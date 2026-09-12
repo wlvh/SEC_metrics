@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 240, in prepare_saved_combined_borrowings
+    proof = inspect_combined_borrowings(primary=preparation['primary'],xml=preparation['xml'],prepared=prepared)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 175, in inspect_combined_borrowings
+    _,inotes,ireports = _parsed(primary['raw_bytes'],prepared=prepared,kind='primary')
+                        ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 104, in _parsed
+    visible = parse_numeric_claim(raw_value=cell['text'],reported_unit='USD')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/constraints.py", line 42, in parse_numeric_claim
+    raise ConstraintError("Cell is not a supported numeric claim")
+vnext.constraints.ConstraintError: Cell is not a supported numeric claim

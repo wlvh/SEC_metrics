@@ -104,7 +104,11 @@ class OrdinaryCompanyfactsTest(unittest.TestCase):
             self.assertEqual('WITHHELD',case['metrics'][metric]['result']['publication'])
         for metric in ('A08','A10'):
             self.assertEqual('PUBLISHED',case['metrics'][metric]['result']['publication'])
-        for company in ('southwest_airlines','paramount_skydance_paramount_global'):
+        southwest=self.cases['southwest_airlines']
+        self.assertEqual('PUBLISHED',southwest['metrics']['B02']['result']['publication'])
+        self.assertEqual('INPUT_PROPERTY_PROVEN',southwest['amendment_input']['decision'])
+        self.assertIsNone(southwest['prior_error'])
+        for company in ('paramount_skydance_paramount_global',):
             self.assertEqual('WITHHELD',self.cases[company]['metrics']['B02']['result']['publication'])
             self.assertEqual('N_A_STRUCTURAL',self.cases[company]['metrics']['A05']['result']['applicability'])
 

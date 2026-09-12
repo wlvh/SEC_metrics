@@ -594,7 +594,7 @@ CI首次将13项新测试作为一个入口时触发既有30秒入口上限。�
 
 ## 普通保存来源候选批次
 
-当前GitHub CI分两项：`python3 tools/run_fast_tests_v2.py --suite fast --jobs 2`检查95个短测试入口，每项30秒；`--suite source-material --jobs 2`检查34个完整来源材料入口，每项240秒，整个job上限20分钟。先前124个入口的并集全部保留，并新增五个普通来源/输入材料套件；没有删除断言。旧`tools/run_fast_tests.py`保持原字节，历史acceptance入口不改。单次全文LCR已在托管机超过30秒，故不再把全文材料误列为短测试；原失败日志保留，材料通过不能改称原30秒测试已通过。两层本地分别通过，不替代实际GitHub或完整390验收。
+当前GitHub CI包含两层测试和独立原生Run检查：`python3 tools/run_fast_tests_v2.py --suite fast --jobs 2`检查95个短测试入口，每项30秒；`--suite source-material --jobs 2`检查37个完整来源材料入口，每项240秒，整个job上限20分钟。先前124个入口的并集全部保留，并新增八个普通来源/输入材料套件；没有删除断言。旧`tools/run_fast_tests.py`保持原字节，历史acceptance入口不改。单次全文LCR已在托管机超过30秒，故不再把全文材料误列为短测试；原失败日志保留，材料通过不能改称原30秒测试已通过。两层本地分别通过，不替代实际GitHub或完整390验收。
 
 <!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
 <!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
@@ -635,6 +635,10 @@ V14/issue_28_v13草案的实际Run材料使用全新外部目录，默认不冻�
 NORMAL_V14_MATERIAL_ROOT=/absolute/new/open-material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_run_v3_material
 ORDINARY_PROJECTION_MATERIAL_ROOT=/absolute/completed/cli-batch PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_ordinary_projection_material
 ```
+
+普通修订与债务来源组件另有 `test_annual_amendment_scope`、`test_b06_combined_borrowings`、`test_b06_financing_inventory`，均在240秒来源材料层登记。真实原件、原说明中的错误用途/期间/附件、金额/单位/命名空间冲突、原生事实与显示金额及声明舍入边界均有正反例；来源清单不推导缺失零值，不产生完整B06或生产信用。
+
+已完成修复批次的公共行可用 `ORDINARY_REPAIR_MANIFEST=/absolute/repair-batches.json PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_ordinary_repairs_material` 重建。清单包含 `amendment`、`denominator`、`selection` 三个实际CLI批次绝对路径；检查14个修订修复坐标、四个NOT_MEANINGFUL空值及证据、JPM具体来源失败/正向选择，逐字节比较实际CSV。该命令不新建Run、不冻结、不写正式结果；失败原批次及修后批次分别保存。
 
 材料包含真实B03依赖图、Salesforce时点/Macy’s跨年时点、文本审阅、事件Claim及文件负例。重签假收入图使用真实Calculator重新生成完整记录，再从原始来源拒绝；删依赖/事件事实、改规格/来源/财年、删审阅和改输入主指标分别验证。第一次删B01依赖结果被误接受、文本审阅顺序失败、事件Claim/来源角色失败和测试异常分类错误均保留，不能拿后续PASS改写首次结果。旧V13 D01/C03冻结数据根用新共享代码冷读仍通过。
 

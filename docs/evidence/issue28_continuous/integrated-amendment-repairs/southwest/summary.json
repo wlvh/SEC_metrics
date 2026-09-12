@@ -1,0 +1,523 @@
+{
+  "record_type": "NORMAL_SAVED_CANDIDATE_BATCH",
+  "status": "OPEN_CANDIDATES_READY",
+  "started_at_utc": "2026-09-12T11:50:36.289685+00:00",
+  "completed_at_utc": "2026-09-12T11:58:14.188189+00:00",
+  "requested_coordinate_count": 14,
+  "coordinates": [
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B01",
+      "run_path": "runs/southwest_airlines/B01",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:5cf305df104b1920a7a257eeef09b35cfbfff89884b7ba1e9cc82ce1b74c7f78",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "B01",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+        "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "28063000000",
+        "unit": "USD",
+        "trace_id": "sha256:59b463908287b377753fb4f9f10da905628658272881548303184a20f0deb7f9",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8197d3b73751dbbb4b2e354236111e95deef15a362db528292d7857af687bacc"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/southwest_airlines-B01.json",
+      "selection_hash": "sha256:51807b7b5e5e04ba32b035e3ae782f5358537f1c4cba1fdfe355bcf4140bb8fa",
+      "selection_summary": {
+        "reason_code": "PASS"
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B02",
+      "run_path": "runs/southwest_airlines/B02",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:ceb4332760169192245ccabf65c826bc33f6fea26daa81d68f4ac0a5b5e5f392",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "B02",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.02110395517228832369100898737",
+        "unit": "ratio",
+        "trace_id": "sha256:4aeeebf8b6da9721cd573972e349314299cec0695ae2dbcaac0e781c79392f52",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:b761cc95b12b5cd3c30e1f78526ff134c171ff514dacbabbe85f6a9938072863"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B03",
+      "run_path": "runs/southwest_airlines/B03",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:c850e174019debfdeb56ea07def928dc8697a5d8361e470e073faf516bdccd9a",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "B03",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+        "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.07084060863058119231728610626",
+        "unit": "ratio",
+        "trace_id": "sha256:d8ffcd8802617b127660c6ab2fbc1d141c4fabd3e5c05010a9f29e8b036c71d4",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:ada9703572318e4e183b5db1e9cb4ac103fde3487151180512254f22149216d8"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/southwest_airlines-B03.json",
+      "selection_hash": "sha256:0a19cb475f6b201a91149c4f0b189d2fb9f33dca4d0dc7d53579dd8c9cf22023",
+      "selection_summary": {
+        "reason_code": "PASS"
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B04",
+      "run_path": "runs/southwest_airlines/B04",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:91783f2216f39c91f7224570455ea1704faaf9ea65c270f0bde883b38e768d98",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "B04",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "441000000",
+        "unit": "USD",
+        "trace_id": "sha256:90fbf4e69000c3a53dfe8fe867139d6d5bba3cc0d5d052fc46d8d0e5d01b7f89",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:ebb94fd564b09ea4296d682a2447986605cb2bcf518cf834613acad072ee4789"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B05",
+      "run_path": "runs/southwest_airlines/B05",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:bc0d25bb1ee81c112f2f8e89fc0b871636d3dfe7c9aee93f0872a8763dcb40cd",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "B05",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "-831000000",
+        "unit": "USD",
+        "trace_id": "sha256:ee4f2e3155e8aa668228f595f1031b8607de8d2a6aa01bfbda53fc57ca5b79df",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:a6118af5bb1081995cb2d062263c5df433b92a531a27dca9bf1523432e7f063e"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B07",
+      "run_path": "runs/southwest_airlines/B07",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:53e48cfe48d55c00622bdf71dc40a884927cabba9ca4d6e674dfdd89055b2090",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "B07",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "2.562874251497005988023952096",
+        "unit": "ratio",
+        "trace_id": "sha256:5f3a66502c87d1111451d76eaec06f045f66ae0b455541d61d209848fec75342",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:1dc8424e3bff62883070fb113de44842f208b0c17ee4e5d792f2656d9490260c"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B08",
+      "run_path": "runs/southwest_airlines/B08",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:f53497bb4be256f0f66bfdf90794df943f999ac5af3f0260451fed5ad922a9f6",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "B08",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.5168940573207581723285413424",
+        "unit": "ratio",
+        "trace_id": "sha256:148248d31b6eea2c6998f5d787fb64de6f71f77b0b07864badfc70e7453bfc6e",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:c82c03262b3e42ab2306ad507fcfdd5e8bc9ed533740f055f83686aa2faa2042"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B09",
+      "run_path": "runs/southwest_airlines/B09",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:08acc073ec10c09080029def4a5b23c9d98abd9d501ce428621b35fd7c641c95",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "B09",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "3231000000",
+        "unit": "USD",
+        "trace_id": "sha256:8690095ab79d363bb5a1c66ed2a9f46e73cc3d2ed131e31b962d87be0fe02b4a",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8b9ea9441163261f6cdb9b0f815947bdbe6b2e7a016d14d91fd425fe9b668b57"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "C01",
+      "run_path": "runs/southwest_airlines/C01",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:7bf51a44da300a157de296e82b359f82e67155da380524e9abad09fd3f9928f5",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "C01",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+        "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "4",
+        "unit": "count",
+        "trace_id": "sha256:b38471e33dbefd5f98fc304e73e1c3fccb8d806ee386d5bcfe0f2cf4a4117865",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:41a83e0107e45e1ca5dfdb91c8a172d219b07f1f0336a2c447344e0c4eedc90e"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/southwest_airlines-C01.json",
+      "selection_hash": "sha256:c11dceef6ffc055a70dd8ea859d71e9d5ea70b90a42e94ab1a41f5df0a6a59c2",
+      "selection_summary": {
+        "reason_code": "PASS"
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E01",
+      "run_path": "runs/southwest_airlines/E01",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:9f43ad819ec2ecf9ed5a6daac70c58f46056db253a3c4604c4d03cbb1233ef9e",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "E01",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+        "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "2",
+        "unit": "count",
+        "trace_id": "sha256:f1a81eb0f298438c0b94a4df2642b041720143b47427eceeb775717709c36541",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/southwest_airlines-E01.json",
+      "selection_hash": "sha256:49750a7037925b36d31cca026c250202fa3998e511926bc17328e962b3756fb4",
+      "selection_summary": {
+        "reason_code": "PASS"
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E02",
+      "run_path": "runs/southwest_airlines/E02",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:df139b4d75a249ea607dacb3441599608c341aa823667490f932d371522c43ff",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "E02",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:6ca42aef435dde02b451c1aa3d0afaf984858fdae962da02b1ad877cbb4f8c23",
+        "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0",
+        "unit": "count",
+        "trace_id": "sha256:686bf6691fced4a3d97a9fb84c15841f5995b6a79bf375ad01df6490dce01b55",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:1a200def37406b2cf72c2bb5c101b22bd03520f436ef8f3f3e79f7d666211214"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/southwest_airlines-E02.json",
+      "selection_hash": "sha256:ae2293ef721c69c45174b51661f08a8bb4a5f5a633fb627098f9564acc2d7a6b",
+      "selection_summary": {
+        "reason_code": "PASS"
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E03",
+      "run_path": "runs/southwest_airlines/E03",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:f1f6c2395129b241ec1bdb021fae48be9e4652e433b1458f0682b5fa6143c18c",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "E03",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+        "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "4",
+        "unit": "count",
+        "trace_id": "sha256:663ce5b5b8685f15aee87c79efb398a92ece3a58594dd074618e769daa34f964",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:5b8326d06680b1908f98570a4dc0c84e8dd5bef4da173e62eaf007785b696a30"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/southwest_airlines-E03.json",
+      "selection_hash": "sha256:c11dceef6ffc055a70dd8ea859d71e9d5ea70b90a42e94ab1a41f5df0a6a59c2",
+      "selection_summary": {
+        "reason_code": "PASS"
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E04",
+      "run_path": "runs/southwest_airlines/E04",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:f06b8920d85c12b82e15ce56045432e10f18288d6fb3c13c4bcf43377af65722",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "E04",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0d029fe3b4e3fa5a6aa6047ec69804c5acba0e42f29514fe5b0f382395aff828",
+        "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0",
+        "unit": "count",
+        "trace_id": "sha256:2e221e7d6351eb8c70fd91c987bc36037ab78de97656832a57a0a0f21b9a7ad7",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8574da1f96a5fbf9ef4c22ab785c0254a229fd17cc695271146e3612138dc1dc"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/southwest_airlines-E04.json",
+      "selection_hash": "sha256:ae2293ef721c69c45174b51661f08a8bb4a5f5a633fb627098f9564acc2d7a6b",
+      "selection_summary": {
+        "reason_code": "PASS"
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E05",
+      "run_path": "runs/southwest_airlines/E05",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:c1ce642bd9b917b4e3140f61c57f7721b9f2f4b101393477df7f732bb93776ad",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "E05",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:6b232d81c480ca18f6035fadb7b13fb12f12a55152029919627f82b6b872e7b9",
+        "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "2",
+        "unit": "count",
+        "trace_id": "sha256:b755e8179b11ab40dac40d2cc4e748b532df815b24fbb842ccf0b702f079899f",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:082c0621a2a01bc80b3b636f5e59fe4cae5703bf87c73936488a856aec788eda"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/southwest_airlines-E05.json",
+      "selection_hash": "sha256:49750a7037925b36d31cca026c250202fa3998e511926bc17328e962b3756fb4",
+      "selection_summary": {
+        "reason_code": "PASS"
+      }
+    }
+  ],
+  "full_issue_acceptance": false,
+  "production_authorized": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "limits": [
+    "Saved sources do not prove current SEC freshness",
+    "Rows are not a complete publication",
+    "Unimplemented and withheld coordinates remain explicit"
+  ]
+}

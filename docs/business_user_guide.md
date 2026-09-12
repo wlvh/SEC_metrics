@@ -294,3 +294,9 @@ B06新来源的两份历史验证只提供候选结果：可查看原始年报�
 A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，已接入34项V14草案CLI，正式报告不变；详见`docs/normal_source_components.md`。
 
 当前开发入口已将34项支持路线接到同一原生验证链，但V14仍是OPEN草案。公共行明确区分主结果与计算所用事实；财年名称按受支持的原文定义显示，原始标签冲突仍可追溯。正式报告和active不因此改变，完整390坐标与上线条件仍未完成。
+
+候选页会保留具体来源失败原因；“无经济意义”的比值保持空值，并能继续查看原始证据。已核实仅更正链接的修订不会一概阻断原报告数值，但其他修订仍需完成其相应检查。借款小计不等于完整债务指标，没有单独融资租赁披露也不等于金额为零。
+<!-- capability-anchor: CAPABILITY.ordinary_candidate_diagnostics -->
+<!-- capability-anchor: CAPABILITY.ordinary_amendment_input_scope -->
+<!-- capability-anchor: CAPABILITY.b06_combined_borrowing_reconciliation -->
+<!-- capability-anchor: CAPABILITY.b06_financing_disclosure_inventory -->

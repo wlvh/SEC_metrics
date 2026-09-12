@@ -14,6 +14,62 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.ordinary_amendment_input_scope",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通B01/B03、六事件与Company Facts来源路线逐份保留修订原件及来源证明；有限链接更正结构可证明原报告财务数值未变，事件日期窗口另行证明。额外修订用途、错原报告期间或附件不能继承该结论。Part III识别不自动批准财务或主体接续范围。该能力不授新来源获取或生产权限。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_annual_amendment_scope.py::AnnualAmendmentScopeTest.test_saved_input_admission_retains_sources_and_only_the_requested_property",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
+        "anchor_id": "CAPABILITY.b06_combined_borrowing_reconciliation",
+        "type": "capability",
+        "status": "active",
+        "statement": "组合附注借款组件按原件重建短期及非流动账面金额，核对HTML/XML/同申报Company Facts、实际调整项、当前部分不重复累计及来源声明的舍入精度。它只产生借款小计证明，融资租赁和完整债务集合仍未证明，不创建B06 Result或Run。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_b06_combined_borrowings.py::CombinedBorrowingsTest.test_actual_carrying_amounts_keep_current_debt_once_and_remaining_scope_explicit",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
+        "anchor_id": "CAPABILITY.b06_financing_disclosure_inventory",
+        "type": "capability",
+        "status": "active",
+        "statement": "融资披露清单保留原生概念、货币单位、实际表行及报表分类枚举；无单独融资租赁披露不推零，供应商概念名或报表枚举不自动授予债务纳入/排除结论。该清单仅供来源分析，不创建Result、Run或新获取信用。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_b06_financing_inventory.py::FinancingInventoryTest.test_actual_disclosures_do_not_infer_zero_or_grant_debt_set_disposition",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
+        "anchor_id": "CAPABILITY.ordinary_candidate_diagnostics",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通候选公共行保留请求子指标的真实选择或失败原因；NOT_MEANINGFUL为空值并保留原始证据。未解决的来源范围仍为WITHHELD，不因展示修复变成成功，也不改变正式active。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_ordinary_repairs_material.py::OrdinaryRepairProjectionMaterialTest.test_actual_repaired_rows_and_specific_source_failures",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
         "anchor_id": "CAPABILITY.normal_saved_candidate_batch",
         "type": "capability",
         "status": "active",

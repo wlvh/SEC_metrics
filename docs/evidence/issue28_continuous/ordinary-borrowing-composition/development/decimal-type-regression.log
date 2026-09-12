@@ -1,0 +1,22 @@
+E
+======================================================================
+ERROR: setUpClass (tests.vnext.test_b06_combined_borrowings.CombinedBorrowingsTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_combined_borrowings.py", line 20, in setUpClass
+    cls.actual = prepare_saved_combined_borrowings(repo_root=ROOT, company_id='pfizer')
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 275, in prepare_saved_combined_borrowings
+    proof = inspect_combined_borrowings(primary=preparation['primary'],xml=preparation['xml'],prepared=prepared)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 246, in inspect_combined_borrowings
+    'difference':decimal_text(value=left-right),'rounding_radius':decimal_text(value=radius)})
+                                                                  ~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 303, in decimal_text
+    if not value.is_finite():
+           ^^^^^^^^^^^^^^^
+AttributeError: 'float' object has no attribute 'is_finite'
+
+----------------------------------------------------------------------
+Ran 0 tests in 4.866s
+
+FAILED (errors=1)

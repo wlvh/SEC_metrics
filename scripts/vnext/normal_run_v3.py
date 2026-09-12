@@ -54,6 +54,10 @@ def prepare_case(*, data_root, company_id, metric_id):
     _need(metric_id in policy["metric_ids"],"ORDINARY_INTEGRATED_METRIC_NOT_ENABLED")
     if metric_id in installed_ordinary_spec_documents():
         original = prepare_ordinary_zero_ai_run_input(repo_root=data_root,company_id=company_id,metric_id=metric_id)
+        detail = original["component"]
+        if "metrics" in detail:
+            detail = detail["metrics"][metric_id]
+        selection = detail.get("selection",detail.get("inspection"))
         case = {"kind":"STRUCTURED","primary_metric_id":metric_id,"input_binding":original,
             "source_records":original["source_records"],"references":original["source_references"],
             "source_proofs":original["source_proofs"],"admission":original["source_admission"],
@@ -61,7 +65,7 @@ def prepare_case(*, data_root, company_id, metric_id):
             "target_period":original["target_period"],"expected_records":original["records"],
             "results":original["results"],"traces":original["traces"],
             "observations":[r for r in original["records"] if r["record_type"] == "VERIFIED_OBSERVATION"],
-            "selection":original["component"].get("selection")}
+            "selection":selection}
     else:
         from .normal_run_v2 import _prepare_case
         old = _prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id)

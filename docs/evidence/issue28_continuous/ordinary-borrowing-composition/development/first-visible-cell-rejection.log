@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 227, in prepare_saved_combined_borrowings
+    proof = inspect_combined_borrowings(primary=preparation['primary'],xml=preparation['xml'],prepared=prepared)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 162, in inspect_combined_borrowings
+    _,inotes,ireports = _parsed(primary['raw_bytes'],prepared=prepared,kind='primary')
+                        ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 94, in _parsed
+    _need(report['ordinal'] in cells, 'COMBINED_BORROWING_VISIBLE_BALANCE_MISSING')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 36, in _need
+    raise CombinedBorrowingError(reason)
+vnext.b06_combined_borrowings.CombinedBorrowingError: COMBINED_BORROWING_VISIBLE_BALANCE_MISSING

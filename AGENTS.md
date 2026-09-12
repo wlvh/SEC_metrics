@@ -182,7 +182,9 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 - `tools/vnext_normal_candidate.py`、`scripts/vnext/normal_run_v3.py`：V14开发草案将34项普通来源路线接入同一Run，默认OPEN并生成独立公共行；B03保留B01依赖。`normal_run_specs.py`/`normal_run_inputs.py`固定22项来源规格与完整图，`ordinary_projection.py`保留主结果及各项来源证据。V12/V13的`normal_run_v2.py`、旧规则/快照/冻结记录不重写，V14尚不冻结。说明见`docs/normal_candidates.md`。
 
-- `normal_zero_ai_results.py` / `normal_companyfacts_results.py`：旧22项中19项的普通来源原生记录组件，复用既有规格、目录、来源适配与Calculator；上一期来源和依赖指标从原件重建。`normal_accession_results.py`另接A01/A02/B12的源单位/维度/时点，共22项原生组件；尚无后继Run，完整更新继续接线，见`docs/normal_source_components.md`。
+- `normal_zero_ai_results.py` / `normal_companyfacts_results.py`：旧22项中19项的普通来源原生记录组件，复用既有规格、目录、来源适配与Calculator；上一期来源和依赖指标从原件重建。`normal_accession_results.py`另接A01/A02/B12的源单位/维度/时点，共22项原生组件，已接入V14 OPEN Run；完整更新继续接线，见`docs/normal_source_components.md`。
+- `annual_amendment_scope.py`：逐份核对普通修订的原件、期间、完整说明及适用输入属性；有限链接更正可接入B01/B03/六事件/Company Facts，Part III不自动批准财务或主体合并范围。
+- `b06_combined_borrowings.py` / `b06_financing_inventory.py`：组合附注借款账面数对账与融资披露来源清单。保留原表实际标签、计量调整与舍入说明；小计不是完整B06，缺少单独融资租赁披露不推零，尚未接入Run。说明与实测见`docs/evidence/issue28_continuous/ordinary-borrowing-composition/`及`ordinary-financing-inventory/`。
 - `regulatory_investigation_candidates.py` / `going_concern_source.py` / `fiscal_year_labels.py`：D03事实候选及上下文、D04完整年报/修订原文分组、财年原文/机器标签对照；来源准备不能当成最终调查/持续经营结论或新规则激活。
 - `tools/run_fast_tests_v2.py`：当前CI分95个30秒短测试入口和34个240秒完整来源材料入口；先前124项均保留，并新增五个普通来源/输入材料套件。旧`tools/run_fast_tests.py`是V13冻结规则的一部分，保留原字节和历史入口。
 

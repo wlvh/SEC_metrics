@@ -50,7 +50,7 @@ class OrdinaryRunInputTest(unittest.TestCase):
 
     def test_blocked_b03_has_real_withheld_dependency_instead_of_an_incomplete_graph(self):
         with original_sources_only():
-            value=prepare_ordinary_zero_ai_run_input(repo_root=ROOT,company_id='southwest_airlines',metric_id='B03')
+            value=prepare_ordinary_zero_ai_run_input(repo_root=ROOT,company_id='paramount_skydance_paramount_global',metric_id='B03')
         self.assertEqual({'B01','B03'},set(value['results']))
         self.assertTrue(all(r['publication']=='WITHHELD' and r['value'] is None for r in value['results'].values()))
         self.assertEqual('NOT_CREATED',value['native_run_status'])

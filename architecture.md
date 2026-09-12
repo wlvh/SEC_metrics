@@ -829,3 +829,13 @@ A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主
 <!-- capability-anchor: CAPABILITY.ordinary_integrated_run_graph -->
 
 V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分派。`normal_run_inputs`和源拥有的规格文件先重建主指标及完整依赖图；`normal_run_v3`核对整个数值计算记录集合，防止只保留主结果而删除B01依赖。事件Claim与其来源关系同样进入图。文本流程按Source/Candidate/Evidence/ReviewUnit→ReviewDecision→Observation/Trace/Result顺序写入。当前规则未冻结，CLI默认生成OPEN；普通公共行由`ordinary_projection`单独绑定展示规则，并只输出所请求主指标。实际财年来源与原始机器标签由`normal_annual_input_v2`分别保留。
+
+<!-- capability-anchor: CAPABILITY.ordinary_amendment_input_scope -->
+<!-- capability-anchor: CAPABILITY.ordinary_candidate_diagnostics -->
+
+`annual_amendment_scope`使用原始HTML/XBRL及已有获取证明，按原件、期间、完整说明、表行和链接核对有限修订。普通数值路线消费`ORIGINAL_STATEMENT_VALUES`，事件路线只消费`FISCAL_EVENT_WINDOW`；每份修订仍进入完整输入绑定和来源记录，主体连续性及事件覆盖另验。`normal_run_v3`从请求子指标提取selection/inspection，展示层保留该具体原因；NOT_MEANINGFUL先构造完整身份/期间基线，再调用既有Projector。
+
+<!-- capability-anchor: CAPABILITY.b06_combined_borrowing_reconciliation -->
+<!-- capability-anchor: CAPABILITY.b06_financing_disclosure_inventory -->
+
+两份B06独立来源组件尚未进入Run：`b06_combined_borrowings`对账组合附注的本金、实际账面调整与当前部分，使用原文舍入声明和显示精度解释合法差额；`b06_financing_inventory`列出融资租赁和供应商原生事实及实际表行。它们复用原输入/解析/来源准入，不填缺失零值、不批准债务集合，不创建第二套结果或发布系统。

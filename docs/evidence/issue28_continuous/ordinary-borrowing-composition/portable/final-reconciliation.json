@@ -1,0 +1,1936 @@
+{
+  "prepared_input": {
+    "company_id": "pfizer",
+    "entity": "78003",
+    "filing": {
+      "accessionNumber": "0000078003-26-000026",
+      "filingDate": "2026-02-26",
+      "reportDate": "2025-12-31",
+      "acceptanceDateTime": "2026-02-26T17:44:01.000Z",
+      "act": "34",
+      "form": "10-K",
+      "fileNumber": "001-03619",
+      "filmNumber": "26684208",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 31228044,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "pfe-20251231.htm",
+      "primaryDocDescription": "10-K"
+    },
+    "amendments": [],
+    "prior_period_amendments": [],
+    "subject_policy": {
+      "mode": "CONTINUOUS_PRIMARY",
+      "selected_cik": "78003",
+      "cross_entity_combination_authorized": false
+    },
+    "companyfacts_input": {
+      "company_id": "pfizer",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "source_repo_relative_path": "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+      "accession": "0000078003-26-000026",
+      "document_name": "CIK0000078003.json",
+      "request_attempt_id": "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db"
+    },
+    "table_input": {
+      "company_id": "pfizer",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "source_repo_relative_path": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+      "accession": "0000078003-26-000026",
+      "document_name": "pfe-20251231.htm",
+      "request_attempt_id": "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4",
+      "source_media_type": "text/html",
+      "source_role": "target_primary"
+    },
+    "source_proofs": [
+      {
+        "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+        "accession": "",
+        "document_name": "CIK0000078003.json",
+        "content_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331",
+        "request_body_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331",
+        "request_body_size": 145855,
+        "request_headers_repo_relative_path": "evidence/request_attempts/e0/e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331/CIK0000078003.json.122e8fa00dfb0943c0d6c9a2a2c4285354867da08ea20b75f1b29af1ed74527f.headers.json",
+        "request_headers_sha256": "122e8fa00dfb0943c0d6c9a2a2c4285354867da08ea20b75f1b29af1ed74527f",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/e0/e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331/CIK0000078003.json",
+        "request_attempt_id": "request:attempt:87479e2b81668856179f2daca30e8af491662248937271857494243f337cc21b"
+      },
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+        "accession": "0000078003-26-000026",
+        "document_name": "pfe-20251231.htm",
+        "content_sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+        "request_body_sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+        "request_body_size": 5222324,
+        "request_headers_repo_relative_path": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm.24cb16c7fe68f49102bd136a0e667604e5c5e8b9ed20da55e1eff99e67a2e701.headers.json",
+        "request_headers_sha256": "24cb16c7fe68f49102bd136a0e667604e5c5e8b9ed20da55e1eff99e67a2e701",
+        "request_headers_size": 1065,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+        "request_attempt_id": "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4"
+      },
+      {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+        "accession": "0000078003-26-000026",
+        "document_name": "CIK0000078003.json",
+        "content_sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+        "request_body_sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+        "request_body_size": 5032767,
+        "request_headers_repo_relative_path": "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json.87d820246a7036bdfbbd48ef3aca556b5daa4647d06ea3c0cc8d4b35c2674168.headers.json",
+        "request_headers_sha256": "87d820246a7036bdfbbd48ef3aca556b5daa4647d06ea3c0cc8d4b35c2674168",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json",
+        "request_attempt_id": "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db"
+      }
+    ],
+    "selection_rule": "LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS",
+    "source_evidence": "LEDGER_BOUND_SAVED_BYTES",
+    "update_status": "ORIGINAL_INPUT_READY",
+    "current_latest_verified": false,
+    "execution": "NOT_EXECUTED",
+    "production_authorized": false,
+    "input_id": "sha256:6eac7f3ec3afc14ea03e7788244d3b1b7b0cd97c2c4dc0218646fda4e67f8e68"
+  },
+  "reconciliation": {
+    "record_type": "B06_BORROWING_CARRYING_RECONCILIATION",
+    "schema_version": 1,
+    "company_id": "pfizer",
+    "entity": "78003",
+    "filing": {
+      "accessionNumber": "0000078003-26-000026",
+      "filingDate": "2026-02-26",
+      "reportDate": "2025-12-31",
+      "acceptanceDateTime": "2026-02-26T17:44:01.000Z",
+      "act": "34",
+      "form": "10-K",
+      "fileNumber": "001-03619",
+      "filmNumber": "26684208",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 31228044,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "pfe-20251231.htm",
+      "primaryDocDescription": "10-K"
+    },
+    "period_end": "2025-12-31",
+    "source_references": [
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+        "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+        "company_id": "pfizer",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+        "accession": "0000078003-26-000026",
+        "document_name": "pfe-20251231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4"
+      },
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:ed98ed04b39b84f625fc730b878ccb1a71b4199180025ea543e5ca72c21dfda9",
+        "raw_asset_id": "sha256:41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+        "company_id": "pfizer",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231_htm.xml",
+        "accession": "0000078003-26-000026",
+        "document_name": "pfe-20251231_htm.xml",
+        "source_role": "auditor_facts",
+        "request_attempt_id": "request:attempt:a4278a6155d79ae3f8b99378f4b525be88acbf387adcaf0aa261e2ee4b52f01f"
+      }
+    ],
+    "policy_hash": "sha256:1ce41f13709ef83690799e105082ad9166427a4aa3f5e3b8c7aa35def5473994",
+    "source_notes": [
+      {
+        "role": "accounting_policy",
+        "xml_ordinal": 604,
+        "primary_ordinal": 604,
+        "text": "Basis of Presentation and Significant Accounting Policies A. Basis of Presentation The consolidated financial statements include the accounts of our parent company and all subsidiaries and are prepared in accordance with U.S. GAAP. The decision of whether or not to consolidate an entity for financial reporting purposes requires consideration of majority voting interests, as well as effective economic or other control over the entity. Typically, we do not seek control by means other than voting interests. For subsidiaries operating outside the U.S., the financial information is included as of and for the year ended November 30 for each year presented. Pfizer's fiscal year-end for U.S. subsidiaries is as of and for the year ended December 31 for each year presented. All significant transactions among our subsidiaries have been eliminated. We manage our commercial operations through three operating segments, each led by a single manager: Biopharma, PC1 and Pfizer Ignite. Biopharma is the only reportable segment. See Note 17A . On December 14, 2023, we completed the acquisition of Seagen. In addition, other acquisitions and business development activities completed in 2025, 2024 and 2023 impacted financial results in the periods presented. See Note 2 . We have made certain reclassification adjustments to conform prior-period amounts to the current presentation, including in the third quarter of 2025, when we reclassified certain costs for corporate affairs previously reported in Other business activities to Biopharma (see Note 17A ). Certain amounts in the consolidated financial statements and associated notes may not add due to rounding. All percentages have been calculated using unrounded amounts. B . New Accounting Standards Adopted in 2025 In the fourth quarter of 2025, we adopted a new accounting standard which requires enhanced disclosures primarily related to existing rate reconciliation and income taxes paid information. The standard was applied prospectively. As this accounting standard only impacts disclosures, the adoption did not impact our consolidated financial statements. See Note 5 . In the third quarter of 2025, we early adopted a new accounting standard, which adds a scope exception to exclude from derivative accounting non-exchange-traded contracts with variables (referred to as “underlyings”) that are based on operations or activities specific to one of the parties to the contract. This new scope exception may apply to certain R&D funding arrangements. When adopted early in an interim reporting period, application of the standard is required as of the beginning of the current annual reporting period. We had no contracts or embedded features that were accounted for as derivatives but are no longer accounted for as derivatives as a result of applying the new standard. The adoption of this new accounting standard had no impact to our consolidated financial statements. C. Estimates and Assumptions In preparing these financial statements, we use certain estimates and assumptions that affect reported amounts and disclosures. These estimates and assumptions can impact all elements of our financial statements. For example, in the consolidated statements of operations, estimates are used when accounting for deductions from revenues, determining the cost of inventory that is sold, allocating cost in the form of depreciation and amortization, and estimating restructuring charges and the impact of contingencies, as well as determining provisions for taxes on income. On the consolidated balance sheets, estimates are used in determining the valuation and recoverability of assets, and in determining the reported amounts of liabilities, all of which also impact the consolidated statements of operations. Certain estimates of fair value and amounts recorded in connection with acquisitions, revenue deductions, impairment reviews, restructuring-associated charges, investments and financial instruments, valuation allowances, pension and postretirement benefit plans, contingencies, share-based compensation, and other calculations can result from a complex series of judgments about future events and uncertainties and can rely heavily on estimates and assumptions. Our estimates are often based on complex judgments and assumptions that we believe to be reasonable, but that can be inherently uncertain and unpredictable. If our estimates and assumptions are not representative of actual outcomes, our results could be materially impacted. As future events and their effects cannot be determined with precision, our estimates and assumptions may prove to be incomplete or inaccurate, or unanticipated events and circumstances may occur that might cause us to change those estimates and assumptions. We are subject to risks and uncertainties that may cause actual results to differ from estimated amounts, such as changes in the healthcare environment, competition, litigation, legislation, development of competing assets by us or others, regulatory actions, or product recalls or withdrawals. We regularly evaluate our estimates and assumptions using historical experience and expectations about the future. We adjust our estimates and assumptions when facts and circumstances indicate the need for change. D. Acquisitions Our consolidated financial statements include the operations of acquired businesses after the completion of the acquisitions. We account for acquired businesses using the acquisition method of accounting, which requires, among other things, that most assets acquired and liabilities assumed be recognized at their estimated fair values as of the acquisition date and that the fair value of acquired IPR&D be recorded on the balance sheet. Transaction costs are expensed as incurred. Any excess of the consideration transferred over the assigned values of the net assets acquired is recorded as goodwill. When we acquire net assets that do not constitute a business, as defined in U.S. GAAP, no goodwill is recognized and acquired IPR&D is expensed in Acquired in-process research and development expenses . Contingent consideration in a business combination is included as part of the acquisition cost and is recognized at fair value as of the acquisition date. Fair value is generally estimated by using a probability-weighted discounted cash flow approach. See Note 16D . Any liability resulting from contingent consideration is remeasured to fair value at each reporting date until the contingency is resolved. These changes in fair value are recognized in earnings in Other (income)/deductions––net . E. Fair Value We measure certain assets and liabilities at fair value, either upon initial recognition or for subsequent accounting or reporting. We estimate fair value using an exit price approach, which requires, among other things, that we determine the price that would be received to sell an asset or paid to transfer a liability in an orderly market. The determination of an exit price is considered from the perspective of market participants, considering the highest and best use of non-financial assets and, for liabilities, assuming that the risk of non-performance will be the same before and after the transfer. When estimating fair value, depending on the nature and complexity of the asset or liability, we may use one or all of the following techniques: • Income approach, which is based on the present value of a future stream of net cash flows. • Market approach, which is based on market prices and other information from market transactions involving identical or comparable assets or liabilities. • Cost approach, which is based on the cost to acquire or construct comparable assets, less an allowance for functional and/or economic obsolescence. Our fair value methodologies depend on the following types of inputs: • Quoted prices for identical assets or liabilities in active markets (Level 1 inputs). • Quoted prices for similar assets or liabilities in active markets, or quoted prices for identical or similar assets or liabilities in markets that are not active, or inputs other than quoted prices that are directly or indirectly observable, or inputs that are derived principally from, or corroborated by, observable market data by correlation or other means (Level 2 inputs). • Unobservable inputs that reflect estimates and assumptions (Level 3 inputs). The following inputs and valuation techniques are used to estimate the fair value of our financial assets and liabilities: • Available-for-sale debt securities—third-party matrix-pricing model that uses significant inputs derived from or corroborated by observable market data and credit-adjusted yield curves. • Equity securities with readily determinable fair values—quoted market prices and observable NAV prices. • Derivative assets and liabilities—third-party matrix-pricing model that uses inputs derived from or corroborated by observable market data. Where applicable, these models use market-based observable inputs, including interest rate yield curves to discount future cash flow amounts, and forward and spot prices for currencies. The credit risk impact to our derivative financial instruments was not significant. • Money market funds—observable NAV prices. • Contingent consideration liabilities—probability-weighted discounted cash flow model and unobservable inputs, which requires the use of significant judgment or estimates, including projections representative of a market participant’s view of the expected cash payments associated with the agreed upon development and regulatory milestones primarily based on probabilities of technical success, timing of the potential milestone events for the compounds, and estimated discount rates. We periodically review the methodologies, inputs and outputs of third-party pricing services for reasonableness. Our procedures can include, for example, referencing other third-party pricing models, monitoring key observable inputs (like benchmark interest rates) and selectively performing test-comparisons of values with actual sales of financial instruments. F. Foreign Currency Translation For most of our international operations, local currencies have been determined to be the functional currencies. We translate functional currency assets and liabilities to their U.S. dollar equivalents at exchange rates in effect as of the balance sheet date and income and expense amounts at average exchange rates for the period. The U.S. dollar effects that arise from changing translation rates are recorded in Other comprehensive income/(loss) . The effects of converting non-functional currency monetary assets and liabilities into the functional currency are recorded in Other (income)/deductions––net . For operations in highly inflationary economies, we translate monetary items at rates in effect as of the balance sheet date, with translation adjustments recorded in Other (income)/deductions––net , and we translate non-monetary items at historical rates. G. Revenues and Trade Accounts Receivable Revenue Recognition ––We record revenues from product sales when there is a transfer of control of the product from us to the customer. We typically determine transfer of control based on when the product is shipped or delivered and title passes to the customer. For certain contracts, the finished product may temporarily be stored at our or our third-party subcontractors’ locations under a bill-and-hold arrangement. Revenue is recognized on bill-and-hold arrangements at the point in time when the customer obtains control of the product and all of the following criteria have been met: the arrangement is substantive; the product is identified separately as belonging to the customer; the product is ready for physical transfer to the customer; and we do not have the ability to use the product or direct it to another customer. In bill-and-hold arrangements which are part of the U.S. SNS, we recognize revenue for the product sale when the product is initially placed into the U.S. SNS and we provide a rotation service to maintain an agreed upon level of shelf life for product in the stockpile. In determining when the customer obtains control of the product, we consider certain indicators, including whether we have a present right to payment from the customer, whether title and/or significant risks and rewards of ownership have transferred to the customer and whether customer acceptance has been received. Our Sales Contracts ––Sales on credit are typically under short-term contracts. Collections are based on market payment cycles common in various markets, with shorter cycles in the U.S. Sales are adjusted for sales allowances, chargebacks, rebates and sales returns and cash discounts. Sales returns may occur due to patent-based expirations or loss of regulatory exclusivity, product recalls or a changing competitive environment. Deductions from Revenues ––Our gross product revenues are subject to a variety of deductions, which generally are estimated and recorded in the same period that the revenues are recognized. Such variable consideration represents chargebacks, rebates, sales allowances and sales returns. These deductions represent estimates of the related obligations and, as such, knowledge and judgment is required when estimating the impact of these product revenue deductions on gross sales for a reporting period. Provisions for pharmaceutical sales returns–– Provisions are based on a calculation for each market that incorporates the following, as appropriate: local returns policies and practices; historical returns as a percentage of sales; an understanding of the reasons for past returns; estimated shelf life by product; an estimate of the amount of time between shipment and return or lag time; and any other factors that could impact the estimate of future returns, such as patent-based expirations or loss of regulatory exclusivity, product recalls or a changing competitive environment. Generally, returned products are destroyed, and customers are refunded the sales price in the form of a credit. We record sales incentives as a reduction of revenues at the time the related revenues are recorded or when the incentive is offered, whichever is later. We estimate the cost of our sales incentives based on our historical experience with similar incentives programs to predict customer behavior. The following outlines our common sales arrangements: • Customers ––Our prescription biopharmaceutical products, with the exception of Paxlovid in 2023, are sold principally to wholesalers, but we also sell directly to retailers, hospitals, clinics, government agencies and pharmacies. In 2023, we principally sold Paxlovid globally to government agencies. Our vaccines in the U.S. are primarily sold directly to the federal government (including the CDC), wholesalers, individual provider offices, retail pharmacies and integrated delivery systems. Our vaccines outside the U.S. are primarily sold to government and non-government institutions. Certain products in our portfolio are subject to seasonality of demand and Paxlovid revenues trend with infection rates. Prescription pharmaceutical products that ultimately are used by patients are generally covered under governmental programs, managed care programs and insurance programs, including those managed through PBMs in the U.S; and are subject to sales allowances and/or rebates payable directly to those programs. Those sales allowances and rebates are generally negotiated, but government programs may have legislated amounts by type of product (e.g., patented or unpatented). Specifically: • In the U.S., we sell our products principally to distributors and hospitals. We also have contracts with managed care programs or PBMs and legislatively mandated contracts with the federal and state governments under which we provide rebates based on medicines utilized by the lives they cover. We record provisions for Medicare, Medicaid, and performance-based contract pharmaceutical rebates based upon our experience ratio of rebates paid and actual prescriptions written during prior periods. We apply the experience ratio to the respective period’s sales to determine the rebate accrual and related expense. This experience ratio is evaluated regularly to ensure that the historical trends are as current as practicable. We estimate discounts on branded prescription drug sales in prior periods to Medicare Part D participants in the Medicare “coverage gap,” also known as the “doughnut hole,” (applicable through 2024) and discounts in the initial coverage and catastrophic phases under the Manufacturer Discount Program (effective January 1, 2025) based on historical beneficiary prescription experience and expected utilization resulting from the applicable discount, whether in the coverage gap or under the Manufacturer Discount Program, respectively. For performance-based contract rebates, we also consider current contract terms, such as changes in formulary status and rebate rates. • Outside the U.S., the majority of our pharmaceutical sales allowances are contractual or legislatively mandated and our estimates are based on actual invoiced sales within each period, which reduces the risk of variations in the estimation process. In certain European countries, rebates are calculated on the government’s total unbudgeted pharmaceutical spending or on specific product sales thresholds and we apply an estimated allocation factor against our actual invoiced sales to project the expected level of reimbursement. We obtain third-party information that helps us to monitor the adequacy of these accruals. • Provisions for pharmaceutical chargebacks (primarily reimbursements to U.S. wholesalers for honoring contracted prices and legislated discounts to third parties) closely approximate actual amounts incurred, as we settle these deductions generally within two to five weeks of incurring the liability. We recorded revenues of more than $1 billion for each of 12 products in 2025, for each of 11 products in 2024 and for each of nine products in 2023, and these revenues represented 65%, 66% and 64% of our Total revenues in 2025, 2024 and 2023, respectively. See Note 17C . The loss or expiration of intellectual property rights can have a significant adverse effect on our revenues as our contracts with customers will generally be at lower selling prices and lower volumes due to added generic competition. We generally provide for higher sales returns during the period in which individual markets begin to near the loss or expiration of intellectual property rights. Our accruals for Medicare, Medicaid and related state program and performance-based contract rebates, chargebacks, sales allowances and sales returns and cash discounts are as follows: As of December 31, (MILLIONS) 2025 2024 Reserve against Trade accounts receivable, less allowance for doubtful accounts $ 1,803 $ 1,627 Other current liabilities : Accrued rebates 7,909 7,195 Other accruals 750 972 Other noncurrent liabilities 1,204 1,029 Total accrued rebates and other sales-related accruals $ 11,666 $ 10,822 Taxes collected from customers relating to product sales and remitted to governmental authorities are excluded from Product revenues . Trade Accounts Receivable —Trade accounts receivable are stated at their net realizable value. The allowance for credit losses reflects our best estimate of expected credit losses of the receivables portfolio determined on the basis of historical experience, current information, and forecasts of future economic conditions. In developing the estimate for expected credit losses, trade accounts receivables are segmented into pools of assets depending on market, delinquency status, and customer type (high risk versus low risk and government versus non-government), and reserve percentages are established for each pool of trade accounts receivables. In determining the reserve percentages for each pool of trade accounts receivables, we considered our historical experience with certain customers and customer types, regulatory and legal environments, country and political risk, and other relevant current and future forecasted macroeconomic factors. These credit risk indicators are monitored on a quarterly basis to determine whether there have been any changes in the economic environment that would indicate the established reserve percentages should be adjusted, and are considered on a regional basis to reflect more geographic-specific metrics. Additionally, write-offs and recoveries of customer receivables are tracked against collections on a quarterly basis to determine whether the reserve percentages remain appropriate. When management becomes aware of certain customer-specific factors that impact credit risk, specific allowances for these known troubled accounts are recorded. Trade accounts receivable are written off after all reasonable means to collect the full amount (including litigation, where appropriate) have been exhausted. During 2025 and 2024, additions to the allowance for credit losses, write-offs and recoveries of customer receivables were not material to our consolidated financial statements. H. Collaborative Arrangements Payments to and from our collaboration partners are presented in our consolidated statements of operations based on the nature of the arrangement (including its contractual terms), the nature of the payments and applicable accounting guidance. Under co-commercialization agreements, we record the amounts received for our share of gross profits from our collaboration partners as Alliance revenues, when our collaboration partners are the principal in the transaction and we receive a share of their net sales or profits. Alliance revenues are recorded as we perform co-promotion activities for the collaboration and the collaboration partners sell the products to their customers. The related expenses for selling and marketing these products including reimbursements to or from our collaboration partners for these costs are included in Selling, informational and administrative expenses. In collaborative arrangements where we manufacture a product for our collaboration partners, we record revenues when we transfer control of the product to our collaboration partners. In collaboration arrangements where we are the principal in the transaction, we record amounts paid to collaboration partners for their share of net sales or profits earned, and all royalty payments to collaboration partners as Cost of sales . Royalty payments received from collaboration partners are included in Royalty revenues. Reimbursements to or from our collaboration partners for development costs are typically recorded in Research and development expenses . Upfront payments and pre-approval milestone payments due from us to our collaboration partners in development stage collaborations are recorded as Acquired in-process r esearch and development expenses . Milestone payments due from us to our collaboration partners after regulatory approval has been attained for a medicine are recorded in Identifiable intangible assets, net —developed technology rights. Upfront and pre-approval milestone payments earned from our collaboration partners by us are recognized in Other (income)/deductions—net over the development period for the products, when our performance obligations include providing R&D services to our collaboration partners. Upfront, pre-approval and post-approval milestone payments earned by us may be recognized in Other (income)/deductions—net immediately when earned or over other periods depending upon the nature of our performance obligations in the applicable collaboration. Where the milestone event is regulatory approval for a medicine, we generally recognize milestone payments due to us in the transaction price when regulatory approval in the applicable jurisdiction has been attained. We may recognize milestone payments due to us in the transaction price earlier than the milestone event in certain circumstances when recognition of the income would not be probable of a significant reversal. I. Cost of Sales and Inventories Inventories are recorded at the lower of cost or net realizable value. The cost of finished goods, work in process and raw materials is determined using average actual cost. We regularly review our inventories for impairment and reserves are established when necessary. Inventories that are not expected to be sold within 12 months are classified as Other noncurrent assets . See Note 8A . J. Selling, Informational and Administrative Expenses Selling, informational and administrative costs are expensed as incurred. Among other things, these expenses include the internal and external costs of marketing, advertising, shipping and handling, digital and legal defense. Advertising expenses totaled approximately $2.7 billion in 2025, $3.3 billion in 2024 and $3.7 billion in 2023. Production costs are expensed as incurred and the costs of TV, radio, and other electronic media and publications are expensed when the related advertising occurs. K. Research and Development Expenses R&D costs are expensed as incurred. These expenses include the costs of our proprietary R&D efforts, as well as R&D activities performed in connection with certain licensing arrangements. L. Acquired In-Process Research and Development Expenses Before a compound receives regulatory approval, we record upfront and milestone payments we make to third parties under licensing and collaboration arrangements as expense. Upfront payments are recorded when incurred, and milestone payments are recorded when the specific milestone has been achieved. Once a compound receives regulatory approval, we record any milestone payments in Identifiable intangible assets, net and, unless the asset is determined to have an indefinite life, we typically amortize the payments on a straight-line basis over the remaining agreement term or the expected product life cycle, whichever is shorter. Acquired in-process research and development expenses includes costs incurred in connection with (a) all upfront and milestone payments on collaboration and in-license agreements, including premiums on equity securities and (b) asset acquisitions of acquired IPR&D. M. Long-Lived Assets Long-lived assets include: • Property, plant and equipment, net —These assets are recorded at cost, including any significant improvements after purchase, less accumulated depreciation. Property, plant and equipment assets, other than land and construction in progress, are depreciated on a straight-line basis over the estimated useful life of the individual assets. Depreciation begins when the asset is ready for its intended use. For tax purposes, accelerated depreciation methods are used as allowed by tax laws. • Identifiable intangible assets, net —These assets are recorded at fair value at acquisition. Intangible assets with finite lives are amortized on a straight-line basis over their estimated useful lives. Intangible assets with indefinite lives are not amortized until a useful life can be determined. • Goodwill —Goodwill represents the excess of the consideration transferred for an acquired business over the assigned values of its net assets. Goodwill is not amortized. Amortization of finite-lived acquired intangible assets is included in Amortization of intangible assets. We review our long-lived assets for impairment indicators throughout the year. We perform impairment testing for indefinite-lived intangible assets and goodwill at least annually and for all other long-lived assets whenever impairment indicators are present. When necessary, we record impairments of long-lived assets for the amount by which the fair value is less than the carrying value of these assets. Specifically: • For finite-lived intangible assets, such as developed technology rights, and for other long-lived assets, such as property, plant and equipment, whenever impairment indicators are present, we calculate the undiscounted value of the projected cash flows for the asset, or asset group, and compare this estimated amount to the carrying amount. If the carrying amount is greater, we record an impairment loss for the excess of book value over fair value. In addition, we reevaluate the remaining useful lives of the assets and modify them, as appropriate. • For indefinite-lived intangible assets, such as brands and IPR&D assets, when necessary, we determine the fair value of the asset and record an impairment loss, if any, for the excess of book value over fair value. In addition, in all cases of an impairment review other than for IPR&D assets, we re-evaluate whether continuing to characterize the asset as indefinite-lived is appropriate. • For goodwill, when necessary, we determine the fair value of each reporting unit and record an impairment loss, if any, for the excess of the book value of the reporting unit over the implied fair value. N. Restructuring Charges and Other Costs Associated with Acquisitions and Cost-Reduction/Productivity Initiatives We incur restructuring charges in connection with acquisitions when we implement plans to restructure and integrate the acquired operations or in connection with our cost-reduction and productivity initiatives. • In connection with acquisition activity, we typically incur costs associated with executing the transactions, integrating the acquired operations (which may include expenditures for consulting and the integration of systems and processes), and restructuring the combined company (which may include charges related to employees, assets and activities that will not continue in the combined company); and • In connection with our cost-reduction/productivity initiatives, we typically incur costs and charges for site closings and other facility rationalization actions, workforce reductions and the expansion of shared services, including the development of global systems, and digital enablement. Included in Restructuring charges and certain acquisition-related costs are all restructuring charges, as well as certain other costs associated with acquiring and integrating an acquired company. If the restructuring action results in a change in the estimated useful life of an asset, that incremental impact is classified in Cost of sales, Selling, informational and administrative expenses and/or Research and development expenses , as appropriate. Employee termination costs are generally recorded when the actions are probable and estimable and include accrued severance benefits, pension and postretirement benefits, many of which may be paid out during periods after termination. Transaction costs, such as banking, legal, accounting and other similar costs incurred in connection with a business acquisition are expensed as incurred . Our business may be impacted by these actions, including sales and marketing, manufacturing and R&D, as well as our corporate enabling functions. O. Cash Equivalents and Statement of Cash Flows Cash equivalents include items almost as liquid as cash, such as certificates of deposit and time deposits with maturity periods of three months or less when purchased. If items meeting this definition are part of a larger investment pool, we classify them as Short-term investments . Cash flows for financial instruments designated as fair value or cash flow hedges may be included in operating, investing or financing activities, depending on the classification of the items being hedged. Cash flows for financial instruments designated as net investment hedges are classified according to the nature of the hedging instrument. Cash flows for financial instruments that do not qualify for hedge accounting treatment are classified according to their purpose and accounting nature. P. Investments and Derivative Financial Instruments The classification of an investment depends on the nature of the investment, our intent and ability to hold the investment, and the degree to which we may exercise influence. Our investments are primarily comprised of the following: • Public equity securities with readily determinable fair values, which are carried at fair value, with changes in fair value reported in Other (income)/deductions—net. • Available-for-sale debt securities, which are carried at fair value, with changes in fair value reported in Other comprehensive income/(loss) until realized. • Held-to-maturity debt securities, which are carried at amortized cost. • Private equity securities without readily determinable fair values and where we have no significant influence are measured at cost minus any impairment and plus or minus adjustments resulting from observable price changes in orderly transactions for the identical or a similar investment of the same issuer. • For equity investments in common stock or in-substance common stock where we have significant influence over the financial and operating policies of the investee, we use the equity-method of accounting. Under the equity-method, we record our share of the investee’s income and expenses in Other (income)/deductions—net . The excess of the cost of the investment over our share of the underlying equity in the net assets of the investee as of the acquisition date is allocated to the identifiable assets and liabilities of the investee, with any remaining excess amount allocated to goodwill. Such investments are initially recorded at cost, which is the fair value of consideration paid and typically does not include contingent consideration. Realized gains or losses on sales of investments are determined by using the specific identification cost method. We regularly evaluate all of our financial assets for impairment. For investments in debt and equity, if and when a decline in fair value is determined, an impairment charge is recorded and a new cost basis in the investment is established. For equity-method investments, an impairment charge is recorded only if and when a decline in fair value is determined to be other-than-temporary. Derivative financial instruments are carried at fair value in certain balance sheet categories (see Note 7A ), with changes in fair value reported in net income or, for certain qualifying hedging relationships, in Other comprehensive income/(loss) (see N o t e 7 E ). Q. Income Taxes Income taxes are accounted for under the asset and liability method. Provisions for federal, state and foreign income taxes are calculated on reported pre-tax earnings based on tax laws currently in effect. Deferred taxes are recognized for the future tax effects of temporary differences between financial and income tax reporting based on enacted tax laws and rates and are adjusted for changes in tax laws and rates when such changes are enacted. Deferred taxes related to GILTI (NCTI) for taxable years starting after December 31, 2025 are also recognized for the future tax effects of temporary differences. We provide a valuation allowance when we believe that our deferred tax assets are not recoverable based on an assessment of estimated future taxable income that incorporates ongoing, prudent and feasible tax-planning strategies, that would be implemented, if necessary, to realize the deferred tax assets. Amounts recorded for valuation allowances require judgments about future income which can depend heavily on estimates and assumptions. All deferred tax assets and liabilities within the same tax jurisdiction are presented as a net amount in the noncurrent deferred tax assets or noncurrent deferred tax liabilities sections of our consolidated balance sheet. We recognize the tax benefit from an uncertain tax position only if it is more likely than not that the tax position, based on its technical merits, will be sustained upon examination by the taxing authority. The tax benefits recognized in the financial statements from such a position are measured based on the largest benefit that has a greater than 50 percent likelihood of being realized upon ultimate resolution. We regularly monitor our position and subsequently recognize the unrecognized tax benefit: (i) if there are changes in tax law, analogous case law or there is new information that sufficiently raise the likelihood of prevailing on the technical merits of the position to “more likely than not”; (ii) if the statute of limitations expires; or (iii) if there is a completion of an audit resulting in a favorable settlement of that tax year with the appropriate agency. Our assessments are based on estimates and assumptions that have been deemed reasonable by management, but our estimates of unrecognized tax benefits and potential tax benefits may not be representative of actual outcomes, and variation from such estimates could materially affect our financial statements in the period of settlement or when the statutes of limitations expire, as we treat these events as discrete items in the period of resolution. See Note 5 for further information regarding income taxes. R. Pension and Postretirement Benefit Plans The majority of our employees worldwide are covered by defined benefit pension plans, defined contribution plans or both. In the U.S., we have both IRC-qualified and supplemental (non-qualified) defined benefit plans and defined contribution plans, as well as other postretirement benefit plans consisting primarily of medical insurance for retirees and their eligible dependents. Net periodic pension and postretirement benefit costs other than the service costs are recognized in Other (income)/deductions—net . We immediately recognize actuarial gains and losses arising from the remeasurement of our pension and postretirement plans (mark-to-market accounting). Each time a pension or postretirement plan is remeasured, the actuarial gain or loss is recognized immediately and classified as Other (income)/deductions––net . We recognize the overfunded or underfunded status of each of our defined benefit plans as an asset or liability. The obligations are generally measured at the actuarial present value of all benefits attributable to employee service rendered, as provided by the applicable benefit formula. Our pension and other postretirement obligations may be determined using certain assumptions. See N ot e 11B . S. Legal and Environmental Contingencies We and certain of our subsidiaries are subject to numerous contingencies arising in the ordinary course of business, such as patent litigation, product liability and other product-related litigation, commercial and other asserted or unasserted matters, environmental claims and proceedings, government investigations and guarantees and indemnifications. In assessing contingencies related to legal and environmental proceedings that are pending against the Company, or unasserted claims that are probable of being asserted, we record accruals for these contingencies to the extent that we conclude that a loss is both probable and reasonably estimable. If some amount within a range of loss appears to be a better estimate than any other amount within the range, we accrue that amount. Alternatively, when no amount within a range of loss appears to be a better estimate than any other amount, we accrue the lowest amount in the range. We record anticipated recoveries under existing insurance contracts when recovery is assured. T. Share-Based Payments Our compensation programs include share-based payments. Generally, grants under share-based payment programs are accounted for at fair value and these fair values are generally amortized on a straight-line basis or on an accelerated attribution approach over the vesting terms with the related costs recorded in Cost of sales, Selling, informational and administrative expenses and/or Research and development expenses , as appropriate.",
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2025-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        }
+      },
+      {
+        "role": "combined",
+        "xml_ordinal": 1367,
+        "primary_ordinal": 1367,
+        "text": "Financial Instruments A. Fair Value Measurements Financial Assets and Liabilities Measured at Fair Value on a Recurring Basis and Fair Value Hierarchy: As of December 31, 2025 As of December 31, 2024 (MILLIONS) Total Level 1 Level 2 Level 3 Total Level 1 Level 2 Level 3 Financial assets: Short-term investments Equity securities with readily determinable fair value (a) $ 2,596 $ — $ 2,596 $ — $ 7,848 $ 6,456 $ 1,392 $ — Available-for-sale debt securities: Government and agency—non-U.S. 4,859 — 4,859 — 6,855 — 6,855 — Government and agency—U.S. 3,030 — 3,030 — 2,853 — 2,853 — Corporate and other 1,294 — 1,294 — 1,173 — 1,173 — 9,183 — 9,183 — 10,881 — 10,881 — Total short-term investments 11,779 — 11,779 — 18,729 6,456 12,273 — Other current assets Derivative assets: Interest rate contracts — — — — — — — — Foreign exchange contracts 416 — 416 — 1,056 — 1,056 — Total other current assets 416 — 416 — 1,056 — 1,056 — Long-term investments Equity securities with readily determinable fair values (b) 642 642 — — 1,246 1,246 — — Available-for-sale debt securities: Government and agency—non-U.S. 1 — 1 — — — — — Corporate and other — — — — — — — — 1 — 1 — — — — — Total long-term investments 642 642 1 — 1,246 1,246 — — Other noncurrent assets Derivative assets: Interest rate contracts 52 — 52 — 13 — 13 — Foreign exchange contracts 64 — 64 — 447 — 447 — Total derivative assets 116 — 116 — 460 — 460 — Insurance contracts (c) 999 — 999 — 875 — 875 — Total other noncurrent assets 1,115 — 1,115 — 1,335 — 1,335 — Total assets $ 13,953 $ 642 $ 13,311 $ — $ 22,366 $ 7,701 $ 14,665 $ — Financial liabilities: Other current liabilities Derivative liabilities: Interest rate contracts $ 16 $ — $ 16 $ — $ 28 $ — $ 28 $ — Foreign exchange contracts 412 — 412 — 217 — 217 — Contingent consideration liabilities (d) 95 — — 95 39 — — 39 Total other current liabilities 523 — 428 95 284 — 245 39 Other noncurrent liabilities Derivative liabilities: Interest rate contracts 215 — 215 — 397 — 397 — Foreign exchange contracts 815 — 815 — 723 — 723 — Contingent consideration liabilities (d) 1,695 — — 1,695 477 — — 477 Total other noncurrent liabilities 2,725 — 1,030 1,695 1,598 — 1,121 477 Total liabilities $ 3,248 $ — $ 1,458 $ 1,790 $ 1,882 $ — $ 1,366 $ 517 (a) Includes money market funds primarily invested in U.S. Treasury and government debt. As of December 31, 2024, short-term equity securities included our previous investment in Haleon of $6.5 billion. In the first quarter of 2025, we sold the remaining portion of our investment in Haleon for $6.3 billion. See Note 2C . (b) Long-term equity securities of $146 million as of December 31, 2025 and $133 million as of December 31, 2024 were held in restricted trusts for U.S. non-qualified employee benefit plans. (c) Includes life insurance policies held in restricted trusts for U.S. non-qualified employee benefit plans. The underlying invested assets in these contracts are marketable securities, which are carried at fair value, with changes in fair value recognized in Other (income)/deductions—net (see Note 4 ). (d) Includes the fair value of contingent consideration associated with the acquisition of Metsera and certain prior business combinations. Fair value is estimated by using a probability-weighted discounted cash flow approach (see N ot e 16 D ). The following provides the changes in our contingent consideration liabilities valued using significant unobservable inputs: Year Ended December 31, (MILLIONS) 2025 2024 Fair value, beginning $ 517 $ 692 Changes in estimated fair value (a) 67 (52) Additions 1,266 — Payments (59) (123) Transfer into/(out of) Level 3 — — Fair value, ending $ 1,790 $ 517 (a) Reported in Other (income)/deductions –– net . See Note 4 . Financial Assets and Liabilities Not Measured at Fair Value on a Recurring Basis–– The carrying value of Long-term debt, excluding the current portion, was $62 billion as of December 31, 2025 and $57 billion as of December 31, 2024. The estimated fair value of such debt, using a market approach and Level 2 inputs, was $60 billion as of December 31, 2025 and $54 billion as of December 31, 2024. The differences between the estimated fair values and carrying values of held-to-maturity debt securities, private equity securities, long-term receivables and short-term borrowings not measured at fair value on a recurring basis were not significant as of December 31, 2025 and 2024. The fair value measurements of our held-to-maturity debt securities and short-term borrowings are based on Level 2 inputs. The fair value measurements of our long-term receivables and private equity securities are based on Level 3 inputs. B. Investments Total Short-Term and Long-Term Investments The following summarizes our investments by classification type: As of December 31, (MILLIONS) 2025 2024 Short-term investments Equity securities with readily determinable fair values $ 2,596 $ 7,848 Available-for-sale debt securities 9,183 10,881 Held-to-maturity debt securities 675 705 Total Short-term investments $ 12,454 $ 19,434 Long-term investments Equity securities with readily determinable fair values (a) $ 642 $ 1,246 Available-for-sale debt securities 1 — Held-to-maturity debt securities 48 45 Private equity securities at cost (a) 696 719 Equity-method investments 235 217 Total Long-term investments $ 1,621 $ 2,228 (a) Represent investments in the life sciences sector. Debt Securities Our investment portfolio consists of investment-grade debt securities issued across diverse governments, corporate and financial institutions: As of December 31, 2025 As of December 31, 2024 Gross Unrealized Maturities (in Years) Gross Unrealized (MILLIONS) Amortized Cost Gains Losses Fair Value Within 1 Over 1 to 5 Over 5 Amortized Cost Gains Losses Fair Value Available-for-sale debt securities Government and agency –– non-U.S. $ 4,890 $ 3 $ (34) $ 4,859 $ 4,859 $ 1 $ — $ 6,970 $ 8 $ (123) $ 6,855 Government and agency –– U.S. 3,030 — — 3,030 3,030 — — 2,853 — — 2,853 Corporate and other 1,295 — (1) 1,294 1,294 — — 1,179 — (6) 1,173 Held-to-maturity debt securities Time deposits and other 487 — — 487 444 7 36 697 — — 697 Government and agency –– non-U.S. 236 — — 236 231 4 1 237 — — 237 Total debt securities $ 9,938 $ 3 $ (35) $ 9,906 $ 9,858 $ 12 $ 37 $ 11,935 $ 8 $ (129) $ 11,814 Any expected credit losses to these portfolios would be immaterial to our financial statements. Equity Securities The following presents the calculation of the portion of unrealized (gains)/losses that relates to equity securities, excluding equity-method investments, held at the reporting date: Year Ended December 31, (MILLIONS) 2025 2024 2023 Net (gains)/losses recognized during the period on equity securities (a) $ 67 $ (1,008) $ (1,590) Less: Net (gains)/losses recognized during the period on equity securities sold during the period 35 (1,122) (1,754) Net unrealized (gains)/losses during the reporting period on equity securities still held at the reporting date $ 32 $ 114 $ 165 (a) Reported in Other (income)/deductions –– net . See Note 4 . Included in net unrealized (gains)/losses are observable price changes on equity securities without readily determinable fair values. As of December 31, 2025, there were cumulative impairments and downward adjustments of $433 million and upward adjustments of $225 million. Impairments, downward and upward adjustments were not material to our operations in 2025, 2024 and 2023. C. Short-Term Borrowings Short-term borrowings include: As of December 31, (MILLIONS) 2025 2024 Commercial paper, principal amount (a) $ — $ 2,453 Current portion of long-term debt, principal amount 3,000 3,750 Other short-term borrowings, principal amount (b) 157 755 Total short-term borrowings, principal amount 3,157 6,957 Net unamortized discounts, premiums and debt issuance costs (3) (12) Total Short-term borrowings, including current portion of long-term debt , carried at historical proceeds, as adjusted $ 3,154 $ 6,946 (a) The weighted-average effective interest rate on commercial paper outstanding was approximately 4.94% as of December 31, 2024. (b) Primarily includes cash collateral. See Note 7F . As of December 31, 2025, we had access to a $7.0 billion committed U.S. revolving credit facility maturing in October 2030, which may be used for general corporate purposes including to support our global commercial paper borrowings. In addition to the U.S. revolving credit facilities, our lenders have provided us an additional $237 million in lines of credit, essentially all expiring within one year. Essentially all lines of credit were unused as of December 31, 2025. D. Long-Term Debt The following outlines our senior unsecured long-term debt (a) and the weighted-average stated interest rate by maturity: As of December 31, (MILLIONS) 2025 2024 Notes due 2026 (3.7% for 2024) (b) $ — $ 6,000 Notes due 2027 (2.9% for 2025 and 2.2% for 2024) 2,081 980 Notes due 2027 (Secured Overnight Financing Rate “SOFR” +0.500%) 500 — Notes due 2028 (4.6% for 2025 and 2024) 5,660 5,660 Notes due 2029 (3.3% for 2025 and 3.5% for 2024) 2,631 1,750 Notes due 2030 (3.7% for 2025 and 3.6% for 2024) 6,250 5,250 Notes due 2031-2035 (4.4% for 2025 and 4.5% for 2024) 10,424 6,750 Notes due 2036-2040 (5.3% for 2025 and 5.4% for 2024) 10,458 9,534 Notes due 2041-2045 (4.3% for 2025 and 2024) 7,540 6,474 Notes due 2046-2050 (3.7% for 2025 and 2024) 4,750 4,750 Notes due 2051-2065 (5.3% for 2025 and 2024) 11,000 10,000 Total long-term debt, principal amount 61,293 57,147 Net fair value adjustments related to hedging and purchase accounting 834 701 Net unamortized discounts, premiums and debt issuance costs (486) (444) Total long-term debt, carried at historical proceeds, as adjusted $ 61,641 $ 57,405 Current portion of long-term debt, carried at historical proceeds, as adjusted (not included above (3.9% for 2025 and 2024)) $ 2,997 $ 3,747 (a) Our long-term debt is generally redeemable by us at any time at varying redemption prices plus accrued and unpaid interest. (b) Reclassified to the current portion of long-term debt. Issuances In 2025, we issued the following senior unsecured notes (a) : (MILLIONS) Principal Coupon Rate Maturity Date Issue Currency As of December 31, 2025 SOFR +0.500% November 15, 2027 U.S. dollar $ 500 3.875% November 15, 2027 U.S. dollar 1,000 4.200% November 15, 2030 U.S. dollar 1,000 4.500% November 15, 2032 U.S. dollar 1,250 4.875% November 15, 2035 U.S. dollar 1,250 5.600% November 15, 2055 U.S. dollar 500 5.700% November 15, 2065 U.S. dollar 500 $ 6,000 (b) 2.875% May 19, 2029 Euro € 750 3.250% May 19, 2032 Euro 1,000 3.875% May 19, 2037 Euro 750 4.250% May 19, 2045 Euro 800 € 3,300 (c) (a) The fixed rate notes may be redeemed by us at any time, in whole, or in part, at a make-whole redemption price plus accrued and unpaid interest. (b) The net proceeds from the sale of the notes were used for general corporate purposes, including the acquisition of Metsera and the refinancing of existing indebtedness. The weighted average effective interest rate for the notes at issuance was 4.583%. (c) Issued through our wholly-owned finance subsidiary, PNIF, for general corporate purposes. The notes are fully and unconditionally guaranteed on a senior unsecured basis by Pfizer Inc. PNIF has no assets or operations and will have no assets or operations, other than as related to the issuance, administration and repayment of the notes and any other debt securities that it may issue in the future. The weighted average effective interest rate for the notes at issuance was 3.605%. In May 2023, we issued, through our wholly-owned finance subsidiary, PIE, $31 billion principal amount of senior unsecured notes at an effective interest rate of 4.93% as part of the financing for our acquisition of Seagen. The notes are fully and unconditionally guaranteed on a senior unsecured basis by Pfizer Inc. PIE was formed to finance a portion of the consideration for the acquisition of Seagen and has no assets or operations, and will have no assets or operations, other than as related to the issuance, administration and repayment of the notes and any other debt securities that it may issue in the future. In December 2025, we redeemed $3 billion of the 4.45% PIE senior unsecured notes due in May 2026. E. Derivative Financial Instruments and Hedging Activities Foreign Exchange Risk–– A significant portion of our revenues, earnings and net investments in foreign affiliates is exposed to changes in foreign exchange rates. Where foreign exchange risk is not offset by other exposures, we manage our foreign exchange risk principally through the use of derivative financial instruments and foreign currency debt. These financial instruments serve to mitigate the impact on net income as a result of remeasurement into another currency, or against the impact of translation into U.S. dollars of certain foreign exchange-denominated transactions. The derivative financial instruments primarily hedge or offset exposures in the euro, U.K. pound, Chinese renminbi, Japanese yen, Canadian dollar, and Swedish krona, and include a portion of our forecasted foreign exchange-denominated intercompany inventory sales hedged up to two years. We may also seek to protect against possible declines in the net investments of our foreign business entities. Changes in fair value are reported in earnings or in Other comprehensive income/(loss) , depending on the nature and purpose of the financial instrument (hedge or offset relationship). For certain foreign exchange contracts, we exclude an amount from the assessment of hedge effectiveness and recognize the excluded amount through an amortization approach in earnings. The hedge relationships are as follows: • Generally, we recognize the gains and losses on foreign exchange contracts that are designated as fair value hedges in earnings upon the recognition of the change in fair value of the hedged item. We also recognize the offsetting foreign exchange impact attributable to the hedged item in earnings. • Generally, we record in Other comprehensive income/(loss) gains or losses on foreign exchange contracts that are designated as cash flow hedges and reclassify those amounts into earnings in the same period or periods during which the hedged transaction affects earnings. • We record in Other comprehensive income/(loss)––Foreign currency translation adjustments, net the foreign exchange gains and losses related to foreign exchange-denominated debt and foreign exchange contracts designated as a hedge of our net investments in foreign subsidiaries and reclassify those amounts into earnings upon the sale or substantial liquidation of our net investments. • For foreign exchange contracts not designated as hedging instruments, we recognize the gains and losses immediately into earnings along with the earnings impact of the items they generally offset. These contracts take the opposite currency position of that reflected on the balance sheet to counterbalance the effect of any currency movement. Interest Rate Risk–– Our interest-bearing investments and borrowings are subject to interest rate risk. Depending on market conditions, we may change the profile of our outstanding debt or investments by entering into derivative financial instruments like interest rate swaps, either to hedge or offset the exposure to changes in the fair value of hedged items with fixed interest rates, or to convert variable rate debt or investments to fixed rates. The derivative financial instruments primarily hedge U.S. dollar fixed-rate debt. We recognize the change in fair value on interest rate contracts that are designated as fair value hedges in earnings, as well as the offsetting earnings impact of the hedged risk attributable to the hedged item. The following summarizes the fair value of the derivative financial instruments and notional amounts: (MILLIONS) As of December 31, 2025 As of December 31, 2024 Fair Value Fair Value Notional Asset Liability Notional Asset Liability Derivatives designated as hedging instruments: Foreign exchange contracts (a) $ 22,984 $ 325 $ 1,066 $ 23,991 $ 1,250 $ 719 Interest rate contracts 6,750 52 230 6,750 13 425 377 1,296 1,263 1,144 Derivatives not designated as hedging instruments: Foreign exchange contracts $ 22,777 155 162 $ 26,335 253 221 Total $ 532 $ 1,458 $ 1,516 $ 1,366 (a) The notional amount of outstanding foreign exchange contracts hedging our intercompany forecasted inventory sales was $5.0 billion as of December 31, 2025 and $5.0 billion as of December 31, 2024. The following summarizes information about the gains/(losses) incurred to hedge or offset operational foreign exchange or interest rate risk exposures: Gains/(Losses) Recognized in OID (a) Gains/(Losses) Recognized in OCI (a) Gains/(Losses) Reclassified from OCI into OID and COS (a) Year Ended December 31, (MILLIONS) 2025 2024 2025 2024 2025 2024 Derivative Financial Instruments in Cash Flow Hedge Relationships: Interest rate contracts $ — $ — $ — $ — $ — $ — Foreign exchange contracts (b) — — (270) 466 211 124 Amount excluded from effectiveness testing and amortized into earnings (c) — — 58 34 57 34 Derivative Financial Instruments in Fair Value Hedge Relationships: Interest rate contracts 221 (253) — — — — Hedged item (221) 253 — — — — Derivative Financial Instruments in Net Investment Hedge Relationships: Foreign exchange contracts — — (1,361) 498 — — Amount excluded from effectiveness testing and amortized into earnings (c) — — 321 119 207 154 Non-Derivative Financial Instruments in Net Investment Hedge Relationships (d) : Foreign currency long-term debt — — (101) 49 — — Derivative Financial Instruments Not Designated as Hedges: Foreign exchange contracts 98 50 — — — — $ 98 $ 50 $ (1,353) $ 1,166 $ 476 $ 313 (a) OID = Other (income)/deductions—net, included in Other (income)/deductions—net in the consolidated statements of operations . COS = Cost of Sales, included in Cost of sales in the consolidated statements of operations. OCI = Other comprehensive income/(loss), included in the consolidated statements of comprehensive income/(loss) . (b) The amounts reclassified from OCI into COS were a net gain of $49 million in 2025 and a net gain of $119 million in 2024. The remaining amounts were reclassified from OCI into OID. Based on year-end foreign exchange rates that are subject to change, we expect to reclassify a pre-tax loss of $16 million within the next 12 months into income . The maximum length of time over which we are hedging our exposure to the variability in future foreign exchange cash flows is approximately 17 years and relates to foreign currency debt. (c) The amounts reclassified from OCI were reclassified into OID. (d) Long-term debt includes foreign currency borrowings which are used in net investment hedges; the related carrying values as of December 31, 2025 and December 31, 2024 were $879 million and $777 million, respectively. The following summarizes cumulative basis adjustments to our long-term debt in fair value hedges: As of December 31, 2025 As of December 31, 2024 Cumulative Amount of Fair Value Hedging Adjustment Increase/(Decrease) to Carrying Amount Cumulative Amount of Fair Value Hedging Adjustment Increase/(Decrease) to Carrying Amount (MILLIONS) Carrying Amount of Hedged Assets/Liabilities (a) Active Hedging Relationships Discontinued Hedging Relationships Carrying Amount of Hedged Assets/Liabilities (a) Active Hedging Relationships Discontinued Hedging Relationships Long-term debt $ 7,110 $ (163) $ 821 $ 7,154 $ (384) $ 891 (a) Carrying amounts exclude the cumulative amount of fair value hedging adjustments. F. Credit Risk On an ongoing basis, we monitor and review the credit risk of our customers, financial institutions and exposures in our investment portfolio. With respect to our trade accounts receivable, we monitor the creditworthiness of our customers to which we grant credit in the normal course of business. In general, there is no requirement for collateral from customers. For additional information on our trade accounts receivable and allowance for credit losses, see Note 1 G . A significant portion of our trade accounts receivable balances are due from wholesalers and governments. For additional information on our trade accounts receivables with significant customers, see Note 17C . With respect to our investments, we monitor concentrations of credit risk associated with government, government agency, and corporate issuers of securities. Investments are placed in instruments that are investment grade and are primarily short in duration. Exposure limits are established to limit a concentration with any single credit counterparty. As of December 31, 2025, the largest investment exposures in our portfolio consisted primarily of U.S. government money market funds, as well as sovereign debt instruments issued by the U.S., Japan, Canada, the U.K., and Germany. With respect to our derivative financial instrument agreements with financial institutions, we do not expect to incur a significant loss from failure of any counterparty. Derivative financial instruments are executed under International Swaps and Derivatives Association master agreements with credit-support annexes that contain zero threshold provisions requiring collateral to be exchanged daily depending on levels of exposure. As a result, there are no significant concentrations of credit risk with any individual financial institution. As of December 31, 2025, the aggregate fair value of these derivative financial instruments that are in a net payable position was $938 million, for which we have posted collateral of $944 million with a corresponding amount reported in Short-term investments . As of December 31, 2025, the aggregate fair value of our derivative financial instruments that are in a net receivable position was $128 million, for which we have received collateral of $154 million with a corresponding amount reported in Short-term borrowings, including current portion of long-term debt.",
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2025-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        }
+      },
+      {
+        "role": "short",
+        "xml_ordinal": 1724,
+        "primary_ordinal": 1724,
+        "text": "Short-term borrowings include: As of December 31, (MILLIONS) 2025 2024 Commercial paper, principal amount (a) $ — $ 2,453 Current portion of long-term debt, principal amount 3,000 3,750 Other short-term borrowings, principal amount (b) 157 755 Total short-term borrowings, principal amount 3,157 6,957 Net unamortized discounts, premiums and debt issuance costs (3) (12) Total Short-term borrowings, including current portion of long-term debt , carried at historical proceeds, as adjusted $ 3,154 $ 6,946 (a) The weighted-average effective interest rate on commercial paper outstanding was approximately 4.94% as of December 31, 2024. (b) Primarily includes cash collateral. See Note 7F .",
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2025-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        }
+      },
+      {
+        "role": "long",
+        "xml_ordinal": 1740,
+        "primary_ordinal": 1740,
+        "text": "The following outlines our senior unsecured long-term debt (a) and the weighted-average stated interest rate by maturity: As of December 31, (MILLIONS) 2025 2024 Notes due 2026 (3.7% for 2024) (b) $ — $ 6,000 Notes due 2027 (2.9% for 2025 and 2.2% for 2024) 2,081 980 Notes due 2027 (Secured Overnight Financing Rate “SOFR” +0.500%) 500 — Notes due 2028 (4.6% for 2025 and 2024) 5,660 5,660 Notes due 2029 (3.3% for 2025 and 3.5% for 2024) 2,631 1,750 Notes due 2030 (3.7% for 2025 and 3.6% for 2024) 6,250 5,250 Notes due 2031-2035 (4.4% for 2025 and 4.5% for 2024) 10,424 6,750 Notes due 2036-2040 (5.3% for 2025 and 5.4% for 2024) 10,458 9,534 Notes due 2041-2045 (4.3% for 2025 and 2024) 7,540 6,474 Notes due 2046-2050 (3.7% for 2025 and 2024) 4,750 4,750 Notes due 2051-2065 (5.3% for 2025 and 2024) 11,000 10,000 Total long-term debt, principal amount 61,293 57,147 Net fair value adjustments related to hedging and purchase accounting 834 701 Net unamortized discounts, premiums and debt issuance costs (486) (444) Total long-term debt, carried at historical proceeds, as adjusted $ 61,641 $ 57,405 Current portion of long-term debt, carried at historical proceeds, as adjusted (not included above (3.9% for 2025 and 2024)) $ 2,997 $ 3,747 (a) Our long-term debt is generally redeemable by us at any time at varying redemption prices plus accrued and unpaid interest. (b) Reclassified to the current portion of long-term debt. Issuances In 2025, we issued the following senior unsecured notes (a) : (MILLIONS) Principal Coupon Rate Maturity Date Issue Currency As of December 31, 2025 SOFR +0.500% November 15, 2027 U.S. dollar $ 500 3.875% November 15, 2027 U.S. dollar 1,000 4.200% November 15, 2030 U.S. dollar 1,000 4.500% November 15, 2032 U.S. dollar 1,250 4.875% November 15, 2035 U.S. dollar 1,250 5.600% November 15, 2055 U.S. dollar 500 5.700% November 15, 2065 U.S. dollar 500 $ 6,000 (b) 2.875% May 19, 2029 Euro € 750 3.250% May 19, 2032 Euro 1,000 3.875% May 19, 2037 Euro 750 4.250% May 19, 2045 Euro 800 € 3,300 (c) (a) The fixed rate notes may be redeemed by us at any time, in whole, or in part, at a make-whole redemption price plus accrued and unpaid interest. (b) The net proceeds from the sale of the notes were used for general corporate purposes, including the acquisition of Metsera and the refinancing of existing indebtedness. The weighted average effective interest rate for the notes at issuance was 4.583%. (c) Issued through our wholly-owned finance subsidiary, PNIF, for general corporate purposes. The notes are fully and unconditionally guaranteed on a senior unsecured basis by Pfizer Inc. PNIF has no assets or operations and will have no assets or operations, other than as related to the issuance, administration and repayment of the notes and any other debt securities that it may issue in the future. The weighted average effective interest rate for the notes at issuance was 3.605%.",
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2025-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        }
+      }
+    ],
+    "short_table": {
+      "roles": {
+        "commercial_paper": {
+          "label": "Commercial paper, principal amount(a)",
+          "value": "0",
+          "row_index": 4,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:0beebe955775bf1e39b6e529e33bb53f35b56c2570208228b40b30d40e686f14",
+          "target_cells": [
+            {
+              "origin_row_index": 4,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 1,
+              "header": false,
+              "raw_text": "$",
+              "text": "$",
+              "row_index": 4,
+              "column_index": 6,
+              "is_origin": true
+            },
+            {
+              "origin_row_index": 4,
+              "origin_column_index": 7,
+              "rowspan": 1,
+              "colspan": 1,
+              "header": false,
+              "raw_text": "— ",
+              "text": "—",
+              "row_index": 4,
+              "column_index": 7,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "0"
+        },
+        "current_principal": {
+          "label": "Current portion of long-term debt, principal amount",
+          "value": "3000000000",
+          "row_index": 5,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:0beebe955775bf1e39b6e529e33bb53f35b56c2570208228b40b30d40e686f14",
+          "target_cells": [
+            {
+              "origin_row_index": 5,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "3,000 ",
+              "text": "3,000",
+              "row_index": 5,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        "other_short": {
+          "label": "Other short-term borrowings, principal amount(b)",
+          "value": "157000000",
+          "row_index": 6,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:0beebe955775bf1e39b6e529e33bb53f35b56c2570208228b40b30d40e686f14",
+          "target_cells": [
+            {
+              "origin_row_index": 6,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "157 ",
+              "text": "157",
+              "row_index": 6,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        "principal": {
+          "label": "Total short-term borrowings, principal amount",
+          "value": "3157000000",
+          "row_index": 7,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:0beebe955775bf1e39b6e529e33bb53f35b56c2570208228b40b30d40e686f14",
+          "target_cells": [
+            {
+              "origin_row_index": 7,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "3,157 ",
+              "text": "3,157",
+              "row_index": 7,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        "adjustment": {
+          "label": "Net unamortized discounts, premiums and debt issuance costs",
+          "value": "-3000000",
+          "row_index": 9,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:0beebe955775bf1e39b6e529e33bb53f35b56c2570208228b40b30d40e686f14",
+          "target_cells": [
+            {
+              "origin_row_index": 9,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "(3)",
+              "text": "(3)",
+              "row_index": 9,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        "carrying": {
+          "label": "Total Short-term borrowings, including current portion of long-term debt, carried at historical proceeds, as adjusted",
+          "value": "3154000000",
+          "row_index": 10,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:0beebe955775bf1e39b6e529e33bb53f35b56c2570208228b40b30d40e686f14",
+          "target_cells": [
+            {
+              "origin_row_index": 10,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 1,
+              "header": false,
+              "raw_text": "$",
+              "text": "$",
+              "row_index": 10,
+              "column_index": 6,
+              "is_origin": true
+            },
+            {
+              "origin_row_index": 10,
+              "origin_column_index": 7,
+              "rowspan": 1,
+              "colspan": 1,
+              "header": false,
+              "raw_text": "3,154 ",
+              "text": "3,154",
+              "row_index": 10,
+              "column_index": 7,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        }
+      },
+      "members": [],
+      "table_count_in_note": 1,
+      "table_id": "table_000001",
+      "grid_sha256": "sha256:0beebe955775bf1e39b6e529e33bb53f35b56c2570208228b40b30d40e686f14"
+    },
+    "long_table": {
+      "roles": {
+        "principal": {
+          "label": "Total long-term debt, principal amount",
+          "value": "61293000000",
+          "row_index": 15,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 15,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "61,293 ",
+              "text": "61,293",
+              "row_index": 15,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        "fair_value_adjustment": {
+          "label": "Net fair value adjustments related to hedging and purchase accounting",
+          "value": "834000000",
+          "row_index": 16,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 16,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "834 ",
+              "text": "834",
+              "row_index": 16,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        "issuance_adjustment": {
+          "label": "Net unamortized discounts, premiums and debt issuance costs",
+          "value": "-486000000",
+          "row_index": 17,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 17,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "(486)",
+              "text": "(486)",
+              "row_index": 17,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        "carrying": {
+          "label": "Total long-term debt, carried at historical proceeds, as adjusted",
+          "value": "61641000000",
+          "row_index": 19,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 19,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 1,
+              "header": false,
+              "raw_text": "$",
+              "text": "$",
+              "row_index": 19,
+              "column_index": 6,
+              "is_origin": true
+            },
+            {
+              "origin_row_index": 19,
+              "origin_column_index": 7,
+              "rowspan": 1,
+              "colspan": 1,
+              "header": false,
+              "raw_text": "61,641 ",
+              "text": "61,641",
+              "row_index": 19,
+              "column_index": 7,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        "current_excluded": {
+          "label": "Current portion of long-term debt, carried at historical proceeds, as adjusted (not included above (3.9% for 2025 and 2024))",
+          "value": "2997000000",
+          "row_index": 20,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 20,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 1,
+              "header": false,
+              "raw_text": "$",
+              "text": "$",
+              "row_index": 20,
+              "column_index": 6,
+              "is_origin": true
+            },
+            {
+              "origin_row_index": 20,
+              "origin_column_index": 7,
+              "rowspan": 1,
+              "colspan": 1,
+              "header": false,
+              "raw_text": "2,997 ",
+              "text": "2,997",
+              "row_index": 20,
+              "column_index": 7,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        }
+      },
+      "members": [
+        {
+          "label": "Notes due 2026 (3.7% for 2024)(b)",
+          "value": "0",
+          "row_index": 4,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 4,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 1,
+              "header": false,
+              "raw_text": "$",
+              "text": "$",
+              "row_index": 4,
+              "column_index": 6,
+              "is_origin": true
+            },
+            {
+              "origin_row_index": 4,
+              "origin_column_index": 7,
+              "rowspan": 1,
+              "colspan": 1,
+              "header": false,
+              "raw_text": "— ",
+              "text": "—",
+              "row_index": 4,
+              "column_index": 7,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "0"
+        },
+        {
+          "label": "Notes due 2027 (2.9% for 2025 and 2.2% for 2024)",
+          "value": "2081000000",
+          "row_index": 5,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 5,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "2,081 ",
+              "text": "2,081",
+              "row_index": 5,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        {
+          "label": "Notes due 2027 (Secured Overnight Financing Rate “SOFR” +0.500%)",
+          "value": "500000000",
+          "row_index": 6,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 6,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "500 ",
+              "text": "500",
+              "row_index": 6,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        {
+          "label": "Notes due 2028 (4.6% for 2025 and 2024)",
+          "value": "5660000000",
+          "row_index": 7,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 7,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "5,660 ",
+              "text": "5,660",
+              "row_index": 7,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        {
+          "label": "Notes due 2029 (3.3% for 2025 and 3.5% for 2024)",
+          "value": "2631000000",
+          "row_index": 8,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 8,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "2,631 ",
+              "text": "2,631",
+              "row_index": 8,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        {
+          "label": "Notes due 2030 (3.7% for 2025 and 3.6% for 2024)",
+          "value": "6250000000",
+          "row_index": 9,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 9,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "6,250 ",
+              "text": "6,250",
+              "row_index": 9,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        {
+          "label": "Notes due 2031-2035 (4.4% for 2025 and 4.5% for 2024)",
+          "value": "10424000000",
+          "row_index": 10,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 10,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "10,424 ",
+              "text": "10,424",
+              "row_index": 10,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        {
+          "label": "Notes due 2036-2040 (5.3% for 2025 and 5.4% for 2024)",
+          "value": "10458000000",
+          "row_index": 11,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 11,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "10,458 ",
+              "text": "10,458",
+              "row_index": 11,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        {
+          "label": "Notes due 2041-2045 (4.3% for 2025 and 2024)",
+          "value": "7540000000",
+          "row_index": 12,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 12,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "7,540 ",
+              "text": "7,540",
+              "row_index": 12,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        {
+          "label": "Notes due 2046-2050 (3.7% for 2025 and 2024)",
+          "value": "4750000000",
+          "row_index": 13,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 13,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "4,750 ",
+              "text": "4,750",
+              "row_index": 13,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        },
+        {
+          "label": "Notes due 2051-2065 (5.3% for 2025 and 2024)",
+          "value": "11000000000",
+          "row_index": 14,
+          "table_id": "table_000001",
+          "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+          "target_cells": [
+            {
+              "origin_row_index": 14,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "11,000 ",
+              "text": "11,000",
+              "row_index": 14,
+              "column_index": 6,
+              "is_origin": true
+            }
+          ],
+          "reported_quantum": "1000000"
+        }
+      ],
+      "table_count_in_note": 2,
+      "table_id": "table_000001",
+      "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7"
+    },
+    "native_reports": {
+      "short": {
+        "xml": [
+          {
+            "value": "3154000000",
+            "decimals": "-6",
+            "ordinal": 297,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "debtcurrent"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            }
+          },
+          {
+            "value": "3154000000",
+            "decimals": "-6",
+            "ordinal": 1735,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "debtcurrent"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            }
+          }
+        ],
+        "primary": [
+          {
+            "value": "3154000000",
+            "decimals": "-6",
+            "ordinal": 297,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "DebtCurrent"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            },
+            "raw_start_byte": 2184225,
+            "cell": {
+              "table_id": "table_000119",
+              "grid_sha256": "sha256:e48af22f923b0196cd1209ffdad6525ad57141bed4d178f766355f83e1cc7a6e",
+              "row_index": 22,
+              "column_index": 7,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "3,154&#160;",
+              "text": "3,154"
+            }
+          },
+          {
+            "value": "3154000000",
+            "decimals": "-6",
+            "ordinal": 1735,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "DebtCurrent"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            },
+            "raw_start_byte": 3551050,
+            "cell": {
+              "table_id": "table_000197",
+              "grid_sha256": "sha256:c3d89a871748a71a7b29d9b0114c003ac25e46c265ff80c98411ed2b6cf9bf27",
+              "row_index": 10,
+              "column_index": 7,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "3,154&#160;",
+              "text": "3,154"
+            }
+          }
+        ],
+        "chosen": {
+          "value": "3154000000",
+          "decimals": "-6",
+          "ordinal": 297,
+          "context_ref": "c-18",
+          "context_proof": {
+            "context_ref": "c-18",
+            "identifiers": [
+              {
+                "value": "0000078003",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "instant",
+                "value": "2025-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "concept_qname": [
+            "http://fasb.org/us-gaap/2025",
+            "debtcurrent"
+          ],
+          "source_unit_definition": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          }
+        }
+      },
+      "noncurrent": {
+        "xml": [
+          {
+            "value": "61641000000",
+            "decimals": "-6",
+            "ordinal": 313,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "longtermdebtnoncurrent"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            }
+          },
+          {
+            "value": "62000000000",
+            "decimals": "-9",
+            "ordinal": 1618,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "longtermdebtnoncurrent"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            }
+          }
+        ],
+        "primary": [
+          {
+            "value": "61641000000",
+            "decimals": "-6",
+            "ordinal": 313,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "LongTermDebtNoncurrent"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            },
+            "raw_start_byte": 2195945,
+            "cell": {
+              "table_id": "table_000119",
+              "grid_sha256": "sha256:e48af22f923b0196cd1209ffdad6525ad57141bed4d178f766355f83e1cc7a6e",
+              "row_index": 32,
+              "column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "61,641&#160;",
+              "text": "61,641"
+            }
+          },
+          {
+            "value": "62000000000",
+            "decimals": "-9",
+            "ordinal": 1618,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "LongTermDebtNoncurrent"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            },
+            "raw_start_byte": 3437775
+          }
+        ],
+        "chosen": {
+          "value": "61641000000",
+          "decimals": "-6",
+          "ordinal": 313,
+          "context_ref": "c-18",
+          "context_proof": {
+            "context_ref": "c-18",
+            "identifiers": [
+              {
+                "value": "0000078003",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "instant",
+                "value": "2025-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "concept_qname": [
+            "http://fasb.org/us-gaap/2025",
+            "longtermdebtnoncurrent"
+          ],
+          "source_unit_definition": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          }
+        }
+      },
+      "current_long": {
+        "xml": [
+          {
+            "value": "2997000000",
+            "decimals": "-6",
+            "ordinal": 295,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "longtermdebtcurrent"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            }
+          }
+        ],
+        "primary": [
+          {
+            "value": "2997000000",
+            "decimals": "-6",
+            "ordinal": 295,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "LongTermDebtCurrent"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            },
+            "raw_start_byte": 2183404,
+            "cell": {
+              "table_id": "table_000119",
+              "grid_sha256": "sha256:e48af22f923b0196cd1209ffdad6525ad57141bed4d178f766355f83e1cc7a6e",
+              "row_index": 22,
+              "column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nShort-term borrowings, including current portion of long-term debt: 2025&#8212;$2,997; 2024&#8212;$3,747",
+              "text": "Short-term borrowings, including current portion of long-term debt: 2025—$2,997; 2024—$3,747"
+            }
+          }
+        ],
+        "chosen": {
+          "value": "2997000000",
+          "decimals": "-6",
+          "ordinal": 295,
+          "context_ref": "c-18",
+          "context_proof": {
+            "context_ref": "c-18",
+            "identifiers": [
+              {
+                "value": "0000078003",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "instant",
+                "value": "2025-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "concept_qname": [
+            "http://fasb.org/us-gaap/2025",
+            "longtermdebtcurrent"
+          ],
+          "source_unit_definition": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          }
+        }
+      },
+      "other_short": {
+        "xml": [
+          {
+            "value": "157000000",
+            "decimals": "-6",
+            "ordinal": 1729,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "othershorttermborrowings"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            }
+          }
+        ],
+        "primary": [
+          {
+            "value": "157000000",
+            "decimals": "-6",
+            "ordinal": 1729,
+            "context_ref": "c-18",
+            "context_proof": {
+              "context_ref": "c-18",
+              "identifiers": [
+                {
+                  "value": "0000078003",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "instant",
+                  "value": "2025-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "concept_qname": [
+              "http://fasb.org/us-gaap/2025",
+              "OtherShortTermBorrowings"
+            ],
+            "source_unit_definition": {
+              "measures": [
+                [
+                  "http://www.xbrl.org/2003/iso4217",
+                  "USD"
+                ]
+              ],
+              "divided": false
+            },
+            "raw_start_byte": 3545881,
+            "cell": {
+              "table_id": "table_000197",
+              "grid_sha256": "sha256:c3d89a871748a71a7b29d9b0114c003ac25e46c265ff80c98411ed2b6cf9bf27",
+              "row_index": 6,
+              "column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "157&#160;",
+              "text": "157"
+            }
+          }
+        ],
+        "chosen": {
+          "value": "157000000",
+          "decimals": "-6",
+          "ordinal": 1729,
+          "context_ref": "c-18",
+          "context_proof": {
+            "context_ref": "c-18",
+            "identifiers": [
+              {
+                "value": "0000078003",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "instant",
+                "value": "2025-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "concept_qname": [
+            "http://fasb.org/us-gaap/2025",
+            "othershorttermborrowings"
+          ],
+          "source_unit_definition": {
+            "measures": [
+              [
+                "http://www.xbrl.org/2003/iso4217",
+                "USD"
+              ]
+            ],
+            "divided": false
+          }
+        }
+      }
+    },
+    "reconciliations": [
+      {
+        "check": "SHORT_PRINCIPAL_COMPONENTS",
+        "left": "3157000000",
+        "right": "3157000000",
+        "agreement": "EXACT",
+        "difference": "0",
+        "rounding_radius": "1500000"
+      },
+      {
+        "check": "SHORT_CARRYING_ADJUSTMENT",
+        "left": "3154000000",
+        "right": "3154000000",
+        "agreement": "EXACT",
+        "difference": "0",
+        "rounding_radius": "1500000"
+      },
+      {
+        "check": "LONG_MATURITY_MEMBERS",
+        "left": "61294000000",
+        "right": "61293000000",
+        "agreement": "DECLARED_ROUNDING_INTERVALS_OVERLAP",
+        "difference": "1000000",
+        "rounding_radius": "5500000"
+      },
+      {
+        "check": "LONG_CARRYING_ADJUSTMENTS",
+        "left": "61641000000",
+        "right": "61641000000",
+        "agreement": "EXACT",
+        "difference": "0",
+        "rounding_radius": "2000000"
+      },
+      {
+        "check": "SHORT_REPORTED_CARRYING",
+        "left": "3154000000",
+        "right": "3154000000",
+        "agreement": "EXACT",
+        "difference": "0",
+        "rounding_radius": "0"
+      },
+      {
+        "check": "LONG_REPORTED_CARRYING",
+        "left": "61641000000",
+        "right": "61641000000",
+        "agreement": "EXACT",
+        "difference": "0",
+        "rounding_radius": "0"
+      },
+      {
+        "check": "CURRENT_LONG_SEPARATELY_EXCLUDED",
+        "left": "2997000000",
+        "right": "2997000000",
+        "agreement": "EXACT",
+        "difference": "0",
+        "rounding_radius": "0"
+      },
+      {
+        "check": "OTHER_SHORT_REPORTED",
+        "left": "157000000",
+        "right": "157000000",
+        "agreement": "EXACT",
+        "difference": "0",
+        "rounding_radius": "0"
+      }
+    ],
+    "source_rounding_statement": [
+      {
+        "text": "Certain amounts in the consolidated financial statements and associated notes may not add due to rounding. All percentages have been calculated using unrounded amounts.",
+        "start": 2456171,
+        "end": 2456339,
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "quoted_context": false
+      }
+    ],
+    "short_present_adjustment_roles": [
+      "adjustment"
+    ],
+    "current_long_treatment": {
+      "principal_is_in_short_composition": {
+        "label": "Current portion of long-term debt, principal amount",
+        "value": "3000000000",
+        "row_index": 5,
+        "table_id": "table_000001",
+        "grid_sha256": "sha256:0beebe955775bf1e39b6e529e33bb53f35b56c2570208228b40b30d40e686f14",
+        "target_cells": [
+          {
+            "origin_row_index": 5,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2,
+            "header": false,
+            "raw_text": "3,000 ",
+            "text": "3,000",
+            "row_index": 5,
+            "column_index": 6,
+            "is_origin": true
+          }
+        ],
+        "reported_quantum": "1000000"
+      },
+      "carrying_is_explicitly_outside_long_total": {
+        "label": "Current portion of long-term debt, carried at historical proceeds, as adjusted (not included above (3.9% for 2025 and 2024))",
+        "value": "2997000000",
+        "row_index": 20,
+        "table_id": "table_000001",
+        "grid_sha256": "sha256:6fb30c18d82d179a0cb587f9ddc8bd31e0cd2c040e34c18fdd290e07f11fc6a7",
+        "target_cells": [
+          {
+            "origin_row_index": 20,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 1,
+            "header": false,
+            "raw_text": "$",
+            "text": "$",
+            "row_index": 20,
+            "column_index": 6,
+            "is_origin": true
+          },
+          {
+            "origin_row_index": 20,
+            "origin_column_index": 7,
+            "rowspan": 1,
+            "colspan": 1,
+            "header": false,
+            "raw_text": "2,997 ",
+            "text": "2,997",
+            "row_index": 20,
+            "column_index": 7,
+            "is_origin": true
+          }
+        ],
+        "reported_quantum": "1000000"
+      },
+      "current_long_is_not_added_separately": true,
+      "costs_are_reconciled_at_each_reported_total": true
+    },
+    "proven_borrowing_subtotal": "64795000000",
+    "unit": "USD",
+    "proven_classes": [
+      "current_borrowings",
+      "noncurrent_borrowings"
+    ],
+    "not_evaluated_classes": [
+      "finance_leases"
+    ],
+    "debt_completeness": "NOT_PROVEN",
+    "metric_result_created": false,
+    "source_acquisition_credit": false,
+    "production_authorized": false,
+    "reconciliation_id": "sha256:2bbf4a27fae9a2c0198eb088d864aeb30a9b3057e31096472d076af0625cabcb"
+  },
+  "source_proofs": [
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+      "accession": "",
+      "document_name": "CIK0000078003.json",
+      "content_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331",
+      "request_body_sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331",
+      "request_body_size": 145855,
+      "request_headers_repo_relative_path": "evidence/request_attempts/e0/e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331/CIK0000078003.json.122e8fa00dfb0943c0d6c9a2a2c4285354867da08ea20b75f1b29af1ed74527f.headers.json",
+      "request_headers_sha256": "122e8fa00dfb0943c0d6c9a2a2c4285354867da08ea20b75f1b29af1ed74527f",
+      "request_headers_size": 736,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/e0/e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331/CIK0000078003.json",
+      "request_attempt_id": "request:attempt:87479e2b81668856179f2daca30e8af491662248937271857494243f337cc21b"
+    },
+    {
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+      "accession": "0000078003-26-000026",
+      "document_name": "CIK0000078003.json",
+      "content_sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+      "request_body_sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+      "request_body_size": 5032767,
+      "request_headers_repo_relative_path": "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json.87d820246a7036bdfbbd48ef3aca556b5daa4647d06ea3c0cc8d4b35c2674168.headers.json",
+      "request_headers_sha256": "87d820246a7036bdfbbd48ef3aca556b5daa4647d06ea3c0cc8d4b35c2674168",
+      "request_headers_size": 707,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json",
+      "request_attempt_id": "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/index.json",
+      "accession": "0000078003-26-000026",
+      "document_name": "index.json",
+      "content_sha256": "946e83a293156652d0f9e1ef8c1b305983345ab3486c67ae5a166bc2d4a4898e",
+      "request_body_sha256": "946e83a293156652d0f9e1ef8c1b305983345ab3486c67ae5a166bc2d4a4898e",
+      "request_body_size": 16855,
+      "request_headers_repo_relative_path": "evidence/request_attempts/94/946e83a293156652d0f9e1ef8c1b305983345ab3486c67ae5a166bc2d4a4898e/index.json.b489cc44c6bb53c907a49d6fd57aa19ae59d27c69a09dba6a2afc56086a5084e.headers.json",
+      "request_headers_sha256": "b489cc44c6bb53c907a49d6fd57aa19ae59d27c69a09dba6a2afc56086a5084e",
+      "request_headers_size": 676,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/94/946e83a293156652d0f9e1ef8c1b305983345ab3486c67ae5a166bc2d4a4898e/index.json",
+      "request_attempt_id": "request:attempt:029b3a4bee35a799456ca443537f785f63907894df5594ca6642d843b6e5fe83"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+      "accession": "0000078003-26-000026",
+      "document_name": "pfe-20251231.htm",
+      "content_sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+      "request_body_sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+      "request_body_size": 5222324,
+      "request_headers_repo_relative_path": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm.24cb16c7fe68f49102bd136a0e667604e5c5e8b9ed20da55e1eff99e67a2e701.headers.json",
+      "request_headers_sha256": "24cb16c7fe68f49102bd136a0e667604e5c5e8b9ed20da55e1eff99e67a2e701",
+      "request_headers_size": 1065,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+      "request_attempt_id": "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231_htm.xml",
+      "accession": "0000078003-26-000026",
+      "document_name": "pfe-20251231_htm.xml",
+      "content_sha256": "41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+      "request_body_sha256": "41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+      "request_body_size": 6704619,
+      "request_headers_repo_relative_path": "evidence/request_attempts/41/41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09/pfe-20251231_htm.xml.44aa9f1f62d8173b077ede52739b419aa0e4bc5b6ed653da08755662680513c6.headers.json",
+      "request_headers_sha256": "44aa9f1f62d8173b077ede52739b419aa0e4bc5b6ed653da08755662680513c6",
+      "request_headers_size": 1145,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/41/41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09/pfe-20251231_htm.xml",
+      "request_attempt_id": "request:attempt:a4278a6155d79ae3f8b99378f4b525be88acbf387adcaf0aa261e2ee4b52f01f"
+    }
+  ],
+  "source_admission": {
+    "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+    "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+    "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+    "request_attempt_ids": [
+      "request:attempt:87479e2b81668856179f2daca30e8af491662248937271857494243f337cc21b",
+      "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db",
+      "request:attempt:029b3a4bee35a799456ca443537f785f63907894df5594ca6642d843b6e5fe83",
+      "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4",
+      "request:attempt:a4278a6155d79ae3f8b99378f4b525be88acbf387adcaf0aa261e2ee4b52f01f"
+    ],
+    "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "source_records": [
+    {
+      "record_type": "RAW_BLOB",
+      "raw_asset_id": "sha256:e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331",
+      "byte_length": 145855,
+      "media_type": "application/json",
+      "storage_uri": "evidence/request_attempts/e0/e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331/CIK0000078003.json"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:8d8ddabe296b7ca8093c19726c2996aae214fb73a4a4ef300089de82b70e8b6c",
+      "raw_asset_id": "sha256:e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331",
+      "company_id": "pfizer",
+      "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+      "accession": "SUBMISSIONS-78003",
+      "document_name": "CIK0000078003.json",
+      "source_role": "submissions",
+      "request_attempt_id": "request:attempt:87479e2b81668856179f2daca30e8af491662248937271857494243f337cc21b"
+    },
+    {
+      "record_type": "RAW_BLOB",
+      "raw_asset_id": "sha256:bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+      "byte_length": 5032767,
+      "media_type": "application/json",
+      "storage_uri": "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:cea56b517272ef02581aadd04078062479e66c7bb7c273578cd08d75b3b4dfea",
+      "raw_asset_id": "sha256:bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+      "company_id": "pfizer",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+      "accession": "0000078003-26-000026",
+      "document_name": "CIK0000078003.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db"
+    },
+    {
+      "record_type": "RAW_BLOB",
+      "raw_asset_id": "sha256:946e83a293156652d0f9e1ef8c1b305983345ab3486c67ae5a166bc2d4a4898e",
+      "byte_length": 16855,
+      "media_type": "application/json",
+      "storage_uri": "evidence/request_attempts/94/946e83a293156652d0f9e1ef8c1b305983345ab3486c67ae5a166bc2d4a4898e/index.json"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:d61b12c81e5519d83fa8fe31cb34f4b2242e702366c617d314e4249d4cc4cae9",
+      "raw_asset_id": "sha256:946e83a293156652d0f9e1ef8c1b305983345ab3486c67ae5a166bc2d4a4898e",
+      "company_id": "pfizer",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/index.json",
+      "accession": "0000078003-26-000026",
+      "document_name": "index.json",
+      "source_role": "accession_index",
+      "request_attempt_id": "request:attempt:029b3a4bee35a799456ca443537f785f63907894df5594ca6642d843b6e5fe83"
+    },
+    {
+      "record_type": "RAW_BLOB",
+      "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+      "byte_length": 5222324,
+      "media_type": "text/html",
+      "storage_uri": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+      "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+      "company_id": "pfizer",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+      "accession": "0000078003-26-000026",
+      "document_name": "pfe-20251231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4"
+    },
+    {
+      "record_type": "RAW_BLOB",
+      "raw_asset_id": "sha256:41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+      "byte_length": 6704619,
+      "media_type": "application/xml",
+      "storage_uri": "evidence/request_attempts/41/41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09/pfe-20251231_htm.xml"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:ed98ed04b39b84f625fc730b878ccb1a71b4199180025ea543e5ca72c21dfda9",
+      "raw_asset_id": "sha256:41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+      "company_id": "pfizer",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231_htm.xml",
+      "accession": "0000078003-26-000026",
+      "document_name": "pfe-20251231_htm.xml",
+      "source_role": "auditor_facts",
+      "request_attempt_id": "request:attempt:a4278a6155d79ae3f8b99378f4b525be88acbf387adcaf0aa261e2ee4b52f01f"
+    }
+  ],
+  "same_filing_companyfacts": {
+    "short": [
+      {
+        "accession": "0000078003-26-000026",
+        "concept": "us-gaap:DebtCurrent",
+        "duration_days": 0,
+        "entity": "78003",
+        "fact_id": "fact:sha256:88ba15ebf3a0dd970b1e95ce26b5f48ddbb4ac05772ed797bf2c87bf35e1928a",
+        "filed": "2026-02-26",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+          "source_reference_id": "sha256:cea56b517272ef02581aadd04078062479e66c7bb7c273578cd08d75b3b4dfea",
+          "accession": "0000078003-26-000026",
+          "document_name": "CIK0000078003.json",
+          "source_role": "companyfacts",
+          "entity": "78003",
+          "frame": ""
+        },
+        "unit": "USD",
+        "value": "3154000000"
+      }
+    ],
+    "noncurrent": [
+      {
+        "accession": "0000078003-26-000026",
+        "concept": "us-gaap:LongTermDebtNoncurrent",
+        "duration_days": 0,
+        "entity": "78003",
+        "fact_id": "fact:sha256:b27a6d3b84df0e9bde74b88729b0b8960ed3bd91bae356fd024d61a560ff2aa7",
+        "filed": "2026-02-26",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+          "source_reference_id": "sha256:cea56b517272ef02581aadd04078062479e66c7bb7c273578cd08d75b3b4dfea",
+          "accession": "0000078003-26-000026",
+          "document_name": "CIK0000078003.json",
+          "source_role": "companyfacts",
+          "entity": "78003",
+          "frame": ""
+        },
+        "unit": "USD",
+        "value": "61641000000"
+      }
+    ],
+    "current_long": [
+      {
+        "accession": "0000078003-26-000026",
+        "concept": "us-gaap:LongTermDebtCurrent",
+        "duration_days": 0,
+        "entity": "78003",
+        "fact_id": "fact:sha256:ecb206835405b8c3325f3f9728e334d22e1c40e6945e52a2095e92ab33584e46",
+        "filed": "2026-02-26",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+          "source_reference_id": "sha256:cea56b517272ef02581aadd04078062479e66c7bb7c273578cd08d75b3b4dfea",
+          "accession": "0000078003-26-000026",
+          "document_name": "CIK0000078003.json",
+          "source_role": "companyfacts",
+          "entity": "78003",
+          "frame": ""
+        },
+        "unit": "USD",
+        "value": "2997000000"
+      }
+    ],
+    "other_short": [
+      {
+        "accession": "0000078003-26-000026",
+        "concept": "us-gaap:OtherShortTermBorrowings",
+        "duration_days": 0,
+        "entity": "78003",
+        "fact_id": "fact:sha256:5863a011c9d0611593d574d9b3c23039fb95a453e3249dfea78bf04f383c0a74",
+        "filed": "2026-02-26",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+          "source_reference_id": "sha256:cea56b517272ef02581aadd04078062479e66c7bb7c273578cd08d75b3b4dfea",
+          "accession": "0000078003-26-000026",
+          "document_name": "CIK0000078003.json",
+          "source_role": "companyfacts",
+          "entity": "78003",
+          "frame": ""
+        },
+        "unit": "USD",
+        "value": "157000000"
+      }
+    ]
+  },
+  "policy_sha256": "d2a372638897cefcaa4c996c7f5bd68485e0fd0957ae172812d736adc0c4e62c",
+  "module_sha256": "9d067a6099dfb7570c04bebe95f33db14c4b673a09752b1e3c167204b1770ffc",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "native_run_created": false,
+  "production_authorized": false
+}

@@ -81,7 +81,7 @@ class OrdinaryZeroAiPrototypeTest(unittest.TestCase):
                 if result['publication']=='WITHHELD': counts['withheld']+=1
                 elif result['applicability']=='N_A_STRUCTURAL': counts['structural']+=1
                 else: counts['number']+=1
-        self.assertEqual({'number':13,'structural':1,'withheld':6},counts)
+        self.assertEqual({'number':15,'structural':1,'withheld':4},counts)
 
     def test_revenue_is_recovered_from_real_same_accession_companyfacts(self):
         case=self.cases[('marriott_international','B01')]
@@ -121,8 +121,15 @@ class OrdinaryZeroAiPrototypeTest(unittest.TestCase):
         bank=self.cases[('jpmorgan_chase','B01')]
         self.assertEqual('N_A_STRUCTURAL',bank['result']['applicability'])
         self.assertEqual([],bank['observations'])
-        for company,reason in [('southwest_airlines','AMENDMENT_REPLAY_NOT_IMPLEMENTED'),
-                               ('paramount_skydance_paramount_global','SUCCESSOR_SCOPE_NOT_IMPLEMENTED')]:
+        for metric in ('B01','C01'):
+            row=self.cases[('southwest_airlines',metric)]
+            self.assertEqual('PUBLISHED',row['result']['publication'])
+            amendment=row['input_binding']['amendment_input']
+            self.assertEqual('INPUT_PROPERTY_PROVEN',amendment['decision'])
+            self.assertTrue(amendment['scopes'])
+            self.assertTrue(any(r['accession']==amendment['scopes'][0]['amendment']['filing']['accessionNumber']
+                for r in row['source_references']))
+        for company,reason in [('paramount_skydance_paramount_global','SUCCESSOR_SCOPE_NOT_IMPLEMENTED')]:
             for metric in ('B01','C01'):
                 row=self.cases[(company,metric)]
                 self.assertEqual('WITHHELD',row['result']['publication'])
