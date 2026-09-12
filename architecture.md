@@ -784,6 +784,9 @@ New financing-set source judgments prove disjoint reported borrowings, bonds and
 `normal_source_requirements`在正常年度输入前先从已核对的元数据命名主文件，缺少正文时也保留该获取依赖。原件确认期间后，复用治理清单选择器列出当期/上期年报、修订、代理材料和财年8-K，并扩展年报目录的原生XML；URL去重而用途保留。缺少目录时子文件集合仍未知，清单冲突时不声称选源完整，最新失败GET不能退回旧成功。CLI只读地保存依赖与缺口，当前来源真实性仍限于安装代码绑定的既有获取基线；刷新、新来源计算及生产触发尚未接通。
 <!-- capability-anchor: CAPABILITY.normal_source_dependency_discovery -->
 
+`r6_semantic_source`为D04离线解释提供全部可见块和原生事实，并保留所引用的上下文、单位、命名空间、续接、脚注和关系对象；嵌套XML通过原位置恢复而避免重复传入。`r6_semantic_review`绑定请求/单元、按唯一引文计算位置、核对必需候选和分类一致性，并保留全局冲突。返回的只是未获语义资格的保存响应提议，不能进入普通结果或正式发布；真实provider调用、模型可靠性和原生D04接线尚未完成。
+<!-- capability-anchor: CAPABILITY.r6_recorded_interpretation_protocol -->
+
 `normal_companyfacts_results`按既有目录区分主体接续和实际测量粒度：允许接续且只依赖当前申报时点的路线可以继续；全年/跨期路线仍需要自己的主体证明。`instant_balance_amendment`为B08/B09重建有限修订输入，旧Part III范围证明保持原样；完整原说明、原生更正标志/封面、未附新财务报表声明和全文余额/更正语句共同限制分支。条件性薪酬条款仅按完整结构识别。原件、修订和两种不同输入结论均进入普通组件与同一原生Run重放，不能把局部时点资格提升为全年或债务资格。
 <!-- capability-anchor: CAPABILITY.ordinary_successor_instant_balances -->
 

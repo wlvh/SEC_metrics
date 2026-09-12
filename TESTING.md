@@ -646,6 +646,10 @@ ORDINARY_PROJECTION_MATERIAL_ROOT=/absolute/completed/cli-batch PYTHONDONTWRITEB
 
 GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运行上述V14真实OPEN材料及文件负例，20分钟上限。它不冻结或修改正式输出，也不替代最终390验收。
 
+### D04离线解释输入与响应协议
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_r6_semantic_review` 检查真实来源的完整输入、嵌套XML重建、请求/单元缺漏、错误引文/索引/类型、主体/时间分类及冲突保留，纳入source-material层。测试响应由测试程序构造，不是provider执行。十公司输入组织不证明模型语义理解正确，也不创建D04 Run。具体入口和界限见`docs/r6_interpretation_protocol.md`。
+
 ### 普通更新的来源发现
 
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_source_requirements` 已加入source-material层。实际Marriott/Salesforce/JPM材料覆盖可用来源、最终失败GET和历史清单冲突；外部副本删除新主文件仍能发现其地址，删除/篡改目录不会宣布子文件齐备；后续年报元数据的纯解析不授予新来源信用。十公司实际CLI命令为 `python3 tools/vnext_normal_update.py --discover-sources --output /absolute/new-external-directory/source-requirements.json`；有缺口返回2并保留所有公司，不执行指标或请求。说明见`docs/normal_source_discovery.md`。

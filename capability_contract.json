@@ -14,6 +14,19 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.r6_recorded_interpretation_protocol",
+        "type": "capability",
+        "status": "active",
+        "statement": "D04离线协议提供全部可见正文和原生事实及依赖对象，按源位置恢复嵌套XML；保存响应须覆盖全部请求和单元，已发现候选不能遗漏，引文由程序唯一定位，主体/时间分类矛盾及全局冲突保留。它只验证来源引用和响应结构，不证明模型判断正确、不授provider或语义资格，不生成D04 Run或正式结果。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_r6_semantic_review.py::R6SemanticReviewTest.test_complete_recorded_responses_remain_unqualified_proposals",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.ordinary_successor_instant_balances",
         "type": "capability",
         "status": "active",

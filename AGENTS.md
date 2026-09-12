@@ -197,6 +197,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `scripts/vnext/normal_annual_input.py` / `tools/vnext_normal_update.py`：从保存清单选择最新普通年报，由原生DEI/context确认实际财年，支持自然年及52/53周年，不使用两样本白名单或旧Result。修订与普通原件分离，来源失败与主体接续实现缺口分别保留；当前只准备输入，不执行指标、不授来源准入或生产信用。旧calendar-only及PR43历史入口不改。
 - `scripts/vnext/normal_source_requirements.py`：普通更新的只读来源发现入口；从申报元数据列出本期/上期年报、修订、代理材料及财年8-K原件、头文件、目录和原生XML。新主文件在读取前即可被发现；清单冲突、最后请求失败及尚未知晓的目录子文件分别保留。CLI追加`--discover-sources`，默认十家公司；来源可用不等于最新、不等于39指标来源验收或新获取信用。见`docs/normal_source_discovery.md`。
 - `scripts/vnext/instant_balance_amendment.py`：在旧修订范围证明之外，核对完整说明、原生错误更正标志、可见未勾选封面、未附财务报表声明及全文更正语句，只给普通B08/B09的期末余额提供有限输入证明。`normal_companyfacts_results`按原目录允许当前主体/当前时点，不把接续关系一概扩成所有指标阻断；全年、债务和治理范围不获此证明。见`docs/ordinary_instant_balances.md`。
+- `scripts/vnext/r6_semantic_source.py` / `r6_semantic_review.py`：D04离线解释输入与保存响应协议，包含全部正文/原生事实及续接关系，嵌套XML按原位置重建，程序定位唯一原文引用并保留响应遗漏/冲突。尚无模型调用、语义正确性证明、D04 Run或正式信用；不以协议测试代替真实模型验证。见`docs/r6_interpretation_protocol.md`。
 
 - `scripts/vnext/b06_source_admission.py`：独立于普通输入的受信获取/导入执行记录、
   固定阶段预算及后置离线checkpoint；自洽ledger不授真实SEC信用。

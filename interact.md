@@ -408,3 +408,7 @@ B06来源分析可显示组合附注中核对过的借款小计、实际表行�
 <!-- capability-anchor: CAPABILITY.ordinary_successor_instant_balances -->
 
 B08/B09在原目录允许且当前主体/申报/时点得到证明时，可显示期末流动比率及现金。有限Part III修订的余额输入证明和“不证明全年可比”的范围保留在候选上下文中；原件与修订均可追溯。其他全年或跨期指标的限制继续显示，不因两项期末值成功而删除。说明见`docs/ordinary_instant_balances.md`。
+
+<!-- capability-anchor: CAPABILITY.r6_recorded_interpretation_protocol -->
+
+D04离线解释协议只提供开发用输入与保存响应检查。`all_source_units_responded=true` 不代表判断正确；输出仍明确标注语义资格、provider执行和原生结果均未证明。当前普通候选CLI没有因此新增D04结果，原正式报告也不改变。说明见`docs/r6_interpretation_protocol.md`。
