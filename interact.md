@@ -400,3 +400,7 @@ B06来源分析可显示组合附注中核对过的借款小计、实际表行�
 <!-- capability-anchor: CAPABILITY.ordinary_deterministic_lodging -->
 
 当前普通CLI扩为36项。B10/B11显示原表当前年的可比全系统全球统计，入住率为百分比、RevPAR为美元，并保留原表定位；不显示为一次新的AI抽取或旧资格重用。其他配置公司按原适用性显示结构不适用。全部仍是OPEN开发候选，剩余B13/D03/D04和完整交付继续推进；说明见`docs/ordinary_lodging.md`。
+
+<!-- capability-anchor: CAPABILITY.normal_source_dependency_discovery -->
+
+普通更新入口可加`--discover-sources`，按公司列出已知来源、待刷新数据集及缺失/失败文件，不要求用户提供文件地址或答案。新年报正文未保存时仍能发现其地址；目录未读取时明确子文件集合未知。保存来源齐备返回0，发现缺口返回2并保留其他公司输出；均不表示来源最新或新财报已计算成功。命令和字段见`docs/normal_source_discovery.md`。

@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.normal_source_dependency_discovery",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通更新可从已绑定的保存清单列出当前及上期年报、修订、代理材料和财年8K来源，主文件读取前先命名其依赖。历史清单冲突、最终失败GET和未知目录子文件分别保留；URL去重且用途保留。来源可用不等于最新、39指标来源验收、新获取或指标执行；入口不发起网络请求。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_normal_source_requirements.py::OrdinarySourceRequirementsTest.test_missing_primary_is_still_discovered_before_annual_preparation",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
         "anchor_id": "CAPABILITY.ordinary_deterministic_lodging",
         "type": "capability",
         "status": "active",

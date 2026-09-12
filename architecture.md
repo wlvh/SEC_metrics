@@ -781,6 +781,9 @@ New financing-set source judgments prove disjoint reported borrowings, bonds and
 `normal_annual_input`复用`annual_update.saved_source`的最新请求失败保护和账本/原字节绑定，按保存submissions的实际reportDate选择最新普通10-K；财政年度及364/365/366/371天实际期间从原生DEI/context重建，不用日历年份推算或固定样本。普通原件与10-K/A分别表达，原件准备成功不等于修订后的本期结果成功。配置为接续关系的公司只准备当前注册人原件，不把前身财务拼入本期；指标层仍须单独证明主体可比性。单公司失败不抹掉其他公司的检查结果。输入可交给现有companyfacts/table Run参数接口，但该组件尚未完成统一执行、采纳、触发或生产接线；不读取旧结果或发出网络请求。旧年度和B06两样本入口按原语义读取。
 <!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
 
+`normal_source_requirements`在正常年度输入前先从已核对的元数据命名主文件，缺少正文时也保留该获取依赖。原件确认期间后，复用治理清单选择器列出当期/上期年报、修订、代理材料和财年8-K，并扩展年报目录的原生XML；URL去重而用途保留。缺少目录时子文件集合仍未知，清单冲突时不声称选源完整，最新失败GET不能退回旧成功。CLI只读地保存依赖与缺口，当前来源真实性仍限于安装代码绑定的既有获取基线；刷新、新来源计算及生产触发尚未接通。
+<!-- capability-anchor: CAPABILITY.normal_source_dependency_discovery -->
+
 ### 后继内容验证组件
 
 `financial_duration`接收候选单元格及来自任务合同的指标/主体词，重新解析原件、数值origin、列日期与相邻同标记脚注；全年列头与完整日历月脚注分别给出证据，未知关联保持未解决，年报DEI不提供测量期间默认值。组件仍需与自动候选及原生Evidence/Run整合。
