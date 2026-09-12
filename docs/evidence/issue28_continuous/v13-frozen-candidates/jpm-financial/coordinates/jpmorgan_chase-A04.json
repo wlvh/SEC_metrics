@@ -1,0 +1,39 @@
+{
+  "company_id": "jpmorgan_chase",
+  "metric_id": "A04",
+  "run_path": "runs/jpmorgan_chase/A04",
+  "data_path": "data/jpmorgan_chase",
+  "status": "FROZEN_CANDIDATE",
+  "run_id": "run:normal-current:60363c52ddcbe3361b5861ec40772f7f0ce4b59a396ba1093ca143cf540139ea",
+  "run_status": "FROZEN",
+  "result": {
+    "company_id": "jpmorgan_chase",
+    "metric_id": "A04",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope_key": "sha256:a7688ff41838926b0ff9724b68c60894ad67dc734ac3f80b32c42acef2e9e2a1",
+    "spec_closure_hash": "sha256:bf1f13bb535f9b2004629af329532e19d87362d41606540da719b789229e9282",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "0.025",
+    "unit": "ratio",
+    "trace_id": "sha256:e9b4b512c0be951db746f4a245d2d2fbd880c1af640c9ad7563b93b0262a773c",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:7665c600bf5ab70102240981d7df0d0ae38d7253785c255aa553b80aef80d8eb"
+  },
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "public_row_status": "CANDIDATE_ROW_PREPARED",
+  "production_authorized": false,
+  "selection_path": "selections/jpmorgan_chase-A04.json",
+  "selection_hash": "sha256:9fcbceadb587c113be38dd62e5e4220ebf4f06cf61017491d1a9ba776dc5c882",
+  "selection_summary": {
+    "reason_code": "PASS",
+    "classification": "VERIFIED_SOURCE_FACT"
+  }
+}

@@ -517,7 +517,9 @@ def _validate_executable_semantics(*, compiled: Mapping[str, object]) -> None:
                 or "value_multiplier" in compiled["legacy_projection"]):
             raise SpecError("TEXT_V1 requires reviewed text semantics without numeric expressions")
         if ("deterministic_text_method" in compiled["quality_rule"]
-                and compiled["quality_rule"]["deterministic_text_method"] != "RISK_FACTOR_HEADINGS_V1"):
+                and compiled["quality_rule"]["deterministic_text_method"] not in {
+                    "RISK_FACTOR_HEADINGS_V1", "BOARD_DISCLOSURE_EXCERPTS_V1",
+                    "LEGAL_DISCLOSURE_EXCERPTS_V1"}):
             raise SpecError("Deterministic text method is unsupported")
     input_roles = set(compiled["inputs"])
     formula = compiled["formula"]

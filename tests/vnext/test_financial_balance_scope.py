@@ -40,6 +40,10 @@ class FinancialBalanceScopeTest(unittest.TestCase):
         self.assertEqual("BALANCE_SCOPE_PROVEN", self.aum["status"])
         self.assertEqual("4791000000000", self.aum["value"])
         self.assertEqual(3, len(self.aum["disclosures"]))
+        self.assertEqual("SINGLE_SOURCE_SEMANTIC_FACT", self.aum["semantic_status"])
+        complete = self.aum["whole_issuer_scope_evidence"]
+        self.assertEqual(2, len(complete["complete_table_group_reconciliations"]))
+        self.assertEqual(3, len(complete["manager_section_bindings"]))
         for item in self.aum["disclosures"]:
             self.assertEqual("total_assets_under_management", item["scope"]["asset_scope"])
             self.assertEqual("INSTANT_BALANCE", item["measurement_time"]["kind"])
@@ -79,6 +83,7 @@ class FinancialBalanceScopeTest(unittest.TestCase):
 
     def test_original_var_separates_annual_average_from_one_day_risk_horizon(self):
         self.assertEqual("TOTAL_VAR_SCOPE_PROVEN", self.var["status"])
+        self.assertEqual("SINGLE_SOURCE_SEMANTIC_FACT", self.var["semantic_status"])
         total = self.var["totals"][0]
         self.assertEqual("40000000", total["value"]["canonical_value"])
         self.assertEqual("2025-01-01", total["statistical_window"]["period_start"])
@@ -88,6 +93,81 @@ class FinancialBalanceScopeTest(unittest.TestCase):
         self.assertEqual("95", total["risk_horizon"]["confidence_percent"])
         self.assertTrue(total["trading_components_excluded"])
         self.assertEqual("Regulatory VaR", total["risk_horizon"]["other_named_measure_definitions"][0]["measure"])
+
+    def test_equal_aum_totals_need_original_complete_scope_and_component_agreement(self):
+        scope = self.aum["whole_issuer_scope_evidence"]
+        definition = scope["aum_definitions"][0]
+        before = self.source[definition["start_byte"]:definition["end_byte"]]
+        changed = before.replace(b"Includes", b"Excludes")
+        self.assertTrue(changed != before)
+        source = self.source[:definition["start_byte"]] + changed + self.source[definition["end_byte"]:]
+        result = self.evaluate(inspect_aum_balance, source)
+        self.assertEqual("BALANCE_SCOPE_PROVEN", result["status"])
+        self.assertEqual("UNRESOLVED", result["semantic_status"])
+        group = scope["complete_table_group_reconciliations"][0]
+        component = group["components"][0]["value"]["locator"]
+        source = self.table_change(component["table_id"], lambda raw: raw.replace(component["text"].encode(), b"1", 1))
+        result = self.evaluate(inspect_aum_balance, source)
+        self.assertEqual("BALANCE_SCOPE_PROVEN", result["status"])
+        self.assertEqual("UNRESOLVED", result["semantic_status"])
+
+    _client_phrases = (b"Private Banking clients, excluding Institutional and Retail clients",
+                       b"Private Banking clients, but not Institutional and Retail clients",
+                       b"selected Private Banking, Institutional and Retail clients",
+                       b"Private Banking clients", b"Institutional and Retail clients")
+
+    def _assert_client_phrase(self, index):
+        definition = self.aum["whole_issuer_scope_evidence"]["aum_definitions"][0]
+        before = self.source[definition["start_byte"]:definition["end_byte"]]
+        if index is not None:
+            phrase = self._client_phrases[index]
+            changed = before.replace(b"Private Banking, Institutional and Retail clients", phrase)
+            self.assertTrue(changed != before)
+            source = self.source[:definition["start_byte"]] + changed + self.source[definition["end_byte"]:]
+            result = self.evaluate(inspect_aum_balance, source)
+            self.assertEqual("UNRESOLVED", result["semantic_status"])
+            self.assertIsNone(result["whole_issuer_scope_evidence"])
+        else:
+            unrelated = b"<div>A separate research example includes only selected clients, excluding institutional clients.</div>"
+            source = self.source[:definition["end_byte"]] + unrelated + self.source[definition["end_byte"]:]
+            self.assertEqual("SINGLE_SOURCE_SEMANTIC_FACT", self.evaluate(inspect_aum_balance, source)["semantic_status"])
+
+    def test_aum_client_enumeration_cannot_hide_exclusions_or_selected_subsets(self):
+        for index in [*range(len(self._client_phrases)), None]:
+            self._assert_client_phrase(index)
+
+    def test_var_reported_estimate_is_distinct_from_an_illustrative_table(self):
+        intro = self.var["totals"][0]["risk_horizon"]["table_association"]
+        before = self.source[intro["start_byte"]:intro["end_byte"]]
+        for replacement in (b"shows hypothetical estimates for illustration, not the reported values of",
+                            b"presents illustrative figures for"):
+            changed = before.replace(b"shows the results of", replacement)
+            self.assertTrue(changed != before)
+            source = self.source[:intro["start_byte"]] + changed + self.source[intro["end_byte"]:]
+            result = self.evaluate(inspect_total_var, source)
+            self.assertEqual("UNRESOLVED", result["status"])
+            self.assertTrue(any(x["reason"] == "SOURCE_REPORTING_DECLARATION_CONFLICT" for x in result["unresolved"]))
+        unrelated = b"<div>The preceding example contains hypothetical amounts, not reported revenue. The model uses hypothetical market shocks.</div>"
+        source = self.source[:intro["start_byte"]] + unrelated + self.source[intro["start_byte"]:]
+        self.assertEqual("SINGLE_SOURCE_SEMANTIC_FACT", self.evaluate(inspect_total_var, source)["semantic_status"])
+
+    def test_var_total_arithmetic_does_not_prove_all_portfolios_at_firm_level(self):
+        aggregation = self.var["totals"][0]["risk_horizon"]["firmwide_aggregation_evidence"]
+        before = self.source[aggregation["start_byte"]:aggregation["end_byte"]]
+        changed = before.replace(b"across all portfolios", b"across selected portfolios")
+        self.assertTrue(changed != before)
+        source = self.source[:aggregation["start_byte"]] + changed + self.source[aggregation["end_byte"]:]
+        result = self.evaluate(inspect_total_var, source)
+        self.assertEqual("TOTAL_VAR_SCOPE_PROVEN", result["status"])
+        self.assertEqual("UNRESOLVED", result["semantic_status"])
+
+    def test_extra_same_named_total_with_unknown_period_cannot_be_silently_skipped(self):
+        for function, label in ((inspect_aum_balance, "Total assets under management"), (inspect_total_var, "Total VaR")):
+            extra = f"<table><tr><td>Unknown measurement period</td><td>Current</td></tr><tr><td>{label}</td><td>40</td></tr></table>".encode()
+            with self.subTest(label=label):
+                result = self.evaluate(function, self.source.replace(b"</body>", extra + b"</body>"))
+                self.assertEqual("UNRESOLVED", result["status"])
+                self.assertEqual("UNRESOLVED", result["semantic_status"])
 
     def test_var_must_reconcile_named_components_and_diversification(self):
         total = self.var["totals"][0]
@@ -129,6 +209,36 @@ class FinancialBalanceScopeTest(unittest.TestCase):
         result = self.evaluate(inspect_total_var, source)
         self.assertEqual("UNRESOLVED", result["status"])
         self.assertEqual([], result["totals"])
+
+
+class AumClientFastTest(unittest.TestCase):
+    """Retain every client-scope variant without an unrelated VaR setup."""
+    @classmethod
+    def setUpClass(cls):
+        cls.source = JPM.read_bytes()
+        cls.aum = cls.evaluate(inspect_aum_balance, cls.source)
+
+    evaluate = staticmethod(FinancialBalanceScopeTest.evaluate)
+    _assert_client_phrase = FinancialBalanceScopeTest._assert_client_phrase
+    _client_phrases = FinancialBalanceScopeTest._client_phrases
+
+    def test_excluding_clients(self):
+        self._assert_client_phrase(0)
+
+    def test_but_not_clients(self):
+        self._assert_client_phrase(1)
+
+    def test_selected_clients(self):
+        self._assert_client_phrase(2)
+
+    def test_only_private_clients(self):
+        self._assert_client_phrase(3)
+
+    def test_only_institutional_and_retail_clients(self):
+        self._assert_client_phrase(4)
+
+    def test_unrelated_exclusion_does_not_change_aum_scope(self):
+        self._assert_client_phrase(None)
 
 
 if __name__ == "__main__":

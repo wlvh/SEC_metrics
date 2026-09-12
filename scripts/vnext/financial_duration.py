@@ -115,7 +115,7 @@ def _column_period(*, table: Mapping, selected: Mapping) -> tuple:
         # in that row must be date/header/unit descriptors, never metric rows.
         atom_ids = {id(cell) for cell, _, _ in atoms}
         if any(id(cell) not in atom_ids and not (re.match(
-                r"^(?:as of\b|(?:for the )?years? ended\b|in\b|\(in\b|\(dollars\b|change\b)",
+                r"^(?:as of\b|(?:for the )?years? ended\b|in\b|\(in\b|\(dollars\b|change\b|average amount \(in\b)",
                 _text(cell["text"]), re.I) or re.fullmatch(
                     _MONTH + r"\s+[0-9]{1,2},?(?:\s+\(.*\))?",
                     _text(cell["text"]), re.I)) for cell in cells):
@@ -219,6 +219,37 @@ def _annual_interval(*, table: Mapping, column: Mapping) -> tuple:
     return periods, evidence
 
 
+def _explicit_month_header(*, table: Mapping, column: Mapping, selected: Mapping) -> tuple:
+    """Join a full column date to an unqualified, spanning N-month header.
+
+    A date or the word average alone does not define a duration. A competing
+    year/quarter/week header makes this bounded grammar decline the join.
+    """
+    if column["date"] is None:
+        return [], []
+    headers = [cell for row in table["rows"][:column["row_index"] + 1]
+               for cell in row["cells"] if cell["is_origin"] and cell["text"]]
+    matching = []
+    for cell in headers:
+        match = re.fullmatch(r"(?:for the )?(" + "|".join(_MONTH_COUNTS)
+                             + r"|[0-9]{1,2}) months? ended", _text(cell["text"]), re.I)
+        if (match and cell["column_index"] <= selected["column_index"]
+                < cell["column_index"] + cell["colspan"]):
+            word = match[1].casefold()
+            count = _MONTH_COUNTS.get(word, int(word) if word.isdecimal() else 0)
+            try:
+                matching.append((_interval(end=column["date"], months=count), cell))
+            except ValueError:
+                return [], []
+    allowed = {id(cell) for _, cell in matching}
+    if any(id(cell) not in allowed and re.search(
+            r"\b(?:year|years|quarter|months?|weeks?)\b", cell["text"], re.I)
+           for cell in headers):
+        return [], []
+    return ([period for period, _ in matching],
+            [_cell_proof(table=table, cell=cell) for _, cell in matching])
+
+
 def inspect_financial_duration(
     *, source_bytes: bytes, expected_source_sha256: str, table_id: str,
     row_index: int, column_index: int, measurement_aliases: Sequence[str],
@@ -312,6 +343,9 @@ def inspect_financial_duration(
         elif not unsupported:
             intervals, annual_cells = _annual_interval(table=table, column=column)
             basis = "EXPLICIT_ANNUAL_TABLE_HEADER" if intervals else None
+            if not intervals:
+                intervals, annual_cells = _explicit_month_header(table=table, column=column, selected=selected)
+                basis = "EXPLICIT_MONTHS_HEADER_AND_FULL_COLUMN_DATE" if intervals else None
     unique = {(p["period_start"], p["period_end"], p["duration_months"]) for p in intervals}
     if len(unique) > 1:
         reasons.append("CONFLICTING_MEASUREMENT_PERIODS")

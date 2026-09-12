@@ -1,1 +1,3 @@
 *.csv whitespace=cr-at-eol
+# Source quote cells retain the filing's original whitespace.
+docs/evidence/issue28_continuous/v13-frozen-candidates/**/metric_evidence.csv -whitespace

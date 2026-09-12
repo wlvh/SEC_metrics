@@ -14,7 +14,11 @@ from .canonical import arithmetic_context, content_hash, decimal_text, sha256_by
 from .composite_scope import index_source_structure
 from .constraints import ConstraintError, parse_numeric_claim
 from .financial_duration import _MONTH, _date, _cell_proof, _column_period, _linked_notes
-from .financial_relationships import _clean, _scale, _covering_headers, _proof
+from .financial_relationships import (
+    _clean, _scale, _covering_headers, _proof, _issuer_identity, _entity_tokens,
+    _reported_segment_sections, _segment_at,
+    _table_reporting_declarations,
+)
 from .normal_annual_input import annual_period
 from .r4_task_contracts import inspect_r4_task_catalog
 from .resource_limits import RESOURCE_LIMITS
@@ -70,6 +74,21 @@ def _numeric(table, row_index, year, *, average=False):
     return entries
 
 
+def _numeric_period_census(table, row_index):
+    result = []
+    for cell in table["rows"][row_index]["cells"]:
+        if not cell["is_origin"] or not cell["text"]:
+            continue
+        try:
+            parse_numeric_claim(raw_value=cell["text"], reported_unit="ratio")
+        except ConstraintError:
+            continue
+        column, headers, reason = _column_period(table=table, selected=cell)
+        result.append({"locator": _cell_proof(table=table, cell=cell), "column_year": column["year"] if column else None,
+                       "column_reason": reason, "column_headers": [_cell_proof(table=table, cell=h) for h, _, _ in headers]})
+    return result
+
+
 def _balance_time(table, entry, label, target_period, structure):
     if re.search(r"\baverage\b|\bavg\b|\bbeginning\b", label["text"], re.I):
         return None
@@ -97,6 +116,123 @@ def _balance_time(table, entry, label, target_period, structure):
             "source_headers": [_cell_proof(table=table, cell=c) for _, c in dates], "row_notes": notes}
 
 
+def _aum_definitions(structure):
+    definitions = []
+    for block in structure["blocks"]:
+        if block["inside_table"]:
+            continue
+        match = re.fullmatch(r'AUM [“"]Assets under management[”"]: Represent assets managed by ([A-Za-z]+) '
+                             r'on behalf of its (.+?) clients\. Includes [“"]Committed capital not Called\.[”"]',
+                             " ".join(block["visible_text"].split()))
+        if match:
+            definitions.append((match[1], match[2], block))
+    return definitions
+
+
+def _client_population(expression):
+    """Separate enumerated clients from exclusions and subset qualifiers."""
+    boundary = re.search(r"\b(?:excluding|except(?: for)?|other than|but not|not including|without)\b", expression, re.I)
+    included = expression[:boundary.start()] if boundary else expression
+    excluded = expression[boundary.end():] if boundary else ""
+    qualifiers = re.findall(r"\b(?:only|selected|certain|some|subset|limited to|solely|exclusively)\b", included, re.I)
+
+    def members(text):
+        text = re.sub(r"\bclients?\b", "", text, flags=re.I).strip(" ,")
+        return [_clean(part.strip(" ,")) for part in re.split(r",\s*(?:and\s+)?|\s+and\s+", text) if part.strip(" ,")]
+
+    positive, negative = members(included), members(excluded)
+    plain = bool(positive) and all(re.fullmatch(r"[a-z][a-z &-]*", item) for item in positive)
+    return {"source_expression": expression, "included_client_classes": positive,
+            "excluded_client_classes": negative, "subset_qualifiers": qualifiers,
+            "complete_unqualified_enumeration": plain and boundary is None and not qualifiers}
+
+
+def _aum_reported_scope(*, builders, structure, disclosures, target_period, issuer):
+    """Bind full AUM to its actual glossary, manager segment and table totals."""
+    definitions = _aum_definitions(structure)
+    if len({(manager, clients) for manager, clients, _ in definitions}) != 1:
+        return None
+    manager, clients, _ = definitions[0]
+    population = _client_population(clients)
+    if not population["complete_unqualified_enumeration"]:
+        return None
+    maps = []
+    for block in structure["blocks"]:
+        if not block["inside_table"]:
+            match = re.fullmatch(re.escape(manager) + r": (.+)", " ".join(block["visible_text"].split()))
+            if match:
+                maps.append((match[1], block))
+    if len({tuple(_entity_tokens(name)) for name, _ in maps}) != 1 or not issuer["source_consolidated_aliases"]:
+        return None
+    # The manager's own description independently names the investor classes
+    # served by its investment-management business. This prevents a shortened
+    # glossary list from granting full scope merely by omitting exclusion words.
+    cohort_evidence, required_clients = [], set()
+    for builder in builders:
+        for raw_row in builder.rows:
+            for raw_cell in raw_row:
+                text = _semantic_text(raw_text="".join(raw_cell.raw_parts))
+                if not re.match(re.escape(maps[0][0]) + r"\b", text, re.I):
+                    continue
+                for match in re.finditer(r"\bto ([a-z ,&-]{1,100}?) (?:investors|clients)\b", text, re.I):
+                    clients_named = _client_population(match[1])
+                    if clients_named["complete_unqualified_enumeration"] and len(clients_named["included_client_classes"]) > 1:
+                        grid = _grid(builder)
+                        witnesses = [c for row in grid["rows"] for c in row["cells"] if c["is_origin"] and c["text"] == text]
+                        if len(witnesses) != 1:
+                            return None
+                        required_clients.update(clients_named["included_client_classes"])
+                        cohort_evidence.append({"manager_description": _cell_proof(table=grid, cell=witnesses[0]),
+                                                "named_investor_classes": clients_named["included_client_classes"]})
+    if not required_clients or not required_clients <= set(population["included_client_classes"]):
+        return None
+    headings = _reported_segment_sections(builders, structure)
+    bindings, reconciliations = [], []
+    for disclosure in disclosures:
+        locator = disclosure["value"]["locator"]
+        table = _grid(builders[int(locator["table_id"].split("_")[1]) - 1])
+        section = _segment_at(headings, table)
+        if section is None or _entity_tokens(section["heading"]["text"]) != _entity_tokens(maps[0][0]):
+            return None
+        bindings.append({"locator": locator, "manager_section": section})
+        group_headers = [c for row in table["rows"][:locator["row_index"]] for c in row["cells"]
+                         if c["is_origin"] and c["column_index"] == 0 and _clean(c["text"]).startswith("assets by ")]
+        if not group_headers:
+            continue
+        header = max(group_headers, key=lambda h: h["row_index"])
+        if _clean(header["text"]) not in {"assets by asset class", "assets by client segment"}:
+            return None
+        components = []
+        for row in table["rows"][header["row_index"] + 1:locator["row_index"]]:
+            labels = [c for c in row["cells"] if c["is_origin"] and c["column_index"] == 0 and c["text"]]
+            if not labels:
+                continue
+            entries = _numeric(table, row["row_index"], target_period["fiscal_year"])
+            if len(labels) != 1 or len(entries) != 1 or _clean(labels[0]["text"]).startswith("total"):
+                return None
+            components.append({"label": _cell_proof(table=table, cell=labels[0]),
+                               "value": _proof(table, entries[0], _scale(table))})
+            if (_clean(header["text"]) == "assets by client segment"
+                    and not _clean(labels[0]["text"]).startswith("global ")
+                    and _clean(labels[0]["text"]) not in population["included_client_classes"]):
+                return None
+        with arithmetic_context():
+            total = sum((Decimal(c["value"]["canonical_value"]) for c in components), Decimal(0))
+        if not components or total != Decimal(disclosure["value"]["canonical_value"]):
+            return None
+        reconciliations.append({"group_header": _cell_proof(table=table, cell=header),
+                                "components": components, "total_locator": locator})
+    if not reconciliations:
+        return None
+    return {"basis": "ISSUER_DEFINED_AUM_ALL_CLIENTS_INCLUDES_COMMITTED_CAPITAL_NOT_CALLED",
+            "aum_definitions": [block for _, _, block in definitions], "manager_definitions": [b for _, b in maps],
+            "source_client_scope_text": clients, "manager_section_bindings": bindings,
+            "client_population": population,
+            "independently_named_manager_clients": sorted(required_clients), "manager_client_evidence": cohort_evidence,
+            "complete_table_group_reconciliations": reconciliations,
+            "equal_repeated_numbers_alone_are_not_scope_proof": True}
+
+
 def inspect_aum_balance(*, repo_root: Path, source_bytes: bytes, expected_source_sha256: str,
                         expected_cik: str, target_period: dict) -> dict:
     """Inspect complete named AUM balances and consistent repeated disclosures."""
@@ -121,7 +257,11 @@ def inspect_aum_balance(*, repo_root: Path, source_bytes: bytes, expected_source
                         excluded.append({"label": _cell_proof(table=table, cell=label), "reason": "NOT_COMPLETE_TOTAL_AUM_SCOPE"})
                     continue
                 if not entries:
-                    excluded.append({"label": _cell_proof(table=table, cell=label), "reason": "NO_REQUESTED_YEAR_BALANCE_IN_TABLE"})
+                    periods = _numeric_period_census(table, row["row_index"])
+                    known_other = bool(periods) and all(p["column_year"] is not None and p["column_year"] != target_period["fiscal_year"] for p in periods)
+                    (excluded if known_other else unresolved).append({"label": _cell_proof(table=table, cell=label),
+                        "reason": "NO_REQUESTED_YEAR_BALANCE_IN_TABLE" if known_other else "SAME_NAMED_AUM_PERIOD_UNPROVEN",
+                        "numeric_period_census": periods})
                     continue
                 if len(entries) != 1 or scale is None:
                     unresolved.append({"label": _cell_proof(table=table, cell=label), "reason": "AUM_PERIOD_OR_SCALE_UNPROVEN"})
@@ -135,12 +275,21 @@ def inspect_aum_balance(*, repo_root: Path, source_bytes: bytes, expected_source
                     excluded.append({"label": _cell_proof(table=table, cell=label),
                                      "measurement_time": time, "reason": "DIFFERENT_SOURCE_INSTANT"})
                     continue
+                reporting = _table_reporting_declarations(structure=structure, table=table, label=label)
+                if reporting["status"] != "NO_ASSOCIATED_REPORTING_CONTRADICTION":
+                    unresolved.append({"reason": "SOURCE_REPORTING_DECLARATION_CONFLICT", "reporting_declarations": reporting})
+                    continue
                 accepted.append({"value": _proof(table, entry, scale), "label": _cell_proof(table=table, cell=label),
+                    "reporting_declarations": reporting,
                     "measurement_time": time, "scope": {"asset_scope": "total_assets_under_management"},
                     "currency_basis": "APPROVED_USD_REPORTING_UNIT_WITH_ORIGINAL_TABLE_SCALE"})
     values = {item["value"]["canonical_value"] for item in accepted}
     if len(values) > 1:
         unresolved.append({"reason": "CONFLICTING_SAME_SCOPE_AUM_BALANCES"})
+    issuer = _issuer_identity(source_bytes=source_bytes, expected_cik=expected_cik,
+                              target_period=target_period, structure=structure)
+    whole = _aum_reported_scope(builders=builders, structure=structure, disclosures=accepted,
+                               target_period=target_period, issuer=issuer) if accepted and not unresolved else None
     body = {"record_type": "AUM_BALANCE_SCOPE_COMPONENT", "schema_version": 1,
         "source_sha256": expected_source_sha256, "source_entity_cik": str(int(expected_cik)),
         "target_filing_period": target_period, "task_contract_hash": content_hash(value=task),
@@ -148,7 +297,10 @@ def inspect_aum_balance(*, repo_root: Path, source_bytes: bytes, expected_source
         "disclosures": accepted, "unresolved": unresolved, "excluded": excluded,
         "duplicate_rule": "SAME_SOURCE_ENTITY_EXACT_TOTAL_AUM_SCOPE_INSTANT_USD_SCALE_AND_VALUE",
         "value": next(iter(values)) if len(values) == 1 and not unresolved else None,
-        "unit": "USD", "whole_issuer_scope_status": "REQUIRES_NATIVE_SCOPE_ACCEPTANCE",
+        "unit": "USD", "whole_issuer_scope_status": "SOURCE_WITNESSED_REPORTED_COMPLETE_AUM" if whole else "REQUIRES_NATIVE_SCOPE_ACCEPTANCE",
+        "whole_issuer_scope_evidence": whole, "issuer_identity": issuer,
+        "client_definition_analysis": [{"definition": b, **_client_population(clients)} for _, clients, b in _aum_definitions(structure)],
+        "semantic_status": "SINGLE_SOURCE_SEMANTIC_FACT" if whole else "UNRESOLVED",
         "native_evidence_status": "NOT_EVALUATED", "qualification_credit": "NONE_COMPONENT_ONLY",
         "publication_credit": "NONE", "calls": {"provider": 0, "paid": 0, "sec": 0}}
     return {**body, "component_id": content_hash(value=body)}
@@ -193,9 +345,14 @@ def _var_scope(structure, table):
     target = [c for c in claims if c["measure"] == "Risk Management VaR"]
     if len(target) != 1 or target[0]["holding_period_text"] not in {"one-day", "one day"} or target[0]["confidence_percent"] != "95":
         return None
+    aggregation = [b for b in blocks if re.search(
+        r"The VaR model results across all portfolios are aggregated at the Firm level\.", b["visible_text"])]
+    complete = (len(aggregation) == 1 and "Firm’s Risk Management VaR" in introductions[0]["visible_text"]
+                and "Firm’s Risk Management VaR" in target[0]["source_block"]["visible_text"])
     return {"named_measure": "Risk Management VaR", "holding_period_days": 1, "confidence_percent": "95",
             "section_heading": heading, "table_association": introductions[0], "selected_definition": target[0],
             "scope_span_census": census,
+            "firmwide_aggregation_evidence": aggregation[0] if complete else None,
             "other_named_measure_definitions": [c for c in claims if c not in target],
             "holding_period_is_not_statistical_window": True}
 
@@ -207,19 +364,47 @@ def inspect_total_var(*, repo_root: Path, source_bytes: bytes, expected_source_s
         expected_source_sha256=expected_source_sha256, expected_cik=expected_cik, target_period=target_period, metric_id="A12")
     if task["required_claims"] != {"confidence_level": "ninety_five_percent", "holding_period": "one_day"}:
         raise FinancialBalanceScopeError("VAR_SCOPE_CONTRACT_UNSUPPORTED")
-    proven, unresolved = [], []
+    proven, unresolved, target_census = [], [], []
     for builder in builders:
         if not any(_clean(_semantic_text(raw_text="".join(c.raw_parts))) == "total var" for row in builder.rows for c in row):
             continue
         table = _grid(builder)
         labels = [(row["row_index"], c) for row in table["rows"] for c in row["cells"] if c["is_origin"] and c["column_index"] == 0 and c["text"]]
-        targets = [(row, label, _numeric(table, row, target_period["fiscal_year"], average=True)) for row, label in labels if _clean(label["text"]) == "total var"]
-        targets = [(row, label, entries[0]) for row, label, entries in targets if len(entries) == 1]
+        targets = []
+        for row, label in labels:
+            if _clean(label["text"]) != "total var":
+                continue
+            entries = _numeric(table, row, target_period["fiscal_year"], average=True)
+            periods = _numeric_period_census(table, row)
+            item = {"label": _cell_proof(table=table, cell=label), "numeric_period_census": periods}
+            title = (not periods and any(r > row and _clean(c["text"]) == "total var"
+                                         and _numeric_period_census(table, r) for r, c in labels))
+            counterfactual = [c for prior in table["rows"][:row] for c in prior["cells"] if c["is_origin"]
+                and _clean(c["text"]) == "amounts by which reported average var would have been lower for the years ended:"
+                and periods and all(c["column_index"] <= p["locator"]["column_index"] < c["column_index"] + c["colspan"] for p in periods)]
+            if title:
+                item["disposition"] = "TABLE_TITLE_WITH_LATER_NAMED_NUMERIC_TOTAL"
+            elif counterfactual:
+                item.update(disposition="COUNTERFACTUAL_REDUCTION_AMOUNT_NOT_REPORTED_TOTAL",
+                            scope_headers=[_cell_proof(table=table, cell=c) for c in counterfactual])
+            elif len(entries) == 1:
+                item["disposition"] = "CURRENT_AVERAGE_REQUIRES_TOTAL_SCOPE_PROOF"
+                targets.append((row, label, entries[0]))
+            elif periods and all(p["column_year"] is not None and p["column_year"] != target_period["fiscal_year"] for p in periods):
+                item["disposition"] = "DIFFERENT_SOURCE_YEAR"
+            else:
+                item["disposition"] = "SAME_NAMED_VAR_PERIOD_OR_AVERAGE_AMBIGUOUS"
+                unresolved.append({"reason": item["disposition"], "candidate": item})
+            target_census.append(item)
         if not targets:
             continue
         scope = _var_scope(structure, table)
         annual = [c for row in table["rows"][:4] for c in row["cells"] if c["is_origin"] and re.search(r"\bfor the year ended\b", c["text"], re.I)]
         for row_index, label, entry in targets:
+            reporting = _table_reporting_declarations(structure=structure, table=table, label=label)
+            if reporting["status"] != "NO_ASSOCIATED_REPORTING_CONTRADICTION":
+                unresolved.append({"reason": "SOURCE_REPORTING_DECLARATION_CONFLICT", "reporting_declarations": reporting})
+                continue
             scale = _scale(table, header_rows=row_index)
             if scale is None or scope is None or len(annual) != 1:
                 unresolved.append({"label": _cell_proof(table=table, cell=label), "reason": "TOTAL_VAR_SCOPE_SCALE_OR_STATISTICAL_WINDOW_UNPROVEN"})
@@ -263,13 +448,22 @@ def inspect_total_var(*, repo_root: Path, source_bytes: bytes, expected_source_s
                 "statistical_window": {"period_start": target_period["period_start"], "period_end": target_period["period_end"],
                     "statistic": "AVERAGE", "source_header": _cell_proof(table=table, cell=annual[0])},
                 "risk_horizon": scope, "components": components, "offset": offset,
+                "reporting_declarations": reporting,
                 "offset_label": _cell_proof(table=table, cell=offset_label), "trading_components_excluded": trading,
                 "reconciliation": "REPORTED_COMPONENTS_PLUS_REPORTED_DIVERSIFICATION_OFFSET"})
+    issuer = _issuer_identity(source_bytes=source_bytes, expected_cik=expected_cik,
+                              target_period=target_period, structure=structure)
+    definitions = [a for a in issuer["source_consolidated_aliases"] if a["alias"] == "Firm"]
+    whole = (len(proven) == 1 and not unresolved and bool(definitions)
+             and proven[0]["risk_horizon"]["firmwide_aggregation_evidence"] is not None)
     body = {"record_type": "TOTAL_VAR_SCOPE_COMPONENT", "schema_version": 1,
         "source_sha256": expected_source_sha256, "source_entity_cik": str(int(expected_cik)),
         "task_contract_hash": content_hash(value=task), "target_filing_period": target_period,
         "status": "TOTAL_VAR_SCOPE_PROVEN" if len(proven) == 1 and not unresolved else "UNRESOLVED",
-        "totals": proven, "unresolved": unresolved, "whole_issuer_scope_status": "REQUIRES_NATIVE_SCOPE_ACCEPTANCE",
+        "totals": proven, "unresolved": unresolved, "same_named_total_census": target_census,
+        "whole_issuer_scope_status": "SOURCE_WITNESSED_FIRMWIDE_VAR" if whole else "REQUIRES_NATIVE_SCOPE_ACCEPTANCE",
+        "issuer_identity": issuer, "consolidated_issuer_definitions": definitions,
+        "semantic_status": "SINGLE_SOURCE_SEMANTIC_FACT" if whole else "UNRESOLVED",
         "native_evidence_status": "NOT_EVALUATED", "qualification_credit": "NONE_COMPONENT_ONLY",
         "publication_credit": "NONE", "calls": {"provider": 0, "paid": 0, "sec": 0}}
     return {**body, "component_id": content_hash(value=body)}

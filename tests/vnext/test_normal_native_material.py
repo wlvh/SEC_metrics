@@ -111,8 +111,7 @@ class NormalNativeMaterialTest(unittest.TestCase):
             "output": str(cls.output), "source_policy": "SAVED_ORIGINALS_ONLY", "new_calls": [0, 0, 0]})
 
     def _case(self, name, company_id, metric_id):
-        from vnext.normal_candidates import install_saved_candidate_inputs
-        from vnext.normal_candidates import create_risk_heading_run, create_structured_candidate_run
+        from vnext.normal_run_v2 import install_normal_inputs, create_normal_run
         from vnext.run_store import load_open_run, validate_and_freeze_run
         root = self.output / name; root.mkdir()
         data_root, run_dir = root / "data", root / "run"
@@ -122,15 +121,11 @@ class NormalNativeMaterialTest(unittest.TestCase):
                   "new_calls": [0, 0, 0], "parent_pid": os.getpid()}
         try:
             with patch.object(socket.socket, "connect", side_effect=AssertionError("Material test forbids network")):
-                installed = install_saved_candidate_inputs(data_root=data_root, company_id=company_id,
-                                                           governance=metric_id == "C03")
-                _save(root / "installed-input.json", installed)
+                installed = install_normal_inputs(data_root=data_root, company_id=company_id, metric_id=metric_id)
+                _save(root / "installed-input.json", installed["input_binding"])
                 report["stage"] = "CREATE_OPEN_NATIVE_RUN"; _save(root / "outcome.json", report)
-                if metric_id == "D01":
-                    created = create_risk_heading_run(data_root=data_root, run_dir=run_dir, company_id=company_id, freeze=False)
-                else:
-                    created = create_structured_candidate_run(data_root=data_root, run_dir=run_dir,
-                        company_id=company_id, metric_id=metric_id, freeze=False)
+                created = create_normal_run(data_root=data_root, run_dir=run_dir,
+                    company_id=company_id, metric_id=metric_id, freeze=False)
                 manifest, records, decisions = load_open_run(run_dir=run_dir)
                 self.assertEqual("OPEN", manifest["status"])
                 self.assertFalse(any(r["record_type"] == "AI_EXTRACTION_ATTEMPT" for r in records))

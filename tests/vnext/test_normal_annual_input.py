@@ -128,6 +128,17 @@ class NormalAnnualInputTest(unittest.TestCase):
     def test_remaining_company_inputs_preserve_transition_and_continue(self):
         self._assert_registry_slice(5, 10)
 
+    def test_registry_company_00(self): self._assert_registry_slice(0, 1)
+    def test_registry_company_01(self): self._assert_registry_slice(1, 2)
+    def test_registry_company_02(self): self._assert_registry_slice(2, 3)
+    def test_registry_company_03(self): self._assert_registry_slice(3, 4)
+    def test_registry_company_04(self): self._assert_registry_slice(4, 5)
+    def test_registry_company_05(self): self._assert_registry_slice(5, 6)
+    def test_registry_company_06(self): self._assert_registry_slice(6, 7)
+    def test_registry_company_07(self): self._assert_registry_slice(7, 8)
+    def test_registry_company_08(self): self._assert_registry_slice(8, 9)
+    def test_registry_company_09(self): self._assert_registry_slice(9, 10)
+
     def test_unknown_subject_policy_isolated_without_using_predecessor(self):
         companies = normal._registry_rows(repo_root=ROOT)
         changed = copy.deepcopy(companies[-2:])

@@ -366,7 +366,10 @@ B06新来源候选使用`tools/vnext_b06_new_source.py install-rules/run/read`�
 
 ## 普通保存来源候选批次
 
-入口和实际范围见`docs/normal_candidates.md`。`tools/vnext_normal_candidate.py`只写全新外部目录，逐坐标保存原生冻结/失败，并生成完整请求范围的summary；不以一个坐标受阻抹掉其他结果。`normal_projection.py`复用原有Projector，执行Spec与展示规则分开绑定；D01的20/18字段、原文换行、申报日期及期间经过真实冻结后的CSV重放。V12已产生FROZEN记录，规则/五文件不再同版本修改；新共享路径只作后继扩展，旧记录须继续读取。
+`tools/vnext_normal_candidate.py`只使用全新外部目录，逐坐标保存结果、选择原因或失败，完成后输出完整请求范围的summary。已有批次不会覆盖。CLI已接入六金融指标、B06、C02/C03/C04、D01/D02；本轮V13冻结与完整CLI材料验收仍在进行，当前OPEN结果不冒称正式采纳。
 
-材料命令：`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_native_material tests.vnext.test_normal_projection`；短目录边界为`tests.vnext.test_normal_candidate_cli`。这些完整材料检查不塞入30秒fast入口，也不替代完整390坐标/正式发布。真实执行和失败日志见`docs/evidence/issue28_continuous/frozen-candidates/`。
+季度平均、年末余额和全年金额在公共行中保留各自实际期间；年度标签仅用于归组。C02可使用代理声明或同期间Part III修订，展示真实申报类型和日期，不推定年末董事会状态。WITHHELD保留具体原因，非正权益B06不显示有效比值，未核验债务完整性时明确说明。一个受阻坐标不抹掉其他候选。
+
+调用者更换旧规格、删掉来源或改期间不能使V13候选通过；统一入口会先重建其原始来源决定。候选输出仍不改变正式版本，不证明实时SEC最新或390坐标迁移已完成。
+<!-- capability-anchor: CAPABILITY.normal_current_run_admission -->
 <!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->

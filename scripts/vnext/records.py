@@ -1194,7 +1194,10 @@ def _validate_record_semantics(
             temporal, sampling, or raw-byte invariants.
     """
     if record_type == DETERMINISTIC_TEXT_CANDIDATE_TYPE:
-        from .text_results import validate_deterministic_candidate_shape
+        if record.get("method") in {"BOARD_DISCLOSURE_EXCERPTS_V1", "LEGAL_DISCLOSURE_EXCERPTS_V1"}:
+            from .text_results_v2 import validate_deterministic_candidate_shape
+        else:
+            from .text_results import validate_deterministic_candidate_shape
         try:
             validate_deterministic_candidate_shape(candidate=record)
         except ValueError as error:
@@ -1210,7 +1213,7 @@ def _validate_record_semantics(
         validate_run_coordinates(
             target_period=record["target_period"],
             company_traits=record["company_traits"],
-            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11"},
+            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12"},
         )
     if record_type == "AI_EXTRACTION_ATTEMPT":
         observation = record["transport_observation"]

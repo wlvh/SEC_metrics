@@ -352,7 +352,7 @@ def create_run(
         validate_run_coordinates(
             target_period=target_period,
             company_traits=normalized_traits,
-            point_in_time_fiscal_label=requirement_id in {"issue_28_v9", "issue_28_v10", "issue_28_v11"},
+            point_in_time_fiscal_label=requirement_id in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12"},
         )
     except RecordError as error:
         raise RunStoreError("Run business coordinates are invalid") from error
@@ -1902,6 +1902,14 @@ def _replay_structured_result(
             Observation/Trace/Result difference from deterministic replay.
     """
     from .r5_b06_structured import is_primary, replay_result, validate_input_binding
+    if manifest.get("requirement_id") == "issue_28_v12":
+        from .normal_run_v2 import replay_case
+        expected = replay_case(data_root=repo_root, manifest=manifest, spec=compiled_spec)
+        if expected["kind"] != "STRUCTURED" or result != expected["result"] or trace != expected["trace"] or any(
+            observations.get(o["observation_id"]) != o for o in expected["observations"]
+        ):
+            raise RunStoreError("Normal successor result differs from full source replay")
+        return
     if compiled_spec["compiled"]["quality_rule"].get("resolver") in {
         "debt_equity_new_source_v2", "ecd_peo_total_compensation_v1",
         "reported_compensation_table_v2", "auditor_change_dual_source_v1",
@@ -2111,6 +2119,10 @@ def _validate_record_graph(
         RunStoreError: On duplicate primary IDs, detached trace/evidence,
         missing source/asset binding, or Candidate/ReviewUnit drift.
     """
+    if manifest.get("requirement_id") == "issue_28_v12":
+        from .normal_run_v2 import validate_normal_run_authority
+        validate_normal_run_authority(repo_root=repo_root, manifest=manifest,
+            records=records, compiled_specs=compiled_specs)
     r4_run = manifest["record_type"] == R4_SCOPED_RUN_TYPE
     r4_structured_run = manifest["record_type"] == R4_STRUCTURED_RUN_TYPE
     if any((record["record_type"] == R4_SCOPED_ATTEMPT_TYPE and not r4_run)
@@ -2284,8 +2296,10 @@ def _validate_record_graph(
         str(wrapper["spec_semantic_hash"]): wrapper
         for wrapper in compiled_specs.values()
     }
-    from .text_run_validation import prepare_text_run_contexts
-    from .text_results import build_text_evidence, replay_text_result
+    if manifest.get("requirement_id") == "issue_28_v12":
+        from .normal_run_v2 import prepare_text_contexts as prepare_text_run_contexts
+    else:
+        from .text_run_validation import prepare_text_run_contexts
     from .text_results import build_text_result_and_trace
     try:
         text_contexts = prepare_text_run_contexts(
@@ -2295,6 +2309,15 @@ def _validate_record_graph(
     except ValueError as error:
         raise RunStoreError("Native text input replay failed: " + str(error)) from error
     text_replays = {}
+
+    def text_handlers(candidate):
+        arguments = text_contexts[candidate["candidate_hash"]]
+        if manifest.get("requirement_id") == "issue_28_v12":
+            from .normal_run_v2 import text_api
+            return text_api(arguments["compiled_spec"]["compiled"]["metric_id"])
+        from . import text_results
+        from .text_review import build_text_review_unit
+        return text_results, build_text_review_unit
 
     def text_review_replay(unit):
         key = unit["review_unit_hash"]
@@ -2307,7 +2330,8 @@ def _validate_record_graph(
         arguments = text_contexts[candidate["candidate_hash"]]
         decisions = [d for d in review_decisions if d["review_unit_hash"] == key]
         decision = effective_review_decision(review_unit=unit, decisions=decisions)
-        if evidence != build_text_evidence(candidate=candidate, **arguments):
+        api, _ = text_handlers(candidate)
+        if evidence != api.build_text_evidence(candidate=candidate, **arguments):
             raise RunStoreError("Text Evidence differs from original bytes")
         if decision["decision"] == "REJECT":
             expected_result, expected_trace = build_text_result_and_trace(
@@ -2315,7 +2339,7 @@ def _validate_record_graph(
                 reason_code="HUMAN_REVIEW_REJECTED")
             expected_observations = []
         else:
-            expected_result, expected_trace, expected_observations = replay_text_result(
+            expected_result, expected_trace, expected_observations = api.replay_text_result(
                 company_traits=list(manifest["company_traits"]), candidate=candidate,
                 evidence_check=evidence, review_unit=unit, review_decisions=decisions,
                 **arguments)
@@ -2515,9 +2539,13 @@ def _validate_record_graph(
                     or observation_spec["compiled"]["quality_rule"].get("resolver") != "reported_compensation_table_v2"):
                 raise RunStoreError("Reviewed observation lacks an approval effect")
             if normal_table_observations is None:
-                from .normal_candidates import replay_structured_normal_result
-                _, _, rebuilt, _ = replay_structured_normal_result(
-                    data_root=repo_root, manifest=manifest, spec=observation_spec)
+                if manifest.get("requirement_id") == "issue_28_v12":
+                    from .normal_run_v2 import replay_case
+                    rebuilt = replay_case(data_root=repo_root, manifest=manifest, spec=observation_spec)["observations"]
+                else:
+                    from .normal_candidates import replay_structured_normal_result
+                    _, _, rebuilt, _ = replay_structured_normal_result(
+                        data_root=repo_root, manifest=manifest, spec=observation_spec)
                 normal_table_observations = {o["observation_id"]: o for o in rebuilt}
             if normal_table_observations.get(observation["observation_id"]) != observation:
                 raise RunStoreError("Deterministic table observation differs from original source")
@@ -3036,7 +3064,8 @@ def _validate_record_graph(
             raise RunStoreError("EvidenceCheck Candidate is absent")
         candidate = candidates[str(evidence["candidate_hash"])]
         if candidate["record_type"] == "DETERMINISTIC_TEXT_CANDIDATE":
-            expected = build_text_evidence(candidate=candidate,
+            api, _ = text_handlers(candidate)
+            expected = api.build_text_evidence(candidate=candidate,
                                           **text_contexts[candidate["candidate_hash"]])
             if expected != evidence:
                 raise RunStoreError("Text Evidence differs from mechanical replay")
@@ -3118,7 +3147,7 @@ def _validate_record_graph(
         if unit["candidate_hashes"] != expected_candidate_hashes:
             raise RunStoreError("ReviewUnit Candidate hashes differ")
         if candidate["record_type"] == "DETERMINISTIC_TEXT_CANDIDATE":
-            from .text_review import build_text_review_unit
+            _, build_text_review_unit = text_handlers(candidate)
             args = text_contexts[candidate["candidate_hash"]]
             expected_unit, rendered = build_text_review_unit(compiled_spec=args["compiled_spec"],
                 candidate=candidate, evidence_check=evidence_checks[evidence_id],

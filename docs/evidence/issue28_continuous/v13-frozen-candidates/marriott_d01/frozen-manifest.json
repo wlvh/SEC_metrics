@@ -1,0 +1,73 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "FROZEN",
+  "records_file_hash": "ba7fdf120467927b7f35783d1691612c7cdd147ad1baed28cf54bc1085fc1b47",
+  "review_decisions_file_hash": "8541cac9626beb600824e0f4b82dfde67ad631665ed8d92c77cb7082e990bd4d",
+  "validation_file_hash": "47f02d65c371fc180cc9b3312d57d5a0e9ff1992aee8a596796f3f2615796795",
+  "content_manifest_hash": "sha256:0cc0dc382b992b5620080d5d676dd036daf7c962173c6424a696933eb29763dc",
+  "audit_manifest_hash": "sha256:deb4eb672ed230fac53ae3b8797785ef12d7f0ef2da51fa321bc763e0b5fd187",
+  "run_id": "run:normal-current:b9a36befb1d6cbefe1af905d2a8e09f519d1b3a4dca314317751ee4b9ce2e3b3",
+  "company_id": "marriott_international",
+  "company_traits": [
+    "lodging",
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:740a7fa65e7bd3e2d402218aaadbbbf80b316e94df557db8b7114080e93abc7b",
+      "raw_asset_id": "sha256:e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "company_id": "marriott_international",
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "accession": "0001048286-26-000007",
+      "document_name": "CIK0001048286.json",
+      "source_role": "submissions",
+      "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+      "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+      "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "company_id": "marriott_international",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "accession": "0001048286-26-000007",
+      "document_name": "CIK0001048286.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r6/D01_risk_factor_headings.md": "c782daf4ed1d49ef226adcf80d22dec9d72038f186931a67bc4e63638018096c"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "0535bb13cb56e79858cf8c3c235e53e581126dec6a2e77a7d17f0e8a8b5e21d2",
+    "contract_sha256": "4662a3719d18118aca8443d7cae73093edc136fa73764861f8574d36a6131dd1",
+    "decision_register_sha256": "19266c140750a4a0d09b739f1c42d9d8d5a965a75b9d2524e5df6abdba07197a",
+    "invariant_profile_sha256": "5e52d201b84479fa09a201a320b2ec823f2660e0af4439f86e013ad82f60a84a",
+    "transfer_manifest_sha256": "b6d43f5979e2088d5482a2cfc07afbf2ad62b8e1e651adba071e25cb60f91cb2",
+    "parent_requirement_closure_hash": "sha256:b275dc81a817283d60593d58fbe31ca7668222e0d1a7f779b4339d65947dcf67",
+    "validator_sha256": "e95c1fcff21dd35b62a146b5d2aa51488a7700693cf1330d788231ffe344eac4"
+  },
+  "requirement_closure_hash": "sha256:b1719ce7b13ce8e8cf8fab5b368076ed9c0116084524c377e0a2f11168c68e8c",
+  "requirement_id": "issue_28_v12",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

@@ -74,6 +74,33 @@ class FinancialDurationTest(unittest.TestCase):
         self.assertEqual("PASSED", result["status"])
         self.assertEqual("EXPLICIT_ANNUAL_TABLE_HEADER", result["duration_basis"])
 
+    def test_actual_quarter_header_and_full_column_date_define_the_lcr_interval(self):
+        result = self.inspect(self.original, table_id="table_000199", row_index=9,
+                              column_index=3, required_row_terms=[])
+        self.assertEqual("PASSED", result["status"])
+        self.assertEqual("EXPLICIT_MONTHS_HEADER_AND_FULL_COLUMN_DATE", result["duration_basis"])
+        self.assertEqual("2025-10-01", result["measurement_period"]["period_start"])
+        structure = index_source_structure(source_bytes=self.original)
+        span = structure["tables"][198]
+        original = self.original[span["start_byte"]:span["end_byte"]]
+        for before, after, start, end, expected in [
+            (b"December 31, 2025", b"June 30, 2025", "2025-04-01", "2025-06-30", "PASSED"),
+            (b"December 31, 2025", b"February 28, 2025", "2024-12-01", "2025-02-28", "PASSED"),
+            (b"December 31, 2025", b"February 29, 2024", "2023-12-01", "2024-02-29", "PASSED"),
+            (b"December 31, 2025", b"June 15, 2025", "2025-03-16", "2025-06-15", "UNRESOLVED"),
+        ]:
+            changed = original.replace(before, after)
+            self.assertNotEqual(original, changed)
+            with self.subTest(end=end):
+                checked = self.inspect(changed, row_index=9, column_index=3, required_row_terms=[],
+                                       claimed_period_start=start, claimed_period_end=end)
+                self.assertEqual(expected, checked["status"])
+        changed = original.replace(b"Three months ended", b"Six months ended").replace(
+            b"December 31, 2025", b"June 30, 2025")
+        checked = self.inspect(changed, row_index=9, column_index=3, required_row_terms=[],
+                               claimed_period_start="2025-01-01", claimed_period_end="2025-06-30")
+        self.assertEqual("PASSED", checked["status"])
+
     def test_original_date_and_average_do_not_invent_a_quarter(self):
         result = self.inspect(
             CITI.read_bytes(), table_id="table_000075", row_index=4,

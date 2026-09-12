@@ -15,7 +15,7 @@ from datetime import date
 from pathlib import Path
 import re
 
-from .canonical import content_hash, sha256_bytes
+from .canonical import content_hash, decimal_text, sha256_bytes
 from .constraints import ConstraintError, parse_numeric_claim
 from .financial_duration import (
     _cell_proof, _column_period, _contains, inspect_financial_duration,
@@ -277,6 +277,130 @@ def inspect_nim_candidate_evidence(
         "calls": {"provider": 0, "paid": 0, "sec": 0},
     }
     return {**body, "binding_id": content_hash(value=body)}
+
+
+def inspect_lcr_disclosed_fact(
+    *, repo_root: Path, source_bytes: bytes, expected_source_sha256: str,
+    expected_cik: str, target_period: dict,
+) -> dict:
+    """Resolve the issuer's actual disclosed average interval, without annualizing.
+
+    This does not extend the historical Citi fixture exception. A new ordinary
+    Result rule must explicitly preserve the returned measurement period and
+    filing interval. Same-name candidates remain visible and unknowns block a
+    single fact; repeated equal values only corroborate already-proven scope.
+    """
+    from .composite_scope import index_source_structure
+    from .financial_relationships import _clean, _entity_tokens, _issuer_identity, _nearest_table_introduction, _table_reporting_declarations
+    from .normal_annual_input import annual_period
+    if (type(source_bytes) is not bytes or not source_bytes or len(source_bytes) > RESOURCE_LIMITS.max_html_bytes
+            or sha256_bytes(content=source_bytes) != expected_source_sha256):
+        raise FinancialCandidateError("SOURCE_BYTES_DIFFER")
+    if annual_period(raw=source_bytes, cik=expected_cik,
+                     filing={"form": "10-K", "reportDate": target_period["period_end"]}) != target_period:
+        raise FinancialCandidateError("SOURCE_FILING_PERIOD_DIFFERS")
+    tasks = [task for task in inspect_r4_task_catalog(repo_root=repo_root)["contracts"] if task["metric_ids"] == ["A03"]]
+    if len(tasks) != 1 or tasks[0]["required_claims"] != {"entity_scope": "firm", "aggregation": "average"}:
+        raise FinancialCandidateError("LCR_SCOPE_CONTRACT_UNSUPPORTED")
+    discovery = inspect_financial_candidates(repo_root=repo_root, source_bytes=source_bytes,
+        expected_source_sha256=expected_source_sha256, task_contract_id=tasks[0]["task_contract_id"], target_period=target_period)
+    structure = index_source_structure(source_bytes=source_bytes)
+    issuer = _issuer_identity(source_bytes=source_bytes, expected_cik=expected_cik,
+                              target_period=target_period, structure=structure)
+    parser = _AllTablesParser()
+    parser.feed(source_bytes.decode("utf-8"))
+    parser.close()
+    tables, group_names = {}, []
+    for table_id in sorted({c["locator"]["table_id"] for c in discovery["candidates"]}):
+        builder = parser.tables[int(table_id.split("_")[1]) - 1]
+        table, _ = _expanded_table(builder=builder, remaining_total_cells=RESOURCE_LIMITS.max_total_cells,
+                                  remaining_expanded_text_chars=RESOURCE_LIMITS.max_expanded_text_chars)
+        tables[table_id] = table
+        for row in table["rows"]:
+            nonempty = [c for c in row["cells"] if c["is_origin"] and c["text"]]
+            if (len(nonempty) == 1 and nonempty[0]["text"].endswith(":")
+                    and len(_entity_tokens(nonempty[0]["text"])) >= 2):
+                group_names.append(_cell_proof(table=table, cell=nonempty[0]))
+    census, selected, unresolved = [], [], []
+    issuer_tokens = _entity_tokens(issuer["registrant_name"])
+    for candidate in discovery["candidates"]:
+        table = tables[candidate["locator"]["table_id"]]
+        label = candidate["measurement_row"]
+        cell = table["rows"][candidate["locator"]["row_index"]]["cells"][candidate["locator"]["column_index"]]
+        item = {"candidate_id": candidate["candidate_id"], "locator": candidate["locator"], "label": label}
+        column, _, column_reason = _column_period(table=table, selected=cell)
+        if (column and (column["year"] != target_period["fiscal_year"]
+                       or column["date"] and column["date"].isoformat() != target_period["period_end"])):
+            item["disposition"] = "DIFFERENT_SOURCE_MEASUREMENT_END"
+            census.append(item)
+            continue
+        match = re.fullmatch(r"(.*?)\s*(?:liquidity coverage ratio|lcr)(?:\s*\([“\"]?lcr[”\"]?\))?(?:\s*\(average\))?",
+                             _clean(label["text"]), re.I)
+        prefix = match[1].strip() if match else None
+        group = None
+        if prefix == "":
+            groups = [g for g in group_names if g["table_id"] == table["table_id"] and g["row_index"] < label["row_index"]]
+            group = max(groups, key=lambda g: g["row_index"]) if groups else None
+            prefix = group["text"].rstrip(":") if group else None
+        tokens = _entity_tokens(prefix or "")
+        scope = None
+        if tokens == issuer_tokens:
+            scope = {"basis": "EXACT_NATIVE_REGISTRANT_NAME", "group_heading": group}
+        elif tokens == ["firm"] and issuer["source_defined_aliases"]:
+            scope = {"basis": "SOURCE_DEFINED_REGISTRANT_ALIAS", "alias_definitions": issuer["source_defined_aliases"]}
+        elif tokens and any(tokens in (_entity_tokens(entity["legal_name"]), _entity_tokens(entity["alias"]))
+                            for entity in issuer["source_defined_other_entities"]):
+            entity = next(entity for entity in issuer["source_defined_other_entities"]
+                          if tokens in (_entity_tokens(entity["legal_name"]), _entity_tokens(entity["alias"])))
+            item.update(disposition="OTHER_EXPLICIT_NAMED_ENTITY", entity_heading=group,
+                        distinct_entity_definition=entity)
+            census.append(item)
+            continue
+        duration = candidate["duration_component"]
+        introduction = _nearest_table_introduction(structure, table)
+        average = (re.search(r"\(average\)", label["text"], re.I) is not None)
+        average_intro = (introduction if introduction and re.search(r"^The following table\b.*\baverage LCR\b",
+                            " ".join(introduction["visible_text"].split()), re.I) else None)
+        reporting = _table_reporting_declarations(structure=structure, table=table, label=label)
+        if reporting["status"] != "NO_ASSOCIATED_REPORTING_CONTRADICTION":
+            item.update(disposition="SOURCE_REPORTING_DECLARATION_CONFLICT", reporting_declarations=reporting)
+        elif scope is None or match is None:
+            item["disposition"] = "LCR_NAMED_ISSUER_OR_MEASURE_UNPROVEN"
+        elif not average and not average_intro:
+            item["disposition"] = "LCR_AVERAGE_AGGREGATION_UNPROVEN"
+        elif (column_reason or duration is None or duration["measurement_period"] is None
+              or set(duration["reasons"]) - {"CLAIMED_MEASUREMENT_PERIOD_DIFFERS"}):
+            item["disposition"] = "LCR_ACTUAL_DURATION_OR_PERCENT_UNPROVEN"
+        elif (duration["measurement_period"]["period_end"] != target_period["period_end"]
+              or duration["measurement_period"]["period_start"] < target_period["period_start"]):
+            item["disposition"] = "LCR_DISCLOSED_INTERVAL_OUTSIDE_REQUESTED_FILING"
+        else:
+            item["disposition"] = "SOURCE_WITNESSED_FIRM_AVERAGE_LCR"
+            selected.append({**item, "value": decimal_text(value=parse_numeric_claim(raw_value=cell["text"], reported_unit="percent")),
+                "scope": {"entity_scope": "firm", "aggregation": "average"}, "entity_evidence": scope,
+                "reporting_declarations": reporting,
+                "aggregation_evidence": {"row_label": label if average else None, "table_introduction": average_intro},
+                "duration_evidence": duration, "measurement_period": duration["measurement_period"]})
+        if item["disposition"] != "SOURCE_WITNESSED_FIRM_AVERAGE_LCR":
+            unresolved.append(item)
+        census.append(item)
+    facts = {(c["value"], c["measurement_period"]["period_start"], c["measurement_period"]["period_end"]) for c in selected}
+    if len(facts) > 1:
+        unresolved.append({"disposition": "CONFLICTING_SAME_SCOPE_LCR_FACTS"})
+    single = len(facts) == 1 and not unresolved
+    body = {"record_type": "LCR_SOURCE_DISCLOSED_PERIOD_FACT", "schema_version": 1,
+        "source_sha256": expected_source_sha256, "task_contract_hash": discovery["task_contract_hash"],
+        "discovery": discovery, "issuer_identity": issuer, "target_filing_period": target_period,
+        "status": "SINGLE_SOURCE_SEMANTIC_FACT" if single else "UNRESOLVED",
+        "value": selected[0]["value"] if single else None, "unit": "ratio",
+        "measurement_period": selected[0]["measurement_period"] if single else None,
+        "selected": selected, "candidate_census": census, "unresolved": unresolved,
+        "ordinary_result_rule_status": "EXPLICIT_DISCLOSED_PERIOD_RULE_REQUIRED",
+        "annual_average_claimed": bool(single and selected[0]["measurement_period"]["period_start"] == target_period["period_start"]),
+        "historical_citi_exception_reused": False, "native_evidence_status": "NOT_EVALUATED",
+        "qualification_credit": "NONE_COMPONENT_ONLY", "publication_credit": "NONE",
+        "calls": {"provider": 0, "paid": 0, "sec": 0}}
+    return {**body, "component_id": content_hash(value=body)}
 
 
 def inspect_balance_candidate_evidence(

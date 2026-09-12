@@ -180,9 +180,9 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ### 核心模块
 
-- `tools/vnext_normal_candidate.py`、`scripts/vnext/normal_projection.py`：新的外部保存来源候选批次、原生冻结及公共行准备；说明见`docs/normal_candidates.md`。V12已出真实冻结记录，规则不再同版本改写。
+- `tools/vnext_normal_candidate.py`、`scripts/vnext/normal_run_v2.py`：外部保存来源的十二指标候选批次，经过统一规格/来源/期间核验后进入既有原生Run。`normal_text_projection_v2.py`与`normal_numeric_projection.py`负责独立公共行；说明见`docs/normal_candidates.md`。V12、V13均已出真实冻结记录，五文件和规则不再同版本改写；旧`normal_projection.py`保留V12读取。
 
-- `scripts/vnext/normal_candidates.py`、`normal_source_authority.py`、`normal_governance_input.py`：从已保存实际来源重建B06/C03/C04/D01普通候选，外部根与既存获取基线分开验证；新V12草案未激活。
+- `scripts/vnext/normal_candidates.py`、`normal_source_authority.py`、`normal_governance_input.py`：从已保存实际来源重建B06/C03/C04/D01候选，外部根与既存获取基线分开验证；V12记录已冻结、未正式激活。后继`normal_text_input_v2.py`为C02/D02保留必要来源和完整选源元数据，`text_results_v2.py`保留严格核验的披露事实与原文，不能推断总诉讼负债。
 - `scripts/vnext/text_results.py`、`text_review.py`、`text_run_validation.py`：原有记录中的显式TEXT_V1、完整原文候选/审阅/Run重读，旧数字记录不改。
 
 - `scripts/vnext/financial_duration.py`：从原表头/行脚注重建实际测量期间；季度不能借年报身份变成年均值。`text_coverage.py`重建原件章节/字节定位，查找命中与范围完整分开；二者目前是离线验证组件，后续原生接线仍需验收。

@@ -5,8 +5,8 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from vnext.normal_candidates import install_saved_candidate_inputs, create_risk_heading_run
-from vnext.normal_projection import render_normal_text_run
+from vnext.normal_run_v2 import install_normal_inputs, create_normal_run
+from vnext.normal_text_projection_v2 import render_normal_text_run
 from vnext.publication import METRIC_FIELDS, EVIDENCE_FIELDS
 
 
@@ -17,9 +17,9 @@ class NormalProjectionMaterialTest(unittest.TestCase):
         cls.addClassCleanup(cls.temporary.cleanup)
         cls.data = Path(cls.temporary.name) / 'data'
         cls.run_dir = Path(cls.temporary.name) / 'run'
-        install_saved_candidate_inputs(data_root=cls.data, company_id='marriott_international')
-        cls.native = create_risk_heading_run(data_root=cls.data, run_dir=cls.run_dir,
-            company_id='marriott_international', freeze=True)
+        install_normal_inputs(data_root=cls.data, company_id='marriott_international', metric_id='D01')
+        cls.native = create_normal_run(data_root=cls.data, run_dir=cls.run_dir,
+            company_id='marriott_international', metric_id='D01', freeze=True)
 
     def test_exact_text_and_source_quotes_survive_existing_csv_roundtrip(self):
         rendered = render_normal_text_run(data_root=self.data, run_dir=self.run_dir)

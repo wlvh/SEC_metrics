@@ -11,6 +11,7 @@ from vnext.composite_scope import index_source_structure
 from vnext.deterministic_router import source_set_manifest as build_source_set
 from vnext.financial_structured import (
     FinancialStructuredError, inspect_inline_financial_claims, prepare_saved_inline_source_set,
+    inspect_ordinary_a09_source_fact,
 )
 from vnext.r4_structured_sources import build_pinned_fixture_source_set
 from vnext.sources import source_reference_record
@@ -19,23 +20,35 @@ from vnext.sources import source_reference_record
 PERIOD = {"fiscal_year": 2025, "period_start": "2025-01-01", "period_end": "2025-12-31"}
 
 
+class _LazyFixture(dict):
+    """Prepare only original fixtures actually used by the selected test."""
+    def __init__(self, prepare):
+        super().__init__()
+        self.prepare = prepare
+
+    def __missing__(self, key):
+        value = self.prepare(key)
+        self[key] = value
+        return value
+
+
 class FinancialStructuredTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        with no_answers_or_network():
-            ordinary = prepare_saved_inline_source_set(repo_root=ROOT, company_id="jpmorgan_chase")
-        cls.bundles = {"JPM": {key: value for key, value in ordinary.items() if key != "prepared_input_id"}}
-        # The two existing alternate acquisitions are provenance only. Their
-        # construction is outside the no-recipe runtime check because it reads
-        # the old acquisition receipt, never an expected business result.
-        for name, source_id, cik in (("Citi", "citigroup_fy2025_10k", "831001"),
-                                     ("BAC", "bank_of_america_fy2025_10k", "70858")):
+        def bundle(name):
+            if name == "JPM":
+                with no_answers_or_network():
+                    ordinary = prepare_saved_inline_source_set(repo_root=ROOT, company_id="jpmorgan_chase")
+                return {key: value for key, value in ordinary.items() if key != "prepared_input_id"}
+            # Existing alternate acquisitions are provenance, never answers.
+            source_id, cik = {"Citi": ("citigroup_fy2025_10k", "831001"),
+                              "BAC": ("bank_of_america_fy2025_10k", "70858")}[name]
             manifest = build_pinned_fixture_source_set(repo_root=ROOT, source_id=source_id)
-            cls.bundles[name] = {"source_bytes": (ROOT / manifest["raw_blob"]["storage_uri"]).read_bytes(),
+            return {"source_bytes": (ROOT / manifest["raw_blob"]["storage_uri"]).read_bytes(),
                 "source_reference": manifest["source_reference"], "source_set_manifest": manifest,
                 "expected_cik": cik, "target_period": PERIOD}
-        cls.actual = {(name, metric): cls.evaluate(cls.bundles[name], metric)
-                      for name, metric in (("JPM", "A13"), ("JPM", "A09"), ("Citi", "A13"), ("BAC", "A09"))}
+        cls.bundles = _LazyFixture(bundle)
+        cls.actual = _LazyFixture(lambda key: cls.evaluate(cls.bundles[key[0]], key[1]))
 
     @staticmethod
     def evaluate(bundle, metric):
@@ -86,12 +99,55 @@ class FinancialStructuredTest(unittest.TestCase):
         self.assertEqual("NATIVE_SAVED_SUBMISSIONS_COMPLETE_SOURCE_SET", self.actual[("JPM", "A13")]["source_set_scope"])
         self.assertIn("FIXTURE_ONLY", self.actual[("Citi", "A13")]["source_set_scope"])
 
+    def test_ordinary_a09_rebuilds_native_ambiguity_before_proving_html_source_fact(self):
+        with no_answers_or_network():
+            result = inspect_ordinary_a09_source_fact(repo_root=ROOT, **self.bundles["JPM"])
+        self.assertEqual("STRUCTURED_SOURCE_AMBIGUOUS", result["structured_primary"]["outcome"])
+        self.assertEqual("NATIVE_SAVED_SUBMISSIONS_COMPLETE_SOURCE_SET", result["structured_primary"]["source_set_scope"])
+        self.assertEqual("HTML_FALLBACK_SOURCE_SEMANTIC_FACT", result["outcome"])
+        self.assertEqual("0.0066", result["value"])
+        self.assertEqual("EXPLICIT_DETERMINISTIC_FALLBACK_RULE_REQUIRED", result["ordinary_result_rule_status"])
+        self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, result["calls"])
+
+    def test_resolved_native_a09_is_not_replaced_by_html_fallback(self):
+        from unittest.mock import patch
+        bundle = self.bundles["BAC"]
+        with no_answers_or_network(), patch("vnext.financial_relationships.inspect_nonaccrual_loan_ratio",
+                                            side_effect=AssertionError("fallback must not run")):
+            result = inspect_ordinary_a09_source_fact(repo_root=ROOT, **bundle)
+        self.assertEqual("STRUCTURED_PRIMARY_RESOLVED", result["outcome"])
+        self.assertEqual("0.0049", result["value"])
+        self.assertIsNone(result["html_fallback"])
+
+    def test_incomplete_source_set_cannot_supply_an_ambiguity_flag(self):
+        changed = copy.deepcopy(self.bundles["JPM"])
+        changed["inventory_bytes"] = None
+        with self.assertRaisesRegex(FinancialStructuredError, "NORMAL_SOURCE_SET_INVENTORY_REQUIRED"), no_answers_or_network():
+            inspect_ordinary_a09_source_fact(repo_root=ROOT, **changed)
+
     def test_single_country_is_excluded_by_its_actual_linked_detail_footnote(self):
         result = self.actual[("Citi", "A13")]
         details = [d for d in result["claim_dispositions"] if d["disposition"] == "COUNTRY_DETAIL_NOT_DIRECT_INTERNATIONAL_TOTAL"]
         self.assertEqual(1, len(details))
         self.assertIn("U.K.", details[0]["source_witness"]["original_country_detail_footnote"]["visible_text"])
         self.assertTrue(details[0]["source_witness"]["referencing_international_total_labels"])
+
+    def test_native_tags_do_not_override_an_explicit_non_reported_table_declaration(self):
+        original = self.bundles["JPM"]["source_bytes"]
+        cell = self.actual[("JPM", "A13")]["selected"][0]["source_witness"]["table_cell"]
+        table = index_source_structure(source_bytes=original)["tables"][int(cell["table_id"].split("_")[1]) - 1]
+        negative = b"<div>The following table is for illustration only and contains hypothetical amounts, not reported international revenue.</div>"
+        source = original[:table["start_byte"]] + negative + original[table["start_byte"]:]
+        result = self.evaluate(self.counterfactual("JPM", source), "A13")
+        self.assertEqual("STRUCTURED_SOURCE_CONFLICT", result["outcome"])
+        self.assertIsNone(result["value"])
+        self.assertTrue(result["source_conflicts"])
+        self.assertFalse(result["fallback_plan_allowed_by_route"])
+        unrelated = b"<div>The preceding example contains hypothetical amounts, not reported revenue. Models can use hypothetical assumptions.</div>"
+        source = original[:table["start_byte"]] + unrelated + original[table["start_byte"]:]
+        result = self.evaluate(self.counterfactual("JPM", source), "A13")
+        self.assertEqual("STRUCTURED_PRIMARY_RESOLVED", result["outcome"])
+        self.assertEqual("42758000000", result["value"])
 
     def test_opaque_member_rename_does_not_require_another_company_year_mapping(self):
         original = self.bundles["JPM"]["source_bytes"]

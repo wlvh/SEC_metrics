@@ -9,7 +9,7 @@ import socket
 import unittest
 from unittest.mock import patch
 
-from vnext.financial_candidates import FinancialCandidateError, inspect_financial_candidates
+from vnext.financial_candidates import FinancialCandidateError, inspect_financial_candidates, inspect_lcr_disclosed_fact
 from tests.vnext.test_financial_duration import JPM, ROOT
 
 
@@ -139,6 +139,125 @@ class FinancialCandidateTest(unittest.TestCase):
                 expected_source_sha256=hashlib.sha256(source).hexdigest(),
                 task_contract_id=TASKS["A03"], target_period=ANNUAL,
             )
+
+
+class LcrDisclosedFactTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from vnext.composite_scope import index_source_structure
+        cls.raw = JPM.read_bytes()
+        cls.structure = index_source_structure(source_bytes=cls.raw)
+        cls.actual = cls.evaluate(cls.raw)
+
+    @staticmethod
+    def evaluate(raw):
+        with no_answers_or_network():
+            return inspect_lcr_disclosed_fact(repo_root=ROOT, source_bytes=raw,
+                expected_source_sha256=hashlib.sha256(raw).hexdigest(), expected_cik="19617", target_period=ANNUAL)
+
+    def replace_table(self, source, locator, transform):
+        from vnext.composite_scope import index_source_structure
+        span = index_source_structure(source_bytes=source)["tables"][int(locator["table_id"].split("_")[1]) - 1]
+        original = source[span["start_byte"]:span["end_byte"]]
+        changed = transform(original)
+        self.assertTrue(original != changed, "TEST_ONLY table mutation must change original bytes")
+        return source[:span["start_byte"]] + changed + source[span["end_byte"]:]
+
+    def test_two_real_disclosures_form_one_quarter_fact_and_keep_all_twelve_candidates(self):
+        result = self.actual
+        self.assertEqual("SINGLE_SOURCE_SEMANTIC_FACT", result["status"])
+        self.assertEqual("1.11", result["value"])
+        self.assertEqual("2025-10-01", result["measurement_period"]["period_start"])
+        self.assertEqual("2025-01-01", result["target_filing_period"]["period_start"])
+        self.assertEqual(2, len(result["selected"]))
+        self.assertEqual(12, len(result["candidate_census"]))
+        self.assertEqual(2, sum(c["disposition"] == "OTHER_EXPLICIT_NAMED_ENTITY" for c in result["candidate_census"]))
+        self.assertFalse(result["annual_average_claimed"])
+        self.assertFalse(result["historical_citi_exception_reused"])
+        self.assertEqual("EXPLICIT_DISCLOSED_PERIOD_RULE_REQUIRED", result["ordinary_result_rule_status"])
+
+    def test_same_scope_disclosures_with_conflicting_rates_are_not_selected_by_preference(self):
+        entry = self.actual["selected"][0]
+        changed = self.replace_table(self.raw, entry["locator"], lambda raw: raw.replace(b">111<", b">112<"))
+        result = self.evaluate(changed)
+        self.assertEqual("UNRESOLVED", result["status"])
+        self.assertIn("CONFLICTING_SAME_SCOPE_LCR_FACTS", [c["disposition"] for c in result["unresolved"]])
+
+    def test_equal_annual_and_quarter_average_numbers_remain_different_facts(self):
+        extra = (b"<table><tr><td>Year ended December 31</td><td>2025</td></tr>"
+                 b"<tr><td>Firm Liquidity coverage ratio (average)</td><td>111</td><td>%</td></tr></table>")
+        result = self.evaluate(self.raw.replace(b"</body>", extra + b"</body>"))
+        self.assertEqual("UNRESOLVED", result["status"])
+        self.assertEqual(3, len(result["selected"]))
+        self.assertIsNone(result["measurement_period"])
+
+    def test_novel_consistent_numbers_do_not_depend_on_the_old_answer(self):
+        changed = self.raw
+        for entry in self.actual["selected"]:
+            changed = self.replace_table(changed, entry["locator"], lambda raw: raw.replace(b">111<", b">137<"))
+        result = self.evaluate(changed)
+        self.assertEqual("SINGLE_SOURCE_SEMANTIC_FACT", result["status"])
+        self.assertEqual("1.37", result["value"])
+
+    def test_unknown_same_name_scope_and_lost_aggregation_are_not_ignored(self):
+        extra = (b"<table><tr><td>Year ended December 31</td><td>2025</td></tr>"
+                 b"<tr><td>Other Liquidity coverage ratio (average)</td><td>111</td><td>%</td></tr></table>")
+        self.assertEqual("UNRESOLVED", self.evaluate(self.raw.replace(b"</body>", extra + b"</body>"))["status"])
+        entry = self.actual["selected"][0]
+        changed = self.replace_table(self.raw, entry["locator"], lambda raw: raw.replace(b"(average)", b""))
+        self.assertEqual("UNRESOLVED", self.evaluate(changed)["status"])
+
+    def _assert_unknown_entity(self, heading):
+        extra = (f'<table><tr><td colspan="3">{heading}</td></tr>'
+                 '<tr><td>Year ended December 31</td><td>2025</td><td></td></tr>'
+                 '<tr><td>Liquidity coverage ratio (average)(a)</td><td>112</td><td>%</td></tr></table>'
+                 '<p>(a) Average for three months ended December 31, 2025.</p>').encode()
+        result = self.evaluate(self.raw.replace(b"</body>", extra + b"</body>"))
+        self.assertEqual("UNRESOLVED", result["status"])
+        self.assertIsNone(result["value"])
+        self.assertTrue(any(c["disposition"] == "LCR_NAMED_ISSUER_OR_MEASURE_UNPROVEN" for c in result["unresolved"]))
+
+    def test_unnamed_consolidated_group_is_not_proof_of_another_legal_entity(self):
+        for heading in ("Reported consolidated entity:", "Unidentified Holdings Inc:"):
+            self._assert_unknown_entity(heading)
+        others = [c for c in self.actual["candidate_census"] if c["disposition"] == "OTHER_EXPLICIT_NAMED_ENTITY"]
+        self.assertTrue(all(c["distinct_entity_definition"]["relationship"] == "EXPLICIT_SUBSIDIARY_OF_REGISTRANT" for c in others))
+
+    def test_a_firm_word_without_its_source_issuer_definition_does_not_close_scope(self):
+        changed = self.raw
+        # Rewrite all actual alias witnesses, preserving DEI and every number.
+        for alias in reversed(self.actual["issuer_identity"]["source_defined_aliases"]):
+            span = alias["definition"]
+            before = self.raw[span["start_byte"]:span["end_byte"]]
+            after = before.replace(b"Firm", b"Subsidiary")
+            self.assertNotEqual(before, after)
+            changed = changed[:span["start_byte"]] + after + changed[span["end_byte"]:]
+        result = self.evaluate(changed)
+        self.assertEqual("UNRESOLVED", result["status"])
+        self.assertEqual([], result["issuer_identity"]["source_defined_aliases"])
+
+
+class LcrEntityFastTest(unittest.TestCase):
+    """One source evaluation per bounded CI selector; no unrelated setup."""
+    @classmethod
+    def setUpClass(cls):
+        cls.raw = JPM.read_bytes()
+
+    evaluate = staticmethod(LcrDisclosedFactTest.evaluate)
+    _assert_unknown_entity = LcrDisclosedFactTest._assert_unknown_entity
+
+    def test_unidentified_consolidated_group_is_rejected(self):
+        self._assert_unknown_entity("Reported consolidated entity:")
+
+    def test_unidentified_named_holding_is_rejected(self):
+        self._assert_unknown_entity("Unidentified Holdings Inc:")
+
+    def test_explicit_subsidiaries_keep_their_original_definition(self):
+        actual = self.evaluate(self.raw)
+        others = [c for c in actual["candidate_census"] if c["disposition"] == "OTHER_EXPLICIT_NAMED_ENTITY"]
+        self.assertEqual(2, len(others))
+        self.assertTrue(all(c["distinct_entity_definition"]["relationship"]
+                            == "EXPLICIT_SUBSIDIARY_OF_REGISTRANT" for c in others))
 
 
 if __name__ == "__main__":

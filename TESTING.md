@@ -594,7 +594,17 @@ CI首次将13项新测试作为一个入口时触发既有30秒入口上限。�
 
 ## 普通保存来源候选批次
 
-入口和实际范围见`docs/normal_candidates.md`。`tools/vnext_normal_candidate.py`只写全新外部目录，逐坐标保存原生冻结/失败，并生成完整请求范围的summary；不以一个坐标受阻抹掉其他结果。`normal_projection.py`复用原有Projector，执行Spec与展示规则分开绑定；D01的20/18字段、原文换行、申报日期及期间经过真实冻结后的CSV重放。V12已产生FROZEN记录，规则/五文件不再同版本修改；新共享路径只作后继扩展，旧记录须继续读取。
+短边界覆盖`test_normal_run_authority`、`test_normal_candidate_cli`及最小文本输入。V13公共入口的独立实际验收包含两份合法OPEN图和14个规格/来源/期间负例，详见`docs/evidence/issue28_continuous/successor-open-fb76/`；其信用只属于受审草案，不覆盖后续CI清单或D02改动。
+<!-- capability-anchor: CAPABILITY.normal_current_run_admission -->
 
-材料命令：`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_native_material tests.vnext.test_normal_projection`；短目录边界为`tests.vnext.test_normal_candidate_cli`。这些完整材料检查不塞入30秒fast入口，也不替代完整390坐标/正式发布。真实执行和失败日志见`docs/evidence/issue28_continuous/frozen-candidates/`。
+完整材料测试会真实冻结当前安装规则，应在草案实现和输入文件稳定后执行：
+
+```bash
+NORMAL_RUN_MATERIAL_ROOT=/absolute/new/open-material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_run_material
+NORMAL_NATIVE_MATERIAL_ROOT=/absolute/new/native-material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_native_material
+PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_projection tests.vnext.test_normal_text_projection_v2
+PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_numeric_projection
+```
+
+第一条只验证两个真实OPEN基线及规格/来源/期间文件负例，禁止冻结。第二、三条覆盖真实Run/冻结/新进程冷读和文本CSV；第四条目前验证实际数值记录的展示，不授FROZEN信用。它们不塞进30秒fast入口，不替代390坐标或正式发布。V12旧材料见`frozen-candidates/`；本轮V13最终冻结材料仍在执行准备中，不能把测试文件存在写成已通过。
 <!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->

@@ -17,13 +17,26 @@
         "anchor_id": "CAPABILITY.normal_saved_candidate_batch",
         "type": "capability",
         "status": "active",
-        "statement": "普通保存来源CLI在新的外部目录自动准备并冻结B06/C03/C04/D01候选，逐坐标保留失败和WITHHELD并继续其余坐标。D01通过既有Projector输出完整公共行及原文证据；其他指标公共行未准备时明确NOT_PREPARED。重复使用已有输出目录被拒绝，不覆盖历史批次；尚不是实时更新服务、完整发布或正式采纳。",
+        "statement": "普通保存来源CLI在全新外部目录接入六金融指标、B06、C02/C03/C04、D01/D02，调用原生Run冻结及独立公共行适配；失败和WITHHELD逐坐标保留，继续其余坐标。执行Spec与展示政策分别绑定，实际季度/时点/全年、来源申报日期和文本原文不能被统一重标。本轮V13目前完成部分实际OPEN及公共行预览，后继冻结/冷读与完整CLI材料验收仍在进行；已冻结V12可继续读取。不是实时更新服务、完整390坐标发布或正式采纳。",
         "audience": [
           "developer",
           "operator",
           "reviewer"
         ],
         "test_anchor": "tests/vnext/test_normal_projection.py::NormalProjectionMaterialTest.test_exact_text_and_source_quotes_survive_existing_csv_roundtrip",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
+        "anchor_id": "CAPABILITY.normal_current_run_admission",
+        "type": "capability",
+        "status": "active",
+        "statement": "V13普通Run在按来源模式分派前统一要求一个安装政策允许的Spec，并从受信原始输入重建实际期间、Run身份、完整来源引用和RawBlob/SourceReference记录集合。旧ai_table规格不能避开新入口；空/多Spec、来源遗漏和期间变更均被拒绝。该完整性核验不增加生产或调用权限。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_normal_run_authority.py::NormalRunAuthorityTest.test_old_table_spec_cannot_select_a_path_without_ordinary_source_replay",
         "test_status": "automated_recorded",
         "since": "2026-09-12"
       },

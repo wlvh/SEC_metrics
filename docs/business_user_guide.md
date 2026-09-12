@@ -280,3 +280,6 @@ B06新来源的两份历史验证只提供候选结果：可查看原始年报�
 普通候选开发可在保存材料上检查薪酬、审计师变更与风险标题。薪酬保留披露实际覆盖期间，不把交易后数月金额冒充全年；缺少可比前期或来源获取失败，不显示“无变更”。风险标题输出是公司原文摘录，并附原始定位，不表示该风险已经发生。候选结果和完整正式发布保持分别可见，本轮尚未接入正式结果更新。
 <!-- capability-anchor: CAPABILITY.normal_governance_input -->
 <!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->
+
+多指标开发候选的入口和状态见`docs/normal_candidates.md`。金融数值保留实际季度、时点或全年期间，董事会披露显示真实申报日期，不推定为年末董事会状态；暂不出值时保留具体原因。当前已出现原生冻结和公共行材料，但完整390坐标、正常新来源更新与正式采纳仍未完成，正式报告不因此自动改变。
+<!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->

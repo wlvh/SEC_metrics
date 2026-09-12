@@ -20,7 +20,7 @@ from .deterministic_router import (
     source_set_manifest as build_source_set, verify_source_set_completeness,
 )
 from .financial_duration import _cell_proof, _linked_notes
-from .financial_relationships import _clean, _scale
+from .financial_relationships import _clean, _scale, _table_reporting_declarations
 from .normal_annual_input import annual_period, prepare_saved_annual_input
 from .r4_structured_sources import FIXTURE_SET_TYPE, validate_fixture_source_set
 from .r4_task_contracts import inspect_r4_task_catalog
@@ -225,6 +225,9 @@ def _a13_witness(*, claim, fact, table, cell, task, structure):
               and item["column_index"] < cell["column_index"] and _clean(item["text"]) in {_clean(a) for a in aliases}]
     if len(labels) != 1:
         return None, "NOT_DIRECT_DISCLOSED_INTERNATIONAL_TOTAL_LABEL"
+    reporting = _table_reporting_declarations(structure=structure, table=table, label=labels[0])
+    if reporting["status"] != "NO_ASSOCIATED_REPORTING_CONTRADICTION":
+        return {"reporting_declarations": reporting}, "SOURCE_REPORTING_DECLARATION_CONFLICT"
     measure = _revenue_column(table, cell, structure)
     scale = _scale(table)
     if measure is None:
@@ -241,6 +244,7 @@ def _a13_witness(*, claim, fact, table, cell, task, structure):
         return None, "NATIVE_FACT_VISIBLE_SCALE_CONFLICT"
     return {"native_fact_ordinal": fact["ordinal"], "native_context": claim["attributes"]["context"],
             "table_cell": _cell_proof(table=table, cell=cell), "geography_label": _cell_proof(table=table, cell=labels[0]),
+            "reporting_declarations": reporting,
             "revenue_measure": measure, "source_amount_scale": scale,
             "member_classification": "FROM_SAME_FACT_ORIGINAL_ROW_LABEL_NOT_MEMBER_SPELLING"}, None
 
@@ -372,7 +376,7 @@ def inspect_inline_financial_claims(
     facts = {fact["ordinal"]: fact for fact in parsed.facts}
     locators = _fact_cells(index, parsed, {claim["locator"]["ordinal"] for claim in claims})
     structure = index_source_structure(source_bytes=source_bytes)
-    selected, dispositions, implementation_gaps = [], [], []
+    selected, dispositions, implementation_gaps, source_conflicts = [], [], [], []
     for claim in claims:
         context = claim["attributes"]["context"]
         reason = None
@@ -400,7 +404,9 @@ def inspect_inline_financial_claims(
         if reason is None and metric_id == "A13":
             table, cell = locators[ordinal]
             witness, reason = _a13_witness(claim=claim, fact=facts[ordinal], table=table, cell=cell, task=task, structure=structure)
-            if reason and reason != "NOT_DIRECT_DISCLOSED_INTERNATIONAL_TOTAL_LABEL":
+            if reason == "SOURCE_REPORTING_DECLARATION_CONFLICT":
+                source_conflicts.append(witness)
+            elif reason and reason != "NOT_DIRECT_DISCLOSED_INTERNATIONAL_TOTAL_LABEL":
                 implementation_gaps.append(reason)
         elif reason is None:
             table, cell = locators[ordinal]
@@ -423,7 +429,9 @@ def inspect_inline_financial_claims(
         gap_codes = set(implementation_gaps)
         implementation_gaps = [d["disposition"] for d in dispositions if d["disposition"] in gap_codes]
     values = {(item["claim"]["value"], item["source_witness"]["native_unit_definition"]["canonical_unit"]) for item in selected}
-    if implementation_gaps:
+    if source_conflicts:
+        outcome = "STRUCTURED_SOURCE_CONFLICT"
+    elif implementation_gaps:
         outcome = "STRUCTURED_IMPLEMENTATION_GAP"
     elif len(values) == 1:
         outcome = "STRUCTURED_PRIMARY_RESOLVED"
@@ -441,8 +449,48 @@ def inspect_inline_financial_claims(
         "selected": selected, "claim_dispositions": dispositions,
         "outcome": outcome, "value": next(iter(values))[0] if outcome == "STRUCTURED_PRIMARY_RESOLVED" else None,
         "implementation_gaps": sorted(set(implementation_gaps)), "regional_sum_used": False,
+        "source_conflicts": source_conflicts,
         "fallback_plan_allowed_by_route": outcome == "STRUCTURED_SOURCE_AMBIGUOUS",
         "fallback_provider_authorized": False, "native_run_status": "NOT_CREATED",
         "qualification_credit": "NONE_COMPONENT_ONLY", "publication_credit": "NONE",
         "calls": {"provider": 0, "paid": 0, "sec": 0}}
+    return {**body, "component_id": content_hash(value=body)}
+
+
+def inspect_ordinary_a09_source_fact(
+    *, repo_root: Path, source_bytes: bytes, source_reference: dict,
+    source_set_manifest: dict, expected_cik: str, target_period: dict,
+    inventory_source_reference: dict = None, inventory_bytes: bytes = None,
+) -> dict:
+    """Recompute the complete native route before any HTML interpretation.
+
+    The caller cannot supply an ambiguity flag or cached structured receipt.
+    A resolved native primary remains primary; implementation gaps and missing
+    source sets cannot be relabelled as the approved ambiguity fallback.
+    """
+    from .financial_relationships import inspect_nonaccrual_loan_ratio
+    primary = inspect_inline_financial_claims(repo_root=repo_root, metric_id="A09",
+        source_bytes=source_bytes, source_reference=source_reference,
+        source_set_manifest=source_set_manifest, expected_cik=expected_cik, target_period=target_period,
+        inventory_source_reference=inventory_source_reference, inventory_bytes=inventory_bytes)
+    fallback = None
+    if (primary["outcome"] == "STRUCTURED_SOURCE_AMBIGUOUS"
+            and primary["source_set_scope"] == "NATIVE_SAVED_SUBMISSIONS_COMPLETE_SOURCE_SET"):
+        fallback = inspect_nonaccrual_loan_ratio(repo_root=repo_root, source_bytes=source_bytes,
+            expected_source_sha256=sha256_bytes(content=source_bytes), expected_cik=expected_cik,
+            target_period=target_period)
+    if primary["outcome"] == "STRUCTURED_PRIMARY_RESOLVED":
+        outcome, value = "STRUCTURED_PRIMARY_RESOLVED", primary["value"]
+    elif fallback and fallback["status"] == "SINGLE_SOURCE_SEMANTIC_FACT":
+        outcome, value = "HTML_FALLBACK_SOURCE_SEMANTIC_FACT", fallback["value"]
+    else:
+        outcome, value = "UNRESOLVED", None
+    body = {"record_type": "ORDINARY_A09_SOURCE_FACT_COMPONENT", "schema_version": 1,
+        "source_sha256": sha256_bytes(content=source_bytes), "target_filing_period": target_period,
+        "structured_primary": primary, "html_fallback": fallback,
+        "outcome": outcome, "value": value, "unit": "ratio",
+        "measurement_time": {"kind": "INSTANT", "as_of_date": target_period["period_end"]},
+        "ordinary_result_rule_status": "EXPLICIT_DETERMINISTIC_FALLBACK_RULE_REQUIRED" if fallback else "NATIVE_PRIMARY_RULE",
+        "native_run_status": "NOT_CREATED", "qualification_credit": "NONE_COMPONENT_ONLY",
+        "publication_credit": "NONE", "calls": {"provider": 0, "paid": 0, "sec": 0}}
     return {**body, "component_id": content_hash(value=body)}

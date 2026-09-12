@@ -799,15 +799,18 @@ New financing-set source judgments prove disjoint reported borrowings, bonds and
 <!-- capability-anchor: CAPABILITY.normal_saved_source_admission -->
 <!-- capability-anchor: CAPABILITY.normal_governance_input -->
 
-`normal_candidates`将B06/C03/C04及D01接入同一原生Run；`issue_28_v11`/V12为未激活开发草案。父v10按`frozen-parent-v10-index.json`固定的旧字节读取，旧Rule/Run不重签。D01以TEXT_V1在原有记录类型中保存文本，完整原文标题集合由Evidence重新导出，再经既有D-06 SYSTEM或真实HUMAN审阅链核对。普通SCT路线使用确定性表格规则，保存整份DerivedAsset，原生验证重新解析原件网格及金额/期间，不能凭Spec名跳过核对。旧数字记录没有附加默认字段或全局语义版本变动。
+`normal_candidates`将B06/C03/C04及D01接入同一原生Run；`issue_28_v11`/V12已产生冻结记录，尚未正式激活。父v10按`frozen-parent-v10-index.json`固定的旧字节读取，旧Rule/Run不重签。D01以TEXT_V1在原有记录类型中保存文本，完整原文标题集合由Evidence重新导出，再经既有D-06 SYSTEM或真实HUMAN审阅链核对。普通SCT路线使用确定性表格规则，保存整份DerivedAsset，原生验证重新解析原件网格及金额/期间，不能凭Spec名跳过核对。旧数字记录没有附加默认字段或全局语义版本变动。
 
-目前真实材料已完成OPEN完整图检查，尚未宣称最终FROZEN/完整公开包/390坐标验收。文本Projector保留实际摘录及UTF-8字节范围，禁止倍率转换；完整包、生产入口和正常更新仍在集成。反例与实际层级见`docs/evidence/issue28_continuous/`。
+V12真实材料已完成D01十公司和C03/C04二十坐标冻结；后继V13仍在完整图及展示验收，完整公开包/390坐标尚未完成。文本Projector保留实际摘录及UTF-8字节范围，禁止倍率转换；完整包、生产入口和正常更新仍在集成。反例与实际层级见`docs/evidence/issue28_continuous/`。
 <!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->
 
 
 ## 普通保存来源候选批次
 
-入口和实际范围见`docs/normal_candidates.md`。`tools/vnext_normal_candidate.py`只写全新外部目录，逐坐标保存原生冻结/失败，并生成完整请求范围的summary；不以一个坐标受阻抹掉其他结果。`normal_projection.py`复用原有Projector，执行Spec与展示规则分开绑定；D01的20/18字段、原文换行、申报日期及期间经过真实冻结后的CSV重放。V12已产生FROZEN记录，规则/五文件不再同版本修改；新共享路径只作后继扩展，旧记录须继续读取。
+`normal_run_v2`通过既有Run/Review/Calculator接入六金融指标、B06、C02/C03/C04、D01/D02。数值事实从原件重建；文本候选通过完整原件摘录、Evidence和同一ReviewUnit。`normal_text_input_v2`只组织实际选源所需的原件和完整元数据，C02/D02不再依赖无关的C04事件与审计材料。原请求类别、最后失败和修订状态保留。
 
-材料命令：`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_native_material tests.vnext.test_normal_projection`；短目录边界为`tests.vnext.test_normal_candidate_cli`。这些完整材料检查不塞入30秒fast入口，也不替代完整390坐标/正式发布。真实执行和失败日志见`docs/evidence/issue28_continuous/frozen-candidates/`。
+`run_store`在V13的公共图入口调用`validate_normal_run_authority`，先核验唯一规格、来源决定、实际期间及完整来源记录，再按数值/文本类型验证。旧ai_table规格也必须经过该入口。V12/issue_28_v11已有真实冻结记录，五文件和规则保持不变；后继V13/issue_28_v12已产生首批真实冻结记录，五文件和规则同样固定；材料验收仍在继续。
+<!-- capability-anchor: CAPABILITY.normal_current_run_admission -->
+
+`tools/vnext_normal_candidate.py`逐坐标保存原生结果或具体失败；`normal_text_projection_v2`与`normal_numeric_projection`复用既有Projector生成20/18列公共行。展示政策独立绑定，执行Spec不改；文本申报日期不替代董事会测量日期，数值期间保留季度/时点/全年。完整来源更新、390坐标发布及旧入口退出仍未完成。入口和实际验证层级见`docs/normal_candidates.md`及`docs/evidence/issue28_continuous/`。
 <!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->

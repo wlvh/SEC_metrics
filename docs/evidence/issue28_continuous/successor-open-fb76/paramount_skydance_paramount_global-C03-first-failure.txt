@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 823, in load_run_requirement_snapshot
+    validate_execution_authority(repo_root=repo_root, requirement=requirement)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v1.py", line 2014, in validate_execution_authority
+    raise RequirementProfileError(
+        "Successor execution authority bytes differ: " + relative
+    )
+vnext.requirement_profile_v1.RequirementProfileError: Successor execution authority bytes differ: tools/run_fast_tests.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1353, in _verify_repository_bindings
+    requirement = load_run_requirement_snapshot(
+        repo_root=repo_root,
+    ...<5 lines>...
+        record_type=str(manifest["record_type"]),
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 825, in load_run_requirement_snapshot
+    raise RequirementError(
+        "Run explicit Requirement identity differs"
+    ) from error
+vnext.requirements.RequirementError: Run explicit Requirement identity differs
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/v13-open-acceptance.py", line 20, in <module>
+    x=create_normal_run(data_root=d/'data',run_dir=d/'run',company_id=company,metric_id=metric,freeze=False)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v2.py", line 219, in create_normal_run
+    manifest, stored, _ = _mechanically_replay_open_run(run_dir=run_dir, repo_root=data_root, require_complete_results=True)
+                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3390, in _mechanically_replay_open_run
+    _verify_repository_bindings(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1363, in _verify_repository_bindings
+    raise RunStoreError("Run Requirement Snapshot is invalid") from error
+vnext.run_store.RunStoreError: Run Requirement Snapshot is invalid

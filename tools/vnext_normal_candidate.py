@@ -13,12 +13,12 @@ sys.path[:0] = [str(ROOT), str(ROOT / "scripts")]
 from sec_http import write_immutable_bytes
 from vnext.canonical import content_hash
 from vnext.normal_annual_input import _registry_rows
-from vnext.normal_candidates import install_saved_candidate_inputs
-from vnext.normal_candidates import create_risk_heading_run, create_structured_candidate_run
-from vnext.normal_projection import render_normal_text_run
+from vnext.normal_run_v2 import install_normal_inputs, create_normal_run
+from vnext.normal_text_projection_v2 import render_normal_text_run
+from vnext.normal_numeric_projection import render_normal_numeric_run
 
 
-METRICS = ("B06", "C03", "C04", "D01")
+METRICS = ("A03", "A04", "A09", "A11", "A12", "A13", "B06", "C02", "C03", "C04", "D01", "D02")
 
 
 def _write(path, value):
@@ -44,7 +44,7 @@ def main(argv=None):
     parser.add_argument("--company", action="append",
                         help="Configured company ID; repeat to select several; default all ten")
     parser.add_argument("--metric", action="append", choices=METRICS,
-                        help="Repeat to select several; default B06/C03/C04/D01")
+                        help="Repeat to select several; default all installed normal candidate metrics")
     args = parser.parse_args(argv)
     companies = [row["company_id"] for row in _registry_rows(repo_root=ROOT)]
     selected = args.company or companies
@@ -70,20 +70,15 @@ def main(argv=None):
                    "run_path": run.relative_to(output).as_posix(),
                    "data_path": data.relative_to(output).as_posix()}
             try:
-                install_saved_candidate_inputs(data_root=data, company_id=company,
-                    governance=metric in {"C03", "C04"}, b06=metric == "B06")
-                if metric == "D01":
-                    result = create_risk_heading_run(data_root=data, run_dir=run,
-                                                     company_id=company, freeze=True)
-                else:
-                    result = create_structured_candidate_run(data_root=data, run_dir=run,
-                        company_id=company, metric_id=metric, freeze=True)
+                install_normal_inputs(data_root=data, company_id=company, metric_id=metric)
+                result = create_normal_run(data_root=data, run_dir=run,
+                    company_id=company, metric_id=metric, freeze=True)
                 native = result["result"]
                 row.update(status="FROZEN_CANDIDATE" if native["publication"] == "PUBLISHED" else "WITHHELD_CANDIDATE",
                     run_id=result["manifest"]["run_id"], run_status=result["manifest"]["status"],
                     result=native, target_period=result["manifest"]["target_period"],
                     public_row_status="NOT_PREPARED", production_authorized=False)
-                if "selection" in result:
+                if result.get("selection") is not None:
                     selection = result["selection"]
                     relative = "selections/" + company + "-" + metric + ".json"
                     _write(output / relative, selection)
@@ -91,9 +86,10 @@ def main(argv=None):
                         selection_summary={k: selection[k] for k in
                             ("reason_code", "reason", "classification", "category", "reasons", "details")
                             if k in selection})
-                if metric == "D01" and native["publication"] == "PUBLISHED":
+                if native["publication"] == "PUBLISHED" or metric not in {"D01", "C02", "D02"}:
                     try:
-                        rendered = render_normal_text_run(data_root=data, run_dir=run)
+                        renderer = render_normal_text_run if metric in {"D01", "C02", "D02"} else render_normal_numeric_run
+                        rendered = renderer(data_root=data, run_dir=run)
                         target = output / "rows" / company / metric
                         target.mkdir(parents=True)
                         for name, raw in rendered["files"].items():
