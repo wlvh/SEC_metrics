@@ -934,3 +934,7 @@ normal_source_requirements对接续主体补充原事件目录窗口内的全部
 普通6事件从各已登记CIK逐份复用_source/Event适配、SourceSet/合集及Calculator，再统一进入V14原生Run。当前修订窗口证明与每个CIK的来源集合同时保存，财务不跨主体拼接。Run保持实际年度坐标；事件Result/Observation保存旧目录规定的回溯窗口。run_store在独立重建完整case并核对所有记录后，仅给确切的注册范围事件记录保留此测量期间；其他坐标/记录期间检查不变。
 
 <!-- capability-anchor: CAPABILITY.registered_event_native_scope -->
+
+普通B01/B03接续输入通过ordinary_income_input重建当前原件的实际报告期间，核对当前修订对所需收入输入的影响，再调用原Calculator。每个选中CF观察与同期间/申报/主体的原HTML/XML官方事实独立匹配，原期间过短由既有年度长度守卫返回NOT_MEANINGFUL。source及观察核对分别保存，原input_id不因补充检查被修改。
+
+<!-- capability-anchor: CAPABILITY.current_income_statement_scope -->

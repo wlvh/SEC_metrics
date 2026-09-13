@@ -131,9 +131,12 @@ class OrdinaryZeroAiPrototypeTest(unittest.TestCase):
                 for r in row['source_references']))
         company='paramount_skydance_paramount_global'
         revenue=self.cases[(company,'B01')]
-        self.assertEqual('WITHHELD',revenue['result']['publication'])
-        self.assertEqual('IMPLEMENTATION_GAP',revenue['selection']['category'])
-        self.assertIn('SUCCESSOR_SCOPE_NOT_IMPLEMENTED',revenue['selection']['reason'])
+        self.assertEqual('PUBLISHED',revenue['result']['publication'])
+        self.assertEqual('NOT_MEANINGFUL',revenue['result']['quality'])
+        self.assertEqual('ANNUAL_DURATION_OUT_OF_RANGE',revenue['result']['reason_code'])
+        self.assertIsNone(revenue['result']['value'])
+        self.assertEqual(revenue['target_period']['period_start'],'2025-08-08')
+        self.assertTrue(revenue['input_binding']['income_observation_checks'])
         # The unchanged repository corpus lacks predecessor originals. The
         # event route now reaches that real dependency instead of the blanket
         # financial-continuity guard, without inventing a smaller valid count.

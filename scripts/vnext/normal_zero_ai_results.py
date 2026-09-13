@@ -174,6 +174,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     annual coordinate exists; source authenticity/authority errors propagate.
     """
     _need(metric_id in SUPPORTED_METRICS, "NORMAL_ZERO_AI_METRIC_NOT_IN_PROTOTYPE")
+    from .ordinary_income_input import IncomeInputError, prepare_current_income_input, verify_income_observations
     authority = _authority(repo_root)
     prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
@@ -196,6 +197,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     claims, source_sets, observations, filing_rows, selection = [], [], [], [prepared["filing"]], {}
     dependency_specs, dependency_records = {}, []
     amendment_input = None
+    income_input = None
+    income_observation_checks = []
     if metric_id in {"B01", "B03"}:
         spec_path = B01_SPEC_PATH if metric_id == "B01" else B03_SPEC_PATH
         if metric_id == "B03":
@@ -212,8 +215,15 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     target = {"company_id":company_id, "period_start":period["period_start"], "period_end":period["period_end"],
         "scope":scope, "scope_key":scope_key(scope=scope)}
     try:
-        _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY" or registered_event, "NORMAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
-        if prepared["amendments"]:
+        if metric_id in {"B01","B03"} and prepared["subject_policy"]["mode"] == "SUCCESSOR_REGISTRANT_ONLY":
+            income_input = prepare_current_income_input(repo_root=repo_root,company_id=company_id)
+            period = income_input["statement_period"]
+            target = {**target,"period_start":period["period_start"],"period_end":period["period_end"]}
+            amendment_input = {**income_input["amendment_input"],"decision":"INPUT_PROPERTY_PROVEN",
+                "input_class":"CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES","current_income_checks":income_input["amendment_checks"]}
+        _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY" or registered_event or income_input is not None,
+              "NORMAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
+        if prepared["amendments"] and income_input is None:
             amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,
                 input_class="ORIGINAL_STATEMENT_VALUES" if metric_id in {"B01","B03"} else "FISCAL_EVENT_WINDOW")
             _need(amendment_input["prepared_input"] == prepared.get("original_input",prepared),
@@ -239,6 +249,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
                 reusable.extend(dep_observations)
             result, trace, observations = calculate_metric(compiled_spec=spec,
                 target=execution_target, company_traits=traits, structured_facts=facts, verified_observations=reusable)
+            if income_input is not None:
+                income_observation_checks = verify_income_observations(income_input,observations)
             selection = {"source_candidate_count":len(facts), "selected_fact_ids":[o["source_binding"]["fact_id"] for o in observations],
                 "source_reported_periods":sorted({(f["period_start"],f["period_end"]) for f in facts}), "reason_code":result["reason_code"]}
         else:
@@ -263,7 +275,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
             observations = [observation]
             selection = {"reason_code":result["reason_code"], "matched_verified_claim_ids":graph["matched_verified_claim_ids"],
                          "source_event_accessions":sorted({f["accessionNumber"] for f in events})}
-    except (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateError, BatchWorkflowError, SourceError) as error:
+    except (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateError, BatchWorkflowError, SourceError, IncomeInputError) as error:
         reason = str(error)
         category = getattr(error, "category", "SOURCE_ACCESS_FAILED" if reason.startswith("LATEST_SOURCE_REQUEST_FAILED") else "SOURCE_INTEGRITY_ERROR")
         result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code="NORMAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED")
@@ -271,11 +283,14 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         selection = {**selection, "reason_code":result["reason_code"], "reason":reason, "category":category}
     proofs = prepared["source_proofs"] + [entry["proof"] for entry in reader.proofs.values()]
     if amendment_input is not None: proofs.extend(amendment_input["source_proofs"])
+    if income_input is not None: proofs.extend(income_input["source_proofs"])
     proofs = list({content_hash(value=p):p for p in proofs}.values())
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=proofs)
     source_records = list(reader.records.values())
     if amendment_input is not None:
         source_records = list({content_hash(value=r):r for r in [*source_records,*amendment_input["source_records"]]}.values())
+    if income_input is not None:
+        source_records = list({content_hash(value=r):r for r in [*source_records,*income_input["source_records"]]}.values())
     input_binding = {"prepared_input":prepared,"target":target,"target_period":period,"amendment_input":amendment_input,
         "spec_origin":spec_origin,"spec_closure_hash":spec["spec_closure_hash"],"authority_file_hashes":authority,
         "dependency_spec_closure_hashes":{key:value["spec_closure_hash"] for key,value in dependency_specs.items()},
@@ -283,6 +298,9 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         "failed_source_attempts":list(reader.failed_attempts.values()),"selection":selection,
         "resolver_sha256":sha256_file(path=Path(__file__))}
     if registered_scope is not None:input_binding["registered_event_scope"] = registered_scope
+    if income_input is not None:
+        input_binding["current_income_input"] = income_input
+        input_binding["income_observation_checks"] = income_observation_checks
     body = {"record_type":"NORMAL_ZERO_AI_SOURCE_RESULT_PROTOTYPE", "company_id":company_id,"metric_id":metric_id,
         "spec_path":spec_path,"spec_origin":spec_origin,"compiled_spec":spec,"authority_file_hashes":authority,
         "dependency_specs":dependency_specs,"dependency_records":dependency_records,

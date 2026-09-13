@@ -76,6 +76,7 @@ SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_utilization_source.CapacitySourceMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_sec_acquisition",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_special_debt_scope",)
+SOURCE_TESTS += ("tests.vnext.test_ordinary_income_input",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

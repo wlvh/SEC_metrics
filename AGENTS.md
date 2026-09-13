@@ -401,3 +401,5 @@ C04的文档身份视图现覆盖当前及历史submissions清单；重建Source
 普通来源发现现按原事件目录的窗口和已登记主/前身CIK列出完整事件来源依赖；Paramount为2024–2025、4份当前/31份前身申报，缺9份前身8K正文及头文件共18件。来源发现与有限获取准入已离线验证，尚不代表6事件原生接线完成。见ordinary-registered-events材料。
 
 普通normal_zero_ai_results现按原事件目录窗口/已登记主及前身CIK重建6事件；完整来源保留在同一Run。Run的一年坐标与事件实际回溯窗口分开，run_store只对完整原件重建且逐条一致的6事件记录认可差异，通用53周/财务期间不改。18件真实来源补齐后Paramount6事件原生通过，省略前身的相同零值拒绝，见ordinary-registered-event-runs。
+
+ordinary_income_input为接续主体B01/B03增加独立当前收入输入证明：原HTML/XML/CF、实际期间与PartIII收入更正检查。原300–400天Spec守卫自动保留146天报告的NOT_MEANINGFUL，B03复用B01观察；不拼前身，不修改旧余额/债务/修订规则。材料见ordinary-current-income。

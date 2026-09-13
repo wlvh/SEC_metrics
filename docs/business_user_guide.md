@@ -315,3 +315,7 @@ A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主
 接续主体的事件统计窗口可能长于报告财年；请以结果的period_start/period_end读取覆盖范围。当前开发候选会保留各已登记主体的全部来源，不能因为计数恰好为零就省略前身。正式结果仍由active发布版本决定。
 
 <!-- capability-anchor: CAPABILITY.registered_event_native_scope -->
+
+NOT_MEANINGFUL可以表示当前主体只报告不足一年的期间，而非没有披露收入。查看实际period_start/period_end及原件观察；短期实报数仍可追溯，但不作为全年指标，也不能自行加上前身期间。
+
+<!-- capability-anchor: CAPABILITY.current_income_statement_scope -->

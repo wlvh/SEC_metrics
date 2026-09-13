@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.current_income_statement_scope",
+        "type": "capability",
+        "status": "active",
+        "statement": "接续主体B01/B03从当前原HTML/XML无分部维度的官方收入事实重建真实报告期间，并以同期间/同主体/同申报的原件逐项核对Calculator选中的Company Facts观察。对仅补PartIII的修订复用完整说明/来源/错误更正/无新财务报表等既有机械检查，并增加收入相关更正及财务报表标题检查；未把旧余额许可扩大。当前146天原收入/营业利润/折旧摊销经过原Spec的300–400天守卫生成NOT_MEANINGFUL，不拼接前身或修改历史定义。来源不一致和当前修订疑点仍拒绝，普通入口及B03依赖保留同一原生链。",
+        "audience": [
+          "developer",
+          "reviewer",
+          "operator"
+        ],
+        "test_anchor": "tests/vnext/test_ordinary_income_input.py::OrdinaryIncomeInputTest",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.registered_event_native_scope",
         "type": "capability",
         "status": "active",
