@@ -1,3 +1,15 @@
+# 当前新增进度：主体不可比规则已接入六项原生验证
+
+Paramount B02/B04/B05/B07现复用原目录REQUIRE_CONTINUOUS的NOT_MEANINGFUL规则，不再误报未实现；B08/B09数值保留。来源10测试PASS66.657秒，六个真实OPEN Run/公共行全部就绪，两组结构有效重签攻击被拒绝，Python3.9复制包冷读通过，100组fast PASS79.61秒。首次原生空输入拒绝与修后材料分开保存在ordinary-continuity-policy/；不是数值重算成功、真实SEC新获取、完整390或生产信用。
+
+当前模型key仍未读到，已请求本机配置位置，真实0/0/0。下一核心工作是既有SecHttpClient的有限真实获取与统一计数/可信来源接线：JPM六个历史分片与索引日期范围冲突，Salesforce一份旧年报HTML和一份8K头文件缺失/失败，确切URL已做只读发现。现有recorded来源会话仅测试身份，不能直接改成live；新SEC执行也须先定向离线验证。并继续B13完整来源赋义及原生结果、D03/D04语义和其他范围缺口，不停在本次commit。
+
+最新有效调用接线见ordinary-continuity-policy/offline-wiring.json；预算批准和固定总账不变，仍无生产许可。提交后先alignment，失败不push；同一Draft PR43，旧失败/快照/审阅不覆盖。
+
+以下为前序进度，版本状态以本段及execution-state.json为准。
+
+---
+
 # 当前新增进度：780d9ba 回归已在本地修复，B13仍在开发
 
 780d9ba已推PR，但CI原生Run因当前未冻结V14的4项执行指纹漏更新而失败；当前更新5项执行绑定（含B13 compiler新增语法），业务规则不改。V14当前82754285/351；原e1ac/634五文件保存在runtime-binding-repair-780d9ba/historical-v14-e1ac，原闭包重算一致。V15当前6a70bf77/364，仍绑原批准5651558538和同一累计总账。

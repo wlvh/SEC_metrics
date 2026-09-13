@@ -902,3 +902,7 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 <!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
 
 `continuous_semantic_calls` 先按受信旧获取证明重建 D04 来源，将每个已有完整单元分别序列化以遵守 200000 context 限制；原单元覆盖不丢失。新请求的来源、规则、配置、策略工厂及 WB-3 身份在后继版本下绑定。现有 DeepSeek transport 新增精确请求类型分派，仍仅原固定官方 opener；send 核对当前 WB-3 上下文、进程/令牌、预留与唯一 marker。未知 token/cost 在本后继显式为 null，旧整数/字符串观测验证保持。可行性终态保留原始 wire，明确没有原生 Evidence，不把协议通过升级为语义正确或正式成功。真实调用还须已完成且与当前执行文件集合一致的离线接线材料。
+
+<!-- capability-anchor: CAPABILITY.ordinary_continuity_policy_terminal -->
+
+普通Company Facts适配先区分“来源赋义尚未实现”和原目录明确规定的主体不可比。后者在原件/登记主体/期间已核对后，复用冻结zero_ai_r2中的REQUIRE_CONTINUOUS守卫；修订范围限制仍作为独立信息保存，不借此使用财务数值。原生图验证先完整重建ordinary_case，再仅对与该确切预期结果相同、且理由/Trace均为ENTITY_CONTINUITY_NOT_COMPARABLE的无数值终态允许空数量输入。它不是所有NOT_MEANINGFUL的豁免。

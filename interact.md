@@ -461,3 +461,7 @@ D04 可行性调用保存本次实际请求/响应和验证结果，但目前不
 <!-- capability-anchor: CAPABILITY.b13_source_and_comparison_draft -->
 
 B13开发入口保留制造产能原文和数量线索；“每季约500万台产能”等材料不会直接变成利用率。数值必须具备同范围实际产量及可用产能，销量不能替代；当前源候选及Calculator检查不冒充已完成的B13结果。普通更新和原生结果接线仍待完成，来源候选的TEXT_QUAL提示不证明已经排除了全部数值对。
+
+<!-- capability-anchor: CAPABILITY.ordinary_continuity_policy_terminal -->
+
+Paramount的B02/B04/B05/B07按既有目录显示主体不连续导致“不具可比意义”，附原始年报、修订及具体规则。此状态不声称财报没有披露相关数值，也不拼接前后主体的全年金额。B08/B09仍显示同一当前主体、同一期末的已核验余额；不是整个公司都被阻断。

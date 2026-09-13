@@ -25,8 +25,10 @@ class InstantBalanceNativeMaterialTest(unittest.TestCase):
         summary=json.loads((root/'summary.json').read_text())
         self.assertEqual('OPEN_CANDIDATES_READY',summary['status'])
         coordinates={r['metric_id']:r for r in summary['coordinates']}
-        self.assertEqual({'B08','B09'},set(coordinates))
+        expected={'B02','B04','B05','B07','B08','B09'} if os.environ.get('INSTANT_BALANCE_WITH_CONTINUITY')=='1' else {'B08','B09'}
+        self.assertEqual(expected,set(coordinates))
         for metric,row in coordinates.items():
+            if metric not in {'B08','B09'}:continue
             data,run=root/row['data_path'],root/row['run_path']
             manifest,records,decisions=run_store._mechanically_replay_open_run(run_dir=run,repo_root=data,require_complete_results=True)
             self.assertEqual('OPEN',manifest['status']);self.assertEqual([],decisions)

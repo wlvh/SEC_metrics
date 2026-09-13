@@ -54,6 +54,22 @@ class OrdinaryCompanyfactsTest(unittest.TestCase):
                         self.assertEqual([],row['claims'])
                         self.assertEqual([],row['observations'])
 
+    def test_successor_annual_metrics_use_the_existing_noncomparability_rule(self):
+        case=self.cases['paramount_skydance_paramount_global']
+        for metric in ['B02','B04','B05','B07']:
+            with self.subTest(metric=metric):
+                row=case['metrics'][metric]
+                self.assertEqual(row['result']['quality'],'NOT_MEANINGFUL')
+                self.assertEqual(row['result']['reason_code'],'ENTITY_CONTINUITY_NOT_COMPARABLE')
+                self.assertIsNone(row['result']['value'])
+                self.assertEqual(row['selection']['category'],'APPROVED_COMPARABILITY_LIMIT')
+                self.assertEqual(row['selection']['continuity_policy'],'REQUIRE_CONTINUOUS')
+                self.assertFalse(row['selection']['statement_values_used'])
+                self.assertIsNotNone(row['selection']['amendment_input_id'])
+                self.assertEqual(row['claims'],[]);self.assertEqual(row['observations'],[])
+        for metric in ['B08','B09']:
+            self.assertEqual(case['metrics'][metric]['result']['quality'],'EXACT')
+
     def test_every_selected_claim_returns_to_its_original_accession_value_unit_and_period(self):
         for company,case in self.cases.items():
             raw=json.loads((ROOT/case['prepared_input']['companyfacts_input']['source_repo_relative_path']).read_text())
@@ -109,7 +125,8 @@ class OrdinaryCompanyfactsTest(unittest.TestCase):
         self.assertEqual('INPUT_PROPERTY_PROVEN',southwest['amendment_input']['decision'])
         self.assertIsNone(southwest['prior_error'])
         for company in ('paramount_skydance_paramount_global',):
-            self.assertEqual('WITHHELD',self.cases[company]['metrics']['B02']['result']['publication'])
+            self.assertEqual('NOT_MEANINGFUL',self.cases[company]['metrics']['B02']['result']['quality'])
+            self.assertIsNone(self.cases[company]['metrics']['B02']['result']['value'])
             self.assertEqual('N_A_STRUCTURAL',self.cases[company]['metrics']['A05']['result']['applicability'])
 
     def test_real_json_no_git_rebuild_rejects_resigned_answer_period_and_source_changes(self):
@@ -145,7 +162,8 @@ class OrdinaryCompanyfactsTest(unittest.TestCase):
                 self.assertEqual('2041610',claim['attributes']['entity'])
                 self.assertEqual(case['filings']['current']['accessionNumber'],claim['attributes']['accession'])
         for metric in ('B02','B04','B05','B07'):
-            self.assertEqual('WITHHELD',case['metrics'][metric]['result']['publication'])
+            self.assertEqual('NOT_MEANINGFUL',case['metrics'][metric]['result']['quality'])
+            self.assertIsNone(case['metrics'][metric]['result']['value'])
         with tempfile.TemporaryDirectory(prefix='instant-amendment-import-') as tmp:
             root=Path(tmp);copy_sources(case,root)
             with original_sources_only():
@@ -161,6 +179,25 @@ class OrdinaryCompanyfactsTest(unittest.TestCase):
         for key in ('prior_period','filing','claims','answer','source_proofs'):
             with self.subTest(key=key),self.assertRaises(TypeError):
                 resolve_ordinary_companyfacts_metrics(repo_root=ROOT,company_id='marriott_international',**{key:{}})
+
+    def test_changed_continuity_guard_cannot_leave_numeric_evidence(self):
+        from unittest.mock import patch
+        from vnext import normal_companyfacts_results as module
+        original=module._deterministic_metric_graph
+        def wrong(**fields):
+            graph=original(**fields)
+            if fields['metric_id']=='B04':
+                graph=copy.deepcopy(graph)
+                graph['result'].update(value='1',quality='EXACT')
+                graph['observation']={'value':'1'}
+            return graph
+        with original_sources_only(),patch.object(module,'_deterministic_metric_graph',side_effect=wrong):
+            case=resolve_ordinary_companyfacts_metrics(repo_root=ROOT,company_id='paramount_skydance_paramount_global')
+        row=case['metrics']['B04']
+        self.assertEqual(row['result']['publication'],'WITHHELD')
+        self.assertIn('CONTINUITY_GUARD_CHANGED',row['selection']['reason'])
+        self.assertIsNone(row['result']['value']);self.assertEqual(row['observations'],[])
+        self.assertEqual(case['metrics']['B08']['result']['quality'],'EXACT')
 
 
 if __name__=='__main__':

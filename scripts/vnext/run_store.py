@@ -2908,8 +2908,24 @@ def _validate_record_graph(
                 raise RunStoreError(
                     "Structural Result state differs from Trace"
                 )
+            ordinary_continuity_terminal = (
+                ordinary_case is not None
+                and ordinary_case.get("kind") == "STRUCTURED"
+                and isinstance(ordinary_case.get("selection"), dict)
+                and ordinary_case["selection"].get("category") == "APPROVED_COMPARABILITY_LIMIT"
+                and ordinary_case.get("results", {}).get(record["metric_id"]) == record
+                and record["quality"] == "NOT_MEANINGFUL"
+                and record["reason_code"] == "ENTITY_CONTINUITY_NOT_COMPARABLE"
+                and record["value"] is None
+                and trace["steps"] == [{"event": "ENTITY_CONTINUITY_NOT_COMPARABLE"}]
+                and not trace["input_observation_ids"]
+            )
+            # ordinary_case was reconstructed from this Run's exact sources,
+            # registry and approved catalog before reaching this check. This
+            # policy guard evaluates identity rather than a financial number.
             if (
                 record["quality"] == "NOT_MEANINGFUL"
+                and not ordinary_continuity_terminal
                 and (
                     not trace["input_observation_ids"]
                     or any(

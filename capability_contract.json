@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.ordinary_continuity_policy_terminal",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通Company Facts入口对已批准REQUIRE_CONTINUOUS规则和已验证接续主体，复用原计算器的NOT_MEANINGFUL/ENTITY_CONTINUITY_NOT_COMPARABLE终态，保留修订限制而不使用未经证明的财务值；不再误报成未实现或改成N/A。原生Run只有经完整来源/目录重算且与确切预期结果、理由和Trace一致的该类结果可以无数量输入；其他NOT_MEANINGFUL守卫保留数量要求。当前余额正向结果不变，伪造数值/空输入理由及异常守卫结果被拒绝。",
+        "audience": [
+          "developer",
+          "reviewer",
+          "operator"
+        ],
+        "test_anchor": "tests/vnext/test_normal_companyfacts_results.py::OrdinaryCompanyfactsTest.test_successor_annual_metrics_use_the_existing_noncomparability_rule",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.b13_source_and_comparison_draft",
         "type": "capability",
         "status": "active",

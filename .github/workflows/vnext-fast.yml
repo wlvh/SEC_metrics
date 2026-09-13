@@ -96,17 +96,25 @@ jobs:
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
           python-version: "3.14"
-      - name: Build successor current-balance Runs with amendment evidence
+      - name: Build current-balance and approved noncomparability Runs
         env:
           PYTHONDONTWRITEBYTECODE: "1"
-        run: python3 tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B08 --metric B09 --output-root "${{ runner.temp }}/ordinary-instant-${{ github.run_id }}-${{ github.run_attempt }}"
+        run: python3 tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B02 --metric B04 --metric B05 --metric B07 --metric B08 --metric B09 --output-root "${{ runner.temp }}/ordinary-instant-${{ github.run_id }}-${{ github.run_attempt }}"
       - name: Reject false cash and missing amendment sources
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts
           INSTANT_BALANCE_NATIVE_BATCH: ${{ runner.temp }}/ordinary-instant-${{ github.run_id }}-${{ github.run_attempt }}
           INSTANT_BALANCE_ATTACK_ROOT: ${{ runner.temp }}/ordinary-instant-attacks-${{ github.run_id }}-${{ github.run_attempt }}
+          INSTANT_BALANCE_WITH_CONTINUITY: "1"
         run: python3 -m unittest -v tests.vnext.test_instant_balance_run_material
+      - name: Reject forged inputless and numeric continuity terminals
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          CONTINUITY_NATIVE_BATCH: ${{ runner.temp }}/ordinary-instant-${{ github.run_id }}-${{ github.run_attempt }}
+          CONTINUITY_ATTACK_ROOT: ${{ runner.temp }}/ordinary-continuity-attacks-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_continuity_run_material
   debt-native-runs:
     name: vNext debt native Runs
     runs-on: ubuntu-latest

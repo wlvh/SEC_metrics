@@ -38,6 +38,8 @@ ChatGPT review5189571246 与用户转交 Fable5.1 按6341530及明示模块登�
 
 780d9ba 的原生CI因未冻结V14执行字节绑定未同步而失败，当前只更新该草案的执行绑定，原e1ac五文件与失败保存在`docs/evidence/issue28_continuous/runtime-binding-repair-780d9ba/`。V15及其新请求类型延迟到实际选择时导入，旧普通运行包不必加载新调用模块。`capacity_utilization_source.py`、`config/b13_production_capacity_v1.json`和两个B13后继Spec目前只完成来源候选及可比量Calculator开发检查；尚未授予数值来源赋义、原生Review/Run、完整B13或生产信用。
 
+普通Company Facts现复用已批准的REQUIRE_CONTINUOUS守卫，为Paramount B02/B04/B05/B07生成主体不可比的NOT_MEANINGFUL；B08/B09数值保留。Run只对经过完整原件/目录重算的确切该类结果允许无数量输入，不放宽其他守卫。六项原生/两项重签攻击/复制包冷读见`docs/evidence/issue28_continuous/ordinary-continuity-policy/`。这不是数值披露缺失结论，也不是改变指标口径。
+
 ## 0. 按任务选择阅读路径
 
 首次进入仓库时先判断任务，再读取对应的标准流程。`SOP.md` 是标准工作流的一级导航；专项文档负责提供具体事实和命令。

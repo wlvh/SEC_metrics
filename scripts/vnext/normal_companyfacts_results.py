@@ -168,29 +168,53 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
                 steps=[{"event":"N_A_STRUCTURAL"}],accession=None,entity=None,unit=None)
         else:
             try:
-                # The installed catalog already permits these current-instant
-                # metrics across a registrant transition. Their facts still
-                # come exclusively from this primary CIK/current accession;
-                # this does not establish comparable annual performance.
-                instant_scope=(route["continuity_policy"] == "ALLOW" and instant
-                    and all(c["accession_role"] == "current" and c["period_role"] == "current_instant"
-                            for branch in route["branches"] for c in branch["components"]))
-                _need(not subject_error or instant_scope, subject_error)
-                limited_amendment=(instant_scope and instant_amendment_input is not None
-                    and metric_id in instant_amendment_input["metric_ids"]
-                    and instant_amendment_input["decision"] == "INPUT_PROPERTY_PROVEN")
-                _need(not common_error or limited_amendment, common_error)
-                requires_prior = any(c["accession_role"] == "prior" for b in route["branches"] for c in b["components"])
-                _need(not requires_prior or prior_error is None, (prior_error or {}).get("reason"))
-                graph = _deterministic_metric_graph(context=context, company_id=company_id, metric_id=metric_id)
-                result, trace = graph["result"], graph["trace"]
-                if subject_error or limited_amendment:
-                    detail={"subject_scope":"CURRENT_PRIMARY_CIK_AND_CURRENT_INSTANT_ONLY",
-                            "annual_continuity_proven":False,
-                            "instant_amendment_input_id":instant_amendment_input["instant_input_id"] if limited_amendment else None}
+                continuity_guard = (bool(subject_error)
+                    and route["continuity_policy"] == "REQUIRE_CONTINUOUS"
+                    and registry["entity_continuity_status"] != "continuous")
+                if continuity_guard:
+                    # This existing catalog guard needs the authenticated
+                    # registrant/period, not unproven statement values. Keep
+                    # the amendment limitation without inventing a ratio or
+                    # relabelling an approved non-comparability outcome as a
+                    # missing implementation.
+                    graph = _deterministic_metric_graph(context=context, company_id=company_id, metric_id=metric_id)
+                    result, trace = graph["result"], graph["trace"]
+                    _need(result["quality"] == "NOT_MEANINGFUL"
+                          and result["reason_code"] == "ENTITY_CONTINUITY_NOT_COMPARABLE"
+                          and result["value"] is None and not graph["claims"] and graph["observation"] is None,
+                          "NORMAL_COMPANYFACTS_CONTINUITY_GUARD_CHANGED")
+                    detail = {"category":"APPROVED_COMPARABILITY_LIMIT",
+                        "reason":"ENTITY_CONTINUITY_NOT_COMPARABLE",
+                        "continuity_policy":route["continuity_policy"],
+                        "entity_continuity_status":registry["entity_continuity_status"],
+                        "subject_policy":prepared["subject_policy"],
+                        "statement_values_used":False,"financial_amendment_limitation":common_error,
+                        "amendment_input_id":amendment_input["amendment_input_id"] if amendment_input else None}
+                else:
+                    # The installed catalog already permits these current-instant
+                    # metrics across a registrant transition. Their facts still
+                    # come exclusively from this primary CIK/current accession;
+                    # this does not establish comparable annual performance.
+                    instant_scope=(route["continuity_policy"] == "ALLOW" and instant
+                        and all(c["accession_role"] == "current" and c["period_role"] == "current_instant"
+                                for branch in route["branches"] for c in branch["components"]))
+                    _need(not subject_error or instant_scope, subject_error)
+                    limited_amendment=(instant_scope and instant_amendment_input is not None
+                        and metric_id in instant_amendment_input["metric_ids"]
+                        and instant_amendment_input["decision"] == "INPUT_PROPERTY_PROVEN")
+                    _need(not common_error or limited_amendment, common_error)
+                    requires_prior = any(c["accession_role"] == "prior" for b in route["branches"] for c in b["components"])
+                    _need(not requires_prior or prior_error is None, (prior_error or {}).get("reason"))
+                    graph = _deterministic_metric_graph(context=context, company_id=company_id, metric_id=metric_id)
+                    result, trace = graph["result"], graph["trace"]
+                    if subject_error or limited_amendment:
+                        detail={"subject_scope":"CURRENT_PRIMARY_CIK_AND_CURRENT_INSTANT_ONLY",
+                                "annual_continuity_proven":False,
+                                "instant_amendment_input_id":instant_amendment_input["instant_input_id"] if limited_amendment else None}
             except (*_SOURCE_ERRORS, NormalCompanyfactsError, DecimalException) as error:
                 detail = {"reason":str(error),"error_type":type(error).__name__,
                           "category":"SOURCE_OR_IMPLEMENTATION_UNRESOLVED"}
+                graph = {"claims":[],"projection_claims":[],"observation":None}
                 result, trace = withheld_metric_result(compiled_spec=spec,target=target,reason_code="NORMAL_COMPANYFACTS_ROUTE_UNRESOLVED")
         observations = [graph["observation"]] if graph["observation"] else []
         results[metric_id] = {"metric_id":metric_id,"compiled_spec":spec,"target":target,

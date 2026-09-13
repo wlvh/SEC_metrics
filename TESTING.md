@@ -723,3 +723,7 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 <!-- capability-anchor: CAPABILITY.b13_source_and_comparison_draft -->
 
 `PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_capacity_utilization_source.CapacityComparisonTest` 验证80/100、零产量及超过名义产能的比值复用既有Calculator，并拒绝销量/出货/装机/规划量、错主体/单位/期间/产品设施及错误目标口径。`B13_SOURCE_MATERIAL_ROOT=/absolute/new/material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_capacity_utilization_source.CapacitySourceMaterialTest` 从Ford/Enphase实际保存原文形成来源候选，保留11/5条相关披露和8/0个可能产量线索。测试未将候选数视为语义覆盖，也未将无匹配推成NOT_AVAILABLE_SEC；没有B13原生Run信用。两类分别加入fast/source层。
+
+<!-- capability-anchor: CAPABILITY.ordinary_continuity_policy_terminal -->
+
+`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_companyfacts_results`覆盖当前10公司×11项源结果、原有正向/来源反例、新主体不可比规则及错误守卫不得留下数值证据。Paramount六项定向CLI为`tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B02 --metric B04 --metric B05 --metric B07 --metric B08 --metric B09 --output-root <新外部目录>`；前四项NOT_MEANINGFUL，后两项EXACT，全部OPEN及公共行均须形成。`docs/evidence/issue28_continuous/ordinary-continuity-policy/`保存首次通用Run校验拒绝、修后材料、有效重签的虚假数值/无关空输入理由拒绝及复制运行包的Python3.9冷读。无真实调用或正式发布信用。
