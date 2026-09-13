@@ -204,7 +204,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `scripts/vnext/r6_semantic_source.py` / `r6_semantic_review.py`：D04离线解释输入与保存响应协议，包含全部正文/原生事实及续接关系，嵌套XML按原位置重建，程序定位唯一原文引用并保留响应遗漏/冲突。尚无模型调用、语义正确性证明、D04 Run或正式信用；不以协议测试代替真实模型验证。见`docs/r6_interpretation_protocol.md`。
 - `scripts/vnext/ordinary_source_session.py` / `ordinary_source_authority.py`：测试会话复用SEC原生持久化与追加；实际创建进程在安装目录登记完整来源记录，再通过当前普通验证、外部source_root安装和Run重放读取。原清单不改，调用方JSON不能登记自己；测试类型保留到预览，真实获取/预算/生产仍未启用。见`docs/recorded_source_session.md`。
 - `ordinary_remaining_cases.py` / `ordinary_financial_results.py` / `ordinary_text_input.py` / `ordinary_debt_guard.py`：既有十二条金融、治理、文本及债务路线的当前来源入口。复用冻结模块的纯业务函数、Spec及Calculator，不修改旧入口；当前B06修订核对和非正权益保护顺序保持不变。
-- `ordinary_update_cycle.py`：普通已准入输入的更新检查，区分最近尝试与完整成功候选，保留失败/中断历史，输入未变时重验并复用Run。使用现有原生链路，零外发、不发布，入口见`docs/ordinary_update_cycle.md`。 正常公司入口按指标保存独立历史，单项失败不阻止其余指标，旧值保留原期间及当前输入匹配标记。
+- `ordinary_update_cycle.py`：普通已准入输入的更新检查，区分最近尝试与完整成功候选，保留失败/中断历史，输入未变时重验并复用Run。使用现有原生链路，零外发、不发布，入口见`docs/ordinary_update_cycle.md`。 正常公司入口按指标保存独立历史，单项失败不阻止其余指标，旧值保留原期间及当前输入匹配标记。 历史意图/终态编号、类型及完整前驱绑定逐项核对，重签哈希不能绕过。
 
 - `scripts/vnext/b06_source_admission.py`：独立于普通输入的受信获取/导入执行记录、
   固定阶段预算及后置离线checkpoint；自洽ledger不授真实SEC信用。

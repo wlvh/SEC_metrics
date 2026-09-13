@@ -701,7 +701,7 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 
 <!-- capability-anchor: CAPABILITY.ordinary_update_cycle -->
 
-`ORDINARY_UPDATE_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_update_cycle`使用真实Run及两份原始清单版本验证内容身份、重复请求、失败/恢复、成功终态与引用写入中断、未完成意图、并发、伪造引用、改公共行和相同WITHHELD输入不重复建Run。网络/HTTP/DNS均禁用。新增历史测试请求只能选择受信不可变尝试，相关源会话测试继续在fast层运行。材料不等于实时新财报或完整生产生命周期验证。
+`ORDINARY_UPDATE_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_update_cycle`使用真实Run及两份原始清单版本验证内容身份、重复请求、失败/恢复、成功终态与引用写入中断、未完成意图、并发、伪造引用、改公共行和相同WITHHELD输入不重复建Run。网络/HTTP/DNS均禁用。新增历史测试请求只能选择受信不可变尝试，相关源会话测试继续在fast层运行。材料不等于实时新财报或完整生产生命周期验证。 同一实际材料增加十项记录反例：最新/更早终态编号与类型、未知终态、错意图/配置、更早意图类型/成功前驱及缺失旧终态；改意图时连带重签终态绑定，以验证实际一致性而非仅哈希失配。最后恢复原件并重验不新建Run。
 
 338bbc8的来源CI中，B06当前输入模块六项测试合计达到240秒而超时，其他七项CI作业成功。当前source-material选择器将这六项按实际方法分别运行，仍保持每项240秒，方法集合与源码逐项核对无遗漏；源码选择器总数由45变为50。旧超时不重写为通过，拆分后的六项单独复验。
 

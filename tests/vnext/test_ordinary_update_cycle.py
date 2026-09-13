@@ -93,12 +93,49 @@ class OrdinaryUpdateCycleTest(unittest.TestCase):
                 for _ in range(2):
                     repeated=cycle.run_once(state_root=withheld_root,source_root=normal.ROOT,company_id='pfizer',metric_ids=['B06'])
                     self.assertEqual('PREVIOUS_INPUT_WITHHELD',repeated['status']);self.assertFalse(repeated['new_candidate_created'])
+            latest=json.loads((state/'current.json').read_text())['latest_attempt']
+            first_work=state/'attempts'/first['successful_attempt']
+            latest_terminal=state/'attempts'/latest/'terminal.json'
+            metadata_attacks=[
+                ('latest-terminal-id',latest_terminal,'attempt_id','0'*32,'UPDATE_TERMINAL_IDENTITY_CHANGED'),
+                ('latest-terminal-type',latest_terminal,'record_type','UNRELATED_TERMINAL_TYPE','UPDATE_TERMINAL_IDENTITY_CHANGED'),
+                ('older-terminal-id',first_work/'terminal.json','attempt_id','0'*32,'UPDATE_TERMINAL_IDENTITY_CHANGED'),
+                ('older-terminal-type',first_work/'terminal.json','record_type','UNRELATED_TERMINAL_TYPE','UPDATE_TERMINAL_IDENTITY_CHANGED'),
+                ('older-terminal-status',first_work/'terminal.json','status','UNRECOGNIZED','UPDATE_TERMINAL_STATUS_INVALID'),
+                ('older-terminal-intent',first_work/'terminal.json','intent_id','sha256:'+'0'*64,'UPDATE_TERMINAL_INTENT_CHANGED'),
+                ('older-terminal-configuration',first_work/'terminal.json','configuration_id','sha256:'+'0'*64,'UPDATE_TERMINAL_INTENT_CHANGED'),
+                ('older-intent-type',first_work/'intent.json','record_type','UNRELATED_INTENT_TYPE','UPDATE_INTENT_IDENTITY_CHANGED'),
+                ('older-success-predecessor',first_work/'intent.json','previous_successful_attempt',first['successful_attempt'],'UPDATE_INTENT_PREDECESSOR_CHANGED'),
+                ('older-terminal-removed',first_work/'terminal.json',None,None,'UPDATE_HISTORICAL_TERMINAL_MISSING')]
+            evidence=root/'metadata-rejections';evidence.mkdir()
+            for name,path,field,value,reason in metadata_attacks:
+                with self.subTest(metadata=name):
+                    saved={path:path.read_bytes()}
+                    try:
+                        if field is None:path.unlink()
+                        else:
+                            changed=json.loads(saved[path]);changed[field]=value
+                            changed['record_id']=cycle.content_hash(value={k:v for k,v in changed.items() if k!='record_id'})
+                            path.write_text(json.dumps(changed,indent=2)+'\n')
+                            if path.name=='intent.json':
+                                terminal=path.parent/'terminal.json';saved[terminal]=terminal.read_bytes()
+                                paired=json.loads(saved[terminal]);paired['intent_id']=changed['record_id']
+                                paired['record_id']=cycle.content_hash(value={k:v for k,v in paired.items() if k!='record_id'})
+                                terminal.write_text(json.dumps(paired,indent=2)+'\n')
+                        (evidence/(name+'.json')).write_text(json.dumps({'expected_reason':reason,
+                            'input_files':{str(p.relative_to(state)):p.read_text() if p.exists() else None for p in saved}},indent=2)+'\n')
+                        with self.assertRaisesRegex(cycle.OrdinaryUpdateError,reason):check()
+                    finally:
+                        for p,raw in saved.items():p.write_bytes(raw)
+            with patch.object(normal,'create_normal_run',side_effect=AssertionError('Restored history must reuse its original candidate')):
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE',check()['status'])
         (root/'summary.json').write_text(json.dumps({'status':'PASS','first_candidate':first['successful_attempt'],
             'changed_content_candidate':success,'recovered_candidate':ready[0]['attempt_id'],
             'checks':['initial-candidate','request-only-change-no-new-run','two-actual-source-versions-new-candidate',
             'failed-source-preserves-success','restored-source-no-new-run','ready-terminal-pointer-recovery',
             'unfinished-intent-retained','concurrent-check-rejected','invented-latest-reference-rejected','changed-successful-row-rejected',
-            'same-withheld-input-does-not-create-more-runs'],
+            'same-withheld-input-does-not-create-more-runs','terminal-and-intent-identities-and-ancestry-rejected'],
+            'metadata_rejections':[name for name,*_ in metadata_attacks],
             'calls':{'provider':0,'paid':0,'sec':0},'real_new_filing_verified':False,'production_authorized':False},indent=2)+'\n')
 
 

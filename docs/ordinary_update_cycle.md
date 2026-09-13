@@ -32,3 +32,5 @@ ORDINARY_UPDATE_MATERIAL_ROOT=/absolute/new/update-material PYTHONDONTWRITEBYTEC
 该材料没有证明新财年在线发现、真实来源获取、模型语义判断、常驻调度、全部39项或正式发布完成。新增预算、持续生产权限、代码版本迁移和最终生产确认仍需按Issue #28总委托落实。
 
 实际混合场景通过`ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT=/absolute/new/company-material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest`验证：Pfizer收入和流动比率独立成功，债务保持受限；重复检查不新建Run，收入输入故障保留原期间且标为历史，后续指标仍完成；篡改收入公共行只阻止该指标。
+
+历史记录的类型和尝试编号必须与实际意图/终态文件及目录相符；所有已有终态都要与对应意图和配置绑定，状态必须是受支持的终态。检查覆盖最新及更早记录，按完整前驱链核对成功引用；已有后继记录之前缺少终态会拒绝。重新计算被改记录的哈希不能替代这些一致性证明。

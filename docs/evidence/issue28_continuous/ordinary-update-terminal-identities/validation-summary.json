@@ -1,0 +1,50 @@
+{
+  "status": "LOCAL_VERIFICATION_PASSED_INDEPENDENT_REVIEW_PENDING",
+  "requirement_closure_hash": "sha256:e1ac4b08b4b31aa5d7a411ac76b8d29c33075e82da3fe5f939009566194dc1f4",
+  "execution_files": 351,
+  "metadata_rejections": [
+    "latest-terminal-id",
+    "latest-terminal-type",
+    "older-terminal-id",
+    "older-terminal-type",
+    "older-terminal-status",
+    "older-terminal-intent",
+    "older-terminal-configuration",
+    "older-intent-type",
+    "older-success-predecessor",
+    "older-terminal-removed"
+  ],
+  "native_scenarios": 12,
+  "material_seconds": 393.475,
+  "fast": {
+    "selectors": 97,
+    "seconds": 79.619,
+    "status": "PASSED"
+  },
+  "archives": {
+    "counterexample": {
+      "members": 594,
+      "bytes": 4132328
+    },
+    "corrected": {
+      "members": 2957,
+      "bytes": 19800955
+    }
+  },
+  "reentry_python39": "PASS_NO_NEW_RUN",
+  "no_git_lifecycle": "NOT_CLAIMED",
+  "previous_committed_ci": {
+    "head": "0c597a8065e00c9a30f6c545abf18c87dac8cb97",
+    "run": 34733477725,
+    "jobs": 10,
+    "status": "SUCCESS"
+  },
+  "source_credit": "RECORDED_TEST_ONLY",
+  "new_filing_verified": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

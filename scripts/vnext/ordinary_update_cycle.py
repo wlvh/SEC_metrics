@@ -140,7 +140,7 @@ def _state(root,configuration):
     else:
         work=_attempt(root,state['latest_attempt'])
         _need((work/'intent.json').is_file() and (work/'terminal.json').is_file(),'UPDATE_STATE_REFERENCE_MISSING')
-        intent=_read(work/'intent.json');terminal=_read(work/'terminal.json')
+        intent=_intent(root,state['latest_attempt']);terminal=_terminal(root,state['latest_attempt'])
         _need(intent['configuration_id']==terminal['configuration_id']==configuration['record_id']
               and terminal['intent_id']==intent['record_id'],'UPDATE_STATE_REFERENCE_CHAIN_CHANGED')
         expected=state['latest_attempt'] if terminal['status']=='CANDIDATE_READY' else intent['previous_successful_attempt']
@@ -148,7 +148,20 @@ def _state(root,configuration):
     return state
 
 
-def _terminal(root,identity):return _read(_attempt(root,identity)/'terminal.json')
+def _intent(root,identity):
+    value=_read(_attempt(root,identity)/'intent.json')
+    _need(value.get('record_type')=='ORDINARY_UPDATE_INTENT' and value.get('attempt_id')==identity,
+          'UPDATE_INTENT_IDENTITY_CHANGED')
+    return value
+
+
+def _terminal(root,identity):
+    value=_read(_attempt(root,identity)/'terminal.json')
+    _need(value.get('record_type')=='ORDINARY_UPDATE_TERMINAL' and value.get('attempt_id')==identity,
+          'UPDATE_TERMINAL_IDENTITY_CHANGED')
+    _need(value.get('status') in {'CANDIDATE_READY','NO_SOURCE_CONTENT_CHANGE','CANDIDATE_WITHHELD',
+          'PREVIOUS_INPUT_WITHHELD','INPUT_FAILED','EXECUTION_FAILED','INTERRUPTED'},'UPDATE_TERMINAL_STATUS_INVALID')
+    return value
 
 
 def _recover(root,state,configuration):
@@ -157,7 +170,7 @@ def _recover(root,state,configuration):
     for work in (root/'attempts').iterdir() if (root/'attempts').exists() else []:
         _attempt(root,work.name)
         if (work/'intent.json').is_file():
-            intent=_read(work/'intent.json')
+            intent=_intent(root,work.name)
             _need(intent['configuration_id']==configuration['record_id'] and intent['attempt_id']==work.name,
                   'UPDATE_INTENT_CONFIGURATION_CHANGED')
             intents[work.name]=intent
@@ -167,12 +180,24 @@ def _recover(root,state,configuration):
         parent=intent['previous_attempt']
         _need(parent is None or parent in intents and parent!=identity,'UPDATE_JOURNAL_PREDECESSOR_MISSING')
         successors.setdefault(parent,[]).append(identity)
-    visited=set();cursor=None
+    visited=set();cursor=None;historical_success=None
     while True:
         children=successors.get(cursor,[])
         if not children:break
         _need(len(children)==1 and children[0] not in visited,'UPDATE_JOURNAL_BRANCH_OR_CYCLE')
         cursor=children[0];visited.add(cursor)
+        intent=intents[cursor]
+        _need(intent['previous_successful_attempt']==historical_success,'UPDATE_INTENT_PREDECESSOR_CHANGED')
+        work=_attempt(root,cursor)
+        if (work/'terminal.json').exists():
+            terminal=_terminal(root,cursor)
+            _need(terminal['intent_id']==intent['record_id'] and terminal['configuration_id']==configuration['record_id'],
+                  'UPDATE_TERMINAL_INTENT_CHANGED')
+            if terminal['status']=='CANDIDATE_READY':historical_success=cursor
+        else:
+            _need(not successors.get(cursor),'UPDATE_HISTORICAL_TERMINAL_MISSING')
+        if cursor==state['latest_attempt']:
+            _need(state['successful_attempt']==historical_success,'UPDATE_STATE_REFERENCE_CHAIN_CHANGED')
     _need(visited==set(intents),'UPDATE_JOURNAL_DISCONNECTED')
     while True:
         following=successors.get(state['latest_attempt'],[])
