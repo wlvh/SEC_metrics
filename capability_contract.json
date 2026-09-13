@@ -14,6 +14,19 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.b13_source_and_comparison_draft",
+        "type": "capability",
+        "status": "active",
+        "statement": "用户批准的B13后继数值/文本Spec保留历史Spec。限定Ford/Enphase来源候选读取完整本地原件并保存精确生产/制造产能原文、可能产量线索和原生候选；相关定性原文不证明数值对不存在，搜索未命中不输出NOT_AVAILABLE_SEC。仅对已验证数量角色开发检查同主体、期间、产品/设施、单位及实际产量/可用产能，调用既有Calculator；销量/出货/装机/计划量、错范围和非正产能拒绝。当前是源候选与计算规则，尚未证明自动数值角色、原生Review/Run、完整B13结果或生产信用。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_capacity_utilization_source.py::CapacitySourceMaterialTest.test_actual_two_company_disclosures_do_not_become_ratios_or_absence",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.continuous_call_allowance",
         "type": "capability",
         "status": "active",

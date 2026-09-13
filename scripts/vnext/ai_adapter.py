@@ -1057,8 +1057,9 @@ def build_scoped_provider_request_body(
 
 def _scoped_transport_payload(*, policy: TransportPolicy, prepared_request: object):
     """Return bytes only for the exact repository-bound successor request type."""
-    from .continuous_semantic_calls import SemanticRequest, transport_payload
-    if type(prepared_request) is SemanticRequest:
+    if (type(prepared_request).__module__ == __package__ + ".continuous_semantic_calls"
+            and type(prepared_request).__name__ == "SemanticRequest"):
+        from .continuous_semantic_calls import transport_payload
         return transport_payload(request=prepared_request, policy=policy)
     from .live_scoped_reader import LiveScopedReaderRequest, rebuild_live_scoped_reader_request
     if type(prepared_request) is not LiveScopedReaderRequest:

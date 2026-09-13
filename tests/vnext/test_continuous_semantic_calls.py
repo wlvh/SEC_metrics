@@ -85,8 +85,19 @@ class ContinuousSemanticCallsTest(unittest.TestCase):
                 self.assertIsNone(control._usage(value=usage_observation(None))['input_tokens'])
             with self.assertRaises(control.InvocationControlError):control._usage(value=usage_observation(None))
             parent=load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v13')
-            self.assertEqual(parent['requirement_closure_hash'],
-                'sha256:e1ac4b08b4b31aa5d7a411ac76b8d29c33075e82da3fe5f939009566194dc1f4')
+            self.assertEqual(parent['requirement_closure_hash'],prepared.requirement['parent_requirement_closure_hash'])
+            # The reviewed e1ac snapshot is retained as history even when the
+            # still-unfrozen ordinary draft refreshes its execution bindings.
+            historical=ROOT/'docs/evidence/issue28_continuous/runtime-binding-repair-780d9ba/historical-v14-e1ac'
+            from vnext.canonical import sha256_file,content_hash
+            baseline=json.loads((historical/'baseline_manifest.json').read_text())
+            hashes={key:sha256_file(path=historical/name) for key,name in (
+                ('baseline_sha256','baseline_manifest.json'),('contract_sha256','CONTRACT.md'),
+                ('decision_register_sha256','decision_register.json'),('invariant_profile_sha256','invariant_profile.json'),
+                ('transfer_manifest_sha256','transfer_manifest.json'))}
+            hashes.update(parent_requirement_closure_hash=baseline['parent']['requirement_closure_hash'],
+                          validator_sha256=baseline['validator']['sha256'])
+            self.assertEqual(content_hash(value=hashes),'sha256:e1ac4b08b4b31aa5d7a411ac76b8d29c33075e82da3fe5f939009566194dc1f4')
             summary={'status':'OFFLINE_WIRING_PASS','requirement_id':prepared.requirement['requirement_id'],
                 'closure':prepared.requirement['requirement_closure_hash'],
                 'request_bytes':len(prepared.provider_request_body_bytes),

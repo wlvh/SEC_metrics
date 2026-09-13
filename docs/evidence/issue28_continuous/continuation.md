@@ -1,3 +1,17 @@
+# 当前新增进度：780d9ba 回归已在本地修复，B13仍在开发
+
+780d9ba已推PR，但CI原生Run因当前未冻结V14的4项执行指纹漏更新而失败；当前更新5项执行绑定（含B13 compiler新增语法），业务规则不改。V14当前82754285/351；原e1ac/634五文件保存在runtime-binding-repair-780d9ba/historical-v14-e1ac，原闭包重算一致。V15当前6a70bf77/364，仍绑原批准5651558538和同一累计总账。
+
+原生5基线/10反例PASS115.607秒，B03及Python3.9 D01无Git/无网络冷读通过；100组fast PASS83.921秒。新V15接线材料在runtime-binding-repair-780d9ba/offline-wiring.json；resume-2026-09-13中的780d9ba原包不覆盖。先完成本修复的commit、提交后alignment及push/PR更新，再继续核心开发。
+
+B13新增两份Spec、capacity_utilization_source.py与规则，4项可比量Calculator测试及2公司来源候选检查通过。Ford11条/Enphase5条相关原文只形成候选；8/0个可能产量关键词线索不证明是否存在可计算数值对。当前没有B13原生Review/Run、自动数值赋义或可靠NOT_AVAILABLE_SEC，继续承担接线责任，不能宣称B13完成。
+
+模型环境仍缺DEEPSEEK_API_KEY，已请求用户提供本机配置位置，无真实slot或provider/paid/SEC调用。安全离线工作继续。原CI34745889888失败须保留；下一提交CI按实际新head核对。没有新PR/worktree/强推/stash/Ready/merge/采纳/deploy/active变化。
+
+以下为前一恢复入口，版本状态以本段和execution-state.json为准。
+
+---
+
 # Issue #28 当前恢复入口
 
 用户 2026-09-13 最终恢复指令继续同一目录、task/b06-new-source、Draft PR43；受审基线6341530。旧局部停点已替代，新调用/B13批准见 [代登记5651558538](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538)。旧快照保存在 resume-2026-09-13/historical-state/，不是当前待办。

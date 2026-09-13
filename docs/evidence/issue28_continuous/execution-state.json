@@ -1,6 +1,6 @@
 {
   "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
-  "status": "RESUMED_OFFLINE_CORE_WORK_MODEL_CREDENTIAL_PENDING",
+  "status": "RESUMED_CORE_DEVELOPMENT_MODEL_CREDENTIAL_PENDING",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
   "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
@@ -12,7 +12,7 @@
   },
   "authority": {
     "development": "USER_DELEGATED",
-    "new_call_budget": "USER_APPROVED_SUCCESSOR_BOUND_OFFLINE_WIRING_VERIFIED",
+    "new_call_budget": "USER_APPROVED; CURRENT_SUCCESSOR_BINDING_AND_OFFLINE_WIRING_VERIFIED",
     "maximum_additional_provider_paid_sec_calls": [
       240,
       240,
@@ -34,9 +34,9 @@
     "unknown": 0
   },
   "current_work": [
-    "Finalize and submit successor invocation wiring and scoped review registration to the same Draft PR43",
-    "Reconcile current gaps against later native evidence; do not re-run the unchanged340 batch",
-    "Implement B13 successor and remaining shared source/subject/D03 defects while model credential is unavailable"
+    "Submit validated runtime binding regression repair and B13 source/comparison drafts to the same Draft PR43; retain failed780d9ba CI",
+    "Continue B13 automatic source assignment, native Review/Run and ordinary integration; source candidates are not completed results",
+    "Continue shared subject/amendment/Company Facts/B06/D03 source gaps while awaiting local model credential for real semantic feasibility"
   ],
   "next": [
     "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
@@ -71,6 +71,25 @@
     "account_inspected": false,
     "real_call_slot_consumed": false
   },
-  "offline_wiring_receipt": "resume-2026-09-13/offline-wiring.json",
-  "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json"
+  "offline_wiring_receipt": "runtime-binding-repair-780d9ba/offline-wiring.json",
+  "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
+  "runtime_binding_repair": {
+    "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
+    "ci": "https://github.com/wlvh/SEC_metrics/actions/runs/34745889888",
+    "first_native_error": "Successor execution authority bytes differ: scripts/vnext/ai_adapter.py",
+    "current_unfrozen_v14_closure": "sha256:827542852b160b40810eade4ce2a5aa510f593b594833a84f5ef68ef59d8ee31",
+    "historical_reviewed_v14": "runtime-binding-repair-780d9ba/historical-v14-e1ac",
+    "single_native_reproduction_after_repair": "PASS",
+    "full_native_material_test": "PASS_5_BASELINES_10_NEGATIVES_115.607_SECONDS",
+    "cold_replay": "B03_DEFAULT_AND_D01_PYTHON39_PASS_NO_GIT_NO_NETWORK",
+    "current_v15_closure": "sha256:6a70bf77aa16d63a9ac7b39282774ba34d907af3f510960c5f3e18401d5e084a",
+    "current_v15_execution_file_count": 364
+  },
+  "b13_development": {
+    "specs": "NEW_SUCCESSOR_NUMERIC_AND_TEXT_DRAFTS",
+    "actual_source_candidates": "FORD_11_QUALITATIVE_AND_8_POSSIBLE_OUTPUT; ENPHASE_5_QUALITATIVE_AND_NO_POSSIBLE_OUTPUT_MATCH",
+    "calculator_comparison_tests": "4_PASS",
+    "source_assignments_and_numeric_absence_proven": false,
+    "native_results_created": false
+  }
 }

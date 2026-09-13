@@ -457,3 +457,7 @@ D04离线解释协议只提供开发用输入与保存响应检查。`all_source
 <!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
 
 D04 可行性调用保存本次实际请求/响应和验证结果，但目前不生成原生指标或更新正式结果。调用控制器的 `FEASIBILITY_ONLY_NO_NATIVE_EVIDENCE` 终态表示尚未接入原生证据验收；不能据此判断来源已证明、语义路线成立或完整 390 验收通过。当前材料与剩余审阅范围见 `docs/evidence/issue28_continuous/resume-2026-09-13/`。
+
+<!-- capability-anchor: CAPABILITY.b13_source_and_comparison_draft -->
+
+B13开发入口保留制造产能原文和数量线索；“每季约500万台产能”等材料不会直接变成利用率。数值必须具备同范围实际产量及可用产能，销量不能替代；当前源候选及Calculator检查不冒充已完成的B13结果。普通更新和原生结果接线仍待完成，来源候选的TEXT_QUAL提示不证明已经排除了全部数值对。

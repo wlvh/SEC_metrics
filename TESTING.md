@@ -717,3 +717,9 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 <!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
 
 `CONTINUOUS_WIRING_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_continuous_semantic_calls` 使用 Enphase 保存原件，走后继授权、工厂、实际请求和 WB-3。socket/DNS/SEC 被拒绝，官方 opener 只返回明确测试 wire，原生 marker 为 MOCK。验证私有出口令牌缺失与请求变造拒绝、未知 usage/费用不归零、父 V14 闭包不变。结果不是语义可行性结论或真实调用；加入 source-material 选择器，仍用原每项240秒限制。
+
+780d9ba CI 暴露当前未冻结 V14 的执行文件绑定漏更新；确切该提交有4个执行文件字节与绑定不同。修复保留e1ac/6341530原快照，只更新当前执行绑定；B13 Spec语法增量另占第5项变化。`NORMAL_V14_MATERIAL_ROOT=/absolute/new/material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_run_v3_material` 的5个真实基线/10个反例已重验；另用复制运行包独立进程回读B03与Python3.9 D01。新调用测试验证当前父绑定及历史e1ac快照的原闭包分别成立。
+
+<!-- capability-anchor: CAPABILITY.b13_source_and_comparison_draft -->
+
+`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_capacity_utilization_source.CapacityComparisonTest` 验证80/100、零产量及超过名义产能的比值复用既有Calculator，并拒绝销量/出货/装机/规划量、错主体/单位/期间/产品设施及错误目标口径。`B13_SOURCE_MATERIAL_ROOT=/absolute/new/material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_capacity_utilization_source.CapacitySourceMaterialTest` 从Ford/Enphase实际保存原文形成来源候选，保留11/5条相关披露和8/0个可能产量线索。测试未将候选数视为语义覆盖，也未将无匹配推成NOT_AVAILABLE_SEC；没有B13原生Run信用。两类分别加入fast/source层。

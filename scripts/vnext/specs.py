@@ -519,7 +519,7 @@ def _validate_executable_semantics(*, compiled: Mapping[str, object]) -> None:
         if ("deterministic_text_method" in compiled["quality_rule"]
                 and compiled["quality_rule"]["deterministic_text_method"] not in {
                     "RISK_FACTOR_HEADINGS_V1", "BOARD_DISCLOSURE_EXCERPTS_V1",
-                    "LEGAL_DISCLOSURE_EXCERPTS_V1"}):
+                    "LEGAL_DISCLOSURE_EXCERPTS_V1", "PRODUCTION_CAPACITY_DISCLOSURE_EXCERPTS_V1"}):
             raise SpecError("Deterministic text method is unsupported")
     input_roles = set(compiled["inputs"])
     formula = compiled["formula"]

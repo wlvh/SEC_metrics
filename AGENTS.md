@@ -36,6 +36,8 @@
 
 ChatGPT review5189571246 与用户转交 Fable5.1 按6341530及明示模块登记；不是全PR批准。Codex独立子任务9月17日前不重试/换模型/重置额度，用户转交模块报告补覆盖。未覆盖模块、安全开发、最终验收责任分别列在当前执行材料中，不再把预算/B13待批或旧340问题索引当成停工原因。
 
+780d9ba 的原生CI因未冻结V14执行字节绑定未同步而失败，当前只更新该草案的执行绑定，原e1ac五文件与失败保存在`docs/evidence/issue28_continuous/runtime-binding-repair-780d9ba/`。V15及其新请求类型延迟到实际选择时导入，旧普通运行包不必加载新调用模块。`capacity_utilization_source.py`、`config/b13_production_capacity_v1.json`和两个B13后继Spec目前只完成来源候选及可比量Calculator开发检查；尚未授予数值来源赋义、原生Review/Run、完整B13或生产信用。
+
 ## 0. 按任务选择阅读路径
 
 首次进入仓库时先判断任务，再读取对应的标准流程。`SOP.md` 是标准工作流的一级导航；专项文档负责提供具体事实和命令。

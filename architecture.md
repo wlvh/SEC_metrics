@@ -893,6 +893,12 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 
 2026-09-13 后继 `issue_28_v14/PROFILE_DRIVEN_V15` 绑定真实用户代登记评论、现行模型配置和新执行文件集合。`continuous_call_ledger` 在固定外部目录上持有目录锁，以追加 claim、独立 intent、原 WB-3 marker/receipt 及 terminal 累计；缺终态保留可能调用并暂停受影响通道，跨目录或新阶段不能重置。测试账本身份不能转为真实调用。初始化锚与 claim 日志核对删除或失配，恢复先只读核对原终态，不重发未知请求。SEC 份额已登记，真实 SecHttpClient 后继接线尚待完成。
 
+780d9ba 的共用代码已改变而普通 V14 草案仍绑定旧执行字节，导致原生 Run 拒绝。当前仅更新未冻结草案的五项执行文件绑定；e1ac/6341530 的原五文件快照另存历史，不重签原 Run、失败或审阅。V15只在选中该版本时导入，新语义请求类型也只在明确类型分派时加载，旧普通运行包不强制携带未使用的新调用组件。
+
+<!-- capability-anchor: CAPABILITY.b13_source_and_comparison_draft -->
+
+`capacity_utilization_source`复用普通年报选择、来源准入、完整正文及原生解析器；后继Spec分别声明可比数量比值和定性原文。数量开发检查调用既有Calculator，保留各角色的期间、主体、产品/设施、单位及来源；相关原文只形成候选，没有以关键词缺失证明不披露，也不自动形成B13 Run。新 `PRODUCTION_CAPACITY_DISCLOSURE_EXCERPTS_V1` 在Spec语法中明确登记，来源赋义、Review和普通原生接线仍待完成。
+
 <!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
 
 `continuous_semantic_calls` 先按受信旧获取证明重建 D04 来源，将每个已有完整单元分别序列化以遵守 200000 context 限制；原单元覆盖不丢失。新请求的来源、规则、配置、策略工厂及 WB-3 身份在后继版本下绑定。现有 DeepSeek transport 新增精确请求类型分派，仍仅原固定官方 opener；send 核对当前 WB-3 上下文、进程/令牌、预留与唯一 marker。未知 token/cost 在本后继显式为 null，旧整数/字符串观测验证保持。可行性终态保留原始 wire，明确没有原生 Evidence，不把协议通过升级为语义正确或正式成功。真实调用还须已完成且与当前执行文件集合一致的离线接线材料。
