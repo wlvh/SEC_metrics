@@ -477,3 +477,7 @@ C04候选不再因获取工具的本地存储名误报年报身份不符；原�
 银行或工业B06现在可显示原件重建的融资范围和具体未决关系；已报告小计只在证据中保留，指标值仍为空。缺银行融资租赁完整性或工业归母权益时，不显示完整比值、N/A或“无披露”。不受影响的公司继续原债务路线。
 
 <!-- capability-anchor: CAPABILITY.ordinary_special_debt_scope -->
+
+C04不会因当前/历史SEC清单保存为编号文件而误报缺失分片；原清单与修后引用均保留，事件窗口和已发现申报集合不改变。
+
+<!-- capability-anchor: CAPABILITY.ordinary_document_identity -->

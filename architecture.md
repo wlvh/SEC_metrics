@@ -922,3 +922,7 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 普通B06的特殊范围适配器在当前修订检查和原分母守卫之后运行。ordinary_special_debt_scope按注册行业及原件维度/可见工业列重建原HTML/XML报告分项，复用既有原生解析、精度检查、Spec与withheld Calculator；加入同一Run来源图和选择记录。没有给缺融资租赁完整性或缺工业归母权益的坐标发放完整比值，旧三个债务语法及原定义保留。
 
 <!-- capability-anchor: CAPABILITY.ordinary_special_debt_scope -->
+
+C04清单源的本地存储名与URL名也分别保留。ordinary_storage_identity为当前及历史清单创建同一不可变请求的逻辑引用，再以原元数据/申报原件重建SourceSet；除清单引用及集合本身的身份外，其余字段必须与原集合相同，不能借名称修复改变事件覆盖。
+
+<!-- capability-anchor: CAPABILITY.ordinary_document_identity -->

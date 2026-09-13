@@ -1,6 +1,6 @@
 {
   "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
-  "status": "CONTINUING_SPECIAL_B06_SCOPE_AND_REMAINING_CORE_DELIVERY",
+  "status": "CONTINUING_REGISTERED_EVENT_SCOPE_AND_REMAINING_CORE_DELIVERY",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
   "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
@@ -34,9 +34,9 @@
     "unknown": 0
   },
   "current_work": [
-    "Complete native source-bound verification and review archive for bank/industrial B06 scoped limitations",
-    "Continue B13 complete source interpretation/native results and D03/D04 real semantics when credential is available",
-    "Complete390/normal update/publication rollback retirement and outstanding independent module reviews"
+    "Complete C04 inventory identity review archive and preserve first failures;17 positive source-dependent coordinates now restored",
+    "Implement Paramount event scope using existing primary+predecessor CIKs and prior-calendar-year-start window; current-only source probe is incomplete",
+    "Continue remaining financial successor scope,B13,D03/D04,390/update/publication/retirement;model credential and module independent review still needed"
   ],
   "next": [
     "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
@@ -72,7 +72,7 @@
     "real_call_slot_consumed": true,
     "provider_slot_consumed": false
   },
-  "offline_wiring_receipt": "ordinary-special-debt-scope/provider-wiring.json",
+  "offline_wiring_receipt": "ordinary-history-identities/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -131,7 +131,7 @@
     "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
     "actual_material": "ordinary-document-identity/"
   },
-  "sec_wiring_receipt": "ordinary-special-debt-scope/sec-wiring.json",
+  "sec_wiring_receipt": "ordinary-history-identities/sec-wiring.json",
   "document_identity_repair": {
     "old_request_rows_rewritten": false,
     "old_sources_redownloaded": false,
@@ -141,12 +141,15 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "0ec5df8d9043186867177c29ec47decfac119a1b",
-    "run": 34751565540,
-    "conclusion": "cancelled",
-    "jobs_success": 9,
-    "jobs_cancelled": 1,
-    "cancelled_job": "vNext current-instant native Runs",
+    "head": "bdc41e76c513f5a9cecb5c242b5fea77806045dc",
+    "run": 34755365944,
+    "overall_still_in_progress_at_observation": true,
+    "cancelled_jobs": [
+      "current-instant native Runs",
+      "debt native Runs"
+    ],
+    "github_annotation": "The job has exceeded the maximum execution time of 20m0s",
+    "job_timeout_adjustment": "20 to30 minutes; nextheadmustactuallypass",
     "full_pass": false
   },
   "ordinary_special_debt_scope": {
@@ -160,5 +163,31 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:34cd0c86d706806994384993440bf253884572fb4df448d80716fb809375107c"
+  "current_v15_development_closure": "sha256:71160fb33b26a48da83422bbd395d42d3f334577620dce901179733d3090055d",
+  "ordinary_history_identity": {
+    "material": "ordinary-history-identities/",
+    "jpm_event_native_restored": 6,
+    "jpm_c04_restored": true,
+    "salesforce_c04_regression": true,
+    "current_and_history_inventory_views": 9,
+    "source_sets_content_unchanged": true,
+    "unique_positive_coordinates_restored_since_source_acquisition": 17,
+    "full_390_acceptance": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "sec_tests_reused_from": "bdc41e76c513f5a9cecb5c242b5fea77806045dc",
+    "current_provider_factory_test_seconds": 36.843
+  },
+  "successor_event_scope": {
+    "approved_policy": "catalog/zero_ai_public_projection.json:PRIOR_CALENDAR_YEAR_START_TO_TARGET_END",
+    "primary_and_related_ciks_required": true,
+    "current_only_unblocking_rejected_as_incomplete": true,
+    "current_source_probe": "4 current-registrant filings/7claims; not whole scope",
+    "prior_source_dependency": "https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/d830953d8k.htm",
+    "amendment_event_window": "INPUT_PROPERTY_PROVEN",
+    "implementation_pending": true
+  }
 }

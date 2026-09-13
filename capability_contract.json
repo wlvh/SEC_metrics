@@ -31,13 +31,13 @@
         "anchor_id": "CAPABILITY.ordinary_document_identity",
         "type": "capability",
         "status": "active",
-        "statement": "普通C04对已固定的不可变SEC请求可另建以原URL文件名命名的来源视图，仍核对同一URL、accession、请求编号、正文及原存储路径和头文件；不改旧请求、原引用或历史解析规则，不给可变旧工作文件此映射。独立候选安装保留同一响应身份所有原不可变尝试的正文与头文件，供原读取器完整重验后选取最近尝试；获取身份和生产权限不改变。",
+        "statement": "普通C04对已固定的不可变SEC请求可另建以原URL文件名命名的来源视图，仍核对同一URL、accession、请求编号、正文及原存储路径和头文件；不改旧请求、原引用或历史解析规则，不给可变旧工作文件此映射。独立候选安装保留同一响应身份所有原不可变尝试的正文与头文件，供原读取器完整重验后选取最近尝试；获取身份和生产权限不改变。 C04当前及历史清单也通过同一请求建立URL文件名视图；来源集合只重建清单引用身份，已发现申报集合、原件顺序、窗口和截止请求不变，原集合同时保存，伪造发现集合会被拒绝。",
         "audience": [
           "developer",
           "reviewer",
           "operator"
         ],
-        "test_anchor": "tests/vnext/test_ordinary_storage_identity.py::OrdinaryStorageIdentityTest.test_logical_name_reuses_the_exact_immutable_request_without_rewriting_it",
+        "test_anchor": "tests/vnext/test_ordinary_storage_identity.py::OrdinaryStorageIdentityTest",
         "test_status": "automated_recorded",
         "since": "2026-09-13"
       },
