@@ -799,6 +799,20 @@
         "test_anchor": "tests/vnext/test_remaining_source_run_material.py::RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review",
         "test_status": "automated_recorded",
         "since": "2026-09-13"
+      },
+      {
+        "anchor_id": "CAPABILITY.ordinary_update_cycle",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通零外发更新检查将最近尝试与最近完整成功候选分开：按源正文/期间/Spec/运行规则识别输入，重验已有候选后避免重复Run，失败/未通过时不前移成功引用。不可覆盖历史、进程锁、真实引用/前驱核对及终态先写支持中断恢复；伪造引用和改成功公共行拒绝。仅已准入保存来源，不授予真实获取、模型调用、持续部署或生产切换权限。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_ordinary_update_cycle.py::OrdinaryUpdateCycleTest.test_real_history_idempotency_failure_and_recovery",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
       }
     ],
     "capability_boundaries": [

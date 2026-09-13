@@ -126,6 +126,19 @@ class OrdinarySourceSessionTest(unittest.TestCase):
         self.assertEqual('SOURCE_SELECTION_REGRESSED',result['status']);self.assertFalse(result['requires_candidate_processing'])
         self.assertFalse(result['input_authenticity_verified_by_comparison'])
 
+    def test_two_actual_saved_inventory_versions_remain_recorded_content_changes(self):
+        proof=self.original['source_proofs'][0]
+        old='request:attempt:2d141ff33cfa770ab8a490d98a7f79d8fde3f1d3b25a2ea404553b56d6e405b3'
+        with self.assertRaisesRegex(OrdinarySourceSessionError,'HISTORICAL_ATTEMPT_NOT_IN_BASELINE'):
+            self.session.record_saved_response(url=proof['source_url'],historical_test_attempt_id='request:attempt:'+'0'*64)
+        self.session.record_saved_response(url=proof['source_url'],historical_test_attempt_id=old)
+        earlier=self.session.prepare_annual_input()['prepared_input']
+        self.session.record_saved_response(url=proof['source_url'])
+        later=self.session.prepare_annual_input()['prepared_input']
+        self.assertEqual(earlier['filing'],later['filing'])
+        self.assertEqual('SOURCE_CONTENT_CHANGED',compare_annual_inputs(previous=earlier,current=later)['status'])
+        self.assertNotEqual(earlier['source_proofs'][0]['content_sha256'],later['source_proofs'][0]['content_sha256'])
+
     def test_replaced_data_root_and_journal_subdirectory_aliases_reject_before_write(self):
         moved=self.root/'moved-data';self.data.rename(moved);self.data.symlink_to(moved,target_is_directory=True)
         with self.assertRaisesRegex(OrdinarySourceSessionError,'PATH_ALIAS'):self.session.prepare_annual_input()

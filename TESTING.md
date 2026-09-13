@@ -697,3 +697,10 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 本次十二路线创建耗时845.782秒，完整重放/反例314.233秒；新CI按公司拆分，并给每个原生材料作业45分钟总上限，保持全部断言及来源规则不变。
 
 已完成十二路线材料可设置`REMAINING_SOURCE_EXISTING_ROOT`及可选的新`REMAINING_SOURCE_ATTACK_ROOT`重放并检查攻击副本。首次金融反例因传入多余Calculator目标字段而停止；原日志保留，改为精确五字段后12场景及两类反例通过。
+
+
+<!-- capability-anchor: CAPABILITY.ordinary_update_cycle -->
+
+`ORDINARY_UPDATE_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_update_cycle`使用真实Run及两份原始清单版本验证内容身份、重复请求、失败/恢复、成功终态与引用写入中断、未完成意图、并发、伪造引用、改公共行和相同WITHHELD输入不重复建Run。网络/HTTP/DNS均禁用。新增历史测试请求只能选择受信不可变尝试，相关源会话测试继续在fast层运行。材料不等于实时新财报或完整生产生命周期验证。
+
+338bbc8的来源CI中，B06当前输入模块六项测试合计达到240秒而超时，其他七项CI作业成功。当前source-material选择器将这六项按实际方法分别运行，仍保持每项240秒，方法集合与源码逐项核对无遗漏；源码选择器总数由45变为50。旧超时不重写为通过，拆分后的六项单独复验。

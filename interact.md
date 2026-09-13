@@ -429,6 +429,10 @@ D04离线解释协议只提供开发用输入与保存响应检查。`all_source
 
 <!-- capability-anchor: CAPABILITY.remaining_current_source_adapters -->
 
+<!-- capability-anchor: CAPABILITY.ordinary_update_cycle -->
+
+`--process`返回本次尝试状态、最近成功候选及是否创建新候选。来源未变时保留原Run，失败时保留旧成功引用并显示具体原因；相同未通过输入不会反复生成Run。更新引用不等于正式active，检查及恢复仍可能读取和计算已有证据。配置或历史完整性错误明确阻止更新，详情见`docs/ordinary_update_cycle.md`。
+
 金融、治理、文本和债务候选可沿当前入口读取已登记请求，仍保留各自的实际期间、范围限制和审阅要求。测试重放继续显示原有来源类型；接线完成不会把资料限制、尚未支持的业务判断或非正权益结果改为正常数值。
 
 普通候选CLI可用`--source-root`读取已由安装目录登记的外部来源。测试来源在批次坐标、预览回执和公共行备注中标明“测试重放、没有新SEC获取”；未登记日志、篡改记录和缺少安装记录会失败。原文未变化时仍显示NO_SOURCE_CONTENT_CHANGE，不能将相同数值重算当成自动发现新财报的结果。

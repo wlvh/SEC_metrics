@@ -112,15 +112,36 @@ class RecordedSourceSession:
         prefix='https://www.sec.gov/Archives/edgar/data/'+str(cik)+'/'
         _need(url in allowed or url.startswith(prefix),'SOURCE_SESSION_COMPANY_URL_SCOPE')
 
-    def record_saved_response(self,*,url,accession='',status_code=200):
+    def record_saved_response(self,*,url,accession='',status_code=200,historical_test_attempt_id=None):
         """Replay known original bytes through native persistence, without HTTP."""
         self._allowed_url(url);_need(status_code in {200,404,500},'SOURCE_SESSION_TEST_STATUS_UNSUPPORTED')
         rows,terminals=self._check()
         _need(not any(t['status']!='SUCCEEDED' for t in terminals),'SOURCE_SESSION_FAILED_TERMINAL_CLOSED')
         _need(len(terminals)<self.header['max_responses'],'SOURCE_SESSION_RECORDED_BUDGET_EXHAUSTED')
-        original=saved_source(repo_root=ROOT,url=url,accession=accession)
+        if historical_test_attempt_id is None:
+            original=saved_source(repo_root=ROOT,url=url,accession=accession)
+        else:
+            # Test history is selected only from immutable, already trusted
+            # acquisitions. It is never a replacement SEC body or live fetch.
+            from .sources import resolve_repository_file
+            candidates=[(i,r) for i,r in enumerate(self.prefix_rows)
+                if request_log_attempt_id(row_index=i,row=r)==historical_test_attempt_id and r['source_url']==url]
+            _need(len(candidates)==1,'SOURCE_SESSION_HISTORICAL_ATTEMPT_NOT_IN_BASELINE')
+            _,row=candidates[0]
+            binding=validate_request_attempt_binding(repo_root=ROOT,source_url=url,content_sha256=row['content_sha256'],
+                accession=accession,document_name=row['document_name'],request_attempt_id=historical_test_attempt_id,
+                require_immutable=True)
+            proof={'source_url':url,'accession':accession,'document_name':row['document_name'],
+                   'content_sha256':row['content_sha256'],**binding}
+            original={'proof':proof,'raw':resolve_repository_file(repo_root=ROOT,repo_relative_path=proof['request_repo_relative_path']).read_bytes()}
         _need(original is not None,'SOURCE_SESSION_ORIGINAL_NOT_SAVED')
         verify_saved_source_proofs(data_root=ROOT,proofs=[original['proof']])
+        from .sources import resolve_repository_file
+        from sec_http import write_immutable_bytes
+        for key in ['request_repo_relative_path','request_headers_repo_relative_path']:
+            relative=original['proof'][key]
+            write_immutable_bytes(path=self.data_root/relative,
+                content=resolve_repository_file(repo_root=ROOT,repo_relative_path=relative).read_bytes())
         client=SecHttpClient(workdir=self.data_root,config_path=ROOT/'config/sec_config.json',
                              log_path=self.data_root/'evidence/requests_log.csv')
         _need(self._check()[0]==rows,'SOURCE_SESSION_PRECHECK_CHANGED_LEDGER')

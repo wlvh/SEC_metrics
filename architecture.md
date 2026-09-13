@@ -791,6 +791,10 @@ New financing-set source judgments prove disjoint reported borrowings, bonds and
 
 <!-- capability-anchor: CAPABILITY.remaining_current_source_adapters -->
 
+<!-- capability-anchor: CAPABILITY.ordinary_update_cycle -->
+
+`ordinary_update_cycle`将输入内容身份、不可覆盖的尝试意图/终态和成功候选引用接到现有普通Run链。身份覆盖真实源正文、期间、Spec和运行规则；仅请求身份变化不新建Run。完整候选经原生重放及公共行逐字节核对后才前移成功引用，失败和未通过的输入单独保留。进程锁、引用/前驱检查及终态先于引用的顺序支持中断恢复；不创建第二套指标或发布系统。当前显式要求零provider/SEC和未冻结运行政策。
+
 `ordinary_remaining_cases`替代V14对旧来源入口的直接调用；新的金融、文本和债务保护包装器使用当前来源登记验证，业务解释继续复用冻结模块的纯函数及原Spec。C03/C04和B06仍沿既有解析与Calculator，C02/D01/D02沿既有范围、Evidence和SYSTEM审阅。原基线下返回对象保持一致，记录过的新请求不扩大业务含义或取消来源/主体限制。旧入口保留原基线语义，历史Run不重签。
 
 `ordinary_source_authority`在固定安装目录保存实际测试会话创建者登记的来源记录，核对原日志字节前缀、原始来源及每项新意图/终态。当前适配器通过新入口选择历史基线或已登记测试来源，原冻结验证器不改。`normal_run_v3.install_normal_inputs`分开固定代码和外部来源文件，安装完整来源记录及依赖；创建和重放Run均要求安装记录存在。复制运行包的冷读使用安装记录，测试类型保留到原生绑定、CLI和预览。这仍是原文未变的RECORDED_TEST_ONLY，不提供真实SEC获取、全部路线更新或正式发布能力。
