@@ -311,3 +311,7 @@ A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主
 检查银行/工业B06空值时，可从候选选择记录查看两份原件共同证明的融资分项、工业列和具体尚缺的证明。小计和工业净资产不能自行替代完整债务比率；正式系统仍以active版本为准。
 
 <!-- capability-anchor: CAPABILITY.ordinary_special_debt_scope -->
+
+接续主体的事件统计窗口可能长于报告财年；请以结果的period_start/period_end读取覆盖范围。当前开发候选会保留各已登记主体的全部来源，不能因为计数恰好为零就省略前身。正式结果仍由active发布版本决定。
+
+<!-- capability-anchor: CAPABILITY.registered_event_native_scope -->

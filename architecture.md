@@ -930,3 +930,7 @@ C04清单源的本地存储名与URL名也分别保留。ordinary_storage_identi
 normal_source_requirements对接续主体补充原事件目录窗口内的全部已登记CIK，复用现有清单/历史解析和请求账本验证，再交既有SecAcquisitionSession处理已声明URL。发现集合不替代事件Claim/Calculator，也不授权财务跨主体合并；元数据缺失或错主体保持未闭合。
 
 <!-- capability-anchor: CAPABILITY.registered_event_source_discovery -->
+
+普通6事件从各已登记CIK逐份复用_source/Event适配、SourceSet/合集及Calculator，再统一进入V14原生Run。当前修订窗口证明与每个CIK的来源集合同时保存，财务不跨主体拼接。Run保持实际年度坐标；事件Result/Observation保存旧目录规定的回溯窗口。run_store在独立重建完整case并核对所有记录后，仅给确切的注册范围事件记录保留此测量期间；其他坐标/记录期间检查不变。
+
+<!-- capability-anchor: CAPABILITY.registered_event_native_scope -->

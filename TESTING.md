@@ -745,3 +745,7 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 CI的current-instant/debt原生任务在bdc41实际运行到20分钟上限被取消，原日志保留。两项任务上限现为30分钟，仍需完整成功终态；没有改变单个SEC/模型请求的context/resource/重试边界。新head实况不借旧取消结果推定通过。
 
 注册事件范围的来源发现新增3项（含原8项共11项）检查，覆盖主/前身、既有窗口、缺前身清单及错CIK；命令仍为tests.vnext.test_normal_source_requirements。完整SEC材料新增第三笔RECORDED前身头文件获取，只证明出口范围准入，不授事件内容信用；实际断言验证3条记录。首次打印摘要遗留2的旧字面量，原日志/摘要保留，独立重读3条并修正报告为读取实际账本；没有重跑未变执行，仅报告输出修正。材料见ordinary-registered-events。
+
+接续事件完整材料测试：设置REGISTERED_EVENT_NATIVE_BATCH、REGISTERED_EVENT_SOURCE_ROOT及新的REGISTERED_EVENT_ATTACK_ROOT后运行tests.vnext.test_registered_event_run_material。它验证6项原生及窗口，模拟当前主体单独产出结构合法的E02=0，再恢复注册表规则重读，必须因输入绑定不同拒绝；通用两年Run坐标仍须拒绝。该真实来源材料检查本轮在本地显式执行，不能把没有这些材料的CI跳过写成新覆盖。旧normal_zero_ai_results中收入的接续守卫不变；C01在未补原件的仓库源集由未实现转为真实缺源，定向回归分别断言。
+
+128fe33完整SEC材料在CI单项240秒超时，原日志已归档；当前仅tests.vnext.test_continuous_sec_acquisition为480秒，其他SOURCE_TESTS仍240秒，各项实际时限写入JSON。source-material job35分钟，所有选择项/断言保留；未改任何真实请求资源上限。

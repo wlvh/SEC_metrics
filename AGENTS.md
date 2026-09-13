@@ -399,3 +399,5 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 C04的文档身份视图现覆盖当前及历史submissions清单；重建SourceSet仅改变清单引用身份，发现集合/原件顺序/窗口/截止请求保持不变。JPM6事件恢复、C04首次失败与修后双公司原生/冷读，以及未改SEC代码证据的复用核对，见`ordinary-history-identities/`。
 
 普通来源发现现按原事件目录的窗口和已登记主/前身CIK列出完整事件来源依赖；Paramount为2024–2025、4份当前/31份前身申报，缺9份前身8K正文及头文件共18件。来源发现与有限获取准入已离线验证，尚不代表6事件原生接线完成。见ordinary-registered-events材料。
+
+普通normal_zero_ai_results现按原事件目录窗口/已登记主及前身CIK重建6事件；完整来源保留在同一Run。Run的一年坐标与事件实际回溯窗口分开，run_store只对完整原件重建且逐条一致的6事件记录认可差异，通用53周/财务期间不改。18件真实来源补齐后Paramount6事件原生通过，省略前身的相同零值拒绝，见ordinary-registered-event-runs。

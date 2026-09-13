@@ -97,6 +97,11 @@ def prepare_case(*, data_root, company_id, metric_id):
             "results":original["results"],"traces":original["traces"],
             "observations":[r for r in original["records"] if r["record_type"] == "VERIFIED_OBSERVATION"],
             "selection":selection}
+        registered = original.get("component", {}).get("input_binding", {}).get("registered_event_scope")
+        if registered is not None:
+            # A Run retains its reporting-year coordinate. The approved event
+            # lookback is independently preserved in results and source sets.
+            case["target_period"] = original["component"]["prepared_input"]["table_input"]["target_period"]
     else:
         from .ordinary_remaining_cases import prepare_current_source_case
         old = prepare_current_source_case(data_root=data_root,company_id=company_id,metric_id=metric_id)
@@ -167,11 +172,11 @@ def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None)
     # Event completeness also compares the authenticated acquisition census.
     # Header bytes used by that census are bound original inputs, not answers.
     if case["primary_metric_id"] in {"C01","E01","E02","E03","E04","E05"}:
-        from .normal_annual_input import _registry_rows
-        cik = next(c["primary_cik"] for c in _registry_rows(repo_root=source_root) if c["company_id"] == company_id)
+        from .traits import repository_company_ciks
+        ciks = {int(cik) for cik in repository_company_ciks(repo_root=source_root,company_id=company_id)}
         for directory in (source_root/"evidence/accession_materials").iterdir():
             fields = directory.name.rsplit("_",2)
-            if directory.is_dir() and len(fields)==3 and fields[1].isdigit() and int(fields[1])==int(cik):
+            if directory.is_dir() and len(fields)==3 and fields[1].isdigit() and int(fields[1]) in ciks:
                 source_paths.update(str(p.relative_to(source_root)) for p in directory.glob("*.hdr.sgml"))
     _need(not source_paths.intersection(_policy(ROOT)["rule_paths"]+_policy(ROOT)["presentation_paths"]),
           "ORDINARY_INTEGRATED_SOURCE_WOULD_REPLACE_RUNTIME")

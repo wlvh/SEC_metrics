@@ -1,6 +1,6 @@
 {
   "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
-  "status": "CONTINUING_REGISTERED_PREDECESSOR_SOURCE_ACQUISITION_AND_EVENT_INTEGRATION",
+  "status": "CONTINUING_REMAINING_FINANCIAL_AND_SEMANTIC_DELIVERY",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
   "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
@@ -30,13 +30,13 @@
   "actual_new_calls": {
     "provider": 0,
     "paid": 0,
-    "sec": 13,
+    "sec": 31,
     "unknown": 0
   },
   "current_work": [
-    "Submit verified full registered event-source discovery and current limited acquisition binding",
-    "Acquire18 necessary predecessor original/header dependencies within approved80total, preserving each first outcome and no automatic retries",
-    "Connect full approved combined event scope to existing claims/Calculator/Run, keeping B01/B03 financial scope separate; continueB13,D03D04,390/update/release/retirement"
+    "Archive18 real acquisitions and6 source-complete event Runs with original53week failure/repair/equal-zero rejection/cold evidence",
+    "Continue B01/B03 financial successor scope,B13 native interpretation and D03/D04 real semantics when credentialavailable",
+    "Complete390/normalupdate/publication rollback retirement and outstanding independent module review"
   ],
   "next": [
     "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
@@ -72,7 +72,7 @@
     "real_call_slot_consumed": true,
     "provider_slot_consumed": false
   },
-  "offline_wiring_receipt": "ordinary-registered-events/provider-wiring.json",
+  "offline_wiring_receipt": "ordinary-registered-event-runs/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -131,7 +131,7 @@
     "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
     "actual_material": "ordinary-document-identity/"
   },
-  "sec_wiring_receipt": "ordinary-registered-events/sec-wiring.json",
+  "sec_wiring_receipt": "ordinary-registered-event-runs/sec-wiring.json",
   "document_identity_repair": {
     "old_request_rows_rewritten": false,
     "old_sources_redownloaded": false,
@@ -141,15 +141,13 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "bdc41e76c513f5a9cecb5c242b5fea77806045dc",
-    "run": 34755365944,
-    "overall_still_in_progress_at_observation": true,
-    "cancelled_jobs": [
-      "current-instant native Runs",
-      "debt native Runs"
-    ],
-    "github_annotation": "The job has exceeded the maximum execution time of 20m0s",
-    "job_timeout_adjustment": "20 to30 minutes; nextheadmustactuallypass",
+    "head": "128fe3304cfa3c8df20b04f545d0e908a7c60290",
+    "run": 34758198782,
+    "conclusion": "failure",
+    "passed_jobs": 9,
+    "failed_job": "vNext saved-source material",
+    "prior_two_job_timeout_fixes": "current-instant and debt both SUCCESS",
+    "failure_diagnosis": "READING_ORIGINAL_LOG",
     "full_pass": false
   },
   "ordinary_special_debt_scope": {
@@ -163,7 +161,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:5577c514934dac32d8e15961b892fd10ff964f076d9291d3938399a17d32e819",
+  "current_v15_development_closure": "sha256:dbe6016d1ff8c5dae66ef14ee95df2277189d3c4bfa96d3327e6c87d34b66c12",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -209,5 +207,44 @@
     "planned_cumulative_sec_after_missing_files": 31,
     "event_native_integration_complete": false,
     "material": "ordinary-registered-events/"
+  },
+  "registered_event_acquisition_in_progress": {
+    "complete": true,
+    "additional_captures": 18,
+    "verified_source_pairs": 9,
+    "cumulative": [
+      0,
+      0,
+      31
+    ],
+    "all_succeeded": true,
+    "unknown": 0
+  },
+  "registered_event_native_integration": {
+    "source_filings": 35,
+    "native_claims": 70,
+    "results": {
+      "C01": "12",
+      "E01": "5",
+      "E02": "0",
+      "E03": "12",
+      "E04": "0",
+      "E05": "4"
+    },
+    "reporting_run_period": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "event_measurement_window": [
+      "2024-01-01",
+      "2025-12-31"
+    ],
+    "native_open_and_public_rows": 6,
+    "current_only_equal_zero_rejected": true,
+    "unique_positive_source_dependent_coordinates_restored": 23,
+    "global_53_week_limit_unchanged": true,
+    "financial_scope_unchanged": true,
+    "material": "ordinary-registered-event-runs/",
+    "full390_acceptance": false
   }
 }

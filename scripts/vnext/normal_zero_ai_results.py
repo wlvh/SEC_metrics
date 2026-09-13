@@ -128,6 +128,44 @@ def _event_sources(*, repo_root, reader, prepared, inventory):
     return claims, [s["manifest"] for s in sets] + [collection], filing_rows
 
 
+def _registered_event_sources(*, repo_root, reader, prepared, inventory, period):
+    """Rebuild the approved union from each registered CIK's actual sources."""
+    from .traits import repository_company_ciks
+    ciks=repository_company_ciks(repo_root=repo_root,company_id=prepared['company_id'])
+    all_claims=[];all_manifests=[];all_filings=[];event_sets=[];scopes=[];seen=set()
+    for cik in ciks:
+        current=reader if cik==prepared['entity'] else _Sources(repo_root,prepared['company_id'],cik)
+        try:
+            current_inventory=(inventory if current is reader else current.read(submissions_url(cik=int(cik)),
+                role='sec_submissions_inventory',media_type='application/json'))
+            # This is a source-discovery context, not a rewritten annual identity.
+            context={'company_id':prepared['company_id'],'entity':cik,'table_input':{'target_period':period}}
+            claims,manifests,filings=_event_sources(repo_root=repo_root,reader=current,prepared=context,inventory=current_inventory)
+            accessions={f['accessionNumber'] for f in filings}
+            _need(not seen.intersection(accessions),'NORMAL_REGISTERED_EVENT_CIK_ACCESSION_OVERLAP','SOURCE_COVERAGE_CONFLICT')
+            seen.update(accessions)
+            references={r['source_reference_id']:r for r in current.records.values() if r['record_type']=='SOURCE_REFERENCE'}
+            for manifest in manifests[:-1]:
+                event_sets.append({'manifest':manifest,'references':[references[k] for k in manifest['ordered_source_reference_ids']]})
+            all_claims.extend(claims);all_manifests.extend(manifests[:-1]);all_filings.extend(filings)
+            scopes.append({'cik':cik,'source_window':period,'inventory_source_reference':current_inventory['source_reference'],
+                'source_set_manifest_ids':[m['source_set_manifest_id'] for m in manifests[:-1]],'accessions':sorted(accessions)})
+        finally:
+            if current is not reader:
+                for key,value in current.records.items():
+                    _need(key not in reader.records or reader.records[key]==value,'NORMAL_REGISTERED_EVENT_RECORD_CONFLICT')
+                    reader.records[key]=value
+                reader.proofs.update(current.proofs);reader.failed_attempts.update(current.failed_attempts)
+    collection=_event_collection_manifest(company_id=prepared['company_id'],target=period,
+        inventory_reference=inventory['source_reference'],event_sets=event_sets,ordered_accessions=sorted(seen))
+    all_manifests.append(collection)
+    evidence={'registered_ciks':ciks,'window':period,'per_cik_sources':scopes,
+        'event_projection_catalog_sha256':sha256_file(path=repo_root/'catalog/zero_ai_public_projection.json'),
+        'company_registry_sha256':sha256_file(path=repo_root/'config/company_registry.csv'),
+        'financial_cross_entity_combination_authorized':False}
+    return all_claims,all_manifests,all_filings,evidence
+
+
 def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str):
     """Derive native records from current saved annual input, without a Run.
 
@@ -140,6 +178,15 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
     period = prepared["table_input"]["target_period"]
+    registered_event = metric_id in EVENT_METRICS and prepared["subject_policy"]["mode"] == "SUCCESSOR_REGISTRANT_ONLY"
+    registered_scope = None
+    if registered_event:
+        from .public_projection import event_target_period
+        from .traits import repository_company_ciks
+        projection_catalog = strict_json_loads(text=(repo_root/"catalog/zero_ai_public_projection.json").read_text())
+        period = event_target_period(target_period=period,continuity_status="successor_predecessor",catalog=projection_catalog)
+        registered_scope = {"registered_ciks":repository_company_ciks(repo_root=repo_root,company_id=company_id),
+            "window":period,"status":"SOURCE_RECONSTRUCTION_PENDING","financial_cross_entity_combination_authorized":False}
     reader = _Sources(repo_root, company_id, prepared["entity"])
     inventory = reader.read(submissions_url(cik=int(prepared["entity"])), role="sec_submissions_inventory", media_type="application/json")
     reader.primary(prepared["filing"])
@@ -165,7 +212,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     target = {"company_id":company_id, "period_start":period["period_start"], "period_end":period["period_end"],
         "scope":scope, "scope_key":scope_key(scope=scope)}
     try:
-        _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY", "NORMAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
+        _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY" or registered_event, "NORMAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
         if prepared["amendments"]:
             amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,
                 input_class="ORIGINAL_STATEMENT_VALUES" if metric_id in {"B01","B03"} else "FISCAL_EVENT_WINDOW")
@@ -195,7 +242,11 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
             selection = {"source_candidate_count":len(facts), "selected_fact_ids":[o["source_binding"]["fact_id"] for o in observations],
                 "source_reported_periods":sorted({(f["period_start"],f["period_end"]) for f in facts}), "reason_code":result["reason_code"]}
         else:
-            claims, source_sets, events = _event_sources(repo_root=repo_root, reader=reader, prepared=prepared, inventory=inventory)
+            if registered_event:
+                claims, source_sets, events, registered_scope = _registered_event_sources(
+                    repo_root=repo_root,reader=reader,prepared=prepared,inventory=inventory,period=period)
+            else:
+                claims, source_sets, events = _event_sources(repo_root=repo_root, reader=reader, prepared=prepared, inventory=inventory)
             filing_rows.extend(events)
             graph = project_event_result(metric_id=metric_id, claims=claims, source_set_manifest=source_sets[-1],
                 inventory_source_reference=inventory["source_reference"], target_period=period, catalog=catalog)
@@ -231,6 +282,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         "source_proofs":proofs,"source_admission":admission,"source_set_manifests":source_sets,
         "failed_source_attempts":list(reader.failed_attempts.values()),"selection":selection,
         "resolver_sha256":sha256_file(path=Path(__file__))}
+    if registered_scope is not None:input_binding["registered_event_scope"] = registered_scope
     body = {"record_type":"NORMAL_ZERO_AI_SOURCE_RESULT_PROTOTYPE", "company_id":company_id,"metric_id":metric_id,
         "spec_path":spec_path,"spec_origin":spec_origin,"compiled_spec":spec,"authority_file_hashes":authority,
         "dependency_specs":dependency_specs,"dependency_records":dependency_records,

@@ -2138,6 +2138,16 @@ def _validate_record_graph(
         from .normal_run_v2 import validate_normal_run_authority
         validate_normal_run_authority(repo_root=repo_root, manifest=manifest,
             records=records, compiled_specs=compiled_specs)
+    def approved_registered_event_period(record):
+        # The complete case was reconstructed from original sources above.
+        # Only its exact event records may carry the catalog's lookback window;
+        # the Run's annual coordinate and all other period checks remain strict.
+        if ordinary_case is None or record.get("metric_id") not in {"C01","E01","E02","E03","E04","E05"}:
+            return False
+        scope = ordinary_case.get("input_binding", {}).get("component", {}).get("input_binding", {}).get("registered_event_scope")
+        return (isinstance(scope, dict) and isinstance(scope.get("window"), dict)
+                and record in ordinary_case.get("expected_records", [])
+                and all(record.get(k) == scope["window"].get(k) for k in ("period_start","period_end")))
     r4_run = manifest["record_type"] == R4_SCOPED_RUN_TYPE
     r4_structured_run = manifest["record_type"] == R4_STRUCTURED_RUN_TYPE
     if any((record["record_type"] == R4_SCOPED_ATTEMPT_TYPE and not r4_run)
@@ -2532,7 +2542,7 @@ def _validate_record_graph(
             != manifest["target_period"]["period_start"]
             or observation["period_end"]
             != manifest["target_period"]["period_end"]
-        ):
+        ) and not approved_registered_event_period(observation):
             raise RunStoreError("Observation period differs from Run")
         for field in (
             "raw_asset_id",
@@ -2966,7 +2976,7 @@ def _validate_record_graph(
                 != manifest["target_period"]["period_start"]
                 or record["period_end"]
                 != manifest["target_period"]["period_end"]
-            ):
+            ) and not approved_registered_event_period(record):
                 raise RunStoreError("MetricResult period differs from Run")
             metric_id = str(record["metric_id"])
             if metric_id not in compiled_specs:

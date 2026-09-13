@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.registered_event_native_scope",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通接续主体的6事件按原批准目录窗口和主/前身CIK从完整申报集合重建Claims及Calculator结果，保留各CIK来源、窗口、修订及失败。Run保留一年报告坐标，事件观察/结果可携带目录规定的回溯窗口；仅对已由原件完整重建且逐条一致的6事件记录允许该差别，不放宽通用53周坐标或财务期间规则。省略前身即使得到相同零值仍因源输入绑定不同拒绝，收入/EBITDA的财务主体限制不随事件接线改变。",
+        "audience": [
+          "developer",
+          "reviewer",
+          "operator"
+        ],
+        "test_anchor": "tests/vnext/test_registered_event_run_material.py::RegisteredEventRunMaterialTest.test_complete_scope_and_a_valid_current_only_zero",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.registered_event_source_discovery",
         "type": "capability",
         "status": "active",

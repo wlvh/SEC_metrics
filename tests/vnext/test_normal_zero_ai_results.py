@@ -129,12 +129,20 @@ class OrdinaryZeroAiPrototypeTest(unittest.TestCase):
             self.assertTrue(amendment['scopes'])
             self.assertTrue(any(r['accession']==amendment['scopes'][0]['amendment']['filing']['accessionNumber']
                 for r in row['source_references']))
-        for company,reason in [('paramount_skydance_paramount_global','SUCCESSOR_SCOPE_NOT_IMPLEMENTED')]:
-            for metric in ('B01','C01'):
-                row=self.cases[(company,metric)]
-                self.assertEqual('WITHHELD',row['result']['publication'])
-                self.assertEqual('IMPLEMENTATION_GAP',row['selection']['category'])
-                self.assertIn(reason,row['selection']['reason'])
+        company='paramount_skydance_paramount_global'
+        revenue=self.cases[(company,'B01')]
+        self.assertEqual('WITHHELD',revenue['result']['publication'])
+        self.assertEqual('IMPLEMENTATION_GAP',revenue['selection']['category'])
+        self.assertIn('SUCCESSOR_SCOPE_NOT_IMPLEMENTED',revenue['selection']['reason'])
+        # The unchanged repository corpus lacks predecessor originals. The
+        # event route now reaches that real dependency instead of the blanket
+        # financial-continuity guard, without inventing a smaller valid count.
+        event=self.cases[(company,'C01')]
+        self.assertEqual('WITHHELD',event['result']['publication'])
+        self.assertEqual('SOURCE_UNAVAILABLE',event['selection']['category'])
+        self.assertIn('SAVED_SOURCE_MISSING:',event['selection']['reason'])
+        self.assertEqual(event['input_binding']['registered_event_scope']['registered_ciks'],['2041610','813828'])
+        self.assertEqual(event['target_period']['period_start'],'2024-01-01')
         failed=self.cases[('salesforce','C01')]
         self.assertEqual('SOURCE_ACCESS_FAILED',failed['selection']['category'])
         self.assertTrue(failed['failed_source_attempts'])

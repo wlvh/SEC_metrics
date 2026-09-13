@@ -485,3 +485,7 @@ C04不会因当前/历史SEC清单保存为编号文件而误报缺失分片；�
 接续主体的来源需求会列出前身及原事件窗口中缺少的8K正文/头文件；不会把当前主体较小的申报集合显示为完整范围。获取与指标成功分别报告。
 
 <!-- capability-anchor: CAPABILITY.registered_event_source_discovery -->
+
+接续主体6事件可显示覆盖主/前身完整来源的结果和实际统计窗口。2025报告中的事件可按既有规则显示2024-01-01至2025-12-31，不能误读为仅2025发生数；Run报告年度仍为2025。删掉前身来源即使零值未变也不接受；财务主体限制单独保留。
+
+<!-- capability-anchor: CAPABILITY.registered_event_native_scope -->

@@ -77,21 +77,27 @@ SOURCE_TESTS += ("tests.vnext.test_capacity_utilization_source.CapacitySourceMat
 SOURCE_TESTS += ("tests.vnext.test_continuous_sec_acquisition",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_special_debt_scope",)
 SOURCE_TIMEOUT_SECONDS = 240
+SOURCE_TIMEOUT_OVERRIDES = {
+    # This single case includes acquisition, native installation and cold replay.
+    "tests.vnext.test_continuous_sec_acquisition": 480,
+}
 
 
 def _run_source_case(name):
     start = time.monotonic()
+    timeout = SOURCE_TIMEOUT_OVERRIDES.get(name, SOURCE_TIMEOUT_SECONDS)
     environment = {**os.environ,"PYTHONDONTWRITEBYTECODE":"1"}
     try:
         done = subprocess.run([sys.executable,"-m","unittest","-q",name],cwd=str(inherited.REPO_ROOT),
-            env=environment,capture_output=True,encoding="utf-8",timeout=SOURCE_TIMEOUT_SECONDS)
+            env=environment,capture_output=True,encoding="utf-8",timeout=timeout)
         code,stdout,stderr = done.returncode,done.stdout,done.stderr
     except subprocess.TimeoutExpired as error:
         code,stdout,stderr = 124,error.stdout or "",error.stderr or ""
         stdout = stdout.decode("utf-8",errors="replace") if isinstance(stdout,bytes) else stdout
         stderr = stderr.decode("utf-8",errors="replace") if isinstance(stderr,bytes) else stderr
-        stderr += "\nSOURCE_MATERIAL_TIMEOUT_SECONDS="+str(SOURCE_TIMEOUT_SECONDS)
+        stderr += "\nSOURCE_MATERIAL_TIMEOUT_SECONDS="+str(timeout)
     return {"test":name,"return_code":code,"duration_seconds":round(time.monotonic()-start,3),
+            "timeout_seconds":timeout,
             "stdout_tail":stdout[-2000:],"stderr_tail":stderr[-2000:]}
 
 
@@ -111,6 +117,7 @@ def run_fast_tests(*, jobs, suite="fast"):
     return {"evidence_tier":"FAST_LOCAL_ONLY" if suite == "fast" else "SOURCE_MATERIAL_LOCAL_ONLY",
         "selector_generation":2, "suite":suite, "jobs":jobs,
         "per_case_timeout_seconds":inherited.FAST_TEST_TIMEOUT_SECONDS if suite == "fast" else SOURCE_TIMEOUT_SECONDS,
+        **({"per_case_timeout_overrides":SOURCE_TIMEOUT_OVERRIDES} if suite != "fast" else {}),
         "duration_seconds":round(time.monotonic()-start, 3), "tests":rows,
         "status":"PASSED" if all(r["return_code"] == 0 for r in rows) else "FAILED"}
 
