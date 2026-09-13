@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 525, in _current_borrowing_assertions
+    raise BondLeaseError('BOND_LEASE_CURRENT_BORROWING_ASSERTION_UNRESOLVED:'+sentence)
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_CURRENT_BORROWING_ASSERTION_UNRESOLVED:Financing The Company's debt is as follows: Interest expense and losses on extinguishment of debt are as follows: Debt Obligations ABL Credit Facility On April 9, 2025, Macy’s Inventory Funding LLC (the “ABL Borrower”), an indirect subsidiary of the Company, and Macy’s Inventory Holdings LLC (the “ABL Parent”), a direct subsidiary of the Company and the direct parent of the ABL Borrower, entered into an amendment (the “Amendment”) to the credit agreement governing the existing $3,000 million asset-based credit facility (the “Existing ABL Credit Facility”), which was set to expire in March 2027.

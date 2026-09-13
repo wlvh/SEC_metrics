@@ -1,0 +1,309 @@
+{
+  "record_type": "REGULATORY_INVESTIGATION_CANDIDATE_BUNDLE",
+  "metric_id": "D03",
+  "company_id": "sample_entity",
+  "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+  "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+  "source_filing": {
+    "form": "10-K",
+    "accessionNumber": "0000012345-26-000001",
+    "primaryDocument": "source.htm",
+    "filingDate": "2026-03-27",
+    "reportDate": "2025-12-31"
+  },
+  "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+  "navigation_proposal_id": "sha256:e9010c7e3e5a868107e7cda2176a89d24638a2bdc7364de55109b78f2f79772c",
+  "checked_ranges": [
+    {
+      "section_id": "ITEM_1A",
+      "start_block": 1,
+      "end_block_exclusive": 4,
+      "heading": {
+        "item": "1A",
+        "block_index": 0,
+        "heading_end_index": 0
+      },
+      "closing_heading": {
+        "item": "1B",
+        "block_index": 4,
+        "heading_end_index": 4
+      }
+    },
+    {
+      "section_id": "ITEM_3",
+      "start_block": 7,
+      "end_block_exclusive": 8,
+      "heading": {
+        "item": "3",
+        "block_index": 6,
+        "heading_end_index": 6
+      },
+      "closing_heading": {
+        "item": "4",
+        "block_index": 8,
+        "heading_end_index": 8
+      }
+    },
+    {
+      "section_id": "ITEM_8",
+      "start_block": 11,
+      "end_block_exclusive": 12,
+      "heading": {
+        "item": "8",
+        "block_index": 10,
+        "heading_end_index": 10
+      },
+      "closing_heading": {
+        "item": "9",
+        "block_index": 12,
+        "heading_end_index": 12
+      }
+    },
+    {
+      "section_id": "NOTE_2",
+      "start_block": 21,
+      "end_block_exclusive": 25,
+      "requested_reference": "2",
+      "scope_relation": "EXACT_NOTE"
+    }
+  ],
+  "note_references": [
+    {
+      "reference": "Note 2",
+      "source_occurrences": [
+        {
+          "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+          "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+          "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+          "section_id": "ITEM_3",
+          "labels": [
+            "NOTE_REFERENCE"
+          ],
+          "block_index": 7,
+          "text": "Refer to Note 2 for our legal proceedings and pending litigation.",
+          "raw_start_byte": 1222,
+          "raw_end_byte": 1287,
+          "raw_span_sha256": "d3ffd53a0bc0cf074938acc58ccbb0f8d890b10ef2380f4636addbc8f6f95186"
+        }
+      ],
+      "heading_candidates": [
+        {
+          "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+          "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+          "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+          "section_id": "FULL_DOCUMENT_NOTES",
+          "labels": [
+            "NOTE_HEADING"
+          ],
+          "block_index": 21,
+          "text": "Note 2. Contingencies",
+          "raw_start_byte": 1953,
+          "raw_end_byte": 1974,
+          "raw_span_sha256": "4550b62043163b08f3c38d5056fd09321794ed0802bb22b379c60c1c38d6075a"
+        }
+      ],
+      "range_candidates": [
+        {
+          "section_id": "NOTE_2",
+          "start_block": 21,
+          "end_block_exclusive": 25,
+          "requested_reference": "2",
+          "scope_relation": "EXACT_NOTE"
+        }
+      ],
+      "status": "LOCATED_NOTE_RANGE"
+    }
+  ],
+  "source_aliases": [
+    {
+      "text": "we",
+      "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+      "support": null
+    },
+    {
+      "text": "Example Incorporated",
+      "basis": "NAMESPACE_CHECKED_DEI_REGISTRANT_NAME",
+      "support": null
+    }
+  ],
+  "coverage_status": "LOCAL_REQUESTED_RANGES_SCANNED",
+  "coverage_reasons": [],
+  "candidates": [
+    {
+      "excerpt": {
+        "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+        "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+        "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+        "section_id": "ITEM_1A",
+        "labels": [
+          "REGULATORY_LANGUAGE_CANDIDATE"
+        ],
+        "block_index": 1,
+        "text": "If the DOJ were to open an inquiry, our hypothetical response would be:",
+        "raw_start_byte": 942,
+        "raw_end_byte": 1013,
+        "raw_span_sha256": "087e8421ce0b717b020783145615fcf9fe1e93e5bf3f952ad53133845ae38bc3"
+      },
+      "context_excerpts": [
+        {
+          "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+          "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+          "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "ADJACENT_CONTEXT_ONLY"
+          ],
+          "block_index": 2,
+          "text": "We are cooperating with the DOJ inquiry.",
+          "raw_start_byte": 1032,
+          "raw_end_byte": 1072,
+          "raw_span_sha256": "68057174b0a4078918f1fef9308eb21d0fdf1f2c1d9f3be3216efe41d5a69dd1"
+        },
+        {
+          "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+          "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+          "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "ADJACENT_CONTEXT_ONLY"
+          ],
+          "block_index": 3,
+          "text": "No such inquiry has been opened.",
+          "raw_start_byte": 1092,
+          "raw_end_byte": 1124,
+          "raw_span_sha256": "fc2f8bc332746b6577d5ff37613b72b11eb8c99a4cf06db3225e96ac83ac2f1b"
+        }
+      ],
+      "language_signals": [
+        "PROSPECTIVE"
+      ],
+      "facts": [],
+      "requires_semantic_review": true,
+      "unmatched_language_semantically_resolved": false,
+      "candidate_id": "sha256:e0f83a7c0bca8b3377929ac643306d957e78a42aa14d0fc1e3458716c9b05522"
+    },
+    {
+      "excerpt": {
+        "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+        "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+        "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+        "section_id": "ITEM_1A",
+        "labels": [
+          "REGULATORY_LANGUAGE_CANDIDATE"
+        ],
+        "block_index": 2,
+        "text": "We are cooperating with the DOJ inquiry.",
+        "raw_start_byte": 1032,
+        "raw_end_byte": 1072,
+        "raw_span_sha256": "68057174b0a4078918f1fef9308eb21d0fdf1f2c1d9f3be3216efe41d5a69dd1"
+      },
+      "context_excerpts": [
+        {
+          "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+          "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+          "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "ADJACENT_CONTEXT_ONLY"
+          ],
+          "block_index": 1,
+          "text": "If the DOJ were to open an inquiry, our hypothetical response would be:",
+          "raw_start_byte": 942,
+          "raw_end_byte": 1013,
+          "raw_span_sha256": "087e8421ce0b717b020783145615fcf9fe1e93e5bf3f952ad53133845ae38bc3"
+        },
+        {
+          "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+          "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+          "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "ADJACENT_CONTEXT_ONLY"
+          ],
+          "block_index": 3,
+          "text": "No such inquiry has been opened.",
+          "raw_start_byte": 1092,
+          "raw_end_byte": 1124,
+          "raw_span_sha256": "fc2f8bc332746b6577d5ff37613b72b11eb8c99a4cf06db3225e96ac83ac2f1b"
+        }
+      ],
+      "language_signals": [],
+      "facts": [
+        {
+          "rule_id": "CURRENT_COOPERATION",
+          "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+          "statement_text": "We are cooperating with the DOJ inquiry.",
+          "visible_block_character_span": {
+            "start": 0,
+            "end": 40
+          },
+          "subject_binding": {
+            "text": "we",
+            "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+            "support": null
+          },
+          "source_date_literals": [],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": true,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:d7240dbafe2662859330c9dfc992631777615dad67de3944b7478e4d8e41ff88"
+        }
+      ],
+      "requires_semantic_review": true,
+      "unmatched_language_semantically_resolved": false,
+      "candidate_id": "sha256:6281da2717bf9dd7f1f930e836256887d859ba5a31133a9e1ca10e614df45fb7"
+    },
+    {
+      "excerpt": {
+        "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+        "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+        "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+        "section_id": "ITEM_1A",
+        "labels": [
+          "REGULATORY_LANGUAGE_CANDIDATE"
+        ],
+        "block_index": 3,
+        "text": "No such inquiry has been opened.",
+        "raw_start_byte": 1092,
+        "raw_end_byte": 1124,
+        "raw_span_sha256": "fc2f8bc332746b6577d5ff37613b72b11eb8c99a4cf06db3225e96ac83ac2f1b"
+      },
+      "context_excerpts": [
+        {
+          "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+          "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+          "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "ADJACENT_CONTEXT_ONLY"
+          ],
+          "block_index": 2,
+          "text": "We are cooperating with the DOJ inquiry.",
+          "raw_start_byte": 1032,
+          "raw_end_byte": 1072,
+          "raw_span_sha256": "68057174b0a4078918f1fef9308eb21d0fdf1f2c1d9f3be3216efe41d5a69dd1"
+        }
+      ],
+      "language_signals": [
+        "NEGATED_ACTION"
+      ],
+      "facts": [],
+      "requires_semantic_review": true,
+      "unmatched_language_semantically_resolved": false,
+      "candidate_id": "sha256:ca06e5ef1386bd7d46f52ea39f1cf2435955692afaa593b5480dea338e3acb1f"
+    }
+  ],
+  "outside_requested_range_action_candidates": [],
+  "supported_fact_count": 1,
+  "semantic_scope_completeness_asserted": false,
+  "not_disclosed_confirmed": false,
+  "native_result_created": false,
+  "publication_credit": false,
+  "policy_hash": "sha256:a3439919ece6da35e2c2ded2ff5392c1e8e4145204d05e9e7b401921619bd369",
+  "candidate_bundle_id": "sha256:a795dc9de697b1ea67a882bd7f19940b096c7e777bdd47798ed19b50a31a6e6b"
+}

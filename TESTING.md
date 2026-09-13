@@ -1,5 +1,19 @@
 # SEC_metrics 测试与验证流程
 
+## 正常年度输入选择
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_normal_annual_input -v`在保存真实材料上检查非自然财年、52周期间、修订与普通原件分离、十公司保留/故障隔离，以及季度冒充年度、错主体、缺历史分片和后来来源失败反例。测试禁止网络及旧结果读取，不模拟财务答案。组件通过只证明输入准备，未证明指标执行或新SEC发现。fast入口逐项登记以保持30秒单项上限。
+<!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
+
+## 后继来源内容组件
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_financial_duration tests.vnext.test_text_coverage -v`验证原件期间、同表脚注、月底起点、目录/片段/章节/来源篡改；synthetic反例不计真实获取。真实九公司普通年报由normal输入选择后与text组件联测，报告为component integration，不称文本指标已完成。
+<!-- capability-anchor: CAPABILITY.financial_source_measurement_period -->
+<!-- capability-anchor: CAPABILITY.source_text_coverage -->
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_b06_disclosure_v2 -v`使用PR43两历史原件和保存的新信用协议组正例，验证分母冲突、已知计量改写、额外借款及未知叙述。新10项模块超过30秒；fast逐method登记，完整原生v2冻结/冷读另作接线验收，不能以组件通过代替。旧13项及旧原生材料维持原规则，首次漏洞/修后结果分别保存。
+<!-- capability-anchor: CAPABILITY.b06_successor_content_checks -->
+
 ## 确切年度候选正式采纳接线
 
 fast白名单共35入口，保留v1发布模块，并加入`tests.vnext.test_annual_publication_authority`。
@@ -552,3 +566,154 @@ PR42来源修订短回归：`python3 -m unittest tests.vnext.test_r5_b06_followu
 ### B06统一债务集合
 
 `PYTHONPATH=scripts python3 -m unittest tests.vnext.test_r5_b06_scope -v`：11项短测试接入fast，覆盖真实来源组成/原5坐标、Pfizer/JPM/Ford完整性拒绝、精度区间、重复/漏项、未知原件/资产冒充以及嵌套具名表达式。旧9项/10项模块显式读取保留的v1/v2 Spec，不修改旧期望。`R5_B06_CANDIDATE_ROOT=<外部目录> PYTHONPATH=scripts python3 -m unittest tests.vnext.test_r5_b06_material -v`用于实际完整候选，需干净检出；运行中不要编辑文档，所有输出显式置于checkout外。
+
+### B06 新来源定向验证
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_b06_new_source -v`
+进入fast白名单。测试以PR42材料及明确TEST_ONLY语义变造为输入，真实来源哈希重新
+建立；验证原文否定/分列冲突、计算白名单外融资、BS新增行、资产/付款冒充、
+完整性伪造、真正自洽但不可信的模拟获取账本及成组金额动态重算。
+原本当前Southwest另有供应商融资性质缺口，不以测试修复抹去；派生零余额正例仅
+测试支持模式。固定历史两材料的正常Run、冷重放、重入和历史包兼容另作材料层
+验收，保存首次失败与修后结果；完整候选prepare与生产发布不属于本轮执行。
+
+真实新来源材料层：`B06_NEW_SOURCE_MATERIAL_ROOT=<本轮外部根> PYTHONPATH=scripts python3 -m unittest tests.vnext.test_b06_new_source_material -v`，6项测试实际执行，缺材料报错。包括两个正常FROZEN Run、冷读来源准入、旧入口抛错、零调用重入和重绑定伪验证记录拒绝。便携包恢复后用新进程只读CLI，额外证明没有Git目录仍可重验checkpoint与原生结果。
+
+CI首次将13项新测试作为一个入口时触发既有30秒入口上限。已将同样13项分别登记为入口，不提高超时、不删测试或放宽断言。当前fast共60入口，实际测试数仍182；首次CI失败保留。
+
+
+## 普通治理与文本原生接线
+
+`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_replay tests.vnext.test_record_schemas tests.vnext.test_text_results`在本次接线后70项通过；随后增加文本Projector原文/字节定位及禁止倍率反例。历史Projector fixture通过既有`copy_foundation_receipts`取回原模型配置，执行当前验证器；不改历史authority。`tests.vnext.test_normal_source_authority`检验无Git导入、caller基线/账本/原件/headers/主体变造；`tests.vnext.test_normal_governance_input`及`test_governance_signals`/`test_governance_compensation_table`检验自动输入与薪酬/审计师语义。
+
+本次D01/C03/C04/B06真实OPEN整图检查及首次失败分别保存；不把OPEN重放、70项回归或fast当最终冻结、完整包或生产PASS。完整金融组件55项另行运行（约153秒），不能塞入30秒单case fast上限。
+<!-- capability-anchor: CAPABILITY.normal_saved_source_admission -->
+<!-- capability-anchor: CAPABILITY.normal_governance_input -->
+<!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->
+
+
+## 普通保存来源候选批次
+
+当前GitHub CI包含两层测试和独立原生Run检查：`python3 tools/run_fast_tests_v2.py --suite fast --jobs 2`检查95个短测试入口，每项30秒；`--suite source-material --jobs 2`检查38个完整来源材料入口，每项240秒，整个job上限20分钟。先前124个入口的并集全部保留，并新增九个普通来源/输入材料套件；没有删除断言。旧`tools/run_fast_tests.py`保持原字节，历史acceptance入口不改。单次全文LCR已在托管机超过30秒，故不再把全文材料误列为短测试；原失败日志保留，材料通过不能改称原30秒测试已通过。两层本地分别通过，不替代实际GitHub或完整390验收。
+
+<!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
+<!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
+
+普通零AI来源组件的材料测试：
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_normal_companyfacts_results tests.vnext.test_normal_zero_ai_results
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts /usr/bin/python3 -m unittest tests.vnext.test_fiscal_year_labels tests.vnext.test_going_concern_source tests.vnext.test_regulatory_investigation_candidates
+```
+
+前一命令17项通过，覆盖十公司原件/110目录坐标、B01/C01原20坐标、新增B03/五事件、独立源金额核算、JSON和无Git数据根重建、篡改拒绝。后一命令Python3.9的48项通过。测试拒绝网络和旧矩阵答案，不创建Run或freeze，不写正式结果；完整材料另存源码外。后继运行命令和原失败证据见`docs/evidence/issue28_continuous/successor-source-components/`，业务范围见`docs/normal_source_components.md`。
+
+短边界覆盖`test_normal_run_authority`、`test_normal_candidate_cli`及最小文本输入。V13公共入口的独立实际验收包含两份合法OPEN图和14个规格/来源/期间负例，详见`docs/evidence/issue28_continuous/successor-open-fb76/`；其信用只属于受审草案，不覆盖后续CI清单或D02改动。
+<!-- capability-anchor: CAPABILITY.normal_current_run_admission -->
+
+完整材料测试会真实冻结当前安装规则，应在草案实现和输入文件稳定后执行：
+
+```bash
+NORMAL_RUN_MATERIAL_ROOT=/absolute/new/open-material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_run_material
+NORMAL_NATIVE_MATERIAL_ROOT=/absolute/new/native-material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_native_material
+PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_projection tests.vnext.test_normal_text_projection_v2
+PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_numeric_projection
+```
+
+第一条只验证两个真实OPEN基线及规格/来源/期间文件负例，禁止冻结。第二、三条覆盖真实Run/冻结/新进程冷读和文本CSV；第四条目前验证实际数值记录的展示，不授FROZEN信用。它们不塞进30秒fast入口，不替代390坐标或正式发布。V12旧材料见`frozen-candidates/`；本轮V13最终冻结材料仍在执行准备中，不能把测试文件存在写成已通过。
+<!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->
+
+<!-- capability-anchor: CAPABILITY.ordinary_accession_native_components -->
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_normal_accession_results`及同命令改用`/usr/bin/python3`分别6项通过（27.533s、44.509s）。覆盖30原生坐标、实际3数值与27结构性状态、单位ID改名/错误单位、主体/维度差别、实体标识方案、错误数字分组和JSON/异目录变更拒绝。十公司材料及JPM/Salesforce两个新进程无Git数据根冷读见`docs/evidence/issue28_continuous/ordinary-accession-components/`。仍无Run、freeze或生产写入。
+
+<!-- capability-anchor: CAPABILITY.ordinary_integrated_run_graph -->
+
+V14/issue_28_v13草案的实际Run材料使用全新外部目录，默认不冻结：
+
+```bash
+NORMAL_V14_MATERIAL_ROOT=/absolute/new/open-material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_run_v3_material
+ORDINARY_PROJECTION_MATERIAL_ROOT=/absolute/completed/cli-batch PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_ordinary_projection_material
+```
+
+普通修订与债务来源组件另有 `test_annual_amendment_scope`、`test_b06_combined_borrowings`、`test_b06_financing_inventory`，均在240秒来源材料层登记。真实原件、原说明中的错误用途/期间/附件、金额/单位/命名空间冲突、原生事实与显示金额及声明舍入边界均有正反例；来源清单不推导缺失零值，不产生完整B06或生产信用。
+
+逐笔债券与明确无融资租赁的新路线由`test_b06_note_carrying`核对完整原件及细分维度漏检反例；`test_note_debt_run_material`读取显式新建的Enphase/Marriott B06普通批次，复核原生Run及公共行，并拒绝重新计算并重签的虚假债务图和旧规格替换。后者通过`NOTE_DEBT_NATIVE_BATCH`和`NOTE_DEBT_ATTACK_ROOT`指定隔离目录，在current-instant CI job执行；命令见`docs/note_debt_source.md`。无新SEC/provider调用和正式发布。
+
+上述原生批次现在加入Macy’s，共三个实际Run与四个伪造重算/旧规格替换反例；Marriott检查还禁止进入新债务解析器，验证原非正权益保护的先后顺序。`test_b06_bond_leases`在来源层核对债券/租赁/供应商及独立清单，涵盖细分额外借款、无金额的其他借款、跨文件金额、条款/引用变更、未来购买承诺及真实比较期的非零当前借款。比较期检查不声称已取得过去主文档。
+
+已完成修复批次的公共行可用 `ORDINARY_REPAIR_MANIFEST=/absolute/repair-batches.json PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_ordinary_repairs_material` 重建。清单包含 `amendment`、`denominator`、`selection` 三个实际CLI批次绝对路径；检查14个修订修复坐标、四个NOT_MEANINGFUL空值及证据、JPM具体来源失败/正向选择，逐字节比较实际CSV。该命令不新建Run、不冻结、不写正式结果；失败原批次及修后批次分别保存。
+
+材料包含真实B03依赖图、Salesforce时点/Macy’s跨年时点、文本审阅、事件Claim及文件负例。重签假收入图使用真实Calculator重新生成完整记录，再从原始来源拒绝；删依赖/事件事实、改规格/来源/财年、删审阅和改输入主指标分别验证。第一次删B01依赖结果被误接受、文本审阅顺序失败、事件Claim/来源角色失败和测试异常分类错误均保留，不能拿后续PASS改写首次结果。旧V13 D01/C03冻结数据根用新共享代码冷读仍通过。
+
+普通来源解释的原始引语/字符反例、财年v2与22路线测试仍分开执行；生成的20项普通Spec文件必须重编译出完全相同的既有目录语义。V14尚未冻结，不应运行旧的V13新建材料命令来复制不匹配的当前共享执行字节；旧冻结读取仍按其原数据根进行。
+
+GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运行上述V14真实OPEN材料及文件负例，30分钟上限。它不冻结或修改正式输出，也不替代最终390验收。
+
+### D04离线解释输入与响应协议
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_r6_semantic_review` 检查真实来源的完整输入、嵌套XML重建、请求/单元缺漏、错误引文/索引/类型、主体/时间分类及冲突保留，纳入source-material层。测试响应由测试程序构造，不是provider执行。十公司输入组织不证明模型语义理解正确，也不创建D04 Run。具体入口和界限见`docs/r6_interpretation_protocol.md`。
+
+### 普通更新的来源发现
+
+来源更新测试会话用 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_source_session` 检查，纳入fast层。网络和HTTP入口均被测试禁用；正例通过现有SEC持久化/追加及基础年度读取，负例覆盖伪造追加/终态、前缀/原件变化、未知结果、失败后停止、测试额度及路径别名。输入比较区分内容变化与仅请求身份变化。独立材料使用同一原文的新测试记录调用原生计算器；不创建Run、不授真实来源信用。
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_source_requirements` 已加入source-material层。实际Marriott/Salesforce/JPM材料覆盖可用来源、最终失败GET和历史清单冲突；外部副本删除新主文件仍能发现其地址，删除/篡改目录不会宣布子文件齐备；后续年报元数据的纯解析不授予新来源信用。十公司实际CLI命令为 `python3 tools/vnext_normal_update.py --discover-sources --output /absolute/new-external-directory/source-requirements.json`；有缺口返回2并保留所有公司，不执行指标或请求。说明见`docs/normal_source_discovery.md`。
+
+### 普通主体接续与期末余额
+
+来源规则与十公司原生组件用 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_instant_balance_amendment tests.vnext.test_normal_companyfacts_results` 验证；两模块均在source-material层。实际Part III修订和链接更正保留不同证明，覆盖额外用途、错原报告日、正文更正/余额、已发生重述、封面标志、引语和新增原生财务事实。缺少修订原件必须拒绝源重放。
+
+实际Run先由 `tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B08 --metric B09 --output-root /absolute/new/instant-runs` 创建，再设置 `INSTANT_BALANCE_NATIVE_BATCH`、`INSTANT_BALANCE_ATTACK_ROOT` 两个外部目录执行 `tests.vnext.test_instant_balance_run_material`。核对原生时点/主体及公共行，并以真实Calculator构造90亿美元假现金图、删除修订原件，检查重放拒绝。CI独立的current-instant native任务包含这两个步骤，各原生命令和20分钟任务上限不变。4e02565首次把全部原生检查串在一个任务内，在最后一步达到20分钟上限而被取消，原始记录见`docs/evidence/issue28_continuous/instant-ci-timeout/`；这不是反例通过。拆分仅调整独立检查的调度，不把组件或测试准备说成Run执行通过。
+
+### 普通B10/B11的确定性来源与原生记录
+
+`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_lodging_table_source`使用三年原件核对同范围/同年列、跨页说明和地域脚注，拒绝错误范围、表外标签、竞争表、重复全球行、季度/货币限定和引用说明。它在source-material层登记，保留原料和首次失败，不调用模型、不改旧AI规格。
+
+实际原生验收先运行 `python3 tools/vnext_normal_candidate.py --company marriott_international --company southwest_airlines --metric B10 --metric B11 --output-root /absolute/new/lodging-runs`，再设置 `LODGING_NATIVE_BATCH` 为该目录、`LODGING_ATTACK_ROOT` 为另一全新外部目录，运行 `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_lodging_run_material`。检查无AI响应/假review的原生记录，拒绝重签错误值、删除网格及旧AI Spec替换。GitHub native-runs job包含这两个实际步骤；本地另有十公司20坐标完整范围检查，不能把它扩称390全验收。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_current_input -->
+
+`test_b06_current_input`核对真实修订、原政策范围不变、债务/权益更正、额外原生事实、输入门先于权益保护及合法WITHHELD路径；`test_b06_current_input_material`以显式新目录创建真实Paramount B06 Run及公共行，并拒绝删掉修订原件或重签删除检查的输入。历史解析WITHHELD证据不改写。后者在普通native CI job执行，仍无SEC/provider调用、冻结或生产写入。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_inclusive_table -->
+
+`test_b06_inclusive_table`使用完整原件检查已含租赁、当前主体/权益、收购日估值、不同计量精度和全部147项潜在融资事实；反例包含错误继任表头、缺租赁、金额冲突、额外票据/借款/附注、错误权益范围、收购值冲突及收入履约维度冒充借款。`test_b06_current_input_material`另用实际Calculator重建重复计租赁及前任金额的错误图，并验证重放拒绝这两图、旧Spec、删修订及自签输入，共五类原生反例。
+
+59fd27b的current-instant CI因合并作业超过20分钟而取消，前三项作业通过，不记为全绿。债务Run与反例现拆为独立`vNext debt native Runs`作业，仍20分钟；来源和ordinary-native总作业上限改为30分钟，单个来源案例的240秒上限不变。所有原测试保留，新范围不代替390最终验收。
+
+
+<!-- capability-anchor: CAPABILITY.recorded_source_run_admission -->
+
+新增`test_ordinary_source_authority`在fast层核对安装目录登记、冷读、伪造信用/记录、未登记追加及失败/未知终态。`ORDINARY_SOURCE_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_source_run_material`创建五个实际Run（B03含B01依赖，另有B08/B09/B10/B11），比较原文计算值/期间，并验证来源记录缺漏、重签信用、未登记追加、假收入图及缺依赖五类拒绝。网络/HTTP/DNS在材料中禁用，来源新增三份测试请求但财务原文未变，仍无实际SEC信用。
+
+该材料通过独立`vNext recorded source update Runs` CI作业执行，30分钟上限；不替代真正新财报获取/更新、全部路线和390验收。首次B01材料的/tmp别名及首次跨路线酒店内层仍调用旧验证器的失败保留；修后新目录另验，不重签旧失败。复制运行包的无Git冷读单独记录。
+
+
+<!-- capability-anchor: CAPABILITY.remaining_current_source_adapters -->
+
+`REMAINING_SOURCE_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_remaining_source_run_material`从原来源准备完整依赖，再登记测试请求并创建Marriott六项/JPM六项原生Run与公共行；验证原有数值/期间、SYSTEM文本审阅、B06保护及改金额图/删除审阅拒绝。`REMAINING_SOURCE_COMPANY`可限定其中一家公司；CI以此分两个45分钟作业。已完成材料可改用`REMAINING_SOURCE_EXISTING_ROOT`执行只读重放及独立攻击副本，不重跑创建。测试信用和真实来源获取、39项完成及正式发布分别记录。
+
+本次十二路线创建耗时845.782秒，完整重放/反例314.233秒；新CI按公司拆分，并给每个原生材料作业45分钟总上限，保持全部断言及来源规则不变。
+
+已完成十二路线材料可设置`REMAINING_SOURCE_EXISTING_ROOT`及可选的新`REMAINING_SOURCE_ATTACK_ROOT`重放并检查攻击副本。首次金融反例因传入多余Calculator目标字段而停止；原日志保留，改为精确五字段后12场景及两类反例通过。
+
+
+<!-- capability-anchor: CAPABILITY.ordinary_update_cycle -->
+
+`ORDINARY_UPDATE_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_update_cycle`使用真实Run及两份原始清单版本验证内容身份、重复请求、失败/恢复、成功终态与引用写入中断、未完成意图、并发、伪造引用、改公共行和相同WITHHELD输入不重复建Run。网络/HTTP/DNS均禁用。新增历史测试请求只能选择受信不可变尝试，相关源会话测试继续在fast层运行。材料不等于实时新财报或完整生产生命周期验证。 同一实际材料增加十项记录反例：最新/更早终态编号与类型、未知终态、错意图/配置、更早意图类型/成功前驱及缺失旧终态；改意图时连带重签终态绑定，以验证实际一致性而非仅哈希失配。最后恢复原件并重验不新建Run。
+
+338bbc8的来源CI中，B06当前输入模块六项测试合计达到240秒而超时，其他七项CI作业成功。当前source-material选择器将这六项按实际方法分别运行，仍保持每项240秒，方法集合与源码逐项核对无遗漏；源码选择器总数由45变为50。旧超时不重写为通过，拆分后的六项单独复验。
+
+<!-- capability-anchor: CAPABILITY.ordinary_update_metric_isolation -->
+
+`ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT=/absolute/new/company-material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest`使用实际Pfizer B01/B06/B08检查独立成功、受限、重复输入、前项输入故障后后项继续、历史期间/当前状态分离、改公共行隔离及旧组历史不静默重置。所有网络入口禁止。
+
+
+<!-- capability-anchor: CAPABILITY.continuous_call_allowance -->
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_continuous_call_ledger` 检查新累计账本的跨进程互斥、重启累计、额度耗尽、重复请求、缺终态和402/UNKNOWN停止、末记录/目录删除及测试身份篡改。只用带身份的测试材料，模拟计数不充当真实 provider/paid/SEC。加入当前 fast 选择器。
+
+<!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
+
+`CONTINUOUS_WIRING_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_continuous_semantic_calls` 使用 Enphase 保存原件，走后继授权、工厂、实际请求和 WB-3。socket/DNS/SEC 被拒绝，官方 opener 只返回明确测试 wire，原生 marker 为 MOCK。验证私有出口令牌缺失与请求变造拒绝、未知 usage/费用不归零、父 V14 闭包不变。结果不是语义可行性结论或真实调用；加入 source-material 选择器，仍用原每项240秒限制。

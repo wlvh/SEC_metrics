@@ -1,5 +1,41 @@
 # SEC_metrics Agent 工作入口
 
+## 开工必读：产品边界与 Issue 级交付（2026-09-11）
+
+先实时读取 [Issue #28](https://github.com/wlvh/SEC_metrics/issues/28)：第1节保存三个最终目标，第3–4节保存当前任务和剩余责任，第5节保存协作原则，第6节区分权限与证据。下文带历史PR编号的阶段状态只解释当时实现，不覆盖实时Issue、最新用户委托及其实际权限；历史规则和证据仍按原绑定读取。
+
+### 只研究指标必需的细节
+
+按公司财报已报告的会计分类和已批准MetricSpec计算，核对数值、单位、期间、主体、账面计量及必要包含关系；不因发现供应商相关项目等线索，自动扩建隐性债务重分类、供应链分析或审计级全面尽调。B06仍遵守已批准的借款、债券、融资租赁及银行/工业范围，不因简化工作擅自删掉应计组成。关键词或标签仅是线索，不能单独证明纳入、排除或完整性；已发现的直接矛盾须在限定范围内处理，无法证明时准确限制该指标。不得临时采用“小额忽略”、猜数、改N/A或把小计当完整总额。需要改变业务口径时按既有修订机制对齐，保留历史语义。
+
+### 日常运行零必需人工操作
+
+资料充分、口径适用的受支持输入，必须自动完成获取、解释、计算、验证和更新；不能依赖逐公司/逐年填写关系、指定单元格、审批数值、修改代码或人工补数队列。限定自动处理后确有披露不足或冲突时，自动形成带来源和具体原因的状态，并继续处理不受影响的指标；历史有效结果只能按原期间显示，不能冒充本期成功。资料足够但程序不会处理属于开发缺口，不能伪装成披露不足。验收同时检查零日常人工依赖与真实正向完成，不能靠大量拒绝或NOT_EXTRACTED过关。开发独立审阅及少数业务/资源/发布决策与常态人工处理分别登记。
+
+### 一次总委托，连续推进，少拆 PR
+
+获得Issue级执行委托后，默认一个主PR、多个可审查提交；在其授权范围内连续完成调查、实现、独立审阅、修复、测试、必要接线、归档和集中交付，不因完成预检、一次测试、commit或子模块而停工回问。内部按风险分解并持续验证，不把所有审阅堆到最后。新增PR须有独立发布、风险隔离或并行协作的实际理由，不能按机械步骤拆分。进度是告知，报告后继续；从Issue、提交及证据恢复上下文，不让用户反复搬运长交接。未获Issue级总委托时，在现有有限委托内采用相同方式，不越过其明确范围和停点。
+
+### 仅在必要决策处对齐
+
+普通代码、解析、接线和测试问题在范围内自行解决；单个坐标的内容失败不阻断无依赖的其他工作。改变指标含义/正确性标准/产品范围、超出资源或权限、执行未授权生产操作，或核心路线经有界尝试仍不成立时，集中给出证据、影响、选项和推荐。来源真实性、权限、调用身份/计数UNKNOWN或共同验证器可能错误接受时，暂停受影响动作，继续仍然安全且获准的离线工作；禁止无限重试。必要对齐不扩展为每步审批。
+
+### 复用能力，用业务增量衡量进度
+
+优先复用定义、来源、Evidence、Calculator、Run和发布链，按交易模式、行业与主体范围、披露结构建立通用规则，不按公司名/CIK/固定原件写通过特例。合法缺失、规则未实现、来源歧义与实现故障分别报告；评估错误接受、误拦截、自动完成和新增维护成本。每次集中交付说明新增正式能力、减少的日常人工操作、退出的旧生产依赖或消除的关键路线不确定性，PR/文件/测试数量不代替进展。按实际差异验证，复用未变部分的有效证据；保留必要正反例和真实材料验收，不重建平行平台、不无限追加局部完善。十家公司×39指标的承诺不暗中扩展为几千家公司全面通过。
+
+### 原则记录与执行授权分开
+
+一次明确授权可覆盖其范围内的分支、commit、push、PR和连续工程步骤，不逐项重复询问；开发授权不自动授予新费用、合并、生产采纳或active切换。用户现已正式采用[Issue #28连续开发与完整交付总委托](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102)，替代PR43旧局部开发范围与机械停点，按十家公司×39指标三个最终目标连续实施。旧关闭额度及原失败不恢复；新增费用集中核实申请，未获批继续合法离线工作。旧生产入口随相应正式采纳退出，不能提前破坏仍在使用的入口。cbede80的原则记录及旧评论保留历史含义；当前可恢复执行状态见`docs/evidence/issue28_continuous/`。
+
+### 2026-09-13 最终恢复批准
+
+[新增总预算与 B13 代登记](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538)来自用户本次对话明确批准；不是代码 APPROVE。provider240/paid240/SEC80 累计，deepseek-flash/Chat Completions/WB-3/SecHttpClient，原资源限制、零自动重试；旧额度不恢复。D-36 保持，无仓库金额预检/预留/上限或账户操作。B13仅 Ford/Enphase 的可比实际产量÷可用产能，以后继 Spec 实现，旧 Spec/Run不改。
+
+新 `continuous_call_policy`、`continuous_call_ledger`、`continuous_semantic_calls`、`continuous_call_wiring` 及 `issue_28_v14/PROFILE_DRIVEN_V15` 负责本轮明确绑定，不能走因模型配置字节变化而失效的 Issue15 默认入口或借用旧v8阶段。固定总账 `/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13`；真实调用要求先有绑定的离线接线证据。代码/测试/新批准不授 Ready、合并、采纳、部署或active切换。
+
+ChatGPT review5189571246 与用户转交 Fable5.1 按6341530及明示模块登记；不是全PR批准。Codex独立子任务9月17日前不重试/换模型/重置额度，用户转交模块报告补覆盖。未覆盖模块、安全开发、最终验收责任分别列在当前执行材料中，不再把预算/B13待批或旧340问题索引当成停工原因。
+
 ## 0. 按任务选择阅读路径
 
 首次进入仓库时先判断任务，再读取对应的标准流程。`SOP.md` 是标准工作流的一级导航；专项文档负责提供具体事实和命令。
@@ -152,6 +188,38 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ### 核心模块
 
+- `tools/vnext_normal_candidate.py`、`scripts/vnext/normal_run_v3.py`：V14开发草案将36项普通来源路线接入同一Run，默认OPEN并生成独立公共行；B03保留B01依赖。`normal_run_specs.py`/`normal_run_inputs.py`固定22项来源规格与完整图，`ordinary_projection.py`保留主结果及各项来源证据。V12/V13的`normal_run_v2.py`、旧规则/快照/冻结记录不重写，V14尚不冻结。说明见`docs/normal_candidates.md`。
+
+- `normal_zero_ai_results.py` / `normal_companyfacts_results.py`：旧22项中19项的普通来源原生记录组件，复用既有规格、目录、来源适配与Calculator；上一期来源和依赖指标从原件重建。`normal_accession_results.py`另接A01/A02/B12的源单位/维度/时点，共22项原生组件，已接入V14 OPEN Run；完整更新继续接线，见`docs/normal_source_components.md`。
+- `lodging_table_source.py` / `normal_lodging_results.py` / `catalog/ordinary_lodging/`：B10/B11新确定性来源路线，从表前说明、整表及地域脚注重建当前年可比全系统全球统计，沿V14原生Run输出；旧AI规格/资格不改，不授新调用或正式信用。见`docs/ordinary_lodging.md`。
+- `annual_amendment_scope.py`：逐份核对普通修订的原件、期间、完整说明及适用输入属性；有限链接更正可接入B01/B03/六事件/Company Facts，Part III不自动批准财务或主体合并范围。
+- `b06_combined_borrowings.py` / `b06_financing_inventory.py`：组合附注借款账面数对账与融资披露来源清单。保留原表实际标签、计量调整与舍入说明；小计不是完整B06，缺少单独融资租赁披露不推零，尚未接入Run。说明与实测见`docs/evidence/issue28_continuous/ordinary-borrowing-composition/`及`ordinary-financing-inventory/`。
+- `b06_note_carrying.py` / `normal_note_debt_results.py`：新增逐笔债券及明确无融资租赁的有限B06原件路线，核对整表、细分原生事实及独立融资清单，沿V14同一Run输出。旧债务验证器和冻结规则不改，未覆盖关系保留未决；见`docs/note_debt_source.md`。
+- `b06_bond_leases.py` / `normal_bond_debt_results.py`：债券本金/费用、单独列报融资租赁、付款条件未变的普通贸易供应商项目及独立融资清单的普通来源路线。新债务集合核对当前加非当前借款；历史模型不改，仍无生产许可。见`docs/note_debt_source.md`。
+- `b06_current_input.py`：普通B06先核对全部当前修订件对债务/权益的影响，输入未证明时不进入债务解析或非正权益保护；修订原件和判断进入同一Run。B08/B09旧政策不扩大，债务完整性和当前主体仍另验。见`docs/note_debt_source.md`。
+- `b06_inclusive_table.py` / `normal_inclusive_debt_results.py`：逐项证明债务表总额已包含融资租赁，核对当前主体列、同范围权益、原生融资清单和完整续接附注；收购日估值与未来票面额不另加到当前账面债务。复用原`INCLUSIVE_REPORTED_TOTAL`模型及Calculator，新B06v6仅为未冻结开发路线。
+- `regulatory_investigation_candidates.py` / `going_concern_source.py` / `fiscal_year_labels.py`：D03事实候选及上下文、D04完整年报/修订原文分组、财年原文/机器标签对照；来源准备不能当成最终调查/持续经营结论或新规则激活。
+- `tools/run_fast_tests_v2.py`：当前CI分95个30秒短测试入口和34个240秒完整来源材料入口；先前124项均保留，并新增五个普通来源/输入材料套件。旧`tools/run_fast_tests.py`是V13冻结规则的一部分，保留原字节和历史入口。
+
+- `scripts/vnext/normal_candidates.py`、`normal_source_authority.py`、`normal_governance_input.py`：从已保存实际来源重建B06/C03/C04/D01候选，外部根与既存获取基线分开验证；V12记录已冻结、未正式激活。后继`normal_text_input_v2.py`为C02/D02保留必要来源和完整选源元数据，`text_results_v2.py`保留严格核验的披露事实与原文，不能推断总诉讼负债。
+- `scripts/vnext/text_results.py`、`text_review.py`、`text_run_validation.py`：原有记录中的显式TEXT_V1、完整原文候选/审阅/Run重读，旧数字记录不改。
+
+- `scripts/vnext/financial_duration.py`：从原表头/行脚注重建实际测量期间；季度不能借年报身份变成年均值。`text_coverage.py`重建原件章节/字节定位，查找命中与范围完整分开；二者目前是离线验证组件，后续原生接线仍需验收。
+- `scripts/vnext/b06_disclosure_v2.py` / `catalog/r5/B06_new_source_v2.md`：显式后继内容检查，补primary/XML金额一致性、其他债务计量对账及有限当期借款叙述。旧v1保持历史语义，新增组件不自行赋予来源或生产信用。
+- `scripts/vnext/normal_annual_input.py` / `tools/vnext_normal_update.py`：从保存清单选择最新普通年报，由原生DEI/context确认实际财年，支持自然年及52/53周年，不使用两样本白名单或旧Result。修订与普通原件分离，来源失败与主体接续实现缺口分别保留；当前只准备输入，不执行指标、不授来源准入或生产信用。旧calendar-only及PR43历史入口不改。
+- `scripts/vnext/normal_source_requirements.py`：普通更新的只读来源发现入口；从申报元数据列出本期/上期年报、修订、代理材料及财年8-K原件、头文件、目录和原生XML。新主文件在读取前即可被发现；清单冲突、最后请求失败及尚未知晓的目录子文件分别保留。CLI追加`--discover-sources`，默认十家公司；来源可用不等于最新、不等于39指标来源验收或新获取信用。见`docs/normal_source_discovery.md`。
+- `scripts/vnext/instant_balance_amendment.py`：在旧修订范围证明之外，核对完整说明、原生错误更正标志、可见未勾选封面、未附财务报表声明及全文更正语句，只给普通B08/B09的期末余额提供有限输入证明。`normal_companyfacts_results`按原目录允许当前主体/当前时点，不把接续关系一概扩成所有指标阻断；全年、债务和治理范围不获此证明。见`docs/ordinary_instant_balances.md`。
+- `scripts/vnext/r6_semantic_source.py` / `r6_semantic_review.py`：D04离线解释输入与保存响应协议，包含全部正文/原生事实及续接关系，嵌套XML按原位置重建，程序定位唯一原文引用并保留响应遗漏/冲突。尚无模型调用、语义正确性证明、D04 Run或正式信用；不以协议测试代替真实模型验证。见`docs/r6_interpretation_protocol.md`。
+- `scripts/vnext/ordinary_source_session.py` / `ordinary_source_authority.py`：测试会话复用SEC原生持久化与追加；实际创建进程在安装目录登记完整来源记录，再通过当前普通验证、外部source_root安装和Run重放读取。原清单不改，调用方JSON不能登记自己；测试类型保留到预览，真实获取/预算/生产仍未启用。见`docs/recorded_source_session.md`。
+- `ordinary_remaining_cases.py` / `ordinary_financial_results.py` / `ordinary_text_input.py` / `ordinary_debt_guard.py`：既有十二条金融、治理、文本及债务路线的当前来源入口。复用冻结模块的纯业务函数、Spec及Calculator，不修改旧入口；当前B06修订核对和非正权益保护顺序保持不变。
+- `ordinary_update_cycle.py`：普通已准入输入的更新检查，区分最近尝试与完整成功候选，保留失败/中断历史，输入未变时重验并复用Run。使用现有原生链路，零外发、不发布，入口见`docs/ordinary_update_cycle.md`。 正常公司入口按指标保存独立历史，单项失败不阻止其余指标，旧值保留原期间及当前输入匹配标记。 历史意图/终态编号、类型及完整前驱绑定逐项核对，重签哈希不能绕过。
+
+- `scripts/vnext/b06_source_admission.py`：独立于普通输入的受信获取/导入执行记录、
+  固定阶段预算及后置离线checkpoint；自洽ledger不授真实SEC信用。
+- `scripts/vnext/b06_disclosure.py` / `b06_new_source.py`：两类有限债务披露关系、
+  独立遗漏清单、非自然年度身份及原生Run创建/冻结/冷读；新Spec和V11政策
+  显式分派，旧B06与年度入口语义不改，任何生产写权限仍不存在。
+
 - `scripts/vnext/annual_adoption_policy.py` / `annual_publication_authority.py`：显式冻结v1/v2
   政策解析、确切候选的待批计划、真实GitHub激活/发布核对及有限发布/回退/恢复；
   V8/issue_28_v7保持新采纳决定待外部批准。共享现有发布核心，schema2切换日志另绑
@@ -182,6 +250,11 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `scripts/vnext/table_context_measurement.py`：与qualification隔离的同一one-shot actual-token measurement边界；occupancy与RevPAR authorization均已永久消费。RevPAR exact head `290c1119…`只执行一次，provider usage为160928 prompt、535 completion、161463 total，real model/paid/SEC=`1/1/0`；schema-v2 marker/evidence绑定review/head/task/request且无qualification/publication/reuse credit。latest D-07现在使任何新plan/authorization稳定返回`AUTHORIZATION_CONSUMED`，不得再次运行measurement。
 - `scripts/vnext/table_payload.py` / `scope_contract.py` / `table_task_contracts.py` / `table_qualification_freeze.py`：分别实现expanded grid可逆compact transport、多维shared-locator exact-enum scope、单角色catalog task与无网络qualification freeze。schema-v4 freeze按development source×task绑定exact request与各自attestation；当前occupancy/RevPAR两request均以`PROVIDER_REPORTED_EXACT_BINDING`通过，lodging family ready，financial仍仅由`EXPANDED_GRID_RESOURCE_LIMIT`阻断。qualification executor沿同一task plan处理matrix-owned `SECOND_LAYOUT` / `POST_FREEZE_HOLDOUT` / `FRESH_STABILITY`：second layout为Marriott FY2024 immutable SEC fixture，replacement holdout为Marriott FY2023 distinct fiscal-year/accession fixture，fresh为Marriott FY2025，caller不能覆盖source。owner-approved同issuer独立性仍要求source bytes不同并机械证明document table-count与target span geometry等至少两项layout差异；estimated超200000的request只允许exact-head review逐plan/request绑定并由各自新qualification response terminal usage门裁决，usage缺失或超限零重试且停止后续lodging plans，measurement response仍禁止复用。
 - `scripts/vnext/table_context_attestation.py` / `table_context_comparison.py` / `stage_c_context_packet.py`：前者保留并机械重验两个exact attestation，qualification-only successor只允许明确authority/consumption文件变化且两个provider request必须逐字段未变；中者保留pre-measurement sibling no-bound历史对象并重验两request bytes；后者同样保持历史packet，不重签为post-RevPAR状态。
+- `scripts/vnext/stage_c_packet.py` / `tools/create_stage_c_a_packet.py`：保留Stage C-A answer-first pre-egress packet；严格分开approved/implemented/not-run/unauthorized/blocker，token authorization保持`NOT_ISSUED`，不得在Stage C-B后重签该历史对象。
+- `scripts/vnext/stage_c_b_packet.py` / `tools/create_stage_c_b_packet.py`：Stage C-B post-egress terminal packet与current-source overlay；离线重算review-bound plan/cycle/authorization、唯一marker/evidence/raw-response/usage hashes、1/1/0计数、active R2/309-row root与JPM F3 blocker。validator不得构造transport或再次调用provider，并继续要求historical R2仅有source drift。
+- `tools/vnext_table_context_measurement.py`：`plan`仅写current RevPAR content-addressed离线plan；`execute`无family/task/source/provider override，必须同时收到exact授权词、当前clean HEAD、review绑定的request SHA、PR top-level review comment URL与UTC时间才可能进入唯一真实provider边界。exact-head独立审核前不得运行`execute`，任一marker后永久禁止再次调用。
+- `tools/create_table_qualification_owner_decision_packet.py`：在新freeze与Stage-A overlay均可重验后，生成schema-v4 owner packet；严格分开exact context owner policy、当前task/request/family readiness、已消费measurement/no qualification reuse、sibling evidence decision与financial未决项，并绑定attestation/comparison/unchanged R2 root及三类零egress。旧packet保留，只更新content-addressed pointer。
+- `tools/create_table_context_feasibility_attestation.py` / `investigate_sibling_table_context.py` / `create_stage_c_context_attestation_packet.py`：均只离线重建现有bytes；依次生成或验证exact context attestation、sibling full-request decision-neutral comparison与post-attestation Stage-C packet，不构造transport、不请求额外measurement、不开始qualification/publication。
 - 2026-08-26 owner在PR #22批准lodging-only frozen prompt修订与重新测量政策：历史occupancy/RevPAR attestation继续immutable但不再给修订request current credit；只允许两个lodging task的`system_prompt`明确必填candidate/scope-evidence/competing字段，schema、MetricSpec、source、serializer、provider/model/API与全表原序均不变。`table_context_measurement.py`复用同一plan/authorization/cycle/marker/evidence边界，为两个新content-addressed task plan各提供最多一次、retry=0、usage-only/no-credit one-shot；具体grant仍须在clean committed head由独立PR评论逐plan/request SHA签发。两份新attestation形成前`live_qualification_authorized=false`。
 - 后续schema-v3 Hilton Occupancy response通过结构校验，但目标表supplied caption为空时借用了另一表或邻近正文，机械Evidence以`SCOPE_LABEL_TEXT_MISMATCH`终态拒绝。owner在同一PR再次批准最小scope-binding prompt及两项新one-shot：caption仅在selected target table自身`caption_raw_text`非空时使用并逐字复制；否则cell/header/row/label必须从同一目标表的一格复制完整八字段locator与exact raw text，禁止跨表或借邻近正文。schema仍为v3，其他冻结组件不变；161282/161263 proof降为historical。新Occupancy/RevPAR measurements实际prompt为161433/161422，分别形成`5ee591dd…`/`a5632e90…` exact attestation，均HTTP 200、retry=false、1/1/0且无qualification/publication/reuse credit；same-ID D-07已接受并永久关闭额外measurement，current freeze/Stage-A重建前不得执行qualification。
 - Hilton失败终态随后证明其目标表本身缺少same-target-table冻结scope literals。owner批准只更换second-layout fixture/source，保持scope contract、Hyatt holdout、Marriott FY2025 fresh及其他边界不变。替代Marriott FY2024 source由既有`SecHttpClient`exact获取一次、retry=0、无模型调用；offline proof定位唯一`table_000011`，包含全部冻结literals且29x39 geometry/grid hash不同于FY2025 27x39目标表。latest D-07又明确不新增measurement，只把`EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE`扩展到`SECOND_LAYOUT`与`POST_FREEZE_HOLDOUT`；每个rebuilt plan需新execution与exact-head审核，usage缺失或actual prompt>200000即terminal、零重试并停止后续lodging plans。
@@ -203,11 +276,6 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `tools/investigate_table_context_minimization.py`：Stage-B decision-neutral离线研究入口；逐字节分解当前provider/table payload，覆盖Marriott development与Hilton/Hyatt distinct source hashes×两个lodging task，构造五个research-only候选并逐字段round-trip。候选不接入production serializer/task catalog，不调用SEC/provider；dictionary/indirection只证明机器可逆，明确仍需真实qualification验证模型可读性。
 - `tools/investigate_jpm_financial_grid.py`：只读、interval-based JPM完整grid census；复用production raw parser/text transform但不构造完整expanded dict/list，输出679表逐表矩形/blank/span/text/canonical-size、100000门首次触发点和A/B/C decision-neutral option matrix。它不改`resource_limits.py`、不筛表/分片/换source、不调用SEC/provider；full materialization benchmark固定诚实记录`NOT_RUN_RESOURCE_SAFETY`。
 - `tools/benchmark_jpm_full_materialization.py`：Stage C隔离benchmark入口；只允许child内`max_total_cells=187142`，要求512 MiB硬RSS/address-space、120秒wall与process-tree no-network三重保护，production resource bytes逐byte不变。当前Darwin guard不可可靠安装，故在child启动前记录`NOT_RUN_RSS_GUARD_UNAVAILABLE`；不得把null peak/time/canonical/DerivedAsset写成completed。
-- `scripts/vnext/stage_c_packet.py` / `tools/create_stage_c_a_packet.py`：保留Stage C-A answer-first pre-egress packet；严格分开approved/implemented/not-run/unauthorized/blocker，token authorization保持`NOT_ISSUED`，不得在Stage C-B后重签该历史对象。
-- `scripts/vnext/stage_c_b_packet.py` / `tools/create_stage_c_b_packet.py`：Stage C-B post-egress terminal packet与current-source overlay；离线重算review-bound plan/cycle/authorization、唯一marker/evidence/raw-response/usage hashes、1/1/0计数、active R2/309-row root与JPM F3 blocker。validator不得构造transport或再次调用provider，并继续要求historical R2仅有source drift。
-- `tools/vnext_table_context_measurement.py`：`plan`仅写current RevPAR content-addressed离线plan；`execute`无family/task/source/provider override，必须同时收到exact授权词、当前clean HEAD、review绑定的request SHA、PR top-level review comment URL与UTC时间才可能进入唯一真实provider边界。exact-head独立审核前不得运行`execute`，任一marker后永久禁止再次调用。
-- `tools/create_table_qualification_owner_decision_packet.py`：在新freeze与Stage-A overlay均可重验后，生成schema-v4 owner packet；严格分开exact context owner policy、当前task/request/family readiness、已消费measurement/no qualification reuse、sibling evidence decision与financial未决项，并绑定attestation/comparison/unchanged R2 root及三类零egress。旧packet保留，只更新content-addressed pointer。
-- `tools/create_table_context_feasibility_attestation.py` / `investigate_sibling_table_context.py` / `create_stage_c_context_attestation_packet.py`：均只离线重建现有bytes；依次生成或验证exact context attestation、sibling full-request decision-neutral comparison与post-attestation Stage-C packet，不构造transport、不请求额外measurement、不开始qualification/publication。
 - `tools/vnext_qualification.py` / `tools/vnext_cutover.py`：前者保留legacy `prepare` fail-closed，并在同一CLI增加catalog `table-plan/table-execute/table-freeze/table-freeze-status`。plan按phase重建exact source/request；execute仍走唯一WB-3 qualification authorization、provider ledger、Evidence、Review、Run freeze；两个second-layout task FROZEN后，cycle-owned `PRODUCTION_SEMANTIC_FREEZE`绑定semantic tree与ledger prefix，holdout只能在其后运行，fresh stability又要求两个holdout task先FROZEN。其余正式qualification/Cutover继续复用既有validation/publication状态机。
 - `tools/vnext_terminal_cycle.py`：formal new/rollback/restore各调用一次；在单进程中pin一次publication transaction，依序验证Stage10 Golden、Stage11 report、Stage12 active publication、snapshot publish与snapshot verify，并把exact gate set、pointer/mirror hash和零网络/repair/write计数形成content-addressed结果。
 - `tools/vnext_zero_ai_release.py`：repository-owned 零 AI ratchet CLI；不接受 workspace、source、metric、provider 或 publication-root override。
@@ -315,3 +383,5 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `scripts/vnext/r5_b06_amendments.py` / `r5_b06_measurement.py`：B06完整修订原件影响判断、原生XML账面计量对账及旧v1兼容；新语义见`docs/r5_b06_structured.md`，均无生产权限和业务网络调用。
 
 - `scripts/vnext/r5_b06_scope.py` / `config/r5_b06_debt_sets_v3.json`：B06具名负债组成、原XBRL精度/对账、独立完整性门；现有Calculator/Projector共用。`catalog/r5/history/`保留v1/v2原字节。当前主路径合并不等于B06全部迁移/生产授权。
+
+- `normal_annual_input_v2.py` / `config/normal_fiscal_year_labels_v1.json`：用唯一未处于引语中的注册人原文定义选择财年，保留原始DEI/CF及冲突。每次验证来源字节后才复用进程内的有界解析结果；不缓存来源权限或调用信用。

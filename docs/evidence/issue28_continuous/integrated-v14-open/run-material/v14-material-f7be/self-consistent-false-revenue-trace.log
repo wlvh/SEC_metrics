@@ -1,0 +1,36 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 74, in check
+    row['details']=action();row['passed']=not reject;row['outcome']='ACCEPTED'
+                   ~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 60, in <lambda>
+    self.check(name,lambda m=metric,n=name,f=mutate:self.attack(m,n,f),reject=True)
+                                                    ~~~~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 106, in attack
+    self.replay(data,run)
+    ~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 84, in replay
+    manifest,records,decisions=run_store._mechanically_replay_open_run(run_dir=run,repo_root=data,require_complete_results=True)
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3421, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3021, in _validate_record_graph
+    _replay_structured_result(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        ordinary_case=ordinary_case,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1913, in _replay_structured_result
+    raise RunStoreError("Integrated ordinary result differs from full source replay")
+vnext.run_store.RunStoreError: Integrated ordinary result differs from full source replay

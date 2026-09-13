@@ -1,0 +1,14 @@
+test_changed_new_response_body_is_detected_and_persistence_failure_stays_unknown (tests.vnext.test_ordinary_source_session.OrdinarySourceSessionTest) ... ok
+test_changed_prefix_or_forged_terminal_is_not_trusted (tests.vnext.test_ordinary_source_session.OrdinarySourceSessionTest) ... ok
+test_consistent_unowned_ledger_append_cannot_self_enroll (tests.vnext.test_ordinary_source_session.OrdinarySourceSessionTest) ... ok
+test_content_changes_and_regression_are_distinct_from_attempt_changes (tests.vnext.test_ordinary_source_session.OrdinarySourceSessionTest) ... ok
+test_latest_failed_response_is_not_hidden_and_closes_further_test_attempts (tests.vnext.test_ordinary_source_session.OrdinarySourceSessionTest) ... ok
+test_replaced_data_root_and_journal_subdirectory_aliases_reject_before_write (tests.vnext.test_ordinary_source_session.OrdinarySourceSessionTest) ... ok
+test_rewritten_baseline_prefix_and_empty_proofs_are_rejected (tests.vnext.test_ordinary_source_session.OrdinarySourceSessionTest) ... ok
+test_three_recorded_responses_reach_the_unchanged_annual_input_reader (tests.vnext.test_ordinary_source_session.OrdinarySourceSessionTest) ... ok
+test_unknown_terminal_and_budget_exhaustion_do_not_reopen_slots (tests.vnext.test_ordinary_source_session.OrdinarySourceSessionTest) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 3.669s
+
+OK

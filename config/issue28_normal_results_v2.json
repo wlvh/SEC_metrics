@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "policy_id": "issue28_normal_results_v2",
+  "development_delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
+  "parent_requirement_id": "issue_28_v12",
+  "production_authorized": false,
+  "provider_enabled": false,
+  "sec_fetch_enabled": false,
+  "new_business_budget": "NOT_GRANTED_BY_THIS_POLICY",
+  "source_admission": "PREEXISTING_SAVED_BASELINE_ONLY",
+  "metric_ids": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "B12",
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+  ],
+  "metric_spec_paths": {
+    "A03": [
+      "catalog/r4_normal/A03_liquidity_coverage_ratio.md"
+    ],
+    "A04": [
+      "catalog/r4_normal/A04_net_interest_margin.md"
+    ],
+    "A09": [
+      "catalog/r4_normal/A09_nonperforming_loan_ratio.md"
+    ],
+    "A11": [
+      "catalog/r4_normal/A11_assets_under_management.md"
+    ],
+    "A12": [
+      "catalog/r4_normal/A12_trading_exposure.md"
+    ],
+    "A13": [
+      "catalog/r4_normal/A13_geographic_exposure.md"
+    ],
+    "B06": [
+      "catalog/r5/B06_new_source_v2.md",
+      "catalog/r5/B06_guarded_v3.md",
+      "catalog/r5/B06_note_carrying_v4.md",
+      "catalog/r5/B06_bond_leases_v5.md",
+      "catalog/r5/B06_inclusive_table_v6.md"
+    ],
+    "C02": [
+      "catalog/r6/C02_board_disclosures_v1.md"
+    ],
+    "C03": [
+      "catalog/r5/C03_peo_total_compensation.md",
+      "catalog/r5/C03_reported_compensation_v2.md"
+    ],
+    "C04": [
+      "catalog/r5/C04_auditor_changes_v2.md"
+    ],
+    "D01": [
+      "catalog/r6/D01_risk_factor_headings.md"
+    ],
+    "D02": [
+      "catalog/r6/D02_legal_disclosures_v1.md"
+    ],
+    "B01": [
+      "catalog/metrics/B01_revenue.md"
+    ],
+    "B03": [
+      "catalog/metrics/B03_ebitda_margin.md"
+    ],
+    "A01": [
+      "catalog/ordinary_zero_ai/A01.md"
+    ],
+    "A02": [
+      "catalog/ordinary_zero_ai/A02.md"
+    ],
+    "A05": [
+      "catalog/ordinary_zero_ai/A05.md"
+    ],
+    "A06": [
+      "catalog/ordinary_zero_ai/A06.md"
+    ],
+    "A07": [
+      "catalog/ordinary_zero_ai/A07.md"
+    ],
+    "A08": [
+      "catalog/ordinary_zero_ai/A08.md"
+    ],
+    "A10": [
+      "catalog/ordinary_zero_ai/A10.md"
+    ],
+    "B02": [
+      "catalog/ordinary_zero_ai/B02.md"
+    ],
+    "B04": [
+      "catalog/ordinary_zero_ai/B04.md"
+    ],
+    "B05": [
+      "catalog/ordinary_zero_ai/B05.md"
+    ],
+    "B07": [
+      "catalog/ordinary_zero_ai/B07.md"
+    ],
+    "B08": [
+      "catalog/ordinary_zero_ai/B08.md"
+    ],
+    "B09": [
+      "catalog/ordinary_zero_ai/B09.md"
+    ],
+    "B12": [
+      "catalog/ordinary_zero_ai/B12.md"
+    ],
+    "C01": [
+      "catalog/ordinary_zero_ai/C01.md"
+    ],
+    "E01": [
+      "catalog/ordinary_zero_ai/E01.md"
+    ],
+    "E02": [
+      "catalog/ordinary_zero_ai/E02.md"
+    ],
+    "E03": [
+      "catalog/ordinary_zero_ai/E03.md"
+    ],
+    "E04": [
+      "catalog/ordinary_zero_ai/E04.md"
+    ],
+    "E05": [
+      "catalog/ordinary_zero_ai/E05.md"
+    ],
+    "B10": [
+      "catalog/ordinary_lodging/B10.md"
+    ],
+    "B11": [
+      "catalog/ordinary_lodging/B11.md"
+    ]
+  },
+  "temporarily_blocked_metrics": [],
+  "native_deterministic_text_methods": [
+    "RISK_FACTOR_HEADINGS_V1",
+    "BOARD_DISCLOSURE_EXCERPTS_V1",
+    "LEGAL_DISCLOSURE_EXCERPTS_V1"
+  ],
+  "preserve_actual_measurement_period": true,
+  "governance_annual_period_is_grouping_not_board_asof": true,
+  "typed_legal_accrual_branch": "STRICT_REPORTED_FACTS_IN_TEXT_EVIDENCE_AND_REVIEW_NO_AGGREGATION",
+  "b13_economic_meaning": "PENDING_EXTERNAL_APPROVAL",
+  "rule_paths": [
+    "catalog/metrics/B01_revenue.md",
+    "catalog/metrics/B03_ebitda_margin.md",
+    "catalog/ordinary_lodging/B10.md",
+    "catalog/ordinary_lodging/B11.md",
+    "catalog/ordinary_zero_ai/A01.md",
+    "catalog/ordinary_zero_ai/A02.md",
+    "catalog/ordinary_zero_ai/A05.md",
+    "catalog/ordinary_zero_ai/A06.md",
+    "catalog/ordinary_zero_ai/A07.md",
+    "catalog/ordinary_zero_ai/A08.md",
+    "catalog/ordinary_zero_ai/A10.md",
+    "catalog/ordinary_zero_ai/B02.md",
+    "catalog/ordinary_zero_ai/B04.md",
+    "catalog/ordinary_zero_ai/B05.md",
+    "catalog/ordinary_zero_ai/B07.md",
+    "catalog/ordinary_zero_ai/B08.md",
+    "catalog/ordinary_zero_ai/B09.md",
+    "catalog/ordinary_zero_ai/B12.md",
+    "catalog/ordinary_zero_ai/C01.md",
+    "catalog/ordinary_zero_ai/E01.md",
+    "catalog/ordinary_zero_ai/E02.md",
+    "catalog/ordinary_zero_ai/E03.md",
+    "catalog/ordinary_zero_ai/E04.md",
+    "catalog/ordinary_zero_ai/E05.md",
+    "catalog/r5/B06_bond_leases_v5.md",
+    "catalog/r5/B06_inclusive_table_v6.md",
+    "catalog/r5/B06_note_carrying_v4.md",
+    "config/annual_amendment_scope_v1.json",
+    "config/b06_bond_debt_set_v1.json",
+    "config/b06_bond_leases_v1.json",
+    "config/b06_current_input_v1.json",
+    "config/b06_financing_inventory_v1.json",
+    "config/b06_inclusive_table_v1.json",
+    "config/b06_note_carrying_v1.json",
+    "config/instant_balance_amendment_v1.json",
+    "config/issue28_normal_results_v2.json",
+    "config/normal_accession_metrics_v1.json",
+    "config/normal_fiscal_year_labels_v1.json",
+    "config/ordinary_lodging_table_v1.json",
+    "scripts/vnext/annual_amendment_scope.py",
+    "scripts/vnext/b06_bond_leases.py",
+    "scripts/vnext/b06_current_input.py",
+    "scripts/vnext/b06_financing_inventory.py",
+    "scripts/vnext/b06_inclusive_table.py",
+    "scripts/vnext/b06_note_carrying.py",
+    "scripts/vnext/fiscal_year_labels.py",
+    "scripts/vnext/instant_balance_amendment.py",
+    "scripts/vnext/lodging_table_source.py",
+    "scripts/vnext/normal_accession_results.py",
+    "scripts/vnext/normal_annual_input_v2.py",
+    "scripts/vnext/normal_bond_debt_results.py",
+    "scripts/vnext/normal_companyfacts_results.py",
+    "scripts/vnext/normal_inclusive_debt_results.py",
+    "scripts/vnext/normal_lodging_results.py",
+    "scripts/vnext/normal_note_debt_results.py",
+    "scripts/vnext/normal_run_inputs.py",
+    "scripts/vnext/normal_run_specs.py",
+    "scripts/vnext/normal_run_v3.py",
+    "scripts/vnext/normal_zero_ai_results.py",
+    "scripts/vnext/ordinary_debt_guard.py",
+    "scripts/vnext/ordinary_financial_results.py",
+    "scripts/vnext/ordinary_remaining_cases.py",
+    "scripts/vnext/ordinary_source_authority.py",
+    "scripts/vnext/ordinary_source_session.py",
+    "scripts/vnext/ordinary_text_input.py",
+    "scripts/vnext/ordinary_update_cycle.py"
+  ],
+  "freeze_enabled": false,
+  "declared_issue_metric_count": 39,
+  "pending_metric_ids": [
+    "B13",
+    "D03",
+    "D04"
+  ],
+  "integration_status": "DEVELOPMENT_DRAFT_NO_FREEZE",
+  "fiscal_year_label_policy": "config/normal_fiscal_year_labels_v1.json",
+  "presentation_paths": [
+    "scripts/vnext/ordinary_projection.py",
+    "config/ordinary_public_projection_v1.json"
+  ]
+}

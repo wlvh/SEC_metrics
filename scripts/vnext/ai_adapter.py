@@ -1057,6 +1057,9 @@ def build_scoped_provider_request_body(
 
 def _scoped_transport_payload(*, policy: TransportPolicy, prepared_request: object):
     """Return bytes only for the exact repository-bound successor request type."""
+    from .continuous_semantic_calls import SemanticRequest, transport_payload
+    if type(prepared_request) is SemanticRequest:
+        return transport_payload(request=prepared_request, policy=policy)
     from .live_scoped_reader import LiveScopedReaderRequest, rebuild_live_scoped_reader_request
     if type(prepared_request) is not LiveScopedReaderRequest:
         return None
@@ -1849,6 +1852,9 @@ def configured_annual_transport_policy(*, requirement, repo_root):
     Provider, API, resources and retries stay under the carried Decision. The
     exact config file is part of this Requirement's execution identity.
     """
+    if requirement.get("requirement_id") == "issue_28_v14":
+        from .continuous_call_policy import configured_transport_policy
+        return configured_transport_policy(requirement=requirement, repo_root=repo_root)
     policy = approved_scoped_transport_policy(requirement=requirement)
     if requirement.get("requirement_id") != "issue_28_v8":
         return policy

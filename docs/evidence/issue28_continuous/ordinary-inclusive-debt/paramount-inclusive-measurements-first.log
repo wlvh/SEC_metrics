@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 465, in inspect_inclusive_debt_scope
+    inventory=_independent_inventory(primary,xml,prepared,component)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 445, in _independent_inventory
+    rows.append({'ordinal':f['ordinal'],'concept_qname':[uri,local],'context':context,'value':decimal_text(value=value),
+    ^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'append'

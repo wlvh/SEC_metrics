@@ -764,3 +764,135 @@ B06 carrying-v2补充了受控来源判断：discover先验证全部相关年度
 ### B06 financing set revision 3
 
 New financing-set source judgments prove disjoint reported borrowings, bonds and finance lease liabilities; source precision and component reconciliation are read from the native XBRL parser. `r5_b06_scope.py` composes existing Calculator expressions; a thin Spec compiler extension permits named nested add/sub expressions already supported by Calculator/Trace. No new calculator or publisher. Incomplete scope is an independent hard gate, even if a reason list is accidentally empty. Historical v1/v2 packages retain their frozen Spec behavior.
+
+### B06 新来源候选（有限披露模式）
+
+`b06_source_admission`在受信安装目录的独立执行日志登记固定基线导入或真实SEC获取；
+调用者输入目录不能自助登记来源。`b06_new_source`选择封存submissions中的前一份普通
+10-K，核对XML/primary DEI（包括非自然财年），创建原生Run。新Spec显式选择
+`debt_equity_new_source_v1`，`run_store`冻结与冷读调用同一来源/关系/Calculator重验。
+`b06_disclosure`先建立资产负债表与借款/租赁披露清单，再提出公式、验证表内组成、
+分类、流动拆分、账面调整和租赁现值。公司名不选公式，未知融资项目保持未解决。
+旧v1/v2/v3语义、原Run与完整候选包不改；新路径不生成完整发布包，不改变active。
+<!-- capability-anchor: CAPABILITY.b06_new_source_candidates -->
+
+### 正常年度输入适配
+
+`normal_annual_input`复用`annual_update.saved_source`的最新请求失败保护和账本/原字节绑定，按保存submissions的实际reportDate选择最新普通10-K；财政年度及364/365/366/371天实际期间从原生DEI/context重建，不用日历年份推算或固定样本。普通原件与10-K/A分别表达，原件准备成功不等于修订后的本期结果成功。配置为接续关系的公司只准备当前注册人原件，不把前身财务拼入本期；指标层仍须单独证明主体可比性。单公司失败不抹掉其他公司的检查结果。输入可交给现有companyfacts/table Run参数接口，但该组件尚未完成统一执行、采纳、触发或生产接线；不读取旧结果或发出网络请求。旧年度和B06两样本入口按原语义读取。
+<!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
+
+`normal_source_requirements`在正常年度输入前先从已核对的元数据命名主文件，缺少正文时也保留该获取依赖。原件确认期间后，复用治理清单选择器列出当期/上期年报、修订、代理材料和财年8-K，并扩展年报目录的原生XML；URL去重而用途保留。缺少目录时子文件集合仍未知，清单冲突时不声称选源完整，最新失败GET不能退回旧成功。CLI只读地保存依赖与缺口，当前来源真实性仍限于安装代码绑定的既有获取基线；刷新、新来源计算及生产触发尚未接通。
+<!-- capability-anchor: CAPABILITY.normal_source_dependency_discovery -->
+
+`ordinary_source_session`验证新增来源记录进入基础年度读取器的测试路径。它复用SEC客户端的持久化/日志方法而不调用HTTP，固定旧日志前缀，每次追加绑定会话意图及终态，并重验请求证明。来源正文和申报身份的比较独立于请求身份/目录变化。该会话不能变成真实SEC准入，尚未接入持久可信恢复、正式预算或普通Run；旧固定基线保持不变。
+<!-- capability-anchor: CAPABILITY.recorded_source_update_session -->
+
+<!-- capability-anchor: CAPABILITY.recorded_source_run_admission -->
+
+<!-- capability-anchor: CAPABILITY.remaining_current_source_adapters -->
+
+<!-- capability-anchor: CAPABILITY.ordinary_update_cycle -->
+
+`ordinary_update_cycle`将输入内容身份、不可覆盖的尝试意图/终态和成功候选引用接到现有普通Run链。身份覆盖真实源正文、期间、Spec和运行规则；仅请求身份变化不新建Run。完整候选经原生重放及公共行逐字节核对后才前移成功引用，失败和未通过的输入单独保留。进程锁、引用/前驱检查及终态先于引用的顺序支持中断恢复；不创建第二套指标或发布系统。当前显式要求零provider/SEC和未冻结运行政策。 所有意图/终态按实际目录核对类型、尝试编号和对应绑定；沿完整历史链核对成功前驱，已有后继之前的缺失终态拒绝，尾部未完成意图仍按既有中断恢复处理。
+
+`ordinary_remaining_cases`替代V14对旧来源入口的直接调用；新的金融、文本和债务保护包装器使用当前来源登记验证，业务解释继续复用冻结模块的纯函数及原Spec。C03/C04和B06仍沿既有解析与Calculator，C02/D01/D02沿既有范围、Evidence和SYSTEM审阅。原基线下返回对象保持一致，记录过的新请求不扩大业务含义或取消来源/主体限制。旧入口保留原基线语义，历史Run不重签。
+
+`ordinary_source_authority`在固定安装目录保存实际测试会话创建者登记的来源记录，核对原日志字节前缀、原始来源及每项新意图/终态。当前适配器通过新入口选择历史基线或已登记测试来源，原冻结验证器不改。`normal_run_v3.install_normal_inputs`分开固定代码和外部来源文件，安装完整来源记录及依赖；创建和重放Run均要求安装记录存在。复制运行包的冷读使用安装记录，测试类型保留到原生绑定、CLI和预览。这仍是原文未变的RECORDED_TEST_ONLY，不提供真实SEC获取、全部路线更新或正式发布能力。
+
+`r6_semantic_source`为D04离线解释提供全部可见块和原生事实，并保留所引用的上下文、单位、命名空间、续接、脚注和关系对象；嵌套XML通过原位置恢复而避免重复传入。`r6_semantic_review`绑定请求/单元、按唯一引文计算位置、核对必需候选和分类一致性，并保留全局冲突。返回的只是未获语义资格的保存响应提议，不能进入普通结果或正式发布；真实provider调用、模型可靠性和原生D04接线尚未完成。
+<!-- capability-anchor: CAPABILITY.r6_recorded_interpretation_protocol -->
+
+`normal_companyfacts_results`按既有目录区分主体接续和实际测量粒度：允许接续且只依赖当前申报时点的路线可以继续；全年/跨期路线仍需要自己的主体证明。`instant_balance_amendment`为B08/B09重建有限修订输入，旧Part III范围证明保持原样；完整原说明、原生更正标志/封面、未附新财务报表声明和全文余额/更正语句共同限制分支。条件性薪酬条款仅按完整结构识别。原件、修订和两种不同输入结论均进入普通组件与同一原生Run重放，不能把局部时点资格提升为全年或债务资格。
+<!-- capability-anchor: CAPABILITY.ordinary_successor_instant_balances -->
+
+### 后继内容验证组件
+
+`financial_duration`接收候选单元格及来自任务合同的指标/主体词，重新解析原件、数值origin、列日期与相邻同标记脚注；全年列头与完整日历月脚注分别给出证据，未知关联保持未解决，年报DEI不提供测量期间默认值。组件仍需与自动候选及原生Evidence/Run整合。
+<!-- capability-anchor: CAPABILITY.financial_source_measurement_period -->
+
+`text_coverage`以RawBlob/SourceReference和原件DEI绑定公司、期间、申报，解析可见block并保存原UTF-8字节位置。章节起止从正文标题推导，目录/片段/修订不足不能授完整范围。范围扫描保留命中与未命中，但不产生“没有风险”等语义结论；原生消费者必须重建原字节而非信任可自行重哈希的文档对象。
+<!-- capability-anchor: CAPABILITY.source_text_coverage -->
+
+`b06_disclosure_v2`复用原公式和表内关系，并独立比较所消费分子/分母在XML与primary的单位、主体、时点、符号、scale和精度；其他已知债务事实须对回其具名本金列/到期表，不能当作已包含的账面值。有限当期借款叙述必须与具名表格成员或原文信用协议组对应。新Spec显式分派v2，v1字节及原Run不重解释；此提交层级仍是内容组件，原生冻结、正常输入准入及发布接线未由组件测试证明。
+<!-- capability-anchor: CAPABILITY.b06_successor_content_checks -->
+
+
+### 普通保存来源与原生文本候选
+
+`normal_source_authority`把外部输入与随实现固定的既存获取基线比较，再走原有请求账本核对。`normal_governance_input`重建代理材料、同主体前期与修订/事件全集；Salesforce的后续失败GET和JPM不一致的历史清单不会被早前成功记录掩盖。当前接续主体缺少可比前期时保留缺口。
+<!-- capability-anchor: CAPABILITY.normal_saved_source_admission -->
+<!-- capability-anchor: CAPABILITY.normal_governance_input -->
+
+`normal_candidates`将B06/C03/C04及D01接入同一原生Run；`issue_28_v11`/V12已产生冻结记录，尚未正式激活。父v10按`frozen-parent-v10-index.json`固定的旧字节读取，旧Rule/Run不重签。D01以TEXT_V1在原有记录类型中保存文本，完整原文标题集合由Evidence重新导出，再经既有D-06 SYSTEM或真实HUMAN审阅链核对。普通SCT路线使用确定性表格规则，保存整份DerivedAsset，原生验证重新解析原件网格及金额/期间，不能凭Spec名跳过核对。旧数字记录没有附加默认字段或全局语义版本变动。
+
+V12真实材料已完成D01十公司和C03/C04二十坐标冻结；后继V13仍在完整图及展示验收，完整公开包/390坐标尚未完成。文本Projector保留实际摘录及UTF-8字节范围，禁止倍率转换；完整包、生产入口和正常更新仍在集成。反例与实际层级见`docs/evidence/issue28_continuous/`。
+<!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->
+
+
+## 普通保存来源候选批次
+
+`normal_run_v2`通过既有Run/Review/Calculator接入六金融指标、B06、C02/C03/C04、D01/D02。数值事实从原件重建；文本候选通过完整原件摘录、Evidence和同一ReviewUnit。`normal_text_input_v2`只组织实际选源所需的原件和完整元数据，C02/D02不再依赖无关的C04事件与审计材料。原请求类别、最后失败和修订状态保留。
+
+`run_store`在V13的公共图入口调用`validate_normal_run_authority`，先核验唯一规格、来源决定、实际期间及完整来源记录，再按数值/文本类型验证。旧ai_table规格也必须经过该入口。V12/issue_28_v11已有真实冻结记录，五文件和规则保持不变；后继V13/issue_28_v12已产生首批真实冻结记录，五文件和规则同样固定；材料验收仍在继续。
+<!-- capability-anchor: CAPABILITY.normal_current_run_admission -->
+
+`tools/vnext_normal_candidate.py`逐坐标保存原生结果或具体失败；`normal_text_projection_v2`与`normal_numeric_projection`复用既有Projector生成20/18列公共行。展示政策独立绑定，执行Spec不改；文本申报日期不替代董事会测量日期，数值期间保留季度/时点/全年。完整来源更新、390坐标发布及旧入口退出仍未完成。入口和实际验证层级见`docs/normal_candidates.md`及`docs/evidence/issue28_continuous/`。
+
+<!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
+<!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
+
+后继普通零AI组件分为B01/B03及六事件、11项Company Facts目录公式两个入口。它们只复用原生计算和来源集合辅助函数，不调用旧发布准备器或读取旧矩阵。B03的B01依赖从当前原件生成；当前/上一期Company Facts分别绑定申报身份，期间由对应HTML或已存原生XBRL的DEI重建；上一期缺口不会阻断仅需本期的指标。调用者不能提供答案、期间或申报选择。组件记录已进入未冻结V14 Run草案，细节见`docs/normal_source_components.md`。
+
+D03额外保存HTML引语范围、邻段限定和机关直接行为关系，未证明者保留语义待审。D04提供完整可见块及原生事实线索，名字匹配通过同原件封面和当前DEI关系；不把审计开头或关键词缺失等同无持续经营疑虑。财年对照保留原始标签和实际日期，当前不改写冻结输入。
+<!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->
+
+<!-- capability-anchor: CAPABILITY.ordinary_accession_native_components -->
+
+A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，已接入34项V14草案CLI，正式报告不变；详见`docs/normal_source_components.md`。
+
+<!-- capability-anchor: CAPABILITY.ordinary_integrated_run_graph -->
+
+V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分派。`normal_run_inputs`和源拥有的规格文件先重建主指标及完整依赖图；`normal_run_v3`核对整个数值计算记录集合，防止只保留主结果而删除B01依赖。事件Claim与其来源关系同样进入图。文本流程按Source/Candidate/Evidence/ReviewUnit→ReviewDecision→Observation/Trace/Result顺序写入。当前规则未冻结，CLI默认生成OPEN；普通公共行由`ordinary_projection`单独绑定展示规则，并只输出所请求主指标。实际财年来源与原始机器标签由`normal_annual_input_v2`分别保留。
+
+<!-- capability-anchor: CAPABILITY.ordinary_amendment_input_scope -->
+<!-- capability-anchor: CAPABILITY.ordinary_candidate_diagnostics -->
+
+`annual_amendment_scope`使用原始HTML/XBRL及已有获取证明，按原件、期间、完整说明、表行和链接核对有限修订。普通数值路线消费`ORIGINAL_STATEMENT_VALUES`，事件路线只消费`FISCAL_EVENT_WINDOW`；每份修订仍进入完整输入绑定和来源记录，主体连续性及事件覆盖另验。`normal_run_v3`从请求子指标提取selection/inspection，展示层保留该具体原因；NOT_MEANINGFUL先构造完整身份/期间基线，再调用既有Projector。
+
+<!-- capability-anchor: CAPABILITY.b06_combined_borrowing_reconciliation -->
+<!-- capability-anchor: CAPABILITY.b06_financing_disclosure_inventory -->
+
+两份B06独立来源组件尚未进入Run：`b06_combined_borrowings`对账组合附注的本金、实际账面调整与当前部分，使用原文舍入声明和显示精度解释合法差额；`b06_financing_inventory`列出融资租赁和供应商原生事实及实际表行。它们复用原输入/解析/来源准入，不填缺失零值、不批准债务集合，不创建第二套结果或发布系统。
+
+<!-- capability-anchor: CAPABILITY.ordinary_note_debt_carrying -->
+
+`b06_note_carrying`另行支持逐笔债券面值/费用/账面额和明确无融资租赁的原件结构。合并与细分原生事实、完整附注、表行、报表分类和Company Facts共同重建；`normal_note_debt_results`核对新规格经济字段及独立来源准入，再调用既有债务集合/Calculator。V14 Run用期末时点并在接收前完整重算；匹配该结构但证明失败时保持WITHHELD，不回退到旧验证器。旧非正权益保护和其他原有路线保留。
+
+<!-- capability-anchor: CAPABILITY.ordinary_bond_separate_leases -->
+
+`b06_bond_leases`将债券组成、三类计量列、单独租赁分类、供应商完整条款、其他融资项目和含细分维度的独立原生清单合并验证。普通贸易应付款的排除要求公司付款义务不变及明确报表分类，不能由供应商名称或金额决定。`normal_bond_debt_results`沿同一普通来源准入/Calculator/Run接线，新规格只改变受支持的来源结构；新集合检查包括当前与非当前借款。无报价利率或未来支付额代替当前账面债务。
+
+<!-- capability-anchor: CAPABILITY.ordinary_deterministic_lodging -->
+
+`lodging_table_source`重建全部源表格，以表前明确年度说明、指标/本年/变化列、同表经营范围和地域脚注构造B10/B11来源证明；跨页说明只拼接原有块，不改原字符。`normal_lodging_results`核对新结构化规格与旧规格的经济字段，调用同一观察/Calculator，非lodging主体复用原适用性。V14共享Run先重新计算完整来源图，再接受此显式路由的无AI批准表格观察。普通展示只为规格明确声明的ratio→percent/100转换增加支持；原历史AI路由不变。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_current_input -->
+
+`b06_current_input`复用完整修订核对机制，独立限定B06当前债务/权益输入。V14先核对输入，再进入原非正权益保护和各债务结构；全部修订原件、判断、来源证明加入同一记录图并在重放中重建。拒绝输入与债务关系时，传入既有Calculator规定的精确WITHHELD目标字段，保留合法非数值结果而非转成执行故障。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_inclusive_table -->
+
+`b06_inclusive_table`从原HTML/XML完整续接附注、每笔当前债券、已含融资租赁和同范围母公司权益重建来源关系，并核对独立潜在融资清单。收购日分配、未来票面偿还和市场公允价值按原说明与显示精度保留，不作为额外账面债务。`normal_inclusive_debt_results`使用既有INCLUSIVE_REPORTED_TOTAL模型及Calculator，B06v6只扩展来源结构。V14重放从原件重建相同记录图；删除修订、重签错误总额或替换旧Spec拒绝。历史解析器和已冻结规则不改。
+
+<!-- capability-anchor: CAPABILITY.ordinary_update_metric_isolation -->
+
+正常公司入口复用同一控制器，为每个指标建立独立状态目录和成功引用。逐项异常在该指标内形成终态，其余指标继续。整组就绪与部分就绪分别报告；原组状态不被自动丢弃或覆盖。
+
+
+<!-- capability-anchor: CAPABILITY.continuous_call_allowance -->
+
+2026-09-13 后继 `issue_28_v14/PROFILE_DRIVEN_V15` 绑定真实用户代登记评论、现行模型配置和新执行文件集合。`continuous_call_ledger` 在固定外部目录上持有目录锁，以追加 claim、独立 intent、原 WB-3 marker/receipt 及 terminal 累计；缺终态保留可能调用并暂停受影响通道，跨目录或新阶段不能重置。测试账本身份不能转为真实调用。初始化锚与 claim 日志核对删除或失配，恢复先只读核对原终态，不重发未知请求。SEC 份额已登记，真实 SecHttpClient 后继接线尚待完成。
+
+<!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
+
+`continuous_semantic_calls` 先按受信旧获取证明重建 D04 来源，将每个已有完整单元分别序列化以遵守 200000 context 限制；原单元覆盖不丢失。新请求的来源、规则、配置、策略工厂及 WB-3 身份在后继版本下绑定。现有 DeepSeek transport 新增精确请求类型分派，仍仅原固定官方 opener；send 核对当前 WB-3 上下文、进程/令牌、预留与唯一 marker。未知 token/cost 在本后继显式为 null，旧整数/字符串观测验证保持。可行性终态保留原始 wire，明确没有原生 Evidence，不把协议通过升级为语义正确或正式成功。真实调用还须已完成且与当前执行文件集合一致的离线接线材料。

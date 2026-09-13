@@ -1,0 +1,76 @@
+{
+  "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
+  "status": "RESUMED_OFFLINE_CORE_WORK_MODEL_CREDENTIAL_PENDING",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
+  "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+  "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
+  "branch": "task/b06-new-source",
+  "scope": {
+    "companies": 10,
+    "metrics": 39,
+    "coordinates": 390
+  },
+  "authority": {
+    "development": "USER_DELEGATED",
+    "new_call_budget": "USER_APPROVED_SUCCESSOR_BOUND_OFFLINE_WIRING_VERIFIED",
+    "maximum_additional_provider_paid_sec_calls": [
+      240,
+      240,
+      80
+    ],
+    "repository_monetary_budget_enforcement": "DISABLED",
+    "b13_business_meaning": "USER_APPROVED_SUCCESSOR_IMPLEMENTATION_PENDING",
+    "ready": false,
+    "merge": false,
+    "formal_adoption": false,
+    "deployment": false,
+    "active_switch": false,
+    "long_running_schedule": false
+  },
+  "actual_new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0,
+    "unknown": 0
+  },
+  "current_work": [
+    "Finalize and submit successor invocation wiring and scoped review registration to the same Draft PR43",
+    "Reconcile current gaps against later native evidence; do not re-run the unchanged340 batch",
+    "Implement B13 successor and remaining shared source/subject/D03 defects while model credential is unavailable"
+  ],
+  "next": [
+    "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
+    "Implement successor B13 for Ford/Enphase",
+    "Use approvedSEC budget for necessary refresh/missing originals",
+    "Complete390/update/publication/rollback/retirement preparation and remaining scoped independent reviews"
+  ],
+  "review_coverage": "resume-2026-09-13/review-coverage.json",
+  "remaining_review_dependency": "Module-level user-forwarded ChatGPT/Fable review; original Codex subagents not retried beforeSep17",
+  "historical_state_snapshot": "resume-2026-09-13/historical-state/execution-state.json",
+  "historical_continuation_snapshot": "resume-2026-09-13/historical-state/continuation.md",
+  "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+  "ledger_implementation_status": "FIXED_ROOT_LOCKED_APPEND_ONLY_COUNT_CONTROL_OFFLINE_TESTED; NO_REAL_LEDGER_CALLS",
+  "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+  "full_acceptance": false,
+  "external_dependencies": [
+    {
+      "kind": "RUNTIME_CREDENTIAL",
+      "scope": "real DeepSeek requests only",
+      "reason": "DEEPSEEK_API_KEY absent from current process; repository .env absent",
+      "safe_offline_work_continues": true
+    },
+    {
+      "kind": "INDEPENDENT_REVIEW",
+      "scope": "only unreviewed modules and future deltas; not covered by scoped634 reports",
+      "safe_offline_work_continues": true
+    }
+  ],
+  "runtime_observation": {
+    "provider_key_available": false,
+    "credential_value_recorded": false,
+    "account_inspected": false,
+    "real_call_slot_consumed": false
+  },
+  "offline_wiring_receipt": "resume-2026-09-13/offline-wiring.json",
+  "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json"
+}

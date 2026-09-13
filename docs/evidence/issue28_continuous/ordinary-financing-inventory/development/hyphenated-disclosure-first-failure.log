@@ -1,0 +1,33 @@
+FF
+======================================================================
+FAIL: test_hyphenated_finance_lease_disclosure_is_not_reported_missing (tests.vnext.test_b06_financing_inventory.FinancingInventoryTest.test_hyphenated_finance_lease_disclosure_is_not_reported_missing) (text='finance-lease')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_financing_inventory.py", line 103, in test_hyphenated_finance_lease_disclosure_is_not_reported_missing
+    self.assertEqual('FINANCE_LEASE_TEXT_FOUND_WITHOUT_SEPARATE_NATIVE_FACT',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     result['finance_lease']['status'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FINANCE_LEASE_TEXT_FOUND_WITHOUT_SEPARATE_NATIVE_FACT' != 'NO_SEPARATE_FINANCE_LEASE_DISCLOSURE_FOUND'
+- FINANCE_LEASE_TEXT_FOUND_WITHOUT_SEPARATE_NATIVE_FACT
++ NO_SEPARATE_FINANCE_LEASE_DISCLOSURE_FOUND
+
+
+======================================================================
+FAIL: test_hyphenated_finance_lease_disclosure_is_not_reported_missing (tests.vnext.test_b06_financing_inventory.FinancingInventoryTest.test_hyphenated_finance_lease_disclosure_is_not_reported_missing) (text='finance‑lease')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_financing_inventory.py", line 103, in test_hyphenated_finance_lease_disclosure_is_not_reported_missing
+    self.assertEqual('FINANCE_LEASE_TEXT_FOUND_WITHOUT_SEPARATE_NATIVE_FACT',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     result['finance_lease']['status'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FINANCE_LEASE_TEXT_FOUND_WITHOUT_SEPARATE_NATIVE_FACT' != 'NO_SEPARATE_FINANCE_LEASE_DISCLOSURE_FOUND'
+- FINANCE_LEASE_TEXT_FOUND_WITHOUT_SEPARATE_NATIVE_FACT
++ NO_SEPARATE_FINANCE_LEASE_DISCLOSURE_FOUND
+
+
+----------------------------------------------------------------------
+Ran 1 test in 14.086s
+
+FAILED (failures=2)

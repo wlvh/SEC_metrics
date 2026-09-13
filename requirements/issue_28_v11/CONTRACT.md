@@ -1,0 +1,3 @@
+# Normal saved-input candidates
+
+User-delegated Issue #28 development replaces the historical PR43 local stopping point. The ten-company/39-metric responsibility is unchanged; this revision wires saved-source candidates for B06, C03, C04 and exact D01 source headings. Source inputs are independently derived and admitted against the installed preexisting baseline. Text candidates use an explicit no-AI protocol and the existing whole ReviewUnit decision; published-in-Run is not formal production. Actual fiscal/subperiod/source identities remain explicit. All historical snapshots, failures and closed quotas keep their original meaning. No provider/SEC acquisition, new spending, merge, formal adoption or active switch is granted. B13 business choice remains pending.

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "policy_id": "r5_b06_structured_v1",
+  "requirement_id": "issue_28_v9",
+  "metric_ids": [
+    "B06"
+  ],
+  "source_strategy": "structured_first_ai_fallback",
+  "primary_spec": "catalog/r5/B06_structured.md",
+  "primary_only": true,
+  "production_authorized": false,
+  "business_calls": [
+    0,
+    0,
+    0
+  ],
+  "predecessor_kind": "current_verified_active",
+  "blocked_coordinates": "blank_new_result_with_explicit_reason_never_legacy_fill",
+  "formal_metric_count_unchanged": 24,
+  "candidate_metric_count_proposed": 25,
+  "pending_obligations": [
+    "ambiguous company source coverage and fallback",
+    "candidate acceptance and production permission",
+    "B06 legacy producer retirement at formal adoption",
+    "continuous production authority and true new inputs",
+    "B13 C03 C04 WB-7 R4 R6 Rf"
+  ],
+  "draft_release_plan": "config/release_plans/issue_28_b06_structured_draft.json",
+  "draft_release_plan_id": "sha256:cc866a8d98a97b00242ee79847e656bc1b4df5c63de7f071a8260cad28deb1f5",
+  "saved_source_origin": "EXACT_EXISTING_COMMITTED_SEC_ATTEMPTS_FOR_THIS_OFFLINE_WORK_PACKAGE",
+  "semantic_revision": 3,
+  "measurement_basis": "PERIOD_END_CARRYING_AMOUNT_OF_DEFINED_DEBT_SET",
+  "amendment_review_file": "docs/evidence/r5_b06_followup/amendment_assessments.json",
+  "amendment_review_sha256": "235fa78368c6e888d63b811e7215c0948966fc5fd242c14c7a22ec8348d52cfe",
+  "measurement_review_file": "docs/evidence/r5_b06_followup/measurement_relationships.json",
+  "measurement_review_sha256": "eedf303c47ef694521d10c676ae842888bc7c0e13f7651d3e5ad5d275707c0cc",
+  "composition_review_file": "docs/evidence/r5_b06_scope/composition_assessments.json",
+  "composition_review_sha256": "74713a8fc903c62d9ac9e852377207b3f9ccbaa9687cb61ce03b24f813bce70a",
+  "debt_scope_definition": {
+    "included": [
+      "recognized_borrowings",
+      "notes_and_bonds",
+      "finance_lease_liabilities_including_combined_nonlease_components"
+    ],
+    "excluded": [
+      "operating_lease_liabilities",
+      "ordinary_trade_tax_provisions",
+      "customer_deposits",
+      "nonfinancing_trading_derivatives"
+    ],
+    "basis": "recognized_statement_carrying_amount_including_discount_premium_cost_hedge_and_fair_value_measurement",
+    "nonoverlap": "Each demonstrated liability set once; disjoint reported categories may be added",
+    "equity": "same_scope_StockholdersEquity_not_noncontrolling_inclusive",
+    "bank_scope": "Separate bank funding scope and comparability limitation; no netting assets"
+  },
+  "debt_scope_review_file": "docs/evidence/r5_b06_scope/debt_scope_relationships.json",
+  "debt_scope_review_sha256": "8e4ce2452c3cd1a0cf9195e2382bd4c8f7beee883105e2d84238c75812ef0cec"
+}

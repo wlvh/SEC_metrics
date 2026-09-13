@@ -1,0 +1,121 @@
+{
+  "record_type": "REGULATORY_INVESTIGATION_CANDIDATE_POLICY",
+  "schema_version": 1,
+  "policy_id": "regulatory_investigation_candidates_v1",
+  "metric_id": "D03",
+  "scope": "SOURCE_REPORTED_ACTIONS_AND_EXPLICIT_STATUS_NOT_EXHAUSTIVE_INVESTIGATION_LIST",
+  "patterns": {
+    "action": "\\b(?:investigations?|investigat(?:ed|ing)|subpoenas?|inquir(?:y|ies)|civil investigative demands?|CID|enforcement|consent (?:orders?|decrees?))\\b",
+    "authority": "\\b(?:government(?:al)? (?:agencies|authorities|investigations)|regulatory (?:agencies|authorities|investigations)|regulators?|SEC|DOJ|FTC|FDA|EPA|CFTC|CFPB|FCC|NHTSA|Department of Justice|Securities and Exchange Commission|Attorney(?:[’']s)? General|attorneys general|U\\.S\\. Attorney[’']s Office|Enforcement Directorate|Department of Transportation|federal, state, local and international authorities)\\b",
+    "prospective": "\\b(?:may|might|could|would|if|potential|future|risk of|risk that|expected to)\\b",
+    "resolution": "\\b(?:resolved|settled|closed|declined to intervene|no longer (?:appear to be )?active|reached (?:a |final )?(?:settlement|resolutions?))\\b",
+    "partial_resolution": "\\b(?:most|some|certain|only remaining)\\b",
+    "negated_action": "\\b(?:no|not|never|without)\\b.{0,70}\\b(?:investigations?|subpoenas?|inquir(?:y|ies)|enforcement)\\b",
+    "private_internal": "\\b(?:Special Litigation Committee|shareholder derivative|third-party subpoena|private litigation|private actions|relator|internal investigation)\\b",
+    "third_party": "\\b(?:our (?:suppliers?|customers?|competitors?|business partners?)|another (?:company|drug manufacturer)|unaffiliated|as (?:a |an )?(?:expert )?witness|not (?:a |the )?target)\\b",
+    "generic_regulation": "\\b(?:laws? and regulations?|regulatory requirements|rule.making|enforcement authority|enforcement priorities|comply with|compliance with)\\b",
+    "date_literal": "\\b(?:January|February|March|April|May|June|July|August|September|October|November|December)\\s+(?:[0-9]{1,2},?\\s+)?[12][0-9]{3}\\b|\\b[12][0-9]{3}-[01][0-9]-[0-3][0-9]\\b",
+    "alias_parenthetical": "\\s*\\(([^)]{1,200})\\)",
+    "quoted_alias": "[\"“]((?:the )?[A-Za-z][A-Za-z0-9 '&.-]{0,60})[\"”]",
+    "alias_intro": "^\\s*(?:the\\s+)?[\"“]",
+    "sentence_prefix": "^(?:(?:In|On|As of) [^.!?]{1,70},\\s*)?",
+    "current_involvement": "{{SELF}} (?:are|is) (?:also |currently )?involved in (?:government(?:al)?|regulatory) investigations?\\b",
+    "current_cooperation": "{{SELF}} (?:are|is) (?:currently )?cooperating(?: fully)? with\\b",
+    "current_response": "{{SELF}} (?:(?:are|is) (?:currently )?responding to|(?:vigorously defend ourselves in [^.!?]{1,130} and )?respond to)\\b",
+    "current_proceedings": "{{SELF}}(?: and (?:its|our) subsidiaries and affiliates)? (?:are|is) (?:currently )?(?:defendants or respondents|subject to) in? ?[^.!?]{0,180}\\b(?:government investigations|regulatory enforcement matters)\\b",
+    "current_legal_inventory": "{{SELF}} (?:are|is) involved in various legal matters[^.!?]*[.!?]\\s+These include [^.!?]*\\bgovernment investigations\\b",
+    "received_process": "{{SELF}} (?:have received|has received|received) (?:a |an |HIPAA |civil |Civil )*(?:subpoena|civil investigative demand|Civil Investigative Demand|CID|letter of inquiry)\\b",
+    "entered_order": "{{SELF}} (?:have entered|has entered|entered) into (?:a |an )?consent (?:order|decree)\\b",
+    "issued_process_to_named_entity": "(?:The )?{{AUTHORITY}}(?:[’']s Enforcement Bureau)?\\s+(?:(?:has|had)\\s+)?(?:issued|served) (?:a |an )?(?:subpoena|letter of inquiry|civil investigative demand) to {{SELF}}(?=[.,; ]|$)",
+    "authority_actor": "\\b(?:government(?:al)? (?:agencies|authorities)|regulatory (?:agencies|authorities)|regulators?|SEC|DOJ|FTC|FDA|EPA|CFTC|CFPB|FCC|NHTSA|Department of Justice|Securities and Exchange Commission|Attorney(?:[’']s)? General|attorneys general|U\\.S\\. Attorney[’']s Office|Enforcement Directorate|Department of Transportation|federal, state, local and international authorities)\\b",
+    "discourse_qualification": "\\b(?:quotation|quoted|hypothetical (?:statement|response)|(?:historical|past) (?:statement|response|quotation)|(?:statement|response) (?:would|could) be|(?:from|in) (?:our |its )?[12][0-9]{3} (?:annual report|statement|press release))\\b",
+    "linked_resolution": "^(?:(?:All|Some|Most|Certain) of )?(?:This|That|These|Those|Such|The) (?:inquiry|inquiries|investigation|investigations|matter|matters|proceeding|proceedings)\\b",
+    "explicit_unrelated": "\\b(?:unrelated|separate private|different matter)\\b",
+    "reported_speech_intro": "\\b(?:stated|said|reported|wrote|quoted|response would be|statement was)\\b[^.!?]{0,100}[:“\"]\\s*$"
+  },
+  "authority_relations": {
+    "RECEIVED_PROCESS": "\\b(?:subpoena|civil investigative demand|CID)(?:\\s*\\(CID\\))?\\s+(?:from|issued by|served by)\\s+(?:the\\s+)?{{AUTHORITY}}",
+    "CURRENT_COOPERATION": "\\bcooperating(?: fully)? with (?:the )?{{AUTHORITY}}(?:[’\\u0027]s)?(?:\\s+(?:regarding|concerning|in connection with)\\s+(?:its |the )?|\\s+)(?:ongoing |pending |current |civil )*(?:investigation|inquiry|CID|civil investigative demand)\\b",
+    "CURRENT_RESPONSE": "\\brespond(?:ing)? to (?:various |ongoing |governmental |regulatory |formal |informal )*(?:investigations?(?: and inquiries)?|inquiries|requests) from (?:the )?{{AUTHORITY}}",
+    "ENTERED_ORDER": "\\bconsent (?:order|decree) with (?:the )?{{AUTHORITY}}"
+  },
+  "abbreviations": [
+    "U.S.",
+    "U.K.",
+    "J.P.",
+    "Inc.",
+    "Co.",
+    "Corp.",
+    "N.A.",
+    "e.g.",
+    "i.e."
+  ],
+  "generic_entity_aliases": [
+    "company",
+    "firm"
+  ],
+  "source_author_pronouns": [
+    "we",
+    "us",
+    "our"
+  ],
+  "rules": [
+    {
+      "rule_id": "CURRENT_INVOLVEMENT",
+      "pattern": "current_involvement",
+      "fact_kind": "EXPLICIT_CURRENT_INVESTIGATION_INVOLVEMENT",
+      "current_status_asserted": true
+    },
+    {
+      "rule_id": "CURRENT_COOPERATION",
+      "pattern": "current_cooperation",
+      "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+      "current_status_asserted": true
+    },
+    {
+      "rule_id": "CURRENT_RESPONSE",
+      "pattern": "current_response",
+      "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+      "current_status_asserted": true
+    },
+    {
+      "rule_id": "CURRENT_PROCEEDINGS",
+      "pattern": "current_proceedings",
+      "fact_kind": "EXPLICIT_CURRENT_REGULATORY_PROCEEDING",
+      "current_status_asserted": true
+    },
+    {
+      "rule_id": "CURRENT_LEGAL_INVENTORY",
+      "pattern": "current_legal_inventory",
+      "fact_kind": "EXPLICIT_CURRENT_INVESTIGATION_INVOLVEMENT",
+      "current_status_asserted": true
+    },
+    {
+      "rule_id": "RECEIVED_PROCESS",
+      "pattern": "received_process",
+      "fact_kind": "REPORTED_RECEIPT_OF_REGULATORY_PROCESS",
+      "current_status_asserted": false
+    },
+    {
+      "rule_id": "ENTERED_ORDER",
+      "pattern": "entered_order",
+      "fact_kind": "REPORTED_REGULATORY_ORDER",
+      "current_status_asserted": false
+    },
+    {
+      "rule_id": "ISSUED_PROCESS_TO_NAMED_ENTITY",
+      "pattern": "issued_process_to_named_entity",
+      "fact_kind": "REPORTED_REGULATORY_PROCESS_ADDRESSED_TO_ENTITY",
+      "current_status_asserted": false
+    }
+  ],
+  "context_neighbor_limit": 2,
+  "no_hit_means_absence": false,
+  "current_filing_means_current_action": false,
+  "case_count_or_case_identity_inferred": false,
+  "quotation_tags": [
+    "blockquote",
+    "q",
+    "cite"
+  ]
+}

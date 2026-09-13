@@ -1,0 +1,41 @@
+test_acquisition_amount_is_bound_to_the_earlier_source_table (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_actual_inclusive_total_subject_and_other_measurements (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_extra_financing_note_cannot_hide_outside_the_debt_note (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_extra_native_senior_note_or_borrowing_cannot_escape_inventory (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_future_typed_revenue_bucket_cannot_be_reused_as_a_borrowing (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_maturity_table_cannot_relabel_face_amount_as_carrying (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_missing_finance_lease_row_does_not_mean_zero (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_native_current_total_disagreement_is_not_overwritten (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_parent_equity_scope_cannot_be_replaced_by_other_equity (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_predecessor_column_cannot_be_renamed_current (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_unknown_or_unquantified_narrative_borrowing_rejects (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ok
+test_actual_complete_member_reconciliation_and_explicit_lease_absence (tests.vnext.test_b06_note_carrying.NoteCarryingTest) ... ok
+test_additional_current_borrowing_in_full_note_is_not_a_table_total (tests.vnext.test_b06_note_carrying.NoteCarryingTest) ... ok
+test_an_unknown_table_row_cannot_hide_in_a_supported_schedule (tests.vnext.test_b06_note_carrying.NoteCarryingTest) ... ok
+test_cross_document_disagreement_and_wrong_currency_namespace_reject (tests.vnext.test_b06_note_carrying.NoteCarryingTest) ... ok
+test_each_note_principal_and_adjustment_must_reconcile (tests.vnext.test_b06_note_carrying.NoteCarryingTest) ... ok
+test_independent_native_inventory_catches_other_debt_and_finance_leases (tests.vnext.test_b06_note_carrying.NoteCarryingTest) ... ok
+test_missing_or_historical_lease_statement_never_means_zero (tests.vnext.test_b06_note_carrying.NoteCarryingTest) ... ok
+test_quoted_or_contradicted_lease_statement_is_not_current_issuer_evidence (tests.vnext.test_b06_note_carrying.NoteCarryingTest) ... ok
+test_actual_comparative_current_debt_is_included_in_the_new_reconciliation (tests.vnext.test_b06_bond_leases.BondDebtScopeTest) ... ok
+test_current_revolver_statement_must_prove_no_borrowings (tests.vnext.test_b06_bond_leases.BondDebtScopeTest) ... ok
+test_dimensioned_additional_borrowing_cannot_escape_inventory (tests.vnext.test_b06_bond_leases.BondDebtScopeTest) ... ok
+test_full_reported_composition_preserves_supplier_and_nonlease_subsets (tests.vnext.test_b06_bond_leases.BondDebtScopeTest) ... ok
+test_future_purchase_commitment_cannot_be_relabelled_as_financed_debt (tests.vnext.test_b06_bond_leases.BondDebtScopeTest) ... ok
+test_unknown_native_nonlease_change_is_not_hidden_by_unchanged_total (tests.vnext.test_b06_bond_leases.BondDebtScopeTest) ... ok
+test_unquantified_additional_borrowing_is_not_an_absent_amount (tests.vnext.test_b06_bond_leases.BondDebtScopeTest) ... ok
+test_actual_current_noncurrent_and_payment_reconciliation (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest) ... ok
+test_classification_cannot_move_the_finance_lease_into_the_debt_line (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest) ... ok
+test_finance_column_cannot_be_replaced_by_operating_column (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest) ... ok
+test_native_amount_disagreement_is_retained (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest) ... ok
+test_visible_maturity_date_and_scale_are_required (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest) ... ok
+test_actual_program_is_classified_by_unchanged_company_terms_and_reported_trade_payable (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest) ... ok
+test_changed_native_closing_amount_cannot_use_old_table (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest) ... ok
+test_changed_payment_terms_or_company_participation_cannot_retain_trade_exclusion (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest) ... ok
+test_extra_program_obligation_clause_is_not_dropped (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest) ... ok
+test_terms_quote_is_not_an_issuer_assertion (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest) ... ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 238.630s
+
+OK

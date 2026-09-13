@@ -1,0 +1,43 @@
+--- /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_companyfacts_results.py
++++ /tmp/sec_metrics_issue28_continuous/companyfacts-amendment-route-candidate.py
+@@ -15,6 +15,7 @@
+ from .canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_loads
+ from .deterministic_router import adapt_companyfacts
+ from .normal_annual_input import annual_period, _registry_rows, NormalAnnualInputError
++from .annual_amendment_scope import prepare_saved_amendment_input
+ from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value, POLICY_PATH as FISCAL_LABEL_POLICY_PATH
+ from .normal_governance_input import _Sources, _filings, _history_index, history_body_alignment, NormalGovernanceInputError
+ from .normal_source_authority import ROOT, verify_saved_source_proofs
+@@ -112,8 +113,13 @@
+     sources.append({**source, "accession_role":"current"})
+     periods, filings = {"current":period, "prior":None}, {"current":prepared["filing"], "prior":None}
+     prior_error = None
+-    common_error = ("NORMAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED" if prepared["subject_policy"]["mode"] != "CONTINUOUS_PRIMARY"
+-        else "NORMAL_COMPANYFACTS_CURRENT_AMENDMENT_REPLAY_NOT_IMPLEMENTED" if prepared["amendments"] else None)
++    amendment_input = None
++    common_error = "NORMAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED" if prepared["subject_policy"]["mode"] != "CONTINUOUS_PRIMARY" else None
++    if prepared["amendments"] and common_error is None:
++        amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,input_class="ORIGINAL_STATEMENT_VALUES")
++        _need(amendment_input["prepared_input"] == prepared.get("original_input",prepared), "NORMAL_AMENDMENT_ORIGINAL_INPUT_DIFFERS")
++        if amendment_input["decision"] != "INPUT_PROPERTY_PROVEN":
++            common_error = "NORMAL_COMPANYFACTS_AMENDMENT_INPUT_SCOPE_UNRESOLVED"
+     needs_prior = any(metric_is_applicable(applicability=route["applicability"], traits=traits)
+         and any(c["accession_role"] == "prior" for b in route["branches"] for c in b["components"]) for route in routes.values())
+     if needs_prior and not common_error:
+@@ -171,10 +177,15 @@
+             "selection":detail,"claims":graph["claims"],"projection_claims":graph["projection_claims"],
+             "observations":observations,"result":result,"trace":trace,"records":[*observations,trace,result]}
+     proofs = list({content_hash(value=p):p for p in [*prepared["source_proofs"],*[s["proof"] for s in reader.proofs.values()]]}.values())
++    if amendment_input is not None:
++        proofs = list({content_hash(value=p):p for p in [*proofs,*amendment_input["source_proofs"]]}.values())
+     admission = verify_saved_source_proofs(data_root=repo_root, proofs=proofs)
++    source_records = list(reader.records.values())
++    if amendment_input is not None:
++        source_records = list({content_hash(value=r):r for r in [*source_records,*amendment_input["source_records"]]}.values())
+     body = {"record_type":"NORMAL_COMPANYFACTS_NATIVE_RESULTS","company_id":company_id,
+         "prepared_input":prepared,"filings":filings,"periods":periods,"prior_error":prior_error,
+-        "authority_file_hashes":authority,"source_records":list(reader.records.values()),"source_proofs":proofs,
++        "authority_file_hashes":authority,"source_records":source_records,"amendment_input":amendment_input,"source_proofs":proofs,
+         "source_admission":admission,"source_sets":[s["manifest"] for s in sources],"claims_by_accession_role":claims_by_role,
+         "failed_source_attempts":list(reader.failed_attempts.values()),"metrics":results,
+         "resolver_sha256":sha256_file(path=Path(__file__)),"calls":{"provider":0,"paid":0,"sec":0},

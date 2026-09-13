@@ -1,0 +1,38 @@
+test_actual_restatement_cannot_be_disguised_as_a_conditional_compensation_clause (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_actual_restatement_cannot_be_disguised_as_a_conditional_compensation_clause) ... FAIL
+test_added_native_balance_fact_invalidates_the_limited_amendment (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_added_native_balance_fact_invalidates_the_limited_amendment) ... ok
+test_explicit_cover_error_or_restatement_cannot_keep_original_balance_approval (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_explicit_cover_error_or_restatement_cannot_keep_original_balance_approval) ... ok
+test_extra_note_purpose_and_wrong_original_identity_are_rejected (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_extra_note_purpose_and_wrong_original_identity_are_rejected) ... ok
+test_financial_correction_elsewhere_cannot_hide_behind_the_scope_note (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_financial_correction_elsewhere_cannot_hide_behind_the_scope_note) ... ok
+test_quoted_no_statements_sentence_is_not_the_issuers_scope_declaration (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_quoted_no_statements_sentence_is_not_the_issuers_scope_declaration) ... ok
+test_real_part_iii_and_link_correction_only_support_installed_instant_inputs (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_real_part_iii_and_link_correction_only_support_installed_instant_inputs) ... FAIL
+
+======================================================================
+FAIL: test_actual_restatement_cannot_be_disguised_as_a_conditional_compensation_clause (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_actual_restatement_cannot_be_disguised_as_a_conditional_compensation_clause)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_instant_balance_amendment.py", line 67, in test_actual_restatement_cannot_be_disguised_as_a_conditional_compensation_clause
+    self.withheld(self.changed(lambda raw:raw.replace(b'without regard to misconduct',
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        b'without regard to misconduct, which has occurred this year',1)))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_instant_balance_amendment.py", line 32, in withheld
+    self.assertEqual('WITHHELD',result['decision'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'WITHHELD' != 'INPUT_PROPERTY_PROVEN'
+- WITHHELD
++ INPUT_PROPERTY_PROVEN
+
+
+======================================================================
+FAIL: test_real_part_iii_and_link_correction_only_support_installed_instant_inputs (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_real_part_iii_and_link_correction_only_support_installed_instant_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_instant_balance_amendment.py", line 40, in test_real_part_iii_and_link_correction_only_support_installed_instant_inputs
+    self.assertEqual(3,len(result['details']['conditional_compensation_references']))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3 != 2
+
+----------------------------------------------------------------------
+Ran 7 tests in 34.637s
+
+FAILED (failures=2)

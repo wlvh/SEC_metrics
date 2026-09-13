@@ -1,0 +1,21 @@
+test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review (tests.vnext.test_remaining_source_run_material.RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review) ... ERROR
+
+======================================================================
+ERROR: test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review (tests.vnext.test_remaining_source_run_material.RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 102, in test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review
+    bad,bad_trace=calculate_observation_metric(compiled_spec=case['compiled_specs'][m],target=target,
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        company_traits=manifest['company_traits'],observation=fake)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/calculator.py", line 1164, in calculate_observation_metric
+    raise CalculationError(
+        "Direct calculation target fields are not exact"
+    )
+vnext.calculator.CalculationError: Direct calculation target fields are not exact
+
+----------------------------------------------------------------------
+Ran 1 test in 142.791s
+
+FAILED (errors=1)

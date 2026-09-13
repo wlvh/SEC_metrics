@@ -1,0 +1,145 @@
+{
+  "closure": "sha256:fb76e3804bc76494f4efa7fa9d8c188f4b55413d0d1de281b3ebf5ce9348324e",
+  "status": "EXPECTED_ACCEPTANCES_AND_REJECTIONS_CONFIRMED",
+  "valid_open_graphs": 2,
+  "valid_negative_scenarios": 14,
+  "cases": [
+    {
+      "name": "valid-jpmorgan_chase-A04",
+      "outcome": "ACCEPTED",
+      "error": null,
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": true,
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "valid-marriott_international-D01",
+      "outcome": "ACCEPTED",
+      "error": null,
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": true,
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "missing-spec-A04",
+      "outcome": "REJECTED",
+      "error": "NORMAL_CURRENT_RUN_ONE_SPEC_REQUIRED",
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": true,
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "extra-installed-spec-A04",
+      "outcome": "REJECTED",
+      "error": "NORMAL_CURRENT_RUN_ONE_SPEC_REQUIRED",
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": true,
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "missing-manifest-source-A04",
+      "outcome": "REJECTED",
+      "error": "NORMAL_CURRENT_SOURCE_SPEC_OR_TARGET_CHANGED",
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": true,
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "changed-target-period-A04",
+      "outcome": "REJECTED",
+      "error": "NORMAL_CURRENT_SOURCE_SPEC_OR_TARGET_CHANGED",
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": true,
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "missing-spec-D01",
+      "outcome": "REJECTED",
+      "error": "ReviewUnit Spec is absent from repository",
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": false,
+      "reviewed_expected_met": true,
+      "harness_note": "RunStoreError is RuntimeError, omitted by first harness exception classifier; named source/spec rejection is expected."
+    },
+    {
+      "name": "extra-installed-spec-D01",
+      "outcome": "REJECTED",
+      "error": "NORMAL_CURRENT_RUN_ONE_SPEC_REQUIRED",
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": true,
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "missing-manifest-source-D01",
+      "outcome": "REJECTED",
+      "error": "NORMAL_CURRENT_SOURCE_SPEC_OR_TARGET_CHANGED",
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": true,
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "changed-target-period-D01",
+      "outcome": "REJECTED",
+      "error": "NORMAL_CURRENT_SOURCE_SPEC_OR_TARGET_CHANGED",
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": true,
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "old-ai-spec-structural-graph",
+      "outcome": "REJECTED",
+      "error": "NORMAL_CURRENT_SPEC_ROUTE_NOT_ENABLED",
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": true,
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "deleted-primary-body",
+      "outcome": "REJECTED",
+      "error": "Run RawBlob bytes changed",
+      "original_artifact": "stable-fb76-first/index.json",
+      "first_harness_expected_met": false,
+      "reviewed_expected_met": true,
+      "harness_note": "RunStoreError is RuntimeError, omitted by first harness exception classifier; named source/spec rejection is expected."
+    },
+    {
+      "name": "missing-raw-record-A04",
+      "outcome": "REJECTED",
+      "error": "Run SourceReference RawBlob is absent",
+      "original_artifact": "corrected-source-record-cases/index.json",
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "missing-raw-record-D01",
+      "outcome": "REJECTED",
+      "error": "Run SourceReference RawBlob is absent",
+      "original_artifact": "corrected-source-record-cases/index.json",
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "missing-source-reference-record-A04",
+      "outcome": "REJECTED",
+      "error": "NORMAL_CURRENT_SOURCE_RECORD_SET_CHANGED",
+      "original_artifact": "missing-reference-record-cases/index.json",
+      "reviewed_expected_met": true
+    },
+    {
+      "name": "missing-source-reference-record-D01",
+      "outcome": "REJECTED",
+      "error": "NORMAL_CURRENT_SOURCE_RECORD_SET_CHANGED",
+      "original_artifact": "missing-reference-record-cases/index.json",
+      "reviewed_expected_met": true
+    }
+  ],
+  "case_count": 16,
+  "all_reviewed_expected": true,
+  "all_graphs_open_or_rejected": true,
+  "new_frozen_runs": 0,
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "code_unchanged": true,
+  "harness_first_failures_retained": true
+}

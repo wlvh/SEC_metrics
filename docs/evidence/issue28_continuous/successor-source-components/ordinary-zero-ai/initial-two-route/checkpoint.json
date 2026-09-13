@@ -1,0 +1,24 @@
+{
+  "files": {
+    "scripts/vnext/normal_zero_ai_results.py": "5cc97ca9f6792781865eb853ab7e2295ca58f13ec9a7cc60755058806c0fbf23",
+    "tests/vnext/test_normal_zero_ai_results.py": "b799346903c9c20af0f962e50fa40585b23e45d7dbeccc96279dda8a3424a131"
+  },
+  "validation": {
+    "first_suite": "6 passed; portable tamper expected wrong exception class; 33.725s",
+    "targeted_recheck": "portable no-Git B01/C01 roundtrip and real source tamper rejection passed; 29.809s",
+    "covered_test_count": 7,
+    "real_coordinate_count": 20,
+    "numeric_results": 13,
+    "structural_results": 1,
+    "withheld_results": 6
+  },
+  "stable_prototypes": "stable-prototypes/index.json",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "Run_or_freeze_created": false,
+  "V13_files_modified": false,
+  "production_authorized": false
+}

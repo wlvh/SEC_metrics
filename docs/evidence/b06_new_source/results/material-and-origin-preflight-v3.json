@@ -1,0 +1,194 @@
+[
+  {
+    "company_id": "southwest_airlines",
+    "selected": {
+      "company_id": "southwest_airlines",
+      "entity": "92380",
+      "filing": {
+        "accessionNumber": "0000092380-25-000024",
+        "filingDate": "2025-02-07",
+        "reportDate": "2024-12-31",
+        "acceptanceDateTime": "2025-02-07T21:00:58.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-07259",
+        "filmNumber": "25601561",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 31844564,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "luv-20241231.htm",
+        "primaryDocDescription": "FORM 10-K"
+      },
+      "target_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-12-31",
+        "period_end": "2024-12-31"
+      },
+      "actual_year_start": "2024-01-01",
+      "proofs": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0000092380.json",
+          "accession": "",
+          "document_name": "CIK0000092380.json",
+          "content_sha256": "bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600",
+          "request_body_sha256": "bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600",
+          "request_body_size": 170561,
+          "request_headers_repo_relative_path": "evidence/request_attempts/bf/bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600/CIK0000092380.json.37b6a51350d60378021bb4461ca933511c30abfd1ca81924d6c7524a05b1fe7c.headers.json",
+          "request_headers_sha256": "37b6a51350d60378021bb4461ca933511c30abfd1ca81924d6c7524a05b1fe7c",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/bf/bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600/CIK0000092380.json",
+          "request_attempt_id": "request:attempt:705c80a391f7b18422317a4d785c80c125369031f4690d63e5d687b02f3bfe31"
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+          "accession": "0000092380-25-000024",
+          "document_name": "CIK0000092380.json",
+          "content_sha256": "7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+          "request_body_sha256": "7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+          "request_body_size": 4083360,
+          "request_headers_repo_relative_path": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json.92d35af40edd49202ceb83cecab13d623d37e6cf101a4863c39ea8a44862e1b8.headers.json",
+          "request_headers_sha256": "92d35af40edd49202ceb83cecab13d623d37e6cf101a4863c39ea8a44862e1b8",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json",
+          "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml",
+          "accession": "0000092380-25-000024",
+          "document_name": "luv-20241231_htm.xml",
+          "content_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+          "request_body_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+          "request_body_size": 2611659,
+          "request_headers_repo_relative_path": "evidence/accession_materials/southwest_airlines_92380_000009238025000024/luv-20241231_htm.xml.headers.json",
+          "request_headers_sha256": "8b06c99393fb6df9ad39698509f9278c22a67488885cc9a23498404caf5cada0",
+          "request_headers_size": 1125,
+          "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+          "request_repo_relative_path": "evidence/accession_materials/southwest_airlines_92380_000009238025000024/luv-20241231_htm.xml",
+          "request_attempt_id": "request:attempt:19cddc7945e6aad0ec53642a4a3192760539b129581c8486d401231ba8aaac07"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm",
+          "accession": "0000092380-25-000024",
+          "document_name": "luv-20241231.htm",
+          "content_sha256": "30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+          "request_body_sha256": "30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+          "request_body_size": 3043395,
+          "request_headers_repo_relative_path": "evidence/request_attempts/30/30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b/luv-20241231.htm.52dc6eaaa42ce092ef328b3978514bc6dd591fa4d3a59048a79b55fa732d60dd.headers.json",
+          "request_headers_sha256": "52dc6eaaa42ce092ef328b3978514bc6dd591fa4d3a59048a79b55fa732d60dd",
+          "request_headers_size": 1085,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/30/30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b/luv-20241231.htm",
+          "request_attempt_id": "request:attempt:803dd1dd4b6a24c3ea4c2b61c5e93b3b0d760c13cc3b183337c07a2509d6c204"
+        }
+      ],
+      "selection_rule": "PREVIOUS_ORDINARY_10K_IN_PINNED_SUBMISSIONS",
+      "simulated_historical_visibility": true,
+      "amendments": [],
+      "current_use_status": "AS_FILED_ONLY_NO_KNOWN_AMENDMENT_IN_PINNED_LIST",
+      "current_latest_verified": false
+    },
+    "primary_git_blob_existed_before_run": false,
+    "git_blob": "ab219cb3d8527d66a8b153f2933d094074e82eee"
+  },
+  {
+    "company_id": "salesforce",
+    "selected": {
+      "company_id": "salesforce",
+      "entity": "1108524",
+      "filing": {
+        "accessionNumber": "0001108524-25-000006",
+        "filingDate": "2025-03-05",
+        "reportDate": "2025-01-31",
+        "acceptanceDateTime": "2025-03-05T21:16:48.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-32224",
+        "filmNumber": "25711276",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 13641767,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "crm-20250131.htm",
+        "primaryDocDescription": "10-K"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-31",
+        "period_end": "2025-01-31"
+      },
+      "actual_year_start": "2024-02-01",
+      "proofs": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+          "accession": "",
+          "document_name": "CIK0001108524.json",
+          "content_sha256": "fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911",
+          "request_body_sha256": "fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911",
+          "request_body_size": 156365,
+          "request_headers_repo_relative_path": "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json.284a53ed4a1b9f7c0e8eac4efe1115117a8d818134de8fa11942412b52606dc6.headers.json",
+          "request_headers_sha256": "284a53ed4a1b9f7c0e8eac4efe1115117a8d818134de8fa11942412b52606dc6",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json",
+          "request_attempt_id": "request:attempt:707d67a40b04183d948b0c9918eedef55fccd995a3e9bbfe46bcb588d6bdb745"
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+          "accession": "0001108524-25-000006",
+          "document_name": "CIK0001108524.json",
+          "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+          "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+          "request_body_size": 4664726,
+          "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+          "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+          "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+          "accession": "0001108524-25-000006",
+          "document_name": "crm-20250131_htm.xml",
+          "content_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+          "request_body_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+          "request_body_size": 2095588,
+          "request_headers_repo_relative_path": "evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml.headers.json",
+          "request_headers_sha256": "8ed7375cd5794c2b85600e29cfed5cc8efb79ad5664557c5db27f0d182486779",
+          "request_headers_size": 1127,
+          "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+          "request_repo_relative_path": "evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml",
+          "request_attempt_id": "request:attempt:15b61e4f79a4684e2230b203e86c7acc16218be5688e4585e35e6aa1d7171a61"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+          "accession": "0001108524-25-000006",
+          "document_name": "crm-20250131.htm",
+          "content_sha256": "4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf",
+          "request_body_sha256": "4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf",
+          "request_body_size": 2454201,
+          "request_headers_repo_relative_path": "evidence/request_attempts/4b/4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf/crm-20250131.htm.4b7d3581197be84f8b2b19fd96362a8d209401f9850f9f9b43d8d1849abddefb.headers.json",
+          "request_headers_sha256": "4b7d3581197be84f8b2b19fd96362a8d209401f9850f9f9b43d8d1849abddefb",
+          "request_headers_size": 1067,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/4b/4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf/crm-20250131.htm",
+          "request_attempt_id": "request:attempt:843be74d90c13f5aa513ca53b1391dd39d0e1b40f134ff01b64f8279b43dba10"
+        }
+      ],
+      "selection_rule": "PREVIOUS_ORDINARY_10K_IN_PINNED_SUBMISSIONS",
+      "simulated_historical_visibility": true,
+      "amendments": [],
+      "current_use_status": "AS_FILED_ONLY_NO_KNOWN_AMENDMENT_IN_PINNED_LIST",
+      "current_latest_verified": false
+    },
+    "primary_git_blob_existed_before_run": false,
+    "git_blob": "c34c681894e0da7ba2549e83c5eab297f67f9446"
+  }
+]

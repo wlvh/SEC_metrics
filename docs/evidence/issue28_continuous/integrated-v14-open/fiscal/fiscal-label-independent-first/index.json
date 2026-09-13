@@ -1,0 +1,34 @@
+{
+  "source_code_sha256": "cbe4de5f755084f21b91ea771bb6ed2fc3a12a4af1b9350f132f6464c58295ec",
+  "cases": [
+    {
+      "case": "quoted_definitions",
+      "company": "salesforce",
+      "status": "SOURCE_LABEL_CONFLICT",
+      "proposed": 2026,
+      "source_definitions": 2,
+      "unicode_preserved": null
+    },
+    {
+      "case": "exact_unicode",
+      "company": "salesforce",
+      "status": "SOURCE_LABEL_CONFLICT",
+      "proposed": 2026,
+      "source_definitions": 2,
+      "unicode_preserved": false
+    },
+    {
+      "case": "foreign_company_definition",
+      "company": "macys",
+      "status": "EXPLICIT_DEFINITION_UNRESOLVED",
+      "proposed": null,
+      "source_definitions": 1,
+      "unicode_preserved": null
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

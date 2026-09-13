@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_note_carrying.py", line 209, in inspect_note_carrying
+    _need({f['qualified_name'] for f in xrelated} == {f['qualified_name'] for f in irelated}, 'RELATED_NOTE_SET_CONFLICT')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_note_carrying.py", line 36, in _need
+    raise NoteCarryingError('NOTE_CARRYING_'+reason)
+vnext.b06_note_carrying.NoteCarryingError: NOTE_CARRYING_RELATED_NOTE_SET_CONFLICT

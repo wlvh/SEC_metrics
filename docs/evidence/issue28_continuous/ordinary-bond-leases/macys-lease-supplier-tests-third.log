@@ -1,0 +1,15 @@
+test_actual_current_noncurrent_and_payment_reconciliation (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest.test_actual_current_noncurrent_and_payment_reconciliation) ... ok
+test_classification_cannot_move_the_finance_lease_into_the_debt_line (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest.test_classification_cannot_move_the_finance_lease_into_the_debt_line) ... ok
+test_finance_column_cannot_be_replaced_by_operating_column (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest.test_finance_column_cannot_be_replaced_by_operating_column) ... ok
+test_native_amount_disagreement_is_retained (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest.test_native_amount_disagreement_is_retained) ... ok
+test_visible_maturity_date_and_scale_are_required (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest.test_visible_maturity_date_and_scale_are_required) ... ok
+test_actual_program_is_classified_by_unchanged_company_terms_and_reported_trade_payable (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest.test_actual_program_is_classified_by_unchanged_company_terms_and_reported_trade_payable) ... ok
+test_changed_native_closing_amount_cannot_use_old_table (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest.test_changed_native_closing_amount_cannot_use_old_table) ... ok
+test_changed_payment_terms_or_company_participation_cannot_retain_trade_exclusion (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest.test_changed_payment_terms_or_company_participation_cannot_retain_trade_exclusion) ... ok
+test_extra_program_obligation_clause_is_not_dropped (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest.test_extra_program_obligation_clause_is_not_dropped) ... ok
+test_terms_quote_is_not_an_issuer_assertion (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest.test_terms_quote_is_not_an_issuer_assertion) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 15.752s
+
+OK

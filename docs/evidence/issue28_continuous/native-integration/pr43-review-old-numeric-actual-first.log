@@ -1,0 +1,39 @@
+test_validate_and_freeze_replays_run_before_pass (tests.vnext.test_replay.ReplayTest.test_validate_and_freeze_replays_run_before_pass)
+Create PASSED and FROZEN only through the public mechanical gate. ... ERROR
+
+======================================================================
+ERROR: test_validate_and_freeze_replays_run_before_pass (tests.vnext.test_replay.ReplayTest.test_validate_and_freeze_replays_run_before_pass)
+Create PASSED and FROZEN only through the public mechanical gate.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_replay.py", line 864, in test_validate_and_freeze_replays_run_before_pass
+    receipt = validate_run(run_dir=run_dir, repo_root=REPO_ROOT)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3392, in validate_run
+    manifest, _records, _decisions = _mechanically_replay_open_run(
+                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        run_dir=run_dir,
+        ^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3357, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2745, in _validate_record_graph
+    trace.get("value_kind") == "TEXT_V1"
+    ^^^^^
+UnboundLocalError: cannot access local variable 'trace' where it is not associated with a value
+
+----------------------------------------------------------------------
+Ran 1 test in 0.066s
+
+FAILED (errors=1)

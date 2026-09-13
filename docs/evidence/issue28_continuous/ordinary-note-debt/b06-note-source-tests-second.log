@@ -1,0 +1,26 @@
+setUpClass (tests.vnext.test_b06_note_carrying.NoteCarryingTest) ... ERROR
+
+======================================================================
+ERROR: setUpClass (tests.vnext.test_b06_note_carrying.NoteCarryingTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_note_carrying.py", line 24, in setUpClass
+    cls.actual = inspect_note_carrying(**cls.args)
+                 ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_note_carrying.py", line 299, in inspect_note_carrying
+    inotes,irelated,ireports,iinventory = _source(primary,prepared,'primary')
+                                          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_note_carrying.py", line 86, in _source
+    value=_source_value(fact,attrs),decimals=attrs['attrs'].get('decimals'))
+          ~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/governance_signals.py", line 122, in _source_value
+    _need(str(fact["text"]).strip() in {"-", "—", "–", "0"}, "C03_ZERO_TRANSFORM_TEXT_CONFLICT")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/governance_signals.py", line 42, in _need
+    raise GovernanceSignalError(reason)
+vnext.governance_signals.GovernanceSignalError: C03_ZERO_TRANSFORM_TEXT_CONFLICT
+
+----------------------------------------------------------------------
+Ran 0 tests in 1.527s
+
+FAILED (errors=1)

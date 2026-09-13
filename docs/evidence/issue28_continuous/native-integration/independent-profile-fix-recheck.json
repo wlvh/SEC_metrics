@@ -1,0 +1,38 @@
+{
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "cases": [
+    {
+      "case": "prior_accepted_pruned_profile",
+      "status": "REJECTED",
+      "error": "RequirementError: Normal candidate installed snapshot differs: baseline_manifest.json"
+    },
+    {
+      "case": "fresh_installed_D01_full_native_replay",
+      "status": "ACCEPTED",
+      "metric": "D01",
+      "items": 34,
+      "company_traits": [
+        "lodging",
+        "non_financial"
+      ]
+    },
+    {
+      "case": "pruned_fresh_current_execution_authority",
+      "status": "REJECTED",
+      "error": "RequirementError: Normal candidate installed snapshot differs: baseline_manifest.json"
+    },
+    {
+      "case": "modified_fresh_current_contract",
+      "status": "REJECTED",
+      "error": "RequirementError: Normal candidate installed snapshot differs: CONTRACT.md"
+    },
+    {
+      "case": "restored_fresh_current_requirement",
+      "status": "ACCEPTED"
+    }
+  ]
+}

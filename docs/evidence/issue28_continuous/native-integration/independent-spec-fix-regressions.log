@@ -1,0 +1,6 @@
+{"case": "unaltered_current_D01", "status": "ACCEPTED"}
+{"case": "prior_accepted_B06_risk_spec", "status": "REJECTED", "error": "RunStoreError: Native text input replay failed: TEXT_RUN_INSTALLED_D01_SPEC_REQUIRED"}
+{"case": "same_D01_bytes_alias_path", "status": "REJECTED", "error": "RunStoreError: Native text input replay failed: TEXT_RUN_INSTALLED_D01_SPEC_REQUIRED"}
+{"case": "same_name_changed_semantics_native_hook", "status": "REJECTED", "error": "ValueError: TEXT_RUN_INSTALLED_D01_SPEC_REQUIRED"}
+{"case": "missing_normal_input_binding", "status": "REJECTED", "error": "RunStoreError: Native text input replay failed: Source path is not a regular file: /tmp/sec_metrics_issue28_continuous/pr43-review/native-review/fixed-data/normal_bindings/25d565ce5788ff8dec866ecfebbbfeb85baee523f0bf31b81a6e0f756bb72eff.json"}
+{"case": "restored_unaltered_D01", "status": "ACCEPTED"}

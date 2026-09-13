@@ -65,8 +65,10 @@ ALLOWED_REMOTE_ADAPTER_CONSTRUCTORS = {
 ALLOWED_REPOSITORY_TRANSPORT_FACTORIES = {
     ("scripts/vnext/ai_adapter.py", "_ApprovedTransportAdapter._complete_repository_transport"),
     ("scripts/vnext/ai_adapter.py", "_ScopedInvocationControllerTransport.send"),
+    ("scripts/vnext/continuous_semantic_calls.py", "_Transport.send"),
 }
 ALLOWED_EGRESS_CAPABILITY_REFERENCES = {
+    ("scripts/vnext/continuous_semantic_calls.py", "_Transport.send"),
     ("scripts/vnext/ai_adapter.py", "_open_provider_request"),
     (
         "scripts/vnext/ai_adapter.py",
@@ -196,6 +198,12 @@ class _CallVisitor(ast.NodeVisitor):
             self.capability_references.append(
                 (self.relative_path, self._symbol())
             )
+
+    def visit_Attribute(self, node: ast.Attribute) -> None:
+        """Module-qualified access has the same private-token restriction."""
+        if node.attr == "_RESERVATION_OWNER_EGRESS_CAPABILITY" and isinstance(node.ctx, ast.Load):
+            self.capability_references.append((self.relative_path, self._symbol()))
+        self.generic_visit(node)
 
     def visit_Constant(self, node: ast.Constant) -> None:
         """Record provider host literals outside the approved module."""

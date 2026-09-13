@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 285, in inspect_inclusive_debt_scope
+    inventory=_independent_inventory(primary,xml,prepared,component)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 227, in _independent_inventory
+    context={**c,'dimensions':dict(c['dimensions'])};_verified_context(native=context,metadata=meta)
+                                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/text_results_v2.py", line 141, in _verified_context
+    _need(not context["typed_dimension_count"] and not native["typed_dimension_count"],
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "D02_FACT_TYPED_CONTEXT_NOT_IMPLEMENTED")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/text_results_v2.py", line 50, in _need
+    raise TextResultV2Error(reason)
+vnext.text_results_v2.TextResultV2Error: D02_FACT_TYPED_CONTEXT_NOT_IMPLEMENTED

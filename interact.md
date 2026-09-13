@@ -347,3 +347,113 @@ B06主路径入口为`tools/vnext_r5_b06.py prepare/read`。它输出完整待�
 B06新来源判断会在筛选前拒绝未知年报/修订日期及申报身份。已审完整修订的影响在新采纳记录中单列；旧as-filed结果不被改写。新账面原则会改变扣减成本前金额的选择（如Southwest），对账充分后Lumen仍以非正权益状态保留。输出分别说明内容完整、具体内容缺口及不存在的生产权限，不能用BLOCKED一个词掩盖三者。
 
 B06候选revision3将报表已确认借款、债券和融资租赁按不重叠集合计入，保留经营租赁排除及银行/工业范围限制。完整性未证明时即使借款子集合可以计算也不公开完整比值，`proven_debt_subtotal`和完整`debt`分别展示。生产权限仍不存在。
+
+B06新来源候选使用`tools/vnext_b06_new_source.py install-rules/run/read`，输出均指定外部
+目录。每次执行保存代码/规则身份、原始确定性提议、首次结果及独立后续重验；
+通过只表示原始提交口径候选有效，修订状态与“今天最新”分别显示。完整性缺口
+拒绝完整比值；两个安全拒绝不能算正向能力完成。真实来源信用由准入层核对，
+语义测试不获得SEC信用。来源获取累计与零网络Run/冷读计数分别报告。
+<!-- capability-anchor: CAPABILITY.b06_new_source_candidates -->
+
+`tools/vnext_normal_update.py`只读取保存材料并列出所有配置公司。`ORIGINAL_INPUT_READY`表示普通原件参数已准备，`AMENDMENT_PROCESSING_REQUIRED`表示同期间修订尚需处理，两者都不是本期指标完成；`current_latest_verified=false`明确没有进行新SEC检查。`INPUT_BLOCKED`分别保留来源不可得、请求失败、完整性问题、实现缺口或实现错误，不归为公司未披露。Paramount前后继主体接续仍是开发责任，其余公司继续检查。输出不改变正式版本，也不自动启动模型。
+<!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
+
+
+普通候选开发可在保存材料上检查薪酬、审计师变更与风险标题。薪酬保留披露实际覆盖期间，不把交易后数月金额冒充全年；缺少可比前期或来源获取失败，不显示“无变更”。风险标题输出是公司原文摘录，并附原始定位，不表示该风险已经发生。候选结果和完整正式发布保持分别可见，本轮尚未接入正式结果更新。
+<!-- capability-anchor: CAPABILITY.normal_governance_input -->
+<!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->
+
+
+## 普通保存来源候选批次
+
+<!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
+<!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
+
+19项普通零AI组件目前供开发接线使用，返回原生记录及来源限制，现已扩展为下面CLI的34项V14草案范围。事件数沿用已批准的申报条目规则；上一期材料缺口与当前指标成功分别显示。它们不替换正式报告，详见`docs/normal_source_components.md`。
+
+`tools/vnext_normal_candidate.py`只使用全新外部目录，逐坐标保存结果、选择原因或失败，完成后输出完整请求范围的summary。已有批次不会覆盖。V12/V13冻结记录保留；当前CLI使用V14 OPEN草案，完整340坐标诊断与后续修复另行留档，不冒称正式采纳。
+
+季度平均、年末余额和全年金额在公共行中保留各自实际期间；年度标签仅用于归组。C02可使用代理声明或同期间Part III修订，展示真实申报类型和日期，不推定年末董事会状态。WITHHELD保留具体原因，非正权益B06不显示有效比值，未核验债务完整性时明确说明。一个受阻坐标不抹掉其他候选。
+
+调用者更换旧规格、删掉来源或改期间不能使V13候选通过；统一入口会先重建其原始来源决定。候选输出仍不改变正式版本，不证明实时SEC最新或390坐标迁移已完成。
+<!-- capability-anchor: CAPABILITY.normal_current_run_admission -->
+<!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->
+
+<!-- capability-anchor: CAPABILITY.ordinary_accession_native_components -->
+
+A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，已接入34项V14草案CLI，正式报告不变；详见`docs/normal_source_components.md`。
+
+<!-- capability-anchor: CAPABILITY.ordinary_integrated_run_graph -->
+
+当前普通CLI使用未冻结V14草案，范围扩至34项已支持路线，默认`OPEN_CANDIDATE`及`VERIFIED_OPEN_PREVIEW`公共行；不是FROZEN或正式发布。B03依赖结果完整但公共行只显示主指标，复合指标证据逐项显示来源事实。无缺口的批次为`OPEN_CANDIDATES_READY`；真实失败/WITHHELD继续逐坐标保留。当前`--freeze`被规则拒绝。详见`docs/normal_candidates.md`。
+
+<!-- capability-anchor: CAPABILITY.ordinary_amendment_input_scope -->
+<!-- capability-anchor: CAPABILITY.ordinary_candidate_diagnostics -->
+
+已证明的有限链接更正不会一概阻断原报告数值或事件窗口；修订件仍留在来源图内。其他未证明的修订和主体范围继续保留限制。公共行展示请求子指标的具体来源原因；无经济意义的比值保持空值并保留证据。
+
+<!-- capability-anchor: CAPABILITY.b06_combined_borrowing_reconciliation -->
+<!-- capability-anchor: CAPABILITY.b06_financing_disclosure_inventory -->
+
+B06来源分析可显示组合附注中核对过的借款小计、实际表行及尚未证明的范围。小计不作为完整B06数值；没有单独融资租赁披露也不写零。来源分析组件尚未进入正式报告。
+
+<!-- capability-anchor: CAPABILITY.ordinary_note_debt_carrying -->
+
+当完整债券表、当期明确无融资租赁声明及独立融资检查共同通过时，普通B06候选可显示重新计算的期末债务权益比，并保留每笔账面额和来源。声明缺失或被引用、额外借款和不一致金额会保持未决；这项有限结构支持仍是OPEN开发预览，不改变正式报告。见`docs/note_debt_source.md`。
+
+<!-- capability-anchor: CAPABILITY.ordinary_bond_separate_leases -->
+
+普通B06还可处理债券与融资租赁在不同报表行列示的原件结构。债券账面数与租赁仅各计一次；原文证明付款义务未变且列为普通贸易应付款的供应商项目有明确排除证据。未知或变更的付款关系不会自动放行。Macy’s新结果仍为OPEN候选，其他公司、真实更新与整体验收继续独立处理。
+
+<!-- capability-anchor: CAPABILITY.ordinary_deterministic_lodging -->
+
+当前普通CLI扩为36项。B10/B11显示原表当前年的可比全系统全球统计，入住率为百分比、RevPAR为美元，并保留原表定位；不显示为一次新的AI抽取或旧资格重用。其他配置公司按原适用性显示结构不适用。全部仍是OPEN开发候选，剩余B13/D03/D04和完整交付继续推进；说明见`docs/ordinary_lodging.md`。
+
+<!-- capability-anchor: CAPABILITY.normal_source_dependency_discovery -->
+
+普通更新入口可加`--discover-sources`，按公司列出已知来源、待刷新数据集及缺失/失败文件，不要求用户提供文件地址或答案。新年报正文未保存时仍能发现其地址；目录未读取时明确子文件集合未知。保存来源齐备返回0，发现缺口返回2并保留其他公司输出；均不表示来源最新或新财报已计算成功。命令和字段见`docs/normal_source_discovery.md`。
+
+<!-- capability-anchor: CAPABILITY.ordinary_successor_instant_balances -->
+
+B08/B09在原目录允许且当前主体/申报/时点得到证明时，可显示期末流动比率及现金。有限Part III修订的余额输入证明和“不证明全年可比”的范围保留在候选上下文中；原件与修订均可追溯。其他全年或跨期指标的限制继续显示，不因两项期末值成功而删除。说明见`docs/ordinary_instant_balances.md`。
+
+<!-- capability-anchor: CAPABILITY.r6_recorded_interpretation_protocol -->
+
+D04离线解释协议只提供开发用输入与保存响应检查。`all_source_units_responded=true` 不代表判断正确；输出仍明确标注语义资格、provider执行和原生结果均未证明。当前普通候选CLI没有因此新增D04结果，原正式报告也不改变。说明见`docs/r6_interpretation_protocol.md`。
+
+<!-- capability-anchor: CAPABILITY.recorded_source_update_session -->
+
+来源更新测试会话的输出始终标记 `RECORDED_TEST_ONLY`，实际SEC信用和生产权限为false。同一来源内容得到新的请求身份时可输出 `NO_SOURCE_CONTENT_CHANGE`；这不是实时“无新财报”证明，也不会更新正式结果。说明见`docs/recorded_source_session.md`。
+
+<!-- capability-anchor: CAPABILITY.recorded_source_run_admission -->
+
+<!-- capability-anchor: CAPABILITY.remaining_current_source_adapters -->
+
+<!-- capability-anchor: CAPABILITY.ordinary_update_cycle -->
+
+`--process`返回本次尝试状态、最近成功候选及是否创建新候选。来源未变时保留原Run，失败时保留旧成功引用并显示具体原因；相同未通过输入不会反复生成Run。更新引用不等于正式active，检查及恢复仍可能读取和计算已有证据。配置或历史完整性错误明确阻止更新，详情见`docs/ordinary_update_cycle.md`。 改错终态编号、类型或历史绑定，即使重新计算记录哈希也会阻止该指标更新；不会把损坏历史当成有效重复检查。
+
+金融、治理、文本和债务候选可沿当前入口读取已登记请求，仍保留各自的实际期间、范围限制和审阅要求。测试重放继续显示原有来源类型；接线完成不会把资料限制、尚未支持的业务判断或非正权益结果改为正常数值。
+
+普通候选CLI可用`--source-root`读取已由安装目录登记的外部来源。测试来源在批次坐标、预览回执和公共行备注中标明“测试重放、没有新SEC获取”；未登记日志、篡改记录和缺少安装记录会失败。原文未变化时仍显示NO_SOURCE_CONTENT_CHANGE，不能将相同数值重算当成自动发现新财报的结果。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_current_input -->
+
+存在当期修订年报时，B06先核对其对原债务/权益的影响。输入未证明即保留WITHHELD及原因，不提前输出权益保护结论；原件与修订件均可追溯。输入核对通过不会隐藏债务解析缺口，主体接续只允许当前选定申报人期末结果，不等同于全年连续性。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_inclusive_table -->
+
+普通B06候选在原债务表逐项证明总额已含融资租赁时，只计入一次租赁，并显示同一当前主体期末的债务权益比。Paramount候选保留当前主体及修订来源；旧WITHHELD记录保留，当前结果不证明前后主体全年可比，也不修改正式报告或active。
+
+<!-- capability-anchor: CAPABILITY.ordinary_update_metric_isolation -->
+
+公司报告逐项列出状态，单项受限不阻止其他指标更新。last_verified_candidate保留原期间和经重验结果，current_input_matches=false时明确属于历史；不能重验则不展示为可信历史。汇总部分就绪仍返回退出码2。
+
+
+<!-- capability-anchor: CAPABILITY.continuous_call_allowance -->
+
+新增有限额度已经用户批准，预算及 B13 经济口径不再显示“待决定”。实际消耗、尚未形成终态的可能调用与测试模拟分别登记；HTTP402、UNKNOWN 或来源真实性失败后只停止受影响动作，安全开发继续。未知 usage/费用不显示为零；仓库没有金额上限或账户检查功能。
+
+<!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
+
+D04 可行性调用保存本次实际请求/响应和验证结果，但目前不生成原生指标或更新正式结果。调用控制器的 `FEASIBILITY_ONLY_NO_NATIVE_EVIDENCE` 终态表示尚未接入原生证据验收；不能据此判断来源已证明、语义路线成立或完整 390 验收通过。当前材料与剩余审阅范围见 `docs/evidence/issue28_continuous/resume-2026-09-13/`。

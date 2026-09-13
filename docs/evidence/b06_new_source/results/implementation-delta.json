@@ -1,0 +1,135 @@
+{
+  "business_implementation": "3e4ceff32fc09a245a078e867ac9a129a89f4d2f",
+  "current_source_diff_since_acceptance": [
+    "TESTING.md",
+    "config/b06_source_checkpoint.json",
+    "docs/business_user_guide.md",
+    "docs/evidence/b06_new_source/README.md",
+    "docs/evidence/b06_new_source/materialize.py",
+    "docs/evidence/b06_new_source/objects/04778f0111cc07a4b8e3b6a5737ec617411467ca8d2f67bc9cb2216634efbaee",
+    "docs/evidence/b06_new_source/objects/07b601caf4bdb34f046d728f673cf653133c478b07d06c6e9b962c5a6f7c1800",
+    "docs/evidence/b06_new_source/objects/0c7fee23272a39bfad68994da36824b2e971330037bff27d6bdd281bd8c62e12",
+    "docs/evidence/b06_new_source/objects/1f43ea1a1ac744a089254fbaa65debbb77768373450b5a04bb8dc7a0e6a4dde7",
+    "docs/evidence/b06_new_source/objects/30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+    "docs/evidence/b06_new_source/objects/36d7cec5585c8db0b83340869ff81504ebd0acd4ec8fffdd84749f1ae9911639",
+    "docs/evidence/b06_new_source/objects/461b1c4a342634d9730c253001767032a2a1b917120934d2ebd09953546f2008",
+    "docs/evidence/b06_new_source/objects/48374589f53aa299d3d649ecf80abc8d0e8d132dcb50325258d6b35d326cb5d7",
+    "docs/evidence/b06_new_source/objects/4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf",
+    "docs/evidence/b06_new_source/objects/4b7d3581197be84f8b2b19fd96362a8d209401f9850f9f9b43d8d1849abddefb",
+    "docs/evidence/b06_new_source/objects/4b856b66be6587e44e51bb6a14370f22311f6c429260b402d632155bb6a1ee77",
+    "docs/evidence/b06_new_source/objects/5144a060bf00aee260f0a9c2efd704e5b5be29d8c6b33c1acebc279b7665c446",
+    "docs/evidence/b06_new_source/objects/52dc6eaaa42ce092ef328b3978514bc6dd591fa4d3a59048a79b55fa732d60dd",
+    "docs/evidence/b06_new_source/objects/58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+    "docs/evidence/b06_new_source/objects/5d32e46f2bc250c508f5648a80a03fb5f2f2bd71896b9b860c97bb6edc8bf194",
+    "docs/evidence/b06_new_source/objects/5fcb5b341cc0b7bdd60e2724202dc420baf4f136d4e153c353463628ad7d0756",
+    "docs/evidence/b06_new_source/objects/6b512485a82aced353b2c5968c0f8aa674f280344f057cf3c71d10fddeab22eb",
+    "docs/evidence/b06_new_source/objects/6c3a7563003ee954a91bf5937b20ce538d160abf4bef0eeeac37837967e47f40",
+    "docs/evidence/b06_new_source/objects/9770e08793d6c771a27d466357b79675d47a6ca3502f99d7c79ccaa0a50a5014",
+    "docs/evidence/b06_new_source/objects/c46d67277063e1040be4ff0d14b7269f62ab96350c6c999698ab66994b2035d8",
+    "docs/evidence/b06_new_source/objects/c5e8b2d0a0782b67e01ef3658f1aef454bce79716b59f43647f4ac0ad4945e63",
+    "docs/evidence/b06_new_source/objects/cdad8b76655c1d57aee6ef46c4a1ae151d35e998c8323ea00c0f856d98f3159d",
+    "docs/evidence/b06_new_source/objects/d0e927ddf3ca465b91c7fa3d91b5733820007e2f083c5dcd62d5ebe32cb5d1a6",
+    "docs/evidence/b06_new_source/objects/d9cca8802c5a2141fd55477b31c258892876b826e7e2adc5d671f4386d518a25",
+    "docs/evidence/b06_new_source/objects/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/evidence/b06_new_source/objects/e3f2151ae8efa9cf69df62aed44af3ca473a400af46bc4e3daf380b6bc417c97",
+    "docs/evidence/b06_new_source/objects/e8102c21e3e39597a2deef91770b37ee5c30ec4937d6ed79fbecfc7de4f8d606",
+    "docs/evidence/b06_new_source/replay-index.json",
+    "docs/evidence/b06_new_source/results/ci-first.log",
+    "docs/evidence/b06_new_source/results/fast-local-first.log",
+    "docs/evidence/b06_new_source/results/formal-state-unchanged.json",
+    "docs/evidence/b06_new_source/results/historical-compatibility-final.json",
+    "docs/evidence/b06_new_source/results/historical-compatibility-final.log",
+    "docs/evidence/b06_new_source/results/historical-compatibility-second-harness-error.log",
+    "docs/evidence/b06_new_source/results/historical-compatibility.log",
+    "docs/evidence/b06_new_source/results/material-and-origin-preflight-v2.json",
+    "docs/evidence/b06_new_source/results/material-and-origin-preflight-v3.json",
+    "docs/evidence/b06_new_source/results/material-and-origin-preflight.json",
+    "docs/evidence/b06_new_source/results/native-material-tests.log",
+    "docs/evidence/b06_new_source/results/portable-salesforce-final.json",
+    "docs/evidence/b06_new_source/results/portable-salesforce-first.json",
+    "docs/evidence/b06_new_source/results/portable-southwest-final.json",
+    "docs/evidence/b06_new_source/results/portable-southwest-first.json",
+    "docs/evidence/b06_new_source/results/portable-verification.json",
+    "docs/evidence/b06_new_source/results/python39-targeted.log",
+    "docs/evidence/b06_new_source/results/salesforce/accepted-result.json",
+    "docs/evidence/b06_new_source/results/salesforce/accepted-result.start.json",
+    "docs/evidence/b06_new_source/results/salesforce/cold-read.json",
+    "docs/evidence/b06_new_source/results/salesforce/first-result.json",
+    "docs/evidence/b06_new_source/results/salesforce/first-result.start.json",
+    "docs/evidence/b06_new_source/results/salesforce/native-result.json",
+    "docs/evidence/b06_new_source/results/salesforce/native-result.start.json",
+    "docs/evidence/b06_new_source/results/semantic-gate.json",
+    "docs/evidence/b06_new_source/results/southwest_airlines/accepted-result.json",
+    "docs/evidence/b06_new_source/results/southwest_airlines/accepted-result.start.json",
+    "docs/evidence/b06_new_source/results/southwest_airlines/cold-read.json",
+    "docs/evidence/b06_new_source/results/southwest_airlines/first-result.json",
+    "docs/evidence/b06_new_source/results/southwest_airlines/first-result.start.json",
+    "docs/evidence/b06_new_source/results/southwest_airlines/native-result.json",
+    "docs/evidence/b06_new_source/results/southwest_airlines/native-result.start.json",
+    "docs/evidence/b06_new_source/results/southwest_airlines/recheck-result.json",
+    "docs/evidence/b06_new_source/results/southwest_airlines/recheck-result.start.json",
+    "docs/evidence/b06_new_source/review/implementation-review.md",
+    "docs/evidence/b06_new_source/review/independent-tests.log",
+    "docs/evidence/b06_new_source/review/initial-counterexamples.json",
+    "docs/evidence/b06_new_source/review/initial-sign-conflict.json",
+    "docs/evidence/b06_new_source/review/intermediate-counterexamples.json",
+    "docs/evidence/b06_new_source/review/material-review.json",
+    "docs/evidence/b06_new_source/review/material-review.md",
+    "docs/evidence/b06_new_source/review/repaired-sign-conflict.json",
+    "docs/evidence/b06_new_source/source-checkpoint.json",
+    "tests/vnext/test_b06_new_source_material.py",
+    "tools/run_fast_tests.py"
+  ],
+  "verified_business_files": [
+    {
+      "path": "scripts/vnext/b06_disclosure.py",
+      "sha256": "4156de970f30a9197b6759add0dfd4229e6e5b9a7473f7f359c099edc699fa4e",
+      "unchanged_since_native_acceptance": true
+    },
+    {
+      "path": "scripts/vnext/b06_new_source.py",
+      "sha256": "a3105fad175c766053ce4be66fe0a228ecc41d9723c20d50e1797f252f157cb1",
+      "unchanged_since_native_acceptance": true
+    },
+    {
+      "path": "scripts/vnext/b06_source_admission.py",
+      "sha256": "b988e64647383c56f0bea158f100be11ebcfe194090d50afd89ad0b59d541570",
+      "unchanged_since_native_acceptance": true
+    },
+    {
+      "path": "scripts/vnext/run_store.py",
+      "sha256": "e987114b4e11eb8eac3d95ffe5a2a9d6e49390097b6bbf77c17a795a69436ccd",
+      "unchanged_since_native_acceptance": true
+    },
+    {
+      "path": "scripts/vnext/records.py",
+      "sha256": "685097119f2516e8bba747f80012a7fb9932c02cf0a07e6c2f4f718394aa21e0",
+      "unchanged_since_native_acceptance": true
+    },
+    {
+      "path": "scripts/vnext/r5_b06_structured.py",
+      "sha256": "3e607de5f39e59c97c3ff5b05b6dd17da38f0b54e2c000605bccb3982ce4993e",
+      "unchanged_since_native_acceptance": true
+    },
+    {
+      "path": "scripts/vnext/requirement_profile.py",
+      "sha256": "c24e845c8a497f79ee2f7ff8bca3da0a179eda4c3b91deedbb42ddd9c8c52bfd",
+      "unchanged_since_native_acceptance": true
+    },
+    {
+      "path": "scripts/vnext/requirement_profile_v11.py",
+      "sha256": "f44b44439a7dafb9bd919ccdcf1ac589881304f1039860e5e20cb6d8ed517f2c",
+      "unchanged_since_native_acceptance": true
+    },
+    {
+      "path": "catalog/r5/B06_new_source.md",
+      "sha256": "438f575268edf57b1769f20825b107c778c0867e04a5274a604b298133fcce88",
+      "unchanged_since_native_acceptance": true
+    },
+    {
+      "path": "requirements/issue_28_v10/baseline_manifest.json",
+      "sha256": "3202e46feb217867aadf5acaf6f5d085f31d6d6ac8e456b253858e943591697f",
+      "unchanged_since_native_acceptance": true
+    }
+  ]
+}

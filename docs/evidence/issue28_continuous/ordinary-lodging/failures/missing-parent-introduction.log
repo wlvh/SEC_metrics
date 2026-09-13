@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/lodging_table_source.py", line 191, in prepare_saved_lodging_source
+    result=inspect_lodging_table_source(raw=saved['raw'],blob=blob,reference=reference,filing=prepared['filing'],company_id=company_id,
+        cik=prepared['entity'],period=inp['target_period'])
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/lodging_table_source.py", line 170, in inspect_lodging_table_source
+    _need(len(candidates)==1,'LODGING_MATCHING_TABLE_NOT_UNIQUE:'+str(unresolved))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/lodging_table_source.py", line 35, in _need
+    if not condition:raise LodgingSourceError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.lodging_table_source.LodgingSourceError: LODGING_MATCHING_TABLE_NOT_UNIQUE:[{'table_id': 'table_000011', 'reason': 'LODGING_STATISTICS_SECTION_NOT_BOUND'}]

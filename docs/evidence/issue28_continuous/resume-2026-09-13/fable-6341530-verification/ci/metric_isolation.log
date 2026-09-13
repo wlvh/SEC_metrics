@@ -1,0 +1,255 @@
+vNext independent metric updates	Set up job	﻿2026-09-13T03:27:44.9862539Z Current runner version: '2.337.0'
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9887897Z ##[group]Runner Image Provisioner
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9888752Z Hosted Compute Agent
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9889428Z Version: 20260828.587
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9890101Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9890897Z Build Date: 2026-08-28T16:44:25Z
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9891585Z Worker ID: {fe98441d-3384-4a33-9d53-a044cb56b3be}
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9892647Z Azure Region: northcentralus
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9893326Z ##[endgroup]
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9894805Z ##[group]Operating System
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9895476Z Ubuntu
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9896096Z 24.04.5
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9896608Z LTS
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9897146Z ##[endgroup]
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9897768Z ##[group]Runner Image
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9898371Z Image: ubuntu-24.04
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9898987Z Version: 20260907.300.1
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9900044Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9902179Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9903190Z ##[endgroup]
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9904345Z ##[group]GITHUB_TOKEN Permissions
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9906470Z Contents: read
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9907190Z Metadata: read
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9907777Z ##[endgroup]
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9909859Z Secret source: Actions
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9911044Z Cache mode: write
+vNext independent metric updates	Set up job	2026-09-13T03:27:44.9912479Z Prepare workflow directory
+vNext independent metric updates	Set up job	2026-09-13T03:27:45.0388287Z Prepare all required actions
+vNext independent metric updates	Set up job	2026-09-13T03:27:45.0464242Z Getting action download info
+vNext independent metric updates	Set up job	2026-09-13T03:27:45.2791010Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+vNext independent metric updates	Set up job	2026-09-13T03:27:45.4125856Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+vNext independent metric updates	Set up job	2026-09-13T03:27:45.6359703Z Complete job name: vNext independent metric updates
+vNext independent metric updates	Check out repository	﻿2026-09-13T03:27:45.7145361Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7146456Z with:
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7146913Z   persist-credentials: false
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7147436Z   repository: wlvh/SEC_metrics
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7151207Z   token: ***
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7151835Z   ssh-strict: true
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7152282Z   ssh-user: git
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7152698Z   clean: true
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7153204Z   sparse-checkout-cone-mode: true
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7153788Z   fetch-depth: 1
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7154282Z   fetch-tags: false
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7154788Z   show-progress: true
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7155276Z   lfs: false
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7155684Z   submodules: false
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7156131Z   set-safe-directory: true
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.7156864Z ##[endgroup]
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8183943Z Syncing repository: wlvh/SEC_metrics
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8186394Z ##[group]Getting Git version info
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8187748Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8188913Z [command]/usr/bin/git version
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8277558Z git version 2.55.0
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8308366Z ##[endgroup]
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8325684Z Temporarily overriding HOME='/home/runner/work/_temp/c4cc4c02-053f-47a2-b117-c3361420c02a' before making global git config changes
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8327924Z Adding repository directory to the temporary git global config as a safe directory
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8331104Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8388860Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8393289Z ##[group]Initializing the repository
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8398760Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8545436Z hint: Using 'master' as the name for the initial branch. This default branch name
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8547391Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8549570Z hint: to use in all of your new repositories, which will suppress this warning,
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8550909Z hint: call:
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8551496Z hint:
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8553405Z hint: 	git config --global init.defaultBranch <name>
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8554387Z hint:
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8555587Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8556992Z hint: 'development'. The just-created branch can be renamed via this command:
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8557853Z hint:
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8558306Z hint: 	git branch -m <name>
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8558829Z hint:
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8559525Z hint: Disable this message with "git config set advice.defaultBranchName false"
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8560748Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8565145Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8620610Z ##[endgroup]
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8622269Z ##[group]Disabling automatic garbage collection
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8625337Z [command]/usr/bin/git config --local gc.auto 0
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8663725Z ##[endgroup]
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8664912Z ##[group]Setting up auth
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8665824Z Removing SSH command configuration
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8671468Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.8710098Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9123314Z Removing HTTP extra header
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9130121Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9167971Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9393708Z Removing includeIf entries pointing to credentials config files
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9399541Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9438240Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9689436Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9739425Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9772627Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9808376Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9850152Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9882262Z ##[endgroup]
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9883752Z ##[group]Fetching the repository
+vNext independent metric updates	Check out repository	2026-09-13T03:27:45.9892137Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9ce88221427e362f461c7625e1df2539d28bccef:refs/remotes/pull/43/merge
+vNext independent metric updates	Check out repository	2026-09-13T03:28:09.6556307Z From https://github.com/wlvh/SEC_metrics
+vNext independent metric updates	Check out repository	2026-09-13T03:28:09.6557294Z  * [new ref]         9ce88221427e362f461c7625e1df2539d28bccef -> pull/43/merge
+vNext independent metric updates	Check out repository	2026-09-13T03:28:09.6562801Z ##[endgroup]
+vNext independent metric updates	Check out repository	2026-09-13T03:28:09.6564516Z ##[group]Determining the checkout info
+vNext independent metric updates	Check out repository	2026-09-13T03:28:09.6565830Z ##[endgroup]
+vNext independent metric updates	Check out repository	2026-09-13T03:28:09.6570870Z [command]/usr/bin/git sparse-checkout disable
+vNext independent metric updates	Check out repository	2026-09-13T03:28:09.6629290Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+vNext independent metric updates	Check out repository	2026-09-13T03:28:09.6663146Z ##[group]Checking out the ref
+vNext independent metric updates	Check out repository	2026-09-13T03:28:09.6666664Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/43/merge
+vNext independent metric updates	Check out repository	2026-09-13T03:28:10.7057395Z Updating files:  52% (4309/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:10.7362615Z Updating files:  53% (4362/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:10.7670375Z Updating files:  54% (4444/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:10.7794600Z Updating files:  55% (4526/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:10.8179183Z Updating files:  56% (4609/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:10.8444987Z Updating files:  57% (4691/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:10.8635150Z Updating files:  58% (4773/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:10.8995126Z Updating files:  59% (4856/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:10.9306946Z Updating files:  60% (4938/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:10.9481138Z Updating files:  61% (5020/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.1267284Z Updating files:  62% (5102/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.1939029Z Updating files:  63% (5185/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.2407789Z Updating files:  64% (5267/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.3106060Z Updating files:  65% (5349/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.3488167Z Updating files:  66% (5432/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.3782124Z Updating files:  67% (5514/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.3928986Z Updating files:  68% (5596/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.6116380Z Updating files:  69% (5679/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.6180552Z Updating files:  70% (5761/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.6376001Z Updating files:  71% (5843/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.6506016Z Updating files:  72% (5925/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.6647777Z Updating files:  73% (6008/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.6742454Z Updating files:  74% (6090/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.6856307Z Updating files:  75% (6172/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.6907489Z Updating files:  75% (6197/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.7071008Z Updating files:  76% (6255/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.7195677Z Updating files:  77% (6337/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.7283125Z Updating files:  78% (6419/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.7637853Z Updating files:  79% (6501/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.7887702Z Updating files:  80% (6584/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.7996036Z Updating files:  81% (6666/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.8121627Z Updating files:  82% (6748/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.8368732Z Updating files:  83% (6831/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.8588608Z Updating files:  84% (6913/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.8647720Z Updating files:  85% (6995/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.8709126Z Updating files:  86% (7077/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.8758466Z Updating files:  87% (7160/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.8807819Z Updating files:  88% (7242/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.9050660Z Updating files:  89% (7324/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.9307288Z Updating files:  90% (7407/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.9431958Z Updating files:  91% (7489/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.9573152Z Updating files:  92% (7571/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.9642982Z Updating files:  93% (7653/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.9738452Z Updating files:  94% (7736/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.9831044Z Updating files:  95% (7818/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:11.9933643Z Updating files:  96% (7900/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0009613Z Updating files:  97% (7983/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0086263Z Updating files:  98% (8065/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0160710Z Updating files:  99% (8147/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0162151Z Updating files: 100% (8229/8229)
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0163168Z Updating files: 100% (8229/8229), done.
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0825182Z Note: switching to 'refs/remotes/pull/43/merge'.
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0825958Z 
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0826807Z You are in 'detached HEAD' state. You can look around, make experimental
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0828600Z changes and commit them, and you can discard any commits you make in this
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0830084Z state without impacting any branches by switching back to a branch.
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0830854Z 
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0831390Z If you want to create a new branch to retain commits you create, you may
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0833403Z do so (now or later) by using -c with the switch command. Example:
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0834406Z 
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0834729Z   git switch -c <new-branch-name>
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0835189Z 
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0835476Z Or undo this operation with:
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0835857Z 
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0836281Z   git switch -
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0836669Z 
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0837240Z Turn off this advice by setting config variable advice.detachedHead to false
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0838208Z 
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0839024Z HEAD is now at 9ce8822 Merge 6341530c67b5a0aa0ded858a2a60bddc56ee6a12 into 92fdd0e30c5f05db9d3d0136424934037dcff66e
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.0926404Z ##[endgroup]
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1319930Z [command]/usr/bin/git log -1 --format=%H
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1358121Z 9ce88221427e362f461c7625e1df2539d28bccef
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1369662Z ##[group]Removing auth
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1370071Z Removing SSH command configuration
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1374752Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1410795Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1643367Z Removing HTTP extra header
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1649270Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1686042Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1925092Z Removing includeIf entries pointing to credentials config files
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.1930337Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2246163Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2273462Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2275043Z includeif.gitdir:/github/workspace/.git.path
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2275943Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2278439Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2307305Z /home/runner/work/_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2318739Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2870586Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2912816Z /home/runner/work/_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2916741Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2956749Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2984480Z /github/runner_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.2993804Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.3380715Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.3410187Z /github/runner_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.3417522Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.3833082Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.4076384Z Removing credentials config '/home/runner/work/_temp/git-credentials-a7b58600-e8c3-48dd-a135-f96892b7554d.config'
+vNext independent metric updates	Check out repository	2026-09-13T03:28:12.4077985Z ##[endgroup]
+vNext independent metric updates	Set up Python 3.14	﻿2026-09-13T03:28:12.4353090Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.4353536Z with:
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.4353743Z   python-version: 3.14
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.4353977Z   check-latest: false
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.4356463Z   token: ***
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.4356683Z   update-environment: true
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.4356991Z   allow-prereleases: false
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.4357226Z   freethreaded: false
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.4357439Z ##[endgroup]
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.5740714Z ##[group]Installed versions
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.5836610Z Successfully set up CPython (3.14.7)
+vNext independent metric updates	Set up Python 3.14	2026-09-13T03:28:12.5837459Z ##[endgroup]
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	﻿2026-09-13T03:28:12.6018350Z ##[group]Run python3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6019147Z [36;1mpython3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest[0m
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6069192Z shell: /usr/bin/bash -e {0}
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6069465Z env:
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6069959Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6070707Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6071430Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6072313Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6072951Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6073581Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6074152Z   PYTHONDONTWRITEBYTECODE: 1
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6074563Z   PYTHONPATH: scripts
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6075226Z   ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT: /home/runner/work/_temp/ordinary-update-metrics-34735535954-1
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:28:12.6075764Z ##[endgroup]
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:45:55.1041539Z test_successful_metrics_survive_withheld_and_failed_neighbours (tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest.test_successful_metrics_survive_withheld_and_failed_neighbours) ... ok
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:45:55.1043046Z 
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:45:55.1043271Z ----------------------------------------------------------------------
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:45:55.1043754Z Ran 1 test in 1059.498s
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:45:55.1043953Z 
+vNext independent metric updates	Verify independent results and historical periods through actual mixed outcomes	2026-09-13T03:45:55.1044059Z OK
+vNext independent metric updates	Post Set up Python 3.14	﻿2026-09-13T03:45:55.1497588Z Post job cleanup.
+vNext independent metric updates	Post Check out repository	﻿2026-09-13T03:45:55.2900742Z Post job cleanup.
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.3795299Z [command]/usr/bin/git version
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.3840862Z git version 2.55.0
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.3884494Z Temporarily overriding HOME='/home/runner/work/_temp/a0453030-3bb4-4ee8-b5b8-b28d2b3d2fb3' before making global git config changes
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.3885902Z Adding repository directory to the temporary git global config as a safe directory
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.3889479Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.3924315Z Removing SSH command configuration
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.3931146Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.3966273Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.4233357Z Removing HTTP extra header
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.4235965Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.4285410Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.4547580Z Removing includeIf entries pointing to credentials config files
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.4559689Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext independent metric updates	Post Check out repository	2026-09-13T03:45:55.4628920Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext independent metric updates	Complete job	﻿2026-09-13T03:45:55.5172720Z Cleaning up orphan processes

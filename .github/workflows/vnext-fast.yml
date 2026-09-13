@@ -10,7 +10,7 @@ jobs:
   fast:
     name: vNext fast suite
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -25,4 +25,190 @@ jobs:
       - name: Run fast suite
         env:
           PYTHONDONTWRITEBYTECODE: "1"
-        run: python3 tools/run_fast_tests.py --jobs 4
+        # Large original-document checks compete for CPU on hosted runners.
+        # Keep each selected case's existing 30-second limit, with two workers.
+        run: python3 tools/run_fast_tests_v2.py --jobs 2
+
+  source-material:
+    name: vNext saved-source material
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Run complete saved-source material tests
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tools/run_fast_tests_v2.py --suite source-material --jobs 2
+
+  native-runs:
+    name: vNext ordinary native Runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Validate actual OPEN Runs and source-bound file negatives
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          NORMAL_V14_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-v14-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_normal_run_v3_material
+      - name: Build source-rebuilt lodging Runs
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tools/vnext_normal_candidate.py --company marriott_international --company southwest_airlines --metric B10 --metric B11 --output-root "${{ runner.temp }}/ordinary-lodging-${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Reject altered lodging values, omitted grids and old AI Specs
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          LODGING_NATIVE_BATCH: ${{ runner.temp }}/ordinary-lodging-${{ github.run_id }}-${{ github.run_attempt }}
+          LODGING_ATTACK_ROOT: ${{ runner.temp }}/ordinary-lodging-attacks-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_lodging_run_material
+      - name: Reconcile inclusive B06 debt and reject altered graphs or current inputs
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          B06_CURRENT_INPUT_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-b06-input-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_b06_current_input_material
+  instant-native-runs:
+    name: vNext current-instant native Runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Build successor current-balance Runs with amendment evidence
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B08 --metric B09 --output-root "${{ runner.temp }}/ordinary-instant-${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Reject false cash and missing amendment sources
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          INSTANT_BALANCE_NATIVE_BATCH: ${{ runner.temp }}/ordinary-instant-${{ github.run_id }}-${{ github.run_attempt }}
+          INSTANT_BALANCE_ATTACK_ROOT: ${{ runner.temp }}/ordinary-instant-attacks-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_instant_balance_run_material
+  debt-native-runs:
+    name: vNext debt native Runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Build reconciled note debt and nonpositive-equity guard Runs
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tools/vnext_normal_candidate.py --company enphase_energy --company marriott_international --company macys --metric B06 --output-root "${{ runner.temp }}/ordinary-note-debt-${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Reject recalculated false debt and historical Spec substitution
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          NOTE_DEBT_NATIVE_BATCH: ${{ runner.temp }}/ordinary-note-debt-${{ github.run_id }}-${{ github.run_attempt }}
+          NOTE_DEBT_ATTACK_ROOT: ${{ runner.temp }}/ordinary-note-debt-attacks-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_note_debt_run_material
+  source-update-native-runs:
+    name: vNext recorded source update Runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Run owned recorded sources through native adapters and reject changed graphs or histories
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          ORDINARY_SOURCE_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-updated-source-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_ordinary_source_run_material
+  remaining-source-native-runs:
+    name: vNext remaining source Runs (${{ matrix.company }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        company: [marriott_international, jpmorgan_chase]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Verify remaining current-source adapters through native Runs and source-bound rejections
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          REMAINING_SOURCE_MATERIAL_ROOT: ${{ runner.temp }}/remaining-source-${{ matrix.company }}-${{ github.run_id }}-${{ github.run_attempt }}
+          REMAINING_SOURCE_COMPANY: ${{ matrix.company }}
+        run: python3 -m unittest -v tests.vnext.test_remaining_source_run_material
+  ordinary-update-cycle:
+    name: vNext ordinary update history
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Verify real update history, source changes and interruption recovery
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          ORDINARY_UPDATE_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-update-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryUpdateCycleTest
+  ordinary-update-metrics:
+    name: vNext independent metric updates
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Verify independent results and historical periods through actual mixed outcomes
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-update-metrics-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest

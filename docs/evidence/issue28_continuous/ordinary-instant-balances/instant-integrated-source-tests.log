@@ -1,0 +1,70 @@
+test_actual_restatement_cannot_be_disguised_as_a_conditional_compensation_clause (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_actual_restatement_cannot_be_disguised_as_a_conditional_compensation_clause) ... ok
+test_added_native_balance_fact_invalidates_the_limited_amendment (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_added_native_balance_fact_invalidates_the_limited_amendment) ... ok
+test_explicit_cover_error_or_restatement_cannot_keep_original_balance_approval (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_explicit_cover_error_or_restatement_cannot_keep_original_balance_approval) ... ok
+test_extra_note_purpose_and_wrong_original_identity_are_rejected (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_extra_note_purpose_and_wrong_original_identity_are_rejected) ... ok
+test_financial_correction_elsewhere_cannot_hide_behind_the_scope_note (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_financial_correction_elsewhere_cannot_hide_behind_the_scope_note) ... ok
+test_quoted_no_statements_sentence_is_not_the_issuers_scope_declaration (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_quoted_no_statements_sentence_is_not_the_issuers_scope_declaration) ... ok
+test_real_part_iii_and_link_correction_only_support_installed_instant_inputs (tests.vnext.test_instant_balance_amendment.InstantBalanceAmendmentTest.test_real_part_iii_and_link_correction_only_support_installed_instant_inputs) ... ok
+test_caller_cannot_supply_prior_period_filing_claim_or_answer (tests.vnext.test_normal_companyfacts_results.OrdinaryCompanyfactsTest.test_caller_cannot_supply_prior_period_filing_claim_or_answer) ... ok
+test_current_and_prior_math_is_independent_of_old_matrix_answers (tests.vnext.test_normal_companyfacts_results.OrdinaryCompanyfactsTest.test_current_and_prior_math_is_independent_of_old_matrix_answers) ... ok
+test_every_selected_claim_returns_to_its_original_accession_value_unit_and_period (tests.vnext.test_normal_companyfacts_results.OrdinaryCompanyfactsTest.test_every_selected_claim_returns_to_its_original_accession_value_unit_and_period) ... ok
+test_native_prior_instances_and_actual_noncalendar_periods_are_used (tests.vnext.test_normal_companyfacts_results.OrdinaryCompanyfactsTest.test_native_prior_instances_and_actual_noncalendar_periods_are_used) ... ok
+test_prior_conflict_is_not_spread_to_current_only_metrics_or_silently_ignored (tests.vnext.test_normal_companyfacts_results.OrdinaryCompanyfactsTest.test_prior_conflict_is_not_spread_to_current_only_metrics_or_silently_ignored) ... ok
+test_real_json_no_git_rebuild_rejects_resigned_answer_period_and_source_changes (tests.vnext.test_normal_companyfacts_results.OrdinaryCompanyfactsTest.test_real_json_no_git_rebuild_rejects_resigned_answer_period_and_source_changes) ... ok
+test_successor_current_balances_do_not_inherit_an_annual_comparability_claim (tests.vnext.test_normal_companyfacts_results.OrdinaryCompanyfactsTest.test_successor_current_balances_do_not_inherit_an_annual_comparability_claim) ... ERROR
+test_ten_companies_keep_all_eleven_coordinates_with_valid_native_records (tests.vnext.test_normal_companyfacts_results.OrdinaryCompanyfactsTest.test_ten_companies_keep_all_eleven_coordinates_with_valid_native_records) ... ok
+
+======================================================================
+ERROR: test_successor_current_balances_do_not_inherit_an_annual_comparability_claim (tests.vnext.test_normal_companyfacts_results.OrdinaryCompanyfactsTest.test_successor_current_balances_do_not_inherit_an_annual_comparability_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 82, in _verified_request_locator
+    declared_body = resolve_repository_file(
+        repo_root=repo_root,
+        repo_relative_path=body_locator,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/sources.py", line 141, in resolve_repository_file
+    raise SourceError(
+        "Source path is not a regular file: {}".format(current)
+    )
+vnext.sources.SourceError: Source path is not a regular file: /var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/instant-amendment-import-5rf45dhp/evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_companyfacts_results.py", line 158, in test_successor_current_balances_do_not_inherit_an_annual_comparability_claim
+    verify_ordinary_companyfacts_metrics(candidate=case,repo_root=root,company_id=case['company_id'])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_companyfacts_results.py", line 218, in verify_ordinary_companyfacts_metrics
+    rebuilt = resolve_ordinary_companyfacts_metrics(repo_root=repo_root, company_id=company_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_companyfacts_results.py", line 120, in resolve_ordinary_companyfacts_metrics
+    amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,input_class="ORIGINAL_STATEMENT_VALUES")
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_amendment_scope.py", line 287, in prepare_saved_amendment_input
+    packet = prepare_saved_amendment_scopes(repo_root=repo_root, company_id=company_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_amendment_scope.py", line 263, in prepare_saved_amendment_scopes
+    saved=saved_source(repo_root=repo_root,url=url,accession=filing['accessionNumber'])
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_update.py", line 76, in saved_source
+    proof, raw = annual_input._saved_source(repo_root=repo_root, rows=rows, url=url, accession=accession)
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_input.py", line 35, in _saved_source
+    binding = request_attempt_binding(
+        repo_root=repo_root, source_url=url,
+        content_sha256=row["content_sha256"], accession=accession,
+        document_name=row["document_name"],
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 227, in request_attempt_binding
+    proof = _verified_request_locator(
+        repo_root=repo_root,
+    ...<3 lines>...
+        document_name=document_name,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 113, in _verified_request_locator
+    raise BatchWorkflowError(
+        "Request-ledger locator evidence is invalid"
+    ) from error
+vnext.batch_workflow.BatchWorkflowError: Request-ledger locator evidence is invalid
+
+----------------------------------------------------------------------
+Ran 15 tests in 90.435s
+
+FAILED (errors=1)

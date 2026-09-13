@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "policy_id": "issue28_continuous_calls_v1",
+  "repository": "wlvh/SEC_metrics",
+  "requirement_id": "issue_28_v14",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+  "delegation_body_sha256": "1f6f9200f2d327bb0e2c145ca5b03da5bff378bfb192ee0e93da728519bc1ab9",
+  "delegation_record_path": "docs/evidence/issue28_continuous/resume-2026-09-13/approval-comment.json",
+  "maximum_additional_provider_paid_sec_calls": [
+    240,
+    240,
+    80
+  ],
+  "scope": {
+    "company_count": 10,
+    "metric_count": 39,
+    "coordinate_count": 390,
+    "purposes": [
+      "remaining_development_feasibility",
+      "verification_after_engineering_repair",
+      "final_real_isolated_acceptance"
+    ]
+  },
+  "budget_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "api": "chat_completions",
+  "automatic_retry_count": 0,
+  "repository_monetary_budget_enforcement": "DISABLED",
+  "production_authorized": false,
+  "long_running_schedule_authorized": false,
+  "b13": {
+    "applicable_company_ids": [
+      "ford_motor_company",
+      "enphase_energy"
+    ],
+    "numeric_definition": "actual_production / corresponding_available_capacity",
+    "required_comparable_dimensions": [
+      "subject",
+      "period",
+      "product_or_facility_scope",
+      "unit"
+    ],
+    "capacity_only_may_produce_utilization": false,
+    "unapproved_substitutions_forbidden": [
+      "sales",
+      "shipments",
+      "installed_capacity",
+      "future_planned_capacity"
+    ],
+    "qualitative_status": "TEXT_QUAL",
+    "absence_status": "NOT_AVAILABLE_SEC",
+    "absence_requires_recorded_defined_scope_check": true,
+    "implementation_gap_is_nondisclosure": false,
+    "successor_spec_required": true,
+    "historical_spec_immutable": "catalog/metrics/B13_capacity_utilization.md",
+    "decision_field_to_close": "S-R5-B06-B13-MEANING.b13_economic_meaning",
+    "per_company_or_year_value_approval_required": false
+  },
+  "offline_wiring_receipt_path": "docs/evidence/issue28_continuous/resume-2026-09-13/offline-wiring.json",
+  "real_execution_state": "REQUIRES_OFFLINE_WIRING_RECEIPT_AND_BOUND_COUNT_CONTROL",
+  "rule_paths": [
+    "config/issue28_continuous_calls_v1.json",
+    "scripts/vnext/continuous_call_policy.py",
+    "scripts/vnext/continuous_call_ledger.py",
+    "scripts/vnext/continuous_semantic_calls.py",
+    "scripts/vnext/continuous_call_wiring.py",
+    "tools/vnext_continuous_semantic.py",
+    "scripts/vnext/requirement_profile_v15.py",
+    "docs/evidence/issue28_continuous/resume-2026-09-13/approval-comment.json",
+    "config/provider_model_runtime.json",
+    "requirements/issue_15_v1/decision_register.json"
+  ],
+  "pending_implementation_metric_ids": [
+    "B13",
+    "D03",
+    "D04"
+  ]
+}

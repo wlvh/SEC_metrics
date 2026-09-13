@@ -1,0 +1,29 @@
+test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved (tests.vnext.test_b06_current_input_material.CurrentDebtInputMaterialTest.test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved) ... FAIL
+
+======================================================================
+FAIL: test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved (tests.vnext.test_b06_current_input_material.CurrentDebtInputMaterialTest.test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_current_input_material.py", line 22, in test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved
+    normal.install_normal_inputs(data_root=data,company_id=company,metric_id='B06')
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 166, in install_normal_inputs
+    _write(data_root/relative,receipts[relative]["bytes"] if relative in receipts else source.read_bytes())
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 39, in _write
+    write_immutable_bytes(path=path,content=content)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/sec_http.py", line 1345, in write_immutable_bytes
+    with temporary_path.open(mode="xb") as file_obj:
+         ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_zero_ai_results.py", line 30, in call
+    raise AssertionError('Legacy answer or derived input read: ' + str(path))
+AssertionError: Legacy answer or derived input read: /private/tmp/sec_metrics_issue28_continuous/b06-current-native-first/data/outputs/acceptance_receipts/.2b9bf937edcc1144d40fb9072bf9d205b0a0705cc893c5bf3197c491850852d8.json.b00c39c637fc40d8884ab0b0e0413bd0.tmp
+
+----------------------------------------------------------------------
+Ran 1 test in 19.593s
+
+FAILED (failures=1)

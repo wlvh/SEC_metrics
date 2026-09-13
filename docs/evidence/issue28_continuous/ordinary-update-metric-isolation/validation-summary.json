@@ -1,0 +1,62 @@
+{
+  "status": "LOCAL_VERIFICATION_PASSED_INDEPENDENT_REVIEW_PENDING",
+  "requirement_closure_hash": "sha256:c117d27e5be203d9353ec4e659839cbce4591c3b299d4464d413dbce536add97",
+  "execution_files": 351,
+  "before": {
+    "status": "CANDIDATE_WITHHELD",
+    "successful_attempt": null,
+    "metrics": {
+      "B01": "PUBLISHED",
+      "B06": "WITHHELD"
+    },
+    "seconds": 133.8813834169414,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "checks": [
+    "independent-success-with-withheld",
+    "no-duplicate-runs",
+    "earlier-input-failure-does-not-stop-later-success",
+    "historical-period-and-current-status-separated",
+    "restored-source-reuses-success",
+    "changed-success-row-blocks-only-affected-metric",
+    "existing-group-history-not-silently-reset"
+  ],
+  "material_seconds": 404.973,
+  "reentry": {
+    "cli": "PASS_NO_NEW_RUN",
+    "python39": "PASS_NO_NEW_RUN",
+    "no_git_portability": "NOT_CLAIMED"
+  },
+  "fast": {
+    "selectors": 97,
+    "seconds": 80.772,
+    "status": "PASSED"
+  },
+  "archives": {
+    "before": {
+      "members": 593,
+      "bytes": 4473496
+    },
+    "after": {
+      "members": 1780,
+      "bytes": 13100105
+    },
+    "cli_history": {
+      "members": 44,
+      "bytes": 7403
+    }
+  },
+  "source_credit": "EXISTING_SAVED_SOURCE_ONLY",
+  "new_filing_verified": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

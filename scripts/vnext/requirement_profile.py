@@ -19,6 +19,11 @@ from . import requirement_profile_v7 as v7
 from . import requirement_profile_v8 as v8
 from . import requirement_profile_v9 as v9
 from . import requirement_profile_v10 as v10
+from . import requirement_profile_v11 as v11
+from . import requirement_profile_v12 as v12
+from . import requirement_profile_v13 as v13
+from . import requirement_profile_v14 as v14
+from . import requirement_profile_v15 as v15
 from .requirement_profile_v1 import CONTENT_HASH_PATTERN
 from .requirement_profile_v1 import EXPLICIT_ARTIFACT_GENERATION
 from .requirement_profile_v1 import LEGACY_ARTIFACT_GENERATION
@@ -43,6 +48,11 @@ PROFILE_ENGINES = {
     v8.PROFILE_REQUIREMENT_GENERATION: v8,
     v9.PROFILE_REQUIREMENT_GENERATION: v9,
     v10.PROFILE_REQUIREMENT_GENERATION: v10,
+    v11.PROFILE_REQUIREMENT_GENERATION: v11,
+    v12.PROFILE_REQUIREMENT_GENERATION: v12,
+    v13.PROFILE_REQUIREMENT_GENERATION: v13,
+    v14.PROFILE_REQUIREMENT_GENERATION: v14,
+    v15.PROFILE_REQUIREMENT_GENERATION: v15,
 }
 _LOADING_PATHS = ContextVar("requirement_loading_paths", default=())
 

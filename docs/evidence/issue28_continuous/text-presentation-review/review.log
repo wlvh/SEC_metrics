@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/r4-route/text-projection-review/review.py", line 63, in <module>
+    render_normal_text_run(data_root=case / 'data', run_dir=case / 'run')
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_text_projection_v2.py", line 22, in render_normal_text_run
+    manifest, records, _ = load_frozen_run(run_dir=run_dir, repo_root=data_root)
+                           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3669, in load_frozen_run
+    raise RunStoreError("Replay requires a FROZEN Run")
+vnext.run_store.RunStoreError: Replay requires a FROZEN Run

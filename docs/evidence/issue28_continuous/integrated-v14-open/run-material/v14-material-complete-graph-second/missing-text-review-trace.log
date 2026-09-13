@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 81, in check
+    row['details']=action();row['passed']=not reject;row['outcome']='ACCEPTED'
+                   ~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 66, in <lambda>
+    self.check(name,lambda m=metric,n=name,f=mutate:self.attack(m,n,f),reject=True)
+                                                    ~~~~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 126, in attack
+    self.replay(data,run)
+    ~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 103, in replay
+    manifest,records,decisions=run_store._mechanically_replay_open_run(run_dir=run,repo_root=data,require_complete_results=True)
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3405, in _mechanically_replay_open_run
+    effective_decisions = _validate_review_bindings(
+        records=records, decisions=decisions,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3326, in _validate_review_bindings
+    raise RunStoreError("Review unit has no effective decision")
+vnext.run_store.RunStoreError: Review unit has no effective decision

@@ -39,6 +39,7 @@ SPEC_FIELDS = {
     "top_level_guards",
     "unit_policy",
     "quality_rule",
+    "text_policy",
 }
 REQUIRED_SPEC_FIELDS = {
     "applicability",
@@ -505,6 +506,21 @@ def _validate_executable_semantics(*, compiled: Mapping[str, object]) -> None:
         SpecError: On unknown expression roles, malformed constraints, or a
         reuse dependency omitted from the closure.
     """
+    if compiled["kind"] == "direct_text":
+        if (type(compiled["quality_rule"]) is not dict
+                or compiled["canonical_unit"] != "text" or compiled["reported_unit"] != "text"
+                or compiled["unit_policy"] != "fixed_canonical"
+                or compiled["source_mode"] not in {"ai_text", "structured_first_ai_fallback"}
+                or compiled["inputs"] or compiled["formula"] is not None
+                or compiled["dependencies"] or compiled["top_level_guards"]
+                or compiled["identity_constraints"] or not compiled["required_claims"]
+                or "value_multiplier" in compiled["legacy_projection"]):
+            raise SpecError("TEXT_V1 requires reviewed text semantics without numeric expressions")
+        if ("deterministic_text_method" in compiled["quality_rule"]
+                and compiled["quality_rule"]["deterministic_text_method"] not in {
+                    "RISK_FACTOR_HEADINGS_V1", "BOARD_DISCLOSURE_EXCERPTS_V1",
+                    "LEGAL_DISCLOSURE_EXCERPTS_V1"}):
+            raise SpecError("Deterministic text method is unsupported")
     input_roles = set(compiled["inputs"])
     formula = compiled["formula"]
     if formula is not None:
@@ -744,6 +760,25 @@ def compile_spec(
         else None,
         "numeric_policy": dict(NUMERIC_POLICY),
     }
+    if compiled["kind"] == "direct_text":
+        policy = front.get("text_policy")
+        fields = {"version", "content_kind", "required_sections", "allowed_source_roles",
+                  "renderer", "max_items", "max_text_chars", "review_required"}
+        if (type(policy) is not dict or set(policy) != fields
+                or policy["version"] != "TEXT_V1" or policy["content_kind"] != "SOURCE_EXCERPTS"
+                or policy["renderer"] != "ORDERED_NEWLINE_V1" or policy["review_required"] is not True
+                or type(policy["max_items"]) is not int or not 1 <= policy["max_items"] <= 64
+                or type(policy["max_text_chars"]) is not int or not 1 <= policy["max_text_chars"] <= 64000):
+            raise SpecError("TEXT_V1 text_policy is missing or unsupported")
+        for field in ("required_sections", "allowed_source_roles"):
+            values = policy[field]
+            if (type(values) is not list or not values
+                    or any(type(value) is not str or not value for value in values)
+                    or len(values) != len(set(values))):
+                raise SpecError("TEXT_V1 policy collection is invalid: " + field)
+        compiled["text_policy"] = dict(policy)
+    elif "text_policy" in front:
+        raise SpecError("text_policy requires direct_text kind")
     if not isinstance(compiled["legacy_projection"], dict):
         raise SpecError("legacy_projection must be an object")
     if compiled["unit_policy"] not in UNIT_POLICIES:

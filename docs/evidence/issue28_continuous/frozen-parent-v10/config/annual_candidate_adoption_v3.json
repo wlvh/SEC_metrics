@@ -1,0 +1,81 @@
+{
+  "company_id": "marriott_international",
+  "metric_id": "B10",
+  "metric_ids": [
+    "B01",
+    "B10"
+  ],
+  "task_contract_id": "lodging_occupancy_table_v2",
+  "source_policy": "ANNUAL_INPUT_CONTINUOUS_PRIMARY_CALENDAR_UNAMENDED_CURRENT_BLOCK",
+  "source_proof": "IMMUTABLE_SEC_REQUEST_ATTEMPT",
+  "request_scope": "COMPLETE_DOCUMENT_TABLES_IN_ORIGINAL_ORDER",
+  "automatic_retry_count": 0,
+  "actual_input_tokens_max": 200000,
+  "estimated_context_override": "NONE_MODEL_LIMIT_AND_PAYLOAD_LIMIT_RETAINED",
+  "measurement_calls": 0,
+  "qualification_credit": "NONE",
+  "label_comparison": {
+    "policy": "EXACT_SOURCE_RAW_OR_TEXT_V2",
+    "accepted_cell_fields": [
+      "raw_text",
+      "text"
+    ],
+    "authoritative_cell_field": "raw_text",
+    "caption_policy": "EXACT_RAW_TEXT_V1",
+    "response_rewrite_allowed": false,
+    "fuzzy_matching_or_locator_search_allowed": false
+  },
+  "source_ownership": {
+    "row_dimensions": [
+      "geography"
+    ],
+    "group_dimensions": [
+      "property_population",
+      "operating_scope"
+    ],
+    "group_rule": "NEAREST_PRECEDING_SINGLE_NONEMPTY_ORIGIN_ROW_IN_LABEL_COLUMN",
+    "metric_header": "EXACT_TASK_ROLE_CASEFOLD",
+    "period_header": "EXACT_RUN_FISCAL_YEAR",
+    "reported_unit": "percent",
+    "visible_unit": "%"
+  },
+  "policy_id": "annual_candidate_adoption_v3",
+  "schema_version": 3,
+  "kind": "ANNUAL_CONTINUITY_POLICY",
+  "adoption_requirement_id": "issue_28_v8",
+  "candidate_requirement_ids": [
+    "issue_28_v8"
+  ],
+  "publication_credit": "NONE_ISOLATED_CONTINUOUS_UPDATE",
+  "execution_mode": "BOUNDED_CONTINUOUS_ANNUAL_UPDATE",
+  "source_forms": [
+    "10-K"
+  ],
+  "source_period_rule": "CONTINUOUS_PRIMARY_CALENDAR_COMPLETE_YEAR",
+  "inheritance_rule": "EXACT_CURRENT_PREDECESSOR_COMPLETE_COORDINATES_AND_PUBLIC_ROWS",
+  "adoption_rule": "Immutable SEC source/period/subject/scope plus native Evidence, SYSTEM Review, Calculator and complete graph replay; no self-reported acceptance flag.",
+  "historical_seed_rule": "ISOLATED_ONLY_ORIGINAL_NATIVE_RESULTS_AND_COMMITTED_QUALIFICATION_REPLAY",
+  "historical_visibility_rule": "EXPLICIT_DERIVED_VISIBILITY_RECEIPT_OVER_UNCHANGED_SEC_BYTES_NOT_ONLINE_DISCOVERY",
+  "normal_provider_calls_max": 2,
+  "conditional_repair_calls_max": 1,
+  "maximum_total_executions": 3,
+  "sec_calls_max": 6,
+  "maximum_stage_lifetime_days": 7,
+  "production_root_writes": false,
+  "input_git_commit_required": false,
+  "new_year_policy_revision_required": false,
+  "open_pr_required": false,
+  "original_runs_mutable": false,
+  "response_rewrite_allowed": false,
+  "uncertain_counts": "STOP_ALL_NEW_BUSINESS_CALLS",
+  "failed_candidate": "RETAIN_PARTIAL_AND_DO_NOT_ADVANCE_COMPLETE_SUCCESS_OR_PUBLICATION",
+  "operations": {
+    "publish": "ONE_PER_PREDECESSOR_BOUND_UPDATE",
+    "recover": "ONLY_SAME_RESERVED_NATIVE_SWITCH",
+    "production": false
+  },
+  "formal_remaining_conditions": [
+    "Continuous production permission and long-term activation are outside this isolated work package",
+    "Known historical material success does not qualify every unseen filing"
+  ]
+}
