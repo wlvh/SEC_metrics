@@ -73,6 +73,7 @@ FAST_TESTS += ("tests.vnext.test_continuous_call_policy",)
 FAST_TESTS += ("tests.vnext.test_capacity_utilization_source.CapacityComparisonTest",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_utilization_source.CapacitySourceMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_continuous_sec_acquisition",)
 SOURCE_TIMEOUT_SECONDS = 240
 
 

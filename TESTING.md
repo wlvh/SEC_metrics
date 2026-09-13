@@ -727,3 +727,7 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 <!-- capability-anchor: CAPABILITY.ordinary_continuity_policy_terminal -->
 
 `PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_companyfacts_results`覆盖当前10公司×11项源结果、原有正向/来源反例、新主体不可比规则及错误守卫不得留下数值证据。Paramount六项定向CLI为`tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B02 --metric B04 --metric B05 --metric B07 --metric B08 --metric B09 --output-root <新外部目录>`；前四项NOT_MEANINGFUL，后两项EXACT，全部OPEN及公共行均须形成。`docs/evidence/issue28_continuous/ordinary-continuity-policy/`保存首次通用Run校验拒绝、修后材料、有效重签的虚假数值/无关空输入理由拒绝及复制运行包的Python3.9冷读。无真实调用或正式发布信用。
+
+<!-- capability-anchor: CAPABILITY.continuous_sec_acquisition -->
+
+`SEC_ACQUISITION_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_continuous_sec_acquisition`复制固定原始来源，测试记录成功/503失败、前缀与两种信用隔离、禁止原件重抽/跨公司URL、保留有效来源、导入检查记录变造拒绝，并在单独未登记的隔离目录验证原SecHttpClient的真实HTTP构造和503零重试。随后将选中的新测试请求装入JPM A08原生Run，并在复制的运行包中冷读和重建预览。测试网络全部阻止，不创建真实获取信用。加入source-material层，保持每项240秒限制。

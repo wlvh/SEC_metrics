@@ -1,6 +1,6 @@
 {
   "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
-  "status": "RESUMED_CONTINUITY_POLICY_DELIVERY_AND_SOURCE_ACQUISITION_PREPARATION",
+  "status": "RESUMED_SEC_OFFLINE_WIRING_READY_FOR_AUTHORIZED_FIRST_CAPTURE",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
   "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
@@ -12,7 +12,7 @@
   },
   "authority": {
     "development": "USER_DELEGATED",
-    "new_call_budget": "USER_APPROVED; CURRENT_BINDING_AND_OFFLINE_WIRING_VERIFIED; REAL_CALLS_STILL_ZERO",
+    "new_call_budget": "USER_APPROVED; SEC_AND_PROVIDER_OFFLINE_WIRING_VERIFIED; ACTUAL_COUNTS_STILL_ZERO",
     "maximum_additional_provider_paid_sec_calls": [
       240,
       240,
@@ -34,9 +34,9 @@
     "unknown": 0
   },
   "current_work": [
-    "Deliver six native continuity/current-balance coordinates and narrow source-replayed Run guard; preserve first failure and old reviewed snapshots",
-    "Implement limited real SEC acquisition through existing SecHttpClient and the fixed aggregate ledger; recorded source sessions cannot be relabelled live",
-    "Continue B13 native/source interpretation and other current scope gaps while awaiting model credential for D03/D04 feasibility"
+    "Submit verified SEC acquisition/count/admission and portable-preview wiring; then execute necessary real SEC dependencies within80 total",
+    "Keep all original attempt/response/failure evidence and update shared counts after each actual capture",
+    "Continue B13 native/source interpretation, D03/D04 feasibility when model credential is available, and remaining full390/update/publication/retirement work"
   ],
   "next": [
     "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
@@ -71,7 +71,7 @@
     "account_inspected": false,
     "real_call_slot_consumed": false
   },
-  "offline_wiring_receipt": "ordinary-continuity-policy/offline-wiring.json",
+  "offline_wiring_receipt": "ordinary-sec-acquisition/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -114,6 +114,17 @@
   "source_refresh_dependencies": {
     "jpmorgan_chase": "6 incoherent history shards; refresh metadata and required shards",
     "salesforce": "prior annual HTML and one 8K header missing/failed; exact URLs in archived discovery report",
-    "actual_sec_acquisition_adapter": "NOT_YET_IMPLEMENTED"
-  }
+    "actual_sec_acquisition_adapter": "OFFLINE_VERIFIED_READY_FOR_AUTHORIZED_REAL_CAPTURE"
+  },
+  "sec_acquisition": {
+    "state": "IMPLEMENTED_OFFLINE_VERIFIED_NOT_YET_EXECUTED_LIVE",
+    "source_test": "PASS_78.680_SECONDS",
+    "provider_wiring_test": "PASS_38.446_SECONDS",
+    "fast_suite": "100_PASS_79.304_SECONDS",
+    "native_source_checkpoint": "JPM_A08_AND_MARRIOTT_B01_PASS",
+    "restored_python39_preview": "PASS",
+    "offline_material": "ordinary-sec-acquisition/",
+    "remaining_real_capture": "Salesforce missing prior annual HTML and8Kheader; JPM metadata and requiredhistory shards"
+  },
+  "sec_wiring_receipt": "ordinary-sec-acquisition/sec-wiring.json"
 }

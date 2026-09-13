@@ -137,6 +137,8 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
     recorded = case["admission"]["source_credit"] == "RECORDED_TEST_ONLY"
     if recorded:
         row["notes"] += " Recorded source refresh test using preexisting SEC content; no new SEC acquisition."
+    elif case["admission"].get("real_sec_credit") is True:
+        row["notes"] += " Selected source inputs include new SEC acquisition records; each input retains its own acquisition identity."
     _need(set(row)==set(publication.METRIC_FIELDS) and all(set(e)==set(publication.EVIDENCE_FIELDS) for e in evidence),
           "ORDINARY_PUBLIC_ROW_SCHEMA_CHANGED")
     receipt={"record_type":"ORDINARY_INTEGRATED_ROW_RECEIPT","status":"FROZEN_CANDIDATE" if frozen else "VERIFIED_OPEN_PREVIEW",
@@ -148,6 +150,11 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
     if recorded:
         receipt.update(source_credit="RECORDED_TEST_ONLY",source_checkpoint_id=case["admission"]["checkpoint_id"],
                        real_sec_credit=False)
+    elif "checkpoint_id" in case["admission"]:
+        receipt.update(source_credit=case["admission"]["source_credit"],
+                       source_checkpoint_id=case["admission"]["checkpoint_id"],
+                       real_sec_credit=case["admission"]["real_sec_credit"],
+                       selected_new_request_attempt_ids=case["admission"]["selected_new_request_attempt_ids"])
     return {"row":row,"evidence":evidence,"receipt":{**receipt,"receipt_id":content_hash(value=receipt)},
         "files":{"metrics_matrix.csv":publication._csv_bytes(rows=[row],fieldnames=publication.METRIC_FIELDS),
                  "metric_evidence.csv":publication._csv_bytes(rows=evidence,fieldnames=publication.EVIDENCE_FIELDS)}}

@@ -906,3 +906,9 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 <!-- capability-anchor: CAPABILITY.ordinary_continuity_policy_terminal -->
 
 普通Company Facts适配先区分“来源赋义尚未实现”和原目录明确规定的主体不可比。后者在原件/登记主体/期间已核对后，复用冻结zero_ai_r2中的REQUIRE_CONTINUOUS守卫；修订范围限制仍作为独立信息保存，不借此使用财务数值。原生图验证先完整重建ordinary_case，再仅对与该确切预期结果相同、且理由/Trace均为ENTITY_CONTINUITY_NOT_COMPARABLE的无数值终态允许空数量输入。它不是所有NOT_MEANINGFUL的豁免。
+
+<!-- capability-anchor: CAPABILITY.continuous_sec_acquisition -->
+
+`continuous_sec_acquisition`使用同一CallLedger的SEC槽和原SecHttpClient。持有统一目录锁时验证限定公司/已发现URL、已有来源、原前缀和固定策略；真实请求前重验，max_retries=0。原件已经验证时不发请求，元数据刷新单独保留父日志身份；单次原件请求不得原样重发。每个槽保留确切规则、原请求行、body/headers及终态。
+
+新获取检查记录由创建进程登记在安装目录acquired分支；旧recorded分支和测试身份保留。检查记录包含所有成功/失败行，只允许成功原件进入来源证明；导入目录不能自行登记或变更测试信用。普通来源验证、安装与预览复用该记录；实际选中的旧请求不能因同一日志存在新获取而被升级。普通运行包补入必要获取读取模块与数值展示依赖，供无Git冷读。

@@ -74,7 +74,8 @@ class _Requirements:
             else:
                 proof=next(v['proof'] for v in self.reader.proofs.values()
                            if v['source_reference_id']==source['source_reference']['source_reference_id'])
-                verify_saved_source_proofs(data_root=self.root,proofs=[proof])
+                from .ordinary_source_authority import verify_ordinary_source_proofs
+                verify_ordinary_source_proofs(data_root=self.root,proofs=[proof])
                 item.update(saved_status='VERIFIED_SAVED_SOURCE',source_reference=source['source_reference'],proof=proof)
                 self.payloads[url]=source
         except _SOURCE_ERRORS as error:

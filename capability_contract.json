@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.continuous_sec_acquisition",
+        "type": "capability",
+        "status": "active",
+        "statement": "后继SEC获取在固定总账与原SecHttpClient下处理单个已声明依赖，零自动重试、保持原日志字节前缀及不可变body/headers，失败和未知调用计账。已验证原件可直接复用，元数据刷新与原件重复下载分开。创建进程登记新的获取检查记录；测试执行保持RECORDED_TEST_ONLY，不能由导入sidecar改标live。失败URL不使其他成功输入失效，真实获取信用只属于被当前结果实际引用的新请求，旧输入保持原获取身份；普通Run安装和预览保留检查记录。真实执行还要求当前绑定的离线HTTP/来源接线材料，不授发布或长期运行。",
+        "audience": [
+          "developer",
+          "reviewer",
+          "operator"
+        ],
+        "test_anchor": "tests/vnext/test_continuous_sec_acquisition.py::ContinuousSecAcquisitionTest.test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.ordinary_continuity_policy_terminal",
         "type": "capability",
         "status": "active",

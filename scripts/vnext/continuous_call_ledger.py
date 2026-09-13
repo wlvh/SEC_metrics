@@ -179,6 +179,29 @@ class CallLedger:
         _exclusive_write_json(path=path/'terminal.json',value=terminal)
         return terminal
 
+    def finish_sec(self, *, path, intent, receipt):
+        """Seal one SecHttpClient observation without changing the allowance."""
+        from .canonical import sha256_file
+        need(self._locked and intent['channel']=='SEC'
+             and path==self.root/'calls'/('%04d' % intent['ordinal'])
+             and _read(path,'intent.json')==intent,'CONTINUOUS_SEC_SLOT_CHANGED')
+        need(_read(path,'sec-receipt.json')==receipt,'CONTINUOUS_SEC_RECEIPT_CHANGED')
+        _identity(receipt,'receipt_id')
+        need(receipt['intent_id']==intent['intent_id']
+             and receipt['execution_mode']==('LIVE' if self.live else 'RECORDED_TEST_ONLY')
+             and receipt['actual_sec_egress_count']==int(self.live)
+             and receipt['automatic_retry_count']==0,'CONTINUOUS_SEC_MODE_OR_COUNT_CHANGED')
+        stop=receipt['stop_reason']
+        need(stop in _STOP or stop=='','CONTINUOUS_SEC_STOP_REASON_INVALID')
+        evidence={p.relative_to(path).as_posix():sha256_file(path=p)
+                  for p in path.rglob('*') if p.is_file()}
+        terminal=_identified({'record_type':'CONTINUOUS_CALL_TERMINAL','intent_id':intent['intent_id'],
+            'status':receipt['status'],'stop_reason':stop,'counts':[0,0,1],
+            'counts_kind':'ACTUAL_OR_UNKNOWN_CHARGED' if self.live else 'RECORDED_TEST_SIMULATION',
+            'sec_receipt_id':receipt['receipt_id'],'evidence':evidence},'terminal_id')
+        _exclusive_write_json(path=path/'terminal.json',value=terminal)
+        return terminal
+
 
 def live_ledger(*, requirement):
     approved = load_delegation(requirement=requirement,online=True)

@@ -465,3 +465,7 @@ B13开发入口保留制造产能原文和数量线索；“每季约500万台�
 <!-- capability-anchor: CAPABILITY.ordinary_continuity_policy_terminal -->
 
 Paramount的B02/B04/B05/B07按既有目录显示主体不连续导致“不具可比意义”，附原始年报、修订及具体规则。此状态不声称财报没有披露相关数值，也不拼接前后主体的全年金额。B08/B09仍显示同一当前主体、同一期末的已核验余额；不是整个公司都被阻断。
+
+<!-- capability-anchor: CAPABILITY.continuous_sec_acquisition -->
+
+`tools/vnext_continuous_sec.py plan`只说明已发现的具体来源依赖；`capture`在有限批准、当前接线证明和统一次数检查通过后发出一次SEC请求。输出区分已验证原件复用、真实获取成功、失败和未知；不会把已保存或测试回复写成新获取。即使一个URL失败，其他已核验输入仍可读取。候选行中的获取信用按实际引用的新请求标识，不代表所有输入都已刷新或390已完成。
