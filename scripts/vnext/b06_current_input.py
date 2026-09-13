@@ -11,7 +11,8 @@ from .annual_amendment_scope import inspect_annual_amendment_scope, prepare_save
 from .instant_balance_amendment import _part_iii_details, POLICY as BALANCE_POLICY
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_annual_input_v2 import exact_json_value
-from .normal_source_authority import ROOT, verify_saved_source_proofs
+from .normal_source_authority import ROOT
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .sources import resolve_repository_file
 
 
@@ -87,7 +88,7 @@ def bind_current_debt_input(*, case, packet, repo_root):
     proofs = list({content_hash(value=p):p for p in [*case['source_proofs'],*packet['source_proofs']]}.values())
     records = [r for r in case['expected_records'] if r['record_type'] not in {'RAW_BLOB','SOURCE_REFERENCE'}]
     return {**case,'source_records':source_records,'references':[r for r in source_records if r['record_type']=='SOURCE_REFERENCE'],
-        'source_proofs':proofs,'admission':verify_saved_source_proofs(data_root=repo_root,proofs=proofs),
+        'source_proofs':proofs,'admission':verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs),
         'expected_records':[*source_records,*records],
         'input_binding':{**case['input_binding'],'current_debt_input':packet}}
 
@@ -112,6 +113,6 @@ def withheld_current_debt_case(*, repo_root, company_id, packet):
     return {'kind':'STRUCTURED','primary_metric_id':'B06','input_binding':{'original_source_input':preparation['input_binding'],
         'annual_label_input':annual,'current_debt_input':packet},'source_records':records,
         'references':[r for r in records if r['record_type']=='SOURCE_REFERENCE'],'source_proofs':proofs,
-        'admission':verify_saved_source_proofs(data_root=repo_root,proofs=proofs),'spec_paths':{'B06':path},'compiled_specs':{'B06':spec},
+        'admission':verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs),'spec_paths':{'B06':path},'compiled_specs':{'B06':spec},
         'target_period':{'fiscal_year':annual['table_input']['target_period']['fiscal_year'],'period_start':end,'period_end':end},
         'expected_records':[*records,trace,result],'results':{'B06':result},'traces':{'B06':trace},'observations':[],'selection':selection}

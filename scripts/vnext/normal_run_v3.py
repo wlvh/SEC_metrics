@@ -60,11 +60,11 @@ def prepare_case(*, data_root, company_id, metric_id):
         debt_input = prepare_current_debt_input(repo_root=data_root,company_id=company_id)
         if debt_input["decision"] != "INPUT_PROPERTY_PROVEN":
             return withheld_current_debt_case(repo_root=data_root,company_id=company_id,packet=debt_input)
-        from .b06_guarded_result_v3 import prepare_guarded_b06_result
+        from .ordinary_debt_guard import prepare_current_guarded_b06_result
         # The established denominator guard precedes every debt grammar. A
         # source-layout extension must not require debt evidence to establish
         # a ratio already known to be meaningless from nonpositive equity.
-        guarded = prepare_guarded_b06_result(repo_root=data_root,company_id=company_id)
+        guarded = prepare_current_guarded_b06_result(repo_root=data_root,company_id=company_id)
         if guarded["status"] != "NOT_MEANINGFUL":
             from .normal_note_debt_results import prepare_note_debt_case
             note_debt = prepare_note_debt_case(repo_root=data_root,company_id=company_id)
@@ -94,8 +94,8 @@ def prepare_case(*, data_root, company_id, metric_id):
             "observations":[r for r in original["records"] if r["record_type"] == "VERIFIED_OBSERVATION"],
             "selection":selection}
     else:
-        from .normal_run_v2 import _prepare_case
-        old = _prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id)
+        from .ordinary_remaining_cases import prepare_current_source_case
+        old = prepare_current_source_case(data_root=data_root,company_id=company_id,metric_id=metric_id)
         annual = prepare_saved_annual_input(repo_root=data_root,company_id=company_id)
         year = annual["table_input"]["target_period"]["fiscal_year"]
         if year != old["target_period"]["fiscal_year"]:

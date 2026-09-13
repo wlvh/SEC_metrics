@@ -28,6 +28,20 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.
 ORDINARY_SOURCE_MATERIAL_ROOT=/absolute/new/source-material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_source_run_material
 ```
 
-测试来源的公共行和预览回执明确显示来源类型。当前材料创建五个实际OPEN Run，包含B03/B01依赖、B08/B09及B10/B11，共六个结果；与原文直接计算的数值/期间一致，并拒绝五类伪造图、依赖缺漏、来源登记缺漏、自签信用升级及未登记追加。未经新适配的旧冻结来源包装器仍受原基线限制，不能声称全部39项已接受更新来源。
+测试来源的公共行和预览回执明确显示来源类型。已交付材料创建五个实际OPEN Run，包含B03/B01依赖、B08/B09及B10/B11，共六个结果；与原文直接计算的数值/期间一致，并拒绝五类伪造图、依赖缺漏、来源登记缺漏、自签信用升级及未登记追加。
+
+## 剩余十二条旧入口的当前接线
+
+四个新增包装器将其余既有路线接到同一来源登记机制：`ordinary_financial_results`复用六项金融指标的原解析、期间和计算规则；`ordinary_text_input`复用C02/D01/D02的来源选择及文本范围规则；`ordinary_debt_guard`保留B06原来的非正权益保护和银行/工业范围限制；`ordinary_remaining_cases`复用C03/C04及B06的既有业务解析。原冻结文件与Spec不改，当前B06的三种债务表结构仍使用各自已验证的解析器。
+
+新旧入口对原有来源的完整返回对象已在九个代表场景中逐项比较一致。新增请求的原生检查覆盖Marriott六项及JPM六项，分别检查文本SYSTEM审阅、金融实际测量期间、债务保护、伪造金额图和删除审阅。CI按公司分为两个独立作业，避免合并运行时间掩盖验证结果。
+
+```bash
+REMAINING_SOURCE_MATERIAL_ROOT=/absolute/new/remaining-material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_remaining_source_run_material
+```
+
+十二路线原生材料已完成，并通过完整重放、SYSTEM审阅检查、假金融金额图和删除文本审阅反例。另有Enphase、Macy’s、Paramount三种正向B06结构的实际新增请求Run验证，以及默认/Python3.9复制运行包冷读。实际记录见`docs/evidence/issue28_continuous/remaining-current-source-routes/`；首轮测试参数错误保留，修正后在新的攻击目录重验。
+
+这使既有36条路线可以在各自来源条件满足时使用已登记请求，仍不是39指标完整实现、真实新财报获取或持续运行验收；B13、D03、D04与真实业务判断/数据限制继续保留。
 
 后续仍须接入新预算下的真实获取、完整路线、新申报触发、持久运行计数及正式发布。本次财务原文未变，不证明在线发现新财报；旧阶段额度不恢复，本测试接口不提供真实SEC执行信用或日常人工补文件流程。

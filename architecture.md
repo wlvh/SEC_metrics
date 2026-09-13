@@ -789,6 +789,10 @@ New financing-set source judgments prove disjoint reported borrowings, bonds and
 
 <!-- capability-anchor: CAPABILITY.recorded_source_run_admission -->
 
+<!-- capability-anchor: CAPABILITY.remaining_current_source_adapters -->
+
+`ordinary_remaining_cases`替代V14对旧来源入口的直接调用；新的金融、文本和债务保护包装器使用当前来源登记验证，业务解释继续复用冻结模块的纯函数及原Spec。C03/C04和B06仍沿既有解析与Calculator，C02/D01/D02沿既有范围、Evidence和SYSTEM审阅。原基线下返回对象保持一致，记录过的新请求不扩大业务含义或取消来源/主体限制。旧入口保留原基线语义，历史Run不重签。
+
 `ordinary_source_authority`在固定安装目录保存实际测试会话创建者登记的来源记录，核对原日志字节前缀、原始来源及每项新意图/终态。当前适配器通过新入口选择历史基线或已登记测试来源，原冻结验证器不改。`normal_run_v3.install_normal_inputs`分开固定代码和外部来源文件，安装完整来源记录及依赖；创建和重放Run均要求安装记录存在。复制运行包的冷读使用安装记录，测试类型保留到原生绑定、CLI和预览。这仍是原文未变的RECORDED_TEST_ONLY，不提供真实SEC获取、全部路线更新或正式发布能力。
 
 `r6_semantic_source`为D04离线解释提供全部可见块和原生事实，并保留所引用的上下文、单位、命名空间、续接、脚注和关系对象；嵌套XML通过原位置恢复而避免重复传入。`r6_semantic_review`绑定请求/单元、按唯一引文计算位置、核对必需候选和分类一致性，并保留全局冲突。返回的只是未获语义资格的保存响应提议，不能进入普通结果或正式发布；真实provider调用、模型可靠性和原生D04接线尚未完成。

@@ -150,3 +150,27 @@ jobs:
           PYTHONPATH: scripts
           ORDINARY_SOURCE_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-updated-source-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_ordinary_source_run_material
+  remaining-source-native-runs:
+    name: vNext remaining source Runs (${{ matrix.company }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        company: [marriott_international, jpmorgan_chase]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Verify remaining current-source adapters through native Runs and source-bound rejections
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          REMAINING_SOURCE_MATERIAL_ROOT: ${{ runner.temp }}/remaining-source-${{ matrix.company }}-${{ github.run_id }}-${{ github.run_attempt }}
+          REMAINING_SOURCE_COMPANY: ${{ matrix.company }}
+        run: python3 -m unittest -v tests.vnext.test_remaining_source_run_material

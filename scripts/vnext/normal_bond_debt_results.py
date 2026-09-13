@@ -5,7 +5,8 @@ from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_annual_input import _registry_rows
 from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value
 from .normal_candidates import _prepare_b06
-from .normal_source_authority import ROOT, verify_saved_source_proofs
+from .normal_source_authority import ROOT
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .r5_b06_scope import resolve_financing, validate_partition
 from .sources import companyfacts_structured_facts, resolve_repository_file
 from .specs import compile_spec_file
@@ -48,7 +49,7 @@ def prepare_bond_debt_case(*, repo_root, company_id):
     prepared = prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
     proofs = list({content_hash(value=p):p for p in [*preparation['input_binding']['source_proofs'],
         *original['source_proofs'],*prepared['source_proofs']]}.values())
-    admission = verify_saved_source_proofs(data_root=repo_root,proofs=proofs)
+    admission = verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs)
     scope = {'entity_scope':'consolidated'}
     target = {'company_id':company_id,'entity':original['entity'],'accession':original['filing']['accessionNumber'],
               'period_start':end,'period_end':end,'scope':scope,'scope_key':content_hash(value=scope)}

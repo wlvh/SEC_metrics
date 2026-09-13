@@ -84,7 +84,7 @@ class CurrentDebtInputTest(unittest.TestCase):
         negative = self.changed(lambda raw:raw.replace(b'</body>',b'<p>We corrected our total debt balance.</p></body>',1))
         packet = copy.deepcopy(self.packet); packet.update(decision='WITHHELD',checks=[negative])
         with original_sources_only(), patch('vnext.b06_current_input.prepare_current_debt_input',return_value=packet), \
-             patch('vnext.b06_guarded_result_v3.prepare_guarded_b06_result',side_effect=AssertionError('Guard must wait for amendment input')):
+             patch('vnext.ordinary_debt_guard.prepare_current_guarded_b06_result',side_effect=AssertionError('Guard must wait for amendment input')):
             case = prepare_case(data_root=ROOT,company_id=self.company,metric_id='B06')
         self.assertEqual('WITHHELD',case['results']['B06']['publication'])
         self.assertEqual('B06_CURRENT_INPUT_UNRESOLVED',case['results']['B06']['reason_code'])

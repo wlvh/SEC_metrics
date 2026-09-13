@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "run_id": "run:ordinary-integrated:3f46f245539d7bd4c8e24a9c7e35c394f0741be4924448ee1a36e2964fc6b967",
+  "run_status": "OPEN",
+  "record_count": 17,
+  "decision_count": 0,
+  "runtime_root": "/private/tmp/sec_metrics_issue28_continuous/remaining-source-positive-debt-first/paramount_skydance_paramount_global/data",
+  "git_directory_present": false,
+  "results": [
+    {
+      "applicability": "APPLICABLE",
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B06",
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:d2453e8b020075cc7165ade36c17448e387e0e0b25ca484dcdd5286e5265d17e",
+      "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+      "spec_closure_hash": "sha256:4ad7f5e5ab1925de7d4113eb28f1a3a5fdd3f4219c95cc0604c6e454eb3db744",
+      "trace_id": "sha256:5a42b960f84b15be362cef660a6431e643a086f9420f2ab899ff85decba495af",
+      "unit": "ratio",
+      "value": "1.168049260241169930727785855"
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

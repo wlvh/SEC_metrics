@@ -688,3 +688,12 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 新增`test_ordinary_source_authority`在fast层核对安装目录登记、冷读、伪造信用/记录、未登记追加及失败/未知终态。`ORDINARY_SOURCE_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_source_run_material`创建五个实际Run（B03含B01依赖，另有B08/B09/B10/B11），比较原文计算值/期间，并验证来源记录缺漏、重签信用、未登记追加、假收入图及缺依赖五类拒绝。网络/HTTP/DNS在材料中禁用，来源新增三份测试请求但财务原文未变，仍无实际SEC信用。
 
 该材料通过独立`vNext recorded source update Runs` CI作业执行，30分钟上限；不替代真正新财报获取/更新、全部路线和390验收。首次B01材料的/tmp别名及首次跨路线酒店内层仍调用旧验证器的失败保留；修后新目录另验，不重签旧失败。复制运行包的无Git冷读单独记录。
+
+
+<!-- capability-anchor: CAPABILITY.remaining_current_source_adapters -->
+
+`REMAINING_SOURCE_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_remaining_source_run_material`从原来源准备完整依赖，再登记测试请求并创建Marriott六项/JPM六项原生Run与公共行；验证原有数值/期间、SYSTEM文本审阅、B06保护及改金额图/删除审阅拒绝。`REMAINING_SOURCE_COMPANY`可限定其中一家公司；CI以此分两个45分钟作业。已完成材料可改用`REMAINING_SOURCE_EXISTING_ROOT`执行只读重放及独立攻击副本，不重跑创建。测试信用和真实来源获取、39项完成及正式发布分别记录。
+
+本次十二路线创建耗时845.782秒，完整重放/反例314.233秒；新CI按公司拆分，并给每个原生材料作业45分钟总上限，保持全部断言及来源规则不变。
+
+已完成十二路线材料可设置`REMAINING_SOURCE_EXISTING_ROOT`及可选的新`REMAINING_SOURCE_ATTACK_ROOT`重放并检查攻击副本。首次金融反例因传入多余Calculator目标字段而停止；原日志保留，改为精确五字段后12场景及两类反例通过。
