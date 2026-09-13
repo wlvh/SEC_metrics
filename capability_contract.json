@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.registered_event_source_discovery",
+        "type": "capability",
+        "status": "active",
+        "statement": "接续主体的普通来源发现复用已批准事件窗口与已登记主/前身CIK，逐份核对清单主体、历史范围和重复申报，列出窗口内全部8K/8K-A正文及头文件需求；不能以当前主体的小集合替代既有完整事件范围。缺前身元数据或主体不符时保持范围未闭合，未改财务跨主体合并权限，也不把来源发现或记录测试当成指标/真实获取成功。既有有限SEC出口可处理这些已声明且在总预算内的来源依赖。",
+        "audience": [
+          "developer",
+          "reviewer",
+          "operator"
+        ],
+        "test_anchor": "tests/vnext/test_normal_source_requirements.py::RegisteredEventSourceRequirementsTest",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.ordinary_special_debt_scope",
         "type": "capability",
         "status": "active",

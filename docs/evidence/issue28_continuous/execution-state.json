@@ -1,6 +1,6 @@
 {
   "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
-  "status": "CONTINUING_REGISTERED_EVENT_SCOPE_AND_REMAINING_CORE_DELIVERY",
+  "status": "CONTINUING_REGISTERED_PREDECESSOR_SOURCE_ACQUISITION_AND_EVENT_INTEGRATION",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
   "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
@@ -34,9 +34,9 @@
     "unknown": 0
   },
   "current_work": [
-    "Complete C04 inventory identity review archive and preserve first failures;17 positive source-dependent coordinates now restored",
-    "Implement Paramount event scope using existing primary+predecessor CIKs and prior-calendar-year-start window; current-only source probe is incomplete",
-    "Continue remaining financial successor scope,B13,D03/D04,390/update/publication/retirement;model credential and module independent review still needed"
+    "Submit verified full registered event-source discovery and current limited acquisition binding",
+    "Acquire18 necessary predecessor original/header dependencies within approved80total, preserving each first outcome and no automatic retries",
+    "Connect full approved combined event scope to existing claims/Calculator/Run, keeping B01/B03 financial scope separate; continueB13,D03D04,390/update/release/retirement"
   ],
   "next": [
     "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
@@ -72,7 +72,7 @@
     "real_call_slot_consumed": true,
     "provider_slot_consumed": false
   },
-  "offline_wiring_receipt": "ordinary-history-identities/provider-wiring.json",
+  "offline_wiring_receipt": "ordinary-registered-events/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -131,7 +131,7 @@
     "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
     "actual_material": "ordinary-document-identity/"
   },
-  "sec_wiring_receipt": "ordinary-history-identities/sec-wiring.json",
+  "sec_wiring_receipt": "ordinary-registered-events/sec-wiring.json",
   "document_identity_repair": {
     "old_request_rows_rewritten": false,
     "old_sources_redownloaded": false,
@@ -163,7 +163,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:71160fb33b26a48da83422bbd395d42d3f334577620dce901179733d3090055d",
+  "current_v15_development_closure": "sha256:5577c514934dac32d8e15961b892fd10ff964f076d9291d3938399a17d32e819",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -189,5 +189,25 @@
     "prior_source_dependency": "https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/d830953d8k.htm",
     "amendment_event_window": "INPUT_PROPERTY_PROVEN",
     "implementation_pending": true
+  },
+  "registered_event_discovery": {
+    "current_filings": 4,
+    "predecessor_filings": 31,
+    "approved_window": [
+      "2024-01-01",
+      "2025-12-31"
+    ],
+    "missing_originals_and_headers": 18,
+    "source_tests": "11_PASS_22.116s",
+    "sec_offline_with_predecessor_scope": "PASS94.031s",
+    "provider_offline_factory": "PASS36.219s",
+    "actual_new_calls": [
+      0,
+      0,
+      0
+    ],
+    "planned_cumulative_sec_after_missing_files": 31,
+    "event_native_integration_complete": false,
+    "material": "ordinary-registered-events/"
   }
 }

@@ -71,6 +71,19 @@ class ContinuousSecAcquisitionTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'IMPORTED_CHECKPOINT_CHANGED'):
                 verify_ordinary_source_proofs(data_root=session.data_root,proofs=[first_proof])
             sidecar.unlink()
+            # The unchanged company registry and event-window catalog also
+            # authorize a registered predecessor's missing source dependency.
+            # These deliberately opaque test bytes confer no event-content credit.
+            predecessor_url='https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/0001193125-25-036747.hdr.sgml'
+            predecessor=recorded_sec_session(root=root/'ledger',response=b'RECORDED_PREDECESSOR_TRANSPORT_ONLY')
+            captured=predecessor.capture(company_id='paramount_skydance_paramount_global',url=predecessor_url)
+            self.assertEqual(captured['status'],'SUCCEEDED')
+            self.assertEqual(captured['calls'],[0,0,0])
+            checkpoint,paths=checkpoint_installation(source_root=session.data_root)
+            self.assertEqual(len(checkpoint['captures']),3)
+            self.assertFalse(checkpoint['real_sec_credit'])
+            with session.ledger.locked():
+                self.assertEqual(session.ledger.snapshot()['counts'],[0,0,3])
             # Actual HTTP construction uses the existing client in an isolated
             # unregistered workspace. The test response has no LIVE credit.
             wire_root=root/'http-wire';wire_root.mkdir()
@@ -115,7 +128,9 @@ with patch.object(socket.socket,'connect',side_effect=AssertionError('NO_NETWORK
             child=subprocess.run([sys.executable,'-c',cold,str(native_data),str(native_run)],capture_output=True,text=True)
             (root/'cold-native.log').write_text(child.stdout+child.stderr)
             self.assertEqual(child.returncode,0,child.stderr)
-            result={'status':'OFFLINE_SEC_CAPTURE_PASS','calls':[0,0,0],'recorded_count_simulation':[0,0,2],
+            with session.ledger.locked():
+                recorded_counts=session.ledger.snapshot()['counts']
+            result={'status':'OFFLINE_SEC_CAPTURE_PASS','calls':[0,0,0],'recorded_count_simulation':recorded_counts,
                 'actual_http_path_verified':True,'retryable_http_zero_retry_verified':True,
                 'checkpoint_import_and_failure_isolation_verified':True,
                 'test_checkpoint_cannot_be_relabelled_live':True,'source_root':str(session.data_root),

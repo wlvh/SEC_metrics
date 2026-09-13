@@ -481,3 +481,7 @@ C04候选不再因获取工具的本地存储名误报年报身份不符；原�
 C04不会因当前/历史SEC清单保存为编号文件而误报缺失分片；原清单与修后引用均保留，事件窗口和已发现申报集合不改变。
 
 <!-- capability-anchor: CAPABILITY.ordinary_document_identity -->
+
+接续主体的来源需求会列出前身及原事件窗口中缺少的8K正文/头文件；不会把当前主体较小的申报集合显示为完整范围。获取与指标成功分别报告。
+
+<!-- capability-anchor: CAPABILITY.registered_event_source_discovery -->

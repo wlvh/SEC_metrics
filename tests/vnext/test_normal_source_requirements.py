@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
@@ -13,6 +14,8 @@ from vnext.normal_annual_input import _registry_rows
 from vnext.normal_source_requirements import (
     discover_saved_source_requirements,inspect_source_requirements,_instance_names,
     _declared_selection,SourceRequirementsError)
+from vnext.normal_source_requirements import _Requirements, _registered_event_requirements
+from vnext.normal_annual_input_v2 import prepare_saved_annual_input
 
 
 class OrdinarySourceRequirementsTest(unittest.TestCase):
@@ -120,6 +123,56 @@ class OrdinarySourceRequirementsTest(unittest.TestCase):
             row=next(r for r in case['requirements'] if r['source_url']==index['source_url'])
             self.assertEqual('SAVED_SOURCE_BLOCKED',row['saved_status'])
             self.assertFalse(case['complete_new_source_graph_known'])
+
+
+class RegisteredEventSourceRequirementsTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.company=next(c for c in _registry_rows(repo_root=ROOT)
+                         if c['entity_continuity_status']=='successor_predecessor')
+        with original_sources_only():
+            cls.prepared=prepare_saved_annual_input(repo_root=ROOT,company_id=cls.company['company_id'])
+            cls.report=discover_saved_source_requirements(repo_root=ROOT,company_id=cls.company['company_id'])
+
+    def test_existing_scope_keeps_both_ciks_and_prior_calendar_year(self):
+        scope=self.report['registered_event_scope']
+        self.assertEqual(scope['registered_ciks'],['2041610','813828'])
+        self.assertEqual(scope['window'],{'fiscal_year':2025,'period_start':'2024-01-01','period_end':'2025-12-31'})
+        self.assertTrue(scope['complete_registered_metadata'])
+        self.assertEqual([len(s['event_filings']) for s in scope['scopes']],[4,31])
+        self.assertEqual(len(self.report['missing_or_failed_source_urls']),18)
+        self.assertTrue(all('/813828/' in u for u in self.report['missing_or_failed_source_urls']))
+        self.assertFalse(scope['financial_cross_entity_combination_authorized'])
+        self.assertFalse(scope['metric_executed'])
+        self.assertEqual(len(self.report['requirements']),len({r['source_url'] for r in self.report['requirements']}))
+        self.assertEqual(self.report['calls'],{'provider':0,'paid':0,'sec':0})
+
+    def test_missing_predecessor_metadata_cannot_shrink_scope_to_current_registrant(self):
+        plan=_Requirements(ROOT,self.company);real=plan.require
+        def unavailable(url,*args,**kwargs):
+            if url.endswith('/CIK0000813828.json'):return None
+            return real(url,*args,**kwargs)
+        with original_sources_only(),patch.object(plan,'require',side_effect=unavailable):
+            scope=_registered_event_requirements(plan,self.prepared)
+        self.assertFalse(scope['complete_registered_metadata'])
+        self.assertTrue(scope['scopes'][0]['metadata_complete'])
+        self.assertEqual(scope['scopes'][1]['issues'],['REGISTERED_EVENT_SUBMISSIONS_UNAVAILABLE'])
+        self.assertEqual(scope['registered_ciks'],['2041610','813828'])
+
+    def test_foreign_metadata_cannot_declare_event_originals(self):
+        plan=_Requirements(ROOT,self.company);real=plan.require
+        def foreign(url,*args,**kwargs):
+            result=real(url,*args,**kwargs)
+            if result is not None and url.endswith('/CIK0000813828.json'):
+                result=copy.deepcopy(result);body=json.loads(result['raw_bytes']);body['cik']=1
+                result['raw_bytes']=json.dumps(body).encode()
+            return result
+        with original_sources_only(),patch.object(plan,'require',side_effect=foreign):
+            scope=_registered_event_requirements(plan,self.prepared)
+        self.assertFalse(scope['complete_registered_metadata'])
+        self.assertEqual(scope['scopes'][1]['event_filings'],[])
+        self.assertEqual(scope['scopes'][1]['issues'][0]['reason'],'SOURCE_REQUIREMENT_EVENT_CIK_CHANGED')
+        self.assertFalse(any('/Archives/edgar/data/1/' in u for u in plan.requests))
 
 
 if __name__=='__main__':unittest.main()

@@ -743,3 +743,5 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 文档身份单元测试现包含两个真实持久化的模拟清单（当前/历史），验证仅更换逻辑引用、原准备对象及日志不改；重新签名的虚假发现集合被拒。新增JPM/Salesforce C04原生与Python3.9冷读。此次未改SEC/计数/传输代码，按执行字节差异核对复用bdc41的82.459s SEC材料，未声称该套件本轮重跑；当前工厂仍执行36.843s禁网接线。见ordinary-history-identities的reuse audit及材料索引。
 
 CI的current-instant/debt原生任务在bdc41实际运行到20分钟上限被取消，原日志保留。两项任务上限现为30分钟，仍需完整成功终态；没有改变单个SEC/模型请求的context/resource/重试边界。新head实况不借旧取消结果推定通过。
+
+注册事件范围的来源发现新增3项（含原8项共11项）检查，覆盖主/前身、既有窗口、缺前身清单及错CIK；命令仍为tests.vnext.test_normal_source_requirements。完整SEC材料新增第三笔RECORDED前身头文件获取，只证明出口范围准入，不授事件内容信用；实际断言验证3条记录。首次打印摘要遗留2的旧字面量，原日志/摘要保留，独立重读3条并修正报告为读取实际账本；没有重跑未变执行，仅报告输出修正。材料见ordinary-registered-events。

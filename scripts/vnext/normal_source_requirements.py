@@ -115,6 +115,68 @@ def _metadata_requirements(plan,prepared,inventory):
                       'unavailable_history_urls':[],'complete_filing_inventory_proven':True}
 
 
+def _registered_event_requirements(plan,prepared):
+    """Keep the approved event window and every registered reporting CIK.
+
+    This is source discovery only. It cannot combine financial statements or
+    treat the current registrant's smaller filing set as the whole event scope.
+    """
+    from .public_projection import event_target_period
+    from .traits import repository_company_ciks
+    catalog_path='catalog/zero_ai_public_projection.json'
+    _need(sha256_file(path=plan.root/catalog_path)==sha256_file(path=ROOT/catalog_path),
+          'SOURCE_REQUIREMENT_EVENT_POLICY_CHANGED')
+    catalog=strict_json_loads(text=(plan.root/catalog_path).read_text())
+    window=event_target_period(target_period=prepared['table_input']['target_period'],
+        continuity_status=plan.company['entity_continuity_status'],catalog=catalog)
+    ciks=repository_company_ciks(repo_root=plan.root,company_id=plan.company['company_id'])
+    scopes=[]
+    for cik in ciks:
+        scope={'cik':cik,'window':window,'metadata_complete':False,'issues':[],'event_filings':[]}
+        scopes.append(scope)
+        source=plan.require(submissions_url(cik=int(cik)),'registered_event_submissions','application/json',
+                            accession='SUBMISSIONS-'+cik,refresh=True)
+        if source is None:
+            scope['issues'].append('REGISTERED_EVENT_SUBMISSIONS_UNAVAILABLE');continue
+        try:
+            payload=strict_json_loads(text=source['raw_bytes'].decode('utf-8'))
+            _need(type(payload.get('cik')) in (str,int) and str(payload['cik']).isdigit()
+                  and int(payload['cik'])==int(cik),'SOURCE_REQUIREMENT_EVENT_CIK_CHANGED')
+            shards=_history_index(payload,cik)
+            rows=_filings(payload,inventory_name=source['source_reference']['document_name'])
+            for shard in shards:
+                if shard['filingFrom']>window['period_end'] or shard['filingTo']<window['period_start']:continue
+                saved=plan.require(submissions_file_url(file_name=shard['name']),
+                    'registered_event_submissions_history','application/json',accession='SUBMISSIONS-'+cik,refresh=True)
+                if saved is None:
+                    scope['issues'].append('REGISTERED_EVENT_HISTORY_UNAVAILABLE:'+shard['name']);continue
+                body=strict_json_loads(text=saved['raw_bytes'].decode('utf-8'))
+                _need('cik' not in body or str(body['cik']).isdigit() and int(body['cik'])==int(cik),
+                      'SOURCE_REQUIREMENT_EVENT_HISTORY_CIK_CHANGED')
+                history_rows=_filings(body,inventory_name=shard['name'])
+                conflict=history_body_alignment(shard=shard,rows=history_rows)
+                if conflict:scope['issues'].append(conflict)
+                rows.extend(history_rows)
+            events=[r for r in rows if r['form'] in {'8-K','8-K/A'}
+                    and window['period_start']<=r['filingDate']<=window['period_end']]
+            seen=set()
+            for filing in sorted(events,key=lambda r:(r['filingDate'],r['accessionNumber'])):
+                accession=filing['accessionNumber']
+                if accession in seen:
+                    scope['issues'].append('REGISTERED_EVENT_INVENTORY_OVERLAP:'+accession);continue
+                seen.add(accession);scope['event_filings'].append(filing)
+                plan.require(accession_document_url(cik=int(cik),accession=accession,document_name=filing['primaryDocument']),
+                             'registered_event_primary','text/html',accession)
+                plan.require(hdr_sgml_url(cik=int(cik),accession=accession),'registered_event_header','text/plain',accession)
+            scope['metadata_complete']=not scope['issues']
+        except _SOURCE_ERRORS as error:
+            scope['issues'].append({'reason':str(error),'error_type':type(error).__name__})
+    return {'record_type':'REGISTERED_EVENT_SOURCE_REQUIREMENTS','window':window,'registered_ciks':ciks,
+            'catalog_sha256':sha256_file(path=plan.root/catalog_path),'scopes':scopes,
+            'complete_registered_metadata':all(s['metadata_complete'] for s in scopes),
+            'financial_cross_entity_combination_authorized':False,'metric_executed':False}
+
+
 def discover_saved_source_requirements(*,repo_root:Path,company_id:str):
     _need(sha256_file(path=repo_root/'config/company_registry.csv')==sha256_file(path=ROOT/'config/company_registry.csv'),
           'SOURCE_REQUIREMENT_INSTALLED_COMPANY_SCOPE_CHANGED')
@@ -172,6 +234,12 @@ def discover_saved_source_requirements(*,repo_root:Path,company_id:str):
                                          'annual_accession_instance','application/xml',accession)
                     except _SOURCE_ERRORS as error:
                         limitations.append({'phase':'ACCESSION_INDEX','accession':accession,'reason':str(error),'error_type':type(error).__name__})
+    event_scope=None
+    if prepared is not None and company['entity_continuity_status']!='continuous':
+        event_scope=_registered_event_requirements(plan,prepared)
+        if not event_scope['complete_registered_metadata']:
+            limitations.append({'phase':'REGISTERED_EVENT_METADATA',
+                                'reason':'APPROVED_EVENT_SCOPE_METADATA_INCOMPLETE'})
     requests=list(plan.requests.values())
     pending=[r['source_url'] for r in requests if r['saved_status']!='VERIFIED_SAVED_SOURCE']
     refresh=[r['source_url'] for r in requests if r['refresh_for_new_discovery']]
@@ -180,6 +248,7 @@ def discover_saved_source_requirements(*,repo_root:Path,company_id:str):
     body={'record_type':'ORDINARY_SOURCE_REQUIREMENTS','schema_version':1,'company_id':company_id,'primary_cik':cik,
           'status':status,'metadata':metadata,'prepared_annual_input':prepared,'filing_selection':selection,
           'metadata_declared_annual_selection':declared,'annual_source_identity_verified':prepared is not None,
+          **({'registered_event_scope':event_scope} if event_scope is not None else {}),
           'requirements':requests,'missing_or_failed_source_urls':pending,'new_discovery_dataset_urls':refresh,
           'limitations':limitations,'unique_known_get_count':len(requests),'complete_new_source_graph_known':selection is not None and not limitations,
           'discovery_scope':'CURRENT_AND_PRIOR_ANNUAL_LATEST_PROXY_AND_FISCAL_8K_DOCUMENTS',

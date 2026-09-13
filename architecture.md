@@ -926,3 +926,7 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 C04清单源的本地存储名与URL名也分别保留。ordinary_storage_identity为当前及历史清单创建同一不可变请求的逻辑引用，再以原元数据/申报原件重建SourceSet；除清单引用及集合本身的身份外，其余字段必须与原集合相同，不能借名称修复改变事件覆盖。
 
 <!-- capability-anchor: CAPABILITY.ordinary_document_identity -->
+
+normal_source_requirements对接续主体补充原事件目录窗口内的全部已登记CIK，复用现有清单/历史解析和请求账本验证，再交既有SecAcquisitionSession处理已声明URL。发现集合不替代事件Claim/Calculator，也不授权财务跨主体合并；元数据缺失或错主体保持未闭合。
+
+<!-- capability-anchor: CAPABILITY.registered_event_source_discovery -->
