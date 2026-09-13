@@ -912,3 +912,9 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 `continuous_sec_acquisition`使用同一CallLedger的SEC槽和原SecHttpClient。持有统一目录锁时验证限定公司/已发现URL、已有来源、原前缀和固定策略；真实请求前重验，max_retries=0。原件已经验证时不发请求，元数据刷新单独保留父日志身份；单次原件请求不得原样重发。每个槽保留确切规则、原请求行、body/headers及终态。
 
 新获取检查记录由创建进程登记在安装目录acquired分支；旧recorded分支和测试身份保留。检查记录包含所有成功/失败行，只允许成功原件进入来源证明；导入目录不能自行登记或变更测试信用。普通来源验证、安装与预览复用该记录；实际选中的旧请求不能因同一日志存在新获取而被升级。普通运行包补入必要获取读取模块与数值展示依赖，供无Git冷读。
+
+### SEC原文件名与本地存储名
+
+普通C04通过ordinary_storage_identity保留原引用，再为同一个固定不可变请求建立URL文件名视图。batch_workflow仍按日志中的物理文件名核对原body/headers、URL、accession和请求ID；可变旧文件不能使用此映射。ordinary_source_authority在安装时保留同一响应身份的全部不可变尝试，维持原读取器逐份核验、再选择最新请求的规则。旧业务解析、旧请求与原始字节不改。
+
+<!-- capability-anchor: CAPABILITY.ordinary_document_identity -->

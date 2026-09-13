@@ -1,6 +1,6 @@
 {
   "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
-  "status": "RESUMED_SEC_OFFLINE_WIRING_READY_FOR_AUTHORIZED_FIRST_CAPTURE",
+  "status": "CONTINUING_ACTUAL_SOURCE_RECONSTRUCTION_AND_REMAINING_CORE_WORK",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
   "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
@@ -12,7 +12,7 @@
   },
   "authority": {
     "development": "USER_DELEGATED",
-    "new_call_budget": "USER_APPROVED; SEC_AND_PROVIDER_OFFLINE_WIRING_VERIFIED; ACTUAL_COUNTS_STILL_ZERO",
+    "new_call_budget": "USER_APPROVED_240_240_80; FIXED_AGGREGATE_LEDGER_ACTIVE",
     "maximum_additional_provider_paid_sec_calls": [
       240,
       240,
@@ -30,13 +30,13 @@
   "actual_new_calls": {
     "provider": 0,
     "paid": 0,
-    "sec": 0,
+    "sec": 13,
     "unknown": 0
   },
   "current_work": [
-    "Submit verified SEC acquisition/count/admission and portable-preview wiring; then execute necessary real SEC dependencies within80 total",
-    "Keep all original attempt/response/failure evidence and update shared counts after each actual capture",
-    "Continue B13 native/source interpretation, D03/D04 feasibility when model credential is available, and remaining full390/update/publication/retirement work"
+    "Archive13 actualSEC attempts and10 restored native coordinates; preserve firstC04 failure and source-copy failure with repaired evidence",
+    "Continue B13 source interpretation and native results, remaining scope/debt limitations, and D03/D04 semantics when credential available",
+    "Complete390/update/publication/rollback/retirement preparation and outstanding independent module review"
   ],
   "next": [
     "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
@@ -49,7 +49,7 @@
   "historical_state_snapshot": "resume-2026-09-13/historical-state/execution-state.json",
   "historical_continuation_snapshot": "resume-2026-09-13/historical-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
-  "ledger_implementation_status": "FIXED_ROOT_LOCKED_APPEND_ONLY_COUNT_CONTROL_OFFLINE_TESTED; NO_REAL_LEDGER_CALLS",
+  "ledger_implementation_status": "13_ACTUAL_SEC_TERMINALS_VERIFIED; NO_PROVIDER_CALLS; NO_UNKNOWN_OR_STOPPED_CHANNEL",
   "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
   "full_acceptance": false,
   "external_dependencies": [
@@ -69,9 +69,10 @@
     "provider_key_available": false,
     "credential_value_recorded": false,
     "account_inspected": false,
-    "real_call_slot_consumed": false
+    "real_call_slot_consumed": true,
+    "provider_slot_consumed": false
   },
-  "offline_wiring_receipt": "ordinary-sec-acquisition/provider-wiring.json",
+  "offline_wiring_receipt": "ordinary-document-identity/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -83,7 +84,8 @@
     "full_native_material_test": "PASS_5_BASELINES_10_NEGATIVES_115.607_SECONDS",
     "cold_replay": "B03_DEFAULT_AND_D01_PYTHON39_PASS_NO_GIT_NO_NETWORK",
     "current_v15_closure": "sha256:6a70bf77aa16d63a9ac7b39282774ba34d907af3f510960c5f3e18401d5e084a",
-    "current_v15_execution_file_count": 364
+    "current_v15_execution_file_count": 364,
+    "historical_observation_only": true
   },
   "b13_development": {
     "specs": "NEW_SUCCESSOR_NUMERIC_AND_TEXT_DRAFTS",
@@ -112,19 +114,39 @@
     "full_acceptance": false
   },
   "source_refresh_dependencies": {
-    "jpmorgan_chase": "6 incoherent history shards; refresh metadata and required shards",
-    "salesforce": "prior annual HTML and one 8K header missing/failed; exact URLs in archived discovery report",
-    "actual_sec_acquisition_adapter": "OFFLINE_VERIFIED_READY_FOR_AUTHORIZED_REAL_CAPTURE"
+    "salesforce": "Saved dependency graph available after two actual captures",
+    "jpmorgan_chase": "Required current metadata,8history shards,priorannual and8Kheader acquired; discovered dependenciesavailable",
+    "actual_sec_acquisition_adapter": "LIVE_EXECUTED_WITH_PERSISTED_NATIVE_ATTEMPTS"
   },
   "sec_acquisition": {
-    "state": "IMPLEMENTED_OFFLINE_VERIFIED_NOT_YET_EXECUTED_LIVE",
+    "state": "13_ACTUAL_SUCCESS; JPM3_AND_SALESFORCE7_NATIVE_CANDIDATES_RESTORED",
     "source_test": "PASS_78.680_SECONDS",
     "provider_wiring_test": "PASS_38.446_SECONDS",
     "fast_suite": "100_PASS_79.304_SECONDS",
     "native_source_checkpoint": "JPM_A08_AND_MARRIOTT_B01_PASS",
     "restored_python39_preview": "PASS",
     "offline_material": "ordinary-sec-acquisition/",
-    "remaining_real_capture": "Salesforce missing prior annual HTML and8Kheader; JPM metadata and requiredhistory shards"
+    "remaining_real_capture": "None currently required for the resolved JPM/Salesforce dependency graph; other inputs evaluated only as needed",
+    "first_real_source": "Salesforce 0001108524-25-000083.hdr.sgml; accession/form verified; old inputs retain original credit",
+    "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+    "actual_material": "ordinary-document-identity/"
   },
-  "sec_wiring_receipt": "ordinary-sec-acquisition/sec-wiring.json"
+  "sec_wiring_receipt": "ordinary-document-identity/sec-wiring.json",
+  "document_identity_repair": {
+    "old_request_rows_rewritten": false,
+    "old_sources_redownloaded": false,
+    "new_live_calls": 0,
+    "first_failure": "C04_SAME_CIK_FILING_REQUIRED",
+    "fixed_candidate": "salesforce/C04 EXACT0 FY2026 OPEN; notformalpublication",
+    "material": "ordinary-document-identity/"
+  },
+  "latest_ci_observation": {
+    "head": "0ec5df8d9043186867177c29ec47decfac119a1b",
+    "run": 34751565540,
+    "conclusion": "cancelled",
+    "jobs_success": 9,
+    "jobs_cancelled": 1,
+    "cancelled_job": "vNext current-instant native Runs",
+    "full_pass": false
+  }
 }

@@ -469,3 +469,7 @@ Paramount的B02/B04/B05/B07按既有目录显示主体不连续导致“不具�
 <!-- capability-anchor: CAPABILITY.continuous_sec_acquisition -->
 
 `tools/vnext_continuous_sec.py plan`只说明已发现的具体来源依赖；`capture`在有限批准、当前接线证明和统一次数检查通过后发出一次SEC请求。输出区分已验证原件复用、真实获取成功、失败和未知；不会把已保存或测试回复写成新获取。即使一个URL失败，其他已核验输入仍可读取。候选行中的获取信用按实际引用的新请求标识，不代表所有输入都已刷新或390已完成。
+
+C04候选不再因获取工具的本地存储名误报年报身份不符；原文件名视图和原请求绑定同时可读。新获取若返回相同正文，独立候选也保留之前请求的头文件，能够完整重验。来源错误仍拒绝，OPEN候选不等于正式发布。
+
+<!-- capability-anchor: CAPABILITY.ordinary_document_identity -->

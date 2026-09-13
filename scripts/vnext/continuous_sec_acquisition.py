@@ -7,6 +7,7 @@ itself as an actual acquisition.
 from pathlib import Path
 import json
 import os
+from urllib.parse import urlsplit
 
 from sec_http import (SecHttpClient,validate_request_log_manifest,parse_request_log_rows,
                       request_log_attempt_id,validate_official_sec_url,request_log_prefix_bytes)
@@ -60,7 +61,8 @@ def initialize_source_inputs(*,root,requirement):
     _exclusive_write_bytes(path=root/fiscal_policy,content=(ROOT/fiscal_policy).read_bytes())
     # The ordinary source adapters consume the existing catalog/configuration
     # alongside data. Copy the bound rule inputs, not a parallel definition.
-    for relative,binding in requirement['execution_authority']['files'].items():
+    processing_requirement=requirement['parent_snapshot']
+    for relative,binding in processing_requirement['execution_authority']['files'].items():
         if not relative.startswith(('config/','catalog/')):continue
         raw=resolve_repository_file(repo_root=ROOT,repo_relative_path=relative).read_bytes()
         need({'sha256':sha256_bytes(content=raw),'size':len(raw)}==binding,
@@ -134,7 +136,9 @@ class SecAcquisitionSession:
             _exclusive_write_json(path=path/'sec-plan.json',value=plan)
             from .continuous_semantic_calls import preserve_execution_rules
             preserve_execution_rules(self,path)
-            target=self.data_root/'evidence/continuous-acquisition'/('%04d.body'%intent['ordinal'])
+            document_name=Path(urlsplit(url).path).name
+            need(bool(document_name),'SEC_ACQUISITION_DOCUMENT_NAME_MISSING')
+            target=self.data_root/'evidence/continuous-acquisition'/('%04d'%intent['ordinal'])/document_name
             if self.ledger.live:
                 self._check()
                 result=client.fetch(url=url,purpose='ISSUE28_DECLARED_SOURCE_DEPENDENCY',local_path=target)

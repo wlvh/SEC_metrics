@@ -188,9 +188,24 @@ def checkpoint_installation(*,source_root):
     if len(ledger)==entry['size'] and _git_blob_id(ledger)==entry['git_blob_id']:return None,set()
     checkpoint=_trusted_checkpoint(source_root)
     _,_,admitted=_validate_checkpoint(source_root,checkpoint,baseline);paths=set()
+    rows=parse_request_log_rows(text=ledger.decode('utf-8'))
+    selected=set()
     for item in admitted.values():
         for proof in [item['origin'],item['binding']]:
             paths.update(proof[k] for k in ['request_repo_relative_path','request_headers_repo_relative_path'])
+            selected.add(proof['request_attempt_id'])
+    # The unchanged reader verifies every immutable attempt for the same
+    # response identity before selecting the latest. Preserve that evidence
+    # when an authorized refresh returned identical bytes under the same name.
+    def identity(row):
+        return tuple(row[k] for k in ['source_url','content_sha256','document_name','accession'])
+    identities={identity(row) for i,row in enumerate(rows)
+                if request_log_attempt_id(row_index=i,row=row) in selected}
+    for row in rows:
+        if (identity(row) in identities and row['method']=='GET'
+                and row['status_code']=='200' and not row['error']
+                and row['repo_relative_path'].startswith('evidence/request_attempts/')):
+            paths.update(row[k] for k in ['repo_relative_path','headers_repo_relative_path'])
     return checkpoint,paths
 
 

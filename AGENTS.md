@@ -391,3 +391,5 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `scripts/vnext/r5_b06_scope.py` / `config/r5_b06_debt_sets_v3.json`：B06具名负债组成、原XBRL精度/对账、独立完整性门；现有Calculator/Projector共用。`catalog/r5/history/`保留v1/v2原字节。当前主路径合并不等于B06全部迁移/生产授权。
 
 - `normal_annual_input_v2.py` / `config/normal_fiscal_year_labels_v1.json`：用唯一未处于引语中的注册人原文定义选择财年，保留原始DEI/CF及冲突。每次验证来源字节后才复用进程内的有界解析结果；不缓存来源权限或调用信用。
+
+`ordinary_storage_identity.py`为普通C04增加同一不可变请求的URL文件名视图，原引用/请求/原件不改；`ordinary_source_authority.checkpoint_installation`保留同一响应身份的旧尝试证据，支持相同正文的元数据刷新后冷读。13次真实SEC获取、恢复的10坐标、首次C04/复制失败及修后材料见`docs/evidence/issue28_continuous/ordinary-document-identity/`；模型调用仍需当前进程密钥。

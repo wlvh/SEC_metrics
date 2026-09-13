@@ -7,15 +7,15 @@
   "contract_revision": "continuous-calls-and-b13-v1",
   "parent": {
     "requirement_id": "issue_28_v13",
-    "requirement_closure_hash": "sha256:fc6de0fa5027a4c98dba805db0dc4bde6ed65973b1e0098ec8160a50c8637a18",
+    "requirement_closure_hash": "sha256:50ecc4e719909d728802f48d20ce65957356d225509d358adbb4a7811301c836",
     "snapshot_files": {
       "CONTRACT.md": {
         "sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
         "size": 1211
       },
       "baseline_manifest.json": {
-        "sha256": "acd4d98955b779ff644eb568895061ab070906debb3d27fe6068dd8fe9ebb617",
-        "size": 70011
+        "sha256": "912807dfc2a4bf938403d9c61a324e3313527ce657f4ad0c9b38243035ab05b5",
+        "size": 70181
       },
       "decision_register.json": {
         "sha256": "9aa7071dfe51a3453a3db459071642d7b687cf5ab5265025a2401231b65d1489",
@@ -46,8 +46,8 @@
   },
   "new_rule_files": {
     "config/issue28_continuous_calls_v1.json": {
-      "sha256": "149841a0d06981548a738c4ff244455553d2394e6ea45660cfae18a1f6e64fbd",
-      "size": 3297
+      "sha256": "c4c3e0af5fe148631522cd63390eb7cf3f8e9a443acc8b7f3de172330782917a",
+      "size": 3301
     },
     "scripts/vnext/continuous_call_policy.py": {
       "sha256": "6f612b01c702e9581dbd672a308e10812104668f3a0e5d044095620e48614e73",
@@ -70,8 +70,8 @@
       "size": 2568
     },
     "scripts/vnext/continuous_sec_acquisition.py": {
-      "sha256": "a1eb12920ad4b812578c9a485acefce0327cc9af564969e3bae031a649ae14b4",
-      "size": 17745
+      "sha256": "499284e4085b6baa4b0f0560792255d0e5a71426404c6c2d1ce6e53e98231f21",
+      "size": 17991
     },
     "tools/vnext_continuous_sec.py": {
       "sha256": "e11b72ac9d9443d8c606389b4a3d9deaf418521908af6543702b98321b1d763c",
@@ -465,8 +465,8 @@
         "size": 4861
       },
       "config/issue28_continuous_calls_v1.json": {
-        "sha256": "149841a0d06981548a738c4ff244455553d2394e6ea45660cfae18a1f6e64fbd",
-        "size": 3297
+        "sha256": "c4c3e0af5fe148631522cd63390eb7cf3f8e9a443acc8b7f3de172330782917a",
+        "size": 3301
       },
       "config/issue28_normal_candidates_v1.json": {
         "sha256": "24bfb509d4e56127a70ffe5d016c5a2795341ffa51641eff9f0a2bd038e6d934",
@@ -829,8 +829,8 @@
         "size": 8329
       },
       "scripts/vnext/batch_workflow.py": {
-        "sha256": "201b5b8b489176a39411a5205b486f87401d955a0550149a0424a049891663e2",
-        "size": 43384
+        "sha256": "e2be7f1dd0497c698a5af7145ec0d0d9e4218d197213b62ad923926e56503bbc",
+        "size": 43964
       },
       "scripts/vnext/calculator.py": {
         "sha256": "96219758e07055cffc64c966b06fcbbaa127e7043d75ce8a7fcd754121dabacd",
@@ -869,8 +869,8 @@
         "size": 1383
       },
       "scripts/vnext/continuous_sec_acquisition.py": {
-        "sha256": "a1eb12920ad4b812578c9a485acefce0327cc9af564969e3bae031a649ae14b4",
-        "size": 17745
+        "sha256": "499284e4085b6baa4b0f0560792255d0e5a71426404c6c2d1ce6e53e98231f21",
+        "size": 17991
       },
       "scripts/vnext/continuous_semantic_calls.py": {
         "sha256": "6d64307fed02904d821ba7d9c56eb83ee5d0e141d6bfea38fc2c205697519e4f",
@@ -1041,16 +1041,20 @@
         "size": 11832
       },
       "scripts/vnext/ordinary_remaining_cases.py": {
-        "sha256": "150345ee294f7cf8daccfd362e94f8c78644f261da22b304d97bcf4fbea3b10f",
-        "size": 8364
+        "sha256": "bb9aedaae02d7fb6849194ee9bf14fbad53b7829565793900eeb92e768d15a2b",
+        "size": 8541
       },
       "scripts/vnext/ordinary_source_authority.py": {
-        "sha256": "a8eedf0dd1fa5cf3e2b95ab828cc7dd09e7420dfaf07e6a686b48e47581fb44e",
-        "size": 12657
+        "sha256": "153b8eeea1233d3ce33209ba352ef1265eca13ae82326125f9adf1acd793c795",
+        "size": 13611
       },
       "scripts/vnext/ordinary_source_session.py": {
         "sha256": "19a274d473cb7a23de71e5427f10820ddf9e35ce4b413743ac5e7dd5e56de829",
         "size": 14819
+      },
+      "scripts/vnext/ordinary_storage_identity.py": {
+        "sha256": "df5acef7b0a7ff3557e660f2aec822219d560a0845e847878700bbf67a308461",
+        "size": 2818
       },
       "scripts/vnext/ordinary_text_input.py": {
         "sha256": "4f15c69e99d9bc08962827a345810a443082c626d0dae06bfc141ad3b33880d4",

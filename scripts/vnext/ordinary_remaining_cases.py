@@ -21,6 +21,9 @@ def _current_structured_preparation(*,data_root,company_id,metric_id):
         prepared=prepare_saved_governance_input(repo_root=data_root,company_id=company_id)
     proofs=[*prepared['input_binding']['source_proofs'],*prepared['input_binding']['prepared_annual_input']['source_proofs']]
     admission=verify_ordinary_source_proofs(data_root=data_root,proofs=proofs)
+    if metric_id=='C04':
+        from .ordinary_storage_identity import auditor_document_views
+        prepared=auditor_document_views(repo_root=data_root,preparation=prepared)
     if metric_id=='B06':path,resolution=_b06_resolution(data_root=data_root,preparation=prepared)
     else:path,resolution=_governance_resolution(data_root=data_root,preparation=prepared,metric_id=metric_id)
     _need(admission==verify_ordinary_source_proofs(data_root=data_root,proofs=proofs),'ORDINARY_CURRENT_SOURCE_CHANGED_DURING_RESOLUTION')

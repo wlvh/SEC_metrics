@@ -731,3 +731,7 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 <!-- capability-anchor: CAPABILITY.continuous_sec_acquisition -->
 
 `SEC_ACQUISITION_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_continuous_sec_acquisition`复制固定原始来源，测试记录成功/503失败、前缀与两种信用隔离、禁止原件重抽/跨公司URL、保留有效来源、导入检查记录变造拒绝，并在单独未登记的隔离目录验证原SecHttpClient的真实HTTP构造和503零重试。随后将选中的新测试请求装入JPM A08原生Run，并在复制的运行包中冷读和重建预览。测试网络全部阻止，不创建真实获取信用。加入source-material层，保持每项240秒限制。
+
+### 普通SEC文档身份与同正文刷新
+
+`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_ordinary_storage_identity`核对同一不可变请求的物理/URL文件名等价，拒绝不同文档、URL、请求ID和可变旧文件映射。`tests.vnext.test_continuous_sec_acquisition`的完整来源方法使用同正文元数据刷新，实际安装候选并从复制的运行文件冷读；首次漏带旧头文件失败保留。当前快速入口包含文档身份测试。真实13次获取不在这些离线测试中重发；审核与还原命令见ordinary-document-identity材料。
