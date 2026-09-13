@@ -68,6 +68,9 @@ SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for 
 FAST_TESTS = tuple(s for s in FAST_TESTS if s not in SOURCE_TESTS)
 FAST_TESTS += ("tests.vnext.test_ordinary_source_session",)
 FAST_TESTS += ("tests.vnext.test_ordinary_source_authority",)
+FAST_TESTS += ("tests.vnext.test_continuous_call_ledger",)
+FAST_TESTS += ("tests.vnext.test_continuous_call_policy",)
+SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TIMEOUT_SECONDS = 240
 
 

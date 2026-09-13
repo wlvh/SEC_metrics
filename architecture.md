@@ -887,3 +887,12 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 <!-- capability-anchor: CAPABILITY.ordinary_update_metric_isolation -->
 
 正常公司入口复用同一控制器，为每个指标建立独立状态目录和成功引用。逐项异常在该指标内形成终态，其余指标继续。整组就绪与部分就绪分别报告；原组状态不被自动丢弃或覆盖。
+
+
+<!-- capability-anchor: CAPABILITY.continuous_call_allowance -->
+
+2026-09-13 后继 `issue_28_v14/PROFILE_DRIVEN_V15` 绑定真实用户代登记评论、现行模型配置和新执行文件集合。`continuous_call_ledger` 在固定外部目录上持有目录锁，以追加 claim、独立 intent、原 WB-3 marker/receipt 及 terminal 累计；缺终态保留可能调用并暂停受影响通道，跨目录或新阶段不能重置。测试账本身份不能转为真实调用。初始化锚与 claim 日志核对删除或失配，恢复先只读核对原终态，不重发未知请求。SEC 份额已登记，真实 SecHttpClient 后继接线尚待完成。
+
+<!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
+
+`continuous_semantic_calls` 先按受信旧获取证明重建 D04 来源，将每个已有完整单元分别序列化以遵守 200000 context 限制；原单元覆盖不丢失。新请求的来源、规则、配置、策略工厂及 WB-3 身份在后继版本下绑定。现有 DeepSeek transport 新增精确请求类型分派，仍仅原固定官方 opener；send 核对当前 WB-3 上下文、进程/令牌、预留与唯一 marker。未知 token/cost 在本后继显式为 null，旧整数/字符串观测验证保持。可行性终态保留原始 wire，明确没有原生 Evidence，不把协议通过升级为语义正确或正式成功。真实调用还须已完成且与当前执行文件集合一致的离线接线材料。

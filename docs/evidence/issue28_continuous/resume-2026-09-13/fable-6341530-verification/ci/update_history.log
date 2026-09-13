@@ -1,0 +1,255 @@
+vNext ordinary update history	Set up job	﻿2026-09-13T03:27:44.6297831Z Current runner version: '2.337.0'
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6325656Z ##[group]Runner Image Provisioner
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6326428Z Hosted Compute Agent
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6326924Z Version: 20260828.587
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6327465Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6328106Z Build Date: 2026-08-28T16:44:25Z
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6328698Z Worker ID: {54b2ddd4-ff44-474d-9086-363cfcef50d1}
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6329324Z Azure Region: eastus2
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6329807Z ##[endgroup]
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6331001Z ##[group]Operating System
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6331838Z Ubuntu
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6332278Z 24.04.5
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6332706Z LTS
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6333136Z ##[endgroup]
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6333590Z ##[group]Runner Image
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6334096Z Image: ubuntu-24.04
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6334569Z Version: 20260907.300.1
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6335539Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6337053Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6337942Z ##[endgroup]
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6338873Z ##[group]GITHUB_TOKEN Permissions
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6340917Z Contents: read
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6341732Z Metadata: read
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6342199Z ##[endgroup]
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6344182Z Secret source: Actions
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6344975Z Cache mode: write
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6345946Z Prepare workflow directory
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6674549Z Prepare all required actions
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.6724808Z Getting action download info
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.8850056Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+vNext ordinary update history	Set up job	2026-09-13T03:27:44.9798835Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+vNext ordinary update history	Set up job	2026-09-13T03:27:45.1502551Z Complete job name: vNext ordinary update history
+vNext ordinary update history	Check out repository	﻿2026-09-13T03:27:45.2450619Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2452048Z with:
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2452526Z   persist-credentials: false
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2453067Z   repository: wlvh/SEC_metrics
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2457293Z   token: ***
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2457741Z   ssh-strict: true
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2458195Z   ssh-user: git
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2458626Z   clean: true
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2459086Z   sparse-checkout-cone-mode: true
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2459623Z   fetch-depth: 1
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2460056Z   fetch-tags: false
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2460509Z   show-progress: true
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2460964Z   lfs: false
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2461658Z   submodules: false
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2462121Z   set-safe-directory: true
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.2462854Z ##[endgroup]
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3490220Z Syncing repository: wlvh/SEC_metrics
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3492711Z ##[group]Getting Git version info
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3493808Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3495518Z [command]/usr/bin/git version
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3530993Z git version 2.55.0
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3585303Z ##[endgroup]
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3619804Z Temporarily overriding HOME='/home/runner/work/_temp/4f43a30a-0151-4ab4-a9ac-cacf2e6b1e2f' before making global git config changes
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3622771Z Adding repository directory to the temporary git global config as a safe directory
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3626349Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3673410Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3677176Z ##[group]Initializing the repository
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3682653Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3757870Z hint: Using 'master' as the name for the initial branch. This default branch name
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3759557Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3760959Z hint: to use in all of your new repositories, which will suppress this warning,
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3762023Z hint: call:
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3762507Z hint:
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3763095Z hint: 	git config --global init.defaultBranch <name>
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3763795Z hint:
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3764453Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3765459Z hint: 'development'. The just-created branch can be renamed via this command:
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3766264Z hint:
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3766769Z hint: 	git branch -m <name>
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3767335Z hint:
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3768047Z hint: Disable this message with "git config set advice.defaultBranchName false"
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3771946Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3784550Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3827372Z ##[endgroup]
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3828685Z ##[group]Disabling automatic garbage collection
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3834162Z [command]/usr/bin/git config --local gc.auto 0
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3866670Z ##[endgroup]
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3867903Z ##[group]Setting up auth
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3868845Z Removing SSH command configuration
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3875516Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.3912818Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.4249503Z Removing HTTP extra header
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.4258880Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.4298026Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.4554544Z Removing includeIf entries pointing to credentials config files
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.4562503Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.4602062Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.4846754Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.4897107Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.4933341Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.4970480Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.5004797Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.5035950Z ##[endgroup]
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.5037070Z ##[group]Fetching the repository
+vNext ordinary update history	Check out repository	2026-09-13T03:27:45.5044914Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9ce88221427e362f461c7625e1df2539d28bccef:refs/remotes/pull/43/merge
+vNext ordinary update history	Check out repository	2026-09-13T03:28:11.3255372Z From https://github.com/wlvh/SEC_metrics
+vNext ordinary update history	Check out repository	2026-09-13T03:28:11.3256189Z  * [new ref]         9ce88221427e362f461c7625e1df2539d28bccef -> pull/43/merge
+vNext ordinary update history	Check out repository	2026-09-13T03:28:11.3260350Z ##[endgroup]
+vNext ordinary update history	Check out repository	2026-09-13T03:28:11.3261617Z ##[group]Determining the checkout info
+vNext ordinary update history	Check out repository	2026-09-13T03:28:11.3262641Z ##[endgroup]
+vNext ordinary update history	Check out repository	2026-09-13T03:28:11.3268149Z [command]/usr/bin/git sparse-checkout disable
+vNext ordinary update history	Check out repository	2026-09-13T03:28:11.3318903Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+vNext ordinary update history	Check out repository	2026-09-13T03:28:11.3351023Z ##[group]Checking out the ref
+vNext ordinary update history	Check out repository	2026-09-13T03:28:11.3354875Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/43/merge
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.4068879Z Updating files:  52% (4303/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.4388313Z Updating files:  53% (4362/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.4657765Z Updating files:  54% (4444/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.4774531Z Updating files:  55% (4526/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.5079686Z Updating files:  56% (4609/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.5350344Z Updating files:  57% (4691/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.5541955Z Updating files:  58% (4773/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.5904978Z Updating files:  59% (4856/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.6209326Z Updating files:  60% (4938/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.6378436Z Updating files:  61% (5020/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.8204847Z Updating files:  62% (5102/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.8887354Z Updating files:  63% (5185/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:12.9353581Z Updating files:  64% (5267/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.0055553Z Updating files:  65% (5349/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.0426146Z Updating files:  66% (5432/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.0690074Z Updating files:  67% (5514/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.0840016Z Updating files:  68% (5596/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.3111617Z Updating files:  69% (5679/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.3154143Z Updating files:  70% (5761/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.3338113Z Updating files:  71% (5843/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.3459365Z Updating files:  72% (5925/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.3500653Z Updating files:  73% (6008/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.3606649Z Updating files:  73% (6030/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.3704381Z Updating files:  74% (6090/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.3873579Z Updating files:  75% (6172/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.4037967Z Updating files:  76% (6255/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.4166939Z Updating files:  77% (6337/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.4255663Z Updating files:  78% (6419/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.4608988Z Updating files:  79% (6501/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.4864978Z Updating files:  80% (6584/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.4967460Z Updating files:  81% (6666/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.5087218Z Updating files:  82% (6748/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.5326036Z Updating files:  83% (6831/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.5546915Z Updating files:  84% (6913/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.5603133Z Updating files:  85% (6995/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.5664730Z Updating files:  86% (7077/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.5712109Z Updating files:  87% (7160/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.5757895Z Updating files:  88% (7242/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.5983426Z Updating files:  89% (7324/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.6246936Z Updating files:  90% (7407/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.6354401Z Updating files:  91% (7489/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.6488600Z Updating files:  92% (7571/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.6557351Z Updating files:  93% (7653/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.6658666Z Updating files:  94% (7736/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.6774813Z Updating files:  95% (7818/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.6893493Z Updating files:  96% (7900/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.6974296Z Updating files:  97% (7983/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7053565Z Updating files:  98% (8065/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7130949Z Updating files:  99% (8147/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7131552Z Updating files: 100% (8229/8229)
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7131882Z Updating files: 100% (8229/8229), done.
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7316407Z Note: switching to 'refs/remotes/pull/43/merge'.
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7316916Z 
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7317268Z You are in 'detached HEAD' state. You can look around, make experimental
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7318045Z changes and commit them, and you can discard any commits you make in this
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7318785Z state without impacting any branches by switching back to a branch.
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7319234Z 
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7319530Z If you want to create a new branch to retain commits you create, you may
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7320546Z do so (now or later) by using -c with the switch command. Example:
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7320948Z 
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7321117Z   git switch -c <new-branch-name>
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7321593Z 
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7321750Z Or undo this operation with:
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7321976Z 
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7322102Z   git switch -
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7322278Z 
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7322571Z Turn off this advice by setting config variable advice.detachedHead to false
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7323065Z 
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7323602Z HEAD is now at 9ce8822 Merge 6341530c67b5a0aa0ded858a2a60bddc56ee6a12 into 92fdd0e30c5f05db9d3d0136424934037dcff66e
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7410220Z ##[endgroup]
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7471867Z [command]/usr/bin/git log -1 --format=%H
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7499793Z 9ce88221427e362f461c7625e1df2539d28bccef
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7515975Z ##[group]Removing auth
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7516502Z Removing SSH command configuration
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7525236Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7555500Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7819861Z Removing HTTP extra header
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7825473Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.7863709Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8111743Z Removing includeIf entries pointing to credentials config files
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8116336Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8151972Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8153565Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8154607Z includeif.gitdir:/github/workspace/.git.path
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8155468Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8160474Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8187987Z /home/runner/work/_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8197903Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8237037Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8263838Z /home/runner/work/_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8276109Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8313706Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8339670Z /github/runner_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8348404Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8387884Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8414413Z /github/runner_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8422306Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8457918Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8699471Z Removing credentials config '/home/runner/work/_temp/git-credentials-bc7c2538-a256-43fc-b506-177362f6c988.config'
+vNext ordinary update history	Check out repository	2026-09-13T03:28:13.8707120Z ##[endgroup]
+vNext ordinary update history	Set up Python 3.14	﻿2026-09-13T03:28:13.8962411Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:13.8962819Z with:
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:13.8963039Z   python-version: 3.14
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:13.8963267Z   check-latest: false
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:13.8965915Z   token: ***
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:13.8966134Z   update-environment: true
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:13.8966390Z   allow-prereleases: false
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:13.8966626Z   freethreaded: false
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:13.8966849Z ##[endgroup]
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:14.0303210Z ##[group]Installed versions
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:14.0381978Z Successfully set up CPython (3.14.7)
+vNext ordinary update history	Set up Python 3.14	2026-09-13T03:28:14.0382707Z ##[endgroup]
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	﻿2026-09-13T03:28:14.0524800Z ##[group]Run python3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryUpdateCycleTest
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0525594Z [36;1mpython3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryUpdateCycleTest[0m
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0576841Z shell: /usr/bin/bash -e {0}
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0577120Z env:
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0577404Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0577853Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0578284Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0578665Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0579039Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0579414Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0579760Z   PYTHONDONTWRITEBYTECODE: 1
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0580033Z   PYTHONPATH: scripts
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0580607Z   ORDINARY_UPDATE_MATERIAL_ROOT: /home/runner/work/_temp/ordinary-update-34735535954-1
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:28:14.0581743Z ##[endgroup]
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:43:52.0218208Z test_real_history_idempotency_failure_and_recovery (tests.vnext.test_ordinary_update_cycle.OrdinaryUpdateCycleTest.test_real_history_idempotency_failure_and_recovery) ... ok
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:43:52.0219311Z 
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:43:52.0219533Z ----------------------------------------------------------------------
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:43:52.0220042Z Ran 1 test in 935.322s
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:43:52.0220240Z 
+vNext ordinary update history	Verify real update history, source changes and interruption recovery	2026-09-13T03:43:52.0220352Z OK
+vNext ordinary update history	Post Set up Python 3.14	﻿2026-09-13T03:43:52.0735445Z Post job cleanup.
+vNext ordinary update history	Post Check out repository	﻿2026-09-13T03:43:52.2199403Z Post job cleanup.
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3134740Z [command]/usr/bin/git version
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3177848Z git version 2.55.0
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3219017Z Temporarily overriding HOME='/home/runner/work/_temp/f1fa33a8-0419-46d3-98e7-da7abf5e449c' before making global git config changes
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3220885Z Adding repository directory to the temporary git global config as a safe directory
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3225119Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3258787Z Removing SSH command configuration
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3265291Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3302843Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3583307Z Removing HTTP extra header
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3589583Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3627927Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3884856Z Removing includeIf entries pointing to credentials config files
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3894325Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext ordinary update history	Post Check out repository	2026-09-13T03:43:52.3932000Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext ordinary update history	Complete job	﻿2026-09-13T03:43:52.4402625Z Cleaning up orphan processes

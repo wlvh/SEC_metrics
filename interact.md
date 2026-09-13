@@ -448,3 +448,12 @@ D04离线解释协议只提供开发用输入与保存响应检查。`all_source
 <!-- capability-anchor: CAPABILITY.ordinary_update_metric_isolation -->
 
 公司报告逐项列出状态，单项受限不阻止其他指标更新。last_verified_candidate保留原期间和经重验结果，current_input_matches=false时明确属于历史；不能重验则不展示为可信历史。汇总部分就绪仍返回退出码2。
+
+
+<!-- capability-anchor: CAPABILITY.continuous_call_allowance -->
+
+新增有限额度已经用户批准，预算及 B13 经济口径不再显示“待决定”。实际消耗、尚未形成终态的可能调用与测试模拟分别登记；HTTP402、UNKNOWN 或来源真实性失败后只停止受影响动作，安全开发继续。未知 usage/费用不显示为零；仓库没有金额上限或账户检查功能。
+
+<!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
+
+D04 可行性调用保存本次实际请求/响应和验证结果，但目前不生成原生指标或更新正式结果。调用控制器的 `FEASIBILITY_ONLY_NO_NATIVE_EVIDENCE` 终态表示尚未接入原生证据验收；不能据此判断来源已证明、语义路线成立或完整 390 验收通过。当前材料与剩余审阅范围见 `docs/evidence/issue28_continuous/resume-2026-09-13/`。

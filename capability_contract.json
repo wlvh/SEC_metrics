@@ -14,6 +14,32 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.continuous_call_allowance",
+        "type": "capability",
+        "status": "active",
+        "statement": "2026-09-13 用户新批准以 issue_28_v14 后继规则绑定真实代登记评论，累计 provider240/paid240/SEC80，固定外部目录及追加记录跨阶段/进程累计；记录模式无真实信用。丢失终态按可能调用计账并停止受影响通道，原样请求重抽、移除末记录、重置目录和重标测试模式拒绝。D-36 禁用金额预检/预留/上限，未知 usage/cost 在本后继保持 null，历史规则不改。SEC 获取接线、语义验收及生产仍分别验证。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_continuous_call_ledger.py::ContinuousCallLedgerTest.test_reopen_and_changed_phase_do_not_reset_exhausted_total",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
+        "anchor_id": "CAPABILITY.continuous_semantic_call_wiring",
+        "type": "capability",
+        "status": "active",
+        "statement": "后继 D04 可行性入口从受信保存原件生成完整来源单元及实际 deepseek-flash 请求，经显式工厂复用既有固定出口及 WB-3；每请求200000 context/8388608 bytes/120秒/零重试，超限拒绝而不扩大资源。真实执行要求绑定离线接线材料和统一额度。可行性响应、未知 usage 和原始失败保留；没有原生 Evidence 时终态明确不授原生成功，协议通过不证明语义正确、390验收或生产权限。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_continuous_semantic_calls.py::ContinuousSemanticCallsTest.test_actual_source_factory_existing_opener_and_controller_offline",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.recorded_source_update_session",
         "type": "capability",
         "status": "active",

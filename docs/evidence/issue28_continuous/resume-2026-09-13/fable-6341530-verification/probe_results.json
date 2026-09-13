@@ -1,0 +1,22 @@
+[
+ [
+  "latest-intent-points-to-older-parent (branch)",
+  "REJECTED UPDATE_JOURNAL_BRANCH_OR_CYCLE"
+ ],
+ [
+  "older-intent-previous-attempt-cycle",
+  "REJECTED UPDATE_JOURNAL_DISCONNECTED"
+ ],
+ [
+  "older-intent-configuration-id-changed",
+  "REJECTED UPDATE_INTENT_CONFIGURATION_CHANGED"
+ ],
+ [
+  "older-terminal-status-flipped-to-ready",
+  "REJECTED UPDATE_INTENT_PREDECESSOR_CHANGED"
+ ],
+ [
+  "current-json-success-pointer-to-nonready",
+  "REJECTED UPDATE_STATE_REFERENCE_CHAIN_CHANGED"
+ ]
+]

@@ -28,6 +28,14 @@
 
 一次明确授权可覆盖其范围内的分支、commit、push、PR和连续工程步骤，不逐项重复询问；开发授权不自动授予新费用、合并、生产采纳或active切换。用户现已正式采用[Issue #28连续开发与完整交付总委托](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102)，替代PR43旧局部开发范围与机械停点，按十家公司×39指标三个最终目标连续实施。旧关闭额度及原失败不恢复；新增费用集中核实申请，未获批继续合法离线工作。旧生产入口随相应正式采纳退出，不能提前破坏仍在使用的入口。cbede80的原则记录及旧评论保留历史含义；当前可恢复执行状态见`docs/evidence/issue28_continuous/`。
 
+### 2026-09-13 最终恢复批准
+
+[新增总预算与 B13 代登记](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538)来自用户本次对话明确批准；不是代码 APPROVE。provider240/paid240/SEC80 累计，deepseek-flash/Chat Completions/WB-3/SecHttpClient，原资源限制、零自动重试；旧额度不恢复。D-36 保持，无仓库金额预检/预留/上限或账户操作。B13仅 Ford/Enphase 的可比实际产量÷可用产能，以后继 Spec 实现，旧 Spec/Run不改。
+
+新 `continuous_call_policy`、`continuous_call_ledger`、`continuous_semantic_calls`、`continuous_call_wiring` 及 `issue_28_v14/PROFILE_DRIVEN_V15` 负责本轮明确绑定，不能走因模型配置字节变化而失效的 Issue15 默认入口或借用旧v8阶段。固定总账 `/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13`；真实调用要求先有绑定的离线接线证据。代码/测试/新批准不授 Ready、合并、采纳、部署或active切换。
+
+ChatGPT review5189571246 与用户转交 Fable5.1 按6341530及明示模块登记；不是全PR批准。Codex独立子任务9月17日前不重试/换模型/重置额度，用户转交模块报告补覆盖。未覆盖模块、安全开发、最终验收责任分别列在当前执行材料中，不再把预算/B13待批或旧340问题索引当成停工原因。
+
 ## 0. 按任务选择阅读路径
 
 首次进入仓库时先判断任务，再读取对应的标准流程。`SOP.md` 是标准工作流的一级导航；专项文档负责提供具体事实和命令。

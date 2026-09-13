@@ -708,3 +708,12 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 <!-- capability-anchor: CAPABILITY.ordinary_update_metric_isolation -->
 
 `ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT=/absolute/new/company-material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest`使用实际Pfizer B01/B06/B08检查独立成功、受限、重复输入、前项输入故障后后项继续、历史期间/当前状态分离、改公共行隔离及旧组历史不静默重置。所有网络入口禁止。
+
+
+<!-- capability-anchor: CAPABILITY.continuous_call_allowance -->
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_continuous_call_ledger` 检查新累计账本的跨进程互斥、重启累计、额度耗尽、重复请求、缺终态和402/UNKNOWN停止、末记录/目录删除及测试身份篡改。只用带身份的测试材料，模拟计数不充当真实 provider/paid/SEC。加入当前 fast 选择器。
+
+<!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
+
+`CONTINUOUS_WIRING_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_continuous_semantic_calls` 使用 Enphase 保存原件，走后继授权、工厂、实际请求和 WB-3。socket/DNS/SEC 被拒绝，官方 opener 只返回明确测试 wire，原生 marker 为 MOCK。验证私有出口令牌缺失与请求变造拒绝、未知 usage/费用不归零、父 V14 闭包不变。结果不是语义可行性结论或真实调用；加入 source-material 选择器，仍用原每项240秒限制。
