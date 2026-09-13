@@ -64,7 +64,7 @@ class OrdinaryZeroAiPrototypeTest(unittest.TestCase):
 
     def test_twenty_actual_coordinates_use_native_records_and_never_create_a_run(self):
         self.assertEqual(20,len(self.cases))
-        counts={'number':0,'structural':0,'withheld':0}
+        counts={'number':0,'structural':0,'withheld':0,'not_meaningful':0}
         for key,case in self.cases.items():
             with self.subTest(key=key):
                 self.assertEqual('NOT_CREATED',case['native_run_status'])
@@ -80,8 +80,11 @@ class OrdinaryZeroAiPrototypeTest(unittest.TestCase):
                 self.assertEqual(case['target_period']['period_end'],result['period_end'])
                 if result['publication']=='WITHHELD': counts['withheld']+=1
                 elif result['applicability']=='N_A_STRUCTURAL': counts['structural']+=1
-                else: counts['number']+=1
-        self.assertEqual({'number':15,'structural':1,'withheld':4},counts)
+                elif result['quality']=='NOT_MEANINGFUL':
+                    self.assertIsNone(result['value']);counts['not_meaningful']+=1
+                else:
+                    self.assertIsNotNone(result['value']);counts['number']+=1
+        self.assertEqual({'number':15,'structural':1,'withheld':3,'not_meaningful':1},counts)
 
     def test_revenue_is_recovered_from_real_same_accession_companyfacts(self):
         case=self.cases[('marriott_international','B01')]

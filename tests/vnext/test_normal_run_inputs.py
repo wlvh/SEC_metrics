@@ -48,11 +48,15 @@ class OrdinaryRunInputTest(unittest.TestCase):
         self.assertEqual('72400000000',instant['primary_result']['value'])
         self.assertEqual({'B12'},set(instant['compiled_specs']))
 
-    def test_blocked_b03_has_real_withheld_dependency_instead_of_an_incomplete_graph(self):
+    def test_short_period_b03_has_real_guarded_dependency_instead_of_an_incomplete_graph(self):
         with original_sources_only():
             value=prepare_ordinary_zero_ai_run_input(repo_root=ROOT,company_id='paramount_skydance_paramount_global',metric_id='B03')
         self.assertEqual({'B01','B03'},set(value['results']))
-        self.assertTrue(all(r['publication']=='WITHHELD' and r['value'] is None for r in value['results'].values()))
+        self.assertTrue(all(r['publication']=='PUBLISHED' and r['quality']=='NOT_MEANINGFUL'
+            and r['reason_code']=='ANNUAL_DURATION_OUT_OF_RANGE' and r['value'] is None
+            for r in value['results'].values()))
+        self.assertEqual(value['target_period'],{'fiscal_year':2025,'period_start':'2025-08-08','period_end':'2025-12-31'})
+        self.assertTrue(all(t['input_observation_ids'] for t in value['traces'].values()))
         self.assertEqual('NOT_CREATED',value['native_run_status'])
 
 
