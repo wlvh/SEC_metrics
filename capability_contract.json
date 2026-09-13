@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.ordinary_special_debt_scope",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通B06在已验证当前修订和同范围分母守卫之后，按既有银行/工业适用范围从原HTML与XML独立重建当前账面融资行、期间、主体、USD单位及工业维度/可见列标题。只保留已报告分项小计、相同范围归母权益证据与具体未决关系，不能把银行融资小计当完整B06或用工业净资产/合并权益替代工业归母权益；当前特殊范围路线保留WITHHELD及原生来源图，不声称完整比值、无披露或正式发布。",
+        "audience": [
+          "developer",
+          "reviewer",
+          "operator"
+        ],
+        "test_anchor": "tests/vnext/test_ordinary_special_debt_scope.py::SpecialDebtScopeTest.test_actual_scope_reconstruction_does_not_turn_subtotals_into_complete_ratios",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.ordinary_document_identity",
         "type": "capability",
         "status": "active",

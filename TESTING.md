@@ -735,3 +735,7 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 ### 普通SEC文档身份与同正文刷新
 
 `PYTHONPATH=scripts python3 -m unittest tests.vnext.test_ordinary_storage_identity`核对同一不可变请求的物理/URL文件名等价，拒绝不同文档、URL、请求ID和可变旧文件映射。`tests.vnext.test_continuous_sec_acquisition`的完整来源方法使用同正文元数据刷新，实际安装候选并从复制的运行文件冷读；首次漏带旧头文件失败保留。当前快速入口包含文档身份测试。真实13次获取不在这些离线测试中重发；审核与还原命令见ordinary-document-identity材料。
+
+### 普通B06银行和工业范围
+
+`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_ordinary_special_debt_scope`读取JPM/Ford原HTML/XML，验证融资分项小计及明确非数值限制，并拒绝金额冲突、假会计命名空间、工业列改标及原件未绑定变造。该6项来源测试已加入当前SOURCE_TESTS。`SPECIAL_DEBT_NATIVE_BATCH=<两项原生批次> SPECIAL_DEBT_ATTACK_ROOT=<新外部目录> PYTHONPATH=scripts python3 -m unittest tests.vnext.test_special_debt_run_material`验证原生结果仍WITHHELD，重新签名的完整比值/无披露记录不能替换。普通CLI两项批次的exit2表示预期保留两个缺证状态，不得写成完整B06成功。

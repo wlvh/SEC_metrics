@@ -66,8 +66,12 @@ def prepare_case(*, data_root, company_id, metric_id):
         # a ratio already known to be meaningless from nonpositive equity.
         guarded = prepare_current_guarded_b06_result(repo_root=data_root,company_id=company_id)
         if guarded["status"] != "NOT_MEANINGFUL":
-            from .normal_note_debt_results import prepare_note_debt_case
-            note_debt = prepare_note_debt_case(repo_root=data_root,company_id=company_id)
+            if guarded['reason_code'] == 'EXISTING_SPECIAL_SCOPE_REQUIRED':
+                from .ordinary_special_debt_scope import prepare_special_debt_case
+                note_debt = prepare_special_debt_case(repo_root=data_root,company_id=company_id)
+            if note_debt is None:
+                from .normal_note_debt_results import prepare_note_debt_case
+                note_debt = prepare_note_debt_case(repo_root=data_root,company_id=company_id)
             if note_debt is None:
                 from .normal_bond_debt_results import prepare_bond_debt_case
                 note_debt = prepare_bond_debt_case(repo_root=data_root,company_id=company_id)

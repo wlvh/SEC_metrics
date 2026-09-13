@@ -1,6 +1,6 @@
 {
   "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
-  "status": "CONTINUING_ACTUAL_SOURCE_RECONSTRUCTION_AND_REMAINING_CORE_WORK",
+  "status": "CONTINUING_SPECIAL_B06_SCOPE_AND_REMAINING_CORE_DELIVERY",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
   "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
@@ -34,9 +34,9 @@
     "unknown": 0
   },
   "current_work": [
-    "Archive13 actualSEC attempts and10 restored native coordinates; preserve firstC04 failure and source-copy failure with repaired evidence",
-    "Continue B13 source interpretation and native results, remaining scope/debt limitations, and D03/D04 semantics when credential available",
-    "Complete390/update/publication/rollback/retirement preparation and outstanding independent module review"
+    "Complete native source-bound verification and review archive for bank/industrial B06 scoped limitations",
+    "Continue B13 complete source interpretation/native results and D03/D04 real semantics when credential is available",
+    "Complete390/normal update/publication rollback retirement and outstanding independent module reviews"
   ],
   "next": [
     "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
@@ -72,7 +72,7 @@
     "real_call_slot_consumed": true,
     "provider_slot_consumed": false
   },
-  "offline_wiring_receipt": "ordinary-document-identity/provider-wiring.json",
+  "offline_wiring_receipt": "ordinary-special-debt-scope/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -131,7 +131,7 @@
     "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
     "actual_material": "ordinary-document-identity/"
   },
-  "sec_wiring_receipt": "ordinary-document-identity/sec-wiring.json",
+  "sec_wiring_receipt": "ordinary-special-debt-scope/sec-wiring.json",
   "document_identity_repair": {
     "old_request_rows_rewritten": false,
     "old_sources_redownloaded": false,
@@ -148,5 +148,17 @@
     "jobs_cancelled": 1,
     "cancelled_job": "vNext current-instant native Runs",
     "full_pass": false
-  }
+  },
+  "ordinary_special_debt_scope": {
+    "source_tests": "6_PASS_23.968_SECONDS",
+    "bank_reported_subtotal_usd": "970329000000",
+    "industrial_reported_debt_usd": "21919000000",
+    "bank_limit": "BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED",
+    "industrial_limit": "INDUSTRIAL_ATTRIBUTABLE_EQUITY_NOT_ESTABLISHED",
+    "native_batch": "TWO_WITHHELD_OPEN_RUNS_AND_PUBLIC_ROWS; CLI_EXIT2_EXPECTED",
+    "full_B06_ratios": false,
+    "full_390_acceptance": false,
+    "material": "ordinary-special-debt-scope/"
+  },
+  "current_v15_development_closure": "sha256:34cd0c86d706806994384993440bf253884572fb4df448d80716fb809375107c"
 }

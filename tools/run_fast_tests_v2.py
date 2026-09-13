@@ -75,6 +75,7 @@ FAST_TESTS += ("tests.vnext.test_ordinary_storage_identity",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_utilization_source.CapacitySourceMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_sec_acquisition",)
+SOURCE_TESTS += ("tests.vnext.test_ordinary_special_debt_scope",)
 SOURCE_TIMEOUT_SECONDS = 240
 
 

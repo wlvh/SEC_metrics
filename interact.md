@@ -473,3 +473,7 @@ Paramount的B02/B04/B05/B07按既有目录显示主体不连续导致“不具�
 C04候选不再因获取工具的本地存储名误报年报身份不符；原文件名视图和原请求绑定同时可读。新获取若返回相同正文，独立候选也保留之前请求的头文件，能够完整重验。来源错误仍拒绝，OPEN候选不等于正式发布。
 
 <!-- capability-anchor: CAPABILITY.ordinary_document_identity -->
+
+银行或工业B06现在可显示原件重建的融资范围和具体未决关系；已报告小计只在证据中保留，指标值仍为空。缺银行融资租赁完整性或工业归母权益时，不显示完整比值、N/A或“无披露”。不受影响的公司继续原债务路线。
+
+<!-- capability-anchor: CAPABILITY.ordinary_special_debt_scope -->

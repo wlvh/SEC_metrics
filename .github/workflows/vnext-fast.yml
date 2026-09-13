@@ -139,6 +139,25 @@ jobs:
           NOTE_DEBT_NATIVE_BATCH: ${{ runner.temp }}/ordinary-note-debt-${{ github.run_id }}-${{ github.run_attempt }}
           NOTE_DEBT_ATTACK_ROOT: ${{ runner.temp }}/ordinary-note-debt-attacks-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_note_debt_run_material
+      - name: Build bank and industrial source gaps without complete ratios
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          SPECIAL_DEBT_NATIVE_BATCH: ${{ runner.temp }}/ordinary-special-debt-${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          python3 - <<'PY'
+          import os, subprocess
+          result = subprocess.run(['python3', 'tools/vnext_normal_candidate.py',
+              '--company', 'jpmorgan_chase', '--company', 'ford_motor_company', '--metric', 'B06',
+              '--output-root', os.environ['SPECIAL_DEBT_NATIVE_BATCH']])
+          assert result.returncode == 2, result.returncode
+          PY
+      - name: Reject re-signed ratios and false disclosure absence
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          SPECIAL_DEBT_NATIVE_BATCH: ${{ runner.temp }}/ordinary-special-debt-${{ github.run_id }}-${{ github.run_attempt }}
+          SPECIAL_DEBT_ATTACK_ROOT: ${{ runner.temp }}/ordinary-special-debt-attacks-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_special_debt_run_material
   source-update-native-runs:
     name: vNext recorded source update Runs
     runs-on: ubuntu-latest

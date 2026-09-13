@@ -918,3 +918,7 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 普通C04通过ordinary_storage_identity保留原引用，再为同一个固定不可变请求建立URL文件名视图。batch_workflow仍按日志中的物理文件名核对原body/headers、URL、accession和请求ID；可变旧文件不能使用此映射。ordinary_source_authority在安装时保留同一响应身份的全部不可变尝试，维持原读取器逐份核验、再选择最新请求的规则。旧业务解析、旧请求与原始字节不改。
 
 <!-- capability-anchor: CAPABILITY.ordinary_document_identity -->
+
+普通B06的特殊范围适配器在当前修订检查和原分母守卫之后运行。ordinary_special_debt_scope按注册行业及原件维度/可见工业列重建原HTML/XML报告分项，复用既有原生解析、精度检查、Spec与withheld Calculator；加入同一Run来源图和选择记录。没有给缺融资租赁完整性或缺工业归母权益的坐标发放完整比值，旧三个债务语法及原定义保留。
+
+<!-- capability-anchor: CAPABILITY.ordinary_special_debt_scope -->

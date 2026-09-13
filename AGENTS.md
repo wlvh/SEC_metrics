@@ -393,3 +393,5 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `normal_annual_input_v2.py` / `config/normal_fiscal_year_labels_v1.json`：用唯一未处于引语中的注册人原文定义选择财年，保留原始DEI/CF及冲突。每次验证来源字节后才复用进程内的有界解析结果；不缓存来源权限或调用信用。
 
 `ordinary_storage_identity.py`为普通C04增加同一不可变请求的URL文件名视图，原引用/请求/原件不改；`ordinary_source_authority.checkpoint_installation`保留同一响应身份的旧尝试证据，支持相同正文的元数据刷新后冷读。13次真实SEC获取、恢复的10坐标、首次C04/复制失败及修后材料见`docs/evidence/issue28_continuous/ordinary-document-identity/`；模型调用仍需当前进程密钥。
+
+`ordinary_special_debt_scope.py`接入普通B06当前输入/分母守卫之后，按银行行业与原件工业维度/列标题重建已报告融资分项；HTML/XML金额、单位、期间、主体一致才保留小计。JPM融资租赁完整性和Ford工业归母权益仍为明确非数值限制，不依赖旧逐公司范围复核表，不改历史Spec。材料见`ordinary-special-debt-scope/`。

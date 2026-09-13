@@ -307,3 +307,7 @@ A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主
 当前开发中的C04候选可区分SEC原文档名与获取工具的本地保存名，并保留原请求追溯；仍须核对实际主体、年度、审计师与事件证据。开发候选与正式结果分开，生产active未随本次获取或修复改变。
 
 <!-- capability-anchor: CAPABILITY.ordinary_document_identity -->
+
+检查银行/工业B06空值时，可从候选选择记录查看两份原件共同证明的融资分项、工业列和具体尚缺的证明。小计和工业净资产不能自行替代完整债务比率；正式系统仍以active版本为准。
+
+<!-- capability-anchor: CAPABILITY.ordinary_special_debt_scope -->
