@@ -444,3 +444,7 @@ D04离线解释协议只提供开发用输入与保存响应检查。`all_source
 <!-- capability-anchor: CAPABILITY.ordinary_b06_inclusive_table -->
 
 普通B06候选在原债务表逐项证明总额已含融资租赁时，只计入一次租赁，并显示同一当前主体期末的债务权益比。Paramount候选保留当前主体及修订来源；旧WITHHELD记录保留，当前结果不证明前后主体全年可比，也不修改正式报告或active。
+
+<!-- capability-anchor: CAPABILITY.ordinary_update_metric_isolation -->
+
+公司报告逐项列出状态，单项受限不阻止其他指标更新。last_verified_candidate保留原期间和经重验结果，current_input_matches=false时明确属于历史；不能重验则不展示为可信历史。汇总部分就绪仍返回退出码2。

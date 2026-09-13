@@ -1,6 +1,28 @@
 # Current continuation state
 
-Continue the active Issue #28 full delivery mandate. This is the current checklist, not a stop instruction. Superseded checklist text remains in Git; historical comments, sources, calls, failures and version-specific archives remain unchanged. All local verification/archive processes mentioned here are terminal; no live local session exists.
+Continue the active Issue #28 full delivery mandate. This is the current checklist, not a stop instruction. Superseded checklist text remains in Git; historical comments, sources, calls, failures and version-specific archives remain unchanged. Use the active increment below for live process state; older records remain terminal.
+
+## Current metric-isolation increment ready for delivery
+
+The original mixed-result probe is terminal: /tmp/sec_metrics_issue28_continuous/update-cycle-mixed-before/observed.json records Pfizer B01 PUBLISHED, B06 WITHHELD, but successful_attempt=null in the old group controller;133.881383seconds. It is an actual offline result, not a guessed defect. Original complete material/log is retained.
+
+Current code adds ordinary_update_cycle.run_company, which composes the same run_once controller in company/metrics/<metric_id> directories. CLI --process now uses it. Each metric's exception/status is isolated; aggregate UPDATES_READY/PARTIAL/INCOMPLETE preserves per-metric statuses. run_once additionally returns source/Run-revalidated last_verified_candidate with original targets, actual result records, row directory and current_input_matches. Input failure keeps the original period with current_input_matches=false; damaged history returns no trusted result for that metric. Existing group histories are refused by this facade instead of silently restarted; runtime/deployment migration remains unimplemented. No formula, source gate, budget, provider or publication change.
+
+Current UNFROZEN V14 sha256:c117d27e5be203d9353ec4e659839cbce4591c3b299d4464d413dbce536add97;351executionfiles. Generation log update-metric-isolation-v14-first.log. Do not modify runtime or regenerate while current reentry processes run.
+
+Actual new material /private/tmp/sec_metrics_issue28_continuous/update-metric-isolation-first is terminalPASS404.973s. Seven checks over actual Pfizer B01/B06/B08: independent positive/withheld outcomes; repeats create noRun; earlier input failure does not stop later success; historical periods/current-match separated; restored input reuse; tampered B01 CSV blocks onlyB01; old group history does not silently restart. B01=62579000000USD FY2025. B01 success340d3c5540b3456ebc511fea96d36720; B08 success54e2b83cb239445d89710b44b54fef0a. Fast97PASS80.772s, company/semantic/egressPASS. No full50source rerun or new independent review is claimed.
+
+All local processes are TERMINAL. CLI reentry on copied update-metric-isolation-cli-state/pfizer and Python3.9 new-process reentry on final material bothPASS: UPDATES_PARTIAL, B01/B08 NO_SOURCE_CONTENT_CHANGE, B06 PREVIOUS_INPUT_WITHHELD, all new_candidate_created=false, no newRuns/calls. Logs/JSON update-metric-isolation-cli and update-metric-isolation-reentry39. Socket/DNS/HTTP and Run creation were blocked. Existing installed runtime/history retained; no noGit lifecycle claim. Do not poll/restart ended82381/63532/62833/91887/81929/96211/42811/65541.
+
+Archive docs/evidence/issue28_continuous/ordinary-update-metric-isolation COMPLETE:24indexedfiles+manifest, original grouped593members/4473496bytes, current independent1780members/13100105bytes, CLI44control/historymembers/7403bytes. Every member/gzip original/fileSHA verified. Exact helper and reentry results retained. Script /tmp/sec_metrics_issue28_continuous/archive-update-metric-isolation.py. Current code/test/CI/doc/evidence are ready for commit/alignment/push/samePR43/Issue current comment readback; do not repeat unchanged tests. New separate30-minute CIjob ordinary-update-metrics runs actual mixed material; original update-cycle CI retains all11 scenarios in its own class. All material remains uncommitted until current gitstate proves delivery.
+
+Current093c5cb CI34732581160 remains in_progress at update-cycle-ci-before-isolation-delivery.json: fast/currentinstant/Marriottremaining/debt/source-update/update-history SUCCESS; source-material/ordinary-native/JPMremaining still running. This is prior351b536 delivery evidence, not current351c117 evidence. All new business calls0/0/0; active unchanged; pending budget/B13/independent review unchanged.
+
+## Latest delivery receipt
+
+093c5cbde6c35a43b897d112c9b37a0653d543e8 IS COMMITTED AND PUSHED to the same Draft PR43. Committed alignmentPASS. PR body64814bytes/1681exactdiffpaths, reconstructed prefix tree and remote head/body/OPEN/Draft readbackPASS. Issue/currentcomment updated2026-09-13 and read back exactly with the complete adopted mandate suffix unchanged. Local records pr43-update-cycle-*, issue/comment-update-cycle-* under /tmp/sec_metrics_issue28_continuous. CI34732581160 on this exact head is in_progress at latest snapshot update-cycle-ci-second.json. Do not rerun old terminal CI or transfer prior-head success.
+
+The increment and archive below are delivered; do not repeat their commit/push. Immediate mixed-result probe /tmp/sec_metrics_issue28_continuous/update-cycle-mixed-before uses actual Pfizer B01+B06 through the delivered runtime, with socket/DNS/HTTP blocked. Its completed result and subsequent correction are recorded in the active increment above.
 
 ## Latest increment: ordinary update history
 
@@ -21,7 +43,7 @@ Actual local verification, all terminal:
 
 Previous delivered HEAD338bbc8f96bec6cc03d11ae52a23b08a66d8093f CI34729030720 is TERMINAL FAILURE: sevenjobsSUCCESS and source-materialFAILED. The test_b06_current_input six-method selector exceeded its240-second cap (240.070s); other44selectors passed; fulljob1330.622s. Original log and CI snapshot are in the current archive. tools/run_fast_tests_v2.py splits all six actual methods into individual selectors; cap240seconds and assertions remain unchanged; current source count50. New ordinary-update-cycle CI job has30minutes. A future/current delivery head requires its own CI; never transfer prior-head credit.
 
-This increment is ready for commit/alignment/push and samePR43/Issue/current-comment maintenance. Verify liveHEAD/delivery before repeating any action. Committed alignment must pass before push. PR body must retain exact current diff leaves and fit65536bytes; previous body63224bytes/1635paths at338bbc8. Use one space per directory level, condense older narrative and reconstruct leaves against git diff --name-only origin/main...HEAD.
+This increment has been delivered as recorded above. Verify liveHEAD/delivery before repeating any action. Committed alignment must pass before push. PR body must retain exact current diff leaves and fit65536bytes; previous body63224bytes/1635paths at338bbc8. Use one space per directory level, condense older narrative and reconstruct leaves against git diff --name-only origin/main...HEAD.
 
 ## Previous delivered current-source routes
 

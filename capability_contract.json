@@ -813,6 +813,20 @@
         "test_anchor": "tests/vnext/test_ordinary_update_cycle.py::OrdinaryUpdateCycleTest.test_real_history_idempotency_failure_and_recovery",
         "test_status": "automated_recorded",
         "since": "2026-09-13"
+      },
+      {
+        "anchor_id": "CAPABILITY.ordinary_update_metric_isolation",
+        "type": "capability",
+        "status": "active",
+        "statement": "正常公司更新按指标维护成功引用，单项受限、输入失败或历史完整性错误不停止其他指标；报告各项终态及整组/部分就绪。经原生重验的历史结果保留原期间和当前输入是否匹配，无法重验时不展示为可信历史。旧整组状态不静默重置。仍不授予真实获取、常驻部署或正式发布。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_ordinary_update_cycle.py::OrdinaryCompanyUpdateTest.test_successful_metrics_survive_withheld_and_failed_neighbours",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
       }
     ],
     "capability_boundaries": [

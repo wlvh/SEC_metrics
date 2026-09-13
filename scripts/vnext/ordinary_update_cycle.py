@@ -201,9 +201,9 @@ def run_once(*,state_root,source_root,company_id,metric_ids):
     _need(root!=source and root not in source.parents and source not in root.parents,'UPDATE_SOURCE_STATE_ROOTS_OVERLAP')
     with _locked(root):
         configuration=_config(root,source,company_id,metric_ids);state=_recover(root,_state(root,configuration),configuration)
-        previous=None
+        previous=None;successful_results={}
         if state['successful_attempt'] is not None:
-            previous=_terminal(root,state['successful_attempt']);_verify_candidate(root,previous,configuration)
+            previous=_terminal(root,state['successful_attempt']);successful_results=_verify_candidate(root,previous,configuration)
         identity=uuid4().hex;work=_attempt(root,identity)
         intent=_record(work/'intent.json',{'record_type':'ORDINARY_UPDATE_INTENT','attempt_id':identity,
             'configuration_id':configuration['record_id'],'started_at':_now(),'previous_attempt':state['latest_attempt'],
@@ -232,7 +232,7 @@ def run_once(*,state_root,source_root,company_id,metric_ids):
                 _need(sha256_file(path=source/'evidence/requests_log.csv')==ledger,'UPDATE_SOURCE_CHANGED_DURING_EXECUTION')
                 status='CANDIDATE_READY' if all(v['publication']=='PUBLISHED' for v in metrics.values()) else 'CANDIDATE_WITHHELD'
                 if status=='CANDIDATE_READY':
-                    _verify_candidate(root,{'status':status,'configuration_id':configuration['record_id'],
+                    successful_results=_verify_candidate(root,{'status':status,'configuration_id':configuration['record_id'],
                         'attempt_id':identity,'input':descriptor,'metrics':metrics},configuration)
         except Exception as failure:
             error={'error_type':type(failure).__name__,'reason':str(failure)}
@@ -242,8 +242,36 @@ def run_once(*,state_root,source_root,company_id,metric_ids):
             'completed_at':_now(),'input':descriptor,'metrics':metrics,'error':error,
             'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False})
         if status=='CANDIDATE_READY':
-            state['successful_attempt']=identity
+            state['successful_attempt']=identity;previous=terminal
         state['latest_attempt']=identity;atomic_write_json(path=root/'current.json',value=state)
         return {'status':status,'attempt_id':identity,'latest_attempt':identity,
             'successful_attempt':state['successful_attempt'],'previous_successful_attempt':intent['previous_successful_attempt'],
+            'last_verified_candidate':None if previous is None else {
+                'attempt_id':previous['attempt_id'],'targets':previous['input']['targets'],
+                'current_input_matches':descriptor==previous['input'],'results':successful_results,
+                'rows_root':str(_attempt(root,previous['attempt_id'])/'rows')},
             'new_candidate_created':bool(metrics),'terminal':terminal,'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
+
+
+def run_company(*,state_root,source_root,company_id,metric_ids):
+    """Keep each metric's candidate independent of other metric failures."""
+    root=normal._external(Path(state_root));policy=normal._policy(normal.ROOT)
+    _need(type(metric_ids) is list and metric_ids and len(metric_ids)==len(set(metric_ids))
+          and set(metric_ids)<=set(policy['metric_ids']),'UPDATE_METRIC_SCOPE_INVALID')
+    # Earlier group histories remain intact and must use their pinned runtime.
+    # Never silently start unrelated histories beside an existing group pointer.
+    _need(not (root/'configuration.json').exists() and not (root/'current.json').exists(),
+          'UPDATE_GROUP_HISTORY_REQUIRES_PINNED_RUNTIME')
+    outcomes=[]
+    for metric in sorted(metric_ids):
+        try:
+            outcome=run_once(state_root=root/'metrics'/metric,source_root=source_root,
+                             company_id=company_id,metric_ids=[metric])
+        except Exception as error:
+            outcome={'status':'UPDATE_BLOCKED','error_type':type(error).__name__,'reason':str(error),
+                     'last_verified_candidate':None,'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
+        outcomes.append({'metric_id':metric,**outcome})
+    ready=sum(o['status'] in {'CANDIDATE_READY','NO_SOURCE_CONTENT_CHANGE'} for o in outcomes)
+    return {'company_id':company_id,'status':'UPDATES_READY' if ready==len(outcomes) else
+            'UPDATES_PARTIAL' if ready else 'UPDATES_INCOMPLETE','metrics':outcomes,
+            'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}

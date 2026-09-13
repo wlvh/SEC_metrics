@@ -704,3 +704,7 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 `ORDINARY_UPDATE_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_update_cycle`使用真实Run及两份原始清单版本验证内容身份、重复请求、失败/恢复、成功终态与引用写入中断、未完成意图、并发、伪造引用、改公共行和相同WITHHELD输入不重复建Run。网络/HTTP/DNS均禁用。新增历史测试请求只能选择受信不可变尝试，相关源会话测试继续在fast层运行。材料不等于实时新财报或完整生产生命周期验证。
 
 338bbc8的来源CI中，B06当前输入模块六项测试合计达到240秒而超时，其他七项CI作业成功。当前source-material选择器将这六项按实际方法分别运行，仍保持每项240秒，方法集合与源码逐项核对无遗漏；源码选择器总数由45变为50。旧超时不重写为通过，拆分后的六项单独复验。
+
+<!-- capability-anchor: CAPABILITY.ordinary_update_metric_isolation -->
+
+`ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT=/absolute/new/company-material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest`使用实际Pfizer B01/B06/B08检查独立成功、受限、重复输入、前项输入故障后后项继续、历史期间/当前状态分离、改公共行隔离及旧组历史不静默重置。所有网络入口禁止。

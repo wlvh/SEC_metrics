@@ -6,7 +6,9 @@
 python3 tools/vnext_normal_update.py --process --data-root /absolute/source-workspace --state-root /absolute/update-state --company marriott_international --metric B01
 ```
 
-不指定`--data-root`时读取仓库已有来源；不指定公司或指标时选择当前配置范围。原有只读检查和`--discover-sources`入口保留。更新状态按公司隔离，配置固定公司、指标、来源目录和运行规则版本；改变这些配置会明确拒绝，不悄悄重置旧历史。正式部署和代码版本接续尚未由本接口完成。
+不指定`--data-root`时读取仓库已有来源；不指定公司或指标时选择当前配置范围。原有只读检查和`--discover-sources`入口保留。正常入口将状态保存在公司目录下的`metrics/<metric_id>`，每个指标独立保留成功引用；一个指标受限、当前输入失败或历史损坏不停止其他指标。每个指标配置固定公司、指标、来源目录和运行规则版本；改变这些配置会明确拒绝，不悄悄重置旧历史。正式部署和代码版本接续尚未由本接口完成。
+
+公司汇总为`UPDATES_READY`、`UPDATES_PARTIAL`或`UPDATES_INCOMPLETE`，各指标仍保留下表的具体状态。非全部就绪时CLI返回2，但继续完成其余指标。`last_verified_candidate`给出经源与Run重验的结果、原始期间、公共行目录以及`current_input_matches`；后者为false时只能将它作为历史结果，不能写成本期更新成功。无法重验时该字段为null。旧版本的整组状态目录会明确拒绝，不会悄悄重新开始；旧材料继续用其固定运行包读取，部署时版本接续仍待完成。
 
 每次检查先重验已有成功候选，再读取当前来源。输入身份包含来源正文、实际期间、Spec及运行规则，不把请求时间或请求身份本身当作财务内容变化。
 
@@ -28,3 +30,5 @@ ORDINARY_UPDATE_MATERIAL_ROOT=/absolute/new/update-material PYTHONDONTWRITEBYTEC
 ```
 
 该材料没有证明新财年在线发现、真实来源获取、模型语义判断、常驻调度、全部39项或正式发布完成。新增预算、持续生产权限、代码版本迁移和最终生产确认仍需按Issue #28总委托落实。
+
+实际混合场景通过`ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT=/absolute/new/company-material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_update_cycle.OrdinaryCompanyUpdateTest`验证：Pfizer收入和流动比率独立成功，债务保持受限；重复检查不新建Run，收入输入故障保留原期间且标为历史，后续指标仍完成；篡改收入公共行只阻止该指标。

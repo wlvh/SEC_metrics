@@ -102,4 +102,68 @@ class OrdinaryUpdateCycleTest(unittest.TestCase):
             'calls':{'provider':0,'paid':0,'sec':0},'real_new_filing_verified':False,'production_authorized':False},indent=2)+'\n')
 
 
+@unittest.skipUnless(os.environ.get('ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT'),'Requires a fresh external company material root')
+class OrdinaryCompanyUpdateTest(unittest.TestCase):
+    def test_successful_metrics_survive_withheld_and_failed_neighbours(self):
+        root=Path(os.environ['ORDINARY_UPDATE_COMPANY_MATERIAL_ROOT']).resolve();self.assertFalse(root.exists())
+        def check():return cycle.run_company(state_root=root,source_root=normal.ROOT,
+            company_id='pfizer',metric_ids=['B01','B06','B08'])
+        with patch.object(socket.socket,'connect',side_effect=AssertionError('No network')), \
+             patch.object(socket,'getaddrinfo',side_effect=AssertionError('No DNS')), \
+             patch('sec_http.urlopen',side_effect=AssertionError('No HTTP')):
+            first=check();self.assertEqual('UPDATES_PARTIAL',first['status'])
+            metrics={m['metric_id']:m for m in first['metrics']}
+            self.assertEqual('CANDIDATE_READY',metrics['B01']['status'])
+            self.assertEqual('CANDIDATE_WITHHELD',metrics['B06']['status'])
+            self.assertEqual('CANDIDATE_READY',metrics['B08']['status'])
+            self.assertIsNone(metrics['B06']['last_verified_candidate'])
+            revenue=metrics['B01']['last_verified_candidate']
+            with (Path(revenue['rows_root'])/'B01/metrics_matrix.csv').open() as stream:
+                self.assertEqual('62579000000',next(csv.DictReader(stream))['value'])
+            self.assertEqual('2025-12-31',revenue['targets']['B01']['period_end'])
+            successful={m:metrics[m]['successful_attempt'] for m in ['B01','B08']}
+            with patch.object(normal,'create_normal_run',side_effect=AssertionError('Repeated input must not create any Run')):
+                repeat=check();repeated={m['metric_id']:m for m in repeat['metrics']}
+                self.assertEqual('UPDATES_PARTIAL',repeat['status'])
+                self.assertEqual('PREVIOUS_INPUT_WITHHELD',repeated['B06']['status'])
+                for metric in successful:
+                    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',repeated[metric]['status'])
+                    self.assertEqual(successful[metric],repeated[metric]['successful_attempt'])
+                    self.assertTrue(repeated[metric]['last_verified_candidate']['current_input_matches'])
+                original=normal.prepare_case
+                def fail_revenue_input(**kwargs):
+                    if kwargs['data_root']==normal.ROOT and kwargs['metric_id']=='B01':
+                        raise ValueError('Injected current revenue input failure')
+                    return original(**kwargs)
+                with patch.object(normal,'prepare_case',side_effect=fail_revenue_input):
+                    failed=check()
+                failed_metrics={m['metric_id']:m for m in failed['metrics']}
+                self.assertEqual('INPUT_FAILED',failed_metrics['B01']['status'])
+                self.assertEqual(successful['B01'],failed_metrics['B01']['successful_attempt'])
+                self.assertFalse(failed_metrics['B01']['last_verified_candidate']['current_input_matches'])
+                self.assertEqual(revenue['targets'],failed_metrics['B01']['last_verified_candidate']['targets'])
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE',failed_metrics['B08']['status'])
+                self.assertEqual(successful['B08'],failed_metrics['B08']['successful_attempt'])
+                restored=check()
+                self.assertEqual('NO_SOURCE_CONTENT_CHANGE',restored['metrics'][0]['status'])
+            # Re-signed company summaries cannot replace the per-metric source
+            # and native-Run verification performed by the controller.
+            row=Path(revenue['rows_root'])/'B01/metrics_matrix.csv';raw=row.read_bytes()
+            row.write_bytes(raw.replace(b'62579000000',b'99999999999'))
+            with patch.object(normal,'create_normal_run',side_effect=AssertionError('Other unchanged metrics still reuse Runs')):
+                tampered=check()
+            row.write_bytes(raw);tampered_metrics={m['metric_id']:m for m in tampered['metrics']}
+            self.assertEqual('UPDATE_BLOCKED',tampered_metrics['B01']['status'])
+            self.assertIsNone(tampered_metrics['B01']['last_verified_candidate'])
+            self.assertEqual('NO_SOURCE_CONTENT_CHANGE',tampered_metrics['B08']['status'])
+            with self.assertRaisesRegex(cycle.OrdinaryUpdateError,'UPDATE_GROUP_HISTORY_REQUIRES_PINNED_RUNTIME'):
+                cycle.run_company(state_root=root/'metrics/B01',source_root=normal.ROOT,
+                    company_id='pfizer',metric_ids=['B01'])
+        (root/'summary.json').write_text(json.dumps({'status':'PASS','successful_attempts':successful,
+            'checks':['independent-success-with-withheld','no-duplicate-runs','earlier-input-failure-does-not-stop-later-success',
+                      'historical-period-and-current-status-separated','restored-source-reuses-success',
+                      'changed-success-row-blocks-only-affected-metric','existing-group-history-not-silently-reset'],
+            'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False},indent=2)+'\n')
+
+
 if __name__=='__main__':unittest.main()
