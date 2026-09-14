@@ -10,7 +10,7 @@
 
 D03的JPM总体当前涉案披露留出阻断仍在：45和修后46均把原文明确当前涉入当假设，因为无案名。这不是披露不足；保持无D03通用验收信用，调查既有source-reported-fact规则复用与独立模块审阅，不继续对同一句无限改提示抽样。Pfizer成功不能替代JPM结果。
 
-下一项B13：已重新读取Ford11条/Enphase5条相关正文、Ford8条可能产量文字及13个native容量标签。13个实际全为LineOfCreditFacilityMaximumBorrowingCapacity（USD），不是生产产能；Enphase只有每季约五百万microinverter产能，未证明同范围实际产量。不得用销量/出货/融资额度构造比值。原来源快照在/tmp/sec_metrics_issue28_continuous/b13-current-*.json；这些候选还不是完整不存在证明或原生结果。继续完整来源赋义及后继原生接线，随后390、更新、统一发布/故障回退恢复、旧入口退出。
+下一项B13：已重新读取Ford11条/Enphase5条相关正文、Ford8条可能产量文字及13个native容量标签。13个实际全为LineOfCreditFacilityMaximumBorrowingCapacity（USD），不是生产产能；Enphase只有每季约五百万microinverter产能，未证明同范围实际产量。不得用销量/出货/融资额度构造比值。原来源快照已入PR的docs/evidence/issue28_continuous/b13-current-source-inspection/；这些候选还不是完整不存在证明或原生结果。继续完整来源赋义及后继原生接线，随后390、更新、统一发布/故障回退恢复、旧入口退出。
 
 未覆盖模块独立审阅仍需用户转交，9月17日前不重试旧Codex子任务；无Ready/合并/正式采纳/部署/active/长期生产许可。当前仅开发证据，最终开发验收后集中生产确认。当前状态与历史快照分开，不因本次提交或会话结束将Issue标为完成。
 
