@@ -21,12 +21,13 @@ from . import invocation_control as control
 
 _FACTORY = object()
 _FEASIBILITY = 'FEASIBILITY_ONLY_NO_NATIVE_EVIDENCE'
-REVIEW_POLICY_PATH = 'catalog/r6/semantic_review_v2.json'
+REVIEW_POLICY_PATH = 'catalog/r6/semantic_review_v3.json'
 SEMANTIC_RULE_PATHS = (
     'scripts/vnext/r6_semantic_source.py','scripts/vnext/r6_semantic_review.py',
     'scripts/vnext/going_concern_source.py','scripts/vnext/regulatory_investigation_candidates.py',
     'scripts/vnext/r6_regulatory_semantics.py','catalog/r6/semantic_source_v1.json',
-    'catalog/r6/semantic_review_v1.json',REVIEW_POLICY_PATH,
+    'catalog/r6/semantic_review_v1.json','catalog/r6/semantic_review_v2.json',REVIEW_POLICY_PATH,
+    'scripts/vnext/r6_semantic_scope.py',
     'catalog/r6/going_concern_source_rules_v1.json',
     'catalog/r6/regulatory_investigation_candidates_v1.json',
     'catalog/r6/regulatory_semantic_review_v1.json','catalog/r6/regulatory_semantic_review_v2.json',
@@ -34,7 +35,8 @@ SEMANTIC_RULE_PATHS = (
     'catalog/r6/regulatory_semantic_review_v5.json',
     'catalog/r6/regulatory_semantic_review_v6.json',
     'scripts/vnext/r6_semantic_verification.py',
-    'catalog/r6/regulatory_semantic_verification_v1.json','catalog/r6/regulatory_semantic_verification_v2.json')
+    'catalog/r6/regulatory_semantic_verification_v1.json','catalog/r6/regulatory_semantic_verification_v2.json',
+    'scripts/vnext/r6_historical_controls.py','config/r6_historical_control_sources_v1.json')
 
 
 def validate_semantic_rule_bindings(requirement):
@@ -116,6 +118,13 @@ def source_requests(source):
             body['required_candidate_assessments'] = [
                 {'unit_id':unit['unit_id'],'kind':kind,'source_index':index}
                 for index in required if index in items]
+            if source['record_type']=='D04_HISTORICAL_PRIMARY_CONTROL_SOURCE':
+                body['historical_control']=source['control']
+                body['control_source_scope']=source['control_scope']
+                body['system_prompt'] += (' This is a real historical filing control. Interpret CURRENT_REPORT relative '
+                    'to this supplied original report, not the present day. Its scope is the complete selected primary HTML, '
+                    'with SEC header identity; companion XBRL is not supplied. Do not infer whole-filing absence, current '
+                    'company status, or production acceptance from this control.')
             requests.append({**body,'request_id':content_hash(value=body)})
     need([u['unit_id'] for r in requests for u in r['units']] == source['required_unit_ids'],
          'CONTINUOUS_SOURCE_UNIT_COVERAGE_CHANGED')
@@ -131,6 +140,7 @@ class SemanticRequest:
     output_schema_bytes: bytes
     requirement: object
     authority: object
+    data_root: Path = ROOT
 
     def validate(self, policy):
         need(self._factory is _FACTORY, 'CONTINUOUS_SOURCE_FACTORY_REQUIRED')
@@ -139,7 +149,17 @@ class SemanticRequest:
         request = strict_json_loads(text=self.request_bytes.decode())
         need(source['semantic_source_id'] == content_hash(value={k:v for k,v in source.items() if k!='semantic_source_id'}),
              'CONTINUOUS_SOURCE_CHANGED')
-        verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
+        allowed_control_root=Path(self.requirement['policy']['budget_root'])/'source-inputs'
+        need(self.data_root in {ROOT,allowed_control_root}
+             and not any(p.is_symlink() for p in [self.data_root,*self.data_root.parents]),
+             'CONTINUOUS_SOURCE_ROOT_NOT_ALLOWED')
+        if self.data_root==ROOT:
+            verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
+        else:
+            from .ordinary_source_authority import verify_ordinary_source_proofs
+            need(source['record_type']=='D04_HISTORICAL_PRIMARY_CONTROL_SOURCE' and source['normal_update_input'] is False,
+                 'CONTINUOUS_CONTROL_SOURCE_SCOPE_REQUIRED')
+            verify_ordinary_source_proofs(data_root=self.data_root,proofs=source['source_proofs'])
         need(request in source_requests(source), 'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
         need(configured_transport_policy(requirement=self.requirement,repo_root=ROOT) == policy
              and request_body(request,policy) == self.provider_request_body_bytes
@@ -148,7 +168,7 @@ class SemanticRequest:
         return request
 
 
-def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None):
+def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,control_id=None):
     from .r6_semantic_source import prepare_d04_semantic_source
     from .requirement_profile import validate_execution_authority
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
@@ -158,7 +178,13 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None):
     policy = configured_transport_policy(requirement=requirement,repo_root=ROOT)
     authority = control.prepare_successor_invocation_authority(repo_root=ROOT,requirement_id=REQUIREMENT_ID)
     need(metric_id in {'D03','D04'},'CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
-    if prior_call_ordinal is not None:
+    data_root=ROOT
+    if control_id is not None:
+        need(metric_id=='D04' and prior_call_ordinal is None,'CONTINUOUS_HISTORICAL_CONTROL_REQUIRES_D04')
+        from .r6_historical_controls import prepare_control_source
+        data_root=Path(requirement['policy']['budget_root'])/'source-inputs'
+        source=prepare_control_source(repo_root=data_root,company_id=company_id,control_id=control_id)
+    elif prior_call_ordinal is not None:
         need(metric_id=='D03','CONTINUOUS_VERIFICATION_REQUIRES_D03')
         from .r6_semantic_verification import prepare_verification_source
         source=prepare_verification_source(company_id=company_id,prior_call_ordinal=prior_call_ordinal)
@@ -167,10 +193,13 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None):
         source = prepare_regulatory_semantic_source(repo_root=ROOT,company_id=company_id)
     else:
         source = prepare_d04_semantic_source(repo_root=ROOT,company_id=company_id)
-    verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
+    if data_root==ROOT:verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
+    else:
+        from .ordinary_source_authority import verify_ordinary_source_proofs
+        verify_ordinary_source_proofs(data_root=data_root,proofs=source['source_proofs'])
     raw = _json(source)
     return [SemanticRequest(_FACTORY,raw,_json(request),request_body(request,policy),
-        _json(request['response_protocol']),requirement,authority) for request in source_requests(source)]
+        _json(request['response_protocol']),requirement,authority,data_root) for request in source_requests(source)]
 
 
 def transport_payload(*, request, policy):
@@ -345,7 +374,7 @@ class _Transport:
 
 def execute_feasibility(*, prepared, ledger, recorded_wire=None):
     """A response is a feasibility observation, never a native result."""
-    from .r6_semantic_review import validate_response
+    from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
     if request_fields['record_type']=='D03_SEMANTIC_VERIFICATION_REQUEST':
         from .r6_semantic_verification import validate_response

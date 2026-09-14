@@ -107,13 +107,18 @@ class SecAcquisitionSession:
                 need(sha256_file(path=resolve_repository_file(repo_root=ROOT,repo_relative_path=relative))==digest,
                      'SEC_ACQUISITION_OFFLINE_EVIDENCE_CHANGED')
 
-    def capture(self,*,company_id,url,refresh_metadata=False):
+    def capture(self,*,company_id,url,refresh_metadata=False,control_id=None):
         """Capture one declared dependency; no loop or automatic retry."""
         from .normal_source_requirements import discover_saved_source_requirements
         self._check();validate_official_sec_url(url=url)
         with self.ledger.locked():
             initialize_source_inputs(root=self.data_root,requirement=self.requirement)
-            discovery=discover_saved_source_requirements(repo_root=self.data_root,company_id=company_id)
+            if control_id is None:
+                discovery=discover_saved_source_requirements(repo_root=self.data_root,company_id=company_id)
+            else:
+                from .r6_historical_controls import discover_control_sources
+                need(not refresh_metadata,'SEMANTIC_CONTROL_METADATA_REFRESH_NOT_REQUESTED')
+                discovery=discover_control_sources(repo_root=self.data_root,company_id=company_id,control_id=control_id)
             rows=[r for r in discovery['requirements'] if r['source_url']==url]
             need(len(rows)==1,'SEC_ACQUISITION_URL_NOT_A_DECLARED_COMPANY_DEPENDENCY')
             selected=rows[0]
@@ -131,6 +136,10 @@ class SecAcquisitionSession:
                 'requirement_closure_hash':self.requirement['requirement_closure_hash'],
                 'source_dependency':selected,'discovery_id':discovery['requirements_id'],'request':request,
                 'source_ledger_before_sha256':sha256_bytes(content=before),'source_row_count_before':len(old_rows)}
+            if control_id is not None:
+                plan['historical_semantic_control_id']=control_id
+                plan['historical_source_scope']=discovery['scope']
+                plan['current_metric_or_publication_credit']=False
             path,intent=self.ledger.claim(channel='SEC',request_digest=content_hash(value=request),
                 requirement=self.requirement,plan_id=content_hash(value=plan),purpose='remaining_development_feasibility')
             _exclusive_write_json(path=path/'sec-plan.json',value=plan)

@@ -17,6 +17,7 @@ def main(argv=None):
     parser.add_argument('--company',required=True)
     parser.add_argument('--metric',choices=['D03','D04'],default='D04')
     parser.add_argument('--prior-call',type=int)
+    parser.add_argument('--control-id')
     parser.add_argument('--request-id')
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args(argv)
@@ -25,7 +26,7 @@ def main(argv=None):
         parser.error('Output must be a new file outside the source checkout')
     if args.command=='verify' and (args.metric!='D03' or args.prior_call is None):
         parser.error('Verify requires --metric D03 and one --prior-call ordinal')
-    requests=prepare_requests(company_id=args.company,metric_id=args.metric,prior_call_ordinal=args.prior_call)
+    requests=prepare_requests(company_id=args.company,metric_id=args.metric,prior_call_ordinal=args.prior_call,control_id=args.control_id)
     if args.command in {'execute','verify'}:
         selected=(requests if args.command=='verify' else
                   [p for p in requests if strict_json_loads(text=p.request_bytes.decode())['request_id']==args.request_id])

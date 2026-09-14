@@ -1,6 +1,6 @@
 # D04 离线解释协议
 
-原型的完整来源与引用协议保持历史含义。2026-09-14已开始本轮真实验证，本轮整体调用现累计provider/paid/SEC=15/15/31（含D03）；早期D04六次按原记录读取；Pfizer估值反例及后继提示下两份Ford普通风险语义得到有限验证，另有两次截断和一次网络安全误判/漏评，原始失败永久保留。新语义入口已补齐既有thinking disabled；semantic_review_v2定义类别并显式列出本单元必评项。材料见docs/evidence/issue28_continuous/semantic-live-repair及semantic-focus-repair。当前仍无D04原生Run、完整语义验收或正式信用；Ford Credit条件性时间、真实正向敏感性及完整材料判断仍需继续。
+原型的完整来源与引用协议保持历史含义。2026-09-14已开始本轮真实验证，本轮整体调用现累计provider/paid/SEC=18/18/35（含D03）；早期D04六次按原记录读取；Pfizer估值反例及后继提示下两份Ford普通风险语义得到有限验证，另有两次截断和一次网络安全误判/漏评，原始失败永久保留。新语义入口已补齐既有thinking disabled；semantic_review_v2定义类别并显式列出本单元必评项。材料见docs/evidence/issue28_continuous/semantic-live-repair及semantic-focus-repair。当前仍无D04原生Run、完整语义验收或正式信用；Ford Credit条件性时间、真实正向敏感性及完整材料判断仍需继续。
 
 ## 输入和响应
 
@@ -33,3 +33,5 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.
 ## 后续接线
 
 在获批预算下，先有限验证模型是否能可靠解释这些真实来源及关键反例，再接入既有 provider 调用记录、Evidence、Review、原生文本结果和普通运行入口。不能通过把原文打包完整、响应 JSON 合法或干净审计意见，当作“未披露持续经营疑虑”的充分证明。D03 仍需完成自己的段落判断，B13 和其余完整交付责任不因本原型完成而结束。
+
+真实历史正向/解除对照及范围限制见docs/historical_semantic_controls.md与historical-semantic-scope证据。新semantic_review_v3/r6_semantic_scope保留原响应，按主体/时间阻止历史或其他实体的疑虑变成当前目标结论；原v2失败仍按原规则拒绝。

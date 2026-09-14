@@ -755,3 +755,5 @@ CURRENT_INCOME_NATIVE_BATCH/CURRENT_INCOME_ATTACK_ROOT指定原生及新反例�
 2026-09-14语义入口修复还核对实际DeepSeek请求的thinking disabled、stream=false和4096输出上限，以及从每份真实来源单元重建的必评索引集合。原0032/0033/0034终态经CLI零外发重放分别exit0/2/2。真实六次可行性调用及失败、后继提示响应见docs/evidence/issue28_continuous/semantic-live-repair及semantic-focus-repair；101fast PASS80.216s不代替完整语义或390验收。
 
 `tests.vnext.test_r6_regulatory_semantics`覆盖Pfizer原件/原生事实保留、引用/日期/状态/上下文约束及原opener/WB-3；`tests.vnext.test_r6_semantic_verification`只读核对原始LIVE提议，把新调用保持MOCK，检查候选完整集合、篡改与引用范围拒绝。两套已加入source-material；通过不表示模型在新公司的业务语义已正确。
+
+历史控制的`tests.vnext.test_r6_historical_controls`校验元数据选择、错公司/URL/刷新拒绝、原noninline正文及错头文件拒绝；新调用保持RECORDED_TEST_ONLY。`tests.vnext.test_r6_semantic_scope`用实际旧响应作明确recorded回归，保留旧v2失败并检查历史/其他主体不能进入当前目标，加入fast层。真实provider对照与禁网MOCK严格分开记录。

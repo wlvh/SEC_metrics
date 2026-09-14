@@ -28,15 +28,15 @@
     "long_running_schedule": false
   },
   "actual_new_calls": {
-    "provider": 15,
-    "paid": 15,
-    "sec": 31,
+    "provider": 18,
+    "paid": 18,
+    "sec": 35,
     "unknown": 0
   },
   "current_work": [
-    "D03 source selection/date/status and model content check implemented; Pfizer local pilot improved, but JPM aggregate current involvement still misclassified after bounded repair. No generic D03/native acceptance credit.",
-    "Stop repeated prompt attempts on the same JPM statement; document concrete source-reported-fact alternative and remaining independent-review dependency.",
-    "Proceed with Enphase2016/2017 real historical D04 controls (metadata found; originals not acquired yet), B13 and remaining native/390/update/publication-retirement work."
+    "D04 real historical positive and resolved/historical controls completed with limited semantic evidence; original v2 mixed-scope failure retained and successor v3 corrected",
+    "D03 aggregate current-involvement holdout remains unqualified; do not repeat unmodified requests or infer nondisclosure",
+    "Next B13 complete source-role assessment and native integration; full-source D03/D04 integration,390,updates,publication rollback/retirement and independent reviews remain"
   ],
   "next": [
     "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
@@ -49,7 +49,7 @@
   "historical_state_snapshot": "resume-2026-09-13/historical-state/execution-state.json",
   "historical_continuation_snapshot": "resume-2026-09-13/historical-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
-  "ledger_implementation_status": "46_SEALED_SLOTS; PROVIDER15_PAID15_SEC31; NO_UNKNOWN_OR_STOPPED_CHANNEL; ALL_PRIOR_FAILURES_CHARGED",
+  "ledger_implementation_status": "53_SEALED_SLOTS; PROVIDER18_PAID18_SEC35; NO_UNKNOWN_OR_STOPPED_CHANNEL; ALL_PRIOR_FAILURES_RETAINED",
   "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
   "full_acceptance": false,
   "external_dependencies": [
@@ -67,7 +67,7 @@
     "provider_slot_consumed": true,
     "credential_storage": "PRIVATE_OUTSIDE_REPOSITORY_AND_EVIDENCE"
   },
-  "offline_wiring_receipt": "regulatory-current-involvement/provider-wiring.json",
+  "offline_wiring_receipt": "historical-semantic-scope/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -288,8 +288,8 @@
       "regulatory-source-selections",
       "regulatory-current-involvement"
     ],
-    "current_v15_closure": "sha256:64e8ff85efd200e75f374a9549b42390f1a8cda2c3e9082caf6a8b5c4abacbd4",
-    "execution_files": 392,
+    "current_v15_closure": "sha256:0326bd686711739b42d2ec4b17a06b05918a76c9f12bc25341984ef3da256878",
+    "execution_files": 396,
     "provider_slots": [
       32,
       33,
@@ -305,7 +305,10 @@
       43,
       44,
       45,
-      46
+      46,
+      51,
+      52,
+      53
     ],
     "observations": {
       "32": "Pfizer Seagen goodwill valuation distinguished; partial source only",
@@ -322,7 +325,10 @@
       "43": "v5 normalized source dates and all context coverage; Pfizer selected unit assertions pass executor source inspection",
       "44": "All21Pfizer proposals supported by model content check; not independent review/full-source/native credit",
       "45": "JPM holdout still misclassifies explicit aggregate current involvement and overlaps context/facts",
-      "46": "v6 eliminates overlap, but same aggregate-current false negative persists; generic D03 route unqualified"
+      "46": "v6 eliminates overlap, but same aggregate-current false negative persists; generic D03 route unqualified",
+      "51": "Enphase2016 original audit/control unit: DOUBT_DISCLOSED correctly identified despite unqualified opinion",
+      "52": "Enphase2017 understood historical2016/current2017, but kind/timing violated original v2 shape; original failure retained",
+      "53": "Successor v3 separates statement kind from subject/timing; historical doubt retained, only current NO_DOUBT_DECLARATION"
     },
     "native_result_created": false,
     "full_semantic_acceptance": false,
@@ -347,8 +353,30 @@
     },
     {
       "metric": "D04",
-      "failure": "No full positive/temporal-control qualification or whole-source native route yet",
-      "next": "Acquire declaredEnphase2016/2017 originalprimary/header controls through currentSecHttpClient allowance; not from search snippets"
+      "remaining": "Historical positive/time controls are limited evidence; full-source current native route and scoped independent review not completed",
+      "next": "Use bounded evidence to integrate current sources, Evidence/Review/Run and complete coverage without treating protocol success as semantic proof"
     }
-  ]
+  ],
+  "historical_d04_controls": {
+    "acquisition_slots": [
+      47,
+      48,
+      49,
+      50
+    ],
+    "source_scope": "Exact historical primary HTML and SEC headers; no companion-XBRL or whole-filing absence/current-metric credit",
+    "report_years": [
+      2016,
+      2017
+    ],
+    "metadata_header_and_cover_identity": "VERIFIED",
+    "period_start_inferred": false,
+    "native_result_created": false,
+    "material": [
+      "historical-semantic-acquisition",
+      "historical-semantic-controls",
+      "historical-semantic-scope"
+    ],
+    "restore_reference_repair": "Three old mutable repository references preserved in immutable repository-supplement; original packages unchanged"
+  }
 }

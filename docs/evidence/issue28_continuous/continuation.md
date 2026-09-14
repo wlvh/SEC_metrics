@@ -1,3 +1,21 @@
+# 当前恢复入口：D04真实历史对照已验证，Issue整体仍未完成
+
+固定总账当前provider/paid/SEC=18/18/35，53个slot封存，无UNKNOWN或停用通道；所有首次失败永久保留。Enphase2016/2017各一件primary正文和SEC头文件已真实获取，使用原SecHttpClient/来源登记/累计总账。仅声明历史primary+header控制范围，不覆盖伴随XML、最新指标或整份filing不存在证明。
+
+2016实际审计段落在无保留意见旁披露疑虑，slot51正确识别DOUBT_DISCLOSED；2017在同段区分2016历史疑虑与2017不存在，slot52语义方向正确但旧v2分类/时间接口冲突而失败。新v3按陈述内容、主体、时间分别解释，slot53只有当前NO_DOUBT_DECLARATION，历史疑虑不进入当前结果。原52失败不改，四项投影反例和当前实际原件工厂/原opener/WB3禁网验证通过。不是完整D04或原生验收完成。
+
+当前V15闭包0326bd68/396执行文件，wiring在historical-semantic-scope；source-root只允许原ROOT或固定预算下的历史控制输入目录，不接受任意根。旧普通inline-DEI要求不修改；非inline历史控制另验原元数据、头文件和封面。还原发现早期离线包3个规则/config引用工作树字节已变，已从原测试数据目录补存原字节；用historical-semantic-scope/restore_material.py及repository-supplement回读，不改原包/索引。
+
+D03的JPM总体当前涉案披露留出阻断仍在：45和修后46均把原文明确当前涉入当假设，因为无案名。这不是披露不足；保持无D03通用验收信用，调查既有source-reported-fact规则复用与独立模块审阅，不继续对同一句无限改提示抽样。Pfizer成功不能替代JPM结果。
+
+下一项B13：已重新读取Ford11条/Enphase5条相关正文、Ford8条可能产量文字及13个native容量标签。13个实际全为LineOfCreditFacilityMaximumBorrowingCapacity（USD），不是生产产能；Enphase只有每季约五百万microinverter产能，未证明同范围实际产量。不得用销量/出货/融资额度构造比值。原来源快照在/tmp/sec_metrics_issue28_continuous/b13-current-*.json；这些候选还不是完整不存在证明或原生结果。继续完整来源赋义及后继原生接线，随后390、更新、统一发布/故障回退恢复、旧入口退出。
+
+未覆盖模块独立审阅仍需用户转交，9月17日前不重试旧Codex子任务；无Ready/合并/正式采纳/部署/active/长期生产许可。当前仅开发证据，最终开发验收后集中生产确认。当前状态与历史快照分开，不因本次提交或会话结束将Issue标为完成。
+
+以下为旧执行快照，以本段及execution-state.json为准。
+
+---
+
 # 当前恢复入口：D03留出样本仍受阻，继续D04真实对照与其他核心工作
 
 当前累计provider/paid/SEC=15/15/31，46个slot封存，无UNKNOWN或停用通道。模型原始响应、首次截断/格式/引用/语义失败和修后记录均保留；旧关闭额度不恢复。当前后继闭包64e8ff85/392文件，绑定完整语义来源模块及规则，调用前检查缺项。最初六次缺8项执行绑定的事实及按原提交重取的补充源码独立登记，不追授信用。
