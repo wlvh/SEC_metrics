@@ -56,7 +56,7 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
         manifest,records,_ = load_frozen_run(run_dir=run_dir,repo_root=data_root)
     else:
         manifest,records,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
-    _need(manifest["requirement_id"] == REQUIREMENT_ID,"ORDINARY_PROJECTION_REQUIREMENT_CHANGED")
+    _need(manifest["requirement_id"] in {REQUIREMENT_ID, 'issue_28_v14'},"ORDINARY_PROJECTION_REQUIREMENT_CHANGED")
     case = replay_case(data_root=data_root,manifest=manifest)
     metric = case["primary_metric_id"]
     results = [r for r in records if r["record_type"] == "METRIC_RESULT" and r["metric_id"] == metric]
@@ -135,6 +135,8 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
     if annual["fiscal_year_label_resolution"]["metadata_conflict_retained"]:
         row["notes"]+=" Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding."
     recorded = case["admission"]["source_credit"] == "RECORDED_TEST_ONLY"
+    if case['input_binding'].get('mode') == 'RECORDED_TEST_ONLY':
+        row['notes'] += ' Source classifications use recorded test responses; no real model execution credit.'
     if recorded:
         row["notes"] += " Recorded source refresh test using preexisting SEC content; no new SEC acquisition."
     elif case["admission"].get("real_sec_credit") is True:
@@ -147,6 +149,8 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
         "presentation_policy_sha256":sha256_file(path=ROOT/POLICY_PATH),"renderer_sha256":sha256_file(path=Path(__file__)),
         "row_hash":content_hash(value=row),"evidence_hash":content_hash(value=evidence),"evidence_count":len(evidence),
         "source_validation":"FULL_NATIVE_RUN_REPLAY","production_authorized":False}
+    if 'mode' in case['input_binding']:
+        receipt['semantic_assessment_mode'] = case['input_binding']['mode']
     if recorded:
         receipt.update(source_credit="RECORDED_TEST_ONLY",source_checkpoint_id=case["admission"]["checkpoint_id"],
                        real_sec_credit=False)

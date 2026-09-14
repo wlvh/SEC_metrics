@@ -952,3 +952,14 @@ D03语义后继复用完整来源装配、原引用校验器及本轮调用控�
 <!-- capability-anchor: CAPABILITY.regulatory_aggregate_statement_fact -->
 
 B13原生角色检查复用`_FactAttributes`展开实际单位命名空间；标准借款额度概念与未相除的ISO货币量共同证明其为货币额度。错误命名空间、实物单位或复合比率单位不能仅凭标签被归类；仍不推断产量或数值缺失。
+
+### B13 原生来源判断与文字候选
+
+`capacity_semantic_review` 按原限制组织完整来源，共享重复字段和 XML 样式并验证精确恢复。`capacity_native_assessment` 把每请求的原文、单元覆盖和有限角色检查接入既有 WB-3 Candidate/Evidence 成功链，再按完整请求集合重读；旧诊断终态不升级。`capacity_assessment_input` 复用普通来源私有登记边界，区分 LIVE 与 RECORDED_TEST_ONLY，数据包不能自行给响应登记。
+
+`capacity_text_results` 复用 TEXT_V1 的 Review/Observation/Calculator；`capacity_run` 复用普通输入安装和 Run 写入代码，显式选择已批准 B13 定义所在的 V15。Run 和公共行从登记、原件和有效 Review 重新构造；当前只接通文字分支，数值对、缺失、不适用和正常更新编排仍待完成。说明见 `docs/ordinary_capacity_results.md`。
+<!-- capability-anchor: CAPABILITY.b13_native_assessment_draft -->
+<!-- capability-anchor: CAPABILITY.b13_native_text_run_draft -->
+
+`r6_semantic_source._group` 利用现有三个追加型序列化器的单调字节长度寻找原来的最大前缀，避免每加一行就重复校验整个前缀。原字节计量、源行、单元边界和上限保持，不获得新语义或调用信用。
+<!-- capability-anchor: CAPABILITY.semantic_source_grouping -->

@@ -51,6 +51,9 @@ def _policy(root):
 
 
 def prepare_case(*, data_root, company_id, metric_id):
+    if metric_id == 'B13':
+        from .capacity_run import prepare_case as prepare_capacity_case
+        return prepare_capacity_case(data_root=data_root, company_id=company_id)
     policy = _policy(data_root)
     _need(metric_id in policy["metric_ids"],"ORDINARY_INTEGRATED_METRIC_NOT_ENABLED")
     note_debt = None
@@ -146,12 +149,24 @@ def _binding(case, requirement):
 
 
 def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None):
+    if metric_id == 'B13':
+        from .capacity_run import install_inputs
+        return install_inputs(data_root=data_root, company_id=company_id,
+                              source_root=ROOT if source_root is None else source_root)
     data_root = _external(data_root)
     source_root = ROOT if source_root is None else _external(source_root)
     _need(source_root != data_root and source_root not in data_root.parents and data_root not in source_root.parents,
           "ORDINARY_INTEGRATED_SOURCE_AND_OUTPUT_OVERLAP")
     case = prepare_case(data_root=source_root,company_id=company_id,metric_id=metric_id)
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/"requirements"/REQUIREMENT_ID)
+    _install_case_inputs(data_root=data_root,source_root=source_root,company_id=company_id,case=case,requirement=requirement)
+    rebuilt = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id)
+    _need(_binding(rebuilt,requirement) == _binding(case,requirement),"ORDINARY_INTEGRATED_IMPORTED_INPUT_CHANGED")
+    return rebuilt
+
+
+def _install_case_inputs(*, data_root, source_root, company_id, case, requirement, extra_input_bytes=None):
+    """Shared immutable runtime/source installation for explicit native routes."""
     verify_ordinary_source_proofs(data_root=source_root,proofs=case["source_proofs"])
     from .ordinary_source_authority import checkpoint_installation,EXPORT_PATH
     checkpoint,extra_source_paths = checkpoint_installation(source_root=source_root)
@@ -185,19 +200,25 @@ def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None)
         source = resolve_repository_file(repo_root=source_root if relative in source_paths else ROOT,repo_relative_path=relative)
         _write(data_root/relative,receipts[relative]["bytes"] if relative in receipts else source.read_bytes())
     if checkpoint is not None:_write(data_root/EXPORT_PATH,_bytes(checkpoint))
-    rebuilt = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id)
-    _need(_binding(rebuilt,requirement) == _binding(case,requirement),"ORDINARY_INTEGRATED_IMPORTED_INPUT_CHANGED")
-    return rebuilt
+    for relative, raw in (extra_input_bytes or {}).items():
+        _need(relative not in paths|source_paths and not Path(relative).is_absolute()
+              and '..' not in Path(relative).parts, 'ORDINARY_EXTRA_INPUT_WOULD_REPLACE_RUNTIME')
+        _write(data_root/relative,raw)
 
 
 def text_api(metric_id):
+    if metric_id == 'B13':
+        from . import capacity_text_results
+        return capacity_text_results, capacity_text_results.build_text_review_unit
     from .normal_run_v2 import text_api as select
     return select(metric_id)
 
 
 def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False):
-    from .run_store import (create_run,append_run_record,append_review_decision,write_review_assets,
-        validate_and_freeze_run,load_frozen_run,_mechanically_replay_open_run)
+    if metric_id == 'B13':
+        _need(not freeze, 'ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED')
+        from .capacity_run import create_run as create_capacity_run
+        return create_capacity_run(data_root=data_root, run_dir=run_dir, company_id=company_id)
     data_root,run_dir = _external(data_root),_external(run_dir)
     _need(not run_dir.exists(),"ORDINARY_INTEGRATED_RUN_PATH_EXISTS")
     _need(not freeze or _policy(data_root)["freeze_enabled"],"ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED")
@@ -205,6 +226,17 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)
+    return _create_case_run(data_root=data_root,run_dir=run_dir,company_id=company_id,metric_id=metric_id,
+                            case=case,requirement=requirement,freeze=freeze)
+
+
+def _create_case_run(*, data_root, run_dir, company_id, metric_id, case, requirement, freeze=False):
+    """One native record/Review/Result write order for ordinary source routes."""
+    from .run_store import (create_run,append_run_record,append_review_decision,write_review_assets,
+        validate_and_freeze_run,load_frozen_run,_mechanically_replay_open_run)
+    data_root,run_dir = _external(data_root),_external(run_dir)
+    _need(not run_dir.exists(),"ORDINARY_INTEGRATED_RUN_PATH_EXISTS")
+    _need(not freeze or _policy(data_root)["freeze_enabled"],"ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED")
     binding = _binding(case,requirement);key = content_hash(value=binding)[7:]
     _write(data_root/BINDING_DIRECTORY/(key+".json"),_bytes(binding))
     traits = repository_company_traits(repo_root=data_root,company_id=company_id)
@@ -229,7 +261,7 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
     create_run(run_dir=run_dir,run_id=PREFIX+key,company_id=company_id,company_traits=traits,
         target_period=case["target_period"],source_references=case["references"],missing_required_source_roles=[],
         spec_file_hashes={p:sha256_file(path=data_root/p) for p in case["spec_paths"].values()},
-        requirement_hashes=requirement["hashes"],requirement_id=REQUIREMENT_ID,
+        requirement_hashes=requirement["hashes"],requirement_id=requirement['requirement_id'],
         requirement_closure_hash=requirement["requirement_closure_hash"],artifact_requirement_generation="EXPLICIT_REQUIREMENT_V1")
     seen = {}
     for record in records:
@@ -254,11 +286,17 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
 
 
 def replay_case(*, data_root, manifest, spec=None):
+    if manifest.get('requirement_id') == 'issue_28_v14':
+        from .capacity_run import validate_run_authority
+        case = validate_run_authority(repo_root=data_root, manifest=manifest, records=None, compiled_specs=None)
+        _need(spec is None or spec == case['compiled_specs']['B13'], 'B13_NATIVE_SPEC_CHANGED')
+        return case
     _need(manifest["requirement_id"] == REQUIREMENT_ID and manifest["run_id"].startswith(PREFIX),
           "ORDINARY_INTEGRATED_RUN_IDENTITY_REQUIRED")
     key = manifest["run_id"][len(PREFIX):]
     saved = strict_json_file(path=resolve_repository_file(repo_root=data_root,repo_relative_path=BINDING_DIRECTORY+"/"+key+".json"))
     metric_id = saved["primary_metric_id"]
+    _need(metric_id in _policy(data_root)['metric_ids'], 'ORDINARY_INTEGRATED_METRIC_NOT_ENABLED')
     case = prepare_case(data_root=data_root,company_id=manifest["company_id"],metric_id=metric_id)
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])

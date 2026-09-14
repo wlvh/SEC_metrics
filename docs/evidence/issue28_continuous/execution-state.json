@@ -34,15 +34,14 @@
     "unknown": 0
   },
   "current_work": [
-    "B13 complete source assembly and13 monetary-capacity role checks implemented; qualitative/numeric assessment and native results remain",
-    "D03 bounded aggregate statement facts and source-backed response conflict checks implemented; independent module review and real verification pending",
-    "D04 full-source Evidence/Review/Run integration,390,updates,publication recovery andretirement remain"
+    "B13 native source Candidate/Evidence and TEXT_QUAL ordinary OPEN Run implemented and recorded-tested; real full-source judgments remain",
+    "D04 complete-source native integration remains; old51/52/53 controls retain their original diagnostic boundaries",
+    "D03 module review remains pending before repaired real validation; source grouping performance fixed without changing81original units"
   ],
   "next": [
-    "Complete B13 source assessment and native route using saved complete source material",
-    "Integrate D04 complete-source judgments with Evidence/Review/Run; preserve historical diagnostic terminals",
-    "Obtain scoped review of newD03statement module before necessary repaired real regression",
-    "Continue390/update/publication/recovery/retirement preparation under existing delegation"
+    "Complete bounded real B13 source interpretation and native results under current approved ledger",
+    "Continue D04 native integration and complete source judgments",
+    "Continue390,normal updates,publication/recovery/retirement and independent reviews"
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
   "remaining_review_dependency": "Module-level user-forwarded ChatGPT/Fable review; original Codex subagents not retried beforeSep17",
@@ -67,7 +66,7 @@
     "provider_slot_consumed": true,
     "credential_storage": "PRIVATE_OUTSIDE_REPOSITORY_AND_EVIDENCE"
   },
-  "offline_wiring_receipt": "resume-2026-09-14/provider-wiring.json",
+  "offline_wiring_receipt": "b13-native-assessment/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -139,12 +138,11 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "run": 34831133089,
-    "head": "9709eb60e154c0f92d5710094697654f0c46c63b",
-    "status": "completed",
-    "conclusion": "success",
-    "successful_jobs": 10,
-    "evidence": "resume-2026-09-14/ci-34831133089.json"
+    "head": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
+    "run": 34837885217,
+    "result": "9_SUCCESS_1_SOURCE_TIMEOUT_FAILURE",
+    "failed_selector": "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",
+    "timeout_seconds": 240
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -157,7 +155,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:58f9315e55da7c94d42f601c8c9b8cffef61da644608bfc8ba3d8dfcc8234c6e",
+  "current_v15_development_closure": "sha256:34222fb90e12d6913d1cb2c74afe9b5e9458b2ed2331959fe438b7387f9fe25d",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -400,7 +398,7 @@
   "current_rule_identity": {
     "requirement_id": "issue_28_v14",
     "requirement_generation": "PROFILE_DRIVEN_V15",
-    "execution_file_count": 398,
+    "execution_file_count": 404,
     "basis": "CURRENT_LOADER_AND_EXECUTION_AUTHORITY_VERIFIED"
   },
   "last_resume": {
@@ -435,5 +433,41 @@
     "native_result_created": false,
     "independent_module_review": "PENDING_USER_FORWARDED_REVIEW",
     "real_model_validation": "NOT_RUN_PENDING_MODULE_REVIEW"
+  },
+  "b13_native_development": {
+    "record_type": "B13_NATIVE_DEVELOPMENT_CHECKPOINT",
+    "status": "ACTIVE_CONTINUATION_NOT_COMPLETE",
+    "baseline_head": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
+    "native_run": "RECORDED_OPEN_AND_PUBLIC_ROW_VERIFIED",
+    "native_seconds": 158.619,
+    "cold_python39": "PASS_NO_NETWORK",
+    "old_v14_native_regression_seconds": 106.457,
+    "jpm_statement_regression_seconds": 21.593,
+    "fast": {
+      "status": "PASSED",
+      "selectors": 106,
+      "seconds": 81.175
+    },
+    "actual_new_calls": [
+      0,
+      0,
+      0
+    ],
+    "full_b13_real_acceptance": false,
+    "full390": false,
+    "independent_module_review": "PENDING",
+    "next": [
+      "Commit verified B13 native increment in the same Draft PR43",
+      "Use approved private runtime and current wiring for a bounded real B13 semantic check",
+      "Continue B13 complete source results, D04 native integration and remaining Issue goals"
+    ],
+    "historical_ci": {
+      "head": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
+      "run": 34837885217,
+      "result": "9_SUCCESS_1_SOURCE_TIMEOUT_FAILURE",
+      "failed_selector": "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",
+      "timeout_seconds": 240
+    },
+    "production_permissions": false
   }
 }

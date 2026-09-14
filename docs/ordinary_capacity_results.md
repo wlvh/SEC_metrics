@@ -1,0 +1,23 @@
+# B13 来源判断与原生文字结果（开发中）
+
+本路线沿已批准的 Ford / Enphase 范围处理实际产量和相应可用产能。只有同主体、期间、产品或设施和单位可比时才允许比值；出货、销量、储能容量、借款额度和未来规划产能不能替代输入。原 Spec、旧响应和旧失败不改。
+
+`capacity_semantic_review` 组织已保存年报和全部当期修订的完整正文、原生事实及续接对象。命中词只要求明确评估，不筛掉其他来源。请求共享重复字段名、XML 样式及命名空间/期间/单位定义；恢复后必须与原单元逐字段相同。财年问题沿用现有五个解释字段，完整核对材料保留在来源包中。每份实际 provider body 仍受原 UTF-8 字节上界估计、200000 context、8 MiB、120 秒及零重试约束。
+
+新 B13 请求通过 `continuous_semantic_calls.execute_capacity_assessment` 复用原 WB-3 和官方出口。完整单元响应、原文定位、未决项及已证明的货币额度冲突先接受检查，再写既有 Candidate / Evidence 和 acceptance receipt。这里的成功只覆盖该请求的来源判断，不代表整个 B13 已完成。旧 D03/D04 诊断入口和 `FEASIBILITY_ONLY_NO_NATIVE_EVIDENCE` 终态保持原含义；B13 误用该入口会在计数前拒绝。
+
+`capacity_native_assessment.collect_native_assessments` 要求当前来源的全部请求，而非一个“已完成”标记。缺失和失败保留为未完成解释，不能变成披露不足。存在当期实际产量及产能两类提议时，必须继续处理可比数值对，不能用文字分支掩盖计算缺口。
+
+`capacity_assessment_input` 由真实创建者从既有账本和原生成功记录登记输入，复用 `.git/ordinary-source-authority/` 的私有登记方式。真实与测试输入分开存储；数据目录里的 JSON 不能自行登记。复制运行包携带 `config/ordinary_capacity_assessment.json`，并重新核对原请求、原响应、Candidate/Evidence 和当前完整原件。其信任边界与普通来源安装相同：不保护同时替换运行代码与执行历史的操作者。登记不产生新的调用或生产权限。
+
+`capacity_text_results` 使用既有 TEXT_V1、Review、Observation 和 Calculator。`capacity_run` 接入普通 Run 的同一安装和写入顺序，由 `issue_28_v14 / PROFILE_DRIVEN_V15` 保存已批业务定义。V14 旧普通规则不能借此接收 B13。完整 Run 从受信登记和原件重新计算文字选择，公共行保留原文及原期间；测试解释会明确标注，不获得真实模型信用。
+
+已有受信完整输入时，可沿现有入口生成隔离 OPEN 候选：
+
+```bash
+python3 tools/vnext_normal_candidate.py --company enphase_energy --metric B13 --output-root /absolute/new/output
+```
+
+默认普通批次仍是原 36 项。B13 真实完整来源判断、数值/有依据缺失分支、其余不适用坐标、正常新输入的自动调用编排及最终验收仍未完成；当前不能声明 B13 完整交付或 390 坐标完成。所有开发结果均无 Ready、合并、正式采纳、部署、active 切换或长期运行权限。
+
+来源分组的性能修复只改变寻找同一分组边界的方式。原先逐行重复完整 JSON 校验，改为按实际字节数寻找最大前缀；单元上限、单对象上限和全部源字段保持。Ford / Enphase 的 81 个原单元已与优化前材料逐字段核对，不改变历史请求的源单元。

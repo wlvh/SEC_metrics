@@ -91,17 +91,31 @@ def _seal_unit(document_id,kind,payload,ordinal):
 
 
 def _group(rows,render,document_id,kind):
-    groups=[];current=[]
-    # Count exactly serialized bytes, including the dictionaries used by this
-    # unit. Oversized individual source objects reject before any model request.
-    for row in rows:
-        trial=current+[row]
-        if current and len(_bytes(render(trial)))>POLICY['max_unit_payload_bytes']:
-            groups.append(current);current=[row]
-        else:current=trial
-        _need(len(_bytes(render(current)))<=(POLICY['max_single_object_payload_bytes'] if len(current)==1 else POLICY['max_unit_payload_bytes']),
+    groups=[];start=0;limit=POLICY['max_unit_payload_bytes']
+    # Each renderer below appends source rows and only adds shared dictionary
+    # entries. Its encoded length is monotone. Find the same maximal prefix
+    # without canonically revalidating every growing prefix twice per row.
+    while start<len(rows):
+        sizes={}
+        def size(end):
+            if end not in sizes:sizes[end]=len(_bytes(render(rows[start:end])))
+            return sizes[end]
+        first=start+1
+        _need(size(first)<=POLICY['max_single_object_payload_bytes'],
               'SEMANTIC_SINGLE_SOURCE_OBJECT_EXCEEDS_INPUT_BOUND')
-    if current:groups.append(current)
+        end=first
+        if size(first)<=limit and first<len(rows):
+            high=min(len(rows),start+2)
+            while size(high)<=limit:
+                end=high
+                if high==len(rows):break
+                high=min(len(rows),start+2*(high-start))
+            low=end+1
+            while low<=high:
+                middle=(low+high)//2
+                if size(middle)<=limit:end=middle;low=middle+1
+                else:high=middle-1
+        groups.append(rows[start:end]);start=end
     return [_seal_unit(document_id,kind,render(group),i) for i,group in enumerate(groups)]
 
 

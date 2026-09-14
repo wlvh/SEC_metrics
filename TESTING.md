@@ -767,3 +767,11 @@ CURRENT_INCOME_NATIVE_BATCH/CURRENT_INCOME_ATTACK_ROOT指定原生及新反例�
 <!-- capability-anchor: CAPABILITY.regulatory_aggregate_statement_fact -->
 
 B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物单位和相除单位；完整Ford材料逐条核对13项真实货币额度，保留原单位定义与事实。
+
+### B13 新原生链与来源分组性能
+
+`test_semantic_source_grouping.SemanticSourceGroupingTest` 比较原分组边界、共享字典、单独大对象与超限拒绝；其 MaterialTest 从真实两公司原件重建全部81个单元，与优化前材料逐字段相同。JPM完整来源/三种错误分类测试仍保留原240秒限制。性能剖析的中断不算PASS，修复后的完整测试须独立返回成功。
+
+`test_capacity_semantic_review` 验证字段共享的精确恢复、JSON键重排后的相同请求、缺单元、遗漏候选、假引文及两个真实完整包。`test_capacity_native_assessment` 从实际原件经过原factory/opener/WB-3，在禁网下验证原生Candidate/Evidence成功、遗漏单元终态失败，以及单个成功请求不能产生全范围缺失结论。`test_capacity_text_results` 检查真实季度产能原文经Review/Calculator成为TEXT_V1，拒绝假完整标记、掩盖数值对、错期间、原件变化和缺有效Review。
+
+`B13_NATIVE_RUN_MATERIAL_ROOT=/absolute/new/material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_capacity_run_material` 在新目录完成26个明确MOCK来源请求、创建者登记、同一普通OPEN Run及公共行，拒绝重签遗漏请求和测试改成LIVE。原请求/响应/失败均保留，测试没有真实provider/paid/SEC或生产信用。该测试会在原仓库私有来源登记目录新增明确RECORDED_TEST_ONLY记录；不会替代真实输入或恢复旧额度。最后还需用复制的运行包和Python3.9独立冷读。

@@ -2321,7 +2321,9 @@ def _validate_record_graph(
         str(wrapper["spec_semantic_hash"]): wrapper
         for wrapper in compiled_specs.values()
     }
-    if manifest.get("requirement_id") == "issue_28_v13":
+    if manifest.get("requirement_id") == "issue_28_v14":
+        from .capacity_run import prepare_text_contexts as prepare_text_run_contexts
+    elif manifest.get("requirement_id") == "issue_28_v13":
         from .normal_run_v3 import prepare_text_contexts as prepare_text_run_contexts
     elif manifest.get("requirement_id") == "issue_28_v12":
         from .normal_run_v2 import prepare_text_contexts as prepare_text_run_contexts
@@ -2339,6 +2341,9 @@ def _validate_record_graph(
 
     def text_handlers(candidate):
         arguments = text_contexts[candidate["candidate_hash"]]
+        if manifest.get("requirement_id") == "issue_28_v14":
+            from . import capacity_text_results
+            return capacity_text_results, capacity_text_results.build_text_review_unit
         if manifest.get("requirement_id") == "issue_28_v13":
             from .normal_run_v3 import text_api
             return text_api(arguments["compiled_spec"]["compiled"]["metric_id"])

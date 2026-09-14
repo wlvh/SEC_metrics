@@ -409,3 +409,5 @@ D03后继`r6_regulatory_semantics`/`r6_semantic_verification`已接本轮有限�
 D04历史控制入口见`docs/historical_semantic_controls.md`：Enphase2016/2017原正文与SEC头文件已实际取得，新的非inline控制身份检查不替换普通DEI规则。v3内容/主体/时间分离保留原响应与失败；控制不代表最新公司状态、整份filing、原生Result或正式信用。
 
 `capacity_semantic_source.py`复用完整年报/修订输入，保留正文/原生事实/续接对象，候选命中不授数值完整性或原生信用。`regulatory_statement_facts.py`以来源别名和当前总体涉入的直接语法关系分开事实与案件明细；D03新请求保存事实并拒绝将其抹为假设/上下文/其他主体，原模型响应和旧调用终态不改。JPM339材料是已见回归；新模块独立审阅和整项验收仍待完成。
+
+2026-09-14 后续开发：`capacity_semantic_review`共享并精确恢复完整来源；`capacity_native_assessment`将新B13请求接入原WB-3 Candidate/Evidence，而不升级旧诊断。`capacity_assessment_input`复用普通来源私有登记边界，真实/测试分开；`capacity_text_results`和`capacity_run`将完整判断后的文字分支接入既有Review/Calculator/普通Run及公共行。当前仅有记录响应的开发验证，真实完整B13、数值/缺失/其余不适用坐标及正常更新仍未完成。说明见`docs/ordinary_capacity_results.md`。来源分组性能修复保留原单元与资源上限，不改变D03内容审阅依赖。

@@ -796,6 +796,25 @@
         "notes": "Comparable systemwide worldwide statistic from the explicitly stated source year."
       },
       "spec_overrides": {}
+    },
+    "B13": {
+      "name": null,
+      "projection": {
+        "status_exact": "TEXT_QUAL",
+        "source_class": "10-K",
+        "unit": "text",
+        "formula": "verbatim production capacity disclosures",
+        "confidence": "",
+        "concept_or_section": "Production capacity disclosures",
+        "metric_context_style": "constant",
+        "context_or_dimension": "source-reported production/capacity scope",
+        "evidence_context_style": "text_source_span",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "verbatim_source_excerpt",
+        "parser_version": "TEXT_V1",
+        "notes": "Original capacity disclosures retain their own product, facility and period scope. No numeric utilization or annualized capacity is inferred."
+      },
+      "spec_overrides": {}
     }
   }
 }

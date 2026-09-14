@@ -990,6 +990,45 @@
         "test_anchor": "tests/vnext/test_capacity_semantic_source.py::CapacitySemanticSourceTest.test_keyword_miss_retains_every_visible_and_hidden_item",
         "test_status": "automated_recorded",
         "since": "2026-09-14"
+      },
+      {
+        "anchor_id": "CAPABILITY.b13_native_assessment_draft",
+        "type": "capability",
+        "status": "active",
+        "statement": "B13完整源单元经过可精确恢复的共享表示组织，原文、原生事实与续接对象不因关键词未命中而删去。新请求复用原WB-3、官方出口及累计账本，以完整响应、原文和有限角色检查形成每请求原生Candidate/Evidence；缺失、失败、未决或旧诊断终态不能填满原生集合。私有登记由创建者重读完成，真实与测试输入分开；当前仅有禁网记录响应验证，不证明模型语义、完整B13或生产就绪。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_capacity_native_assessment.py::CapacityNativeAssessmentMaterialTest.test_actual_factory_native_acceptance_and_omitted_unit_failure",
+        "test_status": "automated_recorded",
+        "since": "2026-09-14"
+      },
+      {
+        "anchor_id": "CAPABILITY.b13_native_text_run_draft",
+        "type": "capability",
+        "status": "active",
+        "statement": "Ford/Enphase已登记的完整B13文字分支可沿已批准定义的V15进入既有TEXT_V1、Review、Observation、Calculator、普通OPEN Run及公共行。Run从原件和登记重新构造，季度产能不年化、不推利用率；不完整判断或潜在数值对不能以文字结果遮蔽。数据包重签遗漏请求或把测试改为真实会被拒绝。当前为记录响应的原生开发验证，真实完整B13、数值/缺失/其余不适用坐标、正常更新及390仍未完成。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_capacity_run_material.py::CapacityRunMaterialTest.test_native_run_recorded_mode_exact_source_and_resigned_input_rejection",
+        "test_status": "automated_recorded",
+        "since": "2026-09-14"
+      },
+      {
+        "anchor_id": "CAPABILITY.semantic_source_grouping",
+        "type": "capability",
+        "status": "active",
+        "statement": "完整语义来源分组以原字节计量寻找相同最大前缀，避免逐行重复完整JSON校验。所有源行、单元边界和单对象/单元上限保持；Ford/Enphase的81个原单元与优化前材料逐字段相同。性能变化不授新调用、内容或生产信用。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_semantic_source_grouping.py::SemanticSourceGroupingMaterialTest.test_actual_two_company_units_are_identical_to_preoptimization_material",
+        "test_status": "automated_recorded",
+        "since": "2026-09-14"
       }
     ],
     "capability_boundaries": [

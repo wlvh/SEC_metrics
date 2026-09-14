@@ -37,7 +37,9 @@ SEMANTIC_RULE_PATHS = (
     'scripts/vnext/r6_semantic_verification.py',
     'catalog/r6/regulatory_semantic_verification_v1.json','catalog/r6/regulatory_semantic_verification_v2.json',
     'scripts/vnext/r6_historical_controls.py','config/r6_historical_control_sources_v1.json',
-    'scripts/vnext/regulatory_statement_facts.py')
+    'scripts/vnext/regulatory_statement_facts.py',
+    'scripts/vnext/capacity_semantic_source.py', 'scripts/vnext/capacity_semantic_review.py',
+    'catalog/r5/capacity_semantic_review_v1.json', 'scripts/vnext/capacity_native_assessment.py')
 
 
 def validate_semantic_rule_bindings(requirement):
@@ -86,6 +88,9 @@ def request_digest(request, policy):
             'prior_assistant_output_sha256':request['prior_assistant_output_sha256']}
     if request.get('source_statement_facts'):
         body['source_statement_facts'] = request['source_statement_facts']
+    if request.get('metric_id') == 'B13':
+        body['shared_source_dictionaries'] = request['shared_source_dictionaries']
+        body['native_capacity_role_assessments'] = request['native_capacity_role_assessments']
     return sha256_bytes(content=_json(body))
 
 
@@ -93,6 +98,9 @@ def source_requests(source):
     """Keep every existing source unit, with one unit per smaller request."""
     if source['record_type']=='D03_PROVIDER_PROPOSAL_VERIFICATION_SOURCE':
         from .r6_semantic_verification import requests_from_source
+        return requests_from_source(source)
+    if source['metric_id'] == 'B13':
+        from .capacity_semantic_review import requests_from_source
         return requests_from_source(source)
     if source['metric_id']=='D03':
         from .r6_regulatory_semantics import requests_from_source
@@ -180,7 +188,7 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     load_delegation(requirement=requirement)
     policy = configured_transport_policy(requirement=requirement,repo_root=ROOT)
     authority = control.prepare_successor_invocation_authority(repo_root=ROOT,requirement_id=REQUIREMENT_ID)
-    need(metric_id in {'D03','D04'},'CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
+    need(metric_id in {'B13','D03','D04'},'CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
     data_root=ROOT
     if control_id is not None:
         need(metric_id=='D04' and prior_call_ordinal is None,'CONTINUOUS_HISTORICAL_CONTROL_REQUIRES_D04')
@@ -194,6 +202,9 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     elif metric_id=='D03':
         from .r6_regulatory_semantics import prepare_regulatory_semantic_source
         source = prepare_regulatory_semantic_source(repo_root=ROOT,company_id=company_id)
+    elif metric_id == 'B13':
+        from .capacity_semantic_source import prepare_capacity_semantic_source
+        source = prepare_capacity_semantic_source(repo_root=ROOT,company_id=company_id)
     else:
         source = prepare_d04_semantic_source(repo_root=ROOT,company_id=company_id)
     if data_root==ROOT:verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
@@ -251,7 +262,7 @@ def build_plan(prepared):
     runtime = load_provider_runtime_authority(repo_root=ROOT,provider=policy.provider,model=policy.model,api=policy.api)
     plan = control.build_successor_ai_invocation_plan(repo_root=ROOT,requirement_id=REQUIREMENT_ID,
         authority=prepared.authority,
-        release_input_plan_id=content_hash(value={'purpose':metric_id+'_FEASIBILITY','source':request['source_id']}),
+        release_input_plan_id=content_hash(value={'purpose':metric_id+('_SOURCE_ASSESSMENT' if metric_id == 'B13' else '_FEASIBILITY'),'source':request['source_id']}),
         source_identity_hash=request['source_id'],selected_representation_hash=request['request_id'],
         task_contract_hash=content_hash(value={'metric':metric_id,'prompt':request['system_prompt']}),
         output_schema_hash=content_hash(value=request['response_protocol']),serialization_version='continuous-'+metric_id.lower()+'-chat-v1',
@@ -295,11 +306,13 @@ class SourceAuthenticityFailure(ValueError):
 
 
 class _Transport:
-    def __init__(self, *, prepared, policy, ledger, path, intent, recorded_wire, owner_token):
+    def __init__(self, *, prepared, policy, ledger, path, intent, recorded_wire, owner_token,
+                 native_assessment=False):
         self.prepared,self.policy,self.ledger = prepared,policy,ledger
         self.path,self.intent,self.recorded_wire = path,intent,recorded_wire
         self.wire = None
         self.owner_token = owner_token
+        self.native_assessment = native_assessment
 
     @property
     def transport_kind(self):
@@ -370,20 +383,51 @@ class _Transport:
         control._exclusive_write_json(path=self.path/'wire/journal.json',value=self.wire)
         if error_class in {'UNKNOWN_REMOTE_OUTCOME','TIMEOUT'}:
             raise control.UnknownRemoteOutcomeError(error_class)
-        return {'status_code':status_code,'error_class':error_class or _FEASIBILITY,
+        return {'status_code':status_code,'error_class':error_class or ('' if self.native_assessment else _FEASIBILITY),
             'response_body':output if output is not None else raw or b'',
             'provider_request_id':request_id,'usage':usage}
 
 
 def execute_feasibility(*, prepared, ledger, recorded_wire=None):
     """A response is a feasibility observation, never a native result."""
+    need(strict_json_loads(text=prepared.request_bytes.decode()).get('metric_id') != 'B13',
+         'B13_REQUIRES_NATIVE_ASSESSMENT_ENTRY')
+    return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=recorded_wire,
+                             native_assessment=False)
+
+
+def execute_capacity_assessment(*, prepared, ledger, recorded_wire=None):
+    """Accept new B13 source proposals through full native Candidate/Evidence."""
+    need(strict_json_loads(text=prepared.request_bytes.decode()).get('metric_id') == 'B13',
+         'B13_NATIVE_ASSESSMENT_REQUIRED')
+    return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=recorded_wire,
+                             native_assessment=True)
+
+
+def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
     if request_fields['record_type']=='D03_SEMANTIC_VERIFICATION_REQUEST':
         from .r6_semantic_verification import validate_response
     elif request_fields.get('metric_id')=='D03':
         from .r6_regulatory_semantics import validate_response
+    elif request_fields.get('metric_id') == 'B13':
+        from .capacity_semantic_review import validate_response
     policy,plan = build_plan(prepared)
+    def response_validator(**kwargs):
+        if native_assessment:
+            try:
+                validate_response(request=request_fields, raw_response=kwargs['response_body'])
+            except (ValueError, KeyError, TypeError) as error:
+                raise control.SchemaViolationError(str(error)) from error
+
+    def evidence_validator(**kwargs):
+        if native_assessment:
+            from .capacity_native_assessment import build_acceptance
+            try:
+                return build_acceptance(prepared=prepared, plan=plan, response_body=kwargs['response_body'])
+            except (ValueError, KeyError, TypeError) as error:
+                raise control.EvidenceFailureError(str(error)) from error
     if ledger.live:
         need(recorded_wire is None, 'CONTINUOUS_RECORDED_BYTES_CANNOT_RUN_LIVE')
         need(ledger.root == Path(prepared.requirement['policy']['budget_root'])
@@ -407,15 +451,18 @@ def execute_feasibility(*, prepared, ledger, recorded_wire=None):
         preserve_execution_rules(prepared,path)
         owner = str(uuid.uuid4()); when = now()
         transport = _Transport(prepared=prepared,policy=policy,ledger=ledger,path=path,intent=intent,
-            recorded_wire=recorded_wire,owner_token=owner)
+            recorded_wire=recorded_wire,owner_token=owner,native_assessment=native_assessment)
         execution = control.execute_successor_invocation(repo_root=ROOT,authority=prepared.authority,
             workspace_dir=path,plan=plan,request_body=prepared.provider_request_body_bytes,
             execution_id=control.execution_identity(ai_invocation_plan_id=plan['ai_invocation_plan_id'],owner_token=owner,authorized_at_utc=when),
             owner_token=owner,authorized_at_utc=when,clock=now,transport=transport,
-            response_validator=lambda **_:None,evidence_validator=lambda **_:None)
+            response_validator=response_validator,evidence_validator=evidence_validator)
         terminal = ledger.finish_provider(path=path,intent=intent,execution=execution,wire=transport.wire)
         result = {'execution_receipt_id':execution['execution_receipt_id'],'terminal':terminal,
             'semantic_correctness_verified':False,'native_result_created':False,'production_authorized':False}
+        if native_assessment:
+            result['native_candidate_evidence_created'] = execution['status'] == 'SUCCEEDED'
+            result['acceptance_scope'] = 'ONE_REQUEST_SOURCE_ASSESSMENT_NOT_COMPLETE_METRIC'
         output = path/'wire/assistant-output.bin'
         if output.exists() and not transport.wire['error_class']:
             try:
@@ -423,5 +470,5 @@ def execute_feasibility(*, prepared, ledger, recorded_wire=None):
                     raw_response=output.read_bytes())
             except (ValueError,KeyError,TypeError) as error:
                 result['response_check_error'] = str(error)
-        control._exclusive_write_json(path=path/'feasibility.json',value=result)
+        control._exclusive_write_json(path=path/('capacity-assessment.json' if native_assessment else 'feasibility.json'),value=result)
         return path,result

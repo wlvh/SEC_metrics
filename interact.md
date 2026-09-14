@@ -499,3 +499,7 @@ C04不会因当前/历史SEC清单保存为编号文件而误报缺失分片；�
 B13完整输入包含普通年报及当期修订的正文与原生对象；仅发现产能文字不代表已得到利用率，也不代表没有披露产量。D03把已证明的总体当前政府调查涉入与案名、案数明细分开，缺少明细不把已发生陈述改成假设；模型若与该有限来源事实冲突则明确失败。此增量尚未完成B13/D03原生验收，不改变当前正式结果。
 <!-- capability-anchor: CAPABILITY.b13_complete_source_input -->
 <!-- capability-anchor: CAPABILITY.regulatory_aggregate_statement_fact -->
+
+B13 可显式使用普通候选入口读取已登记的完整原生来源判断，生成 OPEN 文字结果及原文证据行。季度产能保留季度表述，不年化、不显示利用率。缺少请求、失败或仍须判断数值对时，不显示“无披露”。测试响应生成的候选明确标注测试解释，不能冒充真实模型结果；默认普通范围仍为原36项。
+<!-- capability-anchor: CAPABILITY.b13_native_assessment_draft -->
+<!-- capability-anchor: CAPABILITY.b13_native_text_run_draft -->

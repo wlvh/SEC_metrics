@@ -1,0 +1,144 @@
+"""Install B13 native assessments using the existing private source journal.
+
+Only a factory-owned ledger can register input. A data directory cannot enroll
+its own response JSON. Portable replay trusts the installed runtime/input pair,
+the same boundary as ordinary_source_authority; it grants no new call rights.
+"""
+from pathlib import Path
+
+from .canonical import canonical_json_bytes, content_hash, strict_json_file, strict_json_loads
+from .capacity_utilization_source import need
+from .capacity_native_assessment import collect_native_assessments, build_acceptance
+from .normal_source_authority import ROOT
+from .sources import resolve_repository_file
+
+EXPORT_PATH = 'config/ordinary_capacity_assessment.json'
+
+
+def _journal(mode):
+    need(mode in {'LIVE', 'RECORDED_TEST_ONLY'}, 'B13_ASSESSMENT_MODE_INVALID')
+    from .ordinary_source_authority import _journal as existing_journal
+    path = existing_journal().parent / 'capacity-assessments' / mode
+    from git_workspace import first_symlink_in_path
+    need(first_symlink_in_path(path=path) is None, 'B13_ASSESSMENT_JOURNAL_ALIAS')
+    path.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def input_key(source, requirement):
+    return content_hash(value={'source_id': source['semantic_source_id'],
+                               'requirement_closure_hash': requirement['requirement_closure_hash']})[7:]
+
+
+def register_assessment_input(*, prepared_requests, ledger):
+    """Re-read the complete native set before recording creator-owned input."""
+    from .continuous_call_ledger import CallLedger, _FACTORY
+    from .continuous_semantic_calls import build_plan
+    from . import invocation_control as control
+    need(type(ledger) is CallLedger and ledger._factory is _FACTORY, 'B13_LEDGER_FACTORY_REQUIRED')
+    assessment = collect_native_assessments(prepared_requests=prepared_requests, ledger=ledger)
+    need(assessment['all_source_requests_accepted'] and not assessment['failed_requests'],
+         'B13_NATIVE_ASSESSMENT_INCOMPLETE')
+    source = strict_json_loads(text=prepared_requests[0].source_bytes.decode())
+    requirement = prepared_requests[0].requirement
+    if ledger.live:
+        need(ledger.root == Path(requirement['policy']['budget_root']), 'B13_LIVE_LEDGER_ROOT_CHANGED')
+    by_id = {strict_json_loads(text=p.request_bytes.decode())['request_id']: p for p in prepared_requests}
+    native = []
+    with ledger.locked():
+        ledger.snapshot()
+        for row in assessment['completed']:
+            prepared = by_id[row['request_id']]
+            _, plan = build_plan(prepared)
+            path = ledger.root / 'calls' / ('%04d' % row['ordinal'])
+            with control._successor_plan_context(repo_root=ROOT, authority=prepared.authority):
+                success = control.load_successful_response(workspace_dir=path, plan=plan)
+            native.append({'request_id': row['request_id'], 'ordinal': row['ordinal'], 'plan': plan,
+                'semantic_request': strict_json_loads(text=prepared.request_bytes.decode()),
+                'assistant_output': success['response_body'].decode('utf-8'),
+                'acceptance_receipt': success['acceptance_receipt'],
+                'intent': strict_json_file(path=path / 'intent.json'),
+                'terminal': strict_json_file(path=path / 'terminal.json'),
+                'wire': strict_json_file(path=path / 'wire/journal.json')})
+    body = {'record_type': 'B13_REGISTERED_NATIVE_ASSESSMENT_INPUT', 'schema_version': 1,
+        'source_id': source['semantic_source_id'], 'company_id': source['company_id'],
+        'requirement_closure_hash': requirement['requirement_closure_hash'],
+        'mode': 'LIVE' if ledger.live else 'RECORDED_TEST_ONLY', 'assessment': assessment,
+        'native_requests': native, 'new_call_authority': False, 'production_authorized': False}
+    value = {**body, 'input_record_id': content_hash(value=body)}
+    from .ordinary_source_authority import _immutable
+    directory = _journal(value['mode']) / input_key(source, requirement)
+    need(not directory.is_symlink(), 'B13_ASSESSMENT_JOURNAL_ALIAS')
+    directory.mkdir(exist_ok=True)
+    _immutable(directory / (value['input_record_id'][7:] + '.json'), value)
+    return value
+
+
+def load_registered_input(*, data_root, source, requirement, mode=None, input_record_id=None):
+    """A caller-rehashed packet cannot replace the installed trusted record."""
+    key = input_key(source, requirement)
+    exported = data_root / EXPORT_PATH
+    imported = (strict_json_file(path=resolve_repository_file(repo_root=data_root, repo_relative_path=EXPORT_PATH))
+                if exported.exists() else None)
+    if mode is None:
+        mode = imported['mode'] if imported is not None else 'LIVE'
+    if input_record_id is None and imported is not None:
+        input_record_id = imported['input_record_id']
+    if (ROOT / '.git').exists():
+        directory = _journal(mode) / key
+        need(not directory.is_symlink(), 'B13_ASSESSMENT_JOURNAL_ALIAS')
+        if input_record_id is None:
+            choices = list(directory.glob('*.json')) if directory.exists() else []
+            need(len(choices) == 1, 'B13_NATIVE_ASSESSMENT_NOT_REGISTERED_OR_AMBIGUOUS')
+            path = choices[0]
+        else:
+            import re
+            need(type(input_record_id) is str and re.fullmatch(r'sha256:[0-9a-f]{64}', input_record_id),
+                 'B13_ASSESSMENT_INPUT_ID_INVALID')
+            path = directory / (input_record_id[7:] + '.json')
+        need(path.is_file(), 'B13_NATIVE_ASSESSMENT_NOT_REGISTERED')
+        need(not path.is_symlink(), 'B13_ASSESSMENT_JOURNAL_ALIAS')
+    else:
+        path = resolve_repository_file(repo_root=ROOT, repo_relative_path=EXPORT_PATH)
+    value = strict_json_file(path=path)
+    need(value['record_type'] == 'B13_REGISTERED_NATIVE_ASSESSMENT_INPUT'
+         and value['schema_version'] == 1 and value['source_id'] == source['semantic_source_id']
+         and value['company_id'] == source['company_id']
+         and value['mode'] == mode and mode in {'LIVE', 'RECORDED_TEST_ONLY'}
+         and value['requirement_closure_hash'] == requirement['requirement_closure_hash']
+         and (input_record_id is None or value['input_record_id'] == input_record_id)
+         and value['input_record_id'] == content_hash(value={k: v for k, v in value.items() if k != 'input_record_id'})
+         and value['new_call_authority'] is False and value['production_authorized'] is False,
+         'B13_REGISTERED_ASSESSMENT_INPUT_CHANGED')
+    if exported.exists():
+        need(strict_json_file(path=resolve_repository_file(repo_root=data_root, repo_relative_path=EXPORT_PATH)) == value,
+             'B13_IMPORTED_ASSESSMENT_CHANGED')
+    from .capacity_semantic_review import requests_from_source
+    from .continuous_semantic_calls import request_body
+    from .continuous_call_policy import configured_transport_policy
+    from . import invocation_control as control
+    from types import SimpleNamespace
+    expected = requests_from_source(source)
+    need([r['request_id'] for r in value['native_requests']] == [r['request_id'] for r in expected]
+         and value['assessment']['mode'] == value['mode'], 'B13_NATIVE_INPUT_REQUEST_SET_CHANGED')
+    policy = configured_transport_policy(requirement=requirement, repo_root=ROOT)
+    source_bytes = canonical_json_bytes(value=source)
+    from .canonical import sha256_bytes
+    for row, request, summary in zip(value['native_requests'], expected, value['assessment']['completed']):
+        need(row['semantic_request'] == request and row['request_id'] == summary['request_id']
+             and row['terminal']['terminal_id'] == summary['terminal_id']
+             and row['terminal']['status'] == 'SUCCEEDED' and not row['terminal']['stop_reason']
+             and row['wire']['mode'] == value['mode'] and not row['wire']['error_class'],
+             'B13_NATIVE_INPUT_TERMINAL_CHANGED')
+        raw = row['assistant_output'].encode('utf-8')
+        need(row['wire']['assistant_output_sha256'] == sha256_bytes(content=raw)
+             and row['plan']['provider_request_body_sha256'] == sha256_bytes(content=request_body(request, policy)),
+             'B13_NATIVE_INPUT_WIRE_CHANGED')
+        prepared = SimpleNamespace(source_bytes=source_bytes, request_bytes=canonical_json_bytes(value=request))
+        acceptance = build_acceptance(prepared=prepared, plan=row['plan'], response_body=raw)
+        need(all(row['acceptance_receipt'][k] == v for k, v in acceptance.items())
+             and acceptance['candidate_record'] == summary['candidate']
+             and acceptance['evidence_record'] == summary['evidence'], 'B13_NATIVE_INPUT_EVIDENCE_CHANGED')
+        control._validate_acceptance_receipt(value=row['acceptance_receipt'], plan=row['plan'], response_body=raw)
+    need(len(value['native_requests']) == len(value['assessment']['completed']), 'B13_NATIVE_INPUT_SUMMARY_SET_CHANGED')
+    return value
