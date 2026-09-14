@@ -777,3 +777,5 @@ B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物�
 `B13_NATIVE_RUN_MATERIAL_ROOT=/absolute/new/material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_capacity_run_material` 在新目录完成26个明确MOCK来源请求、创建者登记、同一普通OPEN Run及公共行，拒绝重签遗漏请求和测试改成LIVE。原请求/响应/失败均保留，测试没有真实provider/paid/SEC或生产信用。该测试会在原仓库私有来源登记目录新增明确RECORDED_TEST_ONLY记录；不会替代真实输入或恢复旧额度。最后还需用复制的运行包和Python3.9独立冷读。
 
 B13后继协议v2的`test_sales_only_source_cannot_be_labelled_actual_production`复现真实54的分类/原文冲突；销售/出货类可保留，不能改为实际产量。原54失败不重签；明确JSON类型和独立枚举后需新请求接线验证，不能原样重抽。
+
+B13 v3改为来源kind/index选择，由程序恢复完整原文；保留provider原响应。字段/引用反例、完整记录响应Run及行（172.465秒）、B13实际工厂禁网接线（14.242秒）和D04回归（12.575秒）通过，106fast通过85.781秒。原55的AMPTC重抄错误不重签为成功。

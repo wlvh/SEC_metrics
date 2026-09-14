@@ -34,8 +34,7 @@ def response_for(request):
         {'unit_id': request['units'][0]['unit_id'], 'reviewed': True, 'unresolved': [], 'findings': [
             {'kind': 'AVAILABLE_CAPACITY', 'subject': 'TARGET_REGISTRANT', 'timing': 'CURRENT_REPORT',
              'reason': 'Quarterly widget manufacturing capacity only; no actual production amount.',
-             'evidence': [{'kind': 'VISIBLE_BLOCK', 'source_index': 7,
-                           'text': 'Our plant can manufacture 100 widgets per quarter.'}]}]}]}
+             'evidence': [{'kind': 'VISIBLE_BLOCK', 'source_index': 7}]}]}]}
 
 
 class CapacitySemanticReviewTest(unittest.TestCase):
@@ -51,7 +50,6 @@ class CapacitySemanticReviewTest(unittest.TestCase):
         request = requests_from_source(source)[0]
         response = response_for(request)
         finding = response['units'][0]['findings'][0]
-        finding['evidence'][0]['text'] = payload['blocks'][0]['text']
         finding['kind'] = 'ACTUAL_PRODUCTION'
         with self.assertRaisesRegex(ValueError, 'SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION'):
             validate_response(request=request, raw_response=_bytes(response))
@@ -64,6 +62,9 @@ class CapacitySemanticReviewTest(unittest.TestCase):
         checked = validate_response(request=request, raw_response=_bytes(response))
         self.assertEqual(checked['response'], response)
         self.assertFalse(checked['semantic_correctness_verified'])
+        for malformed in (None, [], 'not an object', True):
+            with self.subTest(malformed=malformed), self.assertRaises(ValueError):
+                validate_response(request=request, raw_response=_bytes(malformed))
         for mutate in ('omit_unit', 'omit_candidate', 'invent_quote', 'wrong_request'):
             bad = deepcopy(response)
             if mutate == 'omit_unit': bad['units'] = []

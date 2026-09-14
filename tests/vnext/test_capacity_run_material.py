@@ -29,9 +29,8 @@ def recorded_response(request):
                       and 'approximately five-million microinverters per quarter' in text else 'OTHER_CONTEXT')
             # These classifications are explicitly test data, not a claim that
             # the model has interpreted the other source language correctly.
-            quote = text[:1200]
             findings.append({'kind': chosen, 'subject': 'TARGET_REGISTRANT', 'timing': 'CURRENT_REPORT',
-                'evidence': [{'kind': kind, 'source_index': index, 'text': quote}],
+                'evidence': [{'kind': kind, 'source_index': index}],
                 'reason': 'Recorded source-role input for native Run tests, not provider or semantic qualification.'})
         rows.append({'unit_id': unit['unit_id'], 'reviewed': True, 'findings': findings, 'unresolved': []})
     return {'request_id': request['request_id'], 'units': rows}

@@ -14,7 +14,7 @@ from .normal_source_authority import ROOT
 from .r6_semantic_source import _bytes
 from .r6_semantic_review import _validate_source_response
 
-POLICY_PATH = 'catalog/r5/capacity_semantic_review_v2.json'
+POLICY_PATH = 'catalog/r5/capacity_semantic_review_v3.json'
 _MAPS = ('contexts', 'units', 'namespace_environments')
 _STYLE = re.compile(r'\bstyle=(?:"[^"]*"|\x27[^\x27]*\x27)', re.I)
 _STYLE_REF = re.compile(r'data-b13-style-ref="(\d+)"')
@@ -203,14 +203,34 @@ def validate_response(*, request, raw_response):
     # request identity when checking the provider's original response first.
     from .canonical import strict_json_loads
     response = strict_json_loads(text=raw_response.decode('utf-8'))
-    need(response.get('request_id') == request['request_id'], 'B13_RESPONSE_REQUEST_CHANGED')
+    need(type(response) is dict and response.get('request_id') == request['request_id'], 'B13_RESPONSE_REQUEST_CHANGED')
+    resolved = deepcopy(response)
+    from .r6_semantic_review import _source_items
+    by_id = {u['unit_id']: u for u in units}
+    need(type(resolved.get('units')) is list, 'B13_RESPONSE_UNITS_REQUIRED')
+    for row in resolved['units']:
+        need(type(row) is dict and row.get('unit_id') in by_id and type(row.get('findings')) is list,
+             'B13_REFERENCE_UNIT_CHANGED')
+        kind, items = _source_items(by_id[row['unit_id']])
+        for finding in row['findings']:
+            need(type(finding) is dict and type(finding.get('evidence')) is list, 'B13_REFERENCE_FIELDS_CHANGED')
+            for evidence in finding['evidence']:
+                need(type(evidence) is dict and set(evidence) == {'kind', 'source_index'}
+                     and evidence['kind'] == kind and type(evidence['source_index']) is int
+                     and evidence['source_index'] in items, 'B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE')
+                item = items[evidence['source_index']]
+                evidence['text'] = item['raw_xml'] if kind == 'NATIVE_SUPPLEMENT' else item['text']
     body = {k: v for k, v in request.items() if k != 'request_id'}
     body['units'] = units
     body['document_context'] = {**body['document_context'],
         'language_candidate_block_indices': [], 'native_candidate_ordinals': []}
     restored = {**body, 'request_id': content_hash(value=body)}
+    # These larger bounds apply only to host-recovered originals. The provider
+    # response above retains its existing 262144-byte limit and 4096 tokens.
+    host_rules = {**rules, 'max_response_bytes': rules['host_reference_max_bytes'],
+                  'max_quote_characters': rules['host_reference_max_quote_characters']}
     checked = _validate_source_response(request=restored,
-        raw_response=_bytes({**response, 'request_id': restored['request_id']}), policy=rules)
+        raw_response=_bytes({**resolved, 'request_id': restored['request_id']}), policy=host_rules)
     # Restore the externally observed identity in the derived check. The raw
     # response and original request are never changed on disk.
     required = {(r['unit_id'], r['kind'], r['source_index'])
