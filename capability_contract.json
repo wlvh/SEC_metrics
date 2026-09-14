@@ -1042,6 +1042,32 @@
         "test_anchor": "tests/vnext/test_semantic_source_grouping.py::SemanticSourceGroupingMaterialTest.test_actual_two_company_units_are_identical_to_preoptimization_material",
         "test_status": "automated_recorded",
         "since": "2026-09-14"
+      },
+      {
+        "anchor_id": "CAPABILITY.d04_native_assessment_draft",
+        "type": "capability",
+        "status": "active",
+        "statement": "新D04完整保存来源请求可经WB-3、创建者登记、Evidence/Review进入普通OPEN Run和公共行。当前目标与历史/其他主体分开，未披露判断附范围证据；历史控制不变为当前输入。只有记录响应及协议开发证据，未获得新版本真实完整D04或生产信用。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_d04_run_material.py::D04RunMaterialTest.test_native_run_recorded_mode_exact_source_and_resigned_input_rejection",
+        "test_status": "automated_recorded",
+        "since": "2026-09-15"
+      },
+      {
+        "anchor_id": "CAPABILITY.native_assessment_original_identity_replay",
+        "type": "capability",
+        "status": "active",
+        "statement": "完全相同的原请求/原件可以保留原执行计划和原接受收据，经原捕获规则的只读校验及当前含义复验成为新消费者的输入。归档代码不执行，旧诊断/失败/协议变化/当前内容拒绝不能升级；只读视图不能执行，不产生新的provider或paid调用。可信安装及私有创建者登记边界保持。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_native_assessment_replay.py::NativeAssessmentReplayMaterialTest.test_original_plan_survives_consumer_change_and_rebinding_is_rejected",
+        "test_status": "automated_recorded",
+        "since": "2026-09-15"
       }
     ],
     "capability_boundaries": [

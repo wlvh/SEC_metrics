@@ -783,3 +783,5 @@ B13 v3改为来源kind/index选择，由程序恢复完整原文；保留provide
 B13 v4增加`test_clear_capacity_with_no_production_is_a_calculation_limit`：无产量可作为计算限制保留，但已有产能时不能同时宣称本单元没有产能；本单元限制不升级为整份年报缺失。原59终态不变。
 
 B13来源编号与内容反例：`test_capacity_semantic_review`检查原始ordinal449不能引用为行位置0、JSON键重排仍保持非单调原顺序，并直接拒绝原始68及拆分的税收抵免余额反例。`test_capacity_text_results`使用独立合成无相关披露原件检查完整集合、Review、非数值结果及程序范围证据；不把Enphase原年报改称未披露。`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_capacity_applicability`检查批准两家公司不能成为不适用，并从实际来源创建范围外Run，拒绝合法重新签名的假披露缺失结果。短测试和完整材料分别登记在当前fast/source-material入口。
+
+D04原生：`tests.vnext.test_d04_native_assessment`覆盖历史/当前分离、引用、引语、估值/网络安全/干净意见反例及原生Review文字结果；`test_d04_native_wiring`禁网验证实际来源工厂、原opener和WB-3，并拒绝缺单元。`D04_NATIVE_RUN_MATERIAL_ROOT=/absolute/new/root PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_d04_run_material`执行27个明确记录响应请求、登记、Review、完整Run及公共行，拒绝缺请求和测试改LIVE；这不是模型判断通过。独立CI作业避免把完整D04材料塞进30秒fast入口。`test_native_assessment_replay`从已存原材料恢复一个旧原生请求，验证保留原计划ID、改请求/响应和重签新计划拒绝、历史视图无执行权限。

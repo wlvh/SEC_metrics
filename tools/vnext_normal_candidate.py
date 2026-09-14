@@ -44,7 +44,7 @@ def main(argv=None):
                         help="Existing external saved-source workspace; appended requests require installed execution admission")
     parser.add_argument("--company", action="append",
                         help="Configured company ID; repeat to select several; default all ten")
-    parser.add_argument("--metric", action="append", choices=(*METRICS, 'B13'),
+    parser.add_argument("--metric", action="append", choices=(*METRICS, 'B13', 'D04'),
                         help="Repeat to select several; default all installed normal candidate metrics")
     parser.add_argument("--freeze", action="store_true",
                         help="Freeze only when the installed successor policy explicitly enables it; draft runs remain OPEN")

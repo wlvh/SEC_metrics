@@ -11,6 +11,7 @@ from .text_results import text_policy, text_claim_from_block
 from .text_review import build_text_review_unit
 
 METHOD = 'PRODUCTION_CAPACITY_DISCLOSURE_EXCERPTS_V1'
+METHODS = {'B13': METHOD, 'D04': 'GOING_CONCERN_DISCLOSURE_EXCERPTS_V1'}
 _QUALITATIVE = {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY', 'CAPACITY_QUALITATIVE', 'PLANNED_CAPACITY'}
 
 
@@ -18,7 +19,7 @@ def validate_deterministic_candidate_shape(*, candidate):
     # The derivative is deterministic; source-role judgments remain explicitly
     # bound model inputs in proposal_id and the complete Evidence coverage.
     need(candidate['record_type'] == 'DETERMINISTIC_TEXT_CANDIDATE'
-         and candidate['method'] == METHOD and candidate['status'] == 'CANDIDATE'
+         and candidate['method'] in METHODS.values() and candidate['status'] == 'CANDIDATE'
          and not candidate['derived_asset_ids'] and not candidate['competing_candidates']
          and not candidate['unresolved_competing_claims'], 'B13_TEXT_CANDIDATE_SHAPE')
     target = candidate['calculation_target']
@@ -40,8 +41,9 @@ def validate_deterministic_candidate_shape(*, candidate):
 
 def _prepare(*, compiled_spec, target, source, assessment, source_references, raw_bytes_by_id):
     policy = text_policy(compiled_spec)
-    need(compiled_spec['compiled']['metric_id'] == 'B13'
-         and compiled_spec['compiled']['quality_rule']['deterministic_text_method'] == METHOD
+    metric = compiled_spec['compiled']['metric_id']
+    need(metric in METHODS and source['metric_id'] == metric
+         and compiled_spec['compiled']['quality_rule']['deterministic_text_method'] == METHODS[metric]
          and target['scope'] == compiled_spec['compiled']['required_claims'], 'B13_TEXT_SPEC_CHANGED')
     need(source['semantic_source_id'] == content_hash(value={k: v for k, v in source.items() if k != 'semantic_source_id'})
          and assessment['assessment_set_id'] == content_hash(value={k: v for k, v in assessment.items() if k != 'assessment_set_id'})
@@ -50,8 +52,8 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
          'B13_TEXT_ASSESSMENT_SOURCE_CHANGED')
     need(assessment['all_source_requests_accepted'] is True and not assessment['missing_request_ids']
          and not assessment['failed_requests'], 'B13_TEXT_COMPLETE_ASSESSMENT_REQUIRED')
-    from .capacity_semantic_review import requests_from_source
-    requests = requests_from_source(source)
+    from .continuous_semantic_calls import source_requests
+    requests = source_requests(source)
     request_ids = [r['request_id'] for r in requests]
     need(assessment['required_request_ids'] == request_ids
          and [row['request_id'] for row in assessment['completed']] == request_ids,
@@ -63,9 +65,16 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
     need(findings == assessment['source_findings'], 'B13_TEXT_FINDING_SUMMARY_CHANGED')
     current_kinds = {f['kind'] for f in findings
                      if f['subject'] == 'TARGET_REGISTRANT' and f['timing'] == 'CURRENT_REPORT'}
-    need(not {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'} <= current_kinds,
+    need(metric != 'B13' or not {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'} <= current_kinds,
          'B13_COMPARABLE_PAIR_ASSESSMENT_REQUIRED')
-    absent = not any(f['kind'] in _QUALITATIVE for f in findings)
+    relevant = [f for f in findings if f['kind'] in _QUALITATIVE]
+    section = 'CAPACITY_DISCLOSURES'
+    if metric == 'D04':
+        from .d04_native_assessment import CURRENT_KINDS
+        relevant = [f for f in findings if f['kind'] in CURRENT_KINDS
+                    and f['subject'] == 'TARGET_REGISTRANT' and f['timing'] == 'CURRENT_REPORT']
+        section = 'GOING_CONCERN_DISCLOSURES'
+    absent = not relevant
     expected_branch = ('DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW' if absent else
                        'TEXT_QUAL_PROPOSAL_REQUIRES_NATIVE_REVIEW')
     need(assessment['proposed_branch'] == expected_branch,
@@ -78,9 +87,7 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
     documents = {}
     units = {u['unit_id']: u for u in source['units']}
     selected = set()
-    for finding in findings:
-        if finding['kind'] not in _QUALITATIVE:
-            continue
+    for finding in relevant:
         unit = units[finding['unit_id']]
         for evidence in finding['resolved_evidence']:
             if evidence['kind'] == 'VISIBLE_BLOCK':
@@ -99,7 +106,7 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
         coverage = {'source_reference_id': sid, 'document_id': did,
             'assessment_set_id': assessment['assessment_set_id'], 'source_check_scope': source['source_check_scope'],
             'source_filing': original['filing'], 'scope': target['scope'],
-            'ranges': [{'section_id': 'CAPACITY_DISCLOSURES', 'start_block': 0, 'end_block_exclusive': len(blocks)}],
+            'ranges': [{'section_id': section, 'start_block': 0, 'end_block_exclusive': len(blocks)}],
             'required_unit_ids': original['source_unit_ids'], 'assessment_mode': assessment['mode'],
             'numeric_utilization_inferred': False}
         coverage['coverage_hash'] = content_hash(value=coverage)
@@ -112,7 +119,7 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
                  'B13_TEXT_RAW_SPAN_CHANGED')
             order = len(claims)
             claims['excerpt_' + str(order)] = text_claim_from_block(document=document,
-                section_id='CAPACITY_DISCLOSURES', block_index=index, order=order)
+                section_id=section, block_index=index, order=order)
     need((0 if absent else 1) <= len(claims) <= policy['max_items'] and
          sum(len(c['text']) for c in claims.values()) + len(claims) - 1 <= policy['max_text_chars'],
          'B13_COMPLETE_TEXT_EXCERPTS_EXCEED_BOUND')
@@ -122,7 +129,7 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
 def create_deterministic_text_candidate(*, compiled_spec, target, source, assessment, source_references, raw_bytes_by_id):
     selected, bindings, _ = _prepare(compiled_spec=compiled_spec, target=target, source=source,
         assessment=assessment, source_references=source_references, raw_bytes_by_id=raw_bytes_by_id)
-    body = {'record_type': 'DETERMINISTIC_TEXT_CANDIDATE', 'method': METHOD,
+    body = {'record_type': 'DETERMINISTIC_TEXT_CANDIDATE', 'method': METHODS[compiled_spec['compiled']['metric_id']],
         'spec_semantic_hash': compiled_spec['spec_semantic_hash'], 'spec_closure_hash': compiled_spec['spec_closure_hash'],
         'source_set_hash': content_hash(value=source_references), 'document_bindings': bindings,
         'calculation_target': target, 'disclosure_group': compiled_spec['compiled']['disclosure_group'],
@@ -137,7 +144,8 @@ def build_text_evidence(*, compiled_spec, candidate, **arguments):
     _, _, coverage = _prepare(compiled_spec=compiled_spec, **arguments)
     body = {'candidate_hash': candidate['candidate_hash'], 'status': 'PASS',
         'normalized_values': {role: claim['text'] for role, claim in candidate['selected'].items()},
-        'checks': [{'check': 'B13_COMPLETE_NATIVE_SOURCE_ASSESSMENT', 'status': 'PASS', 'coverage': coverage}],
+        'checks': [{'check': compiled_spec['compiled']['metric_id'] + '_COMPLETE_NATIVE_SOURCE_ASSESSMENT',
+                    'status': 'PASS', 'coverage': coverage}],
         'reason_codes': [], 'identity_constraints': [], 'normalized_scope': arguments['target']['scope'],
         'system_approval_eligible': True, 'unresolved_scope_dimensions': []}
     return validate_record(record={'record_type': 'EVIDENCE_CHECK', **body, 'evidence_check_id': content_hash(value=body)})
@@ -158,8 +166,10 @@ def replay_text_result(*, compiled_spec, target, company_traits, candidate, evid
          'B13_TEXT_EFFECTIVE_REVIEW_REQUIRED')
     if not candidate['selected']:
         from .text_results import build_text_result_and_trace
+        reason = ('B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE' if compiled_spec['compiled']['metric_id'] == 'B13'
+                  else 'D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE')
         result, trace = build_text_result_and_trace(compiled_spec=compiled_spec, target=target,
-            reason_code='B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE')
+            reason_code=reason)
         return result, trace, []
     references = {s['source_reference_id']: s for s in arguments['source_references']}
     coverage = {r['source_reference_id']: r for r in expected['checks'][0]['coverage']}
@@ -172,7 +182,7 @@ def replay_text_result(*, compiled_spec, target, company_traits, candidate, evid
             'coverage_hash': coverage[ref['source_reference_id']]['coverage_hash'],
             **{key: claim[key] for key in ('extent', 'document_id', 'section_id', 'block_index', 'raw_start_byte',
                                           'raw_end_byte', 'raw_span_sha256', 'order')}}
-        observations.append(_build_text_observation(metric_id='B13', semantic_role=role, company_id=target['company_id'],
+        observations.append(_build_text_observation(metric_id=compiled_spec['compiled']['metric_id'], semantic_role=role, company_id=target['company_id'],
             period_start=target['period_start'], period_end=target['period_end'], scope=target['scope'],
             value=claim['text'], source_binding=binding, approval_effect_hash=decision['approval_effect_hash']))
     result, trace = calculate_text_metric(compiled_spec=compiled_spec, target=target,

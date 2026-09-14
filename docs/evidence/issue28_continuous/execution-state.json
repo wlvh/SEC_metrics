@@ -138,11 +138,14 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "6c07fc1cbc0c3aae3a9f9a4227e36dd960f5b18a",
-    "run": 34867046536,
-    "conclusion": "SUCCESS",
-    "jobs": 10,
-    "scope": "PREVIOUS_UNCHANGED_TREE_REUSED_NOT_CURRENT_INCREMENT_CI"
+    "head": "f42ea796ea224d9c8b343aa6f1584a1237b3adf9",
+    "run": 34879084983,
+    "conclusion": "CANCELLED",
+    "jobs_success": 9,
+    "jobs_cancelled": [
+      "vNext remaining source Runs (jpmorgan_chase)"
+    ],
+    "scope": "PRECEDING_COMMIT_NOT_NEW_D04_INCREMENT_CI"
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -398,8 +401,8 @@
   "current_rule_identity": {
     "requirement_id": "issue_28_v14",
     "requirement_generation": "PROFILE_DRIVEN_V15",
-    "requirement_closure_hash": "sha256:4e6105c99e3d1741cbf72d9a4c0e71ee175740e6f3de6dc4c40a149b990ac95d",
-    "execution_file_count": 408,
+    "requirement_closure_hash": "sha256:a72021ea3a8c130a76e688df2f71a4f512a25ff143deb403c313611e20c4cb40",
+    "execution_file_count": 412,
     "basis": "CURRENT_LOADER_AND_EXECUTION_AUTHORITY_VERIFIED"
   },
   "last_resume": {
@@ -519,7 +522,7 @@
   },
   "session_checkpoint": {
     "date": "2026-09-15",
-    "state": "ACTIVE_CONTINUATION",
+    "state": "CHECKPOINT_PREPARED_NOT_PROJECT_COMPLETE",
     "baseline_head": "6c07fc1cbc0c3aae3a9f9a4227e36dd960f5b18a",
     "actual_calls": [
       33,
@@ -535,8 +538,9 @@
     "b13_affected_real_calls_paused": true,
     "pause_reason": "Original68 exact references accepted but production-tax-credit semantics wrong; limited offline guards are not complete qualification",
     "new_approval_required_for_existing_budget": false,
-    "next": "Continue numeric B13 and D04 native engineering; obtain actual D03 scoped review; do not redraw68 or treat limited content guards as broad semantic qualification",
-    "production_permissions": false
+    "next": "Read this current state and final commit; D04 native current/control factories are ready for necessary bounded real verification. B13 remains held on68 semantics; implement native quantity pairs and resolve content route, obtain D03 6e5 review, then390/update/publication recovery/retirement.",
+    "production_permissions": false,
+    "context_note": "Long continuous execution reduced context-tracking reliability; checkpoint preserves tested work and actual ledger, not a withdrawal of development or budget authorization."
   },
   "b13_current_development": {
     "material": "b13-content-guards/",
@@ -580,6 +584,25 @@
     },
     "independent_module_review": "PENDING",
     "full390": false,
+    "production_permissions": false
+  },
+  "d04_current_development": {
+    "material": "d04-native-integration/",
+    "native_full_recorded_run": "PASS_27_REQUESTS_REVIEW_RUN_PUBLIC_ROWS",
+    "native_seconds": 185.941,
+    "current_doubt_and_historical_scope_tests": "5_PASS",
+    "source_wiring_replay_tests": "7_PASS_30.873_SECONDS",
+    "fast": "108_SELECTORS_PASS_95.607_SECONDS",
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "real_new_version_semantic_acceptance": false,
+    "original_native_replay": "27_F42_RECORDED_REQUESTS_RETAIN_ORIGINAL_PLANS_AND_ACCEPTANCES_IN_NEW_RUN_ZERO_NEW_CALLS",
+    "original68_still_rejected": true,
+    "historical_controls": "RECORDED_WIRING_ONLY_NOT_FRESH_MODEL_VALIDATION",
+    "independent_module_review": "PENDING",
     "production_permissions": false
   }
 }

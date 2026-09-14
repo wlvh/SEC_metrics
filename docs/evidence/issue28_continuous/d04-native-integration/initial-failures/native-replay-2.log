@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/resume-20260915/check_native_replay.py", line 12, in <module>
+    result=replay_native_response(prepared=by_id[old['request_id']],path=path)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/native_assessment_replay.py", line 139, in replay_native_response
+    success = control.load_successful_response(workspace_dir=path, plan=plan, _historical_view=view)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/invocation_control.py", line 1942, in load_successful_response
+    validated_plan = validate_ai_invocation_plan(plan=plan, _historical_view=_historical_view)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/invocation_control.py", line 1022, in validate_ai_invocation_plan
+    _decimal_observation(
+    ~~~~~~~~~~~~~~~~~~~~^
+        value=observability["estimated_cost"], label="estimated cost"
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/invocation_control.py", line 734, in _decimal_observation
+    raise InvocationControlError("{} must be decimal text".format(label))
+vnext.invocation_control.InvocationControlError: estimated cost must be decimal text

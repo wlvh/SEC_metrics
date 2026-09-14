@@ -815,6 +815,25 @@
         "notes": "Original capacity disclosures retain their own product, facility and period scope. No numeric utilization or annualized capacity is inferred."
       },
       "spec_overrides": {}
+    },
+    "D04": {
+      "name": null,
+      "projection": {
+        "status_exact": "TEXT_QUAL",
+        "source_class": "10-K",
+        "unit": "text",
+        "formula": "source-reported going concern statements",
+        "confidence": "",
+        "concept_or_section": "Going concern assessment",
+        "metric_context_style": "constant",
+        "context_or_dimension": "current target statements with source-reported temporal context",
+        "evidence_context_style": "text_source_span",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "verbatim_source_excerpt",
+        "parser_version": "TEXT_V1",
+        "notes": "Preserve source statements and complete assessment scope; ordinary operational risks and unqualified audit opinions do not establish going-concern conclusions."
+      },
+      "spec_overrides": {}
     }
   }
 }

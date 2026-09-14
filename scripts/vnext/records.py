@@ -1194,7 +1194,7 @@ def _validate_record_semantics(
             temporal, sampling, or raw-byte invariants.
     """
     if record_type == DETERMINISTIC_TEXT_CANDIDATE_TYPE:
-        if record.get("method") == "PRODUCTION_CAPACITY_DISCLOSURE_EXCERPTS_V1":
+        if record.get("method") in {"PRODUCTION_CAPACITY_DISCLOSURE_EXCERPTS_V1", "GOING_CONCERN_DISCLOSURE_EXCERPTS_V1"}:
             from .capacity_text_results import validate_deterministic_candidate_shape
         elif record.get("method") in {"BOARD_DISCLOSURE_EXCERPTS_V1", "LEGAL_DISCLOSURE_EXCERPTS_V1"}:
             from .text_results_v2 import validate_deterministic_candidate_shape

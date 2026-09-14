@@ -97,7 +97,8 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
     else:
         row,evidence,_ = projector._project_result(result=result,trace=trace,company=company,spec=view,baseline_row=baseline,
             indexes=indexes,fiscal_year=str(period["fiscal_year"]),metric_fields=publication.METRIC_FIELDS)
-    if metric == 'B13' and result['reason_code'] == 'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE':
+    if metric in {'B13', 'D04'} and result['reason_code'] in {
+            'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE', 'D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE'}:
         from .capacity_run import project_defined_absence
         row, evidence = project_defined_absence(case=case, result=result, row=row, company=company)
     if not is_text:
@@ -128,11 +129,12 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
             "source_reference_ids":[r["source_reference_id"] for r in case["references"]]},ensure_ascii=False,sort_keys=True)
     elif result['text_payload'] is not None:
         _need(len(evidence)==len(result["text_payload"]["items"]),"ORDINARY_TEXT_EVIDENCE_SET_CHANGED")
-    elif metric == 'B13':
+    elif metric in {'B13', 'D04'}:
         structural = case['selection']['status'] == 'N_A_STRUCTURAL'
         _need((structural and result['applicability'] == 'N_A_STRUCTURAL' and not evidence)
-              or (case['selection']['status'] == 'NOT_AVAILABLE_SEC'
-                  and result['reason_code'] == 'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE'
+              or (case['selection']['status'] == ('NOT_AVAILABLE_SEC' if metric == 'B13' else 'TEXT_QUAL')
+                  and result['reason_code'] in {'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE',
+                                                'D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE'}
                   and len(evidence) == len(case['text_arguments']['source']['documents'])),
               'B13_NULL_TEXT_PROJECTION_CHANGED')
         if structural:

@@ -51,9 +51,9 @@ def _policy(root):
 
 
 def prepare_case(*, data_root, company_id, metric_id):
-    if metric_id == 'B13':
+    if metric_id in {'B13', 'D04'}:
         from .capacity_run import prepare_case as prepare_capacity_case
-        return prepare_capacity_case(data_root=data_root, company_id=company_id)
+        return prepare_capacity_case(data_root=data_root, company_id=company_id, metric_id=metric_id)
     policy = _policy(data_root)
     _need(metric_id in policy["metric_ids"],"ORDINARY_INTEGRATED_METRIC_NOT_ENABLED")
     note_debt = None
@@ -149,10 +149,10 @@ def _binding(case, requirement):
 
 
 def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None):
-    if metric_id == 'B13':
+    if metric_id in {'B13', 'D04'}:
         from .capacity_run import install_inputs
         return install_inputs(data_root=data_root, company_id=company_id,
-                              source_root=ROOT if source_root is None else source_root)
+                              source_root=ROOT if source_root is None else source_root, metric_id=metric_id)
     data_root = _external(data_root)
     source_root = ROOT if source_root is None else _external(source_root)
     _need(source_root != data_root and source_root not in data_root.parents and data_root not in source_root.parents,
@@ -207,7 +207,7 @@ def _install_case_inputs(*, data_root, source_root, company_id, case, requiremen
 
 
 def text_api(metric_id):
-    if metric_id == 'B13':
+    if metric_id in {'B13', 'D04'}:
         from . import capacity_text_results
         return capacity_text_results, capacity_text_results.build_text_review_unit
     from .normal_run_v2 import text_api as select
@@ -215,10 +215,10 @@ def text_api(metric_id):
 
 
 def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False):
-    if metric_id == 'B13':
+    if metric_id in {'B13', 'D04'}:
         _need(not freeze, 'ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED')
         from .capacity_run import create_run as create_capacity_run
-        return create_capacity_run(data_root=data_root, run_dir=run_dir, company_id=company_id)
+        return create_capacity_run(data_root=data_root, run_dir=run_dir, company_id=company_id, metric_id=metric_id)
     data_root,run_dir = _external(data_root),_external(run_dir)
     _need(not run_dir.exists(),"ORDINARY_INTEGRATED_RUN_PATH_EXISTS")
     _need(not freeze or _policy(data_root)["freeze_enabled"],"ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED")
@@ -289,7 +289,7 @@ def replay_case(*, data_root, manifest, spec=None):
     if manifest.get('requirement_id') == 'issue_28_v14':
         from .capacity_run import validate_run_authority
         case = validate_run_authority(repo_root=data_root, manifest=manifest, records=None, compiled_specs=None)
-        _need(spec is None or spec == case['compiled_specs']['B13'], 'B13_NATIVE_SPEC_CHANGED')
+        _need(spec is None or spec == case['compiled_specs'][case['primary_metric_id']], 'B13_NATIVE_SPEC_CHANGED')
         return case
     _need(manifest["requirement_id"] == REQUIREMENT_ID and manifest["run_id"].startswith(PREFIX),
           "ORDINARY_INTEGRATED_RUN_IDENTITY_REQUIRED")

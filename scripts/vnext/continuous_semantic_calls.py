@@ -43,6 +43,8 @@ SEMANTIC_RULE_PATHS = (
     'catalog/r5/capacity_semantic_review_v3.json',
     'catalog/r5/capacity_semantic_review_v4.json',
     'catalog/r5/capacity_semantic_review_v5.json',
+    'scripts/vnext/d04_native_assessment.py', 'catalog/r6/semantic_review_v4.json',
+    'catalog/r6/D04_going_concern_assessment_v1.md',
     'scripts/vnext/capacity_native_assessment.py')
 
 
@@ -92,8 +94,9 @@ def request_digest(request, policy):
             'prior_assistant_output_sha256':request['prior_assistant_output_sha256']}
     if request.get('source_statement_facts'):
         body['source_statement_facts'] = request['source_statement_facts']
-    if request.get('metric_id') == 'B13':
+    if 'shared_source_dictionaries' in request:
         body['shared_source_dictionaries'] = request['shared_source_dictionaries']
+    if request.get('metric_id') == 'B13':
         body['native_capacity_role_assessments'] = request['native_capacity_role_assessments']
     return sha256_bytes(content=_json(body))
 
@@ -102,6 +105,9 @@ def source_requests(source):
     """Keep every existing source unit, with one unit per smaller request."""
     if source['record_type']=='D03_PROVIDER_PROPOSAL_VERIFICATION_SOURCE':
         from .r6_semantic_verification import requests_from_source
+        return requests_from_source(source)
+    if source['record_type'] in {'D04_NATIVE_COMPLETE_SEMANTIC_SOURCE', 'D04_NATIVE_HISTORICAL_CONTROL_SOURCE'}:
+        from .d04_native_assessment import requests_from_source
         return requests_from_source(source)
     if source['metric_id'] == 'B13':
         from .capacity_semantic_review import requests_from_source
@@ -172,7 +178,8 @@ class SemanticRequest:
             verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
         else:
             from .ordinary_source_authority import verify_ordinary_source_proofs
-            need(source['record_type']=='D04_HISTORICAL_PRIMARY_CONTROL_SOURCE' and source['normal_update_input'] is False,
+            need(source['record_type'] in {'D04_HISTORICAL_PRIMARY_CONTROL_SOURCE', 'D04_NATIVE_HISTORICAL_CONTROL_SOURCE'}
+                 and source['normal_update_input'] is False,
                  'CONTINUOUS_CONTROL_SOURCE_SCOPE_REQUIRED')
             verify_ordinary_source_proofs(data_root=self.data_root,proofs=source['source_proofs'])
         need(request in source_requests(source), 'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
@@ -183,7 +190,7 @@ class SemanticRequest:
         return request
 
 
-def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,control_id=None):
+def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,control_id=None, native=False):
     from .r6_semantic_source import prepare_d04_semantic_source
     from .requirement_profile import validate_execution_authority
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
@@ -193,12 +200,17 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     policy = configured_transport_policy(requirement=requirement,repo_root=ROOT)
     authority = control.prepare_successor_invocation_authority(repo_root=ROOT,requirement_id=REQUIREMENT_ID)
     need(metric_id in {'B13','D03','D04'},'CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
+    need(not native or (metric_id == 'D04' and prior_call_ordinal is None),
+         'D04_NATIVE_REQUIRES_CURRENT_COMPLETE_SOURCE')
     data_root=ROOT
     if control_id is not None:
         need(metric_id=='D04' and prior_call_ordinal is None,'CONTINUOUS_HISTORICAL_CONTROL_REQUIRES_D04')
         from .r6_historical_controls import prepare_control_source
         data_root=Path(requirement['policy']['budget_root'])/'source-inputs'
         source=prepare_control_source(repo_root=data_root,company_id=company_id,control_id=control_id)
+        if native:
+            from .d04_native_assessment import native_source
+            source = native_source(source, historical_control=True)
     elif prior_call_ordinal is not None:
         need(metric_id=='D03','CONTINUOUS_VERIFICATION_REQUIRES_D03')
         from .r6_semantic_verification import prepare_verification_source
@@ -211,6 +223,9 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
         source = prepare_capacity_semantic_source(repo_root=ROOT,company_id=company_id)
     else:
         source = prepare_d04_semantic_source(repo_root=ROOT,company_id=company_id)
+        if native:
+            from .d04_native_assessment import native_source
+            source = native_source(source)
     if data_root==ROOT:verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
     else:
         from .ordinary_source_authority import verify_ordinary_source_proofs
@@ -266,7 +281,8 @@ def build_plan(prepared):
     runtime = load_provider_runtime_authority(repo_root=ROOT,provider=policy.provider,model=policy.model,api=policy.api)
     plan = control.build_successor_ai_invocation_plan(repo_root=ROOT,requirement_id=REQUIREMENT_ID,
         authority=prepared.authority,
-        release_input_plan_id=content_hash(value={'purpose':metric_id+('_SOURCE_ASSESSMENT' if metric_id == 'B13' else '_FEASIBILITY'),'source':request['source_id']}),
+        release_input_plan_id=content_hash(value={'purpose':metric_id+('_SOURCE_ASSESSMENT' if metric_id == 'B13'
+            or request.get('native_evidence_requested') is True else '_FEASIBILITY'),'source':request['source_id']}),
         source_identity_hash=request['source_id'],selected_representation_hash=request['request_id'],
         task_contract_hash=content_hash(value={'metric':metric_id,'prompt':request['system_prompt']}),
         output_schema_hash=content_hash(value=request['response_protocol']),serialization_version='continuous-'+metric_id.lower()+'-chat-v1',
@@ -396,6 +412,8 @@ def execute_feasibility(*, prepared, ledger, recorded_wire=None):
     """A response is a feasibility observation, never a native result."""
     need(strict_json_loads(text=prepared.request_bytes.decode()).get('metric_id') != 'B13',
          'B13_REQUIRES_NATIVE_ASSESSMENT_ENTRY')
+    need(not strict_json_loads(text=prepared.request_bytes.decode()).get('native_evidence_requested'),
+         'D04_NATIVE_REQUEST_REQUIRES_NATIVE_ENTRY')
     return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=recorded_wire,
                              native_assessment=False)
 
@@ -408,15 +426,28 @@ def execute_capacity_assessment(*, prepared, ledger, recorded_wire=None):
                              native_assessment=True)
 
 
+def execute_d04_assessment(*, prepared, ledger, recorded_wire=None):
+    """Fresh current-source D04 Evidence; historical diagnostics are not inputs."""
+    need(strict_json_loads(text=prepared.request_bytes.decode())['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST',
+         'D04_FRESH_NATIVE_REQUEST_REQUIRED')
+    return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=recorded_wire,
+                             native_assessment=True)
+
+
 def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
+    need(not native_assessment or request_fields.get('metric_id') == 'B13'
+         or request_fields['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST',
+         'NATIVE_DIAGNOSTIC_UPGRADE_FORBIDDEN')
     if request_fields['record_type']=='D03_SEMANTIC_VERIFICATION_REQUEST':
         from .r6_semantic_verification import validate_response
     elif request_fields.get('metric_id')=='D03':
         from .r6_regulatory_semantics import validate_response
     elif request_fields.get('metric_id') == 'B13':
         from .capacity_semantic_review import validate_response
+    elif request_fields['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST':
+        from .d04_native_assessment import validate_response
     policy,plan = build_plan(prepared)
     def response_validator(**kwargs):
         if native_assessment:
@@ -427,7 +458,10 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
 
     def evidence_validator(**kwargs):
         if native_assessment:
-            from .capacity_native_assessment import build_acceptance
+            if request_fields.get('metric_id') == 'B13':
+                from .capacity_native_assessment import build_acceptance
+            else:
+                from .d04_native_assessment import build_acceptance
             try:
                 return build_acceptance(prepared=prepared, plan=plan, response_body=kwargs['response_body'])
             except (ValueError, KeyError, TypeError) as error:
@@ -466,7 +500,8 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
             'semantic_correctness_verified':False,'native_result_created':False,'production_authorized':False}
         if native_assessment:
             result['native_candidate_evidence_created'] = execution['status'] == 'SUCCEEDED'
-            result['acceptance_scope'] = 'ONE_REQUEST_SOURCE_ASSESSMENT_NOT_COMPLETE_METRIC'
+            result['acceptance_scope'] = ('ONE_HISTORICAL_CONTROL_REQUEST_NOT_CURRENT_OR_WHOLE_FILING'
+                if 'historical_control' in request_fields else 'ONE_REQUEST_SOURCE_ASSESSMENT_NOT_COMPLETE_METRIC')
         output = path/'wire/assistant-output.bin'
         if output.exists() and not transport.wire['error_class']:
             try:
@@ -474,5 +509,6 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
                     raw_response=output.read_bytes())
             except (ValueError,KeyError,TypeError) as error:
                 result['response_check_error'] = str(error)
-        control._exclusive_write_json(path=path/('capacity-assessment.json' if native_assessment else 'feasibility.json'),value=result)
+        filename = ('capacity-assessment.json' if request_fields.get('metric_id') == 'B13' else 'd04-assessment.json')
+        control._exclusive_write_json(path=path/(filename if native_assessment else 'feasibility.json'),value=result)
         return path,result

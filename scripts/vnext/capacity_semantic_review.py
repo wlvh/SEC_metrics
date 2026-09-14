@@ -144,6 +144,25 @@ def _restore_units(packed, shared):
     return units
 
 
+def shared_source_groups(units, maximum_bytes):
+    """Share representation fields without changing any source unit or order."""
+    groups, current = [], []
+    for unit in units:
+        if current and unit['document_id'] != current[0]['document_id']:
+            groups.append(current)
+            current = []
+        trial = current + [unit]
+        packed, shared = _shared_units(trial)
+        if current and len(_bytes([packed, shared])) > maximum_bytes:
+            groups.append(current)
+            current = [unit]
+        else:
+            current = trial
+    if current:
+        groups.append(current)
+    return groups
+
+
 def requests_from_source(source):
     rules = strict_json_file(path=ROOT / POLICY_PATH)
     need(source['record_type'] == 'B13_COMPLETE_SEMANTIC_SOURCE'
@@ -154,20 +173,7 @@ def requests_from_source(source):
     need(source['required_unit_ids'] == [u['unit_id'] for u in source['units']]
          and len(set(source['required_unit_ids'])) == len(source['units']),
          'B13_SOURCE_UNIT_SET_CHANGED')
-    groups, current = [], []
-    for unit in source['units']:
-        if current and unit['document_id'] != current[0]['document_id']:
-            groups.append(current)
-            current = []
-        trial = current + [unit]
-        packed, shared = _shared_units(trial)
-        if current and len(_bytes([packed, shared])) > rules['max_group_source_bytes']:
-            groups.append(current)
-            current = [unit]
-        else:
-            current = trial
-    if current:
-        groups.append(current)
+    groups = shared_source_groups(source['units'], rules['max_group_source_bytes'])
     documents = {d['document_id']: d for d in source['documents']}
     annual = source['prepared_annual_input']
     requests = []
