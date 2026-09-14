@@ -57,7 +57,7 @@
     "decision_field_to_close": "S-R5-B06-B13-MEANING.b13_economic_meaning",
     "per_company_or_year_value_approval_required": false
   },
-  "offline_wiring_receipt_path": "docs/evidence/issue28_continuous/historical-semantic-scope/provider-wiring.json",
+  "offline_wiring_receipt_path": "docs/evidence/issue28_continuous/resume-2026-09-14/provider-wiring.json",
   "sec_wiring_receipt_path": "docs/evidence/issue28_continuous/historical-semantic-scope/sec-wiring.json",
   "real_execution_state": "REQUIRES_OFFLINE_WIRING_RECEIPT_AND_BOUND_COUNT_CONTROL",
   "rule_paths": [
@@ -100,7 +100,9 @@
     "scripts/vnext/requirement_profile_v15.py",
     "docs/evidence/issue28_continuous/resume-2026-09-13/approval-comment.json",
     "config/provider_model_runtime.json",
-    "requirements/issue_15_v1/decision_register.json"
+    "requirements/issue_15_v1/decision_register.json",
+    "scripts/vnext/regulatory_statement_facts.py",
+    "scripts/vnext/capacity_semantic_source.py"
   ],
   "pending_implementation_metric_ids": [
     "B13",

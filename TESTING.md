@@ -757,3 +757,13 @@ CURRENT_INCOME_NATIVE_BATCH/CURRENT_INCOME_ATTACK_ROOT指定原生及新反例�
 `tests.vnext.test_r6_regulatory_semantics`覆盖Pfizer原件/原生事实保留、引用/日期/状态/上下文约束及原opener/WB-3；`tests.vnext.test_r6_semantic_verification`只读核对原始LIVE提议，把新调用保持MOCK，检查候选完整集合、篡改与引用范围拒绝。两套已加入source-material；通过不表示模型在新公司的业务语义已正确。
 
 历史控制的`tests.vnext.test_r6_historical_controls`校验元数据选择、错公司/URL/刷新拒绝、原noninline正文及错头文件拒绝；新调用保持RECORDED_TEST_ONLY。`tests.vnext.test_r6_semantic_scope`用实际旧响应作明确recorded回归，保留旧v2失败并检查历史/其他主体不能进入当前目标，加入fast层。真实provider对照与禁网MOCK严格分开记录。
+
+### B13完整输入与D03事实关系增量
+
+短反例：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_capacity_semantic_source.CapacitySemanticSourceTest tests.vnext.test_regulatory_statement_facts.RegulatoryStatementFactsTest -v`。覆盖重签后的来源缺项、关键词未命中仍保留隐藏事实，以及否定、假设、历史/引语、其他主体、与政府行动没有直接关系的诉讼。
+
+完整材料：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest -v`，禁网读取Ford/Enphase及JPM已存原件，后者从原文别名定义重建339段并验证响应冲突。两类分别加入当前fast/source-material入口；可选B13_COMPLETE_SOURCE_OUTPUT和D03_STATEMENT_MATERIAL_OUTPUT只写全新外部测试路径。JPM属于已参与修复的回归样本，模拟响应与执行者自查不算真实模型通过、原生或独立审阅。
+<!-- capability-anchor: CAPABILITY.b13_complete_source_input -->
+<!-- capability-anchor: CAPABILITY.regulatory_aggregate_statement_fact -->
+
+B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物单位和相除单位；完整Ford材料逐条核对13项真实货币额度，保留原单位定义与事实。

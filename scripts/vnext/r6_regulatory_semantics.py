@@ -62,11 +62,13 @@ def prepare_regulatory_semantic_source(*,repo_root:Path,company_id:str):
 
 
 def requests_from_source(source):
+    from .regulatory_statement_facts import aggregate_facts_from_source
     policy=strict_json_file(path=ROOT/POLICY_PATH)
     _need(source['metric_id']=='D03' and source['source_serialization_complete']
           and source['semantic_source_id']==content_hash(value={k:v for k,v in source.items() if k!='semantic_source_id'}),
           'D03_COMPLETE_SOURCE_REQUIRED')
     documents={d['document_id']:d for d in source['documents']};rows=[]
+    statement_facts = aggregate_facts_from_source(source)
     for unit in source['units']:
         doc=documents[unit['document_id']];kind,items=_source_items(unit)
         required=(doc['language_candidate_block_indices'] if kind=='VISIBLE_BLOCK' else
@@ -86,6 +88,14 @@ def requests_from_source(source):
                 'subjects':policy['subjects'],'reported_status_values':policy['reported_status_values'],'json_schema':_response_schema(policy)},
             'policy_sha256':sha256_file(path=ROOT/POLICY_PATH),'provider_request_sent':False,
             'provider_tokens_measured':False,'production_authorized':False}
+        body['source_statement_facts'] = [f for f in statement_facts
+            if f['document_id'] == doc['document_id'] and kind == 'VISIBLE_BLOCK'
+            and f['block_index'] in items]
+        if body['source_statement_facts']:
+            body['system_prompt'] += (' source_statement_facts records bounded source-derived relations. '
+                'Keep assertion, source-bound subject, reported time and level of case detail separate. '
+                'An affirmative aggregate involvement fact supplies no case identity, count or guilt. '
+                'Preserve exceptions and other findings; report conflicts as unresolved instead of erasing the source fact.')
         rows.append({**body,'request_id':content_hash(value=body)})
     _need([r['units'][0]['unit_id'] for r in rows]==source['required_unit_ids'],'D03_SOURCE_UNIT_COVERAGE_CHANGED')
     return rows
@@ -198,6 +208,16 @@ def validate_response(*,request,raw_response):
     if policy['schema_version']>=4:
         _need(len(temporal)==len(checked['findings']),'D03_EVENT_STATUS_COUNT_CHANGED')
         checked['findings']=[{**finding,**fields} for finding,fields in zip(checked['findings'],temporal)]
+    for fact in request.get('source_statement_facts', []):
+        if fact['status'] != 'SOURCE_REPORTED_FACT':
+            continue
+        matching = [f for f in checked['findings'] if any(
+            e['kind'] == 'VISIBLE_BLOCK' and e['source_index'] == fact['block_index']
+            for e in f['evidence'])]
+        _need(any(f['kind'] == 'CURRENT_REGULATORY_ACTION'
+                  and f['reported_status'] == 'ONGOING_AS_REPORTED'
+                  and f['subject'] == 'TARGET_REGISTRANT' for f in matching),
+              'D03_AFFIRMATIVE_AGGREGATE_FACT_CLASSIFICATION_CONFLICT')
     return {**checked,'provider_response':original,
             'source_selection_proposal':{'request_id':original['request_id'],'units':selected_rows},
             'response_origin':'HOST_MATERIALIZED_COMPLETE_SOURCE_ITEMS',

@@ -407,3 +407,5 @@ ordinary_income_input为接续主体B01/B03增加独立当前收入输入证明�
 D03后继`r6_regulatory_semantics`/`r6_semantic_verification`已接本轮有限真实模型调用，按来源索引恢复原文并分离事件日期/披露状态。上下文选择也进入内容核验；模型内容核验不算独立代码审阅。Pfizer局部修后样本通过，JPM总体当前涉案披露留出仍错误，未取得D03通用或原生验收信用。现行入口和实际调用见`docs/r6_regulatory_semantics.md`及`docs/evidence/issue28_continuous/execution-state.json`。
 
 D04历史控制入口见`docs/historical_semantic_controls.md`：Enphase2016/2017原正文与SEC头文件已实际取得，新的非inline控制身份检查不替换普通DEI规则。v3内容/主体/时间分离保留原响应与失败；控制不代表最新公司状态、整份filing、原生Result或正式信用。
+
+`capacity_semantic_source.py`复用完整年报/修订输入，保留正文/原生事实/续接对象，候选命中不授数值完整性或原生信用。`regulatory_statement_facts.py`以来源别名和当前总体涉入的直接语法关系分开事实与案件明细；D03新请求保存事实并拒绝将其抹为假设/上下文/其他主体，原模型响应和旧调用终态不改。JPM339材料是已见回归；新模块独立审阅和整项验收仍待完成。

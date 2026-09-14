@@ -964,6 +964,32 @@
         "test_anchor": "tests/vnext/test_ordinary_update_cycle.py::OrdinaryCompanyUpdateTest.test_successful_metrics_survive_withheld_and_failed_neighbours",
         "test_status": "automated_recorded",
         "since": "2026-09-13"
+      },
+      {
+        "anchor_id": "CAPABILITY.regulatory_aggregate_statement_fact",
+        "type": "capability",
+        "status": "active",
+        "statement": "D03复用来源别名、原文句界及引语/相邻解除限定，按有界语法分开肯定陈述、主体、当前时间和总体涉入明细。缺案名不抹掉明确政府调查涉入；不提取案数、案名、事件日期或违法结论。新请求保存来源事实，响应若将该事实归成假设、仅上下文或其他主体则拒绝，不改原响应和旧终态。未匹配不证明不存在；仍未完成整项D03原生验收或独立模块审阅。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_regulatory_statement_facts.py::RegulatoryStatementFactsTest.test_affirmative_aggregate_fact_keeps_case_details_unextracted",
+        "test_status": "automated_recorded",
+        "since": "2026-09-14"
+      },
+      {
+        "anchor_id": "CAPABILITY.b13_complete_source_input",
+        "type": "capability",
+        "status": "active",
+        "statement": "B13复用既有完整年报来源组装器，保留已保存普通年报及全部当期修订的正文、原生事实和续接对象，核对完整单元与数量。产能/产量关键词仅供导航，未命中不能缩小输入集合、证明数值对不存在或输出NOT_AVAILABLE_SEC。原生信用额度仅在标准借款额度概念与其真实、未相除的ISO货币单位同时成立时识别为货币额度，不能用作产量或物理产能；其余原生角色保持未决。当前仅为后继B13判断准备完整输入，不创建原生结果或授予语义和生产信用。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_capacity_semantic_source.py::CapacitySemanticSourceTest.test_keyword_miss_retains_every_visible_and_hidden_item",
+        "test_status": "automated_recorded",
+        "since": "2026-09-14"
       }
     ],
     "capability_boundaries": [

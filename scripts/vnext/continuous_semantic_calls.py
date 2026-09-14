@@ -36,7 +36,8 @@ SEMANTIC_RULE_PATHS = (
     'catalog/r6/regulatory_semantic_review_v6.json',
     'scripts/vnext/r6_semantic_verification.py',
     'catalog/r6/regulatory_semantic_verification_v1.json','catalog/r6/regulatory_semantic_verification_v2.json',
-    'scripts/vnext/r6_historical_controls.py','config/r6_historical_control_sources_v1.json')
+    'scripts/vnext/r6_historical_controls.py','config/r6_historical_control_sources_v1.json',
+    'scripts/vnext/regulatory_statement_facts.py')
 
 
 def validate_semantic_rule_bindings(requirement):
@@ -83,6 +84,8 @@ def request_digest(request, policy):
     if request['record_type']=='D03_SEMANTIC_VERIFICATION_REQUEST':
         body['verification']={'proposals':request['proposals'],
             'prior_assistant_output_sha256':request['prior_assistant_output_sha256']}
+    if request.get('source_statement_facts'):
+        body['source_statement_facts'] = request['source_statement_facts']
     return sha256_bytes(content=_json(body))
 
 

@@ -1,6 +1,6 @@
 {
   "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
-  "status": "ACTIVE_CONTINUATION_OF_EXISTING_DELEGATION",
+  "status": "SESSION_PAUSED_WITH_RECOVERABLE_STATE_NOT_PROJECT_COMPLETE",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
   "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
@@ -34,15 +34,15 @@
     "unknown": 0
   },
   "current_work": [
-    "B13 complete source assembly and13 monetary-capacity role checks implemented; qualitative/numeric assessment and native results remain",
-    "D03 bounded aggregate statement facts and source-backed response conflict checks implemented; independent module review and real verification pending",
-    "D04 full-source Evidence/Review/Run integration,390,updates,publication recovery andretirement remain"
+    "D04 real historical positive and resolved/historical controls completed with limited semantic evidence; original v2 mixed-scope failure retained and successor v3 corrected",
+    "D03 aggregate current-involvement holdout remains unqualified; do not repeat unmodified requests or infer nondisclosure",
+    "Next B13 complete source-role assessment and native integration; full-source D03/D04 integration,390,updates,publication rollback/retirement and independent reviews remain"
   ],
   "next": [
-    "Complete B13 source assessment and native route using saved complete source material",
-    "Integrate D04 complete-source judgments with Evidence/Review/Run; preserve historical diagnostic terminals",
-    "Obtain scoped review of newD03statement module before necessary repaired real regression",
-    "Continue390/update/publication/recovery/retirement preparation under existing delegation"
+    "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
+    "Implement successor B13 for Ford/Enphase",
+    "Use approvedSEC budget for necessary refresh/missing originals",
+    "Complete390/update/publication/rollback/retirement preparation and remaining scoped independent reviews"
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
   "remaining_review_dependency": "Module-level user-forwarded ChatGPT/Fable review; original Codex subagents not retried beforeSep17",
@@ -67,7 +67,7 @@
     "provider_slot_consumed": true,
     "credential_storage": "PRIVATE_OUTSIDE_REPOSITORY_AND_EVIDENCE"
   },
-  "offline_wiring_receipt": "resume-2026-09-14/provider-wiring.json",
+  "offline_wiring_receipt": "historical-semantic-scope/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -88,9 +88,7 @@
     "calculator_comparison_tests": "4_PASS",
     "source_assignments_and_numeric_absence_proven": false,
     "native_results_created": false,
-    "current_source_inspection_material": "b13-current-source-inspection",
-    "complete_source_material": "resume-2026-09-14/b13-complete-source.tar.gz",
-    "native_monetary_capacity_roles": "13_FORD_SOURCE_CONCEPT_AND_CURRENCY_UNIT_VERIFIED_NOT_PRODUCTION_QUANTITIES"
+    "current_source_inspection_material": "b13-current-source-inspection"
   },
   "continuity_policy_delivery": {
     "scope": [
@@ -139,12 +137,11 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "run": 34831133089,
-    "head": "9709eb60e154c0f92d5710094697654f0c46c63b",
-    "status": "completed",
-    "conclusion": "success",
-    "successful_jobs": 10,
-    "evidence": "resume-2026-09-14/ci-34831133089.json"
+    "run": 34830655469,
+    "head": "b25d2155fa95ca2516a190ca664187009e03bb1a",
+    "status": "IN_PROGRESS",
+    "earlier_3b0b_run": 34825782625,
+    "earlier_3b0b_conclusion": "SUCCESS"
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -157,7 +154,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:58f9315e55da7c94d42f601c8c9b8cffef61da644608bfc8ba3d8dfcc8234c6e",
+  "current_v15_development_closure": "sha256:130d796a46b6d96cb4fc4bec4d50752adfc197d26229a9cc363f927ad4291075",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -286,6 +283,7 @@
       "regulatory-source-selections",
       "regulatory-current-involvement"
     ],
+    "current_v15_closure": "sha256:0326bd686711739b42d2ec4b17a06b05918a76c9f12bc25341984ef3da256878",
     "execution_files": 396,
     "provider_slots": [
       32,
@@ -332,9 +330,7 @@
     "independent_review": false,
     "next": "D04 historical real-source controls and independent B13/native work; investigate source-fact reuse for D03 instead of unbounded prompt retries.",
     "current_d03_policy": "catalog/r6/regulatory_semantic_review_v6.json",
-    "current_content_check_policy": "catalog/r6/regulatory_semantic_verification_v2.json",
-    "historical_v15_closure": "sha256:0326bd686711739b42d2ec4b17a06b05918a76c9f12bc25341984ef3da256878",
-    "historical_observation_only": true
+    "current_content_check_policy": "catalog/r6/regulatory_semantic_verification_v2.json"
   },
   "latest_preceding_ci": {
     "head": "210c43f342bede8a88b794f9985ca128f2e356ad",
@@ -385,55 +381,6 @@
     "next_action": "Read current continuation/state and ledger; confirm latest CI; implement B13 complete source-role assessment and native route while preserving D03 aggregate-current holdout and D04 limited-credit controls",
     "requires_new_budget_approval": false,
     "requires_new_development_approval": false,
-    "production_permissions_granted": false,
-    "historical_observation_only": true
-  },
-  "historical_resume_observations": {
-    "snapshot": "resume-2026-09-14/execution-state-before.json",
-    "superseded_fields": [
-      "current_v15_development_closure",
-      "latest_ci_observation",
-      "session_handoff"
-    ],
-    "prior_fields_are_historical": true
-  },
-  "current_rule_identity": {
-    "requirement_id": "issue_28_v14",
-    "requirement_generation": "PROFILE_DRIVEN_V15",
-    "execution_file_count": 398,
-    "basis": "CURRENT_LOADER_AND_EXECUTION_AUTHORITY_VERIFIED"
-  },
-  "last_resume": {
-    "checked_at_utc": "2026-09-14T10:53:30.508324+00:00",
-    "head": "9709eb60e154c0f92d5710094697654f0c46c63b",
-    "working_tree_at_resume": "CLEAN",
-    "fixed_ledger_counts": [
-      18,
-      18,
-      35
-    ],
-    "sealed_records": 53,
-    "stopped_channels": [],
-    "remaining": [
-      222,
-      222,
-      45
-    ],
-    "review": "https://github.com/wlvh/SEC_metrics/pull/43#pullrequestreview-5196602829",
-    "review_scope": "COMMENTED_DIRECTED_ONLY_NOT_WHOLE_PR",
-    "running_commands": [],
-    "next_action": "B13 full source assessment/native integration; D04 integration; D03 factual relation repair without repeating JPM prompt draws",
-    "current_increment_material": "resume-2026-09-14/README.md"
-  },
-  "d03_statement_increment": {
-    "source_material": "resume-2026-09-14/d03-source-fact-final.json",
-    "grammar_counterexamples": "6_SHORT_TESTS_PASS",
-    "actual_jpm_source_and_response_conflicts": "PASS_135.461_SECONDS",
-    "case_details_inferred": false,
-    "old_response_rewritten": false,
-    "sample_role": "REGRESSION_AFTER_PRIOR_REPAIR",
-    "native_result_created": false,
-    "independent_module_review": "PENDING_USER_FORWARDED_REVIEW",
-    "real_model_validation": "NOT_RUN_PENDING_MODULE_REVIEW"
+    "production_permissions_granted": false
   }
 }

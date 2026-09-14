@@ -493,3 +493,9 @@ C04不会因当前/历史SEC清单保存为编号文件而误报缺失分片；�
 接续主体全年收入/EBITDA不再笼统显示“程序未实现”；能证明当前只报告146天且原年度长度要求不满足时，显示NOT_MEANINGFUL及实际期间，值为空。不能以原短期收入或前身+接续金额作为全年指标。原件或修订不支持该结论时继续报告具体来源问题。
 
 <!-- capability-anchor: CAPABILITY.current_income_statement_scope -->
+
+### B13与D03的开发状态
+
+B13完整输入包含普通年报及当期修订的正文与原生对象；仅发现产能文字不代表已得到利用率，也不代表没有披露产量。D03把已证明的总体当前政府调查涉入与案名、案数明细分开，缺少明细不把已发生陈述改成假设；模型若与该有限来源事实冲突则明确失败。此增量尚未完成B13/D03原生验收，不改变当前正式结果。
+<!-- capability-anchor: CAPABILITY.b13_complete_source_input -->
+<!-- capability-anchor: CAPABILITY.regulatory_aggregate_statement_fact -->

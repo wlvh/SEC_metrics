@@ -944,3 +944,11 @@ normal_source_requirements对接续主体补充原事件目录窗口内的全部
 D03语义后继复用完整来源装配、原引用校验器及本轮调用控制。`event_dates`只从选中来源解析同精度日期，`reported_status`另存披露时状态；旧`timing`仅为程序兼容字段。`context_only_source_indices`与事实引用互斥，明确上下文也展开为待核验提议。内容检查绑定原request/response/terminal，原wire不改；任何不支持/未决项都不能取得完整候选信用。仍缺当前总体涉案语句的稳定判别、完整来源、原生接线和独立审阅，见D03说明。
 
 `r6_historical_controls`只为配置内D04历史primary/header控制发现与解释提供来源；期初不推断、伴随XML不假称覆盖、普通DEI规则不改。连续调用对象只接受ROOT或固定预算source-inputs根，并按对应真实获取证明重验；所有控制都排除当前普通更新和原生信用。`r6_semantic_scope`在后继v3显式将历史/其他主体陈述归入非当前范围，保留原provider响应；旧版本失败不重解释为成功。
+
+### B13完整输入与D03总体涉入事实
+
+`capacity_semantic_source`复用完整年报/修订组装器并保留全部正文、原生事实和续接对象，只改变指标问题及导航；候选命中不是数值完整性证明。`regulatory_statement_facts`复用来源别名、句界与引语限定，按当前涉入谓语及政府行动的直接包含关系形成有限来源事实。D03请求携带这些事实，响应验证拒绝把它们抹为假设、上下文或其他主体；历史请求无该字段时保持原协议。两项均不自行创建Run或授予生产信用。
+<!-- capability-anchor: CAPABILITY.b13_complete_source_input -->
+<!-- capability-anchor: CAPABILITY.regulatory_aggregate_statement_fact -->
+
+B13原生角色检查复用`_FactAttributes`展开实际单位命名空间；标准借款额度概念与未相除的ISO货币量共同证明其为货币额度。错误命名空间、实物单位或复合比率单位不能仅凭标签被归类；仍不推断产量或数值缺失。
