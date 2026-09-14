@@ -14,7 +14,7 @@ from .normal_source_authority import ROOT
 from .r6_semantic_source import _bytes
 from .r6_semantic_review import _validate_source_response
 
-POLICY_PATH = 'catalog/r5/capacity_semantic_review_v1.json'
+POLICY_PATH = 'catalog/r5/capacity_semantic_review_v2.json'
 _MAPS = ('contexts', 'units', 'namespace_environments')
 _STYLE = re.compile(r'\bstyle=(?:"[^"]*"|\x27[^\x27]*\x27)', re.I)
 _STYLE_REF = re.compile(r'data-b13-style-ref="(\d+)"')
@@ -224,6 +224,13 @@ def validate_response(*, request, raw_response):
         if finding['kind'] in {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'}:
             need(not any(e['kind'] == 'NATIVE_FACT' and (finding['unit_id'], e['source_index']) in monetary
                          for e in finding['resolved_evidence']), 'B13_MONETARY_CAPACITY_NOT_PHYSICAL')
+        if finding['kind'] == 'ACTUAL_PRODUCTION':
+            visible = [e['text'] for e in finding['resolved_evidence'] if e['kind'] == 'VISIBLE_BLOCK']
+            if visible and len(visible) == len(finding['resolved_evidence']):
+                text = ' '.join(visible)
+                sales = re.search(r'\b(?:sold|shipped|shipments?|sales|wholesale\s+volume)\b', text, re.I)
+                production = re.search(r'\b(?:produced|manufactur(?:e|es|ed|ing)|production|output)\b', text, re.I)
+                need(not sales or production is not None, 'B13_SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION')
     checked['request_id'] = request['request_id']
     checked['response'] = response
     return checked

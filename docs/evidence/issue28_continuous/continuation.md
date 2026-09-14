@@ -1,3 +1,11 @@
+# 最新真实调用与协议修复（2026-09-14）
+
+12bb35d已推同一Draft PR43，B13记录响应的原生OPEN/公共行及Python3.9冷读已通过。真实54新增1/1/0后累计19/19/35，54封存，无UNKNOWN/停用通道；因响应结构及销量误标产量矛盾而FAILED_TERMINAL，没有原生信用。原v1/54保留。
+
+后继capacity_semantic_review_v2明确JSON Schema、主体/时间枚举、evidence数组及unresolved字符串数组，并拒绝销售/出货原文被标作实际产量。材料和新接线在b13-native-protocol-v2/，当前V15闭包1a1b042f46b6cf3c6bc62b160c48904f349fcc032495162ff7bcec8c571c7cbf。修后原生接线14.011秒、D04回归12.336秒、8项来源/文字反例10.065秒通过。下一步按已批额度做新的有界B13请求，不重抽原请求，不在此检查点停工；完整B13/D04/390/更新/发布恢复及退出仍未完成，生产权限仍无。
+
+---
+
 # 当前执行增量（2026-09-14，继续实施）
 
 同一原目录、task/b06-new-source、Draft PR43。B13新请求已经接入原WB-3 Candidate/Evidence、创建者来源登记和现有TEXT_V1/Review/Calculator/普通OPEN Run/公共行。完整记录响应测试158.619秒通过，重签遗漏请求或测试改LIVE拒绝，Python3.9复制包禁网冷读通过。只有开发/记录响应信用，未进行新的真实模型调用，也未完成完整B13。材料与当前接线见b13-native-assessment/。

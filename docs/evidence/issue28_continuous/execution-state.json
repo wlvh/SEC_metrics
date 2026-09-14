@@ -28,8 +28,8 @@
     "long_running_schedule": false
   },
   "actual_new_calls": {
-    "provider": 18,
-    "paid": 18,
+    "provider": 19,
+    "paid": 19,
     "sec": 35,
     "unknown": 0
   },
@@ -48,7 +48,7 @@
   "historical_state_snapshot": "resume-2026-09-13/historical-state/execution-state.json",
   "historical_continuation_snapshot": "resume-2026-09-13/historical-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
-  "ledger_implementation_status": "53_SEALED_SLOTS; PROVIDER18_PAID18_SEC35; NO_UNKNOWN_OR_STOPPED_CHANNEL; ALL_PRIOR_FAILURES_RETAINED",
+  "ledger_implementation_status": "54_SEALED_SLOTS; PROVIDER19_PAID19_SEC35; NO_UNKNOWN_OR_STOPPED_CHANNEL; ALL_PRIOR_FAILURES_RETAINED",
   "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
   "full_acceptance": false,
   "external_dependencies": [
@@ -66,7 +66,7 @@
     "provider_slot_consumed": true,
     "credential_storage": "PRIVATE_OUTSIDE_REPOSITORY_AND_EVIDENCE"
   },
-  "offline_wiring_receipt": "b13-native-assessment/provider-wiring.json",
+  "offline_wiring_receipt": "b13-native-protocol-v2/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -155,7 +155,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:34222fb90e12d6913d1cb2c74afe9b5e9458b2ed2331959fe438b7387f9fe25d",
+  "current_v15_development_closure": "sha256:1a1b042f46b6cf3c6bc62b160c48904f349fcc032495162ff7bcec8c571c7cbf",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -398,7 +398,7 @@
   "current_rule_identity": {
     "requirement_id": "issue_28_v14",
     "requirement_generation": "PROFILE_DRIVEN_V15",
-    "execution_file_count": 404,
+    "execution_file_count": 405,
     "basis": "CURRENT_LOADER_AND_EXECUTION_AUTHORITY_VERIFIED"
   },
   "last_resume": {
@@ -469,5 +469,14 @@
       "timeout_seconds": 240
     },
     "production_permissions": false
+  },
+  "b13_native_pilot": {
+    "ordinal": 54,
+    "status": "FAILED_TERMINAL",
+    "native_credit": false,
+    "schema_failure": "Unresolved/evidence expected arrays; subject/timing expected enums",
+    "semantic_conflict": "Sold microinverter units classified ACTUAL_PRODUCTION while reason explicitly says not production",
+    "source_scope": "ONE_ENPHASE_SOURCE_REQUEST_NOT_WHOLE_B13",
+    "repair": "Explicit v2 JSON schema plus sales-only source rejection; old54unmodified"
   }
 }

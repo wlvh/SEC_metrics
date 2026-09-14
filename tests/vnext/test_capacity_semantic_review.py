@@ -39,6 +39,25 @@ def response_for(request):
 
 
 class CapacitySemanticReviewTest(unittest.TestCase):
+    def test_sales_only_source_cannot_be_labelled_actual_production(self):
+        source = source_packet()
+        old = source['units'][0]
+        payload = deepcopy(old['payload'])
+        payload['blocks'][0]['text'] = 'We sold 6.4 million units and shipped 706.1 MWh of batteries.'
+        unit = _seal_unit(old['document_id'], 'VISIBLE_TEXT', payload, 0)
+        source['units'] = [unit]; source['required_unit_ids'] = [unit['unit_id']]
+        source['capacity_navigation'][0]['unit_id'] = unit['unit_id']
+        source['semantic_source_id'] = content_hash(value={k:v for k,v in source.items() if k != 'semantic_source_id'})
+        request = requests_from_source(source)[0]
+        response = response_for(request)
+        finding = response['units'][0]['findings'][0]
+        finding['evidence'][0]['text'] = payload['blocks'][0]['text']
+        finding['kind'] = 'ACTUAL_PRODUCTION'
+        with self.assertRaisesRegex(ValueError, 'SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION'):
+            validate_response(request=request, raw_response=_bytes(response))
+        finding['kind'] = 'SALES_OR_SHIPMENTS'
+        validate_response(request=request, raw_response=_bytes(response))
+
     def test_complete_source_and_exact_quotes_required(self):
         request = requests_from_source(source_packet())[0]
         response = response_for(request)

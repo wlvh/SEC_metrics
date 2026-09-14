@@ -775,3 +775,5 @@ B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物�
 `test_capacity_semantic_review` 验证字段共享的精确恢复、JSON键重排后的相同请求、缺单元、遗漏候选、假引文及两个真实完整包。`test_capacity_native_assessment` 从实际原件经过原factory/opener/WB-3，在禁网下验证原生Candidate/Evidence成功、遗漏单元终态失败，以及单个成功请求不能产生全范围缺失结论。`test_capacity_text_results` 检查真实季度产能原文经Review/Calculator成为TEXT_V1，拒绝假完整标记、掩盖数值对、错期间、原件变化和缺有效Review。
 
 `B13_NATIVE_RUN_MATERIAL_ROOT=/absolute/new/material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_capacity_run_material` 在新目录完成26个明确MOCK来源请求、创建者登记、同一普通OPEN Run及公共行，拒绝重签遗漏请求和测试改成LIVE。原请求/响应/失败均保留，测试没有真实provider/paid/SEC或生产信用。该测试会在原仓库私有来源登记目录新增明确RECORDED_TEST_ONLY记录；不会替代真实输入或恢复旧额度。最后还需用复制的运行包和Python3.9独立冷读。
+
+B13后继协议v2的`test_sales_only_source_cannot_be_labelled_actual_production`复现真实54的分类/原文冲突；销售/出货类可保留，不能改为实际产量。原54失败不重签；明确JSON类型和独立枚举后需新请求接线验证，不能原样重抽。

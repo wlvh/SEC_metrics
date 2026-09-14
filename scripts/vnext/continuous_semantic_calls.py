@@ -39,7 +39,8 @@ SEMANTIC_RULE_PATHS = (
     'scripts/vnext/r6_historical_controls.py','config/r6_historical_control_sources_v1.json',
     'scripts/vnext/regulatory_statement_facts.py',
     'scripts/vnext/capacity_semantic_source.py', 'scripts/vnext/capacity_semantic_review.py',
-    'catalog/r5/capacity_semantic_review_v1.json', 'scripts/vnext/capacity_native_assessment.py')
+    'catalog/r5/capacity_semantic_review_v1.json', 'catalog/r5/capacity_semantic_review_v2.json',
+    'scripts/vnext/capacity_native_assessment.py')
 
 
 def validate_semantic_rule_bindings(requirement):
