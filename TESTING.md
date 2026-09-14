@@ -753,3 +753,5 @@ CI的current-instant/debt原生任务在bdc41实际运行到20分钟上限被取
 CURRENT_INCOME_NATIVE_BATCH/CURRENT_INCOME_ATTACK_ROOT指定原生及新反例目录，运行tests.vnext.test_current_income_run_material，验证B01/B03原146天年度守卫与真实观察，重新签名的“短期值当全年”/“前身拼接值”均拒绝。tests.vnext.test_ordinary_income_input的5项检查加入SOURCE_TESTS；收入更正反例通过真实变造HTML并重建修订scope，未以静态关键词命中代替来源绑定。旧normal_zero_ai_results的对应分类方法单独回归，其他路径保持。
 
 2026-09-14语义入口修复还核对实际DeepSeek请求的thinking disabled、stream=false和4096输出上限，以及从每份真实来源单元重建的必评索引集合。原0032/0033/0034终态经CLI零外发重放分别exit0/2/2。真实六次可行性调用及失败、后继提示响应见docs/evidence/issue28_continuous/semantic-live-repair及semantic-focus-repair；101fast PASS80.216s不代替完整语义或390验收。
+
+`tests.vnext.test_r6_regulatory_semantics`覆盖Pfizer原件/原生事实保留、引用/日期/状态/上下文约束及原opener/WB-3；`tests.vnext.test_r6_semantic_verification`只读核对原始LIVE提议，把新调用保持MOCK，检查候选完整集合、篡改与引用范围拒绝。两套已加入source-material；通过不表示模型在新公司的业务语义已正确。

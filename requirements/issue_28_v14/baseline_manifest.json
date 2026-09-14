@@ -46,8 +46,80 @@
   },
   "new_rule_files": {
     "config/issue28_continuous_calls_v1.json": {
-      "sha256": "d94449f22360a0604bfd436c4b1f9d3a0157744b995a9ce20c69cf1dc1b11c9f",
-      "size": 3333
+      "sha256": "059bb1d052bcf3c9bbd8ef45d0a42f239571699f40d0037af4037a08e7e9014c",
+      "size": 4274
+    },
+    "catalog/r6/regulatory_semantic_review_v6.json": {
+      "sha256": "2f0bb7a49aa68a3bcb15fdc1b8d1e228a573575bfe88d16583d98e33f20589c6",
+      "size": 8356
+    },
+    "catalog/r6/regulatory_semantic_review_v5.json": {
+      "sha256": "1d0e9c2300d05224fef2d013cd81c65ca7349b950e3f814f418669b6f2dcec7a",
+      "size": 7612
+    },
+    "catalog/r6/regulatory_semantic_review_v4.json": {
+      "sha256": "1a513973265e89f49503f7e00b7594f30bb186ca824a4953e9244bbbedbd5222",
+      "size": 6780
+    },
+    "catalog/r6/regulatory_semantic_verification_v2.json": {
+      "sha256": "b4a158586b971a99b97df98f3a91154207b796620e37befc5dadb7b767e038aa",
+      "size": 2801
+    },
+    "scripts/vnext/r6_semantic_verification.py": {
+      "sha256": "b13ca9e7d5612cbf29a47049fb7c7da99459a10e4ff78ec6fa4db0c06b078e50",
+      "size": 7761
+    },
+    "catalog/r6/regulatory_semantic_verification_v1.json": {
+      "sha256": "6408f514cb9725e90713d926af30e4efd1cc621816d58de33dc359be0e2e5468",
+      "size": 1988
+    },
+    "catalog/r6/regulatory_semantic_review_v3.json": {
+      "sha256": "72e546a07e4abf4c1d03658139029041149ba769f8216039a77f4fa7b1521c05",
+      "size": 7092
+    },
+    "catalog/r6/regulatory_semantic_review_v2.json": {
+      "sha256": "e604cc83ab8b9c70bcc16ccb458bc6001d05c5b1269188afbf884edb42bff754",
+      "size": 6308
+    },
+    "scripts/vnext/r6_semantic_source.py": {
+      "sha256": "6d043bca98f4ff3554b22c827647e5b4a863e21461b696a6ef39cf7b2e4b8bc8",
+      "size": 11701
+    },
+    "scripts/vnext/r6_semantic_review.py": {
+      "sha256": "d21e286ed39fcc2fbd9359de8548d590d929fc724e597d3247ce3718b6b7c079",
+      "size": 12361
+    },
+    "scripts/vnext/going_concern_source.py": {
+      "sha256": "6ffa23724395e1e781abbe9aa75f25f04a7149103cf426c88392e6c82a904276",
+      "size": 20620
+    },
+    "scripts/vnext/regulatory_investigation_candidates.py": {
+      "sha256": "0d9de9dd726f974bdf36b9176a2b1263cdb8b2b83014457d51e3220117994add",
+      "size": 13873
+    },
+    "scripts/vnext/r6_regulatory_semantics.py": {
+      "sha256": "d3a4de65fd701c186d6e247affe3c161cbad6d7060d03dfcd61a69f0b53bc92c",
+      "size": 13928
+    },
+    "catalog/r6/semantic_source_v1.json": {
+      "sha256": "92bb9aa587b27260188286665e57cbd9e12ef8264d2d36de08a41fe619917c05",
+      "size": 813
+    },
+    "catalog/r6/semantic_review_v1.json": {
+      "sha256": "82964e3181bad38197d18a444f29d030ae55493507e40c871f8e344389299ac4",
+      "size": 2415
+    },
+    "catalog/r6/going_concern_source_rules_v1.json": {
+      "sha256": "df84bdc5314a1a096f1a0b4da4a39f4c4049858332ca0b145e2f9f1847b53719",
+      "size": 821
+    },
+    "catalog/r6/regulatory_investigation_candidates_v1.json": {
+      "sha256": "ed6219001e9f83fdd3d630b25c6ca0bf25991c9a435e9e75311d8ffd277dae90",
+      "size": 7527
+    },
+    "catalog/r6/regulatory_semantic_review_v1.json": {
+      "sha256": "f0421e4a6ba1b9cd1ee1b2624ec6e7406015f332b60146d0c622df15bd867695",
+      "size": 5450
     },
     "catalog/r6/semantic_review_v2.json": {
       "sha256": "bf68b8a506a34e8469c0059ad24e032a35432c9509f52148a1db9d3804f0ac7c",
@@ -62,16 +134,16 @@
       "size": 13635
     },
     "scripts/vnext/continuous_semantic_calls.py": {
-      "sha256": "78f7b365887df89421254c9b9f5a0847ff5c0b76683470bb8273b5de286afb12",
-      "size": 20631
+      "sha256": "930c3015066c1df79513de65763d9eafb4fa1b695bc0018493dcc27775a06d43",
+      "size": 23675
     },
     "scripts/vnext/continuous_call_wiring.py": {
       "sha256": "59c0816ef3e6f9ab3cfc5be0494b53fe4eba0a66928b9dd6605ed3ad2bd57eaa",
       "size": 1383
     },
     "tools/vnext_continuous_semantic.py": {
-      "sha256": "3176f517f1f74fe772e729dd143292762e7e1272bc649ce20312b68e140fc118",
-      "size": 2823
+      "sha256": "86621930f23b51ad5c735a9778ccad3a87d7af9c1e579cc691b6af5df77137ac",
+      "size": 3393
     },
     "scripts/vnext/continuous_sec_acquisition.py": {
       "sha256": "499284e4085b6baa4b0f0560792255d0e5a71426404c6c2d1ce6e53e98231f21",
@@ -392,9 +464,57 @@
         "sha256": "66e25bccd5235d13d5c5edc03a8eb52f20fd65875a2eadaef961915a192b188f",
         "size": 4532
       },
+      "catalog/r6/going_concern_source_rules_v1.json": {
+        "sha256": "df84bdc5314a1a096f1a0b4da4a39f4c4049858332ca0b145e2f9f1847b53719",
+        "size": 821
+      },
+      "catalog/r6/regulatory_investigation_candidates_v1.json": {
+        "sha256": "ed6219001e9f83fdd3d630b25c6ca0bf25991c9a435e9e75311d8ffd277dae90",
+        "size": 7527
+      },
+      "catalog/r6/regulatory_semantic_review_v1.json": {
+        "sha256": "f0421e4a6ba1b9cd1ee1b2624ec6e7406015f332b60146d0c622df15bd867695",
+        "size": 5450
+      },
+      "catalog/r6/regulatory_semantic_review_v2.json": {
+        "sha256": "e604cc83ab8b9c70bcc16ccb458bc6001d05c5b1269188afbf884edb42bff754",
+        "size": 6308
+      },
+      "catalog/r6/regulatory_semantic_review_v3.json": {
+        "sha256": "72e546a07e4abf4c1d03658139029041149ba769f8216039a77f4fa7b1521c05",
+        "size": 7092
+      },
+      "catalog/r6/regulatory_semantic_review_v4.json": {
+        "sha256": "1a513973265e89f49503f7e00b7594f30bb186ca824a4953e9244bbbedbd5222",
+        "size": 6780
+      },
+      "catalog/r6/regulatory_semantic_review_v5.json": {
+        "sha256": "1d0e9c2300d05224fef2d013cd81c65ca7349b950e3f814f418669b6f2dcec7a",
+        "size": 7612
+      },
+      "catalog/r6/regulatory_semantic_review_v6.json": {
+        "sha256": "2f0bb7a49aa68a3bcb15fdc1b8d1e228a573575bfe88d16583d98e33f20589c6",
+        "size": 8356
+      },
+      "catalog/r6/regulatory_semantic_verification_v1.json": {
+        "sha256": "6408f514cb9725e90713d926af30e4efd1cc621816d58de33dc359be0e2e5468",
+        "size": 1988
+      },
+      "catalog/r6/regulatory_semantic_verification_v2.json": {
+        "sha256": "b4a158586b971a99b97df98f3a91154207b796620e37befc5dadb7b767e038aa",
+        "size": 2801
+      },
+      "catalog/r6/semantic_review_v1.json": {
+        "sha256": "82964e3181bad38197d18a444f29d030ae55493507e40c871f8e344389299ac4",
+        "size": 2415
+      },
       "catalog/r6/semantic_review_v2.json": {
         "sha256": "bf68b8a506a34e8469c0059ad24e032a35432c9509f52148a1db9d3804f0ac7c",
         "size": 4845
+      },
+      "catalog/r6/semantic_source_v1.json": {
+        "sha256": "92bb9aa587b27260188286665e57cbd9e12ef8264d2d36de08a41fe619917c05",
+        "size": 813
       },
       "catalog/r6/text_business_candidates_v1.json": {
         "sha256": "c8a03d36639554133cfd10ea1cf0ba274a01ee636cfc8cf2e12d1a448f79db35",
@@ -477,8 +597,8 @@
         "size": 4861
       },
       "config/issue28_continuous_calls_v1.json": {
-        "sha256": "d94449f22360a0604bfd436c4b1f9d3a0157744b995a9ce20c69cf1dc1b11c9f",
-        "size": 3333
+        "sha256": "059bb1d052bcf3c9bbd8ef45d0a42f239571699f40d0037af4037a08e7e9014c",
+        "size": 4274
       },
       "config/issue28_normal_candidates_v1.json": {
         "sha256": "24bfb509d4e56127a70ffe5d016c5a2795341ffa51641eff9f0a2bd038e6d934",
@@ -889,8 +1009,8 @@
         "size": 17991
       },
       "scripts/vnext/continuous_semantic_calls.py": {
-        "sha256": "78f7b365887df89421254c9b9f5a0847ff5c0b76683470bb8273b5de286afb12",
-        "size": 20631
+        "sha256": "930c3015066c1df79513de65763d9eafb4fa1b695bc0018493dcc27775a06d43",
+        "size": 23675
       },
       "scripts/vnext/cutover.py": {
         "sha256": "062f54389d440dcdaeb8872638459b17f58a7f889439b9ebb960076be415e83f",
@@ -935,6 +1055,10 @@
       "scripts/vnext/fiscal_year_labels.py": {
         "sha256": "b4c2c6d696604f6e313da83c7845bfa6dfe2ffae250de137dcaecf9633b93251",
         "size": 15880
+      },
+      "scripts/vnext/going_concern_source.py": {
+        "sha256": "6ffa23724395e1e781abbe9aa75f25f04a7149103cf426c88392e6c82a904276",
+        "size": 20620
       },
       "scripts/vnext/governance_compensation_table.py": {
         "sha256": "8874e0e8264488e8518dbc2068b9e9887d766dbc56277a85c6fe3f0020606b31",
@@ -1196,6 +1320,22 @@
         "sha256": "3e607de5f39e59c97c3ff5b05b6dd17da38f0b54e2c000605bccb3982ce4993e",
         "size": 24877
       },
+      "scripts/vnext/r6_regulatory_semantics.py": {
+        "sha256": "d3a4de65fd701c186d6e247affe3c161cbad6d7060d03dfcd61a69f0b53bc92c",
+        "size": 13928
+      },
+      "scripts/vnext/r6_semantic_review.py": {
+        "sha256": "d21e286ed39fcc2fbd9359de8548d590d929fc724e597d3247ce3718b6b7c079",
+        "size": 12361
+      },
+      "scripts/vnext/r6_semantic_source.py": {
+        "sha256": "6d043bca98f4ff3554b22c827647e5b4a863e21461b696a6ef39cf7b2e4b8bc8",
+        "size": 11701
+      },
+      "scripts/vnext/r6_semantic_verification.py": {
+        "sha256": "b13ca9e7d5612cbf29a47049fb7c7da99459a10e4ff78ec6fa4db0c06b078e50",
+        "size": 7761
+      },
       "scripts/vnext/ratchet_release.py": {
         "sha256": "bf53ff41e22c4ee0d3e5f15ac579f0133a62c213bc3981d631adf5c7c212263a",
         "size": 52735
@@ -1215,6 +1355,10 @@
       "scripts/vnext/records.py": {
         "sha256": "ae64ddbd493c70c92edcc830859ec6b81b8f6e82238114762dffbf6cc112461e",
         "size": 71844
+      },
+      "scripts/vnext/regulatory_investigation_candidates.py": {
+        "sha256": "0d9de9dd726f974bdf36b9176a2b1263cdb8b2b83014457d51e3220117994add",
+        "size": 13873
       },
       "scripts/vnext/render.py": {
         "sha256": "a8b6f065d5e8772829d177f8bb3ee2ec2dd894d5d76c0219e6f7823f8e4793ca",
@@ -1569,8 +1713,8 @@
         "size": 2013
       },
       "tools/vnext_continuous_semantic.py": {
-        "sha256": "3176f517f1f74fe772e729dd143292762e7e1272bc649ce20312b68e140fc118",
-        "size": 2823
+        "sha256": "86621930f23b51ad5c735a9778ccad3a87d7af9c1e579cc691b6af5df77137ac",
+        "size": 3393
       },
       "tools/vnext_cutover.py": {
         "sha256": "f0ce08d3b0541896669a886d6792affe3fce995a2d1fbbe64f16a25ea7573dcc",

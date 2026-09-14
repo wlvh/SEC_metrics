@@ -28,15 +28,15 @@
     "long_running_schedule": false
   },
   "actual_new_calls": {
-    "provider": 6,
-    "paid": 6,
+    "provider": 15,
+    "paid": 15,
     "sec": 31,
     "unknown": 0
   },
   "current_work": [
-    "D03 actual source semantic feasibility: distinguish reported investigative process, current status, historical dates and private continuation",
-    "D04 focused counterexamples have limited progress; still require positive sensitivity, precise temporal meaning, whole-source organization and native integration",
-    "B13 native interpretation, remaining390/update/publication rollback retirement and scoped independent reviews remain unfinished"
+    "D03 source selection/date/status and model content check implemented; Pfizer local pilot improved, but JPM aggregate current involvement still misclassified after bounded repair. No generic D03/native acceptance credit.",
+    "Stop repeated prompt attempts on the same JPM statement; document concrete source-reported-fact alternative and remaining independent-review dependency.",
+    "Proceed with Enphase2016/2017 real historical D04 controls (metadata found; originals not acquired yet), B13 and remaining native/390/update/publication-retirement work."
   ],
   "next": [
     "Within approved totals validate D03/D04 core semantics using genuine sources/counterexamples",
@@ -49,7 +49,7 @@
   "historical_state_snapshot": "resume-2026-09-13/historical-state/execution-state.json",
   "historical_continuation_snapshot": "resume-2026-09-13/historical-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
-  "ledger_implementation_status": "37_SEALED_SLOTS; PROVIDER6_PAID6_SEC31; NO_UNKNOWN_OR_STOPPED_CHANNEL; THREE_PROVIDER_FAILURES_PERMANENTLY_COUNTED",
+  "ledger_implementation_status": "46_SEALED_SLOTS; PROVIDER15_PAID15_SEC31; NO_UNKNOWN_OR_STOPPED_CHANNEL; ALL_PRIOR_FAILURES_CHARGED",
   "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
   "full_acceptance": false,
   "external_dependencies": [
@@ -67,7 +67,7 @@
     "provider_slot_consumed": true,
     "credential_storage": "PRIVATE_OUTSIDE_REPOSITORY_AND_EVIDENCE"
   },
-  "offline_wiring_receipt": "ordinary-current-income/provider-wiring.json",
+  "offline_wiring_receipt": "regulatory-current-involvement/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -279,17 +279,33 @@
   "semantic_feasibility": {
     "material": [
       "semantic-live-repair",
-      "semantic-focus-repair"
+      "semantic-focus-repair",
+      "regulatory-semantic-pilot",
+      "regulatory-semantic-shape",
+      "regulatory-semantic-references",
+      "regulatory-semantic-verification",
+      "regulatory-event-status",
+      "regulatory-source-selections",
+      "regulatory-current-involvement"
     ],
-    "current_v15_closure": "sha256:b48bbc3234196eb58c39148295260b4d9ef893912ba6895b94a209efe19681a7",
-    "execution_files": 374,
+    "current_v15_closure": "sha256:64e8ff85efd200e75f374a9549b42390f1a8cda2c3e9082caf6a8b5c4abacbd4",
+    "execution_files": 392,
     "provider_slots": [
       32,
       33,
       34,
       35,
       36,
-      37
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46
     ],
     "observations": {
       "32": "Pfizer Seagen goodwill valuation distinguished; partial source only",
@@ -297,16 +313,42 @@
       "34": "Ford Credit unit original response truncated at4096 output; no response text",
       "35": "Thinking-mode repair yielded full response but cybersecurity false NO_DOUBT and missing block450; host rejected",
       "36": "Explicit category definitions and mandatory assessment restored talent meaning",
-      "37": "Funding wording distinguished from going concern; conditional timing still requires refinement"
+      "37": "Funding wording distinguished from going concern; conditional timing still requires refinement",
+      "38": "D03 v1 unresolved-object shape failure; raw meaningful dates retained",
+      "39": "v2 exact quotation capitalization failure",
+      "40": "v3 references pass; headings and temporal classifications wrong",
+      "41": "content check rejects5heading errors but misses temporal issue; original broad environmental rubric corrected separately",
+      "42": "v4 event/status separation improves semantics; normalized month format and missingheading constraints fail",
+      "43": "v5 normalized source dates and all context coverage; Pfizer selected unit assertions pass executor source inspection",
+      "44": "All21Pfizer proposals supported by model content check; not independent review/full-source/native credit",
+      "45": "JPM holdout still misclassifies explicit aggregate current involvement and overlaps context/facts",
+      "46": "v6 eliminates overlap, but same aggregate-current false negative persists; generic D03 route unqualified"
     },
     "native_result_created": false,
     "full_semantic_acceptance": false,
     "independent_review": false,
-    "next": "D03 real-source pilot and bounded D04 sensitivity/coverage work; no unchanged redraws"
+    "next": "D04 historical real-source controls and independent B13/native work; investigate source-fact reuse for D03 instead of unbounded prompt retries.",
+    "current_d03_policy": "catalog/r6/regulatory_semantic_review_v6.json",
+    "current_content_check_policy": "catalog/r6/regulatory_semantic_verification_v2.json"
   },
   "latest_preceding_ci": {
-    "head": "48d73d90fbfdbb93dac2372df6513c8d45974886",
-    "run": 34765218664,
+    "head": "210c43f342bede8a88b794f9985ca128f2e356ad",
+    "run": 34815348616,
     "conclusion": "SUCCESS"
-  }
+  },
+  "core_route_limitations": [
+    {
+      "metric": "D03",
+      "source": "JPM original visible blocks339-340",
+      "failure": "Affirmative current involvement mislabelled conditional because no named individual case",
+      "attempts": "unmodified-policy holdout45 and materially revised-policy repair46",
+      "next": "Source-reported-fact route reuse and module review; no repeated unchanged draws",
+      "other_work_continues": true
+    },
+    {
+      "metric": "D04",
+      "failure": "No full positive/temporal-control qualification or whole-source native route yet",
+      "next": "Acquire declaredEnphase2016/2017 originalprimary/header controls through currentSecHttpClient allowance; not from search snippets"
+    }
+  ]
 }

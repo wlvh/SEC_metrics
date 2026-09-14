@@ -75,6 +75,11 @@ def _source_items(unit):
 
 def validate_response(*,request,raw_response):
     """Check response shape and source references; do not endorse its meaning."""
+    return _validate_source_response(request=request,raw_response=raw_response,policy=POLICY)
+
+
+def _validate_source_response(*,request,raw_response,policy):
+    """Shared literal-reference checks; the caller owns metric-specific enums."""
     _need(request['request_id']==content_hash(value={k:v for k,v in request.items() if k!='request_id'}),
           'D04_HOST_REQUEST_CHANGED')
     for unit in request['units']:
@@ -82,7 +87,7 @@ def validate_response(*,request,raw_response):
         _need(unit['payload_sha256']==sha256_bytes(content=raw) and unit['payload_bytes']==len(raw)
               and unit['unit_id']==content_hash(value={k:v for k,v in unit.items() if k!='unit_id'})
               and unit['document_id']==request['document_context']['document_id'],'D04_HOST_SOURCE_UNIT_CHANGED')
-    _need(type(raw_response) is bytes and len(raw_response)<=POLICY['max_response_bytes'],'D04_RESPONSE_SIZE_OR_TYPE')
+    _need(type(raw_response) is bytes and len(raw_response)<=policy['max_response_bytes'],'D04_RESPONSE_SIZE_OR_TYPE')
     response=strict_json_loads(text=raw_response.decode('utf-8'))
     _need(type(response) is dict and set(response)=={'request_id','units'}
           and response['request_id']==request['request_id'],'D04_RESPONSE_REQUEST_BINDING')
@@ -94,20 +99,20 @@ def validate_response(*,request,raw_response):
         uid=result['unit_id'];_need(type(uid) is str and uid in expected and uid not in seen
                                   and result['reviewed'] is True,'D04_UNIT_REVIEW_MISSING_OR_DUPLICATE')
         seen.add(uid);unit=expected[uid];evidence_kind,items=_source_items(unit)
-        _need(type(result['findings']) is list and len(result['findings'])<=POLICY['max_findings_per_unit'],'D04_FINDING_COUNT')
-        _need(type(result['unresolved']) is list and all(type(s) is str and 0<len(s.strip())<=POLICY['max_reason_characters']
+        _need(type(result['findings']) is list and len(result['findings'])<=policy['max_findings_per_unit'],'D04_FINDING_COUNT')
+        _need(type(result['unresolved']) is list and all(type(s) is str and 0<len(s.strip())<=policy['max_reason_characters']
               for s in result['unresolved']),'D04_UNRESOLVED_FIELDS')
         accounted=set()
         for finding in result['findings']:
             _need(type(finding) is dict and set(finding)=={'kind','subject','timing','evidence','reason'},'D04_FINDING_FIELDS')
-            kind=finding['kind'];_need(kind in POLICY['kinds'] and finding['subject'] in POLICY['subjects']
-                                      and finding['timing'] in POLICY['timings'],'D04_FINDING_ENUM')
-            if kind in POLICY['current_target_kinds']:
+            kind=finding['kind'];_need(kind in policy['kinds'] and finding['subject'] in policy['subjects']
+                                      and finding['timing'] in policy['timings'],'D04_FINDING_ENUM')
+            if kind in policy['current_target_kinds']:
                 _need(finding['subject']=='TARGET_REGISTRANT' and finding['timing']=='CURRENT_REPORT','D04_CURRENT_TARGET_CATEGORY_CONFLICT')
             for chosen,field,value in [('OTHER_ENTITY','subject','OTHER_ENTITY'),('HISTORICAL_STATEMENT','timing','HISTORICAL'),
                                        ('CONDITIONAL_OR_BOILERPLATE','timing','CONDITIONAL')]:
                 if kind==chosen:_need(finding[field]==value,'D04_CATEGORY_SCOPE_CONFLICT')
-            _need(type(finding['reason']) is str and 0<len(finding['reason'].strip())<=POLICY['max_reason_characters'],
+            _need(type(finding['reason']) is str and 0<len(finding['reason'].strip())<=policy['max_reason_characters'],
                   'D04_REASON_MISSING_OR_TOO_LARGE')
             _need(type(finding['evidence']) is list and bool(finding['evidence']),'D04_SOURCE_EVIDENCE_REQUIRED')
             resolved=[]
@@ -117,13 +122,13 @@ def validate_response(*,request,raw_response):
                       and evidence['source_index'] in items,'D04_EVIDENCE_OUTSIDE_SUPPLIED_UNIT')
                 item=items[evidence['source_index']];text=item['raw_xml'] if evidence_kind=='NATIVE_SUPPLEMENT' else item['text']
                 quote=evidence['text']
-                _need(type(quote) is str and bool(quote.strip()) and len(quote)<=POLICY['max_quote_characters'],'D04_SOURCE_QUOTE_RANGE_INVALID')
+                _need(type(quote) is str and bool(quote.strip()) and len(quote)<=policy['max_quote_characters'],'D04_SOURCE_QUOTE_RANGE_INVALID')
                 start=text.find(quote)
                 _need(start>=0,'D04_EXACT_SOURCE_TEXT_CHANGED')
                 _need(text.find(quote,start+1)<0,'D04_SOURCE_QUOTE_NOT_UNIQUE')
                 end=start+len(quote)
                 resolved.append({**evidence,'start_character':start,'end_character':end})
-                if evidence_kind=='VISIBLE_BLOCK' and item['html_quotation_context'] and kind in POLICY['current_target_kinds']:
+                if evidence_kind=='VISIBLE_BLOCK' and item['html_quotation_context'] and kind in policy['current_target_kinds']:
                     raise SemanticReviewError('D04_QUOTED_TEXT_CANNOT_ALONE_ESTABLISH_CURRENT_ASSERTION')
                 accounted.add(evidence['source_index'])
             findings.append({**finding,'unit_id':uid,'resolved_evidence':resolved})

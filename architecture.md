@@ -940,3 +940,5 @@ normal_source_requirements对接续主体补充原事件目录窗口内的全部
 <!-- capability-anchor: CAPABILITY.current_income_statement_scope -->
 
 当前语义请求显式使用与既有DeepSeek入口一致的thinking disabled、stream=false并保持max_tokens4096。后继semantic_review_v2明确D04各类别的含义，并从当前单元重建必评索引；旧提示和首次真实失败保留。请求指纹包含实际生成参数，修改代码或来源ID本身不允许重抽。CLI只有响应检查通过才exit0，否则保存原终态并exit2；不会把可行性响应升级为原生Evidence或发布资格。
+
+D03语义后继复用完整来源装配、原引用校验器及本轮调用控制。`event_dates`只从选中来源解析同精度日期，`reported_status`另存披露时状态；旧`timing`仅为程序兼容字段。`context_only_source_indices`与事实引用互斥，明确上下文也展开为待核验提议。内容检查绑定原request/response/terminal，原wire不改；任何不支持/未决项都不能取得完整候选信用。仍缺当前总体涉案语句的稳定判别、完整来源、原生接线和独立审阅，见D03说明。

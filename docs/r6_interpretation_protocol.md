@@ -1,6 +1,6 @@
 # D04 离线解释协议
 
-原型的完整来源与引用协议保持历史含义。2026-09-14已开始本轮真实验证，累计provider/paid/SEC=6/6/31；Pfizer估值反例及后继提示下两份Ford普通风险语义得到有限验证，另有两次截断和一次网络安全误判/漏评，原始失败永久保留。新语义入口已补齐既有thinking disabled；semantic_review_v2定义类别并显式列出本单元必评项。材料见docs/evidence/issue28_continuous/semantic-live-repair及semantic-focus-repair。当前仍无D04原生Run、完整语义验收或正式信用；Ford Credit条件性时间、真实正向敏感性及完整材料判断仍需继续。
+原型的完整来源与引用协议保持历史含义。2026-09-14已开始本轮真实验证，本轮整体调用现累计provider/paid/SEC=15/15/31（含D03）；早期D04六次按原记录读取；Pfizer估值反例及后继提示下两份Ford普通风险语义得到有限验证，另有两次截断和一次网络安全误判/漏评，原始失败永久保留。新语义入口已补齐既有thinking disabled；semantic_review_v2定义类别并显式列出本单元必评项。材料见docs/evidence/issue28_continuous/semantic-live-repair及semantic-focus-repair。当前仍无D04原生Run、完整语义验收或正式信用；Ford Credit条件性时间、真实正向敏感性及完整材料判断仍需继续。
 
 ## 输入和响应
 

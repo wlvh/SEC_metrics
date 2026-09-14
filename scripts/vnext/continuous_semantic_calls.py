@@ -1,4 +1,4 @@
-"""Bound D04 feasibility requests through the existing provider opener/WB-3.
+"""Bound D03/D04 feasibility requests through the existing provider opener/WB-3.
 
 Saved source authenticity is replayed, never relabelled as new acquisition.
 These executions retain original wire and a terminal but deliberately confer
@@ -22,6 +22,28 @@ from . import invocation_control as control
 _FACTORY = object()
 _FEASIBILITY = 'FEASIBILITY_ONLY_NO_NATIVE_EVIDENCE'
 REVIEW_POLICY_PATH = 'catalog/r6/semantic_review_v2.json'
+SEMANTIC_RULE_PATHS = (
+    'scripts/vnext/r6_semantic_source.py','scripts/vnext/r6_semantic_review.py',
+    'scripts/vnext/going_concern_source.py','scripts/vnext/regulatory_investigation_candidates.py',
+    'scripts/vnext/r6_regulatory_semantics.py','catalog/r6/semantic_source_v1.json',
+    'catalog/r6/semantic_review_v1.json',REVIEW_POLICY_PATH,
+    'catalog/r6/going_concern_source_rules_v1.json',
+    'catalog/r6/regulatory_investigation_candidates_v1.json',
+    'catalog/r6/regulatory_semantic_review_v1.json','catalog/r6/regulatory_semantic_review_v2.json',
+    'catalog/r6/regulatory_semantic_review_v3.json','catalog/r6/regulatory_semantic_review_v4.json',
+    'catalog/r6/regulatory_semantic_review_v5.json',
+    'catalog/r6/regulatory_semantic_review_v6.json',
+    'scripts/vnext/r6_semantic_verification.py',
+    'catalog/r6/regulatory_semantic_verification_v1.json','catalog/r6/regulatory_semantic_verification_v2.json')
+
+
+def validate_semantic_rule_bindings(requirement):
+    """Imported source/interpretation modules belong to the call's version."""
+    for relative in SEMANTIC_RULE_PATHS:
+        raw=(ROOT/relative).read_bytes()
+        need(requirement['execution_authority']['files'].get(relative)==
+             {'sha256':sha256_bytes(content=raw),'size':len(raw)},
+             'CONTINUOUS_SEMANTIC_RULE_NOT_BOUND:'+relative)
 
 
 def now():
@@ -56,11 +78,21 @@ def request_digest(request, policy):
         # belong to the request, including the repaired thinking-mode setting.
         'provider_parameters':{k:v for k,v in strict_json_loads(
             text=request_body(request,policy).decode()).items() if k not in {'messages'}}}
+    if request['record_type']=='D03_SEMANTIC_VERIFICATION_REQUEST':
+        body['verification']={'proposals':request['proposals'],
+            'prior_assistant_output_sha256':request['prior_assistant_output_sha256']}
     return sha256_bytes(content=_json(body))
 
 
 def source_requests(source):
     """Keep every existing source unit, with one unit per smaller request."""
+    if source['record_type']=='D03_PROVIDER_PROPOSAL_VERIFICATION_SOURCE':
+        from .r6_semantic_verification import requests_from_source
+        return requests_from_source(source)
+    if source['metric_id']=='D03':
+        from .r6_regulatory_semantics import requests_from_source
+        return requests_from_source(source)
+    need(source['metric_id']=='D04','CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
     from .r6_semantic_review import requests_from_source
     from .r6_semantic_review import POLICY as reference_policy, _source_items
     review_policy = strict_json_file(path=ROOT/REVIEW_POLICY_PATH)
@@ -116,15 +148,25 @@ class SemanticRequest:
         return request
 
 
-def prepare_requests(*, company_id):
+def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None):
     from .r6_semantic_source import prepare_d04_semantic_source
     from .requirement_profile import validate_execution_authority
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
     validate_execution_authority(repo_root=ROOT,requirement=requirement)
+    validate_semantic_rule_bindings(requirement)
     load_delegation(requirement=requirement)
     policy = configured_transport_policy(requirement=requirement,repo_root=ROOT)
     authority = control.prepare_successor_invocation_authority(repo_root=ROOT,requirement_id=REQUIREMENT_ID)
-    source = prepare_d04_semantic_source(repo_root=ROOT,company_id=company_id)
+    need(metric_id in {'D03','D04'},'CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
+    if prior_call_ordinal is not None:
+        need(metric_id=='D03','CONTINUOUS_VERIFICATION_REQUIRES_D03')
+        from .r6_semantic_verification import prepare_verification_source
+        source=prepare_verification_source(company_id=company_id,prior_call_ordinal=prior_call_ordinal)
+    elif metric_id=='D03':
+        from .r6_regulatory_semantics import prepare_regulatory_semantic_source
+        source = prepare_regulatory_semantic_source(repo_root=ROOT,company_id=company_id)
+    else:
+        source = prepare_d04_semantic_source(repo_root=ROOT,company_id=company_id)
     verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
     raw = _json(source)
     return [SemanticRequest(_FACTORY,raw,_json(request),request_body(request,policy),
@@ -173,13 +215,14 @@ def build_plan(prepared):
     requirement = prepared.requirement
     policy = configured_transport_policy(requirement=requirement,repo_root=ROOT)
     request = prepared.validate(policy)
+    metric_id = request.get('metric_id','D04')
     runtime = load_provider_runtime_authority(repo_root=ROOT,provider=policy.provider,model=policy.model,api=policy.api)
     plan = control.build_successor_ai_invocation_plan(repo_root=ROOT,requirement_id=REQUIREMENT_ID,
         authority=prepared.authority,
-        release_input_plan_id=content_hash(value={'purpose':'D04_FEASIBILITY','source':request['source_id']}),
+        release_input_plan_id=content_hash(value={'purpose':metric_id+'_FEASIBILITY','source':request['source_id']}),
         source_identity_hash=request['source_id'],selected_representation_hash=request['request_id'],
-        task_contract_hash=content_hash(value={'metric':'D04','prompt':request['system_prompt']}),
-        output_schema_hash=content_hash(value=request['response_protocol']),serialization_version='continuous-d04-chat-v1',
+        task_contract_hash=content_hash(value={'metric':metric_id,'prompt':request['system_prompt']}),
+        output_schema_hash=content_hash(value=request['response_protocol']),serialization_version='continuous-'+metric_id.lower()+'-chat-v1',
         provider=policy.provider,model=policy.model,api=policy.api,request_body=prepared.provider_request_body_bytes,
         maximum_payload_bytes=policy.maximum_payload_bytes,maximum_context_tokens=200000,
         estimated_context_tokens=estimate_context_tokens(request_body=prepared.provider_request_body_bytes,authority=runtime),
@@ -303,6 +346,11 @@ class _Transport:
 def execute_feasibility(*, prepared, ledger, recorded_wire=None):
     """A response is a feasibility observation, never a native result."""
     from .r6_semantic_review import validate_response
+    request_fields=strict_json_loads(text=prepared.request_bytes.decode())
+    if request_fields['record_type']=='D03_SEMANTIC_VERIFICATION_REQUEST':
+        from .r6_semantic_verification import validate_response
+    elif request_fields.get('metric_id')=='D03':
+        from .r6_regulatory_semantics import validate_response
     policy,plan = build_plan(prepared)
     if ledger.live:
         need(recorded_wire is None, 'CONTINUOUS_RECORDED_BYTES_CANNOT_RUN_LIVE')

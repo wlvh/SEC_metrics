@@ -403,3 +403,5 @@ C04的文档身份视图现覆盖当前及历史submissions清单；重建Source
 普通normal_zero_ai_results现按原事件目录窗口/已登记主及前身CIK重建6事件；完整来源保留在同一Run。Run的一年坐标与事件实际回溯窗口分开，run_store只对完整原件重建且逐条一致的6事件记录认可差异，通用53周/财务期间不改。18件真实来源补齐后Paramount6事件原生通过，省略前身的相同零值拒绝，见ordinary-registered-event-runs。
 
 ordinary_income_input为接续主体B01/B03增加独立当前收入输入证明：原HTML/XML/CF、实际期间与PartIII收入更正检查。原300–400天Spec守卫自动保留146天报告的NOT_MEANINGFUL，B03复用B01观察；不拼前身，不修改旧余额/债务/修订规则。材料见ordinary-current-income。
+
+D03后继`r6_regulatory_semantics`/`r6_semantic_verification`已接本轮有限真实模型调用，按来源索引恢复原文并分离事件日期/披露状态。上下文选择也进入内容核验；模型内容核验不算独立代码审阅。Pfizer局部修后样本通过，JPM总体当前涉案披露留出仍错误，未取得D03通用或原生验收信用。现行入口和实际调用见`docs/r6_regulatory_semantics.md`及`docs/evidence/issue28_continuous/execution-state.json`。
