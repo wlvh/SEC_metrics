@@ -1,6 +1,6 @@
 # D04 离线解释协议
 
-当前原型准备完整解释输入，并检查保存的响应是否完整、引用是否准确、分类字段是否一致。它没有调用模型，没有验证判断正确性，也没有生成 D04 原生 Run 或正式结果。2026-09-13新增调用预算现已批准，后继V15的官方DeepSeek/WB-3工厂和固定总账已接通；本页保留早期协议含义。当前进程缺少DEEPSEEK_API_KEY，真实语义验证尚未执行；独立模块审阅及原生D04接线仍未完成，详见docs/evidence/issue28_continuous/execution-state.json。
+原型的完整来源与引用协议保持历史含义。2026-09-14已开始本轮真实验证，累计provider/paid/SEC=6/6/31；Pfizer估值反例及后继提示下两份Ford普通风险语义得到有限验证，另有两次截断和一次网络安全误判/漏评，原始失败永久保留。新语义入口已补齐既有thinking disabled；semantic_review_v2定义类别并显式列出本单元必评项。材料见docs/evidence/issue28_continuous/semantic-live-repair及semantic-focus-repair。当前仍无D04原生Run、完整语义验收或正式信用；Ford Credit条件性时间、真实正向敏感性及完整材料判断仍需继续。
 
 ## 输入和响应
 

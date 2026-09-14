@@ -31,9 +31,24 @@ class ContinuousSemanticCallsTest(unittest.TestCase):
              patch('sec_http.urlopen',side_effect=AssertionError('SEC_FORBIDDEN')), \
              patch.object(control,'effective_invocation_policy',side_effect=AssertionError('LEGACY_DEFAULT_FORBIDDEN')):
             requests=prepare_requests(company_id='enphase_energy')
+            from vnext.r6_semantic_review import _source_items
+            required_count=0
+            for candidate in requests:
+                r=strict_json_loads(text=candidate.request_bytes.decode())
+                unit=r['units'][0];kind,items=_source_items(unit)
+                indices=(r['document_context']['language_candidate_block_indices'] if kind=='VISIBLE_BLOCK'
+                         else r['document_context']['native_candidate_ordinals'] if kind=='NATIVE_FACT' else [])
+                expected=[{'unit_id':unit['unit_id'],'kind':kind,'source_index':i} for i in indices if i in items]
+                self.assertEqual(r['required_candidate_assessments'],expected)
+                required_count+=len(expected)
+            self.assertGreater(required_count,0)
             prepared=min(requests,key=lambda r:len(r.provider_request_body_bytes))
             policy,plan=build_plan(prepared)
             request=strict_json_loads(text=prepared.request_bytes.decode())
+            envelope=strict_json_loads(text=prepared.provider_request_body_bytes.decode())
+            self.assertEqual(envelope['thinking'],{'type':'disabled'})
+            self.assertIs(envelope['stream'],False)
+            self.assertEqual(envelope['max_tokens'],4096)
             self.assertEqual(request_digest(request,policy),
                 request_digest({**request,'request_id':'new-id','source_id':'new-code-id'},policy))
             # An empty set of findings is only protocol input for this bridge.

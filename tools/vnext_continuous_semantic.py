@@ -22,6 +22,16 @@ def main(argv=None):
     if output==ROOT or ROOT in output.parents or output.exists():
         parser.error('Output must be a new file outside the source checkout')
     requests=prepare_requests(company_id=args.company)
+    if args.command=='execute':
+        selected=[p for p in requests if strict_json_loads(text=p.request_bytes.decode())['request_id']==args.request_id]
+        if len(selected)!=1:parser.error('Execute requires one exact prepared request id')
+        ledger=live_ledger(requirement=selected[0].requirement)
+        path,observed=execute_feasibility(prepared=selected[0],ledger=ledger)
+        output.parent.mkdir(parents=True,exist_ok=True)
+        with output.open('xb') as file:
+            file.write(canonical_json_bytes(value={'call_path':str(path),'outcome':observed}))
+        print(output)
+        return 0 if 'response_check' in observed and not observed['terminal']['stop_reason'] else 2
     rows=[]
     for prepared in requests:
         request=strict_json_loads(text=prepared.request_bytes.decode())
@@ -36,12 +46,6 @@ def main(argv=None):
         rows.append(row)
     result={'company_id':args.company,'metric_id':'D04','requests':rows,
         'calls':{'provider':0,'paid':0,'sec':0},'semantic_correctness_verified':False,'production_authorized':False}
-    if args.command=='execute':
-        selected=[p for p in requests if strict_json_loads(text=p.request_bytes.decode())['request_id']==args.request_id]
-        if len(selected)!=1:parser.error('Execute requires one exact prepared request id')
-        ledger=live_ledger(requirement=selected[0].requirement)
-        path,observed=execute_feasibility(prepared=selected[0],ledger=ledger)
-        result={'call_path':str(path),'outcome':observed}
     output.parent.mkdir(parents=True,exist_ok=True)
     with output.open('xb') as file:file.write(canonical_json_bytes(value=result))
     print(output)

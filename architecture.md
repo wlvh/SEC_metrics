@@ -799,7 +799,7 @@ New financing-set source judgments prove disjoint reported borrowings, bonds and
 
 `ordinary_source_authority`在固定安装目录保存实际测试会话创建者登记的来源记录，核对原日志字节前缀、原始来源及每项新意图/终态。当前适配器通过新入口选择历史基线或已登记测试来源，原冻结验证器不改。`normal_run_v3.install_normal_inputs`分开固定代码和外部来源文件，安装完整来源记录及依赖；创建和重放Run均要求安装记录存在。复制运行包的冷读使用安装记录，测试类型保留到原生绑定、CLI和预览。这仍是原文未变的RECORDED_TEST_ONLY，不提供真实SEC获取、全部路线更新或正式发布能力。
 
-`r6_semantic_source`为D04离线解释提供全部可见块和原生事实，并保留所引用的上下文、单位、命名空间、续接、脚注和关系对象；嵌套XML通过原位置恢复而避免重复传入。`r6_semantic_review`绑定请求/单元、按唯一引文计算位置、核对必需候选和分类一致性，并保留全局冲突。返回的只是未获语义资格的保存响应提议，不能进入普通结果或正式发布；真实provider调用、模型可靠性和原生D04接线尚未完成。
+`r6_semantic_source`为D04离线解释提供全部可见块和原生事实，并保留所引用的上下文、单位、命名空间、续接、脚注和关系对象；嵌套XML通过原位置恢复而避免重复传入。`r6_semantic_review`绑定请求/单元、按唯一引文计算位置、核对必需候选和分类一致性，并保留全局冲突。返回的只是未获语义资格的保存响应提议，不能进入普通结果或正式发布；有限真实provider验证现由continuous_semantic_calls执行；完整模型可靠性和原生D04接线尚未完成。
 <!-- capability-anchor: CAPABILITY.r6_recorded_interpretation_protocol -->
 
 `normal_companyfacts_results`按既有目录区分主体接续和实际测量粒度：允许接续且只依赖当前申报时点的路线可以继续；全年/跨期路线仍需要自己的主体证明。`instant_balance_amendment`为B08/B09重建有限修订输入，旧Part III范围证明保持原样；完整原说明、原生更正标志/封面、未附新财务报表声明和全文余额/更正语句共同限制分支。条件性薪酬条款仅按完整结构识别。原件、修订和两种不同输入结论均进入普通组件与同一原生Run重放，不能把局部时点资格提升为全年或债务资格。
@@ -901,7 +901,7 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 
 <!-- capability-anchor: CAPABILITY.continuous_semantic_call_wiring -->
 
-`continuous_semantic_calls` 先按受信旧获取证明重建 D04 来源，将每个已有完整单元分别序列化以遵守 200000 context 限制；原单元覆盖不丢失。新请求的来源、规则、配置、策略工厂及 WB-3 身份在后继版本下绑定。现有 DeepSeek transport 新增精确请求类型分派，仍仅原固定官方 opener；send 核对当前 WB-3 上下文、进程/令牌、预留与唯一 marker。未知 token/cost 在本后继显式为 null，旧整数/字符串观测验证保持。可行性终态保留原始 wire，明确没有原生 Evidence，不把协议通过升级为语义正确或正式成功。真实调用还须已完成且与当前执行文件集合一致的离线接线材料。
+`continuous_semantic_calls` 先按受信旧获取证明重建 D04 来源，将每个已有完整单元分别序列化，仍逐请求检查200000 context限制；超过上限的单元不能发送，完整材料的输入组织仍须改进，原单元覆盖不丢失。新请求的来源、规则、配置、策略工厂及 WB-3 身份在后继版本下绑定。现有 DeepSeek transport 新增精确请求类型分派，仍仅原固定官方 opener；send 核对当前 WB-3 上下文、进程/令牌、预留与唯一 marker。未知 token/cost 在本后继显式为 null，旧整数/字符串观测验证保持。可行性终态保留原始 wire，明确没有原生 Evidence，不把协议通过升级为语义正确或正式成功。真实调用还须已完成且与当前执行文件集合一致的离线接线材料。
 
 <!-- capability-anchor: CAPABILITY.ordinary_continuity_policy_terminal -->
 
@@ -938,3 +938,5 @@ normal_source_requirements对接续主体补充原事件目录窗口内的全部
 普通B01/B03接续输入通过ordinary_income_input重建当前原件的实际报告期间，核对当前修订对所需收入输入的影响，再调用原Calculator。每个选中CF观察与同期间/申报/主体的原HTML/XML官方事实独立匹配，原期间过短由既有年度长度守卫返回NOT_MEANINGFUL。source及观察核对分别保存，原input_id不因补充检查被修改。
 
 <!-- capability-anchor: CAPABILITY.current_income_statement_scope -->
+
+当前语义请求显式使用与既有DeepSeek入口一致的thinking disabled、stream=false并保持max_tokens4096。后继semantic_review_v2明确D04各类别的含义，并从当前单元重建必评索引；旧提示和首次真实失败保留。请求指纹包含实际生成参数，修改代码或来源ID本身不允许重抽。CLI只有响应检查通过才exit0，否则保存原终态并exit2；不会把可行性响应升级为原生Evidence或发布资格。

@@ -751,3 +751,5 @@ CI的current-instant/debt原生任务在bdc41实际运行到20分钟上限被取
 128fe33完整SEC材料在CI单项240秒超时，原日志已归档；当前仅tests.vnext.test_continuous_sec_acquisition为480秒，其他SOURCE_TESTS仍240秒，各项实际时限写入JSON。source-material job35分钟，所有选择项/断言保留；未改任何真实请求资源上限。
 
 CURRENT_INCOME_NATIVE_BATCH/CURRENT_INCOME_ATTACK_ROOT指定原生及新反例目录，运行tests.vnext.test_current_income_run_material，验证B01/B03原146天年度守卫与真实观察，重新签名的“短期值当全年”/“前身拼接值”均拒绝。tests.vnext.test_ordinary_income_input的5项检查加入SOURCE_TESTS；收入更正反例通过真实变造HTML并重建修订scope，未以静态关键词命中代替来源绑定。旧normal_zero_ai_results的对应分类方法单独回归，其他路径保持。
+
+2026-09-14语义入口修复还核对实际DeepSeek请求的thinking disabled、stream=false和4096输出上限，以及从每份真实来源单元重建的必评索引集合。原0032/0033/0034终态经CLI零外发重放分别exit0/2/2。真实六次可行性调用及失败、后继提示响应见docs/evidence/issue28_continuous/semantic-live-repair及semantic-focus-repair；101fast PASS80.216s不代替完整语义或390验收。

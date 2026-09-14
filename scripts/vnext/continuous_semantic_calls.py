@@ -12,7 +12,7 @@ import io
 import tarfile
 import uuid
 
-from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_loads
+from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_loads, strict_json_file, sha256_file
 from .continuous_call_policy import REQUIREMENT_ID, configured_transport_policy, load_delegation, need
 from .normal_source_authority import ROOT, verify_saved_source_proofs
 from .provider_runtime import load_provider_runtime_authority, estimate_context_tokens
@@ -21,6 +21,7 @@ from . import invocation_control as control
 
 _FACTORY = object()
 _FEASIBILITY = 'FEASIBILITY_ONLY_NO_NATIVE_EVIDENCE'
+REVIEW_POLICY_PATH = 'catalog/r6/semantic_review_v2.json'
 
 
 def now():
@@ -37,7 +38,8 @@ def request_body(request, policy):
     return _json({'model':policy.model,'messages':[
         {'role':'system','content':request['system_prompt']},
         {'role':'user','content':json.dumps(payload,ensure_ascii=False,sort_keys=True,separators=(',',':'))}],
-        'response_format':{'type':'json_object'},'temperature':0,'max_tokens':4096})
+        'response_format':{'type':'json_object'},'temperature':0,'max_tokens':4096,
+        'stream':False,'thinking':{'type':'disabled'}})
 
 
 def request_digest(request, policy):
@@ -47,18 +49,41 @@ def request_digest(request, policy):
         'fiscal_label_context':request['fiscal_label_context'],
         'filing':request['document_context']['filing'],
         'units':[{'kind':u['kind'],'payload':u['payload']} for u in request['units']],
-        'response_protocol':request['response_protocol']}
+        'response_protocol':request['response_protocol'],
+        'category_definitions':request['category_definitions'],
+        'required_candidate_assessments':request['required_candidate_assessments'],
+        # Semantic input IDs do not grant a redraw. Actual decoding settings
+        # belong to the request, including the repaired thinking-mode setting.
+        'provider_parameters':{k:v for k,v in strict_json_loads(
+            text=request_body(request,policy).decode()).items() if k not in {'messages'}}}
     return sha256_bytes(content=_json(body))
 
 
 def source_requests(source):
     """Keep every existing source unit, with one unit per smaller request."""
     from .r6_semantic_review import requests_from_source
+    from .r6_semantic_review import POLICY as reference_policy, _source_items
+    review_policy = strict_json_file(path=ROOT/REVIEW_POLICY_PATH)
+    # Reuse the original exact-reference validator with unchanged categories
+    # and bounds. Only the model's instructions and explicit per-unit todo grow.
+    for key in ('kinds','subjects','timings','current_target_kinds','max_response_bytes',
+                'max_findings_per_unit','max_reason_characters','max_quote_characters'):
+        need(review_policy[key] == reference_policy[key], 'CONTINUOUS_RESPONSE_PROTOCOL_CHANGED')
     original = requests_from_source(source); requests = []
     for group in original:
         for unit in group['units']:
             body = {k:v for k,v in group.items() if k != 'request_id'}
             body['units'] = [unit]
+            body['system_prompt'] = review_policy['system_prompt']
+            body['policy_sha256'] = sha256_file(path=ROOT/REVIEW_POLICY_PATH)
+            body['category_definitions'] = review_policy['category_definitions']
+            kind,items = _source_items(unit)
+            context = body['document_context']
+            required = (context['language_candidate_block_indices'] if kind=='VISIBLE_BLOCK' else
+                        context['native_candidate_ordinals'] if kind=='NATIVE_FACT' else [])
+            body['required_candidate_assessments'] = [
+                {'unit_id':unit['unit_id'],'kind':kind,'source_index':index}
+                for index in required if index in items]
             requests.append({**body,'request_id':content_hash(value=body)})
     need([u['unit_id'] for r in requests for u in r['units']] == source['required_unit_ids'],
          'CONTINUOUS_SOURCE_UNIT_COVERAGE_CHANGED')

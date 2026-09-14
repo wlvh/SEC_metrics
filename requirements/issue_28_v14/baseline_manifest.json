@@ -46,8 +46,12 @@
   },
   "new_rule_files": {
     "config/issue28_continuous_calls_v1.json": {
-      "sha256": "ebb4d4753d2d6916cf8f8e05a3233ef6cd6008484de487f316d53627c7d40d2c",
-      "size": 3295
+      "sha256": "d94449f22360a0604bfd436c4b1f9d3a0157744b995a9ce20c69cf1dc1b11c9f",
+      "size": 3333
+    },
+    "catalog/r6/semantic_review_v2.json": {
+      "sha256": "bf68b8a506a34e8469c0059ad24e032a35432c9509f52148a1db9d3804f0ac7c",
+      "size": 4845
     },
     "scripts/vnext/continuous_call_policy.py": {
       "sha256": "6f612b01c702e9581dbd672a308e10812104668f3a0e5d044095620e48614e73",
@@ -58,16 +62,16 @@
       "size": 13635
     },
     "scripts/vnext/continuous_semantic_calls.py": {
-      "sha256": "6d64307fed02904d821ba7d9c56eb83ee5d0e141d6bfea38fc2c205697519e4f",
-      "size": 18749
+      "sha256": "78f7b365887df89421254c9b9f5a0847ff5c0b76683470bb8273b5de286afb12",
+      "size": 20631
     },
     "scripts/vnext/continuous_call_wiring.py": {
       "sha256": "59c0816ef3e6f9ab3cfc5be0494b53fe4eba0a66928b9dd6605ed3ad2bd57eaa",
       "size": 1383
     },
     "tools/vnext_continuous_semantic.py": {
-      "sha256": "d69f600a60e29960d50ebc3b6fd35c96ca462f9aa42b118438866f00a1e6a465",
-      "size": 2568
+      "sha256": "3176f517f1f74fe772e729dd143292762e7e1272bc649ce20312b68e140fc118",
+      "size": 2823
     },
     "scripts/vnext/continuous_sec_acquisition.py": {
       "sha256": "499284e4085b6baa4b0f0560792255d0e5a71426404c6c2d1ce6e53e98231f21",
@@ -388,6 +392,10 @@
         "sha256": "66e25bccd5235d13d5c5edc03a8eb52f20fd65875a2eadaef961915a192b188f",
         "size": 4532
       },
+      "catalog/r6/semantic_review_v2.json": {
+        "sha256": "bf68b8a506a34e8469c0059ad24e032a35432c9509f52148a1db9d3804f0ac7c",
+        "size": 4845
+      },
       "catalog/r6/text_business_candidates_v1.json": {
         "sha256": "c8a03d36639554133cfd10ea1cf0ba274a01ee636cfc8cf2e12d1a448f79db35",
         "size": 3281
@@ -469,8 +477,8 @@
         "size": 4861
       },
       "config/issue28_continuous_calls_v1.json": {
-        "sha256": "ebb4d4753d2d6916cf8f8e05a3233ef6cd6008484de487f316d53627c7d40d2c",
-        "size": 3295
+        "sha256": "d94449f22360a0604bfd436c4b1f9d3a0157744b995a9ce20c69cf1dc1b11c9f",
+        "size": 3333
       },
       "config/issue28_normal_candidates_v1.json": {
         "sha256": "24bfb509d4e56127a70ffe5d016c5a2795341ffa51641eff9f0a2bd038e6d934",
@@ -881,8 +889,8 @@
         "size": 17991
       },
       "scripts/vnext/continuous_semantic_calls.py": {
-        "sha256": "6d64307fed02904d821ba7d9c56eb83ee5d0e141d6bfea38fc2c205697519e4f",
-        "size": 18749
+        "sha256": "78f7b365887df89421254c9b9f5a0847ff5c0b76683470bb8273b5de286afb12",
+        "size": 20631
       },
       "scripts/vnext/cutover.py": {
         "sha256": "062f54389d440dcdaeb8872638459b17f58a7f889439b9ebb960076be415e83f",
@@ -1561,8 +1569,8 @@
         "size": 2013
       },
       "tools/vnext_continuous_semantic.py": {
-        "sha256": "d69f600a60e29960d50ebc3b6fd35c96ca462f9aa42b118438866f00a1e6a465",
-        "size": 2568
+        "sha256": "3176f517f1f74fe772e729dd143292762e7e1272bc649ce20312b68e140fc118",
+        "size": 2823
       },
       "tools/vnext_cutover.py": {
         "sha256": "f0ce08d3b0541896669a886d6792affe3fce995a2d1fbbe64f16a25ea7573dcc",
