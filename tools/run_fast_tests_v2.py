@@ -76,6 +76,7 @@ FAST_TESTS += ("tests.vnext.test_r6_semantic_scope",)
 FAST_TESTS += ("tests.vnext.test_regulatory_statement_facts.RegulatoryStatementFactsTest",)
 FAST_TESTS += ("tests.vnext.test_capacity_semantic_source.CapacitySemanticSourceTest",)
 FAST_TESTS += ("tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest",)
+FAST_TESTS += ("tests.vnext.test_capacity_applicability.CapacityApplicabilityTest",)
 FAST_TESTS += ("tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingTest",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)
@@ -91,6 +92,7 @@ SOURCE_TESTS += ("tests.vnext.test_capacity_semantic_review.CapacitySemanticRevi
 SOURCE_TESTS += ("tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_native_assessment",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_text_results",)
+SOURCE_TESTS += ("tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

@@ -1,0 +1,541 @@
+{
+  "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
+  "status": "ACTIVE_CONTINUATION_OF_EXISTING_DELEGATION",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
+  "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+  "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
+  "branch": "task/b06-new-source",
+  "scope": {
+    "companies": 10,
+    "metrics": 39,
+    "coordinates": 390
+  },
+  "authority": {
+    "development": "USER_DELEGATED",
+    "new_call_budget": "USER_APPROVED_240_240_80; FIXED_AGGREGATE_LEDGER_ACTIVE",
+    "maximum_additional_provider_paid_sec_calls": [
+      240,
+      240,
+      80
+    ],
+    "repository_monetary_budget_enforcement": "DISABLED",
+    "b13_business_meaning": "USER_APPROVED_SUCCESSOR_IMPLEMENTATION_PENDING",
+    "ready": false,
+    "merge": false,
+    "formal_adoption": false,
+    "deployment": false,
+    "active_switch": false,
+    "long_running_schedule": false
+  },
+  "actual_new_calls": {
+    "provider": 24,
+    "paid": 24,
+    "sec": 35,
+    "unknown": 0
+  },
+  "current_work": [
+    "B13v4 calculation-limit/source-ambiguity separation implemented and offline native-tested; real v4 verification pending",
+    "D04 full-source native integration remains; original51/52/53 controls retain limited scope",
+    "D03 and newB13 modules awaiting requested independent review;390/update/publication/recovery/retirement incomplete"
+  ],
+  "next": [
+    "Complete bounded real B13 source interpretation and native results under current approved ledger",
+    "Continue D04 native integration and complete source judgments",
+    "Continue390,normal updates,publication/recovery/retirement and independent reviews"
+  ],
+  "review_coverage": "resume-2026-09-13/review-coverage.json",
+  "remaining_review_dependency": "Module-level user-forwarded ChatGPT/Fable review; original Codex subagents not retried beforeSep17",
+  "historical_state_snapshot": "resume-2026-09-13/historical-state/execution-state.json",
+  "historical_continuation_snapshot": "resume-2026-09-13/historical-state/continuation.md",
+  "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+  "ledger_implementation_status": "59_SEALED_SLOTS; PROVIDER24_PAID24_SEC35; NO_UNKNOWN_OR_STOPPED_CHANNEL; ALL_PRIOR_FAILURES_RETAINED",
+  "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+  "full_acceptance": false,
+  "external_dependencies": [
+    {
+      "kind": "INDEPENDENT_REVIEW",
+      "scope": "only unreviewed modules and future deltas; not covered by scoped634 reports",
+      "safe_offline_work_continues": true
+    }
+  ],
+  "runtime_observation": {
+    "provider_key_available": true,
+    "credential_value_recorded": false,
+    "account_inspected": false,
+    "real_call_slot_consumed": true,
+    "provider_slot_consumed": true,
+    "credential_storage": "PRIVATE_OUTSIDE_REPOSITORY_AND_EVIDENCE"
+  },
+  "offline_wiring_receipt": "b13-calculation-limits/provider-wiring.json",
+  "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
+  "runtime_binding_repair": {
+    "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
+    "ci": "https://github.com/wlvh/SEC_metrics/actions/runs/34745889888",
+    "first_native_error": "Successor execution authority bytes differ: scripts/vnext/ai_adapter.py",
+    "current_unfrozen_v14_closure": "sha256:827542852b160b40810eade4ce2a5aa510f593b594833a84f5ef68ef59d8ee31",
+    "historical_reviewed_v14": "runtime-binding-repair-780d9ba/historical-v14-e1ac",
+    "single_native_reproduction_after_repair": "PASS",
+    "full_native_material_test": "PASS_5_BASELINES_10_NEGATIVES_115.607_SECONDS",
+    "cold_replay": "B03_DEFAULT_AND_D01_PYTHON39_PASS_NO_GIT_NO_NETWORK",
+    "current_v15_closure": "sha256:6a70bf77aa16d63a9ac7b39282774ba34d907af3f510960c5f3e18401d5e084a",
+    "current_v15_execution_file_count": 364,
+    "historical_observation_only": true
+  },
+  "b13_development": {
+    "specs": "NEW_SUCCESSOR_NUMERIC_AND_TEXT_DRAFTS",
+    "actual_source_candidates": "FORD_11_QUALITATIVE_AND_8_POSSIBLE_OUTPUT; ENPHASE_5_QUALITATIVE_AND_NO_POSSIBLE_OUTPUT_MATCH",
+    "calculator_comparison_tests": "4_PASS",
+    "source_assignments_and_numeric_absence_proven": false,
+    "native_results_created": false,
+    "current_source_inspection_material": "b13-current-source-inspection",
+    "complete_source_material": "resume-2026-09-14/b13-complete-source.tar.gz",
+    "native_monetary_capacity_roles": "13_FORD_SOURCE_CONCEPT_AND_CURRENCY_UNIT_VERIFIED_NOT_PRODUCTION_QUANTITIES"
+  },
+  "continuity_policy_delivery": {
+    "scope": [
+      "B02",
+      "B04",
+      "B05",
+      "B07"
+    ],
+    "company": "paramount_skydance_paramount_global",
+    "outcome": "EXISTING_APPROVED_NOT_MEANINGFUL_NOT_NA_NOT_NUMERIC",
+    "instant_regression": [
+      "B08",
+      "B09"
+    ],
+    "source_tests": "10_PASS_66.657_SECONDS",
+    "native_runs_and_rows": "6_PASS",
+    "resigned_native_attacks": "2_REJECTED",
+    "cold_python39": "PASS",
+    "full_acceptance": false
+  },
+  "source_refresh_dependencies": {
+    "salesforce": "Saved dependency graph available after two actual captures",
+    "jpmorgan_chase": "Required current metadata,8history shards,priorannual and8Kheader acquired; discovered dependenciesavailable",
+    "actual_sec_acquisition_adapter": "LIVE_EXECUTED_WITH_PERSISTED_NATIVE_ATTEMPTS"
+  },
+  "sec_acquisition": {
+    "state": "13_ACTUAL_SUCCESS; JPM3_AND_SALESFORCE7_NATIVE_CANDIDATES_RESTORED",
+    "source_test": "PASS_78.680_SECONDS",
+    "provider_wiring_test": "PASS_38.446_SECONDS",
+    "fast_suite": "100_PASS_79.304_SECONDS",
+    "native_source_checkpoint": "JPM_A08_AND_MARRIOTT_B01_PASS",
+    "restored_python39_preview": "PASS",
+    "offline_material": "ordinary-sec-acquisition/",
+    "remaining_real_capture": "None currently required for the resolved JPM/Salesforce dependency graph; other inputs evaluated only as needed",
+    "first_real_source": "Salesforce 0001108524-25-000083.hdr.sgml; accession/form verified; old inputs retain original credit",
+    "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+    "actual_material": "ordinary-document-identity/"
+  },
+  "sec_wiring_receipt": "ordinary-current-income/sec-wiring.json",
+  "document_identity_repair": {
+    "old_request_rows_rewritten": false,
+    "old_sources_redownloaded": false,
+    "new_live_calls": 0,
+    "first_failure": "C04_SAME_CIK_FILING_REQUIRED",
+    "fixed_candidate": "salesforce/C04 EXACT0 FY2026 OPEN; notformalpublication",
+    "material": "ordinary-document-identity/"
+  },
+  "latest_ci_observation": {
+    "head": "12bb35d281c2e02ade9bc61a3c93fe2c0e367700",
+    "run": 34861669005,
+    "conclusion": "success",
+    "scope": "That exact prior head only"
+  },
+  "ordinary_special_debt_scope": {
+    "source_tests": "6_PASS_23.968_SECONDS",
+    "bank_reported_subtotal_usd": "970329000000",
+    "industrial_reported_debt_usd": "21919000000",
+    "bank_limit": "BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED",
+    "industrial_limit": "INDUSTRIAL_ATTRIBUTABLE_EQUITY_NOT_ESTABLISHED",
+    "native_batch": "TWO_WITHHELD_OPEN_RUNS_AND_PUBLIC_ROWS; CLI_EXIT2_EXPECTED",
+    "full_B06_ratios": false,
+    "full_390_acceptance": false,
+    "material": "ordinary-special-debt-scope/"
+  },
+  "current_v15_development_closure": "sha256:9cd37e32b014047303b79f9315f7ba3f6fcb26fe2a5ce521b1f793c944f55d3e",
+  "ordinary_history_identity": {
+    "material": "ordinary-history-identities/",
+    "jpm_event_native_restored": 6,
+    "jpm_c04_restored": true,
+    "salesforce_c04_regression": true,
+    "current_and_history_inventory_views": 9,
+    "source_sets_content_unchanged": true,
+    "unique_positive_coordinates_restored_since_source_acquisition": 17,
+    "full_390_acceptance": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "sec_tests_reused_from": "bdc41e76c513f5a9cecb5c242b5fea77806045dc",
+    "current_provider_factory_test_seconds": 36.843
+  },
+  "successor_event_scope": {
+    "approved_policy": "catalog/zero_ai_public_projection.json:PRIOR_CALENDAR_YEAR_START_TO_TARGET_END",
+    "primary_and_related_ciks_required": true,
+    "current_only_unblocking_rejected_as_incomplete": true,
+    "current_source_probe": "4 current-registrant filings/7claims; not whole scope",
+    "prior_source_dependency": "https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/d830953d8k.htm",
+    "amendment_event_window": "INPUT_PROPERTY_PROVEN",
+    "implementation_pending": true
+  },
+  "registered_event_discovery": {
+    "current_filings": 4,
+    "predecessor_filings": 31,
+    "approved_window": [
+      "2024-01-01",
+      "2025-12-31"
+    ],
+    "missing_originals_and_headers": 18,
+    "source_tests": "11_PASS_22.116s",
+    "sec_offline_with_predecessor_scope": "PASS94.031s",
+    "provider_offline_factory": "PASS36.219s",
+    "actual_new_calls": [
+      0,
+      0,
+      0
+    ],
+    "planned_cumulative_sec_after_missing_files": 31,
+    "event_native_integration_complete": false,
+    "material": "ordinary-registered-events/"
+  },
+  "registered_event_acquisition_in_progress": {
+    "complete": true,
+    "additional_captures": 18,
+    "verified_source_pairs": 9,
+    "cumulative": [
+      0,
+      0,
+      31
+    ],
+    "all_succeeded": true,
+    "unknown": 0
+  },
+  "registered_event_native_integration": {
+    "source_filings": 35,
+    "native_claims": 70,
+    "results": {
+      "C01": "12",
+      "E01": "5",
+      "E02": "0",
+      "E03": "12",
+      "E04": "0",
+      "E05": "4"
+    },
+    "reporting_run_period": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "event_measurement_window": [
+      "2024-01-01",
+      "2025-12-31"
+    ],
+    "native_open_and_public_rows": 6,
+    "current_only_equal_zero_rejected": true,
+    "unique_positive_source_dependent_coordinates_restored": 23,
+    "global_53_week_limit_unchanged": true,
+    "financial_scope_unchanged": true,
+    "material": "ordinary-registered-event-runs/",
+    "full390_acceptance": false
+  },
+  "current_income_delivery": {
+    "metric_ids": [
+      "B01",
+      "B03"
+    ],
+    "actual_period": [
+      "2025-08-08",
+      "2025-12-31"
+    ],
+    "duration_days": 146,
+    "result": "NOT_MEANINGFUL_ANNUAL_DURATION_OUT_OF_RANGE",
+    "original_spec_guard": [
+      300,
+      400
+    ],
+    "current_observation_values_usd": {
+      "revenue": "12269000000",
+      "operating_income": "-95000000",
+      "depreciation_amortization": "590000000"
+    },
+    "amendment_input": "NEW_INCOME_SPECIFIC_PROOF_USING_EXISTING_PARTIII_MECHANICS",
+    "native_open_runs_and_rows": 2,
+    "resigned_false_annual_and_combined_amounts": "2_REJECTED",
+    "cold_b03_dependency": "PASS21records_B01_B03",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "material": "ordinary-current-income/"
+  },
+  "semantic_feasibility": {
+    "material": [
+      "semantic-live-repair",
+      "semantic-focus-repair",
+      "regulatory-semantic-pilot",
+      "regulatory-semantic-shape",
+      "regulatory-semantic-references",
+      "regulatory-semantic-verification",
+      "regulatory-event-status",
+      "regulatory-source-selections",
+      "regulatory-current-involvement"
+    ],
+    "execution_files": 396,
+    "provider_slots": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      51,
+      52,
+      53
+    ],
+    "observations": {
+      "32": "Pfizer Seagen goodwill valuation distinguished; partial source only",
+      "33": "Ford talent unit original response truncated at4096 output; no response text",
+      "34": "Ford Credit unit original response truncated at4096 output; no response text",
+      "35": "Thinking-mode repair yielded full response but cybersecurity false NO_DOUBT and missing block450; host rejected",
+      "36": "Explicit category definitions and mandatory assessment restored talent meaning",
+      "37": "Funding wording distinguished from going concern; conditional timing still requires refinement",
+      "38": "D03 v1 unresolved-object shape failure; raw meaningful dates retained",
+      "39": "v2 exact quotation capitalization failure",
+      "40": "v3 references pass; headings and temporal classifications wrong",
+      "41": "content check rejects5heading errors but misses temporal issue; original broad environmental rubric corrected separately",
+      "42": "v4 event/status separation improves semantics; normalized month format and missingheading constraints fail",
+      "43": "v5 normalized source dates and all context coverage; Pfizer selected unit assertions pass executor source inspection",
+      "44": "All21Pfizer proposals supported by model content check; not independent review/full-source/native credit",
+      "45": "JPM holdout still misclassifies explicit aggregate current involvement and overlaps context/facts",
+      "46": "v6 eliminates overlap, but same aggregate-current false negative persists; generic D03 route unqualified",
+      "51": "Enphase2016 original audit/control unit: DOUBT_DISCLOSED correctly identified despite unqualified opinion",
+      "52": "Enphase2017 understood historical2016/current2017, but kind/timing violated original v2 shape; original failure retained",
+      "53": "Successor v3 separates statement kind from subject/timing; historical doubt retained, only current NO_DOUBT_DECLARATION"
+    },
+    "native_result_created": false,
+    "full_semantic_acceptance": false,
+    "independent_review": false,
+    "next": "D04 historical real-source controls and independent B13/native work; investigate source-fact reuse for D03 instead of unbounded prompt retries.",
+    "current_d03_policy": "catalog/r6/regulatory_semantic_review_v6.json",
+    "current_content_check_policy": "catalog/r6/regulatory_semantic_verification_v2.json",
+    "historical_v15_closure": "sha256:0326bd686711739b42d2ec4b17a06b05918a76c9f12bc25341984ef3da256878",
+    "historical_observation_only": true
+  },
+  "latest_preceding_ci": {
+    "head": "210c43f342bede8a88b794f9985ca128f2e356ad",
+    "run": 34815348616,
+    "conclusion": "SUCCESS"
+  },
+  "core_route_limitations": [
+    {
+      "metric": "D03",
+      "source": "JPM original visible blocks339-340",
+      "failure": "Affirmative current involvement mislabelled conditional because no named individual case",
+      "attempts": "unmodified-policy holdout45 and materially revised-policy repair46",
+      "next": "Source-reported-fact route reuse and module review; no repeated unchanged draws",
+      "other_work_continues": true
+    },
+    {
+      "metric": "D04",
+      "remaining": "Historical positive/time controls are limited evidence; full-source current native route and scoped independent review not completed",
+      "next": "Use bounded evidence to integrate current sources, Evidence/Review/Run and complete coverage without treating protocol success as semantic proof"
+    }
+  ],
+  "historical_d04_controls": {
+    "acquisition_slots": [
+      47,
+      48,
+      49,
+      50
+    ],
+    "source_scope": "Exact historical primary HTML and SEC headers; no companion-XBRL or whole-filing absence/current-metric credit",
+    "report_years": [
+      2016,
+      2017
+    ],
+    "metadata_header_and_cover_identity": "VERIFIED",
+    "period_start_inferred": false,
+    "native_result_created": false,
+    "material": [
+      "historical-semantic-acquisition",
+      "historical-semantic-controls",
+      "historical-semantic-scope"
+    ],
+    "restore_reference_repair": "Three old mutable repository references preserved in immutable repository-supplement; original packages unchanged"
+  },
+  "session_handoff": {
+    "reason": "Context tracking degraded after a long multi-stage execution; no hard platform quota or project completion is asserted",
+    "last_substantive_commit": "b25d2155fa95ca2516a190ca664187009e03bb1a",
+    "worktree_changes_after_substantive_commit": "Only this continuation status record",
+    "next_action": "Read current continuation/state and ledger; confirm latest CI; implement B13 complete source-role assessment and native route while preserving D03 aggregate-current holdout and D04 limited-credit controls",
+    "requires_new_budget_approval": false,
+    "requires_new_development_approval": false,
+    "production_permissions_granted": false,
+    "historical_observation_only": true
+  },
+  "historical_resume_observations": {
+    "snapshot": "resume-2026-09-14/execution-state-before.json",
+    "superseded_fields": [
+      "current_v15_development_closure",
+      "latest_ci_observation",
+      "session_handoff"
+    ],
+    "prior_fields_are_historical": true
+  },
+  "current_rule_identity": {
+    "requirement_id": "issue_28_v14",
+    "requirement_generation": "PROFILE_DRIVEN_V15",
+    "execution_file_count": 407,
+    "basis": "CURRENT_LOADER_AND_EXECUTION_AUTHORITY_VERIFIED"
+  },
+  "last_resume": {
+    "checked_at_utc": "2026-09-14T10:53:30.508324+00:00",
+    "head": "9709eb60e154c0f92d5710094697654f0c46c63b",
+    "working_tree_at_resume": "CLEAN",
+    "fixed_ledger_counts": [
+      18,
+      18,
+      35
+    ],
+    "sealed_records": 53,
+    "stopped_channels": [],
+    "remaining": [
+      222,
+      222,
+      45
+    ],
+    "review": "https://github.com/wlvh/SEC_metrics/pull/43#pullrequestreview-5196602829",
+    "review_scope": "COMMENTED_DIRECTED_ONLY_NOT_WHOLE_PR",
+    "running_commands": [],
+    "next_action": "B13 full source assessment/native integration; D04 integration; D03 factual relation repair without repeating JPM prompt draws",
+    "current_increment_material": "resume-2026-09-14/README.md"
+  },
+  "d03_statement_increment": {
+    "source_material": "resume-2026-09-14/d03-source-fact-final.json",
+    "grammar_counterexamples": "6_SHORT_TESTS_PASS",
+    "actual_jpm_source_and_response_conflicts": "PASS_135.461_SECONDS",
+    "case_details_inferred": false,
+    "old_response_rewritten": false,
+    "sample_role": "REGRESSION_AFTER_PRIOR_REPAIR",
+    "native_result_created": false,
+    "independent_module_review": "PENDING_USER_FORWARDED_REVIEW",
+    "real_model_validation": "NOT_RUN_PENDING_MODULE_REVIEW"
+  },
+  "b13_native_development": {
+    "record_type": "B13_NATIVE_DEVELOPMENT_CHECKPOINT",
+    "status": "ACTIVE_CONTINUATION_NOT_COMPLETE",
+    "baseline_head": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
+    "native_run": "RECORDED_OPEN_AND_PUBLIC_ROW_VERIFIED",
+    "native_seconds": 158.619,
+    "cold_python39": "PASS_NO_NETWORK",
+    "old_v14_native_regression_seconds": 106.457,
+    "jpm_statement_regression_seconds": 21.593,
+    "fast": {
+      "status": "PASSED",
+      "selectors": 106,
+      "seconds": 81.175
+    },
+    "actual_new_calls": [
+      0,
+      0,
+      0
+    ],
+    "full_b13_real_acceptance": false,
+    "full390": false,
+    "independent_module_review": "PENDING",
+    "next": [
+      "Commit verified B13 native increment in the same Draft PR43",
+      "Use approved private runtime and current wiring for a bounded real B13 semantic check",
+      "Continue B13 complete source results, D04 native integration and remaining Issue goals"
+    ],
+    "historical_ci": {
+      "head": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
+      "run": 34837885217,
+      "result": "9_SUCCESS_1_SOURCE_TIMEOUT_FAILURE",
+      "failed_selector": "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",
+      "timeout_seconds": 240
+    },
+    "production_permissions": false
+  },
+  "b13_native_pilot": {
+    "ordinal": 54,
+    "status": "FAILED_TERMINAL",
+    "native_credit": false,
+    "schema_failure": "Unresolved/evidence expected arrays; subject/timing expected enums",
+    "semantic_conflict": "Sold microinverter units classified ACTUAL_PRODUCTION while reason explicitly says not production",
+    "source_scope": "ONE_ENPHASE_SOURCE_REQUEST_NOT_WHOLE_B13",
+    "repair": "Explicit v2 JSON schema plus sales-only source rejection; old54unmodified"
+  },
+  "b13_native_pilot_v2": {
+    "ordinal": 55,
+    "status": "FAILED_TERMINAL",
+    "native_credit": false,
+    "literal_failure": "AMPTC copied as AMTPC in an unrelated context quote",
+    "source_scope_issue": "Unsupported uncertainty about whether explicitly microinverter capacity also covers batteries",
+    "schema_improved": true,
+    "sales_classification_improved": true,
+    "repair": "v3 source-index references with host retrieval; source interpretation scope clarified; original55unchanged"
+  },
+  "b13_v3_actual": {
+    "successful_native_requests": [
+      56,
+      57,
+      58
+    ],
+    "failed_request": 59,
+    "failure": "Clear qualitative accounting statement blocked because inability to compute a ratio was reported as unresolved",
+    "whole_b13_complete": false,
+    "remaining_source_requests": 23,
+    "original_terminals_unchanged": true
+  },
+  "b13_v4_development": {
+    "status": "CALCULATION_LIMIT_CHANNEL_IMPLEMENTED_OFFLINE_TESTED",
+    "real_calls": 0,
+    "prior_successful_source_requests": [
+      56,
+      57,
+      58
+    ],
+    "prior_failed_requests": [
+      54,
+      55,
+      59
+    ],
+    "whole_metric_complete": false
+  },
+  "session_checkpoint": {
+    "date": "2026-09-15",
+    "state": "SEALED_FOR_FRESH_CONTEXT",
+    "reason": "Context tracking degraded during prolonged implementation; no hard platform quota asserted",
+    "new_approval_required": false,
+    "actual_calls": [
+      24,
+      24,
+      35
+    ],
+    "remaining": [
+      216,
+      216,
+      45
+    ],
+    "v4_real_calls": 0,
+    "next": "Bounded v4 verification of the qualitative accounting-policy unit behind59; complete B13/D04/390/update/publication recovery and retirement",
+    "last_verified_tests": {
+      "native_seconds": 163.014,
+      "fast_selectors": 106,
+      "fast_seconds": 82.317
+    }
+  }
+}

@@ -14,7 +14,7 @@ from .normal_source_authority import ROOT
 from .r6_semantic_source import _bytes
 from .r6_semantic_review import _validate_source_response
 
-POLICY_PATH = 'catalog/r5/capacity_semantic_review_v4.json'
+POLICY_PATH = 'catalog/r5/capacity_semantic_review_v5.json'
 _MAPS = ('contexts', 'units', 'namespace_environments')
 _STYLE = re.compile(r'\bstyle=(?:"[^"]*"|\x27[^\x27]*\x27)', re.I)
 _STYLE_REF = re.compile(r'data-b13-style-ref="(\d+)"')
@@ -55,14 +55,17 @@ def _pack_rows(unit):
     columns = sorted(rows[0])
     if not all(set(row) == set(columns) for row in rows):
         return
-    layout = {'columns': columns}
+    indices = [row['block_index'] if name == 'blocks' else row['fact']['ordinal'] for row in rows]
+    layout = {'columns': columns, 'source_order': indices}
     if name == 'facts':
         fact_columns = sorted(rows[0]['fact'])
         if all(set(row['fact']) == set(fact_columns) for row in rows):
             layout['fact_columns'] = fact_columns
             for row in rows:
                 row['fact'] = [row['fact'][key] for key in fact_columns]
-    payload[name] = [[row[key] for key in columns] for row in rows]
+    need(len(indices) == len(set(indices)) and all(type(i) is int and i >= 0 for i in indices),
+         'B13_PACKED_SOURCE_INDEX_INVALID')
+    payload[name] = {str(index): [row[key] for key in columns] for index, row in zip(indices, rows)}
     payload['row_layout'] = layout
 
 
@@ -73,15 +76,23 @@ def _restore_rows(unit):
         return
     name = 'blocks' if unit['kind'] == 'VISIBLE_TEXT' else 'facts'
     columns = layout['columns']
-    need(len(columns) == len(set(columns)) and all(len(row) == len(columns) for row in payload[name]),
+    packed = payload[name]
+    need(type(packed) is dict and all(re.fullmatch(r'0|[1-9][0-9]*', key) for key in packed),
+         'B13_PACKED_SOURCE_INDEX_INVALID')
+    indices = [str(i) for i in layout['source_order']]
+    need(len(indices) == len(set(indices)) and set(indices) == set(packed),
+         'B13_PACKED_SOURCE_INDEX_CHANGED')
+    need(len(columns) == len(set(columns)) and all(len(row) == len(columns) for row in packed.values()),
          'B13_PACKED_ROW_FIELDS_CHANGED')
-    payload[name] = [dict(zip(columns, row)) for row in payload[name]]
+    payload[name] = [dict(zip(columns, packed[index])) for index in indices]
     if 'fact_columns' in layout:
         columns = layout['fact_columns']
         need(len(columns) == len(set(columns)) and all(len(row['fact']) == len(columns) for row in payload[name]),
              'B13_PACKED_FACT_FIELDS_CHANGED')
         for row in payload[name]:
             row['fact'] = dict(zip(columns, row['fact']))
+    need(all(int(index) == (row['block_index'] if name == 'blocks' else row['fact']['ordinal'])
+             for index, row in zip(indices, payload[name])), 'B13_PACKED_SOURCE_INDEX_CHANGED')
 
 
 def _shared_units(units):
@@ -251,6 +262,22 @@ def validate_response(*, request, raw_response):
     monetary = {(r['unit_id'], r['source_index']) for r in request['native_capacity_role_assessments']
                 if r['role'] == 'MONETARY_CREDIT_FACILITY_CAPACITY'}
     for finding in checked['findings']:
+        if finding['kind'] == 'MONETARY_CREDIT_CAPACITY':
+            evidence = finding['resolved_evidence']
+            _, source_items = _source_items(by_id[finding['unit_id']])
+            if evidence and all(e['kind'] == 'NATIVE_FACT' and
+                    source_items[e['source_index']].get('tag', '').lower().endswith('nonfraction')
+                    for e in evidence):
+                need(all((finding['unit_id'], e['source_index']) in monetary for e in evidence),
+                     'B13_NUMERIC_CREDIT_FACILITY_ROLE_NOT_ESTABLISHED')
+        # A production incentive is not manufacturing capability, and a tax
+        # credit is not borrowing headroom. Reject this observed conflict;
+        # passing the check does not positively establish any other role.
+        texts = [e['text'] for e in finding['resolved_evidence']]
+        if texts and all(_tax_credit_without_capacity(text) for text in texts):
+            need(finding['kind'] not in {'CAPACITY_QUALITATIVE', 'MONETARY_CREDIT_CAPACITY',
+                                        'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'},
+                 'B13_TAX_CREDIT_IS_NOT_PRODUCTION_OR_BORROWING_CAPACITY')
         if finding['kind'] in {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'}:
             need(not any(e['kind'] == 'NATIVE_FACT' and (finding['unit_id'], e['source_index']) in monetary
                          for e in finding['resolved_evidence']), 'B13_MONETARY_CAPACITY_NOT_PHYSICAL')
@@ -265,3 +292,17 @@ def validate_response(*, request, raw_response):
     checked['response'] = response
     checked['calculation_limits'] = calculation_limits
     return checked
+
+
+def _tax_credit_without_capacity(text):
+    """A narrow negative for tax incentives with no capacity assertion.
+
+    This neither admits other statements nor establishes filing-wide absence.
+    Mixed statements retain their capacity/quantity assessment obligations.
+    """
+    tax = re.search(r'\b(?:tax\s+credits?|advanced\s+manufacturing\s+production\s+tax\s+credit|AMPTC)\b', text, re.I)
+    capacity = re.search(r'\b(?:capacit(?:y|ies)|utilization|utilisation|throughput|'
+                         r'production\s+(?:volumes?|quantit(?:y|ies)|units?|output)|'
+                         r'(?:produced|manufactured)\s+[\d,.]+|'
+                         r'credit\s+(?:facility|facilities|line)|borrowing)\b', text, re.I)
+    return tax is not None and capacity is None

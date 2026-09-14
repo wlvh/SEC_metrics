@@ -2130,6 +2130,13 @@ def _validate_record_graph(
         missing source/asset binding, or Candidate/ReviewUnit drift.
     """
     ordinary_case = None
+    capacity_case = None
+    if manifest.get("requirement_id") == "issue_28_v14" and any(
+            record.get('record_type') == 'METRIC_RESULT' and record.get('applicability') == 'N_A_STRUCTURAL'
+            for record in records):
+        from .capacity_run import validate_run_authority
+        capacity_case = validate_run_authority(repo_root=repo_root, manifest=manifest,
+            records=records, compiled_specs=compiled_specs)
     if manifest.get("requirement_id") == "issue_28_v13":
         from .normal_run_v3 import validate_normal_run_authority
         ordinary_case = validate_normal_run_authority(repo_root=repo_root,manifest=manifest,
@@ -2720,6 +2727,10 @@ def _validate_record_graph(
             if binding["derived_asset_id"] not in derived_ids:
                 raise RunStoreError("Observation DerivedAsset is absent")
     result_expectations = []
+    if capacity_case is not None and capacity_case['kind'] == 'STRUCTURED':
+        expected_result = capacity_case['results']['B13']
+        result_expectations.append({'metric_id': 'B13', 'scope_key': expected_result['scope_key'],
+            'result': expected_result, 'trace': capacity_case['traces']['B13']})
     supporting_observation_ids = set()
     for effect_hash in effective_decisions:
         # A HUMAN decision covers one complete role and output set. Rebinding
@@ -2997,6 +3008,11 @@ def _validate_record_graph(
                 )
                 else "N_A_STRUCTURAL"
             )
+            if (capacity_case is not None and capacity_case['kind'] == 'STRUCTURED'
+                    and capacity_case['selection']['category'] == 'APPROVED_B13_COMPANY_SCOPE'):
+                # The successor's exact owner-approved company set is checked
+                # from policy and registry above. It does not infer absence.
+                expected_applicability = 'N_A_STRUCTURAL'
             if record["applicability"] != expected_applicability:
                 raise RunStoreError(
                     "MetricResult applicability differs from Spec/traits"

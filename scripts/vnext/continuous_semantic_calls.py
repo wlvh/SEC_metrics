@@ -42,6 +42,7 @@ SEMANTIC_RULE_PATHS = (
     'catalog/r5/capacity_semantic_review_v1.json', 'catalog/r5/capacity_semantic_review_v2.json',
     'catalog/r5/capacity_semantic_review_v3.json',
     'catalog/r5/capacity_semantic_review_v4.json',
+    'catalog/r5/capacity_semantic_review_v5.json',
     'scripts/vnext/capacity_native_assessment.py')
 
 

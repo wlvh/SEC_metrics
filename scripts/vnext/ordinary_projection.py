@@ -97,6 +97,9 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
     else:
         row,evidence,_ = projector._project_result(result=result,trace=trace,company=company,spec=view,baseline_row=baseline,
             indexes=indexes,fiscal_year=str(period["fiscal_year"]),metric_fields=publication.METRIC_FIELDS)
+    if metric == 'B13' and result['reason_code'] == 'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE':
+        from .capacity_run import project_defined_absence
+        row, evidence = project_defined_absence(case=case, result=result, row=row, company=company)
     if not is_text:
         evidence=[];claims=_claims(case)
         financial_locators=_selected_financial_locators(metric,case.get("selection"))
@@ -123,8 +126,19 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
         row["context_or_dimension"]=json.dumps({"scope":trace["calculation_target"]["scope"],"measurement_kind":label,
             "annual_filing_period":period,"selection":case.get("selection"),
             "source_reference_ids":[r["source_reference_id"] for r in case["references"]]},ensure_ascii=False,sort_keys=True)
-    else:
+    elif result['text_payload'] is not None:
         _need(len(evidence)==len(result["text_payload"]["items"]),"ORDINARY_TEXT_EVIDENCE_SET_CHANGED")
+    elif metric == 'B13':
+        structural = case['selection']['status'] == 'N_A_STRUCTURAL'
+        _need((structural and result['applicability'] == 'N_A_STRUCTURAL' and not evidence)
+              or (case['selection']['status'] == 'NOT_AVAILABLE_SEC'
+                  and result['reason_code'] == 'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE'
+                  and len(evidence) == len(case['text_arguments']['source']['documents'])),
+              'B13_NULL_TEXT_PROJECTION_CHANGED')
+        if structural:
+            row['notes'] = 'Outside the approved B13 company scope. No disclosure-absence or utilization claim is made.'
+    else:
+        raise ValueError('ORDINARY_NULL_TEXT_PROJECTION_UNSUPPORTED')
     filings=_filings(case["input_binding"])
     accessions=list(dict.fromkeys(e["accession"] for e in evidence))
     known=[filings[a] for a in accessions if a in filings]

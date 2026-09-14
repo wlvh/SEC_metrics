@@ -65,7 +65,10 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
                      if f['subject'] == 'TARGET_REGISTRANT' and f['timing'] == 'CURRENT_REPORT'}
     need(not {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'} <= current_kinds,
          'B13_COMPARABLE_PAIR_ASSESSMENT_REQUIRED')
-    need(assessment['proposed_branch'] == 'TEXT_QUAL_PROPOSAL_REQUIRES_NATIVE_REVIEW',
+    absent = not any(f['kind'] in _QUALITATIVE for f in findings)
+    expected_branch = ('DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW' if absent else
+                       'TEXT_QUAL_PROPOSAL_REQUIRES_NATIVE_REVIEW')
+    need(assessment['proposed_branch'] == expected_branch,
          'B13_TEXT_BRANCH_NOT_ESTABLISHED')
     annual = source['prepared_annual_input']
     period = annual['table_input']['target_period']
@@ -82,7 +85,7 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
         for evidence in finding['resolved_evidence']:
             if evidence['kind'] == 'VISIBLE_BLOCK':
                 selected.add((unit['document_id'], evidence['source_index']))
-    need(bool(selected), 'B13_VISIBLE_CAPACITY_EXCERPT_NOT_ESTABLISHED')
+    need(bool(selected) or absent, 'B13_VISIBLE_CAPACITY_EXCERPT_NOT_ESTABLISHED')
     need(source_references == [d['source_reference'] for d in source['documents']], 'B13_TEXT_SOURCE_SET_CHANGED')
     coverages, claims, bindings = [], {}, {}
     for original in source['documents']:
@@ -110,7 +113,7 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
             order = len(claims)
             claims['excerpt_' + str(order)] = text_claim_from_block(document=document,
                 section_id='CAPACITY_DISCLOSURES', block_index=index, order=order)
-    need(1 <= len(claims) <= policy['max_items'] and
+    need((0 if absent else 1) <= len(claims) <= policy['max_items'] and
          sum(len(c['text']) for c in claims.values()) + len(claims) - 1 <= policy['max_text_chars'],
          'B13_COMPLETE_TEXT_EXCERPTS_EXCEED_BOUND')
     return claims, bindings, coverages
@@ -153,6 +156,11 @@ def replay_text_result(*, compiled_spec, target, company_traits, candidate, evid
     decision = effective_review_decision(review_unit=review_unit, decisions=review_decisions)
     need(decision['decision'] == 'APPROVE' and decision['approved_claims'] == target['scope'],
          'B13_TEXT_EFFECTIVE_REVIEW_REQUIRED')
+    if not candidate['selected']:
+        from .text_results import build_text_result_and_trace
+        result, trace = build_text_result_and_trace(compiled_spec=compiled_spec, target=target,
+            reason_code='B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE')
+        return result, trace, []
     references = {s['source_reference_id']: s for s in arguments['source_references']}
     coverage = {r['source_reference_id']: r for r in expected['checks'][0]['coverage']}
     observations = []

@@ -1,0 +1,28 @@
+test_actual_factory_native_acceptance_and_omitted_unit_failure (tests.vnext.test_capacity_native_assessment.CapacityNativeAssessmentMaterialTest.test_actual_factory_native_acceptance_and_omitted_unit_failure) ... ERROR
+
+======================================================================
+ERROR: test_actual_factory_native_acceptance_and_omitted_unit_failure (tests.vnext.test_capacity_native_assessment.CapacityNativeAssessmentMaterialTest.test_actual_factory_native_acceptance_and_omitted_unit_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_native_assessment.py", line 33, in test_actual_factory_native_acceptance_and_omitted_unit_failure
+    requests = prepare_requests(company_id='enphase_energy', metric_id='B13')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 220, in prepare_requests
+    _json(request['response_protocol']),requirement,authority,data_root) for request in source_requests(source)]
+                                                                                        ~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 108, in source_requests
+    return requests_from_source(source)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 161, in requests_from_source
+    packed, shared = _shared_units(trial)
+                     ~~~~~~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 122, in _shared_units
+    need(_restore_units(packed, shared) == units, 'B13_PACKED_SOURCE_ROUNDTRIP_CHANGED')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 28, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_PACKED_SOURCE_ROUNDTRIP_CHANGED
+
+----------------------------------------------------------------------
+Ran 1 test in 7.635s
+
+FAILED (errors=1)

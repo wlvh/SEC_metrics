@@ -995,7 +995,7 @@
         "anchor_id": "CAPABILITY.b13_native_assessment_draft",
         "type": "capability",
         "status": "active",
-        "statement": "B13完整源单元经过可精确恢复的共享表示组织，原文、原生事实与续接对象不因关键词未命中而删去。新请求复用原WB-3、官方出口及累计账本，以完整响应、原文和有限角色检查形成每请求原生Candidate/Evidence；缺失、失败、未决或旧诊断终态不能填满原生集合。私有登记由创建者重读完成，真实与测试输入分开；当前仅有禁网记录响应验证，不证明模型语义、完整B13或生产就绪。",
+        "statement": "B13新请求复用WB-3和固定总账，压缩来源以真实索引为键且可逐字段恢复，Candidate/Evidence检查完整响应及有限内容冲突。已有逐请求真实接受，但68的引用正确而税收抵免角色错误，原执行终态保留、业务内容拒绝，受影响真实调用暂停。后继检查拒绝该已见冲突，不证明全部模型含义、完整B13或生产就绪。",
         "audience": [
           "developer",
           "reviewer"
@@ -1008,7 +1008,7 @@
         "anchor_id": "CAPABILITY.b13_native_text_run_draft",
         "type": "capability",
         "status": "active",
-        "statement": "Ford/Enphase已登记的完整B13文字分支可沿已批准定义的V15进入既有TEXT_V1、Review、Observation、Calculator、普通OPEN Run及公共行。Run从原件和登记重新构造，季度产能不年化、不推利用率；不完整判断或潜在数值对不能以文字结果遮蔽。数据包重签遗漏请求或把测试改为真实会被拒绝。当前为记录响应的原生开发验证，真实完整B13、数值/缺失/其余不适用坐标、正常更新及390仍未完成。",
+        "statement": "完整B13文字判断可进入既有Evidence/Review/Calculator/普通OPEN Run。新增规定范围不可得分支要求完整请求、完整原件及有效Review，公共行附程序范围检查证据；仅有合成开发验证，不代表实际两家公司无披露。批准范围外八家公司可从原年度输入生成零AI不适用Run，按当前政策和登记重建确切结果，不能改签为披露不足。适用公司真实完整B13、数值配对及正常更新仍未完成，无生产权限。",
         "audience": [
           "developer",
           "reviewer"
@@ -1016,6 +1016,19 @@
         "test_anchor": "tests/vnext/test_capacity_run_material.py::CapacityRunMaterialTest.test_native_run_recorded_mode_exact_source_and_resigned_input_rejection",
         "test_status": "automated_recorded",
         "since": "2026-09-14"
+      },
+      {
+        "anchor_id": "CAPABILITY.b13_approved_applicability",
+        "type": "capability",
+        "status": "active",
+        "statement": "B13批准的Ford/Enphase范围外公司不依赖模型或语义输入登记，从保存年度原件进入同一OPEN Run并输出N_A_STRUCTURAL；批准范围内公司不可使用该分支。Run从原政策、登记和原件核对全部精确记录，拒绝重签成披露缺失。这个分支不证明产能披露不存在，也不授生产许可。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_capacity_applicability.py::CapacityApplicabilityMaterialTest.test_native_structural_result_rejects_fabricated_disclosure_absence",
+        "test_status": "automated_recorded",
+        "since": "2026-09-15"
       },
       {
         "anchor_id": "CAPABILITY.semantic_source_grouping",

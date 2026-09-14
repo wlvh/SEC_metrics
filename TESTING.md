@@ -781,3 +781,5 @@ B13后继协议v2的`test_sales_only_source_cannot_be_labelled_actual_production
 B13 v3改为来源kind/index选择，由程序恢复完整原文；保留provider原响应。字段/引用反例、完整记录响应Run及行（172.465秒）、B13实际工厂禁网接线（14.242秒）和D04回归（12.575秒）通过，106fast通过85.781秒。原55的AMPTC重抄错误不重签为成功。
 
 B13 v4增加`test_clear_capacity_with_no_production_is_a_calculation_limit`：无产量可作为计算限制保留，但已有产能时不能同时宣称本单元没有产能；本单元限制不升级为整份年报缺失。原59终态不变。
+
+B13来源编号与内容反例：`test_capacity_semantic_review`检查原始ordinal449不能引用为行位置0、JSON键重排仍保持非单调原顺序，并直接拒绝原始68及拆分的税收抵免余额反例。`test_capacity_text_results`使用独立合成无相关披露原件检查完整集合、Review、非数值结果及程序范围证据；不把Enphase原年报改称未披露。`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_capacity_applicability`检查批准两家公司不能成为不适用，并从实际来源创建范围外Run，拒绝合法重新签名的假披露缺失结果。短测试和完整材料分别登记在当前fast/source-material入口。

@@ -38,6 +38,64 @@ def response_for(request):
 
 
 class CapacitySemanticReviewTest(unittest.TestCase):
+    def test_tax_credit_is_not_capacity_or_borrowing_and_mixed_scope_remains(self):
+        from vnext.capacity_semantic_review import _tax_credit_without_capacity
+        text = 'The advanced manufacturing production tax credit applies to microinverters manufactured and sold.'
+        self.assertTrue(_tax_credit_without_capacity(text))
+        self.assertFalse(_tax_credit_without_capacity(text + ' Available capacity is 100 widgets per quarter.'))
+        self.assertFalse(_tax_credit_without_capacity(text + ' We manufactured 100 widgets in 2025.'))
+        source = source_packet(); old = source['units'][0]; payload = deepcopy(old['payload'])
+        payload['blocks'][0]['text'] = text
+        unit = _seal_unit(old['document_id'], 'VISIBLE_TEXT', payload, 0)
+        source.update(units=[unit], required_unit_ids=[unit['unit_id']], capacity_navigation=[])
+        source['semantic_source_id'] = content_hash(value={k:v for k,v in source.items() if k != 'semantic_source_id'})
+        request = requests_from_source(source)[0]; response = response_for(request)
+        finding = response['units'][0]['findings'][0]
+        for kind in ('CAPACITY_QUALITATIVE', 'MONETARY_CREDIT_CAPACITY', 'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'):
+            finding['kind'] = kind
+            with self.subTest(kind=kind), self.assertRaisesRegex(ValueError, 'TAX_CREDIT_IS_NOT'):
+                validate_response(request=request, raw_response=_bytes(response))
+        finding['kind'] = 'OTHER_CONTEXT'
+        validate_response(request=request, raw_response=_bytes(response))
+
+    def test_native_reference_uses_original_ordinal_not_packed_row_position(self):
+        source = source_packet()
+        doc = source['units'][0]['document_id']
+        payload = {'facts': [{'fact': {'ordinal': 449,
+            'qualified_name': 'x:ProductionPolicyTextBlock',
+            'text': 'A tax credit applies to widgets manufactured and sold.',
+            'context_ref': 'c', 'unit_ref': '', 'scale': '0', 'sign': '', 'tag': 'ix:nonnumeric'},
+            'attributes': {}, 'expanded_concept': ['urn:test', 'ProductionPolicyTextBlock'],
+            'namespace_environment_id': 'ns'}],
+            'contexts': {}, 'units': {}, 'namespace_environments': {}}
+        unit = _seal_unit(doc, 'NATIVE_FACTS', payload, 0)
+        source.update(units=[unit], required_unit_ids=[unit['unit_id']], capacity_navigation=[])
+        source['semantic_source_id'] = content_hash(value={k:v for k,v in source.items() if k != 'semantic_source_id'})
+        request = requests_from_source(source)[0]
+        self.assertEqual(list(request['units'][0]['payload']['facts']), ['449'])
+        self.assertEqual(_restore_units(request['units'], request['shared_source_dictionaries']), [unit])
+        response = {'request_id': request['request_id'], 'units': [{
+            'unit_id': unit['unit_id'], 'reviewed': True, 'unresolved': [], 'calculation_limits': [],
+            'findings': [{'kind': 'OTHER_CONTEXT', 'subject': 'TARGET_REGISTRANT',
+                'timing': 'CURRENT_REPORT', 'reason': 'Tax policy alone is not production capacity.',
+                'evidence': [{'kind': 'NATIVE_FACT', 'source_index': 0}]}]}]}
+        with self.assertRaisesRegex(ValueError, 'REFERENCE_OUTSIDE_SUPPLIED_SOURCE'):
+            validate_response(request=request, raw_response=_bytes(response))
+        response['units'][0]['findings'][0]['evidence'][0]['source_index'] = 449
+        checked = validate_response(request=request, raw_response=_bytes(response))
+        self.assertEqual(checked['findings'][0]['resolved_evidence'][0]['text'], payload['facts'][0]['fact']['text'])
+        changed = deepcopy(request['units'])
+        changed[0]['payload']['facts']['0'] = changed[0]['payload']['facts'].pop('449')
+        with self.assertRaisesRegex(ValueError, 'SOURCE_INDEX_CHANGED'):
+            _restore_units(changed, request['shared_source_dictionaries'])
+        second = deepcopy(payload['facts'][0])
+        second['fact']['ordinal'] = 237
+        payload['facts'].append(second)
+        reordered_unit = _seal_unit(doc, 'NATIVE_FACTS', payload, 0)
+        packed, shared = _shared_units([reordered_unit])
+        packed = json.loads(json.dumps(packed, sort_keys=True))
+        self.assertEqual(_restore_units(packed, shared), [reordered_unit])
+
     def test_clear_capacity_with_no_production_is_a_calculation_limit(self):
         request = requests_from_source(source_packet())[0]
         response = response_for(request)
@@ -109,6 +167,18 @@ class CapacitySemanticReviewTest(unittest.TestCase):
 
 
 class CapacitySemanticReviewMaterialTest(unittest.TestCase):
+    def test_original_accepted_tax_credit_response_fails_content_replay(self):
+        root = ROOT / 'docs/evidence/issue28_continuous/b13-source-indexing/original68'
+        request = json.loads((root / 'semantic-request.json').read_text())
+        raw = (root / 'wire/assistant-output.bin').read_bytes()
+        with self.assertRaisesRegex(ValueError, 'TAX_CREDIT_IS_NOT'):
+            validate_response(request=request, raw_response=raw)
+        isolated = json.loads(raw)
+        isolated['units'][0]['findings'] = isolated['units'][0]['findings'][1:]
+        with self.assertRaisesRegex(ValueError, 'NUMERIC_CREDIT_FACILITY_ROLE_NOT_ESTABLISHED'):
+            validate_response(request=request, raw_response=_bytes(isolated))
+        self.assertEqual(json.loads((root / 'terminal.json').read_text())['status'], 'SUCCEEDED')
+
     def test_complete_saved_packages_restore_without_navigation_filter(self):
         path = ROOT / 'docs/evidence/issue28_continuous/resume-2026-09-14/b13-complete-source.tar.gz'
         with tarfile.open(path) as archive:

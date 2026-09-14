@@ -138,10 +138,11 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "12bb35d281c2e02ade9bc61a3c93fe2c0e367700",
-    "run": 34861669005,
-    "conclusion": "success",
-    "scope": "That exact prior head only"
+    "head": "6c07fc1cbc0c3aae3a9f9a4227e36dd960f5b18a",
+    "run": 34867046536,
+    "conclusion": "SUCCESS",
+    "jobs": 10,
+    "scope": "PREVIOUS_UNCHANGED_TREE_REUSED_NOT_CURRENT_INCREMENT_CI"
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -397,7 +398,8 @@
   "current_rule_identity": {
     "requirement_id": "issue_28_v14",
     "requirement_generation": "PROFILE_DRIVEN_V15",
-    "execution_file_count": 407,
+    "requirement_closure_hash": "sha256:4e6105c99e3d1741cbf72d9a4c0e71ee175740e6f3de6dc4c40a149b990ac95d",
+    "execution_file_count": 408,
     "basis": "CURRENT_LOADER_AND_EXECUTION_AUTHORITY_VERIFIED"
   },
   "last_resume": {
@@ -517,25 +519,67 @@
   },
   "session_checkpoint": {
     "date": "2026-09-15",
-    "state": "SEALED_FOR_FRESH_CONTEXT",
-    "reason": "Context tracking degraded during prolonged implementation; no hard platform quota asserted",
-    "new_approval_required": false,
+    "state": "ACTIVE_CONTINUATION",
+    "baseline_head": "6c07fc1cbc0c3aae3a9f9a4227e36dd960f5b18a",
     "actual_calls": [
-      24,
-      24,
+      33,
+      33,
       35
     ],
     "remaining": [
-      216,
-      216,
+      207,
+      207,
       45
     ],
-    "v4_real_calls": 0,
-    "next": "Bounded v4 verification of the qualitative accounting-policy unit behind59; complete B13/D04/390/update/publication recovery and retirement",
-    "last_verified_tests": {
-      "native_seconds": 163.014,
-      "fast_selectors": 106,
-      "fast_seconds": 82.317
-    }
+    "latest_slot": 68,
+    "b13_affected_real_calls_paused": true,
+    "pause_reason": "Original68 exact references accepted but production-tax-credit semantics wrong; limited offline guards are not complete qualification",
+    "new_approval_required_for_existing_budget": false,
+    "next": "Continue numeric B13 and D04 native engineering; obtain actual D03 scoped review; do not redraw68 or treat limited content guards as broad semantic qualification",
+    "production_permissions": false
+  },
+  "b13_current_development": {
+    "material": "b13-content-guards/",
+    "source_reference_material": "b13-source-indexing/",
+    "actual_new_calls": [
+      9,
+      9,
+      0
+    ],
+    "v4_accepted_request_ordinals": [
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66
+    ],
+    "v4_reference_failure": 67,
+    "v5_original_native_success_with_rejected_semantics": 68,
+    "original_terminals_unchanged": true,
+    "current_source_units": 81,
+    "current_source_requests": 69,
+    "whole_applicable_b13_real_acceptance": false,
+    "structural_native_coordinates": 8,
+    "structural_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "defined_scope_absence": "SYNTHETIC_SOURCE_EVIDENCE_REVIEW_RESULT_AND_PROJECTION_TESTED_ONLY",
+    "numeric_branch": "STILL_REQUIRES_NATIVE_QUANTITY_PAIR_IMPLEMENTATION",
+    "tests": {
+      "source_text_methods": 15,
+      "source_text_seconds": 32.077,
+      "fast_selectors": 107,
+      "fast_seconds": 85.293,
+      "recorded_native_seconds": 171.751,
+      "v14_regression_seconds": 108.985,
+      "cold_python39": "PASS_COPIED_RUNTIME_NO_NETWORK"
+    },
+    "independent_module_review": "PENDING",
+    "full390": false,
+    "production_permissions": false
   }
 }

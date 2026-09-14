@@ -53,10 +53,10 @@ class CapacityTextResultTest(unittest.TestCase):
                                 for d in source['documents']}}
         cls.expected_text = block['text']
 
-    def reviewed(self):
+    def reviewed(self, args=None):
         from vnext.review import create_system_review_decision
         from vnext.requirements import load_requirement_snapshot
-        args = self.arguments
+        args = self.arguments if args is None else args
         candidate = api.create_deterministic_text_candidate(**args)
         evidence = api.build_text_evidence(candidate=candidate, **args)
         unit, _ = api.build_text_review_unit(compiled_spec=args['compiled_spec'], candidate=candidate,
@@ -66,6 +66,63 @@ class CapacityTextResultTest(unittest.TestCase):
             decided_at_utc='2026-09-14T14:00:00Z', requirement=requirement)
         return dict(args, company_traits=[], candidate=candidate, evidence_check=evidence,
                     review_unit=unit, review_decisions=[decision])
+
+    def test_defined_absence_needs_complete_source_set_and_effective_review(self):
+        args = deepcopy(self.arguments)
+        from tests.vnext.test_text_coverage import annual, binding
+        from tests.vnext.test_capacity_semantic_review import source_packet
+        from vnext.text_coverage import build_text_document
+        from vnext.r6_semantic_source import _seal_unit
+        original = binding(annual('<h1>Business</h1><p>Revenue is recognized when services are delivered.</p>'))
+        document = build_text_document(**original)
+        source = source_packet(); source['company_id'] = original['expected_company_id']
+        did = document['text_document_id']
+        unit = _seal_unit(did, 'VISIBLE_TEXT', {'blocks': document['blocks']}, 0)
+        source.update(units=[unit], required_unit_ids=[unit['unit_id']], capacity_navigation=[],
+            source_check_scope='SYNTHETIC_COMPLETE_PRIMARY_TEST_ONLY')
+        prepared = args['source']['prepared_annual_input']
+        prepared['entity'] = original['expected_cik']
+        prepared['filing']['accessionNumber'] = original['source_reference']['accession']
+        source['prepared_annual_input'] = prepared
+        source['documents'] = [{'document_id': did, 'filing': prepared['filing'],
+            'registrant_name_binding': {}, 'source_reference': original['source_reference'],
+            'raw_blob': original['raw_blob'], 'source_unit_ids': [unit['unit_id']]}]
+        reseal(source, 'semantic_source_id')
+        args.update(source=source, source_references=[original['source_reference']],
+            raw_bytes_by_id={original['raw_blob']['raw_asset_id']: original['raw_bytes']})
+        args['target'].update(company_id=source['company_id'], entity=prepared['entity'],
+                              accession=prepared['filing']['accessionNumber'])
+        assessment = args['assessment']
+        requests = requests_from_source(source)
+        assessment.update(company_id=source['company_id'], source_id=source['semantic_source_id'],
+            required_request_ids=[r['request_id'] for r in requests],
+            completed=[{'request_id': r['request_id'],
+                        'candidate': {'selected': {'source_assessment': {'findings': []}}}} for r in requests])
+        assessment['source_findings'] = []
+        assessment['proposed_branch'] = 'DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW'
+        reseal(assessment, 'assessment_set_id')
+        reviewed = self.reviewed(args)
+        result, trace, observations = api.replay_text_result(**reviewed)
+        self.assertIsNone(result['value'])
+        self.assertEqual(result['reason_code'], 'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE')
+        self.assertEqual(observations, [])
+        self.assertEqual(trace['input_observation_ids'], [])
+        from vnext.capacity_run import project_defined_absence
+        row, evidence = project_defined_absence(case={
+            'registered_input': {'assessment': assessment},
+            'selection': {'status': 'NOT_AVAILABLE_SEC'}, 'text_arguments': args},
+            result=result, row={}, company={'display_name': 'Synthetic fixture', 'primary_cik': '12345'})
+        self.assertEqual(row['status'], 'NOT_AVAILABLE_SEC')
+        self.assertEqual(row['value'], '')
+        self.assertEqual(len(evidence), len(source['documents']))
+        self.assertIn('Host scope-check record', evidence[0]['evidence_quote'])
+        reviewed['review_decisions'] = []
+        with self.assertRaisesRegex(ValueError, 'no decision|EFFECTIVE_REVIEW_REQUIRED'):
+            api.replay_text_result(**reviewed)
+        args['assessment']['completed'].pop()
+        reseal(args['assessment'], 'assessment_set_id')
+        with self.assertRaisesRegex(ValueError, 'REQUEST_COVERAGE_CHANGED'):
+            api.create_deterministic_text_candidate(**args)
 
     def test_reviewed_capacity_prose_is_text_without_annualization_or_ratio(self):
         result, trace, observations = api.replay_text_result(**self.reviewed())
