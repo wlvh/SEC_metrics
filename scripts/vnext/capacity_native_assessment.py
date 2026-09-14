@@ -30,7 +30,7 @@ def build_acceptance(*, prepared, plan, response_body):
             'source_reference_ids': source_ids, 'derived_asset_ids': [plan['selected_representation_hash']],
             'selected': {'source_assessment': {
                 'request_id': request['request_id'], 'unit_ids': [u['unit_id'] for u in request['units']],
-                'findings': checked['findings']}},
+                'findings': checked['findings'], 'calculation_limits': checked['calculation_limits']}},
             'competing_candidates': [], 'unresolved_competing_claims': []}
     candidate = validate_record(record={'record_type': 'OBSERVATION_CANDIDATE', **body,
         'candidate_hash': content_hash(value=body), 'attempt_id': 'capacity:' + plan['ai_invocation_plan_id'][7:],

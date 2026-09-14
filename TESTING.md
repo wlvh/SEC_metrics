@@ -779,3 +779,5 @@ B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物�
 B13后继协议v2的`test_sales_only_source_cannot_be_labelled_actual_production`复现真实54的分类/原文冲突；销售/出货类可保留，不能改为实际产量。原54失败不重签；明确JSON类型和独立枚举后需新请求接线验证，不能原样重抽。
 
 B13 v3改为来源kind/index选择，由程序恢复完整原文；保留provider原响应。字段/引用反例、完整记录响应Run及行（172.465秒）、B13实际工厂禁网接线（14.242秒）和D04回归（12.575秒）通过，106fast通过85.781秒。原55的AMPTC重抄错误不重签为成功。
+
+B13 v4增加`test_clear_capacity_with_no_production_is_a_calculation_limit`：无产量可作为计算限制保留，但已有产能时不能同时宣称本单元没有产能；本单元限制不升级为整份年报缺失。原59终态不变。

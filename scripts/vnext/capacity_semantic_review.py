@@ -14,7 +14,7 @@ from .normal_source_authority import ROOT
 from .r6_semantic_source import _bytes
 from .r6_semantic_review import _validate_source_response
 
-POLICY_PATH = 'catalog/r5/capacity_semantic_review_v3.json'
+POLICY_PATH = 'catalog/r5/capacity_semantic_review_v4.json'
 _MAPS = ('contexts', 'units', 'namespace_environments')
 _STYLE = re.compile(r'\bstyle=(?:"[^"]*"|\x27[^\x27]*\x27)', re.I)
 _STYLE_REF = re.compile(r'data-b13-style-ref="(\d+)"')
@@ -207,10 +207,20 @@ def validate_response(*, request, raw_response):
     resolved = deepcopy(response)
     from .r6_semantic_review import _source_items
     by_id = {u['unit_id']: u for u in units}
+    calculation_limits = []
     need(type(resolved.get('units')) is list, 'B13_RESPONSE_UNITS_REQUIRED')
     for row in resolved['units']:
         need(type(row) is dict and row.get('unit_id') in by_id and type(row.get('findings')) is list,
              'B13_REFERENCE_UNIT_CHANGED')
+        limits = row.pop('calculation_limits', None)
+        need(type(limits) is list and all(type(code) is str and code in rules['calculation_limit_codes'] for code in limits)
+             and len(limits) == len(set(limits)), 'B13_CALCULATION_LIMIT_FIELDS')
+        current = {f.get('kind') for f in row['findings'] if type(f) is dict
+                   and f.get('subject') == 'TARGET_REGISTRANT' and f.get('timing') == 'CURRENT_REPORT'}
+        need(not ('ACTUAL_PRODUCTION' in current and 'TARGET_CURRENT_PRODUCTION_NOT_PRESENT_IN_THIS_UNIT' in limits)
+             and not ('AVAILABLE_CAPACITY' in current and 'TARGET_CURRENT_CAPACITY_NOT_PRESENT_IN_THIS_UNIT' in limits),
+             'B13_CALCULATION_LIMIT_CONTRADICTS_FINDING')
+        calculation_limits.append({'unit_id': row['unit_id'], 'codes': limits})
         kind, items = _source_items(by_id[row['unit_id']])
         for finding in row['findings']:
             need(type(finding) is dict and type(finding.get('evidence')) is list, 'B13_REFERENCE_FIELDS_CHANGED')
@@ -253,4 +263,5 @@ def validate_response(*, request, raw_response):
                 need(not sales or production is not None, 'B13_SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION')
     checked['request_id'] = request['request_id']
     checked['response'] = response
+    checked['calculation_limits'] = calculation_limits
     return checked

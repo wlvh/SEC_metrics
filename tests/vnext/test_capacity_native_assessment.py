@@ -40,7 +40,7 @@ class CapacityNativeAssessmentMaterialTest(unittest.TestCase):
             policy, plan = build_plan(prepared)
             request = strict_json_loads(text=prepared.request_bytes.decode())
             response = {'request_id': request['request_id'], 'units': [
-                {'unit_id': u['unit_id'], 'reviewed': True, 'findings': [], 'unresolved': []}
+                {'unit_id': u['unit_id'], 'reviewed': True, 'findings': [], 'unresolved': [], 'calculation_limits': []}
                 for u in request['units']]}
 
             def wire(value):

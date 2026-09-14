@@ -28,15 +28,15 @@
     "long_running_schedule": false
   },
   "actual_new_calls": {
-    "provider": 20,
-    "paid": 20,
+    "provider": 24,
+    "paid": 24,
     "sec": 35,
     "unknown": 0
   },
   "current_work": [
-    "B13 native source Candidate/Evidence and TEXT_QUAL ordinary OPEN Run implemented and recorded-tested; real full-source judgments remain",
-    "D04 complete-source native integration remains; old51/52/53 controls retain their original diagnostic boundaries",
-    "D03 module review remains pending before repaired real validation; source grouping performance fixed without changing81original units"
+    "B13v4 calculation-limit/source-ambiguity separation implemented and offline native-tested; real v4 verification pending",
+    "D04 full-source native integration remains; original51/52/53 controls retain limited scope",
+    "D03 and newB13 modules awaiting requested independent review;390/update/publication/recovery/retirement incomplete"
   ],
   "next": [
     "Complete bounded real B13 source interpretation and native results under current approved ledger",
@@ -48,7 +48,7 @@
   "historical_state_snapshot": "resume-2026-09-13/historical-state/execution-state.json",
   "historical_continuation_snapshot": "resume-2026-09-13/historical-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
-  "ledger_implementation_status": "55_SEALED_SLOTS; PROVIDER20_PAID20_SEC35; NO_UNKNOWN_OR_STOPPED_CHANNEL; ALL_PRIOR_FAILURES_RETAINED",
+  "ledger_implementation_status": "59_SEALED_SLOTS; PROVIDER24_PAID24_SEC35; NO_UNKNOWN_OR_STOPPED_CHANNEL; ALL_PRIOR_FAILURES_RETAINED",
   "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
   "full_acceptance": false,
   "external_dependencies": [
@@ -66,7 +66,7 @@
     "provider_slot_consumed": true,
     "credential_storage": "PRIVATE_OUTSIDE_REPOSITORY_AND_EVIDENCE"
   },
-  "offline_wiring_receipt": "b13-source-references/provider-wiring.json",
+  "offline_wiring_receipt": "b13-calculation-limits/provider-wiring.json",
   "historical_gap_reconciliation": "resume-2026-09-13/current-gap-index.json",
   "runtime_binding_repair": {
     "prior_pushed_head": "780d9bae5d77c950b6a692fdc2277fa6798cc068",
@@ -138,11 +138,10 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
-    "run": 34837885217,
-    "result": "9_SUCCESS_1_SOURCE_TIMEOUT_FAILURE",
-    "failed_selector": "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",
-    "timeout_seconds": 240
+    "head": "12bb35d281c2e02ade9bc61a3c93fe2c0e367700",
+    "run": 34861669005,
+    "conclusion": "success",
+    "scope": "That exact prior head only"
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -155,7 +154,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:c385aa48dc5814ead3b6833baecd98d89a003bf9e4b356ecca1a3b681878bb2b",
+  "current_v15_development_closure": "sha256:9cd37e32b014047303b79f9315f7ba3f6fcb26fe2a5ce521b1f793c944f55d3e",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -398,7 +397,7 @@
   "current_rule_identity": {
     "requirement_id": "issue_28_v14",
     "requirement_generation": "PROFILE_DRIVEN_V15",
-    "execution_file_count": 406,
+    "execution_file_count": 407,
     "basis": "CURRENT_LOADER_AND_EXECUTION_AUTHORITY_VERIFIED"
   },
   "last_resume": {
@@ -488,5 +487,55 @@
     "schema_improved": true,
     "sales_classification_improved": true,
     "repair": "v3 source-index references with host retrieval; source interpretation scope clarified; original55unchanged"
+  },
+  "b13_v3_actual": {
+    "successful_native_requests": [
+      56,
+      57,
+      58
+    ],
+    "failed_request": 59,
+    "failure": "Clear qualitative accounting statement blocked because inability to compute a ratio was reported as unresolved",
+    "whole_b13_complete": false,
+    "remaining_source_requests": 23,
+    "original_terminals_unchanged": true
+  },
+  "b13_v4_development": {
+    "status": "CALCULATION_LIMIT_CHANNEL_IMPLEMENTED_OFFLINE_TESTED",
+    "real_calls": 0,
+    "prior_successful_source_requests": [
+      56,
+      57,
+      58
+    ],
+    "prior_failed_requests": [
+      54,
+      55,
+      59
+    ],
+    "whole_metric_complete": false
+  },
+  "session_checkpoint": {
+    "date": "2026-09-15",
+    "state": "SEALED_FOR_FRESH_CONTEXT",
+    "reason": "Context tracking degraded during prolonged implementation; no hard platform quota asserted",
+    "new_approval_required": false,
+    "actual_calls": [
+      24,
+      24,
+      35
+    ],
+    "remaining": [
+      216,
+      216,
+      45
+    ],
+    "v4_real_calls": 0,
+    "next": "Bounded v4 verification of the qualitative accounting-policy unit behind59; complete B13/D04/390/update/publication recovery and retirement",
+    "last_verified_tests": {
+      "native_seconds": 163.014,
+      "fast_selectors": 106,
+      "fast_seconds": 82.317
+    }
   }
 }

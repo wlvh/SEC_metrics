@@ -31,13 +31,24 @@ def source_packet():
 
 def response_for(request):
     return {'request_id': request['request_id'], 'units': [
-        {'unit_id': request['units'][0]['unit_id'], 'reviewed': True, 'unresolved': [], 'findings': [
+        {'unit_id': request['units'][0]['unit_id'], 'reviewed': True, 'unresolved': [], 'calculation_limits': [], 'findings': [
             {'kind': 'AVAILABLE_CAPACITY', 'subject': 'TARGET_REGISTRANT', 'timing': 'CURRENT_REPORT',
              'reason': 'Quarterly widget manufacturing capacity only; no actual production amount.',
              'evidence': [{'kind': 'VISIBLE_BLOCK', 'source_index': 7}]}]}]}
 
 
 class CapacitySemanticReviewTest(unittest.TestCase):
+    def test_clear_capacity_with_no_production_is_a_calculation_limit(self):
+        request = requests_from_source(source_packet())[0]
+        response = response_for(request)
+        response['units'][0]['calculation_limits'] = ['TARGET_CURRENT_PRODUCTION_NOT_PRESENT_IN_THIS_UNIT']
+        checked = validate_response(request=request, raw_response=_bytes(response))
+        self.assertEqual(checked['unresolved'], [])
+        self.assertEqual(checked['calculation_limits'][0]['codes'], response['units'][0]['calculation_limits'])
+        response['units'][0]['calculation_limits'].append('TARGET_CURRENT_CAPACITY_NOT_PRESENT_IN_THIS_UNIT')
+        with self.assertRaisesRegex(ValueError, 'CONTRADICTS_FINDING'):
+            validate_response(request=request, raw_response=_bytes(response))
+
     def test_sales_only_source_cannot_be_labelled_actual_production(self):
         source = source_packet()
         old = source['units'][0]

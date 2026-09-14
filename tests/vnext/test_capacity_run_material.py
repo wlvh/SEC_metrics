@@ -32,7 +32,7 @@ def recorded_response(request):
             findings.append({'kind': chosen, 'subject': 'TARGET_REGISTRANT', 'timing': 'CURRENT_REPORT',
                 'evidence': [{'kind': kind, 'source_index': index}],
                 'reason': 'Recorded source-role input for native Run tests, not provider or semantic qualification.'})
-        rows.append({'unit_id': unit['unit_id'], 'reviewed': True, 'findings': findings, 'unresolved': []})
+        rows.append({'unit_id': unit['unit_id'], 'reviewed': True, 'findings': findings, 'unresolved': [], 'calculation_limits': []})
     return {'request_id': request['request_id'], 'units': rows}
 
 
