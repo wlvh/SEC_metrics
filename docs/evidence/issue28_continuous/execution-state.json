@@ -1,6 +1,6 @@
 {
   "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
-  "status": "CONTINUING_REMAINING_SEMANTIC_AND_FINAL_INTEGRATION_WORK",
+  "status": "SESSION_PAUSED_WITH_RECOVERABLE_STATE_NOT_PROJECT_COMPLETE",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
   "resume_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "reviewed_baseline": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
@@ -136,17 +136,11 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "996cc1144453679b1d02a5ce27da4559ac5431be",
-    "run": 34762880585,
-    "conclusion": "failure",
-    "passed_jobs": 9,
-    "failed_source_selectors": [
-      "tests.vnext.test_normal_run_inputs",
-      "tests.vnext.test_normal_zero_ai_results"
-    ],
-    "cause": "two expectations still treated source-proven NOT_MEANINGFUL as WITHHELD, aggregate called every published terminal numeric",
-    "repair": "preserve actual nonnumeric class and full dependency assertions; affected suites rerun",
-    "full_pass": false
+    "run": 34830655469,
+    "head": "b25d2155fa95ca2516a190ca664187009e03bb1a",
+    "status": "IN_PROGRESS",
+    "earlier_3b0b_run": 34825782625,
+    "earlier_3b0b_conclusion": "SUCCESS"
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -378,5 +372,14 @@
       "historical-semantic-scope"
     ],
     "restore_reference_repair": "Three old mutable repository references preserved in immutable repository-supplement; original packages unchanged"
+  },
+  "session_handoff": {
+    "reason": "Context tracking degraded after a long multi-stage execution; no hard platform quota or project completion is asserted",
+    "last_substantive_commit": "b25d2155fa95ca2516a190ca664187009e03bb1a",
+    "worktree_changes_after_substantive_commit": "Only this continuation status record",
+    "next_action": "Read current continuation/state and ledger; confirm latest CI; implement B13 complete source-role assessment and native route while preserving D03 aggregate-current holdout and D04 limited-credit controls",
+    "requires_new_budget_approval": false,
+    "requires_new_development_approval": false,
+    "production_permissions_granted": false
   }
 }
