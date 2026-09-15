@@ -101,7 +101,7 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts
           B13_NATIVE_RUN_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-b13-${{ github.run_id }}-${{ github.run_attempt }}
-        run: python3 -m unittest -v tests.vnext.test_capacity_run_material
+        run: python3 -m unittest -v tests.vnext.test_capacity_run_material tests.vnext.test_capacity_numeric_run
   going-concern-native-runs:
     name: vNext going-concern native Runs
     runs-on: ubuntu-latest

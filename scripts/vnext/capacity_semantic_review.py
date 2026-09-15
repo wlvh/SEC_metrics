@@ -294,6 +294,8 @@ def validate_response(*, request, raw_response):
                 sales = re.search(r'\b(?:sold|shipped|shipments?|sales|wholesale\s+volume)\b', text, re.I)
                 production = re.search(r'\b(?:produced|manufactur(?:e|es|ed|ing)|production|output)\b', text, re.I)
                 need(not sales or production is not None, 'B13_SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION')
+    from .capacity_utilization_source import validate_explicit_quantity_classifications
+    validate_explicit_quantity_classifications(units=units, findings=checked['findings'], period=request['target_period'])
     checked['request_id'] = request['request_id']
     checked['response'] = response
     checked['calculation_limits'] = calculation_limits

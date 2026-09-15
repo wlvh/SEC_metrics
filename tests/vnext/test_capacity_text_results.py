@@ -75,6 +75,10 @@ class CapacityTextResultTest(unittest.TestCase):
         from vnext.r6_semantic_source import _seal_unit
         original = binding(annual('<h1>Business</h1><p>Revenue is recognized when services are delivered.</p>'))
         document = build_text_document(**original)
+        # The complete semantic-source entry adds quotation context to every
+        # visible block; this synthetic lower-level document has no quotes.
+        for block in document['blocks']:
+            block['html_quotation_context'] = False
         source = source_packet(); source['company_id'] = original['expected_company_id']
         did = document['text_document_id']
         unit = _seal_unit(did, 'VISIBLE_TEXT', {'blocks': document['blocks']}, 0)

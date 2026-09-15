@@ -417,3 +417,5 @@ D04历史控制入口见`docs/historical_semantic_controls.md`：Enphase2016/201
 2026-09-15后续：`d04_native_assessment.py`及`catalog/r6/semantic_review_v4.json`接新D04原生请求，复用既有来源登记、Review/Run和公共行。`capacity_*`的共同记录/登记/文本/Run函数现为B13与D04共享；旧诊断不升级。`native_assessment_replay.py`保留原计划/原接受ID，对完全相同来源请求作当前内容复验；归档代码不执行，只读视图无执行权限。D04真实新验证、B13适用数值/完整真实结果及全Issue验收仍未完成，详见`docs/evidence/issue28_continuous/d04-native-integration/`。
 
 PR43 review5205267507修复增量：D04源句关系检查在原生接受、文字结果和未披露公共行共同执行，检查肯定/否定及排除标签，具体未决不成为未披露。B13测试来源补齐metric_id合同；B13完整原生测试独立CI作业避免累计作业超时。限定开发验证与后续独立审阅、真实完整验收仍分别登记。
+
+B13数值接线增量：capacity_utilization_source新增明确年度数量及相同范围的原件检查；capacity_run/run_store/ordinary_projection接入原Calculator、精确记录图与原句证据。合成数值场景明确替代来源准入/登记，不是Ford/Enphase真实利用率，受影响真实调用暂停与独立审阅责任保持。

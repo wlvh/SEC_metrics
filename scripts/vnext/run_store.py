@@ -1903,6 +1903,15 @@ def _replay_structured_result(
             Observation/Trace/Result difference from deterministic replay.
     """
     from .r5_b06_structured import is_primary, replay_result, validate_input_binding
+    if manifest.get("requirement_id") == "issue_28_v14" and compiled_spec['compiled']['metric_id'] == 'B13':
+        expected = ordinary_case
+        if (expected is None or expected['kind'] != 'STRUCTURED'
+                or expected['selection'].get('category') != 'SOURCE_VERIFIED_COMPARABLE_QUANTITIES'
+                or expected['compiled_specs'].get('B13') != compiled_spec
+                or result != expected['results']['B13'] or trace != expected['traces']['B13']
+                or any(observations.get(o['observation_id']) != o for o in expected['observations'])):
+            raise RunStoreError('B13 numeric result differs from complete original-source replay')
+        return
     if manifest.get("requirement_id") == "issue_28_v13":
         from .normal_run_v3 import replay_case
         expected = ordinary_case if ordinary_case is not None else replay_case(data_root=repo_root,manifest=manifest,spec=compiled_spec)
@@ -2132,11 +2141,15 @@ def _validate_record_graph(
     ordinary_case = None
     capacity_case = None
     if manifest.get("requirement_id") == "issue_28_v14" and any(
-            record.get('record_type') == 'METRIC_RESULT' and record.get('applicability') == 'N_A_STRUCTURAL'
+            record.get('record_type') == 'METRIC_RESULT' and (record.get('metric_id') == 'B13' and record.get('value_kind') != 'TEXT_V1'
+                or record.get('applicability') == 'N_A_STRUCTURAL')
             for record in records):
         from .capacity_run import validate_run_authority
-        capacity_case = validate_run_authority(repo_root=repo_root, manifest=manifest,
-            records=records, compiled_specs=compiled_specs)
+        try:
+            capacity_case = validate_run_authority(repo_root=repo_root, manifest=manifest,
+                records=records, compiled_specs=compiled_specs)
+        except ValueError as error:
+            raise RunStoreError(str(error)) from error
     if manifest.get("requirement_id") == "issue_28_v13":
         from .normal_run_v3 import validate_normal_run_authority
         ordinary_case = validate_normal_run_authority(repo_root=repo_root,manifest=manifest,
@@ -3080,7 +3093,7 @@ def _validate_record_graph(
             source_references=source_references,
             raw_bytes_by_id=raw_bytes_by_id,
             company_ciks=company_ciks,
-            ordinary_case=ordinary_case,
+            ordinary_case=capacity_case if capacity_case is not None else ordinary_case,
         )
     referenced_observation_ids = {
         str(observation_id)

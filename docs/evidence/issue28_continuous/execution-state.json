@@ -158,7 +158,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:392abc9cd4c6cead38552bf661ca2cd8607e0cff7ff1a7a95d3bc8af496243a6",
+  "current_v15_development_closure": "sha256:f4056e0a8af6e3d7a931adbe3d34fd614ded0a14c91017b48657a527dfd9c099",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -401,7 +401,7 @@
   "current_rule_identity": {
     "requirement_id": "issue_28_v14",
     "requirement_generation": "PROFILE_DRIVEN_V15",
-    "requirement_closure_hash": "sha256:392abc9cd4c6cead38552bf661ca2cd8607e0cff7ff1a7a95d3bc8af496243a6",
+    "requirement_closure_hash": "sha256:f4056e0a8af6e3d7a931adbe3d34fd614ded0a14c91017b48657a527dfd9c099",
     "execution_file_count": 412,
     "basis": "CURRENT_LOADER_AND_EXECUTION_AUTHORITY_VERIFIED"
   },
@@ -572,7 +572,7 @@
       0
     ],
     "defined_scope_absence": "SYNTHETIC_SOURCE_EVIDENCE_REVIEW_RESULT_AND_PROJECTION_TESTED_ONLY",
-    "numeric_branch": "STILL_REQUIRES_NATIVE_QUANTITY_PAIR_IMPLEMENTATION",
+    "numeric_branch": "IMPLEMENTED_LIMITED_ORIGINAL_ANNUAL_QUANTITY_RELATIONS; SYNTHETIC_NATIVE_PLUMBING_WITH_ADMISSION_DOUBLES_PASS; REAL_NUMERIC_ACCEPTANCE_NOT_ESTABLISHED",
     "tests": {
       "source_text_methods": 15,
       "source_text_seconds": 32.077,
@@ -582,9 +582,10 @@
       "v14_regression_seconds": 108.985,
       "cold_python39": "PASS_COPIED_RUNTIME_NO_NETWORK"
     },
-    "independent_module_review": "PENDING",
+    "independent_module_review": "PENDING_CURRENT_QUANTITY_AND_CONTENT_DELTA",
     "full390": false,
-    "production_permissions": false
+    "production_permissions": false,
+    "quantity_material": "b13-quantity-integration/"
   },
   "d04_current_development": {
     "material": "review-5205267507/",
@@ -641,5 +642,36 @@
       "extracted_cold_read": "PASS_CURRENT_D04_PYTHON39_NO_NETWORK"
     },
     "ci_fix_commit": "1960bac"
+  },
+  "b13_quantity_increment": {
+    "material": "b13-quantity-integration/",
+    "core_tests": "33_PASS_33.825_SECONDS",
+    "fast": "108_PASS_85.868_SECONDS",
+    "actual_source_native_regression": "3_PASS_195.908_SECONDS",
+    "v14_regression": "PASS_111.813_SECONDS",
+    "cold": "PASS_COPIED_B13_TEXT_RUN_PYTHON39_NO_NETWORK",
+    "synthetic_numeric_source_admission_mocked": true,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "whole_b13_real_acceptance": false
+  },
+  "ci_490327d": {
+    "run_id": 34935266572,
+    "status": "COMPLETED",
+    "conclusion": "SUCCESS",
+    "successful_jobs": 12,
+    "applies_to": "490327d7f538713dfff905a57f27459cec9b15cf",
+    "not_credit_for_later_quantity_delta": true
+  },
+  "d04_offline_request_inventory": {
+    "requests": 380,
+    "companies": 10,
+    "remaining_provider_budget": 207,
+    "requests_sent": 0,
+    "whole_source_absence_proven": false,
+    "next": "Reduce losslessly represented source overhead and resolve ordinary continuation-activity exclusions before affected real validation; no budget increase requested."
   }
 }

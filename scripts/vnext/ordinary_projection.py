@@ -121,6 +121,12 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
                     entry.update(value_raw=binding["reported_raw_text"],
                         context_or_dimension=json.dumps({"source_binding":binding,"source_cells":binding["source_witnesses"]},ensure_ascii=False,sort_keys=True),
                         evidence_quote="Source table cell: "+binding["reported_raw_text"])
+                if metric == 'B13' and 'quantity_statement' in binding:
+                    proof = binding['quantity_statement']
+                    entry.update(value_raw=' '.join(x for x in (proof['reported_number'], proof['reported_scale']) if x),
+                        evidence_quote=proof['statement_text'],
+                        extraction_method='source_verified_annual_production_quantity',
+                        context_or_dimension=json.dumps(binding, ensure_ascii=False, sort_keys=True))
                 evidence.append(entry)
         label,note=_period_label(result,period);row["fiscal_period"]=label
         row["notes"]=" ".join([row.get("notes",""),note,"Native state: "+result["publication"]+"; reason: "+result["reason_code"]+"."])

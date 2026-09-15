@@ -787,3 +787,5 @@ B13来源编号与内容反例：`test_capacity_semantic_review`检查原始ordi
 D04原生：`tests.vnext.test_d04_native_assessment`覆盖历史/当前分离、引用、引语、估值/网络安全/干净意见反例及原生Review文字结果；`test_d04_native_wiring`禁网验证实际来源工厂、原opener和WB-3，并拒绝缺单元。`D04_NATIVE_RUN_MATERIAL_ROOT=/absolute/new/root PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_d04_run_material`执行27个明确记录响应请求、登记、Review、完整Run及公共行，拒绝缺请求和测试改LIVE；这不是模型判断通过。独立CI作业避免把完整D04材料塞进30秒fast入口。`test_native_assessment_replay`从已存原材料恢复一个旧原生请求，验证保留原计划ID、改请求/响应和重签新计划拒绝、历史视图无执行权限。
 
 PR43 review5205267507回归：B13合成source_packet明确包含metric_id=B13，来源与请求哈希由真实工厂重算，共享检查不提供默认指标。test_capacity_text_results继续执行完整集合、无Review和缺覆盖拒绝。D04原生测试增加同原件/同引用的肯定否定互换、其他主体/历史/其他含义排除攻击、具体未决保留、原生接受函数拒绝及最终公共未披露行拒绝；历史正例必须在原句中明确历史期间，不能只改模型标签。普通原生CI原先叠加B13后超过30分钟总时限，B13原有完整测试现独立为capacity-native-runs作业（15分钟），所有原步骤保留，不延长原作业时限。
+
+B13数值增量：CapacityComparisonTest新增原件数量/倍率、改写源块、分类排除、跨产品/设施、年度/季度、税收抵免和引语/假设例子反例。tests.vnext.test_capacity_numeric_run实际执行数量读取、Calculator、Run记录图和公共行，拒绝重签的0.81替代原文80/100；其来源准备、来源准入和外部登记明确使用合成替代，不能当作真实SEC/provider/冷读验收。该场景随独立capacity-native-runs作业运行，完整实际材料test_capacity_run_material继续覆盖原来源/登记门。

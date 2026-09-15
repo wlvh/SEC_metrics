@@ -63,6 +63,10 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
     findings = [f for row in assessment['completed']
                 for f in row['candidate']['selected']['source_assessment']['findings']]
     need(findings == assessment['source_findings'], 'B13_TEXT_FINDING_SUMMARY_CHANGED')
+    if metric == 'B13':
+        from .capacity_utilization_source import validate_explicit_quantity_classifications
+        validate_explicit_quantity_classifications(units=source['units'], findings=findings,
+            period=source['prepared_annual_input']['table_input']['target_period'])
     current_kinds = {f['kind'] for f in findings
                      if f['subject'] == 'TARGET_REGISTRANT' and f['timing'] == 'CURRENT_REPORT'}
     need(metric != 'B13' or not {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'} <= current_kinds,

@@ -18,7 +18,7 @@ SPEC_PATH = 'catalog/r5/B13_capacity_disclosures_v1.md'
 def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_input_id=None, metric_id='B13'):
     need(metric_id in {'B13', 'D04'}, 'NATIVE_ASSESSED_METRIC_UNSUPPORTED')
     from .capacity_utilization_source import policy
-    _, approved = policy()
+    rules, approved = policy()
     if metric_id == 'B13' and company_id not in approved['applicable_company_ids']:
         need(assessment_mode is None and assessment_input_id is None, 'B13_STRUCTURAL_ASSESSMENT_NOT_USED')
         return _prepare_structural_case(data_root=data_root, company_id=company_id)
@@ -33,8 +33,11 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
     registered = load_registered_input(data_root=data_root, source=source, requirement=requirement,
                                        mode=assessment_mode, input_record_id=assessment_input_id)
     assessment = registered['assessment']
+    numeric = metric_id == 'B13' and assessment['proposed_branch'] == 'COMPARABLE_QUANTITY_PAIR_ASSESSMENT_REQUIRED'
+    if numeric:
+        spec_path = rules['numeric_spec']
     need(assessment['proposed_branch'] in {'TEXT_QUAL_PROPOSAL_REQUIRES_NATIVE_REVIEW',
-                                         'DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW'},
+                                         'DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW'} or numeric,
          metric_id + '_NATIVE_BRANCH_REQUIRES_IMPLEMENTATION:' + assessment['proposed_branch'])
     spec = compile_spec_file(path=data_root / spec_path, dependency_specs={})
     need(sha256_file(path=data_root / spec_path) == sha256_file(path=ROOT / spec_path), 'B13_INSTALLED_SPEC_CHANGED')
@@ -67,7 +70,7 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
                'assessment_input_id': registered['input_record_id'],
                'assessment_set_id': assessment['assessment_set_id'], 'source_proofs': source['source_proofs'],
                'mode': registered['mode'], 'export_path': EXPORT_PATHS[metric_id], 'production_authorized': False}
-    return {'kind': 'TEXT', 'primary_metric_id': metric_id, 'input_binding': binding,
+    case = {'kind': 'TEXT', 'primary_metric_id': metric_id, 'input_binding': binding,
         'source_records': records, 'expected_records': records, 'references': references,
         'source_proofs': source['source_proofs'], 'admission': admission,
         'spec_paths': {metric_id: spec_path}, 'compiled_specs': {metric_id: spec}, 'target_period': period,
@@ -78,6 +81,18 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
                                 'DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW' else 'TEXT_QUAL'),
                       'reason_code': 'COMPLETE_NATIVE_CAPACITY_ASSESSMENT',
                       'assessment_mode': registered['mode'], 'numeric_utilization_inferred': False}}
+    if numeric:
+        from .capacity_utilization_source import calculate_source_comparable_pair
+        calculated = calculate_source_comparable_pair(source=source, raw_bytes_by_id=raw)
+        need(spec == compile_spec_file(path=ROOT / rules['numeric_spec'], dependency_specs={}), 'B13_NUMERIC_SPEC_CHANGED')
+        binding['source_quantity_proofs'] = calculated['source_quantity_proofs']
+        case.update(kind='STRUCTURED', results={'B13': calculated['result']}, traces={'B13': calculated['trace']},
+            observations=calculated['observations'],
+            expected_records=[*records, *calculated['observations'], calculated['trace'], calculated['result']],
+            selection={'status': calculated['result']['quality'], 'category': 'SOURCE_VERIFIED_COMPARABLE_QUANTITIES',
+                'assessment_mode': registered['mode'], 'numeric_utilization_inferred': False})
+        case.pop('text_arguments')
+    return case
 
 
 def _prepare_structural_case(*, data_root, company_id):
@@ -175,7 +190,8 @@ def validate_run_authority(*, repo_root, manifest, records, compiled_specs):
              'B13_NATIVE_RUN_SOURCE_RECORDS_CHANGED')
         if case['kind'] == 'STRUCTURED':
             need(sorted(records, key=content_hash_key) == sorted(case['expected_records'], key=content_hash_key),
-                 'B13_STRUCTURAL_RECORD_SET_CHANGED')
+                 'B13_STRUCTURAL_RECORD_SET_CHANGED' if case['selection']['category'] == 'APPROVED_B13_COMPANY_SCOPE'
+                 else 'B13_NUMERIC_RECORD_SET_CHANGED')
     return case
 
 
@@ -200,10 +216,10 @@ def project_defined_absence(*, case, result, row, company):
     row.update(status=status, value='',
         notes='No relevant disclosure in the complete saved annual primary and current annual amendments. '
               'This is a defined-scope source assessment; no utilization value is inferred.')
+    from .capacity_text_results import create_deterministic_text_candidate
+    candidate = create_deterministic_text_candidate(**case['text_arguments'])
+    need(not candidate['selected'], metric + '_ABSENCE_PROJECTION_SOURCE_CONFLICT')
     if metric == 'D04':
-        from .capacity_text_results import create_deterministic_text_candidate
-        candidate = create_deterministic_text_candidate(**case['text_arguments'])
-        need(not candidate['selected'], 'D04_ABSENCE_PROJECTION_SOURCE_CONFLICT')
         row['notes'] = '未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。'
     source = case['text_arguments']['source']; evidence = []
     for document in source['documents']:

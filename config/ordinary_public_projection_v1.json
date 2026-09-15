@@ -814,7 +814,20 @@
         "parser_version": "TEXT_V1",
         "notes": "Original capacity disclosures retain their own product, facility and period scope. No numeric utilization or annualized capacity is inferred."
       },
-      "spec_overrides": {}
+      "spec_overrides": {
+        "catalog/r5/B13_production_capacity_v1.md": {
+          "status_exact": "OK",
+          "source_class": "DERIVED",
+          "unit": "ratio",
+          "value_multiplier": "1",
+          "formula": "actual production / comparable available capacity",
+          "concept_or_section": "Reported annual physical quantities",
+          "evidence_extraction_method": "source_verified_annual_production_quantity",
+          "parser_version": "B13_EXPLICIT_ANNUAL_QUANTITIES_V1",
+          "notes": "Comparable source-reported annual output divided by available annual capacity; product and geographical/facility scope retained.",
+          "evidence_context_style": "constant"
+        }
+      }
     },
     "D04": {
       "name": null,
