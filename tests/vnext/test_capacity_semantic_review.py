@@ -17,7 +17,8 @@ def source_packet():
         {'block_index': 7, 'text': 'Our plant can manufacture 100 widgets per quarter.',
          'raw_start_byte': 0, 'raw_end_byte': 52, 'raw_span_sha256': 'sha256:' + '2' * 64,
          'html_quotation_context': False}]}, 0)]
-    body = {'record_type': 'B13_COMPLETE_SEMANTIC_SOURCE', 'source_serialization_complete': True,
+    body = {'record_type': 'B13_COMPLETE_SEMANTIC_SOURCE', 'metric_id': 'B13',
+        'source_serialization_complete': True,
         'company_id': 'enphase_energy', 'units': units, 'required_unit_ids': [u['unit_id'] for u in units],
         'documents': [{'document_id': doc, 'filing': {'form': '10-K'}, 'registrant_name_binding': {}}],
         'prepared_annual_input': {'entity': '1463101', 'table_input': {'target_period': {}},

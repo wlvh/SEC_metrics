@@ -83,6 +83,19 @@ jobs:
           PYTHONPATH: scripts
           B06_CURRENT_INPUT_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-b06-input-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_b06_current_input_material
+  capacity-native-runs:
+    name: vNext capacity native Runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
       - name: Validate recorded B13 native Run and rejected input relabelling
         env:
           PYTHONDONTWRITEBYTECODE: "1"
