@@ -1,0 +1,92 @@
+{
+  "source_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0070/source.json",
+  "source_sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+  "source_bytes": 7142869,
+  "source_id": "sha256:8cbeabac0801d5025f6120af3a3ebad10ffaac24a338656630a4853ea8e3d161",
+  "source_format": "deepseek-v41-two-message-json-chat-1",
+  "runs": [
+    {
+      "round": 1,
+      "profiled": false,
+      "seconds": 8.707092500058934,
+      "requests": 11,
+      "source_units": 52,
+      "request_bytes_total": 5220682,
+      "wire_bytes_total": 5626828,
+      "request_hashes": [
+        "89191bc5dbdeae19b8b042821745213e9490713d2ef813f976f2d8faa7316662",
+        "31f61cf57553360ccba3e01c05d7bf0620fc436be8ed49ea989919882c793134",
+        "e76e865587437801a8290514c0d715e63a58825ce987cdd37cceb8f3fe91f352",
+        "33c1965693e7db0c10025f35e3e6afe990dcf8492f48f5c3caf07b289d7b1de4",
+        "397aed8e6c2288eab518574f8ce32857f2496b727424107f9097a6700f7c6a72",
+        "6363280232c000e48c94ef82c0bebe0ec396f00e22c5a492cb3396a7c7bec9ca",
+        "99b18bf8d083fa337ae94d47193d3db2e4d26f7d6ff78832fdeed257020c632a",
+        "311ba65d19663937984ef21e63fa24bba8516a53e3c362654d2e4406bc0b15d7",
+        "283d282dd084c725689c3ab27a21eeacce442e79aa0e10ee699b1bab7fe2eb34",
+        "fb1f20bc81b8dc648fb9457db6aecc766092d35df0b14dd86d9b24db8af47fb9",
+        "8c2c5959f0ae0803438dca6c1eb6249c7489e46811e61ba8b44e37754324355b"
+      ],
+      "wire_hashes": [
+        "72d414ead275aa7d0ba5504d70b7b2e0533a7466a265b5b4f835e7f5298897f5",
+        "1ccddad4685de639209d48ccf5ba261cc9e8f43baee87a0ed33273fbfa8a4d02",
+        "83a454bb044c885538295cdec11867e002991412afe47a48a6003720c2bda2c5",
+        "6d3296c2dee3212af821a228d942cf492fbff476f5ab3e0fb5e48e84a07ddff8",
+        "977b619fba0726f1b65411637987da7366657e30e51f2fa88deb7bccc83b60f5",
+        "e0a6ece28864c1d49c041f4fc024136ab4655227a50c2adb9b65c19e4c47486a",
+        "1c98d45ba6425a7261d3bbd4968fa4071b4ec577c49d9f8d8c5ef5d13853abf8",
+        "9cdb6198577173a8bf5dd3806a56e9ab2305042189308099d9b0cf051dc5104e",
+        "67e55d2cf0294d14abbf10f9ce523403901be01586ce0b763324cd116b46a1a6",
+        "b4a3fd81a41da2352dca55e02e214ceafd394fb6b19d5605631c7f549fc2d1ab",
+        "0dc1eb0f305cc200f07b0e4b5f832b2bcc2d1fe2ed29d3a6b4f755ec23c99293"
+      ]
+    },
+    {
+      "round": 2,
+      "profiled": true,
+      "seconds": 9.984251040965319,
+      "requests": 11,
+      "source_units": 52,
+      "request_bytes_total": 5220682,
+      "wire_bytes_total": 5626828,
+      "request_hashes": [
+        "89191bc5dbdeae19b8b042821745213e9490713d2ef813f976f2d8faa7316662",
+        "31f61cf57553360ccba3e01c05d7bf0620fc436be8ed49ea989919882c793134",
+        "e76e865587437801a8290514c0d715e63a58825ce987cdd37cceb8f3fe91f352",
+        "33c1965693e7db0c10025f35e3e6afe990dcf8492f48f5c3caf07b289d7b1de4",
+        "397aed8e6c2288eab518574f8ce32857f2496b727424107f9097a6700f7c6a72",
+        "6363280232c000e48c94ef82c0bebe0ec396f00e22c5a492cb3396a7c7bec9ca",
+        "99b18bf8d083fa337ae94d47193d3db2e4d26f7d6ff78832fdeed257020c632a",
+        "311ba65d19663937984ef21e63fa24bba8516a53e3c362654d2e4406bc0b15d7",
+        "283d282dd084c725689c3ab27a21eeacce442e79aa0e10ee699b1bab7fe2eb34",
+        "fb1f20bc81b8dc648fb9457db6aecc766092d35df0b14dd86d9b24db8af47fb9",
+        "8c2c5959f0ae0803438dca6c1eb6249c7489e46811e61ba8b44e37754324355b"
+      ],
+      "wire_hashes": [
+        "72d414ead275aa7d0ba5504d70b7b2e0533a7466a265b5b4f835e7f5298897f5",
+        "1ccddad4685de639209d48ccf5ba261cc9e8f43baee87a0ed33273fbfa8a4d02",
+        "83a454bb044c885538295cdec11867e002991412afe47a48a6003720c2bda2c5",
+        "6d3296c2dee3212af821a228d942cf492fbff476f5ab3e0fb5e48e84a07ddff8",
+        "977b619fba0726f1b65411637987da7366657e30e51f2fa88deb7bccc83b60f5",
+        "e0a6ece28864c1d49c041f4fc024136ab4655227a50c2adb9b65c19e4c47486a",
+        "1c98d45ba6425a7261d3bbd4968fa4071b4ec577c49d9f8d8c5ef5d13853abf8",
+        "9cdb6198577173a8bf5dd3806a56e9ab2305042189308099d9b0cf051dc5104e",
+        "67e55d2cf0294d14abbf10f9ce523403901be01586ce0b763324cd116b46a1a6",
+        "b4a3fd81a41da2352dca55e02e214ceafd394fb6b19d5605631c7f549fc2d1ab",
+        "0dc1eb0f305cc200f07b0e4b5f832b2bcc2d1fe2ed29d3a6b4f755ec23c99293"
+      ]
+    }
+  ],
+  "complete_request_and_wire_byte_equality": true,
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "Deterministic construction only; original source/receipt/meaning validation not skipped or measured as credit",
+  "implementation_files": {
+    "scripts/vnext/continuous_semantic_calls.py": "d801ded3df06f102f9c6eb6e338ceb9357fc6516eb14b23d04712ffbc5677276",
+    "scripts/vnext/continuous_request_context.py": "e252d1e0fc51b16f4456d9493814e09d48fabfabcbaad9e240f1a10464756fe0",
+    "scripts/vnext/d04_native_assessment.py": "e557f1c253498b121dc928534a5d4bd0d67e3b8fe1848ed48f065ae89ee37a57",
+    "catalog/r6/semantic_review_v5.json": "26f8890e72fd571c759ea69c36bcf2f43cf0b449fd2bcfd2e80807e15eab7615"
+  }
+}

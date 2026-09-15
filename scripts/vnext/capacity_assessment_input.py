@@ -38,7 +38,7 @@ def input_key(source, requirement):
                                'requirement_closure_hash': requirement['requirement_closure_hash']})[7:]
 
 
-def register_assessment_input(*, prepared_requests, ledger):
+def register_assessment_input(*, prepared_requests, ledger, include_source_snapshot=False):
     """Re-read the complete native set before recording creator-owned input."""
     from .continuous_call_ledger import CallLedger, _FACTORY
     from .native_assessment_replay import replay_native_response
@@ -73,8 +73,11 @@ def register_assessment_input(*, prepared_requests, ledger):
         'requirement_closure_hash': requirement['requirement_closure_hash'],
         'mode': 'LIVE' if ledger.live else 'RECORDED_TEST_ONLY', 'assessment': assessment,
         'native_requests': native, 'new_call_authority': False, 'production_authorized': False}
-    if 'request_context_format' in source:
-        body['request_context_format'] = source['request_context_format']
+    if include_source_snapshot:
+        body.update(schema_version=2,source_snapshot=source)
+    for field in ('request_context_format', 'response_contract_version'):
+        if field in source:
+            body[field] = source[field]
     value = {**body, 'input_record_id': content_hash(value=body)}
     from .ordinary_source_authority import _immutable
     directory = _journal(value['mode'], metric) / input_key(source, requirement)
@@ -84,13 +87,13 @@ def register_assessment_input(*, prepared_requests, ledger):
     return value
 
 
-def load_registered_input(*, data_root, source, requirement, mode=None, input_record_id=None):
+def load_registered_input(*, data_root, source, requirement, mode=None, input_record_id=None, check_export=True):
     """A caller-rehashed packet cannot replace the installed trusted record."""
     key = input_key(source, requirement)
     metric = _metric(source); export_path = EXPORT_PATHS[metric]
     exported = data_root / export_path
     imported = (strict_json_file(path=resolve_repository_file(repo_root=data_root, repo_relative_path=export_path))
-                if exported.exists() else None)
+                if check_export and exported.exists() else None)
     if mode is None:
         mode = imported['mode'] if imported is not None else 'LIVE'
     if input_record_id is None and imported is not None:
@@ -114,8 +117,10 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
     value = strict_json_file(path=path)
     need(value.get('request_context_format') == source.get('request_context_format'),
          'NATIVE_ASSESSMENT_CONTEXT_FORMAT_CHANGED')
+    need(value.get('response_contract_version') == source.get('response_contract_version'),
+         'NATIVE_ASSESSMENT_RESPONSE_CONTRACT_CHANGED')
     need(value['record_type'] == metric + '_REGISTERED_NATIVE_ASSESSMENT_INPUT'
-         and value['schema_version'] == 1 and value['source_id'] == source['semantic_source_id']
+         and value['schema_version'] in {1,2} and value['source_id'] == source['semantic_source_id']
          and value['company_id'] == source['company_id']
          and value['mode'] == mode and mode in {'LIVE', 'RECORDED_TEST_ONLY'}
          and value['requirement_closure_hash'] == requirement['requirement_closure_hash']
@@ -123,15 +128,19 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
          and value['input_record_id'] == content_hash(value={k: v for k, v in value.items() if k != 'input_record_id'})
          and value['new_call_authority'] is False and value['production_authorized'] is False,
          'B13_REGISTERED_ASSESSMENT_INPUT_CHANGED')
-    if exported.exists():
+    if value['schema_version']==2:
+        need(value.get('source_snapshot')==source,'NATIVE_REGISTERED_SOURCE_SNAPSHOT_CHANGED')
+    else:
+        need('source_snapshot' not in value,'NATIVE_REGISTERED_SOURCE_SNAPSHOT_ON_OLD_SCHEMA')
+    if check_export and exported.exists():
         need(strict_json_file(path=resolve_repository_file(repo_root=data_root, repo_relative_path=export_path)) == value,
              'B13_IMPORTED_ASSESSMENT_CHANGED')
-    from .continuous_semantic_calls import source_requests
+    from .native_unit_index import reconstruct_requests
     from .continuous_semantic_calls import request_body
     from .continuous_call_policy import configured_transport_policy
     from . import invocation_control as control
     from types import SimpleNamespace
-    expected = source_requests(source)
+    expected = reconstruct_requests(source, value['assessment'].get('native_request_variants'))
     acceptor = build_acceptance
     if metric == 'D04':
         from .d04_native_assessment import build_acceptance as acceptor

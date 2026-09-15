@@ -21,6 +21,11 @@ class CapacityTextResultTest(unittest.TestCase):
     def setUpClass(cls):
         with tarfile.open(ROOT / 'docs/evidence/issue28_continuous/resume-2026-09-14/b13-complete-source.tar.gz') as archive:
             source = json.load(archive.extractfile('enphase_energy.json'))
+        # This is a new explicitly identified recorded source fixture. The
+        # archived source/request bytes remain untouched, with no old credit.
+        from vnext.capacity_quantity_scope import attach_quantity_scope
+        source = attach_quantity_scope(source=source,raw_bytes_by_id={
+            d['raw_blob']['raw_asset_id']:(ROOT/d['raw_blob']['storage_uri']).read_bytes() for d in source['documents']})
         requests = requests_from_source(source)
         unit = next(u for u in source['units'] if u['kind'] == 'VISIBLE_TEXT'
                     and any('approximately five-million microinverters per quarter' in b['text'] for b in u['payload']['blocks']))

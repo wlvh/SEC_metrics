@@ -1,0 +1,9 @@
+# 旧入口退出准备：一次性进程的原有机制验证
+
+复用Issue15冻结语义生产者清单，116个语义函数覆盖39指标；20个共用基础函数记录保留。当前已有22个B03/旅宿旧导出阻断检查PASS。预备场景只在独立Python进程内把这116个导出换成仓库已有retired_legacy_entrypoint，并将既有写入守卫的指标集合设成完整39项：116个导出、39项upsert和39项evidence写入口均在执行前拒绝。没有编辑实际sec_pipeline或改变部署行为。
+
+同一进程中实际PublicationView在禁用这些语义导出前后仍读取同一已采纳版本；矩阵/证据字节相同，实际active指针字节未变。首次探针少加了repo root到Python模块路径，在首次读取前报缺tools；记录保留，路径修正后完成。
+
+这只证明既有导出/写边界可以按冻结清单准备退出，**不是完整新390生产调用图独立性证明、正式retirement receipt或已退出生产**。后续仍要让完整新链在旧语义不可用条件下运行，绑定相应正式采纳的退出范围，并等待生产确认。原历史读取保留；不能提前禁用仍在使用的生产路径。
+
+复跑：`python3 docs/evidence/issue28_continuous/ordinary-release-preparation/legacy-exit-preparation/probe.py`。该脚本只写本目录证据JSON，没有provider/SEC调用；若后续源代码/已采纳版本变化，输出代表新的实际观察，不能覆盖旧绑定解释。

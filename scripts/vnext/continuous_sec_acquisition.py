@@ -62,8 +62,12 @@ def initialize_source_inputs(*,root,requirement):
     # The ordinary source adapters consume the existing catalog/configuration
     # alongside data. Copy the bound rule inputs, not a parallel definition.
     processing_requirement=requirement['parent_snapshot']
+    presentation_paths=set(processing_requirement['policy']['presentation_paths'])
     for relative,binding in processing_requirement['execution_authority']['files'].items():
-        if not relative.startswith(('config/','catalog/')):continue
+        # Presentation is installed from current bound code in the candidate
+        # runtime. It is not an acquisition/source dependency; retain any
+        # historical copy instead of overwriting it or blocking new sources.
+        if relative in presentation_paths or not relative.startswith(('config/','catalog/')):continue
         raw=resolve_repository_file(repo_root=ROOT,repo_relative_path=relative).read_bytes()
         need({'sha256':sha256_bytes(content=raw),'size':len(raw)}==binding,
              'SEC_ACQUISITION_PROCESSING_RULE_CHANGED')

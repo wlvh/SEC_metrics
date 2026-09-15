@@ -1,0 +1,24 @@
+{
+  "case": "Original69_response_with_only_new_request_id_substituted_OFFLINE_REJECTION_ONLY",
+  "original_request_id": "sha256:69a94f721a559a0294e64e8cf46398c73ce90eb179181d4ee3aee17aa7e55e7e",
+  "new_request_id": "sha256:e84425c222359fa59d2959745e4ad0a891bb0b091aa05e71950b13db0ddd25e4",
+  "original_response_sha256": "e90c99105738267e86c25ea7d8f7999080c6e02d17f92946cfd27ac427b9ac5b",
+  "original_requested_units": 5,
+  "original_responded_units": 2,
+  "new_requested_units": 5,
+  "outcome": "REJECTED",
+  "reason": "D04_RESPONSE_UNIT_SET_INCOMPLETE",
+  "all_original_artifact_hashes_unchanged": {
+    "source.json": "455ad377c4ceef631375b4849e048df0b49bd71972c0dcb932a62404c76b2699",
+    "semantic-request.json": "981a92ee1c60a2cbcf41a8c1d9b7388690c479647c8727f7f06c3295302fdd83",
+    "wire/assistant-output.bin": "e90c99105738267e86c25ea7d8f7999080c6e02d17f92946cfd27ac427b9ac5b",
+    "wire/raw-response.bin": "6f26f2d48b1c911e3b2a852cd50fa6d16400db2e88f5f23925c3e9aed9eaafc6",
+    "terminal.json": "03accb00f4f50d35c43b47c6bd7fe58ee0d015a9c9303c5b0ec7df400bfd66e3"
+  },
+  "execution_credit_reused": false,
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

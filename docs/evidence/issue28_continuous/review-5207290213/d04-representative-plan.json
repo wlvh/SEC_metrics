@@ -1,60 +1,16 @@
 {
-  "record_type": "ISSUE28_BOUNDED_D04_REPRESENTATIVE_EXECUTION_PLAN",
-  "phase": "TWO_CURRENT_COMPANY_TASK_REQUESTS",
-  "requests": [
-    {
-      "company_id": "ford_motor_company",
-      "metric_id": "D04",
-      "request_id": "sha256:69a94f721a559a0294e64e8cf46398c73ce90eb179181d4ee3aee17aa7e55e7e",
-      "request_sha256": "796a622104971d7ae90539dc14524e6d655492fac2e8c937042565b715c15473",
-      "source_id": "sha256:eb76fb5b712ab7fe61abbed45be0f6a2de94c066ddaf380cc978b5dd95df37f3",
-      "input_tokens": 184635,
-      "output_reserve_tokens": 4096,
-      "required_source_units": 5,
-      "required_candidates": 2,
-      "native_quantity_role_assessments": 0,
-      "bounded_statement_relations": 3,
-      "relation_kinds": {
-        "VALUATION_OR_OTHER_MEANING": 3
-      },
-      "d03_source_statement_facts": 0,
-      "selection_reason": "Current activity relationships with required candidate handling",
-      "included_in_company_task_request_count": true,
-      "actual_execution": "NOT_EXECUTED",
-      "native_route_available": true,
-      "model_output_length_validated": false
-    },
-    {
-      "company_id": "pfizer",
-      "metric_id": "D04",
-      "request_id": "sha256:3486dbc83822925d1a02356de03f48fdf23f65902951dd6d9e22a8349e5be0a7",
-      "request_sha256": "45b025d82d2ba8ec396ca1445b877e955f5ec4bf95add48a360c860a6d3f29ef",
-      "source_id": "sha256:04fb425b178a277596a063b87e379aedef139c923508457a0b22c13e86eb5176",
-      "input_tokens": 195159,
-      "output_reserve_tokens": 4096,
-      "required_source_units": 8,
-      "required_candidates": 0,
-      "native_quantity_role_assessments": 0,
-      "bounded_statement_relations": 1,
-      "relation_kinds": {
-        "VALUATION_OR_OTHER_MEANING": 1
-      },
-      "d03_source_statement_facts": 0,
-      "selection_reason": "Long complete input and eight source units with native valuation context",
-      "included_in_company_task_request_count": true,
-      "actual_execution": "NOT_EXECUTED",
-      "native_route_available": true,
-      "model_output_length_validated": false
-    }
-  ],
-  "maximum_new_provider_paid_sec": [
-    2,
-    2,
-    0
-  ],
+  "record_type": "ISSUE28_D04_PROGRESS_AND_REMAINING_CALL_PLAN",
+  "phase": "AFTER_CALL71_AFFECTED_ROUTE_PAUSED_PENDING_REPAIR_AND_REVIEW",
+  "historical_plan": "historical-through-call69/d04-representative-plan.json",
+  "original_ford_task_plan": "../d04-complete-response-contract/ford-live-plan.json",
   "aggregate_before": [
-    33,
-    33,
+    36,
+    36,
+    35
+  ],
+  "aggregate_current": [
+    36,
+    36,
     35
   ],
   "aggregate_limit": [
@@ -62,16 +18,133 @@
     240,
     80
   ],
+  "remaining": [
+    204,
+    204,
+    45
+  ],
+  "requests": [
+    {
+      "expected_input_tokens": 185487,
+      "request_id": "sha256:77a7d67057a27769f42a148ffb103fc4eff5abe423cf4edc3e571e686ce98775",
+      "request_sha256": "72d414ead275aa7d0ba5504d70b7b2e0533a7466a265b5b4f835e7f5298897f5",
+      "required_candidates": 2,
+      "units": 5,
+      "actual_execution": "SUCCEEDED",
+      "original_ordinal": 70,
+      "current_reuse_rule": "ORIGINAL_EXACT_REQUEST_AND_RECEIPT_PLUS_CURRENT_CHECKS_REQUIRED"
+    },
+    {
+      "expected_input_tokens": 171429,
+      "request_id": "sha256:cd327064f63d440e30c9c8dbbf7e3e77b07320f710ad7b78f81819b26325a05a",
+      "request_sha256": "1ccddad4685de639209d48ccf5ba261cc9e8f43baee87a0ed33273fbfa8a4d02",
+      "required_candidates": 0,
+      "units": 4,
+      "actual_execution": "FAILED_TERMINAL",
+      "original_ordinal": 71,
+      "current_reuse_rule": "FAILED_OR_UNEXECUTED_NO_RESULT_CREDIT"
+    },
+    {
+      "expected_input_tokens": 160585,
+      "request_id": "sha256:c242dc2795acd22aeff56beba654853ee1cd37ec62041e5b8b3e35b0db4cd727",
+      "request_sha256": "83a454bb044c885538295cdec11867e002991412afe47a48a6003720c2bda2c5",
+      "required_candidates": 0,
+      "units": 4,
+      "actual_execution": "NOT_EXECUTED",
+      "current_reuse_rule": "FAILED_OR_UNEXECUTED_NO_RESULT_CREDIT"
+    },
+    {
+      "expected_input_tokens": 185382,
+      "request_id": "sha256:1b891e5af515846bf7a1e913d6c578a7335f24e6936bb3d2bddbaa91bfc66834",
+      "request_sha256": "6d3296c2dee3212af821a228d942cf492fbff476f5ab3e0fb5e48e84a07ddff8",
+      "required_candidates": 0,
+      "units": 4,
+      "actual_execution": "NOT_EXECUTED",
+      "current_reuse_rule": "FAILED_OR_UNEXECUTED_NO_RESULT_CREDIT"
+    },
+    {
+      "expected_input_tokens": 184593,
+      "request_id": "sha256:55f43e43d6626fb9f533ae4e34f16a7061750e4da6ca01abbfe1e0ea76d8bc2a",
+      "request_sha256": "977b619fba0726f1b65411637987da7366657e30e51f2fa88deb7bccc83b60f5",
+      "required_candidates": 0,
+      "units": 4,
+      "actual_execution": "NOT_EXECUTED",
+      "current_reuse_rule": "FAILED_OR_UNEXECUTED_NO_RESULT_CREDIT"
+    },
+    {
+      "expected_input_tokens": 153358,
+      "request_id": "sha256:515562f66429ba78d5668a9d5cf1d0c5c8bdac2620bf0deca6f79b41586cfe33",
+      "request_sha256": "e0a6ece28864c1d49c041f4fc024136ab4655227a50c2adb9b65c19e4c47486a",
+      "required_candidates": 0,
+      "units": 3,
+      "actual_execution": "NOT_EXECUTED",
+      "current_reuse_rule": "FAILED_OR_UNEXECUTED_NO_RESULT_CREDIT"
+    },
+    {
+      "expected_input_tokens": 191147,
+      "request_id": "sha256:e0fa8e902f6e3e5312a12c67a0c6bc31d7f2a9d393043bd972872c4c8e7a9f4c",
+      "request_sha256": "1c98d45ba6425a7261d3bbd4968fa4071b4ec577c49d9f8d8c5ef5d13853abf8",
+      "required_candidates": 0,
+      "units": 4,
+      "actual_execution": "NOT_EXECUTED",
+      "current_reuse_rule": "FAILED_OR_UNEXECUTED_NO_RESULT_CREDIT"
+    },
+    {
+      "expected_input_tokens": 180484,
+      "request_id": "sha256:fb7796fb39f0586937ff438dab78eacf8be10fb9c0d1d8443916e900407c51dc",
+      "request_sha256": "9cdb6198577173a8bf5dd3806a56e9ab2305042189308099d9b0cf051dc5104e",
+      "required_candidates": 0,
+      "units": 7,
+      "actual_execution": "NOT_EXECUTED",
+      "current_reuse_rule": "FAILED_OR_UNEXECUTED_NO_RESULT_CREDIT"
+    },
+    {
+      "expected_input_tokens": 184731,
+      "request_id": "sha256:189555bb787e04cd4f9a6d0ace03118bc6358e27a4b9de705d7e399059f2ab92",
+      "request_sha256": "67e55d2cf0294d14abbf10f9ce523403901be01586ce0b763324cd116b46a1a6",
+      "required_candidates": 0,
+      "units": 8,
+      "actual_execution": "NOT_EXECUTED",
+      "current_reuse_rule": "FAILED_OR_UNEXECUTED_NO_RESULT_CREDIT"
+    },
+    {
+      "expected_input_tokens": 184910,
+      "request_id": "sha256:40d982fdaad59cb77f6e3b0af7671d09f76298d856e5148236efd2e9d25b9819",
+      "request_sha256": "b4a3fd81a41da2352dca55e02e214ceafd394fb6b19d5605631c7f549fc2d1ab",
+      "required_candidates": 0,
+      "units": 7,
+      "actual_execution": "NOT_EXECUTED",
+      "current_reuse_rule": "FAILED_OR_UNEXECUTED_NO_RESULT_CREDIT"
+    },
+    {
+      "expected_input_tokens": 55537,
+      "request_id": "sha256:854a833afd28274728e815663115b92287d61d98af329cb279f581710160d945",
+      "request_sha256": "0dc1eb0f305cc200f07b0e4b5f832b2bcc2d1fe2ed29d3a6b4f755ec23c99293",
+      "required_candidates": 0,
+      "units": 2,
+      "actual_execution": "NOT_EXECUTED",
+      "current_reuse_rule": "FAILED_OR_UNEXECUTED_NO_RESULT_CREDIT"
+    }
+  ],
+  "request_identity_scope": "ORIGINAL_V5_FORD_TASK_ONLY_NOT_NEW_POST_REPAIR_REQUEST_IDENTITIES",
+  "accepted_exact_original_requests": 1,
+  "ford_task_required_requests": 11,
+  "ford_complete_company_metric": false,
   "all_family_base_requests": {
-    "D04": 93,
-    "B13": 17,
+    "D04_V5": 93,
+    "B13_last_measured_contract": 17,
     "D03_proposals_not_native": 130
   },
-  "measured_base_provider_shortfall": 33,
-  "remaining_work_reserves": "Do not execute the full batch; preserve B13/D03 and update/acceptance responsibility. These two requests belong to the measured company tasks and successful exact-identity responses remain reusable for those tasks.",
-  "zero_automatic_retry": true,
-  "on_failure": "Seal the original failure and suspend the affected route; no unchanged redraw. Continue independent work.",
-  "B13_affected_route_paused": true,
-  "D03_source_fact_review_missing": true,
+  "base_request_count_before_exact70_reuse": 240,
+  "conditionally_reusable_exact70_requests": 1,
+  "base_requests_remaining_if_exact70_current_recheck_passes": 239,
+  "known_base_provider_shortfall_if_exact70_is_retained": 35,
+  "known_base_provider_shortfall_without_exact70_reuse": 36,
+  "request_count_measurement_limit": "B13 repairs, D03 native wiring, post71 response-contract changes, update and final acceptance still require scoped remeasurement or explicit reserves.",
+  "remaining_work_reserves": "B13,D03,necessary repair validation,normal updates and final acceptance remain part of the same cumulative plan;no exclusive D04 consumption of all remainder.",
+  "no_new_calls_authorized_by_this_status_file": true,
+  "no_automatic_retry": true,
+  "old_call69_and71_failures_retained": true,
+  "new_complete_real_company_metric_coordinates": 0,
   "production_authorized": false
 }

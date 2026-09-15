@@ -24,6 +24,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--company', action='append')
     parser.add_argument('--metric', action='append', choices=['D04', 'B13', 'D03'])
+    parser.add_argument('--complete-response-contract', action='store_true')
     args = parser.parse_args()
     output = args.output.resolve()
     if output.exists() or output == ROOT or ROOT in output.parents:
@@ -47,7 +48,8 @@ def main():
                     original = prepare_d04_semantic_source(repo_root=ROOT, company_id=company)
                     old = native_source(original)
                     old_count = len(requests_from_source(old))
-                    source = native_source(original, request_context_format=FORMAT_VERSION)
+                    source = native_source(original, request_context_format=FORMAT_VERSION,
+                        complete_response_contract=args.complete_response_contract)
                 elif metric == 'B13':
                     from vnext.capacity_semantic_source import prepare_capacity_semantic_source
                     from vnext.capacity_semantic_review import requests_from_source

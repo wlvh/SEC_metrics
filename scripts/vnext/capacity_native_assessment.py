@@ -74,7 +74,7 @@ def collect_native_assessments(*, prepared_requests, ledger):
     requests remain explicit development/execution gaps, never nondisclosure.
     """
     from . import invocation_control as control
-    from .continuous_semantic_calls import source_requests
+    from .native_unit_index import validate_request_partition
     from .native_assessment_replay import replay_native_response
     need(bool(prepared_requests), 'B13_COMPLETE_REQUEST_SET_REQUIRED')
     source = strict_json_loads(text=prepared_requests[0].source_bytes.decode())
@@ -82,11 +82,12 @@ def collect_native_assessments(*, prepared_requests, ledger):
     need(metric_id in {'B13', 'D04'}, 'NATIVE_SOURCE_METRIC_UNSUPPORTED')
     if metric_id == 'D04':
         need(source['record_type'] == 'D04_NATIVE_COMPLETE_SEMANTIC_SOURCE', 'D04_FRESH_NATIVE_SOURCE_REQUIRED')
-    expected = source_requests(source)
-    by_id = {strict_json_loads(text=p.request_bytes.decode())['request_id']: p for p in prepared_requests}
-    need(len(by_id) == len(prepared_requests) and set(by_id) == {r['request_id'] for r in expected}
-         and all(p.source_bytes == prepared_requests[0].source_bytes for p in prepared_requests),
+    expected = [strict_json_loads(text=p.request_bytes.decode()) for p in prepared_requests]
+    need(all(p.source_bytes == prepared_requests[0].source_bytes for p in prepared_requests),
          'B13_COMPLETE_REQUEST_SET_CHANGED')
+    variants = validate_request_partition(source, expected)
+    by_id = {request['request_id']: prepared for request, prepared in zip(expected, prepared_requests)}
+    need(len(by_id) == len(prepared_requests), 'B13_COMPLETE_REQUEST_SET_CHANGED')
     completed, failures = {}, []
     with ledger.locked():
         state = ledger.snapshot()
@@ -141,4 +142,6 @@ def collect_native_assessments(*, prepared_requests, ledger):
         'all_source_requests_accepted': not missing, 'proposed_branch': branch,
         'source_findings': findings, 'mode': 'LIVE' if ledger.live else 'RECORDED_TEST_ONLY',
         'metric_result_created': False, 'review_complete': False, 'production_authorized': False}
+    if 'INDEXED_UNITS_V1' in variants:
+        body['native_request_variants'] = variants
     return {**body, 'assessment_set_id': content_hash(value=body)}

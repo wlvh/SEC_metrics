@@ -421,3 +421,6 @@ PR43 review5205267507修复增量：D04源句关系检查在原生接受、文�
 B13数值接线增量：capacity_utilization_source新增明确年度数量及相同范围的原件检查；capacity_run/run_store/ordinary_projection接入原Calculator、精确记录图与原句证据。合成数值场景明确替代来源准入/登记，不是Ford/Enphase真实利用率，受影响真实调用暂停与独立审阅责任保持。
 
 本轮5207290213恢复材料见`docs/evidence/issue28_continuous/review-5207290213/`。`continuous_request_context.py`负责限定完整Chat Completions计数和显式新分组；原输入加输出预留仍受200000限制，实际usage不匹配暂停provider。D04作用域修复有两轮独立发现及第三轮复核；B13假设数量上下文新增P1尚待修复。旧6e5 D03独立审阅未补齐，不将本轮审阅扩大。
+
+
+本轮后继接线：`native_unit_index.py`保留完整原单元及原请求，只将长单元ID的返回格式变为严格整数索引；不同请求无旧信用。`capacity_quantity_scope.py`/`capacity_quantity_roles.py`按原HTML断言范围及有限数量角色核验，未知量关系不能被OTHER或遗漏抹成未披露。`capacity_update_input.py`把原生成功收据、当前来源等价和普通逐指标历史接通，`ordinary_refresh_cycle.py`负责有限自动来源获取及新原生请求协调。`ordinary_release_preparation.py`及`ordinary_isolated_publication.py`复用统一发布核心作私有版本准备与恢复；正式生产保持未授权。当前状态以`continuation.md`和累计账本为准；前文阶段性的“未修复/仅准备”记录保留当时身份。

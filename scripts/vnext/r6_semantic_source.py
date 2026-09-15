@@ -177,12 +177,12 @@ def _native_units(raw,component):
         'native_contexts_and_units_retained':True,'native_roundtrip_verified':True}
 
 
-def prepare_d04_semantic_source(*,repo_root:Path,company_id:str):
-    path=resolve_repository_file(repo_root=repo_root,repo_relative_path=POLICY_PATH)
+def prepare_d04_semantic_source(*,repo_root:Path,company_id:str,ordinary_registered=False):
+    path=resolve_repository_file(repo_root=ROOT if ordinary_registered else repo_root,repo_relative_path=POLICY_PATH)
     _need(strict_json_file(path=path)==POLICY==strict_json_file(path=ROOT/POLICY_PATH),
           'SEMANTIC_SOURCE_INSTALLED_POLICY_CHANGED')
-    source=prepare_ordinary_going_concern_source(repo_root=repo_root,company_id=company_id)
-    annual=prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
+    source=prepare_ordinary_going_concern_source(repo_root=repo_root,company_id=company_id,ordinary_registered=ordinary_registered)
+    annual=prepare_saved_annual_input(repo_root=repo_root,company_id=company_id,ordinary_registered=ordinary_registered)
     _need(annual['original_input']==source['prepared_annual_input'],'SEMANTIC_ANNUAL_SOURCE_BINDING_CHANGED')
     units=[];documents=[]
     for component in source['components']:

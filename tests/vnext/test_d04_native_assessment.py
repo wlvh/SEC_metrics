@@ -19,7 +19,7 @@ REVIEW_SCOPE_CASES = [
 ]
 
 
-def request_for(text, quoted=False, year=2025):
+def request_for(text, quoted=False, year=2025, complete_response_contract=False):
     source = source_packet(); source.update(record_type='D04_COMPLETE_SEMANTIC_SOURCE', metric_id='D04')
     old = source['units'][0]; payload = deepcopy(old['payload'])
     payload['blocks'][0].update(text=text, html_quotation_context=quoted)
@@ -29,7 +29,7 @@ def request_for(text, quoted=False, year=2025):
     source['prepared_annual_input']['table_input']['target_period'] = {
         'period_start': str(year) + '-01-01', 'period_end': str(year) + '-12-31', 'fiscal_year': year}
     source['semantic_source_id'] = content_hash(value={k:v for k,v in source.items() if k != 'semantic_source_id'})
-    return requests_from_source(native_source(source))[0]
+    return requests_from_source(native_source(source, complete_response_contract=complete_response_contract))[0]
 
 
 def response_for(request, kind='DOUBT_DISCLOSED', timing='CURRENT_REPORT'):
@@ -41,6 +41,41 @@ def response_for(request, kind='DOUBT_DISCLOSED', timing='CURRENT_REPORT'):
 
 
 class D04NativeProtocolTest(unittest.TestCase):
+    def test_complete_response_contract_is_source_bound_and_cannot_drop_units(self):
+        source = source_packet();source.update(record_type='D04_COMPLETE_SEMANTIC_SOURCE',metric_id='D04')
+        first = source['units'][0]
+        first['payload']['blocks'][0]['text'] = 'There is substantial doubt about our ability to continue as a going concern.'
+        first = _seal_unit(first['document_id'], 'VISIBLE_TEXT', first['payload'], 0)
+        units=[first]+[_seal_unit(first['document_id'], 'VISIBLE_TEXT',{'blocks':[{
+            **first['payload']['blocks'][0], 'block_index':index,'text':'Revenue is recognized when services are delivered.'}]}, index)
+            for index in (8,9)]
+        source.update(units=units,required_unit_ids=[u['unit_id'] for u in units])
+        source['documents'][0].update(language_candidate_block_indices=[7],native_candidate_ordinals=[])
+        source['prepared_annual_input']['table_input']['target_period']={'period_start':'2025-01-01','period_end':'2025-12-31','fiscal_year':2025}
+        source['semantic_source_id']=content_hash(value={k:v for k,v in source.items() if k!='semantic_source_id'})
+        old=requests_from_source(native_source(source))[0]
+        request=requests_from_source(native_source(source,complete_response_contract=True))[0]
+        self.assertNotEqual(request['request_id'],old['request_id'])
+        from types import SimpleNamespace
+        from vnext.continuous_semantic_calls import request_digest
+        self.assertNotEqual(request_digest(request,SimpleNamespace(model='deepseek-flash')),
+                            request_digest(old,SimpleNamespace(model='deepseek-flash')))
+        self.assertEqual(request['units'],old['units'])
+        self.assertNotIn('required_response_unit_ids',old)
+        self.assertEqual(request['required_response_unit_ids'],[u['unit_id'] for u in units])
+        schema=request['response_protocol']['json_schema']['properties']['units']
+        self.assertEqual((schema['minItems'],schema['maxItems']),(3,3))
+        response=response_for(request)
+        response['units'] += [{'unit_id':u['unit_id'],'reviewed':True,'unresolved':[],'findings':[]} for u in units[1:]]
+        self.assertEqual(validate_response(request=request,raw_response=_bytes(response))['unresolved'],[])
+        for changed in (dict(response,units=response['units'][:1]),dict(response,units=[response['units'][0]]*3),
+                        dict(response,units=list(reversed(response['units'])))):
+            with self.assertRaises(ValueError):validate_response(request=request,raw_response=_bytes(changed))
+        for field,value in [('required_response_unit_ids',[first['unit_id']]),('unit_response_requirements',[])]:
+            bad=deepcopy(request);bad[field]=value;bad['request_id']=content_hash(value={k:v for k,v in bad.items() if k!='request_id'})
+            with self.assertRaisesRegex(ValueError,'REQUEST_POLICY_CHANGED'):
+                validate_response(request=bad,raw_response=_bytes(dict(response,request_id=bad['request_id'])))
+
     def test_review_counterexamples_bind_modifiers_to_their_own_assertions(self):
         for text, wrong_kind, wrong_timing in REVIEW_SCOPE_CASES:
             request = request_for(text)

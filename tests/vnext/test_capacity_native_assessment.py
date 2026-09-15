@@ -12,7 +12,7 @@ from vnext import ai_adapter as adapter
 from vnext import invocation_control as control
 from vnext.canonical import canonical_json_bytes, strict_json_loads
 from vnext.continuous_call_ledger import recorded_ledger
-from vnext.continuous_semantic_calls import prepare_requests, build_plan, execute_capacity_assessment, execute_feasibility
+from vnext.continuous_semantic_calls import prepare_requests, build_plan, execute_capacity_assessment, execute_feasibility, select_native_request_variants
 
 
 class CapacityNativeAssessmentMaterialTest(unittest.TestCase):
@@ -30,7 +30,11 @@ class CapacityNativeAssessmentMaterialTest(unittest.TestCase):
              patch.object(socket, 'getaddrinfo', side_effect=AssertionError('DNS_FORBIDDEN')), \
              patch('sec_http.urlopen', side_effect=AssertionError('SEC_FORBIDDEN')), \
              patch.object(control, 'effective_invocation_policy', side_effect=AssertionError('LEGACY_DEFAULT_FORBIDDEN')):
-            requests = prepare_requests(company_id='enphase_energy', metric_id='B13')
+            requests = prepare_requests(company_id='enphase_energy', metric_id='B13',
+                reference_context=os.environ.get('B13_REFERENCE_CONTEXT') == '1')
+            if os.environ.get('B13_INDEXED_UNITS') == '1':
+                requests, _ = select_native_request_variants(prepared_requests=requests,
+                    ledger=recorded_ledger(root=directory/'selection'))
             # No interpretation success is claimed by this simulated empty
             # response. This exact request only exercises transport/acceptance.
             eligible = [r for r in requests if not strict_json_loads(
@@ -42,6 +46,9 @@ class CapacityNativeAssessmentMaterialTest(unittest.TestCase):
             response = {'request_id': request['request_id'], 'units': [
                 {'unit_id': u['unit_id'], 'reviewed': True, 'findings': [], 'unresolved': [], 'calculation_limits': []}
                 for u in request['units']]}
+            if 'indexed_unit_contract' in request:
+                response = {'units':[{**{k:v for k,v in row.items() if k != 'unit_id'}, 'unit_index':i}
+                                     for i,row in enumerate(response['units'])]}
 
             def wire(value):
                 return canonical_json_bytes(value={'id': 'b13-offline-native', 'model': 'deepseek-flash',

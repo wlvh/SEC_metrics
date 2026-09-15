@@ -10,6 +10,8 @@ from .r6_semantic_review import _source_items, _validate_source_response
 from .r6_semantic_source import _bytes
 
 POLICY_PATH = 'catalog/r6/semantic_review_v4.json'
+COMPLETE_POLICY_PATH = 'catalog/r6/semantic_review_v5.json'
+COMPLETE_RESPONSE_VERSION = 'D04_COMPLETE_UNITS_V1'
 SPEC_PATH = 'catalog/r6/D04_going_concern_assessment_v1.md'
 CURRENT_KINDS = {'DOUBT_DISCLOSED', 'DOUBT_ALLEVIATED', 'NO_DOUBT_DECLARATION'}
 
@@ -257,7 +259,7 @@ def check_source_classifications(*, request, units, findings):
     return unresolved
 
 
-def native_source(source, *, historical_control=False, request_context_format=None):
+def native_source(source, *, historical_control=False, request_context_format=None, complete_response_contract=False):
     """A new input identity, retaining the exact complete original source set."""
     expected = 'D04_HISTORICAL_PRIMARY_CONTROL_SOURCE' if historical_control else 'D04_COMPLETE_SEMANTIC_SOURCE'
     need(source['record_type'] == expected
@@ -276,11 +278,31 @@ def native_source(source, *, historical_control=False, request_context_format=No
         from .continuous_request_context import FORMAT_VERSION
         need(request_context_format == FORMAT_VERSION, 'D04_NATIVE_CONTEXT_FORMAT_UNSUPPORTED')
         body['request_context_format'] = FORMAT_VERSION
+    need(type(complete_response_contract) is bool, 'D04_COMPLETE_RESPONSE_SELECTION_INVALID')
+    if complete_response_contract:
+        body['response_contract_version'] = COMPLETE_RESPONSE_VERSION
     return {**body, 'semantic_source_id': content_hash(value=body)}
 
 
+def _response_contract(rules, units, required, complete):
+    protocol = deepcopy(rules['response_protocol'])
+    if not complete:
+        return protocol, {}
+    ids = [u['unit_id'] for u in units]
+    unit_schema = protocol['json_schema']['properties']['units']
+    unit_schema.update(minItems=len(ids), maxItems=len(ids))
+    unit_schema['items']['properties']['unit_id']['enum'] = ids
+    return protocol, {'required_response_unit_ids': ids, 'unit_response_requirements': [
+        {'unit_id': uid, 'required_evidence_references': [
+            {k:r[k] for k in ('kind','source_index')} for r in required if r['unit_id'] == uid]}
+        for uid in ids]}
+
+
 def requests_from_source(source):
-    rules = strict_json_file(path=ROOT / POLICY_PATH)
+    version = source.get('response_contract_version')
+    need(version in {None, COMPLETE_RESPONSE_VERSION}, 'D04_RESPONSE_CONTRACT_VERSION_UNSUPPORTED')
+    policy_path = COMPLETE_POLICY_PATH if version else POLICY_PATH
+    rules = strict_json_file(path=ROOT / policy_path)
     need(source['record_type'] in {'D04_NATIVE_COMPLETE_SEMANTIC_SOURCE', 'D04_NATIVE_HISTORICAL_CONTROL_SOURCE'}
          and source['source_serialization_complete'] is True
          and source['semantic_source_id'] == content_hash(value={
@@ -304,6 +326,7 @@ def requests_from_source(source):
                        doc['native_candidate_ordinals'] if kind == 'NATIVE_FACT' else [])
             required.extend({'unit_id': unit['unit_id'], 'kind': kind, 'source_index': i}
                             for i in indices if i in items)
+        protocol, checklist = _response_contract(rules, packed, required, bool(version))
         body = {'record_type': 'D04_NATIVE_INTERPRETATION_REQUEST', 'metric_id': 'D04',
             'native_evidence_requested': True, 'source_id': source['semantic_source_id'],
             'company_id': source['company_id'], 'target_cik': annual['entity'],
@@ -314,8 +337,10 @@ def requests_from_source(source):
             'document_context': {k: doc[k] for k in ('document_id', 'filing', 'registrant_name_binding')},
             'system_prompt': rules['system_prompt'], 'units': packed, 'shared_source_dictionaries': shared,
             'category_definitions': rules['category_definitions'], 'required_candidate_assessments': required,
-            'response_protocol': rules['response_protocol'], 'policy_sha256': sha256_file(path=ROOT / POLICY_PATH),
+            'response_protocol': protocol, 'policy_sha256': sha256_file(path=ROOT / policy_path),
             'provider_request_sent': False, 'provider_tokens_measured': False, 'production_authorized': False}
+        if version:
+            body.update(response_contract_version=version, **checklist)
         if context_format is not None:
             body['request_context_format'] = context_format
         if source['record_type'] == 'D04_NATIVE_HISTORICAL_CONTROL_SOURCE':
@@ -333,13 +358,33 @@ def requests_from_source(source):
 
 
 def validate_response(*, request, raw_response):
-    rules = strict_json_file(path=ROOT / POLICY_PATH)
+    if 'indexed_unit_contract' in request:
+        from .native_unit_index import restore_response
+        need(type(raw_response) is bytes and len(raw_response) <= strict_json_file(path=ROOT / POLICY_PATH)['max_response_bytes'],
+             'D04_NATIVE_RESPONSE_SIZE')
+        base, normalized, original = restore_response(request=request, raw_response=raw_response)
+        checked = validate_response(request=base, raw_response=normalized)
+        checked.update(request_id=request['request_id'], response=original)
+        return checked
+    version = request.get('response_contract_version')
+    need(version in {None, COMPLETE_RESPONSE_VERSION}, 'D04_RESPONSE_CONTRACT_VERSION_UNSUPPORTED')
+    policy_path = COMPLETE_POLICY_PATH if version else POLICY_PATH
+    rules = strict_json_file(path=ROOT / policy_path)
+    protocol, checklist = _response_contract(rules, request['units'], request['required_candidate_assessments'], bool(version))
     need(request['request_id'] == content_hash(value={k: v for k, v in request.items() if k != 'request_id'})
-         and request['policy_sha256'] == sha256_file(path=ROOT / POLICY_PATH)
-         and request['response_protocol'] == rules['response_protocol'], 'D04_NATIVE_REQUEST_POLICY_CHANGED')
+         and request['policy_sha256'] == sha256_file(path=ROOT / policy_path)
+         and request['response_protocol'] == protocol
+         and all(request.get(k) == v for k, v in checklist.items())
+         and (bool(version) or not {'required_response_unit_ids','unit_response_requirements'}.intersection(request)),
+         'D04_NATIVE_REQUEST_POLICY_CHANGED')
     need(type(raw_response) is bytes and len(raw_response) <= rules['max_response_bytes'], 'D04_NATIVE_RESPONSE_SIZE')
     original = strict_json_loads(text=raw_response.decode('utf-8'))
     need(type(original) is dict and original.get('request_id') == request['request_id'], 'D04_NATIVE_RESPONSE_REQUEST_CHANGED')
+    if version:
+        need(type(original.get('units')) is list
+             and all(type(u) is dict for u in original['units'])
+             and [u.get('unit_id') for u in original['units']] == request['required_response_unit_ids'],
+             'D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED')
     resolved = deepcopy(original)
     units = _restore_units(request['units'], request['shared_source_dictionaries'])
     by_id = {u['unit_id']: u for u in units}

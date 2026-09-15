@@ -10,7 +10,7 @@ import unittest
 
 from vnext.canonical import canonical_json_bytes, content_hash, strict_json_loads
 from vnext.continuous_call_ledger import recorded_ledger
-from vnext.continuous_semantic_calls import prepare_requests, execute_d04_assessment
+from vnext.continuous_semantic_calls import prepare_requests, execute_d04_assessment, select_native_request_variants
 from vnext.capacity_semantic_review import _restore_units
 from vnext.r6_semantic_review import _source_items
 from vnext.capacity_assessment_input import register_assessment_input, load_registered_input, EXPORT_PATHS
@@ -20,6 +20,11 @@ EXPORT_PATH = EXPORT_PATHS['D04']
 
 
 def recorded_response(request):
+    if 'indexed_unit_contract' in request:
+        from vnext.native_unit_index import restore_base_request
+        base = recorded_response(restore_base_request(request))
+        return {'units':[{**{k:v for k,v in row.items() if k != 'unit_id'}, 'unit_index':index}
+                         for index,row in reversed(list(enumerate(base['units'])))]}
     rows = []
     for unit in _restore_units(request['units'], request['shared_source_dictionaries']):
         kind, items = _source_items(unit)
@@ -121,9 +126,10 @@ class D04RunMaterialTest(unittest.TestCase):
              patch.object(socket, 'getaddrinfo', side_effect=AssertionError('DNS_FORBIDDEN')), \
              patch('sec_http.urlopen', side_effect=AssertionError('SEC_FORBIDDEN')):
             prepared = prepare_requests(company_id='enphase_energy', metric_id='D04', native=True,
-                reference_context=os.environ.get('D04_REFERENCE_CONTEXT') == '1')
+                reference_context=os.environ.get('D04_REFERENCE_CONTEXT') == '1',
+                complete_response_contract=os.environ.get('D04_COMPLETE_RESPONSE_CONTRACT') == '1')
             ledger = recorded_ledger(root=directory / 'ledger')
-            for request_object in prepared:
+            def execute_recorded(request_object):
                 request = strict_json_loads(text=request_object.request_bytes.decode())
                 response = recorded_response(request)
                 wire = canonical_json_bytes(value={'id': 'd04-native-run-recorded', 'model': 'deepseek-flash',
@@ -132,6 +138,16 @@ class D04RunMaterialTest(unittest.TestCase):
                               'prompt_cache_hit_tokens': 0, 'prompt_cache_miss_tokens': 100}})
                 path, outcome = execute_d04_assessment(prepared=request_object, ledger=ledger, recorded_wire=wire)
                 self.assertEqual(outcome['terminal']['status'], 'SUCCEEDED', str(path) + ': ' + str(outcome))
+            if os.environ.get('D04_INDEXED_UNITS') == '1':
+                original_first = prepared[0]
+                execute_recorded(original_first)
+                prepared, retained = select_native_request_variants(prepared_requests=prepared, ledger=ledger)
+                self.assertEqual(prepared[0].request_bytes, original_first.request_bytes)
+                self.assertEqual(retained[0]['original_ordinal'], 1)
+                self.assertTrue(all(r['variant'] == 'INDEXED_UNITS_V1' for r in retained[1:]))
+                for request_object in prepared[1:]:execute_recorded(request_object)
+            else:
+                for request_object in prepared:execute_recorded(request_object)
             registered = register_assessment_input(prepared_requests=prepared, ledger=ledger)
             self.assertEqual(registered['mode'], 'RECORDED_TEST_ONLY')
             source = strict_json_loads(text=prepared[0].source_bytes.decode())
@@ -141,7 +157,8 @@ class D04RunMaterialTest(unittest.TestCase):
             data, run = directory / 'data', directory / 'run'
             install_inputs(data_root=data, company_id='enphase_energy', assessment_mode='RECORDED_TEST_ONLY',
                            assessment_input_id=registered['input_record_id'], metric_id='D04',
-                           request_context_format=source.get('request_context_format'))
+                           request_context_format=source.get('request_context_format'),
+                           complete_response_contract=bool(source.get('response_contract_version')))
             with self.assertRaises(ValueError):
                 load_registered_input(data_root=data, source=source, requirement=prepared[0].requirement, mode='LIVE')
             created = create_normal_run(data_root=data, run_dir=run, company_id='enphase_energy', metric_id='D04')
@@ -160,11 +177,12 @@ class D04RunMaterialTest(unittest.TestCase):
                 target = directory / 'rows' / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(raw)
             from vnext.run_store import _mechanically_replay_open_run, RunStoreError
             checkpoint = data / EXPORT_PATH; original = checkpoint.read_bytes()
-            for mutation in ('omit_request', 'upgrade_mode', 'context_format'):
+            for mutation in ('omit_request', 'upgrade_mode', 'context_format', 'response_contract'):
                 bad = json.loads(original)
                 if mutation == 'omit_request': bad['native_requests'].pop()
                 elif mutation == 'upgrade_mode': bad['mode'] = 'LIVE'; bad['assessment']['mode'] = 'LIVE'
-                else: bad['request_context_format'] = 'unapproved-format'
+                elif mutation == 'context_format': bad['request_context_format'] = 'unapproved-format'
+                else: bad['response_contract_version'] = 'unapproved-contract'
                 bad['input_record_id'] = content_hash(value={k: v for k, v in bad.items() if k != 'input_record_id'})
                 checkpoint.write_bytes(canonical_json_bytes(value=bad))
                 try:
@@ -176,6 +194,6 @@ class D04RunMaterialTest(unittest.TestCase):
                 'result_id': created['result']['result_id'], 'source_requests': len(prepared),
                 'real_calls': [0, 0, 0], 'semantic_assessment_mode': 'RECORDED_TEST_ONLY',
                 'complete_d04_real_acceptance': False, 'production_authorized': False,
-                'negative_cases': ['missing native request', 'recorded input relabelled live', 'changed request context format']}
+                'negative_cases': ['missing native request', 'recorded input relabelled live', 'changed request context format', 'changed response coverage contract']}
             (directory / 'summary.json').write_bytes(canonical_json_bytes(value=summary))
             print(summary)

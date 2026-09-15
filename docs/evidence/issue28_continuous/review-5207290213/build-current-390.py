@@ -161,6 +161,34 @@ for key,(detail,path) in limitations.items():
  row=rows[key];row['result_category']='IMPLEMENTATION_OR_SOURCE_PROOF_UNRESOLVED';row['specific_source_or_policy_details']=detail
  row['fact_limitation_evidence']=[evidence(path)];row['real_disclosure_limitation_established']=False
  row['remaining_responsibility']='Distinguish actual source ambiguity from unsupported implementation through complete bounded source proof; no coordinate completion credit from refusal'
+# Two complete real D04 source tasks, preserving the original model and Run identities.
+for company in ('ford_motor_company','pfizer'):
+ name='d04-indexed-unit-response/live/'+company+'-D04-summary.json'
+ c=read_json(name)
+ cold=read_json('d04-indexed-unit-response/live/'+('ford' if company=='ford_motor_company' else 'pfizer')+'-cold.json')
+ assert c['native_company_metric_created'] and c['all_source_requests_accepted'] and not c['failed_requests']
+ assert c['receipt']['semantic_assessment_mode']=='LIVE' and cold['semantic_assessment_mode']=='LIVE'
+ assert cold['result_id']==c['result']['result_id'] and cold['run_id']==c['run_id']
+ assert c['result']['reason_code']=='D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE' and c['row']['status']=='TEXT_QUAL'
+ native({**c,'target_period':c['source_period'],'public_row_status':c['row']['status']},name,
+        {'execution_requirement_closure_hash':'sha256:be11771764276962cfabd7b51c551e8d12f596f15c9c4b7276665cf4cd1a2c29',
+         'head_when_executed':'ddecbf03b98c9c40f24be87c8181ae9077cb7ae3',
+         'uncommitted_execution_files_bound':True},
+        source_credit='ORIGINAL_SAVED_SEC_SOURCES_WITH_LIVE_NATIVE_ASSESSMENTS')
+ row=rows[(company,'D04')]
+ row.update(result_category='DEFINED_SCOPE_TEXT_STATEMENT',
+     evidence_type='COMPLETE_LIVE_NATIVE_SOURCE_ASSESSMENT_RUN_AND_COLD_REPLAY',
+     new_real_result_this_review=True,executed_binding_native_and_cold_verified=True,
+     source_period_basis='BOUND_COMPLETE_REAL_NATIVE_RESULT',
+     derived_public_statement=c['row']['notes'],native_result_publication=c['result']['publication'],
+     remaining_responsibility='Carry this valid source statement into normal update and unified release; current later runtime changes require scoped revalidation, not new model credit.')
+ row['cold_replay_evidence']=evidence('d04-indexed-unit-response/live/'+('ford' if company=='ford_motor_company' else 'pfizer')+'-cold.json')
+for company,folder,ordinal in [('enphase_energy','live',82),('ford_motor_company','live-ford-b13',94)]:
+ name='d04-indexed-unit-response/'+folder+'/call-%04d.json'%ordinal
+ failure=read_json(name);assert failure['status']=='FAILED_TERMINAL'
+ rows[(company,'B13')].update(reason_code='B13_REAL_RESPONSE_REJECTED_NO_COMPLETE_COORDINATE',
+     actual_failed_request=evidence(name),
+     remaining_responsibility='Resolve the demonstrated quantity-role response failures; original failed calls retain no usable result credit. Do not relabel implementation/model failure as a disclosure limitation.')
 # Original 53 gaps are historical lineage only. Successor native records supersede their old unresolved labels.
 gaps=read_json('resume-2026-09-13/current-gap-index.json')
 for old in gaps['rows']:
@@ -173,10 +201,10 @@ assert len(companies)==10 and len(metrics)==39 and len(rows)==390
 assert set(rows)=={(c,m)for c in companies for m in metrics}
 ordered=[rows[(c,m)] for c in companies for m in metrics]
 counts=dict(Counter(r['result_category'] for r in ordered))
-body={'record_type':'ISSUE28_CURRENT_390_EVIDENCE_RECONCILIATION','as_of':'2026-09-15_BEFORE_THIS_TURN_NEW_D04_REAL_VALIDATION',
+body={'record_type':'ISSUE28_CURRENT_390_EVIDENCE_RECONCILIATION','as_of':'2026-09-15_THROUGH_REAL_CALL94_AND_TWO_D04_COLD_READS',
  'coordinate_count':390,'full_current_head_reexecution':False,'full_issue_acceptance':False,'production_authorized':False,
  'new_calls_for_index':[0,0,0],'categories':counts,'native_record_count':sum(r['historical_native_record_retained'] for r in ordered),
- 'native_result_or_valid_noncomputing_state_count':sum(r['result_category'] in {'NUMERIC_RESULT','TEXT_RESULT','STRUCTURAL_NOT_APPLICABLE','NOT_MEANINGFUL'} for r in ordered),
+ 'native_result_or_valid_noncomputing_state_count':sum(r['result_category'] in {'NUMERIC_RESULT','TEXT_RESULT','DEFINED_SCOPE_TEXT_STATEMENT','STRUCTURAL_NOT_APPLICABLE','NOT_MEANINGFUL'} for r in ordered),
  'recorded_source_admission_numeric_entries':sum(r['source_credit']=='RECORDED_TEST_ONLY' and r['result_category']=='NUMERIC_RESULT' for r in ordered),
  'real_disclosure_limitation_established_count':sum(r['real_disclosure_limitation_established'] for r in ordered),
  'historical_53_replaced_by_later_native_evidence':sum(r.get('historical_340_gap',{}).get('superseded_by_later_native_evidence',False)for r in ordered),

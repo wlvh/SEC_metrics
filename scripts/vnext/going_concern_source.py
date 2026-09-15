@@ -320,7 +320,7 @@ def verify_going_concern_source(*, component, **source_arguments):
     return rebuilt
 
 
-def prepare_ordinary_going_concern_source(*, repo_root: Path, company_id: str):
+def prepare_ordinary_going_concern_source(*, repo_root: Path, company_id: str, ordinary_registered=False):
     """Discover and authenticate original + every current-period saved 10-K/A.
 
     Latest means the existing saved submissions view, not a new SEC fetch.
@@ -341,7 +341,11 @@ def prepare_ordinary_going_concern_source(*, repo_root: Path, company_id: str):
         if proof not in proofs:
             proofs.append(proof)
         source_rows.append((filing, proof))
-    admission = verify_saved_source_proofs(data_root=root, proofs=proofs)
+    if ordinary_registered:
+        from .ordinary_source_authority import verify_ordinary_source_proofs
+        admission = verify_ordinary_source_proofs(data_root=root, proofs=proofs)
+    else:
+        admission = verify_saved_source_proofs(data_root=root, proofs=proofs)
     components = []
     for filing, proof in source_rows:
         blob = raw_blob_record(repo_root=root, repo_relative_path=proof["request_repo_relative_path"], media_type="text/html")

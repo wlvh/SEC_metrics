@@ -983,3 +983,13 @@ B13数值分支复用已批准的production_capacity_v1 Spec。完整登记的�
 D04活动延续增量按动作及对象核对招聘、用户和融资渠道语句，避免把特定活动与主体持续经营混同；真实原句在测试工厂中覆盖正确排除和错误疑虑拒绝。当前13项D04回归通过。上下文分词只完成官方参考与12份历史实际usage核对，现有运行计数/资源限制未改；材料见docs/evidence/issue28_continuous/d04-activity-and-context。
 
 当前D04关系检查将条件、因果/让步、例证及历史原因与当前谓语分别绑定；具体实现不支持不会形成未披露。限定Chat Completions计数新增continuous_request_context，绑定完整两消息/JSON响应提示/官方分词器及格式版本，包含4096输出预留；原服务、200000/8MiB/120秒与零重试不变。新分组在source/request中显式选择，旧原请求保留身份，格式提示须经完整私有登记和原生请求重验。LIVE实际输入计数不符时封存原响应并停止受影响provider通道。材料见docs/evidence/issue28_continuous/review-5207290213/与request-context-counting/。
+
+### 普通更新与私有完整版本的后继接线
+
+`capacity_update_input`复用原生请求收据与普通来源创建者登记，将完整旧请求的当前来源等价检查接到逐指标更新历史。当前输入的原件目录与执行规则目录显式分开；只能忽略已列明的获取/实现身份差异，实质来源或请求变化不能复用旧信用。新输入有限执行默认0请求，经原调用器与固定账本；B13真实路径仍暂停，D03未接，跨来源部分旧组复用仍是实现缺口。
+
+`ordinary_refresh_cycle`先发现/取得输入，再准备原生输入并运行逐指标更新；新年报缺同accession CF时保留未决继续发现，不能使本可取得的依赖变成死循环。自身调用按ordinal归属，重复回读不重复累计；总账增量独立报告。
+<!-- capability-anchor: CAPABILITY.ordinary_refresh_native_draft -->
+
+`ordinary_release_preparation`完整重放选中Run、来源和公共投影，继承未选行的原有字节及证据。`ordinary_isolated_publication`在新私有根使用现有publication核心进行切换/回退/恢复；旧ANNUAL类型只对明确新credit分派新验证器，不能凭调用方JSON获得写入权。规定范围无疑虑/无相关披露只有通过专项原件和Review检查才可选入。当前私有演练不触及actual active，不充当390验收或生产退出证明。
+<!-- capability-anchor: CAPABILITY.ordinary_private_release_draft -->

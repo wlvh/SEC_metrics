@@ -98,8 +98,14 @@ class CapacitySemanticReviewTest(unittest.TestCase):
         self.assertEqual(_restore_units(packed, shared), [reordered_unit])
 
     def test_clear_capacity_with_no_production_is_a_calculation_limit(self):
-        request = requests_from_source(source_packet())[0]
+        # A quantity role now also needs the original HTML heading scope.
+        # Keep the old sentence and classification; build its real synthetic
+        # source spans instead of the grouping-only packet's placeholder hash.
+        from tests.vnext.test_capacity_utilization_source import quantity_source
+        source, _ = quantity_source('<p>Our plant can manufacture 100 widgets per quarter.</p>')
+        request = requests_from_source(source)[0]
         response = response_for(request)
+        response['units'][0]['findings'][0]['evidence'][0]['source_index'] = 0
         response['units'][0]['calculation_limits'] = ['TARGET_CURRENT_PRODUCTION_NOT_PRESENT_IN_THIS_UNIT']
         checked = validate_response(request=request, raw_response=_bytes(response))
         self.assertEqual(checked['unresolved'], [])
@@ -107,6 +113,13 @@ class CapacitySemanticReviewTest(unittest.TestCase):
         response['units'][0]['calculation_limits'].append('TARGET_CURRENT_CAPACITY_NOT_PRESENT_IN_THIS_UNIT')
         with self.assertRaisesRegex(ValueError, 'CONTRADICTS_FINDING'):
             validate_response(request=request, raw_response=_bytes(response))
+        missing_scope = deepcopy(source)
+        missing_scope.pop('quantity_scope_context')
+        missing_scope['semantic_source_id'] = content_hash(value={k:v for k,v in missing_scope.items() if k != 'semantic_source_id'})
+        unsupported = requests_from_source(missing_scope)[0]
+        missing_response = response_for(unsupported)
+        missing_response['units'][0]['findings'][0]['evidence'][0]['source_index'] = 0
+        self.assertTrue(validate_response(request=unsupported, raw_response=_bytes(missing_response))['unresolved'])
 
     def test_sales_only_source_cannot_be_labelled_actual_production(self):
         source = source_packet()

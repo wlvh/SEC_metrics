@@ -995,7 +995,7 @@
         "anchor_id": "CAPABILITY.b13_native_assessment_draft",
         "type": "capability",
         "status": "active",
-        "statement": "B13新请求复用WB-3和固定总账，压缩来源以真实索引为键且可逐字段恢复，Candidate/Evidence检查完整响应及有限内容冲突。已有逐请求真实接受，但68的引用正确而税收抵免角色错误，原执行终态保留、业务内容拒绝，受影响真实调用暂停。后继检查拒绝该已见冲突，不证明全部模型含义、完整B13或生产就绪。",
+        "statement": "B13新请求复用WB-3和固定总账，压缩来源以真实索引为键且可逐字段恢复，Candidate/Evidence检查完整响应及有限内容冲突。已有逐请求真实接受，但68的引用正确而税收抵免角色错误，原执行终态保留、业务内容拒绝，受影响真实调用暂停。后继检查拒绝该已见冲突，不证明全部模型含义、完整B13或生产就绪。 后继数量角色检查从原文独立证明实际物理量；无量生产叙述和行业产能不能成为当前主体数量。未支持的生产/产能数量关系即使被OTHER或漏答仍保留实现未决，原生文字及未披露公共行不能绕过。新82/94仍是原FAILED，无完整真实B13信用。",
         "audience": [
           "developer",
           "reviewer"
@@ -1047,7 +1047,7 @@
         "anchor_id": "CAPABILITY.d04_native_assessment_draft",
         "type": "capability",
         "status": "active",
-        "statement": "新D04完整保存来源请求可经WB-3、创建者登记、Evidence/Review进入普通OPEN Run和公共行。源句独立检查已支持的疑虑肯定、否定、缓解、主体与明确历史期间关系，错误类别或排除标签不能抹掉事实；条件、例证、历史原因和缓解限定按支持的断言作用范围核对；不能确定的相关句保留具体实现未决，不能形成未披露。历史控制不变为当前输入。只有记录响应及有限关系开发证据，未获得新版本真实完整D04或生产信用。",
+        "statement": "新D04完整保存来源请求可经WB-3、创建者登记、Evidence/Review进入普通OPEN Run和公共行。源句独立检查已支持的疑虑肯定、否定、缓解、主体与明确历史期间关系，错误类别或排除标签不能抹掉事实；条件、例证、历史原因和缓解限定按支持的断言作用范围核对；不能确定的相关句保留具体实现未决，不能形成未披露。历史控制不变为当前输入。Ford、Pfizer FY2025已在各自实际执行绑定下完成全部来源请求、原生结果和公共范围文字，且原安装运行时禁网冷读通过；这些真实结果不代表当前后续全部代码/其余八家公司或生产验收完成。",
         "audience": [
           "developer",
           "reviewer"
@@ -1066,6 +1066,34 @@
           "reviewer"
         ],
         "test_anchor": "tests/vnext/test_native_assessment_replay.py::NativeAssessmentReplayMaterialTest.test_original_plan_survives_consumer_change_and_rebinding_is_rejected",
+        "test_status": "automated_recorded",
+        "since": "2026-09-15"
+      },
+      {
+        "anchor_id": "CAPABILITY.ordinary_refresh_native_draft",
+        "type": "capability",
+        "status": "active",
+        "statement": "有限普通刷新沿原SEC获取器和统一累计账本自动发现/取得输入，再走逐指标历史；38项具备更新入口，D03仍明确未接。B13/D04已成功的完全相同请求可经原收据与当前来源等价检查复用，原字节不改。显式有限provider上限默认0，仅从未尝试请求进入原执行器；旧失败不换格式重抽，B13真实新执行仍暂停，跨来源部分旧组复用尚未支持。报告自身调用与总账增量分开，无法归属则UNKNOWN，失败不抹去其他无依赖结果。新财年CF尚未取得时保留原因并继续来源发现。已有recorded接线及JPM A08真实刷新，不表示全部39项新财年或持续生产完成。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_native_refresh_execution.py::RefreshCoordinatorNewNativeTest.test_failure_continues_other_metrics_and_uses_one_shared_limit",
+        "test_status": "automated_recorded",
+        "since": "2026-09-15"
+      },
+      {
+        "anchor_id": "CAPABILITY.ordinary_private_release_draft",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通版本准备重放选中原生Run并保留前驱未选公共行及其原证据身份。专用完整来源判断经过原件/Review/投影检查才可作为规定范围文字选入，不能凭WITHHELD标签或reason字符串取得未披露信用。私有发布沿既有写入/回退/恢复核心，限创建者新建的独立目录，拒绝实际根、既有active目录和调用方伪造登记；不授正式发布或迁移信用。完整当前私有场景验证与390、正式退出分别登记。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_ordinary_isolated_publication.py::OrdinaryIsolatedPublicationBoundaryTest.test_self_signed_marker_cannot_register_an_existing_workspace",
         "test_status": "automated_recorded",
         "since": "2026-09-15"
       }

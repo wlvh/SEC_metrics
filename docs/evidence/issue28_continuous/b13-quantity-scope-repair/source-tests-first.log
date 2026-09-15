@@ -1,0 +1,18 @@
+......................F.
+======================================================================
+FAIL: test_raw_source_and_effective_review_are_required (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_raw_source_and_effective_review_are_required)
+----------------------------------------------------------------------
+ValueError: B13_QUANTITY_SCOPE_ORIGINAL_CHANGED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_text_results.py", line 164, in test_raw_source_and_effective_review_are_required
+    with self.assertRaisesRegex(ValueError, 'ORIGINAL_BYTES_CHANGED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "ORIGINAL_BYTES_CHANGED" does not match "B13_QUANTITY_SCOPE_ORIGINAL_CHANGED"
+
+----------------------------------------------------------------------
+Ran 24 tests in 12.140s
+
+FAILED (failures=1)

@@ -132,14 +132,14 @@ def capacity_source_from_complete_annual(*, source, rules):
     return {**body, 'semantic_source_id': content_hash(value=body)}
 
 
-def prepare_capacity_semantic_source(*, repo_root: Path, company_id: str, request_context_format=None):
+def prepare_capacity_semantic_source(*, repo_root: Path, company_id: str, request_context_format=None, ordinary_registered=False):
     """Rebuild all source units before any B13 quantity or absence decision."""
     rules, approved = policy()
     need(company_id in approved['applicable_company_ids'],
          'B13_OUTSIDE_APPROVED_APPLICABILITY')
-    need(strict_json_file(path=repo_root / POLICY_PATH) == rules,
+    need(strict_json_file(path=(ROOT if ordinary_registered else repo_root) / POLICY_PATH) == rules,
          'B13_INSTALLED_RULES_CHANGED')
-    source = prepare_d04_semantic_source(repo_root=repo_root, company_id=company_id)
+    source = prepare_d04_semantic_source(repo_root=repo_root, company_id=company_id, ordinary_registered=ordinary_registered)
     result = capacity_source_from_complete_annual(source=source, rules=rules)
     body = {k: v for k, v in result.items() if k != 'semantic_source_id'}
     body.update(capacity_rule_sha256=sha256_file(path=ROOT / POLICY_PATH),
@@ -148,4 +148,11 @@ def prepare_capacity_semantic_source(*, repo_root: Path, company_id: str, reques
         from .continuous_request_context import FORMAT_VERSION
         need(request_context_format == FORMAT_VERSION, 'B13_CONTEXT_FORMAT_UNSUPPORTED')
         body['request_context_format'] = FORMAT_VERSION
-    return {**body, 'semantic_source_id': content_hash(value=body)}
+    result = {**body, 'semantic_source_id': content_hash(value=body)}
+    if request_context_format is not None:
+        from .capacity_quantity_scope import attach_quantity_scope
+        from .sources import resolve_repository_file
+        raw = {d['raw_blob']['raw_asset_id']: resolve_repository_file(repo_root=repo_root,
+            repo_relative_path=d['raw_blob']['storage_uri']).read_bytes() for d in result['documents']}
+        result = attach_quantity_scope(source=result, raw_bytes_by_id=raw)
+    return result

@@ -36,7 +36,9 @@ def quantity_source(body):
         'filing': filing, 'source_reference': ref, 'raw_blob': original['raw_blob'], 'registrant_name_binding': {},
         'source_unit_ids':[unit['unit_id']]}])
     source['semantic_source_id'] = content_hash(value={k:v for k,v in source.items() if k != 'semantic_source_id'})
-    return source, {original['raw_blob']['raw_asset_id']:original['raw_bytes']}
+    from vnext.capacity_quantity_scope import attach_quantity_scope
+    raw = {original['raw_blob']['raw_asset_id']:original['raw_bytes']}
+    return attach_quantity_scope(source=source, raw_bytes_by_id=raw), raw
 
 
 class CapacityComparisonTest(unittest.TestCase):

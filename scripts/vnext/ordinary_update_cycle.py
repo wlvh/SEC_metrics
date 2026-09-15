@@ -55,18 +55,25 @@ def _locked(root):
         yield
 
 
-def _config(root,source_root,company_id,metrics):
+def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE'):
     policy=normal._policy(normal.ROOT)
     _need(policy['provider_enabled'] is False and policy['sec_fetch_enabled'] is False
           and policy['freeze_enabled'] is False,'UPDATE_ZERO_EGRESS_RUNTIME_REQUIRED')
     _need(company_id in {c['company_id'] for c in _registry_rows(repo_root=normal.ROOT)},'UPDATE_COMPANY_NOT_CONFIGURED')
     _need(type(metrics) is list and metrics and len(metrics)==len(set(metrics))
-          and set(metrics)<=set(policy['metric_ids']),'UPDATE_METRIC_SCOPE_INVALID')
-    requirement=load_requirement_snapshot(snapshot_dir=normal.ROOT/'requirements'/normal.REQUIREMENT_ID)
+          and set(metrics)<=set(normal.update_metric_ids()),'UPDATE_METRIC_SCOPE_INVALID')
+    native = bool(set(metrics) & {'B13','D04'})
+    _need(not native or len(metrics) == 1, 'UPDATE_NATIVE_REQUIRES_PER_METRIC_HISTORY')
+    requirement_id = normal.REQUIREMENT_ID
+    if native:
+        from .continuous_call_policy import REQUIREMENT_ID as requirement_id
+    requirement=load_requirement_snapshot(snapshot_dir=normal.ROOT/'requirements'/requirement_id)
     body={'record_type':'ORDINARY_UPDATE_CONFIGURATION','schema_version':1,'company_id':company_id,
         'metric_ids':sorted(metrics),'source_root':str(source_root),
         'requirement_closure_hash':requirement['requirement_closure_hash'],
         'provider_enabled':False,'sec_fetch_enabled':False,'production_authorized':False}
+    if native:
+        body['registered_update_options'] = normal.registered_update_options(metrics[0], assessment_mode=native_assessment_mode)
     path=root/'configuration.json'
     if path.exists():
         configured=_read(path)
@@ -86,12 +93,23 @@ def _descriptor(cases,configuration):
     body={'company_id':configuration['company_id'],'metric_ids':configuration['metric_ids'],
         'requirement_closure_hash':configuration['requirement_closure_hash'],'targets':targets,'specs':specs,
         'source_contents':[{'source_url':k[0],'accession':k[1],'document_name':k[2],'sha256':v} for k,v in sorted(bodies.items())]}
+    native_inputs = {}
+    for metric, case in cases.items():
+        if metric in {'B13','D04'} and 'registered_input' in case:
+            registered=case['registered_input']; binding=case['input_binding']
+            native_inputs[metric] = {'source_id':binding['source_id'],
+                'input_record_id':registered['input_record_id'], 'assessment_set_id':binding['assessment_set_id'],
+                'mode':registered['mode'], 'request_context_format':registered.get('request_context_format'),
+                'response_contract_version':registered.get('response_contract_version')}
+    if native_inputs:
+        body['registered_assessment_inputs'] = native_inputs
     return {**body,'content_id':content_hash(value=body)}
 
 
-def _inspect(source_root,configuration):
+def _inspect(source_root,configuration,native_assessment_ledger=None):
     ledger=sha256_file(path=source_root/'evidence/requests_log.csv')
-    cases={m:normal.prepare_case(data_root=source_root,company_id=configuration['company_id'],metric_id=m)
+    cases={m:normal.prepare_case(data_root=source_root,company_id=configuration['company_id'],metric_id=m,
+                **({'registered_update_options':configuration['registered_update_options'],'native_assessment_ledger':native_assessment_ledger} if 'registered_update_options' in configuration else {}))
            for m in configuration['metric_ids']}
     _need(sha256_file(path=source_root/'evidence/requests_log.csv')==ledger,'UPDATE_SOURCE_CHANGED_DURING_INSPECTION')
     return cases,_descriptor(cases,configuration),ledger
@@ -104,6 +122,25 @@ def _attempt(root,identity):
     return path
 
 
+def _completed_result(*, metric, result, case, rendered, data_root):
+    if result['publication'] == 'PUBLISHED':
+        return True
+    reasons = {'B13':'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE',
+               'D04':'D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE'}
+    if (metric not in reasons or result.get('reason_code') != reasons[metric]
+            or result.get('value_kind') != 'TEXT_V1' or case.get('kind') != 'TEXT'):
+        return False
+    # This is not a reason-string exemption. The case was reconstructed by
+    # native Run replay and the specialized projector repeats the complete
+    # registered source assessment, candidate and original-source checks.
+    from .capacity_run import project_defined_absence
+    company=next(c for c in _registry_rows(repo_root=data_root) if c['company_id']==result['company_id'])
+    row,evidence=project_defined_absence(case=case,result=result,row={},company=company)
+    _need(rendered['row']['status']==row['status'] and rendered['row']['value']==row['value']
+          and rendered['evidence']==evidence, 'UPDATE_DEFINED_ABSENCE_PROJECTION_CHANGED')
+    return True
+
+
 def _verify_candidate(root,terminal,configuration):
     _need(terminal['status']=='CANDIDATE_READY' and terminal['configuration_id']==configuration['record_id'],
           'UPDATE_SUCCESS_REFERENCE_INVALID')
@@ -114,9 +151,10 @@ def _verify_candidate(root,terminal,configuration):
         manifest,records,_=_mechanically_replay_open_run(run_dir=run,repo_root=data,require_complete_results=True)
         cases[metric]=normal.replay_case(data_root=data,manifest=manifest)
         result=next(r for r in records if r['record_type']=='METRIC_RESULT' and r['metric_id']==metric)
-        _need(result['publication']=='PUBLISHED' and result['result_id']==terminal['metrics'][metric]['result_id'],
-              'UPDATE_SUCCESS_RESULT_CHANGED')
+        _need(result['result_id']==terminal['metrics'][metric]['result_id'], 'UPDATE_SUCCESS_RESULT_CHANGED')
         rendered=render_ordinary_run(data_root=data,run_dir=run)
+        _need(_completed_result(metric=metric,result=result,case=cases[metric],rendered=rendered,data_root=data),
+              'UPDATE_SUCCESS_RESULT_CHANGED')
         for name,raw in rendered['files'].items():
             path=work/'rows'/metric/name
             _need(path.read_bytes()==raw and sha256_file(path=path)==terminal['metrics'][metric]['files'][name],
@@ -220,12 +258,12 @@ def _recover(root,state,configuration):
     return state
 
 
-def run_once(*,state_root,source_root,company_id,metric_ids):
+def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None):
     """Check one company's current input and keep a durable candidate history."""
     root=normal._external(Path(state_root));source=Path(source_root).resolve()
     _need(root!=source and root not in source.parents and source not in root.parents,'UPDATE_SOURCE_STATE_ROOTS_OVERLAP')
     with _locked(root):
-        configuration=_config(root,source,company_id,metric_ids);state=_recover(root,_state(root,configuration),configuration)
+        configuration=_config(root,source,company_id,metric_ids,native_assessment_mode);state=_recover(root,_state(root,configuration),configuration)
         previous=None;successful_results={}
         if state['successful_attempt'] is not None:
             previous=_terminal(root,state['successful_attempt']);successful_results=_verify_candidate(root,previous,configuration)
@@ -235,7 +273,7 @@ def run_once(*,state_root,source_root,company_id,metric_ids):
             'previous_successful_attempt':state['successful_attempt']})
         descriptor=None;metrics={};status='INPUT_FAILED';error=None
         try:
-            _,descriptor,ledger=_inspect(source,configuration)
+            _,descriptor,ledger=_inspect(source,configuration,native_assessment_ledger)
             if previous:
                 _need(all(descriptor['targets'][m]['period_end']>=previous['input']['targets'][m]['period_end']
                           for m in configuration['metric_ids']),'UPDATE_SOURCE_PERIOD_REGRESSED')
@@ -246,7 +284,8 @@ def run_once(*,state_root,source_root,company_id,metric_ids):
             else:
                 for metric in configuration['metric_ids']:
                     normal.install_normal_inputs(data_root=work/'data',source_root=None if source==normal.ROOT else source,
-                        company_id=company_id,metric_id=metric)
+                        company_id=company_id,metric_id=metric,
+                        **({'registered_update_options':configuration['registered_update_options'],'native_assessment_ledger':native_assessment_ledger} if 'registered_update_options' in configuration else {}))
                     created=normal.create_normal_run(data_root=work/'data',run_dir=work/'runs'/metric,company_id=company_id,metric_id=metric)
                     rendered=render_ordinary_run(data_root=work/'data',run_dir=work/'runs'/metric)
                     hashes={}
@@ -254,8 +293,12 @@ def run_once(*,state_root,source_root,company_id,metric_ids):
                         path=work/'rows'/metric/name;normal._write(path,raw);hashes[name]=sha256_file(path=path)
                     metrics[metric]={'result_id':created['result']['result_id'],'publication':created['result']['publication'],
                                      'source_credit':created['input_binding']['source_admission']['source_credit'],'files':hashes}
+                    if metric in {'B13','D04'}:
+                        current_case=normal.replay_case(data_root=work/'data',manifest=created['manifest'])
+                        metrics[metric]['native_assessment_completed'] = _completed_result(metric=metric,
+                            result=created['result'],case=current_case,rendered=rendered,data_root=work/'data')
                 _need(sha256_file(path=source/'evidence/requests_log.csv')==ledger,'UPDATE_SOURCE_CHANGED_DURING_EXECUTION')
-                status='CANDIDATE_READY' if all(v['publication']=='PUBLISHED' for v in metrics.values()) else 'CANDIDATE_WITHHELD'
+                status='CANDIDATE_READY' if all(v['publication']=='PUBLISHED' or v.get('native_assessment_completed') is True for v in metrics.values()) else 'CANDIDATE_WITHHELD'
                 if status=='CANDIDATE_READY':
                     successful_results=_verify_candidate(root,{'status':status,'configuration_id':configuration['record_id'],
                         'attempt_id':identity,'input':descriptor,'metrics':metrics},configuration)
@@ -278,11 +321,11 @@ def run_once(*,state_root,source_root,company_id,metric_ids):
             'new_candidate_created':bool(metrics),'terminal':terminal,'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
 
 
-def run_company(*,state_root,source_root,company_id,metric_ids):
+def run_company(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None):
     """Keep each metric's candidate independent of other metric failures."""
     root=normal._external(Path(state_root));policy=normal._policy(normal.ROOT)
     _need(type(metric_ids) is list and metric_ids and len(metric_ids)==len(set(metric_ids))
-          and set(metric_ids)<=set(policy['metric_ids']),'UPDATE_METRIC_SCOPE_INVALID')
+          and set(metric_ids)<=set(normal.update_metric_ids()),'UPDATE_METRIC_SCOPE_INVALID')
     # Earlier group histories remain intact and must use their pinned runtime.
     # Never silently start unrelated histories beside an existing group pointer.
     _need(not (root/'configuration.json').exists() and not (root/'current.json').exists(),
@@ -291,7 +334,7 @@ def run_company(*,state_root,source_root,company_id,metric_ids):
     for metric in sorted(metric_ids):
         try:
             outcome=run_once(state_root=root/'metrics'/metric,source_root=source_root,
-                             company_id=company_id,metric_ids=[metric])
+                             company_id=company_id,metric_ids=[metric],native_assessment_mode=native_assessment_mode,native_assessment_ledger=native_assessment_ledger)
         except Exception as error:
             outcome={'status':'UPDATE_BLOCKED','error_type':type(error).__name__,'reason':str(error),
                      'last_verified_candidate':None,'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}

@@ -1,0 +1,29 @@
+{
+  "cases": [
+    {
+      "case": "capture exception with claimed slot",
+      "result": "PASS",
+      "calls_report": {
+        "provider": 0,
+        "paid": 0,
+        "sec": null
+      },
+      "top_status": "CALL_ACCOUNTING_UNRESOLVED",
+      "capture_invocations": 1,
+      "companies_still_processed": 2,
+      "unrelated_company": "REFRESHED_UPDATES_READY"
+    },
+    {
+      "case": "previous failed metadata URL on next invocation",
+      "result": "PASS",
+      "capture_invocations": 0,
+      "failed_url_preserved": true
+    }
+  ],
+  "evidence_kind": "SYNTHETIC_COORDINATOR_BOUNDARY_WITH_READ_AND_SESSION_DOUBLES",
+  "actual_new_calls": [
+    0,
+    0,
+    0
+  ]
+}

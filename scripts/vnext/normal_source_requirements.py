@@ -6,17 +6,19 @@ it cannot be presented as a complete source inventory. This is the read-only
 front of normal source updates, not an acquisition grant or execution result.
 """
 from pathlib import Path
+from datetime import date,timedelta
 import re
 
 from sec_urls import submissions_url,submissions_file_url,companyfacts_url,accession_document_url,accession_directory_url,hdr_sgml_url
 from .annual_update import AnnualUpdateError
 from .batch_workflow import BatchWorkflowError
 from .canonical import CanonicalError,content_hash,sha256_file,strict_json_loads
-from .normal_annual_input import _registry_rows,select_filing,NormalAnnualInputError
+from .normal_annual_input import _registry_rows,select_filing,annual_period,NormalAnnualInputError
 from .normal_annual_input_v2 import prepare_saved_annual_input,exact_json_value
 from .normal_governance_input import _Sources,_filings,_history_index,history_body_alignment,select_governance_metadata,NormalGovernanceInputError
 from .normal_source_authority import ROOT,verify_saved_source_proofs,NormalSourceAuthorityError
 from .sources import SourceError
+from .fiscal_year_labels import FiscalYearLabelError
 
 
 class SourceRequirementsError(ValueError):
@@ -27,7 +29,7 @@ def _need(condition,reason):
     if not condition:raise SourceRequirementsError(reason)
 
 
-_SOURCE_ERRORS=(AnnualUpdateError,BatchWorkflowError,CanonicalError,NormalAnnualInputError,NormalGovernanceInputError,NormalSourceAuthorityError,SourceError,SourceRequirementsError,UnicodeError)
+_SOURCE_ERRORS=(AnnualUpdateError,BatchWorkflowError,CanonicalError,NormalAnnualInputError,NormalGovernanceInputError,NormalSourceAuthorityError,SourceError,SourceRequirementsError,FiscalYearLabelError,UnicodeError)
 
 
 def _instance_names(payload,company,filing):
@@ -83,10 +85,109 @@ class _Requirements:
         return self.payloads.get(url)
 
 
+def source_dependency_satisfied(requirement):
+    """A missing file stays missing even when its sole required role is met."""
+    return requirement['saved_status']=='VERIFIED_SAVED_SOURCE' or (
+        requirement['saved_status']=='MISSING_SAVED_SOURCE'
+        and requirement['roles']==['prior_annual_primary']
+        and requirement.get('alternative_dependency',{}).get('status')=='VERIFIED_PRIOR_NATIVE_INSTANCE')
+
+
+def _same_source_observation(left,right):
+    # Reader roles name different uses of the exact same source and attempt.
+    omitted={'source_reference_id','source_role'}
+    return {k:v for k,v in left.items() if k not in omitted}=={k:v for k,v in right.items() if k not in omitted}
+
+
+def _satisfy_prior_primary_alternatives(plan,prepared,selection):
+    """Reuse the existing annual-period/auditor XML routes, without fetching.
+
+    Only a primary used solely for the prior annual dependency can be optional.
+    All declared native instances and their accession index must already have
+    verified saved proofs. This does not establish any metric result or freshness.
+    """
+    from .governance_signals import _auditor_filing,GovernanceSignalError
+    if prepared is None or selection is None:return
+    cik=plan.company['primary_cik']
+    for filing in selection['prior_filing_chain']:
+        url=accession_document_url(cik=int(cik),accession=filing['accessionNumber'],document_name=filing['primaryDocument'])
+        item=plan.requests.get(url)
+        if item is None or item['saved_status']!='MISSING_SAVED_SOURCE' or item['roles']!=['prior_annual_primary']:continue
+        try:
+            _need(prepared['entity']==cik,'SOURCE_REQUIREMENT_ALTERNATIVE_SUBJECT_CHANGED')
+            documents=plan.reader.auditor_filing(filing)
+            file_set=plan.reader.file_sets[-1]
+            _need(file_set['primary_saved'] is False and bool(file_set['expected_xml_documents']),
+                  'SOURCE_REQUIREMENT_ALTERNATIVE_NATIVE_INSTANCE_REQUIRED')
+            index_url=accession_directory_url(cik=int(cik),accession=filing['accessionNumber'])
+            index=plan.requests.get(index_url,{})
+            _need(index.get('saved_status')=='VERIFIED_SAVED_SOURCE'
+                  and _same_source_observation(index['source_reference'],plan.reader.records[file_set['index_source_reference_id']]),
+                  'SOURCE_REQUIREMENT_ALTERNATIVE_INDEX_NOT_VERIFIED')
+            for source in documents:
+                ref=source['source_reference'];declared=plan.requests.get(ref['source_url'],{})
+                _need(declared.get('saved_status')=='VERIFIED_SAVED_SOURCE'
+                      and _same_source_observation(declared['source_reference'],ref),'SOURCE_REQUIREMENT_ALTERNATIVE_INSTANCE_NOT_VERIFIED')
+            periods=[annual_period(raw=s['raw_bytes'],cik=cik,filing=filing) for s in documents]
+            _need(bool(periods) and all(p==periods[0] for p in periods),
+                  'SOURCE_REQUIREMENT_ALTERNATIVE_PERIOD_CONFLICT')
+            prior=periods[0]
+            _need(date.fromisoformat(prior['period_end'])+timedelta(days=1)
+                  ==date.fromisoformat(prepared['table_input']['target_period']['period_start']),
+                  'SOURCE_REQUIREMENT_ALTERNATIVE_PRIOR_NOT_ADJACENT')
+            auditor=_auditor_filing(sources=documents,company_id=plan.company['company_id'],cik=cik,period_end=prior['period_end'])
+            _need(auditor['status']=='FOUND','SOURCE_REQUIREMENT_ALTERNATIVE_AUDITOR_NOT_ESTABLISHED')
+            item['alternative_dependency']={'status':'VERIFIED_PRIOR_NATIVE_INSTANCE',
+                'satisfied_roles':['prior_annual_primary'],'prior_period':prior,'file_set':file_set,
+                'source_references':[s['source_reference'] for s in documents],
+                'auditor_facts':auditor['facts'],'auditor_fact_status':auditor['status'],
+                'source_acquisition_credit':False,'metric_executed':False,
+                'all_39_metric_source_acceptance_proven':False}
+        except _SOURCE_ERRORS+(GovernanceSignalError,) as error:
+            item['alternative_dependency']={'status':'NOT_ESTABLISHED','reason':str(error),'error_type':type(error).__name__}
+
+
+_REGISTRATION_EVENT_FORMS = frozenset({'8-K12B','8-K12B/A'})
+
+
+def _discovery_filings(payload,*,inventory_name):
+    """Validate through the frozen parser without changing its form contract."""
+    from copy import deepcopy
+    original=_filings(payload,inventory_name=inventory_name)
+    block=payload['filings']['recent'] if 'filings' in payload else payload
+    if not any(form in _REGISTRATION_EVENT_FORMS for form in block['form']):return original
+    copied=deepcopy(payload)
+    temporary=copied['filings']['recent'] if 'filings' in copied else copied
+    temporary['form']=['8-K' if form in _REGISTRATION_EVENT_FORMS else form for form in block['form']]
+    checked=_filings(copied,inventory_name=inventory_name)
+    # Restore from the original row, not by normalizing the accepted form.
+    return [{**{key:values[row['metadata_origin']['row_index']] for key,values in block.items()},
+             'metadata_origin':row['metadata_origin']} for row in checked]
+
+
+def _registration_event_requirements(plan,rows,cik,window):
+    """Discover originals without changing the accepted C04/six-event forms."""
+    filings=[r for r in rows if r['form'] in _REGISTRATION_EVENT_FORMS
+             and window['period_start']<=r['filingDate']<=window['period_end']]
+    accessions=[r['accessionNumber'] for r in rows]
+    _need(all(accessions.count(filing['accessionNumber'])==1 for filing in filings),
+          'SOURCE_REQUIREMENT_REGISTRATION_INVENTORIES_OVERLAP')
+    for filing in filings:
+        accession=filing['accessionNumber']
+        for url,role,media in (
+            (accession_document_url(cik=int(cik),accession=accession,document_name=filing['primaryDocument']),
+             'registration_event_primary','text/html'),
+            (hdr_sgml_url(cik=int(cik),accession=accession),'registration_event_header','text/plain')):
+            plan.require(url,role,media,accession)
+            plan.requests[url].update(filing_form=filing['form'],
+                semantic_form_scope='SOURCE_DISCOVERY_ONLY_NOT_EXISTING_EVENT_ACCEPTANCE')
+    return sorted(filings,key=lambda r:(r['filingDate'],r['accessionNumber']))
+
+
 def _metadata_requirements(plan,prepared,inventory):
     company=plan.company;cik=company['primary_cik'];period=prepared['table_input']['target_period']
     payload=strict_json_loads(text=inventory['raw_bytes'].decode('utf-8'))
-    shards=_history_index(payload,cik);rows=_filings(payload,inventory_name=inventory['source_reference']['document_name'])
+    shards=_history_index(payload,cik);rows=_discovery_filings(payload,inventory_name=inventory['source_reference']['document_name'])
     inventories=[{'name':inventory['source_reference']['document_name'],'payload':payload,'source':inventory}]
     conflicts=[];unavailable=[]
     for shard in shards:
@@ -103,7 +204,7 @@ def _metadata_requirements(plan,prepared,inventory):
         body=strict_json_loads(text=source['raw_bytes'].decode('utf-8'))
         _need('cik' not in body or str(body['cik']).isdigit() and int(body['cik'])==int(cik),
               'SOURCE_REQUIREMENT_HISTORY_ENTITY_CHANGED')
-        shard_rows=_filings(body,inventory_name=shard['name'])
+        shard_rows=_discovery_filings(body,inventory_name=shard['name'])
         problem=history_body_alignment(shard=shard,rows=shard_rows)
         if problem:conflicts.append(problem)
         rows.extend(shard_rows);inventories.append({'name':shard['name'],'payload':body,'source':source})
@@ -111,6 +212,7 @@ def _metadata_requirements(plan,prepared,inventory):
         return None,{'status':'METADATA_REFRESH_REQUIRED','history_conflicts':conflicts,'unavailable_history_urls':unavailable,
                      'complete_filing_inventory_proven':False}
     selection=select_governance_metadata(company=company,prepared_input=prepared,inventories=inventories)
+    selection['registration_event_filings']=_registration_event_requirements(plan,rows,cik,period)
     return selection,{'status':'SAVED_METADATA_COHERENT','history_conflicts':[],
                       'unavailable_history_urls':[],'complete_filing_inventory_proven':True}
 
@@ -143,7 +245,7 @@ def _registered_event_requirements(plan,prepared):
             _need(type(payload.get('cik')) in (str,int) and str(payload['cik']).isdigit()
                   and int(payload['cik'])==int(cik),'SOURCE_REQUIREMENT_EVENT_CIK_CHANGED')
             shards=_history_index(payload,cik)
-            rows=_filings(payload,inventory_name=source['source_reference']['document_name'])
+            rows=_discovery_filings(payload,inventory_name=source['source_reference']['document_name'])
             for shard in shards:
                 if shard['filingFrom']>window['period_end'] or shard['filingTo']<window['period_start']:continue
                 saved=plan.require(submissions_file_url(file_name=shard['name']),
@@ -153,10 +255,12 @@ def _registered_event_requirements(plan,prepared):
                 body=strict_json_loads(text=saved['raw_bytes'].decode('utf-8'))
                 _need('cik' not in body or str(body['cik']).isdigit() and int(body['cik'])==int(cik),
                       'SOURCE_REQUIREMENT_EVENT_HISTORY_CIK_CHANGED')
-                history_rows=_filings(body,inventory_name=shard['name'])
+                history_rows=_discovery_filings(body,inventory_name=shard['name'])
                 conflict=history_body_alignment(shard=shard,rows=history_rows)
                 if conflict:scope['issues'].append(conflict)
                 rows.extend(history_rows)
+            if not scope['issues']:
+                scope['registration_variant_filings']=_registration_event_requirements(plan,rows,cik,window)
             events=[r for r in rows if r['form'] in {'8-K','8-K/A'}
                     and window['period_start']<=r['filingDate']<=window['period_end']]
             seen=set()
@@ -240,8 +344,10 @@ def discover_saved_source_requirements(*,repo_root:Path,company_id:str):
         if not event_scope['complete_registered_metadata']:
             limitations.append({'phase':'REGISTERED_EVENT_METADATA',
                                 'reason':'APPROVED_EVENT_SCOPE_METADATA_INCOMPLETE'})
+    _satisfy_prior_primary_alternatives(plan,prepared,selection)
     requests=list(plan.requests.values())
-    pending=[r['source_url'] for r in requests if r['saved_status']!='VERIFIED_SAVED_SOURCE']
+    missing=[r['source_url'] for r in requests if r['saved_status']!='VERIFIED_SAVED_SOURCE']
+    pending=[r['source_url'] for r in requests if not source_dependency_satisfied(r)]
     refresh=[r['source_url'] for r in requests if r['refresh_for_new_discovery']]
     status=('METADATA_REFRESH_REQUIRED' if not metadata['complete_filing_inventory_proven'] else
             'SOURCE_DEPENDENCIES_UNRESOLVED' if pending or limitations else 'SAVED_SOURCE_DEPENDENCIES_AVAILABLE')
@@ -249,7 +355,8 @@ def discover_saved_source_requirements(*,repo_root:Path,company_id:str):
           'status':status,'metadata':metadata,'prepared_annual_input':prepared,'filing_selection':selection,
           'metadata_declared_annual_selection':declared,'annual_source_identity_verified':prepared is not None,
           **({'registered_event_scope':event_scope} if event_scope is not None else {}),
-          'requirements':requests,'missing_or_failed_source_urls':pending,'new_discovery_dataset_urls':refresh,
+          'requirements':requests,'missing_or_failed_source_urls':missing,'unresolved_dependency_urls':pending,
+          'new_discovery_dataset_urls':refresh,
           'limitations':limitations,'unique_known_get_count':len(requests),'complete_new_source_graph_known':selection is not None and not limitations,
           'discovery_scope':'CURRENT_AND_PRIOR_ANNUAL_LATEST_PROXY_AND_FISCAL_8K_DOCUMENTS',
           'all_39_metric_source_acceptance_proven':False,

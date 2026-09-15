@@ -50,10 +50,45 @@ def _policy(root):
     return value
 
 
-def prepare_case(*, data_root, company_id, metric_id):
+def update_metric_ids():
+    """Existing source routes plus registered B13/D04 consumption; no D03."""
+    return sorted(set(_policy(ROOT)['metric_ids']) | {'B13', 'D04'})
+
+
+def registered_update_options(metric_id, *, assessment_mode='LIVE'):
+    """A fixed source/request contract, not per-filing answers or call rights."""
+    _need(metric_id in {'B13', 'D04'} and assessment_mode in {'LIVE','RECORDED_TEST_ONLY'},
+          'ORDINARY_REGISTERED_UPDATE_MODE_INVALID')
+    from .continuous_request_context import FORMAT_VERSION
+    return {'assessment_mode':assessment_mode, 'request_context_format':FORMAT_VERSION,
+            'complete_response_contract':metric_id == 'D04'}
+
+
+def _registered_update_kwargs(metric_id, options, company_id):
+    if options is None:
+        return {}
+    _need(type(options) is dict and options == registered_update_options(metric_id,
+        assessment_mode=options.get('assessment_mode')), 'ORDINARY_REGISTERED_UPDATE_CONTRACT_CHANGED')
+    if metric_id == 'B13':
+        from .capacity_utilization_source import policy
+        _, approved = policy()
+        if company_id not in approved['applicable_company_ids']:
+            return {}
+    return dict(options)
+
+
+def prepare_case(*, data_root, company_id, metric_id, registered_update_options=None, native_assessment_ledger=None):
     if metric_id in {'B13', 'D04'}:
         from .capacity_run import prepare_case as prepare_capacity_case
-        return prepare_capacity_case(data_root=data_root, company_id=company_id, metric_id=metric_id)
+        options=_registered_update_kwargs(metric_id, registered_update_options, company_id)
+        if options:
+            from .capacity_update_input import prepare_registered_update
+            selected=prepare_registered_update(source_root=data_root,company_id=company_id,metric_id=metric_id,
+                options=options,ledger=native_assessment_ledger)
+            return prepare_capacity_case(data_root=data_root,company_id=company_id,metric_id=metric_id,**options,
+                current_runtime=True,source_snapshot=selected['source'],assessment_input_id=selected['registered_input']['input_record_id'])
+        return prepare_capacity_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
+            **({'current_runtime':True} if registered_update_options is not None else {}))
     policy = _policy(data_root)
     _need(metric_id in policy["metric_ids"],"ORDINARY_INTEGRATED_METRIC_NOT_ENABLED")
     note_debt = None
@@ -148,11 +183,19 @@ def _binding(case, requirement):
         "production_authorized":False})
 
 
-def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None):
+def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None, registered_update_options=None, native_assessment_ledger=None):
     if metric_id in {'B13', 'D04'}:
         from .capacity_run import install_inputs
-        return install_inputs(data_root=data_root, company_id=company_id,
-                              source_root=ROOT if source_root is None else source_root, metric_id=metric_id)
+        root=ROOT if source_root is None else source_root
+        options=_registered_update_kwargs(metric_id,registered_update_options,company_id)
+        if options:
+            from .capacity_update_input import prepare_registered_update
+            selected=prepare_registered_update(source_root=root,company_id=company_id,metric_id=metric_id,
+                options=options,ledger=native_assessment_ledger)
+            return install_inputs(data_root=data_root,company_id=company_id,source_root=root,metric_id=metric_id,**options,
+                current_runtime=True,source_snapshot=selected['source'],assessment_input_id=selected['registered_input']['input_record_id'])
+        return install_inputs(data_root=data_root,company_id=company_id,source_root=root,metric_id=metric_id,
+            **({'current_runtime':True} if registered_update_options is not None else {}))
     data_root = _external(data_root)
     source_root = ROOT if source_root is None else _external(source_root)
     _need(source_root != data_root and source_root not in data_root.parents and data_root not in source_root.parents,

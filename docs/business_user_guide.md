@@ -319,3 +319,9 @@ A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主
 NOT_MEANINGFUL可以表示当前主体只报告不足一年的期间，而非没有披露收入。查看实际period_start/period_end及原件观察；短期实报数仍可追溯，但不作为全年指标，也不能自行加上前身期间。
 
 <!-- capability-anchor: CAPABILITY.current_income_statement_scope -->
+
+### 开发中的普通更新与私有版本
+
+有限刷新可自动发现并取得所需来源，报告各指标新尝试与历史有效结果。某项未完成不会把其他无依赖结果抹去；旧结果仍按原期间显示。完整来源的程序范围文字、实际计算值、结构性不适用和实现失败分别阅读，不因存在一条记录就视为390项全部验收。私有发布演练不会改变当前正式结果，正式采纳仍待集中确认。入口及具体边界见[普通刷新说明](ordinary_refresh_cycle.md)。
+<!-- capability-anchor: CAPABILITY.ordinary_refresh_native_draft -->
+<!-- capability-anchor: CAPABILITY.ordinary_private_release_draft -->

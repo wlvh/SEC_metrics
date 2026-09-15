@@ -4,7 +4,7 @@ Saved source authenticity is replayed, never relabelled as new acquisition.
 These executions retain original wire and a terminal but deliberately confer
 no native Evidence, qualification, publication or semantic acceptance credit.
 """
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 from pathlib import Path
 import json
@@ -44,8 +44,14 @@ SEMANTIC_RULE_PATHS = (
     'catalog/r5/capacity_semantic_review_v4.json',
     'catalog/r5/capacity_semantic_review_v5.json',
     'scripts/vnext/d04_native_assessment.py', 'catalog/r6/semantic_review_v4.json',
+    'catalog/r6/semantic_review_v5.json',
     'catalog/r6/D04_going_concern_assessment_v1.md',
     'scripts/vnext/capacity_native_assessment.py',
+    'scripts/vnext/capacity_quantity_scope.py',
+    'scripts/vnext/capacity_quantity_roles.py',
+    'scripts/vnext/capacity_update_input.py',
+    'scripts/vnext/native_request_construction.py',
+    'scripts/vnext/native_unit_index.py',
     'scripts/vnext/continuous_request_context.py',
     'config/tokenizers/deepseek_v41/tokenizer.json.gz',
     'requirements-continuous-context.txt')
@@ -101,10 +107,26 @@ def request_digest(request, policy):
         body['shared_source_dictionaries'] = request['shared_source_dictionaries']
     if request.get('metric_id') == 'B13':
         body['native_capacity_role_assessments'] = request['native_capacity_role_assessments']
+    for field in ('quantity_scope_context', 'quantity_scope_instructions', 'response_contract_version',
+                  'required_response_unit_ids', 'unit_response_requirements',
+                  'unit_index_requirements'):
+        if field in request:
+            body[field] = request[field]
+    if 'indexed_unit_contract' in request:
+        # A source/request identity alone never permits a redraw. The complete
+        # original ID remains bound in HTTP bytes, request, plan and receipt;
+        # this digest compares semantic inputs and the response contract only.
+        body['indexed_unit_contract'] = {k:v for k,v in request['indexed_unit_contract'].items()
+                                         if k != 'base_request_id'}
     return sha256_bytes(content=_json(body))
 
 
 def source_requests(source):
+    from .native_request_construction import reuse_source_requests
+    return reuse_source_requests(source,_construct_source_requests)
+
+
+def _construct_source_requests(source):
     """Keep every existing source unit, with one unit per smaller request."""
     if source['record_type']=='D03_PROVIDER_PROPOSAL_VERIFICATION_SOURCE':
         from .r6_semantic_verification import requests_from_source
@@ -165,6 +187,10 @@ class SemanticRequest:
     requirement: object
     authority: object
     data_root: Path = ROOT
+    source_ledger: object = None
+    replay_only: bool = False
+    current_source_bytes: bytes = None
+    current_source_ledger_sha256: str = None
 
     def validate(self, policy):
         need(self._factory is _FACTORY, 'CONTINUOUS_SOURCE_FACTORY_REQUIRED')
@@ -174,18 +200,38 @@ class SemanticRequest:
         need(source['semantic_source_id'] == content_hash(value={k:v for k,v in source.items() if k!='semantic_source_id'}),
              'CONTINUOUS_SOURCE_CHANGED')
         allowed_control_root=Path(self.requirement['policy']['budget_root'])/'source-inputs'
-        need(self.data_root in {ROOT,allowed_control_root}
+        from .continuous_call_ledger import CallLedger, _FACTORY as ledger_factory
+        registered_source = (type(self.source_ledger) is CallLedger and self.source_ledger._factory is ledger_factory)
+        allowed_registered = registered_source and (self.data_root == allowed_control_root if self.source_ledger.live else
+            self.data_root != allowed_control_root and self.data_root != ROOT and ROOT not in self.data_root.parents)
+        need((self.data_root in {ROOT,allowed_control_root} or allowed_registered)
              and not any(p.is_symlink() for p in [self.data_root,*self.data_root.parents]),
              'CONTINUOUS_SOURCE_ROOT_NOT_ALLOWED')
         if self.data_root==ROOT:
             verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
         else:
             from .ordinary_source_authority import verify_ordinary_source_proofs
-            need(source['record_type'] in {'D04_HISTORICAL_PRIMARY_CONTROL_SOURCE', 'D04_NATIVE_HISTORICAL_CONTROL_SOURCE'}
-                 and source['normal_update_input'] is False,
+            historical = source['record_type'] in {'D04_HISTORICAL_PRIMARY_CONTROL_SOURCE', 'D04_NATIVE_HISTORICAL_CONTROL_SOURCE'}
+            ordinary = (registered_source and allowed_registered and source['record_type'] in {
+                'B13_COMPLETE_SEMANTIC_SOURCE','D04_NATIVE_COMPLETE_SEMANTIC_SOURCE'})
+            need(historical and source['normal_update_input'] is False or ordinary,
                  'CONTINUOUS_CONTROL_SOURCE_SCOPE_REQUIRED')
-            verify_ordinary_source_proofs(data_root=self.data_root,proofs=source['source_proofs'])
-        need(request in source_requests(source), 'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
+            admission=verify_ordinary_source_proofs(data_root=self.data_root,proofs=source['source_proofs'])
+            if ordinary and self.source_ledger.live:
+                need(admission['source_credit']!='RECORDED_TEST_ONLY','CONTINUOUS_RECORDED_SOURCE_CANNOT_RUN_LIVE')
+        if self.current_source_bytes is not None:
+            from .ordinary_source_authority import verify_ordinary_source_proofs
+            from .capacity_update_input import source_equivalence
+            current=strict_json_loads(text=self.current_source_bytes.decode())
+            need(self.replay_only and sha256_file(path=self.data_root/'evidence/requests_log.csv')==self.current_source_ledger_sha256,
+                 'CONTINUOUS_REPLAY_CURRENT_SOURCE_CHANGED')
+            verify_ordinary_source_proofs(data_root=self.data_root,proofs=current['source_proofs'])
+            source_equivalence(current=current,original=source)
+        original_requests = source_requests(source)
+        if request not in original_requests:
+            from .native_unit_index import restore_base_request
+            need('indexed_unit_contract' in request and restore_base_request(request) in original_requests,
+                 'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
         need(configured_transport_policy(requirement=self.requirement,repo_root=ROOT) == policy
              and request_body(request,policy) == self.provider_request_body_bytes
              and _json(request['response_protocol']) == self.output_schema_bytes,
@@ -194,7 +240,7 @@ class SemanticRequest:
 
 
 def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,control_id=None, native=False,
-                     reference_context=False):
+                     reference_context=False, complete_response_contract=False, source_root=None, source_ledger=None):
     from .r6_semantic_source import prepare_d04_semantic_source
     from .requirement_profile import validate_execution_authority
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
@@ -206,11 +252,25 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     need(metric_id in {'B13','D03','D04'},'CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
     need(not native or (metric_id == 'D04' and prior_call_ordinal is None),
          'D04_NATIVE_REQUIRES_CURRENT_COMPLETE_SOURCE')
+    need(type(complete_response_contract) is bool and (not complete_response_contract or native),
+         'D04_COMPLETE_RESPONSE_REQUIRES_NATIVE_REQUEST')
     need(not reference_context or (prior_call_ordinal is None and (native or metric_id in {'B13', 'D03'})),
          'CONTINUOUS_REFERENCE_GROUPING_UNSUPPORTED')
     from .continuous_request_context import FORMAT_VERSION
     context_format = FORMAT_VERSION if reference_context else None
     data_root=ROOT
+    if source_root is not None:
+        from .continuous_call_ledger import CallLedger, _FACTORY as ledger_factory
+        data_root=Path(source_root).resolve()
+        need(control_id is None and prior_call_ordinal is None and metric_id in {'B13','D04'}
+             and (metric_id=='B13' or native), 'CONTINUOUS_ORDINARY_SOURCE_ROUTE_REQUIRED')
+        need(type(source_ledger) is CallLedger and source_ledger._factory is ledger_factory,
+             'CONTINUOUS_ORDINARY_SOURCE_LEDGER_REQUIRED')
+        fixed=Path(requirement['policy']['budget_root'])/'source-inputs'
+        need((data_root in {ROOT,fixed} if source_ledger.live else data_root!=fixed)
+             and (not source_ledger.live or source_ledger.root==fixed.parent)
+             and not any(p.is_symlink() for p in [Path(source_root),*Path(source_root).parents]),
+             'CONTINUOUS_ORDINARY_SOURCE_ROOT_FORBIDDEN')
     if control_id is not None:
         need(metric_id=='D04' and prior_call_ordinal is None,'CONTINUOUS_HISTORICAL_CONTROL_REQUIRES_D04')
         from .r6_historical_controls import prepare_control_source
@@ -218,7 +278,8 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
         source=prepare_control_source(repo_root=data_root,company_id=company_id,control_id=control_id)
         if native:
             from .d04_native_assessment import native_source
-            source = native_source(source, historical_control=True, request_context_format=context_format)
+            source = native_source(source, historical_control=True, request_context_format=context_format,
+                                   complete_response_contract=complete_response_contract)
     elif prior_call_ordinal is not None:
         need(metric_id=='D03','CONTINUOUS_VERIFICATION_REQUIRES_D03')
         from .r6_semantic_verification import prepare_verification_source
@@ -228,19 +289,84 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
         source = prepare_regulatory_semantic_source(repo_root=ROOT,company_id=company_id,request_context_format=context_format)
     elif metric_id == 'B13':
         from .capacity_semantic_source import prepare_capacity_semantic_source
-        source = prepare_capacity_semantic_source(repo_root=ROOT,company_id=company_id,request_context_format=context_format)
+        source = prepare_capacity_semantic_source(repo_root=data_root,company_id=company_id,request_context_format=context_format,ordinary_registered=data_root!=ROOT)
     else:
-        source = prepare_d04_semantic_source(repo_root=ROOT,company_id=company_id)
+        source = prepare_d04_semantic_source(repo_root=data_root,company_id=company_id,ordinary_registered=data_root!=ROOT)
         if native:
             from .d04_native_assessment import native_source
-            source = native_source(source, request_context_format=context_format)
+            source = native_source(source, request_context_format=context_format,
+                                   complete_response_contract=complete_response_contract)
     if data_root==ROOT:verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
     else:
         from .ordinary_source_authority import verify_ordinary_source_proofs
         verify_ordinary_source_proofs(data_root=data_root,proofs=source['source_proofs'])
     raw = _json(source)
     return [SemanticRequest(_FACTORY,raw,_json(request),request_body(request,policy),
-        _json(request['response_protocol']),requirement,authority,data_root) for request in source_requests(source)]
+        _json(request['response_protocol']),requirement,authority,data_root,source_ledger) for request in source_requests(source)]
+
+
+def select_native_request_variants(*, prepared_requests, ledger):
+    """Keep exact successful receipts; use indexed output for other groups.
+
+    Selection is read-only and covers the existing complete source partition.
+    A success that fails current replay stops selection rather than buying a
+    replacement. Failed original requests retain their original terminal.
+    """
+    from .continuous_call_ledger import CallLedger
+    from .native_unit_index import BASE, VERSION, upgrade_request, validate_request_partition
+    from .native_assessment_replay import replay_native_response
+    need(type(ledger) is CallLedger and bool(prepared_requests), 'NATIVE_VARIANT_FACTORY_INPUT_REQUIRED')
+    need(all(type(p) is SemanticRequest and p._factory is _FACTORY for p in prepared_requests),
+         'NATIVE_VARIANT_FACTORY_INPUT_REQUIRED')
+    source = strict_json_loads(text=prepared_requests[0].source_bytes.decode())
+    need(source['metric_id'] in {'B13', 'D04'} and all(
+        p.source_bytes == prepared_requests[0].source_bytes for p in prepared_requests),
+        'NATIVE_VARIANT_COMPLETE_SOURCE_REQUIRED')
+    originals = [strict_json_loads(text=p.request_bytes.decode()) for p in prepared_requests]
+    need(validate_request_partition(source, originals) == [BASE] * len(originals),
+         'NATIVE_VARIANT_BASE_PARTITION_REQUIRED')
+    alternatives = [upgrade_request(r) for r in originals]
+    candidates = {r['request_id']:(i,version) for i,pair in enumerate(zip(originals, alternatives))
+                  for r,version in zip(pair,(BASE,VERSION))}
+    successful = {}
+    with ledger.locked():
+        state = ledger.snapshot()
+        for row in state['rows']:
+            if row['channel'] != 'PROVIDER' or row['status'] != 'SUCCEEDED':
+                continue
+            path = ledger.root / 'calls' / ('%04d' % row['ordinal'])
+            saved_path = path / 'semantic-request.json'
+            if not saved_path.exists():
+                continue
+            saved = strict_json_file(path=saved_path)
+            match = candidates.get(saved.get('request_id'))
+            if match is None:
+                continue
+            i,version = match
+            need(i not in successful, 'NATIVE_VARIANT_MULTIPLE_SUCCESSFUL_VERSIONS')
+            request = originals[i] if version == BASE else alternatives[i]
+            need(saved == request, 'NATIVE_VARIANT_SAVED_REQUEST_CHANGED')
+            prepared = prepared_requests[i]
+            policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
+            selected = replace(prepared, request_bytes=_json(request),
+                provider_request_body_bytes=request_body(request, policy),
+                output_schema_bytes=_json(request['response_protocol']))
+            replay = replay_native_response(prepared=selected, path=path)
+            successful[i] = (selected, {'request_id':request['request_id'], 'variant':version,
+                'original_ordinal':row['ordinal'], 'revalidation':replay['revalidation']})
+    selected, report = [], []
+    for i,prepared in enumerate(prepared_requests):
+        if i in successful:
+            item, entry = successful[i]
+        else:
+            request = alternatives[i]
+            policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
+            item = replace(prepared, request_bytes=_json(request),
+                provider_request_body_bytes=request_body(request,policy),
+                output_schema_bytes=_json(request['response_protocol']))
+            entry = {'request_id':request['request_id'], 'variant':VERSION, 'original_ordinal':None}
+        selected.append(item); report.append(entry)
+    return selected, report
 
 
 def transport_payload(*, request, policy):
@@ -462,6 +588,10 @@ def execute_d04_assessment(*, prepared, ledger, recorded_wire=None):
 def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
+    need(not prepared.replay_only, 'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
+    if prepared.source_ledger is not None:
+        need(prepared.source_ledger.live==ledger.live and prepared.source_ledger.root==ledger.root,
+             'CONTINUOUS_SOURCE_EXECUTION_LEDGER_CHANGED')
     need(not native_assessment or request_fields.get('metric_id') == 'B13'
          or request_fields['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST',
          'NATIVE_DIAGNOSTIC_UPGRADE_FORBIDDEN')

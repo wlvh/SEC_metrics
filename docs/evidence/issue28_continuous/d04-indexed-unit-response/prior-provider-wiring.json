@@ -1,0 +1,24 @@
+{
+  "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
+  "requirement_id": "issue_28_v14",
+  "execution_authority_hash": "sha256:f180545c102edb2dd9a7cb9f71461f7999b879dcad86295271b2656ae0088dfd",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "network_disabled": true,
+  "legacy_default_forbidden": true,
+  "real_request_factory_to_controller_verified": true,
+  "count_control_tests_passed": true,
+  "evidence": {
+    "docs/evidence/issue28_continuous/d04-complete-response-contract/current-wiring.log": "a09573d291848add078800fd5b98f69d9b850f3a4f7a141cc8075f4cdcd7fbf6",
+    "docs/evidence/issue28_continuous/d04-complete-response-contract/current-fast-delta.log": "00c691ae7636afe942f14e9b5d795aed1f697c318dcc29038c96d6e0f37ffd0a",
+    "docs/evidence/issue28_continuous/d04-complete-response-contract/native.log": "e90862302d27775cc32fe328ee95bd8aa65a188d95d3fe8915eb40b75a4f0c9f",
+    "docs/evidence/issue28_continuous/b13-quantity-scope-repair/complete-native-current.log": "961eda8b9625f09dcd4dce3a79361530f9607e3ab87a3a5f93e33a078214765c",
+    "docs/evidence/issue28_continuous/b13-quantity-scope-repair/numeric-run-current.log": "a2ccb86081ad7422eed95292519794f68d73d9364b3e583febee0cf6120c998c",
+    "docs/evidence/issue28_continuous/review-5207290213/independent-complete-response-review/README.md": "36e341d6c7c353ae388c339a9cd12c18aebd7a3efbea46bcbd445b24c20c3e3f",
+    "docs/evidence/issue28_continuous/b13-quantity-scope-repair/root-independent-recheck.json": "110815862879ca3e5e52ac3c78cbb07ce0ca35b9b9a5fc73c889f87b0cc51ed1"
+  }
+}

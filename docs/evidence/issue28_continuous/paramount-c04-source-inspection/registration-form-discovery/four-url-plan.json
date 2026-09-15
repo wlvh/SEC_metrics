@@ -1,0 +1,168 @@
+{
+  "record_type": "REGISTRATION_VARIANT_FINITE_SOURCE_PLAN",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "metadata": {
+    "source_url": "https://data.sec.gov/submissions/CIK0002041610.json",
+    "method": "GET",
+    "roles": [
+      "sec_submissions_inventory"
+    ],
+    "accession": "",
+    "media_type": "application/json",
+    "refresh_for_new_discovery": true,
+    "saved_status": "VERIFIED_SAVED_SOURCE",
+    "source_acquisition_credit": false,
+    "source_reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:1675e3728606efda84d87ed739d2743656f0c40054b565754e0caf43ec55dd99",
+      "raw_asset_id": "sha256:322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103",
+      "company_id": "paramount_skydance_paramount_global",
+      "source_url": "https://data.sec.gov/submissions/CIK0002041610.json",
+      "accession": "SUBMISSIONS-2041610",
+      "document_name": "CIK0002041610.json",
+      "source_role": "sec_submissions_inventory",
+      "request_attempt_id": "request:attempt:98d4ba07a2daed1c2e2730244ad274f701e586a0f8dd2b3fd68429250b3b75fb"
+    },
+    "proof": {
+      "source_url": "https://data.sec.gov/submissions/CIK0002041610.json",
+      "accession": "",
+      "document_name": "CIK0002041610.json",
+      "content_sha256": "322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103",
+      "request_body_sha256": "322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103",
+      "request_body_size": 32702,
+      "request_headers_repo_relative_path": "evidence/request_attempts/32/322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103/CIK0002041610.json.01be7271ae96e4466114270e71ce847e6de928ff5b1b933a6c76747284d2fea8.headers.json",
+      "request_headers_sha256": "01be7271ae96e4466114270e71ce847e6de928ff5b1b933a6c76747284d2fea8",
+      "request_headers_size": 718,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/32/322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103/CIK0002041610.json",
+      "request_attempt_id": "request:attempt:98d4ba07a2daed1c2e2730244ad274f701e586a0f8dd2b3fd68429250b3b75fb"
+    }
+  },
+  "metadata_raw_sha256": "322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103",
+  "company_id": "paramount_skydance_paramount_global",
+  "cik": "2041610",
+  "period": {
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "source_forms": [
+    "8-K12B",
+    "8-K12B/A"
+  ],
+  "filings": [
+    {
+      "accessionNumber": "0001193125-25-175046",
+      "filingDate": "2025-08-07",
+      "reportDate": "2025-08-07",
+      "acceptanceDateTime": "2025-08-07T13:14:40.000Z",
+      "act": "34",
+      "form": "8-K12B",
+      "fileNumber": "001-42791",
+      "filmNumber": "251192007",
+      "items": "1.01,1.02,2.01,2.03,3.01,3.02,3.03,5.01,5.02,5.03,5.05,7.01,9.01",
+      "core_type": "XBRL",
+      "size": 2486267,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "d841914d8k12b.htm",
+      "primaryDocDescription": "8-K12B",
+      "metadata_origin": {
+        "inventory_name": "CIK0002041610.json",
+        "row_index": 186
+      }
+    },
+    {
+      "accessionNumber": "0002041610-25-000029",
+      "filingDate": "2025-10-23",
+      "reportDate": "2025-08-07",
+      "acceptanceDateTime": "2025-10-23T20:28:58.000Z",
+      "act": "34",
+      "form": "8-K12B/A",
+      "fileNumber": "001-42791",
+      "filmNumber": "251413417",
+      "items": "7.01,9.01",
+      "core_type": "XBRL",
+      "size": 1894074,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "psky-20250807.htm",
+      "primaryDocDescription": "FORM 8-K12B/A",
+      "metadata_origin": {
+        "inventory_name": "CIK0002041610.json",
+        "row_index": 136
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161025000029/psky-20250807.htm",
+      "method": "GET",
+      "roles": [
+        "registration_event_primary"
+      ],
+      "accession": "0002041610-25-000029",
+      "media_type": "text/html",
+      "refresh_for_new_discovery": false,
+      "saved_status": "MISSING_SAVED_SOURCE",
+      "source_acquisition_credit": false,
+      "filing_form": "8-K12B/A",
+      "semantic_form_scope": "SOURCE_DISCOVERY_ONLY_NOT_EXISTING_EVENT_ACCEPTANCE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161025000029/0002041610-25-000029.hdr.sgml",
+      "method": "GET",
+      "roles": [
+        "registration_event_header"
+      ],
+      "accession": "0002041610-25-000029",
+      "media_type": "text/plain",
+      "refresh_for_new_discovery": false,
+      "saved_status": "MISSING_SAVED_SOURCE",
+      "source_acquisition_credit": false,
+      "filing_form": "8-K12B/A",
+      "semantic_form_scope": "SOURCE_DISCOVERY_ONLY_NOT_EXISTING_EVENT_ACCEPTANCE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000119312525175046/d841914d8k12b.htm",
+      "method": "GET",
+      "roles": [
+        "registration_event_primary"
+      ],
+      "accession": "0001193125-25-175046",
+      "media_type": "text/html",
+      "refresh_for_new_discovery": false,
+      "saved_status": "MISSING_SAVED_SOURCE",
+      "source_acquisition_credit": false,
+      "filing_form": "8-K12B",
+      "semantic_form_scope": "SOURCE_DISCOVERY_ONLY_NOT_EXISTING_EVENT_ACCEPTANCE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000119312525175046/0001193125-25-175046.hdr.sgml",
+      "method": "GET",
+      "roles": [
+        "registration_event_header"
+      ],
+      "accession": "0001193125-25-175046",
+      "media_type": "text/plain",
+      "refresh_for_new_discovery": false,
+      "saved_status": "MISSING_SAVED_SOURCE",
+      "source_acquisition_credit": false,
+      "filing_form": "8-K12B",
+      "semantic_form_scope": "SOURCE_DISCOVERY_ONLY_NOT_EXISTING_EVENT_ACCEPTANCE"
+    }
+  ],
+  "required_new_SEC_requests_if_still_missing": 4,
+  "provider_requests_required_for_discovery": 0,
+  "actual_new_calls": [
+    0,
+    0,
+    0
+  ],
+  "fetch_executed": false,
+  "source_body_contents_known": false,
+  "old_C04_or_six_event_acceptance_extended": false,
+  "metadata_item_field_used_to_exclude_sources": false,
+  "new_real_company_metric_results": 0
+}

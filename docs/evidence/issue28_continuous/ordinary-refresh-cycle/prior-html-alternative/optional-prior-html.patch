@@ -1,0 +1,130 @@
+--- a/scripts/vnext/normal_source_requirements.py
++++ b/scripts/vnext/normal_source_requirements.py
+@@ -6,13 +6,14 @@
+ front of normal source updates, not an acquisition grant or execution result.
+ """
+ from pathlib import Path
++from datetime import date,timedelta
+ import re
+ 
+ from sec_urls import submissions_url,submissions_file_url,companyfacts_url,accession_document_url,accession_directory_url,hdr_sgml_url
+ from .annual_update import AnnualUpdateError
+ from .batch_workflow import BatchWorkflowError
+ from .canonical import CanonicalError,content_hash,sha256_file,strict_json_loads
+-from .normal_annual_input import _registry_rows,select_filing,NormalAnnualInputError
++from .normal_annual_input import _registry_rows,select_filing,annual_period,NormalAnnualInputError
+ from .normal_annual_input_v2 import prepare_saved_annual_input,exact_json_value
+ from .normal_governance_input import _Sources,_filings,_history_index,history_body_alignment,select_governance_metadata,NormalGovernanceInputError
+ from .normal_source_authority import ROOT,verify_saved_source_proofs,NormalSourceAuthorityError
+@@ -81,6 +82,68 @@
+         except _SOURCE_ERRORS as error:
+             item.update(saved_status='SAVED_SOURCE_BLOCKED',reason=str(error),error_type=type(error).__name__)
+         return self.payloads.get(url)
++
++
++def source_dependency_satisfied(requirement):
++    """A missing file stays missing even when its sole required role is met."""
++    return requirement['saved_status']=='VERIFIED_SAVED_SOURCE' or (
++        requirement['saved_status']=='MISSING_SAVED_SOURCE'
++        and requirement['roles']==['prior_annual_primary']
++        and requirement.get('alternative_dependency',{}).get('status')=='VERIFIED_PRIOR_NATIVE_INSTANCE')
++
++
++def _same_source_observation(left,right):
++    # Reader roles name different uses of the exact same source and attempt.
++    omitted={'source_reference_id','source_role'}
++    return {k:v for k,v in left.items() if k not in omitted}=={k:v for k,v in right.items() if k not in omitted}
++
++
++def _satisfy_prior_primary_alternatives(plan,prepared,selection):
++    """Reuse the existing annual-period/auditor XML routes, without fetching.
++
++    Only a primary used solely for the prior annual dependency can be optional.
++    All declared native instances and their accession index must already have
++    verified saved proofs. This does not establish any metric result or freshness.
++    """
++    from .governance_signals import _auditor_filing,GovernanceSignalError
++    if prepared is None or selection is None:return
++    cik=plan.company['primary_cik']
++    for filing in selection['prior_filing_chain']:
++        url=accession_document_url(cik=int(cik),accession=filing['accessionNumber'],document_name=filing['primaryDocument'])
++        item=plan.requests.get(url)
++        if item is None or item['saved_status']!='MISSING_SAVED_SOURCE' or item['roles']!=['prior_annual_primary']:continue
++        try:
++            _need(prepared['entity']==cik,'SOURCE_REQUIREMENT_ALTERNATIVE_SUBJECT_CHANGED')
++            documents=plan.reader.auditor_filing(filing)
++            file_set=plan.reader.file_sets[-1]
++            _need(file_set['primary_saved'] is False and bool(file_set['expected_xml_documents']),
++                  'SOURCE_REQUIREMENT_ALTERNATIVE_NATIVE_INSTANCE_REQUIRED')
++            index_url=accession_directory_url(cik=int(cik),accession=filing['accessionNumber'])
++            index=plan.requests.get(index_url,{})
++            _need(index.get('saved_status')=='VERIFIED_SAVED_SOURCE'
++                  and _same_source_observation(index['source_reference'],plan.reader.records[file_set['index_source_reference_id']]),
++                  'SOURCE_REQUIREMENT_ALTERNATIVE_INDEX_NOT_VERIFIED')
++            for source in documents:
++                ref=source['source_reference'];declared=plan.requests.get(ref['source_url'],{})
++                _need(declared.get('saved_status')=='VERIFIED_SAVED_SOURCE'
++                      and _same_source_observation(declared['source_reference'],ref),'SOURCE_REQUIREMENT_ALTERNATIVE_INSTANCE_NOT_VERIFIED')
++            periods=[annual_period(raw=s['raw_bytes'],cik=cik,filing=filing) for s in documents]
++            _need(bool(periods) and all(p==periods[0] for p in periods),
++                  'SOURCE_REQUIREMENT_ALTERNATIVE_PERIOD_CONFLICT')
++            prior=periods[0]
++            _need(date.fromisoformat(prior['period_end'])+timedelta(days=1)
++                  ==date.fromisoformat(prepared['table_input']['target_period']['period_start']),
++                  'SOURCE_REQUIREMENT_ALTERNATIVE_PRIOR_NOT_ADJACENT')
++            auditor=_auditor_filing(sources=documents,company_id=plan.company['company_id'],cik=cik,period_end=prior['period_end'])
++            _need(auditor['status']=='FOUND','SOURCE_REQUIREMENT_ALTERNATIVE_AUDITOR_NOT_ESTABLISHED')
++            item['alternative_dependency']={'status':'VERIFIED_PRIOR_NATIVE_INSTANCE',
++                'satisfied_roles':['prior_annual_primary'],'prior_period':prior,'file_set':file_set,
++                'source_references':[s['source_reference'] for s in documents],
++                'auditor_facts':auditor['facts'],'auditor_fact_status':auditor['status'],
++                'source_acquisition_credit':False,'metric_executed':False,
++                'all_39_metric_source_acceptance_proven':False}
++        except _SOURCE_ERRORS+(GovernanceSignalError,) as error:
++            item['alternative_dependency']={'status':'NOT_ESTABLISHED','reason':str(error),'error_type':type(error).__name__}
+ 
+ 
+ def _metadata_requirements(plan,prepared,inventory):
+@@ -240,8 +303,10 @@
+         if not event_scope['complete_registered_metadata']:
+             limitations.append({'phase':'REGISTERED_EVENT_METADATA',
+                                 'reason':'APPROVED_EVENT_SCOPE_METADATA_INCOMPLETE'})
++    _satisfy_prior_primary_alternatives(plan,prepared,selection)
+     requests=list(plan.requests.values())
+-    pending=[r['source_url'] for r in requests if r['saved_status']!='VERIFIED_SAVED_SOURCE']
++    missing=[r['source_url'] for r in requests if r['saved_status']!='VERIFIED_SAVED_SOURCE']
++    pending=[r['source_url'] for r in requests if not source_dependency_satisfied(r)]
+     refresh=[r['source_url'] for r in requests if r['refresh_for_new_discovery']]
+     status=('METADATA_REFRESH_REQUIRED' if not metadata['complete_filing_inventory_proven'] else
+             'SOURCE_DEPENDENCIES_UNRESOLVED' if pending or limitations else 'SAVED_SOURCE_DEPENDENCIES_AVAILABLE')
+@@ -249,7 +314,8 @@
+           'status':status,'metadata':metadata,'prepared_annual_input':prepared,'filing_selection':selection,
+           'metadata_declared_annual_selection':declared,'annual_source_identity_verified':prepared is not None,
+           **({'registered_event_scope':event_scope} if event_scope is not None else {}),
+-          'requirements':requests,'missing_or_failed_source_urls':pending,'new_discovery_dataset_urls':refresh,
++          'requirements':requests,'missing_or_failed_source_urls':missing,'unresolved_dependency_urls':pending,
++          'new_discovery_dataset_urls':refresh,
+           'limitations':limitations,'unique_known_get_count':len(requests),'complete_new_source_graph_known':selection is not None and not limitations,
+           'discovery_scope':'CURRENT_AND_PRIOR_ANNUAL_LATEST_PROXY_AND_FISCAL_8K_DOCUMENTS',
+           'all_39_metric_source_acceptance_proven':False,
+--- a/scripts/vnext/ordinary_refresh_cycle.py
++++ b/scripts/vnext/ordinary_refresh_cycle.py
+@@ -12,7 +12,7 @@
+ from .continuous_call_policy import need
+ from .continuous_sec_acquisition import SecAcquisitionSession, initialize_source_inputs
+ from .normal_source_authority import ROOT
+-from .normal_source_requirements import discover_saved_source_requirements
++from .normal_source_requirements import discover_saved_source_requirements, source_dependency_satisfied
+ from .normal_annual_input import _registry_rows
+ from .ordinary_update_cycle import run_company
+ from .normal_run_v3 import _policy
+@@ -55,7 +55,8 @@
+ 
+ def _pending(discovery, attempted, failed):
+     return [r for r in discovery['requirements'] if r['source_url'] not in attempted | failed
+-            and (r['refresh_for_new_discovery'] or r['saved_status'] == 'MISSING_SAVED_SOURCE')
++            and (r['refresh_for_new_discovery'] or (r['saved_status'] == 'MISSING_SAVED_SOURCE'
++                and not source_dependency_satisfied(r)))
+             and r['saved_status'] != 'SAVED_SOURCE_BLOCKED']
+ 
+ 

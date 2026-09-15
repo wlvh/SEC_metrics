@@ -793,3 +793,13 @@ B13数值增量：CapacityComparisonTest新增原件数量/倍率、改写源块
 D04活动延续增量按动作及对象核对招聘、用户和融资渠道语句，避免把特定活动与主体持续经营混同；真实原句在测试工厂中覆盖正确排除和错误疑虑拒绝。当前13项D04回归通过。上下文分词只完成官方参考与12份历史实际usage核对，现有运行计数/资源限制未改；材料见docs/evidence/issue28_continuous/d04-activity-and-context。
 
 D04作用域回归：`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_d04_native_assessment`；原三个反例完整Run和公共行在`tests.vnext.test_d04_run_material.D04RunMaterialTest.test_scoped_assertions_complete_run_and_final_public_row`，明确合成来源/准入替身。新格式完整记录响应链使用`D04_REFERENCE_CONTEXT=1`或`B13_REFERENCE_CONTEXT=1`运行相应原生material测试；固定离线依赖用`python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt`。计数/格式/资源篡改与usage反馈测试为`tests.vnext.test_continuous_request_context`；CI fast及相应来源/原生作业安装同一固定包，不扩大原资源上限。
+
+
+普通后继增量：`PYTHONPATH=.:scripts python3 -m unittest -v tests.vnext.test_capacity_quantity_roles tests.vnext.test_native_source_runtime_policy tests.vnext.test_native_refresh_execution tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest`覆盖源数量不能被错误排除、运行规则/原件根分离、新请求有限协调及旧成功复用边界。计数协调短测试中的账本/执行器/登记为明确替身；不能替代WB-3完整接线。
+
+`ORDINARY_NATIVE_UPDATE_SOURCE_ROOT=/absolute/registered-source ORDINARY_NATIVE_UPDATE_LEDGER_ROOT=/absolute/recorded-ledger ORDINARY_NATIVE_UPDATE_METRIC=D04 ORDINARY_NATIVE_UPDATE_COMPANY=enphase_energy ORDINARY_NATIVE_UPDATE_MODE=RECORDED_TEST_ONLY ORDINARY_NATIVE_UPDATE_MATERIAL_ROOT=/absolute/new/retained-root PYTHONPATH=.:scripts python3 -m unittest -v tests.vnext.test_registered_native_update.RegisteredNativeUpdateMaterialTest`执行完整原生候选、重复无新Run、输入损坏保留和恢复。材料保留根可选，须全新且在源码外；省略则临时清理。较早bf71当前实现材料实际1项2482.985秒通过，后续差异及真实复用另验，不机械复跑该大测试。固定tokenizers依赖按本节既有安装命令准备。
+
+私有发布：`ORDINARY_ISOLATED_PUBLICATION_PREPARATION=/absolute/verified-preparation ORDINARY_ISOLATED_PUBLICATION_ROOT=/absolute/new/private-root PYTHONPATH=.:scripts python3 -m unittest -v tests.vnext.test_ordinary_isolated_publication`。完整材料为显式可选测试；未提供变量时其SKIP不是PASS。准备包必须来自同一执行绑定下的完整原生重放，不能重签旧Run。旧入口退出预备使用既有冻结producer清单，在一次性进程里验证116语义导出阻断和39项两种写边界；原公开历史仍可读取，实际源码/active不改，见ordinary-release-preparation/legacy-exit-preparation。
+
+
+请求构造短作用域：`PYTHONPATH=.:scripts python3 -m unittest -v tests.vnext.test_native_request_construction`，需要既有固定tokenizers依赖。覆盖完整原字符/输入类型/字段顺序、返回对象突变、实际规则/分词状态变更、源真实性仍逐次执行；只缓存确定性请求字节，原生收据和含义检查不缓存。完整源声明、预算和请求格式未改变。注册形式短回归`tests.vnext.test_registration_event_discovery`使用明确合成metadata；真实4原件及完整metadata检查单列，不依赖私有固定目录或永久missing状态。

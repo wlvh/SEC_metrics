@@ -1,0 +1,98 @@
+test_historical_company_assertion_does_not_unlock_current_industry (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_historical_company_assertion_does_not_unlock_current_industry) ... FAIL
+test_industry_assertion_does_not_become_company_capacity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_industry_assertion_does_not_become_company_capacity) ... FAIL
+test_mixed_company_assertion_keeps_target_capacity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_mixed_company_assertion_keeps_target_capacity) ... ok
+test_native_records_and_public_absence_repeat_source_role_checks (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_native_records_and_public_absence_repeat_source_role_checks) ... FAIL
+test_nonquantity_dates_model_names_and_cancelled_plans_do_not_create_amounts (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_nonquantity_dates_model_names_and_cancelled_plans_do_not_create_amounts) ... ok
+test_operating_antecedent_dates_its_quantity_without_dating_cause_or_later_shipping (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_operating_antecedent_dates_its_quantity_without_dating_cause_or_later_shipping) ... FAIL
+test_qualitative_production_is_not_a_quantity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_qualitative_production_is_not_a_quantity) ... FAIL
+test_quarterly_arrangements_role_is_preserved_without_annualization (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_quarterly_arrangements_role_is_preserved_without_annualization) ... FAIL
+test_unsupported_quantity_is_implementation_unresolved (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_unsupported_quantity_is_implementation_unresolved) ... FAIL
+test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding) ... FAIL
+test_defined_absence_needs_complete_source_set_and_effective_review (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_defined_absence_needs_complete_source_set_and_effective_review) ... ok
+test_forged_complete_flags_and_numeric_opportunity_do_not_become_text (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_forged_complete_flags_and_numeric_opportunity_do_not_become_text) ... ok
+test_raw_source_and_effective_review_are_required (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_raw_source_and_effective_review_are_required) ... ok
+test_reviewed_capacity_prose_is_text_without_annualization_or_ratio (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_reviewed_capacity_prose_is_text_without_annualization_or_ratio) ... ok
+test_comparable_quantities_reuse_the_existing_calculator (tests.vnext.test_capacity_utilization_source.CapacityComparisonTest.test_comparable_quantities_reuse_the_existing_calculator) ... ok
+test_no_sales_shipments_installed_or_planned_substitutes (tests.vnext.test_capacity_utilization_source.CapacityComparisonTest.test_no_sales_shipments_installed_or_planned_substitutes) ... ok
+test_original_quantities_and_scope_are_rebuilt_before_division (tests.vnext.test_capacity_utilization_source.CapacityComparisonTest.test_original_quantities_and_scope_are_rebuilt_before_division) ... ok
+test_quantity_facts_cannot_be_relabelled_as_other_or_historical (tests.vnext.test_capacity_utilization_source.CapacityComparisonTest.test_quantity_facts_cannot_be_relabelled_as_other_or_historical) ... ok
+test_quantity_relations_reject_scope_period_and_substitute_amounts (tests.vnext.test_capacity_utilization_source.CapacityComparisonTest.test_quantity_relations_reject_scope_period_and_substitute_amounts) ... ok
+test_unit_subject_period_and_facility_mismatch_are_rejected (tests.vnext.test_capacity_utilization_source.CapacityComparisonTest.test_unit_subject_period_and_facility_mismatch_are_rejected) ... ok
+test_zero_capacity_and_unapproved_company_are_rejected (tests.vnext.test_capacity_utilization_source.CapacityComparisonTest.test_zero_capacity_and_unapproved_company_are_rejected) ... ok
+
+======================================================================
+FAIL: test_historical_company_assertion_does_not_unlock_current_industry (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_historical_company_assertion_does_not_unlock_current_industry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_quantity_roles.py", line 135, in test_historical_company_assertion_does_not_unlock_current_industry
+    with self.assertRaisesRegex(ValueError,'INDUSTRY_CAPACITY_IS_NOT_TARGET_CAPACITY'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_industry_assertion_does_not_become_company_capacity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_industry_assertion_does_not_become_company_capacity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_quantity_roles.py", line 127, in test_industry_assertion_does_not_become_company_capacity
+    with self.assertRaisesRegex(ValueError,'INDUSTRY_CAPACITY_IS_NOT_TARGET_CAPACITY'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_native_records_and_public_absence_repeat_source_role_checks (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_native_records_and_public_absence_repeat_source_role_checks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_quantity_roles.py", line 151, in test_native_records_and_public_absence_repeat_source_role_checks
+    with self.assertRaisesRegex(ValueError,error):result(args)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_operating_antecedent_dates_its_quantity_without_dating_cause_or_later_shipping (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_operating_antecedent_dates_its_quantity_without_dating_cause_or_later_shipping)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_quantity_roles.py", line 76, in test_operating_antecedent_dates_its_quantity_without_dating_cause_or_later_shipping
+    with self.assertRaisesRegex(ValueError,'CLASSIFICATION_CONFLICT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_qualitative_production_is_not_a_quantity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_qualitative_production_is_not_a_quantity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_quantity_roles.py", line 59, in test_qualitative_production_is_not_a_quantity
+    with self.assertRaisesRegex(ValueError,'PHYSICAL_QUANTITY_ROLE_NOT_ESTABLISHED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_quarterly_arrangements_role_is_preserved_without_annualization (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_quarterly_arrangements_role_is_preserved_without_annualization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_quantity_roles.py", line 68, in test_quarterly_arrangements_role_is_preserved_without_annualization
+    with self.assertRaisesRegex(ValueError,'SOURCE_PHYSICAL_QUANTITY_CLASSIFICATION_CONFLICT'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_unsupported_quantity_is_implementation_unresolved (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_unsupported_quantity_is_implementation_unresolved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_quantity_roles.py", line 90, in test_unsupported_quantity_is_implementation_unresolved
+    self.assertTrue(any(u['reason']=='B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED' for u in checked['unresolved']))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_quantity_roles.py", line 108, in test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding
+    self.assertTrue(checked['unresolved'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+----------------------------------------------------------------------
+Ran 21 tests in 17.644s
+
+FAILED (failures=8)

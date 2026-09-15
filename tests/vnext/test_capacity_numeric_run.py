@@ -59,6 +59,41 @@ class CapacityNumericRunTest(unittest.TestCase):
             self.assertEqual({e['value_raw'] for e in rendered['evidence']}, {'80 million','100 million'})
             self.assertTrue(all('fiscal year 2025' in e['evidence_quote'] for e in rendered['evidence']))
             self.assertFalse(rendered['receipt']['production_authorized'])
+            # Keep the real quantity/Run path while replacing only the same
+            # explicitly synthetic source/registration doubles as above.
+            p = 'For fiscal year 2025, we produced 80 million widgets worldwide.'
+            c = 'For fiscal year 2025, our available annual production capacity was 100 million widgets worldwide.'
+            bodies = [
+                ('<h2>Hypothetical example:</h2><p>Example setup.</p><p>Assumed figures follow.</p><p>'+p+'</p><p>'+c+'</p>', 'RELATION_NOT_UNIQUE_OR_UNSUPPORTED'),
+                ('<p>'+p+' '+c+' These quantities are hypothetical examples, not actual production or available capacity.</p>', 'RELATION_NOT_UNIQUE_OR_UNSUPPORTED'),
+                ('<p><strong>Hypothetical example:</strong></p><p>Example setup.</p><p>Assumed figures follow.</p><p>'+p+'</p><p>'+c+'</p>', 'NONHEADING_INTRODUCTION_SCOPE_UNRESOLVED'),
+            ]
+            for number, (body, reason) in enumerate(bodies):
+                excluded, excluded_raw = quantity_source(body)
+                excluded['source_proofs'] = []
+                excluded['semantic_source_id'] = content_hash(value={k:v for k,v in excluded.items() if k != 'semantic_source_id'})
+                path = data/excluded['documents'][0]['raw_blob']['storage_uri']
+                path.parent.mkdir(parents=True,exist_ok=True); path.write_bytes(next(iter(excluded_raw.values())))
+                with patch('vnext.capacity_run.prepare_capacity_semantic_source',return_value=excluded):
+                    with self.assertRaisesRegex(ValueError, reason):
+                        create_run(data_root=data,run_dir=base/('excluded-'+str(number)),company_id=source['company_id'])
+            actual_bodies = [
+                ('<h2>Hypothetical example:</h2><p>For fiscal year 2025, we produced 7 widgets worldwide.</p>'
+                    '<h2>Actual production</h2><p>'+p+'</p><p>'+c+'</p>', '0.8'),
+                ('<p>'+p+' '+c+' These quantities are hypothetical examples, not actual production or available capacity. '
+                    +p.replace('80 million','90 million')+' '+c+'</p>', '0.9'),
+            ]
+            for number, (body, expected) in enumerate(actual_bodies):
+                actual, actual_raw = quantity_source(body)
+                actual['source_proofs'] = []
+                actual['semantic_source_id'] = content_hash(value={k:v for k,v in actual.items() if k != 'semantic_source_id'})
+                path = data/actual['documents'][0]['raw_blob']['storage_uri']
+                path.parent.mkdir(parents=True,exist_ok=True); path.write_bytes(next(iter(actual_raw.values())))
+                with patch('vnext.capacity_run.prepare_capacity_semantic_source',return_value=actual):
+                    actual_run=base/('actual-after-example-'+str(number))
+                    self.assertEqual(create_run(data_root=data,run_dir=actual_run,company_id=source['company_id'])['result']['value'],expected)
+                    self.assertEqual(render_ordinary_run(data_root=data,run_dir=actual_run)['row']['value'],expected)
+            (data/source['documents'][0]['raw_blob']['storage_uri']).write_bytes(next(iter(raw.values())))
             parsed = calculate_source_comparable_pair(source=source, raw_bytes_by_id=raw)
             production = deepcopy(parsed['source_quantity_proofs']['ACTUAL_PRODUCTION'])
             production['value'] = '81000000'

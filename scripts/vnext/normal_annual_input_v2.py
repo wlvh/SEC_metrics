@@ -44,8 +44,8 @@ def _choose_fiscal_year(inspected):
     return year, basis
 
 
-def prepare_saved_annual_input(*, repo_root: Path, company_id: str):
-    policy = strict_json_file(path=resolve_repository_file(repo_root=repo_root,repo_relative_path=POLICY_PATH))
+def prepare_saved_annual_input(*, repo_root: Path, company_id: str, ordinary_registered=False):
+    policy = strict_json_file(path=resolve_repository_file(repo_root=ROOT if ordinary_registered else repo_root,repo_relative_path=POLICY_PATH))
     if policy != strict_json_file(path=ROOT/POLICY_PATH) or policy["policy_id"] != "ordinary_fiscal_year_labels_v1":
         raise NormalAnnualInputError("ORDINARY_FISCAL_LABEL_INSTALLED_POLICY_CHANGED","AUTHORITY_CONFLICT")
     # Always re-read filing selection, latest request outcome and all admitted

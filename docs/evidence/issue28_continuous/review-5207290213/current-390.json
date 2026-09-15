@@ -1,6 +1,6 @@
 {
   "record_type": "ISSUE28_CURRENT_390_EVIDENCE_RECONCILIATION",
-  "as_of": "2026-09-15_BEFORE_THIS_TURN_NEW_D04_REAL_VALIDATION",
+  "as_of": "2026-09-15_THROUGH_REAL_CALL94_AND_TWO_D04_COLD_READS",
   "coordinate_count": 390,
   "full_current_head_reexecution": false,
   "full_issue_acceptance": false,
@@ -15,11 +15,12 @@
     "NUMERIC_RESULT": 163,
     "NOT_MEANINGFUL": 10,
     "TEXT_RESULT": 30,
-    "VALIDATION_OR_IMPLEMENTATION_PENDING": 22,
-    "IMPLEMENTATION_OR_SOURCE_PROOF_UNRESOLVED": 5
+    "VALIDATION_OR_IMPLEMENTATION_PENDING": 20,
+    "IMPLEMENTATION_OR_SOURCE_PROOF_UNRESOLVED": 5,
+    "DEFINED_SCOPE_TEXT_STATEMENT": 2
   },
-  "native_record_count": 368,
-  "native_result_or_valid_noncomputing_state_count": 363,
+  "native_record_count": 370,
+  "native_result_or_valid_noncomputing_state_count": 365,
   "recorded_source_admission_numeric_entries": 3,
   "real_disclosure_limitation_established_count": 0,
   "historical_53_replaced_by_later_native_evidence": 48,
@@ -4220,7 +4221,7 @@
       "applicability": "APPLICABLE",
       "value": null,
       "unit": null,
-      "reason_code": "B13_COMPLETE_SOURCE_ROLE_AND_QUANTITY_VALIDATION_PENDING",
+      "reason_code": "B13_REAL_RESPONSE_REJECTED_NO_COMPLETE_COORDINATE",
       "source_period": {
         "fiscal_year": 2025,
         "period_start": "2025-01-01",
@@ -4244,7 +4245,7 @@
       "current_head_full_revalidated": false,
       "formal_adoption_or_active_credit": false,
       "real_disclosure_limitation_established": false,
-      "remaining_responsibility": "Complete current source-dependent native response/Review/Run validation; retain partials and failures at original scope",
+      "remaining_responsibility": "Resolve the demonstrated quantity-role response failures; original failed calls retain no usable result credit. Do not relabel implementation/model failure as a disclosure limitation.",
       "development_evidence": [
         {
           "path": "docs/evidence/issue28_continuous/b13-current-source-roles/README.md"
@@ -4256,7 +4257,10 @@
           "path": "docs/evidence/issue28_continuous/b13-source-indexing/original68-content-audit.json"
         }
       ],
-      "original_68_business_result_credit": false
+      "original_68_business_result_credit": false,
+      "actual_failed_request": {
+        "path": "docs/evidence/issue28_continuous/d04-indexed-unit-response/live-ford-b13/call-0094.json"
+      }
     },
     {
       "company_id": "ford_motor_company",
@@ -4534,44 +4538,52 @@
     {
       "company_id": "ford_motor_company",
       "metric_id": "D04",
-      "result_category": "VALIDATION_OR_IMPLEMENTATION_PENDING",
-      "quality": null,
+      "result_category": "DEFINED_SCOPE_TEXT_STATEMENT",
+      "quality": "NONE",
       "applicability": "APPLICABLE",
       "value": null,
       "unit": null,
-      "reason_code": "D04_COMPLETE_CURRENT_REAL_VALIDATION_PENDING",
+      "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
       "source_period": {
         "fiscal_year": 2025,
-        "period_start": "2025-01-01",
-        "period_end": "2025-12-31"
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
       },
-      "source_period_basis": "CURRENT_COMPLETE_SOURCE_PREPARATION_ONLY_NOT_RESULT",
+      "source_period_basis": "BOUND_COMPLETE_REAL_NATIVE_RESULT",
       "implementation_identity": {
-        "source_id": "sha256:eb76fb5b712ab7fe61abbed45be0f6a2de94c066ddaf380cc978b5dd95df37f3",
-        "request_context_format": "deepseek-v41-two-message-json-chat-1",
-        "implementation_files": "docs/evidence/issue28_continuous/request-context-counting/implementation-files.json"
+        "run_id": "run:ordinary-integrated:d04d7a88c11c8f6428d8bf57a9689642fc1db2cc3f79f3b8ca9fd99634036f6b",
+        "result_id": "sha256:9581bcb5f55170cdc084263fc2533f16eb772fd9b56229756d7b61f5bbf11fdb",
+        "spec_closure_hash": "sha256:b72e137f2ba802a2ca8c2e8874f9e3388114600acb19c976aeaff4c309aa05ba",
+        "execution_requirement_closure_hash": "sha256:be11771764276962cfabd7b51c551e8d12f596f15c9c4b7276665cf4cd1a2c29",
+        "head_when_executed": "ddecbf03b98c9c40f24be87c8181ae9077cb7ae3",
+        "uncommitted_execution_files_bound": true
       },
-      "evidence_type": "SOURCE_PREPARATION_WITH_SEPARATE_RECORDED_OR_SYNTHETIC_DEVELOPMENT_EVIDENCE",
-      "source_credit": "SEE_ORIGINAL_SOURCE_PROOFS_NO_MODEL_RESULT_CREDIT",
+      "evidence_type": "COMPLETE_LIVE_NATIVE_SOURCE_ASSESSMENT_RUN_AND_COLD_REPLAY",
+      "source_credit": "ORIGINAL_SAVED_SEC_SOURCES_WITH_LIVE_NATIVE_ASSESSMENTS",
       "selected_evidence": {
-        "path": "docs/evidence/issue28_continuous/request-context-counting/grouped-census.json",
+        "path": "docs/evidence/issue28_continuous/d04-indexed-unit-response/live/ford_motor_company-D04-summary.json",
         "selector": "ford_motor_company/D04"
       },
-      "evidence_history": [],
-      "historical_native_record_retained": false,
-      "new_real_result_this_review": false,
+      "evidence_history": [
+        {
+          "path": "docs/evidence/issue28_continuous/request-context-counting/grouped-census.json",
+          "selector": "ford_motor_company/D04"
+        }
+      ],
+      "run_status": "OPEN",
+      "public_row_status": "TEXT_QUAL",
+      "historical_native_record_retained": true,
+      "new_real_result_this_review": true,
       "current_head_full_revalidated": false,
       "formal_adoption_or_active_credit": false,
       "real_disclosure_limitation_established": false,
-      "remaining_responsibility": "Complete current source-dependent native response/Review/Run validation; retain partials and failures at original scope",
-      "development_evidence": [
-        {
-          "path": "docs/evidence/issue28_continuous/review-5207290213/after.json"
-        },
-        {
-          "path": "docs/evidence/issue28_continuous/review-5207290213/d04-reference-native.log"
-        }
-      ]
+      "remaining_responsibility": "Carry this valid source statement into normal update and unified release; current later runtime changes require scoped revalidation, not new model credit.",
+      "executed_binding_native_and_cold_verified": true,
+      "derived_public_statement": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。",
+      "native_result_publication": "WITHHELD",
+      "cold_replay_evidence": {
+        "path": "docs/evidence/issue28_continuous/d04-indexed-unit-response/live/ford-cold.json"
+      }
     },
     {
       "company_id": "ford_motor_company",
@@ -6066,44 +6078,52 @@
     {
       "company_id": "pfizer",
       "metric_id": "D04",
-      "result_category": "VALIDATION_OR_IMPLEMENTATION_PENDING",
-      "quality": null,
+      "result_category": "DEFINED_SCOPE_TEXT_STATEMENT",
+      "quality": "NONE",
       "applicability": "APPLICABLE",
       "value": null,
       "unit": null,
-      "reason_code": "D04_COMPLETE_CURRENT_REAL_VALIDATION_PENDING",
+      "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
       "source_period": {
         "fiscal_year": 2025,
-        "period_start": "2025-01-01",
-        "period_end": "2025-12-31"
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
       },
-      "source_period_basis": "CURRENT_COMPLETE_SOURCE_PREPARATION_ONLY_NOT_RESULT",
+      "source_period_basis": "BOUND_COMPLETE_REAL_NATIVE_RESULT",
       "implementation_identity": {
-        "source_id": "sha256:04fb425b178a277596a063b87e379aedef139c923508457a0b22c13e86eb5176",
-        "request_context_format": "deepseek-v41-two-message-json-chat-1",
-        "implementation_files": "docs/evidence/issue28_continuous/request-context-counting/implementation-files.json"
+        "run_id": "run:ordinary-integrated:91149b15d6f527c71874b14a2b18a730a4b7c7d1a34b9bf179e16f6859b609a0",
+        "result_id": "sha256:489a0c23081f27d8b8123a1493544aed2760ce736fc4fc9e6c22882a01e273ca",
+        "spec_closure_hash": "sha256:b72e137f2ba802a2ca8c2e8874f9e3388114600acb19c976aeaff4c309aa05ba",
+        "execution_requirement_closure_hash": "sha256:be11771764276962cfabd7b51c551e8d12f596f15c9c4b7276665cf4cd1a2c29",
+        "head_when_executed": "ddecbf03b98c9c40f24be87c8181ae9077cb7ae3",
+        "uncommitted_execution_files_bound": true
       },
-      "evidence_type": "SOURCE_PREPARATION_WITH_SEPARATE_RECORDED_OR_SYNTHETIC_DEVELOPMENT_EVIDENCE",
-      "source_credit": "SEE_ORIGINAL_SOURCE_PROOFS_NO_MODEL_RESULT_CREDIT",
+      "evidence_type": "COMPLETE_LIVE_NATIVE_SOURCE_ASSESSMENT_RUN_AND_COLD_REPLAY",
+      "source_credit": "ORIGINAL_SAVED_SEC_SOURCES_WITH_LIVE_NATIVE_ASSESSMENTS",
       "selected_evidence": {
-        "path": "docs/evidence/issue28_continuous/request-context-counting/grouped-census.json",
+        "path": "docs/evidence/issue28_continuous/d04-indexed-unit-response/live/pfizer-D04-summary.json",
         "selector": "pfizer/D04"
       },
-      "evidence_history": [],
-      "historical_native_record_retained": false,
-      "new_real_result_this_review": false,
+      "evidence_history": [
+        {
+          "path": "docs/evidence/issue28_continuous/request-context-counting/grouped-census.json",
+          "selector": "pfizer/D04"
+        }
+      ],
+      "run_status": "OPEN",
+      "public_row_status": "TEXT_QUAL",
+      "historical_native_record_retained": true,
+      "new_real_result_this_review": true,
       "current_head_full_revalidated": false,
       "formal_adoption_or_active_credit": false,
       "real_disclosure_limitation_established": false,
-      "remaining_responsibility": "Complete current source-dependent native response/Review/Run validation; retain partials and failures at original scope",
-      "development_evidence": [
-        {
-          "path": "docs/evidence/issue28_continuous/review-5207290213/after.json"
-        },
-        {
-          "path": "docs/evidence/issue28_continuous/review-5207290213/d04-reference-native.log"
-        }
-      ]
+      "remaining_responsibility": "Carry this valid source statement into normal update and unified release; current later runtime changes require scoped revalidation, not new model credit.",
+      "executed_binding_native_and_cold_verified": true,
+      "derived_public_statement": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。",
+      "native_result_publication": "WITHHELD",
+      "cold_replay_evidence": {
+        "path": "docs/evidence/issue28_continuous/d04-indexed-unit-response/live/pfizer-cold.json"
+      }
     },
     {
       "company_id": "pfizer",
@@ -15432,7 +15452,7 @@
       "applicability": "APPLICABLE",
       "value": null,
       "unit": null,
-      "reason_code": "B13_COMPLETE_SOURCE_ROLE_AND_QUANTITY_VALIDATION_PENDING",
+      "reason_code": "B13_REAL_RESPONSE_REJECTED_NO_COMPLETE_COORDINATE",
       "source_period": {
         "fiscal_year": 2025,
         "period_start": "2025-01-01",
@@ -15456,7 +15476,7 @@
       "current_head_full_revalidated": false,
       "formal_adoption_or_active_credit": false,
       "real_disclosure_limitation_established": false,
-      "remaining_responsibility": "Complete current source-dependent native response/Review/Run validation; retain partials and failures at original scope",
+      "remaining_responsibility": "Resolve the demonstrated quantity-role response failures; original failed calls retain no usable result credit. Do not relabel implementation/model failure as a disclosure limitation.",
       "development_evidence": [
         {
           "path": "docs/evidence/issue28_continuous/b13-current-source-roles/README.md"
@@ -15468,7 +15488,10 @@
           "path": "docs/evidence/issue28_continuous/b13-source-indexing/original68-content-audit.json"
         }
       ],
-      "original_68_business_result_credit": false
+      "original_68_business_result_credit": false,
+      "actual_failed_request": {
+        "path": "docs/evidence/issue28_continuous/d04-indexed-unit-response/live/call-0082.json"
+      }
     },
     {
       "company_id": "enphase_energy",
@@ -16006,6 +16029,12 @@
     "docs/evidence/issue28_continuous/b13-content-guards/native-material-index.json": "e67b4819d581782f6a970fe775066ff32d45fe34368da62ae9a46985534b9a71",
     "docs/evidence/issue28_continuous/b13-content-guards/structural-summary.json": "385ceb7b1e8a1d4d80bac9ed5101fa1a635000c98df49c65680fdbec3e762b9f",
     "docs/evidence/issue28_continuous/request-context-counting/grouped-census.json": "4fc53ab9a031faeefd6559e2cb6308668da799432c64cb2b2dcf1599c62adf0a",
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/live/ford_motor_company-D04-summary.json": "6fcad5ee01f5d513f24d43489011e60c67d292fdc96de1c44994f0d06500d785",
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/live/ford-cold.json": "1bad1cbb179c90bd32c95c5fb435a8f7dd979d71e9042fe3b0b7c159be50cf7f",
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/live/pfizer-D04-summary.json": "08d7ac88802482664d3f8792dca98f0d60a3bf74f2c2209a6560185c5d2f2729",
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/live/pfizer-cold.json": "3cffafdcabfb64e97379359b605bddbea33892c87252b9047f48fcaf0703bd69",
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/live/call-0082.json": "9c0321ef3f3fcf2b50d29c59dea21af97130aab6cca5ff7485a4a17836365f86",
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/live-ford-b13/call-0094.json": "a1266bca5395742a1e294443031045450de084efe6a186b8d7b6440ec2c06c1a",
     "docs/evidence/issue28_continuous/resume-2026-09-13/current-gap-index.json": "9c02f205df94621a044179b1425badefcfca8ebaf9c35f51a06eb4f478bae095"
   },
   "selected_archive_reads": [

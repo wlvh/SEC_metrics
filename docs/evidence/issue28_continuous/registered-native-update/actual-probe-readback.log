@@ -1,0 +1,85 @@
+{
+  "fixture": "/tmp/sec_metrics_issue28_continuous/b13-scope-native-current",
+  "copy": "/tmp/sec_metrics_issue28_continuous/native-update-source-probe-itbxoq1j/source",
+  "provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "source_session_only": "ONE_SAME_BODY_RECORDED_SUBMISSIONS_APPEND_ON_COPY_WITH_CREATOR_REGISTRATION",
+  "closure": {
+    "registered": "sha256:c4bfed2c3b3e76ea2c9005c3f01747913a2a8f815e4d2069b083d81d0c5c43fa",
+    "current": "sha256:be11771764276962cfabd7b51c551e8d12f596f15c9c4b7276665cf4cd1a2c29",
+    "different": true,
+    "source_matches_registered": true,
+    "old_key": "259662c0b35efbbe5770d7e61d3bd4d30b8723952d363ae8a6372623f1a3b3ad",
+    "current_key": "b3a0eb507d7b86098f2808232c11431eab596caa6f51b831c8e808fda14fbf55",
+    "load": {
+      "error": "ValueError",
+      "reason": "B13_NATIVE_ASSESSMENT_NOT_REGISTERED"
+    }
+  },
+  "current_source_factory": {
+    "error": "NormalSourceAuthorityError",
+    "reason": "TRUSTED_SAVED_BASELINE_BYTES_CHANGED:evidence/requests_log.csv"
+  },
+  "diagnostic_current_admission_substitution": {
+    "not_production_or_native_acceptance": true,
+    "all_source_body_hashes_equal": true,
+    "units_equal": true,
+    "documents_equal": true,
+    "before_source_id": "sha256:f66d20a67d40104fee65e2e978cf78f17065d53ad4896faf2ea6775fccabb7b7",
+    "after_source_id": "sha256:4d65c9148fe48665bb783e36f881cd165add6da5cf110c0b4a1b33959b255964",
+    "request_ids_equal": false,
+    "changed_top_level_source_fields": [
+      "prepared_annual_input",
+      "original_source_packet_id",
+      "source_proofs",
+      "source_admission",
+      "inherited_complete_source_id",
+      "semantic_source_id"
+    ],
+    "changed_annual_input_leaf_paths": [
+      "/input_id",
+      "/original_input/input_id",
+      "/original_input/source_proofs/0/request_attempt_id",
+      "/original_input/source_proofs/0/request_headers_repo_relative_path",
+      "/original_input/source_proofs/0/request_headers_sha256",
+      "/original_input/source_proofs/0/request_headers_size",
+      "/source_proofs/0/request_attempt_id",
+      "/source_proofs/0/request_headers_repo_relative_path",
+      "/source_proofs/0/request_headers_sha256",
+      "/source_proofs/0/request_headers_size"
+    ],
+    "changed_request_fields": [
+      [
+        "source_id",
+        "request_id"
+      ],
+      [
+        "source_id",
+        "request_id"
+      ],
+      [
+        "source_id",
+        "request_id"
+      ],
+      [
+        "source_id",
+        "request_id"
+      ],
+      [
+        "source_id",
+        "request_id"
+      ],
+      [
+        "source_id",
+        "request_id"
+      ]
+    ],
+    "load": {
+      "error": "ValueError",
+      "reason": "B13_NATIVE_ASSESSMENT_NOT_REGISTERED"
+    }
+  }
+}

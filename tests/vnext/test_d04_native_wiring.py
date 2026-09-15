@@ -31,7 +31,8 @@ class D04NativeAssessmentMaterialTest(unittest.TestCase):
              patch('sec_http.urlopen', side_effect=AssertionError('SEC_FORBIDDEN')), \
              patch.object(control, 'effective_invocation_policy', side_effect=AssertionError('LEGACY_DEFAULT_FORBIDDEN')):
             requests = prepare_requests(company_id='enphase_energy', metric_id='D04', native=True,
-                reference_context=os.environ.get('D04_REFERENCE_CONTEXT') == '1')
+                reference_context=os.environ.get('D04_REFERENCE_CONTEXT') == '1',
+                complete_response_contract=os.environ.get('D04_COMPLETE_RESPONSE_CONTRACT') == '1')
             # No interpretation success is claimed by this simulated empty
             # response. This exact request only exercises transport/acceptance.
             eligible = [r for r in requests if not strict_json_loads(

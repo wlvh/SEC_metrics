@@ -180,6 +180,8 @@ def calculate_source_comparable_pair(*, source, raw_bytes_by_id):
     need(source['metric_id'] == 'B13' and source['semantic_source_id'] == content_hash(value={
         k:v for k,v in source.items() if k != 'semantic_source_id'}), 'B13_QUANTITY_SOURCE_ID_CHANGED')
     annual = source['prepared_annual_input']; period = annual['table_input']['target_period']
+    from .capacity_quantity_scope import verified_scope, quantity_qualification, local_context_blocks
+    quantity_scope = verified_scope(source=source, raw_bytes_by_id=raw_bytes_by_id)
     documents = {d['document_id']: d for d in source['documents']}
     quantities = {'ACTUAL_PRODUCTION': [], 'AVAILABLE_CAPACITY': []}; rebuilt_documents = {}; quotations = {}
     for unit in source['units']:
@@ -201,10 +203,15 @@ def calculate_source_comparable_pair(*, source, raw_bytes_by_id):
                 ('text','raw_start_byte','raw_end_byte','raw_span_sha256')), 'B13_QUANTITY_SOURCE_BLOCK_CHANGED')
             quoted = any(start < block['raw_end_byte'] and end > block['raw_start_byte']
                          for start, end in quotations[unit['document_id']])
-            context = [rebuilt_documents[unit['document_id']][i]['text']
-                       for i in range(max(0, block['block_index'] - 2), block['block_index'])]
-            facts = explicit_annual_quantity_statements(text=block['text'], quoted=quoted, context=context)
+            context = local_context_blocks(blocks=list(rebuilt_documents[unit['document_id']].values()),
+                block=block, document_id=unit['document_id'], scope=quantity_scope)
+            facts = explicit_annual_quantity_statements(text=block['text'])
             for fact in facts:
+                qualification = quantity_qualification(block=block, document_id=unit['document_id'], scope=quantity_scope, statement=fact)
+                need(qualification not in {'B13_QUANTITY_HEADING_SCOPE_UNRESOLVED',
+                    'B13_QUANTITY_NONHEADING_INTRODUCTION_SCOPE_UNRESOLVED'}, str(qualification))
+                if qualification or _quantity_context_qualified(quoted=quoted, context=context):
+                    continue
                 if fact['fiscal_year'] != period['fiscal_year']:
                     continue
                 if fact['period_basis'] == 'CALENDAR_YEAR' and (period['period_start'], period['period_end']) != (
@@ -235,8 +242,10 @@ def calculate_source_comparable_pair(*, source, raw_bytes_by_id):
         'source_quantity_proofs': selected, 'target': target}
 
 
-def validate_explicit_quantity_classifications(*, units, findings, period):
+def validate_explicit_quantity_classifications(*, units, findings, period, quantity_scope=None):
     """Known physical quantities cannot be erased by a different model label."""
+    from .capacity_quantity_scope import quantity_qualification, local_context_blocks
+    unresolved = []
     blocks = {(u['document_id'], b['block_index']): b for u in units if u['kind'] == 'VISIBLE_TEXT'
               for b in u['payload']['blocks']}
     for unit in units:
@@ -244,25 +253,36 @@ def validate_explicit_quantity_classifications(*, units, findings, period):
             continue
         for block in unit['payload']['blocks']:
             index = block['block_index']
-            if index and (unit['document_id'], index - 1) not in blocks:
-                # A per-request boundary may omit an introducing qualifier.
-                # The full-source consumer rechecks this block with context.
-                continue
-            context = [blocks[(unit['document_id'], i)]['text'] for i in range(max(0, index - 2), index)
-                       if (unit['document_id'], i) in blocks]
+            context = local_context_blocks(blocks=[b for (did, _), b in blocks.items() if did == unit['document_id']],
+                block=block, document_id=unit['document_id'], scope=quantity_scope)
             qualified = _quantity_context_qualified(quoted=block['html_quotation_context'], context=context)
             facts = explicit_annual_quantity_statements(text=block['text'])
             selected = [f for f in findings if f['unit_id'] == unit['unit_id'] and any(
                 e['kind'] == 'VISIBLE_BLOCK' and e['source_index'] == index for e in f['resolved_evidence'])]
-            if facts and qualified:
-                need(not any(f['kind'] in {'ACTUAL_PRODUCTION','AVAILABLE_CAPACITY'}
-                    and f['subject'] == 'TARGET_REGISTRANT' and f['timing'] == 'CURRENT_REPORT'
-                    for f in selected), 'B13_QUALIFIED_QUANTITY_CANNOT_ESTABLISH_CURRENT_SOURCE')
-                continue
+            supported = []
+            excluded = []
             for fact in facts:
+                reason = quantity_qualification(block=block, document_id=unit['document_id'],
+                    scope=quantity_scope, statement=fact)
+                if reason in {'B13_QUANTITY_HTML_SCOPE_NOT_SUPPLIED','B13_QUANTITY_HEADING_SCOPE_UNRESOLVED',
+                    'B13_QUANTITY_NONHEADING_INTRODUCTION_SCOPE_UNRESOLVED'}:
+                    unresolved.append({'unit_id': unit['unit_id'], 'source_index': index, 'reason': reason,
+                        'statement_start_character': fact['start_character'], 'statement_end_character': fact['end_character']})
+                elif qualified or reason:
+                    excluded.append(fact)
+                else:
+                    supported.append(fact)
+            # Findings identify source blocks and roles, not individual numeric
+            # values. A mixed block can contain a hypothetical and an actual
+            # quantity of the same role; the numeric reader selects the latter
+            # from the exact statement offsets independently of the label.
+            current_roles = {f['basis'] for f in supported if f['fiscal_year'] == period.get('fiscal_year')}
+            excluded_roles = {f['basis'] for f in excluded}
+            need(not any(f['kind'] in excluded_roles - current_roles
+                and f['subject'] == 'TARGET_REGISTRANT' and f['timing'] == 'CURRENT_REPORT'
+                for f in selected), 'B13_QUALIFIED_QUANTITY_CANNOT_ESTABLISH_CURRENT_SOURCE')
+            for fact in supported:
                 timing = 'CURRENT_REPORT' if fact['fiscal_year'] == period.get('fiscal_year') else 'HISTORICAL'
                 need(any(f['kind'] == fact['basis'] and f['subject'] == 'TARGET_REGISTRANT'
-                    and f['timing'] == timing and f['unit_id'] == unit['unit_id'] and any(
-                        e['kind'] == 'VISIBLE_BLOCK' and e['source_index'] == block['block_index']
-                        for e in f['resolved_evidence']) for f in findings),
-                    'B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT')
+                    and f['timing'] == timing for f in selected), 'B13_SOURCE_QUANTITY_CLASSIFICATION_CONFLICT')
+    return unresolved

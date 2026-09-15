@@ -15,34 +15,55 @@ from .specs import compile_spec_file
 SPEC_PATH = 'catalog/r5/B13_capacity_disclosures_v1.md'
 
 
-def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_input_id=None, metric_id='B13', request_context_format=None):
+def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_input_id=None, metric_id='B13', request_context_format=None, complete_response_contract=None, current_runtime=False, source_snapshot=None):
     need(metric_id in {'B13', 'D04'}, 'NATIVE_ASSESSED_METRIC_UNSUPPORTED')
     from .capacity_utilization_source import policy
     rules, approved = policy()
     if metric_id == 'B13' and company_id not in approved['applicable_company_ids']:
         need(assessment_mode is None and assessment_input_id is None, 'B13_STRUCTURAL_ASSESSMENT_NOT_USED')
-        return _prepare_structural_case(data_root=data_root, company_id=company_id)
+        return _prepare_structural_case(data_root=data_root, company_id=company_id,current_runtime=current_runtime)
     spec_path = SPEC_PATH
+    need(complete_response_contract is None or type(complete_response_contract) is bool,
+         'D04_COMPLETE_RESPONSE_SELECTION_INVALID')
+    response_version = None
     export_path = EXPORT_PATHS[metric_id]
-    if (data_root / export_path).exists():
+    exported = None
+    if not current_runtime and (data_root / export_path).exists():
         exported = strict_json_file(path=resolve_repository_file(repo_root=data_root, repo_relative_path=export_path))
         hint = exported.get('request_context_format')
         need(request_context_format is None or request_context_format == hint, 'NATIVE_INSTALLED_CONTEXT_FORMAT_CONFLICT')
         request_context_format = hint
+        response_version = exported.get('response_contract_version')
+        need(complete_response_contract is None or complete_response_contract == bool(response_version),
+             'NATIVE_INSTALLED_RESPONSE_CONTRACT_CONFLICT')
+        complete_response_contract = bool(response_version)
     if metric_id == 'B13':
+        need(not complete_response_contract and response_version is None, 'D04_RESPONSE_CONTRACT_ON_B13_FORBIDDEN')
         source = prepare_capacity_semantic_source(repo_root=data_root, company_id=company_id,
-                                                 request_context_format=request_context_format)
+                                                 request_context_format=request_context_format,
+                                                 ordinary_registered=current_runtime or bool(exported and exported.get('schema_version')==2))
     else:
-        from .d04_native_assessment import native_source, SPEC_PATH as spec_path
+        from .d04_native_assessment import native_source, SPEC_PATH as spec_path, COMPLETE_RESPONSE_VERSION
         from .r6_semantic_source import prepare_d04_semantic_source
+        need(response_version in {None, COMPLETE_RESPONSE_VERSION}, 'D04_RESPONSE_CONTRACT_VERSION_UNSUPPORTED')
         # This field selects a finite serializer. It grants no source credit:
         # load_registered_input below rechecks the creator's record, source id,
         # every original request, acceptance and current source classifications.
-        source = native_source(prepare_d04_semantic_source(repo_root=data_root, company_id=company_id),
-                               request_context_format=request_context_format)
-    requirement = load_requirement_snapshot(snapshot_dir=data_root / 'requirements' / REQUIREMENT_ID)
+        source = native_source(prepare_d04_semantic_source(repo_root=data_root, company_id=company_id,
+            ordinary_registered=current_runtime or bool(exported and exported.get('schema_version')==2)),
+                               request_context_format=request_context_format,
+                               complete_response_contract=bool(complete_response_contract))
+    current_equivalence=None
+    if source_snapshot is None and exported and exported.get('schema_version')==2:
+        source_snapshot=exported.get('source_snapshot')
+    if source_snapshot is not None:
+        from .capacity_update_input import source_equivalence
+        current_equivalence=source_equivalence(current=source,original=source_snapshot)
+        source=source_snapshot
+    runtime_root=ROOT if current_runtime else data_root
+    requirement = load_requirement_snapshot(snapshot_dir=runtime_root / 'requirements' / REQUIREMENT_ID)
     registered = load_registered_input(data_root=data_root, source=source, requirement=requirement,
-                                       mode=assessment_mode, input_record_id=assessment_input_id)
+                                       mode=assessment_mode, input_record_id=assessment_input_id,check_export=not current_runtime)
     assessment = registered['assessment']
     numeric = metric_id == 'B13' and assessment['proposed_branch'] == 'COMPARABLE_QUANTITY_PAIR_ASSESSMENT_REQUIRED'
     if numeric:
@@ -50,8 +71,8 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
     need(assessment['proposed_branch'] in {'TEXT_QUAL_PROPOSAL_REQUIRES_NATIVE_REVIEW',
                                          'DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW'} or numeric,
          metric_id + '_NATIVE_BRANCH_REQUIRES_IMPLEMENTATION:' + assessment['proposed_branch'])
-    spec = compile_spec_file(path=data_root / spec_path, dependency_specs={})
-    need(sha256_file(path=data_root / spec_path) == sha256_file(path=ROOT / spec_path), 'B13_INSTALLED_SPEC_CHANGED')
+    spec = compile_spec_file(path=runtime_root / spec_path, dependency_specs={})
+    need(sha256_file(path=runtime_root / spec_path) == sha256_file(path=ROOT / spec_path), 'B13_INSTALLED_SPEC_CHANGED')
     annual = source['prepared_annual_input']; period = annual['table_input']['target_period']
     scope = spec['compiled']['required_claims']
     target = {'company_id': company_id, 'entity': annual['entity'], 'accession': annual['filing']['accessionNumber'],
@@ -103,22 +124,25 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
             selection={'status': calculated['result']['quality'], 'category': 'SOURCE_VERIFIED_COMPARABLE_QUANTITIES',
                 'assessment_mode': registered['mode'], 'numeric_utilization_inferred': False})
         case.pop('text_arguments')
+    if current_equivalence is not None:
+        case['current_source_equivalence']=current_equivalence
     return case
 
 
-def _prepare_structural_case(*, data_root, company_id):
+def _prepare_structural_case(*, data_root, company_id,current_runtime=False):
     """The approved company set is applicability authority, not a disclosure scan."""
     from .normal_annual_input_v2 import prepare_saved_annual_input
     from .capacity_utilization_source import policy
     from .text_results import build_text_result_and_trace
     from .traits import repository_company_traits
     _, approved = policy()
-    repository_company_traits(repo_root=data_root, company_id=company_id)
+    runtime_root=ROOT if current_runtime else data_root
+    repository_company_traits(repo_root=runtime_root, company_id=company_id)
     need(company_id not in approved['applicable_company_ids'], 'B13_APPLICABLE_COMPANY_CANNOT_BE_STRUCTURAL')
-    annual = prepare_saved_annual_input(repo_root=data_root, company_id=company_id)
+    annual = prepare_saved_annual_input(repo_root=data_root, company_id=company_id,ordinary_registered=current_runtime)
     period = annual['table_input']['target_period']
-    spec = compile_spec_file(path=data_root / SPEC_PATH, dependency_specs={})
-    need(sha256_file(path=data_root / SPEC_PATH) == sha256_file(path=ROOT / SPEC_PATH), 'B13_INSTALLED_SPEC_CHANGED')
+    spec = compile_spec_file(path=runtime_root / SPEC_PATH, dependency_specs={})
+    need(sha256_file(path=runtime_root / SPEC_PATH) == sha256_file(path=ROOT / SPEC_PATH), 'B13_INSTALLED_SPEC_CHANGED')
     scope = spec['compiled']['required_claims']
     target = {'company_id': company_id, 'entity': None, 'accession': None,
         'period_start': period['period_start'], 'period_end': period['period_end'],
@@ -148,14 +172,15 @@ def _prepare_structural_case(*, data_root, company_id):
                       'reason_code': 'B13_OUTSIDE_APPROVED_APPLICABILITY', 'disclosure_absence_asserted': False}}
 
 
-def install_inputs(*, data_root, company_id, source_root=ROOT, assessment_mode=None, assessment_input_id=None, metric_id='B13', request_context_format=None):
+def install_inputs(*, data_root, company_id, source_root=ROOT, assessment_mode=None, assessment_input_id=None, metric_id='B13', request_context_format=None, complete_response_contract=None, current_runtime=False, source_snapshot=None):
     from .normal_run_v3 import _external, _install_case_inputs, _binding
     data_root = _external(data_root)
     source_root = ROOT if Path(source_root) == ROOT else _external(source_root)
     need(source_root != data_root and source_root not in data_root.parents and data_root not in source_root.parents,
          'B13_INPUT_OUTPUT_OVERLAP')
     case = prepare_case(data_root=source_root, company_id=company_id, assessment_mode=assessment_mode,
-                        assessment_input_id=assessment_input_id, metric_id=metric_id, request_context_format=request_context_format)
+                        assessment_input_id=assessment_input_id, metric_id=metric_id, request_context_format=request_context_format,
+                        complete_response_contract=complete_response_contract,current_runtime=current_runtime,source_snapshot=source_snapshot)
     requirement = load_requirement_snapshot(snapshot_dir=ROOT / 'requirements' / REQUIREMENT_ID)
     extra = ({EXPORT_PATHS[metric_id]: canonical_json_bytes(value=case['registered_input'])}
              if 'registered_input' in case else None)

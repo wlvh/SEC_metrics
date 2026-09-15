@@ -129,6 +129,8 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts
           D04_REFERENCE_CONTEXT: "1"
+          D04_COMPLETE_RESPONSE_CONTRACT: "1"
+          D04_INDEXED_UNITS: "1"
           D04_NATIVE_RUN_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-d04-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_d04_run_material
   instant-native-runs:
