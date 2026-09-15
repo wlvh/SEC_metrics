@@ -1,0 +1,59 @@
+test_native_run_recorded_mode_exact_source_and_resigned_input_rejection (tests.vnext.test_capacity_run_material.CapacityRunMaterialTest.test_native_run_recorded_mode_exact_source_and_resigned_input_rejection) ... FAIL
+
+======================================================================
+FAIL: test_native_run_recorded_mode_exact_source_and_resigned_input_rejection (tests.vnext.test_capacity_run_material.CapacityRunMaterialTest.test_native_run_recorded_mode_exact_source_and_resigned_input_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 48, in load_profile_requirement_snapshot
+    need({'sha256':sha256_file(path=path),'size':path.stat().st_size} == binding
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and sha256_file(path=installed/relative) == binding['sha256'], 'Continuous rule bytes differ: ' + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 15, in need
+    if not condition:raise v1.RequirementProfileError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.requirement_profile_v1.RequirementProfileError: Continuous rule bytes differ: scripts/vnext/d04_native_assessment.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1353, in _verify_repository_bindings
+    requirement = load_run_requirement_snapshot(
+        repo_root=repo_root,
+    ...<5 lines>...
+        record_type=str(manifest["record_type"]),
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 811, in load_run_requirement_snapshot
+    requirement = load_requirement_snapshot(snapshot_dir=snapshot_dir)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Continuous rule bytes differ: scripts/vnext/d04_native_assessment.py
+
+The above exception was the direct cause of the following exception:
+
+vnext.run_store.RunStoreError: Run Requirement Snapshot is invalid
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_run_material.py", line 90, in test_native_run_recorded_mode_exact_source_and_resigned_input_rejection
+    with self.assertRaisesRegex(RunStoreError, 'Native text input replay failed'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "Native text input replay failed" does not match "Run Requirement Snapshot is invalid"
+
+----------------------------------------------------------------------
+Ran 1 test in 162.927s
+
+FAILED (failures=1)

@@ -1,0 +1,10 @@
+[
+  {
+    "duration_seconds": 20.68,
+    "return_code": 1,
+    "stderr_tail": "======================================================================\nERROR: test_defined_absence_needs_complete_source_set_and_effective_review (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_defined_absence_needs_complete_source_set_and_effective_review)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_capacity_text_results.py\", line 104, in test_defined_absence_needs_complete_source_set_and_effective_review\n    reviewed = self.reviewed(args)\n  File \"/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_capacity_text_results.py\", line 60, in reviewed\n    candidate = api.create_deterministic_text_candidate(**args)\n  File \"/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/capacity_text_results.py\", line 130, in create_deterministic_text_candidate\n    selected, bindings, _ = _prepare(compiled_spec=compiled_spec, target=target, source=source,\n                            ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        assessment=assessment, source_references=source_references, raw_bytes_by_id=raw_bytes_by_id)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/capacity_text_results.py\", line 45, in _prepare\n    need(metric in METHODS and source['metric_id'] == metric\n                               ~~~~~~^^^^^^^^^^^^^\nKeyError: 'metric_id'\n\n----------------------------------------------------------------------\nRan 4 tests in 19.601s\n\nFAILED (errors=1)\n",
+    "stdout_tail": "",
+    "test": "tests.vnext.test_capacity_text_results",
+    "timeout_seconds": 240
+  }
+]

@@ -28,27 +28,27 @@
     "long_running_schedule": false
   },
   "actual_new_calls": {
-    "provider": 33,
-    "paid": 33,
+    "provider": 24,
+    "paid": 24,
     "sec": 35,
     "unknown": 0
   },
   "current_work": [
-    "Repair CI source fixture metric identity and separately complete cancelled B13 native validation",
-    "D04 source classification repairs and positive/negative/native/public-row tests; real validation remains pending",
-    "Continue B13 numeric implementation and other authorized Issue-level work; no production authority"
+    "B13v4 calculation-limit/source-ambiguity separation implemented and offline native-tested; real v4 verification pending",
+    "D04 full-source native integration remains; original51/52/53 controls retain limited scope",
+    "D03 and newB13 modules awaiting requested independent review;390/update/publication/recovery/retirement incomplete"
   ],
   "next": [
-    "Finish exact-current CI and semantic acceptance regression evidence",
-    "Obtain independent review for affected content deltas before affected real validation",
-    "Continue B13 numeric/full source, D03,390,updates,publication,recovery and old producer retirement"
+    "Complete bounded real B13 source interpretation and native results under current approved ledger",
+    "Continue D04 native integration and complete source judgments",
+    "Continue390,normal updates,publication/recovery/retirement and independent reviews"
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
   "remaining_review_dependency": "Module-level user-forwarded ChatGPT/Fable review; original Codex subagents not retried beforeSep17",
   "historical_state_snapshot": "resume-2026-09-13/historical-state/execution-state.json",
   "historical_continuation_snapshot": "resume-2026-09-13/historical-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
-  "ledger_implementation_status": "68_SEALED_SLOTS; PROVIDER33_PAID33_SEC35; NO_UNKNOWN_OR_STOPPED_CHANNEL; ALL_PRIOR_FAILURES_RETAINED",
+  "ledger_implementation_status": "59_SEALED_SLOTS; PROVIDER24_PAID24_SEC35; NO_UNKNOWN_OR_STOPPED_CHANNEL; ALL_PRIOR_FAILURES_RETAINED",
   "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
   "full_acceptance": false,
   "external_dependencies": [
@@ -158,7 +158,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:392abc9cd4c6cead38552bf661ca2cd8607e0cff7ff1a7a95d3bc8af496243a6",
+  "current_v15_development_closure": "sha256:9cd37e32b014047303b79f9315f7ba3f6fcb26fe2a5ce521b1f793c944f55d3e",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -401,7 +401,7 @@
   "current_rule_identity": {
     "requirement_id": "issue_28_v14",
     "requirement_generation": "PROFILE_DRIVEN_V15",
-    "requirement_closure_hash": "sha256:392abc9cd4c6cead38552bf661ca2cd8607e0cff7ff1a7a95d3bc8af496243a6",
+    "requirement_closure_hash": "sha256:a72021ea3a8c130a76e688df2f71a4f512a25ff143deb403c313611e20c4cb40",
     "execution_file_count": 412,
     "basis": "CURRENT_LOADER_AND_EXECUTION_AUTHORITY_VERIFIED"
   },
@@ -522,8 +522,8 @@
   },
   "session_checkpoint": {
     "date": "2026-09-15",
-    "state": "ACTIVE_REPAIR_AND_CONTINUOUS_DELIVERY",
-    "baseline_head": "a56e0ae99056cdab7061751d6718afc6490a4e5d",
+    "state": "CHECKPOINT_PREPARED_NOT_PROJECT_COMPLETE",
+    "baseline_head": "6c07fc1cbc0c3aae3a9f9a4227e36dd960f5b18a",
     "actual_calls": [
       33,
       33,
@@ -538,9 +538,9 @@
     "b13_affected_real_calls_paused": true,
     "pause_reason": "Original68 exact references accepted but production-tax-credit semantics wrong; limited offline guards are not complete qualification",
     "new_approval_required_for_existing_budget": false,
-    "next": "Complete source classification repair evidence and independent review; then affected real validation. Continue B13 numeric implementation, D03,390,updates,publication,recovery and retirement.",
+    "next": "Read this current state and final commit; D04 native current/control factories are ready for necessary bounded real verification. B13 remains held on68 semantics; implement native quantity pairs and resolve content route, obtain D03 6e5 review, then390/update/publication recovery/retirement.",
     "production_permissions": false,
-    "context_note": "Previous checkpoint retained in review-5205267507/before-execution-state.json; the user resumed the same delegation with CI and semantic repairs first."
+    "context_note": "Long continuous execution reduced context-tracking reliability; checkpoint preserves tested work and actual ledger, not a withdrawal of development or budget authorization."
   },
   "b13_current_development": {
     "material": "b13-content-guards/",
@@ -587,59 +587,22 @@
     "production_permissions": false
   },
   "d04_current_development": {
-    "material": "review-5205267507/",
+    "material": "d04-native-integration/",
     "native_full_recorded_run": "PASS_27_REQUESTS_REVIEW_RUN_PUBLIC_ROWS",
-    "native_seconds": 177.736,
-    "current_doubt_and_historical_scope_tests": "12_PASS_WITH_NATIVE_ACCEPTANCE_AND_PUBLIC_ABSENCE_COUNTEREXAMPLES",
-    "source_wiring_replay_tests": "6_PASS_33.238_SECONDS",
-    "fast": "108_SELECTORS_PASS_84.929_SECONDS",
+    "native_seconds": 185.941,
+    "current_doubt_and_historical_scope_tests": "5_PASS",
+    "source_wiring_replay_tests": "7_PASS_30.873_SECONDS",
+    "fast": "108_SELECTORS_PASS_95.607_SECONDS",
     "new_real_calls": [
       0,
       0,
       0
     ],
     "real_new_version_semantic_acceptance": false,
-    "original_native_replay": "27_ORIGINAL_REQUESTS_REVALIDATED_AT_392ABC9_WITH_ORIGINAL_PLAN_AND_ACCEPTANCE_IDENTITIES; ZERO_NEW_CALLS",
+    "original_native_replay": "27_F42_RECORDED_REQUESTS_RETAIN_ORIGINAL_PLANS_AND_ACCEPTANCES_IN_NEW_RUN_ZERO_NEW_CALLS",
     "original68_still_rejected": true,
     "historical_controls": "RECORDED_WIRING_ONLY_NOT_FRESH_MODEL_VALIDATION",
-    "independent_module_review": "A56_SCOPED_REVIEW_FOUND_BLOCKER; CURRENT_REPAIR_NOT_INDEPENDENTLY_REVIEWED",
-    "production_permissions": false,
-    "current_cold_read": "PASS_CURRENT_COPIED_RUNTIME_PYTHON39_NO_NETWORK"
-  },
-  "review_5205267507": {
-    "url": "https://github.com/wlvh/SEC_metrics/pull/43#pullrequestreview-5205267507",
-    "reviewed_commit": "a56e0ae99056cdab7061751d6718afc6490a4e5d",
-    "scope": "ChatGPT directed module review via user connection; not owner review or whole-PR approval",
-    "ci": {
-      "run_id": 34891672471,
-      "status": "COMPLETED",
-      "success": 9,
-      "failure": 1,
-      "cancelled": 1,
-      "failure_reason": "Synthetic B13 source missing metric_id",
-      "cancel_reason": "ordinary native job exceeded total 30m; GitHub annotation verified"
-    },
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
-    "original_68_usable_result_credit": false,
-    "B13_affected_real_route_paused": true,
-    "prior_state": "review-5205267507/before-execution-state.json",
-    "source_contract_repaired": true,
-    "ci_b13_full_step": "PASS_176.776_SECONDS_AT_2EE85DEE; B13_IMPLEMENTATION_UNCHANGED_BY_LATER_D04_ONLY_REPAIRS",
-    "current_relation_unit_tests": "12_PASS_0.107_SECONDS",
-    "fixed_implementation_closure": "sha256:392abc9cd4c6cead38552bf661ca2cd8607e0cff7ff1a7a95d3bc8af496243a6",
-    "live_wiring_current": false,
-    "archive": {
-      "file": "review-5205267507/native-material.tar.xz",
-      "paths": 2953,
-      "unique_blobs": 1424,
-      "bytes": 5815500,
-      "members_verified": true,
-      "extracted_cold_read": "PASS_CURRENT_D04_PYTHON39_NO_NETWORK"
-    },
-    "ci_fix_commit": "1960bac"
+    "independent_module_review": "PENDING",
+    "production_permissions": false
   }
 }

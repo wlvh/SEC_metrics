@@ -70,7 +70,13 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
     relevant = [f for f in findings if f['kind'] in _QUALITATIVE]
     section = 'CAPACITY_DISCLOSURES'
     if metric == 'D04':
-        from .d04_native_assessment import CURRENT_KINDS
+        from .d04_native_assessment import CURRENT_KINDS, check_source_classifications
+        from .capacity_semantic_review import _restore_units
+        for request, row in zip(requests, assessment['completed']):
+            unresolved = check_source_classifications(request=request,
+                units=_restore_units(request['units'], request['shared_source_dictionaries']),
+                findings=row['candidate']['selected']['source_assessment']['findings'])
+            need(not unresolved, 'D04_SOURCE_RELATIONS_UNRESOLVED:' + repr(unresolved))
         relevant = [f for f in findings if f['kind'] in CURRENT_KINDS
                     and f['subject'] == 'TARGET_REGISTRANT' and f['timing'] == 'CURRENT_REPORT']
         section = 'GOING_CONCERN_DISCLOSURES'

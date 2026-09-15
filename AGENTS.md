@@ -415,3 +415,5 @@ D04历史控制入口见`docs/historical_semantic_controls.md`：Enphase2016/201
 2026-09-15：B13压缩行以原始来源编号作键并保留原顺序。真实68虽然引用正确，仍错误分类税收抵免；原成功终态保留但业务内容拒绝，受影响B13真实调用暂停。`capacity_text_results`新增完整集合/有效Review后的有据不可得分支（仅合成开发验证）；`capacity_run`按已批公司范围为另外八家公司生成零AI不适用Run。数值/适用公司真实完整结果仍未完成。材料见`docs/evidence/issue28_continuous/b13-content-guards/`。
 
 2026-09-15后续：`d04_native_assessment.py`及`catalog/r6/semantic_review_v4.json`接新D04原生请求，复用既有来源登记、Review/Run和公共行。`capacity_*`的共同记录/登记/文本/Run函数现为B13与D04共享；旧诊断不升级。`native_assessment_replay.py`保留原计划/原接受ID，对完全相同来源请求作当前内容复验；归档代码不执行，只读视图无执行权限。D04真实新验证、B13适用数值/完整真实结果及全Issue验收仍未完成，详见`docs/evidence/issue28_continuous/d04-native-integration/`。
+
+PR43 review5205267507修复增量：D04源句关系检查在原生接受、文字结果和未披露公共行共同执行，检查肯定/否定及排除标签，具体未决不成为未披露。B13测试来源补齐metric_id合同；B13完整原生测试独立CI作业避免累计作业超时。限定开发验证与后续独立审阅、真实完整验收仍分别登记。

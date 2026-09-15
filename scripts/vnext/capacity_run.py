@@ -201,6 +201,9 @@ def project_defined_absence(*, case, result, row, company):
         notes='No relevant disclosure in the complete saved annual primary and current annual amendments. '
               'This is a defined-scope source assessment; no utilization value is inferred.')
     if metric == 'D04':
+        from .capacity_text_results import create_deterministic_text_candidate
+        candidate = create_deterministic_text_candidate(**case['text_arguments'])
+        need(not candidate['selected'], 'D04_ABSENCE_PROJECTION_SOURCE_CONFLICT')
         row['notes'] = '未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。'
     source = case['text_arguments']['source']; evidence = []
     for document in source['documents']:
