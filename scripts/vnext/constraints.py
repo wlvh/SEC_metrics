@@ -234,6 +234,16 @@ def verify_trace_observation_values(
         ConstraintError: On duplicate/missing inputs, detached component
             values, or final resolved values that differ from observations.
     """
+    if "value_kind" in trace:
+        from .text_results import verify_text_trace
+        try:
+            verify_text_trace(trace=trace, observations=observations)
+        except ValueError as error:
+            raise ConstraintError(str(error)) from error
+        return
+    if any(observation.get("value_kind") for identity, observation in observations.items()
+           if identity in trace["input_observation_ids"]):
+        raise ConstraintError("Numeric trace cannot consume text observations")
     input_ids = trace["input_observation_ids"]
     if (
         type(input_ids) is not list

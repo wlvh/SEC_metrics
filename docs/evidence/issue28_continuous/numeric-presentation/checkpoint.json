@@ -1,0 +1,21 @@
+{
+  "record_type": "NUMERIC_PRESENTATION_DEVELOPMENT_CHECKPOINT",
+  "files": {
+    "scripts/vnext/normal_numeric_projection.py": "24672ea9c10cb680e48812be5eef29e906a7ed59fba3f267b08d6c75de4ebff2",
+    "config/normal_numeric_projection_v1.json": "51d04a634f9973eda2f6362587f0dc117cb4f441c29db4b71e3724fa19d1dafb",
+    "tests/vnext/test_normal_numeric_projection.py": "f1a8477ab1099efc13e5174d1d855ef3f063c42a84f19ccb75b85ad613344e9c"
+  },
+  "tests": {
+    "command": "PYTHONPATH=scripts python3 -m unittest tests.vnext.test_normal_numeric_projection -v",
+    "passed": 8,
+    "seconds": 56.633,
+    "log": "record-rendering-tests-v2.log"
+  },
+  "validation_credit": "RECORDS_ONLY_RENDERING; no independently frozen V13 Run tested yet",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

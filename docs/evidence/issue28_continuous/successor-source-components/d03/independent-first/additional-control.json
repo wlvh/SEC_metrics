@@ -1,0 +1,31 @@
+{
+  "case": "unrelated_closed_control",
+  "supported_fact_count": 1,
+  "source_sha256": "a6509b3b93d367891b5b13367b3d759c9bddce0fd3a8360c9e869c874b867641",
+  "facts": [
+    {
+      "rule_id": "CURRENT_COOPERATION",
+      "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+      "statement_text": "We are cooperating with the DOJ inquiry.",
+      "visible_block_character_span": {
+        "start": 0,
+        "end": 40
+      },
+      "subject_binding": {
+        "text": "we",
+        "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+        "support": null
+      },
+      "source_date_literals": [],
+      "status": "SOURCE_REPORTED_FACT",
+      "authority_to_action_relation_proven": true,
+      "reason_codes": [],
+      "current_status_asserted": true,
+      "action_start_or_end_date_inferred": false,
+      "same_as_annual_measurement_period_asserted": false,
+      "investigated_subject_identity_inferred_from_participation": false,
+      "investigation_case_identity_or_count_inferred": false,
+      "fact_id": "sha256:d7240dbafe2662859330c9dfc992631777615dad67de3944b7478e4d8e41ff88"
+    }
+  ]
+}

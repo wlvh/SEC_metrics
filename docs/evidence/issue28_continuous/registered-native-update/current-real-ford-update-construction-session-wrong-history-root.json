@@ -1,0 +1,39 @@
+{
+  "result": {
+    "company_id": "ford_motor_company",
+    "status": "UPDATES_INCOMPLETE",
+    "metrics": [
+      {
+        "metric_id": "D04",
+        "status": "UPDATE_BLOCKED",
+        "error_type": "OrdinaryUpdateError",
+        "reason": "UPDATE_CONFIGURATION_OR_RUNTIME_CHANGED",
+        "last_verified_candidate": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    ],
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "counts_before": [
+    59,
+    59,
+    49
+  ],
+  "counts_after": [
+    59,
+    59,
+    49
+  ],
+  "network_or_process_events": [],
+  "elapsed_seconds": 1.7129821249982342
+}

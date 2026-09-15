@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<stdin>", line 10, in <module>
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/capacity_update_input.py", line 89, in prepare_registered_update
+    current_prepared=prepare_requests(company_id=company_id,metric_id=metric_id,native=metric_id=='D04',
+        reference_context=True,complete_response_contract=options['complete_response_contract'],
+        source_root=source_root,source_ledger=ledger)
+  File "/tmp/sec_metrics_issue28_continuous/native-update-patch/after/scripts/vnext/continuous_semantic_calls.py", line 262, in prepare_requests
+    need((data_root in {ROOT,fixed} if source_ledger.live else data_root!=fixed)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and (not source_ledger.live or source_ledger.root==fixed.parent)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and not any(p.is_symlink() for p in [Path(source_root),*Path(source_root).parents]),
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'CONTINUOUS_ORDINARY_SOURCE_ROOT_FORBIDDEN')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_policy.py", line 15, in need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_ORDINARY_SOURCE_ROOT_FORBIDDEN

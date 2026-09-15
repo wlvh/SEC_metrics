@@ -1,0 +1,43 @@
+{
+  "command": [
+    "/tmp/sec_metrics_issue28_continuous/pr43-review/d04-source-development/run_material.py",
+    "--repo",
+    "/Users/lyuhongwang/Developer/SEC_metrics",
+    "--output",
+    "/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material"
+  ],
+  "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "protected_before": {
+    "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+    "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+  },
+  "protected_after": {
+    "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+    "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+  },
+  "protected_unchanged": true,
+  "code_before": {
+    "scripts/vnext/going_concern_source.py": "6ffa23724395e1e781abbe9aa75f25f04a7149103cf426c88392e6c82a904276",
+    "tests/vnext/test_going_concern_source.py": "d0b99477df8c00dabfdcde7b77807daefaf37490ffb4865b70823d0af17bc6ae",
+    "scripts/vnext/text_business_candidates.py": "08d6fe148f3d198bc60fd18a031e76f07aa8f5f9b394508822dbcf448ea85b43",
+    "scripts/vnext/text_coverage.py": "33fe616774a0ee6da02011dd00526f6cc086b191beab7af4d67ce79c4d84b5ce",
+    "scripts/vnext/normal_annual_input.py": "bbf94b9df70e393c09d29d517ffdc9905ff210bc6c4976d582190da15842487a",
+    "scripts/vnext/normal_source_authority.py": "657eaec526d1b28edcd28a1e1d7fc9433fad5a96a677da77c2561d0d0383be3e"
+  },
+  "code_after": {
+    "scripts/vnext/going_concern_source.py": "6ffa23724395e1e781abbe9aa75f25f04a7149103cf426c88392e6c82a904276",
+    "tests/vnext/test_going_concern_source.py": "d0b99477df8c00dabfdcde7b77807daefaf37490ffb4865b70823d0af17bc6ae",
+    "scripts/vnext/text_business_candidates.py": "08d6fe148f3d198bc60fd18a031e76f07aa8f5f9b394508822dbcf448ea85b43",
+    "scripts/vnext/text_coverage.py": "33fe616774a0ee6da02011dd00526f6cc086b191beab7af4d67ce79c4d84b5ce",
+    "scripts/vnext/normal_annual_input.py": "bbf94b9df70e393c09d29d517ffdc9905ff210bc6c4976d582190da15842487a",
+    "scripts/vnext/normal_source_authority.py": "657eaec526d1b28edcd28a1e1d7fc9433fad5a96a677da77c2561d0d0383be3e"
+  },
+  "network_audit_guard": true,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "native_run_created": false,
+  "freeze_called": false
+}

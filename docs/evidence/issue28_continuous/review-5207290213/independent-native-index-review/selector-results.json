@@ -1,0 +1,90 @@
+{
+  "cases": [
+    {
+      "case": "no success",
+      "outcome": "ACCEPTED",
+      "reason": null,
+      "variants": [
+        "INDEXED_UNITS_V1",
+        "INDEXED_UNITS_V1",
+        "INDEXED_UNITS_V1"
+      ],
+      "original_ordinals": [
+        null,
+        null,
+        null
+      ],
+      "replay_calls": 0
+    },
+    {
+      "case": "BASE and INDEXED successes plus old failed BASE",
+      "outcome": "ACCEPTED",
+      "reason": null,
+      "variants": [
+        "BASE",
+        "INDEXED_UNITS_V1",
+        "INDEXED_UNITS_V1"
+      ],
+      "original_ordinals": [
+        1,
+        2,
+        null
+      ],
+      "replay_calls": 2
+    },
+    {
+      "case": "two successful variants for one original group",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_VARIANT_MULTIPLE_SUCCESSFUL_VERSIONS",
+      "variants": [],
+      "original_ordinals": [],
+      "replay_calls": 1
+    },
+    {
+      "case": "current replay rejects original success",
+      "outcome": "REJECTED",
+      "reason": "NATIVE_ORIGINAL_ACCEPTANCE_SEMANTICS_CHANGED",
+      "variants": [],
+      "original_ordinals": [],
+      "replay_calls": 1
+    },
+    {
+      "case": "foreign source success",
+      "outcome": "ACCEPTED",
+      "reason": null,
+      "variants": [
+        "INDEXED_UNITS_V1",
+        "INDEXED_UNITS_V1",
+        "INDEXED_UNITS_V1"
+      ],
+      "original_ordinals": [
+        null,
+        null,
+        null
+      ],
+      "replay_calls": 0
+    },
+    {
+      "case": "SemanticRequest.validate valid_indexed",
+      "outcome": "ACCEPTED",
+      "reason": null
+    },
+    {
+      "case": "SemanticRequest.validate cross_source_indexed",
+      "outcome": "REJECTED",
+      "reason": "CONTINUOUS_REQUEST_NOT_IN_SOURCE"
+    }
+  ],
+  "test_doubles": [
+    "ledger snapshot",
+    "native archived-runtime replay",
+    "process authority check and source admission for membership probes",
+    "transport policy loader"
+  ],
+  "actual_new_calls": [
+    0,
+    0,
+    0
+  ],
+  "original_fixture_request_files_unchanged": true
+}

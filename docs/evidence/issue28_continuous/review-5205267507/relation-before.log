@@ -1,0 +1,36 @@
+test_nearby_words_and_future_alleviation_do_not_prove_the_relation (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_nearby_words_and_future_alleviation_do_not_prove_the_relation) ... 
+  test_nearby_words_and_future_alleviation_do_not_prove_the_relation (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_nearby_words_and_future_alleviation_do_not_prove_the_relation) (text='There is substantial doubt about the asset valuation, which does not affect our ability to continue as a going concern.') ... FAIL
+  test_nearby_words_and_future_alleviation_do_not_prove_the_relation (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_nearby_words_and_future_alleviation_do_not_prove_the_relation) (text='Management expects to alleviate substantial doubt about our ability to continue as a going concern.') ... FAIL
+  test_nearby_words_and_future_alleviation_do_not_prove_the_relation (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_nearby_words_and_future_alleviation_do_not_prove_the_relation) (text='Substantial doubt about our ability to continue as a going concern will have been alleviated after the proposed financing.') ... FAIL
+
+======================================================================
+FAIL: test_nearby_words_and_future_alleviation_do_not_prove_the_relation (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_nearby_words_and_future_alleviation_do_not_prove_the_relation) (text='There is substantial doubt about the asset valuation, which does not affect our ability to continue as a going concern.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 43, in test_nearby_words_and_future_alleviation_do_not_prove_the_relation
+    self.assertTrue(checked['unresolved'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_nearby_words_and_future_alleviation_do_not_prove_the_relation (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_nearby_words_and_future_alleviation_do_not_prove_the_relation) (text='Management expects to alleviate substantial doubt about our ability to continue as a going concern.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 43, in test_nearby_words_and_future_alleviation_do_not_prove_the_relation
+    self.assertTrue(checked['unresolved'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_nearby_words_and_future_alleviation_do_not_prove_the_relation (tests.vnext.test_d04_native_assessment.D04NativeProtocolTest.test_nearby_words_and_future_alleviation_do_not_prove_the_relation) (text='Substantial doubt about our ability to continue as a going concern will have been alleviated after the proposed financing.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_native_assessment.py", line 43, in test_nearby_words_and_future_alleviation_do_not_prove_the_relation
+    self.assertTrue(checked['unresolved'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=3)

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<stdin>", line 13, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_refresh_cycle.py", line 84, in refresh_and_process
+    need(state_root.is_absolute() and first_symlink_in_path(path=state_root) is None,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'ORDINARY_REFRESH_ABSOLUTE_UNALIASED_STATE_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_policy.py", line 15, in need
+    raise ValueError(reason)
+ValueError: ORDINARY_REFRESH_ABSOLUTE_UNALIASED_STATE_REQUIRED

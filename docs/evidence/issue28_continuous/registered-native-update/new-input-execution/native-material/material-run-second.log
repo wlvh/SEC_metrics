@@ -1,0 +1,29 @@
+history-before-native UPDATES_INCOMPLETE
+material-failure FAILED
+material-summary FAILED
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/native-refresh-execution/run_material.py", line 25, in <module>
+    result=ensure_native_update(source_root=source,company_id='enphase_energy',metric_id='D04',ledger=ledger,max_provider_requests=2,recorded_wire_factory=wire);save('native-execution',result);assert result['status']=='NATIVE_INPUT_REGISTERED',result
+  File "/tmp/sec_metrics_issue28_continuous/native-refresh-execution/after/scripts/vnext/capacity_update_input.py", line 150, in ensure_native_update
+    selected=prepare_registered_update(source_root=source_root,company_id=company_id,metric_id=metric_id,
+        options=options,ledger=ledger,allow_incomplete=True)
+  File "/tmp/sec_metrics_issue28_continuous/native-refresh-execution/after/scripts/vnext/capacity_update_input.py", line 89, in prepare_registered_update
+    current_prepared=prepare_requests(company_id=company_id,metric_id=metric_id,native=metric_id=='D04',
+        reference_context=True,complete_response_contract=options['complete_response_contract'],
+        source_root=source_root,source_ledger=ledger)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 287, in prepare_requests
+    source = prepare_d04_semantic_source(repo_root=data_root,company_id=company_id,ordinary_registered=data_root!=ROOT)
+  File "/tmp/sec_metrics_issue28_continuous/native-source-runtime-policy/after/scripts/vnext/r6_semantic_source.py", line 185, in prepare_d04_semantic_source
+    annual=prepare_saved_annual_input(repo_root=repo_root,company_id=company_id,ordinary_registered=ordinary_registered)
+  File "/tmp/sec_metrics_issue28_continuous/native-source-runtime-policy/after/scripts/vnext/normal_annual_input_v2.py", line 60, in prepare_saved_annual_input
+    report = fiscal_year_labels._inspect_prepared_input(repo_root=repo_root,prepared=original)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 251, in _inspect_prepared_input
+    inspected=inspect_fiscal_year_labels(primary_bytes=primary,companyfacts_bytes=facts,
+        expected_primary_sha256=sha256_bytes(content=primary),expected_companyfacts_sha256=sha256_bytes(content=facts),
+        expected_cik=prepared["entity"],filing=prepared["filing"])
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 208, in inspect_fiscal_year_labels
+    _need(bool(cf_rows),"FISCAL_LABEL_SAME_ACCESSION_COMPANYFACTS_MISSING")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 37, in _need
+    raise FiscalYearLabelError(reason)
+vnext.fiscal_year_labels.FiscalYearLabelError: FISCAL_LABEL_SAME_ACCESSION_COMPANYFACTS_MISSING

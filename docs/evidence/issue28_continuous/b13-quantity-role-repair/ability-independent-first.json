@@ -1,0 +1,15 @@
+{
+  "patch_sha256": "01e56321f533eaae43f5ccfd21a7828b228fe491ad82c946aa4694736f8f8b06",
+  "status": "BLOCKING_FINDING",
+  "passed_controls": [
+    "Our plant can manufacture 100 widgets per quarter. CURRENT_REPORT accepted",
+    "In 2024, our plant can manufacture 100 widgets per quarter. wrong CURRENT_REPORT rejected",
+    "Same dated source with HISTORICAL accepted"
+  ],
+  "source_text": "Our planned plant can manufacture 100 widgets per quarter.",
+  "wrong_label": "AVAILABLE_CAPACITY/TARGET_REGISTRANT/CURRENT_REPORT",
+  "actual": "validate_response accepted unresolved=[]",
+  "scope": "Synthetic source via real factories and validator, not actual company or full Run",
+  "cause": "arbitrary facility modifiers accepted while planned checked only in product",
+  "main_patch_applied": false
+}

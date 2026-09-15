@@ -1,0 +1,43 @@
+test_scoped_assertions_complete_run_and_final_public_row (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_scoped_assertions_complete_run_and_final_public_row)
+Synthetic source/admission doubles; real result, Run and projection. ... ERROR
+
+======================================================================
+ERROR: test_scoped_assertions_complete_run_and_final_public_row (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_scoped_assertions_complete_run_and_final_public_row)
+Synthetic source/admission doubles; real result, Run and projection.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 48, in load_profile_requirement_snapshot
+    need({'sha256':sha256_file(path=path),'size':path.stat().st_size} == binding
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and sha256_file(path=installed/relative) == binding['sha256'], 'Continuous rule bytes differ: ' + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 15, in need
+    if not condition:raise v1.RequirementProfileError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.requirement_profile_v1.RequirementProfileError: Continuous rule bytes differ: scripts/vnext/continuous_semantic_calls.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_run_material.py", line 62, in test_scoped_assertions_complete_run_and_final_public_row
+    requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v14')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Continuous rule bytes differ: scripts/vnext/continuous_semantic_calls.py
+
+----------------------------------------------------------------------
+Ran 1 test in 1.199s
+
+FAILED (errors=1)

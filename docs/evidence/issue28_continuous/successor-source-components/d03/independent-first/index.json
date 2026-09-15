@@ -1,0 +1,647 @@
+[
+  {
+    "case": "actual_current_control",
+    "source_sha256": "83706c8dd9097df101a910c731092d065d83b61f149fb86150f2d4474a2d6e8a",
+    "supported_fact_count": 1,
+    "facts": [
+      {
+        "rule_id": "CURRENT_COOPERATION",
+        "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+        "statement_text": "We are cooperating with the DOJ inquiry.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 40
+        },
+        "subject_binding": {
+          "text": "we",
+          "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SOURCE_REPORTED_FACT",
+        "authority_to_action_relation_proven": true,
+        "reason_codes": [],
+        "current_status_asserted": true,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:d7240dbafe2662859330c9dfc992631777615dad67de3944b7478e4d8e41ff88",
+        "excerpt": {
+          "source_reference_id": "sha256:a1d8554478286765ffe07ea712438f79b66e339b61da02726a339058971818f8",
+          "raw_asset_id": "sha256:83706c8dd9097df101a910c731092d065d83b61f149fb86150f2d4474a2d6e8a",
+          "document_id": "sha256:93864b114696674e55769ca9fe1afa2ba5e977afd1ec59d329f9267b92742e55",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 1,
+          "text": "We are cooperating with the DOJ inquiry.",
+          "raw_start_byte": 942,
+          "raw_end_byte": 982,
+          "raw_span_sha256": "68057174b0a4078918f1fef9308eb21d0fdf1f2c1d9f3be3216efe41d5a69dd1"
+        },
+        "context_excerpts": [],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  },
+  {
+    "case": "private_background_control",
+    "source_sha256": "d337cf4b59a15b5df3344fdf08ba6380bcbd0664aaec891929489eb7b5bd1904",
+    "supported_fact_count": 0,
+    "facts": [
+      {
+        "rule_id": "RECEIVED_PROCESS",
+        "fact_kind": "REPORTED_RECEIPT_OF_REGULATORY_PROCESS",
+        "statement_text": "We received a subpoena from a private plaintiff in a contract lawsuit discussing SEC investigations.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 100
+        },
+        "subject_binding": {
+          "text": "we",
+          "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SEMANTIC_REVIEW_REQUIRED",
+        "authority_to_action_relation_proven": false,
+        "reason_codes": [
+          "AUTHORITY_ACTOR_RELATION_NOT_PROVEN"
+        ],
+        "current_status_asserted": false,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:31add04d51a2b55fbf6b1ed9254b831a7b28fbfd4f0d21628fbf9c1697383518",
+        "excerpt": {
+          "source_reference_id": "sha256:b88280ec0b7f4eafe4941a1581945add1dd86143bfeb3850a9ca1526275fd436",
+          "raw_asset_id": "sha256:d337cf4b59a15b5df3344fdf08ba6380bcbd0664aaec891929489eb7b5bd1904",
+          "document_id": "sha256:5fad02170b156d4201e81bde70475a57784fa7c21273afdb33abd43f5c0f5f5d",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 1,
+          "text": "We received a subpoena from a private plaintiff in a contract lawsuit discussing SEC investigations.",
+          "raw_start_byte": 942,
+          "raw_end_byte": 1042,
+          "raw_span_sha256": "450c6220c5957e524cc1da4ba3a38d93558865f7b9558c6af8442bd7ce41ee69"
+        },
+        "context_excerpts": [],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  },
+  {
+    "case": "conditional_same_sentence_control",
+    "source_sha256": "41c802e2dc33df1c942dcb19bdc4f9d5f8a909f549cd015108df6f7f8cd28c63",
+    "supported_fact_count": 0,
+    "facts": [
+      {
+        "rule_id": "CURRENT_COOPERATION",
+        "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+        "statement_text": "We are cooperating with the DOJ inquiry if one is opened.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 57
+        },
+        "subject_binding": {
+          "text": "we",
+          "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SEMANTIC_REVIEW_REQUIRED",
+        "authority_to_action_relation_proven": true,
+        "reason_codes": [
+          "MIXED_OR_HYPOTHETICAL_ACTION_REQUIRES_INTERPRETATION"
+        ],
+        "current_status_asserted": false,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:426cfbac9fc18b446a1e7779acb113072d6cb4c8d67b8262270aca4f23a3af0a",
+        "excerpt": {
+          "source_reference_id": "sha256:27c263a9cc93005ccf25eebe6d478fb1d0fa48d3c3e00555b5be53ddee863da4",
+          "raw_asset_id": "sha256:41c802e2dc33df1c942dcb19bdc4f9d5f8a909f549cd015108df6f7f8cd28c63",
+          "document_id": "sha256:11caf7bd0759325a0a6d6d16f97a8686389643bbd0e406c26f50c96326189f0b",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 1,
+          "text": "We are cooperating with the DOJ inquiry if one is opened.",
+          "raw_start_byte": 942,
+          "raw_end_byte": 999,
+          "raw_span_sha256": "624e75e39f570ac8a3e549fb536a8fdc9a827afcfedaad642177d67e3e45b9c3"
+        },
+        "context_excerpts": [],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  },
+  {
+    "case": "historical_quoted_paragraph",
+    "source_sha256": "2ff0093ec509d88994c31868abe5441a893e7ab87c8db81e28bdb2da1867507e",
+    "supported_fact_count": 1,
+    "facts": [
+      {
+        "rule_id": "CURRENT_COOPERATION",
+        "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+        "statement_text": "We are cooperating with the DOJ inquiry.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 40
+        },
+        "subject_binding": {
+          "text": "we",
+          "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SOURCE_REPORTED_FACT",
+        "authority_to_action_relation_proven": true,
+        "reason_codes": [],
+        "current_status_asserted": true,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:d7240dbafe2662859330c9dfc992631777615dad67de3944b7478e4d8e41ff88",
+        "excerpt": {
+          "source_reference_id": "sha256:5c9bbf99162c668538f3af1339a4664cfde9257114f09a6971851a1ccbe61a92",
+          "raw_asset_id": "sha256:2ff0093ec509d88994c31868abe5441a893e7ab87c8db81e28bdb2da1867507e",
+          "document_id": "sha256:c648209031779b044ae33dbfa7112adddcfbecf9c77646395993d5e8c69e8bcc",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 2,
+          "text": "We are cooperating with the DOJ inquiry.",
+          "raw_start_byte": 1048,
+          "raw_end_byte": 1088,
+          "raw_span_sha256": "68057174b0a4078918f1fef9308eb21d0fdf1f2c1d9f3be3216efe41d5a69dd1"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:5c9bbf99162c668538f3af1339a4664cfde9257114f09a6971851a1ccbe61a92",
+            "raw_asset_id": "sha256:2ff0093ec509d88994c31868abe5441a893e7ab87c8db81e28bdb2da1867507e",
+            "document_id": "sha256:c648209031779b044ae33dbfa7112adddcfbecf9c77646395993d5e8c69e8bcc",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 1,
+            "text": "The following quotation is from our 2018 annual report; the inquiry was closed in 2019.",
+            "raw_start_byte": 942,
+            "raw_end_byte": 1029,
+            "raw_span_sha256": "1e351b58bdd079c1cd3f5269188ba3734b87886e816020b72ad9b2a4640a6e29"
+          },
+          {
+            "source_reference_id": "sha256:5c9bbf99162c668538f3af1339a4664cfde9257114f09a6971851a1ccbe61a92",
+            "raw_asset_id": "sha256:2ff0093ec509d88994c31868abe5441a893e7ab87c8db81e28bdb2da1867507e",
+            "document_id": "sha256:c648209031779b044ae33dbfa7112adddcfbecf9c77646395993d5e8c69e8bcc",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3,
+            "text": "This is a historical quotation.",
+            "raw_start_byte": 1108,
+            "raw_end_byte": 1139,
+            "raw_span_sha256": "b2e8ae81c472a813bfb2a97ec5ef107102e8ec56dcbd591af6850bf4fdfab6dc"
+          }
+        ],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  },
+  {
+    "case": "third_party_quoted_paragraph",
+    "source_sha256": "afa0f66ac714bb9346585578bb415aa85f78ebd7d3b1cccb700b135b7edcb2e3",
+    "supported_fact_count": 1,
+    "facts": [
+      {
+        "rule_id": "CURRENT_COOPERATION",
+        "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+        "statement_text": "We are cooperating with the DOJ inquiry.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 40
+        },
+        "subject_binding": {
+          "text": "we",
+          "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SOURCE_REPORTED_FACT",
+        "authority_to_action_relation_proven": true,
+        "reason_codes": [],
+        "current_status_asserted": true,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:d7240dbafe2662859330c9dfc992631777615dad67de3944b7478e4d8e41ff88",
+        "excerpt": {
+          "source_reference_id": "sha256:0fb0af276f3b721e056b53035c1dd7c904f6022450b8dcb145114028c6b817c9",
+          "raw_asset_id": "sha256:afa0f66ac714bb9346585578bb415aa85f78ebd7d3b1cccb700b135b7edcb2e3",
+          "document_id": "sha256:8e42ac54c9eee18d7a89160105f1cc2094b7221e448568c8b95044bdfde2a022",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 2,
+          "text": "We are cooperating with the DOJ inquiry.",
+          "raw_start_byte": 1032,
+          "raw_end_byte": 1072,
+          "raw_span_sha256": "68057174b0a4078918f1fef9308eb21d0fdf1f2c1d9f3be3216efe41d5a69dd1"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:0fb0af276f3b721e056b53035c1dd7c904f6022450b8dcb145114028c6b817c9",
+            "raw_asset_id": "sha256:afa0f66ac714bb9346585578bb415aa85f78ebd7d3b1cccb700b135b7edcb2e3",
+            "document_id": "sha256:8e42ac54c9eee18d7a89160105f1cc2094b7221e448568c8b95044bdfde2a022",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 1,
+            "text": "Our supplier Delta provided this statement about its own investigation:",
+            "raw_start_byte": 942,
+            "raw_end_byte": 1013,
+            "raw_span_sha256": "2ce546c433b946b1c266a741ec8bf106a08d083f572043d0655b3352e0a3a5a8"
+          },
+          {
+            "source_reference_id": "sha256:0fb0af276f3b721e056b53035c1dd7c904f6022450b8dcb145114028c6b817c9",
+            "raw_asset_id": "sha256:afa0f66ac714bb9346585578bb415aa85f78ebd7d3b1cccb700b135b7edcb2e3",
+            "document_id": "sha256:8e42ac54c9eee18d7a89160105f1cc2094b7221e448568c8b95044bdfde2a022",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3,
+            "text": "Delta is not affiliated with the registrant.",
+            "raw_start_byte": 1092,
+            "raw_end_byte": 1136,
+            "raw_span_sha256": "6bfb71543f2b69d8bbb3a5a015affffe013354fb470a756a743178a715d3c0aa"
+          }
+        ],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  },
+  {
+    "case": "conditional_quoted_paragraph",
+    "source_sha256": "04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+    "supported_fact_count": 1,
+    "facts": [
+      {
+        "rule_id": "CURRENT_COOPERATION",
+        "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+        "statement_text": "We are cooperating with the DOJ inquiry.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 40
+        },
+        "subject_binding": {
+          "text": "we",
+          "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SOURCE_REPORTED_FACT",
+        "authority_to_action_relation_proven": true,
+        "reason_codes": [],
+        "current_status_asserted": true,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:d7240dbafe2662859330c9dfc992631777615dad67de3944b7478e4d8e41ff88",
+        "excerpt": {
+          "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+          "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+          "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 2,
+          "text": "We are cooperating with the DOJ inquiry.",
+          "raw_start_byte": 1032,
+          "raw_end_byte": 1072,
+          "raw_span_sha256": "68057174b0a4078918f1fef9308eb21d0fdf1f2c1d9f3be3216efe41d5a69dd1"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+            "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+            "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 1,
+            "text": "If the DOJ were to open an inquiry, our hypothetical response would be:",
+            "raw_start_byte": 942,
+            "raw_end_byte": 1013,
+            "raw_span_sha256": "087e8421ce0b717b020783145615fcf9fe1e93e5bf3f952ad53133845ae38bc3"
+          },
+          {
+            "source_reference_id": "sha256:de38f545985e53b3128b281fa3d48616773702ce36c19b13a9755f6ecc279de3",
+            "raw_asset_id": "sha256:04aca712ecb44368a2aeade373a44251ce51bfb3d52c6ea75a1e6d016ad6db46",
+            "document_id": "sha256:8a67413e4e1dce3d07a722e9a2060457a924c0fb52fc4e3ef3ea3a0c6a315ff9",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3,
+            "text": "No such inquiry has been opened.",
+            "raw_start_byte": 1092,
+            "raw_end_byte": 1124,
+            "raw_span_sha256": "fc2f8bc332746b6577d5ff37613b72b11eb8c99a4cf06db3225e96ac83ac2f1b"
+          }
+        ],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  },
+  {
+    "case": "adjacent_closed_status",
+    "source_sha256": "cf902b7b2cde4e896ae79e4f5acb52f76241a4a62e433b9fbb09b199c90e162f",
+    "supported_fact_count": 1,
+    "facts": [
+      {
+        "rule_id": "CURRENT_COOPERATION",
+        "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+        "statement_text": "We are cooperating with the DOJ inquiry.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 40
+        },
+        "subject_binding": {
+          "text": "we",
+          "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SOURCE_REPORTED_FACT",
+        "authority_to_action_relation_proven": true,
+        "reason_codes": [],
+        "current_status_asserted": true,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:d7240dbafe2662859330c9dfc992631777615dad67de3944b7478e4d8e41ff88",
+        "excerpt": {
+          "source_reference_id": "sha256:a6e18d1a1c1ecff4469151f55b1110ddf7046c513bce956f836fda1d5a8bb039",
+          "raw_asset_id": "sha256:cf902b7b2cde4e896ae79e4f5acb52f76241a4a62e433b9fbb09b199c90e162f",
+          "document_id": "sha256:c258d6d67daabaee7ded7ad0b87cfb9a4889d286792c0e3b71c20ab1cf9c03cf",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 1,
+          "text": "We are cooperating with the DOJ inquiry.",
+          "raw_start_byte": 942,
+          "raw_end_byte": 982,
+          "raw_span_sha256": "68057174b0a4078918f1fef9308eb21d0fdf1f2c1d9f3be3216efe41d5a69dd1"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:a6e18d1a1c1ecff4469151f55b1110ddf7046c513bce956f836fda1d5a8bb039",
+            "raw_asset_id": "sha256:cf902b7b2cde4e896ae79e4f5acb52f76241a4a62e433b9fbb09b199c90e162f",
+            "document_id": "sha256:c258d6d67daabaee7ded7ad0b87cfb9a4889d286792c0e3b71c20ab1cf9c03cf",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 2,
+            "text": "This inquiry was closed in January 2021.",
+            "raw_start_byte": 989,
+            "raw_end_byte": 1029,
+            "raw_span_sha256": "674a86545e4c9dfb14bf4b3a00e24b6442c802d0af675328da6c86f55b9aba4b"
+          }
+        ],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  },
+  {
+    "case": "sec_reports_private_actor",
+    "source_sha256": "eb0962e2f35601d5627b5c9b2c2e64ab5bcdb258472eeb340561db36a9a3eff7",
+    "supported_fact_count": 1,
+    "facts": [
+      {
+        "rule_id": "ISSUED_PROCESS_TO_NAMED_ENTITY",
+        "fact_kind": "REPORTED_REGULATORY_PROCESS_ADDRESSED_TO_ENTITY",
+        "statement_text": "The SEC reported that private plaintiff Delta issued a subpoena to Example Incorporated in a contract dispute.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 110
+        },
+        "subject_binding": {
+          "text": "Example Incorporated",
+          "basis": "NAMESPACE_CHECKED_DEI_REGISTRANT_NAME",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SOURCE_REPORTED_FACT",
+        "authority_to_action_relation_proven": true,
+        "reason_codes": [],
+        "current_status_asserted": false,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:c9a80b2b2733098b250a403d0a467e2ccfca4df5177c67f0321a750682ba85c9",
+        "excerpt": {
+          "source_reference_id": "sha256:95477ac2e4a29b1d9754a2cfe7d205cd4359fd1ee6b2c902e02274a66f1a8512",
+          "raw_asset_id": "sha256:eb0962e2f35601d5627b5c9b2c2e64ab5bcdb258472eeb340561db36a9a3eff7",
+          "document_id": "sha256:b8cc1a41d2dc2e3dab00169b92ef40a1d795d34f7f15cb3dcaa85724f28c05c2",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 1,
+          "text": "The SEC reported that private plaintiff Delta issued a subpoena to Example Incorporated in a contract dispute.",
+          "raw_start_byte": 942,
+          "raw_end_byte": 1052,
+          "raw_span_sha256": "bc76d7f8b29a50eff0f93b99049bc46a6803ee970660add8f926f36f47d3c6f2"
+        },
+        "context_excerpts": [],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  },
+  {
+    "case": "sec_denies_action",
+    "source_sha256": "ecd42609c173c98f03fb733ad2237d0e7565d7dfe1843412b2738d5403f73484",
+    "supported_fact_count": 1,
+    "facts": [
+      {
+        "rule_id": "ISSUED_PROCESS_TO_NAMED_ENTITY",
+        "fact_kind": "REPORTED_REGULATORY_PROCESS_ADDRESSED_TO_ENTITY",
+        "statement_text": "The SEC denied that it issued a subpoena to Example Incorporated.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 65
+        },
+        "subject_binding": {
+          "text": "Example Incorporated",
+          "basis": "NAMESPACE_CHECKED_DEI_REGISTRANT_NAME",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SOURCE_REPORTED_FACT",
+        "authority_to_action_relation_proven": true,
+        "reason_codes": [],
+        "current_status_asserted": false,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:ee265f6be354c0e3c365751b9ab21dc20e2f83071bacbb8d9738dc263145d524",
+        "excerpt": {
+          "source_reference_id": "sha256:74712013f9996661a34667f064f855eb0ac56c0ba6484a1bd88a922333394b54",
+          "raw_asset_id": "sha256:ecd42609c173c98f03fb733ad2237d0e7565d7dfe1843412b2738d5403f73484",
+          "document_id": "sha256:6e531c8ac68fd545f2d255264b5f0c8d449c70247573b568d699cb45ca93a8a3",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 1,
+          "text": "The SEC denied that it issued a subpoena to Example Incorporated.",
+          "raw_start_byte": 942,
+          "raw_end_byte": 1007,
+          "raw_span_sha256": "869772a0bceee04b4ce4b47bef702be1bc40838651508da8c6b7b9809a229034"
+        },
+        "context_excerpts": [],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  },
+  {
+    "case": "government_private_insurer",
+    "source_sha256": "85cdd8d2bd50237ca16c3a613b5cdfc4389c0532cc2f7ec7e92b863b8d3539df",
+    "supported_fact_count": 1,
+    "facts": [
+      {
+        "rule_id": "RECEIVED_PROCESS",
+        "fact_kind": "REPORTED_RECEIPT_OF_REGULATORY_PROCESS",
+        "statement_text": "We received a subpoena from Government Employees Insurance Company, a private insurer, in its contract lawsuit.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 111
+        },
+        "subject_binding": {
+          "text": "we",
+          "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SOURCE_REPORTED_FACT",
+        "authority_to_action_relation_proven": true,
+        "reason_codes": [],
+        "current_status_asserted": false,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:7b540a91d1568c01f7de4ed0456c35cbcff35033a8cedab7ca960a30ee3e89a3",
+        "excerpt": {
+          "source_reference_id": "sha256:2a671389f5f54ccabc9b9c2c86ea3e5f0a8414a23d81861878d8071df82cf329",
+          "raw_asset_id": "sha256:85cdd8d2bd50237ca16c3a613b5cdfc4389c0532cc2f7ec7e92b863b8d3539df",
+          "document_id": "sha256:42cfd4d853d1e5f4e6a2e8c768210d9ec3be08559f380ef5f3438ad4ad07aaca",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 1,
+          "text": "We received a subpoena from Government Employees Insurance Company, a private insurer, in its contract lawsuit.",
+          "raw_start_byte": 942,
+          "raw_end_byte": 1053,
+          "raw_span_sha256": "ea565e07e127fff863c848171e18ec1babfbaf6ea21e7fe79fde40f411b174f2"
+        },
+        "context_excerpts": [],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  },
+  {
+    "case": "conference_background",
+    "source_sha256": "8e61fd6807d58271b881f53e8074a7a16d122a79dfa811f51797ef6ad30dbd87",
+    "supported_fact_count": 1,
+    "facts": [
+      {
+        "rule_id": "CURRENT_COOPERATION",
+        "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+        "statement_text": "We are cooperating with the SEC on its conference about enforcement practices.",
+        "visible_block_character_span": {
+          "start": 0,
+          "end": 78
+        },
+        "subject_binding": {
+          "text": "we",
+          "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+          "support": null
+        },
+        "source_date_literals": [],
+        "status": "SOURCE_REPORTED_FACT",
+        "authority_to_action_relation_proven": true,
+        "reason_codes": [],
+        "current_status_asserted": true,
+        "action_start_or_end_date_inferred": false,
+        "same_as_annual_measurement_period_asserted": false,
+        "investigated_subject_identity_inferred_from_participation": false,
+        "investigation_case_identity_or_count_inferred": false,
+        "fact_id": "sha256:4da0a61911d0118106297ccaccf2b0d80ea704b5d3f195009c874152f259ac3a",
+        "excerpt": {
+          "source_reference_id": "sha256:76d0f9c50bd8a9387c83eec7ac21b37fdf90ccb352c323c45df9e20ade941570",
+          "raw_asset_id": "sha256:8e61fd6807d58271b881f53e8074a7a16d122a79dfa811f51797ef6ad30dbd87",
+          "document_id": "sha256:b72776f0d1de2328355974036e933fc960c78cf3689ece7de64e4f7dbd550058",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 1,
+          "text": "We are cooperating with the SEC on its conference about enforcement practices.",
+          "raw_start_byte": 942,
+          "raw_end_byte": 1020,
+          "raw_span_sha256": "7adec0ef6fbd787737033a02ae6f0c9c100aa05b5308a61343faa8bc42c50355"
+        },
+        "context_excerpts": [],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false
+  }
+]

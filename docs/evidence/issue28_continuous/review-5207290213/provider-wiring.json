@@ -1,0 +1,27 @@
+{
+  "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
+  "requirement_id": "issue_28_v14",
+  "execution_authority_hash": "sha256:b22a00e4fa0b5e4a059949035d6582089f06bc11f1128f33eed4a16985d62641",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "network_disabled": true,
+  "legacy_default_forbidden": true,
+  "real_request_factory_to_controller_verified": true,
+  "count_control_tests_passed": true,
+  "evidence": {
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/current-wiring-tests.log": "1f3f805faf48a9384311b8a323a892c612b80ab6c3968cc25111488fbd4c802d",
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/native-mixed.log": "bc0d173946b081092cc6e5439b480383ef9a18a1854e9ce1c578d1f592b47f74",
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/cold.json": "cd705350d2a0674464bc92ad4618c03e54bf4cd5178de90c2bb63a7789d28255",
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/envelope-census.json": "ca0ff1a591d6d6cf242420a70f85d5b08f82a449b33e032d6305eb93fd81d32b",
+    "docs/evidence/issue28_continuous/d04-indexed-unit-response/current-success-retention.json": "ecf0f6caa4d1142888b99545a83467aeb6ed8c650b778e56e44d9d94e32c4f66",
+    "docs/evidence/issue28_continuous/review-5207290213/independent-native-index-review/README.md": "ef8dfd86220860d51c3e1c9c946f9755664010fe0d27e7c51d5937fd376e0c3f",
+    "docs/evidence/issue28_continuous/review-5207290213/independent-native-index-review/scope-files.json": "5f427346afd87a4ea37113df1b717c6bdbab0fa709f49640852dd31eb36bc01c",
+    "docs/evidence/issue28_continuous/b13-quantity-scope-repair/root-independent-recheck.json": "110815862879ca3e5e52ac3c78cbb07ce0ca35b9b9a5fc73c889f87b0cc51ed1",
+    "docs/evidence/issue28_continuous/review-5207290213/independent-scope-review/third/result.json": "6fc657853a19ba87d17e233500fa61771a0ae153ead29ceee2ada2e9d0596881"
+  },
+  "validation_scope": "Current complete context and indexed factory/count checks; unchanged exact source/Run/row paths reuse the separately recorded native and cold checks. No model qualification or production permission."
+}

@@ -1,0 +1,39 @@
+{
+  "record_type": "ANNUAL_AMENDMENT_SCOPE_POLICY",
+  "schema_version": 1,
+  "production_authorized": false,
+  "explanatory_heading_pattern": "explanatory note",
+  "part_heading_pattern": "PART (?:I|II|III|IV)",
+  "item_heading_pattern": "Item\\s+(\\d+[A-Z]?)\\.?\\s*(.*)",
+  "link_purpose_pattern": "to correct the hyperlink for Exhibit (?P<exhibit>\\d+(?:\\.\\d+)?)\\s*,\\s*(?P<description>.+?)\\.",
+  "part_iii_purpose_pattern": "to amend Part III, Items 10, 11, 12, 13 and 14 .+? to include the information required by such Items\\.",
+  "no_change_patterns": [
+    "this Amendment does not reflect events occurring after .+? and does not modify or update in any way the disclosures contained in",
+    "this Amendment does not otherwise change, modify or update the disclosures in, or exhibits to,"
+  ],
+  "no_financial_statement_pattern": "No financial statements or supplemental data are filed with this Amendment\\.",
+  "certificate_link_pattern": "(?:Rule 13a-14\\(a\\)|Certification).*(?:Chief Executive Officer|Chief Financial Officer)",
+  "unchanged_input_classes": [
+    "ORIGINAL_STATEMENT_VALUES",
+    "FISCAL_EVENT_WINDOW"
+  ],
+  "not_covered_metric_ids": [
+    "B06",
+    "B13",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "D03",
+    "D04"
+  ],
+  "note": "Source-scope proof only. A Part III amendment may affect governance, legal or related-party/debt interpretation. It does not create an acquisition or Run.",
+  "link_note_disclaimer": "Unless expressly stated, this Amendment does not reflect events occurring after the filing of the Original Form 10-K and does not modify or update in any way the disclosures contained in the Original Form 10-K, which speak as of the date of the Original Form 10-K. Accordingly, this Amendment should be read in conjunction with the Original Form 10-K and the Company’s other filings with the Securities and Exchange Commission subsequent to the filing of the Original Form 10-K.",
+  "certification_note_pattern": "Pursuant to Rule 12b-15 under the Securities Exchange Act of 1934, as amended, this Amendment contains new certifications pursuant to Section 302 of the Sarbanes-Oxley Act of 2002, which are attached hereto\\.",
+  "original_statement_input_class": "ORIGINAL_STATEMENT_VALUES",
+  "event_input_class": "FISCAL_EVENT_WINDOW",
+  "signature_preamble": "Pursuant to the requirements of Section 13 or 15(d) of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized.",
+  "signature_tail_pattern": "(?P<date>[A-Z][a-z]+\\s+\\d{1,2},\\s*\\d{4})\\s*By\\s*/s/\\s*(?P<name>[A-Z][A-Za-z .\\-’\\']{1,80}?)\\s+(?P=name)\\s+(?:(?:Executive|Senior)\\s+Vice President\\s*(?:&|and)\\s*)?Chief (?:Financial|Executive) Officer\\s+\\(On behalf of the Registrant and in\\s+(?:his|her) capacity as Principal (?:Financial|Executive) Officer\\)",
+  "link_note_intro_pattern": "(?P<registrant>.+?) \\(the “Company”\\) is filing this Amendment No\\. (?P<amendment_number>[0-9]+) on Form 10-K/A \\(this “Amendment”\\) to its Annual Report on Form 10-K for the fiscal year ended (?P<period_end>[A-Z][a-z]+ [0-9]{1,2}, [0-9]{4}) \\(the “Original Form 10-K”\\)"
+}

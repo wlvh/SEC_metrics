@@ -1,0 +1,54 @@
+{
+  "company_id": "enphase_energy",
+  "metric_id": "D04",
+  "executions": [
+    {
+      "call_path": "/private/tmp/sec_metrics_issue28_continuous/native-refresh-execution/material-current-d04-fy2026/ledger/calls/0004",
+      "terminal": {
+        "record_type": "CONTINUOUS_CALL_TERMINAL",
+        "intent_id": "sha256:25fc550555b30e2a27307fc4315bcaa5b109c091c201781c1ce28945fa284f2a",
+        "status": "SUCCEEDED",
+        "stop_reason": "",
+        "counts": [
+          1,
+          1,
+          0
+        ],
+        "counts_kind": "RECORDED_TEST_SIMULATION",
+        "execution_receipt_id": "sha256:91c7d3453232ece04b16b827086adcd500c50713fe80009abf1a1fbbc0ceaa13",
+        "evidence": {
+          "intent.json": "a5c02abae4fd3a53f1a3e9e886d4d6a9f37c0baea51ed042a752da454e25bcc7",
+          "source.json": "a6ef50d2edb537866da7ba6bdff6aa1b39c2b8558be6cbad282babed76dc0232",
+          "execution-rules.tar.gz": "4888ccba3556687092556eb9323c8a7a41a52d1c3b775c70a957824324baf0c6",
+          "semantic-request.json": "961e8eed6d1969176b7a5ce3a9f997fddf0c8fce7668aaa65fc3766b94cbec17",
+          "execution-rules.json": "0d5f37bf21de7f58d243f5958aa821306f7d6d9006d942ffe90bd0717f8dc743",
+          "wire/raw-response.bin": "6de054c82e068404863049db964de091b0173ab50c4441f39ffe97d2ec7d57ce",
+          "wire/assistant-output.bin": "63d2dcefb2ce4d34c5b085f7aa54da79d83e1bd2de7c4e1c3c55c38f2bd89daf",
+          "wire/journal.json": "63f8d2fb591cc1678ad30f5b0eb8ff0f9f2dd20a3374cf855f01aa4983f4ea9b",
+          "invocation_control/plans/2f659d8edef140ef513dfb4759c54f1f13dc8dc140384c865a27c0874e365282.json": "d7ad48cae9564dbb0adf2ef8942e82adc122c865a8e80cfa64a0a76e18bd4e52",
+          "invocation_control/requests/6077d8891b1c20ece00e30807063f28bae42be79a50b79f4f4f7cec704f84a90.bin": "d618b3a7e9302e32d6c796db2a0a927756bb763cbaa6db2ec19ccfa7e0813a4f",
+          "invocation_control/executions/27f759f1ed4486848819602bc527367119f5e6ae82e9b12eb829c94cdceb7a0e.json": "2d72c1584b28fca57f80f8026a62f029e054053463bf9a1eab477d52d5f2f58a",
+          "invocation_control/acceptances/6077d8891b1c20ece00e30807063f28bae42be79a50b79f4f4f7cec704f84a90/receipt.json": "972bb2206a704b1003adb0d826c792f64a52263591f0a40312f7d65cac0bc3c8",
+          "invocation_control/attempts/27f759f1ed4486848819602bc527367119f5e6ae82e9b12eb829c94cdceb7a0e/01_53e49922cd93244266a2f4d61e123fd545bced8344b4ce1e79e92a6e27258311.json": "5bc1b9761906abc5334bd4e4485f1551386c8fee08ab12bbf1fe58b4fae5d0a8",
+          "invocation_control/responses/6077d8891b1c20ece00e30807063f28bae42be79a50b79f4f4f7cec704f84a90/response.bin": "63d2dcefb2ce4d34c5b085f7aa54da79d83e1bd2de7c4e1c3c55c38f2bd89daf",
+          "invocation_control/responses/6077d8891b1c20ece00e30807063f28bae42be79a50b79f4f4f7cec704f84a90/receipt.json": "a14b8d6c5b3139c81e4c5174b48d6250046bf3c456a7e4ad23001b629af0637a",
+          "invocation_control/reservation_archive/6077d8891b1c20ece00e30807063f28bae42be79a50b79f4f4f7cec704f84a90/27f759f1ed4486848819602bc527367119f5e6ae82e9b12eb829c94cdceb7a0e.json": "1ac953207a37c4cedfb83a1d524aadc29da39bc077c851c9463718be2134cc05",
+          "invocation_control/egress/27f759f1ed4486848819602bc527367119f5e6ae82e9b12eb829c94cdceb7a0e/01.json": "0a44efe7621c4d4aa432f038d311397557ceae8d8a1c9c481c4a6598852da7e7"
+        },
+        "terminal_id": "sha256:339c9297cf3cec279f8e1f9a60f9f2da6029100d6dc9fac646de824f6437ece4"
+      }
+    }
+  ],
+  "attempted_executions": 1,
+  "counts": [
+    1,
+    1,
+    0
+  ],
+  "call_accounting": "KNOWN",
+  "stop_provider": false,
+  "new_complete_metric_credit": false,
+  "production_authorized": false,
+  "status": "NATIVE_INPUT_REGISTERED",
+  "input_record_id": "sha256:8409b739c3738c13a2d4d02bf0d9136f92a8a5cec800bd0aa69a07af5d9b5af3"
+}

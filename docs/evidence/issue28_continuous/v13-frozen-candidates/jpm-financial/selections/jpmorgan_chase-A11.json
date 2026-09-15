@@ -1,0 +1,1859 @@
+{
+  "reason_code": "PASS",
+  "source_semantics_passed": true,
+  "classification": "VERIFIED_SOURCE_FACT",
+  "source_fact": {
+    "record_type": "AUM_BALANCE_SCOPE_COMPONENT",
+    "schema_version": 1,
+    "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "source_entity_cik": "19617",
+    "target_filing_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "task_contract_hash": "sha256:07a3e94b75366545cbabb4af6a7446f52044d76c683d53ca014ec923ef589d62",
+    "status": "BALANCE_SCOPE_PROVEN",
+    "disclosures": [
+      {
+        "value": {
+          "locator": {
+            "table_id": "table_000149",
+            "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+            "row_index": 9,
+            "column_index": 3,
+            "origin_row_index": 9,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "4,791&#160;",
+            "text": "4,791"
+          },
+          "header_evidence": [
+            {
+              "table_id": "table_000149",
+              "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2025",
+              "text": "2025"
+            }
+          ],
+          "canonical_value": "4791000000000",
+          "canonical_unit": "USD",
+          "amount_scale": {
+            "unit": "USD",
+            "factor": "1000000000",
+            "source_cells": [
+              {
+                "table_id": "table_000149",
+                "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                "row_index": 2,
+                "column_index": 0,
+                "origin_row_index": 2,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "December 31, \n(in billions)",
+                "text": "December 31, (in billions)"
+              }
+            ]
+          }
+        },
+        "label": {
+          "table_id": "table_000149",
+          "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+          "row_index": 9,
+          "column_index": 0,
+          "origin_row_index": 9,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Total assets under management",
+          "text": "Total assets under management"
+        },
+        "reporting_declarations": {
+          "status": "NO_ASSOCIATED_REPORTING_CONTRADICTION",
+          "conflicts": [],
+          "associated_qualifying_statements": []
+        },
+        "measurement_time": {
+          "kind": "INSTANT_BALANCE",
+          "as_of_date": "2025-12-31",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "metric_basis": "TOTAL_ASSETS_UNDER_MANAGEMENT_BALANCE_NOT_AN_AVERAGE",
+          "source_headers": [
+            {
+              "table_id": "table_000149",
+              "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+              "row_index": 2,
+              "column_index": 0,
+              "origin_row_index": 2,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "December 31, \n(in billions)",
+              "text": "December 31, (in billions)"
+            }
+          ],
+          "row_notes": []
+        },
+        "scope": {
+          "asset_scope": "total_assets_under_management"
+        },
+        "currency_basis": "APPROVED_USD_REPORTING_UNIT_WITH_ORIGINAL_TABLE_SCALE"
+      },
+      {
+        "value": {
+          "locator": {
+            "table_id": "table_000149",
+            "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+            "row_index": 18,
+            "column_index": 4,
+            "origin_row_index": 18,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1,
+            "raw_text": "4,791&#160;",
+            "text": "4,791"
+          },
+          "header_evidence": [
+            {
+              "table_id": "table_000149",
+              "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2025",
+              "text": "2025"
+            }
+          ],
+          "canonical_value": "4791000000000",
+          "canonical_unit": "USD",
+          "amount_scale": {
+            "unit": "USD",
+            "factor": "1000000000",
+            "source_cells": [
+              {
+                "table_id": "table_000149",
+                "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                "row_index": 2,
+                "column_index": 0,
+                "origin_row_index": 2,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "December 31, \n(in billions)",
+                "text": "December 31, (in billions)"
+              }
+            ]
+          }
+        },
+        "label": {
+          "table_id": "table_000149",
+          "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+          "row_index": 18,
+          "column_index": 0,
+          "origin_row_index": 18,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Total assets under management",
+          "text": "Total assets under management"
+        },
+        "reporting_declarations": {
+          "status": "NO_ASSOCIATED_REPORTING_CONTRADICTION",
+          "conflicts": [],
+          "associated_qualifying_statements": []
+        },
+        "measurement_time": {
+          "kind": "INSTANT_BALANCE",
+          "as_of_date": "2025-12-31",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "metric_basis": "TOTAL_ASSETS_UNDER_MANAGEMENT_BALANCE_NOT_AN_AVERAGE",
+          "source_headers": [
+            {
+              "table_id": "table_000149",
+              "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+              "row_index": 2,
+              "column_index": 0,
+              "origin_row_index": 2,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "December 31, \n(in billions)",
+              "text": "December 31, (in billions)"
+            }
+          ],
+          "row_notes": []
+        },
+        "scope": {
+          "asset_scope": "total_assets_under_management"
+        },
+        "currency_basis": "APPROVED_USD_REPORTING_UNIT_WITH_ORIGINAL_TABLE_SCALE"
+      },
+      {
+        "value": {
+          "locator": {
+            "table_id": "table_000153",
+            "grid_sha256": "sha256:7ca5e5ea9e1da5c5f7ebbe0fd29029e9213108765c59991a7b79d489d1bff364",
+            "row_index": 19,
+            "column_index": 4,
+            "origin_row_index": 19,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1,
+            "raw_text": "4,791&#160;",
+            "text": "4,791"
+          },
+          "header_evidence": [
+            {
+              "table_id": "table_000153",
+              "grid_sha256": "sha256:7ca5e5ea9e1da5c5f7ebbe0fd29029e9213108765c59991a7b79d489d1bff364",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2025",
+              "text": "2025"
+            }
+          ],
+          "canonical_value": "4791000000000",
+          "canonical_unit": "USD",
+          "amount_scale": {
+            "unit": "USD",
+            "factor": "1000000000",
+            "source_cells": [
+              {
+                "table_id": "table_000153",
+                "grid_sha256": "sha256:7ca5e5ea9e1da5c5f7ebbe0fd29029e9213108765c59991a7b79d489d1bff364",
+                "row_index": 2,
+                "column_index": 0,
+                "origin_row_index": 2,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "Year ended December 31,\n(in billions, except where otherwise noted)",
+                "text": "Year ended December 31, (in billions, except where otherwise noted)"
+              }
+            ]
+          }
+        },
+        "label": {
+          "table_id": "table_000153",
+          "grid_sha256": "sha256:7ca5e5ea9e1da5c5f7ebbe0fd29029e9213108765c59991a7b79d489d1bff364",
+          "row_index": 19,
+          "column_index": 0,
+          "origin_row_index": 19,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Total assets under management",
+          "text": "Total assets under management"
+        },
+        "reporting_declarations": {
+          "status": "NO_ASSOCIATED_REPORTING_CONTRADICTION",
+          "conflicts": [],
+          "associated_qualifying_statements": []
+        },
+        "measurement_time": {
+          "kind": "INSTANT_BALANCE",
+          "as_of_date": "2025-12-31",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "metric_basis": "TOTAL_ASSETS_UNDER_MANAGEMENT_BALANCE_NOT_AN_AVERAGE",
+          "source_headers": [
+            {
+              "table_id": "table_000153",
+              "grid_sha256": "sha256:7ca5e5ea9e1da5c5f7ebbe0fd29029e9213108765c59991a7b79d489d1bff364",
+              "row_index": 2,
+              "column_index": 0,
+              "origin_row_index": 2,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Year ended December 31,\n(in billions, except where otherwise noted)",
+              "text": "Year ended December 31, (in billions, except where otherwise noted)"
+            }
+          ],
+          "row_notes": []
+        },
+        "scope": {
+          "asset_scope": "total_assets_under_management"
+        },
+        "currency_basis": "APPROVED_USD_REPORTING_UNIT_WITH_ORIGINAL_TABLE_SCALE"
+      }
+    ],
+    "unresolved": [],
+    "excluded": [
+      {
+        "label": {
+          "table_id": "table_000153",
+          "grid_sha256": "sha256:7ca5e5ea9e1da5c5f7ebbe0fd29029e9213108765c59991a7b79d489d1bff364",
+          "row_index": 16,
+          "column_index": 0,
+          "origin_row_index": 16,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Total international assets under management",
+          "text": "Total international assets under management"
+        },
+        "reason": "NOT_COMPLETE_TOTAL_AUM_SCOPE"
+      }
+    ],
+    "duplicate_rule": "SAME_SOURCE_ENTITY_EXACT_TOTAL_AUM_SCOPE_INSTANT_USD_SCALE_AND_VALUE",
+    "value": "4791000000000",
+    "unit": "USD",
+    "whole_issuer_scope_status": "SOURCE_WITNESSED_REPORTED_COMPLETE_AUM",
+    "whole_issuer_scope_evidence": {
+      "basis": "ISSUER_DEFINED_AUM_ALL_CLIENTS_INCLUDES_COMMITTED_CAPITAL_NOT_CALLED",
+      "aum_definitions": [
+        {
+          "start_byte": 12794791,
+          "end_byte": 12795249,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "margin-bottom:4pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:1504",
+            "div:1",
+            "div:12"
+          ],
+          "visible_text": "AUM “Assets under management”: Represent assets managed by AWM on behalf of its Private Banking, Institutional and Retail clients. Includes “Committed capital not Called.”",
+          "span_sha256": "1592d5ab51af220f6deb69df77f85a88a55cddfe1b757c1f476575d8bc94733c"
+        }
+      ],
+      "manager_definitions": [
+        {
+          "start_byte": 12795602,
+          "end_byte": 12795899,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "margin-bottom:4pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:1504",
+            "div:1",
+            "div:14"
+          ],
+          "visible_text": "AWM: Asset & Wealth Management",
+          "span_sha256": "3ad97120fd13d2576c053aafa1b74faff6ce1652b7c3ab47eace30072ca703a5"
+        }
+      ],
+      "source_client_scope_text": "Private Banking, Institutional and Retail",
+      "manager_section_bindings": [
+        {
+          "locator": {
+            "table_id": "table_000149",
+            "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+            "row_index": 9,
+            "column_index": 3,
+            "origin_row_index": 9,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "4,791&#160;",
+            "text": "4,791"
+          },
+          "manager_section": {
+            "table_order": 141,
+            "heading": {
+              "table_id": "table_000142",
+              "grid_sha256": "sha256:3c7f66e4e9fe60dea26d2c13579a4bd7ae81302d333980833528630f8542eaba",
+              "row_index": 1,
+              "column_index": 0,
+              "origin_row_index": 1,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 15,
+              "raw_text": "ASSET &amp; WEALTH MANAGEMENT",
+              "text": "ASSET & WEALTH MANAGEMENT"
+            },
+            "segment_definition": {
+              "consistent_source_definitions": [
+                {
+                  "start_byte": 1286138,
+                  "end_byte": 1287160,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:45",
+                    "div:3",
+                    "div:2"
+                  ],
+                  "visible_text": "For management reporting purposes, the Firm has three reportable business segments – Consumer & Community Banking (“CCB”), Commercial & Investment Bank (“CIB”) and Asset & Wealth Management (“AWM”) – with the remaining activities in Corporate. The Firm’s consumer business segment is CCB, and the Firm’s wholesale business segments are CIB and AWM.",
+                  "span_sha256": "2dddde9f634f9aa7e1384dd27f1627d93ab2ff3fd38364c5673ecb1be0882e86"
+                },
+                {
+                  "start_byte": 2064561,
+                  "end_byte": 2065401,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:263",
+                    "div:3",
+                    "div:1"
+                  ],
+                  "visible_text": "For management reporting purposes, the Firm has three reportable business segments – Consumer & Community Banking (“CCB”), Commercial & Investment Bank (“CIB”) and Asset & Wealth Management (“AWM”) – with the remaining activities in Corporate. The Firm's consumer business segment is CCB, and the Firm's wholesale business segments are CIB and AWM. Refer to Business Segment & Corporate Results on pages 62–82 and Note 32 for a description of the Firm’s reportable business segments and the products and services that they provide to their respective client bases, as well as a description of Corporate activities.",
+                  "span_sha256": "2372dd907e0185b7da05900fc3e315f430bdaf33a87a95018409e321899e92d1"
+                },
+                {
+                  "start_byte": 2462147,
+                  "end_byte": 2462544,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:338"
+                  ],
+                  "visible_text": "The Firm is managed on an LOB basis. The Firm has three reportable business segments – Consumer & Community Banking, Commercial & Investment Bank, and Asset & Wealth Management – with the remaining activities in Corporate. ",
+                  "span_sha256": "4e7b6d857b95da353d1e20412a790a2c7caf3a055faf9d349ed9b1dc06ee59a1"
+                },
+                {
+                  "start_byte": 12054893,
+                  "end_byte": 12055465,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "ix:continuation:120",
+                    "div:1",
+                    "div:1",
+                    "div:1"
+                  ],
+                  "visible_text": "The Firm is managed on an LOB basis. The Firm has three reportable business segments – Consumer & Community Banking, Commercial & Investment Bank, and Asset & Wealth Management – with the remaining activities in Corporate. ",
+                  "span_sha256": "7038ab80c7b3ca79b5b3e1fa14e408aa30fbe9390202ba4c553acf4fa54ea0d1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "locator": {
+            "table_id": "table_000149",
+            "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+            "row_index": 18,
+            "column_index": 4,
+            "origin_row_index": 18,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1,
+            "raw_text": "4,791&#160;",
+            "text": "4,791"
+          },
+          "manager_section": {
+            "table_order": 141,
+            "heading": {
+              "table_id": "table_000142",
+              "grid_sha256": "sha256:3c7f66e4e9fe60dea26d2c13579a4bd7ae81302d333980833528630f8542eaba",
+              "row_index": 1,
+              "column_index": 0,
+              "origin_row_index": 1,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 15,
+              "raw_text": "ASSET &amp; WEALTH MANAGEMENT",
+              "text": "ASSET & WEALTH MANAGEMENT"
+            },
+            "segment_definition": {
+              "consistent_source_definitions": [
+                {
+                  "start_byte": 1286138,
+                  "end_byte": 1287160,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:45",
+                    "div:3",
+                    "div:2"
+                  ],
+                  "visible_text": "For management reporting purposes, the Firm has three reportable business segments – Consumer & Community Banking (“CCB”), Commercial & Investment Bank (“CIB”) and Asset & Wealth Management (“AWM”) – with the remaining activities in Corporate. The Firm’s consumer business segment is CCB, and the Firm’s wholesale business segments are CIB and AWM.",
+                  "span_sha256": "2dddde9f634f9aa7e1384dd27f1627d93ab2ff3fd38364c5673ecb1be0882e86"
+                },
+                {
+                  "start_byte": 2064561,
+                  "end_byte": 2065401,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:263",
+                    "div:3",
+                    "div:1"
+                  ],
+                  "visible_text": "For management reporting purposes, the Firm has three reportable business segments – Consumer & Community Banking (“CCB”), Commercial & Investment Bank (“CIB”) and Asset & Wealth Management (“AWM”) – with the remaining activities in Corporate. The Firm's consumer business segment is CCB, and the Firm's wholesale business segments are CIB and AWM. Refer to Business Segment & Corporate Results on pages 62–82 and Note 32 for a description of the Firm’s reportable business segments and the products and services that they provide to their respective client bases, as well as a description of Corporate activities.",
+                  "span_sha256": "2372dd907e0185b7da05900fc3e315f430bdaf33a87a95018409e321899e92d1"
+                },
+                {
+                  "start_byte": 2462147,
+                  "end_byte": 2462544,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:338"
+                  ],
+                  "visible_text": "The Firm is managed on an LOB basis. The Firm has three reportable business segments – Consumer & Community Banking, Commercial & Investment Bank, and Asset & Wealth Management – with the remaining activities in Corporate. ",
+                  "span_sha256": "4e7b6d857b95da353d1e20412a790a2c7caf3a055faf9d349ed9b1dc06ee59a1"
+                },
+                {
+                  "start_byte": 12054893,
+                  "end_byte": 12055465,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "ix:continuation:120",
+                    "div:1",
+                    "div:1",
+                    "div:1"
+                  ],
+                  "visible_text": "The Firm is managed on an LOB basis. The Firm has three reportable business segments – Consumer & Community Banking, Commercial & Investment Bank, and Asset & Wealth Management – with the remaining activities in Corporate. ",
+                  "span_sha256": "7038ab80c7b3ca79b5b3e1fa14e408aa30fbe9390202ba4c553acf4fa54ea0d1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "locator": {
+            "table_id": "table_000153",
+            "grid_sha256": "sha256:7ca5e5ea9e1da5c5f7ebbe0fd29029e9213108765c59991a7b79d489d1bff364",
+            "row_index": 19,
+            "column_index": 4,
+            "origin_row_index": 19,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1,
+            "raw_text": "4,791&#160;",
+            "text": "4,791"
+          },
+          "manager_section": {
+            "table_order": 141,
+            "heading": {
+              "table_id": "table_000142",
+              "grid_sha256": "sha256:3c7f66e4e9fe60dea26d2c13579a4bd7ae81302d333980833528630f8542eaba",
+              "row_index": 1,
+              "column_index": 0,
+              "origin_row_index": 1,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 15,
+              "raw_text": "ASSET &amp; WEALTH MANAGEMENT",
+              "text": "ASSET & WEALTH MANAGEMENT"
+            },
+            "segment_definition": {
+              "consistent_source_definitions": [
+                {
+                  "start_byte": 1286138,
+                  "end_byte": 1287160,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:45",
+                    "div:3",
+                    "div:2"
+                  ],
+                  "visible_text": "For management reporting purposes, the Firm has three reportable business segments – Consumer & Community Banking (“CCB”), Commercial & Investment Bank (“CIB”) and Asset & Wealth Management (“AWM”) – with the remaining activities in Corporate. The Firm’s consumer business segment is CCB, and the Firm’s wholesale business segments are CIB and AWM.",
+                  "span_sha256": "2dddde9f634f9aa7e1384dd27f1627d93ab2ff3fd38364c5673ecb1be0882e86"
+                },
+                {
+                  "start_byte": 2064561,
+                  "end_byte": 2065401,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:263",
+                    "div:3",
+                    "div:1"
+                  ],
+                  "visible_text": "For management reporting purposes, the Firm has three reportable business segments – Consumer & Community Banking (“CCB”), Commercial & Investment Bank (“CIB”) and Asset & Wealth Management (“AWM”) – with the remaining activities in Corporate. The Firm's consumer business segment is CCB, and the Firm's wholesale business segments are CIB and AWM. Refer to Business Segment & Corporate Results on pages 62–82 and Note 32 for a description of the Firm’s reportable business segments and the products and services that they provide to their respective client bases, as well as a description of Corporate activities.",
+                  "span_sha256": "2372dd907e0185b7da05900fc3e315f430bdaf33a87a95018409e321899e92d1"
+                },
+                {
+                  "start_byte": 2462147,
+                  "end_byte": 2462544,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:338"
+                  ],
+                  "visible_text": "The Firm is managed on an LOB basis. The Firm has three reportable business segments – Consumer & Community Banking, Commercial & Investment Bank, and Asset & Wealth Management – with the remaining activities in Corporate. ",
+                  "span_sha256": "4e7b6d857b95da353d1e20412a790a2c7caf3a055faf9d349ed9b1dc06ee59a1"
+                },
+                {
+                  "start_byte": 12054893,
+                  "end_byte": 12055465,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-bottom:4pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "ix:continuation:120",
+                    "div:1",
+                    "div:1",
+                    "div:1"
+                  ],
+                  "visible_text": "The Firm is managed on an LOB basis. The Firm has three reportable business segments – Consumer & Community Banking, Commercial & Investment Bank, and Asset & Wealth Management – with the remaining activities in Corporate. ",
+                  "span_sha256": "7038ab80c7b3ca79b5b3e1fa14e408aa30fbe9390202ba4c553acf4fa54ea0d1"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "client_population": {
+        "source_expression": "Private Banking, Institutional and Retail",
+        "included_client_classes": [
+          "private banking",
+          "institutional",
+          "retail"
+        ],
+        "excluded_client_classes": [],
+        "subset_qualifiers": [],
+        "complete_unqualified_enumeration": true
+      },
+      "independently_named_manager_clients": [
+        "institutional",
+        "retail"
+      ],
+      "manager_client_evidence": [
+        {
+          "manager_description": {
+            "table_id": "table_000143",
+            "grid_sha256": "sha256:4b6d85a0020be1df9efe983a8671292ef2662dde7dffae642ac4b996ff9ceb53",
+            "row_index": 1,
+            "column_index": 0,
+            "origin_row_index": 1,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nAsset &amp; Wealth Management, with client assets of $7.1 trillion, is a global leader in investment and wealth management. \nAsset Management \nOffers multi-asset investment management solutions across equities, fixed income, alternatives and money market funds to institutional and retail investors providing for a broad range of clients&#8217; investment needs.\nGlobal Private Bank\nProvides retirement products and services, brokerage, custody, estate planning, lending, deposits and investment management to high net worth clients.\nThe majority of AWM&#8217;s client assets are in actively managed portfolios.",
+            "text": "Asset & Wealth Management, with client assets of $7.1 trillion, is a global leader in investment and wealth management. Asset Management Offers multi-asset investment management solutions across equities, fixed income, alternatives and money market funds to institutional and retail investors providing for a broad range of clients’ investment needs. Global Private Bank Provides retirement products and services, brokerage, custody, estate planning, lending, deposits and investment management to high net worth clients. The majority of AWM’s client assets are in actively managed portfolios."
+          },
+          "named_investor_classes": [
+            "institutional",
+            "retail"
+          ]
+        }
+      ],
+      "complete_table_group_reconciliations": [
+        {
+          "group_header": {
+            "table_id": "table_000149",
+            "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+            "row_index": 3,
+            "column_index": 0,
+            "origin_row_index": 3,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "Assets by asset class",
+            "text": "Assets by asset class"
+          },
+          "components": [
+            {
+              "label": {
+                "table_id": "table_000149",
+                "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                "row_index": 4,
+                "column_index": 0,
+                "origin_row_index": 4,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "Liquidity",
+                "text": "Liquidity"
+              },
+              "value": {
+                "locator": {
+                  "table_id": "table_000149",
+                  "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                  "row_index": 4,
+                  "column_index": 4,
+                  "origin_row_index": 4,
+                  "origin_column_index": 4,
+                  "rowspan": 1,
+                  "colspan": 1,
+                  "raw_text": "1,279&#160;",
+                  "text": "1,279"
+                },
+                "header_evidence": [
+                  {
+                    "table_id": "table_000149",
+                    "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                    "row_index": 2,
+                    "column_index": 3,
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "2025",
+                    "text": "2025"
+                  }
+                ],
+                "canonical_value": "1279000000000",
+                "canonical_unit": "USD",
+                "amount_scale": {
+                  "unit": "USD",
+                  "factor": "1000000000",
+                  "source_cells": [
+                    {
+                      "table_id": "table_000149",
+                      "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                      "row_index": 2,
+                      "column_index": 0,
+                      "origin_row_index": 2,
+                      "origin_column_index": 0,
+                      "rowspan": 1,
+                      "colspan": 3,
+                      "raw_text": "December 31, \n(in billions)",
+                      "text": "December 31, (in billions)"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "label": {
+                "table_id": "table_000149",
+                "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                "row_index": 5,
+                "column_index": 0,
+                "origin_row_index": 5,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "Fixed income",
+                "text": "Fixed income"
+              },
+              "value": {
+                "locator": {
+                  "table_id": "table_000149",
+                  "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                  "row_index": 5,
+                  "column_index": 3,
+                  "origin_row_index": 5,
+                  "origin_column_index": 3,
+                  "rowspan": 1,
+                  "colspan": 2,
+                  "raw_text": "998&#160;",
+                  "text": "998"
+                },
+                "header_evidence": [
+                  {
+                    "table_id": "table_000149",
+                    "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                    "row_index": 2,
+                    "column_index": 3,
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "2025",
+                    "text": "2025"
+                  }
+                ],
+                "canonical_value": "998000000000",
+                "canonical_unit": "USD",
+                "amount_scale": {
+                  "unit": "USD",
+                  "factor": "1000000000",
+                  "source_cells": [
+                    {
+                      "table_id": "table_000149",
+                      "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                      "row_index": 2,
+                      "column_index": 0,
+                      "origin_row_index": 2,
+                      "origin_column_index": 0,
+                      "rowspan": 1,
+                      "colspan": 3,
+                      "raw_text": "December 31, \n(in billions)",
+                      "text": "December 31, (in billions)"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "label": {
+                "table_id": "table_000149",
+                "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                "row_index": 6,
+                "column_index": 0,
+                "origin_row_index": 6,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "Equity",
+                "text": "Equity"
+              },
+              "value": {
+                "locator": {
+                  "table_id": "table_000149",
+                  "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                  "row_index": 6,
+                  "column_index": 3,
+                  "origin_row_index": 6,
+                  "origin_column_index": 3,
+                  "rowspan": 1,
+                  "colspan": 2,
+                  "raw_text": "1,400&#160;",
+                  "text": "1,400"
+                },
+                "header_evidence": [
+                  {
+                    "table_id": "table_000149",
+                    "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                    "row_index": 2,
+                    "column_index": 3,
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "2025",
+                    "text": "2025"
+                  }
+                ],
+                "canonical_value": "1400000000000",
+                "canonical_unit": "USD",
+                "amount_scale": {
+                  "unit": "USD",
+                  "factor": "1000000000",
+                  "source_cells": [
+                    {
+                      "table_id": "table_000149",
+                      "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                      "row_index": 2,
+                      "column_index": 0,
+                      "origin_row_index": 2,
+                      "origin_column_index": 0,
+                      "rowspan": 1,
+                      "colspan": 3,
+                      "raw_text": "December 31, \n(in billions)",
+                      "text": "December 31, (in billions)"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "label": {
+                "table_id": "table_000149",
+                "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                "row_index": 7,
+                "column_index": 0,
+                "origin_row_index": 7,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "Multi-asset",
+                "text": "Multi-asset"
+              },
+              "value": {
+                "locator": {
+                  "table_id": "table_000149",
+                  "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                  "row_index": 7,
+                  "column_index": 3,
+                  "origin_row_index": 7,
+                  "origin_column_index": 3,
+                  "rowspan": 1,
+                  "colspan": 2,
+                  "raw_text": "884&#160;",
+                  "text": "884"
+                },
+                "header_evidence": [
+                  {
+                    "table_id": "table_000149",
+                    "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                    "row_index": 2,
+                    "column_index": 3,
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "2025",
+                    "text": "2025"
+                  }
+                ],
+                "canonical_value": "884000000000",
+                "canonical_unit": "USD",
+                "amount_scale": {
+                  "unit": "USD",
+                  "factor": "1000000000",
+                  "source_cells": [
+                    {
+                      "table_id": "table_000149",
+                      "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                      "row_index": 2,
+                      "column_index": 0,
+                      "origin_row_index": 2,
+                      "origin_column_index": 0,
+                      "rowspan": 1,
+                      "colspan": 3,
+                      "raw_text": "December 31, \n(in billions)",
+                      "text": "December 31, (in billions)"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "label": {
+                "table_id": "table_000149",
+                "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                "row_index": 8,
+                "column_index": 0,
+                "origin_row_index": 8,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "\nAlternatives",
+                "text": "Alternatives"
+              },
+              "value": {
+                "locator": {
+                  "table_id": "table_000149",
+                  "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                  "row_index": 8,
+                  "column_index": 3,
+                  "origin_row_index": 8,
+                  "origin_column_index": 3,
+                  "rowspan": 1,
+                  "colspan": 2,
+                  "raw_text": "230&#160;",
+                  "text": "230"
+                },
+                "header_evidence": [
+                  {
+                    "table_id": "table_000149",
+                    "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                    "row_index": 2,
+                    "column_index": 3,
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "2025",
+                    "text": "2025"
+                  }
+                ],
+                "canonical_value": "230000000000",
+                "canonical_unit": "USD",
+                "amount_scale": {
+                  "unit": "USD",
+                  "factor": "1000000000",
+                  "source_cells": [
+                    {
+                      "table_id": "table_000149",
+                      "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                      "row_index": 2,
+                      "column_index": 0,
+                      "origin_row_index": 2,
+                      "origin_column_index": 0,
+                      "rowspan": 1,
+                      "colspan": 3,
+                      "raw_text": "December 31, \n(in billions)",
+                      "text": "December 31, (in billions)"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "total_locator": {
+            "table_id": "table_000149",
+            "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+            "row_index": 9,
+            "column_index": 3,
+            "origin_row_index": 9,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "4,791&#160;",
+            "text": "4,791"
+          }
+        },
+        {
+          "group_header": {
+            "table_id": "table_000149",
+            "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+            "row_index": 14,
+            "column_index": 0,
+            "origin_row_index": 14,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "Assets by client segment",
+            "text": "Assets by client segment"
+          },
+          "components": [
+            {
+              "label": {
+                "table_id": "table_000149",
+                "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                "row_index": 15,
+                "column_index": 0,
+                "origin_row_index": 15,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "\nPrivate Banking(b)",
+                "text": "Private Banking(b)"
+              },
+              "value": {
+                "locator": {
+                  "table_id": "table_000149",
+                  "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                  "row_index": 15,
+                  "column_index": 4,
+                  "origin_row_index": 15,
+                  "origin_column_index": 4,
+                  "rowspan": 1,
+                  "colspan": 1,
+                  "raw_text": "1,414&#160;",
+                  "text": "1,414"
+                },
+                "header_evidence": [
+                  {
+                    "table_id": "table_000149",
+                    "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                    "row_index": 2,
+                    "column_index": 3,
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "2025",
+                    "text": "2025"
+                  }
+                ],
+                "canonical_value": "1414000000000",
+                "canonical_unit": "USD",
+                "amount_scale": {
+                  "unit": "USD",
+                  "factor": "1000000000",
+                  "source_cells": [
+                    {
+                      "table_id": "table_000149",
+                      "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                      "row_index": 2,
+                      "column_index": 0,
+                      "origin_row_index": 2,
+                      "origin_column_index": 0,
+                      "rowspan": 1,
+                      "colspan": 3,
+                      "raw_text": "December 31, \n(in billions)",
+                      "text": "December 31, (in billions)"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "label": {
+                "table_id": "table_000149",
+                "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                "row_index": 16,
+                "column_index": 0,
+                "origin_row_index": 16,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "Global Institutional",
+                "text": "Global Institutional"
+              },
+              "value": {
+                "locator": {
+                  "table_id": "table_000149",
+                  "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                  "row_index": 16,
+                  "column_index": 3,
+                  "origin_row_index": 16,
+                  "origin_column_index": 3,
+                  "rowspan": 1,
+                  "colspan": 2,
+                  "raw_text": "1,953&#160;",
+                  "text": "1,953"
+                },
+                "header_evidence": [
+                  {
+                    "table_id": "table_000149",
+                    "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                    "row_index": 2,
+                    "column_index": 3,
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "2025",
+                    "text": "2025"
+                  }
+                ],
+                "canonical_value": "1953000000000",
+                "canonical_unit": "USD",
+                "amount_scale": {
+                  "unit": "USD",
+                  "factor": "1000000000",
+                  "source_cells": [
+                    {
+                      "table_id": "table_000149",
+                      "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                      "row_index": 2,
+                      "column_index": 0,
+                      "origin_row_index": 2,
+                      "origin_column_index": 0,
+                      "rowspan": 1,
+                      "colspan": 3,
+                      "raw_text": "December 31, \n(in billions)",
+                      "text": "December 31, (in billions)"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "label": {
+                "table_id": "table_000149",
+                "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                "row_index": 17,
+                "column_index": 0,
+                "origin_row_index": 17,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "\nGlobal Funds(b)",
+                "text": "Global Funds(b)"
+              },
+              "value": {
+                "locator": {
+                  "table_id": "table_000149",
+                  "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                  "row_index": 17,
+                  "column_index": 3,
+                  "origin_row_index": 17,
+                  "origin_column_index": 3,
+                  "rowspan": 1,
+                  "colspan": 2,
+                  "raw_text": "1,424&#160;",
+                  "text": "1,424"
+                },
+                "header_evidence": [
+                  {
+                    "table_id": "table_000149",
+                    "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                    "row_index": 2,
+                    "column_index": 3,
+                    "origin_row_index": 2,
+                    "origin_column_index": 3,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "2025",
+                    "text": "2025"
+                  }
+                ],
+                "canonical_value": "1424000000000",
+                "canonical_unit": "USD",
+                "amount_scale": {
+                  "unit": "USD",
+                  "factor": "1000000000",
+                  "source_cells": [
+                    {
+                      "table_id": "table_000149",
+                      "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+                      "row_index": 2,
+                      "column_index": 0,
+                      "origin_row_index": 2,
+                      "origin_column_index": 0,
+                      "rowspan": 1,
+                      "colspan": 3,
+                      "raw_text": "December 31, \n(in billions)",
+                      "text": "December 31, (in billions)"
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "total_locator": {
+            "table_id": "table_000149",
+            "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+            "row_index": 18,
+            "column_index": 4,
+            "origin_row_index": 18,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1,
+            "raw_text": "4,791&#160;",
+            "text": "4,791"
+          }
+        }
+      ],
+      "equal_repeated_numbers_alone_are_not_scope_proof": true
+    },
+    "issuer_identity": {
+      "registrant_name": "JPMorgan Chase & Co",
+      "native_name_facts": [
+        {
+          "name": "JPMorgan Chase & Co",
+          "ordinal": 67,
+          "qualified_name": "dei:EntityRegistrantName",
+          "context_ref": "c-1",
+          "entity_cik": "19617",
+          "namespace": "http://xbrl.sec.gov/dei/2025"
+        }
+      ],
+      "normalization": "EXACT_TOKENS_CASE_PUNCTUATION_AND_AMPERSAND_ONLY",
+      "source_defined_aliases": [
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5237066,
+            "end_byte": 5238225,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:932",
+              "div:1",
+              "div:4"
+            ],
+            "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+            "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+          },
+          "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        }
+      ],
+      "source_consolidated_aliases": [
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5237066,
+            "end_byte": 5238225,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:932",
+              "div:1",
+              "div:4"
+            ],
+            "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+            "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+          },
+          "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+        }
+      ],
+      "source_legal_name_aliases": [
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "name": "Parent Company",
+          "definition": {
+            "start_byte": 1444075,
+            "end_byte": 1444994,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:99",
+              "div:3",
+              "div:2"
+            ],
+            "visible_text": "Federal Reserve rules require JPMorgan Chase & Co. (the “Parent Company”) to maintain minimum levels of unsecured external long-term debt and other loss-absorbing capacity with specific terms (“eligible LTD”) to recapitalize JPMorganChase’s operating subsidiaries if the Parent Company were to enter into a resolution either in a bankruptcy proceeding under Chapter 11 of the U.S. Bankruptcy Code, or in a receivership administered by the FDIC under Title II of the Dodd-Frank Act (“Title II”). If the Parent Company were to enter into a resolution, holders of eligible LTD, other unsecured creditors and holders of equity securities of the Parent Company will absorb the losses of the Parent Company and its subsidiaries.",
+            "span_sha256": "036349a59fb9b792f414b6d367ca9b7a5fc013dba4b410b770efb290c6247fe1"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        },
+        {
+          "name": "Parent Company",
+          "definition": {
+            "start_byte": 11602172,
+            "end_byte": 11603741,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1384",
+              "ix:continuation:1",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "Restrictions imposed by U.S. federal law prohibit JPMorgan Chase Bank, N.A., and its subsidiaries, from lending to JPMorgan Chase & Co. (“Parent Company”) and certain of its affiliates unless the loans are secured in specified amounts. Such secured loans provided by any banking subsidiary to the Parent Company or to any particular affiliate, together with certain other transactions with such affiliate (collectively referred to as “covered transactions”), must be made on terms and conditions that are consistent with safe and sound banking practices. In addition, unless collateralized with cash or US Government debt obligations, covered transactions are generally limited to 10% of the banking subsidiary’s total capital, as determined by the risk-based capital guidelines; the aggregate amount of covered transactions between any banking subsidiary and all of its affiliates is limited to 20% of the banking subsidiary’s total capital.",
+            "span_sha256": "8051876e48fac9e646ea9b0dc28d4fb8d8fa71126558a8774e9271976b61c945"
+          }
+        }
+      ],
+      "source_defined_other_entities": [
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "JPMorgan Chase Bank, National Association",
+          "alias": "JPMorgan Chase Bank, N.A.",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 1283602,
+            "end_byte": 1284570,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:3"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "2274adbd5b31e9aed4bbcaf547581978992eabde19bdd6f17c5543a47b4fc8bc"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "J.P. Morgan Securities LLC",
+          "alias": "J.P. Morgan Securities",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 1283602,
+            "end_byte": 1284570,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:3"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "2274adbd5b31e9aed4bbcaf547581978992eabde19bdd6f17c5543a47b4fc8bc"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "JPMorgan Chase Bank, National Association",
+          "alias": "JPMorgan Chase Bank, N.A.",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 2063453,
+            "end_byte": 2064395,
+            "tag": "div",
+            "attributes": [],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:263",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "97388f5f588db903c025b2fff0e180757fd090b8e8698c06110f1290cf293af1"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "J.P. Morgan Securities LLC",
+          "alias": "J.P. Morgan Securities",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 2063453,
+            "end_byte": 2064395,
+            "tag": "div",
+            "attributes": [],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:263",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "97388f5f588db903c025b2fff0e180757fd090b8e8698c06110f1290cf293af1"
+          }
+        }
+      ]
+    },
+    "client_definition_analysis": [
+      {
+        "definition": {
+          "start_byte": 12794791,
+          "end_byte": 12795249,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "margin-bottom:4pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:1504",
+            "div:1",
+            "div:12"
+          ],
+          "visible_text": "AUM “Assets under management”: Represent assets managed by AWM on behalf of its Private Banking, Institutional and Retail clients. Includes “Committed capital not Called.”",
+          "span_sha256": "1592d5ab51af220f6deb69df77f85a88a55cddfe1b757c1f476575d8bc94733c"
+        },
+        "source_expression": "Private Banking, Institutional and Retail",
+        "included_client_classes": [
+          "private banking",
+          "institutional",
+          "retail"
+        ],
+        "excluded_client_classes": [],
+        "subset_qualifiers": [],
+        "complete_unqualified_enumeration": true
+      }
+    ],
+    "semantic_status": "SINGLE_SOURCE_SEMANTIC_FACT",
+    "native_evidence_status": "NOT_EVALUATED",
+    "qualification_credit": "NONE_COMPONENT_ONLY",
+    "publication_credit": "NONE",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "component_id": "sha256:c631b2deb1abe169217a55b2ef944ca769ea44e192af43f95d11dfa1f67ef289"
+  }
+}

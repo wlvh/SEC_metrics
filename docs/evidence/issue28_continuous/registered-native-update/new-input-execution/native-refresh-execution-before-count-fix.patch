@@ -1,0 +1,323 @@
+--- a/scripts/vnext/capacity_update_input.py
++++ b/scripts/vnext/capacity_update_input.py
+@@ -76,7 +76,7 @@
+     return CallLedger(factory=_FACTORY,root=fixed,binding=binding,live=True)
+ 
+ 
+-def prepare_registered_update(*,source_root,company_id,metric_id,options,ledger=None):
++def prepare_registered_update(*,source_root,company_id,metric_id,options,ledger=None,allow_incomplete=False):
+     """Re-register exact original successes under current runtime, with no calls."""
+     from .continuous_call_policy import REQUIREMENT_ID
+     from .requirements import load_requirement_snapshot
+@@ -114,9 +114,103 @@
+         assessment=collect_native_assessments(prepared_requests=selected,ledger=ledger)
+         if assessment['all_source_requests_accepted'] and not assessment['failed_requests']:
+             complete.append((selected,original,equivalence))
++    if not complete and allow_incomplete:
++        return {'status':'CURRENT_NATIVE_SET_INCOMPLETE','prepared_requests':current_prepared,
++                'current_source':current,'requirement':requirement}
+     need(len(complete)==1,'UPDATE_NATIVE_COMPLETE_ORIGINAL_SET_MISSING_OR_AMBIGUOUS')
+     prepared,original,equivalence=complete[0]
+     registered=register_assessment_input(prepared_requests=prepared,ledger=ledger,include_source_snapshot=True)
+     need(registered['source_snapshot']==original,'UPDATE_NATIVE_ORIGINAL_SOURCE_SNAPSHOT_CHANGED')
+     return {'source':original,'registered_input':registered,'current_source':current,
+             'equivalence':equivalence,'requirement':requirement}
++
++
++# Current B13 real content validation remains paused. This new entry point has
++# no option to clear that pause; a reviewed implementation change is required.
++_LIVE_UPDATE_METRICS = frozenset({'D04'})
++
++
++def ensure_native_update(*,source_root,company_id,metric_id,ledger,max_provider_requests,
++                         recorded_wire_factory=None):
++    """Complete only previously unattempted native requests, with a finite cap.
++
++    Reuses whole-source equivalents and exact-current successes. Reusing a
++    semantic group across different source packets remains unsupported; do not
++    buy a redraw or change its output contract to work around that limitation.
++    """
++    from .normal_run_v3 import registered_update_options
++    from .continuous_semantic_calls import (select_native_request_variants,configured_transport_policy,
++        request_digest,execute_capacity_assessment,execute_d04_assessment)
++    from .native_unit_index import upgrade_request
++    need(type(max_provider_requests) is int and 0<=max_provider_requests<=240,
++         'UPDATE_NATIVE_FINITE_PROVIDER_LIMIT_REQUIRED')
++    need(metric_id in {'B13','D04'},'UPDATE_NATIVE_METRIC_UNSUPPORTED')
++    need(not ledger.live or recorded_wire_factory is None,'UPDATE_RECORDED_WIRE_CANNOT_RUN_LIVE')
++    options=registered_update_options(metric_id,assessment_mode='LIVE' if ledger.live else 'RECORDED_TEST_ONLY')
++    selected=prepare_registered_update(source_root=source_root,company_id=company_id,metric_id=metric_id,
++        options=options,ledger=ledger,allow_incomplete=True)
++    base={'company_id':company_id,'metric_id':metric_id,'executions':[],
++          'attempted_executions':0,'counts':[0,0,0],'call_accounting':'KNOWN','stop_provider':False,
++          'new_complete_metric_credit':False,'production_authorized':False}
++    if 'registered_input' in selected:
++        return {**base,'status':'REGISTERED_INPUT_REUSED','input_record_id':selected['registered_input']['input_record_id']}
++    originals=selected['prepared_requests']
++    prepared,variants=select_native_request_variants(prepared_requests=originals,ledger=ledger)
++    pending=[(p,b) for p,b,v in zip(prepared,originals,variants) if v['original_ordinal'] is None]
++    if ledger.live and metric_id not in _LIVE_UPDATE_METRICS:
++        return {**base,'status':'LIVE_NATIVE_EXECUTION_PAUSED','pending_request_count':len(pending)}
++    with ledger.locked():snapshot=ledger.snapshot()
++    policy=configured_transport_policy(requirement=originals[0].requirement,repo_root=ROOT)
++    for _,original in pending:
++        request=strict_json_loads(text=original.request_bytes.decode())
++        # Check both versions before choosing indexed output. An old failed
++        # BASE request is not an automatic license to try INDEXED next time.
++        if any(('PROVIDER',request_digest(r,policy)) in snapshot['requests']
++               for r in (request,upgrade_request(request))):
++            return {**base,'status':'PRIOR_ATTEMPT_OR_CHANGED_SOURCE_GROUP_REUSE_UNSUPPORTED',
++                    'pending_request_count':len(pending),'blocked_request_id':request['request_id']}
++    if 'PROVIDER' in snapshot['stopped_channels']:
++        return {**base,'status':'PROVIDER_CHANNEL_STOPPED','stop_provider':True,'pending_request_count':len(pending)}
++    if not max_provider_requests:
++        return {**base,'status':'PROVIDER_LIMIT_DEFERRED','pending_request_count':len(pending)}
++    execute=execute_capacity_assessment if metric_id=='B13' else execute_d04_assessment
++    for prepared,_ in pending[:max_provider_requests]:
++        base['attempted_executions']+=1
++        before=None
++        try:
++            with ledger.locked():before=ledger.snapshot()
++            wire=None if ledger.live else (recorded_wire_factory(prepared) if recorded_wire_factory else None)
++            path,outcome=execute(prepared=prepared,ledger=ledger,recorded_wire=wire)
++            terminal=outcome['terminal']
++            base['executions'].append({'call_path':str(path),'terminal':terminal})
++            base['counts']=[a+b for a,b in zip(base['counts'],terminal['counts'])]
++            if terminal['status']!='SUCCEEDED' or terminal['stop_reason']:
++                with ledger.locked():after=ledger.snapshot()
++                return {**base,'status':'NATIVE_REQUEST_FAILED','stop_provider':'PROVIDER' in after['stopped_channels']}
++        except Exception as error:
++            # A raised executor may already own an immutable claim. Attribute
++            # only this request's new ordinal; do not count concurrent work.
++            try:
++                with ledger.locked():after=ledger.snapshot()
++                digest=request_digest(strict_json_loads(text=prepared.request_bytes.decode()),policy)
++                observed=[]
++                for row in after['rows'][len(before['rows']):]:
++                    path=ledger.root/'calls'/('%04d'%row['ordinal'])
++                    intent=strict_json_file(path=path/'intent.json')
++                    if row['channel']=='PROVIDER' and intent['request_digest']==digest:observed.append(row)
++                need(len(observed)<=1,'UPDATE_NATIVE_ATTEMPT_ATTRIBUTION_AMBIGUOUS')
++                for row in observed:base['counts']=[a+b for a,b in zip(base['counts'],row['counts'])]
++                base['stop_provider']='PROVIDER' in after['stopped_channels']
++            except Exception:
++                base.update(call_accounting='UNKNOWN',stop_provider=True)
++            return {**base,'status':'NATIVE_EXECUTION_ERROR','error_type':type(error).__name__,'reason':str(error)}
++    if len(pending)>max_provider_requests:
++        return {**base,'status':'PROVIDER_LIMIT_DEFERRED','pending_request_count':len(pending)-max_provider_requests}
++    # Registration and the subsequent ordinary Run each retain their full
++    # current checks. A content error is not converted to a disclosure limit.
++    try:
++        registered=prepare_registered_update(source_root=source_root,company_id=company_id,metric_id=metric_id,
++            options=options,ledger=ledger)
++    except Exception as error:
++        return {**base,'status':'NATIVE_REGISTRATION_FAILED','error_type':type(error).__name__,'reason':str(error)}
++    return {**base,'status':'NATIVE_INPUT_REGISTERED','input_record_id':registered['registered_input']['input_record_id']}
+--- a/scripts/vnext/ordinary_refresh_cycle.py
++++ b/scripts/vnext/ordinary_refresh_cycle.py
+@@ -69,10 +69,13 @@
+         'calls': {'provider': 0, 'paid': 0, 'sec': None if unknown else own_sec if live else 0}}
+ 
+ 
+-def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=None, max_sec_requests):
++def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=None, max_sec_requests, max_provider_requests=0, recorded_native_wire_factory=None):
+     """Discover inputs automatically, capture each URL at most once, then update."""
+     need(type(max_sec_requests) is int and 0 <= max_sec_requests <= 80, 'ORDINARY_REFRESH_FINITE_REQUEST_LIMIT_REQUIRED')
++    need(type(max_provider_requests) is int and 0<=max_provider_requests<=240,
++         'ORDINARY_REFRESH_FINITE_PROVIDER_LIMIT_REQUIRED')
+     need(isinstance(session, SecAcquisitionSession), 'ORDINARY_REFRESH_NATIVE_SESSION_REQUIRED')
++    need(not session.ledger.live or recorded_native_wire_factory is None,'ORDINARY_REFRESH_RECORDED_PROVIDER_WIRE_FORBIDDEN')
+     companies = [row['company_id'] for row in _registry_rows(repo_root=ROOT)]
+     selected = companies if company_ids is None else company_ids
+     strategy = strict_json_file(path=ROOT / 'config/source_strategy_registry.json')
+@@ -135,7 +138,7 @@
+         after = session.ledger.snapshot()['counts']
+     accounting = _call_accounting(captures, before, after, session.ledger.live, capture_error)
+     supported = set(update_metric_ids())
+-    results = []
++    results = [];native_attempts=[];provider_attempts=0;provider_stopped=False
+     for company in selected:
+         try:
+             discovery = discover_saved_source_requirements(repo_root=session.data_root, company_id=company)
+@@ -152,6 +155,23 @@
+             complete = False
+             source_check = {'status': 'REFRESH_CHECK_FAILED', 'error_type': type(error).__name__, 'reason': str(error)}
+         requested = [metric for metric in metrics if metric in supported]
++        if max_provider_requests and complete:
++            from .capacity_update_input import ensure_native_update
++            from .capacity_utilization_source import policy as capacity_policy
++            for metric in requested:
++                if metric not in {'B13','D04'}:continue
++                if metric=='B13' and company not in capacity_policy()[1]['applicable_company_ids']:continue
++                if provider_stopped or provider_attempts>=max_provider_requests:break
++                try:
++                    native=ensure_native_update(source_root=session.data_root,company_id=company,metric_id=metric,
++                        ledger=session.ledger,max_provider_requests=max_provider_requests-provider_attempts,
++                        recorded_wire_factory=recorded_native_wire_factory)
++                    provider_attempts+=native['attempted_executions'];provider_stopped |= native['stop_provider']
++                except Exception as error:
++                    native={'company_id':company,'metric_id':metric,'status':'NATIVE_PREPARATION_FAILED',
++                            'attempted_executions':0,'counts':[0,0,0],'call_accounting':'KNOWN',
++                            'error_type':type(error).__name__,'reason':str(error)}
++                native_attempts.append(native)
+         try:
+             updates = run_company(state_root=Path(state_root) / company, source_root=session.data_root,
+                 company_id=company, metric_ids=requested,
+@@ -167,7 +187,15 @@
+         results.append({'company_id': company,
+             'status': 'REFRESHED_UPDATES_READY' if complete and updates['status'] == 'UPDATES_READY' else 'REFRESHED_UPDATES_INCOMPLETE',
+             'source_refresh': source_check, 'updates': updates, 'acquisition_errors': errors.get(company, [])})
++    if max_provider_requests:
++        with session.ledger.locked():after=session.ledger.snapshot()['counts']
++        accounting['cumulative_ledger_delta']=[b-a for a,b in zip(before,after)]
++        unknown=any(r['call_accounting']=='UNKNOWN' for r in native_attempts)
++        accounting['status']='UNKNOWN' if unknown else accounting['status']
++        for i,key in enumerate(('provider','paid')):
++            accounting['calls'][key]=(None if unknown else sum(r['counts'][i] for r in native_attempts)) if session.ledger.live else 0
+     return {'record_type': 'ORDINARY_BOUNDED_REFRESH_AND_UPDATE', 'schema_version': 1,
++        **({'max_provider_requests':max_provider_requests,'native_preparations':native_attempts} if max_provider_requests else {}),
+         'status': 'CALL_ACCOUNTING_UNRESOLVED' if accounting['status'] == 'UNKNOWN' else
+                   'UPDATES_READY' if all(r['status'] == 'REFRESHED_UPDATES_READY' for r in results) else 'UPDATES_INCOMPLETE',
+         'execution_mode': 'LIVE' if session.ledger.live else 'RECORDED_TEST_ONLY',
+--- a/tools/vnext_ordinary_refresh.py
++++ b/tools/vnext_ordinary_refresh.py
+@@ -19,6 +19,7 @@
+     parser.add_argument('--metric', action='append', help='Metric id; default the full configured scope')
+     parser.add_argument('--state-root', required=True, type=Path, help='Persistent external ordinary update history')
+     parser.add_argument('--max-sec-requests', required=True, type=int, help='Finite SEC limit for this invocation, within the cumulative allowance')
++    parser.add_argument('--max-provider-requests', default=0, type=int, help='Finite new native request limit; default 0, within the same cumulative allowance')
+     parser.add_argument('--output', required=True, type=Path, help='New external report file')
+     args = parser.parse_args(argv)
+     output = args.output
+@@ -27,7 +28,7 @@
+             or any((p / 'outputs/active_publication.json').exists() for p in output.parents)):
+         parser.error('Output must be a new unaliased external report file')
+     result = refresh_and_process(session=live_sec_session(), state_root=args.state_root,
+-        company_ids=args.company, metric_ids=args.metric, max_sec_requests=args.max_sec_requests)
++        company_ids=args.company, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,max_provider_requests=args.max_provider_requests)
+     write_immutable_bytes(path=output, content=(json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode())
+     print(json.dumps({'status': result['status'], 'calls': result['calls'], 'output': str(output)}, ensure_ascii=False))
+     return 0 if result['status'] == 'UPDATES_READY' else 2
+--- /dev/null
++++ b/tests/vnext/test_native_refresh_execution.py
+@@ -0,0 +1,120 @@
++"""Synthetic native acceptance and coordinator tests, no provider/SEC calls.
++
++Ledger snapshots, invocation transport and private registration are doubles.
++The request factory, digest, indexed mapping and native acceptance are real.
++"""
++import json,tempfile,unittest
++from pathlib import Path
++from types import SimpleNamespace
++from contextlib import nullcontext
++from copy import deepcopy
++from unittest.mock import patch,Mock
++from vnext import capacity_update_input as update,continuous_semantic_calls as calls,ordinary_refresh_cycle as refresh
++from vnext.continuous_call_ledger import recorded_ledger
++from vnext.native_unit_index import reconstruct_requests,upgrade_request
++from vnext.canonical import canonical_json_bytes,content_hash
++from vnext.d04_native_assessment import build_acceptance
++from tests.vnext.test_native_request_variants import synthetic_source,response_bytes
++
++class NewNativeUpdateTest(unittest.TestCase):
++ def setUp(self):
++  self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name).resolve()
++  self.source,_=synthetic_source();self.requests=reconstruct_requests(self.source);self.policy=SimpleNamespace(model='deepseek-flash')
++  self.requirement={'requirement_closure_hash':content_hash(value='current engineering probe')}
++  self.prepared=[calls.SemanticRequest(calls._FACTORY,canonical_json_bytes(value=self.source),canonical_json_bytes(value=r),calls.request_body(r,self.policy),canonical_json_bytes(value=r['response_protocol']),self.requirement,None)for r in self.requests]
++  self.ledger=recorded_ledger(root=self.root/'ledger');self.state={'rows':[],'counts':[0,0,0],'stopped_channels':[],'requests':set()}
++  self.executed=[];self.replays={};self.content_failure=False;self.unknown=False
++  self.addCleanup(patch.stopall)
++  patch.object(self.ledger,'locked',side_effect=nullcontext).start();patch.object(self.ledger,'snapshot',side_effect=lambda:deepcopy(self.state)).start()
++  patch.object(calls,'configured_transport_policy',return_value=self.policy).start()
++  patch('vnext.native_assessment_replay.replay_native_response',side_effect=lambda **kw:self.replays[json.loads(kw['prepared'].request_bytes)['request_id']]).start()
++  self.prepare=patch.object(update,'prepare_registered_update',side_effect=self.bridge).start()
++  self.execute=patch.object(calls,'execute_d04_assessment',side_effect=self.recorded_execute).start()
++ def bridge(self,**kwargs):
++  if len([r for r in self.state['rows']if r['status']=='SUCCEEDED'])==len(self.requests):return {'registered_input':{'input_record_id':'synthetic-private-registration'}}
++  if kwargs.get('allow_incomplete'):return {'prepared_requests':self.prepared}
++  raise ValueError('INCOMPLETE_SET')
++ def recorded_execute(self,*,prepared,ledger,recorded_wire):
++  r=json.loads(prepared.request_bytes);ordinal=len(self.state['rows'])+1;path=self.ledger.root/'calls'/f'{ordinal:04d}';path.mkdir(parents=True)
++  digest=calls.request_digest(r,self.policy);self.state['requests'].add(('PROVIDER',digest));self.state['counts']=[ordinal,ordinal,0]
++  (path/'intent.json').write_text(json.dumps({'request_digest':digest}))
++  (path/'semantic-request.json').write_bytes(prepared.request_bytes)
++  status='FAILED'if self.content_failure else 'UNKNOWN_PENDING_RECONCILIATION'if self.unknown else 'SUCCEEDED'
++  self.state['rows'].append({'ordinal':ordinal,'channel':'PROVIDER','status':status,'counts':[1,1,0]})
++  if self.unknown:self.state['stopped_channels']=['PROVIDER'];raise RuntimeError('INTERRUPTED_AFTER_CLAIM')
++  raw=response_bytes(r)
++  plan={k:content_hash(value=[k,r['request_id']])for k in ('ai_invocation_plan_id','provider_request_identity','task_contract_hash')}
++  plan.update(selected_representation_hash=r['request_id'],source_identity_hash=self.source['semantic_source_id'],requirement_closure_hash=self.requirement['requirement_closure_hash'])
++  acceptor=build_acceptance
++  if r.get('metric_id')=='B13':
++   from vnext.capacity_native_assessment import build_acceptance as acceptor
++   value=json.loads(raw)
++   for row in value['units']:row['calculation_limits']=[]
++   raw=canonical_json_bytes(value=value)
++  accepted=acceptor(prepared=prepared,plan=plan,response_body=raw)
++  self.replays[r['request_id']]={'revalidation':{'synthetic_current_acceptance_id':content_hash(value=accepted['evidence_record'])}}
++  self.executed.append(r['request_id']);return path,{'terminal':{'status':status,'stop_reason':'CONTENT_FAILED'if self.content_failure else '','counts':[1,1,0]}}
++ def run_update(self,limit=3,metric='D04'):
++  return update.ensure_native_update(source_root=self.root/'source',company_id='sample_entity',metric_id=metric,ledger=self.ledger,max_provider_requests=limit,recorded_wire_factory=lambda p:b'isolated callback')
++ def test_default_zero_and_whole_source_reuse_never_execute(self):
++  self.assertEqual(self.run_update(0)['status'],'PROVIDER_LIMIT_DEFERRED');self.execute.assert_not_called()
++  self.prepare.side_effect=None;self.prepare.return_value={'registered_input':{'input_record_id':'old'}}
++  r=self.run_update(3);self.assertEqual(r['status'],'REGISTERED_INPUT_REUSED');self.assertEqual(r['counts'],[0,0,0]);self.execute.assert_not_called()
++ def test_finite_partial_success_then_exact_reuse_completes_without_redraw(self):
++  first=self.run_update(2);self.assertEqual(first['status'],'PROVIDER_LIMIT_DEFERRED',first);self.assertEqual(first['counts'],[2,2,0]);self.assertEqual(first['attempted_executions'],2)
++  second=self.run_update(2);self.assertEqual(second['status'],'NATIVE_INPUT_REGISTERED');self.assertEqual(second['counts'],[1,1,0]);self.assertEqual(len(set(self.executed)),3)
++  third=self.run_update(2);self.assertEqual(third['status'],'REGISTERED_INPUT_REUSED');self.assertEqual(third['counts'],[0,0,0])
++ def test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format(self):
++  self.content_failure=True;r=self.run_update(3);self.assertEqual(r['status'],'NATIVE_REQUEST_FAILED',r);self.assertEqual(r['attempted_executions'],1)
++  self.content_failure=False;r=self.run_update(3);self.assertEqual(r['status'],'PRIOR_ATTEMPT_OR_CHANGED_SOURCE_GROUP_REUSE_UNSUPPORTED');self.assertEqual(len(self.executed),1)
++ def test_changed_source_matching_old_group_blocks_before_any_new_call(self):
++  old_digest=calls.request_digest(self.requests[1],self.policy);self.state['requests'].add(('PROVIDER',old_digest))
++  r=self.run_update(3);self.assertEqual(r['status'],'PRIOR_ATTEMPT_OR_CHANGED_SOURCE_GROUP_REUSE_UNSUPPORTED');self.execute.assert_not_called()
++ def test_unknown_claim_keeps_count_and_stops_provider(self):
++  self.unknown=True;r=self.run_update(3);self.assertEqual(r['status'],'NATIVE_EXECUTION_ERROR');self.assertEqual(r['counts'],[1,1,0]);self.assertTrue(r['stop_provider']);self.assertEqual(r['attempted_executions'],1)
++ def test_live_b13_pause_and_recorded_wire_rejection(self):
++  self.ledger.live=True
++  with self.assertRaisesRegex(ValueError,'WIRE_CANNOT_RUN_LIVE'):self.run_update(3)
++  r=update.ensure_native_update(source_root=self.root/'source',company_id='sample_entity',metric_id='B13',ledger=self.ledger,max_provider_requests=3)
++  self.assertEqual(r['status'],'LIVE_NATIVE_EXECUTION_PAUSED');self.execute.assert_not_called()
++ def test_recorded_b13_uses_native_acceptance_without_lifting_live_pause(self):
++  from tests.vnext.test_capacity_utilization_source import quantity_source
++  self.source,_=quantity_source('<p>Revenue is recognized when services are delivered.</p>')
++  self.requests=reconstruct_requests(self.source)
++  self.prepared=[calls.SemanticRequest(calls._FACTORY,canonical_json_bytes(value=self.source),canonical_json_bytes(value=r),calls.request_body(r,self.policy),canonical_json_bytes(value=r['response_protocol']),self.requirement,None)for r in self.requests]
++  with patch.object(calls,'execute_capacity_assessment',side_effect=self.recorded_execute):
++   r=self.run_update(2,'B13');self.assertEqual(r['status'],'NATIVE_INPUT_REGISTERED',r);self.assertEqual(r['counts'],[1,1,0])
++ def test_snapshot_failure_after_success_keeps_consumed_limit_and_stops_provider(self):
++  original_snapshot=self.ledger.snapshot.side_effect
++  def snapshot():
++   if len(self.executed)==1:raise ValueError('LEDGER_READ_INTERRUPTED')
++   return original_snapshot()
++  self.ledger.snapshot.side_effect=snapshot
++  r=self.run_update(3);self.assertEqual(r['status'],'NATIVE_EXECUTION_ERROR');self.assertEqual(r['call_accounting'],'UNKNOWN');self.assertTrue(r['stop_provider']);self.assertEqual(r['counts'],[1,1,0]);self.assertEqual(r['attempted_executions'],2)
++ def test_old_success_or_source_errors_are_never_treated_as_missing_credit(self):
++  for reason in ('NATIVE_ORIGINAL_ACCEPTANCE_SEMANTICS_CHANGED','NATIVE_ORIGINAL_EVIDENCE_CHANGED','UPDATE_NATIVE_COMPLETE_ORIGINAL_SET_MISSING_OR_AMBIGUOUS','SEMANTIC_SOURCE_INSTALLED_POLICY_CHANGED','SOURCE_POLICY_FILE_MISSING'):
++   with self.subTest(reason=reason):
++    self.prepare.side_effect=ValueError(reason)
++    with self.assertRaisesRegex(ValueError,reason):self.run_update(3)
++    self.execute.assert_not_called()
++ def test_invalid_limits_and_d03_cannot_enter(self):
++  for limit in (-1,True,241):
++   with self.assertRaisesRegex(ValueError,'FINITE_PROVIDER_LIMIT'):self.run_update(limit)
++  with self.assertRaisesRegex(ValueError,'METRIC_UNSUPPORTED'):self.run_update(1,'D03')
++
++class RefreshCoordinatorNewNativeTest(unittest.TestCase):
++ def test_failure_continues_other_metrics_and_uses_one_shared_limit(self):
++  from vnext.continuous_sec_acquisition import SecAcquisitionSession
++  with tempfile.TemporaryDirectory()as tmp:
++   root=Path(tmp).resolve();session=object.__new__(SecAcquisitionSession);session.data_root=root/'ledger/source-inputs';session.requirement={};counts=[0,0,0]
++   session.ledger=SimpleNamespace(root=root/'ledger',live=False,locked=nullcontext,snapshot=lambda:{'counts':list(counts)})
++   discovery={'status':'SAVED_SOURCE_DEPENDENCIES_AVAILABLE','requirements_id':'synthetic','requirements':[],'limitations':[]}
++   attempts=[]
++   def ensure(**kw):
++    attempts.append(kw['max_provider_requests']);counts[0]+=1;counts[1]+=1
++    return {'company_id':kw['company_id'],'metric_id':'D04','status':'NATIVE_REQUEST_FAILED','attempted_executions':1,'counts':[1,1,0],'call_accounting':'KNOWN','stop_provider':False}
++   with patch.object(refresh,'_check_session'),patch.object(refresh,'initialize_source_inputs'),patch.object(refresh,'_failed_urls',return_value=set()),patch.object(refresh,'discover_saved_source_requirements',return_value=discovery),patch.object(update,'ensure_native_update',side_effect=ensure),patch.object(refresh,'run_company',return_value={'status':'UPDATES_PARTIAL','metrics':[]})as run:
++    result=refresh.refresh_and_process(session=session,state_root=root/'state',company_ids=['pfizer','enphase_energy'],metric_ids=['A08','D04'],max_sec_requests=0,max_provider_requests=1)
++   self.assertEqual(attempts,[1]);self.assertEqual(run.call_count,2);self.assertEqual(result['cumulative_ledger_delta'],[1,1,0]);self.assertEqual(result['calls'],{'provider':0,'paid':0,'sec':0});self.assertEqual(len(result['native_preparations']),1)
++
++if __name__=='__main__':unittest.main(verbosity=2)

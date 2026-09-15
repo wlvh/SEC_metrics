@@ -1,0 +1,18 @@
+test_real_history_idempotency_failure_and_recovery (tests.vnext.test_ordinary_update_cycle.OrdinaryUpdateCycleTest.test_real_history_idempotency_failure_and_recovery) ... FAIL
+
+======================================================================
+FAIL: test_real_history_idempotency_failure_and_recovery (tests.vnext.test_ordinary_update_cycle.OrdinaryUpdateCycleTest.test_real_history_idempotency_failure_and_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ordinary_update_cycle.py", line 87, in test_real_history_idempotency_failure_and_recovery
+    self.assertEqual('CANDIDATE_WITHHELD',blocked['status']);self.assertIsNone(blocked['successful_attempt'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_WITHHELD' != 'EXECUTION_FAILED'
+- CANDIDATE_WITHHELD
++ EXECUTION_FAILED
+
+
+----------------------------------------------------------------------
+Ran 1 test in 219.008s
+
+FAILED (failures=1)

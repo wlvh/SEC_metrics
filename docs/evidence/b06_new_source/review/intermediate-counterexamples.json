@@ -1,0 +1,32 @@
+{
+  "scope": "OFFLINE_SEMANTIC_TEST_ONLY_NO_SEC_CREDIT",
+  "implementation_sha256": "2186cc2539a496daec63c65884bc063f71814ac38581085bc130a5fa4b9a5e8a",
+  "baseline_accession": "0000092380-26-000004",
+  "cases": [
+    {
+      "case": "unaltered_PR42_baseline",
+      "status": "REJECTED",
+      "reason": "FINANCE_LEASE_RELATIONSHIP_CONFLICT"
+    },
+    {
+      "case": "negation_with_total_as_subject",
+      "status": "REJECTED",
+      "reason": "FINANCE_LEASE_RELATIONSHIP_CONFLICT"
+    },
+    {
+      "case": "extra_known_finance_label_in_primary_balance_sheet",
+      "status": "REJECTED",
+      "reason": "FINANCE_LEASE_RELATIONSHIP_CONFLICT"
+    },
+    {
+      "case": "custom_TaxFinancingLoan",
+      "status": "REJECTED",
+      "reason": "FINANCE_LEASE_RELATIONSHIP_CONFLICT"
+    },
+    {
+      "case": "custom_EmergencyCreditFacility",
+      "status": "REJECTED",
+      "reason": "FINANCE_LEASE_RELATIONSHIP_CONFLICT"
+    }
+  ]
+}

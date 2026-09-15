@@ -1,0 +1,70 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/sec_http.py", line 752, in read_request_snapshot_bytes
+    content, _metadata = read_verified_immutable_bytes(path=verified_path)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/sec_http.py", line 1286, in read_verified_immutable_bytes
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: Immutable request artifact must be a single-link regular file: /private/tmp/sec_metrics_issue28_continuous/format-registration-review-5207290213/data/evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 92, in _verified_request_locator
+    expected_body, expected_headers = legacy_response_snapshot_paths(
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        workdir=repo_root,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        timestamp_utc=str(row["timestamp_utc"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/sec_http.py", line 805, in legacy_response_snapshot_paths
+    body_bytes = read_request_snapshot_bytes(
+        workdir=workdir,
+        path=body_path,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/sec_http.py", line 754, in read_request_snapshot_bytes
+    raise ValueError(
+        f"Immutable request artifact is unsafe: {path}"
+    ) from error
+ValueError: Immutable request artifact is unsafe: /private/tmp/sec_metrics_issue28_continuous/format-registration-review-5207290213/data/evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/format-registration-review-5207290213/review.py", line 16, in <module>
+    positive=prepare_case(data_root=clone,company_id='enphase_energy',metric_id='D04')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_run.py", line 41, in prepare_case
+    source = native_source(prepare_d04_semantic_source(repo_root=data_root, company_id=company_id),
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r6_semantic_source.py", line 184, in prepare_d04_semantic_source
+    source=prepare_ordinary_going_concern_source(repo_root=repo_root,company_id=company_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/going_concern_source.py", line 331, in prepare_ordinary_going_concern_source
+    prepared = prepare_saved_annual_input(repo_root=root, company_id=company_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_annual_input.py", line 204, in prepare_saved_annual_input
+    inventory = read(submissions_url(cik=cik))
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_annual_input.py", line 199, in read
+    item = saved_source(repo_root=repo_root, url=url, accession=accession)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_update.py", line 76, in saved_source
+    proof, raw = annual_input._saved_source(repo_root=repo_root, rows=rows, url=url, accession=accession)
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_input.py", line 35, in _saved_source
+    binding = request_attempt_binding(
+        repo_root=repo_root, source_url=url,
+        content_sha256=row["content_sha256"], accession=accession,
+        document_name=row["document_name"],
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 228, in request_attempt_binding
+    proof = _verified_request_locator(
+        repo_root=repo_root,
+    ...<3 lines>...
+        document_name=document_name,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 114, in _verified_request_locator
+    raise BatchWorkflowError(
+        "Request-ledger locator evidence is invalid"
+    ) from error
+vnext.batch_workflow.BatchWorkflowError: Request-ledger locator evidence is invalid

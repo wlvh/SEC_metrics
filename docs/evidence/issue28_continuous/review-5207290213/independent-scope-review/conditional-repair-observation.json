@@ -1,0 +1,28 @@
+{
+  "statement": "If financing fails, cash is insufficient and these conditions raise substantial doubt about our ability to continue as a going concern.",
+  "results": [
+    {
+      "kind": "DOUBT_DISCLOSED",
+      "timing": "CURRENT_REPORT",
+      "observation": {
+        "accepted": false,
+        "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+      }
+    },
+    {
+      "kind": "CONDITIONAL_OR_BOILERPLATE",
+      "timing": "CONDITIONAL",
+      "observation": {
+        "accepted": true,
+        "unresolved": [],
+        "current_target_findings": []
+      }
+    }
+  ],
+  "function_sha256": {
+    "_assertion_clauses": "b2d8e8bb1fcf1bf9e4662927f03534f535921a202d38caf929420c495ae83a1f",
+    "_assertion_scope": "d635e858d2def74022572cb464cd3b6545f4b3e6360ea32cf2042e71e8665770",
+    "source_statement_relations": "0c0004d443c017b7644fe77e53187db8eedad997425132fe44a67ed1a2dc041a"
+  },
+  "full_run_executed": false
+}

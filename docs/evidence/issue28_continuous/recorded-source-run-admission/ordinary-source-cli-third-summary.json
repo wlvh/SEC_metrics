@@ -1,0 +1,101 @@
+{
+  "record_type": "NORMAL_SAVED_CANDIDATE_BATCH",
+  "status": "OPEN_CANDIDATES_READY",
+  "started_at_utc": "2026-09-12T23:31:57.815633+00:00",
+  "completed_at_utc": "2026-09-12T23:33:03.535003+00:00",
+  "requested_coordinate_count": 2,
+  "coordinates": [
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B10",
+      "run_path": "runs/marriott_international/B10",
+      "data_path": "data/marriott_international",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:3f90dd6f7486b1e53c2ebc1ed365b2deb248d2c547672fb19a1888a39a980955",
+      "run_status": "OPEN",
+      "source_credit": "RECORDED_TEST_ONLY",
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.693",
+        "unit": "ratio",
+        "trace_id": "sha256:d53bd76dbcb1f642310c4681d17dd84d1303ea7bfab934da8e9f8e095256ff77",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:a3bc9fadc055f1a4b4d01f3ccd6a7075ab9344760bd7cf86367836808936030d"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/marriott_international-B10.json",
+      "selection_hash": "sha256:51961b3ff9ed14e1dd1e44dcbab19fe6397776fdd3f1390e44f7a82812f65658",
+      "selection_summary": {
+        "reason_code": "PASS",
+        "classification": "DETERMINISTIC_REPORTED_TABLE"
+      }
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B11",
+      "run_path": "runs/marriott_international/B11",
+      "data_path": "data/marriott_international",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:00a529d34653378aaa2c72e4fb3a2e46220c2836ced18dcc2e6fc536b27434a2",
+      "run_status": "OPEN",
+      "source_credit": "RECORDED_TEST_ONLY",
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:6f9cab9c1c477f4210dadf7fa4f018ffeb7f67588be5f6811cf50bd6092e94bc",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "128.8",
+        "unit": "USD",
+        "trace_id": "sha256:94e0d8689dbef352d96bc35223b28918f42ef138194dcf49b1fa95c07d35aa54",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:49fdd3dfac8e00e2ebb09f076b9fd8bce0de5ef1a1d8328e819c7d40668be7e0"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/marriott_international-B11.json",
+      "selection_hash": "sha256:0a9413656e003d3e27397b8fc5e5779fc15bcc601a22d19da1306ce2bbfec884",
+      "selection_summary": {
+        "reason_code": "PASS",
+        "classification": "DETERMINISTIC_REPORTED_TABLE"
+      }
+    }
+  ],
+  "full_issue_acceptance": false,
+  "production_authorized": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "limits": [
+    "Saved sources do not prove current SEC freshness",
+    "Rows are not a complete publication",
+    "Unimplemented and withheld coordinates remain explicit"
+  ]
+}

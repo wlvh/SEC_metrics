@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "run_id": "run:ordinary-integrated:29264b39c1cfa61162c1d3440bd7612d0a982cf4b53925593b52cd69fff59461",
+  "run_status": "OPEN",
+  "record_count": 15,
+  "decision_count": 0,
+  "runtime_root": "/private/tmp/sec_metrics_issue28_continuous/b06-current-native-second/data",
+  "git_directory_present": false,
+  "results": [
+    {
+      "applicability": "APPLICABLE",
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B06",
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:e70500bd87105619b96da3a97be9b644bb5f6f4b7f2368d8b5e005e86e3a41c8",
+      "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+      "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+      "trace_id": "sha256:553a9f827317b0ce195c23d38de3d13f079bf1a8b193cb6833190f9ab9495d65",
+      "unit": null,
+      "value": null
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

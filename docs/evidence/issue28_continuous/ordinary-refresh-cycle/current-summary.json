@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "phases": [
+    "initial",
+    "repeat",
+    "remote-failure",
+    "after-remote-failure",
+    "local-input-failure",
+    "local-input-restored"
+  ],
+  "reused_acquired_recorded_source_inputs": true,
+  "native_initial_results": {
+    "jpmorgan_chase": {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B01",
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:acda5475f270d4888d1c9d38b8e5b869adafc3317e2da05f6c9048c9fcfa5de1",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "trace_id": "sha256:a0a128d34591e190d9cef42b9085dc05b365254b49d1e3e01d1c3f739873c9bd",
+      "unit": null,
+      "value": null
+    },
+    "pfizer": {
+      "applicability": "APPLICABLE",
+      "company_id": "pfizer",
+      "metric_id": "B01",
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "trace_id": "sha256:2403c1f1aea4c693f78eefda728a27dd095109282ddd5ca7ae4e9cc21bcff435",
+      "unit": "USD",
+      "value": "62579000000"
+    }
+  },
+  "recorded_sec_slots": 6,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "failed_urls_never_automatically_retried": [
+    "https://data.sec.gov/submissions/CIK0000078003.json"
+  ],
+  "actual_new_fiscal_year": false,
+  "full390_acceptance": false,
+  "production_authorized": false
+}

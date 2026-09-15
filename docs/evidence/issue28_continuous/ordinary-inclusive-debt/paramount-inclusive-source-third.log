@@ -1,0 +1,16 @@
+test_acquisition_amount_is_bound_to_the_earlier_source_table (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_acquisition_amount_is_bound_to_the_earlier_source_table) ... ok
+test_actual_inclusive_total_subject_and_other_measurements (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_actual_inclusive_total_subject_and_other_measurements) ... ok
+test_extra_financing_note_cannot_hide_outside_the_debt_note (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_extra_financing_note_cannot_hide_outside_the_debt_note) ... ok
+test_extra_native_senior_note_or_borrowing_cannot_escape_inventory (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_extra_native_senior_note_or_borrowing_cannot_escape_inventory) ... ok
+test_future_typed_revenue_bucket_cannot_be_reused_as_a_borrowing (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_future_typed_revenue_bucket_cannot_be_reused_as_a_borrowing) ... ok
+test_maturity_table_cannot_relabel_face_amount_as_carrying (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_maturity_table_cannot_relabel_face_amount_as_carrying) ... ok
+test_missing_finance_lease_row_does_not_mean_zero (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_missing_finance_lease_row_does_not_mean_zero) ... ok
+test_native_current_total_disagreement_is_not_overwritten (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_native_current_total_disagreement_is_not_overwritten) ... ok
+test_parent_equity_scope_cannot_be_replaced_by_other_equity (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_parent_equity_scope_cannot_be_replaced_by_other_equity) ... ok
+test_predecessor_column_cannot_be_renamed_current (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_predecessor_column_cannot_be_renamed_current) ... ok
+test_unknown_or_unquantified_narrative_borrowing_rejects (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest.test_unknown_or_unquantified_narrative_borrowing_rejects) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 41.341s
+
+OK

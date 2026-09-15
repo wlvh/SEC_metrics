@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "successful_attempts": {
+    "B01": "340d3c5540b3456ebc511fea96d36720",
+    "B08": "54e2b83cb239445d89710b44b54fef0a"
+  },
+  "checks": [
+    "independent-success-with-withheld",
+    "no-duplicate-runs",
+    "earlier-input-failure-does-not-stop-later-success",
+    "historical-period-and-current-status-separated",
+    "restored-source-reuses-success",
+    "changed-success-row-blocks-only-affected-metric",
+    "existing-group-history-not-silently-reset"
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

@@ -1,0 +1,239 @@
+{
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_native_Run_executed": false,
+  "production_output_observed": false,
+  "cases": [
+    {
+      "statement": "There is substantial doubt about our ability to continue as a going concern, even if the proposed financing succeeds.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": []
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+            "value": null,
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": true,
+          "value": [
+            {
+              "status": "TEXT_QUAL",
+              "value": "",
+              "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。"
+            },
+            [
+              {
+                "company": "Sample",
+                "cik": "12345",
+                "metric_id": "D04",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/12345/000001234526000001/source.htm",
+                "repo_relative_path": "fixture/source.htm",
+                "content_sha256": "0c21f33eb2dd1a2c9acea606c71ad6004aec8330dd2c04764851768b7d1ef06c",
+                "accession": "0000012345-26-000001",
+                "document_name": "source.htm",
+                "concept_or_section": "Defined source scope",
+                "context_or_dimension": "{\"assessment_mode\": \"RECORDED_TEST_ONLY\", \"assessment_set_id\": \"sha256:2c3ead64c02202038dd798a92518128a2bd9419b143eeb309b2439ef1654190b\", \"scope\": \"SAVED_ANNUAL_PRIMARY_AND_ALL_CURRENT_ANNUAL_AMENDMENTS_VISIBLE_AND_NATIVE\", \"source_unit_ids\": [\"sha256:542e04718e18fe251b1ebab1e7903680e1474b9d6c480a9a509feb407cbf4b72\"]}",
+                "unit": "text",
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31",
+                "value_raw": "",
+                "value_normalized": "",
+                "evidence_quote": "Host scope-check record; no source quotation or numeric value is asserted.",
+                "extraction_method": "complete_native_d04_assessment",
+                "parser_version": "capacity_run"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "statement": "There is substantial doubt about our ability to continue as a going concern; for example, cash is insufficient to meet obligations.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": []
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+            "value": null,
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": true,
+          "value": [
+            {
+              "status": "TEXT_QUAL",
+              "value": "",
+              "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。"
+            },
+            [
+              {
+                "company": "Sample",
+                "cik": "12345",
+                "metric_id": "D04",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/12345/000001234526000001/source.htm",
+                "repo_relative_path": "fixture/source.htm",
+                "content_sha256": "41a066a40843e67fc6dd67c166d3cc4d298f8f49afb54777d0a1774a70945eef",
+                "accession": "0000012345-26-000001",
+                "document_name": "source.htm",
+                "concept_or_section": "Defined source scope",
+                "context_or_dimension": "{\"assessment_mode\": \"RECORDED_TEST_ONLY\", \"assessment_set_id\": \"sha256:132e94ebd8e8ae7d3dbeb0a25efb79ff98028db3b0a18dd5789f98f062677eab\", \"scope\": \"SAVED_ANNUAL_PRIMARY_AND_ALL_CURRENT_ANNUAL_AMENDMENTS_VISIBLE_AND_NATIVE\", \"source_unit_ids\": [\"sha256:5f5af2bbbbe80e9d1a05e5c1211d37e48b5a396ac5b0cb359643f61a812b849b\"]}",
+                "unit": "text",
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31",
+                "value_raw": "",
+                "value_normalized": "",
+                "evidence_quote": "Host scope-check record; no source quotation or numeric value is asserted.",
+                "extraction_method": "complete_native_d04_assessment",
+                "parser_version": "capacity_run"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "statement": "In 2024 we incurred losses, and these conditions now raise substantial doubt about our ability to continue as a going concern.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": []
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+            "value": null,
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": true,
+          "value": [
+            {
+              "status": "TEXT_QUAL",
+              "value": "",
+              "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。"
+            },
+            [
+              {
+                "company": "Sample",
+                "cik": "12345",
+                "metric_id": "D04",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/12345/000001234526000001/source.htm",
+                "repo_relative_path": "fixture/source.htm",
+                "content_sha256": "bb2226547ff2f7eb4d007001082dcebfd8d02b9d1481c015678912318d236cce",
+                "accession": "0000012345-26-000001",
+                "document_name": "source.htm",
+                "concept_or_section": "Defined source scope",
+                "context_or_dimension": "{\"assessment_mode\": \"RECORDED_TEST_ONLY\", \"assessment_set_id\": \"sha256:77070ccffe11d85d29abc94c9a3b849643214b5f1a14144816906cdb6635ef70\", \"scope\": \"SAVED_ANNUAL_PRIMARY_AND_ALL_CURRENT_ANNUAL_AMENDMENTS_VISIBLE_AND_NATIVE\", \"source_unit_ids\": [\"sha256:d68883dd75f41c4b7dbe69a6f8d3bac6cc3fd602930e473659335cfea10bd576\"]}",
+                "unit": "text",
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31",
+                "value_raw": "",
+                "value_normalized": "",
+                "evidence_quote": "Host scope-check record; no source quotation or numeric value is asserted.",
+                "extraction_method": "complete_native_d04_assessment",
+                "parser_version": "capacity_run"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

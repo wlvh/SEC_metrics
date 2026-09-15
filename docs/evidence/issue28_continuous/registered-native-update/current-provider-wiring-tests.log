@@ -1,0 +1,50 @@
+test_actual_factory_native_acceptance_and_omitted_unit_failure (tests.vnext.test_d04_native_wiring.D04NativeAssessmentMaterialTest.test_actual_factory_native_acceptance_and_omitted_unit_failure) ... ok
+test_all_source_navigation_schema_and_messages_enter_count (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_all_source_navigation_schema_and_messages_enter_count) ... ok
+test_b13_and_d03_grouped_responses_still_account_for_each_source_unit (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_b13_and_d03_grouped_responses_still_account_for_each_source_unit) ... ERROR
+test_grouper_preserves_every_unit_and_checks_full_identity (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_grouper_preserves_every_unit_and_checks_full_identity) ... ok
+test_missing_engine_is_conservative_and_cannot_regroup (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_missing_engine_is_conservative_and_cannot_regroup) ... ok
+test_new_source_format_does_not_relabel_old_requests (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_new_source_format_does_not_relabel_old_requests) ... ok
+test_output_reservation_changes_the_real_200000_boundary (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_output_reservation_changes_the_real_200000_boundary) ... ok
+test_real_usage_feedback_has_a_separate_context_failure (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_real_usage_feedback_has_a_separate_context_failure) ... ok
+test_reference_vectors_include_prompt_envelope_and_output_reserve (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_reference_vectors_include_prompt_envelope_and_output_reserve) ... ok
+test_resource_mutation_after_cached_parse_is_rejected (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_resource_mutation_after_cached_parse_is_rejected) ... ok
+test_unsupported_service_and_format_are_explicit (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_unsupported_service_and_format_are_explicit) ... ok
+test_actual_source_prompt_and_output_contract_changes_remain_distinct (tests.vnext.test_native_unit_index.IndexedSemanticIdentityTest.test_actual_source_prompt_and_output_contract_changes_remain_distinct) ... ok
+test_base_and_indexed_output_contracts_have_distinct_execution_semantics (tests.vnext.test_native_unit_index.IndexedSemanticIdentityTest.test_base_and_indexed_output_contracts_have_distinct_execution_semantics) ... ok
+test_mechanical_source_identity_cannot_authorize_indexed_redraw (tests.vnext.test_native_unit_index.IndexedSemanticIdentityTest.test_mechanical_source_identity_cannot_authorize_indexed_redraw) ... ok
+test_continuous_calls (unittest.loader._FailedTest.test_continuous_calls) ... ERROR
+
+======================================================================
+ERROR: test_b13_and_d03_grouped_responses_still_account_for_each_source_unit (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_b13_and_d03_grouped_responses_still_account_for_each_source_unit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_continuous_request_context.py", line 182, in test_b13_and_d03_grouped_responses_still_account_for_each_source_unit
+    checked = b13.validate_response(request=request, raw_response=canonical_json_bytes(value=response))
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 330, in validate_response
+    checked['unresolved'].extend(validate_quantity_role_findings(units=units,findings=checked['findings'],
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        period=request['target_period'],quantity_scope=request.get('quantity_scope_context')))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_quantity_roles.py", line 161, in validate_quantity_role_findings
+    else:need(False,'B13_PHYSICAL_QUANTITY_ROLE_NOT_ESTABLISHED')
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_PHYSICAL_QUANTITY_ROLE_NOT_ESTABLISHED
+
+======================================================================
+ERROR: test_continuous_calls (unittest.loader._FailedTest.test_continuous_calls)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_continuous_calls
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 141, in loadTestsFromName
+    module = __import__(module_name)
+ModuleNotFoundError: No module named 'tests.vnext.test_continuous_calls'
+
+
+----------------------------------------------------------------------
+Ran 15 tests in 50.594s
+
+FAILED (errors=2)
+{'status': 'OFFLINE_NATIVE_REQUEST_ACCEPTANCE_PASS', 'network_disabled': True, 'actual_factory_and_opener_verified': True, 'required_native_evidence_verified': True, 'missing_unit_rejected': True, 'request_count': 6, 'selected_request_bytes': 421598, 'estimated_context_tokens': 127727, 'closure': 'sha256:a8313892a6559fcd4d03afe31ca05bf61bb710c7281e9647896ba206a41803ea', 'real_calls': [0, 0, 0], 'complete_d04_result': False}

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "record_type": "B06_NOTE_CARRYING_SOURCE_POLICY",
+  "scope": "consolidated_nonbank",
+  "note_concepts": {
+    "debt": "LongTermDebtTextBlock",
+    "schedule": "ScheduleOfDebtTableTextBlock",
+    "leases": "LesseeLeasesPolicyTextBlock"
+  },
+  "monetary_concepts": {
+    "current": "LongTermDebtCurrent",
+    "noncurrent": "LongTermDebtNoncurrent",
+    "total": "LongTermDebt",
+    "equity": "StockholdersEquity"
+  },
+  "no_finance_lease_statement": "The Company does not have any finance leases.",
+  "debt_table_introduction": "The following table provides information regarding the Company’s debt:",
+  "scale_labels": {"(In thousands)": 1000, "(In millions)": 1000000},
+  "member_pattern": "Notes due (?P<year>[0-9]{4})",
+  "carrying_pattern": "Carrying amount of Notes due (?P<year>[0-9]{4})",
+  "adjustment_labels": ["Less: unamortized debt issuance costs", "Less: unamortized debt discount"],
+  "total_label": "Total carrying amount of debt",
+  "current_label": "Less: debt, current",
+  "noncurrent_label": "Debt, non-current",
+  "group_label": "Convertible notes",
+  "balance_labels": {"Debt, current": "current", "Debt, non-current": "noncurrent"},
+  "ordinary_balance_labels": ["Accounts payable", "Accrued liabilities", "Deferred revenues, current", "Warranty obligations, current", "Total current liabilities", "Deferred revenues, non-current", "Warranty obligations, non-current", "Other liabilities", "Total liabilities"],
+  "potential_financing_concept_pattern": "debt|borrow|loan|lease|credit|facility|financing|funding|obligation|promissory|seniornotes|subordinatednotes|debentures",
+  "different_nature_standard_pattern": "asset|tax|receivable|availableforsale|operatinglease|lessor|rightofuse|weightedaverage|revenueremainingperformanceobligation|warranty|^purchaseobligation$",
+  "different_nature_custom_pattern": "^(?:DeferredTaxAssets|DeferredTaxLiabilities|AdvancedManufacturingProductionTaxCredit|LesseeOperatingLeaseLiability|RevenueRemainingPerformanceObligation|Warranty|DebtSecuritiesAvailableForSale|FinancingReceivableIncludingInterest)",
+  "model_id": "BORROWING_CURRENT_NONCURRENT_NO_FINANCE_LEASE",
+  "dimension_member_pattern": "ConvertibleSeniorNotesDue(?P<year>[0-9]{4})Member",
+  "dimension_concept_roles": {"LongTermDebt": "carrying", "DebtInstrumentCarryingAmount": "principal", "DeferredFinanceCostsNet": "issuance_cost", "DebtInstrumentUnamortizedDiscount": "discount"},
+  "source_acquisition_credit": false,
+  "production_authorized": false
+}

@@ -1,0 +1,47 @@
+test_complete_saved_packages_restore_without_navigation_filter (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewMaterialTest.test_complete_saved_packages_restore_without_navigation_filter) ... ERROR
+test_clear_capacity_with_no_production_is_a_calculation_limit (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_clear_capacity_with_no_production_is_a_calculation_limit) ... ok
+test_complete_source_and_exact_quotes_required (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_complete_source_and_exact_quotes_required) ... ok
+test_native_reference_uses_original_ordinal_not_packed_row_position (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_native_reference_uses_original_ordinal_not_packed_row_position) ... ok
+test_sales_only_source_cannot_be_labelled_actual_production (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_sales_only_source_cannot_be_labelled_actual_production) ... ok
+test_shared_metadata_is_restored_and_conflicts_rejected (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_shared_metadata_is_restored_and_conflicts_rejected) ... ok
+test_source_unit_missing_from_declared_census_rejected (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_source_unit_missing_from_declared_census_rejected) ... ok
+setUpClass (tests.vnext.test_capacity_text_results.CapacityTextResultTest) ... ERROR
+
+======================================================================
+ERROR: test_complete_saved_packages_restore_without_navigation_filter (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewMaterialTest.test_complete_saved_packages_restore_without_navigation_filter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_semantic_review.py", line 148, in test_complete_saved_packages_restore_without_navigation_filter
+    requests = requests_from_source(source)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 161, in requests_from_source
+    packed, shared = _shared_units(trial)
+                     ~~~~~~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 122, in _shared_units
+    need(_restore_units(packed, shared) == units, 'B13_PACKED_SOURCE_ROUNDTRIP_CHANGED')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 28, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_PACKED_SOURCE_ROUNDTRIP_CHANGED
+
+======================================================================
+ERROR: setUpClass (tests.vnext.test_capacity_text_results.CapacityTextResultTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_text_results.py", line 24, in setUpClass
+    requests = requests_from_source(source)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 161, in requests_from_source
+    packed, shared = _shared_units(trial)
+                     ~~~~~~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py", line 122, in _shared_units
+    need(_restore_units(packed, shared) == units, 'B13_PACKED_SOURCE_ROUNDTRIP_CHANGED')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 28, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_PACKED_SOURCE_ROUNDTRIP_CHANGED
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.239s
+
+FAILED (errors=2)

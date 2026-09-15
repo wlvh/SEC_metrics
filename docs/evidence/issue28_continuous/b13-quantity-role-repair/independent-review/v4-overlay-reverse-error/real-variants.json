@@ -1,0 +1,500 @@
+{
+  "scope": "SYNTHETIC_CLASSIFICATION_VARIANTS_OVER_UNMODIFIED_REAL_REQUESTS_AND_REFERENCES_NOT_NEW_PROVIDER_RESULTS",
+  "results": [
+    {
+      "name": "82-original",
+      "accepted": false,
+      "error": "ValueError",
+      "reason": "B13_CALCULATION_LIMIT_CONTRADICTS_FINDING"
+    },
+    {
+      "name": "82-limits-only-removed",
+      "accepted": false,
+      "error": "ValueError",
+      "reason": "B13_SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION"
+    },
+    {
+      "name": "82-sales-role-correct-quarter-capacity-kept",
+      "accepted": true,
+      "unresolved": [],
+      "findings": [
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            443,
+            454
+          ]
+        },
+        {
+          "kind": "AVAILABLE_CAPACITY",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            809
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            834
+          ]
+        },
+        {
+          "kind": "SALES_OR_SHIPMENTS",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            883
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1022
+          ]
+        }
+      ]
+    },
+    {
+      "name": "809-independent-role-proof",
+      "proofs": [
+        {
+          "basis": "AVAILABLE_CAPACITY",
+          "statement_text": "These arrangements maintained a combined manufacturing capacity of approximately five-million microinverters per quarter.",
+          "start_character": 237,
+          "end_character": 358,
+          "reported_number": "five-million",
+          "reported_product": "microinverters",
+          "reported_period": "quarter",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "annual_comparability_proven": false,
+          "antecedent_statement": "To mitigate supply chain risks and tariff exposure and to leverage U.S. manufacturing incentives, we continued to operate our domestic manufacturing footprint, including our in‑house manufacturing facility and our partnership with Flex."
+        }
+      ]
+    },
+    {
+      "name": "94-original",
+      "accepted": false,
+      "error": "ValueError",
+      "reason": "B13_CALCULATION_LIMIT_CONTRADICTS_FINDING"
+    },
+    {
+      "name": "94-limits-only-removed",
+      "accepted": true,
+      "unresolved": [],
+      "findings": [
+        {
+          "kind": "ACTUAL_PRODUCTION",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            423
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            432
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            437
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            476
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            482
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            669
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            674
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            678
+          ]
+        },
+        {
+          "kind": "ACTUAL_PRODUCTION",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            697
+          ]
+        },
+        {
+          "kind": "ACTUAL_PRODUCTION",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            699
+          ]
+        },
+        {
+          "kind": "ACTUAL_PRODUCTION",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            700
+          ]
+        },
+        {
+          "kind": "ACTUAL_PRODUCTION",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            701
+          ]
+        },
+        {
+          "kind": "ACTUAL_PRODUCTION",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            849
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1420
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1710
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1725
+          ]
+        }
+      ]
+    },
+    {
+      "name": "94-no-quantity-role-corrected-industry-still-wrong",
+      "accepted": true,
+      "unresolved": [],
+      "findings": [
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            423
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            432
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            437
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            476
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            482
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            669
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            674
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            678
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            697
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            699
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            700
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            701
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            849
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1420
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1710
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1725
+          ]
+        }
+      ]
+    },
+    {
+      "name": "94-no-quantity-and-industry-corrected",
+      "accepted": true,
+      "unresolved": [],
+      "findings": [
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            423
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            432
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            437
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "OTHER_ENTITY",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            476
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            482
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "OTHER_ENTITY",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            669
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            674
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            678
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            697
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            699
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            700
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            701
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            849
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1420
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1710
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1725
+          ]
+        }
+      ]
+    }
+  ],
+  "original_slots_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,7 @@
+test_native_run_recorded_mode_exact_source_and_resigned_input_rejection (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_native_run_recorded_mode_exact_source_and_resigned_input_rejection) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 303.604s
+
+OK
+{'status': 'D04_RECORDED_NATIVE_OPEN_AND_ROWS_PASS', 'run_id': 'run:ordinary-integrated:934d9bb31656478ff25d60199b71b690b767211076c3a52d275ef9f8de75964d', 'result_id': 'sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b', 'source_requests': 6, 'real_calls': [0, 0, 0], 'semantic_assessment_mode': 'RECORDED_TEST_ONLY', 'complete_d04_real_acceptance': False, 'production_authorized': False, 'negative_cases': ['missing native request', 'recorded input relabelled live', 'changed request context format', 'changed response coverage contract']}

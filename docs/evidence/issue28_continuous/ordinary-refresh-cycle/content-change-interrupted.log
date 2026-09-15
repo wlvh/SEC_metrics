@@ -1,0 +1,28 @@
+test_actual_metadata_change_creates_candidate_and_then_reuses_it (tests.vnext.test_ordinary_refresh_content_change_material.OrdinaryRefreshContentChangeTest.test_actual_metadata_change_creates_candidate_and_then_reuses_it) ... ERROR
+
+======================================================================
+ERROR: test_actual_metadata_change_creates_candidate_and_then_reuses_it (tests.vnext.test_ordinary_refresh_content_change_material.OrdinaryRefreshContentChangeTest.test_actual_metadata_change_creates_candidate_and_then_reuses_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ordinary_refresh_content_change_material.py", line 44, in test_actual_metadata_change_creates_candidate_and_then_reuses_it
+    result = refresh.refresh_and_process(session=session, state_root=state, company_ids=[company],
+        metric_ids=['B01'], max_sec_requests=maximum)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_refresh_cycle.py", line 83, in refresh_and_process
+    _check_session(session)
+    ~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_refresh_cycle.py", line 28, in _check_session
+    session._check()
+    ~~~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 91, in _check
+    validate_execution_authority(repo_root=ROOT,requirement=self.requirement)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v1.py", line 2014, in validate_execution_authority
+    raise RequirementProfileError(
+        "Successor execution authority bytes differ: " + relative
+    )
+vnext.requirement_profile_v1.RequirementProfileError: Successor execution authority bytes differ: scripts/vnext/capacity_assessment_input.py
+
+----------------------------------------------------------------------
+Ran 1 test in 218.026s
+
+FAILED (errors=1)

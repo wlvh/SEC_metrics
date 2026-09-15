@@ -1,0 +1,26 @@
+{
+  "record_type": "HISTORICAL_SEMANTIC_CONTROL_SOURCE_POLICY",
+  "schema_version": 1,
+  "metric_id": "D04",
+  "scope": "PUBLIC_SEC_HISTORICAL_PRIMARY_DOCUMENT_CONTROLS_WITHIN_EXISTING_COMPANIES",
+  "source_set": [
+    "primary_html",
+    "sec_header"
+  ],
+  "controls": [
+    {
+      "control_id": "enphase_2016_annual_primary",
+      "company_id": "enphase_energy",
+      "report_date": "2016-12-31"
+    },
+    {
+      "control_id": "enphase_2017_annual_primary",
+      "company_id": "enphase_energy",
+      "report_date": "2017-12-31"
+    }
+  ],
+  "case_selection_is_business_result_approval": false,
+  "whole_filing_absence_credit": false,
+  "normal_update_input": false,
+  "production_authorized": false
+}

@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/tmp/sec_metrics_issue28_continuous/ordinary-accession-material.py",
+    "--repo",
+    "/Users/lyuhongwang/Developer/SEC_metrics",
+    "--output",
+    "/tmp/sec_metrics_issue28_continuous/ordinary-accession-material-final"
+  ],
+  "before": {
+    "config/normal_accession_metrics_v1.json": "f0ebf62e04675b33cc9dba0a9d58e35e46fca1581ad50cbecce672e8b7e1deaa",
+    "scripts/vnext/normal_accession_results.py": "5b8e5d3b11202b38695687aeefa68a184961f8fb39b29d38393492d0faa1b6a8",
+    "tests/vnext/test_normal_accession_results.py": "19daa3a51480c7d94b0d8656e130260f7150c4b0119c54289b561ba903e03e38",
+    "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+    "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+  },
+  "after": {
+    "config/normal_accession_metrics_v1.json": "f0ebf62e04675b33cc9dba0a9d58e35e46fca1581ad50cbecce672e8b7e1deaa",
+    "scripts/vnext/normal_accession_results.py": "5b8e5d3b11202b38695687aeefa68a184961f8fb39b29d38393492d0faa1b6a8",
+    "tests/vnext/test_normal_accession_results.py": "19daa3a51480c7d94b0d8656e130260f7150c4b0119c54289b561ba903e03e38",
+    "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+    "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+  },
+  "unchanged": true,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "native_runs_created": false
+}

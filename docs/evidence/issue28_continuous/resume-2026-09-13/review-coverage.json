@@ -1,0 +1,52 @@
+{
+  "record_type": "ISSUE_28_RESUMED_REVIEW_COVERAGE",
+  "reviewed_head": "6341530c67b5a0aa0ded858a2a60bddc56ee6a12",
+  "records": [
+    {
+      "kind": "CHATGPT_DIRECTED_REVIEW_VIA_USER_CONNECTION",
+      "url": "https://github.com/wlvh/SEC_metrics/pull/43#pullrequestreview-5189571246",
+      "state": "COMMENTED",
+      "source_file": "chatgpt-directed-review.json",
+      "coverage": "Only code and evidence explicitly listed in the original review. Its earlier pending-budget/B13 and monetary-cap discussion is historical and superseded by the final user resume approval.",
+      "code_approve": false
+    },
+    {
+      "kind": "USER_FORWARDED_FABLE_5_1_REPORT",
+      "files": "fable-6341530-verification/",
+      "sha_manifest_verification": "PASS",
+      "indexed_files": 18,
+      "physical_files_including_manifest": 19,
+      "source_report_tests_rerun_by_codex": false,
+      "coverage": [
+        "scripts/vnext/ordinary_update_cycle.py::_intent",
+        "scripts/vnext/ordinary_update_cycle.py::_terminal",
+        "scripts/vnext/ordinary_update_cycle.py::_recover",
+        "scripts/vnext/ordinary_update_cycle.py::run_once",
+        "scripts/vnext/ordinary_update_cycle.py::run_company",
+        "tests/vnext/test_ordinary_update_cycle.py",
+        "CI34735535954 history/isolation logs and same-tree checkout",
+        "issue_28_v13 e1ac4b08/351 loader identity",
+        "reported local397.086s native/97fast80.648s/five mutations and restored reuse"
+      ],
+      "reported_registration_side_effect": {
+        "new_recorded_test_only_entries": 3,
+        "total_entries": 23,
+        "preserved": true,
+        "real_acquisition_credit": false
+      }
+    }
+  ],
+  "unreviewed_remaining_modules": [
+    "new issue_28_v14 call policy, aggregate ledger, factory and D04 feasibility adapter; root tests do not count as independent review",
+    "36-route source adapters and Calculator reuse",
+    "three B06 debt parsers and guards",
+    "amendment and subject handling",
+    "D01 D02 C02 text routes",
+    "publication and rollback wiring",
+    "D03 D04",
+    "full390",
+    "real acquisition publication retirement"
+  ],
+  "full_pr_approval": false,
+  "production_authorized": false
+}

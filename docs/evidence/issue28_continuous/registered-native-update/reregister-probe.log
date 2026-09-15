@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/native_update_reregister_probe.py", line 18, in <module>
+    current=register_assessment_input(prepared_requests=prepared,ledger=ledger)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_assessment_input.py", line 46, in register_assessment_input
+    assessment = collect_native_assessments(prepared_requests=prepared_requests, ledger=ledger)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_native_assessment.py", line 80, in collect_native_assessments
+    source = strict_json_loads(text=prepared_requests[0].source_bytes.decode())
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'source_bytes'

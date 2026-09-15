@@ -1,0 +1,18 @@
+{
+  "steps": [
+    {
+      "script": "prepare_current_material.py",
+      "returncode": 0
+    },
+    {
+      "script": "complete_current_material_facts.py",
+      "returncode": 0
+    },
+    {
+      "script": "run_current_material.py",
+      "returncode": 1
+    }
+  ],
+  "seconds": 55.58366858295631,
+  "all_passed": false
+}

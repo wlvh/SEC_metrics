@@ -1,0 +1,45 @@
+{
+  "scope": "OFFLINE_SEMANTIC_TEST_ONLY_NO_SEC_CREDIT",
+  "implementation_sha256": "be42d7056e1f2837f377019d91bf7ccca574033c2ff74398502d7039bccee812",
+  "baseline_accession": "0000092380-26-000004",
+  "cases": [
+    {
+      "case": "unaltered_PR42_baseline",
+      "status": "ACCEPTED",
+      "inventory_count": 69,
+      "relevant_inventory": []
+    },
+    {
+      "case": "negation_with_total_as_subject",
+      "status": "ACCEPTED",
+      "inventory_count": 69,
+      "relevant_inventory": []
+    },
+    {
+      "case": "extra_known_finance_label_in_primary_balance_sheet",
+      "status": "ACCEPTED",
+      "inventory_count": 70,
+      "relevant_inventory": []
+    },
+    {
+      "case": "custom_TaxFinancingLoan",
+      "status": "ACCEPTED",
+      "inventory_count": 70,
+      "relevant_inventory": [
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "luv:taxfinancingloan",
+          "ordinal": 1598,
+          "value": "99000000",
+          "disposition": "EXCLUDED_DIFFERENT_MEASUREMENT_OR_NATURE"
+        }
+      ]
+    },
+    {
+      "case": "custom_EmergencyCreditFacility",
+      "status": "ACCEPTED",
+      "inventory_count": 69,
+      "relevant_inventory": []
+    }
+  ]
+}

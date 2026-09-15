@@ -1,0 +1,23 @@
+{
+  "status": "UPDATES_INCOMPLETE",
+  "metric_status": "EXECUTION_FAILED",
+  "counts_before": [
+    59,
+    59,
+    45
+  ],
+  "counts_after": [
+    59,
+    59,
+    45
+  ],
+  "events": [
+    "subprocess.Popen"
+  ],
+  "seconds": 2777.675464208005
+}
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/current-real-native-update.py", line 20, in <module>
+    assert result['status']=='UPDATES_READY' and before==after and not events,report
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'result': {'company_id': 'ford_motor_company', 'status': 'UPDATES_INCOMPLETE', 'metrics': [{'metric_id': 'D04', 'status': 'EXECUTION_FAILED', 'attempt_id': '7724f419782a40b89fa96c6ce9ba41a5', 'latest_attempt': '7724f419782a40b89fa96c6ce9ba41a5', 'successful_attempt': None, 'previous_successful_attempt': None, 'last_verified_candidate': None, 'new_candidate_created': False, 'terminal': {'record_type': 'ORDINARY_UPDATE_TERMINAL', 'attempt_id': '7724f419782a40b89fa96c6ce9ba41a5', 'configuration_id': 'sha256:16b8b115dd6ab1df0dd1ab63dd54b0049e8b5db48f3086157ac75d7c0f8e8af2', 'intent_id': 'sha256:e352e6f1a823337172cf75a40086e9e65b1b5ccdfaaec59c6f217ce2e41c2361', 'status': 'EXECUTION_FAILED', 'completed_at': '2026-09-15T16:34:32.716785+00:00', 'input': {'company_id': 'ford_motor_company', 'metric_ids': ['D04'], 'requirement_closure_hash': 'sha256:a8313892a6559fcd4d03afe31ca05bf61bb710c7281e9647896ba206a41803ea', 'targets': {'D04': {'fiscal_year': 2025, 'period_end': '2025-12-31', 'period_start': '2025-01-01'}}, 'specs': {'D04': {'D04': 'sha256:b72e137f2ba802a2ca8c2e8874f9e3388114600acb19c976aeaff4c309aa05ba'}}, 'source_contents': [{'source_url': 'https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json', 'accession': '0000037996-26-000015', 'document_name': 'CIK0000037996.json', 'sha256': 'db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e'}, {'source_url': 'https://data.sec.gov/submissions/CIK0000037996.json', 'accession': '', 'document_name': 'CIK0000037996.json', 'sha256': '2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53'}, {'source_url': 'https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm', 'accession': '0000037996-26-000015', 'document_name': 'f-20251231.htm', 'sha256': '3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9'}], 'registered_assessment_inputs': {'D04': {'source_id': 'sha256:8cbeabac0801d5025f6120af3a3ebad10ffaac24a338656630a4853ea8e3d161', 'input_record_id': 'sha256:9bfba937b33d5864644bad6174c5444fc7d801906fa10e65007dddc3573d7d41', 'assessment_set_id': 'sha256:cf732bb01ecf1f09e2dff641af47a83504ea1037907e8b2ab4716c4c2202b638', 'mode': 'LIVE', 'request_context_format': 'deepseek-v41-two-message-json-chat-1', 'response_contract_version': 'D04_COMPLETE_UNITS_V1'}}, 'content_id': 'sha256:a02e9436f0603105dc3721c9ac586765125a97e9d34abce06f52ca87ee12d3a3'}, 'metrics': {}, 'error': {'error_type': 'RuntimeError', 'reason': 'NETWORK_OR_PROCESS_FORBIDDEN'}, 'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'record_id': 'sha256:64d49edabfaef72a7dd71b546b49549e917ea7b6bd80b921a794914d27943b05'}, 'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}], 'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}, 'counts_before': [59, 59, 45], 'counts_after': [59, 59, 45], 'network_or_process_events': ['subprocess.Popen'], 'elapsed_seconds': 2777.675464208005}

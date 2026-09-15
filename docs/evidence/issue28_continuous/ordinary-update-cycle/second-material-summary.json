@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "first_candidate": "16ed88221f3144f7899dc264a0f8a3d3",
+  "changed_content_candidate": "eba17d94228241aa91471da13b02f70b",
+  "recovered_candidate": "0478584cebc7462084ed477b1fe12827",
+  "checks": [
+    "initial-candidate",
+    "request-only-change-no-new-run",
+    "two-actual-source-versions-new-candidate",
+    "failed-source-preserves-success",
+    "restored-source-no-new-run",
+    "ready-terminal-pointer-recovery",
+    "unfinished-intent-retained",
+    "concurrent-check-rejected",
+    "changed-successful-row-rejected"
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "real_new_filing_verified": false,
+  "production_authorized": false
+}

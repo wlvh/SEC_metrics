@@ -1,0 +1,1 @@
+首次15项运行：14通过、1失败。原件段落篡改被新上下文重建提前拒绝，但错误名B13_QUANTITY_SCOPE_BLOCK_CHANGED与既有SOURCE_BLOCK_CHANGED断言不一致。保留既有断言，将同类来源字节/内容错误统一为B13_QUANTITY_SOURCE_BLOCK_CHANGED后重验；未删校验或放宽测试。

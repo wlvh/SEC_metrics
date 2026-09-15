@@ -1,0 +1,19 @@
+test_rollback_then_restore_reuses_only_verified_bundles (tests.vnext.test_publication.PublicationTest.test_rollback_then_restore_reuses_only_verified_bundles)
+Return to the committed successor without rerunning a producer. ... ok
+test_mirror_recovery_and_cas_loss_preserve_active (tests.vnext.test_publication.PublicationTest.test_mirror_recovery_and_cas_loss_preserve_active)
+Repair mirrors from active and reject a stale publisher. ... ok
+test_hard_crash_after_pointer_requires_writer_recovery (tests.vnext.test_publication.PublicationTest.test_hard_crash_after_pointer_requires_writer_recovery)
+Fail readers closed, then complete a pointer-committed intent. ... ok
+test_actual_repository_and_unowned_active_roots_are_rejected (tests.vnext.test_annual_publication.AnnualPublicationBoundaryTest.test_actual_repository_and_unowned_active_roots_are_rejected) ... ok
+test_annual_manifest_cannot_acquire_formal_credit_or_disguise_type (tests.vnext.test_annual_publication.AnnualPublicationBoundaryTest.test_annual_manifest_cannot_acquire_formal_credit_or_disguise_type) ... ok
+test_frozen_registry_scanner_reads_code_as_data (tests.vnext.test_annual_publication.AnnualPublicationBoundaryTest.test_frozen_registry_scanner_reads_code_as_data) ... ok
+test_historical_views_cannot_be_forged_or_sent_to_execution (tests.vnext.test_annual_publication.AnnualPublicationBoundaryTest.test_historical_views_cannot_be_forged_or_sent_to_execution) ... ok
+test_retired_public_resolvers_are_fail_closed_tombstones (tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_retired_public_resolvers_are_fail_closed_tombstones)
+Keep old B03/lodging entrypoints non-oracular after Cutover. ... ok
+test_legacy_upsert_rejects_every_migrated_metric (tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_legacy_upsert_rejects_every_migrated_metric)
+Reject all four migrated metric IDs with one stable error code. ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 75.152s
+
+OK

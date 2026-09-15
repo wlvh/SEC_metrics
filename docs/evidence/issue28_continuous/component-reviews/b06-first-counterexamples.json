@@ -1,0 +1,4750 @@
+{
+  "review_head": "cbede80d6c75bae7a6022adce74416a4d281399a",
+  "restore": {
+    "files": 1876,
+    "bytes": 105190675
+  },
+  "real_calls": {
+    "provider": 0,
+    "paid": 0,
+    "SEC": 0
+  },
+  "test_source_credit": "NONE",
+  "cases": [
+    {
+      "company_id": "salesforce",
+      "name": "unaltered",
+      "accession": "0001108524-25-000006",
+      "original_xml_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+      "original_primary_sha256": "4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf",
+      "delta": {},
+      "result": {
+        "status": "ACCEPTED",
+        "downstream_calculator": {
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "value": "0.1489382570741994016968270315",
+          "reasons": []
+        },
+        "complete": true,
+        "unresolved": [],
+        "carrying_amount": "9111000000",
+        "equity": "61173000000",
+        "inventory": [
+          {
+            "origin": "debt_composition",
+            "row": 4,
+            "label": "2024 Senior Notes (1)",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 6,
+            "label": "2028 Senior Notes",
+            "value": "1496000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 7,
+            "label": "2028 Senior Sustainability Notes",
+            "value": "995000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 8,
+            "label": "2031 Senior Notes",
+            "value": "1491000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 9,
+            "label": "2041 Senior Notes",
+            "value": "1236000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 10,
+            "label": "2051 Senior Notes",
+            "value": "1979000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 11,
+            "label": "2061 Senior Notes",
+            "value": "1236000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 12,
+            "label": "Total carrying value of debt",
+            "value": "8433000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 13,
+            "label": "Less current portion of debt",
+            "value": "0",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 14,
+            "label": "Total noncurrent debt",
+            "value": "8433000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 22,
+            "label": "Accounts payable, accrued expenses and other liabilities",
+            "value": "6658000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 23,
+            "label": "Operating lease liabilities, current",
+            "value": "579000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 24,
+            "label": "Unearned revenue",
+            "value": "20743000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 26,
+            "label": "Debt, current",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 27,
+            "label": "Total current liabilities",
+            "value": "27980000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 28,
+            "label": "Noncurrent debt",
+            "value": "8433000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 29,
+            "label": "Noncurrent operating lease liabilities",
+            "value": "2380000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 30,
+            "label": "Other noncurrent liabilities",
+            "value": "2962000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 31,
+            "label": "Total liabilities",
+            "value": "41755000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtsecuritiescurrent",
+            "ordinal": 68,
+            "value": "5184000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 78,
+            "value": "3236000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 80,
+            "value": "2157000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 96,
+            "value": "579000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:convertibledebtcurrent",
+            "ordinal": 100,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtnoncurrent",
+            "ordinal": 104,
+            "value": "8433000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 106,
+            "value": "2380000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:revenueremainingperformanceobligationcurrent",
+            "ordinal": 529,
+            "value": "30200000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:revenueremainingperformanceobligationnoncurrent",
+            "ordinal": 530,
+            "value": "33200000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:revenueremainingperformanceobligation",
+            "ordinal": 531,
+            "value": "63400000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsaledebtsecuritiesamortizedcostbasis",
+            "ordinal": 569,
+            "value": "5215000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsaledebtsecuritiesaccumulatedgrossunrealizedgainbeforetax",
+            "ordinal": 570,
+            "value": "9000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsaledebtsecuritiesaccumulatedgrossunrealizedlossbeforetax",
+            "ordinal": 571,
+            "value": "40000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtsecurities",
+            "ordinal": 572,
+            "value": "5184000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtmaturitieswithinoneyearfairvalue",
+            "ordinal": 610,
+            "value": "2081000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtmaturitiesafteronethroughfiveyearsfairvalue",
+            "ordinal": 612,
+            "value": "3098000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtmaturitiesafterfivethroughtenyearsfairvalue",
+            "ordinal": 614,
+            "value": "5000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtsecurities",
+            "ordinal": 616,
+            "value": "5184000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetbeforeaccumulateddepreciationandamortization",
+            "ordinal": 791,
+            "value": "6918000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetaccumulateddepreciationandamortization",
+            "ordinal": 793,
+            "value": "3682000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 795,
+            "value": "3236000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 833,
+            "value": "2157000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 835,
+            "value": "579000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 837,
+            "value": "2380000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 839,
+            "value": "2959000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseassetaccumulatedamortization",
+            "ordinal": 843,
+            "value": "708000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseasset",
+            "ordinal": 845,
+            "value": "812000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 847,
+            "value": "337000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 849,
+            "value": "341000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 851,
+            "value": "678000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseweightedaveragediscountratepercent",
+            "ordinal": 857,
+            "value": "0.032",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseweightedaveragediscountratepercent",
+            "ordinal": 859,
+            "value": "0.038",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 863,
+            "value": "653000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 864,
+            "value": "352000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 865,
+            "value": "564000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 866,
+            "value": "244000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearthree",
+            "ordinal": 867,
+            "value": "522000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearthree",
+            "ordinal": 868,
+            "value": "71000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfour",
+            "ordinal": 869,
+            "value": "440000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfour",
+            "ordinal": 870,
+            "value": "29000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfive",
+            "ordinal": 871,
+            "value": "297000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfive",
+            "ordinal": 872,
+            "value": "12000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 873,
+            "value": "820000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 874,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdue",
+            "ordinal": 875,
+            "value": "3296000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdue",
+            "ordinal": 876,
+            "value": "708000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilityundiscountedexcessamount",
+            "ordinal": 877,
+            "value": "337000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilityundiscountedexcessamount",
+            "ordinal": 878,
+            "value": "30000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 879,
+            "value": "2959000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 880,
+            "value": "678000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:lessoroperatingleasepaymentstobereceivednextfiveyears",
+            "ordinal": 881,
+            "value": "303000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lessoroperatingleasepaymentstobereceivedthereafter",
+            "ordinal": 882,
+            "value": "29000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:lesseeoperatingleasecommitmentincludingleasenotyetcommencedamount",
+            "ordinal": 883,
+            "value": "4000000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcarryingamount",
+            "ordinal": 1013,
+            "value": "8500000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebt",
+            "ordinal": 1014,
+            "value": "8433000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtcurrent",
+            "ordinal": 1016,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtnoncurrent",
+            "ordinal": 1018,
+            "value": "8433000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+            "ordinal": 1025,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+            "ordinal": 1026,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+            "ordinal": 1027,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+            "ordinal": 1028,
+            "value": "2500000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+            "ordinal": 1029,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalafteryearfive",
+            "ordinal": 1030,
+            "value": "6000000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcarryingamount",
+            "ordinal": 1031,
+            "value": "8500000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:deferredtaxassetstaxcreditcarryforwards",
+            "ordinal": 1328,
+            "value": "769000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:deferredtaxassetsleaseliabilities",
+            "ordinal": 1334,
+            "value": "740000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:deferredtaxassetstaxcreditcarryforwardsresearch",
+            "ordinal": 1363,
+            "value": "5000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:leasecosttabletextblock",
+            "row": 8,
+            "label": "Financing cash outflows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          }
+        ],
+        "proposal": {
+          "method": "DETERMINISTIC_DISCLOSURE_V1",
+          "model_id": "BORROWING_PLUS_SEPARATE_FINANCE_LEASE",
+          "source_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+          "primary_sha256": "4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf",
+          "scope_id": "sha256:c06e5530344ddfeb28a93ced498afb722d612a2e126aa13e62f87a70ea7f534e"
+        }
+      }
+    },
+    {
+      "company_id": "salesforce",
+      "name": "primary_only_equity_conflict",
+      "accession": "0001108524-25-000006",
+      "original_xml_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+      "original_primary_sha256": "4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf",
+      "delta": [
+        {
+          "before": "61,173",
+          "after": "61,273",
+          "context_ref": "c-4"
+        },
+        {
+          "before": "61,173",
+          "after": "61,273",
+          "context_ref": "c-4"
+        }
+      ],
+      "result": {
+        "status": "ACCEPTED",
+        "downstream_calculator": {
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "value": "0.1489382570741994016968270315",
+          "reasons": []
+        },
+        "complete": true,
+        "unresolved": [],
+        "carrying_amount": "9111000000",
+        "equity": "61173000000",
+        "inventory": [
+          {
+            "origin": "debt_composition",
+            "row": 4,
+            "label": "2024 Senior Notes (1)",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 6,
+            "label": "2028 Senior Notes",
+            "value": "1496000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 7,
+            "label": "2028 Senior Sustainability Notes",
+            "value": "995000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 8,
+            "label": "2031 Senior Notes",
+            "value": "1491000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 9,
+            "label": "2041 Senior Notes",
+            "value": "1236000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 10,
+            "label": "2051 Senior Notes",
+            "value": "1979000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 11,
+            "label": "2061 Senior Notes",
+            "value": "1236000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 12,
+            "label": "Total carrying value of debt",
+            "value": "8433000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 13,
+            "label": "Less current portion of debt",
+            "value": "0",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 14,
+            "label": "Total noncurrent debt",
+            "value": "8433000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 22,
+            "label": "Accounts payable, accrued expenses and other liabilities",
+            "value": "6658000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 23,
+            "label": "Operating lease liabilities, current",
+            "value": "579000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 24,
+            "label": "Unearned revenue",
+            "value": "20743000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 26,
+            "label": "Debt, current",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 27,
+            "label": "Total current liabilities",
+            "value": "27980000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 28,
+            "label": "Noncurrent debt",
+            "value": "8433000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 29,
+            "label": "Noncurrent operating lease liabilities",
+            "value": "2380000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 30,
+            "label": "Other noncurrent liabilities",
+            "value": "2962000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 31,
+            "label": "Total liabilities",
+            "value": "41755000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtsecuritiescurrent",
+            "ordinal": 68,
+            "value": "5184000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 78,
+            "value": "3236000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 80,
+            "value": "2157000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 96,
+            "value": "579000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:convertibledebtcurrent",
+            "ordinal": 100,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtnoncurrent",
+            "ordinal": 104,
+            "value": "8433000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 106,
+            "value": "2380000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:revenueremainingperformanceobligationcurrent",
+            "ordinal": 529,
+            "value": "30200000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:revenueremainingperformanceobligationnoncurrent",
+            "ordinal": 530,
+            "value": "33200000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:revenueremainingperformanceobligation",
+            "ordinal": 531,
+            "value": "63400000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsaledebtsecuritiesamortizedcostbasis",
+            "ordinal": 569,
+            "value": "5215000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsaledebtsecuritiesaccumulatedgrossunrealizedgainbeforetax",
+            "ordinal": 570,
+            "value": "9000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsaledebtsecuritiesaccumulatedgrossunrealizedlossbeforetax",
+            "ordinal": 571,
+            "value": "40000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtsecurities",
+            "ordinal": 572,
+            "value": "5184000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtmaturitieswithinoneyearfairvalue",
+            "ordinal": 610,
+            "value": "2081000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtmaturitiesafteronethroughfiveyearsfairvalue",
+            "ordinal": 612,
+            "value": "3098000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtmaturitiesafterfivethroughtenyearsfairvalue",
+            "ordinal": 614,
+            "value": "5000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtsecurities",
+            "ordinal": 616,
+            "value": "5184000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetbeforeaccumulateddepreciationandamortization",
+            "ordinal": 791,
+            "value": "6918000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetaccumulateddepreciationandamortization",
+            "ordinal": 793,
+            "value": "3682000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 795,
+            "value": "3236000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 833,
+            "value": "2157000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 835,
+            "value": "579000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 837,
+            "value": "2380000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 839,
+            "value": "2959000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseassetaccumulatedamortization",
+            "ordinal": 843,
+            "value": "708000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseasset",
+            "ordinal": 845,
+            "value": "812000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 847,
+            "value": "337000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 849,
+            "value": "341000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 851,
+            "value": "678000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseweightedaveragediscountratepercent",
+            "ordinal": 857,
+            "value": "0.032",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseweightedaveragediscountratepercent",
+            "ordinal": 859,
+            "value": "0.038",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 863,
+            "value": "653000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 864,
+            "value": "352000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 865,
+            "value": "564000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 866,
+            "value": "244000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearthree",
+            "ordinal": 867,
+            "value": "522000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearthree",
+            "ordinal": 868,
+            "value": "71000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfour",
+            "ordinal": 869,
+            "value": "440000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfour",
+            "ordinal": 870,
+            "value": "29000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfive",
+            "ordinal": 871,
+            "value": "297000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfive",
+            "ordinal": 872,
+            "value": "12000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 873,
+            "value": "820000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 874,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdue",
+            "ordinal": 875,
+            "value": "3296000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdue",
+            "ordinal": 876,
+            "value": "708000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilityundiscountedexcessamount",
+            "ordinal": 877,
+            "value": "337000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilityundiscountedexcessamount",
+            "ordinal": 878,
+            "value": "30000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 879,
+            "value": "2959000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 880,
+            "value": "678000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:lessoroperatingleasepaymentstobereceivednextfiveyears",
+            "ordinal": 881,
+            "value": "303000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lessoroperatingleasepaymentstobereceivedthereafter",
+            "ordinal": 882,
+            "value": "29000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:lesseeoperatingleasecommitmentincludingleasenotyetcommencedamount",
+            "ordinal": 883,
+            "value": "4000000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcarryingamount",
+            "ordinal": 1013,
+            "value": "8500000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebt",
+            "ordinal": 1014,
+            "value": "8433000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtcurrent",
+            "ordinal": 1016,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtnoncurrent",
+            "ordinal": 1018,
+            "value": "8433000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+            "ordinal": 1025,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+            "ordinal": 1026,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+            "ordinal": 1027,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+            "ordinal": 1028,
+            "value": "2500000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+            "ordinal": 1029,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalafteryearfive",
+            "ordinal": 1030,
+            "value": "6000000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcarryingamount",
+            "ordinal": 1031,
+            "value": "8500000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:deferredtaxassetstaxcreditcarryforwards",
+            "ordinal": 1328,
+            "value": "769000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:deferredtaxassetsleaseliabilities",
+            "ordinal": 1334,
+            "value": "740000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:deferredtaxassetstaxcreditcarryforwardsresearch",
+            "ordinal": 1363,
+            "value": "5000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:leasecosttabletextblock",
+            "row": 8,
+            "label": "Financing cash outflows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          }
+        ],
+        "proposal": {
+          "method": "DETERMINISTIC_DISCLOSURE_V1",
+          "model_id": "BORROWING_PLUS_SEPARATE_FINANCE_LEASE",
+          "source_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+          "primary_sha256": "56e0e4f269fb46ea0e0ebbbf9846c11a7dd37ff6a51cd581f4439f1bfdd9f148",
+          "scope_id": "sha256:6e10608115194d931060aa7fe915ddff3e41fb25eef643cb62b849217b0d4351"
+        }
+      }
+    },
+    {
+      "company_id": "salesforce",
+      "name": "additional_borrowing_prose",
+      "accession": "0001108524-25-000006",
+      "original_xml_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+      "original_primary_sha256": "4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf",
+      "delta": {
+        "sentence": "Additional short-term borrowings of $99 million were outstanding as of January 31, 2025, presented in accrued expenses and other liabilities, and excluded from the components of borrowings table. ",
+        "xml_replacements": 1,
+        "primary_replacements": 1
+      },
+      "result": {
+        "status": "ACCEPTED",
+        "downstream_calculator": {
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "value": "0.1489382570741994016968270315",
+          "reasons": []
+        },
+        "complete": true,
+        "unresolved": [],
+        "carrying_amount": "9111000000",
+        "equity": "61173000000",
+        "inventory": [
+          {
+            "origin": "debt_composition",
+            "row": 4,
+            "label": "2024 Senior Notes (1)",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 6,
+            "label": "2028 Senior Notes",
+            "value": "1496000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 7,
+            "label": "2028 Senior Sustainability Notes",
+            "value": "995000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 8,
+            "label": "2031 Senior Notes",
+            "value": "1491000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 9,
+            "label": "2041 Senior Notes",
+            "value": "1236000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 10,
+            "label": "2051 Senior Notes",
+            "value": "1979000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 11,
+            "label": "2061 Senior Notes",
+            "value": "1236000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 12,
+            "label": "Total carrying value of debt",
+            "value": "8433000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 13,
+            "label": "Less current portion of debt",
+            "value": "0",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 14,
+            "label": "Total noncurrent debt",
+            "value": "8433000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 22,
+            "label": "Accounts payable, accrued expenses and other liabilities",
+            "value": "6658000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 23,
+            "label": "Operating lease liabilities, current",
+            "value": "579000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 24,
+            "label": "Unearned revenue",
+            "value": "20743000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 26,
+            "label": "Debt, current",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 27,
+            "label": "Total current liabilities",
+            "value": "27980000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 28,
+            "label": "Noncurrent debt",
+            "value": "8433000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 29,
+            "label": "Noncurrent operating lease liabilities",
+            "value": "2380000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 30,
+            "label": "Other noncurrent liabilities",
+            "value": "2962000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 31,
+            "label": "Total liabilities",
+            "value": "41755000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtsecuritiescurrent",
+            "ordinal": 68,
+            "value": "5184000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 78,
+            "value": "3236000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 80,
+            "value": "2157000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 96,
+            "value": "579000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:convertibledebtcurrent",
+            "ordinal": 100,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtnoncurrent",
+            "ordinal": 104,
+            "value": "8433000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 106,
+            "value": "2380000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:revenueremainingperformanceobligationcurrent",
+            "ordinal": 529,
+            "value": "30200000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:revenueremainingperformanceobligationnoncurrent",
+            "ordinal": 530,
+            "value": "33200000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:revenueremainingperformanceobligation",
+            "ordinal": 531,
+            "value": "63400000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsaledebtsecuritiesamortizedcostbasis",
+            "ordinal": 569,
+            "value": "5215000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsaledebtsecuritiesaccumulatedgrossunrealizedgainbeforetax",
+            "ordinal": 570,
+            "value": "9000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsaledebtsecuritiesaccumulatedgrossunrealizedlossbeforetax",
+            "ordinal": 571,
+            "value": "40000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtsecurities",
+            "ordinal": 572,
+            "value": "5184000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtmaturitieswithinoneyearfairvalue",
+            "ordinal": 610,
+            "value": "2081000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtmaturitiesafteronethroughfiveyearsfairvalue",
+            "ordinal": 612,
+            "value": "3098000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtmaturitiesafterfivethroughtenyearsfairvalue",
+            "ordinal": 614,
+            "value": "5000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:availableforsalesecuritiesdebtsecurities",
+            "ordinal": 616,
+            "value": "5184000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetbeforeaccumulateddepreciationandamortization",
+            "ordinal": 791,
+            "value": "6918000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetaccumulateddepreciationandamortization",
+            "ordinal": 793,
+            "value": "3682000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 795,
+            "value": "3236000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 833,
+            "value": "2157000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 835,
+            "value": "579000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 837,
+            "value": "2380000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 839,
+            "value": "2959000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseassetaccumulatedamortization",
+            "ordinal": 843,
+            "value": "708000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseasset",
+            "ordinal": 845,
+            "value": "812000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 847,
+            "value": "337000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 849,
+            "value": "341000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 851,
+            "value": "678000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseweightedaveragediscountratepercent",
+            "ordinal": 857,
+            "value": "0.032",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseweightedaveragediscountratepercent",
+            "ordinal": 859,
+            "value": "0.038",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 863,
+            "value": "653000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 864,
+            "value": "352000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 865,
+            "value": "564000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 866,
+            "value": "244000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearthree",
+            "ordinal": 867,
+            "value": "522000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearthree",
+            "ordinal": 868,
+            "value": "71000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfour",
+            "ordinal": 869,
+            "value": "440000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfour",
+            "ordinal": 870,
+            "value": "29000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfive",
+            "ordinal": 871,
+            "value": "297000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfive",
+            "ordinal": 872,
+            "value": "12000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 873,
+            "value": "820000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 874,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdue",
+            "ordinal": 875,
+            "value": "3296000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdue",
+            "ordinal": 876,
+            "value": "708000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilityundiscountedexcessamount",
+            "ordinal": 877,
+            "value": "337000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilityundiscountedexcessamount",
+            "ordinal": 878,
+            "value": "30000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 879,
+            "value": "2959000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 880,
+            "value": "678000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:lessoroperatingleasepaymentstobereceivednextfiveyears",
+            "ordinal": 881,
+            "value": "303000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lessoroperatingleasepaymentstobereceivedthereafter",
+            "ordinal": 882,
+            "value": "29000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:lesseeoperatingleasecommitmentincludingleasenotyetcommencedamount",
+            "ordinal": 883,
+            "value": "4000000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcarryingamount",
+            "ordinal": 1013,
+            "value": "8500000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebt",
+            "ordinal": 1014,
+            "value": "8433000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtcurrent",
+            "ordinal": 1016,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtnoncurrent",
+            "ordinal": 1018,
+            "value": "8433000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+            "ordinal": 1025,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+            "ordinal": 1026,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+            "ordinal": 1027,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+            "ordinal": 1028,
+            "value": "2500000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+            "ordinal": 1029,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalafteryearfive",
+            "ordinal": 1030,
+            "value": "6000000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcarryingamount",
+            "ordinal": 1031,
+            "value": "8500000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:deferredtaxassetstaxcreditcarryforwards",
+            "ordinal": 1328,
+            "value": "769000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "crm:deferredtaxassetsleaseliabilities",
+            "ordinal": 1334,
+            "value": "740000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:deferredtaxassetstaxcreditcarryforwardsresearch",
+            "ordinal": 1363,
+            "value": "5000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:leasecosttabletextblock",
+            "row": 8,
+            "label": "Financing cash outflows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          }
+        ],
+        "proposal": {
+          "method": "DETERMINISTIC_DISCLOSURE_V1",
+          "model_id": "BORROWING_PLUS_SEPARATE_FINANCE_LEASE",
+          "source_sha256": "b2211e26790a2d146831d66384cc5adb7d5b150648b7204812046343c2f895ef",
+          "primary_sha256": "9564d69c7e1a462bf1a5543733ce4d94f9a98e2861c67489b67ce48b55523c73",
+          "scope_id": "sha256:73a3f5b4150dc90104541da291f7195b81ff9987dbbfbc16b45d69d787902bee"
+        }
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "name": "unaltered",
+      "accession": "0000092380-25-000024",
+      "original_xml_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+      "original_primary_sha256": "30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+      "delta": {},
+      "result": {
+        "status": "ACCEPTED",
+        "downstream_calculator": {
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "value": "0.6472463768115942028985507246",
+          "reasons": []
+        },
+        "complete": true,
+        "unresolved": [],
+        "carrying_amount": "6699000000",
+        "equity": "10350000000",
+        "inventory": [
+          {
+            "origin": "debt_composition",
+            "row": 6,
+            "label": "5.25% Notes",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 7,
+            "label": "1.25% Convertible Notes",
+            "value": "1611000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 8,
+            "label": "3.00% Notes",
+            "value": "300000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 9,
+            "label": "7.375% Debentures",
+            "value": "107000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 10,
+            "label": "3.45% Notes",
+            "value": "300000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 11,
+            "label": "5.125% Notes",
+            "value": "1727000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 12,
+            "label": "2.625% Notes",
+            "value": "500000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "976000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "566000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "526000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 19,
+            "label": "Finance leases",
+            "value": "91000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 20,
+            "label": "",
+            "value": "6704000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 21,
+            "label": "Less current maturities",
+            "value": "1630000000",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 22,
+            "label": "Less debt discount and issuance costs",
+            "value": "5000000",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 23,
+            "label": "",
+            "value": "5069000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 26,
+            "label": "Accounts payable",
+            "value": "1818000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 27,
+            "label": "Accrued liabilities",
+            "value": "2206000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 28,
+            "label": "Current operating lease liabilities",
+            "value": "328000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 29,
+            "label": "Air traffic liability",
+            "value": "6294000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 30,
+            "label": "Current maturities of long-term debt",
+            "value": "1630000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 31,
+            "label": "Total current liabilities",
+            "value": "12276000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 33,
+            "label": "Long-term debt less current maturities",
+            "value": "5069000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 34,
+            "label": "Air traffic liability - noncurrent",
+            "value": "1948000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 35,
+            "label": "Deferred income taxes",
+            "value": "2167000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 37,
+            "label": "Noncurrent operating lease liabilities",
+            "value": "1031000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 38,
+            "label": "Other noncurrent liabilities",
+            "value": "909000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetbeforeaccumulateddepreciationandamortization",
+            "ordinal": 106,
+            "value": "33947000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetaccumulateddepreciationandamortization",
+            "ordinal": 108,
+            "value": "14891000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 110,
+            "value": "19056000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 114,
+            "value": "1369000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 124,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+            "ordinal": 128,
+            "value": "1630000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+            "ordinal": 132,
+            "value": "5069000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 138,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:revenuefromcontractwithcustomernumberofperformanceobligations",
+            "ordinal": 593,
+            "value": "2",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 661,
+            "value": "91000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationsincludingcurrentmaturities",
+            "ordinal": 663,
+            "value": "6704000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+            "ordinal": 665,
+            "value": "1630000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+            "ordinal": 669,
+            "value": "5069000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lettersofcreditoutstandingamount",
+            "ordinal": 725,
+            "value": "377000000",
+            "disposition": "EXCLUDED_DOCUMENTED_OFF_BALANCE_SHEET_STANDBY"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcollateralamount",
+            "ordinal": 726,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+            "ordinal": 728,
+            "value": "1633000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+            "ordinal": 729,
+            "value": "320000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+            "ordinal": 730,
+            "value": "2149000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+            "ordinal": 731,
+            "value": "15000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+            "ordinal": 732,
+            "value": "9000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalafteryearfive",
+            "ordinal": 733,
+            "value": "2571000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebt",
+            "ordinal": 734,
+            "value": "6697000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 790,
+            "value": "1369000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseassetaccumulatedamortization",
+            "ordinal": 792,
+            "value": "452000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseasset",
+            "ordinal": 794,
+            "value": "102000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:leaserightofuseasset",
+            "ordinal": 796,
+            "value": "1471000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 798,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 800,
+            "value": "22000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 802,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 804,
+            "value": "69000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:leaseliability",
+            "ordinal": 806,
+            "value": "1450000000",
+            "disposition": "RECONCILED_FINANCE_AND_OPERATING_TOTAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 844,
+            "value": "368000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 845,
+            "value": "25000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 846,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 847,
+            "value": "23000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearthree",
+            "ordinal": 848,
+            "value": "240000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearthree",
+            "ordinal": 849,
+            "value": "23000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfour",
+            "ordinal": 850,
+            "value": "174000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfour",
+            "ordinal": 851,
+            "value": "15000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfive",
+            "ordinal": 852,
+            "value": "138000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfive",
+            "ordinal": 853,
+            "value": "10000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 854,
+            "value": "317000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 855,
+            "value": "3000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdue",
+            "ordinal": 856,
+            "value": "1565000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdue",
+            "ordinal": 857,
+            "value": "99000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilityundiscountedexcessamount",
+            "ordinal": 858,
+            "value": "206000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilityundiscountedexcessamount",
+            "ordinal": 859,
+            "value": "8000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 860,
+            "value": "1359000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 861,
+            "value": "91000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 862,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 863,
+            "value": "22000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 864,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 865,
+            "value": "69000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseweightedaveragediscountratepercent",
+            "ordinal": 870,
+            "value": "0.041",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseweightedaveragediscountratepercent",
+            "ordinal": 872,
+            "value": "0.040",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:letterofcreditpercentofcollateral",
+            "ordinal": 1084,
+            "value": "1",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:definedbenefitplanaccumulatedothercomprehensiveincomenetpriorservicecostcreditbeforetax",
+            "ordinal": 1336,
+            "value": "13000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:deferredtaxassetsoperatingleaseliability",
+            "ordinal": 1389,
+            "value": "319000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:creditcardreceivables",
+            "ordinal": 1454,
+            "value": "143000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:operatingleasesoflessordisclosuretextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:lesseeoperatingleasestextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:lesseefinanceleasestextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:leasecosttabletextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          }
+        ],
+        "proposal": {
+          "method": "DETERMINISTIC_DISCLOSURE_V1",
+          "model_id": "INCLUSIVE_RECONCILED_COSTS",
+          "source_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+          "primary_sha256": "30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+          "scope_id": "sha256:3ce87e44c8c1d25abea017820e5d76ce735ff45ca3818e3872c5794d1e83bbd0"
+        }
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "name": "primary_only_equity_conflict",
+      "accession": "0000092380-25-000024",
+      "original_xml_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+      "original_primary_sha256": "30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+      "delta": [
+        {
+          "before": "10,350",
+          "after": "10,450",
+          "context_ref": "c-4"
+        },
+        {
+          "before": "10,350",
+          "after": "10,450",
+          "context_ref": "c-4"
+        }
+      ],
+      "result": {
+        "status": "ACCEPTED",
+        "downstream_calculator": {
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "value": "0.6472463768115942028985507246",
+          "reasons": []
+        },
+        "complete": true,
+        "unresolved": [],
+        "carrying_amount": "6699000000",
+        "equity": "10350000000",
+        "inventory": [
+          {
+            "origin": "debt_composition",
+            "row": 6,
+            "label": "5.25% Notes",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 7,
+            "label": "1.25% Convertible Notes",
+            "value": "1611000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 8,
+            "label": "3.00% Notes",
+            "value": "300000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 9,
+            "label": "7.375% Debentures",
+            "value": "107000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 10,
+            "label": "3.45% Notes",
+            "value": "300000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 11,
+            "label": "5.125% Notes",
+            "value": "1727000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 12,
+            "label": "2.625% Notes",
+            "value": "500000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "976000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "566000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "526000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 19,
+            "label": "Finance leases",
+            "value": "91000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 20,
+            "label": "",
+            "value": "6704000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 21,
+            "label": "Less current maturities",
+            "value": "1630000000",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 22,
+            "label": "Less debt discount and issuance costs",
+            "value": "5000000",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 23,
+            "label": "",
+            "value": "5069000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 26,
+            "label": "Accounts payable",
+            "value": "1818000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 27,
+            "label": "Accrued liabilities",
+            "value": "2206000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 28,
+            "label": "Current operating lease liabilities",
+            "value": "328000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 29,
+            "label": "Air traffic liability",
+            "value": "6294000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 30,
+            "label": "Current maturities of long-term debt",
+            "value": "1630000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 31,
+            "label": "Total current liabilities",
+            "value": "12276000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 33,
+            "label": "Long-term debt less current maturities",
+            "value": "5069000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 34,
+            "label": "Air traffic liability - noncurrent",
+            "value": "1948000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 35,
+            "label": "Deferred income taxes",
+            "value": "2167000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 37,
+            "label": "Noncurrent operating lease liabilities",
+            "value": "1031000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 38,
+            "label": "Other noncurrent liabilities",
+            "value": "909000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetbeforeaccumulateddepreciationandamortization",
+            "ordinal": 106,
+            "value": "33947000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetaccumulateddepreciationandamortization",
+            "ordinal": 108,
+            "value": "14891000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 110,
+            "value": "19056000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 114,
+            "value": "1369000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 124,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+            "ordinal": 128,
+            "value": "1630000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+            "ordinal": 132,
+            "value": "5069000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 138,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:revenuefromcontractwithcustomernumberofperformanceobligations",
+            "ordinal": 593,
+            "value": "2",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 661,
+            "value": "91000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationsincludingcurrentmaturities",
+            "ordinal": 663,
+            "value": "6704000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+            "ordinal": 665,
+            "value": "1630000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+            "ordinal": 669,
+            "value": "5069000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lettersofcreditoutstandingamount",
+            "ordinal": 725,
+            "value": "377000000",
+            "disposition": "EXCLUDED_DOCUMENTED_OFF_BALANCE_SHEET_STANDBY"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcollateralamount",
+            "ordinal": 726,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+            "ordinal": 728,
+            "value": "1633000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+            "ordinal": 729,
+            "value": "320000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+            "ordinal": 730,
+            "value": "2149000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+            "ordinal": 731,
+            "value": "15000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+            "ordinal": 732,
+            "value": "9000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalafteryearfive",
+            "ordinal": 733,
+            "value": "2571000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebt",
+            "ordinal": 734,
+            "value": "6697000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 790,
+            "value": "1369000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseassetaccumulatedamortization",
+            "ordinal": 792,
+            "value": "452000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseasset",
+            "ordinal": 794,
+            "value": "102000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:leaserightofuseasset",
+            "ordinal": 796,
+            "value": "1471000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 798,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 800,
+            "value": "22000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 802,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 804,
+            "value": "69000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:leaseliability",
+            "ordinal": 806,
+            "value": "1450000000",
+            "disposition": "RECONCILED_FINANCE_AND_OPERATING_TOTAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 844,
+            "value": "368000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 845,
+            "value": "25000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 846,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 847,
+            "value": "23000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearthree",
+            "ordinal": 848,
+            "value": "240000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearthree",
+            "ordinal": 849,
+            "value": "23000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfour",
+            "ordinal": 850,
+            "value": "174000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfour",
+            "ordinal": 851,
+            "value": "15000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfive",
+            "ordinal": 852,
+            "value": "138000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfive",
+            "ordinal": 853,
+            "value": "10000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 854,
+            "value": "317000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 855,
+            "value": "3000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdue",
+            "ordinal": 856,
+            "value": "1565000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdue",
+            "ordinal": 857,
+            "value": "99000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilityundiscountedexcessamount",
+            "ordinal": 858,
+            "value": "206000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilityundiscountedexcessamount",
+            "ordinal": 859,
+            "value": "8000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 860,
+            "value": "1359000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 861,
+            "value": "91000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 862,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 863,
+            "value": "22000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 864,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 865,
+            "value": "69000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseweightedaveragediscountratepercent",
+            "ordinal": 870,
+            "value": "0.041",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseweightedaveragediscountratepercent",
+            "ordinal": 872,
+            "value": "0.040",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:letterofcreditpercentofcollateral",
+            "ordinal": 1084,
+            "value": "1",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:definedbenefitplanaccumulatedothercomprehensiveincomenetpriorservicecostcreditbeforetax",
+            "ordinal": 1336,
+            "value": "13000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:deferredtaxassetsoperatingleaseliability",
+            "ordinal": 1389,
+            "value": "319000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:creditcardreceivables",
+            "ordinal": 1454,
+            "value": "143000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:operatingleasesoflessordisclosuretextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:lesseeoperatingleasestextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:lesseefinanceleasestextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:leasecosttabletextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          }
+        ],
+        "proposal": {
+          "method": "DETERMINISTIC_DISCLOSURE_V1",
+          "model_id": "INCLUSIVE_RECONCILED_COSTS",
+          "source_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+          "primary_sha256": "c7bf6c8670042fe2997bbf13a3bb1ef016fff031cbce4519731e71d17ae8f26d",
+          "scope_id": "sha256:28bfb593e80ace75ff65f6a573eac29d452de011c33f200003805d771fff9b24"
+        }
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "name": "additional_borrowing_prose",
+      "accession": "0000092380-25-000024",
+      "original_xml_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+      "original_primary_sha256": "30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+      "delta": {
+        "sentence": "Additional short-term borrowings of $99 million were outstanding as of December 31, 2024, presented in accrued expenses and other liabilities, and excluded from the components of borrowings table. ",
+        "xml_replacements": 1,
+        "primary_replacements": 1
+      },
+      "result": {
+        "status": "ACCEPTED",
+        "downstream_calculator": {
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "value": "0.6472463768115942028985507246",
+          "reasons": []
+        },
+        "complete": true,
+        "unresolved": [],
+        "carrying_amount": "6699000000",
+        "equity": "10350000000",
+        "inventory": [
+          {
+            "origin": "debt_composition",
+            "row": 6,
+            "label": "5.25% Notes",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 7,
+            "label": "1.25% Convertible Notes",
+            "value": "1611000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 8,
+            "label": "3.00% Notes",
+            "value": "300000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 9,
+            "label": "7.375% Debentures",
+            "value": "107000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 10,
+            "label": "3.45% Notes",
+            "value": "300000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 11,
+            "label": "5.125% Notes",
+            "value": "1727000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 12,
+            "label": "2.625% Notes",
+            "value": "500000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "976000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "566000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "526000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 19,
+            "label": "Finance leases",
+            "value": "91000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 20,
+            "label": "",
+            "value": "6704000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 21,
+            "label": "Less current maturities",
+            "value": "1630000000",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 22,
+            "label": "Less debt discount and issuance costs",
+            "value": "5000000",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 23,
+            "label": "",
+            "value": "5069000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 26,
+            "label": "Accounts payable",
+            "value": "1818000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 27,
+            "label": "Accrued liabilities",
+            "value": "2206000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 28,
+            "label": "Current operating lease liabilities",
+            "value": "328000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 29,
+            "label": "Air traffic liability",
+            "value": "6294000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 30,
+            "label": "Current maturities of long-term debt",
+            "value": "1630000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 31,
+            "label": "Total current liabilities",
+            "value": "12276000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 33,
+            "label": "Long-term debt less current maturities",
+            "value": "5069000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 34,
+            "label": "Air traffic liability - noncurrent",
+            "value": "1948000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 35,
+            "label": "Deferred income taxes",
+            "value": "2167000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 37,
+            "label": "Noncurrent operating lease liabilities",
+            "value": "1031000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 38,
+            "label": "Other noncurrent liabilities",
+            "value": "909000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetbeforeaccumulateddepreciationandamortization",
+            "ordinal": 106,
+            "value": "33947000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetaccumulateddepreciationandamortization",
+            "ordinal": 108,
+            "value": "14891000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 110,
+            "value": "19056000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 114,
+            "value": "1369000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 124,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+            "ordinal": 128,
+            "value": "1630000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+            "ordinal": 132,
+            "value": "5069000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 138,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:revenuefromcontractwithcustomernumberofperformanceobligations",
+            "ordinal": 593,
+            "value": "2",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 661,
+            "value": "91000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationsincludingcurrentmaturities",
+            "ordinal": 663,
+            "value": "6704000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+            "ordinal": 665,
+            "value": "1630000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+            "ordinal": 669,
+            "value": "5069000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lettersofcreditoutstandingamount",
+            "ordinal": 725,
+            "value": "377000000",
+            "disposition": "EXCLUDED_DOCUMENTED_OFF_BALANCE_SHEET_STANDBY"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcollateralamount",
+            "ordinal": 726,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+            "ordinal": 728,
+            "value": "1633000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+            "ordinal": 729,
+            "value": "320000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+            "ordinal": 730,
+            "value": "2149000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+            "ordinal": 731,
+            "value": "15000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+            "ordinal": 732,
+            "value": "9000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalafteryearfive",
+            "ordinal": 733,
+            "value": "2571000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebt",
+            "ordinal": 734,
+            "value": "6697000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 790,
+            "value": "1369000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseassetaccumulatedamortization",
+            "ordinal": 792,
+            "value": "452000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseasset",
+            "ordinal": 794,
+            "value": "102000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:leaserightofuseasset",
+            "ordinal": 796,
+            "value": "1471000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 798,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 800,
+            "value": "22000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 802,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 804,
+            "value": "69000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:leaseliability",
+            "ordinal": 806,
+            "value": "1450000000",
+            "disposition": "RECONCILED_FINANCE_AND_OPERATING_TOTAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 844,
+            "value": "368000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 845,
+            "value": "25000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 846,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 847,
+            "value": "23000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearthree",
+            "ordinal": 848,
+            "value": "240000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearthree",
+            "ordinal": 849,
+            "value": "23000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfour",
+            "ordinal": 850,
+            "value": "174000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfour",
+            "ordinal": 851,
+            "value": "15000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfive",
+            "ordinal": 852,
+            "value": "138000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfive",
+            "ordinal": 853,
+            "value": "10000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 854,
+            "value": "317000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 855,
+            "value": "3000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdue",
+            "ordinal": 856,
+            "value": "1565000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdue",
+            "ordinal": 857,
+            "value": "99000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilityundiscountedexcessamount",
+            "ordinal": 858,
+            "value": "206000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilityundiscountedexcessamount",
+            "ordinal": 859,
+            "value": "8000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 860,
+            "value": "1359000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 861,
+            "value": "91000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 862,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 863,
+            "value": "22000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 864,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 865,
+            "value": "69000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseweightedaveragediscountratepercent",
+            "ordinal": 870,
+            "value": "0.041",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseweightedaveragediscountratepercent",
+            "ordinal": 872,
+            "value": "0.040",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:letterofcreditpercentofcollateral",
+            "ordinal": 1084,
+            "value": "1",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:definedbenefitplanaccumulatedothercomprehensiveincomenetpriorservicecostcreditbeforetax",
+            "ordinal": 1336,
+            "value": "13000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:deferredtaxassetsoperatingleaseliability",
+            "ordinal": 1389,
+            "value": "319000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:creditcardreceivables",
+            "ordinal": 1454,
+            "value": "143000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:operatingleasesoflessordisclosuretextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:lesseeoperatingleasestextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:lesseefinanceleasestextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:leasecosttabletextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          }
+        ],
+        "proposal": {
+          "method": "DETERMINISTIC_DISCLOSURE_V1",
+          "model_id": "INCLUSIVE_RECONCILED_COSTS",
+          "source_sha256": "21470d30e89d28cf38e43b0f658a99bc41c944fbf8c031099b1f7ccb21381707",
+          "primary_sha256": "c716b06064a7ec214f744752fe7e1465d85fa5e66748af0a72b5d9b50d9bcf0a",
+          "scope_id": "sha256:d71f73c8e6b22f34dc77fbf080770316b07c6ca6b32844a1a6974e74cd50513f"
+        }
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "name": "ignored_longtermdebt_conflict",
+      "accession": "0000092380-25-000024",
+      "original_xml_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+      "original_primary_sha256": "30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+      "delta": {
+        "concept": "us-gaap:LongTermDebt",
+        "context_ref": "c-4",
+        "before": [
+          "6697000000"
+        ],
+        "after": "99000000",
+        "primary_unchanged": true
+      },
+      "result": {
+        "status": "ACCEPTED",
+        "downstream_calculator": {
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "value": "0.6472463768115942028985507246",
+          "reasons": []
+        },
+        "complete": true,
+        "unresolved": [],
+        "carrying_amount": "6699000000",
+        "equity": "10350000000",
+        "inventory": [
+          {
+            "origin": "debt_composition",
+            "row": 6,
+            "label": "5.25% Notes",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 7,
+            "label": "1.25% Convertible Notes",
+            "value": "1611000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 8,
+            "label": "3.00% Notes",
+            "value": "300000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 9,
+            "label": "7.375% Debentures",
+            "value": "107000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 10,
+            "label": "3.45% Notes",
+            "value": "300000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 11,
+            "label": "5.125% Notes",
+            "value": "1727000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 12,
+            "label": "2.625% Notes",
+            "value": "500000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "976000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "566000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "value": "526000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 19,
+            "label": "Finance leases",
+            "value": "91000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 20,
+            "label": "",
+            "value": "6704000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 21,
+            "label": "Less current maturities",
+            "value": "1630000000",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 22,
+            "label": "Less debt discount and issuance costs",
+            "value": "5000000",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 23,
+            "label": "",
+            "value": "5069000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 26,
+            "label": "Accounts payable",
+            "value": "1818000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 27,
+            "label": "Accrued liabilities",
+            "value": "2206000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 28,
+            "label": "Current operating lease liabilities",
+            "value": "328000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 29,
+            "label": "Air traffic liability",
+            "value": "6294000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 30,
+            "label": "Current maturities of long-term debt",
+            "value": "1630000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 31,
+            "label": "Total current liabilities",
+            "value": "12276000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 33,
+            "label": "Long-term debt less current maturities",
+            "value": "5069000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 34,
+            "label": "Air traffic liability - noncurrent",
+            "value": "1948000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 35,
+            "label": "Deferred income taxes",
+            "value": "2167000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 37,
+            "label": "Noncurrent operating lease liabilities",
+            "value": "1031000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 38,
+            "label": "Other noncurrent liabilities",
+            "value": "909000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetbeforeaccumulateddepreciationandamortization",
+            "ordinal": 106,
+            "value": "33947000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetaccumulateddepreciationandamortization",
+            "ordinal": 108,
+            "value": "14891000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 110,
+            "value": "19056000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 114,
+            "value": "1369000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 124,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+            "ordinal": 128,
+            "value": "1630000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+            "ordinal": 132,
+            "value": "5069000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 138,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:revenuefromcontractwithcustomernumberofperformanceobligations",
+            "ordinal": 593,
+            "value": "2",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 661,
+            "value": "91000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationsincludingcurrentmaturities",
+            "ordinal": 663,
+            "value": "6704000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+            "ordinal": 665,
+            "value": "1630000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+            "ordinal": 669,
+            "value": "5069000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lettersofcreditoutstandingamount",
+            "ordinal": 725,
+            "value": "377000000",
+            "disposition": "EXCLUDED_DOCUMENTED_OFF_BALANCE_SHEET_STANDBY"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcollateralamount",
+            "ordinal": 726,
+            "value": "0",
+            "disposition": "EXPLICIT_ZERO_IN_CURRENT_ORIGINAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+            "ordinal": 728,
+            "value": "1633000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+            "ordinal": 729,
+            "value": "320000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+            "ordinal": 730,
+            "value": "2149000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+            "ordinal": 731,
+            "value": "15000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+            "ordinal": 732,
+            "value": "9000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalafteryearfive",
+            "ordinal": 733,
+            "value": "2571000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebt",
+            "ordinal": 734,
+            "value": "99000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 790,
+            "value": "1369000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseassetaccumulatedamortization",
+            "ordinal": 792,
+            "value": "452000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseasset",
+            "ordinal": 794,
+            "value": "102000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:leaserightofuseasset",
+            "ordinal": 796,
+            "value": "1471000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 798,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 800,
+            "value": "22000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 802,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 804,
+            "value": "69000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:leaseliability",
+            "ordinal": 806,
+            "value": "1450000000",
+            "disposition": "RECONCILED_FINANCE_AND_OPERATING_TOTAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 844,
+            "value": "368000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 845,
+            "value": "25000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 846,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 847,
+            "value": "23000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearthree",
+            "ordinal": 848,
+            "value": "240000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearthree",
+            "ordinal": 849,
+            "value": "23000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfour",
+            "ordinal": 850,
+            "value": "174000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfour",
+            "ordinal": 851,
+            "value": "15000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfive",
+            "ordinal": 852,
+            "value": "138000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfive",
+            "ordinal": 853,
+            "value": "10000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 854,
+            "value": "317000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 855,
+            "value": "3000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdue",
+            "ordinal": 856,
+            "value": "1565000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdue",
+            "ordinal": 857,
+            "value": "99000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilityundiscountedexcessamount",
+            "ordinal": 858,
+            "value": "206000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilityundiscountedexcessamount",
+            "ordinal": 859,
+            "value": "8000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 860,
+            "value": "1359000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 861,
+            "value": "91000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 862,
+            "value": "328000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 863,
+            "value": "22000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 864,
+            "value": "1031000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 865,
+            "value": "69000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseweightedaveragediscountratepercent",
+            "ordinal": 870,
+            "value": "0.041",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseweightedaveragediscountratepercent",
+            "ordinal": 872,
+            "value": "0.040",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:letterofcreditpercentofcollateral",
+            "ordinal": 1084,
+            "value": "1",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:definedbenefitplanaccumulatedothercomprehensiveincomenetpriorservicecostcreditbeforetax",
+            "ordinal": 1336,
+            "value": "13000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:deferredtaxassetsoperatingleaseliability",
+            "ordinal": 1389,
+            "value": "319000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:creditcardreceivables",
+            "ordinal": 1454,
+            "value": "143000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 16,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan (a)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:operatingleasesoflessordisclosuretextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:lesseeoperatingleasestextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:lesseefinanceleasestextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:leasecosttabletextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          }
+        ],
+        "proposal": {
+          "method": "DETERMINISTIC_DISCLOSURE_V1",
+          "model_id": "INCLUSIVE_RECONCILED_COSTS",
+          "source_sha256": "c4e109649997cd3ebec6f429defd1304b398fd197df84bf4a8ac853dd1c3a0bb",
+          "primary_sha256": "30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+          "scope_id": "sha256:9865de2c03608fa1eea49b84f9ace6a46dc1170aa4f42e316425494ae7afd877"
+        }
+      }
+    }
+  ]
+}

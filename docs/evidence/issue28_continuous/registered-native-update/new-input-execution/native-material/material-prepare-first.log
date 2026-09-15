@@ -1,0 +1,18 @@
+METADATA_SUCCEEDED
+ANNUAL_SUCCEEDED
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/native-refresh-execution/prepare_material.py", line 26, in <module>
+    report['seconds']=time.monotonic()-started;(root/'prepared.json').write_bytes(canonical_json_bytes(value=report));print('PREPARED',report['seconds'],flush=True)
+                                                                                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 415, in canonical_json_bytes
+    normalized = _canonicalize(value=value, path=(), set_paths=set_paths)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 350, in _canonicalize
+    raise CanonicalError("Binary float is forbidden; use Decimal")
+vnext.canonical.CanonicalError: Binary float is forbidden; use Decimal

@@ -1,0 +1,221 @@
+{
+  "before": {
+    "scripts/vnext/text_results_v2.py": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+    "catalog/r6/text_results_v2_policy.json": "16d9b7e46aa73d61f678ff06b0b9b24c1bedb9849840e2d84e90fd3919ce7d3c",
+    "catalog/r6/D02_legal_disclosures_v1.md": "66e25bccd5235d13d5c5edc03a8eb52f20fd65875a2eadaef961915a192b188f",
+    "tests/vnext/test_text_results_v2.py": "61f96cfd8dbbf7883d21e6ef632fed69224391ac220b9ea736b2f82ee32fa487"
+  },
+  "after": {
+    "scripts/vnext/text_results_v2.py": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+    "catalog/r6/text_results_v2_policy.json": "16d9b7e46aa73d61f678ff06b0b9b24c1bedb9849840e2d84e90fd3919ce7d3c",
+    "catalog/r6/D02_legal_disclosures_v1.md": "66e25bccd5235d13d5c5edc03a8eb52f20fd65875a2eadaef961915a192b188f",
+    "tests/vnext/test_text_results_v2.py": "61f96cfd8dbbf7883d21e6ef632fed69224391ac220b9ea736b2f82ee32fa487"
+  },
+  "source": {
+    "accession": "0001628280-26-008131",
+    "company_id": "jpmorgan_chase",
+    "document_name": "jpm-20251231.htm",
+    "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "record_type": "SOURCE_REFERENCE",
+    "request_attempt_id": "request:attempt:69549e5a72a429ea2bcd83fbbc2e6ddffa9a15863d68f654c0ac510341bf9f0a",
+    "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+    "source_role": "target_primary",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+  },
+  "source_storage_uri": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+  "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+  "fact_count": 2,
+  "verified_count": 2,
+  "inventory": {
+    "record_type": "REPORTED_LEGAL_FACT_EVIDENCE",
+    "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+    "candidate_inventory_id": "sha256:28b427f09d8461b74bec58e2729e90d1a5a0955ce246f2c087ce3bf0e2a39089",
+    "facts": [
+      {
+        "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "concept_namespace": "http://fasb.org/us-gaap/2025",
+        "concept_local_name": "LossContingencyRangeOfPossibleLossPortionNotAccrued",
+        "source_text": "0",
+        "locator": {
+          "qualified_name": "us-gaap:LossContingencyRangeOfPossibleLossPortionNotAccrued",
+          "context_ref": "c-2113",
+          "ordinal": 7871
+        },
+        "context": {
+          "context_ref": "c-2113",
+          "dimensions": {
+            "srt:RangeAxis": "srt:MinimumMember",
+            "us-gaap:LossContingenciesByNatureOfContingencyAxis": "jpm:ThreatenedOrPendingLitigationMember"
+          },
+          "entity_identifier": "0000019617",
+          "period_end": "2025-12-31",
+          "period_start": "2025-12-31",
+          "typed_dimension_count": 0
+        },
+        "unit_ref": "usd",
+        "declared_unit": {
+          "measures": [
+            [
+              "http://www.xbrl.org/2003/iso4217",
+              "USD"
+            ]
+          ],
+          "divided": false
+        },
+        "value_normalized": "0",
+        "verified_monetary_value": true,
+        "verification_status": "VERIFIED_AS_REPORTED_MONETARY_FACT",
+        "verification_reason_codes": [],
+        "aggregate_or_target_period_value_asserted": false,
+        "original_numeric_attributes": {
+          "unitref": "usd",
+          "scale": "0"
+        },
+        "verified_context": {
+          "context_ref": "c-2113",
+          "identifiers": [
+            {
+              "value": "0000019617",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "instant",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [
+            {
+              "dimension_raw": "srt:RangeAxis",
+              "member_raw": "srt:MinimumMember",
+              "dimension_qname": [
+                "http://fasb.org/srt/2025",
+                "RangeAxis"
+              ],
+              "member_qname": [
+                "http://fasb.org/srt/2025",
+                "MinimumMember"
+              ]
+            },
+            {
+              "dimension_raw": "us-gaap:LossContingenciesByNatureOfContingencyAxis",
+              "member_raw": "jpm:ThreatenedOrPendingLitigationMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "LossContingenciesByNatureOfContingencyAxis"
+              ],
+              "member_qname": [
+                "http://www.jpmorganchase.com/20251231",
+                "ThreatenedOrPendingLitigationMember"
+              ]
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        "context_entity_relation": "SAME_REGISTRANT",
+        "reported_currency": "USD",
+        "fact_evidence_id": "sha256:ace3a6f6e335b1868b585229524ad52507edab208cbfb3c7422d163fea9e632b"
+      },
+      {
+        "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "concept_namespace": "http://fasb.org/us-gaap/2025",
+        "concept_local_name": "LossContingencyRangeOfPossibleLossPortionNotAccrued",
+        "source_text": "1.2",
+        "locator": {
+          "qualified_name": "us-gaap:LossContingencyRangeOfPossibleLossPortionNotAccrued",
+          "context_ref": "c-2114",
+          "ordinal": 7872
+        },
+        "context": {
+          "context_ref": "c-2114",
+          "dimensions": {
+            "srt:RangeAxis": "srt:MaximumMember",
+            "us-gaap:LossContingenciesByNatureOfContingencyAxis": "jpm:ThreatenedOrPendingLitigationMember"
+          },
+          "entity_identifier": "0000019617",
+          "period_end": "2025-12-31",
+          "period_start": "2025-12-31",
+          "typed_dimension_count": 0
+        },
+        "unit_ref": "usd",
+        "declared_unit": {
+          "measures": [
+            [
+              "http://www.xbrl.org/2003/iso4217",
+              "USD"
+            ]
+          ],
+          "divided": false
+        },
+        "value_normalized": "1200000000",
+        "verified_monetary_value": true,
+        "verification_status": "VERIFIED_AS_REPORTED_MONETARY_FACT",
+        "verification_reason_codes": [],
+        "aggregate_or_target_period_value_asserted": false,
+        "original_numeric_attributes": {
+          "unitref": "usd",
+          "format": "ixt:num-dot-decimal",
+          "scale": "9"
+        },
+        "verified_context": {
+          "context_ref": "c-2114",
+          "identifiers": [
+            {
+              "value": "0000019617",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "instant",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [
+            {
+              "dimension_raw": "srt:RangeAxis",
+              "member_raw": "srt:MaximumMember",
+              "dimension_qname": [
+                "http://fasb.org/srt/2025",
+                "RangeAxis"
+              ],
+              "member_qname": [
+                "http://fasb.org/srt/2025",
+                "MaximumMember"
+              ]
+            },
+            {
+              "dimension_raw": "us-gaap:LossContingenciesByNatureOfContingencyAxis",
+              "member_raw": "jpm:ThreatenedOrPendingLitigationMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "LossContingenciesByNatureOfContingencyAxis"
+              ],
+              "member_qname": [
+                "http://www.jpmorganchase.com/20251231",
+                "ThreatenedOrPendingLitigationMember"
+              ]
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        "context_entity_relation": "SAME_REGISTRANT",
+        "reported_currency": "USD",
+        "fact_evidence_id": "sha256:847c5b901dd966b39537f58b5c592f49d28797796817ef520d76f4f15ed594fc"
+      }
+    ],
+    "policy_hash": "sha256:b39b3f99831190c6c3fba3a556abb77c56ce79ff4715d0f33c81cd27235ea946",
+    "complete_legal_liability_asserted": false,
+    "source_reported_periods_preserved": true,
+    "fact_inventory_id": "sha256:84f3d34101171952b2c8cb5a8fee75a21013ae4bb7f4d588386a1b2af5790707"
+  },
+  "validation_scope": "Actual saved original and current fact helper only; no V13 replay or Run/freeze",
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

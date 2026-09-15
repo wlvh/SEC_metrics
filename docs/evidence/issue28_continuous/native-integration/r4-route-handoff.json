@@ -1,0 +1,181 @@
+{
+  "scope": "Issue28 R4 route investigation and additive financial duration component; not E2E, live qualification or publication",
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "SEC": 0
+  },
+  "archive": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-07/r4-cell-selection-live-retest/r4-cell-selection-live-retest-scene-final.zip",
+    "sha256": "9faefa12c7e81b197c9e1ce97b2738197f9189ea9744d8f587fa720f039032c0",
+    "members": 420,
+    "crc": "PASS",
+    "current_source_blobs_equal_archive": true
+  },
+  "raw_wire_count": 9,
+  "historical_usage": {
+    "prompt_tokens": 58936,
+    "completion_tokens": 1017,
+    "total_tokens": 59953
+  },
+  "implementation_files": [
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/financial_duration.py",
+      "sha256": "98d8f31615afefced1edfa8d7d48f93de932975fca3901408719edccfe2b6581"
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/financial_candidates.py",
+      "sha256": "c38cafeee99094f73901e8c3827d07d971de4b6759b46a9810f435688bb7d02a"
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/financial_relationships.py",
+      "sha256": "e7d4ea85529d56b07ef8ed372df36a7f7a17b7e6066c38b42bbba02b68cda39e"
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/financial_balance_scope.py",
+      "sha256": "7ecf348649faa2ec2918470989785413165d2b923ed9e5ef9c8bb8e24a28ca68"
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/financial_structured.py",
+      "sha256": "580e6c9d0fd154625d0a4a00e60d798f51e78f6289087b3da383b8d7dff13418"
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_financial_duration.py",
+      "sha256": "6620defb8e5987d68fa79cbd119f82e4b0861b1f7658f5dcb113522f21004563"
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_financial_candidates.py",
+      "sha256": "011f88fdb586199f6da771cc5e820bc45003b4b77116ed2755ae123ab1c41410"
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_financial_relationships.py",
+      "sha256": "4044414b7f968d0142e14a13f54b249642a97a2bcb4050a865828f3ecbc574f9"
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_financial_balance_scope.py",
+      "sha256": "c64db987412c2b211cb4a781c5f7644a4bcd4236a76b947374f830a416331b4a"
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_financial_structured.py",
+      "sha256": "341bde1beccebf208be23d16bb8e8099fe3ae8d145abb19e87f40d4002e5244b"
+    }
+  ],
+  "tests": {
+    "financial_duration": {
+      "count": 14,
+      "status": "PASS",
+      "seconds": "4.816",
+      "log": "/tmp/sec_metrics_issue28_continuous/r4-route/financial-duration-tests.log"
+    },
+    "normal_input_independent": {
+      "count": 7,
+      "status": "PASS",
+      "seconds": "14.563",
+      "log": "/tmp/sec_metrics_issue28_continuous/r4-route/normal-input-independent-tests.log"
+    },
+    "financial_components_final": {
+      "count": 24,
+      "included": "15 duration + 8 candidates + normal input source identity fix",
+      "status": "PASS",
+      "seconds": "13.451",
+      "log": "/tmp/sec_metrics_issue28_continuous/r4-route/financial-components-tests.log"
+    },
+    "financial_final": {
+      "count": 35,
+      "included": "16 duration + 8 candidates + 11 relationships",
+      "status": "PASS",
+      "seconds": "61.411",
+      "log": "/tmp/sec_metrics_issue28_continuous/r4-route/financial-final-tests.log"
+    },
+    "post_final_shape_guard_change": {
+      "status": "PASS",
+      "scope": "Original JPM and Citi positive reconstruction after task/argument guards and whole issuer scope disclosure added",
+      "log": "/tmp/sec_metrics_issue28_continuous/r4-route/nim-final-shape-verification.log"
+    },
+    "latest_combined_financial": {
+      "count": 55,
+      "included": "16 duration + 8 candidates + 11 relationships + 11 balance scope + 9 structured",
+      "status": "PASS",
+      "seconds": "153.341",
+      "log": "/tmp/sec_metrics_issue28_continuous/r4-route/all-financial-tests.log",
+      "scope": "local test run; not a committed-head CI or release proof"
+    }
+  },
+  "preserved_first_failure": "/tmp/sec_metrics_issue28_continuous/r4-route/month-end-first-reproduction.log",
+  "normal_input_adversarial_findings": "/tmp/sec_metrics_issue28_continuous/r4-route/normal-input-probes.json",
+  "limitations": [
+    "duration component does not select source tables or generate native Run/Evidence records",
+    "percent units and source month-end durations only; unsupported/cross-paragraph duration associations unresolved",
+    "input metadata readiness does not prove any metric or latest source",
+    "R4 fixed source audit recipes are not ordinary-year runtime automation",
+    "old response envelopes used deepseek-v4-flash; current configured model is deepseek-flash; no new provider verification performed"
+  ],
+  "normal_input_findings_status": "Both findings reproduced first and then independently verified fixed by main agent",
+  "normal_input_fix_verification": "/tmp/sec_metrics_issue28_continuous/r4-route/normal-input-fix-verification.json",
+  "automatic_candidate_counts": {
+    "A03": 12,
+    "A04": 12,
+    "A09": 3,
+    "A11": 12,
+    "A12": 64,
+    "A13": 34
+  },
+  "automatic_candidate_boundaries": [
+    "No fixture/reference/result/table-number input",
+    "All raw tables searched; literal search cannot prove semantic completeness",
+    "A03 Q4 period remains a conflict with FY request, not acceptance through the Citi-only exception",
+    "A04 source Net yield remains scope-only lead until economic bridge is implemented",
+    "A09/A13 structured-first route remains required",
+    "Every candidate has no execution/qualification/publication credit"
+  ],
+  "nim_relationships": {
+    "JPM": "same original table; named managed NII, reported NII plus FTE adjustment, full average earning assets, Net yield with annual period and percent precision",
+    "Citi": "explicit source NIM formula plus tax-basis notes, annual named-subject narrative, named average-earning-assets column and matching same-group total numerator/denominator/rate",
+    "proof_scope": "RELATIONSHIP_PROVEN only; native Evidence, whole-issuer scope, Run, execution and publication remain unperformed",
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "entrypoints": [
+    "financial_duration.inspect_financial_duration",
+    "financial_duration.validate_financial_duration_receipt",
+    "financial_candidates.inspect_financial_candidates",
+    "financial_relationships.inspect_nim_relationships",
+    "financial_candidates.inspect_nim_candidate_evidence",
+    "financial_balance_scope.inspect_aum_balance",
+    "financial_balance_scope.inspect_total_var",
+    "financial_candidates.inspect_balance_candidate_evidence",
+    "financial_structured.prepare_saved_inline_source_set",
+    "financial_structured.inspect_inline_financial_claims"
+  ],
+  "guide": "/tmp/sec_metrics_issue28_continuous/r4-route/financial-handoff.md",
+  "new_positives": {
+    "A04": [
+      "JPM 0.025",
+      "Citi 0.0247"
+    ],
+    "A11": [
+      "JPM 4791000000000 USD at 2025-12-31; 3 complete total-AUM disclosures"
+    ],
+    "A12": [
+      "JPM 40000000 USD total; annual average; 95 percent; one-day risk holding period"
+    ],
+    "A13": [
+      "JPM normal SourceSet 42758000000 USD",
+      "Citi retained fixture 42295000000 USD"
+    ],
+    "A09": [
+      "BAC retained fixture 0.0049",
+      "JPM 66 native raw fact exclusions and actual structured-source ambiguity"
+    ]
+  },
+  "remaining_boundaries": [
+    "A03 quarter-versus-filing-year binding still needs the ordinary native path",
+    "JPM A09 HTML fallback remains after real structured exclusion",
+    "A04/A11/A12 whole issuer scope remains a native acceptance obligation",
+    "All components retain no qualification/publication credit and no new-call authorization",
+    "Main agent owns shared records/Calculator/Run integration, documentation, commit and PR"
+  ]
+}

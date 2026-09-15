@@ -1,0 +1,191 @@
+{
+  "record_type": "REGULATORY_INVESTIGATION_CANDIDATE_BUNDLE",
+  "metric_id": "D03",
+  "company_id": "sample_entity",
+  "source_reference_id": "sha256:b88280ec0b7f4eafe4941a1581945add1dd86143bfeb3850a9ca1526275fd436",
+  "raw_asset_id": "sha256:d337cf4b59a15b5df3344fdf08ba6380bcbd0664aaec891929489eb7b5bd1904",
+  "source_filing": {
+    "form": "10-K",
+    "accessionNumber": "0000012345-26-000001",
+    "primaryDocument": "source.htm",
+    "filingDate": "2026-03-27",
+    "reportDate": "2025-12-31"
+  },
+  "document_id": "sha256:5fad02170b156d4201e81bde70475a57784fa7c21273afdb33abd43f5c0f5f5d",
+  "navigation_proposal_id": "sha256:23fe9163b9801237705fe7d9ddf6cb0e9880768a60c3d17727b0e79fe864ae00",
+  "checked_ranges": [
+    {
+      "section_id": "ITEM_1A",
+      "start_block": 1,
+      "end_block_exclusive": 2,
+      "heading": {
+        "item": "1A",
+        "block_index": 0,
+        "heading_end_index": 0
+      },
+      "closing_heading": {
+        "item": "1B",
+        "block_index": 2,
+        "heading_end_index": 2
+      }
+    },
+    {
+      "section_id": "ITEM_3",
+      "start_block": 5,
+      "end_block_exclusive": 6,
+      "heading": {
+        "item": "3",
+        "block_index": 4,
+        "heading_end_index": 4
+      },
+      "closing_heading": {
+        "item": "4",
+        "block_index": 6,
+        "heading_end_index": 6
+      }
+    },
+    {
+      "section_id": "ITEM_8",
+      "start_block": 9,
+      "end_block_exclusive": 10,
+      "heading": {
+        "item": "8",
+        "block_index": 8,
+        "heading_end_index": 8
+      },
+      "closing_heading": {
+        "item": "9",
+        "block_index": 10,
+        "heading_end_index": 10
+      }
+    },
+    {
+      "section_id": "NOTE_2",
+      "start_block": 19,
+      "end_block_exclusive": 23,
+      "requested_reference": "2",
+      "scope_relation": "EXACT_NOTE"
+    }
+  ],
+  "note_references": [
+    {
+      "reference": "Note 2",
+      "source_occurrences": [
+        {
+          "source_reference_id": "sha256:b88280ec0b7f4eafe4941a1581945add1dd86143bfeb3850a9ca1526275fd436",
+          "raw_asset_id": "sha256:d337cf4b59a15b5df3344fdf08ba6380bcbd0664aaec891929489eb7b5bd1904",
+          "document_id": "sha256:5fad02170b156d4201e81bde70475a57784fa7c21273afdb33abd43f5c0f5f5d",
+          "section_id": "ITEM_3",
+          "labels": [
+            "NOTE_REFERENCE"
+          ],
+          "block_index": 5,
+          "text": "Refer to Note 2 for our legal proceedings and pending litigation.",
+          "raw_start_byte": 1140,
+          "raw_end_byte": 1205,
+          "raw_span_sha256": "d3ffd53a0bc0cf074938acc58ccbb0f8d890b10ef2380f4636addbc8f6f95186"
+        }
+      ],
+      "heading_candidates": [
+        {
+          "source_reference_id": "sha256:b88280ec0b7f4eafe4941a1581945add1dd86143bfeb3850a9ca1526275fd436",
+          "raw_asset_id": "sha256:d337cf4b59a15b5df3344fdf08ba6380bcbd0664aaec891929489eb7b5bd1904",
+          "document_id": "sha256:5fad02170b156d4201e81bde70475a57784fa7c21273afdb33abd43f5c0f5f5d",
+          "section_id": "FULL_DOCUMENT_NOTES",
+          "labels": [
+            "NOTE_HEADING"
+          ],
+          "block_index": 19,
+          "text": "Note 2. Contingencies",
+          "raw_start_byte": 1871,
+          "raw_end_byte": 1892,
+          "raw_span_sha256": "4550b62043163b08f3c38d5056fd09321794ed0802bb22b379c60c1c38d6075a"
+        }
+      ],
+      "range_candidates": [
+        {
+          "section_id": "NOTE_2",
+          "start_block": 19,
+          "end_block_exclusive": 23,
+          "requested_reference": "2",
+          "scope_relation": "EXACT_NOTE"
+        }
+      ],
+      "status": "LOCATED_NOTE_RANGE"
+    }
+  ],
+  "source_aliases": [
+    {
+      "text": "we",
+      "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+      "support": null
+    },
+    {
+      "text": "Example Incorporated",
+      "basis": "NAMESPACE_CHECKED_DEI_REGISTRANT_NAME",
+      "support": null
+    }
+  ],
+  "coverage_status": "LOCAL_REQUESTED_RANGES_SCANNED",
+  "coverage_reasons": [],
+  "candidates": [
+    {
+      "excerpt": {
+        "source_reference_id": "sha256:b88280ec0b7f4eafe4941a1581945add1dd86143bfeb3850a9ca1526275fd436",
+        "raw_asset_id": "sha256:d337cf4b59a15b5df3344fdf08ba6380bcbd0664aaec891929489eb7b5bd1904",
+        "document_id": "sha256:5fad02170b156d4201e81bde70475a57784fa7c21273afdb33abd43f5c0f5f5d",
+        "section_id": "ITEM_1A",
+        "labels": [
+          "REGULATORY_LANGUAGE_CANDIDATE"
+        ],
+        "block_index": 1,
+        "text": "We received a subpoena from a private plaintiff in a contract lawsuit discussing SEC investigations.",
+        "raw_start_byte": 942,
+        "raw_end_byte": 1042,
+        "raw_span_sha256": "450c6220c5957e524cc1da4ba3a38d93558865f7b9558c6af8442bd7ce41ee69"
+      },
+      "context_excerpts": [],
+      "language_signals": [],
+      "facts": [
+        {
+          "rule_id": "RECEIVED_PROCESS",
+          "fact_kind": "REPORTED_RECEIPT_OF_REGULATORY_PROCESS",
+          "statement_text": "We received a subpoena from a private plaintiff in a contract lawsuit discussing SEC investigations.",
+          "visible_block_character_span": {
+            "start": 0,
+            "end": 100
+          },
+          "subject_binding": {
+            "text": "we",
+            "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+            "support": null
+          },
+          "source_date_literals": [],
+          "status": "SEMANTIC_REVIEW_REQUIRED",
+          "authority_relation_syntax_matched": false,
+          "authority_to_action_relation_proven": false,
+          "reason_codes": [
+            "AUTHORITY_ACTOR_RELATION_NOT_PROVEN"
+          ],
+          "current_status_asserted": false,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:afc7a93ae0daf30cd153c4105fd165522357f7321f27754c6639c1c07c6b5c63"
+        }
+      ],
+      "requires_semantic_review": true,
+      "unmatched_language_semantically_resolved": false,
+      "candidate_id": "sha256:9bba8949776596158b9c5a672934ea380067ff81e0f5292189cca04b2815b104"
+    }
+  ],
+  "outside_requested_range_action_candidates": [],
+  "supported_fact_count": 0,
+  "semantic_scope_completeness_asserted": false,
+  "not_disclosed_confirmed": false,
+  "native_result_created": false,
+  "publication_credit": false,
+  "policy_hash": "sha256:6c14bce5ff7918fdfd16fc13a5de42fda004c35c17eda896bd099139776f65c4",
+  "candidate_bundle_id": "sha256:0b2d4d0a2f9942ffdafd16d0c6c596197ff58fa005b87f108bd96d21fb448d96"
+}

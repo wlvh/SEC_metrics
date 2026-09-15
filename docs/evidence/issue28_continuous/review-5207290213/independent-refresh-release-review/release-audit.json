@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "scope": "Independent archived preparation identity, predecessor digest, row/evidence inheritance and selected source byte audit; no native recomputation rerun",
+  "archive_sha256": "5d66eb68f7c27f4adf785055fbb2ff3fae0358d116223974006c26659f4726b2",
+  "preparation_id": "sha256:ea3d09a0c46efde7ec5282ec593c317e31fa1ba600c0ad319f93877ec3b2be42",
+  "counts": {
+    "metrics_matrix.csv": {
+      "total_rows": 327,
+      "unchanged_inherited_rows": 325
+    },
+    "metric_evidence.csv": {
+      "total_rows": 319,
+      "unchanged_inherited_rows": 288
+    }
+  },
+  "selected_unique_original_files_hashed": 2,
+  "selected_modes": [
+    {
+      "company": "pfizer",
+      "metric": "B01",
+      "value_kind": "NUMERIC",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY"
+    },
+    {
+      "company": "salesforce",
+      "metric": "C02",
+      "value_kind": "TEXT_V1",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY"
+    }
+  ],
+  "credit": "NONE_PREPARATION_ONLY",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
