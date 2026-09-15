@@ -14,6 +14,22 @@ SPEC_PATH = 'catalog/r6/D04_going_concern_assessment_v1.md'
 CURRENT_KINDS = {'DOUBT_DISCLOSED', 'DOUBT_ALLEVIATED', 'NO_DOUBT_DECLARATION'}
 
 
+def _specific_continuation_activity(sentence):
+    """Distinguish the action's object from continued existence of an entity."""
+    if re.search(r'\b(?:doubt|going[ -]concern)\b', sentence, re.I):
+        return False
+    complement = re.search(r'\bability\s+to\s+continue\s+(?:to\s+)?'
+        r'(?P<action>attract(?:ing)?|recruit(?:ing)?|invest(?:ing)?|fund(?:ing)?)\b(?P<object>.+)', sentence, re.I)
+    if complement is None:
+        return False
+    action, obj = complement.group('action').casefold(), complement.group('object')
+    if action.startswith(('attract', 'recruit')):
+        return re.search(r'\b(?:employees|talent|subscribers|users)\b', obj, re.I) is not None
+    if action.startswith('invest'):
+        return re.match(r'\s+in\b.+\bbusiness(?:es)?\b', obj, re.I) is not None
+    return re.match(r'\s+through\b.+\b(?:financing|securiti[sz]ation)\b', obj, re.I) is not None
+
+
 def source_statement_relations(*, text, names, period, quoted=False):
     """Read supported assertion relations without consulting model labels.
 
@@ -42,9 +58,7 @@ def source_statement_relations(*, text, names, period, quoted=False):
         elif (re.search(r'financial statements.{0,80}(?:prepared|preparation).{0,40}going[ -]concern\s+basis', sentence, re.I)
               and not re.search(r'\bdoubt\b', sentence, re.I)):
             relation.update(kind='CONDITIONAL_OR_BOILERPLATE', timing='CONDITIONAL')
-        elif (not re.search(r'\b(?:doubt|going[ -]concern)\b', sentence, re.I) and
-              re.search(r'\bability to continue\s+(?:investing|recruiting|to recruit|to invest)\b', sentence, re.I)):
-            # The complement is investment/recruiting, not continued existence.
+        elif _specific_continuation_activity(sentence):
             relation.update(kind='VALUATION_OR_OTHER_MEANING')
         else:
             match = ability.search(sentence)

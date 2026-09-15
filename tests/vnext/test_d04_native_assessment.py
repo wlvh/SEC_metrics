@@ -30,6 +30,22 @@ def response_for(request, kind='DOUBT_DISCLOSED', timing='CURRENT_REPORT'):
 
 
 class D04NativeProtocolTest(unittest.TestCase):
+    def test_actual_specific_activity_continuation_is_not_entity_viability(self):
+        import json
+        from vnext.normal_source_authority import ROOT
+        rows = json.loads((ROOT/'docs/evidence/issue28_continuous/b13-quantity-integration/d04-inventory.json').read_text())
+        statements = [f['statement_text'] for row in rows for f in row['relations']
+                      if f['reason'] == 'D04_SOURCE_RELATION_NOT_DETERMINED']
+        self.assertEqual(len(statements), 4)
+        for text in statements:
+            request = request_for(text)
+            with self.subTest(text=text):
+                checked = validate_response(request=request, raw_response=_bytes(response_for(request, 'VALUATION_OR_OTHER_MEANING')))
+                self.assertEqual(checked['unresolved'], [])
+                self.assertEqual(checked['current_target_findings'], [])
+                with self.assertRaises(ValueError):
+                    validate_response(request=request, raw_response=_bytes(response_for(request, 'DOUBT_DISCLOSED')))
+
     def test_nearby_words_and_future_alleviation_do_not_prove_the_relation(self):
         cases = [
             ('There is substantial doubt about the asset valuation, which does not affect our ability to continue as a going concern.', 'DOUBT_DISCLOSED'),
