@@ -30,6 +30,64 @@ def _specific_continuation_activity(sentence):
     return re.match(r'\s+through\b.+\b(?:financing|securiti[sz]ation)\b', obj, re.I) is not None
 
 
+def _assertion_clauses(sentence):
+    """Separate explicit coordinated assertions, retaining subordinators.
+
+    A comma alone is not a boundary (dates and if-antecedents contain commas).
+    A coordinating conjunction followed by an explicit subject is a boundary;
+    attached if/unless/although clauses remain with their governing assertion.
+    This is a limited grammar, not a general English parser.
+    """
+    boundary = re.compile(r';\s*|(?:,\s*|\s+)(?:and|but|yet)\s+(?='
+        r'(?:these|those|this|that|we|there|it|our|management|the\s+company)\b)', re.I)
+    antecedent = re.match(r'\s*(?:if|unless|provided\s+that)\b[^,]+,', sentence, re.I)
+    start = 0
+    for match in boundary.finditer(sentence):
+        if antecedent and match.start() < antecedent.end():
+            continue
+        yield start, match.start(), sentence[start:match.start()]
+        start = match.end()
+    if start < len(sentence):
+        yield start, len(sentence), sentence[start:]
+
+
+def _assertion_scope(prefix, suffix):
+    """Bind modifiers to the doubt assertion, not to adjacent explanations."""
+    # Postposed concessive conditions assert that the main fact survives the
+    # condition; the financing's success is not a condition on doubt existing.
+    following = re.search(r',?\s*\b(?:even\s+if|even\s+though|although|because|for\s+example)\b', suffix, re.I)
+    tail = suffix[:following.start()] if following else suffix
+    # A causal/concessive adjunct describes why the main assertion holds;
+    # its date and negation belong to that adjunct, not the main predicate.
+    adjunct = re.match(r'\s*(?:even\s+if|even\s+though|although|because)\b[^,]+,\s*', prefix, re.I)
+    local_prefix = prefix[adjunct.end():] if adjunct else prefix
+    conditional = bool(re.search(r'\b(?:if|unless|provided\s+that)\b', local_prefix + ' ' + tail, re.I))
+    return local_prefix, tail, conditional
+
+
+def _assessment_time_prefix(prefix):
+    """An explicit present predicate may describe a historical cause.
+
+    Keep the full prefix for polarity/embedding checks. Only the temporal
+    attachment is narrowed: both a relative predicate (losses that now raise)
+    and a main predicate (losses that arose earlier now raise) can assess the
+    present. An earlier reporting verb leaves its temporal frame unresolved.
+    """
+    present = re.search(r'\b(?:now|currently|at\s+present)\s+'
+        r'(?:raise[sd]?|creates?|is|have|has)\s+(?:a\s+|substantial\s+)*$', prefix, re.I)
+    if present:
+        before = prefix[:present.start()]
+        if re.search(r'\b(?:concluded|reported|stated|said)\b', prefix[:present.start()], re.I):
+            return None
+        if re.search(r'\b(?:that|which|incurred|arising|sustained|experienced|suffered|generated)\b', before, re.I):
+            return prefix[present.start():]
+        # A remaining date/present-frame combination is not proven historical.
+        # Do not let an unsupported attachment authorize a negative result.
+        if re.search(r'\b(?:19|20)\d{2}\b', before):
+            return None
+    return prefix
+
+
 def source_statement_relations(*, text, names, period, quoted=False):
     """Read supported assertion relations without consulting model labels.
 
@@ -46,7 +104,10 @@ def source_statement_relations(*, text, names, period, quoted=False):
     other_owners = r'(?:our\s+|the\s+)?(?:supplier|subsidiary|predecessor|acquired business|customer|partner)[’\']s'
     ability = re.compile(r'\b(?P<owner>' + '|'.join([*owners, 'its', 'their', other_owners]) + r')\s+'
         r'ability\s+to\s+continu(?:e|ing)\s+(?:as\s+a\s+going[ -]concern|(?:our\s+|its\s+)?operations?|in\s+business)\b', re.I)
-    for start, end, sentence in _sentences(text):
+    clauses = [(start + a, start + b, clause, original, original[:a])
+        for start, end, original in _sentences(text)
+        for a, b, clause in _assertion_clauses(original)]
+    for start, end, sentence, original_sentence, preceding in clauses:
         if not _LANGUAGE.search(sentence):
             continue
         relation = {'statement_text': sentence, 'start_character': start, 'end_character': end,
@@ -68,7 +129,11 @@ def source_statement_relations(*, text, names, period, quoted=False):
                                  sentence[doubt.end():match.start()], re.I) is not None)
             if direct:
                 owner = match.group('owner')
-                prefix = sentence[:doubt.start()]
+                prefix, tail, conditional = _assertion_scope(
+                    sentence[:doubt.start()], sentence[match.end():])
+                inherited_condition = re.match(r'\s*(?:if|unless|provided\s+that)\b[^,]+,', preceding, re.I)
+                if inherited_condition and ';' not in preceding and re.search(r'\band\s*$', preceding, re.I):
+                    conditional = True
                 # The syntactic owner is required: a supplier mentioned next to
                 # "our" somewhere else is not the reporting entity.
                 if any(re.fullmatch(o, owner, re.I) for o in owners):
@@ -90,13 +155,15 @@ def source_statement_relations(*, text, names, period, quoted=False):
                     relation['kind'] = 'DOUBT_DISCLOSED'
                 elif re.search(r'\balleviate[sd]?\s+(?:substantial\s+)?$', prefix, re.I):
                     relation['kind'] = 'DOUBT_ALLEVIATED'
-                tail = sentence[doubt.end():]
                 if re.search(r'\b(?:has|have|had)\s+(?:been\s+)?alleviated\b|\b(?:is|was)\s+alleviated\b', tail, re.I):
                     relation['kind'] = 'DOUBT_ALLEVIATED'
                 if re.search(r'\b(?:has|have|had|is|was)\s+(?:not\s+been|not)\s+alleviated\b', tail, re.I):
                     relation['kind'] = 'DOUBT_DISCLOSED'
-                date = re.search(r'\b(?:In|As of|For (?:the )?(?:year ended )?)\s+(?:[A-Za-z]+\s+\d{1,2},?\s+)?((?:19|20)\d{2})\b', prefix, re.I)
-                if re.search(r'\b(?:previously|historically|prior year|last year|previous annual report)\b', prefix, re.I):
+                time_prefix = _assessment_time_prefix(prefix)
+                date = re.search(r'\b(?:In|As of|For (?:the )?(?:year ended )?)\s+(?:[A-Za-z]+\s+\d{1,2},?\s+)?((?:19|20)\d{2})\b', time_prefix or '', re.I)
+                if time_prefix is None:
+                    relation['timing'] = None
+                elif re.search(r'\b(?:previously|historically|prior year|last year|previous annual report)\b', time_prefix, re.I):
                     relation['timing'] = 'HISTORICAL'
                 elif date:
                     year = date.group(1)
@@ -104,9 +171,14 @@ def source_statement_relations(*, text, names, period, quoted=False):
                         relation['timing'] = 'HISTORICAL' if year < target_year else 'CURRENT_REPORT' if year == target_year else None
                 else:
                     relation['timing'] = 'CURRENT_REPORT'
-                if re.search(r'\b(?:if|hypothetical|illustrative|for example)\b', sentence, re.I):
+                if conditional:
                     relation.update(kind='CONDITIONAL_OR_BOILERPLATE', timing='CONDITIONAL')
                 elif re.search(r'\b(?:may|might|could|would|whether)\b', prefix, re.I):
+                    relation['kind'] = None
+                # An example is not inherently hypothetical. Explicitly
+                # hypothetical framing without a supported conditional syntax
+                # remains unproved instead of authorizing an absence result.
+                if re.search(r'\b(?:hypothetical|illustrative)\b', prefix, re.I) and not conditional:
                     relation['kind'] = None
                 # Negation outside the supported local predicate changes its
                 # scope (e.g. "do not believe ... raise doubt"). Do not guess.
@@ -116,17 +188,22 @@ def source_statement_relations(*, text, names, period, quoted=False):
                     relation['kind'] = None
                 if len(re.findall(r'\b(?:substantial\s+)?doubt\b', sentence, re.I)) > 1:
                     relation['kind'] = None
-                if re.search(r'\bwill\b|\b(?:expects?|expected|intends?|intended|plans?|planned|proposes?|proposed)\s+to\b', sentence, re.I):
+                if not conditional and re.search(r'\bwill\b|\b(?:expects?|expected|intends?|intended|plans?|planned|proposes?|proposed)\s+to\b', prefix + ' ' + tail, re.I):
+                    relation['kind'] = None
+                # Unproved scope across contrast/semicolon or an embedding
+                # attitude cannot become an automatically excluded assertion.
+                if ((inherited_condition and not conditional)
+                    or re.search(r'\b(?:believe|believes|hypothetical|illustrative)\b', preceding, re.I)):
                     relation['kind'] = None
             elif re.search(r'\b(?:required to|must)\s+(?:evaluate|assess|consider)\b.*\b(?:whether|ability)\b', sentence, re.I):
                 relation.update(kind='CONDITIONAL_OR_BOILERPLATE', timing='CONDITIONAL')
-        speech = any(_PATTERNS['reported_speech_intro'].search(sentence[:m.end()])
-                     for m in re.finditer(r'[:“"]', sentence))
-        if quoted or speech or _PATTERNS['discourse_qualification'].search(sentence):
+        speech = any(_PATTERNS['reported_speech_intro'].search(original_sentence[:m.end()])
+                     for m in re.finditer(r'[:“"]', original_sentence))
+        if quoted or speech or _PATTERNS['discourse_qualification'].search(original_sentence):
             relation.update(kind=None, reason='D04_QUOTED_TEXT_REQUIRES_CONTEXT')
         if relation['kind'] is None or (relation['kind'] in CURRENT_KINDS and
                 (relation['subject'] is None or relation['timing'] is None)):
-            relation['reason'] = relation['reason'] or 'D04_SOURCE_RELATION_NOT_DETERMINED'
+            relation['reason'] = relation['reason'] or 'D04_SOURCE_RELATION_IMPLEMENTATION_UNSUPPORTED'
         relations.append(relation)
     return relations
 
@@ -180,7 +257,7 @@ def check_source_classifications(*, request, units, findings):
     return unresolved
 
 
-def native_source(source, *, historical_control=False):
+def native_source(source, *, historical_control=False, request_context_format=None):
     """A new input identity, retaining the exact complete original source set."""
     expected = 'D04_HISTORICAL_PRIMARY_CONTROL_SOURCE' if historical_control else 'D04_COMPLETE_SEMANTIC_SOURCE'
     need(source['record_type'] == expected
@@ -195,6 +272,10 @@ def native_source(source, *, historical_control=False):
                 original_complete_source_id=source['semantic_source_id'],
                 source_check_scope=source['control_scope'] if historical_control else
                     'SAVED_ANNUAL_PRIMARY_AND_ALL_CURRENT_ANNUAL_AMENDMENTS_VISIBLE_AND_NATIVE')
+    if request_context_format is not None:
+        from .continuous_request_context import FORMAT_VERSION
+        need(request_context_format == FORMAT_VERSION, 'D04_NATIVE_CONTEXT_FORMAT_UNSUPPORTED')
+        body['request_context_format'] = FORMAT_VERSION
     return {**body, 'semantic_source_id': content_hash(value=body)}
 
 
@@ -207,10 +288,15 @@ def requests_from_source(source):
     need(source['required_unit_ids'] == [u['unit_id'] for u in source['units']]
          and len(set(source['required_unit_ids'])) == len(source['units']), 'D04_NATIVE_UNIT_SET_CHANGED')
     documents = {d['document_id']: d for d in source['documents']}
-    annual = source['prepared_annual_input']; requests = []
-    for group in shared_source_groups(source['units'], rules['max_group_source_bytes']):
+    annual = source['prepared_annual_input']
+    from .continuous_request_context import FORMAT_VERSION, measured_groups
+    context_format = source.get('request_context_format')
+    need(context_format in {None, FORMAT_VERSION}, 'D04_NATIVE_CONTEXT_FORMAT_UNSUPPORTED')
+
+    def request_for_group(group):
         packed, shared = _shared_units(group)
-        need(len(_bytes([packed, shared])) <= rules['max_group_source_bytes'], 'D04_NATIVE_SOURCE_GROUP_EXCEEDS_BOUND')
+        if context_format is None:
+            need(len(_bytes([packed, shared])) <= rules['max_group_source_bytes'], 'D04_NATIVE_SOURCE_GROUP_EXCEEDS_BOUND')
         doc = documents[group[0]['document_id']]; required = []
         for unit in group:
             kind, items = _source_items(unit)
@@ -230,11 +316,17 @@ def requests_from_source(source):
             'category_definitions': rules['category_definitions'], 'required_candidate_assessments': required,
             'response_protocol': rules['response_protocol'], 'policy_sha256': sha256_file(path=ROOT / POLICY_PATH),
             'provider_request_sent': False, 'provider_tokens_measured': False, 'production_authorized': False}
+        if context_format is not None:
+            body['request_context_format'] = context_format
         if source['record_type'] == 'D04_NATIVE_HISTORICAL_CONTROL_SOURCE':
             body.update(historical_control=source['control'], control_source_scope=source['control_scope'])
             body['system_prompt'] += (' This request is a historical primary/header-only control. CURRENT_REPORT refers '
                 'to the supplied historical report. It cannot establish current-company status or whole-filing absence.')
-        requests.append({**body, 'request_id': content_hash(value=body)})
+        return {**body, 'request_id': content_hash(value=body)}
+
+    groups = (shared_source_groups(source['units'], rules['max_group_source_bytes']) if context_format is None else
+              measured_groups(source['units'], request_for_group))
+    requests = [request_for_group(group) for group in groups]
     need([u['unit_id'] for r in requests for u in r['units']] == source['required_unit_ids'],
          'D04_NATIVE_REQUEST_CENSUS_CHANGED')
     return requests

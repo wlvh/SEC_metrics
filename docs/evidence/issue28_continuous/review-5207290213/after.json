@@ -1,0 +1,227 @@
+{
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_native_Run_executed": false,
+  "production_output_observed": false,
+  "cases": [
+    {
+      "statement": "There is substantial doubt about our ability to continue as a going concern, even if the proposed financing succeeds.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": [
+              {
+                "evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "There is substantial doubt about our ability to continue as a going concern, even if the proposed financing succeeds."
+                  }
+                ],
+                "kind": "DOUBT_DISCLOSED",
+                "reason": "Recorded classification for the supplied source statement.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT",
+                "unit_id": "sha256:12573bf3c3750532c64a7452861af965a0c225853a0c13ff8f44a851a6f4d1ce",
+                "resolved_evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "There is substantial doubt about our ability to continue as a going concern, even if the proposed financing succeeds.",
+                    "start_character": 0,
+                    "end_character": 117
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "PASS",
+            "value": "There is substantial doubt about our ability to continue as a going concern, even if the proposed financing succeeds.",
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "B13_TEXT_BRANCH_NOT_ESTABLISHED"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      }
+    },
+    {
+      "statement": "There is substantial doubt about our ability to continue as a going concern; for example, cash is insufficient to meet obligations.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": [
+              {
+                "evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "There is substantial doubt about our ability to continue as a going concern; for example, cash is insufficient to meet obligations."
+                  }
+                ],
+                "kind": "DOUBT_DISCLOSED",
+                "reason": "Recorded classification for the supplied source statement.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT",
+                "unit_id": "sha256:ba5cfb6d5a2179552c9d4ecc31d4a2f0d5a0d0c689007c43d12d1895dce7b8e3",
+                "resolved_evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "There is substantial doubt about our ability to continue as a going concern; for example, cash is insufficient to meet obligations.",
+                    "start_character": 0,
+                    "end_character": 131
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "PASS",
+            "value": "There is substantial doubt about our ability to continue as a going concern; for example, cash is insufficient to meet obligations.",
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "B13_TEXT_BRANCH_NOT_ESTABLISHED"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      }
+    },
+    {
+      "statement": "In 2024 we incurred losses, and these conditions now raise substantial doubt about our ability to continue as a going concern.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": [
+              {
+                "evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "In 2024 we incurred losses, and these conditions now raise substantial doubt about our ability to continue as a going concern."
+                  }
+                ],
+                "kind": "DOUBT_DISCLOSED",
+                "reason": "Recorded classification for the supplied source statement.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT",
+                "unit_id": "sha256:ebf0725cf275bad46cb5425a10b28255e31884310e9d2db535f1029b1291ef1a",
+                "resolved_evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "In 2024 we incurred losses, and these conditions now raise substantial doubt about our ability to continue as a going concern.",
+                    "start_character": 0,
+                    "end_character": 126
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "PASS",
+            "value": "In 2024 we incurred losses, and these conditions now raise substantial doubt about our ability to continue as a going concern.",
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "B13_TEXT_BRANCH_NOT_ESTABLISHED"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      }
+    }
+  ]
+}

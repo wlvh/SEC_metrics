@@ -1,0 +1,56 @@
+test_scoped_assertions_complete_run_and_final_public_row (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_scoped_assertions_complete_run_and_final_public_row)
+Synthetic source/admission doubles; real result, Run and projection. ... ERROR
+
+======================================================================
+ERROR: test_scoped_assertions_complete_run_and_final_public_row (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_scoped_assertions_complete_run_and_final_public_row)
+Synthetic source/admission doubles; real result, Run and projection.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2354, in _validate_record_graph
+    text_contexts = prepare_text_run_contexts(
+        repo_root=repo_root, manifest=manifest, records=records,
+        compiled_specs=compiled_specs, raw_bytes_by_id=raw_bytes_by_id,
+        requirement=requirement)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_run.py", line 255, in prepare_text_contexts
+    case = validate_run_authority(repo_root=repo_root, manifest=manifest, records=records, compiled_specs=compiled_specs)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_run.py", line 190, in validate_run_authority
+    need(manifest['run_id'] == PREFIX + key
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and strict_json_file(path=resolve_repository_file(repo_root=repo_root,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            repo_relative_path=BINDING_DIRECTORY + '/' + key + '.json')) == expected,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'B13_NATIVE_RUN_BINDING_CHANGED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_NATIVE_RUN_BINDING_CHANGED
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d04_run_material.py", line 112, in test_scoped_assertions_complete_run_and_final_public_row
+    render_ordinary_run(data_root=data,run_dir=run)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_projection.py", line 58, in render_ordinary_run
+    manifest,records,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3485, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2359, in _validate_record_graph
+    raise RunStoreError("Native text input replay failed: " + str(error)) from error
+vnext.run_store.RunStoreError: Native text input replay failed: B13_NATIVE_RUN_BINDING_CHANGED
+
+----------------------------------------------------------------------
+Ran 1 test in 25.787s
+
+FAILED (errors=1)

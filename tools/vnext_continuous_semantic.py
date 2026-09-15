@@ -19,6 +19,8 @@ def main(argv=None):
     parser.add_argument('--prior-call',type=int)
     parser.add_argument('--control-id')
     parser.add_argument('--native',action='store_true',help='Create fresh D04 native source assessments from complete current sources')
+    parser.add_argument('--reference-context',action='store_true',
+                        help='Use the pinned complete-request context format for new D03/B13/native D04 sources')
     parser.add_argument('--request-id')
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args(argv)
@@ -28,7 +30,7 @@ def main(argv=None):
     if args.command=='verify' and (args.metric!='D03' or args.prior_call is None):
         parser.error('Verify requires --metric D03 and one --prior-call ordinal')
     requests=prepare_requests(company_id=args.company,metric_id=args.metric,prior_call_ordinal=args.prior_call,
-                              control_id=args.control_id,native=args.native)
+                              control_id=args.control_id,native=args.native,reference_context=args.reference_context)
     if args.command in {'execute','verify'}:
         selected=(requests if args.command=='verify' else
                   [p for p in requests if strict_json_loads(text=p.request_bytes.decode())['request_id']==args.request_id])

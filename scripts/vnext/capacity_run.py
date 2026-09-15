@@ -15,7 +15,7 @@ from .specs import compile_spec_file
 SPEC_PATH = 'catalog/r5/B13_capacity_disclosures_v1.md'
 
 
-def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_input_id=None, metric_id='B13'):
+def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_input_id=None, metric_id='B13', request_context_format=None):
     need(metric_id in {'B13', 'D04'}, 'NATIVE_ASSESSED_METRIC_UNSUPPORTED')
     from .capacity_utilization_source import policy
     rules, approved = policy()
@@ -23,12 +23,23 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
         need(assessment_mode is None and assessment_input_id is None, 'B13_STRUCTURAL_ASSESSMENT_NOT_USED')
         return _prepare_structural_case(data_root=data_root, company_id=company_id)
     spec_path = SPEC_PATH
+    export_path = EXPORT_PATHS[metric_id]
+    if (data_root / export_path).exists():
+        exported = strict_json_file(path=resolve_repository_file(repo_root=data_root, repo_relative_path=export_path))
+        hint = exported.get('request_context_format')
+        need(request_context_format is None or request_context_format == hint, 'NATIVE_INSTALLED_CONTEXT_FORMAT_CONFLICT')
+        request_context_format = hint
     if metric_id == 'B13':
-        source = prepare_capacity_semantic_source(repo_root=data_root, company_id=company_id)
+        source = prepare_capacity_semantic_source(repo_root=data_root, company_id=company_id,
+                                                 request_context_format=request_context_format)
     else:
         from .d04_native_assessment import native_source, SPEC_PATH as spec_path
         from .r6_semantic_source import prepare_d04_semantic_source
-        source = native_source(prepare_d04_semantic_source(repo_root=data_root, company_id=company_id))
+        # This field selects a finite serializer. It grants no source credit:
+        # load_registered_input below rechecks the creator's record, source id,
+        # every original request, acceptance and current source classifications.
+        source = native_source(prepare_d04_semantic_source(repo_root=data_root, company_id=company_id),
+                               request_context_format=request_context_format)
     requirement = load_requirement_snapshot(snapshot_dir=data_root / 'requirements' / REQUIREMENT_ID)
     registered = load_registered_input(data_root=data_root, source=source, requirement=requirement,
                                        mode=assessment_mode, input_record_id=assessment_input_id)
@@ -137,14 +148,14 @@ def _prepare_structural_case(*, data_root, company_id):
                       'reason_code': 'B13_OUTSIDE_APPROVED_APPLICABILITY', 'disclosure_absence_asserted': False}}
 
 
-def install_inputs(*, data_root, company_id, source_root=ROOT, assessment_mode=None, assessment_input_id=None, metric_id='B13'):
+def install_inputs(*, data_root, company_id, source_root=ROOT, assessment_mode=None, assessment_input_id=None, metric_id='B13', request_context_format=None):
     from .normal_run_v3 import _external, _install_case_inputs, _binding
     data_root = _external(data_root)
     source_root = ROOT if Path(source_root) == ROOT else _external(source_root)
     need(source_root != data_root and source_root not in data_root.parents and data_root not in source_root.parents,
          'B13_INPUT_OUTPUT_OVERLAP')
     case = prepare_case(data_root=source_root, company_id=company_id, assessment_mode=assessment_mode,
-                        assessment_input_id=assessment_input_id, metric_id=metric_id)
+                        assessment_input_id=assessment_input_id, metric_id=metric_id, request_context_format=request_context_format)
     requirement = load_requirement_snapshot(snapshot_dir=ROOT / 'requirements' / REQUIREMENT_ID)
     extra = ({EXPORT_PATHS[metric_id]: canonical_json_bytes(value=case['registered_input'])}
              if 'registered_input' in case else None)

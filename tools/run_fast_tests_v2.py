@@ -78,6 +78,7 @@ FAST_TESTS += ("tests.vnext.test_capacity_semantic_source.CapacitySemanticSource
 FAST_TESTS += ("tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest",)
 FAST_TESTS += ("tests.vnext.test_capacity_applicability.CapacityApplicabilityTest",)
 FAST_TESTS += ("tests.vnext.test_d04_native_assessment",)
+FAST_TESTS += ("tests.vnext.test_continuous_request_context",)
 FAST_TESTS += ("tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingTest",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)

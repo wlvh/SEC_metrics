@@ -21,6 +21,8 @@ jobs:
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
 
       - name: Run fast suite
         env:
@@ -42,6 +44,8 @@ jobs:
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
           python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
       - name: Run complete saved-source material tests
         env:
           PYTHONDONTWRITEBYTECODE: "1"
@@ -96,10 +100,13 @@ jobs:
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
           python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
       - name: Validate recorded B13 native Run and rejected input relabelling
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts
+          B13_REFERENCE_CONTEXT: "1"
           B13_NATIVE_RUN_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-b13-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_capacity_run_material tests.vnext.test_capacity_numeric_run
   going-concern-native-runs:
@@ -115,10 +122,13 @@ jobs:
         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
         with:
           python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
       - name: Validate complete recorded D04 source assessments through native Review and Run
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts
+          D04_REFERENCE_CONTEXT: "1"
           D04_NATIVE_RUN_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-d04-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_d04_run_material
   instant-native-runs:

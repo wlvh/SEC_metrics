@@ -37,7 +37,7 @@ def _response_schema(policy):
     return obj({'request_id':text,'units':array(unit)})
 
 
-def prepare_regulatory_semantic_source(*,repo_root:Path,company_id:str):
+def prepare_regulatory_semantic_source(*,repo_root:Path,company_id:str,request_context_format=None):
     # The inherited assembler makes no D04 conclusion; reuse its complete
     # original annual/amendment text and native-object reconstruction.
     original=prepare_d04_semantic_source(repo_root=repo_root,company_id=company_id)
@@ -58,6 +58,10 @@ def prepare_regulatory_semantic_source(*,repo_root:Path,company_id:str):
         inherited_complete_source_id=original['semantic_source_id'],
         regulatory_policy_sha256=sha256_file(path=ROOT/POLICY_PATH),
         regulatory_module_sha256=sha256_file(path=Path(__file__)))
+    if request_context_format is not None:
+        from .continuous_request_context import FORMAT_VERSION
+        _need(request_context_format == FORMAT_VERSION, 'D03_CONTEXT_FORMAT_UNSUPPORTED')
+        body['request_context_format'] = FORMAT_VERSION
     return {**body,'semantic_source_id':content_hash(value=body)}
 
 
@@ -67,12 +71,22 @@ def requests_from_source(source):
     _need(source['metric_id']=='D03' and source['source_serialization_complete']
           and source['semantic_source_id']==content_hash(value={k:v for k,v in source.items() if k!='semantic_source_id'}),
           'D03_COMPLETE_SOURCE_REQUIRED')
-    documents={d['document_id']:d for d in source['documents']};rows=[]
+    documents={d['document_id']:d for d in source['documents']}
     statement_facts = aggregate_facts_from_source(source)
-    for unit in source['units']:
-        doc=documents[unit['document_id']];kind,items=_source_items(unit)
-        required=(doc['language_candidate_block_indices'] if kind=='VISIBLE_BLOCK' else
-                  doc['native_candidate_ordinals'] if kind=='NATIVE_FACT' else [])
+    from .continuous_request_context import FORMAT_VERSION, measured_groups
+    context_format = source.get('request_context_format')
+    _need(context_format in {None, FORMAT_VERSION}, 'D03_CONTEXT_FORMAT_UNSUPPORTED')
+
+    def request_for_group(group):
+        doc=documents[group[0]['document_id']]
+        required = []; facts = []
+        for unit in group:
+            kind,items=_source_items(unit)
+            indices=(doc['language_candidate_block_indices'] if kind=='VISIBLE_BLOCK' else
+                     doc['native_candidate_ordinals'] if kind=='NATIVE_FACT' else [])
+            required.extend({'unit_id':unit['unit_id'],'kind':kind,'source_index':i} for i in indices if i in items)
+            facts.extend(f for f in statement_facts if f['document_id'] == doc['document_id']
+                         and kind == 'VISIBLE_BLOCK' and f['block_index'] in items)
         body={'record_type':'D03_INTERPRETATION_REQUEST','metric_id':'D03',
             'source_id':source['semantic_source_id'],'company_id':source['company_id'],
             'target_cik':source['prepared_annual_input']['entity'],
@@ -80,24 +94,27 @@ def requests_from_source(source):
             'fiscal_label_context':{k:source['prepared_annual_input']['fiscal_year_label_resolution'][k] for k in
                 ('selected_fiscal_year','basis','original_dei_fiscal_year','original_companyfacts_fiscal_year_values','metadata_conflict_retained')},
             'document_context':{k:doc[k] for k in ('document_id','filing','registrant_name_binding','language_candidate_block_indices','native_candidate_ordinals')},
-            'units':[unit],'system_prompt':policy['system_prompt'],'category_definitions':policy['category_definitions'],
-            'required_candidate_assessments':[{'unit_id':unit['unit_id'],'kind':kind,'source_index':i} for i in required if i in items],
+            'units':group,'system_prompt':policy['system_prompt'],'category_definitions':policy['category_definitions'],
+            'required_candidate_assessments':required,
             'response_protocol':{'root_fields':['request_id','units'],'unit_fields':['unit_id','reviewed','findings','context_only_source_indices','unresolved'],
                 'finding_fields':['kind','subject','event_dates','reported_status','evidence','reason'],'evidence_fields':['kind','source_index'],
                 'evidence_kinds':['VISIBLE_BLOCK','NATIVE_FACT','NATIVE_SUPPLEMENT'],'finding_kinds':policy['kinds'],
                 'subjects':policy['subjects'],'reported_status_values':policy['reported_status_values'],'json_schema':_response_schema(policy)},
             'policy_sha256':sha256_file(path=ROOT/POLICY_PATH),'provider_request_sent':False,
             'provider_tokens_measured':False,'production_authorized':False}
-        body['source_statement_facts'] = [f for f in statement_facts
-            if f['document_id'] == doc['document_id'] and kind == 'VISIBLE_BLOCK'
-            and f['block_index'] in items]
+        body['source_statement_facts'] = facts
+        if context_format is not None:
+            body['request_context_format'] = context_format
         if body['source_statement_facts']:
             body['system_prompt'] += (' source_statement_facts records bounded source-derived relations. '
                 'Keep assertion, source-bound subject, reported time and level of case detail separate. '
                 'An affirmative aggregate involvement fact supplies no case identity, count or guilt. '
                 'Preserve exceptions and other findings; report conflicts as unresolved instead of erasing the source fact.')
-        rows.append({**body,'request_id':content_hash(value=body)})
-    _need([r['units'][0]['unit_id'] for r in rows]==source['required_unit_ids'],'D03_SOURCE_UNIT_COVERAGE_CHANGED')
+        return {**body,'request_id':content_hash(value=body)}
+
+    groups = [[unit] for unit in source['units']] if context_format is None else measured_groups(source['units'], request_for_group)
+    rows = [request_for_group(group) for group in groups]
+    _need([u['unit_id'] for r in rows for u in r['units']]==source['required_unit_ids'],'D03_SOURCE_UNIT_COVERAGE_CHANGED')
     return rows
 
 

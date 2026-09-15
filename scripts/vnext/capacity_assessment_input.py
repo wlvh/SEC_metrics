@@ -73,6 +73,8 @@ def register_assessment_input(*, prepared_requests, ledger):
         'requirement_closure_hash': requirement['requirement_closure_hash'],
         'mode': 'LIVE' if ledger.live else 'RECORDED_TEST_ONLY', 'assessment': assessment,
         'native_requests': native, 'new_call_authority': False, 'production_authorized': False}
+    if 'request_context_format' in source:
+        body['request_context_format'] = source['request_context_format']
     value = {**body, 'input_record_id': content_hash(value=body)}
     from .ordinary_source_authority import _immutable
     directory = _journal(value['mode'], metric) / input_key(source, requirement)
@@ -110,6 +112,8 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
     else:
         path = resolve_repository_file(repo_root=ROOT, repo_relative_path=export_path)
     value = strict_json_file(path=path)
+    need(value.get('request_context_format') == source.get('request_context_format'),
+         'NATIVE_ASSESSMENT_CONTEXT_FORMAT_CHANGED')
     need(value['record_type'] == metric + '_REGISTERED_NATIVE_ASSESSMENT_INPUT'
          and value['schema_version'] == 1 and value['source_id'] == source['semantic_source_id']
          and value['company_id'] == source['company_id']

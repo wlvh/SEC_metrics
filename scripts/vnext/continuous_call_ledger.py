@@ -16,7 +16,8 @@ from .invocation_control import _exclusive_write_json
 from .sources import resolve_repository_file
 
 _FACTORY = object()
-_STOP = {'HTTP_402', 'UNKNOWN_REMOTE_OUTCOME', 'SOURCE_AUTHENTICITY_FAILED', 'USAGE_UNKNOWN'}
+_STOP = {'HTTP_402', 'UNKNOWN_REMOTE_OUTCOME', 'SOURCE_AUTHENTICITY_FAILED', 'USAGE_UNKNOWN',
+         'CONTEXT_REFERENCE_MISMATCH'}
 
 
 def _read(root, relative):

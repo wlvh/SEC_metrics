@@ -419,3 +419,5 @@ D04历史控制入口见`docs/historical_semantic_controls.md`：Enphase2016/201
 PR43 review5205267507修复增量：D04源句关系检查在原生接受、文字结果和未披露公共行共同执行，检查肯定/否定及排除标签，具体未决不成为未披露。B13测试来源补齐metric_id合同；B13完整原生测试独立CI作业避免累计作业超时。限定开发验证与后续独立审阅、真实完整验收仍分别登记。
 
 B13数值接线增量：capacity_utilization_source新增明确年度数量及相同范围的原件检查；capacity_run/run_store/ordinary_projection接入原Calculator、精确记录图与原句证据。合成数值场景明确替代来源准入/登记，不是Ford/Enphase真实利用率，受影响真实调用暂停与独立审阅责任保持。
+
+本轮5207290213恢复材料见`docs/evidence/issue28_continuous/review-5207290213/`。`continuous_request_context.py`负责限定完整Chat Completions计数和显式新分组；原输入加输出预留仍受200000限制，实际usage不匹配暂停provider。D04作用域修复有两轮独立发现及第三轮复核；B13假设数量上下文新增P1尚待修复。旧6e5 D03独立审阅未补齐，不将本轮审阅扩大。

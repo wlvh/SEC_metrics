@@ -46,7 +46,8 @@ class CapacityRunMaterialTest(unittest.TestCase):
         with patch.object(socket.socket, 'connect', side_effect=AssertionError('NETWORK_FORBIDDEN')), \
              patch.object(socket, 'getaddrinfo', side_effect=AssertionError('DNS_FORBIDDEN')), \
              patch('sec_http.urlopen', side_effect=AssertionError('SEC_FORBIDDEN')):
-            prepared = prepare_requests(company_id='enphase_energy', metric_id='B13')
+            prepared = prepare_requests(company_id='enphase_energy', metric_id='B13',
+                reference_context=os.environ.get('B13_REFERENCE_CONTEXT') == '1')
             ledger = recorded_ledger(root=directory / 'ledger')
             for request_object in prepared:
                 request = strict_json_loads(text=request_object.request_bytes.decode())
@@ -65,7 +66,8 @@ class CapacityRunMaterialTest(unittest.TestCase):
             from vnext.ordinary_projection import render_ordinary_run
             data, run = directory / 'data', directory / 'run'
             install_inputs(data_root=data, company_id='enphase_energy', assessment_mode='RECORDED_TEST_ONLY',
-                           assessment_input_id=registered['input_record_id'])
+                           assessment_input_id=registered['input_record_id'],
+                           request_context_format=source.get('request_context_format'))
             with self.assertRaises(ValueError):
                 load_registered_input(data_root=data, source=source, requirement=prepared[0].requirement, mode='LIVE')
             created = create_normal_run(data_root=data, run_dir=run, company_id='enphase_energy', metric_id='B13')
@@ -80,10 +82,11 @@ class CapacityRunMaterialTest(unittest.TestCase):
                 target = directory / 'rows' / name; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(raw)
             from vnext.run_store import _mechanically_replay_open_run, RunStoreError
             checkpoint = data / EXPORT_PATH; original = checkpoint.read_bytes()
-            for mutation in ('omit_request', 'upgrade_mode'):
+            for mutation in ('omit_request', 'upgrade_mode', 'context_format'):
                 bad = json.loads(original)
                 if mutation == 'omit_request': bad['native_requests'].pop()
-                else: bad['mode'] = 'LIVE'; bad['assessment']['mode'] = 'LIVE'
+                elif mutation == 'upgrade_mode': bad['mode'] = 'LIVE'; bad['assessment']['mode'] = 'LIVE'
+                else: bad['request_context_format'] = 'unapproved-format'
                 bad['input_record_id'] = content_hash(value={k: v for k, v in bad.items() if k != 'input_record_id'})
                 checkpoint.write_bytes(canonical_json_bytes(value=bad))
                 try:
@@ -95,6 +98,6 @@ class CapacityRunMaterialTest(unittest.TestCase):
                 'result_id': created['result']['result_id'], 'source_requests': len(prepared),
                 'real_calls': [0, 0, 0], 'semantic_assessment_mode': 'RECORDED_TEST_ONLY',
                 'complete_b13_real_acceptance': False, 'production_authorized': False,
-                'negative_cases': ['missing native request', 'recorded input relabelled live']}
+                'negative_cases': ['missing native request', 'recorded input relabelled live', 'changed request context format']}
             (directory / 'summary.json').write_bytes(canonical_json_bytes(value=summary))
             print(summary)

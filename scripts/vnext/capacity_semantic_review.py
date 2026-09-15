@@ -173,14 +173,17 @@ def requests_from_source(source):
     need(source['required_unit_ids'] == [u['unit_id'] for u in source['units']]
          and len(set(source['required_unit_ids'])) == len(source['units']),
          'B13_SOURCE_UNIT_SET_CHANGED')
-    groups = shared_source_groups(source['units'], rules['max_group_source_bytes'])
     documents = {d['document_id']: d for d in source['documents']}
     annual = source['prepared_annual_input']
-    requests = []
-    for group in groups:
+    from .continuous_request_context import FORMAT_VERSION, measured_groups
+    context_format = source.get('request_context_format')
+    need(context_format in {None, FORMAT_VERSION}, 'B13_CONTEXT_FORMAT_UNSUPPORTED')
+
+    def request_for_group(group):
         packed, shared = _shared_units(group)
-        need(len(_bytes([packed, shared])) <= rules['max_group_source_bytes'],
-             'B13_SOURCE_GROUP_EXCEEDS_BOUND')
+        if context_format is None:
+            need(len(_bytes([packed, shared])) <= rules['max_group_source_bytes'],
+                 'B13_SOURCE_GROUP_EXCEEDS_BOUND')
         document = documents[group[0]['document_id']]
         ids = {u['unit_id'] for u in group}
         body = {'record_type': 'B13_INTERPRETATION_REQUEST', 'metric_id': 'B13',
@@ -200,7 +203,13 @@ def requests_from_source(source):
                 'policy_sha256': sha256_file(path=ROOT / POLICY_PATH),
                 'provider_request_sent': False, 'provider_tokens_measured': False,
                 'production_authorized': False}
-        requests.append({**body, 'request_id': content_hash(value=body)})
+        if context_format is not None:
+            body['request_context_format'] = context_format
+        return {**body, 'request_id': content_hash(value=body)}
+
+    groups = (shared_source_groups(source['units'], rules['max_group_source_bytes']) if context_format is None else
+              measured_groups(source['units'], request_for_group))
+    requests = [request_for_group(group) for group in groups]
     need([u['unit_id'] for r in requests for u in r['units']] == source['required_unit_ids'],
          'B13_REQUEST_COVERAGE_CHANGED')
     return requests

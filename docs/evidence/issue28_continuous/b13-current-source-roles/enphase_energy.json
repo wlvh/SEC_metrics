@@ -1,0 +1,2762 @@
+{
+  "company_id": "enphase_energy",
+  "semantic_source_id": "sha256:d0eeb5536208fb8d77716d691780a49b7945c9c222dea4079091349ffcd31972",
+  "prepared_annual_input_id": null,
+  "period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "documents": [
+    {
+      "document_id": "sha256:e84e4c799f48ae3f2fb6f6994f06f975b002bcf4ad61eb46891f3e57ee9fc7f3",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+        "raw_asset_id": "sha256:7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+        "accession": "0001463101-26-000013",
+        "document_name": "enph-20251231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:b9ebac29d66992383ca6314bc260daa68608e2f34424768305f50622c0871ffd"
+      },
+      "raw_blob": {
+        "record_type": "RAW_BLOB",
+        "raw_asset_id": "sha256:7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+        "byte_length": 2973878,
+        "media_type": "text/html",
+        "storage_uri": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
+      },
+      "filing": {
+        "accessionNumber": "0001463101-26-000013",
+        "filingDate": "2026-02-17",
+        "reportDate": "2025-12-31",
+        "acceptanceDateTime": "2026-02-14T02:38:22.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-35480",
+        "filmNumber": "26635774",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 16190838,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "enph-20251231.htm",
+        "primaryDocDescription": "10-K"
+      },
+      "registrant_name_binding": {
+        "dei_facts": [
+          {
+            "namespace": "http://xbrl.sec.gov/dei/2025",
+            "fact": {
+              "tag": "ix:nonnumeric",
+              "qualified_name": "dei:EntityRegistrantName",
+              "context_ref": "c-1",
+              "unit_ref": "",
+              "scale": "0",
+              "sign": "",
+              "ordinal": 38,
+              "text": "Enphase Energy, Inc."
+            },
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0001463101",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "typed_dimension_count": 0
+            }
+          }
+        ],
+        "invalid_dei_contexts": [],
+        "cover_name": {
+          "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+          "raw_asset_id": "sha256:7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+          "document_id": "sha256:e84e4c799f48ae3f2fb6f6994f06f975b002bcf4ad61eb46891f3e57ee9fc7f3",
+          "section_id": "ANNUAL_COVER",
+          "labels": [
+            "EXPLICIT_REGISTRANT_CHARTER_NAME"
+          ],
+          "block_index": 11,
+          "text": "Enphase Energy, Inc.",
+          "raw_start_byte": 240273,
+          "raw_end_byte": 240293,
+          "raw_span_sha256": "615a8aafeb0230156a5eee847dd810265ac07b361ad139dc9f637044e273ccff"
+        },
+        "cover_caption": {
+          "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+          "raw_asset_id": "sha256:7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+          "document_id": "sha256:e84e4c799f48ae3f2fb6f6994f06f975b002bcf4ad61eb46891f3e57ee9fc7f3",
+          "section_id": "ANNUAL_COVER",
+          "labels": [
+            "EXACT_NAME_OF_REGISTRANT_LABEL"
+          ],
+          "block_index": 12,
+          "text": "(Exact name of registrant as specified in its charter)",
+          "raw_start_byte": 240474,
+          "raw_end_byte": 240528,
+          "raw_span_sha256": "83c9ba74048e5a956ba8180409324361523cafc335d3b988dae1124b8086a332"
+        },
+        "relation": {
+          "relation": "SAME_SUBSTANTIVE_WORDS_AND_TERMINAL_LEGAL_FORM",
+          "removed_dei_terminal_marker": null,
+          "marker_jurisdiction_meaning_asserted": false,
+          "terminal_legal_form": "incorporated"
+        },
+        "accepted_source_names": [
+          "Enphase Energy, Inc."
+        ],
+        "status": "SAME_SOURCE_COVER_AND_CURRENT_DEI_NAME_BOUND"
+      },
+      "visible_block_count": 2709,
+      "native_coverage": {
+        "fact_count": 1839,
+        "source_object_count": 495,
+        "supplement_count": 115,
+        "encoded_outer_supplement_count": 79,
+        "duplicate_nested_xml_bytes_removed": 383039,
+        "native_fact_stream_sha256": "057b2d950438513eaa6797ccd0eeaeb328d4527f2a369fbdc866a8619f0ebdf4",
+        "native_contexts_and_units_retained": true,
+        "native_roundtrip_verified": true
+      },
+      "language_candidate_block_indices": [
+        378
+      ],
+      "native_candidate_ordinals": [],
+      "source_unit_ids": [
+        "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+        "sha256:ad316ca15a3c67a043ce81f8d66731979112b3a4286fb058c144d21f7084bcb0",
+        "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+        "sha256:885e215a010679cf5a16dd0d94e1a6bc49f846b7ac4702b9af3f735136afaf57",
+        "sha256:270e5d5d6f8307066f62ef93e9e542c612e8b09e4ca1ba393cbea6aadbd6e2ad",
+        "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+        "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+        "sha256:2bf0475d01d7cc29295a1d9b6ee635aad231a38d46f85ea407c182c18e098bb6",
+        "sha256:23c828273501990f075abe76dc8bae989c11d13673b0832f43e4cdf364b106af",
+        "sha256:518c3a07134a9c1a5ca2f395297418bcc7373d8e8996897b154595080f4bb420",
+        "sha256:aa4f70f207d4a8c940969a93a08fa8bc31a4c36012af6e7de5217a8119a6a9ae",
+        "sha256:7fbd11f421ffc289853f5916bc8ba904e943a046221b8c9c53526872ff84cd35",
+        "sha256:46c52e1d32772af966517728b834108e4017603c0c17d6fa84ab5a8971fd2f1a",
+        "sha256:b4987a1795564d102e98275fd9ba4b7e580690f99d4a839e1f3847dd6bce4716",
+        "sha256:4af6ba0684c5d311f1df86d5d408b8e2693407c3d456903f4da6214c7b79eff1",
+        "sha256:f6170727e1ec58a8699fd4efc81ecbcba531a6dfcad1ccf9260fce858dbee79a",
+        "sha256:82772eb76cf127e5fe8cd9e3d1147a6a739b8cd1eb2dd1b5128c94f841cdee19",
+        "sha256:e4aa1818f18ce38d35f9cea7198a918a497e84110466a3934929ddf92e0d1b92",
+        "sha256:8b10edb7c09fb1f93de152446b015341e473a34a0e67febfddf9de904758649a",
+        "sha256:a396c8b3e1b590c277ee7e20e81b75443e07376d8979a099a9e84929019a0590",
+        "sha256:754e4524d872a4ff6a1ac3dcf7b7a138504076c2354a515077648c339d791e6b",
+        "sha256:0dfadab8fd3249602fe90cce23aa749263a7a181f9593c458408d1b04438d55c",
+        "sha256:2fd8c698d00245e6713693d74402dfaf876f5d5d8d8a214cb72b8c5444899435",
+        "sha256:2d8946f658c6280d6848546d436a619dcbbb7bae8c1c8fcb8a4367302b90b975",
+        "sha256:692e927c787906d48438b7088adc1c559088ea8b971a76888c0fa8f67fedcbdc",
+        "sha256:b388d95f98350dda0e800af5ce1bb7bf1bffc84f334aa80dce1022e188084d4d",
+        "sha256:172642f5c2d61d5a52f214dc924f59fdaff6adaaa681594b86b3516764fe8c69",
+        "sha256:8dfd3ef2d88a0b838725a615f1f0bd97a0ba72c8fef42e4b7e1eaf5471d954c2",
+        "sha256:83edb6f7074ce1aa656716040a7b79cecfc0a059ac7c76a214f9f46b531c2e82"
+      ]
+    }
+  ],
+  "all_units_equal_archived_originals": true,
+  "units_by_kind": {
+    "VISIBLE_TEXT": 7,
+    "NATIVE_FACTS": 10,
+    "NATIVE_SUPPLEMENTS": 12
+  },
+  "complete_visible_block_count": 2709,
+  "source_anchor_blocks": [
+    {
+      "block_index": 282,
+      "text": "In November 2025, we commenced Enphase manufacturing at our Arlington, Texas facility previously operated by Salcomp Manufacturing USA Corp. This in-house facility, together with our contract manufacturer relationship with Flex, provides us with strategic manufacturing capabilities and enhanced operational flexibility in the United States. We are currently shipping both residential and commercial IQ Microinverters and IQ Batteries with higher domestic content from the U.S.-based manufacturing facilities in South Carolina and Texas, where we have added several new production lines across the two sites. Moving manufacturing to the United States allows us to benefit from certain incentives under the IRA, improve service to our customers by reducing delivery times, diversifying our supply chain and supporting solar projects to qualify for the Domestic Content Bonus Credit.",
+      "raw_start_byte": 396670,
+      "raw_end_byte": 397551,
+      "raw_span_sha256": "65efb63a027c1310d84d647d95b6575fe7f799167cccb340a6c83b3b297d0534",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 809,
+      "text": "To mitigate supply chain risks and tariff exposure and to leverage U.S. manufacturing incentives, we continued to operate our domestic manufacturing footprint, including our in‑house manufacturing facility and our partnership with Flex. These arrangements maintained a combined manufacturing capacity of approximately five-million microinverters per quarter. Beginning in the second half of 2024, we began shipping residential and commercial microinverters and batteries with higher domestic content from U.S. manufacturing facilities, which are expected to help certain solar and battery projects qualify for the domestic content bonus tax credit. The domestic content bonus tax credit is only available to commercial asset owners, which includes commercial businesses adding solar and power purchase agreements/lease providers who own residential solar projects.",
+      "raw_start_byte": 783549,
+      "raw_end_byte": 784419,
+      "raw_span_sha256": "8c781cccc2010e4c079a6b5e93230262dc3371ac458eeea588f96c405a59eaf5",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 883,
+      "text": "Net revenues increased by $142.6 million, or 11%, in the year ended December 31, 2025, as compared to the same period in 2024, driven primarily by a 36% increase in IQ Batteries MWh shipped, partially offset by a 2% decrease in microinverter units sold. During the year ended December 31, 2025, we sold approximately 6.4 million microinverter units and shipped 706.1 MWh of IQ Batteries, as compared to approximately 6.5 million microinverter units and 521 MWh of IQ Batteries shipped in the year ended December 31, 2024.",
+      "raw_start_byte": 855178,
+      "raw_end_byte": 855699,
+      "raw_span_sha256": "f3b75882ead98e9e318cd4d9e7b6c84353fb0f3d6b76c710ac678a35d5f39226",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 899,
+      "text": "Cost of revenues increased by $84.7 million, or 12%, for the year ended December 31, 2025, as compared to the same period in 2024. This increase was primarily driven by increased MWh of IQ Batteries shipped, higher tariffs and indirect manufacturing costs. This increase in cost of revenues was partially offset by benefits recognized from tax credits under the AMPTC for U.S. manufactured microinverters and IQ Batteries MWh shipped to customers. The AMPTC benefits recognized were $238.7 million for the year ended December 31, 2025, as compared to $157.5 million for the same period in 2024.",
+      "raw_start_byte": 869566,
+      "raw_end_byte": 870160,
+      "raw_span_sha256": "b010ebcbde528b437c0f5c7d3bd75df5d80ec426e0811371334defa34a92c6fe",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 1364,
+      "text": "In August 2022, the U.S. enacted the Inflation Reduction Act of 2022 (“IRA”), which includes credits under the AMPTC, to incentivize clean energy component sourcing and production, including for the production of microinverters. The IRA provides for an AMPTC on microinverters of 11 cents per alternating current watt basis. The AMPTC on microinverters decreases by 25% each year beginning in 2030 and ending after 2032. The Company recognized credits under AMPTC as a reduction to cost of revenues in the consolidated statements of operations for the microinverters manufactured in the United States and sold to customers. Such credit is also reflected as an increase to prepaid income tax on the Company’s consolidated balance sheets within prepaid expenses and other",
+      "raw_start_byte": 1466916,
+      "raw_end_byte": 1467704,
+      "raw_span_sha256": "b11ee7fdfbddf599c5ab699742835fedc2665dc7ba6975d1bfb69dddd78ab015",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 1369,
+      "text": "current assets. For the years ended December 31, 2025 and 2024, benefits recognized from AMPTC of $238.7 million and $157.5 million, respectively, were recorded as a prepaid income tax of $227.5 million and $94.9 million (included in prepaid expenses and other current assets), respectively, and reduction of income tax payable of $11.2 million and $62.7 million (included in accrued liabilities), respectively, on the consolidated balance sheets, and as a reduction to cost of revenues of $238.7 million and $157.5 million on the consolidated statements of operations for the year ended December 31, 2025 and 2024, respectively. In addition, the Company recognized a grant receivable of $76.6 million and $15.1 million included in prepaid expenses and other current assets on the consolidated balance sheets as of December 31, 2025 and 2024, respectively, for inventory on hand because it has reasonable assurance that it will comply with the grant’s conditions and that the grant will be received when sold in the following 12 months, which is equal to the reduction of the carrying cost of the inventory on the consolidated balance sheets as of December 31, 2025 and 2024, respectively. Amounts recognized in the consolidated financial statements are based on management’s judgment and interpretation of the most current guidance.",
+      "raw_start_byte": 1470099,
+      "raw_end_byte": 1473536,
+      "raw_span_sha256": "9ba5ff265411008598b55874e9470a0631209cdd3657d958d5218753aaceac52",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 1560,
+      "text": "(1) In November 2025, the Company commenced in-house manufacturing at the Texas facility previously operated by Salcomp Manufacturing USA Corp, resulting in higher raw materials and new work-in-process inventory.",
+      "raw_start_byte": 1639500,
+      "raw_end_byte": 1639712,
+      "raw_span_sha256": "b5363203210a95d77eca876475386ba43d26e563c0216d2c9afc22672d100524",
+      "html_quotation_context": false
+    }
+  ],
+  "all_declared_quantity_units_and_facts": {
+    "number": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"number\"><xbrli:measure>xbrli:pure</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://fasb.org/us-gaap/2025|DebtInstrumentConvertibleConversionRatio1": [
+          21,
+          22
+        ],
+        "http://fasb.org/us-gaap/2025|ConcentrationRiskPercentage1": [
+          565,
+          566,
+          567,
+          568,
+          569,
+          570,
+          1687,
+          1688,
+          1689,
+          1690,
+          1691,
+          1692,
+          1693
+        ],
+        "http://fasb.org/us-gaap/2025|EquityMethodInvestmentOwnershipPercentage": [
+          1000
+        ],
+        "http://enphase.com/20251231|ProductWarrantyObligationsMeasurementInput": [
+          1053,
+          1054,
+          1055,
+          1056
+        ],
+        "http://enphase.com/20251231|StandardProductWarrantyAccrualChangeInDiscountRatePercent": [
+          1057
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentInterestRateStatedPercentage": [
+          1222,
+          1252,
+          1278,
+          1824
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentConvertibleThresholdPercentageOfStockPriceTrigger": [
+          1225,
+          1227,
+          1230,
+          1233,
+          1236,
+          1238,
+          1256,
+          1258,
+          1261,
+          1264,
+          1267
+        ],
+        "http://enphase.com/20251231|DebtInstrumentConvertibleMeasurementPeriodPercentageOfStockPriceTrigger": [
+          1235,
+          1266
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseWeightedAverageDiscountRatePercent": [
+          1299,
+          1300
+        ],
+        "http://enphase.com/20251231|ShareBasedCompensationArrangementByShareBasedPaymentAwardIncreaseInNumberOfSharesAuthorizedRatio": [
+          1340
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardMaximumEmployeeSubscriptionRate": [
+          1347
+        ],
+        "http://fasb.org/us-gaap/2025|SharebasedCompensationArrangementBySharebasedPaymentAwardPurchasePriceOfCommonStockPercent": [
+          1348
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate": [
+          1517
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationStateAndLocalIncomeTaxes": [
+          1519,
+          1556
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationForeignIncomeTaxRateDifferential": [
+          1521,
+          1527
+        ],
+        "http://enphase.com/20251231|EffectiveIncomeTaxRateReconciliationUnremittedForeignEarningsPercent": [
+          1523
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationOtherAdjustments": [
+          1525,
+          1529,
+          1553
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationGiltiPercent": [
+          1531
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationFdiiPercent": [
+          1533
+        ],
+        "http://enphase.com/20251231|EffectiveIncomeTaxRateReconciliationForeignBranchTaxPercent": [
+          1535
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationCrossBorderOtherPercent": [
+          1537
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationTaxCreditsForeign": [
+          1539
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationTaxCreditsOther": [
+          1541
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationTaxExemptIncome": [
+          1543
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationNondeductibleExpenseShareBasedCompensationCost": [
+          1545
+        ],
+        "http://enphase.com/20251231|EffectiveIncomeTaxRateReconciliationNondeductibleExpenseExcessCompensationPercent": [
+          1547
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationNondeductibleExpenseOther": [
+          1549
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationTaxContingencies": [
+          1551
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateContinuingOperations": [
+          1555
+        ],
+        "http://fasb.org/us-gaap/2025|RestructuringAndRelatedCostNumberOfPositionsEliminatedPeriodPercent": [
+          1831
+        ]
+      }
+    },
+    "segment": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"segment\"><xbrli:measure>enph:segment</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://fasb.org/us-gaap/2025|NumberOfReportableSegments": [
+          29
+        ],
+        "http://fasb.org/us-gaap/2025|NumberOfOperatingSegments": [
+          30
+        ]
+      }
+    },
+    "rate": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"rate\"><xbrli:measure>utr:Rate</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://fasb.org/us-gaap/2025|DebtInstrumentConvertibleConversionRatio1": [
+          31
+        ]
+      }
+    },
+    "usd": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"usd\"><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://xbrl.sec.gov/dei/2025|EntityPublicFloat": [
+          60
+        ],
+        "http://fasb.org/us-gaap/2025|CashAndCashEquivalentsAtCarryingValue": [
+          81,
+          82,
+          415,
+          416,
+          417
+        ],
+        "http://fasb.org/us-gaap/2025|RestrictedCashCurrent": [
+          83,
+          84
+        ],
+        "http://fasb.org/us-gaap/2025|MarketableSecuritiesCurrent": [
+          85,
+          86
+        ],
+        "http://fasb.org/us-gaap/2025|AllowanceForDoubtfulAccountsReceivableCurrent": [
+          87,
+          88,
+          469,
+          470,
+          471,
+          472
+        ],
+        "http://fasb.org/us-gaap/2025|AccountsReceivableNetCurrent": [
+          89,
+          90,
+          572,
+          573
+        ],
+        "http://fasb.org/us-gaap/2025|InventoryNet": [
+          91,
+          92,
+          608,
+          609
+        ],
+        "http://fasb.org/us-gaap/2025|PrepaidExpenseAndOtherAssetsCurrent": [
+          93,
+          94,
+          813,
+          814
+        ],
+        "http://fasb.org/us-gaap/2025|AssetsCurrent": [
+          95,
+          96
+        ],
+        "http://fasb.org/us-gaap/2025|PropertyPlantAndEquipmentNet": [
+          97,
+          98,
+          638,
+          639
+        ],
+        "http://fasb.org/us-gaap/2025|IntangibleAssetsNetExcludingGoodwill": [
+          99,
+          100,
+          685,
+          689
+        ],
+        "http://fasb.org/us-gaap/2025|Goodwill": [
+          101,
+          102,
+          650,
+          651,
+          654,
+          655
+        ],
+        "http://fasb.org/us-gaap/2025|OtherAssetsNoncurrent": [
+          103,
+          104
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredIncomeTaxAssetsNet": [
+          105,
+          106
+        ],
+        "http://fasb.org/us-gaap/2025|Assets": [
+          107,
+          108
+        ],
+        "http://fasb.org/us-gaap/2025|AccountsPayableCurrent": [
+          109,
+          110
+        ],
+        "http://fasb.org/us-gaap/2025|AccruedLiabilitiesCurrent": [
+          111,
+          112,
+          836,
+          837
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerLiabilityCurrent": [
+          113,
+          114,
+          578,
+          579
+        ],
+        "http://fasb.org/us-gaap/2025|ProductWarrantyAccrualClassifiedCurrent": [
+          115,
+          116,
+          864,
+          865,
+          866
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtCurrent": [
+          117,
+          118,
+          1193,
+          1194
+        ],
+        "http://fasb.org/us-gaap/2025|LiabilitiesCurrent": [
+          119,
+          120
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerLiabilityNoncurrent": [
+          121,
+          122,
+          580,
+          581
+        ],
+        "http://fasb.org/us-gaap/2025|ProductWarrantyAccrualNoncurrent": [
+          123,
+          124,
+          867,
+          868,
+          869
+        ],
+        "http://fasb.org/us-gaap/2025|OtherLiabilitiesNoncurrent": [
+          125,
+          126
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtNoncurrent": [
+          127,
+          128,
+          1195,
+          1196
+        ],
+        "http://fasb.org/us-gaap/2025|Liabilities": [
+          129,
+          130
+        ],
+        "http://fasb.org/us-gaap/2025|CommitmentsAndContingencies": [
+          131,
+          132
+        ],
+        "http://fasb.org/us-gaap/2025|CommonStockValue": [
+          141,
+          142
+        ],
+        "http://fasb.org/us-gaap/2025|AdditionalPaidInCapital": [
+          143,
+          144
+        ],
+        "http://fasb.org/us-gaap/2025|RetainedEarningsAccumulatedDeficit": [
+          145,
+          146
+        ],
+        "http://fasb.org/us-gaap/2025|AccumulatedOtherComprehensiveIncomeLossNetOfTax": [
+          147,
+          148
+        ],
+        "http://fasb.org/us-gaap/2025|StockholdersEquity": [
+          149,
+          150,
+          229,
+          230,
+          231,
+          232,
+          233,
+          257,
+          258,
+          259,
+          260,
+          261,
+          281,
+          282,
+          283,
+          284,
+          285,
+          305,
+          306,
+          307,
+          308,
+          309
+        ],
+        "http://fasb.org/us-gaap/2025|LiabilitiesAndStockholdersEquity": [
+          151,
+          152
+        ],
+        "http://fasb.org/us-gaap/2025|RevenueFromContractWithCustomerExcludingAssessedTax": [
+          153,
+          154,
+          155,
+          547,
+          548,
+          549,
+          550,
+          551,
+          552,
+          553,
+          554,
+          555,
+          556,
+          557,
+          558,
+          559,
+          560,
+          561,
+          562,
+          563,
+          564,
+          1764,
+          1765,
+          1766
+        ],
+        "http://fasb.org/us-gaap/2025|CostOfRevenue": [
+          156,
+          157,
+          158
+        ],
+        "http://fasb.org/us-gaap/2025|GrossProfit": [
+          159,
+          160,
+          161
+        ],
+        "http://fasb.org/us-gaap/2025|ResearchAndDevelopmentExpense": [
+          162,
+          163,
+          164
+        ],
+        "http://fasb.org/us-gaap/2025|SellingAndMarketingExpense": [
+          165,
+          166,
+          167
+        ],
+        "http://fasb.org/us-gaap/2025|GeneralAndAdministrativeExpense": [
+          168,
+          169,
+          170
+        ],
+        "http://fasb.org/us-gaap/2025|RestructuringCostsAndAssetImpairmentCharges": [
+          171,
+          172,
+          173,
+          1093,
+          1094,
+          1095,
+          1096,
+          1109,
+          1110,
+          1111,
+          1112,
+          1137,
+          1138,
+          1139,
+          1140,
+          1153,
+          1154,
+          1155,
+          1156,
+          1828
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingExpenses": [
+          174,
+          175,
+          176
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingIncomeLoss": [
+          177,
+          178,
+          179,
+          1791,
+          1792,
+          1793
+        ],
+        "http://fasb.org/us-gaap/2025|InterestIncomeDepositsWithFinancialInstitutions": [
+          180,
+          181,
+          182
+        ],
+        "http://fasb.org/us-gaap/2025|InterestExpenseNonoperating": [
+          183,
+          184,
+          185
+        ],
+        "http://fasb.org/us-gaap/2025|OtherNonoperatingIncomeExpense": [
+          186,
+          187,
+          188
+        ],
+        "http://fasb.org/us-gaap/2025|NonoperatingIncomeExpense": [
+          189,
+          190,
+          191,
+          1794,
+          1795,
+          1796
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest": [
+          192,
+          193,
+          194,
+          1484,
+          1485,
+          1486,
+          1797,
+          1798,
+          1799
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxExpenseBenefit": [
+          195,
+          196,
+          197,
+          1512,
+          1513,
+          1514,
+          1554,
+          1587,
+          1588,
+          1800,
+          1801,
+          1802
+        ],
+        "http://fasb.org/us-gaap/2025|NetIncomeLoss": [
+          198,
+          199,
+          200,
+          213,
+          214,
+          215,
+          247,
+          248,
+          269,
+          270,
+          293,
+          294,
+          310,
+          311,
+          312,
+          1697,
+          1698,
+          1699,
+          1803,
+          1804,
+          1805
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeForeignCurrencyTransactionAndTranslationGainLossArisingDuringPeriodNetOfTax": [
+          216,
+          217,
+          218,
+          252,
+          253,
+          276,
+          277,
+          300,
+          301
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossAvailableForSaleSecuritiesTax": [
+          219,
+          220,
+          221
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossAvailableForSaleSecuritiesAdjustmentNetOfTax": [
+          222,
+          223,
+          224
+        ],
+        "http://fasb.org/us-gaap/2025|ComprehensiveIncomeNetOfTax": [
+          225,
+          226,
+          227
+        ],
+        "http://fasb.org/us-gaap/2025|StockIssuedDuringPeriodValueShareBasedCompensation": [
+          235,
+          236,
+          263,
+          264,
+          287,
+          288
+        ],
+        "http://fasb.org/us-gaap/2025|StockIssuedDuringPeriodValueNewIssues": [
+          238,
+          239
+        ],
+        "http://fasb.org/us-gaap/2025|AdjustmentsRelatedToTaxWithholdingForShareBasedCompensation": [
+          240,
+          241,
+          265,
+          266,
+          289,
+          290
+        ],
+        "http://fasb.org/us-gaap/2025|AdjustmentsToAdditionalPaidInCapitalConvertibleDebtWithConversionFeature": [
+          243,
+          244
+        ],
+        "http://fasb.org/us-gaap/2025|AdjustmentsToAdditionalPaidInCapitalSharebasedCompensationRequisiteServicePeriodRecognitionValue": [
+          245,
+          246,
+          267,
+          268,
+          291,
+          292
+        ],
+        "http://fasb.org/us-gaap/2025|StockRepurchasedAndRetiredDuringPeriodValue": [
+          250,
+          251,
+          272,
+          273,
+          296,
+          297,
+          1324,
+          1325,
+          1326
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeUnrealizedHoldingGainLossOnSecuritiesArisingDuringPeriodNetOfTax": [
+          254,
+          255,
+          278,
+          279,
+          302,
+          303
+        ],
+        "http://fasb.org/us-gaap/2025|ShareRepurchaseProgramExciseTax": [
+          274,
+          275,
+          298,
+          299
+        ],
+        "http://fasb.org/us-gaap/2025|DepreciationDepletionAndAmortization": [
+          313,
+          314,
+          315
+        ],
+        "http://fasb.org/us-gaap/2025|AccretionAmortizationOfDiscountsAndPremiumsInvestments": [
+          316,
+          317,
+          318
+        ],
+        "http://fasb.org/us-gaap/2025|ProvisionForDoubtfulAccounts": [
+          319,
+          320,
+          321
+        ],
+        "http://fasb.org/us-gaap/2025|AssetImpairmentCharges": [
+          322,
+          323,
+          324
+        ],
+        "http://fasb.org/us-gaap/2025|AmortizationOfFinancingCostsAndDiscounts": [
+          325,
+          326,
+          327
+        ],
+        "http://fasb.org/us-gaap/2025|GainLossOnTerminationOfLease": [
+          328,
+          329,
+          330
+        ],
+        "http://fasb.org/us-gaap/2025|DebtSecuritiesGainLoss": [
+          331,
+          332,
+          333
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensation": [
+          334,
+          335,
+          336
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredIncomeTaxesAndTaxCredits": [
+          337,
+          338,
+          339
+        ],
+        "http://fasb.org/us-gaap/2025|IncreaseDecreaseInAccountsReceivable": [
+          340,
+          341,
+          342
+        ],
+        "http://fasb.org/us-gaap/2025|IncreaseDecreaseInInventories": [
+          343,
+          344,
+          345
+        ],
+        "http://fasb.org/us-gaap/2025|IncreaseDecreaseInPrepaidDeferredExpenseAndOtherAssets": [
+          346,
+          347,
+          348
+        ],
+        "http://fasb.org/us-gaap/2025|IncreaseDecreaseInAccountsPayableAndAccruedLiabilities": [
+          349,
+          350,
+          351
+        ],
+        "http://enphase.com/20251231|IncreaseDecreaseInWarrantyObligations": [
+          352,
+          353,
+          354
+        ],
+        "http://fasb.org/us-gaap/2025|IncreaseDecreaseInContractWithCustomerLiability": [
+          355,
+          356,
+          357
+        ],
+        "http://fasb.org/us-gaap/2025|NetCashProvidedByUsedInOperatingActivities": [
+          358,
+          359,
+          360
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsToAcquireMarketableSecurities": [
+          361,
+          362,
+          363
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromSaleAndMaturityOfMarketableSecurities": [
+          364,
+          365,
+          366
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsToAcquirePropertyPlantAndEquipment": [
+          367,
+          368,
+          369
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsToAcquireAvailableForSaleSecuritiesDebt": [
+          370,
+          371,
+          372,
+          1013,
+          1822
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsToAcquireEquitySecuritiesFvNi": [
+          373,
+          374,
+          375
+        ],
+        "http://enphase.com/20251231|PaymentsToAcquireTaxEquityInvestment": [
+          376,
+          377,
+          378,
+          1026
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsToAcquireLoansReceivable": [
+          379,
+          380,
+          381
+        ],
+        "http://fasb.org/us-gaap/2025|NetCashProvidedByUsedInInvestingActivities": [
+          382,
+          383,
+          384
+        ],
+        "http://fasb.org/us-gaap/2025|RepaymentsOfLongTermDebt": [
+          385,
+          386,
+          387,
+          1279
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromIssuanceOfSharesUnderIncentiveAndShareBasedCompensationPlansIncludingStockOptions": [
+          388,
+          389,
+          390
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsRelatedToTaxWithholdingForShareBasedCompensation": [
+          391,
+          392,
+          393
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsForRepurchaseOfCommonStock": [
+          394,
+          395,
+          396
+        ],
+        "http://enphase.com/20251231|PaymentOfExciseTaxOnStockRepurchases": [
+          397,
+          398,
+          399
+        ],
+        "http://fasb.org/us-gaap/2025|NetCashProvidedByUsedInFinancingActivities": [
+          400,
+          401,
+          402
+        ],
+        "http://fasb.org/us-gaap/2025|EffectOfExchangeRateOnCashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents": [
+          403,
+          404,
+          405
+        ],
+        "http://fasb.org/us-gaap/2025|CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffect": [
+          406,
+          407,
+          408
+        ],
+        "http://fasb.org/us-gaap/2025|CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents": [
+          409,
+          410,
+          411,
+          412,
+          413,
+          414,
+          421,
+          422,
+          423
+        ],
+        "http://fasb.org/us-gaap/2025|RestrictedCashAndCashEquivalents": [
+          418,
+          419,
+          420
+        ],
+        "http://fasb.org/us-gaap/2025|InterestPaidNet": [
+          424,
+          425,
+          426
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxesPaid": [
+          427,
+          428,
+          429
+        ],
+        "http://enphase.com/20251231|PurchaseOfPropertyAndEquipmentThroughTenantImprovementAllowance": [
+          430,
+          431,
+          432
+        ],
+        "http://fasb.org/us-gaap/2025|CapitalExpendituresIncurredButNotYetPaid": [
+          433,
+          434,
+          435
+        ],
+        "http://enphase.com/20251231|AdvancedManufacturingProductionTaxCreditIncomeTaxPayableBenefit": [
+          450,
+          451,
+          452,
+          453,
+          454,
+          455,
+          1670,
+          1671,
+          1672,
+          1673,
+          1674,
+          1675
+        ],
+        "http://enphase.com/20251231|AdvancedManufacturingProductionTaxCreditCostOfRevenuesOffset": [
+          456,
+          457,
+          1676,
+          1677
+        ],
+        "http://enphase.com/20251231|AdvancedManufacturingProductionTaxCreditIncomeTaxGrantReceivable": [
+          458,
+          459
+        ],
+        "http://fasb.org/us-gaap/2025|DebtSecuritiesAvailableForSaleAccruedInterestAfterAllowanceForCreditLoss": [
+          461,
+          462
+        ],
+        "http://fasb.org/us-gaap/2025|RestrictedCash": [
+          464
+        ],
+        "http://fasb.org/us-gaap/2025|AllowanceForDoubtfulAccountsReceivableWriteOffs": [
+          473
+        ],
+        "http://fasb.org/us-gaap/2025|AllowanceForDoubtfulAccountsReceivable": [
+          475,
+          476,
+          477,
+          487,
+          488,
+          489
+        ],
+        "http://enphase.com/20251231|AccountsReceivableNetChargesToRevenue": [
+          478,
+          479,
+          480
+        ],
+        "http://enphase.com/20251231|AccountsReceivableNetChargesToExpense": [
+          481,
+          482,
+          483
+        ],
+        "http://enphase.com/20251231|AccountsReceivableAllowanceForCreditLossWriteoffNetOfRecoveries": [
+          484,
+          485,
+          486
+        ],
+        "http://fasb.org/us-gaap/2025|TangibleAssetImpairmentCharges": [
+          497,
+          498,
+          499,
+          645,
+          646,
+          647
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseImpairmentLoss": [
+          501,
+          502,
+          503
+        ],
+        "http://fasb.org/us-gaap/2025|GoodwillImpairmentLoss": [
+          509,
+          508,
+          507
+        ],
+        "http://fasb.org/us-gaap/2025|ImpairmentOfIntangibleAssetsFinitelived": [
+          512,
+          513,
+          514,
+          667,
+          674,
+          681,
+          688
+        ],
+        "http://fasb.org/us-gaap/2025|AdvertisingExpense": [
+          535,
+          536,
+          537
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerAssetNetCurrent": [
+          574,
+          575
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerAssetNetNoncurrent": [
+          576,
+          577
+        ],
+        "http://fasb.org/us-gaap/2025|CapitalizedContractCostImpairmentLoss": [
+          582
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerAssetNet": [
+          583,
+          586
+        ],
+        "http://enphase.com/20251231|ContractWithCustomerAssetAmountRecognized": [
+          584
+        ],
+        "http://enphase.com/20251231|ContractWithCustomerAssetNewContractAdditions": [
+          585
+        ],
+        "http://enphase.com/20251231|ContractWithCustomerLiabilityCashPrepayments": [
+          587,
+          588
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerLiability": [
+          589,
+          592
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerLiabilityRevenueRecognized": [
+          590
+        ],
+        "http://enphase.com/20251231|ContractWithCustomerLiabilityIncreaseFromCashReceipts": [
+          591
+        ],
+        "http://fasb.org/us-gaap/2025|RevenueRemainingPerformanceObligation": [
+          594,
+          595,
+          596,
+          597,
+          598,
+          599
+        ],
+        "http://fasb.org/us-gaap/2025|InventoryRawMaterials": [
+          602,
+          603
+        ],
+        "http://fasb.org/us-gaap/2025|InventoryWorkInProcess": [
+          604,
+          605
+        ],
+        "http://fasb.org/us-gaap/2025|InventoryFinishedGoods": [
+          606,
+          607
+        ],
+        "http://fasb.org/us-gaap/2025|PropertyPlantAndEquipmentGross": [
+          614,
+          615,
+          618,
+          619,
+          622,
+          623,
+          626,
+          627,
+          630,
+          631,
+          632,
+          633,
+          634,
+          635
+        ],
+        "http://fasb.org/us-gaap/2025|AccumulatedDepreciationDepletionAndAmortizationPropertyPlantAndEquipment": [
+          636,
+          637
+        ],
+        "http://fasb.org/us-gaap/2025|Depreciation": [
+          640,
+          641,
+          642
+        ],
+        "http://fasb.org/us-gaap/2025|CapitalizedComputerSoftwareNet": [
+          643,
+          644
+        ],
+        "http://fasb.org/us-gaap/2025|GoodwillForeignCurrencyTranslationGainLoss": [
+          652,
+          653
+        ],
+        "http://fasb.org/us-gaap/2025|IndefiniteLivedIntangibleAssetsExcludingGoodwill": [
+          658,
+          659,
+          660,
+          661
+        ],
+        "http://fasb.org/us-gaap/2025|FiniteLivedIntangibleAssetsGross": [
+          662,
+          665,
+          669,
+          672,
+          676,
+          679
+        ],
+        "http://fasb.org/us-gaap/2025|FiniteLivedIntangibleAssetsAccumulatedAmortization": [
+          663,
+          666,
+          670,
+          673,
+          677,
+          680,
+          684,
+          687
+        ],
+        "http://fasb.org/us-gaap/2025|FiniteLivedIntangibleAssetsNet": [
+          664,
+          668,
+          671,
+          675,
+          678,
+          682,
+          702
+        ],
+        "http://fasb.org/us-gaap/2025|IntangibleAssetsGrossExcludingGoodwill": [
+          683,
+          686
+        ],
+        "http://fasb.org/us-gaap/2025|FiniteLivedIntangibleAssetsForeignCurrencyTranslationGainLoss": [
+          690
+        ],
+        "http://fasb.org/us-gaap/2025|AmortizationOfIntangibleAssets": [
+          692,
+          693,
+          694,
+          695,
+          696,
+          697,
+          698,
+          699
+        ],
+        "http://fasb.org/us-gaap/2025|FiniteLivedIntangibleAssetsAmortizationExpenseNextTwelveMonths": [
+          700
+        ],
+        "http://fasb.org/us-gaap/2025|FiniteLivedIntangibleAssetsAmortizationExpenseYearTwo": [
+          701
+        ],
+        "http://fasb.org/us-gaap/2025|DebtSecuritiesAvailableForSaleAmortizedCostExcludingAccruedInterestAfterAllowanceForCreditLoss": [
+          705,
+          711,
+          717,
+          723,
+          729,
+          735,
+          741,
+          747,
+          754,
+          761,
+          768,
+          775,
+          782,
+          789,
+          801
+        ],
+        "http://fasb.org/us-gaap/2025|AvailableForSaleDebtSecuritiesAccumulatedGrossUnrealizedGainBeforeTax": [
+          706,
+          712,
+          718,
+          724,
+          730,
+          736,
+          742,
+          748,
+          755,
+          762,
+          769,
+          776,
+          783,
+          790
+        ],
+        "http://fasb.org/us-gaap/2025|AvailableForSaleDebtSecuritiesAccumulatedGrossUnrealizedLossBeforeTax": [
+          707,
+          713,
+          719,
+          725,
+          731,
+          737,
+          743,
+          749,
+          756,
+          763,
+          770,
+          777,
+          784,
+          791
+        ],
+        "http://fasb.org/us-gaap/2025|DebtSecuritiesAvailableForSaleExcludingAccruedInterest": [
+          708,
+          709,
+          710,
+          714,
+          715,
+          716,
+          720,
+          721,
+          722,
+          726,
+          727,
+          728,
+          732,
+          733,
+          734,
+          738,
+          739,
+          740,
+          744,
+          745,
+          746,
+          750,
+          751,
+          752,
+          753,
+          757,
+          758,
+          759,
+          760,
+          764,
+          765,
+          766,
+          767,
+          771,
+          772,
+          773,
+          774,
+          778,
+          779,
+          780,
+          781,
+          785,
+          786,
+          787,
+          788,
+          792,
+          793,
+          794,
+          795,
+          802,
+          917,
+          918,
+          919,
+          920,
+          921,
+          922,
+          923,
+          924,
+          925,
+          926,
+          927,
+          928,
+          929,
+          930,
+          931,
+          932,
+          933,
+          934,
+          935,
+          936,
+          937,
+          938,
+          939,
+          940,
+          941,
+          942,
+          943,
+          944,
+          945,
+          946
+        ],
+        "http://fasb.org/us-gaap/2025|AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearAmortizedCost": [
+          797
+        ],
+        "http://fasb.org/us-gaap/2025|AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue": [
+          798
+        ],
+        "http://enphase.com/20251231|DebtSecuritiesAvailableForSaleAmortizedCostMaturityAllocatedAndSingleMaturityDateAfterYearOneThroughThree": [
+          799
+        ],
+        "http://enphase.com/20251231|DebtSecuritiesAvailableForSaleFairValueMaturityAllocatedAndSingleMaturityDateAfterYearOneThroughThree": [
+          800
+        ],
+        "http://fasb.org/us-gaap/2025|PrepaidTaxes": [
+          805,
+          806
+        ],
+        "http://fasb.org/us-gaap/2025|GrantsReceivable": [
+          807,
+          808
+        ],
+        "http://enphase.com/20251231|FinancingReceivableIncludingInterestCurrent": [
+          809,
+          810
+        ],
+        "http://fasb.org/us-gaap/2025|OtherPrepaidExpenseCurrent": [
+          811,
+          812
+        ],
+        "http://fasb.org/us-gaap/2025|AccruedMarketingCostsCurrent": [
+          816,
+          817
+        ],
+        "http://enphase.com/20251231|SupplyAndServiceAgreementsLiabilityCurrent": [
+          818,
+          819
+        ],
+        "http://enphase.com/20251231|DutiesAndTariffsCurrent": [
+          820,
+          821
+        ],
+        "http://enphase.com/20251231|AccruedFreightCosts": [
+          822,
+          823
+        ],
+        "http://fasb.org/us-gaap/2025|EmployeeRelatedLiabilitiesCurrent": [
+          824,
+          825
+        ],
+        "http://fasb.org/us-gaap/2025|AccruedIncomeTaxesCurrent": [
+          826,
+          827
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseLiabilityCurrent": [
+          828,
+          829,
+          1291,
+          1292
+        ],
+        "http://enphase.com/20251231|VATPayableCurrent": [
+          830,
+          831
+        ],
+        "http://fasb.org/us-gaap/2025|RestructuringReserve": [
+          832,
+          833,
+          1089,
+          1090,
+          1091,
+          1092,
+          1105,
+          1106,
+          1107,
+          1108,
+          1121,
+          1122,
+          1123,
+          1124,
+          1133,
+          1134,
+          1135,
+          1136,
+          1149,
+          1150,
+          1151,
+          1152,
+          1165,
+          1166,
+          1167,
+          1168
+        ],
+        "http://fasb.org/us-gaap/2025|OtherAccruedLiabilitiesCurrent": [
+          834,
+          835
+        ],
+        "http://fasb.org/us-gaap/2025|ProductWarrantyAccrual": [
+          840,
+          841,
+          842,
+          861,
+          862,
+          863
+        ],
+        "http://fasb.org/us-gaap/2025|StandardProductWarrantyAccrualWarrantiesIssued": [
+          843,
+          844,
+          845
+        ],
+        "http://fasb.org/us-gaap/2025|ProductWarrantyAccrualPreexistingIncreaseDecrease": [
+          846,
+          847,
+          848,
+          870,
+          871,
+          872,
+          873,
+          874,
+          875,
+          876,
+          877,
+          878,
+          881,
+          882,
+          883,
+          884,
+          885,
+          886,
+          887
+        ],
+        "http://fasb.org/us-gaap/2025|StandardProductWarrantyAccrualPayments": [
+          849,
+          850,
+          851
+        ],
+        "http://enphase.com/20251231|ProductWarrantyAccrualAccretionExpense": [
+          852,
+          853,
+          854
+        ],
+        "http://enphase.com/20251231|StandardProductWarrantyAccrualChangeInDiscountRate": [
+          855,
+          856,
+          857,
+          1046,
+          1047,
+          1058
+        ],
+        "http://enphase.com/20251231|StandardAndExtendedProductWarrantyAccrualOtherPeriodIncreaseDecrease": [
+          858,
+          859,
+          860
+        ],
+        "http://fasb.org/us-gaap/2025|CashAndCashEquivalentsFairValueDisclosure": [
+          893,
+          894,
+          895,
+          896,
+          897,
+          898,
+          899,
+          900,
+          901,
+          902,
+          903,
+          904,
+          905,
+          906,
+          907,
+          908,
+          909,
+          910,
+          911,
+          912,
+          913,
+          914,
+          915,
+          916
+        ],
+        "http://fasb.org/us-gaap/2025|DebtSecurities": [
+          947,
+          948,
+          949,
+          950,
+          951,
+          952,
+          1001,
+          1002,
+          1003,
+          1004,
+          1005,
+          1006,
+          1007,
+          1010,
+          1011,
+          1012
+        ],
+        "http://fasb.org/us-gaap/2025|EquitySecuritiesFvNiCurrentAndNoncurrent": [
+          953,
+          954,
+          955,
+          956,
+          957,
+          958
+        ],
+        "http://enphase.com/20251231|TaxEquityFundInvestmentFairValueDisclosure": [
+          959,
+          960,
+          961,
+          962,
+          963,
+          964,
+          1027
+        ],
+        "http://fasb.org/us-gaap/2025|AssetsFairValueDisclosure": [
+          965,
+          966,
+          967,
+          968,
+          969,
+          970
+        ],
+        "http://enphase.com/20251231|StandardAndExtendedProductWarrantyAccrualCurrentFairValueDisclosure": [
+          971,
+          972,
+          973,
+          974,
+          975,
+          976
+        ],
+        "http://enphase.com/20251231|StandardAndExtendedProductWarrantyAccrualNoncurrentFairValueDisclosure": [
+          977,
+          978,
+          979,
+          980,
+          981,
+          982
+        ],
+        "http://enphase.com/20251231|StandardAndExtendedProductWarrantyAccrualFairValueDisclosure": [
+          983,
+          984,
+          985,
+          986,
+          987,
+          988
+        ],
+        "http://fasb.org/us-gaap/2025|LiabilitiesFairValueDisclosure": [
+          989,
+          990,
+          991,
+          992,
+          993,
+          994
+        ],
+        "http://fasb.org/us-gaap/2025|NotesPayableFairValueDisclosure": [
+          995,
+          996
+        ],
+        "http://fasb.org/us-gaap/2025|EquitySecuritiesWithoutReadilyDeterminableFairValueAmount": [
+          997,
+          999
+        ],
+        "http://fasb.org/us-gaap/2025|EquitySecuritiesWithoutReadilyDeterminableFairValueImpairmentLossAnnualAmount": [
+          998
+        ],
+        "http://enphase.com/20251231|AccretedInterest": [
+          1008
+        ],
+        "http://enphase.com/20251231|FairValueMeasurementWithUnobservableInputsReconciliationRecurringBasisAssetImpairment": [
+          1009,
+          1022,
+          1023
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentFaceAmount": [
+          1014,
+          1221,
+          1251,
+          1253,
+          1823
+        ],
+        "http://fasb.org/us-gaap/2025|FairValueMeasurementWithUnobservableInputsReconciliationRecurringBasisAssetValue": [
+          1016,
+          1017,
+          1024,
+          1025
+        ],
+        "http://fasb.org/us-gaap/2025|FairValueMeasurementWithUnobservableInputsReconciliationRecurringBasisAssetPurchases": [
+          1018,
+          1019
+        ],
+        "http://fasb.org/us-gaap/2025|FairValueMeasurementWithUnobservableInputsReconciliationRecurringBasisAssetGainLossIncludedInEarnings1": [
+          1020,
+          1021
+        ],
+        "http://enphase.com/20251231|DeferredTaxAssetTaxEquityFund": [
+          1028
+        ],
+        "http://fasb.org/us-gaap/2025|OtherOperatingIncomeExpenseNet": [
+          1029
+        ],
+        "http://fasb.org/us-gaap/2025|NotesAndLoansReceivableNetCurrent": [
+          1031
+        ],
+        "http://fasb.org/us-gaap/2025|NotesAndLoansReceivableNetNoncurrent": [
+          1032
+        ],
+        "http://fasb.org/us-gaap/2025|NotesReceivableNet": [
+          1033
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableAllowanceForCreditLossesPeriodIncreaseDecrease": [
+          1034
+        ],
+        "http://fasb.org/us-gaap/2025|FairValueMeasurementWithUnobservableInputsReconciliationsRecurringBasisLiabilityValue": [
+          1036,
+          1037,
+          1050,
+          1051
+        ],
+        "http://enphase.com/20251231|FairValueMeasurementWithUnobservableInputsReconciliationRecurringBasisWarrantiesIssued": [
+          1038,
+          1039
+        ],
+        "http://enphase.com/20251231|FairValueMeasurementWithUnobservableInputsReconciliationsRecurringBasisLiabilityChangeInEstimate": [
+          1040,
+          1041
+        ],
+        "http://fasb.org/us-gaap/2025|FairValueMeasurementWithUnobservableInputsReconciliationRecurringBasisLiabilitySettlements": [
+          1042,
+          1043
+        ],
+        "http://fasb.org/us-gaap/2025|FairValueMeasurementWithUnobservableInputsReconciliationRecurringBasisLiabilityGainLossIncludedInEarnings": [
+          1044,
+          1045
+        ],
+        "http://enphase.com/20251231|FairValueMeasurementWithUnobservableInputsReconciliationRecurringBasisIncreaseDecreaseInOther": [
+          1048,
+          1049
+        ],
+        "http://enphase.com/20251231|WarrantyObligationsAtFairValueIncreaseInFairValueLiabilityResultingFromOnePercentagePointIncreaseInProfitElementAndRiskPremium": [
+          1059
+        ],
+        "http://enphase.com/20251231|WarrantyObligationsAtFairValueDecreaseInFairValueLiabilityResultingFromOnePercentagePointDecreaseInProfitElementAndRiskPremium": [
+          1060
+        ],
+        "http://enphase.com/20251231|WarrantyObligationsAtFairValueDecreaseInFairValueResultingFromOnePercentagePointIncreaseInDiscountRate": [
+          1061
+        ],
+        "http://enphase.com/20251231|WarrantyObligationsAtFairValueIncreaseInFairValueResultingFromOnePercentagePointDecreaseInDiscountRate": [
+          1062
+        ],
+        "http://fasb.org/us-gaap/2025|RestructuringCharges": [
+          1065,
+          1066,
+          1067,
+          1068,
+          1069,
+          1070,
+          1071,
+          1072,
+          1073,
+          1074,
+          1075,
+          1076,
+          1077,
+          1078,
+          1079,
+          1080,
+          1081,
+          1082,
+          1083,
+          1084,
+          1085,
+          1086,
+          1087,
+          1088,
+          1125,
+          1126,
+          1127,
+          1128,
+          1129,
+          1130,
+          1131,
+          1132
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsForRestructuring": [
+          1097,
+          1098,
+          1099,
+          1100,
+          1113,
+          1114,
+          1115,
+          1116,
+          1141,
+          1142,
+          1143,
+          1144,
+          1157,
+          1158,
+          1159,
+          1160,
+          1829
+        ],
+        "http://enphase.com/20251231|RestructuringReserveSettledWithoutCashNet": [
+          1101,
+          1102,
+          1103,
+          1104,
+          1117,
+          1118,
+          1119,
+          1120,
+          1145,
+          1146,
+          1147,
+          1148,
+          1161,
+          1162,
+          1163,
+          1164
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentCarryingAmount": [
+          1171,
+          1172,
+          1177,
+          1178,
+          1183,
+          1184
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredFinanceCostsNet": [
+          1173,
+          1174,
+          1179,
+          1180,
+          1187,
+          1188,
+          1242,
+          1269
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebt": [
+          1175,
+          1176,
+          1181,
+          1182,
+          1189,
+          1190,
+          1191,
+          1192,
+          1241,
+          1268,
+          1280
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentUnamortizedDiscount": [
+          1185,
+          1186
+        ],
+        "http://fasb.org/us-gaap/2025|InterestExpenseDebtExcludingAmortization": [
+          1197,
+          1198,
+          1199,
+          1200,
+          1201,
+          1202
+        ],
+        "http://fasb.org/us-gaap/2025|AmortizationOfDebtDiscountPremium": [
+          1203,
+          1204,
+          1205,
+          1206,
+          1207,
+          1208
+        ],
+        "http://fasb.org/us-gaap/2025|AmortizationOfFinancingCosts": [
+          1209,
+          1210,
+          1211,
+          1212,
+          1213,
+          1214
+        ],
+        "http://fasb.org/us-gaap/2025|InterestExpenseDebt": [
+          1215,
+          1216,
+          1217,
+          1218,
+          1219,
+          1220
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromConvertibleDebt": [
+          1223,
+          1254
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsForHedgeFinancingActivities": [
+          1245,
+          1272
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromIssuanceOfWarrants": [
+          1248,
+          1275
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseCost": [
+          1286,
+          1287,
+          1288
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseRightOfUseAsset": [
+          1289,
+          1290
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseLiabilityNoncurrent": [
+          1293,
+          1294
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseLiability": [
+          1295,
+          1296,
+          1314
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeasePayments": [
+          1301,
+          1302
+        ],
+        "http://fasb.org/us-gaap/2025|RightOfUseAssetObtainedInExchangeForOperatingLeaseLiability": [
+          1303,
+          1304
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueNextTwelveMonths": [
+          1306
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueYearTwo": [
+          1307
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueYearThree": [
+          1308
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueYearFour": [
+          1309
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueYearFive": [
+          1310
+        ],
+        "http://enphase.com/20251231|LesseeOperatingLeaseLiabilityToBePaidAfterYearFive": [
+          1311
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDue": [
+          1312
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityUndiscountedExcessAmount": [
+          1313
+        ],
+        "http://fasb.org/us-gaap/2025|PurchaseObligation": [
+          1315
+        ],
+        "http://fasb.org/srt/2025|StockRepurchaseProgramAuthorizedAmount1": [
+          1317
+        ],
+        "http://fasb.org/us-gaap/2025|StockRepurchaseProgramRemainingAuthorizedRepurchaseAmount1": [
+          1327
+        ],
+        "http://enphase.com/20251231|IrsLimitationForEmployeesRightToAcquireClassCommonStockUnderEspp": [
+          1351
+        ],
+        "http://fasb.org/us-gaap/2025|AllocatedShareBasedCompensationExpense": [
+          1356,
+          1357,
+          1358,
+          1359,
+          1360,
+          1361,
+          1362,
+          1363,
+          1364,
+          1365,
+          1366,
+          1367,
+          1368,
+          1369,
+          1370,
+          1371,
+          1372,
+          1373,
+          1378,
+          1379,
+          1380,
+          1381,
+          1382,
+          1383,
+          1384,
+          1385,
+          1386,
+          1387,
+          1388,
+          1389,
+          1773,
+          1774,
+          1775
+        ],
+        "http://fasb.org/us-gaap/2025|EmployeeServiceShareBasedCompensationTaxBenefitFromCompensationExpense": [
+          1374,
+          1375,
+          1376
+        ],
+        "http://fasb.org/us-gaap/2025|EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized": [
+          1390
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue": [
+          1399,
+          1408,
+          1417,
+          1436,
+          1445,
+          1454
+        ],
+        "http://fasb.org/us-gaap/2025|SharebasedCompensationArrangementBySharebasedPaymentAwardEquityInstrumentsOtherThanOptionsAggregateIntrinsicValueNonvested": [
+          1423,
+          1460
+        ],
+        "http://enphase.com/20251231|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsExpectedToVestIntrinsicValueValue": [
+          1427,
+          1464
+        ],
+        "http://enphase.com/20251231|ProceedsFromIssuanceOfCommonStockEmployeeStockPurchasePlan": [
+          1467,
+          1468,
+          1469
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeLossFromContinuingOperationsBeforeIncomeTaxesDomestic": [
+          1478,
+          1479,
+          1480
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeLossFromContinuingOperationsBeforeIncomeTaxesForeign": [
+          1481,
+          1482,
+          1483
+        ],
+        "http://fasb.org/us-gaap/2025|CurrentFederalTaxExpenseBenefit": [
+          1488,
+          1489,
+          1490
+        ],
+        "http://fasb.org/us-gaap/2025|CurrentStateAndLocalTaxExpenseBenefit": [
+          1491,
+          1492,
+          1493
+        ],
+        "http://fasb.org/us-gaap/2025|CurrentForeignTaxExpenseBenefit": [
+          1494,
+          1495,
+          1496
+        ],
+        "http://fasb.org/us-gaap/2025|CurrentIncomeTaxExpenseBenefit": [
+          1497,
+          1498,
+          1499
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredFederalIncomeTaxExpenseBenefit": [
+          1500,
+          1501,
+          1502
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredStateAndLocalIncomeTaxExpenseBenefit": [
+          1503,
+          1504,
+          1505
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredForeignIncomeTaxExpenseBenefit": [
+          1506,
+          1507,
+          1508
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredIncomeTaxExpenseBenefit": [
+          1509,
+          1510,
+          1511
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationIncomeTaxExpenseBenefitAtFederalStatutoryIncomeTaxRate": [
+          1516,
+          1557,
+          1558
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationStateAndLocalIncomeTaxes": [
+          1518,
+          1559,
+          1560
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationForeignIncomeTaxRateDifferential": [
+          1520,
+          1526,
+          1563,
+          1564
+        ],
+        "http://enphase.com/20251231|EffectiveIncomeTaxRateReconciliationUnremittedForeignEarningsAmount": [
+          1522,
+          1583,
+          1584
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationOtherAdjustments": [
+          1524,
+          1528,
+          1552,
+          1571,
+          1572
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationGiltiAmount": [
+          1530
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationFdiiAmount": [
+          1532,
+          1577,
+          1578
+        ],
+        "http://enphase.com/20251231|EffectiveIncomeTaxRateReconciliationForeignBranchTaxAmount": [
+          1534
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationCrossBorderOtherAmount": [
+          1536
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationTaxCreditsForeign": [
+          1538
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationTaxCreditsOther": [
+          1540
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationTaxExemptIncome": [
+          1542
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationNondeductibleExpenseShareBasedCompensationCost": [
+          1544,
+          1569,
+          1570
+        ],
+        "http://enphase.com/20251231|EffectiveIncomeTaxRateReconciliationNondeductibleExpenseExcessCompensationAmount": [
+          1546,
+          1581,
+          1582
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationNondeductibleExpenseOther": [
+          1548
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationTaxContingencies": [
+          1550
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationChangeInDeferredTaxAssetsValuationAllowance": [
+          1561,
+          1562
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationTaxCredits": [
+          1565,
+          1566
+        ],
+        "http://enphase.com/20251231|EffectiveIncomeTaxRateReconciliationNonTaxableIncomeSection45XTaxCreditsAmount": [
+          1567,
+          1568
+        ],
+        "http://enphase.com/20251231|IncomeTaxReconciliationNondeductibleAndNontaxableExpenseOther": [
+          1573,
+          1574
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationTaxContingenciesForeign": [
+          1575,
+          1576
+        ],
+        "http://enphase.com/20251231|EffectiveIncomeTaxRateReconciliationGlobalIntangibleLowTaxedIncomeAmount": [
+          1579,
+          1580
+        ],
+        "http://enphase.com/20251231|EffectiveIncomeTaxReconciliationPriorYearChangesInEstimates": [
+          1585,
+          1586
+        ],
+        "http://enphase.com/20251231|DeferredTaxAssetsTaxDeferredExpenseReservesAndAccrualsCurrent": [
+          1590,
+          1591
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsTaxDeferredExpenseReservesAndAccrualsAccruedLiabilities": [
+          1592,
+          1593
+        ],
+        "http://enphase.com/20251231|DeferredTaxAssetsOperatingLossCarryforwardsNoncurrent": [
+          1594,
+          1595
+        ],
+        "http://enphase.com/20251231|DeferredTaxAssetsTaxDeferredExpenseCompensationAndBenefitsShareBasedCompensationCostNoncurrent": [
+          1596,
+          1597
+        ],
+        "http://enphase.com/20251231|DeferredTaxAssetsDeferredIncomeNoncurrent": [
+          1598,
+          1599
+        ],
+        "http://enphase.com/20251231|DeferredTaxLiabilitiesPropertyPlantAndEquipmentAndIntangibleAssetsNoncurrent": [
+          1600,
+          1601
+        ],
+        "http://enphase.com/20251231|DeferredTaxAssetsConvertibleNotes": [
+          1602,
+          1603
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsInProcessResearchAndDevelopment": [
+          1604,
+          1605
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsInventory": [
+          1606,
+          1607
+        ],
+        "http://enphase.com/20251231|DeferredTaxAssetsDeferredExpenseOtherNoncurrent": [
+          1608,
+          1609
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsGross": [
+          1610,
+          1611
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsValuationAllowance": [
+          1612,
+          1613,
+          1628,
+          1629,
+          1631,
+          1632,
+          1637,
+          1638
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsNet": [
+          1614,
+          1615
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxLiabilitiesUndistributedForeignEarnings": [
+          1616,
+          1617
+        ],
+        "http://enphase.com/20251231|DeferredTaxLiabilitiesStateImpactOfSection45XTaxCredits": [
+          1618,
+          1619
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxLiabilitiesDeferredExpenseCapitalizedInventoryCosts": [
+          1620,
+          1621
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxLiabilitiesOther": [
+          1622,
+          1623
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredIncomeTaxLiabilities": [
+          1624,
+          1625
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsLiabilitiesNet": [
+          1626,
+          1627
+        ],
+        "http://enphase.com/20251231|DeferredTaxAssetsValuationAllowanceAdditions": [
+          1633,
+          1634
+        ],
+        "http://enphase.com/20251231|DeferredTaxAssetsValuationAllowanceReversals": [
+          1635,
+          1636
+        ],
+        "http://fasb.org/us-gaap/2025|TaxCreditCarryforwardAmount": [
+          1639,
+          1640
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLossCarryforwards": [
+          1641
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsPeriodIncreaseDecrease": [
+          1642
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefits": [
+          1643,
+          1646,
+          1647,
+          1648,
+          1661,
+          1662,
+          1663
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate": [
+          1644
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsIncreasesResultingFromPriorPeriodTaxPositions": [
+          1649
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsDecreasesResultingFromPriorPeriodTaxPositions": [
+          1650,
+          1651
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsIncreasesResultingFromCurrentPeriodTaxPositions": [
+          1652,
+          1653,
+          1654
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsDecreasesResultingFromSettlementsWithTaxingAuthorities": [
+          1655,
+          1656,
+          1657
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsReductionsResultingFromLapseOfApplicableStatuteOfLimitations": [
+          1658,
+          1659,
+          1660
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsIncomeTaxPenaltiesAndInterestAccrued": [
+          1664,
+          1665,
+          1666
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxExaminationPenaltiesAndInterestExpense": [
+          1667,
+          1668,
+          1669
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxPaidFederalAfterRefundReceived": [
+          1679
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxPaidForeignAfterRefundReceived": [
+          1680,
+          1681,
+          1683
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxPaidStateAndLocalAfterRefundReceived": [
+          1682,
+          1684
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxesPaidNet": [
+          1685
+        ],
+        "http://fasb.org/us-gaap/2025|InterestOnConvertibleDebtNetOfTax": [
+          1700,
+          1701,
+          1702
+        ],
+        "http://fasb.org/us-gaap/2025|NetIncomeLossAttributableToParentDiluted": [
+          1703,
+          1704,
+          1705
+        ],
+        "http://enphase.com/20251231|CostOfRevenueAdjusted": [
+          1767,
+          1768,
+          1769
+        ],
+        "http://enphase.com/20251231|IncomeBasedGovernmentGrants": [
+          1770,
+          1771,
+          1772
+        ],
+        "http://fasb.org/us-gaap/2025|AmortizationOfAcquisitionCosts": [
+          1776,
+          1777,
+          1778
+        ],
+        "http://enphase.com/20251231|RestructuringCostsAndAssetImpairmentChargesAdjusted": [
+          1779,
+          1780,
+          1781
+        ],
+        "http://enphase.com/20251231|ResearchAndDevelopmentExpenseAdjusted": [
+          1782,
+          1783,
+          1784
+        ],
+        "http://enphase.com/20251231|SellingAndMarketingExpenseAdjusted": [
+          1785,
+          1786,
+          1787
+        ],
+        "http://enphase.com/20251231|GeneralAndAdministrativeExpenseAdjusted": [
+          1788,
+          1789,
+          1790
+        ],
+        "http://fasb.org/us-gaap/2025|NoncurrentAssets": [
+          1807,
+          1808,
+          1809,
+          1810,
+          1811,
+          1812,
+          1813,
+          1814,
+          1815,
+          1816,
+          1817,
+          1818,
+          1819,
+          1820
+        ],
+        "http://fasb.org/us-gaap/2025|RestructuringAndRelatedCostExpectedCost1": [
+          1827,
+          1830,
+          1833,
+          1834
+        ]
+      }
+    },
+    "shares": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"shares\"><xbrli:measure>xbrli:shares</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://xbrl.sec.gov/dei/2025|EntityCommonStockSharesOutstanding": [
+          61
+        ],
+        "http://fasb.org/us-gaap/2025|CommonStockSharesAuthorized": [
+          136,
+          135
+        ],
+        "http://fasb.org/us-gaap/2025|CommonStockSharesIssued": [
+          138,
+          140
+        ],
+        "http://fasb.org/us-gaap/2025|CommonStockSharesOutstanding": [
+          137,
+          139,
+          228,
+          256,
+          280,
+          304
+        ],
+        "http://fasb.org/us-gaap/2025|WeightedAverageNumberOfSharesOutstandingBasic": [
+          207,
+          208,
+          209,
+          1706,
+          1707,
+          1708,
+          1709,
+          1710,
+          1711
+        ],
+        "http://fasb.org/us-gaap/2025|WeightedAverageNumberOfDilutedSharesOutstanding": [
+          210,
+          211,
+          212,
+          1730,
+          1731,
+          1732
+        ],
+        "http://fasb.org/us-gaap/2025|StockIssuedDuringPeriodSharesShareBasedCompensation": [
+          234,
+          262,
+          286
+        ],
+        "http://fasb.org/us-gaap/2025|StockIssuedDuringPeriodSharesNewIssues": [
+          237
+        ],
+        "http://fasb.org/us-gaap/2025|DebtConversionConvertedInstrumentSharesIssued1": [
+          242
+        ],
+        "http://fasb.org/us-gaap/2025|StockRepurchasedAndRetiredDuringPeriodShares": [
+          249,
+          271,
+          295,
+          1318,
+          1319,
+          1320
+        ],
+        "http://enphase.com/20251231|DebtInstrumentConvertibleConversionShares": [
+          1243,
+          1246,
+          1270,
+          1273,
+          1281
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAuthorized": [
+          1329,
+          1338
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfAdditionalSharesAuthorized": [
+          1333,
+          1342
+        ],
+        "http://fasb.org/us-gaap/2025|CommonStockCapitalSharesReservedForFutureIssuance": [
+          1335,
+          1336
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardNumberOfSharesAvailableForGrant": [
+          1337,
+          1343
+        ],
+        "http://enphase.com/20251231|ShareBasedCompensationArrangementByShareBasedPaymentAwardEvergreenShares": [
+          1339,
+          1344
+        ],
+        "http://enphase.com/20251231|ShareBasedCompensationArrangementByShareBasedPaymentAwardEvergreenSharesAutomaticIncreaseDeclined": [
+          1341
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross": [
+          1354,
+          1353,
+          1352
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber": [
+          1393,
+          1402,
+          1411,
+          1420,
+          1430,
+          1439,
+          1448,
+          1457
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod": [
+          1395,
+          1404,
+          1413,
+          1432,
+          1441,
+          1450
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriod": [
+          1397,
+          1406,
+          1415,
+          1434,
+          1443,
+          1452
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsForfeitedInPeriod": [
+          1400,
+          1409,
+          1418,
+          1437,
+          1446,
+          1455
+        ],
+        "http://enphase.com/20251231|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsExpectedToVestOutstandingNumber": [
+          1424,
+          1461
+        ],
+        "http://fasb.org/us-gaap/2025|StockIssuedDuringPeriodSharesEmployeeStockPurchasePlans": [
+          1470,
+          1471,
+          1472
+        ],
+        "http://fasb.org/us-gaap/2025|IncrementalCommonSharesAttributableToShareBasedPaymentArrangements": [
+          1712,
+          1713,
+          1714
+        ],
+        "http://fasb.org/us-gaap/2025|IncrementalCommonSharesAttributableToConversionOfDebtSecurities": [
+          1715,
+          1716,
+          1717,
+          1718,
+          1719,
+          1720,
+          1724,
+          1725,
+          1726,
+          1727,
+          1728,
+          1729
+        ],
+        "http://fasb.org/us-gaap/2025|IncrementalCommonSharesAttributableToCallOptionsAndWarrants": [
+          1721,
+          1722,
+          1723
+        ],
+        "http://fasb.org/us-gaap/2025|AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount": [
+          1740,
+          1741,
+          1742,
+          1743,
+          1744,
+          1745,
+          1746,
+          1747,
+          1748,
+          1749,
+          1750,
+          1751,
+          1752,
+          1753,
+          1754,
+          1755,
+          1756,
+          1757,
+          1758,
+          1759,
+          1760
+        ]
+      }
+    },
+    "usdPerShare": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"usdPerShare\"><xbrli:divide><xbrli:unitNumerator><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unitNumerator><xbrli:unitDenominator><xbrli:measure>xbrli:shares</xbrli:measure></xbrli:unitDenominator></xbrli:divide></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://fasb.org/us-gaap/2025|CommonStockParOrStatedValuePerShare": [
+          134,
+          133,
+          1334
+        ],
+        "http://fasb.org/us-gaap/2025|EarningsPerShareBasic": [
+          201,
+          202,
+          203,
+          1733,
+          1734,
+          1735
+        ],
+        "http://fasb.org/us-gaap/2025|EarningsPerShareDiluted": [
+          204,
+          205,
+          206,
+          1736,
+          1737,
+          1738
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentConvertibleConversionPrice1": [
+          1224,
+          1244,
+          1249,
+          1255,
+          1271,
+          1276,
+          1825
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentConvertibleStockPriceTrigger": [
+          1226,
+          1237,
+          1257
+        ],
+        "http://fasb.org/us-gaap/2025|ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1": [
+          1247,
+          1250,
+          1274,
+          1277,
+          1282
+        ],
+        "http://fasb.org/us-gaap/2025|TreasuryStockAcquiredAverageCostPerShare": [
+          1321,
+          1322,
+          1323
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedWeightedAverageGrantDateFairValue": [
+          1394,
+          1403,
+          1412,
+          1421,
+          1431,
+          1440,
+          1449,
+          1458
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue": [
+          1396,
+          1405,
+          1414,
+          1433,
+          1442,
+          1451
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodWeightedAverageGrantDateFairValue": [
+          1398,
+          1407,
+          1416,
+          1435,
+          1444,
+          1453
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsForfeituresWeightedAverageGrantDateFairValue": [
+          1401,
+          1410,
+          1419,
+          1438,
+          1447,
+          1456
+        ],
+        "http://enphase.com/20251231|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsExpectedToVestOutstandingWeightedAverageExercisePrice": [
+          1425,
+          1462
+        ],
+        "http://fasb.org/us-gaap/2025|SharePrice": [
+          1428,
+          1465
+        ],
+        "http://enphase.com/20251231|EmployeeStockPurchasePlanWeightedAveragePurchasePriceOfSharesPurchased": [
+          1473,
+          1474,
+          1475
+        ]
+      }
+    },
+    "reporting_unit": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"reporting_unit\"><xbrli:measure>enph:reporting_unit</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://fasb.org/us-gaap/2025|NumberOfReportingUnits": [
+          506
+        ]
+      }
+    },
+    "businessactivity": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"businessactivity\"><xbrli:measure>enph:businessActivity</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://enphase.com/20251231|NumberOfMajorBusinessActivity": [
+          545
+        ],
+        "http://enphase.com/20251231|NumberOfBusinessActivities": [
+          1762
+        ]
+      }
+    },
+    "country": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"country\"><xbrli:measure>enph:country</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://enphase.com/20251231|ProductWarrantyIncreaseInProductCostsNumberOfCountries": [
+          880
+        ]
+      }
+    },
+    "tradingday": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"tradingday\"><xbrli:measure>enph:tradingDay</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://fasb.org/us-gaap/2025|DebtInstrumentConvertibleThresholdTradingDays": [
+          1228,
+          1231,
+          1239,
+          1259,
+          1262
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentConvertibleThresholdConsecutiveTradingDays1": [
+          1229,
+          1232,
+          1234,
+          1240,
+          1260,
+          1263,
+          1265
+        ]
+      }
+    },
+    "purchaseperiod": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"purchaseperiod\"><xbrli:measure>enph:purchasePeriod</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://enphase.com/20251231|EmployeeStockPurchasePlanNumberOfInterimPurchasePeriods": [
+          1345
+        ]
+      }
+    },
+    "employee": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"employee\"><xbrli:measure>enph:employee</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:672eda7577354b3f354a98f4a64f2635e3b440694d281c9bd26692021e603445"
+      },
+      "concepts": {
+        "http://fasb.org/us-gaap/2025|RestructuringAndRelatedCostExpectedNumberOfPositionsEliminated": [
+          1832
+        ]
+      }
+    }
+  },
+  "quantity_reader_actual_result": {
+    "status": "IMPLEMENTATION_OR_SOURCE_RELATION_NOT_ESTABLISHED",
+    "reason": "B13_QUANTITY_RELATION_NOT_UNIQUE_OR_UNSUPPORTED:ACTUAL_PRODUCTION",
+    "disclosure_absence_credit": false
+  },
+  "production_authorized": false,
+  "native_result_created": false
+}

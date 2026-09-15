@@ -791,3 +791,5 @@ PR43 review5205267507回归：B13合成source_packet明确包含metric_id=B13，
 B13数值增量：CapacityComparisonTest新增原件数量/倍率、改写源块、分类排除、跨产品/设施、年度/季度、税收抵免和引语/假设例子反例。tests.vnext.test_capacity_numeric_run实际执行数量读取、Calculator、Run记录图和公共行，拒绝重签的0.81替代原文80/100；其来源准备、来源准入和外部登记明确使用合成替代，不能当作真实SEC/provider/冷读验收。该场景随独立capacity-native-runs作业运行，完整实际材料test_capacity_run_material继续覆盖原来源/登记门。
 
 D04活动延续增量按动作及对象核对招聘、用户和融资渠道语句，避免把特定活动与主体持续经营混同；真实原句在测试工厂中覆盖正确排除和错误疑虑拒绝。当前13项D04回归通过。上下文分词只完成官方参考与12份历史实际usage核对，现有运行计数/资源限制未改；材料见docs/evidence/issue28_continuous/d04-activity-and-context。
+
+D04作用域回归：`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_d04_native_assessment`；原三个反例完整Run和公共行在`tests.vnext.test_d04_run_material.D04RunMaterialTest.test_scoped_assertions_complete_run_and_final_public_row`，明确合成来源/准入替身。新格式完整记录响应链使用`D04_REFERENCE_CONTEXT=1`或`B13_REFERENCE_CONTEXT=1`运行相应原生material测试；固定离线依赖用`python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt`。计数/格式/资源篡改与usage反馈测试为`tests.vnext.test_continuous_request_context`；CI fast及相应来源/原生作业安装同一固定包，不扩大原资源上限。

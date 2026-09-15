@@ -15,7 +15,7 @@ import uuid
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_loads, strict_json_file, sha256_file
 from .continuous_call_policy import REQUIREMENT_ID, configured_transport_policy, load_delegation, need
 from .normal_source_authority import ROOT, verify_saved_source_proofs
-from .provider_runtime import load_provider_runtime_authority, estimate_context_tokens
+from .provider_runtime import load_provider_runtime_authority
 from .requirements import load_requirement_snapshot
 from . import invocation_control as control
 
@@ -45,7 +45,10 @@ SEMANTIC_RULE_PATHS = (
     'catalog/r5/capacity_semantic_review_v5.json',
     'scripts/vnext/d04_native_assessment.py', 'catalog/r6/semantic_review_v4.json',
     'catalog/r6/D04_going_concern_assessment_v1.md',
-    'scripts/vnext/capacity_native_assessment.py')
+    'scripts/vnext/capacity_native_assessment.py',
+    'scripts/vnext/continuous_request_context.py',
+    'config/tokenizers/deepseek_v41/tokenizer.json.gz',
+    'requirements-continuous-context.txt')
 
 
 def validate_semantic_rule_bindings(requirement):
@@ -190,7 +193,8 @@ class SemanticRequest:
         return request
 
 
-def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,control_id=None, native=False):
+def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,control_id=None, native=False,
+                     reference_context=False):
     from .r6_semantic_source import prepare_d04_semantic_source
     from .requirement_profile import validate_execution_authority
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
@@ -202,6 +206,10 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     need(metric_id in {'B13','D03','D04'},'CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
     need(not native or (metric_id == 'D04' and prior_call_ordinal is None),
          'D04_NATIVE_REQUIRES_CURRENT_COMPLETE_SOURCE')
+    need(not reference_context or (prior_call_ordinal is None and (native or metric_id in {'B13', 'D03'})),
+         'CONTINUOUS_REFERENCE_GROUPING_UNSUPPORTED')
+    from .continuous_request_context import FORMAT_VERSION
+    context_format = FORMAT_VERSION if reference_context else None
     data_root=ROOT
     if control_id is not None:
         need(metric_id=='D04' and prior_call_ordinal is None,'CONTINUOUS_HISTORICAL_CONTROL_REQUIRES_D04')
@@ -210,22 +218,22 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
         source=prepare_control_source(repo_root=data_root,company_id=company_id,control_id=control_id)
         if native:
             from .d04_native_assessment import native_source
-            source = native_source(source, historical_control=True)
+            source = native_source(source, historical_control=True, request_context_format=context_format)
     elif prior_call_ordinal is not None:
         need(metric_id=='D03','CONTINUOUS_VERIFICATION_REQUIRES_D03')
         from .r6_semantic_verification import prepare_verification_source
         source=prepare_verification_source(company_id=company_id,prior_call_ordinal=prior_call_ordinal)
     elif metric_id=='D03':
         from .r6_regulatory_semantics import prepare_regulatory_semantic_source
-        source = prepare_regulatory_semantic_source(repo_root=ROOT,company_id=company_id)
+        source = prepare_regulatory_semantic_source(repo_root=ROOT,company_id=company_id,request_context_format=context_format)
     elif metric_id == 'B13':
         from .capacity_semantic_source import prepare_capacity_semantic_source
-        source = prepare_capacity_semantic_source(repo_root=ROOT,company_id=company_id)
+        source = prepare_capacity_semantic_source(repo_root=ROOT,company_id=company_id,request_context_format=context_format)
     else:
         source = prepare_d04_semantic_source(repo_root=ROOT,company_id=company_id)
         if native:
             from .d04_native_assessment import native_source
-            source = native_source(source)
+            source = native_source(source, request_context_format=context_format)
     if data_root==ROOT:verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
     else:
         from .ordinary_source_authority import verify_ordinary_source_proofs
@@ -259,7 +267,7 @@ def usage_observation(raw):
         'actual_cost':None}
 
 
-def usage_error(raw):
+def usage_error(raw, *, expected_prompt_tokens=None, enforce_total_context=False):
     observed = usage_observation(raw)
     if observed['input_tokens'] is None or observed['output_tokens'] is None:return 'USAGE_UNKNOWN'
     usage = strict_json_loads(text=raw.decode())['usage']
@@ -270,7 +278,11 @@ def usage_error(raw):
     for key,value in [('prompt_cache_hit_tokens',hit),('prompt_cache_miss_tokens',miss)]:
         if key in usage and value is None:return 'USAGE_UNKNOWN'
     if hit is not None and miss is not None and hit+miss!=observed['input_tokens']:return 'USAGE_UNKNOWN'
-    return 'CONTEXT_LIMIT' if observed['input_tokens']>200000 else ''
+    if observed['input_tokens'] > 200000 or (enforce_total_context and total > 200000):
+        return 'CONTEXT_LIMIT'
+    if expected_prompt_tokens is not None and observed['input_tokens'] != expected_prompt_tokens:
+        return 'CONTEXT_REFERENCE_MISMATCH'
+    return ''
 
 
 def build_plan(prepared):
@@ -279,6 +291,9 @@ def build_plan(prepared):
     request = prepared.validate(policy)
     metric_id = request.get('metric_id','D04')
     runtime = load_provider_runtime_authority(repo_root=ROOT,provider=policy.provider,model=policy.model,api=policy.api)
+    from .continuous_request_context import measure_request
+    context = measure_request(prepared.provider_request_body_bytes,
+        provider=policy.provider, model=policy.model, api=policy.api)
     plan = control.build_successor_ai_invocation_plan(repo_root=ROOT,requirement_id=REQUIREMENT_ID,
         authority=prepared.authority,
         release_input_plan_id=content_hash(value={'purpose':metric_id+('_SOURCE_ASSESSMENT' if metric_id == 'B13'
@@ -288,9 +303,10 @@ def build_plan(prepared):
         output_schema_hash=content_hash(value=request['response_protocol']),serialization_version='continuous-'+metric_id.lower()+'-chat-v1',
         provider=policy.provider,model=policy.model,api=policy.api,request_body=prepared.provider_request_body_bytes,
         maximum_payload_bytes=policy.maximum_payload_bytes,maximum_context_tokens=200000,
-        estimated_context_tokens=estimate_context_tokens(request_body=prepared.provider_request_body_bytes,authority=runtime),
-        context_authority_hash=runtime['context_authority_hash'],estimator_id=runtime['estimator_id'],
-        estimator_version=runtime['estimator_version'],estimator_method=runtime['estimator_method'],
+        estimated_context_tokens=context['context_tokens'],
+        context_authority_hash=content_hash(value={'provider_runtime':runtime['context_authority_hash'],
+            'bounded_chat_context':context['context_authority_hash']}),estimator_id=context['estimator_id'],
+        estimator_version=context['estimator_version'],estimator_method=context['estimator_method'],
         billing_class=runtime['billing_class'],paid_call_observation_source=runtime['paid_call_observation_source'],
         pricing_snapshot_hash=content_hash(value={'provider':policy.provider,'model':policy.model,
             'status':'NON_BLOCKING_PRICE_UNAVAILABLE'}),estimated_cost=None)
@@ -388,7 +404,16 @@ class _Transport:
             error_class = 'SOURCE_AUTHENTICITY_FAILED'; status_code = 0
             error_detail = str(error)
         usage = usage_observation(raw)
-        if not error_class: error_class = usage_error(raw)
+        if not error_class:
+            # The plan counted the exact outgoing body before opening a socket.
+            # Compare genuine service observations without treating synthetic
+            # recorded usage as evidence for the reference tokenizer.
+            reference_input = None
+            if self.ledger.live and plan['observability']['estimator_method'] == 'PINNED_REFERENCE_CHAT_FORMAT':
+                from .continuous_request_context import OUTPUT_RESERVE
+                reference_input = plan['observability']['estimated_context_tokens'] - OUTPUT_RESERVE
+            error_class = usage_error(raw, expected_prompt_tokens=reference_input,
+                                      enforce_total_context=self.ledger.live)
         for name,data in [('raw-response.bin',raw),('assistant-output.bin',output)]:
             if data is not None: control._exclusive_write_bytes(path=self.path/'wire'/name,content=data)
         body = {'record_type':'CONTINUOUS_ORIGINAL_WIRE','execution_id':execution_id,

@@ -7,6 +7,17 @@ from vnext.canonical import content_hash
 from vnext.r6_semantic_source import _seal_unit, _bytes
 from vnext.d04_native_assessment import native_source, requests_from_source, validate_response
 
+REVIEW_SCOPE_CASES = [
+    ('There is substantial doubt about our ability to continue as a going concern, even if the proposed financing succeeds.', 'CONDITIONAL_OR_BOILERPLATE', 'CONDITIONAL'),
+    ('There is substantial doubt about our ability to continue as a going concern; for example, cash is insufficient to meet obligations.', 'CONDITIONAL_OR_BOILERPLATE', 'CONDITIONAL'),
+    ('In 2024 we incurred losses, and these conditions now raise substantial doubt about our ability to continue as a going concern.', 'HISTORICAL_STATEMENT', 'HISTORICAL'),
+    ('In 2024 we incurred losses that now raise substantial doubt about our ability to continue as a going concern.', 'HISTORICAL_STATEMENT', 'HISTORICAL'),
+    ('Because we incurred losses in 2024, these conditions now raise substantial doubt about our ability to continue as a going concern.', 'HISTORICAL_STATEMENT', 'HISTORICAL'),
+    ('The losses that arose in 2024 now raise substantial doubt about our ability to continue as a going concern.', 'HISTORICAL_STATEMENT', 'HISTORICAL'),
+    ('The losses incurred in 2024 now raise substantial doubt about our ability to continue as a going concern.', 'HISTORICAL_STATEMENT', 'HISTORICAL'),
+    ('Losses incurred in 2024 currently create substantial doubt about our ability to continue as a going concern.', 'HISTORICAL_STATEMENT', 'HISTORICAL'),
+]
+
 
 def request_for(text, quoted=False, year=2025):
     source = source_packet(); source.update(record_type='D04_COMPLETE_SEMANTIC_SOURCE', metric_id='D04')
@@ -30,6 +41,58 @@ def response_for(request, kind='DOUBT_DISCLOSED', timing='CURRENT_REPORT'):
 
 
 class D04NativeProtocolTest(unittest.TestCase):
+    def test_review_counterexamples_bind_modifiers_to_their_own_assertions(self):
+        for text, wrong_kind, wrong_timing in REVIEW_SCOPE_CASES:
+            request = request_for(text)
+            checked = validate_response(request=request, raw_response=_bytes(response_for(request)))
+            self.assertEqual(checked['unresolved'], [])
+            self.assertEqual(len(checked['current_target_findings']), 1)
+            with self.subTest(text=text), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                validate_response(request=request, raw_response=_bytes(response_for(request, wrong_kind, wrong_timing)))
+
+    def test_assertion_scope_variants_not_sentence_keyword_exceptions(self):
+        for text in (
+            'Even if financing succeeds, there is substantial doubt about our ability to continue as a going concern.',
+            'Although no customers cancelled orders, these conditions raise substantial doubt about our ability to continue as a going concern.',
+            'There is substantial doubt about our ability to continue as a going concern, because financing has not been secured.',
+            'For example, there is substantial doubt about our ability to continue as a going concern.',
+            'In 2023 we incurred losses but these conditions now raise substantial doubt about our ability to continue as a going concern.',
+            'There is substantial doubt about our ability to continue as a going concern; management expects to obtain financing.',
+        ):
+            request = request_for(text)
+            with self.subTest(text=text):
+                checked = validate_response(request=request, raw_response=_bytes(response_for(request)))
+                self.assertEqual(checked['unresolved'], [])
+                self.assertEqual(len(checked['current_target_findings']), 1)
+        for text in (
+            'There is substantial doubt about our ability to continue as a going concern if financing fails.',
+            'If financing fails, these conditions will raise substantial doubt about our ability to continue as a going concern.',
+            'Unless financing succeeds, there is substantial doubt about our ability to continue as a going concern.',
+            'If financing fails, cash is insufficient and these conditions raise substantial doubt about our ability to continue as a going concern.',
+            'If financing fails and there is substantial doubt about our ability to continue as a going concern, we sell the asset.',
+        ):
+            request = request_for(text)
+            checked = validate_response(request=request, raw_response=_bytes(response_for(request, 'CONDITIONAL_OR_BOILERPLATE', 'CONDITIONAL')))
+            self.assertEqual(checked['unresolved'], [])
+            self.assertEqual(checked['current_target_findings'], [])
+            with self.subTest(text=text), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                validate_response(request=request, raw_response=_bytes(response_for(request)))
+
+    def test_coordinated_historical_and_current_assertions_both_required(self):
+        for conjunction in ('; ', ', but ', ' and '):
+            request = request_for('In 2024 there was substantial doubt about our ability to continue as a going concern'
+                + conjunction + 'there is no substantial doubt about our ability to continue as a going concern now.')
+            response = response_for(request, timing='HISTORICAL')
+            current = deepcopy(response['units'][0]['findings'][0])
+            current.update(kind='NO_DOUBT_DECLARATION', timing='CURRENT_REPORT')
+            response['units'][0]['findings'].append(current)
+            checked = validate_response(request=request, raw_response=_bytes(response))
+            self.assertEqual(checked['unresolved'], [])
+            self.assertEqual(len(checked['current_target_findings']), 1)
+            response['units'][0]['findings'].pop()
+            with self.subTest(conjunction=conjunction), self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                validate_response(request=request, raw_response=_bytes(response))
+
     def test_actual_specific_activity_continuation_is_not_entity_viability(self):
         import json
         from vnext.normal_source_authority import ROOT
@@ -81,6 +144,8 @@ class D04NativeProtocolTest(unittest.TestCase):
             'A going concern assessment is described below.',
             'We do not believe these conditions raise substantial doubt about our ability to continue as a going concern.',
             'Management is evaluating whether there is substantial doubt about our ability to continue as a going concern.',
+            'We do not believe losses that now raise substantial doubt about our ability to continue as a going concern exist.',
+            'In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern.',
         ):
             request = request_for(text)
             checked = validate_response(request=request, raw_response=_bytes(response_for(request, 'VALUATION_OR_OTHER_MEANING')))
@@ -211,6 +276,35 @@ def text_arguments(statement, kind, timing):
 
 
 class D04NativeTextRecordsTest(unittest.TestCase):
+    def test_review_counterexamples_native_acceptance_results_and_public_rows(self):
+        from types import SimpleNamespace
+        from vnext.d04_native_assessment import build_acceptance
+        from vnext.capacity_run import project_defined_absence
+        absence = self.reviewed_result(text_arguments('Revenue is recognized when services are delivered.', None, 'CURRENT_REPORT'))
+        for statement, wrong_kind, wrong_timing in REVIEW_SCOPE_CASES:
+            args = text_arguments(statement, 'DOUBT_DISCLOSED', 'CURRENT_REPORT')
+            self.assertEqual(self.reviewed_result(args)['value'], statement)
+            request = requests_from_source(args['source'])[0]
+            response = response_for(request)
+            response['units'][0]['findings'][0]['evidence'] = [{k:e[k] for k in ('kind', 'source_index')}
+                for e in args['assessment']['source_findings'][0]['resolved_evidence']]
+            original_evidence = deepcopy(response['units'][0]['findings'][0]['evidence'])
+            prepared = SimpleNamespace(request_bytes=_bytes(request), source_bytes=_bytes(args['source']))
+            plan = {k:content_hash(value=k) for k in ('selected_representation_hash','ai_invocation_plan_id','source_identity_hash','task_contract_hash')}
+            self.assertEqual(build_acceptance(prepared=prepared, plan=plan, response_body=_bytes(response))['evidence_status'], 'PASS')
+            response['units'][0]['findings'][0].update(kind=wrong_kind, timing=wrong_timing)
+            self.assertEqual(response['units'][0]['findings'][0]['evidence'], original_evidence)
+            with self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                build_acceptance(prepared=prepared, plan=plan, response_body=_bytes(response))
+            bad = text_arguments(statement, wrong_kind, wrong_timing)
+            with self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                self.reviewed_result(bad)
+            bad['assessment']['proposed_branch'] = 'DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW'
+            bad['assessment']['assessment_set_id'] = content_hash(value={k:v for k,v in bad['assessment'].items() if k != 'assessment_set_id'})
+            with self.assertRaisesRegex(ValueError, 'D04_SOURCE_.*CONFLICT'):
+                project_defined_absence(case={'registered_input':{'assessment':bad['assessment']}, 'selection':{'status':'TEXT_QUAL'},
+                    'text_arguments':bad}, result=absence, row={}, company={'display_name':'Sample','primary_cik':'12345'})
+
     def test_native_acceptor_rejects_same_reference_with_wrong_classification(self):
         from types import SimpleNamespace
         from vnext.d04_native_assessment import build_acceptance

@@ -67,7 +67,8 @@ class ContinuousCallLedgerTest(unittest.TestCase):
             self.claim(again,'SEC-original','SEC')
 
     def test_402_unknown_usage_and_unknown_outcome_are_permanent_stops(self):
-        for error in ['HTTP_402','USAGE_UNKNOWN','UNKNOWN_REMOTE_OUTCOME','SOURCE_AUTHENTICITY_FAILED']:
+        for error in ['HTTP_402','USAGE_UNKNOWN','UNKNOWN_REMOTE_OUTCOME','SOURCE_AUTHENTICITY_FAILED',
+                      'CONTEXT_REFERENCE_MISMATCH']:
             ledger=recorded_ledger(root=self.root/error)
             with ledger.locked():
                 path,intent=self.claim(ledger);self.terminal(ledger,path,intent,error)

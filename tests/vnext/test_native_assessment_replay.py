@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch
 
 from vnext.canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_loads
-from vnext.continuous_semantic_calls import prepare_requests, build_plan
+from vnext.continuous_semantic_calls import prepare_requests, build_plan, request_body
 from vnext.native_assessment_replay import replay_native_response, _original_runtime, _captured_policy_view
 from vnext.normal_source_authority import ROOT
 from vnext import invocation_control as control
@@ -40,8 +40,20 @@ class NativeAssessmentReplayMaterialTest(unittest.TestCase):
                         destination = path/relative; destination.parent.mkdir(parents=True, exist_ok=True)
                         destination.write_bytes(raw)
             request = json.loads((path/'semantic-request.json').read_text())
-            prepared = next(p for p in prepare_requests(company_id='enphase_energy', metric_id='B13')
-                            if strict_json_loads(text=p.request_bytes.decode())['request_id'] == request['request_id'])
+            current = prepare_requests(company_id='enphase_energy', metric_id='B13')[0]
+            # Source provenance includes the source-builder's byte identity.
+            # A new builder is therefore not an identical invocation. Replay
+            # the exact archived request/source with current checks; never
+            # assign the old receipt to today's freshly generated request.
+            if current.request_bytes != (path/'semantic-request.json').read_bytes():
+                with self.assertRaisesRegex(ValueError, 'SAVED_REQUEST_OR_SOURCE_CHANGED'):
+                    replay_native_response(prepared=current, path=path)
+            from vnext.continuous_call_policy import configured_transport_policy
+            policy = configured_transport_policy(requirement=current.requirement, repo_root=ROOT)
+            prepared = replace(current, source_bytes=(path/'source.json').read_bytes(),
+                request_bytes=(path/'semantic-request.json').read_bytes(),
+                provider_request_body_bytes=request_body(request, policy),
+                output_schema_bytes=canonical_json_bytes(value=request['response_protocol']))
             result = replay_native_response(prepared=prepared, path=path)
             old_plan = result['plan']; old_receipt = result['success']['acceptance_receipt_id']
             self.assertNotEqual(old_plan['requirement_closure_hash'], prepared.requirement['requirement_closure_hash'])

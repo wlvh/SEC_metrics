@@ -132,7 +132,7 @@ def capacity_source_from_complete_annual(*, source, rules):
     return {**body, 'semantic_source_id': content_hash(value=body)}
 
 
-def prepare_capacity_semantic_source(*, repo_root: Path, company_id: str):
+def prepare_capacity_semantic_source(*, repo_root: Path, company_id: str, request_context_format=None):
     """Rebuild all source units before any B13 quantity or absence decision."""
     rules, approved = policy()
     need(company_id in approved['applicable_company_ids'],
@@ -144,4 +144,8 @@ def prepare_capacity_semantic_source(*, repo_root: Path, company_id: str):
     body = {k: v for k, v in result.items() if k != 'semantic_source_id'}
     body.update(capacity_rule_sha256=sha256_file(path=ROOT / POLICY_PATH),
                 capacity_module_sha256=sha256_file(path=Path(__file__)))
+    if request_context_format is not None:
+        from .continuous_request_context import FORMAT_VERSION
+        need(request_context_format == FORMAT_VERSION, 'B13_CONTEXT_FORMAT_UNSUPPORTED')
+        body['request_context_format'] = FORMAT_VERSION
     return {**body, 'semantic_source_id': content_hash(value=body)}
