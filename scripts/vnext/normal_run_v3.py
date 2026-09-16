@@ -55,20 +55,34 @@ def update_metric_ids():
     return sorted(set(_policy(ROOT)['metric_ids']) | {'B13', 'D04'})
 
 
-def registered_update_options(metric_id, *, assessment_mode='LIVE'):
+def registered_update_options(metric_id, *, assessment_mode='LIVE',program_quantity_roles=False):
     """A fixed source/request contract, not per-filing answers or call rights."""
     _need(metric_id in {'B13', 'D04'} and assessment_mode in {'LIVE','RECORDED_TEST_ONLY'},
           'ORDINARY_REGISTERED_UPDATE_MODE_INVALID')
     from .continuous_request_context import FORMAT_VERSION
-    return {'assessment_mode':assessment_mode, 'request_context_format':FORMAT_VERSION,
-            'complete_response_contract':metric_id == 'D04'}
+    _need(type(program_quantity_roles) is bool and (not program_quantity_roles or metric_id=='B13'),
+          'ORDINARY_PROGRAM_QUANTITY_SELECTION_INVALID')
+    result={'assessment_mode':assessment_mode,'request_context_format':FORMAT_VERSION,
+            'complete_response_contract':metric_id=='D04'}
+    if program_quantity_roles:result['program_quantity_roles']=True
+    return result
+
+
+def current_registered_update_options(metric_id, *, assessment_mode='LIVE'):
+    """One current ordinary-entry contract for preparation and Run consumption.
+
+    Low-level callers and historical installed inputs retain their explicit
+    contract or the original V5 default in registered_update_options.
+    """
+    return registered_update_options(metric_id, assessment_mode=assessment_mode,
+                                     program_quantity_roles=metric_id=='B13')
 
 
 def _registered_update_kwargs(metric_id, options, company_id):
     if options is None:
         return {}
     _need(type(options) is dict and options == registered_update_options(metric_id,
-        assessment_mode=options.get('assessment_mode')), 'ORDINARY_REGISTERED_UPDATE_CONTRACT_CHANGED')
+        assessment_mode=options.get('assessment_mode'),program_quantity_roles=options.get('program_quantity_roles',False)), 'ORDINARY_REGISTERED_UPDATE_CONTRACT_CHANGED')
     if metric_id == 'B13':
         from .capacity_utilization_source import policy
         _, approved = policy()

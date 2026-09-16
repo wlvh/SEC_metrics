@@ -1,6 +1,6 @@
 # 当前状态补充（累计至104）
 
-本文件下方保留至71的历史实施观察。最新执行入口已同步到[continuation.md](../continuation.md)和[execution-state.json](../execution-state.json)。Ford/Pfizer FY2025 D04已有2项完整真实文字结果；JPM A08完成10次SEC正常刷新。总账59/59/45，余181/181/35，已测基础缺口37另加实际必要尾项。后续B13角色缺口、当前来源目录政策读取、原生更新及统一私有发布仍在推进，不能以历史“尚无完整坐标”或旧CI覆盖当前状态。真实材料分别见[d04-indexed-unit-response/real-material](../d04-indexed-unit-response/real-material/)和[ordinary-refresh-cycle/real-jpm-update](../ordinary-refresh-cycle/real-jpm-update/)。
+本文件下方保留至71的历史实施观察。最新执行入口已同步到[continuation.md](../continuation.md)和[execution-state.json](../execution-state.json)。Ford/Pfizer FY2025 D04已有2项完整真实文字结果；JPM A08完成10次SEC正常刷新。总账59/59/49，余181/181/31，已测基础缺口37另加实际必要尾项。B13 V6已完成限定独审和录制原生验证，真实验证正在准备；Ford正常入口原响应复验已通过，统一私有发布故障恢复仍在推进，不能以历史“尚无完整坐标”或旧CI覆盖当前状态。真实材料分别见[d04-indexed-unit-response/real-material](../d04-indexed-unit-response/real-material/)和[ordinary-refresh-cycle/real-jpm-update](../ordinary-refresh-cycle/real-jpm-update/)。
 
 ## 以下为至71的历史观察（不表示当前状态）
 

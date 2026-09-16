@@ -15,6 +15,15 @@ from .r6_semantic_source import _bytes
 from .r6_semantic_review import _validate_source_response
 
 POLICY_PATH = 'catalog/r5/capacity_semantic_review_v5.json'
+PROGRAM_POLICY_PATH = 'catalog/r5/capacity_semantic_review_v6.json'
+
+def review_policy_path(value):
+    version=value.get('program_quantity_role_contract_version')
+    if version is None:return POLICY_PATH
+    from .capacity_program_roles import VERSION
+    need(version in {None,VERSION},'B13_PROGRAM_CONTRACT_VERSION_UNSUPPORTED')
+    return PROGRAM_POLICY_PATH if version else POLICY_PATH
+
 _MAPS = ('contexts', 'units', 'namespace_environments')
 _STYLE = re.compile(r'\bstyle=(?:"[^"]*"|\x27[^\x27]*\x27)', re.I)
 _STYLE_REF = re.compile(r'data-b13-style-ref="(\d+)"')
@@ -164,7 +173,8 @@ def shared_source_groups(units, maximum_bytes):
 
 
 def requests_from_source(source):
-    rules = strict_json_file(path=ROOT / POLICY_PATH)
+    policy_path=review_policy_path(source)
+    rules = strict_json_file(path=ROOT / policy_path)
     need(source['record_type'] == 'B13_COMPLETE_SEMANTIC_SOURCE'
          and source['source_serialization_complete'] is True
          and source['semantic_source_id'] == content_hash(value={
@@ -178,6 +188,12 @@ def requests_from_source(source):
     from .continuous_request_context import FORMAT_VERSION, measured_groups
     context_format = source.get('request_context_format')
     need(context_format in {None, FORMAT_VERSION}, 'B13_CONTEXT_FORMAT_UNSUPPORTED')
+
+    program_complete=None
+    if policy_path==PROGRAM_POLICY_PATH:
+        from .capacity_program_roles import quantity_contract
+        program_complete=quantity_contract(units=source['units'],period=annual['table_input']['target_period'],
+            scope=source.get('quantity_scope_context'))
 
     def request_for_group(group):
         packed, shared = _shared_units(group)
@@ -200,7 +216,7 @@ def requests_from_source(source):
                 'required_candidate_assessments': [r for r in source['capacity_navigation'] if r['unit_id'] in ids],
                 'native_capacity_role_assessments': [r for r in source['native_capacity_role_assessments'] if r['unit_id'] in ids],
                 'response_protocol': rules['response_protocol'],
-                'policy_sha256': sha256_file(path=ROOT / POLICY_PATH),
+                'policy_sha256': sha256_file(path=ROOT / policy_path),
                 'provider_request_sent': False, 'provider_tokens_measured': False,
                 'production_authorized': False}
         if context_format is not None:
@@ -217,6 +233,11 @@ def requests_from_source(source):
                 'Unstructured explicit hypothetical introductions have unproved extent within the current genuine section; retain that uncertainty. '
                 'A hypothetical or illustrative section and explicit same-paragraph statements that preceding quantities are not actual '
                 'do not establish actual production or available capacity. Keep distinct actual sections and preserve unproved relationships as unresolved.')
+        if policy_path==PROGRAM_POLICY_PATH:
+            from .capacity_program_roles import VERSION,request_contract
+            body['program_quantity_role_contract_version']=VERSION
+            body['program_quantity_contract'],_=request_contract(units=group,period=body['target_period'],
+                scope=body.get('quantity_scope_context'),complete=program_complete)
         return {**body, 'request_id': content_hash(value=body)}
 
     groups = (shared_source_groups(source['units'], rules['max_group_source_bytes']) if context_format is None else
@@ -227,24 +248,29 @@ def requests_from_source(source):
     return requests
 
 
-def validate_response(*, request, raw_response):
+def validate_response(*, request, raw_response, source=None):
     if 'indexed_unit_contract' in request:
         from .native_unit_index import restore_response
-        need(type(raw_response) is bytes and len(raw_response) <= strict_json_file(path=ROOT / POLICY_PATH)['max_response_bytes'],
+        need(type(raw_response) is bytes and len(raw_response) <= strict_json_file(path=ROOT / review_policy_path(request))['max_response_bytes'],
              'B13_RESPONSE_TOO_LARGE')
         base, normalized, original = restore_response(request=request, raw_response=raw_response)
-        checked = validate_response(request=base, raw_response=normalized)
+        checked = validate_response(request=base, raw_response=normalized,source=source)
         checked.update(request_id=request['request_id'], response=original)
         return checked
     """Restore source bytes and reuse the established exact quotation checks."""
     need(request['request_id'] == content_hash(value={
         k: v for k, v in request.items() if k != 'request_id'}), 'B13_REQUEST_CHANGED')
-    rules = strict_json_file(path=ROOT / POLICY_PATH)
+    policy_path=review_policy_path(request)
+    rules = strict_json_file(path=ROOT / policy_path)
     need(type(raw_response) is bytes and len(raw_response) <= rules['max_response_bytes'],
          'B13_RESPONSE_SIZE_OR_TYPE')
-    need(request['policy_sha256'] == sha256_file(path=ROOT / POLICY_PATH)
+    need(request['policy_sha256'] == sha256_file(path=ROOT / policy_path)
          and request['response_protocol'] == rules['response_protocol'], 'B13_REVIEW_POLICY_CHANGED')
     units = _restore_units(request['units'], request['shared_source_dictionaries'])
+    program=None;program_complete=None
+    if policy_path==PROGRAM_POLICY_PATH:
+        from .capacity_program_roles import verify_request_contract
+        program,program_complete=verify_request_contract(request,units,source)
     # The generic checker binds the restored host request. Preserve the actual
     # request identity when checking the provider's original response first.
     from .canonical import strict_json_loads
@@ -289,10 +315,18 @@ def validate_response(*, request, raw_response):
         raw_response=_bytes({**resolved, 'request_id': restored['request_id']}), policy=host_rules)
     # Restore the externally observed identity in the derived check. The raw
     # response and original request are never changed on disk.
+    if program is not None:
+        checked['findings'].extend(program['program_findings'])
+        checked['unresolved'].extend(program['implementation_unresolved'])
+        checked['program_quantity_contract']={'contract_id':request['program_quantity_contract']['contract_id'],
+            'program_quantity_proofs':program['program_quantity_proofs'],
+            'verified_nonphysical_native_roles':program['verified_nonphysical_native_roles']}
     required = {(r['unit_id'], r['kind'], r['source_index'])
                 for r in request['required_candidate_assessments']}
     accounted = {(f['unit_id'], e['kind'], e['source_index'])
                  for f in checked['findings'] for e in f['resolved_evidence']}
+    if program is not None:
+        accounted.update((r['unit_id'],'NATIVE_FACT',r['source_index']) for r in program['verified_nonphysical_native_roles'])
     need(required <= accounted, 'B13_KNOWN_SOURCE_CANDIDATE_NOT_ASSESSED')
     monetary = {(r['unit_id'], r['source_index']) for r in request['native_capacity_role_assessments']
                 if r['role'] == 'MONETARY_CREDIT_FACILITY_CAPACITY'}
@@ -324,11 +358,15 @@ def validate_response(*, request, raw_response):
                 production = re.search(r'\b(?:produced|manufactur(?:e|es|ed|ing)|production|output)\b', text, re.I)
                 need(not sales or production is not None, 'B13_SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION')
     from .capacity_utilization_source import validate_explicit_quantity_classifications
-    checked['unresolved'].extend(validate_explicit_quantity_classifications(units=units, findings=checked['findings'],
-        period=request['target_period'], quantity_scope=request.get('quantity_scope_context')))
     from .capacity_quantity_roles import validate_quantity_role_findings
-    checked['unresolved'].extend(validate_quantity_role_findings(units=units,findings=checked['findings'],
-        period=request['target_period'],quantity_scope=request.get('quantity_scope_context')))
+    role_units=source['units'] if program is not None else units
+    role_findings=([f for f in checked['findings'] if f not in program['program_findings']]+program_complete['program_findings']
+                   if program is not None else checked['findings'])
+    role_scope=source.get('quantity_scope_context') if program is not None else request.get('quantity_scope_context')
+    checked['unresolved'].extend(validate_explicit_quantity_classifications(units=role_units,findings=role_findings,
+        period=request['target_period'],quantity_scope=role_scope))
+    checked['unresolved'].extend(validate_quantity_role_findings(units=role_units,findings=role_findings,
+        period=request['target_period'],quantity_scope=role_scope))
     checked['request_id'] = request['request_id']
     checked['response'] = response
     checked['calculation_limits'] = calculation_limits

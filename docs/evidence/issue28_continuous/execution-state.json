@@ -143,12 +143,19 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "ddecbf03b98c9c40f24be87c8181ae9077cb7ae3",
-    "run_id": 34955496714,
-    "successful_jobs": 12,
-    "total_jobs": 12,
-    "current_uncommitted_delta_covered": false,
-    "prior_run_34943286777": "12/12_SUCCESS_RAW_LOGS_RETAINED"
+    "id": 35002798921,
+    "head": "03b4c3cfacdcb3fa5d813eefff94c94f9f928b3c",
+    "status": "COMPLETED",
+    "prior_successful_runs": [
+      34943286777,
+      34955496714
+    ],
+    "credit": "Previous successes do not cover new commit",
+    "conclusion": "CANCELLED",
+    "success": 10,
+    "failure": 1,
+    "cancelled": 1,
+    "evidence": "ci-35002798921/"
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -161,7 +168,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:6ccf4a6e7c54c0d499945e0e9dae8cb61f8348312c24f1c78dac2311d108bfc4",
+  "current_v15_development_closure": "sha256:1ef08f67e6ef52e8fc4185d65b4c124a18c8d4e2dc8814495ea431e5a0fe7e1d",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -742,9 +749,11 @@
     "new_input_current_bound_recorded_chain": "registered-native-update/new-input-execution/native-material/README.md",
     "current_applied_delta": "registered-native-update/applied-delta-tests.log",
     "current_factory_and_count_checks": "registered-native-update/current-provider-wiring-tests.log; actual D04 factory passes but overall suite failed on B13 positive and one invalid test module name",
-    "current_live_original_receipt_update": "a831 completed original11 source receipt revalidation/registration; Run stopped by test process fence. Original failed history retained;6ccf with pure construction reuse and corrected environment is running, not yet PASS",
+    "current_live_original_receipt_update": "PASS at 03b4c3c / V15 6ccf4a6: Ford FY2025 D04 ordinary entry revalidated original 11 successful requests, registered current input and completed native Run/public rows in 1293.892s; 0/0/0, result9581b unchanged. Prior test environment failure retained. Same-input repeat remains pending.",
     "request_construction_session": "33 applied tests PASS7.335s, original type collision independently repaired; constructor bytes unchanged; original source/receipt/meaning validation uncached",
-    "fast": "120 selectors PASS61.983s before constructor-only delta; constructor delta covered by33 scoped tests, next CI covers next commit"
+    "fast": "122 fast selectors PASS94.825s at V15 1ef08f; tests include program-role contract and locked mirror guard",
+    "current_live_evidence": "registered-native-update/current-real-ford-update-construction-session.json",
+    "current_live_original_receipt_repeat": "6ccf fixed installed runtime: UPDATES_READY / NO_SOURCE_CONTENT_CHANGE, original2f7 Run reused, new_candidate=false,621.223s, local0/0/0 and socket0. Independent global-ledger invariant assertion failed because concurrent root109 added1/1/0; attribution retained separately, no repeated execution."
   },
   "current_publication_validation": {
     "complete_preparation": "PASS_bf71_RECORDED_D04_OPEN_RUN",
@@ -753,7 +762,7 @@
     "old_development_run_current_read": "UNFROZEN_installed_snapshot_mismatch; no guard removed or oldRun resigned",
     "legacy_exit_preparation": "ordinary-release-preparation/legacy-exit-preparation/result.json",
     "actual_active_changed": false,
-    "latest_completed": "Private prepared/stage/publish, selected D04 + historical Marriott B01 native/authority reads, rollback andrestore observed PASS in independent runtime; fault recovery still running",
+    "latest_completed": "Private stage/publish/native and authority reads/rollback/restore passed; injected pointer-before-receipt failure exposed nested exclusive/shared flock deadlock during recover. Original failure and private state retained. Lock-held read repair independently reproduced and checked; complete new fixed rehearsal running, not yet PASS.",
     "historical_native_limit": "Old R3 contains native lodging delta only; inherited Pfizer B01 native not embedded, original public row/evidence still readable; no fabricated historical Run"
   },
   "source_registration_variants": {
@@ -776,5 +785,63 @@
     "old_C04_and_event_semantics_changed": false,
     "material": "paramount-c04-source-inspection/registration-variants-real-material/",
     "current_metric_complete": false
+  },
+  "latest_delivery_head": "03b4c3cfacdcb3fa5d813eefff94c94f9f928b3c",
+  "current_applied_binding": {
+    "ordinary_V14": "sha256:047e4d4061740281e125ae8fde7ddf3277e0d00bf250b574c040c48bcf8f1bf8",
+    "continuous_V15": "sha256:1ef08f67e6ef52e8fc4185d65b4c124a18c8d4e2dc8814495ea431e5a0fe7e1d",
+    "provider_and_sec_wiring": "Current provider V6 wiring complete at1ef08f;109 native response rejected and B13 shared contract paused. Current SEC wiring not renewed; no SEC calls. D04 current affected-path wiring being checked separately."
+  },
+  "current_observed_call_totals": {
+    "through_ordinal": 109,
+    "provider": 60,
+    "paid": 60,
+    "SEC": 49,
+    "remaining": {
+      "provider": 180,
+      "paid": 180,
+      "SEC": 31
+    },
+    "original_caps": [
+      240,
+      240,
+      80
+    ],
+    "last_call": "Enphase B13 V6 FAILED_TERMINAL B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE; no retry and no coordinate credit"
+  },
+  "pending_increment_request": {
+    "status": "ASKED_AWAITING_USER_NO_AUTHORITY",
+    "provider": 38,
+    "paid": 38,
+    "SEC": 0,
+    "proposed_cumulative_caps": [
+      278,
+      278,
+      80
+    ],
+    "measured_base_remaining": {
+      "D04": 71,
+      "B13": 17,
+      "D03_proposal": 130
+    },
+    "unknown_additional_requirements": "D03 actual verification and changed input/final acceptance requests remain to be measured; not assumed zero",
+    "D36": "DISABLED",
+    "automatic_retries": 0
+  },
+  "current_live_b13_v6": {
+    "ordinal": 109,
+    "terminal_status": "FAILED_TERMINAL",
+    "error": "B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE",
+    "first_full_company_task": "enphase_energy",
+    "executed": 1,
+    "following_requests_executed": 0,
+    "coordinate_completed": false,
+    "paused": "B13 shared contract pending source-reference attribution analysis; no prompt redraw"
+  },
+  "current_b13_v6_independent_review": {
+    "patch": "4e9428ce69b4ab8298e35ac98116fa68bbc549afe20d3336fed2a7ba8b704b34",
+    "status": "BOUNDED_DIFF_FINDINGS_FIXED_AND_RECHECKED",
+    "evidence": "b13-quantity-role-repair/program-v6-independent-review/",
+    "not_full_pr_approval": true
   }
 }

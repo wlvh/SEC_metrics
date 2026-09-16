@@ -91,6 +91,7 @@ FAST_TESTS += ("tests.vnext.test_ordinary_isolated_publication.OrdinaryIsolatedP
 FAST_TESTS += ("tests.vnext.test_continuous_request_context",)
 FAST_TESTS += ("tests.vnext.test_capacity_quantity_scope",)
 FAST_TESTS += ("tests.vnext.test_capacity_quantity_roles",)
+FAST_TESTS += ("tests.vnext.test_capacity_program_roles",)
 FAST_TESTS += ("tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingTest",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)

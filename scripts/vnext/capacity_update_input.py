@@ -95,7 +95,7 @@ def _prepare_registered_update(*,source_root,company_id,metric_id,options,ledger
     ledger=_ledger(requirement,options['assessment_mode'],ledger)
     current_prepared=prepare_requests(company_id=company_id,metric_id=metric_id,native=metric_id=='D04',
         reference_context=True,complete_response_contract=options['complete_response_contract'],
-        source_root=source_root,source_ledger=ledger)
+        source_root=source_root,source_ledger=ledger,program_quantity_roles=options.get('program_quantity_roles',False))
     template=current_prepared[0];current=strict_json_loads(text=template.source_bytes.decode())
     candidates={}
     with ledger.locked():
@@ -145,7 +145,7 @@ def ensure_native_update(*,source_root,company_id,metric_id,ledger,max_provider_
     semantic group across different source packets remains unsupported; do not
     buy a redraw or change its output contract to work around that limitation.
     """
-    from .normal_run_v3 import registered_update_options
+    from .normal_run_v3 import current_registered_update_options
     from .continuous_semantic_calls import (select_native_request_variants,configured_transport_policy,
         request_digest,execute_capacity_assessment,execute_d04_assessment)
     from .native_unit_index import upgrade_request
@@ -153,7 +153,7 @@ def ensure_native_update(*,source_root,company_id,metric_id,ledger,max_provider_
          'UPDATE_NATIVE_FINITE_PROVIDER_LIMIT_REQUIRED')
     need(metric_id in {'B13','D04'},'UPDATE_NATIVE_METRIC_UNSUPPORTED')
     need(not ledger.live or recorded_wire_factory is None,'UPDATE_RECORDED_WIRE_CANNOT_RUN_LIVE')
-    options=registered_update_options(metric_id,assessment_mode='LIVE' if ledger.live else 'RECORDED_TEST_ONLY')
+    options=current_registered_update_options(metric_id,assessment_mode='LIVE' if ledger.live else 'RECORDED_TEST_ONLY')
     selected=prepare_registered_update(source_root=source_root,company_id=company_id,metric_id=metric_id,
         options=options,ledger=ledger,allow_incomplete=True)
     base={'company_id':company_id,'metric_id':metric_id,'executions':[],

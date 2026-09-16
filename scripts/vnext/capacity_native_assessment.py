@@ -18,7 +18,7 @@ from .sources import resolve_repository_file
 def build_acceptance(*, prepared, plan, response_body):
     request = strict_json_loads(text=prepared.request_bytes.decode())
     need(request['metric_id'] == 'B13', 'B13_NATIVE_ASSESSMENT_REQUIRED')
-    checked = validate_response(request=request, raw_response=response_body)
+    checked = validate_response(request=request, raw_response=response_body,source=strict_json_loads(text=prepared.source_bytes.decode()))
     return _build_acceptance(prepared=prepared, plan=plan, response_body=response_body, checked=checked,
         metric_id='B13', group='b13_capacity_source_assessment_v1',
         spec_path='catalog/r5/B13_capacity_disclosures_v1.md', validator_path=Path(__file__))
@@ -40,6 +40,8 @@ def _build_acceptance(*, prepared, plan, response_body, checked, metric_id, grou
                 'request_id': request['request_id'], 'unit_ids': [u['unit_id'] for u in request['units']],
                 'findings': checked['findings'], 'calculation_limits': checked.get('calculation_limits', [])}},
             'competing_candidates': [], 'unresolved_competing_claims': []}
+    if 'program_quantity_contract' in checked:
+        body['selected']['source_assessment']['program_quantity_contract']=checked['program_quantity_contract']
     candidate = validate_record(record={'record_type': 'OBSERVATION_CANDIDATE', **body,
         'candidate_hash': content_hash(value=body), 'attempt_id': ('capacity:' if metric_id == 'B13' else 'going-concern:') + plan['ai_invocation_plan_id'][7:],
         'assistant_output_sha256': sha256_bytes(content=response_body), 'status': 'CANDIDATE'})
@@ -51,6 +53,9 @@ def _build_acceptance(*, prepared, plan, response_body, checked, metric_id, grou
             {'check': metric_id + '_ORIGINAL_SOURCE_REFERENCES_AND_ROLES', 'status': 'PASS',
              'findings': checked['findings']}],
         'reason_codes': [], 'identity_constraints': []}
+    if 'program_quantity_contract' in checked:
+        evidence_body['checks'].append({'check':'B13_PROGRAM_OWNED_ORIGINAL_QUANTITY_ROLES','status':'PASS',
+            'program_quantity_contract':checked['program_quantity_contract']})
     evidence = validate_record(record={'record_type': 'EVIDENCE_CHECK', **evidence_body,
         'evidence_check_id': content_hash(value=evidence_body)})
     spec = compile_spec_file(path=ROOT / spec_path, dependency_specs={})

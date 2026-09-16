@@ -15,7 +15,7 @@ from .specs import compile_spec_file
 SPEC_PATH = 'catalog/r5/B13_capacity_disclosures_v1.md'
 
 
-def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_input_id=None, metric_id='B13', request_context_format=None, complete_response_contract=None, current_runtime=False, source_snapshot=None):
+def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_input_id=None, metric_id='B13', request_context_format=None, complete_response_contract=None, current_runtime=False, source_snapshot=None, program_quantity_roles=None):
     need(metric_id in {'B13', 'D04'}, 'NATIVE_ASSESSED_METRIC_UNSUPPORTED')
     from .capacity_utilization_source import policy
     rules, approved = policy()
@@ -37,6 +37,11 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
         need(complete_response_contract is None or complete_response_contract == bool(response_version),
              'NATIVE_INSTALLED_RESPONSE_CONTRACT_CONFLICT')
         complete_response_contract = bool(response_version)
+        from .capacity_program_roles import VERSION
+        program_version=exported.get('program_quantity_role_contract_version')
+        need(program_version in {None,VERSION} and (program_quantity_roles is None or program_quantity_roles==bool(program_version)),
+             'B13_INSTALLED_PROGRAM_CONTRACT_CONFLICT')
+        program_quantity_roles=bool(program_version)
     if metric_id == 'B13':
         need(not complete_response_contract and response_version is None, 'D04_RESPONSE_CONTRACT_ON_B13_FORBIDDEN')
         source = prepare_capacity_semantic_source(repo_root=data_root, company_id=company_id,
@@ -53,6 +58,11 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
             ordinary_registered=current_runtime or bool(exported and exported.get('schema_version')==2)),
                                request_context_format=request_context_format,
                                complete_response_contract=bool(complete_response_contract))
+    need(program_quantity_roles is None or type(program_quantity_roles) is bool,'B13_PROGRAM_SELECTION_INVALID')
+    need(not program_quantity_roles or metric_id=='B13','B13_PROGRAM_CONTRACT_ON_OTHER_METRIC')
+    if program_quantity_roles:
+        from .capacity_program_roles import program_source
+        source=program_source(source)
     current_equivalence=None
     if source_snapshot is None and exported and exported.get('schema_version')==2:
         source_snapshot=exported.get('source_snapshot')
@@ -95,6 +105,9 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
             document_name=proof['document_name'], source_role='supporting_input',
             request_attempt_id=proof['request_attempt_id'])
         records.extend([blob, ref]); references.append(ref); represented.add(key)
+    if source.get('program_quantity_role_contract_version'):
+        from .capacity_program_roles import verify_original_program_assessment
+        verify_original_program_assessment(source=source,assessment=assessment,raw_bytes_by_id=raw)
     admission = verify_ordinary_source_proofs(data_root=data_root, proofs=source['source_proofs'])
     records = list({content_hash(value=record): record for record in records}.values())
     binding = {'company_id': company_id, 'source_id': source['semantic_source_id'],
@@ -172,7 +185,7 @@ def _prepare_structural_case(*, data_root, company_id,current_runtime=False):
                       'reason_code': 'B13_OUTSIDE_APPROVED_APPLICABILITY', 'disclosure_absence_asserted': False}}
 
 
-def install_inputs(*, data_root, company_id, source_root=ROOT, assessment_mode=None, assessment_input_id=None, metric_id='B13', request_context_format=None, complete_response_contract=None, current_runtime=False, source_snapshot=None):
+def install_inputs(*, data_root, company_id, source_root=ROOT, assessment_mode=None, assessment_input_id=None, metric_id='B13', request_context_format=None, complete_response_contract=None, current_runtime=False, source_snapshot=None, program_quantity_roles=None):
     from .normal_run_v3 import _external, _install_case_inputs, _binding
     data_root = _external(data_root)
     source_root = ROOT if Path(source_root) == ROOT else _external(source_root)
@@ -180,7 +193,7 @@ def install_inputs(*, data_root, company_id, source_root=ROOT, assessment_mode=N
          'B13_INPUT_OUTPUT_OVERLAP')
     case = prepare_case(data_root=source_root, company_id=company_id, assessment_mode=assessment_mode,
                         assessment_input_id=assessment_input_id, metric_id=metric_id, request_context_format=request_context_format,
-                        complete_response_contract=complete_response_contract,current_runtime=current_runtime,source_snapshot=source_snapshot)
+                        complete_response_contract=complete_response_contract,current_runtime=current_runtime,source_snapshot=source_snapshot,program_quantity_roles=program_quantity_roles)
     requirement = load_requirement_snapshot(snapshot_dir=ROOT / 'requirements' / REQUIREMENT_ID)
     extra = ({EXPORT_PATHS[metric_id]: canonical_json_bytes(value=case['registered_input'])}
              if 'registered_input' in case else None)

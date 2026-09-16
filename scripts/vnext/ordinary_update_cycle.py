@@ -73,7 +73,7 @@ def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE'):
         'requirement_closure_hash':requirement['requirement_closure_hash'],
         'provider_enabled':False,'sec_fetch_enabled':False,'production_authorized':False}
     if native:
-        body['registered_update_options'] = normal.registered_update_options(metrics[0], assessment_mode=native_assessment_mode)
+        body['registered_update_options'] = normal.current_registered_update_options(metrics[0], assessment_mode=native_assessment_mode)
     path=root/'configuration.json'
     if path.exists():
         configured=_read(path)

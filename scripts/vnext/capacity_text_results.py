@@ -73,6 +73,9 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
         unresolved.extend(validate_quantity_role_findings(units=source['units'],findings=findings,
             period=source['prepared_annual_input']['table_input']['target_period'],quantity_scope=scope))
         need(not unresolved, 'B13_QUANTITY_SCOPE_UNRESOLVED')
+    if source.get('program_quantity_role_contract_version'):
+        from .capacity_program_roles import verify_original_program_assessment
+        verify_original_program_assessment(source=source,assessment=assessment,raw_bytes_by_id=raw_bytes_by_id)
     current_kinds = {f['kind'] for f in findings
                      if f['subject'] == 'TARGET_REGISTRANT' and f['timing'] == 'CURRENT_REPORT'}
     need(metric != 'B13' or not {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'} <= current_kinds,

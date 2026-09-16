@@ -22,6 +22,7 @@ def _operation_time(antecedent):
     remainder=antecedent[operation.start():] if operation else antecedent
     if re.search(r'\b(?:19|20)\d{2}\b',remainder) or (re.search(r'\b(?:19|20)\d{2}\b',prefix) and not cause):
         return {'timing':'UNRESOLVED'}
+    if prefix and not cause:return {'timing':'UNRESOLVED'}
     return {'timing':'CURRENT_REPORT'}
 
 

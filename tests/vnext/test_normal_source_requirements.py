@@ -140,8 +140,15 @@ class RegisteredEventSourceRequirementsTest(unittest.TestCase):
         self.assertEqual(scope['window'],{'fiscal_year':2025,'period_start':'2024-01-01','period_end':'2025-12-31'})
         self.assertTrue(scope['complete_registered_metadata'])
         self.assertEqual([len(s['event_filings']) for s in scope['scopes']],[4,31])
-        self.assertEqual(len(self.report['missing_or_failed_source_urls']),18)
-        self.assertTrue(all('/813828/' in u for u in self.report['missing_or_failed_source_urls']))
+        missing=set(self.report['missing_or_failed_source_urls'])
+        variants={r['source_url'] for r in self.report['requirements']
+                  if set(r['roles']) & {'registration_event_primary','registration_event_header'}}
+        self.assertEqual(len(variants),4)
+        self.assertTrue(variants <= missing)
+        self.assertTrue(all('/2041610/' in u for u in variants))
+        original_missing=missing-variants
+        self.assertEqual(len(original_missing),18)
+        self.assertTrue(all('/813828/' in u for u in original_missing))
         self.assertFalse(scope['financial_cross_entity_combination_authorized'])
         self.assertFalse(scope['metric_executed'])
         self.assertEqual(len(self.report['requirements']),len({r['source_url'] for r in self.report['requirements']}))

@@ -45,6 +45,44 @@ class OrdinaryIsolatedPublicationBoundaryTest(unittest.TestCase):
             release.guard_recovery(pointer_path=Path('/private/tmp/untrusted'), intent={})
         self.assertIsNone(release.recovery_hooks())
 
+    def test_mirror_guard_preserves_identity_under_existing_exclusive_lock(self):
+        # Run in a bounded child so regression to a nested flock cannot hang CI.
+        import subprocess
+        import sys
+        import textwrap
+        worker = textwrap.dedent("""
+            import fcntl, sys, tempfile
+            from pathlib import Path
+            from types import SimpleNamespace
+            from unittest.mock import patch
+            from vnext import ordinary_isolated_publication as release, publication as pub
+            with tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary).resolve(); (root / 'outputs').mkdir()
+                lock = root / 'outputs/active_publication.json.lock'
+                selected = {'publication_id': 'selected', 'previous_publication_id': 'previous'}
+                with lock.open('a+b') as held:
+                    fcntl.flock(held, fcntl.LOCK_EX)
+                    with patch.object(release, '_edge', return_value=(root, selected)), \
+                         patch.object(pub.PublicationView, '_open_paths',
+                                      return_value=SimpleNamespace(publication_id=sys.argv[1])) as internal:
+                        try:
+                            release.guard_mirror_repair(publication_root=root)
+                        except pub.PublicationError as error:
+                            assert sys.argv[1] == 'foreign'
+                            assert str(error) == 'ORDINARY_PUBLICATION_MIRROR_EDGE_CHANGED'
+                        else:
+                            assert sys.argv[1] in {'selected', 'previous'}
+                        internal.assert_called_once_with(publications_dir=root / 'outputs/publications',
+                                                         pointer_path=root / 'outputs/active_publication.json')
+        """)
+        env = {**os.environ, 'PYTHONPATH': os.pathsep.join([str(release.ROOT / 'scripts'), str(release.ROOT)]),
+               'PYTHONDONTWRITEBYTECODE': '1'}
+        for active in ('selected', 'previous', 'foreign'):
+            with self.subTest(active=active):
+                result = subprocess.run([sys.executable, '-c', worker, active], cwd=release.ROOT,
+                                        env=env, capture_output=True, text=True, timeout=5)
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_self_signed_marker_cannot_register_an_existing_workspace(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary).resolve()

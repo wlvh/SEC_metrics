@@ -1,0 +1,89 @@
+{
+  "rows": [
+    {
+      "case": "physical_qname",
+      "parsed_native_coverage": {
+        "fact_count": 4,
+        "source_object_count": 2,
+        "supplement_count": 0,
+        "encoded_outer_supplement_count": 0,
+        "duplicate_nested_xml_bytes_removed": 0,
+        "native_fact_stream_sha256": "26c15b271185d7b94678c845976e2e7b1e4d8efe681537c2bec30e0c196df2cb",
+        "native_contexts_and_units_retained": true,
+        "native_roundtrip_verified": true
+      },
+      "source_unit_count": 2,
+      "program_native_nonphysical_roles": 0,
+      "implementation_unresolved": [
+        {
+          "unit_id": "sha256:854201c3e6fe65b1ed47da9c70ada6b4fab6ab44a2f9843b19d786946a8d4937",
+          "kind": "NATIVE_FACT",
+          "source_index": 4,
+          "reason": "B13_PROGRAM_NATIVE_QUANTITY_ROLE_IMPLEMENTATION_UNSUPPORTED"
+        }
+      ],
+      "outcomes": [
+        {
+          "status": "REJECTED",
+          "reason": "B13_KNOWN_SOURCE_CANDIDATE_NOT_ASSESSED"
+        }
+      ]
+    },
+    {
+      "case": "monetary_native",
+      "parsed_native_coverage": {
+        "fact_count": 4,
+        "source_object_count": 2,
+        "supplement_count": 0,
+        "encoded_outer_supplement_count": 0,
+        "duplicate_nested_xml_bytes_removed": 0,
+        "native_fact_stream_sha256": "b06954ae30911f1613f3eae3fc6360a27e9e927d17ebb6c3fdf81d414b5c5021",
+        "native_contexts_and_units_retained": true,
+        "native_roundtrip_verified": true
+      },
+      "source_unit_count": 2,
+      "program_native_nonphysical_roles": 1,
+      "implementation_unresolved": [],
+      "outcomes": [
+        {
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "case": "physical_supplement",
+      "parsed_native_coverage": {
+        "fact_count": 3,
+        "source_object_count": 1,
+        "supplement_count": 1,
+        "encoded_outer_supplement_count": 1,
+        "duplicate_nested_xml_bytes_removed": 0,
+        "native_fact_stream_sha256": "5b41a15b7ce00713188b22dd854640aae5586a9dda52b50931be91f7cc7e82ef",
+        "native_contexts_and_units_retained": true,
+        "native_roundtrip_verified": true
+      },
+      "source_unit_count": 3,
+      "program_native_nonphysical_roles": 0,
+      "implementation_unresolved": [
+        {
+          "unit_id": "sha256:8bff836ec8232ec2595c302c7aae25e3f2fcf4be9b5074c1006a3eeee02c8b3d",
+          "kind": "NATIVE_SUPPLEMENT",
+          "source_index": 0,
+          "reason": "B13_PROGRAM_SUPPLEMENT_QUANTITY_SCOPE_IMPLEMENTATION_UNSUPPORTED"
+        }
+      ],
+      "outcomes": [
+        {
+          "status": "REJECTED",
+          "reason": "B13_SOURCE_ASSESSMENT_UNRESOLVED"
+        }
+      ]
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "evidence_type": "SYNTHETIC_ORIGINAL_HTML_NATIVE_PARSE_TO_ACCEPTANCE"
+}

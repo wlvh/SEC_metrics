@@ -109,10 +109,32 @@ jobs:
           B13_REFERENCE_CONTEXT: "1"
           B13_NATIVE_RUN_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-b13-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_capacity_run_material tests.vnext.test_capacity_numeric_run
+  capacity-program-native-runs:
+    name: vNext capacity program-role native Runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Install pinned offline request tokenizer
+        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - name: Validate program-owned quantity roles through the complete recorded B13 Run
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          B13_REFERENCE_CONTEXT: "1"
+          B13_NATIVE_RUN_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-b13-program-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_capacity_program_run_material
   going-concern-native-runs:
     name: vNext going-concern native Runs
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd

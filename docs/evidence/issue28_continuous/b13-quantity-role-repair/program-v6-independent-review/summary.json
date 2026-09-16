@@ -1,0 +1,26 @@
+{
+  "reviewer": "request_counting",
+  "scope": "Independent B13 V6 source-role contract review and bounded coordinator repair recheck; excludes restricted 6e5/D03 review",
+  "original_patch": "edbc9385404aad8048bd3f0a2b4e87c336efc4c1b078c44d7d342fa7b37dc52f",
+  "repaired_patch": "4e9428ce69b4ab8298e35ac98116fa68bbc549afe20d3336fed2a7ba8b704b34",
+  "finding": "Finite native preparation V5 versus ordinary Run V6 contract mismatch",
+  "finding_status": "FIXED_AND_INDEPENDENTLY_REPRODUCED_AS_MATCH",
+  "limited_review_result": "NO_REMAINING_FINDING_IN_REVIEWED_DIFFERENCE",
+  "verification": {
+    "original_short_tests": 8,
+    "original_independent_cases": 16,
+    "repaired_same_probe_cases": 13,
+    "repaired_refresh_routing_test": "PASS; B13 and D04; 0.013s",
+    "unchanged_semantic_files_do_not_require_rerun": true
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "real_company_credit": false,
+  "full_PR_approval": false,
+  "production_authorized": false,
+  "LIVE_B13_pause_unchanged": true,
+  "main_runtime_modified": false
+}

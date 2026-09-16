@@ -75,7 +75,7 @@ def register_assessment_input(*, prepared_requests, ledger, include_source_snaps
         'native_requests': native, 'new_call_authority': False, 'production_authorized': False}
     if include_source_snapshot:
         body.update(schema_version=2,source_snapshot=source)
-    for field in ('request_context_format', 'response_contract_version'):
+    for field in ('request_context_format', 'response_contract_version','program_quantity_role_contract_version'):
         if field in source:
             body[field] = source[field]
     value = {**body, 'input_record_id': content_hash(value=body)}
@@ -115,6 +115,8 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
     else:
         path = resolve_repository_file(repo_root=ROOT, repo_relative_path=export_path)
     value = strict_json_file(path=path)
+    need(value.get('program_quantity_role_contract_version')==source.get('program_quantity_role_contract_version'),
+         'B13_REGISTERED_PROGRAM_CONTRACT_CHANGED')
     need(value.get('request_context_format') == source.get('request_context_format'),
          'NATIVE_ASSESSMENT_CONTEXT_FORMAT_CHANGED')
     need(value.get('response_contract_version') == source.get('response_contract_version'),

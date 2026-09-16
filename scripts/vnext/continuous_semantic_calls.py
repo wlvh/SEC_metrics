@@ -48,6 +48,7 @@ SEMANTIC_RULE_PATHS = (
     'catalog/r6/D04_going_concern_assessment_v1.md',
     'scripts/vnext/capacity_native_assessment.py',
     'scripts/vnext/capacity_quantity_scope.py',
+    'scripts/vnext/capacity_program_roles.py','catalog/r5/capacity_semantic_review_v6.json',
     'scripts/vnext/capacity_quantity_roles.py',
     'scripts/vnext/capacity_update_input.py',
     'scripts/vnext/native_request_construction.py',
@@ -107,7 +108,8 @@ def request_digest(request, policy):
         body['shared_source_dictionaries'] = request['shared_source_dictionaries']
     if request.get('metric_id') == 'B13':
         body['native_capacity_role_assessments'] = request['native_capacity_role_assessments']
-    for field in ('quantity_scope_context', 'quantity_scope_instructions', 'response_contract_version',
+    for field in ('program_quantity_role_contract_version','program_quantity_contract',
+                  'quantity_scope_context', 'quantity_scope_instructions', 'response_contract_version',
                   'required_response_unit_ids', 'unit_response_requirements',
                   'unit_index_requirements'):
         if field in request:
@@ -240,7 +242,7 @@ class SemanticRequest:
 
 
 def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,control_id=None, native=False,
-                     reference_context=False, complete_response_contract=False, source_root=None, source_ledger=None):
+                     reference_context=False, complete_response_contract=False, source_root=None, source_ledger=None, program_quantity_roles=False):
     from .r6_semantic_source import prepare_d04_semantic_source
     from .requirement_profile import validate_execution_authority
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
@@ -296,6 +298,15 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
             from .d04_native_assessment import native_source
             source = native_source(source, request_context_format=context_format,
                                    complete_response_contract=complete_response_contract)
+    need(type(program_quantity_roles) is bool and (not program_quantity_roles or metric_id=='B13'),
+         'B13_PROGRAM_CONTRACT_SELECTION_INVALID')
+    if program_quantity_roles:
+        from .capacity_program_roles import program_source,quantity_contract
+        source=program_source(source)
+        program=quantity_contract(units=source['units'],period=source['prepared_annual_input']['table_input']['target_period'],
+            scope=source.get('quantity_scope_context'))
+        need(not program['implementation_unresolved'],
+             'B13_PROGRAM_SOURCE_IMPLEMENTATION_UNRESOLVED:'+repr(program['implementation_unresolved']))
     if data_root==ROOT:verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
     else:
         from .ordinary_source_authority import verify_ordinary_source_proofs
@@ -600,7 +611,10 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     elif request_fields.get('metric_id')=='D03':
         from .r6_regulatory_semantics import validate_response
     elif request_fields.get('metric_id') == 'B13':
-        from .capacity_semantic_review import validate_response
+        from .capacity_semantic_review import validate_response as capacity_validate_response
+        def validate_response(*,request,raw_response):
+            return capacity_validate_response(request=request,raw_response=raw_response,
+                source=strict_json_loads(text=prepared.source_bytes.decode()))
     elif request_fields['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST':
         from .d04_native_assessment import validate_response
     policy,plan = build_plan(prepared)
