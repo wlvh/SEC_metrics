@@ -1,0 +1,29 @@
+CURRENT 2025-08-15 2026-08-17 25720
+SHARD {"declared": {"name": "CIK0000019617-submissions-001.json", "filingCount": 2035, "filingFrom": "2025-07-15", "filingTo": "2025-08-13"}, "actual_all_forms_count": 2079, "actual_from": "2025-05-30", "actual_to": "2025-07-02"}
+OUTSIDE 2 TARGET_EVENTS 2
+OUTSIDE_SAMPLE [{'form': '8-K', 'reportDate': '2025-07-01', 'filingDate': '2025-07-01', 'accessionNumber': '0000019617-25-000510', 'primaryDocument': 'jpm-20250701.htm'}, {'form': '8-K', 'reportDate': '2025-07-01', 'filingDate': '2025-07-01', 'accessionNumber': '0000019617-25-000509', 'primaryDocument': 'jpm-20250701.htm'}]
+SHARD {"declared": {"name": "CIK0000019617-submissions-002.json", "filingCount": 2042, "filingFrom": "2025-06-05", "filingTo": "2025-07-13"}, "actual_all_forms_count": 2002, "actual_from": "2025-04-21", "actual_to": "2025-05-29"}
+OUTSIDE 3 TARGET_EVENTS 3
+OUTSIDE_SAMPLE [{'form': '8-K', 'reportDate': '2025-05-20', 'filingDate': '2025-05-22', 'accessionNumber': '0000019617-25-000485', 'primaryDocument': 'jpm-20250520.htm'}, {'form': '8-K', 'reportDate': '2025-05-19', 'filingDate': '2025-05-19', 'accessionNumber': '0000019617-25-000483', 'primaryDocument': 'jpm-20250519.htm'}, {'form': '8-K', 'reportDate': '2025-04-22', 'filingDate': '2025-04-22', 'accessionNumber': '0001193125-25-089203', 'primaryDocument': 'd913996d8k.htm'}]
+SHARD {"declared": {"name": "CIK0000019617-submissions-003.json", "filingCount": 2075, "filingFrom": "2025-04-30", "filingTo": "2025-06-03"}, "actual_all_forms_count": 2021, "actual_from": "2025-03-18", "actual_to": "2025-04-18"}
+OUTSIDE 4 TARGET_EVENTS 3
+OUTSIDE_SAMPLE [{'form': '8-K', 'reportDate': '2025-04-11', 'filingDate': '2025-04-11', 'accessionNumber': '0000019617-25-000334', 'primaryDocument': 'jpm-20250411.htm'}, {'form': '8-K', 'reportDate': '2025-04-11', 'filingDate': '2025-04-11', 'accessionNumber': '0000019617-25-000332', 'primaryDocument': 'jpm-20250411.htm'}, {'form': '8-K', 'reportDate': '2025-04-10', 'filingDate': '2025-04-10', 'accessionNumber': '0001193125-25-078015', 'primaryDocument': 'd885258d8k.htm'}]
+SHARD {"declared": {"name": "CIK0000019617-submissions-004.json", "filingCount": 2011, "filingFrom": "2025-03-26", "filingTo": "2025-04-28"}, "actual_all_forms_count": 2046, "actual_from": "2025-02-13", "actual_to": "2025-03-17"}
+OUTSIDE 1 TARGET_EVENTS 0
+OUTSIDE_SAMPLE [{'form': '10-K', 'reportDate': '2024-12-31', 'filingDate': '2025-02-14', 'accessionNumber': '0000019617-25-000270', 'primaryDocument': 'jpm-20241231.htm'}]
+SHARD {"declared": {"name": "CIK0000019617-submissions-005.json", "filingCount": 2006, "filingFrom": "2025-02-25", "filingTo": "2025-03-24"}, "actual_all_forms_count": 2062, "actual_from": "2025-01-07", "actual_to": "2025-02-12"}
+OUTSIDE 7 TARGET_EVENTS 7
+OUTSIDE_SAMPLE [{'form': '8-K', 'reportDate': '2025-02-03', 'filingDate': '2025-02-04', 'accessionNumber': '0001193125-25-020070', 'primaryDocument': 'd876756d8k.htm'}, {'form': '8-K', 'reportDate': '2025-01-27', 'filingDate': '2025-01-27', 'accessionNumber': '0001193125-25-013396', 'primaryDocument': 'd924480d8k.htm'}, {'form': '8-K', 'reportDate': '2025-01-24', 'filingDate': '2025-01-24', 'accessionNumber': '0001193125-25-012230', 'primaryDocument': 'd878108d8k.htm'}]
+SHARD {"declared": {"name": "CIK0000019617-submissions-006.json", "filingCount": 2085, "filingFrom": "2025-01-17", "filingTo": "2025-02-23"}, "actual_all_forms_count": 2082, "actual_from": "2024-11-29", "actual_to": "2025-01-06"}
+OUTSIDE 2 TARGET_EVENTS 0
+OUTSIDE_SAMPLE [{'form': '8-K', 'reportDate': '2024-12-09', 'filingDate': '2024-12-12', 'accessionNumber': '0000019617-24-000660', 'primaryDocument': 'jpm-20241209.htm'}, {'form': '8-K', 'reportDate': '2024-11-29', 'filingDate': '2024-11-29', 'accessionNumber': '0001193125-24-268103', 'primaryDocument': 'd846552d8k.htm'}]
+SHARD {"declared": {"name": "CIK0000019617-submissions-007.json", "filingCount": 2054, "filingFrom": "2024-12-05", "filingTo": "2025-01-15"}, "actual_all_forms_count": 2084, "actual_from": "2024-10-29", "actual_to": "2024-11-27"}
+OUTSIDE 0 TARGET_EVENTS 0
+REQUEST https://data.sec.gov/submissions/CIK0000019617.json SAVED 2026-08-17T10:53:03.338220+00:00 SOURCE_DATE None
+REQUEST https://data.sec.gov/submissions/CIK0000019617-submissions-001.json SAVED 2026-07-06T07:22:41.055711+00:00 SOURCE_DATE None
+REQUEST https://data.sec.gov/submissions/CIK0000019617-submissions-002.json SAVED 2026-07-06T07:22:41.982794+00:00 SOURCE_DATE None
+REQUEST https://data.sec.gov/submissions/CIK0000019617-submissions-003.json SAVED 2026-07-06T07:22:43.066756+00:00 SOURCE_DATE None
+REQUEST https://data.sec.gov/submissions/CIK0000019617-submissions-004.json SAVED 2026-07-06T07:22:44.171750+00:00 SOURCE_DATE None
+REQUEST https://data.sec.gov/submissions/CIK0000019617-submissions-005.json SAVED 2026-07-06T07:22:45.307274+00:00 SOURCE_DATE None
+REQUEST https://data.sec.gov/submissions/CIK0000019617-submissions-006.json SAVED 2026-07-06T07:22:46.890210+00:00 SOURCE_DATE None
+REQUEST https://data.sec.gov/submissions/CIK0000019617-submissions-007.json SAVED 2026-07-06T07:22:48.093189+00:00 SOURCE_DATE None

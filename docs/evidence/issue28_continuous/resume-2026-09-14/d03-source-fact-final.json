@@ -1,0 +1,61 @@
+{
+  "source_id": "sha256:ffb41f02f83596d1357ebc5a2980817876b6e4d11df26c2441042ad021ba12ff",
+  "source_fact": {
+    "rule_id": "AFFIRMATIVE_AGGREGATE_GOVERNMENT_INVOLVEMENT_V1",
+    "statement_text": "JPMorganChase is named as a defendant or is otherwise involved in many civil and governmental legal proceedings, including class actions, derivative actions and other litigation or disputes with third parties, as well as investigations and enforcement actions by U.S. and non-U.S. governmental authorities, including criminal proceedings.",
+    "visible_block_character_span": {
+      "start": 0,
+      "end": 338
+    },
+    "subject_binding": {
+      "text": "JPMorganChase",
+      "basis": "EXPLICIT_SAME_NAME_PARENTHETICAL",
+      "support": {
+        "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+        "section_id": "FULL_DOCUMENT_ALIAS_DEFINITION",
+        "labels": [
+          "SOURCE_ENTITY_ALIAS"
+        ],
+        "block_index": 140,
+        "text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+        "raw_start_byte": 1282800,
+        "raw_end_byte": 1283589,
+        "raw_span_sha256": "34a66111476bf80709b2aea8879fe0453b2b9fc41c09f7729aa3bf56cd055ab5"
+      }
+    },
+    "assertion": "AFFIRMATIVE",
+    "subject": "SOURCE_BOUND_REGISTRANT",
+    "reported_time": "CURRENT_AS_REPORTED",
+    "detail_level": "AGGREGATE_INVOLVEMENT",
+    "government_action_phrase": "investigations and enforcement actions by U.S. and non-U.S. governmental authorities",
+    "case_identity": null,
+    "case_count": null,
+    "event_dates": [],
+    "case_details_extracted": false,
+    "unlawfulness_or_guilt_asserted": false,
+    "status": "SOURCE_REPORTED_FACT",
+    "reason_codes": [],
+    "whole_source_coverage_proven": false,
+    "native_result_created": false,
+    "fact_id": "sha256:69b4af995d78bd8353a873c568d51d690ed477b28432c09196f46fa12a9ee972",
+    "document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+    "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+    "block_index": 339,
+    "raw_start_byte": 1419062,
+    "raw_end_byte": 1419419,
+    "raw_span_sha256": "185199a46f8e4dae32972a61de6118cb249d2487a1fa89159a3872b03ed67d6c",
+    "source_fact_id": "sha256:77d7b5b65c24df407b62efc676ebd41d2155d70d43b9fddacd64fa1aaa60e40f"
+  },
+  "request_id": "sha256:0ea24904bb8aafdc48121c5e8f1b606c348490b569584b9c2e1e18675a19eb3e",
+  "negative_cases": [
+    "conditional",
+    "other_entity",
+    "context_only"
+  ],
+  "sample_role": "PREVIOUSLY_USED_REPAIR_REGRESSION",
+  "model_calls": 0,
+  "native_result_created": false,
+  "semantic_correctness_verified": false
+}

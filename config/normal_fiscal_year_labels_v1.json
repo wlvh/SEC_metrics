@@ -1,0 +1,12 @@
+{
+  "record_type": "ORDINARY_FISCAL_YEAR_LABEL_POLICY",
+  "schema_version": 1,
+  "policy_id": "ordinary_fiscal_year_labels_v1",
+  "explicit_definition_rule": "UNIQUE_UNQUOTED_ISSUER_DEFINITION_FOR_THE_ACTUAL_END_DATE",
+  "metadata_only_rule": "CONSISTENT_DEI_AND_SAME_ACCESSION_COMPANYFACTS",
+  "conflict_rule": "USE_PROVEN_EXPLICIT_ISSUER_LABEL_AND_RETAIN_ORIGINAL_METADATA_CONFLICT",
+  "ambiguous_or_invalid_metadata_rule": "REJECT_INPUT_WITH_REASON",
+  "measurement_dates_changed": false,
+  "historical_input_or_run_changed": false,
+  "production_authorized": false
+}

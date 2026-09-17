@@ -1,0 +1,150 @@
+{
+  "patch_sha256": "f2291a0212a9b4906e573de52d1c635d9c909c9595ce2f7e114c944de4a2742f",
+  "overlay_files": {
+    "capacity_semantic_review.py": "44db30b70c6b82cf40d6652768ac6ae8280ca008254e0790b086b1134618debf",
+    "capacity_text_results.py": "68ef27227da23bcc52a8aef0041e428e9c1c61f45f30b19ffca90d9579933006",
+    "capacity_quantity_roles.py": "82a3aba23fb1514fd1d413cd5250771118f3ed965f49de1b89fdf295c819306a"
+  },
+  "scope": "INDEPENDENT_SYNTHETIC_ACCEPTOR_AND_NATIVE_PUBLIC_ABSENCE_PROBES",
+  "results": [
+    {
+      "name": "current-current",
+      "returned": []
+    },
+    {
+      "name": "historical-current",
+      "returned": []
+    },
+    {
+      "name": "historical-correct",
+      "returned": []
+    },
+    {
+      "name": "cause-current",
+      "returned": []
+    },
+    {
+      "name": "ambiguous-current",
+      "returned": []
+    },
+    {
+      "name": "mixed-industry-wrong-current",
+      "returned": []
+    },
+    {
+      "name": "mixed-industry-correct-historical",
+      "returned": []
+    },
+    {
+      "name": "unsupported-labelled-production",
+      "returned": []
+    },
+    {
+      "name": "unsupported-labelled-other",
+      "returned": []
+    },
+    {
+      "name": "unsupported-native-absence",
+      "returned": {
+        "result": {
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:c7dae62f4049fa4bea212e7b8701efe04cba413c522ba80d39aa5d3138250423",
+          "company_id": "enphase_energy",
+          "metric_id": "B13",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "scope_key": "sha256:23a1686bb5cc8b8970254676c08cbada63620579d3f662f3c3ea18c595e136fb",
+          "spec_closure_hash": "sha256:7271dcbbc3bf761af1ec5dc130c6fdbc6528822a33bf11f98a3c0f2021f4fefb",
+          "applicability": "APPLICABLE",
+          "quality": "NONE",
+          "publication": "WITHHELD",
+          "reason_code": "B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE",
+          "value": null,
+          "unit": null,
+          "value_kind": "TEXT_V1",
+          "text_payload": null,
+          "trace_id": "sha256:4651acd92e34446548fd089cc0e8c44186d2de92d69247cc6ff5a20e2e8adc23"
+        },
+        "public_row": {
+          "status": "NOT_AVAILABLE_SEC",
+          "value": "",
+          "notes": "No relevant disclosure in the complete saved annual primary and current annual amendments. This is a defined-scope source assessment; no utilization value is inferred."
+        },
+        "evidence_count": 1
+      }
+    },
+    {
+      "name": "partitive-production-other",
+      "returned": []
+    },
+    {
+      "name": "partitive-production-native-absence",
+      "returned": {
+        "result": {
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:c7dae62f4049fa4bea212e7b8701efe04cba413c522ba80d39aa5d3138250423",
+          "company_id": "enphase_energy",
+          "metric_id": "B13",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "scope_key": "sha256:23a1686bb5cc8b8970254676c08cbada63620579d3f662f3c3ea18c595e136fb",
+          "spec_closure_hash": "sha256:7271dcbbc3bf761af1ec5dc130c6fdbc6528822a33bf11f98a3c0f2021f4fefb",
+          "applicability": "APPLICABLE",
+          "quality": "NONE",
+          "publication": "WITHHELD",
+          "reason_code": "B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE",
+          "value": null,
+          "unit": null,
+          "value_kind": "TEXT_V1",
+          "text_payload": null,
+          "trace_id": "sha256:4651acd92e34446548fd089cc0e8c44186d2de92d69247cc6ff5a20e2e8adc23"
+        },
+        "public_row": {
+          "status": "NOT_AVAILABLE_SEC",
+          "value": "",
+          "notes": "No relevant disclosure in the complete saved annual primary and current annual amendments. This is a defined-scope source assessment; no utilization value is inferred."
+        },
+        "evidence_count": 1
+      }
+    },
+    {
+      "name": "nominal-capacity-other",
+      "returned": []
+    },
+    {
+      "name": "nominal-capacity-native-absence",
+      "returned": {
+        "result": {
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:c7dae62f4049fa4bea212e7b8701efe04cba413c522ba80d39aa5d3138250423",
+          "company_id": "enphase_energy",
+          "metric_id": "B13",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "scope_key": "sha256:23a1686bb5cc8b8970254676c08cbada63620579d3f662f3c3ea18c595e136fb",
+          "spec_closure_hash": "sha256:7271dcbbc3bf761af1ec5dc130c6fdbc6528822a33bf11f98a3c0f2021f4fefb",
+          "applicability": "APPLICABLE",
+          "quality": "NONE",
+          "publication": "WITHHELD",
+          "reason_code": "B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE",
+          "value": null,
+          "unit": null,
+          "value_kind": "TEXT_V1",
+          "text_payload": null,
+          "trace_id": "sha256:4651acd92e34446548fd089cc0e8c44186d2de92d69247cc6ff5a20e2e8adc23"
+        },
+        "public_row": {
+          "status": "NOT_AVAILABLE_SEC",
+          "value": "",
+          "notes": "No relevant disclosure in the complete saved annual primary and current annual amendments. This is a defined-scope source assessment; no utilization value is inferred."
+        },
+        "evidence_count": 1
+      }
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

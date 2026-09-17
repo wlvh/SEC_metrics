@@ -1,0 +1,49 @@
+{
+  "record_type": "ORDINARY_NEW_NATIVE_INPUT_EXECUTION_STAGED_PATCH",
+  "patch_path": "/tmp/sec_metrics_issue28_continuous/native-refresh-execution.patch",
+  "patch_sha256": "70e2b862dcf7218401ae5e6f4d29e00b04db8a84f74c1817b6ce176ca8c434e1",
+  "runtime_applied": false,
+  "default_max_provider_requests": 0,
+  "live_new_execution_metrics": [
+    "D04"
+  ],
+  "live_B13_paused": true,
+  "D03_enabled": false,
+  "tests": {
+    "new_synthetic_methods": 11,
+    "seconds": 0.13,
+    "existing_regression_methods": 13,
+    "regression_seconds": 0.056,
+    "new_synthetic_methods_after_count_fix": 12,
+    "seconds_after_count_fix": 0.144
+  },
+  "evidence_kind": "SYNTHETIC_REQUEST_FACTORY_AND_NATIVE_ACCEPTANCE_WITH_LEDGER_TRANSPORT_REGISTRATION_DOUBLES",
+  "new_real_company_metric_results": 0,
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "full_bound_native_update_run_executed": false,
+  "known_implementation_gap": "Partial request-group reuse across changed complete-source identities is explicitly refused before egress; complete-source provenance equivalence and exact-current request success reuse remain available",
+  "files": {
+    "scripts/vnext/capacity_update_input.py": {
+      "before": "c681ea2caf9d963d116a160aa70e6ad577c7ac525d3a53792afef3e86a2d9e4d",
+      "after": "bd6d8fc3649c20e3b3ed4de7484c7bd420a0625fd449a265b67294814684f23e"
+    },
+    "scripts/vnext/ordinary_refresh_cycle.py": {
+      "before": "47d5df9edb65a52c2cdd84c1525d654a41a89724611b07232d5fca6c93f39556",
+      "after": "812a9ec9bba665508bd8b96e6602b2fea488abdfcd6aed73fd7979c3012b7f97"
+    },
+    "tools/vnext_ordinary_refresh.py": {
+      "before": "bc9618d05c522efde784c085a9f3c1dde2e175a98f6dd06b1a7e2922df7a9fd0",
+      "after": "44534aaf73a10840d02483dbb9dbc0fd296c1dd7ff24c8d349b58b625584d7fa"
+    },
+    "tests/vnext/test_native_refresh_execution.py": {
+      "before": null,
+      "after": "efa03cd1089b23846cfc48f79bba3a7ac91f796957d25909cf5cd384dc404726"
+    }
+  },
+  "pre_count_fix_patch_sha256": "84e87bb0ca5daff08c71bcb855259d500702b341539f1065387c726b82260d76",
+  "fixed_independent_finding": "One FAILED ordinal counted from return then again after transient snapshot error; now one attribution per ordinal with matching-count verification."
+}

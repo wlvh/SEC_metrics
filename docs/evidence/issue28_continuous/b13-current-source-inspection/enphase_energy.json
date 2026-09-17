@@ -1,0 +1,296 @@
+{
+  "record_type": "B13_SOURCE_CANDIDATES",
+  "company_id": "enphase_energy",
+  "metric_id": "B13",
+  "annual": {
+    "company_id": "enphase_energy",
+    "entity": "1463101",
+    "filing": {
+      "accessionNumber": "0001463101-26-000013",
+      "filingDate": "2026-02-17",
+      "reportDate": "2025-12-31",
+      "acceptanceDateTime": "2026-02-14T02:38:22.000Z",
+      "act": "34",
+      "form": "10-K",
+      "fileNumber": "001-35480",
+      "filmNumber": "26635774",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 16190838,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "enph-20251231.htm",
+      "primaryDocDescription": "10-K"
+    },
+    "amendments": [],
+    "prior_period_amendments": [
+      {
+        "accessionNumber": "0001463101-15-000009",
+        "filingDate": "2015-02-06",
+        "reportDate": "2013-12-31",
+        "acceptanceDateTime": "2015-02-06T21:08:31.000Z",
+        "act": "34",
+        "form": "10-K/A",
+        "fileNumber": "001-35480",
+        "filmNumber": "15584580",
+        "items": "",
+        "core_type": "10-K/A",
+        "size": 57097,
+        "isXBRL": 0,
+        "isInlineXBRL": 0,
+        "isXBRLNumeric": null,
+        "primaryDocument": "enph-20131231x10ka.htm",
+        "primaryDocDescription": "10-K/A"
+      }
+    ],
+    "subject_policy": {
+      "mode": "CONTINUOUS_PRIMARY",
+      "selected_cik": "1463101",
+      "cross_entity_combination_authorized": false
+    },
+    "companyfacts_input": {
+      "company_id": "enphase_energy",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "source_repo_relative_path": "evidence/request_attempts/ff/ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3/CIK0001463101.json",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001463101.json",
+      "accession": "0001463101-26-000013",
+      "document_name": "CIK0001463101.json",
+      "request_attempt_id": "request:attempt:3926d2911ed3b04f6558948f7a3e3708f0a5374845657b96ba4997e76e9409cd"
+    },
+    "table_input": {
+      "company_id": "enphase_energy",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "source_repo_relative_path": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+      "accession": "0001463101-26-000013",
+      "document_name": "enph-20251231.htm",
+      "request_attempt_id": "request:attempt:b9ebac29d66992383ca6314bc260daa68608e2f34424768305f50622c0871ffd",
+      "source_media_type": "text/html",
+      "source_role": "target_primary"
+    },
+    "source_proofs": [
+      {
+        "source_url": "https://data.sec.gov/submissions/CIK0001463101.json",
+        "accession": "",
+        "document_name": "CIK0001463101.json",
+        "content_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41",
+        "request_body_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41",
+        "request_body_size": 168172,
+        "request_headers_repo_relative_path": "evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json.85446aa749f07237adc8f19f99c6d71faaf03143d719a390e87528b9db0f6127.headers.json",
+        "request_headers_sha256": "85446aa749f07237adc8f19f99c6d71faaf03143d719a390e87528b9db0f6127",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json",
+        "request_attempt_id": "request:attempt:a6a94b904d18b0f9c0e96f0cd5e667bb1b340536b8f1450f612d74583af72d97"
+      },
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+        "accession": "0001463101-26-000013",
+        "document_name": "enph-20251231.htm",
+        "content_sha256": "7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+        "request_body_sha256": "7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+        "request_body_size": 2973878,
+        "request_headers_repo_relative_path": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm.5b9c9ccfcece7cc2502f8ff0a1b67b31e1f715f146021de0ecd94087e592f9f1.headers.json",
+        "request_headers_sha256": "5b9c9ccfcece7cc2502f8ff0a1b67b31e1f715f146021de0ecd94087e592f9f1",
+        "request_headers_size": 1088,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+        "request_attempt_id": "request:attempt:b9ebac29d66992383ca6314bc260daa68608e2f34424768305f50622c0871ffd"
+      },
+      {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001463101.json",
+        "accession": "0001463101-26-000013",
+        "document_name": "CIK0001463101.json",
+        "content_sha256": "ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3",
+        "request_body_sha256": "ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3",
+        "request_body_size": 3069157,
+        "request_headers_repo_relative_path": "evidence/request_attempts/ff/ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3/CIK0001463101.json.a9fa8bf8d4b97ddecb022cd72189c4dfda40a1114c5a72c0943a12bf39500297.headers.json",
+        "request_headers_sha256": "a9fa8bf8d4b97ddecb022cd72189c4dfda40a1114c5a72c0943a12bf39500297",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/ff/ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3/CIK0001463101.json",
+        "request_attempt_id": "request:attempt:3926d2911ed3b04f6558948f7a3e3708f0a5374845657b96ba4997e76e9409cd"
+      }
+    ],
+    "selection_rule": "LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS",
+    "source_evidence": "LEDGER_BOUND_SAVED_BYTES",
+    "update_status": "ORIGINAL_INPUT_READY",
+    "current_latest_verified": false,
+    "execution": "NOT_EXECUTED",
+    "production_authorized": false,
+    "input_id": "sha256:9fafddb650c6a37a5e05174ed2984c93a3dff5b231bd0ec686c446d2693f630c"
+  },
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+    "raw_asset_id": "sha256:7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+    "company_id": "enphase_energy",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+    "accession": "0001463101-26-000013",
+    "document_name": "enph-20251231.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:b9ebac29d66992383ca6314bc260daa68608e2f34424768305f50622c0871ffd"
+  },
+  "raw_blob": {
+    "record_type": "RAW_BLOB",
+    "raw_asset_id": "sha256:7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+    "byte_length": 2973878,
+    "media_type": "text/html",
+    "storage_uri": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
+  },
+  "source_proofs": [
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0001463101.json",
+      "accession": "",
+      "document_name": "CIK0001463101.json",
+      "content_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41",
+      "request_body_sha256": "750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41",
+      "request_body_size": 168172,
+      "request_headers_repo_relative_path": "evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json.85446aa749f07237adc8f19f99c6d71faaf03143d719a390e87528b9db0f6127.headers.json",
+      "request_headers_sha256": "85446aa749f07237adc8f19f99c6d71faaf03143d719a390e87528b9db0f6127",
+      "request_headers_size": 736,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json",
+      "request_attempt_id": "request:attempt:a6a94b904d18b0f9c0e96f0cd5e667bb1b340536b8f1450f612d74583af72d97"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+      "accession": "0001463101-26-000013",
+      "document_name": "enph-20251231.htm",
+      "content_sha256": "7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+      "request_body_sha256": "7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+      "request_body_size": 2973878,
+      "request_headers_repo_relative_path": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm.5b9c9ccfcece7cc2502f8ff0a1b67b31e1f715f146021de0ecd94087e592f9f1.headers.json",
+      "request_headers_sha256": "5b9c9ccfcece7cc2502f8ff0a1b67b31e1f715f146021de0ecd94087e592f9f1",
+      "request_headers_size": 1088,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+      "request_attempt_id": "request:attempt:b9ebac29d66992383ca6314bc260daa68608e2f34424768305f50622c0871ffd"
+    },
+    {
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001463101.json",
+      "accession": "0001463101-26-000013",
+      "document_name": "CIK0001463101.json",
+      "content_sha256": "ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3",
+      "request_body_sha256": "ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3",
+      "request_body_size": 3069157,
+      "request_headers_repo_relative_path": "evidence/request_attempts/ff/ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3/CIK0001463101.json.a9fa8bf8d4b97ddecb022cd72189c4dfda40a1114c5a72c0943a12bf39500297.headers.json",
+      "request_headers_sha256": "a9fa8bf8d4b97ddecb022cd72189c4dfda40a1114c5a72c0943a12bf39500297",
+      "request_headers_size": 707,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/ff/ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3/CIK0001463101.json",
+      "request_attempt_id": "request:attempt:3926d2911ed3b04f6558948f7a3e3708f0a5374845657b96ba4997e76e9409cd"
+    }
+  ],
+  "source_admission": {
+    "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+    "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+    "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+    "request_attempt_ids": [
+      "request:attempt:a6a94b904d18b0f9c0e96f0cd5e667bb1b340536b8f1450f612d74583af72d97",
+      "request:attempt:b9ebac29d66992383ca6314bc260daa68608e2f34424768305f50622c0871ffd",
+      "request:attempt:3926d2911ed3b04f6558948f7a3e3708f0a5374845657b96ba4997e76e9409cd"
+    ],
+    "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "document_id": "sha256:e84e4c799f48ae3f2fb6f6994f06f975b002bcf4ad61eb46891f3e57ee9fc7f3",
+  "complete_document_block_count": 2709,
+  "related_disclosures": [
+    {
+      "value_kind": "TEXT_V1",
+      "extent": "FULL_BLOCK",
+      "order": 0,
+      "text": "•our ability to manage manufacturing capacity and production;",
+      "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+      "document_id": "sha256:e84e4c799f48ae3f2fb6f6994f06f975b002bcf4ad61eb46891f3e57ee9fc7f3",
+      "section_id": "CAPACITY_DISCLOSURES",
+      "block_index": 443,
+      "raw_start_byte": 504203,
+      "raw_end_byte": 504404,
+      "raw_span_sha256": "7a5f4aaa007bb3d98e71a5c32e0d250c025d8885eeac3d397e07cf164725043d"
+    },
+    {
+      "value_kind": "TEXT_V1",
+      "extent": "FULL_BLOCK",
+      "order": 1,
+      "text": "Additionally, manufacturing yields depend on a number of factors, including the stability and manufacturability of the product design, manufacturing improvements gained over cumulative production volumes, and the quality and consistency of component parts. Capacity constraints, raw materials shortages, logistics issues, labor shortages and changes in customer requirements, manufacturing facilities or processes have historically caused, and may in the future cause, reduced manufacturing yields, negatively impacting the gross profit on, and our production capacity for, those products. Moreover, an increase in the rejection and rework rate of products during the quality control process before, during or after manufacture would result in our experiencing lower yields, gross profit and production capacity. Furthermore, counterfeit parts in our supply chain have been and continue to be a concern, since any counterfeit part can be a lower quality product, which may affect our system reliability.",
+      "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+      "document_id": "sha256:e84e4c799f48ae3f2fb6f6994f06f975b002bcf4ad61eb46891f3e57ee9fc7f3",
+      "section_id": "CAPACITY_DISCLOSURES",
+      "block_index": 454,
+      "raw_start_byte": 511237,
+      "raw_end_byte": 512240,
+      "raw_span_sha256": "4fde58a594a214fa1224b5834d749096023f3cb48bb9866210985f8c75734e21"
+    },
+    {
+      "value_kind": "TEXT_V1",
+      "extent": "FULL_BLOCK",
+      "order": 2,
+      "text": "To mitigate supply chain risks and tariff exposure and to leverage U.S. manufacturing incentives, we continued to operate our domestic manufacturing footprint, including our in‑house manufacturing facility and our partnership with Flex. These arrangements maintained a combined manufacturing capacity of approximately five-million microinverters per quarter. Beginning in the second half of 2024, we began shipping residential and commercial microinverters and batteries with higher domestic content from U.S. manufacturing facilities, which are expected to help certain solar and battery projects qualify for the domestic content bonus tax credit. The domestic content bonus tax credit is only available to commercial asset owners, which includes commercial businesses adding solar and power purchase agreements/lease providers who own residential solar projects.",
+      "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+      "document_id": "sha256:e84e4c799f48ae3f2fb6f6994f06f975b002bcf4ad61eb46891f3e57ee9fc7f3",
+      "section_id": "CAPACITY_DISCLOSURES",
+      "block_index": 809,
+      "raw_start_byte": 783549,
+      "raw_end_byte": 784419,
+      "raw_span_sha256": "8c781cccc2010e4c079a6b5e93230262dc3371ac458eeea588f96c405a59eaf5"
+    },
+    {
+      "value_kind": "TEXT_V1",
+      "extent": "FULL_BLOCK",
+      "order": 3,
+      "text": "We outsource some of our manufacturing to third-party contract manufacturers and generally negotiate product pricing with them on a quarterly basis. We believe our contract manufacturing partners have sufficient production capacity to meet the anticipated demand for our products for the foreseeable future. However, shortages in the supply of certain key raw materials could adversely affect our ability to meet customer demand for our products. We contract with third parties, including one of our contract manufacturers, to serve as our logistics providers by warehousing and delivering our products in the United States, Canada, Mexico, Europe, Australia, New Zealand, India, Brazil, the Philippines, Thailand, South Africa, and certain other Central American and Asian countries.",
+      "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+      "document_id": "sha256:e84e4c799f48ae3f2fb6f6994f06f975b002bcf4ad61eb46891f3e57ee9fc7f3",
+      "section_id": "CAPACITY_DISCLOSURES",
+      "block_index": 834,
+      "raw_start_byte": 800478,
+      "raw_end_byte": 801262,
+      "raw_span_sha256": "a791d85795fe3e94455fd51949aef7ecb0febd8b9a3e6b2fe18bcc4c62d62e09"
+    },
+    {
+      "value_kind": "TEXT_V1",
+      "extent": "FULL_BLOCK",
+      "order": 4,
+      "text": "Inventory is valued at the lower of cost or market. Market is current replacement cost (by purchase or by reproduction, dependent on the type of inventory). In cases where market exceeds net realizable value (i.e., estimated selling price less reasonably predictable costs of completion and disposal), inventories are stated at net realizable value. Market is not considered to be less than net realizable value reduced by an allowance for an approximately normal profit margin. We determine cost on a first-in first-out basis and include both the costs of acquisition and manufacturing in our inventory costs. These costs include direct materials, direct labor, and indirect manufacturing costs, including depreciation and amortization. The capitalization of indirect costs is based on the normal utilization of our manufacturing facility in Texas. If the manufacturing facility utilization is abnormally low, the portion of our indirect manufacturing costs related to the abnormal utilization level is expensed as incurred. Other abnormal manufacturing costs, such as wasted materials or excess yield losses, are also expensed as incurred.",
+      "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+      "document_id": "sha256:e84e4c799f48ae3f2fb6f6994f06f975b002bcf4ad61eb46891f3e57ee9fc7f3",
+      "section_id": "CAPACITY_DISCLOSURES",
+      "block_index": 1022,
+      "raw_start_byte": 995548,
+      "raw_end_byte": 996936,
+      "raw_span_sha256": "3fb3f68bb1288a7b4e68a921e2d51a5a0a7f9c5323f13d0e05faaf49acafbf4e"
+    }
+  ],
+  "possible_actual_production": [],
+  "native_quantity_candidates": [],
+  "amendment_scope_proven": true,
+  "source_status": "RELATED_DISCLOSURES_FOUND",
+  "numeric_pair_completeness_verified": false,
+  "absence_established": false,
+  "candidate_text_status": "TEXT_QUAL",
+  "native_result_created": false,
+  "review_complete": false,
+  "production_authorized": false,
+  "rule_sha256": "ddaa1589647ccc4f7eac27e016c0865fd691dc2cace96029113c27b76609e37c",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "source_candidate_id": "sha256:531d172c8af8443d1db48b2ca3a92949c4fcb46d95d0f4ac8c0db4f85b943a2e"
+}

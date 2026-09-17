@@ -1,0 +1,83 @@
+{
+  "record_type": "ORDINARY_SAVED_UPDATE_CHECK",
+  "companies": [
+    {
+      "company_id": "marriott_international",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "0f825b95ec784390a81045df534c2993",
+      "latest_attempt": "0f825b95ec784390a81045df534c2993",
+      "successful_attempt": "68d3b44583d44465ad31c741f5c55b25",
+      "previous_successful_attempt": "68d3b44583d44465ad31c741f5c55b25",
+      "new_candidate_created": false,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "0f825b95ec784390a81045df534c2993",
+        "configuration_id": "sha256:2f40c77af7c52ea8f2340bd969ec5c02f02e4dc771d3b6e57e78589dbc2d53b3",
+        "intent_id": "sha256:92d7edf00eb0200d9569c049e54028e0a254e3314b60e757f3986cd43d530481",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "completed_at": "2026-09-13T01:56:46.527383+00:00",
+        "input": {
+          "company_id": "marriott_international",
+          "metric_ids": [
+            "B01"
+          ],
+          "requirement_closure_hash": "sha256:b5362a354e99b793830b643ae8c74d42b311c53d900b52c5e4b5728eb80a039e",
+          "targets": {
+            "B01": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            }
+          },
+          "specs": {
+            "B01": {
+              "B01": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8"
+            }
+          },
+          "source_contents": [
+            {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+              "accession": "0001048286-26-000007",
+              "document_name": "CIK0001048286.json",
+              "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a"
+            },
+            {
+              "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+              "accession": "",
+              "document_name": "CIK0001048286.json",
+              "sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+              "accession": "0001048286-26-000007",
+              "document_name": "mar-20251231.htm",
+              "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+            }
+          ],
+          "content_id": "sha256:9f031b60b301741ca07cb2ebbf631c96f52aa5f7005b25e4e8d82a329650d761"
+        },
+        "metrics": {},
+        "error": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:7540b54259bc1605be39e71d0fba7b5c63ce17fd57d8d7ce33ecf30aa85b175b"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

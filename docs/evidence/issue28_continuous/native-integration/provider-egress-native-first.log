@@ -1,0 +1,37 @@
+{
+  "egress_capability_references": [
+    "scripts/vnext/ai_adapter.py::_ApprovedTransportAdapter._complete_repository_transport",
+    "scripts/vnext/ai_adapter.py::_InvocationControllerTransport.send",
+    "scripts/vnext/ai_adapter.py::_ScopedInvocationControllerTransport.send",
+    "scripts/vnext/ai_adapter.py::_TableContextMeasurementTransport.send",
+    "scripts/vnext/ai_adapter.py::_open_provider_request"
+  ],
+  "gate_receipt_id": "sha256:300864271da57b126314fe9c06c98777fb97e447bba2b6fba4e4406219d3bc8b",
+  "provider_boundary_callers": [
+    "scripts/vnext/ai_adapter.py::_DeepSeekChatCompletionsTransport.complete",
+    "scripts/vnext/ai_adapter.py::_OpenAIResponsesTransport.complete"
+  ],
+  "provider_opener_allowed_call_sites": [
+    "scripts/vnext/ai_adapter.py::_open_provider_request"
+  ],
+  "record_type": "PROVIDER_EGRESS_CALL_GRAPH_GATE",
+  "remote_adapter_constructors": [
+    "scripts/vnext/ai_adapter.py::build_annual_candidate_transport_adapter",
+    "scripts/vnext/ai_adapter.py::build_invocation_controlled_transport_adapter",
+    "scripts/vnext/ai_adapter.py::build_scoped_qualification_transport_adapter",
+    "scripts/vnext/ai_adapter.py::build_table_context_measurement_transport",
+    "scripts/vnext/ai_adapter.py::build_table_qualification_transport_adapter"
+  ],
+  "repository_transport_callers": [
+    "scripts/vnext/ai_adapter.py::_InvocationControllerTransport.send",
+    "scripts/vnext/ai_adapter.py::_TableContextMeasurementTransport.send"
+  ],
+  "repository_transport_factories": [
+    "scripts/vnext/ai_adapter.py::_ApprovedTransportAdapter._complete_repository_transport",
+    "scripts/vnext/ai_adapter.py::_ScopedInvocationControllerTransport.send"
+  ],
+  "scanned_file_count": 195,
+  "scanned_source_set_hash": "sha256:93fdd24c2aa3d9cd7ed43b098576e3a73f9932f4ee883f8a997a19e33ca28083",
+  "schema_version": 1,
+  "status": "PASS"
+}

@@ -1,0 +1,56 @@
+{
+  "baseline_commit": "1b37eb47379a34fe208a39eb737b524693a0b3c8",
+  "changed_execution_files": {
+    "config/issue28_continuous_calls_v1.json": {
+      "old": {
+        "sha256": "be833d50e5e9fa89761f22fe0792142d578d48157f0f1927031590203f804210",
+        "size": 3309
+      },
+      "current": {
+        "sha256": "ebb4d4753d2d6916cf8f8e05a3233ef6cd6008484de487f316d53627c7d40d2c",
+        "size": 3295
+      }
+    },
+    "config/issue28_normal_results_v2.json": {
+      "old": {
+        "sha256": "828354c806eba0c02e25b73a2f39172dc991021d65d25e7834d96014b88b6593",
+        "size": 7160
+      },
+      "current": {
+        "sha256": "830c5f27c9a8b8bdfb13078dec733d1979b3fe327638fc97bd740cb160303fcf",
+        "size": 7250
+      }
+    },
+    "config/ordinary_income_input_v1.json": {
+      "old": null,
+      "current": {
+        "sha256": "200dcc2b9c5eac2a00106f159403b4e61d8a260a69e0ebf2ffcf7cd776bbc5ad",
+        "size": 652
+      }
+    },
+    "scripts/vnext/normal_zero_ai_results.py": {
+      "old": {
+        "sha256": "43e55654644137f2213a8c17453dc1d00b0dd849ee83b9883185d6b0b933bdd2",
+        "size": 22878
+      },
+      "current": {
+        "sha256": "91247d1cf336b9202c8c84aec947ce283d723c6a5302dee37a70840993e26565",
+        "size": 24282
+      }
+    },
+    "scripts/vnext/ordinary_income_input.py": {
+      "old": null,
+      "current": {
+        "sha256": "830abd04f19a5a668d05abf6fd06811d8e1deac3e2eee46bec4262de37ccc2a4",
+        "size": 8921
+      }
+    }
+  },
+  "sec_transport_admission_count_unchanged": true,
+  "sec94_material_reused_not_rerun": true,
+  "actual_calls": [
+    0,
+    0,
+    31
+  ]
+}

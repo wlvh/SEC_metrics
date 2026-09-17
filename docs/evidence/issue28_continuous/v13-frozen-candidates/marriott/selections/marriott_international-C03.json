@@ -1,0 +1,200 @@
+{
+  "resolver": "ecd_peo_total_compensation_v1",
+  "source_reference_id": "sha256:f83a3aec9e0aa4fe67ecede9a18e28d4964911c19bf03fb1887768885290af0d",
+  "raw_asset_id": "sha256:fca4ce3abc7f769a80642f34b9a9f3f4208fab569bccb7f8b5166b11fe19adbd",
+  "target": {
+    "company_id": "marriott_international",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope": {
+      "entity_scope": "registrant"
+    },
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6"
+  },
+  "candidates": [
+    {
+      "locator": {
+        "ordinal": 8,
+        "qualified_name": "ecd:PeoTotalCompAmt",
+        "context_ref": "c1"
+      },
+      "dimensions": {
+        "ecd:IndividualAxis": "mar:MrCapuanoMember"
+      },
+      "source_text": "22,970,926",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "entity_identifier": "0001048286",
+      "unit_ref": "usd",
+      "source_transform": "ixt:num-dot-decimal",
+      "value": "22970926",
+      "person_members": [
+        [
+          "http://www.marriott.com/20260508",
+          "MrCapuanoMember"
+        ]
+      ]
+    },
+    {
+      "locator": {
+        "ordinal": 59,
+        "qualified_name": "ecd:PeoTotalCompAmt",
+        "context_ref": "c1"
+      },
+      "dimensions": {
+        "ecd:IndividualAxis": "mar:MrCapuanoMember"
+      },
+      "source_text": "22,970,926",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "entity_identifier": "0001048286",
+      "unit_ref": "usd",
+      "source_transform": "ixt:num-dot-decimal",
+      "value": "22970926",
+      "person_members": [
+        [
+          "http://www.marriott.com/20260508",
+          "MrCapuanoMember"
+        ]
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "locator": {
+        "ordinal": 16,
+        "qualified_name": "ecd:PeoTotalCompAmt",
+        "context_ref": "c2"
+      },
+      "reason": "OTHER_PERIOD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31"
+    },
+    {
+      "locator": {
+        "ordinal": 24,
+        "qualified_name": "ecd:PeoTotalCompAmt",
+        "context_ref": "c4"
+      },
+      "reason": "OTHER_PERIOD",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31"
+    },
+    {
+      "locator": {
+        "ordinal": 32,
+        "qualified_name": "ecd:PeoTotalCompAmt",
+        "context_ref": "c6"
+      },
+      "reason": "OTHER_PERIOD",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31"
+    },
+    {
+      "locator": {
+        "ordinal": 40,
+        "qualified_name": "ecd:PeoTotalCompAmt",
+        "context_ref": "c8"
+      },
+      "reason": "OTHER_PERIOD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31"
+    },
+    {
+      "locator": {
+        "ordinal": 41,
+        "qualified_name": "ecd:PeoTotalCompAmt",
+        "context_ref": "c9"
+      },
+      "reason": "OTHER_PERIOD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31"
+    }
+  ],
+  "invalid_target_facts": [],
+  "reported_person_facts": [
+    {
+      "name": "Mr. Capuano",
+      "person_members": [],
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "locator": {
+        "ordinal": 55,
+        "qualified_name": "ecd:PeoName",
+        "context_ref": "c5"
+      },
+      "identity_valid": true
+    },
+    {
+      "name": "Mr. Capuano",
+      "person_members": [],
+      "period_start": "2021-02-01",
+      "period_end": "2021-12-31",
+      "locator": {
+        "ordinal": 54,
+        "qualified_name": "ecd:PeoName",
+        "context_ref": "c11"
+      },
+      "identity_valid": true
+    },
+    {
+      "name": "Mr. Capuano",
+      "person_members": [],
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "locator": {
+        "ordinal": 53,
+        "qualified_name": "ecd:PeoName",
+        "context_ref": "c7"
+      },
+      "identity_valid": true
+    },
+    {
+      "name": "Mr. Capuano",
+      "person_members": [],
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "locator": {
+        "ordinal": 52,
+        "qualified_name": "ecd:PeoName",
+        "context_ref": "c3"
+      },
+      "identity_valid": true
+    },
+    {
+      "name": "Mr. Capuano",
+      "person_members": [],
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "locator": {
+        "ordinal": 51,
+        "qualified_name": "ecd:PeoName",
+        "context_ref": "c0"
+      },
+      "identity_valid": true
+    },
+    {
+      "name": "Mr. Sorenson",
+      "person_members": [],
+      "period_start": "2021-01-01",
+      "period_end": "2021-01-31",
+      "locator": {
+        "ordinal": 56,
+        "qualified_name": "ecd:PeoName",
+        "context_ref": "c12"
+      },
+      "identity_valid": true
+    }
+  ],
+  "distinct_values": [
+    "22970926"
+  ],
+  "specific_person_members": [
+    [
+      "http://www.marriott.com/20260508",
+      "MrCapuanoMember"
+    ]
+  ],
+  "reason_code": "PASS",
+  "selection_id": "sha256:6203dda04acb4469c0505e991536ef8077d440c3233eca168e1103fd8bc9af4d"
+}

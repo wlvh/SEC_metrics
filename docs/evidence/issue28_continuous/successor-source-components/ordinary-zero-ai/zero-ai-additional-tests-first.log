@@ -1,0 +1,14 @@
+.F.
+======================================================================
+FAIL: test_ebitda_uses_current_revenue_dependency_and_exact_component_arithmetic (tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiAdditionalRoutesTest.test_ebitda_uses_current_revenue_dependency_and_exact_component_arithmetic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_zero_ai_results.py", line 196, in test_ebitda_uses_current_revenue_dependency_and_exact_component_arithmetic
+    self.assertTrue(all(len(values) == 1 for values in (revenue,income,dna)))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 3 tests in 13.842s
+
+FAILED (failures=1)

@@ -1,0 +1,22 @@
+{
+  "record_type": "NORMAL_CANDIDATE_PRESENTATION_POLICY",
+  "schema_version": 1,
+  "production_authorized": false,
+  "metrics": {
+    "D01": {
+      "status_exact": "TEXT_QUAL",
+      "source_class": "MDA",
+      "unit": "text",
+      "formula": "verbatim Item 1A headings",
+      "confidence": "",
+      "concept_or_section": "Item 1A",
+      "metric_context_style": "constant",
+      "context_or_dimension": "registrant risk disclosures",
+      "evidence_context_style": "text_source_span",
+      "evidence_unit_policy": "observation",
+      "evidence_extraction_method": "verbatim_source_excerpt",
+      "parser_version": "TEXT_V1",
+      "notes": "Verbatim headings from the original annual filing. Disclosures do not assert that risks occurred."
+    }
+  }
+}

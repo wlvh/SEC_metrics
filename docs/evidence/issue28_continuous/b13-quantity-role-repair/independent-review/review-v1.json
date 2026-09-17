@@ -1,0 +1,54 @@
+{
+  "review_type": "INDEPENDENT_TARGETED_CODE_AND_EXECUTABLE_COUNTEREXAMPLE_REVIEW",
+  "status": "BLOCKING_FINDING",
+  "base_head": "ddecbf03b98c9c40f24be87c8181ae9077cb7ae3",
+  "reviewed_patch_sha256": "3345bdae283831fb34cc18517ce90c3d0570bb75b919eb1363b85b3d82dd9747",
+  "reviewed_files": {
+    "capacity_semantic_review.py": "1433a6d671eba6b63b975e37c7bcab80258b440d10cd649189b83972a40e1a37",
+    "capacity_text_results.py": "6e21fb8310ec96d3082c9b29ef7b2fcbf17f9571dacd82abba8967a5ce418124",
+    "capacity_quantity_roles.py": "cff1571ae2683d76436169a55a9d19827e5749b4d857f2230ed8dd3adf05ee6c"
+  },
+  "findings": [
+    {
+      "id": "B13_ROLE_REVIEW_01",
+      "priority": "P1",
+      "title": "Unrecognized physical quantity can be relabelled or omitted into defined absence",
+      "path": "scripts/vnext/capacity_quantity_roles.py",
+      "lines": [
+        82,
+        137
+      ],
+      "source": "We produced a total of 80 widgets in the first quarter.",
+      "trigger": "ACTUAL_PRODUCTION returns implementation unresolved, but OTHER_CONTEXT returns no unresolved; omitted finding passes native complete assessment/Review record builders and project_defined_absence.",
+      "actual_native_reason": "B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE",
+      "actual_public_status": "NOT_AVAILABLE_SEC",
+      "actual_public_notes": "No relevant disclosure in the complete saved annual primary and current annual amendments. This is a defined-scope source assessment; no utilization value is inferred.",
+      "cause": "Unsupported quantity syntax detection is inside quantity-labelled finding iteration; reverse source scan only iterates successfully parsed physical quantity proofs. Model omission/wrong role therefore controls whether an implementation gap is visible.",
+      "required_fix": "Independently census possible physical quantity assertions from source and preserve unsupported syntax/scope as implementation unresolved even with OTHER_CONTEXT or no finding. Positive annual quantities and actual quarterly capacity must remain accepted without annualization.",
+      "evidence": "probe.json"
+    }
+  ],
+  "verified_nonblocking_scope": [
+    "Root historical/current antecedent counterexample corrected",
+    "Root current industry plus historical company capacity counterexample corrected",
+    "Cause-year prefix does not misdate current operation",
+    "Current/historical same block requires both classifications",
+    "Actual Enphase809 role retained, period quarter, annual_comparability_proven false",
+    "Actual82 original limits conflict preserved; removing limits still rejects sales as production",
+    "Actual94 original failure preserved; removing limits rejects no-quantity ACTUAL; correcting those still rejects wrong-target industry",
+    "Corrected real-response variants retain unchanged source/request/evidence references and pass current checks",
+    "12 existing role/text native component tests pass, including effective Review and public absence guard checks"
+  ],
+  "not_executed": [
+    "No real provider/SEC execution",
+    "No full current registered Run with this patch; hooks not installed or current Requirement rebound",
+    "No production output or full PR approval",
+    "No patch applied to shared runtime"
+  ],
+  "original_runtime_unchanged": true,
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -5520,8 +5520,8 @@ def _recover_switch_intent_locked(
         _extended_bundle_manifest(bundle_dir=publications_dir / str(pointer["publication_id"]), pointer=pointer)
         for pointer in (previous_pointer, proposed_pointer) if pointer is not None
     ]
-    for extension in {m["record_type"]: m for m in extension_manifests if m is not None}.values():
-        _extended_publication_hooks(extension).guard_recovery(pointer_path=pointer_path, intent=intent)
+    for hooks in _publication_guard_hooks(extension_manifests):
+        hooks.guard_recovery(pointer_path=pointer_path, intent=intent)
     current_pointer = _read_pointer(pointer_path=pointer_path)
     if current_pointer == proposed_pointer:
         bundle_dir = publications_dir / str(
@@ -5688,6 +5688,9 @@ def _r4_publication_hooks():
 def _extended_publication_hooks(manifest):
     """Only registered typed releases can extend validation and switch guards."""
     if manifest["record_type"] == ANNUAL_PUBLICATION_MANIFEST_TYPE:
+        if manifest.get("publication_credit") == "NONE_ISOLATED_ORDINARY_VERSION":
+            from . import ordinary_isolated_publication
+            return ordinary_isolated_publication
         if manifest.get("publication_credit") == "NONE_ISOLATED_STRUCTURED_MIGRATION":
             from . import r5_b06_publication
             return r5_b06_publication
@@ -5696,6 +5699,25 @@ def _extended_publication_hooks(manifest):
     if manifest["record_type"] == R4_PUBLICATION_MANIFEST_TYPE:
         return _r4_publication_hooks()
     raise PublicationError("Publication extension type is not registered")
+
+
+def _publication_guard_hooks(manifests):
+    """A private ordinary edge verifies both copied endpoints itself."""
+    ordinary = [m for m in manifests if m is not None
+                and m.get("publication_credit") == "NONE_ISOLATED_ORDINARY_VERSION"]
+    if ordinary:
+        # The guard still requires its process-private capability and exact
+        # external workspace, selected candidate and retained predecessor.
+        return [_extended_publication_hooks(ordinary[0])]
+    return [_extended_publication_hooks(m) for m in
+            {m["record_type"]: m for m in manifests if m is not None}.values()]
+
+
+def _ordinary_recovery_hooks():
+    # Historical runtimes must not import a later ordinary release module.
+    import sys
+    module = sys.modules.get(__package__ + ".ordinary_isolated_publication")
+    return None if module is None else module.recovery_hooks()
 
 
 def _extended_bundle_manifest(
@@ -5903,8 +5925,8 @@ def _switch_publication_locked(
     if previous_pointer is not None:
         extension_manifests.append(_extended_bundle_manifest(
             bundle_dir=publications_dir / str(previous_pointer["publication_id"]), pointer=previous_pointer))
-    for extension in {m["record_type"]: m for m in extension_manifests if m is not None}.values():
-        _extended_publication_hooks(extension).guard_switch(
+    for hooks in _publication_guard_hooks(extension_manifests):
+        hooks.guard_switch(
             pointer_path=pointer_path, manifest=manifest,
             expected_active_id=expected_previous_publication_id, switch_mode=switch_mode)
     manifest_bytes = (bundle_dir / "publication_manifest.json").read_bytes()
@@ -6422,7 +6444,10 @@ def recover_publication_mirrors(
         view = PublicationView._open_paths(
             publications_dir=publications_dir, pointer_path=pointer_path,
         )
-        if view.manifest["record_type"] in {R4_PUBLICATION_MANIFEST_TYPE, ANNUAL_PUBLICATION_MANIFEST_TYPE}:
+        ordinary_hooks = _ordinary_recovery_hooks()
+        if ordinary_hooks is not None:
+            ordinary_hooks.guard_mirror_repair(publication_root=publication_root)
+        elif view.manifest["record_type"] in {R4_PUBLICATION_MANIFEST_TYPE, ANNUAL_PUBLICATION_MANIFEST_TYPE}:
             _extended_publication_hooks(view.manifest).guard_mirror_repair(publication_root=publication_root)
         for relative in mirror_paths:
             atomic_write_bytes(

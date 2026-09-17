@@ -1,0 +1,44 @@
+{
+  "record_type": "ORDINARY_B06_SPECIAL_SCOPE_RULES",
+  "schema_version": 1,
+  "spec_path": "catalog/r5/B06_new_source_v2.md",
+  "industrial_member_pattern": "^CompanyExcluding.+(?:Credit|Finance)Member$",
+  "industrial_axis": "StatementBusinessSegmentsAxis",
+  "bank_roles": {
+    "long_borrowing": {
+      "concept": "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+      "label": "^Long.term (?:debt|borrowings)"
+    },
+    "short_borrowing": {
+      "concept": "ShortTermBorrowings",
+      "label": "^Short.term borrowings"
+    },
+    "securities_funding": {
+      "concept": "FederalFundsPurchasedAndSecuritiesSoldUnderAgreementsToRepurchase",
+      "label": "(?:Federal funds purchased|Securities loaned|repurchase agreements)"
+    },
+    "vie_funding": {
+      "concept": "BeneficialInterest",
+      "label": "^Beneficial interests issued by consolidated"
+    }
+  },
+  "industrial_roles": {
+    "current_debt": {
+      "concept": "LongTermDebtCurrent",
+      "label": "^Total debt payable within one year"
+    },
+    "noncurrent_debt": {
+      "concept": "LongTermDebtNoncurrent",
+      "label": "^Total (?:long.term )?debt payable after one year"
+    }
+  },
+  "equity_concept": "StockholdersEquity",
+  "finance_lease_concepts": [
+    "FinanceLeaseLiability",
+    "FinanceLeaseLiabilityCurrent",
+    "FinanceLeaseLiabilityNoncurrent"
+  ],
+  "full_ratio_enabled": false,
+  "absence_from_missing_concept": false,
+  "production_authorized": false
+}

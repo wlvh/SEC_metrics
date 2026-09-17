@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 278, in _balance_reports
+    _need({tuple(r['concept_qname']) for r in left} == {tuple(r['concept_qname']) for r in right},'BALANCE_CROSS_DOCUMENT_NAMESPACE_CONFLICT')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 27, in _need
+    if not condition: raise BondLeaseError('BOND_LEASE_'+reason)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_bond_leases.BondLeaseError: BOND_LEASE_BALANCE_CROSS_DOCUMENT_NAMESPACE_CONFLICT

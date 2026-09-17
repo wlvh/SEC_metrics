@@ -1,0 +1,25 @@
+test_changed_debt_or_equity_outside_the_purpose_note_is_rejected (tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_debt_or_equity_outside_the_purpose_note_is_rejected) ... ok
+test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass (tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass) ... ok
+test_current_run_input_retains_the_actual_amendment_without_creating_debt (tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_current_run_input_retains_the_actual_amendment_without_creating_debt) ... ok
+test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy (tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy) ... ok
+test_unproven_amendment_does_not_enter_even_the_equity_guard (tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard) ... ERROR
+
+======================================================================
+ERROR: test_unproven_amendment_does_not_enter_even_the_equity_guard (tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_current_input.py", line 79, in test_unproven_amendment_does_not_enter_even_the_equity_guard
+    case = prepare_case(data_root=ROOT,company_id=self.company,metric_id='B06')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 61, in prepare_case
+    return withheld_current_debt_case(repo_root=data_root,company_id=company_id,packet=debt_input)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_current_input.py", line 106, in withheld_current_debt_case
+    result,trace = withheld_metric_result(compiled_spec=spec,target=target,reason_code='B06_CURRENT_INPUT_UNRESOLVED')
+                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/calculator.py", line 1252, in withheld_metric_result
+    raise CalculationError("WITHHELD target fields are not exact")
+vnext.calculator.CalculationError: WITHHELD target fields are not exact
+
+----------------------------------------------------------------------
+Ran 5 tests in 47.792s
+
+FAILED (errors=1)

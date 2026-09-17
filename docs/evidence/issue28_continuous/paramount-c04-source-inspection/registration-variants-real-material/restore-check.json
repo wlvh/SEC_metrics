@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "scope": "Independent restore and byte comparison, not native or business replay",
+  "logical_files_compared": 60,
+  "unique_objects": 47,
+  "all_restored_bytes_equal_original": true,
+  "self_contained_without_repository": true,
+  "symlinks_and_hardlinks_created": false,
+  "terminal_evidence_sha_checks": "4/4 all named files match",
+  "four_original_runtime_archives_read_and_preserved": true,
+  "runtime_member_counts": [
+    509,
+    509,
+    509,
+    509
+  ],
+  "explicit_private_credential_paths_absent": true,
+  "response_metadata_preserved": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_C04_Run": false,
+  "output": "/tmp/sec_metrics_issue28_continuous/registration-variants-restored-20260916"
+}

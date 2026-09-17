@@ -1,0 +1,286 @@
+vNext going-concern native Runs	UNKNOWN STEP	﻿2026-09-15T17:41:11.1392430Z Current runner version: '2.337.0'
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1419559Z ##[group]Runner Image Provisioner
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1420535Z Hosted Compute Agent
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1421142Z Version: 20260828.587
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1421845Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1422597Z Build Date: 2026-08-28T16:44:25Z
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1423288Z Worker ID: {0d37611b-6128-44cc-9ee5-8998fa95f044}
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1424096Z Azure Region: centralus
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1424685Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1426224Z ##[group]Operating System
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1427257Z Ubuntu
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1427820Z 24.04.5
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1428417Z LTS
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1428953Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1429546Z ##[group]Runner Image
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1430220Z Image: ubuntu-24.04
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1430799Z Version: 20260907.300.1
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1432150Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1433751Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1434743Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1435927Z ##[group]GITHUB_TOKEN Permissions
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1438325Z Contents: read
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1438954Z Metadata: read
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1439687Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1442409Z Secret source: Actions
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1443489Z Cache mode: write
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1444440Z Prepare workflow directory
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1820027Z Prepare all required actions
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.1892735Z Getting action download info
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.4562495Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.5828545Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8081013Z Complete job name: vNext going-concern native Runs
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8857553Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8858677Z with:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8859126Z   persist-credentials: false
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8859642Z   repository: wlvh/SEC_metrics
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8863636Z   token: ***
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8864069Z   ssh-strict: true
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8864505Z   ssh-user: git
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8864923Z   clean: true
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8865371Z   sparse-checkout-cone-mode: true
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8865903Z   fetch-depth: 1
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8866335Z   fetch-tags: false
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8866954Z   show-progress: true
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8867414Z   lfs: false
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8867822Z   submodules: false
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8868276Z   set-safe-directory: true
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.8869001Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.9893323Z Syncing repository: wlvh/SEC_metrics
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.9895956Z ##[group]Getting Git version info
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.9897507Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.9899268Z [command]/usr/bin/git version
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.9969565Z git version 2.55.0
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:11.9996062Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0027821Z Temporarily overriding HOME='/home/runner/work/_temp/ea559814-d6cb-467e-91a8-5719c5941b0a' before making global git config changes
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0030203Z Adding repository directory to the temporary git global config as a safe directory
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0031651Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0091575Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0095614Z ##[group]Initializing the repository
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0101643Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0260401Z hint: Using 'master' as the name for the initial branch. This default branch name
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0261952Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0263477Z hint: to use in all of your new repositories, which will suppress this warning,
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0264884Z hint: call:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0265655Z hint:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0266995Z hint: 	git config --global init.defaultBranch <name>
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0268014Z hint:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0269041Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0270752Z hint: 'development'. The just-created branch can be renamed via this command:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0271790Z hint:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0272550Z hint: 	git branch -m <name>
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0273464Z hint:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0274574Z hint: Disable this message with "git config set advice.defaultBranchName false"
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0275852Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0291287Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0337832Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0338642Z ##[group]Disabling automatic garbage collection
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0341621Z [command]/usr/bin/git config --local gc.auto 0
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0390370Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0391747Z ##[group]Setting up auth
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0392861Z Removing SSH command configuration
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0393883Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0436022Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0818054Z Removing HTTP extra header
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0825400Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.0864528Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1110685Z Removing includeIf entries pointing to credentials config files
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1112494Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1142209Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1374017Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1416208Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1450852Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1489062Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1523667Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1555229Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1555968Z ##[group]Fetching the repository
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:41:12.1567786Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6203b13efa6d4294ea530b901819a77e0e66fab3:refs/remotes/pull/43/merge
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:47.4547538Z From https://github.com/wlvh/SEC_metrics
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:47.4550075Z  * [new ref]         6203b13efa6d4294ea530b901819a77e0e66fab3 -> pull/43/merge
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:47.4555541Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:47.4557199Z ##[group]Determining the checkout info
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:47.4558082Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:47.4563610Z [command]/usr/bin/git sparse-checkout disable
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:47.4619505Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:47.4650220Z ##[group]Checking out the ref
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:47.4655129Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/43/merge
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:48.5286698Z Updating files:  36% (3530/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:48.5447129Z Updating files:  37% (3607/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:48.5495845Z Updating files:  38% (3705/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:48.6214829Z Updating files:  39% (3802/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:48.7909449Z Updating files:  40% (3900/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:48.9613286Z Updating files:  41% (3997/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.0277537Z Updating files:  42% (4095/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.0509171Z Updating files:  43% (4192/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.0635895Z Updating files:  44% (4290/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.1759159Z Updating files:  45% (4387/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.2522727Z Updating files:  46% (4485/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.2810991Z Updating files:  47% (4582/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.3423947Z Updating files:  48% (4680/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.4595789Z Updating files:  49% (4777/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.4659148Z Updating files:  50% (4874/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.4746170Z Updating files:  51% (4972/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.4810882Z Updating files:  52% (5069/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.4823977Z Updating files:  52% (5141/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.4903308Z Updating files:  53% (5167/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.4967673Z Updating files:  54% (5264/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.5021152Z Updating files:  55% (5362/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.5100932Z Updating files:  56% (5459/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.5254166Z Updating files:  57% (5557/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.6078569Z Updating files:  58% (5654/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.6514318Z Updating files:  59% (5752/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.6735614Z Updating files:  60% (5849/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.6863534Z Updating files:  61% (5947/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.7220754Z Updating files:  62% (6044/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.7429593Z Updating files:  63% (6142/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.7790276Z Updating files:  64% (6239/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.8180541Z Updating files:  65% (6337/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:49.8423170Z Updating files:  66% (6434/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.0199340Z Updating files:  67% (6532/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.0978380Z Updating files:  68% (6629/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.1700718Z Updating files:  69% (6727/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.2337221Z Updating files:  70% (6824/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.2646060Z Updating files:  71% (6922/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.2822445Z Updating files:  72% (7019/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.4855946Z Updating files:  73% (7117/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.5028159Z Updating files:  73% (7149/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.5178210Z Updating files:  74% (7214/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.5307899Z Updating files:  75% (7311/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.5497882Z Updating files:  76% (7409/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.5616577Z Updating files:  77% (7506/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.5785751Z Updating files:  78% (7604/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.6013667Z Updating files:  79% (7701/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.6123825Z Updating files:  80% (7799/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.6427177Z Updating files:  81% (7896/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.6790779Z Updating files:  82% (7994/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.8602947Z Updating files:  83% (8091/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.8809866Z Updating files:  84% (8189/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.9120045Z Updating files:  85% (8286/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.9242541Z Updating files:  86% (8384/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.9309891Z Updating files:  87% (8481/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.9366964Z Updating files:  88% (8579/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.9459524Z Updating files:  89% (8676/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.9738848Z Updating files:  90% (8774/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:50.9993561Z Updating files:  91% (8871/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.0056012Z Updating files:  92% (8969/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.0206429Z Updating files:  93% (9066/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.0315293Z Updating files:  94% (9164/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.0418686Z Updating files:  95% (9261/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.0528956Z Updating files:  96% (9359/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.0627315Z Updating files:  97% (9456/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.0713960Z Updating files:  98% (9554/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.0800527Z Updating files:  99% (9651/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.0801487Z Updating files: 100% (9748/9748)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.0802058Z Updating files: 100% (9748/9748), done.
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3569749Z Note: switching to 'refs/remotes/pull/43/merge'.
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3570574Z 
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3574415Z You are in 'detached HEAD' state. You can look around, make experimental
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3588092Z changes and commit them, and you can discard any commits you make in this
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3588935Z state without impacting any branches by switching back to a branch.
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3593876Z 
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3594342Z If you want to create a new branch to retain commits you create, you may
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3595111Z do so (now or later) by using -c with the switch command. Example:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3595546Z 
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3595718Z   git switch -c <new-branch-name>
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3596010Z 
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3596189Z Or undo this operation with:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3596449Z 
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3596593Z   git switch -
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3596938Z 
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3597303Z Turn off this advice by setting config variable advice.detachedHead to false
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3597834Z 
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3598236Z HEAD is now at 6203b13 Merge 03b4c3cfacdcb3fa5d813eefff94c94f9f928b3c into 92fdd0e30c5f05db9d3d0136424934037dcff66e
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.3789885Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4026173Z [command]/usr/bin/git log -1 --format=%H
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4064217Z 6203b13efa6d4294ea530b901819a77e0e66fab3
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4080085Z ##[group]Removing auth
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4080877Z Removing SSH command configuration
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4081662Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4120136Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4358091Z Removing HTTP extra header
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4363224Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4399610Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4641047Z Removing includeIf entries pointing to credentials config files
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4645414Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4957588Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4958373Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4958967Z includeif.gitdir:/github/workspace/.git.path
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4959449Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.4971352Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5001298Z /home/runner/work/_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5011998Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5055343Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5084741Z /home/runner/work/_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5094632Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5133638Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5159547Z /github/runner_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5167714Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5206426Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5233066Z /github/runner_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5241815Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5276000Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5512605Z Removing credentials config '/home/runner/work/_temp/git-credentials-48a8f0fb-8af5-4763-91b2-a55134900995.config'
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5522181Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5769110Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5769526Z with:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5769743Z   python-version: 3.14
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5769977Z   check-latest: false
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5772698Z   token: ***
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5772924Z   update-environment: true
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5773179Z   allow-prereleases: false
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5773417Z   freethreaded: false
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.5773639Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7151224Z ##[group]Installed versions
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7266193Z Successfully set up CPython (3.14.7)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7267354Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7469751Z ##[group]Run python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7471092Z [36;1mpython3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt[0m
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7550000Z shell: /usr/bin/bash -e {0}
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7550527Z env:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7551018Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7551979Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7552779Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7553574Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7554206Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7554849Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:51.7555390Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:52.9548368Z Collecting tokenizers==0.22.2 (from -r requirements-continuous-context.txt (line 2))
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.0939639Z   Downloading tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.3 MB)
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.3935343Z      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 15.4 MB/s  0:00:00
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.4282572Z Installing collected packages: tokenizers
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.4906533Z Successfully installed tokenizers-0.22.2
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5613554Z ##[group]Run python3 -m unittest -v tests.vnext.test_d04_run_material
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5614091Z [36;1mpython3 -m unittest -v tests.vnext.test_d04_run_material[0m
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5653492Z shell: /usr/bin/bash -e {0}
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5653744Z env:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5654019Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5654460Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5655093Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5655470Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5655841Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5656217Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5656554Z   PYTHONDONTWRITEBYTECODE: 1
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5657020Z   PYTHONPATH: scripts
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5657243Z   D04_REFERENCE_CONTEXT: 1
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5657511Z   D04_COMPLETE_RESPONSE_CONTRACT: 1
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5657778Z   D04_INDEXED_UNITS: 1
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5658120Z   D04_NATIVE_RUN_MATERIAL_ROOT: /home/runner/work/_temp/ordinary-d04-35002798921-1
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:47:53.5658534Z ##[endgroup]
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:23.8691809Z ##[error]The operation was canceled.
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:23.8824536Z Post job cleanup.
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:23.9739545Z [command]/usr/bin/git version
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:23.9785003Z git version 2.55.0
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:23.9844197Z Temporarily overriding HOME='/home/runner/work/_temp/e7864127-c584-4b67-b3c7-508748ba5f6c' before making global git config changes
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:23.9845311Z Adding repository directory to the temporary git global config as a safe directory
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:23.9846170Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:23.9901856Z Removing SSH command configuration
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:23.9910031Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:23.9951640Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:24.0215703Z Removing HTTP extra header
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:24.0223403Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:24.0263036Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:24.0519621Z Removing includeIf entries pointing to credentials config files
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:24.0529474Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:24.0572786Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:24.1331985Z Cleaning up orphan processes
+vNext going-concern native Runs	UNKNOWN STEP	2026-09-15T17:56:24.1595880Z Terminate orphan process: pid (2493) (python3)

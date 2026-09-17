@@ -1,0 +1,678 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_REPAIR_SOURCE_AND_RESULT_AUDIT",
+  "schema_version": 1,
+  "audited_at_utc": "2026-09-09T05:53:54.380123+00:00",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "human_review": false,
+  "review_source": "Actual independent Codex collaboration subtask original-source, native-record and pinned-publication inspection. No claim of human review.",
+  "conclusion": "SOURCE_AND_NATIVE_CANDIDATE_SUCCESS_CONFIRMED",
+  "scope": "Marriott B01/B10 FY2024 historical comparison to FY2025 ordinary candidates; current R3 remains separate and unchanged.",
+  "additional_audit_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "execution_code": {
+    "exact_head": "bb7e3f35198c662b9f36dbd433e6fd7b30284526",
+    "runtime_tree": "sha256:9e4552a242f7ce9af14d36dcbe1aa1e46ca42005d7234f680e844bcd1310c113"
+  },
+  "reviewed_code": {
+    "exact_head": "bb7e3f35198c662b9f36dbd433e6fd7b30284526",
+    "runtime_tree": "sha256:9e4552a242f7ce9af14d36dcbe1aa1e46ca42005d7234f680e844bcd1310c113"
+  },
+  "stage_id": "sha256:8af69d5a2d6bfedef3768f0ec57ded2a049c1c030ded0b2bc3e4e78447981902",
+  "plan_id": "sha256:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+  "old_successful_candidates": {
+    "B01": {
+      "metric_id": "B01",
+      "representation": "EXISTING_ISOLATED_HISTORICAL_CANDIDATE",
+      "run_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-raw-input-local/FY2024-structured",
+      "run_id": "run:offline:annual-input:FY2024:structured",
+      "run_status": "OPEN",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B01",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8d5788a64db8e000bf4c89d88da093478ec61d58a3efe62e1f5ef9e71b396bef",
+        "scope_key": "sha256:69aec5aa8565ed081911f0d334bc42e02afba1bf950ef5c8b3b635cf9d60551c",
+        "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+        "trace_id": "sha256:3715b65a0bf31b143c09f44fa8d50a6ee54a6dfaf234fbb894c2d2de4f699479",
+        "unit": "USD",
+        "value": "25100000000"
+      },
+      "scope": {
+        "consolidation": "entity"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:63687b69a68ec70135351fc580e0a0d4f4f9d369bfc8a4f087772217b312a630",
+        "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "company_id": "marriott_international",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "accession": "0001628280-25-004818",
+        "document_name": "CIK0001048286.json",
+        "source_role": "companyfacts",
+        "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+      },
+      "source_proof": {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+        "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "size": 3269111
+      },
+      "record_file_proofs": {
+        "manifest.json": {
+          "sha256": "b86912f3f5f022d425fb487721ac9c2a1f9185b21433bd6c4e74a0b29dd147b9",
+          "size": 2691
+        },
+        "records.jsonl": {
+          "sha256": "94254d489464ef8c9c00ef10f27409481c7a0eb84df38a086df7f8f736e5c0e9",
+          "size": 10162
+        },
+        "review_decisions.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        }
+      },
+      "qualification_credit": "NONE",
+      "publication_credit": "NONE"
+    },
+    "B10": {
+      "metric_id": "B10",
+      "representation": "EXISTING_ISOLATED_HISTORICAL_CANDIDATE",
+      "run_directory": "/Users/lyuhongwang/Developer/SEC_metrics/artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/6f40df80eb602219bc9137a946c4da81ae215f413bc157d712a0289a4871161d",
+      "run_id": "run:qualification:table:6f40df80eb602219bc9137a946c4da81ae215f413bc157d712a0289a4871161d",
+      "run_status": "FROZEN",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B10",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:0ce634fe86af4451ec080b7a9c7b035cd9590790d6c5d31fa8b54f10fad65b7c",
+        "scope_key": "sha256:048bd50c50be5819de124da27afdb7c1709b57be2730492b5eb9118b6f127227",
+        "spec_closure_hash": "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424",
+        "trace_id": "sha256:bfa591b0162c9b9491d18d6c4af11cb01a908f1d2dc398986b871d4fb9e1db5c",
+        "unit": "ratio",
+        "value": "0.698"
+      },
+      "scope": {
+        "geography": "worldwide",
+        "operating_scope": "systemwide",
+        "period_role": "current_fiscal_year",
+        "property_population": "comparable"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+        "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+        "accession": "0001628280-25-004818",
+        "document_name": "mar-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+      },
+      "source_proof": {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+        "sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+        "size": 2047740
+      },
+      "record_file_proofs": {
+        "manifest.json": {
+          "sha256": "0e829488b6489703cd04505634bdecba6750fa7ab74a293a95a8858b6b53984a",
+          "size": 10025
+        },
+        "records.jsonl": {
+          "sha256": "7ee75c3f86c6b45f99146d1d32e24a77f1cda8c52e2c913f28db83b27fbe4d99",
+          "size": 3982589
+        },
+        "review_decisions.jsonl": {
+          "sha256": "44aed986fe88c174a673447230243557d445249494c81b716d585f0bb0694616",
+          "size": 1642
+        }
+      },
+      "qualification_credit": "NONE",
+      "publication_credit": "NONE"
+    }
+  },
+  "new_successful_candidates": {
+    "B01": {
+      "metric_id": "B01",
+      "representation": "NEW_ORDINARY_NATIVE_CANDIDATE",
+      "run_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030/b01",
+      "run_id": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030:structured",
+      "run_status": "OPEN",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B01",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:3e637913536d24349f51c6525c3061c8a2969bb89013ccddb000736c3cc4dba5",
+        "scope_key": "sha256:69aec5aa8565ed081911f0d334bc42e02afba1bf950ef5c8b3b635cf9d60551c",
+        "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+        "trace_id": "sha256:e29b58eed1ce05e7df343b788b360378c91631a7717fd2121305f3b7bd87efff",
+        "unit": "USD",
+        "value": "26186000000"
+      },
+      "scope": {
+        "consolidation": "entity"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+        "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "company_id": "marriott_international",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "accession": "0001048286-26-000007",
+        "document_name": "CIK0001048286.json",
+        "source_role": "companyfacts",
+        "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+      },
+      "source_proof": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/inputs/ea7fc372dd6562a6b2f7d89c5e77b473ae48ffd5b24f12aee708eb7196fc38b8/evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+        "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "size": 3269111
+      },
+      "record_file_proofs": {
+        "manifest.json": {
+          "sha256": "7b41a96e3157fe684ff8f0aed946b0160020b0b3e6076f1972c34e9e4183c5a1",
+          "size": 2743
+        },
+        "records.jsonl": {
+          "sha256": "78c6b1c0d60e9b9dc1e33325fc4ebd8a5880ce23ecfeb76bc61c41877d8f89da",
+          "size": 10186
+        },
+        "review_decisions.jsonl": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        }
+      },
+      "qualification_credit": "NONE",
+      "publication_credit": "NONE"
+    },
+    "B10": {
+      "metric_id": "B10",
+      "representation": "NEW_ORDINARY_NATIVE_CANDIDATE",
+      "run_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030/b10",
+      "run_id": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "run_status": "OPEN",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B10",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+        "scope_key": "sha256:048bd50c50be5819de124da27afdb7c1709b57be2730492b5eb9118b6f127227",
+        "spec_closure_hash": "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424",
+        "trace_id": "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+        "unit": "ratio",
+        "value": "0.693"
+      },
+      "scope": {
+        "geography": "worldwide",
+        "operating_scope": "systemwide",
+        "period_role": "current_fiscal_year",
+        "property_population": "comparable"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+        "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+        "accession": "0001048286-26-000007",
+        "document_name": "mar-20251231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+      },
+      "source_proof": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/inputs/ea7fc372dd6562a6b2f7d89c5e77b473ae48ffd5b24f12aee708eb7196fc38b8/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+        "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "size": 2048661
+      },
+      "record_file_proofs": {
+        "manifest.json": {
+          "sha256": "8f0e3cef6666c11514640f6a3f92803895bef1eb1d2fb5cf81da7473b86ee230",
+          "size": 3605
+        },
+        "records.jsonl": {
+          "sha256": "a14bd4ae2fc9c68eafa4a7223e4b058312e134ecdcbd1790ffef4fc1ab3d57ef",
+          "size": 3985645
+        },
+        "review_decisions.jsonl": {
+          "sha256": "d379e2dfd6640bc6192fa6d60352bca93a0345c7bd99aaba72a2da5722d6cee4",
+          "size": 1642
+        }
+      },
+      "qualification_credit": "NONE",
+      "publication_credit": "NONE"
+    }
+  },
+  "current_formal_results": [
+    {
+      "metric_id": "B01",
+      "representation": "PINNED_R3_PUBLIC_ROW_INHERITED_FROM_PRIOR_RELEASE",
+      "public_row": {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "B01",
+        "metric_name": "Revenue",
+        "value": "26186000000",
+        "unit": "USD",
+        "status": "OK",
+        "source_class": "STD_XBRL",
+        "formula": "direct",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": "2025",
+        "fiscal_period": "FY",
+        "accession": "0001048286-26-000007",
+        "form": "10-K",
+        "filed_date": "2026-02-10",
+        "concept_or_section": "Revenues",
+        "context_or_dimension": "companyfacts:USD:CY2025",
+        "confidence": "0.95",
+        "notes": "Revenue candidate chain from metric definition."
+      },
+      "source_evidence_rows": [
+        {
+          "company": "Marriott International",
+          "cik": "1048286",
+          "metric_id": "B01",
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+          "repo_relative_path": "evidence/companyfacts/CIK0001048286.json",
+          "content_sha256": "8767de512c8459483681137b5e9e5c97d3e16adea30d5345028e0ce75577599d",
+          "accession": "0001048286-26-000007",
+          "document_name": "CIK0001048286.json",
+          "concept_or_section": "Revenues",
+          "context_or_dimension": "companyfacts:USD:CY2025:2025-01-01:2025-12-31",
+          "unit": "USD",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "value_raw": "26186000000",
+          "value_normalized": "26186000000",
+          "evidence_quote": "us-gaap:Revenues unit=USD accn=0001048286-26-000007 filed=2026-02-10",
+          "extraction_method": "companyfacts_direct",
+          "parser_version": "sec_pipeline_v1"
+        }
+      ],
+      "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+      "verification_scope": "PINNED_PUBLIC_ROW_AND_EVIDENCE_BYTES_NOT_NEW_NATIVE_RESULT_RECERTIFICATION",
+      "bundled_source_bytes_verified": false
+    },
+    {
+      "metric_id": "B10",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B10",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+        "scope_key": "sha256:048bd50c50be5819de124da27afdb7c1709b57be2730492b5eb9118b6f127227",
+        "spec_closure_hash": "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424",
+        "trace_id": "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+        "unit": "ratio",
+        "value": "0.693"
+      },
+      "run_id": "run:qualification:table:0799ec7f91b6bc0472fd80c6c655beb90ddd7db583dcd13cae0bfab506e6412c",
+      "source_references": [
+        {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+          "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "company_id": "marriott_international",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+          "accession": "0001048286-26-000007",
+          "document_name": "mar-20251231.htm",
+          "source_role": "target_primary",
+          "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+        }
+      ],
+      "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+      "verification_scope": "PINNED_PUBLICATION_BYTES_AND_RESULT_LINKS_NOT_RECERTIFICATION"
+    }
+  ],
+  "original_source_checks": {
+    "old_B01": {
+      "concept": "us-gaap:Revenues",
+      "fact": {
+        "start": "2024-01-01",
+        "end": "2024-12-31",
+        "val": 25100000000,
+        "accn": "0001628280-25-004818",
+        "fy": 2024,
+        "fp": "FY",
+        "form": "10-K",
+        "filed": "2025-02-11"
+      },
+      "source_value_matches_result": true
+    },
+    "new_B01": {
+      "concept": "us-gaap:Revenues",
+      "fact": {
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "val": 26186000000,
+        "accn": "0001048286-26-000007",
+        "fy": 2025,
+        "fp": "FY",
+        "form": "10-K",
+        "filed": "2026-02-10",
+        "frame": "CY2025"
+      },
+      "source_value_matches_result": true
+    },
+    "old_B10": {
+      "original_html_parser": "stdlib HTMLParser, independent of runtime table parser",
+      "original_value_percent": "69.8",
+      "source_value_matches_result": true,
+      "table_id": "table_000011",
+      "original_numeric_row": 28,
+      "original_numeric_column": 15,
+      "source_headers": [
+        [
+          2,
+          "Occupancy"
+        ],
+        [
+          3,
+          "2024"
+        ]
+      ],
+      "scope_cells": [
+        {
+          "locator": {
+            "colspan": 3,
+            "column_index": 0,
+            "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+            "origin_column_index": 0,
+            "origin_row_index": 19,
+            "row_index": 19,
+            "rowspan": 1,
+            "table_id": "table_000011"
+          },
+          "original_visible_text": "Comparable Systemwide Properties",
+          "provider_label": "Comparable Systemwide Properties"
+        },
+        {
+          "locator": {
+            "colspan": 3,
+            "column_index": 0,
+            "derived_asset_id": "sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f",
+            "origin_column_index": 0,
+            "origin_row_index": 28,
+            "row_index": 28,
+            "rowspan": 1,
+            "table_id": "table_000011"
+          },
+          "original_visible_text": "Worldwide (2)",
+          "provider_label": "\nWorldwide (2)"
+        }
+      ],
+      "source_grid_rebuild_equals_saved_grid": true,
+      "geography_footnote_meaning": "Includes U.S. & Canada and International - All."
+    },
+    "new_B10": {
+      "original_html_parser": "stdlib HTMLParser, independent of runtime table parser",
+      "original_value_percent": "69.3",
+      "source_value_matches_result": true,
+      "table_id": "table_000011",
+      "original_numeric_row": 26,
+      "original_numeric_column": 15,
+      "source_headers": [
+        [
+          3,
+          "Occupancy"
+        ],
+        [
+          4,
+          "2025"
+        ]
+      ],
+      "scope_cells": [
+        {
+          "locator": {
+            "colspan": 3,
+            "column_index": 0,
+            "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+            "origin_column_index": 0,
+            "origin_row_index": 18,
+            "row_index": 18,
+            "rowspan": 1,
+            "table_id": "table_000011"
+          },
+          "original_visible_text": "Comparable Systemwide Properties",
+          "provider_label": "Comparable Systemwide Properties"
+        },
+        {
+          "locator": {
+            "colspan": 3,
+            "column_index": 0,
+            "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+            "origin_column_index": 0,
+            "origin_row_index": 26,
+            "row_index": 26,
+            "rowspan": 1,
+            "table_id": "table_000011"
+          },
+          "original_visible_text": "Worldwide (2)",
+          "provider_label": "Worldwide (2)"
+        }
+      ],
+      "source_grid_rebuild_equals_saved_grid": true,
+      "geography_footnote_meaning": "Includes U.S. & Canada and International - All."
+    }
+  },
+  "b10_native_chain": {
+    "run_status": "OPEN",
+    "attempt_id": "attempt:bb3d99c25f2c43278a03a67f52418d10",
+    "candidate_hash": "sha256:e2bb71da2d7531142640167d436e1a323911661dee32580a95da9d27400f207d",
+    "evidence_check": {
+      "candidate_hash": "sha256:e2bb71da2d7531142640167d436e1a323911661dee32580a95da9d27400f207d",
+      "checks": [
+        {
+          "check": "SOURCE_BINDINGS",
+          "status": "PASS"
+        },
+        {
+          "check": "READER_TABLE_EXACT_SET",
+          "status": "PASS"
+        },
+        {
+          "check": "SELECTED_LOCATOR:occupancy",
+          "status": "PASS"
+        },
+        {
+          "check": "SCOPE_EXACT_ENUM_NORMALIZATION",
+          "normalized_scope": {
+            "geography": "worldwide",
+            "operating_scope": "systemwide",
+            "property_population": "comparable"
+          },
+          "status": "PASS",
+          "unresolved_dimensions": []
+        },
+        {
+          "check": "EXACT_SOURCE_RAW_OR_TEXT_V2",
+          "status": "PASS"
+        },
+        {
+          "check": "ANNUAL_SOURCE_OWNERSHIP_V1",
+          "policy_hash": "sha256:6d66c301279eafa35843a87026ac084b7dbeff2b2a1f8fe3c62c882a27a8eaa1",
+          "requirement_id": "issue_28_v6",
+          "status": "PASS"
+        }
+      ],
+      "evidence_check_id": "sha256:baf5ac7af831f595a8a74bc469d4297e1576768ef8bab18a04ec51cf2f35d882",
+      "identity_constraints": [],
+      "normalized_scope": {
+        "geography": "worldwide",
+        "operating_scope": "systemwide",
+        "property_population": "comparable"
+      },
+      "normalized_values": {
+        "occupancy": "0.693"
+      },
+      "reason_codes": [],
+      "record_type": "EVIDENCE_CHECK",
+      "status": "PASS",
+      "system_approval_eligible": true,
+      "unresolved_scope_dimensions": []
+    },
+    "independently_recomputed_evidence_matches_saved": true,
+    "system_review": {
+      "approval_effect_hash": "sha256:a6d5d4e54aee9e6bc2c4d5c47df8006a8eb49aa4cb8ce73cc31aa268c786e032",
+      "approved_claims": {
+        "geography": "worldwide",
+        "operating_scope": "systemwide",
+        "period_role": "current_fiscal_year",
+        "property_population": "comparable"
+      },
+      "decided_at_utc": "2026-09-09T05:45:24.940677+00:00",
+      "decision": "APPROVE",
+      "reason": "EVIDENCE_BOUND_AUTO_APPROVE",
+      "record_type": "REVIEW_DECISION",
+      "rendered_review_hash": "3deb6a70a594569d851232c2b4dc0da83750ef5cbdc81521cc56c4500758718e",
+      "review_context_hash": "3ecc3ec22c4cc7ea78c1e7a7b4171586c8633d99702e5fbfbf5bf2a93b4790d3",
+      "review_decision_id": "sha256:aac787297cff38c9f3a7f90920ce24ab3c2d4742944da59bb4e7906db556a601",
+      "review_renderer_semantic_version": "3",
+      "review_unit_hash": "sha256:8e62c331f510c47de63b550df174f989b7a56c26c5b83dac848e8811afe07ecf",
+      "reviewed_source_bindings": [
+        {
+          "accession": "0001048286-26-000007",
+          "company_id": "marriott_international",
+          "document_name": "mar-20251231.htm",
+          "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1",
+          "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+          "source_role": "target_primary",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm"
+        }
+      ],
+      "reviewed_spec_semantic_hash": "sha256:0f79342921060cd1b2128d52b46a0a0befc4783aed73aa1a70077afa5cc375b1",
+      "reviewer_id": "system:optional-review-v1",
+      "reviewer_type": "SYSTEM",
+      "supersedes_decision_id": null
+    },
+    "observation_id": "sha256:65105fdce3e5183486de2542ff11f3595afe58a80d2c401a31fe1e54d91933a9",
+    "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+    "new_B01_B10_native_disk_replays_passed": true
+  },
+  "execution": {
+    "provider_request_id": "7ac51432-8a8c-49ec-bc32-95f9b56d3b07",
+    "execution_id": "sha256:e2e9361b656772608e760e1b46cc46945aa1bd7d62f3ee5c5c3b4829b59b5a9c",
+    "status": "SUCCEEDED",
+    "http_status": 200,
+    "retry_count": 0,
+    "usage": {
+      "prompt_tokens": 161707,
+      "completion_tokens": 580,
+      "total_tokens": 162287,
+      "prompt_tokens_details": {
+        "cached_tokens": 161664
+      },
+      "prompt_cache_hit_tokens": 161664,
+      "prompt_cache_miss_tokens": 43
+    },
+    "new_repair_provider_paid_sec_calls": [
+      1,
+      1,
+      0
+    ],
+    "including_original_failure_provider_paid_sec_calls": [
+      2,
+      2,
+      0
+    ],
+    "raw_response": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030/b10/attempt_payloads/response_160343a61b1b2be521a61aae0940bf5f0ff3f3afe15dd6f3e68502e93e1729e3.bin",
+      "sha256": "160343a61b1b2be521a61aae0940bf5f0ff3f3afe15dd6f3e68502e93e1729e3",
+      "size": 2374
+    },
+    "controller_execution": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030/invocation_control/executions/e2e9361b656772608e760e1b46cc46945aa1bd7d62f3ee5c5c3b4829b59b5a9c.json",
+      "sha256": "1634a928b7bc887d03900a8dfa99ab4229d14da792d59cd018e85fa3f00b8f5e",
+      "size": 1974
+    },
+    "marker": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030/invocation_control/egress/e2e9361b656772608e760e1b46cc46945aa1bd7d62f3ee5c5c3b4829b59b5a9c/01.json",
+      "sha256": "fd4370db774fae2fb668c81bc58982cb3d3e1e934710db0fdaa9912d10ca28a0",
+      "size": 718
+    },
+    "assistant_body_byte_identical_to_original_failure": true,
+    "fresh_raw_envelope_request_id_execution_and_marker_verified": true,
+    "same_body_or_content_based_result_id_does_not_establish_response_reuse": true
+  },
+  "same_input_reentry": {
+    "status": "NO_NEW_ANNUAL_FILING",
+    "execution": "NOT_EXECUTED",
+    "provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "stage_provider_paid_sec_calls": [
+      1,
+      1,
+      0
+    ],
+    "process_provider_paid_sec_calls": [
+      2,
+      2,
+      0
+    ]
+  },
+  "protection": {
+    "all_protected_file_hashes_and_sizes_unchanged": true,
+    "protected_file_count": 35,
+    "pre_live_record": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/pre-live-protection.json",
+    "active_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+    "original_failure_files_unchanged_against_immutable_manifest": true,
+    "original_failure_status": "FAILED_TERMINAL",
+    "original_failure_manifest": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/annual_runtime/live/live-native-manifest.json",
+    "historical_FY2024_candidate_hashes_unchanged": true,
+    "second_repair_slot_consumed": false,
+    "successful_reference": {
+      "run_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030/b10",
+      "run_id": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "stage_id": "sha256:8af69d5a2d6bfedef3768f0ec57ded2a049c1c030ded0b2bc3e4e78447981902",
+      "b01_run_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030/b01"
+    }
+  },
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE",
+  "merge_authorized": false,
+  "limitations": [
+    "New candidates are OPEN native Runs. Their Result PUBLISHED field does not mean formal R3 was updated.",
+    "Formal B01 was verified as an inherited pinned R3 public row and pinned evidence row. Its referenced original source hash 8767de512c8459483681137b5e9e5c97d3e16adea30d5345028e0ce75577599d is distinct from candidate CompanyFacts hash af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a; bundled original bytes were not available/recertified in this audit.",
+    "The original failed response remains unchanged and failed under its original policy. The repair used a fresh provider execution despite identical assistant body bytes.",
+    "This known-input chain validation is not unseen-source generalization, qualification, formal publication or 39-metric migration."
+  ]
+}

@@ -1,0 +1,33 @@
+test_append_after_registered_checkpoint_and_changed_prefix_are_rejected (tests.vnext.test_ordinary_source_authority.OrdinarySourceAuthorityTest.test_append_after_registered_checkpoint_and_changed_prefix_are_rejected) ... ok
+test_changed_export_or_body_cannot_keep_the_checkpoint (tests.vnext.test_ordinary_source_authority.OrdinarySourceAuthorityTest.test_changed_export_or_body_cannot_keep_the_checkpoint) ... ERROR
+test_data_sidecar_and_resigned_ledger_cannot_enroll_without_installed_history (tests.vnext.test_ordinary_source_authority.OrdinarySourceAuthorityTest.test_data_sidecar_and_resigned_ledger_cannot_enroll_without_installed_history) ... ok
+test_portable_installed_checkpoint_uses_the_same_original_source_checks (tests.vnext.test_ordinary_source_authority.OrdinarySourceAuthorityTest.test_portable_installed_checkpoint_uses_the_same_original_source_checks) ... ok
+test_real_creator_registers_append_for_restart_without_live_credit (tests.vnext.test_ordinary_source_authority.OrdinarySourceAuthorityTest.test_real_creator_registers_append_for_restart_without_live_credit) ... ok
+test_unknown_or_failed_session_cannot_register_a_current_source (tests.vnext.test_ordinary_source_authority.OrdinarySourceAuthorityTest.test_unknown_or_failed_session_cannot_register_a_current_source) ... ok
+
+======================================================================
+ERROR: test_changed_export_or_body_cannot_keep_the_checkpoint (tests.vnext.test_ordinary_source_authority.OrdinarySourceAuthorityTest.test_changed_export_or_body_cannot_keep_the_checkpoint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ordinary_source_authority.py", line 64, in test_changed_export_or_body_cannot_keep_the_checkpoint
+    authority.verify_ordinary_source_proofs(data_root=self.data,proofs=prepared['source_proofs'])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_source_authority.py", line 156, in verify_ordinary_source_proofs
+    _,old_ids,admitted=_validate_checkpoint(data_root,checkpoint,baseline)
+                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_source_authority.py", line 100, in _validate_checkpoint
+    _baseline_file(data_root,origin[key],baseline)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_source_authority.py", line 38, in _baseline_file
+    _need(len(raw) == entry["size"] and _git_blob_id(raw) == entry["git_blob_id"],
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "TRUSTED_SAVED_BASELINE_BYTES_CHANGED:" + relative)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_source_authority.py", line 26, in _need
+    raise NormalSourceAuthorityError(reason)
+vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm
+
+----------------------------------------------------------------------
+Ran 6 tests in 6.284s
+
+FAILED (errors=1)

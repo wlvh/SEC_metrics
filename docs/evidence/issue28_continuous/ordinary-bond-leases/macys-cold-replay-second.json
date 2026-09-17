@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "run_id": "run:ordinary-integrated:1442485d1068400613d281963c29d4f38ef7171ac0893dbdb2222c2d95c463fd",
+  "run_status": "OPEN",
+  "record_count": 17,
+  "decision_count": 0,
+  "runtime_root": "/private/tmp/sec_metrics_issue28_continuous/v14-macys-bond-native-second/data/macys",
+  "git_directory_present": false,
+  "results": [
+    {
+      "applicability": "APPLICABLE",
+      "company_id": "macys",
+      "metric_id": "B06",
+      "period_end": "2026-01-31",
+      "period_start": "2026-01-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:990fb4fc163a01a5e8d2b78484671a96cf2d1b2380630d8d40d3920fd6a1b5bc",
+      "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+      "spec_closure_hash": "sha256:79ca5c03e6b51ccf3e4adbccf422a171e3fdfab2a0cadcea8750d5ac1799140d",
+      "trace_id": "sha256:0dcfbb77f8cc8e4ffbfca1c7289038d03e033051209cafa0dc0f1de8380f6405",
+      "unit": "ratio",
+      "value": "0.5030864197530864197530864198"
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

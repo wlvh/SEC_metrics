@@ -1,0 +1,874 @@
+{
+  "record_type": "NORMAL_NUMERIC_PUBLIC_ROW_RECEIPT",
+  "status": "CANDIDATE_ONLY",
+  "source_validation": "FROZEN_RUN_VALIDATED",
+  "run_id": "run:normal-current:5897d9bb4a61302a7cab84ccd96e266cd86783dd68168abca4c9c6dd3addb56b",
+  "run_status": "FROZEN",
+  "result_id": "sha256:36f15c51f12ac59297989b1bd8b201397765bce8232871633f8668d5aaf7b16e",
+  "trace_id": "sha256:0865f054c3cccf79491186e045a57c7e147c24b3b6ec8a4f910fdf2cd1543970",
+  "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+  "executed_spec_path": "catalog/r5/C03_peo_total_compensation.md",
+  "executed_spec_file_sha256": "47050c897e8b1d73aa14c54e7f79efddbb1d6944af99df11810c3e932eb3be36",
+  "presentation_policy_sha256": "51d04a634f9973eda2f6362587f0dc117cb4f441c29db4b71e3724fa19d1dafb",
+  "renderer_sha256": "24672ea9c10cb680e48812be5eef29e906a7ed59fba3f267b08d6c75de4ebff2",
+  "input_binding_hash": "sha256:5897d9bb4a61302a7cab84ccd96e266cd86783dd68168abca4c9c6dd3addb56b",
+  "native_result_state": "PUBLISHED",
+  "native_reason_code": "PASS",
+  "measurement_kind": "ANNUAL",
+  "filing_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+  },
+  "observation_ids": [
+    "sha256:8ff97872e770e4b349409144d76cff09582bf33565bb104289b5895c542322e6"
+  ],
+  "supporting_source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe",
+      "raw_asset_id": "sha256:e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "company_id": "marriott_international",
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "accession": "SUBMISSIONS-1048286",
+      "document_name": "CIK0001048286.json",
+      "source_role": "sec_submissions_inventory",
+      "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+      "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "company_id": "marriott_international",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "accession": "0001048286-26-000007",
+      "document_name": "CIK0001048286.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:f83a3aec9e0aa4fe67ecede9a18e28d4964911c19bf03fb1887768885290af0d",
+      "raw_asset_id": "sha256:fca4ce3abc7f769a80642f34b9a9f3f4208fab569bccb7f8b5166b11fe19adbd",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000114036126011590/ny20062722x771_def14a.htm",
+      "accession": "0001140361-26-011590",
+      "document_name": "ny20062722x771_def14a.htm",
+      "source_role": "governance_proxy",
+      "request_attempt_id": "request:attempt:f3c23bd9fc75f6f65cbd62a0ef5e1fd4106590042a1fb2318ee70c0ef30a4a68"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+      "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:9865738104c119941af46defc8749d702fd75f24be7b71b35513d89303562dfb",
+      "raw_asset_id": "sha256:a2b20ee4c353b24e3772bfbe4e2b6e43a17f244e63b32a1c70d6d780d46d7398",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/index.json",
+      "accession": "0001048286-26-000007",
+      "document_name": "index.json",
+      "source_role": "accession_index",
+      "request_attempt_id": "request:attempt:c781a3f986f33b77646c848444ce1e47019d3b830094df32aee3f399f9a8a641"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:6139c18acde58b3ba5aff86a1debd212c1fade31d2ba8a0ce35a748947694a07",
+      "raw_asset_id": "sha256:39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231_htm.xml",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231_htm.xml",
+      "source_role": "auditor_facts",
+      "request_attempt_id": "request:attempt:5176c0832cd4a1a68fb8d7860959306d772750de3a1317dffe59319fa1a20f5e"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:bf544d4ea45fb264453b4e0afbb986e366f93c73b43e55513e95741b1453b855",
+      "raw_asset_id": "sha256:9bd1132e98da300604df61534c0fada12fc9f6a57be30aefa6b6d47a00b26c7d",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/index.json",
+      "accession": "0001628280-25-004818",
+      "document_name": "index.json",
+      "source_role": "accession_index",
+      "request_attempt_id": "request:attempt:77cfc7413842951b5a11c9943687d54fdfaf848be24842485ee2ec53bb26fa90"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+      "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+      "accession": "0001628280-25-004818",
+      "document_name": "mar-20241231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+      "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+      "accession": "0001628280-25-004818",
+      "document_name": "mar-20241231_htm.xml",
+      "source_role": "auditor_facts",
+      "request_attempt_id": "request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:fad6b06c485aa6415e0dfdfb312d09e774c0d42951288db4d0bbe035c62c52bb",
+      "raw_asset_id": "sha256:bf87fec25bfd743d96b1624a36836e7c384ccd98b5aec5d12c8cda5fa95814f1",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/d890503d8k.htm",
+      "accession": "0001193125-25-009110",
+      "document_name": "d890503d8k.htm",
+      "source_role": "fy_8k_primary",
+      "request_attempt_id": "request:attempt:6829c754e52bb529a10cedc2115c68150c6feb7c799d2bd29c5a8fc2f804afce"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+      "raw_asset_id": "sha256:0b7fcc3b211556d4e1426e93c53dc37170a505bdcc8ad1309de1fc9690b2e9f7",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+      "accession": "0001193125-25-009110",
+      "document_name": "0001193125-25-009110.hdr.sgml",
+      "source_role": "fy_8k_header",
+      "request_attempt_id": "request:attempt:90d6e0b380de55b7e508189591d0ccb2055093591fc30b0cb60dbc436c94badf"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:bbe8d18d5b70456fdfe6a7141f2da0e1b2ee5866d814c1fecf09b786ec310e45",
+      "raw_asset_id": "sha256:cde6d9fac69fa87cc232f3e56f991ea1fb6637b98f6a8595e6e60c5d95945d2d",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/mar-20250211.htm",
+      "accession": "0001628280-25-004772",
+      "document_name": "mar-20250211.htm",
+      "source_role": "fy_8k_primary",
+      "request_attempt_id": "request:attempt:62b34fbfc0ef89736cb4229b516723d71f87edbffd5c74e4c73105080dcb90fb"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:60936afcc1962b3f09c405897c949eb586c262d02fdcd5e316511733012058eb",
+      "raw_asset_id": "sha256:4e94fd03f5e3cb69234b4f7f3983fcf702a37ffb3445d29cd0d3ffaf220b2aff",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/0001628280-25-004772.hdr.sgml",
+      "accession": "0001628280-25-004772",
+      "document_name": "0001628280-25-004772.hdr.sgml",
+      "source_role": "fy_8k_header",
+      "request_attempt_id": "request:attempt:e65531d2506a201dd82a980e2ddc65cce131175e96922daf0ada0dfb52e3477a"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:b7918006e714a2f7fd504bdb6267415f25cec432dabd167cb9a5fbbedcfcc888",
+      "raw_asset_id": "sha256:7db2b5693b4986de1da579c85126ff60d02500ff7466d2a2c482d289bfbadb5e",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/d927802d8k.htm",
+      "accession": "0001193125-25-036732",
+      "document_name": "d927802d8k.htm",
+      "source_role": "fy_8k_primary",
+      "request_attempt_id": "request:attempt:7af49b9b78ee76f762ffb2dd18a278aea14f0f2a67b12d0d6e20b90b895e02b9"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:1f83e50639e251e30a9d72aa512b92666a3d1238a9c34f9afe4b101057dae5cf",
+      "raw_asset_id": "sha256:5b1ea9e16b1b97fb83873f648e991a654d4362e2b0751a82bb7ca94545177f7d",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/0001193125-25-036732.hdr.sgml",
+      "accession": "0001193125-25-036732",
+      "document_name": "0001193125-25-036732.hdr.sgml",
+      "source_role": "fy_8k_header",
+      "request_attempt_id": "request:attempt:ca5842d53ec701db6a337e6eb88afaad49af797144079f99e6fa10c7ff524619"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:46b84f82f464a007e2db9a2072261bb78d01fa2116e2d0da5ae8bf4d5638b6b8",
+      "raw_asset_id": "sha256:e7d86dff6f2b681b9adb33d54e454fa00093e86557f5204f926e64b03bad8311",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/mar-20250506.htm",
+      "accession": "0001628280-25-022390",
+      "document_name": "mar-20250506.htm",
+      "source_role": "fy_8k_primary",
+      "request_attempt_id": "request:attempt:f6b977b58fcfc24410fbef24abbe4047c1ebb8f131bcb76e1fc8748415369465"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:61a6a86137f6a970ed09f81a01e7f1635fd9245a556be6e5987a840f7b605ece",
+      "raw_asset_id": "sha256:33c79bd1b02375176040dde689e87ac5dc1fc731b97781972c6718697dc45063",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/0001628280-25-022390.hdr.sgml",
+      "accession": "0001628280-25-022390",
+      "document_name": "0001628280-25-022390.hdr.sgml",
+      "source_role": "fy_8k_header",
+      "request_attempt_id": "request:attempt:7b8a9ea20172b930b1473a0c836765d6065f66ea5759d6b8de828b8ba20ac73f"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:7b56655b78f8633b1c90334cbbb23d0fa2f500317ba3216a4a42986a6bc315c7",
+      "raw_asset_id": "sha256:6779455e40834ac04711b927fc97f2da37df38e8cf017beddd3e35079bad9998",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/d888404d8k.htm",
+      "accession": "0001193125-25-118853",
+      "document_name": "d888404d8k.htm",
+      "source_role": "fy_8k_primary",
+      "request_attempt_id": "request:attempt:0d33e5ebd1159b1ffc477bed3547f879bdff777f10545e8a609637c63f3325ee"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:cf130d2988d1fb9f249c865230b00afbe0e54cc31af3a7efc93a336c736927fa",
+      "raw_asset_id": "sha256:8c67669ade683e3325ec92076dbc2c6bba0a3a88b2bed1e9aa0389e079c99177",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/0001193125-25-118853.hdr.sgml",
+      "accession": "0001193125-25-118853",
+      "document_name": "0001193125-25-118853.hdr.sgml",
+      "source_role": "fy_8k_header",
+      "request_attempt_id": "request:attempt:759f70d926f0501458f4ca8f6634a79b5012f975587cd00529e8a074d1ab5086"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:317b5401fbe6ef4544bf193a8a0f144c0359e680e7c6293ab7ff264d2a1b6be5",
+      "raw_asset_id": "sha256:633d2183a1e9cca6325b1fa7c07e6e21fcbf7fff61d7478c9e439cb23c778206",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/d935320d8ka.htm",
+      "accession": "0001193125-25-118861",
+      "document_name": "d935320d8ka.htm",
+      "source_role": "fy_8k_primary",
+      "request_attempt_id": "request:attempt:97cca401d606cbd27a1868da8025faee569371f549387050a64801e73521ffc5"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:2afc5ddf640c0aaa4cb4142cb7a0d46731c1d8f777997290321cee9e191449d9",
+      "raw_asset_id": "sha256:dceca997691cdbc0425a03c514b044a38d87b93062797c344b7e5dd45dd78602",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/0001193125-25-118861.hdr.sgml",
+      "accession": "0001193125-25-118861",
+      "document_name": "0001193125-25-118861.hdr.sgml",
+      "source_role": "fy_8k_header",
+      "request_attempt_id": "request:attempt:4275540d29cbe200453b19c41c6c806b3b709da04f108595ec3969b7b3ca09f2"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:691fb329e31d5d498d01bf3693695a2b456bbc6e9ddef8f6c88f3894f5357caf",
+      "raw_asset_id": "sha256:928bdbc0e8ce83bd5b0de7811956adade802f82cd49556eb2be6d936d68bcb7c",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/d858138d8k.htm",
+      "accession": "0001193125-25-158742",
+      "document_name": "d858138d8k.htm",
+      "source_role": "fy_8k_primary",
+      "request_attempt_id": "request:attempt:aa1959d5338cf1de857bc0700d255f2a8939ac3f3c2359428918a442fee90807"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc",
+      "raw_asset_id": "sha256:12606dfc17776def4d014b710c69365107ba57352ff38843233a631bba6bef4e",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+      "accession": "0001193125-25-158742",
+      "document_name": "0001193125-25-158742.hdr.sgml",
+      "source_role": "fy_8k_header",
+      "request_attempt_id": "request:attempt:411a7aeee9ddfc265316edeb84c01fbe43bf289cab23e9fbfdf55204941cbc30"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:124b8847246c3b2b1035f38a9edfd8055b78a34b5829ea329db922848dfafc92",
+      "raw_asset_id": "sha256:8a305a1d91f7844d9b33127953592cb4a2df1f96ea849c17b3c977b310281be4",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/mar-20250805.htm",
+      "accession": "0001628280-25-037592",
+      "document_name": "mar-20250805.htm",
+      "source_role": "fy_8k_primary",
+      "request_attempt_id": "request:attempt:100dabc134cc39050022c7a273ae982529b31d4545dd936638820cfa2f775c0c"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:04bb0255f0a10aaf9794d06b52cc4cbb45f4a45b8717df332bca22cd3741e8c0",
+      "raw_asset_id": "sha256:9c277c824dbe666f4e8ce126dd384f2e7db10f387e0e3e236528915755b29e81",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/0001628280-25-037592.hdr.sgml",
+      "accession": "0001628280-25-037592",
+      "document_name": "0001628280-25-037592.hdr.sgml",
+      "source_role": "fy_8k_header",
+      "request_attempt_id": "request:attempt:bf5de251a89adcf2b650ee73bc1445f099f2db1c6d9db2529cd8ffe037f4e374"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:291ee02009d2b24b65045254d61aae4e99f2cda9580bafac1a2e992e37dfdb66",
+      "raw_asset_id": "sha256:3695c0469ad4abe8fd9243dbd6c4df63d5976c5fb1313f22bdbdd6bd7cca3cb4",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/d52476d8k.htm",
+      "accession": "0001193125-25-184082",
+      "document_name": "d52476d8k.htm",
+      "source_role": "fy_8k_primary",
+      "request_attempt_id": "request:attempt:7a529d2833ae27ac5aafe06f6e48013925338a1ee7f67819d33d1d9c606a0bf8"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:38d839367e9e4abfd3e2ebb4ddc32a2f53e5a3bf74d9338be0c1059bb33efbb3",
+      "raw_asset_id": "sha256:6b75de95cabe026c29bf30a19e7f03309d9021f9fb182e407b8fd455828fc152",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/0001193125-25-184082.hdr.sgml",
+      "accession": "0001193125-25-184082",
+      "document_name": "0001193125-25-184082.hdr.sgml",
+      "source_role": "fy_8k_header",
+      "request_attempt_id": "request:attempt:f56cb4dc98a34aede84c2347e789b373bba3934d3e87b4ac5bdc58404445e6c1"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:794697f46a8915c60583241949d41513405204326be36bdfc6b384c092e548d4",
+      "raw_asset_id": "sha256:7646c3d03541392d59169546a147ebe81586d2b71d2bc1aadc6b97eb8395b251",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/mar-20251104.htm",
+      "accession": "0001048286-25-000011",
+      "document_name": "mar-20251104.htm",
+      "source_role": "fy_8k_primary",
+      "request_attempt_id": "request:attempt:0c9a30221e379ff4897ae16e04ed768bab673ec820cc616053369c8659a65aad"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:d4fdf2105a90e20788593ec0dd8922df5d294c1f446c1386216dfa613c20c65b",
+      "raw_asset_id": "sha256:cffee82d3fb74d0b67b74698f2e0f3c270f69a8d2dcf21a5ba70dee3f2aac46e",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml",
+      "accession": "0001048286-25-000011",
+      "document_name": "0001048286-25-000011.hdr.sgml",
+      "source_role": "fy_8k_header",
+      "request_attempt_id": "request:attempt:cc9a6265e9a176327465933fd83654f5531390b35ad395f52c8cbec5be95805a"
+    }
+  ],
+  "source_scope": [
+    {
+      "accession": "SUBMISSIONS-1048286",
+      "company_id": "marriott_international",
+      "document_name": "CIK0001048286.json",
+      "raw_asset_id": "sha256:e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085",
+      "source_reference_id": "sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe",
+      "source_role": "sec_submissions_inventory",
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+      "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "filing": null
+    },
+    {
+      "accession": "0001048286-26-000007",
+      "company_id": "marriott_international",
+      "document_name": "CIK0001048286.json",
+      "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+      "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+      "source_role": "companyfacts",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "filing": {
+        "accessionNumber": "0001048286-26-000007",
+        "form": "10-K",
+        "filingDate": "2026-02-10"
+      }
+    },
+    {
+      "accession": "0001140361-26-011590",
+      "company_id": "marriott_international",
+      "document_name": "ny20062722x771_def14a.htm",
+      "raw_asset_id": "sha256:fca4ce3abc7f769a80642f34b9a9f3f4208fab569bccb7f8b5166b11fe19adbd",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:f3c23bd9fc75f6f65cbd62a0ef5e1fd4106590042a1fb2318ee70c0ef30a4a68",
+      "source_reference_id": "sha256:f83a3aec9e0aa4fe67ecede9a18e28d4964911c19bf03fb1887768885290af0d",
+      "source_role": "governance_proxy",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000114036126011590/ny20062722x771_def14a.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
+      "content_sha256": "fca4ce3abc7f769a80642f34b9a9f3f4208fab569bccb7f8b5166b11fe19adbd",
+      "filing": {
+        "accessionNumber": "0001140361-26-011590",
+        "form": "DEF 14A",
+        "filingDate": "2026-03-27"
+      }
+    },
+    {
+      "accession": "0001048286-26-000007",
+      "company_id": "marriott_international",
+      "document_name": "mar-20251231.htm",
+      "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1",
+      "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+      "source_role": "target_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+      "repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "content_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "filing": {
+        "accessionNumber": "0001048286-26-000007",
+        "form": "10-K",
+        "filingDate": "2026-02-10"
+      }
+    },
+    {
+      "accession": "0001048286-26-000007",
+      "company_id": "marriott_international",
+      "document_name": "index.json",
+      "raw_asset_id": "sha256:a2b20ee4c353b24e3772bfbe4e2b6e43a17f244e63b32a1c70d6d780d46d7398",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:c781a3f986f33b77646c848444ce1e47019d3b830094df32aee3f399f9a8a641",
+      "source_reference_id": "sha256:9865738104c119941af46defc8749d702fd75f24be7b71b35513d89303562dfb",
+      "source_role": "accession_index",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/index.json",
+      "repo_relative_path": "evidence/request_attempts/a2/a2b20ee4c353b24e3772bfbe4e2b6e43a17f244e63b32a1c70d6d780d46d7398/index.json",
+      "content_sha256": "a2b20ee4c353b24e3772bfbe4e2b6e43a17f244e63b32a1c70d6d780d46d7398",
+      "filing": {
+        "accessionNumber": "0001048286-26-000007",
+        "form": "10-K",
+        "filingDate": "2026-02-10"
+      }
+    },
+    {
+      "accession": "0001048286-26-000007",
+      "company_id": "marriott_international",
+      "document_name": "mar-20251231_htm.xml",
+      "raw_asset_id": "sha256:39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:5176c0832cd4a1a68fb8d7860959306d772750de3a1317dffe59319fa1a20f5e",
+      "source_reference_id": "sha256:6139c18acde58b3ba5aff86a1debd212c1fade31d2ba8a0ce35a748947694a07",
+      "source_role": "auditor_facts",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231_htm.xml",
+      "repo_relative_path": "evidence/request_attempts/39/39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150/mar-20251231_htm.xml",
+      "content_sha256": "39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+      "filing": {
+        "accessionNumber": "0001048286-26-000007",
+        "form": "10-K",
+        "filingDate": "2026-02-10"
+      }
+    },
+    {
+      "accession": "0001628280-25-004818",
+      "company_id": "marriott_international",
+      "document_name": "index.json",
+      "raw_asset_id": "sha256:9bd1132e98da300604df61534c0fada12fc9f6a57be30aefa6b6d47a00b26c7d",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:77cfc7413842951b5a11c9943687d54fdfaf848be24842485ee2ec53bb26fa90",
+      "source_reference_id": "sha256:bf544d4ea45fb264453b4e0afbb986e366f93c73b43e55513e95741b1453b855",
+      "source_role": "accession_index",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/index.json",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000162828025004818/index.json",
+      "content_sha256": "9bd1132e98da300604df61534c0fada12fc9f6a57be30aefa6b6d47a00b26c7d",
+      "filing": {
+        "accessionNumber": "0001628280-25-004818",
+        "form": "10-K",
+        "filingDate": "2025-02-11"
+      }
+    },
+    {
+      "accession": "0001628280-25-004818",
+      "company_id": "marriott_international",
+      "document_name": "mar-20241231.htm",
+      "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92",
+      "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+      "source_role": "target_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+      "repo_relative_path": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+      "content_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+      "filing": {
+        "accessionNumber": "0001628280-25-004818",
+        "form": "10-K",
+        "filingDate": "2025-02-11"
+      }
+    },
+    {
+      "accession": "0001628280-25-004818",
+      "company_id": "marriott_international",
+      "document_name": "mar-20241231_htm.xml",
+      "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292",
+      "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+      "source_role": "auditor_facts",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000162828025004818/mar-20241231_htm.xml",
+      "content_sha256": "86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+      "filing": {
+        "accessionNumber": "0001628280-25-004818",
+        "form": "10-K",
+        "filingDate": "2025-02-11"
+      }
+    },
+    {
+      "accession": "0001193125-25-009110",
+      "company_id": "marriott_international",
+      "document_name": "d890503d8k.htm",
+      "raw_asset_id": "sha256:bf87fec25bfd743d96b1624a36836e7c384ccd98b5aec5d12c8cda5fa95814f1",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:6829c754e52bb529a10cedc2115c68150c6feb7c799d2bd29c5a8fc2f804afce",
+      "source_reference_id": "sha256:fad6b06c485aa6415e0dfdfb312d09e774c0d42951288db4d0bbe035c62c52bb",
+      "source_role": "fy_8k_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/d890503d8k.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525009110/d890503d8k.htm",
+      "content_sha256": "bf87fec25bfd743d96b1624a36836e7c384ccd98b5aec5d12c8cda5fa95814f1",
+      "filing": {
+        "accessionNumber": "0001193125-25-009110",
+        "form": "8-K",
+        "filingDate": "2025-01-21"
+      }
+    },
+    {
+      "accession": "0001193125-25-009110",
+      "company_id": "marriott_international",
+      "document_name": "0001193125-25-009110.hdr.sgml",
+      "raw_asset_id": "sha256:0b7fcc3b211556d4e1426e93c53dc37170a505bdcc8ad1309de1fc9690b2e9f7",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:90d6e0b380de55b7e508189591d0ccb2055093591fc30b0cb60dbc436c94badf",
+      "source_reference_id": "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+      "source_role": "fy_8k_header",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525009110/0001193125-25-009110.hdr.sgml",
+      "content_sha256": "0b7fcc3b211556d4e1426e93c53dc37170a505bdcc8ad1309de1fc9690b2e9f7",
+      "filing": {
+        "accessionNumber": "0001193125-25-009110",
+        "form": "8-K",
+        "filingDate": "2025-01-21"
+      }
+    },
+    {
+      "accession": "0001628280-25-004772",
+      "company_id": "marriott_international",
+      "document_name": "mar-20250211.htm",
+      "raw_asset_id": "sha256:cde6d9fac69fa87cc232f3e56f991ea1fb6637b98f6a8595e6e60c5d95945d2d",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:62b34fbfc0ef89736cb4229b516723d71f87edbffd5c74e4c73105080dcb90fb",
+      "source_reference_id": "sha256:bbe8d18d5b70456fdfe6a7141f2da0e1b2ee5866d814c1fecf09b786ec310e45",
+      "source_role": "fy_8k_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/mar-20250211.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000162828025004772/mar-20250211.htm",
+      "content_sha256": "cde6d9fac69fa87cc232f3e56f991ea1fb6637b98f6a8595e6e60c5d95945d2d",
+      "filing": {
+        "accessionNumber": "0001628280-25-004772",
+        "form": "8-K",
+        "filingDate": "2025-02-11"
+      }
+    },
+    {
+      "accession": "0001628280-25-004772",
+      "company_id": "marriott_international",
+      "document_name": "0001628280-25-004772.hdr.sgml",
+      "raw_asset_id": "sha256:4e94fd03f5e3cb69234b4f7f3983fcf702a37ffb3445d29cd0d3ffaf220b2aff",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:e65531d2506a201dd82a980e2ddc65cce131175e96922daf0ada0dfb52e3477a",
+      "source_reference_id": "sha256:60936afcc1962b3f09c405897c949eb586c262d02fdcd5e316511733012058eb",
+      "source_role": "fy_8k_header",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/0001628280-25-004772.hdr.sgml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000162828025004772/0001628280-25-004772.hdr.sgml",
+      "content_sha256": "4e94fd03f5e3cb69234b4f7f3983fcf702a37ffb3445d29cd0d3ffaf220b2aff",
+      "filing": {
+        "accessionNumber": "0001628280-25-004772",
+        "form": "8-K",
+        "filingDate": "2025-02-11"
+      }
+    },
+    {
+      "accession": "0001193125-25-036732",
+      "company_id": "marriott_international",
+      "document_name": "d927802d8k.htm",
+      "raw_asset_id": "sha256:7db2b5693b4986de1da579c85126ff60d02500ff7466d2a2c482d289bfbadb5e",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:7af49b9b78ee76f762ffb2dd18a278aea14f0f2a67b12d0d6e20b90b895e02b9",
+      "source_reference_id": "sha256:b7918006e714a2f7fd504bdb6267415f25cec432dabd167cb9a5fbbedcfcc888",
+      "source_role": "fy_8k_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/d927802d8k.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525036732/d927802d8k.htm",
+      "content_sha256": "7db2b5693b4986de1da579c85126ff60d02500ff7466d2a2c482d289bfbadb5e",
+      "filing": {
+        "accessionNumber": "0001193125-25-036732",
+        "form": "8-K",
+        "filingDate": "2025-02-26"
+      }
+    },
+    {
+      "accession": "0001193125-25-036732",
+      "company_id": "marriott_international",
+      "document_name": "0001193125-25-036732.hdr.sgml",
+      "raw_asset_id": "sha256:5b1ea9e16b1b97fb83873f648e991a654d4362e2b0751a82bb7ca94545177f7d",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:ca5842d53ec701db6a337e6eb88afaad49af797144079f99e6fa10c7ff524619",
+      "source_reference_id": "sha256:1f83e50639e251e30a9d72aa512b92666a3d1238a9c34f9afe4b101057dae5cf",
+      "source_role": "fy_8k_header",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/0001193125-25-036732.hdr.sgml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525036732/0001193125-25-036732.hdr.sgml",
+      "content_sha256": "5b1ea9e16b1b97fb83873f648e991a654d4362e2b0751a82bb7ca94545177f7d",
+      "filing": {
+        "accessionNumber": "0001193125-25-036732",
+        "form": "8-K",
+        "filingDate": "2025-02-26"
+      }
+    },
+    {
+      "accession": "0001628280-25-022390",
+      "company_id": "marriott_international",
+      "document_name": "mar-20250506.htm",
+      "raw_asset_id": "sha256:e7d86dff6f2b681b9adb33d54e454fa00093e86557f5204f926e64b03bad8311",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:f6b977b58fcfc24410fbef24abbe4047c1ebb8f131bcb76e1fc8748415369465",
+      "source_reference_id": "sha256:46b84f82f464a007e2db9a2072261bb78d01fa2116e2d0da5ae8bf4d5638b6b8",
+      "source_role": "fy_8k_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/mar-20250506.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000162828025022390/mar-20250506.htm",
+      "content_sha256": "e7d86dff6f2b681b9adb33d54e454fa00093e86557f5204f926e64b03bad8311",
+      "filing": {
+        "accessionNumber": "0001628280-25-022390",
+        "form": "8-K",
+        "filingDate": "2025-05-06"
+      }
+    },
+    {
+      "accession": "0001628280-25-022390",
+      "company_id": "marriott_international",
+      "document_name": "0001628280-25-022390.hdr.sgml",
+      "raw_asset_id": "sha256:33c79bd1b02375176040dde689e87ac5dc1fc731b97781972c6718697dc45063",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:7b8a9ea20172b930b1473a0c836765d6065f66ea5759d6b8de828b8ba20ac73f",
+      "source_reference_id": "sha256:61a6a86137f6a970ed09f81a01e7f1635fd9245a556be6e5987a840f7b605ece",
+      "source_role": "fy_8k_header",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/0001628280-25-022390.hdr.sgml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000162828025022390/0001628280-25-022390.hdr.sgml",
+      "content_sha256": "33c79bd1b02375176040dde689e87ac5dc1fc731b97781972c6718697dc45063",
+      "filing": {
+        "accessionNumber": "0001628280-25-022390",
+        "form": "8-K",
+        "filingDate": "2025-05-06"
+      }
+    },
+    {
+      "accession": "0001193125-25-118853",
+      "company_id": "marriott_international",
+      "document_name": "d888404d8k.htm",
+      "raw_asset_id": "sha256:6779455e40834ac04711b927fc97f2da37df38e8cf017beddd3e35079bad9998",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:0d33e5ebd1159b1ffc477bed3547f879bdff777f10545e8a609637c63f3325ee",
+      "source_reference_id": "sha256:7b56655b78f8633b1c90334cbbb23d0fa2f500317ba3216a4a42986a6bc315c7",
+      "source_role": "fy_8k_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/d888404d8k.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525118853/d888404d8k.htm",
+      "content_sha256": "6779455e40834ac04711b927fc97f2da37df38e8cf017beddd3e35079bad9998",
+      "filing": {
+        "accessionNumber": "0001193125-25-118853",
+        "form": "8-K",
+        "filingDate": "2025-05-13"
+      }
+    },
+    {
+      "accession": "0001193125-25-118853",
+      "company_id": "marriott_international",
+      "document_name": "0001193125-25-118853.hdr.sgml",
+      "raw_asset_id": "sha256:8c67669ade683e3325ec92076dbc2c6bba0a3a88b2bed1e9aa0389e079c99177",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:759f70d926f0501458f4ca8f6634a79b5012f975587cd00529e8a074d1ab5086",
+      "source_reference_id": "sha256:cf130d2988d1fb9f249c865230b00afbe0e54cc31af3a7efc93a336c736927fa",
+      "source_role": "fy_8k_header",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/0001193125-25-118853.hdr.sgml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525118853/0001193125-25-118853.hdr.sgml",
+      "content_sha256": "8c67669ade683e3325ec92076dbc2c6bba0a3a88b2bed1e9aa0389e079c99177",
+      "filing": {
+        "accessionNumber": "0001193125-25-118853",
+        "form": "8-K",
+        "filingDate": "2025-05-13"
+      }
+    },
+    {
+      "accession": "0001193125-25-118861",
+      "company_id": "marriott_international",
+      "document_name": "d935320d8ka.htm",
+      "raw_asset_id": "sha256:633d2183a1e9cca6325b1fa7c07e6e21fcbf7fff61d7478c9e439cb23c778206",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:97cca401d606cbd27a1868da8025faee569371f549387050a64801e73521ffc5",
+      "source_reference_id": "sha256:317b5401fbe6ef4544bf193a8a0f144c0359e680e7c6293ab7ff264d2a1b6be5",
+      "source_role": "fy_8k_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/d935320d8ka.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525118861/d935320d8ka.htm",
+      "content_sha256": "633d2183a1e9cca6325b1fa7c07e6e21fcbf7fff61d7478c9e439cb23c778206",
+      "filing": {
+        "accessionNumber": "0001193125-25-118861",
+        "form": "8-K/A",
+        "filingDate": "2025-05-13"
+      }
+    },
+    {
+      "accession": "0001193125-25-118861",
+      "company_id": "marriott_international",
+      "document_name": "0001193125-25-118861.hdr.sgml",
+      "raw_asset_id": "sha256:dceca997691cdbc0425a03c514b044a38d87b93062797c344b7e5dd45dd78602",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:4275540d29cbe200453b19c41c6c806b3b709da04f108595ec3969b7b3ca09f2",
+      "source_reference_id": "sha256:2afc5ddf640c0aaa4cb4142cb7a0d46731c1d8f777997290321cee9e191449d9",
+      "source_role": "fy_8k_header",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/0001193125-25-118861.hdr.sgml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525118861/0001193125-25-118861.hdr.sgml",
+      "content_sha256": "dceca997691cdbc0425a03c514b044a38d87b93062797c344b7e5dd45dd78602",
+      "filing": {
+        "accessionNumber": "0001193125-25-118861",
+        "form": "8-K/A",
+        "filingDate": "2025-05-13"
+      }
+    },
+    {
+      "accession": "0001193125-25-158742",
+      "company_id": "marriott_international",
+      "document_name": "d858138d8k.htm",
+      "raw_asset_id": "sha256:928bdbc0e8ce83bd5b0de7811956adade802f82cd49556eb2be6d936d68bcb7c",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:aa1959d5338cf1de857bc0700d255f2a8939ac3f3c2359428918a442fee90807",
+      "source_reference_id": "sha256:691fb329e31d5d498d01bf3693695a2b456bbc6e9ddef8f6c88f3894f5357caf",
+      "source_role": "fy_8k_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/d858138d8k.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525158742/d858138d8k.htm",
+      "content_sha256": "928bdbc0e8ce83bd5b0de7811956adade802f82cd49556eb2be6d936d68bcb7c",
+      "filing": {
+        "accessionNumber": "0001193125-25-158742",
+        "form": "8-K",
+        "filingDate": "2025-07-14"
+      }
+    },
+    {
+      "accession": "0001193125-25-158742",
+      "company_id": "marriott_international",
+      "document_name": "0001193125-25-158742.hdr.sgml",
+      "raw_asset_id": "sha256:12606dfc17776def4d014b710c69365107ba57352ff38843233a631bba6bef4e",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:411a7aeee9ddfc265316edeb84c01fbe43bf289cab23e9fbfdf55204941cbc30",
+      "source_reference_id": "sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc",
+      "source_role": "fy_8k_header",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525158742/0001193125-25-158742.hdr.sgml",
+      "content_sha256": "12606dfc17776def4d014b710c69365107ba57352ff38843233a631bba6bef4e",
+      "filing": {
+        "accessionNumber": "0001193125-25-158742",
+        "form": "8-K",
+        "filingDate": "2025-07-14"
+      }
+    },
+    {
+      "accession": "0001628280-25-037592",
+      "company_id": "marriott_international",
+      "document_name": "mar-20250805.htm",
+      "raw_asset_id": "sha256:8a305a1d91f7844d9b33127953592cb4a2df1f96ea849c17b3c977b310281be4",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:100dabc134cc39050022c7a273ae982529b31d4545dd936638820cfa2f775c0c",
+      "source_reference_id": "sha256:124b8847246c3b2b1035f38a9edfd8055b78a34b5829ea329db922848dfafc92",
+      "source_role": "fy_8k_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/mar-20250805.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000162828025037592/mar-20250805.htm",
+      "content_sha256": "8a305a1d91f7844d9b33127953592cb4a2df1f96ea849c17b3c977b310281be4",
+      "filing": {
+        "accessionNumber": "0001628280-25-037592",
+        "form": "8-K",
+        "filingDate": "2025-08-05"
+      }
+    },
+    {
+      "accession": "0001628280-25-037592",
+      "company_id": "marriott_international",
+      "document_name": "0001628280-25-037592.hdr.sgml",
+      "raw_asset_id": "sha256:9c277c824dbe666f4e8ce126dd384f2e7db10f387e0e3e236528915755b29e81",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:bf5de251a89adcf2b650ee73bc1445f099f2db1c6d9db2529cd8ffe037f4e374",
+      "source_reference_id": "sha256:04bb0255f0a10aaf9794d06b52cc4cbb45f4a45b8717df332bca22cd3741e8c0",
+      "source_role": "fy_8k_header",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/0001628280-25-037592.hdr.sgml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000162828025037592/0001628280-25-037592.hdr.sgml",
+      "content_sha256": "9c277c824dbe666f4e8ce126dd384f2e7db10f387e0e3e236528915755b29e81",
+      "filing": {
+        "accessionNumber": "0001628280-25-037592",
+        "form": "8-K",
+        "filingDate": "2025-08-05"
+      }
+    },
+    {
+      "accession": "0001193125-25-184082",
+      "company_id": "marriott_international",
+      "document_name": "d52476d8k.htm",
+      "raw_asset_id": "sha256:3695c0469ad4abe8fd9243dbd6c4df63d5976c5fb1313f22bdbdd6bd7cca3cb4",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:7a529d2833ae27ac5aafe06f6e48013925338a1ee7f67819d33d1d9c606a0bf8",
+      "source_reference_id": "sha256:291ee02009d2b24b65045254d61aae4e99f2cda9580bafac1a2e992e37dfdb66",
+      "source_role": "fy_8k_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/d52476d8k.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525184082/d52476d8k.htm",
+      "content_sha256": "3695c0469ad4abe8fd9243dbd6c4df63d5976c5fb1313f22bdbdd6bd7cca3cb4",
+      "filing": {
+        "accessionNumber": "0001193125-25-184082",
+        "form": "8-K",
+        "filingDate": "2025-08-20"
+      }
+    },
+    {
+      "accession": "0001193125-25-184082",
+      "company_id": "marriott_international",
+      "document_name": "0001193125-25-184082.hdr.sgml",
+      "raw_asset_id": "sha256:6b75de95cabe026c29bf30a19e7f03309d9021f9fb182e407b8fd455828fc152",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:f56cb4dc98a34aede84c2347e789b373bba3934d3e87b4ac5bdc58404445e6c1",
+      "source_reference_id": "sha256:38d839367e9e4abfd3e2ebb4ddc32a2f53e5a3bf74d9338be0c1059bb33efbb3",
+      "source_role": "fy_8k_header",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/0001193125-25-184082.hdr.sgml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000119312525184082/0001193125-25-184082.hdr.sgml",
+      "content_sha256": "6b75de95cabe026c29bf30a19e7f03309d9021f9fb182e407b8fd455828fc152",
+      "filing": {
+        "accessionNumber": "0001193125-25-184082",
+        "form": "8-K",
+        "filingDate": "2025-08-20"
+      }
+    },
+    {
+      "accession": "0001048286-25-000011",
+      "company_id": "marriott_international",
+      "document_name": "mar-20251104.htm",
+      "raw_asset_id": "sha256:7646c3d03541392d59169546a147ebe81586d2b71d2bc1aadc6b97eb8395b251",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:0c9a30221e379ff4897ae16e04ed768bab673ec820cc616053369c8659a65aad",
+      "source_reference_id": "sha256:794697f46a8915c60583241949d41513405204326be36bdfc6b384c092e548d4",
+      "source_role": "fy_8k_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/mar-20251104.htm",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000104828625000011/mar-20251104.htm",
+      "content_sha256": "7646c3d03541392d59169546a147ebe81586d2b71d2bc1aadc6b97eb8395b251",
+      "filing": {
+        "accessionNumber": "0001048286-25-000011",
+        "form": "8-K",
+        "filingDate": "2025-11-04"
+      }
+    },
+    {
+      "accession": "0001048286-25-000011",
+      "company_id": "marriott_international",
+      "document_name": "0001048286-25-000011.hdr.sgml",
+      "raw_asset_id": "sha256:cffee82d3fb74d0b67b74698f2e0f3c270f69a8d2dcf21a5ba70dee3f2aac46e",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:cc9a6265e9a176327465933fd83654f5531390b35ad395f52c8cbec5be95805a",
+      "source_reference_id": "sha256:d4fdf2105a90e20788593ec0dd8922df5d294c1f446c1386216dfa613c20c65b",
+      "source_role": "fy_8k_header",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml",
+      "repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000104828625000011/0001048286-25-000011.hdr.sgml",
+      "content_sha256": "cffee82d3fb74d0b67b74698f2e0f3c270f69a8d2dcf21a5ba70dee3f2aac46e",
+      "filing": {
+        "accessionNumber": "0001048286-25-000011",
+        "form": "8-K",
+        "filingDate": "2025-11-04"
+      }
+    }
+  ],
+  "row_hash": "sha256:46f78b8b590474382d3ac746bc0ca6d91a19d61755575f90003875dfef348ec6",
+  "evidence_hash": "sha256:1714a2435655558e677e10f9f7c2ca14f891d11b0c9d5d03fe60bb089d14b896",
+  "contributing_evidence_count": 1,
+  "production_authorized": false,
+  "requirement_closure_hash": "sha256:b1719ce7b13ce8e8cf8fab5b368076ed9c0116084524c377e0a2f11168c68e8c",
+  "run_binding_id": "sha256:5897d9bb4a61302a7cab84ccd96e266cd86783dd68168abca4c9c6dd3addb56b",
+  "receipt_id": "sha256:9e3d90217230c139d3d420e4302346ec2809ce9d0fad318b00108145704c14cf"
+}

@@ -1,0 +1,49 @@
+{
+  "status": "LOCAL_VERIFICATION_PASSED_INDEPENDENT_REVIEW_PENDING",
+  "requirement_closure_hash": "sha256:d84d177d623de44bcd11b69923338e64b1ae522ea9935c769a2719202826eb9b",
+  "execution_files": 340,
+  "source_methods_default": {
+    "count": 6,
+    "seconds": 57.875
+  },
+  "source_methods_python39": {
+    "count": 6,
+    "seconds": 92.425
+  },
+  "complete_source_suite": {
+    "selectors": 44,
+    "seconds": 409.062
+  },
+  "fast_suite": {
+    "selectors": 96,
+    "seconds": 71.671
+  },
+  "paramount_native": {
+    "status": "OPEN",
+    "result": "WITHHELD",
+    "amendment_preserved": true,
+    "attacks": 2,
+    "seconds": 166.913
+  },
+  "regression_native": {
+    "coordinates": 3,
+    "attacks": 4,
+    "attack_seconds": 87.824
+  },
+  "cold": {
+    "status": "PASS",
+    "records": 15,
+    "root_used": "b06-current-native-second/data; intact baseline from a test whose expected rejection exception was initially misclassified"
+  },
+  "ten_company_source_preparation": {
+    "status": "ALL_PREPARED",
+    "native_runs_created": false,
+    "seconds": 133.33299520798028
+  },
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

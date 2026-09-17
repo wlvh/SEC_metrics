@@ -1,0 +1,235 @@
+{
+  "record_type": "NORMAL_NUMERIC_PRESENTATION_POLICY",
+  "schema_version": 1,
+  "production_authorized": false,
+  "requirement_id": "issue_28_v12",
+  "run_prefix": "run:normal-current:",
+  "native_values_only": true,
+  "probability_confidence_inferred": false,
+  "withheld_status": "WITHHELD",
+  "nonmeaningful_guard": {
+    "spec_path": "catalog/r5/B06_guarded_v3.md",
+    "resolver": "debt_equity_nonpositive_guard_v3",
+    "reason_code": "DENOMINATOR_NONPOSITIVE",
+    "role": "equity",
+    "condition": "nonpositive",
+    "debt_completeness": "NOT_EVALUATED"
+  },
+  "metrics": {
+    "A03": {
+      "canonical_unit": "ratio",
+      "allowed_spec_paths": [
+        "catalog/r4_normal/A03_liquidity_coverage_ratio.md"
+      ],
+      "projection": {
+        "unit": "ratio",
+        "value_multiplier": "1",
+        "status_exact": "MDA_OK",
+        "status_approx": "APPROX",
+        "source_class": "MDA",
+        "formula": "source-disclosed firm average LCR",
+        "confidence": "",
+        "concept_or_section": "Liquidity coverage ratio",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "native_verified_observation_projection",
+        "parser_version": "normal_numeric_projection_v1",
+        "notes": "Average over the source-disclosed interval; annual filing grouping does not make it an annual average."
+      }
+    },
+    "A04": {
+      "canonical_unit": "ratio",
+      "allowed_spec_paths": [
+        "catalog/r4_normal/A04_net_interest_margin.md"
+      ],
+      "projection": {
+        "unit": "ratio",
+        "value_multiplier": "1",
+        "status_exact": "MDA_OK",
+        "status_approx": "APPROX",
+        "source_class": "MDA",
+        "formula": "source-disclosed managed net interest margin",
+        "confidence": "",
+        "concept_or_section": "Managed net interest margin",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "native_verified_observation_projection",
+        "parser_version": "normal_numeric_projection_v1",
+        "notes": "Disclosed managed or taxable-equivalent rate; the economic relationship validates rather than replaces the disclosed rate."
+      }
+    },
+    "A09": {
+      "canonical_unit": "ratio",
+      "allowed_spec_paths": [
+        "catalog/r4_normal/A09_nonperforming_loan_ratio.md"
+      ],
+      "projection": {
+        "unit": "ratio",
+        "value_multiplier": "1",
+        "status_exact": "MDA_OK",
+        "status_approx": "APPROX",
+        "source_class": "MDA",
+        "formula": "source-verified firmwide nonperforming loan ratio",
+        "confidence": "",
+        "concept_or_section": "Firmwide nonperforming loan ratio",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "native_verified_observation_projection",
+        "parser_version": "normal_numeric_projection_v1",
+        "notes": "Ratio at the stated instant; structured primary and any permitted fallback remain source-replayed."
+      }
+    },
+    "A11": {
+      "canonical_unit": "USD",
+      "allowed_spec_paths": [
+        "catalog/r4_normal/A11_assets_under_management.md"
+      ],
+      "projection": {
+        "unit": "USD",
+        "value_multiplier": "1",
+        "status_exact": "MDA_OK",
+        "status_approx": "APPROX",
+        "source_class": "MDA",
+        "formula": "source-reported complete AUM balance",
+        "confidence": "",
+        "concept_or_section": "Assets under management",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "native_verified_observation_projection",
+        "parser_version": "normal_numeric_projection_v1",
+        "notes": "A point-in-time balance with the source-defined complete client and manager scope."
+      }
+    },
+    "A12": {
+      "canonical_unit": "USD",
+      "allowed_spec_paths": [
+        "catalog/r4_normal/A12_trading_exposure.md"
+      ],
+      "projection": {
+        "unit": "USD",
+        "value_multiplier": "1",
+        "status_exact": "MDA_OK",
+        "status_approx": "APPROX",
+        "source_class": "MDA",
+        "formula": "source-reported annual average total VaR",
+        "confidence": "",
+        "concept_or_section": "Firmwide Risk Management VaR",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "native_verified_observation_projection",
+        "parser_version": "normal_numeric_projection_v1",
+        "notes": "Annual average total VaR, 95 percent confidence and one-day holding period; the one-day horizon is not the statistical measurement window."
+      }
+    },
+    "A13": {
+      "canonical_unit": "USD",
+      "allowed_spec_paths": [
+        "catalog/r4_normal/A13_geographic_exposure.md"
+      ],
+      "projection": {
+        "unit": "USD",
+        "value_multiplier": "1",
+        "status_exact": "XBRL_OK",
+        "status_approx": "APPROX",
+        "source_class": "XBRL",
+        "formula": "source-reported international net revenue",
+        "confidence": "",
+        "concept_or_section": "International net revenue",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "native_verified_observation_projection",
+        "parser_version": "normal_numeric_projection_v1",
+        "notes": "International net revenue for the actual interval, not regional gross revenue or an inferred regional sum."
+      }
+    },
+    "B06": {
+      "canonical_unit": "ratio",
+      "allowed_spec_paths": [
+        "catalog/r5/B06_new_source_v2.md",
+        "catalog/r5/B06_guarded_v3.md"
+      ],
+      "projection": {
+        "unit": "ratio",
+        "value_multiplier": "1",
+        "status_exact": "OK",
+        "status_approx": "APPROX",
+        "source_class": "DERIVED",
+        "formula": "defined carrying debt / shareholders equity",
+        "confidence": "",
+        "concept_or_section": "Debt-to-equity",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "native_verified_observation_projection",
+        "parser_version": "normal_numeric_projection_v1",
+        "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity."
+      }
+    },
+    "C03": {
+      "canonical_unit": "USD",
+      "allowed_spec_paths": [
+        "catalog/r5/C03_peo_total_compensation.md",
+        "catalog/r5/C03_reported_compensation_v2.md"
+      ],
+      "projection": {
+        "unit": "USD",
+        "value_multiplier": "1",
+        "status_exact": "XBRL_OK",
+        "status_approx": "APPROX",
+        "source_class": "XBRL",
+        "formula": "reported PEO total compensation",
+        "confidence": "",
+        "concept_or_section": "Reported PEO total compensation",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "native_verified_observation_projection",
+        "parser_version": "normal_numeric_projection_v1",
+        "notes": "Reported Total compensation for the uniquely supported PEO/CEO; not compensation actually paid or an average of several executives."
+      },
+      "spec_presentation_overrides": {
+        "catalog/r5/C03_reported_compensation_v2.md": {
+          "source_class": "MDA",
+          "status_exact": "MDA_OK"
+        }
+      }
+    },
+    "C04": {
+      "canonical_unit": "flag",
+      "allowed_spec_paths": [
+        "catalog/r5/C04_auditor_changes_v2.md"
+      ],
+      "projection": {
+        "unit": "flag",
+        "value_multiplier": "1",
+        "status_exact": "OK",
+        "status_approx": "APPROX",
+        "source_class": "DERIVED",
+        "formula": "source-verified auditor change signal",
+        "confidence": "",
+        "concept_or_section": "Auditor changes",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "observation",
+        "evidence_extraction_method": "native_verified_observation_projection",
+        "parser_version": "normal_numeric_projection_v1",
+        "notes": "1 means an auditor-change signal was verified; 0 requires completed auditor-name and event-coverage checks. Neither is a probability."
+      }
+    }
+  }
+}

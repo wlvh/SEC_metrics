@@ -1,0 +1,99 @@
+{
+  "status": "LOCAL_VERIFICATION_PASSED_INDEPENDENT_REVIEW_PENDING",
+  "requirement_closure_hash": "sha256:929f3fa00cba824a8549bfb940c536d245989f311c9b95ac08d5c405620b5a47",
+  "execution_files": 344,
+  "source_default": {
+    "methods": 11,
+    "seconds": 41.341
+  },
+  "source_python39": {
+    "methods": 36,
+    "seconds": 238.63
+  },
+  "native_material": {
+    "status": "PASS",
+    "actual_run_status": "OPEN",
+    "result": {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B06",
+      "period_start": "2025-12-31",
+      "period_end": "2025-12-31",
+      "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+      "spec_closure_hash": "sha256:4ad7f5e5ab1925de7d4113eb28f1a3a5fdd3f4219c95cc0604c6e454eb3db744",
+      "applicability": "APPLICABLE",
+      "quality": "EXACT",
+      "publication": "PUBLISHED",
+      "reason_code": "PASS",
+      "value": "1.168049260241169930727785855",
+      "unit": "ratio",
+      "trace_id": "sha256:5a42b960f84b15be362cef660a6431e643a086f9420f2ab899ff85decba495af",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:d2453e8b020075cc7165ade36c17448e387e0e0b25ca484dcdd5286e5265d17e"
+    },
+    "amendment_retained": "0001140361-26-016758",
+    "attacks": 5,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "native_seconds": 246.152,
+  "cold": {
+    "status": "PASS",
+    "run_id": "run:ordinary-integrated:617bbffb862c9d54af71ad9fd966fd7d6d144161fe7440d1c5bd88064d7d699b",
+    "run_status": "OPEN",
+    "record_count": 17,
+    "decision_count": 0,
+    "runtime_root": "/private/tmp/sec_metrics_issue28_continuous/paramount-inclusive-native-first/data",
+    "git_directory_present": false,
+    "results": [
+      {
+        "applicability": "APPLICABLE",
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B06",
+        "period_end": "2025-12-31",
+        "period_start": "2025-12-31",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:d2453e8b020075cc7165ade36c17448e387e0e0b25ca484dcdd5286e5265d17e",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:4ad7f5e5ab1925de7d4113eb28f1a3a5fdd3f4219c95cc0604c6e454eb3db744",
+        "trace_id": "sha256:5a42b960f84b15be362cef660a6431e643a086f9420f2ab899ff85decba495af",
+        "unit": "ratio",
+        "value": "1.168049260241169930727785855"
+      }
+    ],
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "source_suite": {
+    "original_status": "FAILED",
+    "selectors": 45,
+    "seconds": 443.77,
+    "unchanged_passing_selectors": 44,
+    "failed_selector": "tests.vnext.test_b06_current_input",
+    "repair": "Stale WITHHELD assertion replaced by independent source-proof/value assertions plus an unproven-debt rejection.",
+    "repaired_selector_default": "PASS, six methods; current-input-second.log",
+    "repaired_selector_python39": "PASS, six methods; current-input39-second.log",
+    "all_suite_rerun_after_test_only_change": false
+  },
+  "fast_suite": {
+    "status": "PASSED",
+    "selectors": 96,
+    "seconds": 71.357
+  },
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

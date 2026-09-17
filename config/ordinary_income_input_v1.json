@@ -1,0 +1,11 @@
+{
+  "record_type": "ORDINARY_CURRENT_INCOME_INPUT_RULES",
+  "schema_version": 1,
+  "metric_ids": ["B01", "B03"],
+  "input_class": "CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES",
+  "income_subject_pattern": "\\b(?:revenues?|operating income|operating losses?|depreciation|amortization|statements? of (?:income|operations|cash flows))\\b",
+  "statement_heading_pattern": "^(?:Consolidated )?Statements? of (?:Income|Operations|Cash Flows)(?:\\s*\\(.*\\))?$",
+  "period_selection": "EARLIEST_NATIVE_UNDIMENSIONED_REVENUE_START_WITHIN_REPORTING_YEAR_AT_CURRENT_END",
+  "financial_cross_entity_combination_authorized": false,
+  "production_authorized": false
+}

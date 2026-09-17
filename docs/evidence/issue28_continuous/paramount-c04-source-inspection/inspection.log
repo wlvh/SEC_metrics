@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/paramount-c04-source-inspection/inspect.py", line 3, in <module>
+    from unittest.mock import patch
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/__init__.py", line 56, in <module>
+    from .result import TestResult
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/result.py", line 5, in <module>
+    import traceback
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/traceback.py", line 13, in <module>
+    import _colorize
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/_colorize.py", line 5, in <module>
+    from dataclasses import dataclass, field, Field
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/dataclasses.py", line 5, in <module>
+    import inspect
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/paramount-c04-source-inspection/inspect.py", line 3, in <module>
+    from unittest.mock import patch
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 27, in <module>
+    import asyncio
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/__init__.py", line 8, in <module>
+    from .base_events import *
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/base_events.py", line 40, in <module>
+    from . import events
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/asyncio/events.py", line 861, in <module>
+    from _asyncio import (_get_running_loop, _set_running_loop,
+AttributeError: partially initialized module 'traceback' from '/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/traceback.py' has no attribute 'extract_stack' (most likely due to a circular import)

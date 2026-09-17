@@ -1,0 +1,8 @@
+{
+  "status": "INVALID_PATCH_OVERLAY_NOT_A_F229_TEST",
+  "reason": "Copied mutable main hook files already contained hook additions; patch tool reversed these hunks. Overlay SHA audit detected original unpatched hook bytes. Preserved failures do not assess f229 patch.",
+  "expected_hook_after_hashes": [
+    "1433a6d671eba6b63b975e37c7bcab80258b440d10cd649189b83972a40e1a37",
+    "6e21fb8310ec96d3082c9b29ef7b2fcbf17f9571dacd82abba8967a5ce418124"
+  ]
+}

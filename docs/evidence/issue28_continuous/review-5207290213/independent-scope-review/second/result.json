@@ -1,0 +1,379 @@
+{
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_native_Run_executed": false,
+  "production_output_observed": false,
+  "cases": [
+    {
+      "statement": "The losses incurred in 2024 now raise substantial doubt about our ability to continue as a going concern.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": []
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+            "value": null,
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": true,
+          "value": [
+            {
+              "status": "TEXT_QUAL",
+              "value": "",
+              "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。"
+            },
+            [
+              {
+                "company": "Sample",
+                "cik": "12345",
+                "metric_id": "D04",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/12345/000001234526000001/source.htm",
+                "repo_relative_path": "fixture/source.htm",
+                "content_sha256": "5e7e7373237a0209f2f088adb1289b7ffe5df780ccf27a27ab1e513d8d472924",
+                "accession": "0000012345-26-000001",
+                "document_name": "source.htm",
+                "concept_or_section": "Defined source scope",
+                "context_or_dimension": "{\"assessment_mode\": \"RECORDED_TEST_ONLY\", \"assessment_set_id\": \"sha256:56cf8044afde52ab79958afe691d0d4e1a76e24da5efeda0989da205f45ad87c\", \"scope\": \"SAVED_ANNUAL_PRIMARY_AND_ALL_CURRENT_ANNUAL_AMENDMENTS_VISIBLE_AND_NATIVE\", \"source_unit_ids\": [\"sha256:d7803f891e37f948405d35a8f6d18eb2a28c2bd29d7f4982b3e1ac5ea4ca7aae\"]}",
+                "unit": "text",
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31",
+                "value_raw": "",
+                "value_normalized": "",
+                "evidence_quote": "Host scope-check record; no source quotation or numeric value is asserted.",
+                "extraction_method": "complete_native_d04_assessment",
+                "parser_version": "capacity_run"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "statement": "Losses incurred in 2024 currently create substantial doubt about our ability to continue as a going concern.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": []
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+            "value": null,
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": true,
+          "value": [
+            {
+              "status": "TEXT_QUAL",
+              "value": "",
+              "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。"
+            },
+            [
+              {
+                "company": "Sample",
+                "cik": "12345",
+                "metric_id": "D04",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/12345/000001234526000001/source.htm",
+                "repo_relative_path": "fixture/source.htm",
+                "content_sha256": "42f5b070968f7f9b90bff2bac8d4dd1815d6627c34d15d35738b1827745087d2",
+                "accession": "0000012345-26-000001",
+                "document_name": "source.htm",
+                "concept_or_section": "Defined source scope",
+                "context_or_dimension": "{\"assessment_mode\": \"RECORDED_TEST_ONLY\", \"assessment_set_id\": \"sha256:a0c2cbbff5646467dcab754ae459ae82b0bd7d0759ae147ac84cece7194bfe28\", \"scope\": \"SAVED_ANNUAL_PRIMARY_AND_ALL_CURRENT_ANNUAL_AMENDMENTS_VISIBLE_AND_NATIVE\", \"source_unit_ids\": [\"sha256:dcd3836d5f49f8b96346bb67b5a31f389e9c7b6fd2fe9920e6b08c11491b9165\"]}",
+                "unit": "text",
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31",
+                "value_raw": "",
+                "value_normalized": "",
+                "evidence_quote": "Host scope-check record; no source quotation or numeric value is asserted.",
+                "extraction_method": "complete_native_d04_assessment",
+                "parser_version": "capacity_run"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "statement": "In 2024 we incurred losses that now raise substantial doubt about our ability to continue as a going concern.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": [
+              {
+                "evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "In 2024 we incurred losses that now raise substantial doubt about our ability to continue as a going concern."
+                  }
+                ],
+                "kind": "DOUBT_DISCLOSED",
+                "reason": "Recorded classification for the supplied source statement.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT",
+                "unit_id": "sha256:5991927e123acb78bc7189991c15379560397187f541facbd5e46fdbd17296a9",
+                "resolved_evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "In 2024 we incurred losses that now raise substantial doubt about our ability to continue as a going concern.",
+                    "start_character": 0,
+                    "end_character": 109
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "PASS",
+            "value": "In 2024 we incurred losses that now raise substantial doubt about our ability to continue as a going concern.",
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "B13_TEXT_BRANCH_NOT_ESTABLISHED"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      }
+    },
+    {
+      "statement": "Because we incurred losses in 2024, these conditions now raise substantial doubt about our ability to continue as a going concern.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": [
+              {
+                "evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "Because we incurred losses in 2024, these conditions now raise substantial doubt about our ability to continue as a going concern."
+                  }
+                ],
+                "kind": "DOUBT_DISCLOSED",
+                "reason": "Recorded classification for the supplied source statement.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT",
+                "unit_id": "sha256:e01cefd1657836fd5f887031f9867817b5303f859e08bfeb47e4fc7af2bd3882",
+                "resolved_evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "Because we incurred losses in 2024, these conditions now raise substantial doubt about our ability to continue as a going concern.",
+                    "start_character": 0,
+                    "end_character": 130
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "PASS",
+            "value": "Because we incurred losses in 2024, these conditions now raise substantial doubt about our ability to continue as a going concern.",
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "B13_TEXT_BRANCH_NOT_ESTABLISHED"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      }
+    },
+    {
+      "statement": "The losses that arose in 2024 now raise substantial doubt about our ability to continue as a going concern.",
+      "target_year": 2025,
+      "source_type": "SYNTHETIC_LEGAL_FACTORY_INPUT",
+      "correct": {
+        "validate_response": {
+          "accepted": true,
+          "value": {
+            "unresolved": [],
+            "current_target_findings": [
+              {
+                "evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "The losses that arose in 2024 now raise substantial doubt about our ability to continue as a going concern."
+                  }
+                ],
+                "kind": "DOUBT_DISCLOSED",
+                "reason": "Recorded classification for the supplied source statement.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT",
+                "unit_id": "sha256:b3ae0cba63ec2303bbc9d88d97de09000ad3d587a0de0cd15ba655a17db5e4a3",
+                "resolved_evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "The losses that arose in 2024 now raise substantial doubt about our ability to continue as a going concern.",
+                    "start_character": 0,
+                    "end_character": 107
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "build_acceptance": {
+          "accepted": true,
+          "value": "PASS"
+        },
+        "native_reviewed_result": {
+          "accepted": true,
+          "value": {
+            "reason_code": "PASS",
+            "value": "The losses that arose in 2024 now raise substantial doubt about our ability to continue as a going concern.",
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "B13_TEXT_BRANCH_NOT_ESTABLISHED"
+        }
+      },
+      "incorrect": {
+        "validate_response": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "build_acceptance": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "native_reviewed_result": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        },
+        "public_absence_projection": {
+          "accepted": false,
+          "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+        }
+      }
+    }
+  ]
+}

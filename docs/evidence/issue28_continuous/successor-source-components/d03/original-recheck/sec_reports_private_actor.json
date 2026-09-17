@@ -1,0 +1,163 @@
+{
+  "record_type": "REGULATORY_INVESTIGATION_CANDIDATE_BUNDLE",
+  "metric_id": "D03",
+  "company_id": "sample_entity",
+  "source_reference_id": "sha256:95477ac2e4a29b1d9754a2cfe7d205cd4359fd1ee6b2c902e02274a66f1a8512",
+  "raw_asset_id": "sha256:eb0962e2f35601d5627b5c9b2c2e64ab5bcdb258472eeb340561db36a9a3eff7",
+  "source_filing": {
+    "form": "10-K",
+    "accessionNumber": "0000012345-26-000001",
+    "primaryDocument": "source.htm",
+    "filingDate": "2026-03-27",
+    "reportDate": "2025-12-31"
+  },
+  "document_id": "sha256:b8cc1a41d2dc2e3dab00169b92ef40a1d795d34f7f15cb3dcaa85724f28c05c2",
+  "navigation_proposal_id": "sha256:64a38c086d7b10d333d980d43d4eff135ada90a26795cb5bee8bfa3f2356141e",
+  "checked_ranges": [
+    {
+      "section_id": "ITEM_1A",
+      "start_block": 1,
+      "end_block_exclusive": 2,
+      "heading": {
+        "item": "1A",
+        "block_index": 0,
+        "heading_end_index": 0
+      },
+      "closing_heading": {
+        "item": "1B",
+        "block_index": 2,
+        "heading_end_index": 2
+      }
+    },
+    {
+      "section_id": "ITEM_3",
+      "start_block": 5,
+      "end_block_exclusive": 6,
+      "heading": {
+        "item": "3",
+        "block_index": 4,
+        "heading_end_index": 4
+      },
+      "closing_heading": {
+        "item": "4",
+        "block_index": 6,
+        "heading_end_index": 6
+      }
+    },
+    {
+      "section_id": "ITEM_8",
+      "start_block": 9,
+      "end_block_exclusive": 10,
+      "heading": {
+        "item": "8",
+        "block_index": 8,
+        "heading_end_index": 8
+      },
+      "closing_heading": {
+        "item": "9",
+        "block_index": 10,
+        "heading_end_index": 10
+      }
+    },
+    {
+      "section_id": "NOTE_2",
+      "start_block": 19,
+      "end_block_exclusive": 23,
+      "requested_reference": "2",
+      "scope_relation": "EXACT_NOTE"
+    }
+  ],
+  "note_references": [
+    {
+      "reference": "Note 2",
+      "source_occurrences": [
+        {
+          "source_reference_id": "sha256:95477ac2e4a29b1d9754a2cfe7d205cd4359fd1ee6b2c902e02274a66f1a8512",
+          "raw_asset_id": "sha256:eb0962e2f35601d5627b5c9b2c2e64ab5bcdb258472eeb340561db36a9a3eff7",
+          "document_id": "sha256:b8cc1a41d2dc2e3dab00169b92ef40a1d795d34f7f15cb3dcaa85724f28c05c2",
+          "section_id": "ITEM_3",
+          "labels": [
+            "NOTE_REFERENCE"
+          ],
+          "block_index": 5,
+          "text": "Refer to Note 2 for our legal proceedings and pending litigation.",
+          "raw_start_byte": 1150,
+          "raw_end_byte": 1215,
+          "raw_span_sha256": "d3ffd53a0bc0cf074938acc58ccbb0f8d890b10ef2380f4636addbc8f6f95186"
+        }
+      ],
+      "heading_candidates": [
+        {
+          "source_reference_id": "sha256:95477ac2e4a29b1d9754a2cfe7d205cd4359fd1ee6b2c902e02274a66f1a8512",
+          "raw_asset_id": "sha256:eb0962e2f35601d5627b5c9b2c2e64ab5bcdb258472eeb340561db36a9a3eff7",
+          "document_id": "sha256:b8cc1a41d2dc2e3dab00169b92ef40a1d795d34f7f15cb3dcaa85724f28c05c2",
+          "section_id": "FULL_DOCUMENT_NOTES",
+          "labels": [
+            "NOTE_HEADING"
+          ],
+          "block_index": 19,
+          "text": "Note 2. Contingencies",
+          "raw_start_byte": 1881,
+          "raw_end_byte": 1902,
+          "raw_span_sha256": "4550b62043163b08f3c38d5056fd09321794ed0802bb22b379c60c1c38d6075a"
+        }
+      ],
+      "range_candidates": [
+        {
+          "section_id": "NOTE_2",
+          "start_block": 19,
+          "end_block_exclusive": 23,
+          "requested_reference": "2",
+          "scope_relation": "EXACT_NOTE"
+        }
+      ],
+      "status": "LOCATED_NOTE_RANGE"
+    }
+  ],
+  "source_aliases": [
+    {
+      "text": "we",
+      "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+      "support": null
+    },
+    {
+      "text": "Example Incorporated",
+      "basis": "NAMESPACE_CHECKED_DEI_REGISTRANT_NAME",
+      "support": null
+    }
+  ],
+  "coverage_status": "LOCAL_REQUESTED_RANGES_SCANNED",
+  "coverage_reasons": [],
+  "candidates": [
+    {
+      "excerpt": {
+        "source_reference_id": "sha256:95477ac2e4a29b1d9754a2cfe7d205cd4359fd1ee6b2c902e02274a66f1a8512",
+        "raw_asset_id": "sha256:eb0962e2f35601d5627b5c9b2c2e64ab5bcdb258472eeb340561db36a9a3eff7",
+        "document_id": "sha256:b8cc1a41d2dc2e3dab00169b92ef40a1d795d34f7f15cb3dcaa85724f28c05c2",
+        "section_id": "ITEM_1A",
+        "labels": [
+          "REGULATORY_LANGUAGE_CANDIDATE"
+        ],
+        "block_index": 1,
+        "text": "The SEC reported that private plaintiff Delta issued a subpoena to Example Incorporated in a contract dispute.",
+        "raw_start_byte": 942,
+        "raw_end_byte": 1052,
+        "raw_span_sha256": "bc76d7f8b29a50eff0f93b99049bc46a6803ee970660add8f926f36f47d3c6f2"
+      },
+      "context_excerpts": [],
+      "language_signals": [],
+      "facts": [],
+      "requires_semantic_review": true,
+      "unmatched_language_semantically_resolved": false,
+      "candidate_id": "sha256:b527ade8fb40128a2803175abb8500ca5aa92a13ab1b74c03b806f6ad139e404"
+    }
+  ],
+  "outside_requested_range_action_candidates": [],
+  "supported_fact_count": 0,
+  "semantic_scope_completeness_asserted": false,
+  "not_disclosed_confirmed": false,
+  "native_result_created": false,
+  "publication_credit": false,
+  "policy_hash": "sha256:6c14bce5ff7918fdfd16fc13a5de42fda004c35c17eda896bd099139776f65c4",
+  "candidate_bundle_id": "sha256:0dc0585f7a1abc63212d820667b9db180239842e2c96922e0d286eae889c5166"
+}

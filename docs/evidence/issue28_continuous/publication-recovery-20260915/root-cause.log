@@ -1,0 +1,120 @@
+test_rollback_then_restore_reuses_only_verified_bundles (tests.vnext.test_publication.PublicationTest.test_rollback_then_restore_reuses_only_verified_bundles)
+Return to the committed successor without rerunning a producer. ... ERROR
+
+======================================================================
+ERROR: test_rollback_then_restore_reuses_only_verified_bundles (tests.vnext.test_publication.PublicationTest.test_rollback_then_restore_reuses_only_verified_bundles)
+Return to the committed successor without rerunning a producer.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_publication.py", line 3430, in test_rollback_then_restore_reuses_only_verified_bundles
+    **publication_inputs(
+      ~~~~~~~~~~~~~~~~~~^
+        root=root,
+        ^^^^^^^^^^
+        tag="restore-first",
+        ^^^^^^^^^^^^^^^^^^^^
+        previous_publication_id=None,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ),
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_publication.py", line 637, in publication_inputs
+    write_publication_validation_receipt(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=inputs["repo_root"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        validated_at_utc="2026-07-31T00:00:00Z",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 3797, in write_publication_validation_receipt
+    return _write_publication_validation_receipt(
+        repo_root=repo_root,
+    ...<6 lines>...
+        source_commit=RECORDED_SOURCE_COMMIT,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 3722, in _write_publication_validation_receipt
+    projection = _finalize_staging_view(
+        repo_root=repo_root,
+    ...<4 lines>...
+        source_commit=source_commit,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 3602, in _finalize_staging_view
+    semantic = _execute_semantic_audit(repo_root=repo_root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 3047, in _execute_semantic_audit
+    raise PublicationError("Semantic audit execution failed")
+vnext.publication.PublicationError: Semantic audit execution failed
+
+----------------------------------------------------------------------
+Ran 1 test in 5.114s
+
+FAILED (errors=1)
+SEMANTIC_STDOUT 
+SEMANTIC_STDERR Traceback (most recent call last):
+  File "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/scripts/vnext/requirement_profile_v1.py", line 1701, in _load_profile_requirement_snapshot
+    else _recorded_parent(snapshot_dir=parent_dir, binding=parent_binding)
+         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/scripts/vnext/requirement_profile_v1.py", line 1513, in _recorded_parent
+    _verify_bound_files(
+    ~~~~~~~~~~~~~~~~~~~^
+        root=snapshot_dir,
+        ^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        label="Historical parent snapshot",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/scripts/vnext/requirement_profile_v1.py", line 1000, in _verify_bound_files
+    raise RequirementProfileError("{} bytes differ: {}".format(label, relative))
+vnext.requirement_profile_v1.RequirementProfileError: Historical parent snapshot bytes differ: baseline_manifest.json
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/scripts/vnext/requirement_profile_v1.py", line 1915, in load_profile_requirement_snapshot
+    return _load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+    )
+  File "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/scripts/vnext/requirement_profile_v1.py", line 1704, in _load_profile_requirement_snapshot
+    raise RequirementProfileError("Parent Requirement is invalid") from error
+vnext.requirement_profile_v1.RequirementProfileError: Parent Requirement is invalid
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/tools/check_vnext_semantics.py", line 444, in <module>
+    sys.exit(main(argv=sys.argv[1:]))
+             ~~~~^^^^^^^^^^^^^^^^^^^
+  File "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/tools/check_vnext_semantics.py", line 428, in main
+    receipt = run_audit(
+        repo_root=repo_root,
+        secret_roots=secret_roots,
+        secret_token=secret_token,
+    )
+  File "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/tools/check_vnext_semantics.py", line 361, in run_audit
+    business_literal_pattern = compile_business_literal_pattern(
+        repo_root=repo_root
+    )
+  File "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/tools/check_vnext_semantics.py", line 91, in compile_business_literal_pattern
+    registry = load_source_strategy_registry(repo_root=repo_root)
+  File "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/scripts/vnext/source_strategy.py", line 377, in load_source_strategy_registry
+    requirement = _recorded_source_requirement(repo_root)
+  File "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/scripts/vnext/source_strategy.py", line 357, in _recorded_source_requirement
+    return load_requirement_snapshot(snapshot_dir=successor)["parent_snapshot"]
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpsa_5gl7d/.fixture-restore-first/repo/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Parent Requirement is invalid
+

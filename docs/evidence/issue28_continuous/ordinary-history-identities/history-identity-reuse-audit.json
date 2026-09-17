@@ -1,0 +1,35 @@
+{
+  "baseline_commit": "bdc41e76c513f5a9cecb5c242b5fea77806045dc",
+  "execution_changes": {
+    "config/issue28_continuous_calls_v1.json": {
+      "old": {
+        "sha256": "9ffb7d5936f6cb10de63005c5e27764a300d2af7f81406df846fe15b24bcbbae",
+        "size": 3303
+      },
+      "current": {
+        "sha256": "6908cede2b6d782f687bfaef01aae3283998ae2dc6988c1f363d003646626f6b",
+        "size": 3303
+      }
+    },
+    "scripts/vnext/ordinary_storage_identity.py": {
+      "old": {
+        "sha256": "df5acef7b0a7ff3557e660f2aec822219d560a0845e847878700bbf67a308461",
+        "size": 2818
+      },
+      "current": {
+        "sha256": "db3eaad51bd4dc3fdc616c2d4cb595c860e083bd543b4280c01f721ece6e12f8",
+        "size": 4606
+      }
+    }
+  },
+  "policy_changed_fields": [
+    "sec_wiring_receipt_path",
+    "offline_wiring_receipt_path"
+  ],
+  "unchanged_transport_count_source_admission_code": true,
+  "reused_sec_evidence": "docs/evidence/issue28_continuous/ordinary-special-debt-scope/sec-wiring.json",
+  "previous_sec_test_seconds": 82.459,
+  "previous_sec_test_not_rerun": true,
+  "new_call_budget_changed": false,
+  "model_or_resource_or_retry_changed": false
+}

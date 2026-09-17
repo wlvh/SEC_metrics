@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "result": {
+    "company_id": "marriott_international",
+    "metric_id": "B01",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+    "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "26186000000",
+    "unit": "USD",
+    "trace_id": "sha256:1828a144f4508a873f104fe50753aa9b95b42ef3026adce3b4f106c2bbd9625f",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc"
+  },
+  "admission": {
+    "record_type": "VERIFIED_ORDINARY_RECORDED_INPUTS",
+    "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+    "source_manifest_sha256": "7848197abe1a8e243e2461ce2f82e232261ea9930f04acefac6f214d1e050b5e",
+    "checkpoint_id": "sha256:af3412603b58b2eed22d0a16e90d1642f14b82617cee45d3e3a249ecfb8e5de6",
+    "request_attempt_ids": [
+      "request:attempt:389caac2771d3172fd8deb1780a0c3cc449791315017e52e52a8c1626dedefb8",
+      "request:attempt:45656436e199fc4d900d322f4044e71d2a6bee5be5257e3a9861055c0ddc173b",
+      "request:attempt:e7fa4db7d7d10065081eb3da56c0247acc98596e627b23995040267bc705ab4b"
+    ],
+    "source_credit": "RECORDED_TEST_ONLY",
+    "real_sec_credit": false,
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "run_status": "OPEN",
+  "checkpoint_id": "sha256:af3412603b58b2eed22d0a16e90d1642f14b82617cee45d3e3a249ecfb8e5de6",
+  "comparison": {
+    "status": "NO_SOURCE_CONTENT_CHANGE",
+    "requires_candidate_processing": false,
+    "input_authenticity_verified_by_comparison": false,
+    "production_authorized": false
+  },
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

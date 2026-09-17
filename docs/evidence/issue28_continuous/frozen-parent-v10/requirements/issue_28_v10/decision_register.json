@@ -1,0 +1,45 @@
+{
+  "requirement_id": "issue_28_v10",
+  "status": "DELEGATED_CANDIDATE_ONLY",
+  "policy": {
+    "schema_version": 1,
+    "policy_id": "b06_new_source_v1",
+    "production_authorized": false,
+    "scope_class": "consolidated_nonbank",
+    "scope": {
+      "entity_scope": "consolidated"
+    },
+    "required_liability_classes": [
+      "current_borrowings",
+      "noncurrent_borrowings",
+      "finance_leases"
+    ],
+    "budget": {
+      "provider": 2,
+      "paid": 2,
+      "sec": 4
+    },
+    "automatic_retries": 0,
+    "trusted_import_commit": "92fdd0e30c5f05db9d3d0136424934037dcff66e",
+    "delegation_api": "repos/wlvh/SEC_metrics/issues/comments/5632158872",
+    "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5632158872",
+    "owner": "wlvh",
+    "delegation_body_sha256": "2c03f32ab859d0b394ff47da7fb08d90a1d285072761e2a766aa5d0b343472c8",
+    "samples": {
+      "southwest_airlines": {
+        "cik": "92380",
+        "accession": "0000092380-25-000024",
+        "period_end": "2024-12-31",
+        "primary_document": "luv-20241231.htm"
+      },
+      "salesforce": {
+        "cik": "1108524",
+        "accession": "0001108524-25-000006",
+        "period_end": "2025-01-31",
+        "primary_document": "crm-20250131.htm"
+      }
+    },
+    "proposal_method": "DETERMINISTIC_BOUNDED_DISCLOSURE_PATTERNS",
+    "provider_enabled": false
+  }
+}
