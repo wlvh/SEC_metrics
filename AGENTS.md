@@ -147,6 +147,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `config/metric_applicability.yaml`：SIC/profile 规则、extractor 路由与行业参数；当前由 JSON parser 读取，内容必须保持 JSON 兼容。
 - `config/validation_source_policy.json`：机器可读的 runtime/acceptance source、full artifact directory、生成 artifact、发布治理和解释性文档角色；qualification、request attempts、failure-first、fault与portable live audit receipts都属于full artifact closure；provenance closure 的真相源。
 - `catalog/`：vNext JSON-compatible MetricSpec、disclosure group 与 company trait 目录；业务选择、guard、quality、projection 和 identity constraint 的仓库级 truth source。
+- `catalog/reference/`：Issue #44 的 SIC × Metrics 映射表与 39 指标中英文定义表（参考数据，不是运行配置）。`source_selection.json` 按明确绑定选取已提交定义版本、不是生产激活指针；`sic_metric_rules.json` 是唯一手工维护的行业关系；`metric_metadata.json` 只保存机器来源没有的中英文说明与代码引用；`generated/` 由 `tools/generate_metrics_reference.py` 生成、`--check` 只读校验，不得手改。现有加载器不扫描该目录。说明见 `catalog/reference/README.md`。
 - `catalog/deterministic_metrics.json` / `catalog/event_routes.json` / `catalog/zero_ai_public_projection.json`：R2确定性公式/approved concepts、事件item/keyword路由与22指标完整public-row投影；均被Issue #15 Requirement runtime authority逐byte绑定，approved public delta exact set当前为空。
 - `catalog/event_routes.json`：C01/E01–E05 的声明式零 AI item/keyword route authority；冻结 E01 aliases、text normalization、match mode、brief source priority 与 legacy projection。
 

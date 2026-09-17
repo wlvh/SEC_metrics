@@ -531,6 +531,19 @@ legacy candidate publication开始时会使旧provenance失效；formal active�
 - vNext freeze 负例必须覆盖 Candidate 缺成功 attempt/response binding、自报 PASS Evidence 与 cell/constraint 重放不一致、ReviewUnit required claims 脱离仓库 compiled Spec、Observation provenance 字段脱离 SourceReference，以及 MetricResult status/reason/value 脱离 Trace `result_contract_hash`；只验证各对象能自哈希不算通过。
 - vNext Run mutation primitive 当前按单 Run 单写者使用；publication commit 已有 POSIX lock/CAS 并发回归，但不能把它外推为 Run append/review/freeze 的跨进程编排证明。
 
+## Metrics reference 参考表专项检查
+
+Issue #44 的 `catalog/reference/` 参考表有独立、不依赖 fast suite 的检查；CI workflow `.github/workflows/metrics-reference.yml` 在每个 pull request 上执行下面两条命令，不做路径过滤，也不替代或缩减 vNext fast suite。
+
+```bash
+python3 tools/generate_metrics_reference.py --check
+python3 -m unittest tests.test_metrics_reference -v
+```
+
+- `--check` 只读：核对 `source_selection.json` 声明的 40 个输入的摘要（数据/文档整文件 sha256；三个代码引用目标只对被引用符号块取摘要），再在内存中生成并与 `catalog/reference/generated/` 逐字节比较；输入内容变化报 `SOURCE_DRIFT`，须显式运行 `--refresh-source-digests` 后重新生成并审阅差异。
+- `tests/test_metrics_reference.py` 覆盖：39 个 ID 与 10 个基线 SIC 范围的 390 行完整唯一网格；定义表 `applicable_sic_ranges` 由映射表独立重算；B03 复用 B01、有序 fallback、1% cross-check 与四项范围/单位 guard；酒店 KPI 仅对 7010–7019 适用及其 required claims/单位；事件与文字指标不伪造 tag/算式；版本选择按 active R3 / R4 离线计划 / R5 政策 / 表格合同 / 文字定义的显式绑定；确定性公式模板与 `scripts/vnext/zero_ai_r2.py::_formula_value` 数值一致；只含声明输入的干净临时副本可逐字节复现；反例包括来源漂移、缺失摘要、篡改生成文件、缺失/多余/重复规则、DEFAULT 顺序、结构性不适用被标为适用、未知 trait、SIC 范围重叠、未选择版本、错误 metric_id、B06 偏离 R5 政策、代码引用符号/字面量缺失、未知状态，以及 `--check` 零写入。
+- 该测试只读取仓库文件并在临时目录复制声明输入；不写 `outputs/`、active 指针或任何运行根，不调用 git，不联网，不 import PR #43 代码。
+
 ## 年度连续更新
 
 短测试：`python3 -m unittest -v tests.vnext.test_annual_continuity`；新增两项年度进度回归与该模块列入tools/run_fast_tests.py。完整真实材料/新进程流程另在checkout外运行，必须保护实际active、14兼容副本、原候选、旧包和原请求账；所有工具显式指定输出，禁用默认根审计副本写入。保存响应回放与模拟GitHub/provider边界不得算作新provider成功。独立review、固定实现、真实阶段许可通过前禁止业务请求。
