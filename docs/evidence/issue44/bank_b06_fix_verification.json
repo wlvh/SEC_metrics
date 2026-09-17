@@ -1,0 +1,76 @@
+{
+  "record_type": "ISSUE_44_BANK_B06_FIX_VERIFICATION",
+  "schema_version": 1,
+  "environment": {
+    "os": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "python": "3.14.7"
+  },
+  "commits": {
+    "main_base": "fa56b597d9e7e3e2aed71830e36c2b33dfd202a6",
+    "fix_commit_verified": "3f19e26d6d27bc29dda22b75a66cb23b380be04d",
+    "evidence_commit_note": "the commit adding this file changes only docs/evidence/issue44/",
+    "pr43_remote_at_execution": "8346c326f04be5a863dc8bf2f010087a6f2025a3"
+  },
+  "checks_on_fix_commit": [
+    {
+      "check": "reference --check",
+      "command": "python3 tools/generate_metrics_reference.py --check",
+      "result": "CHECK PASS",
+      "exit_code": 0
+    },
+    {
+      "check": "reference tests",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_metrics_reference",
+      "result": "Ran 52 tests OK",
+      "exit_code": 0
+    },
+    {
+      "check": "main fast suite",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4",
+      "result": "PASSED",
+      "case_count": 47,
+      "duration_seconds": 21.38,
+      "exit_code": 0
+    },
+    {
+      "check": "capability contract alignment",
+      "command": "python3 tools/check_capability_contract_alignment.py --base-ref origin/main",
+      "result": "PASS",
+      "exit_code": 0
+    },
+    {
+      "check": "clean copy (git archive, no .git) with Python-level socket/subprocess patch",
+      "command": "python3 docs/evidence/issue44/no_network_driver.py",
+      "result": "check rc 0; 52 tests, 0 failures",
+      "exit_code": 0,
+      "boundary": "Python-level only, not OS network isolation"
+    }
+  ],
+  "combination_rehearsal": {
+    "pr43_commit": "8346c326f04be5a863dc8bf2f010087a6f2025a3",
+    "fix_commit": "3f19e26d6d27bc29dda22b75a66cb23b380be04d",
+    "temporary_merge_commit": "9a9c58ba93c97e41337a29c40e07d9b8e2dfe8ac",
+    "merged_tree": "1ddea95a143afeb486d1e8a9f230d859bd846a99",
+    "merge_result": "no conflicts",
+    "checks": [
+      {
+        "check": "reference --check",
+        "result": "CHECK PASS"
+      },
+      {
+        "check": "reference tests",
+        "result": "Ran 52 tests OK"
+      },
+      {
+        "check": "capability contract alignment (base = PR43 commit)",
+        "result": "PASS"
+      }
+    ],
+    "not_rerun": "PR43 fast suite v2 was not rerun for this fix; the fix changes only reference data, the reference generator/tests and docs, none of which that suite imports. The 122/122 PASS on the previous merged tree (docs/evidence/issue44/verification_record.json) remains the latest result."
+  },
+  "not_covered": [
+    "GitHub Actions on the PR head (see PR checks)",
+    "independent human review APPROVE",
+    "any real model/SEC call, publication or active switch"
+  ]
+}

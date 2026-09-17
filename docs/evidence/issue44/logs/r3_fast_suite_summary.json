@@ -1,0 +1,244 @@
+{
+ "status": "PASSED",
+ "duration_seconds": 21.331,
+ "jobs": 4,
+ "case_count": 47,
+ "exit_line": "exit=0",
+ "cases": [
+  {
+   "test": "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_r4_plan_uses_fast_runner_without_full_discovery",
+   "return_code": 0,
+   "duration_seconds": 0.382
+  },
+  {
+   "test": "tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_deepseek_chat_envelope_is_json_and_tool_free",
+   "return_code": 0,
+   "duration_seconds": 0.305
+  },
+  {
+   "test": "tests.vnext.test_annual_continuity.AnnualContinuationPermissionTest",
+   "return_code": 0,
+   "duration_seconds": 0.38
+  },
+  {
+   "test": "tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest",
+   "return_code": 0,
+   "duration_seconds": 1.901
+  },
+  {
+   "test": "tests.vnext.test_annual_continuity.AnnualModelConfigurationTest",
+   "return_code": 0,
+   "duration_seconds": 4.916
+  },
+  {
+   "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_no_requirement_and_other_task_retain_original_prompt",
+   "return_code": 0,
+   "duration_seconds": 4.709
+  },
+  {
+   "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_prompt_changes_only_instruction_and_its_task_identities",
+   "return_code": 0,
+   "duration_seconds": 4.709
+  },
+  {
+   "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_prompt_file_tamper_is_rejected_without_rewriting_repository",
+   "return_code": 0,
+   "duration_seconds": 3.086
+  },
+  {
+   "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_stage_three_counts_two_closed_attempts_before_new_slots",
+   "return_code": 0,
+   "duration_seconds": 0.37
+  },
+  {
+   "test": "tests.vnext.test_annual_publication",
+   "return_code": 0,
+   "duration_seconds": 1.264
+  },
+  {
+   "test": "tests.vnext.test_annual_publication_authority",
+   "return_code": 0,
+   "duration_seconds": 2.371
+  },
+  {
+   "test": "tests.vnext.test_annual_repair.AnnualLabelRegressionTest.test_policy_selects_new_requirement_only",
+   "return_code": 0,
+   "duration_seconds": 1.991
+  },
+  {
+   "test": "tests.vnext.test_annual_update.AnnualUpdateTest.test_candidate_leading_publication_survives_discovery_failure",
+   "return_code": 0,
+   "duration_seconds": 1.593
+  },
+  {
+   "test": "tests.vnext.test_annual_update.AnnualUpdateTest.test_publication_progress_is_explicit_and_run_specific",
+   "return_code": 0,
+   "duration_seconds": 1.616
+  },
+  {
+   "test": "tests.vnext.test_cutover_qualification.CutoverQualificationTest.test_layout_terminal_requires_approval_publish_and_validation",
+   "return_code": 0,
+   "duration_seconds": 0.399
+  },
+  {
+   "test": "tests.vnext.test_deterministic_router.DeterministicRouterTest.test_e01_matched_event_key_set_has_exact_legacy_parity",
+   "return_code": 0,
+   "duration_seconds": 0.242
+  },
+  {
+   "test": "tests.vnext.test_invocation_control",
+   "return_code": 0,
+   "duration_seconds": 5.482
+  },
+  {
+   "test": "tests.vnext.test_issue15_authority.Issue15AuthorityTest.test_reusable_producer_scopes_match_exact_base_call_graph",
+   "return_code": 0,
+   "duration_seconds": 0.546
+  },
+  {
+   "test": "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke",
+   "return_code": 0,
+   "duration_seconds": 1.078
+  },
+  {
+   "test": "tests.vnext.test_issue28_v2.Issue28V2FastTest.test_real_five_file_revision_has_exact_parent_and_no_activation",
+   "return_code": 0,
+   "duration_seconds": 0.42
+  },
+  {
+   "test": "tests.vnext.test_legacy_projector.LegacyProjectorTest.test_legacy_inventory_binds_frozen_commit_and_source_blobs",
+   "return_code": 0,
+   "duration_seconds": 0.212
+  },
+  {
+   "test": "tests.vnext.test_live_scoped_reader.LiveScopedEnvelopeTest",
+   "return_code": 0,
+   "duration_seconds": 1.42
+  },
+  {
+   "test": "tests.vnext.test_offline_execution_session.OfflineExecutionSessionTest.test_unknown_is_terminal_and_cannot_be_retried",
+   "return_code": 0,
+   "duration_seconds": 1.252
+  },
+  {
+   "test": "tests.vnext.test_r4_live_authority.R4ExecutionPrefixTest",
+   "return_code": 0,
+   "duration_seconds": 0.436
+  },
+  {
+   "test": "tests.vnext.test_r4_live_authority.R4LiveAuthorityShapeTest",
+   "return_code": 0,
+   "duration_seconds": 0.414
+  },
+  {
+   "test": "tests.vnext.test_r4_live_plan.R4DraftPlanRiskTest",
+   "return_code": 0,
+   "duration_seconds": 0.294
+  },
+  {
+   "test": "tests.vnext.test_r4_projection.R4ProjectionBoundaryTest.test_complete_grid_rejects_missing_duplicate_extra_and_false_applicability",
+   "return_code": 0,
+   "duration_seconds": 0.224
+  },
+  {
+   "test": "tests.vnext.test_r4_publication_boundaries",
+   "return_code": 0,
+   "duration_seconds": 0.38
+  },
+  {
+   "test": "tests.vnext.test_r4_release_gate.R4ReleaseAggregateGateTest",
+   "return_code": 0,
+   "duration_seconds": 0.281
+  },
+  {
+   "test": "tests.vnext.test_r5_b06.B06PrimaryTest",
+   "return_code": 0,
+   "duration_seconds": 0.283
+  },
+  {
+   "test": "tests.vnext.test_r5_b06_followup",
+   "return_code": 0,
+   "duration_seconds": 1.887
+  },
+  {
+   "test": "tests.vnext.test_r5_b06_scope",
+   "return_code": 0,
+   "duration_seconds": 5.667
+  },
+  {
+   "test": "tests.vnext.test_review_binding.ReviewBindingTest.test_optional_system_decision_is_auditable",
+   "return_code": 0,
+   "duration_seconds": 0.144
+  },
+  {
+   "test": "tests.vnext.test_scoped_reader.ScopedReaderTest.test_all_four_zero_call_classes_cannot_prepare_requests",
+   "return_code": 0,
+   "duration_seconds": 1.338
+  },
+  {
+   "test": "tests.vnext.test_source_scope.SourceScopeTest.test_complete_native_candidate_and_evidence_are_bound",
+   "return_code": 0,
+   "duration_seconds": 1.266
+  },
+  {
+   "test": "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest.test_registry_covers_exact_39_without_migration_state",
+   "return_code": 0,
+   "duration_seconds": 1.199
+  },
+  {
+   "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_current_packet_persists_no_credit_and_zero_current_egress",
+   "return_code": 0,
+   "duration_seconds": 0.225
+  },
+  {
+   "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_current_packet_persists_sibling_and_financial_blockers",
+   "return_code": 0,
+   "duration_seconds": 0.222
+  },
+  {
+   "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_historical_stage_c_b_packet_remains_content_addressed",
+   "return_code": 0,
+   "duration_seconds": 0.239
+  },
+  {
+   "test": "tests.vnext.test_successor_invocation_control",
+   "return_code": 0,
+   "duration_seconds": 1.685
+  },
+  {
+   "test": "tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_occupancy_request_has_no_current_credit",
+   "return_code": 0,
+   "duration_seconds": 2.85
+  },
+  {
+   "test": "tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_revpar_request_has_no_current_credit",
+   "return_code": 0,
+   "duration_seconds": 4.378
+  },
+  {
+   "test": "tests.vnext.test_table_context_measurement.TableContextMeasurementTerminalTest.test_revpar_terminal_is_consumed_exact_and_non_credit",
+   "return_code": 0,
+   "duration_seconds": 1.082
+  },
+  {
+   "test": "tests.vnext.test_table_context_qualification_guard.TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two",
+   "return_code": 0,
+   "duration_seconds": 8.307
+  },
+  {
+   "test": "tests.vnext.test_table_stage_c_a_packet.TableStageCAPacketTest.test_packet_sections_preserve_stage_c_a_claim_boundaries",
+   "return_code": 0,
+   "duration_seconds": 0.224
+  },
+  {
+   "test": "tests.vnext.test_table_stage_c_financial_materialization",
+   "return_code": 0,
+   "duration_seconds": 0.171
+  },
+  {
+   "test": "tests.vnext.test_zero_ai_release.ZeroAiReleaseFastTest.test_r2_predecessor_bundle_fast_smoke",
+   "return_code": 0,
+   "duration_seconds": 0.328
+  }
+ ]
+}

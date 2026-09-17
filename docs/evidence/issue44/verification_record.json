@@ -1,0 +1,112 @@
+{
+  "record_type": "ISSUE_44_VERIFICATION_RECORD",
+  "schema_version": 1,
+  "purpose": "Concise, PR-accessible record of the local verification of PR #45 (Issue #44). GitHub Actions on main+PR45 and the local PR43+PR45 combination rehearsal are two separate evidence sets.",
+  "environment": {
+    "os": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "python": "3.14.7",
+    "git": "git version 2.39.5 (Apple Git-154)",
+    "pinned_tokenizer_for_pr43_suite": "tokenizers==0.22.2",
+    "tokenizer_install_command": "python -m venv <scratch>/venv_tok && <scratch>/venv_tok/bin/python -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt (in the combined tree)"
+  },
+  "commits": {
+    "origin_main_base": "92fdd0e30c5f05db9d3d0136424934037dcff66e",
+    "pr45_round1_head": "b1a76874483e5bdedd7923e1d32971395bc288a9",
+    "pr45_round3_fix_head_verified": "69e5df03fa5ad87535ea150603a387d1ff2e7a26",
+    "pr45_evidence_commit_note": "the commit that adds docs/evidence/issue44/ contains only these evidence files; code, data and generated tables are byte-identical to 69e5df0",
+    "pr43_remote_at_execution": "8346c326f04be5a863dc8bf2f010087a6f2025a3",
+    "pr43_remote_changed_since_round1": false
+  },
+  "round3_local_checks_on_69e5df0": [
+    {
+      "check": "reference --check",
+      "command": "python3 tools/generate_metrics_reference.py --check",
+      "result": "CHECK PASS",
+      "exit_code": 0
+    },
+    {
+      "check": "reference tests",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_metrics_reference",
+      "result": "Ran 49 tests OK",
+      "exit_code": 0,
+      "log": "logs/test_metrics_reference_run5.log"
+    },
+    {
+      "check": "capability contract alignment (committed tree, base origin/main)",
+      "command": "python3 tools/check_capability_contract_alignment.py --base-ref origin/main",
+      "result": "PASS",
+      "exit_code": 0,
+      "log": "logs/r3_capability_alignment.log"
+    },
+    {
+      "check": "main fast suite",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4",
+      "result": "PASSED",
+      "duration_seconds": 21.331,
+      "case_count": 47,
+      "exit_code": 0,
+      "log": "logs/r3_fast_suite_summary.json"
+    },
+    {
+      "check": "clean copy (git archive HEAD, no .git, no PR43 objects) with Python-level socket/subprocess patch",
+      "command": "cd <archive-copy> && PYTHONDONTWRITEBYTECODE=1 python3 docs/evidence/issue44/no_network_driver.py",
+      "result": "check rc 0; tests run 49, failures 0, errors 0",
+      "exit_code": 0,
+      "log": "logs/r3_clean_copy_no_network.log",
+      "boundary": "socket.socket/create_connection/getaddrinfo, urllib.request.urlopen and subprocess.Popen are replaced with raising stubs inside the Python process; this is NOT operating-system level network isolation"
+    }
+  ],
+  "round3_combination_rehearsal": {
+    "method": "temporary detached git worktree at the PR43 commit; git merge --no-ff --no-commit <fix>; local temporary merge commit (never pushed); worktree removed afterwards; PR43's own working directory untouched",
+    "pr43_commit": "8346c326f04be5a863dc8bf2f010087a6f2025a3",
+    "pr45_commit": "69e5df03fa5ad87535ea150603a387d1ff2e7a26",
+    "temporary_merge_commit": "3599b1966a97ec6747448b073e797997e357fbfa",
+    "merged_tree": "1e1bff931d45411ee35bf1020c48158c9e1cf619",
+    "merge_result": "Auto-merging AGENTS.md, TESTING.md; no conflicts",
+    "merge_log": "logs/r3_combo_merge.log",
+    "checks": [
+      {
+        "check": "reference --check on merged tree",
+        "result": "CHECK PASS",
+        "exit_code": 0,
+        "log": "logs/r3_combo_reference_check.log"
+      },
+      {
+        "check": "reference tests on merged tree",
+        "result": "Ran 49 tests OK",
+        "exit_code": 0,
+        "log": "logs/r3_combo_reference_tests.log"
+      },
+      {
+        "check": "capability contract alignment on merged tree (base = PR43 commit)",
+        "command": "python3 tools/check_capability_contract_alignment.py --base-ref 8346c326f04be5a863dc8bf2f010087a6f2025a3",
+        "result": "PASS",
+        "exit_code": 0,
+        "log": "logs/r3_combo_capability_alignment.log"
+      },
+      {
+        "check": "PR43 fast suite v2 on merged tree with pinned tokenizer venv",
+        "command": "PYTHONDONTWRITEBYTECODE=1 <venv_tok>/bin/python tools/run_fast_tests_v2.py --jobs 2",
+        "result": "PASSED",
+        "duration_seconds": 105.404,
+        "case_count": 122,
+        "failed": 0,
+        "exit_code": 0,
+        "log": "logs/r3_combo_fast_suite_v2_venv_summary.json"
+      }
+    ]
+  },
+  "round1_history": {
+    "note": "Round 1 (b1a7687) results are recorded in the PR #45 body; the temporary merge commit was 4bc107757068ecc89558adb80b92cffc78e1b66e (tree dee6b1d5b6cf80ed8462c996308a39d103c7c8c3). The system-Python PR43 fast suite v2 run on that merged tree failed only in tests.vnext.test_continuous_request_context and tests.vnext.test_native_request_construction because the pinned tokenizer was not installed; the same two modules failed identically on a plain PR43 temporary worktree and passed under the pinned venv.",
+    "system_python_pr43_suite_summary": "logs/r1_combo_fast_suite_v2_system_python_summary.json",
+    "failed_cases_system_python": [
+      "tests.vnext.test_continuous_request_context",
+      "tests.vnext.test_native_request_construction"
+    ]
+  },
+  "not_covered": [
+    "GitHub Actions results (see PR checks on the current head)",
+    "independent human or Codex/GPT review APPROVE (self-review only)",
+    "any real model/SEC call, publication, active switch or production adoption"
+  ]
+}

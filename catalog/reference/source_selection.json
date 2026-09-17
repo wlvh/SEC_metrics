@@ -1,0 +1,824 @@
+{
+  "schema_version": 1,
+  "record_type": "METRICS_REFERENCE_SOURCE_SELECTION",
+  "purpose": "参考目录自己的显式来源清单：决定两张参考表从哪些已提交文件、按哪个明确绑定选取定义。它只控制参考表，不是生产激活指针，不授予任何指标上线状态。",
+  "not_a_production_pointer": true,
+  "selection_principle": "EXPLICIT_BINDING_FIRST",
+  "selection_principle_zh": "先按明确用途对应的 Requirement / 发布计划 / 运行配置绑定选择冻结版本；没有当前生效证据时选择明确标注的主干参考版本或原文字定义，并记录限制。不按最大 vN、最近修改时间或最早冻结版本自动选取。",
+  "baseline": {
+    "branch": "main",
+    "commit": "92fdd0e30c5f05db9d3d0136424934037dcff66e",
+    "note": "记录用；生成器不调用 git，也不依赖该提交仍是当前 HEAD。inputs 中的 sha256 才是漂移检测依据。"
+  },
+  "read_only_development_reference": {
+    "branch": "task/b06-new-source",
+    "pull_request": 43,
+    "commit": "8346c326f04be5a863dc8bf2f010087a6f2025a3",
+    "verified_by_generator": false,
+    "note": "development_references 只是开发期间只读核对该固定提交后记录的路径与内容摘要；生成、校验与 CI 不读取该分支或其 Git 对象，也不把这些引用当作定义来源或上线状态。"
+  },
+  "binding_authorities": {
+    "active_release_r3": {
+      "paths": [
+        "config/issue_15_release_plan.json",
+        "config/release_plans/issue_15_lodging_r3.json"
+      ],
+      "role": "当前 active vNext 发布计划（issue_15_lodging_r3，24 指标 cumulative_metric_ids）。",
+      "state_label": "ACTIVE_VNEXT_RELEASE_R3"
+    },
+    "r4_offline_v3": {
+      "paths": [
+        "config/release_plans/issue_28_r4_scoped_engine_v3.json"
+      ],
+      "role": "Issue #28 R4 离线发布计划（issue_28_v3），把 A03/A04/A09/A11/A12/A13 绑定到 catalog/r4_v2；未激活。",
+      "state_label": "R4_OFFLINE_PLAN_NOT_ACTIVE"
+    },
+    "r5_b06_structured_v1": {
+      "paths": [
+        "config/r5_b06_structured_v1.json",
+        "config/release_plans/issue_28_b06_structured_draft.json"
+      ],
+      "role": "R5 B06 结构化主路径政策（issue_28_v9）：primary_spec=catalog/r5/B06_structured.md，production_authorized=false，草案发布计划 PENDING_FINAL_REVIEW。",
+      "state_label": "R5_STRUCTURED_DRAFT_NOT_AUTHORIZED"
+    },
+    "source_strategy_registry": {
+      "paths": [
+        "config/source_strategy_registry.json",
+        "config/source_strategy_fallback_representation.json"
+      ],
+      "role": "Issue #15 的 39 指标 source_mode / reader family / structured route 骨架，以及绑定该注册表 sha256 的 AI 回退表示（table / text）声明；不保存迁移状态，也不绑定具体 concept。",
+      "state_label": null
+    },
+    "issue15_table_contracts": {
+      "paths": [
+        "catalog/table_task_contracts.json"
+      ],
+      "role": "Issue #15 单角色 table task 合同（A03/A04/A09/A11/A12/A13/B06/B13/B10/B11）。",
+      "state_label": null
+    },
+    "legacy_migration_set": {
+      "paths": [
+        "config/vnext_release_plan.json"
+      ],
+      "role": "legacy producer 已退出（fail closed）的 migrated metric exact set：B01/B03/B10/B11。",
+      "state_label": null
+    },
+    "text_definition": {
+      "paths": [
+        "02_指标定义_SEC_10公司单年指标.md"
+      ],
+      "role": "全部 39 指标的业务定义文本；对没有结构化 Spec 的指标是主要定义来源。",
+      "state_label": null
+    },
+    "legacy_pipeline_code": {
+      "paths": [
+        "scripts/sec_pipeline.py",
+        "scripts/vnext/zero_ai_r2.py",
+        "scripts/vnext/calculator.py"
+      ],
+      "role": "legacy producer 方法与 vNext 公式/适用性语义的代码引用；生成器只核对 symbol 与字面量存在，不执行这些代码。这些文件的摘要范围是 ast 定位的被引用顶层符号块（digest_scope=cited_symbols，含装饰器，重复绑定拒绝），文件其他位置的无关改动不算参考漂移；符号块摘要不覆盖其传递依赖或运行行为。",
+      "state_label": null
+    }
+  },
+  "inputs": {
+    "02_指标定义_SEC_10公司单年指标.md": {
+      "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99",
+      "role": "text_definition"
+    },
+    "catalog/company_traits.yaml": {
+      "sha256": "1d91efe5b5b1d5886953b095f82f641f7cfe8fccc60af5d9b16c8541b22db31b",
+      "role": "profile_to_traits"
+    },
+    "catalog/deterministic_metrics.json": {
+      "sha256": "09e93627ce4125debfe00872f9e11dc351658b140bbaa13dfeef81b6ac3b2a3c",
+      "role": "deterministic_catalog"
+    },
+    "catalog/disclosures/lodging_kpi_table.md": {
+      "sha256": "48b818cd8d2bd5b1dbbcc2a877fe235d9b5be417578a3555db61aaa437bbc2de",
+      "role": "disclosure_group"
+    },
+    "catalog/event_routes.json": {
+      "sha256": "863746896a4a54da1cc84cc7385e90e58e01d8e5df076d8df14e90f1bf71672a",
+      "role": "event_routes"
+    },
+    "catalog/metrics/A03_liquidity_coverage_ratio.md": {
+      "sha256": "c236a007a1adeae882d48c5f73301bcb6835bb025305d67b97533305adc3205b",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/A04_net_interest_margin.md": {
+      "sha256": "9bbd227df7ca37c69273c1834021c2a1d5907d3d15940224eaac3395bc9ccb33",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/A09_nonperforming_loan_ratio.md": {
+      "sha256": "340ba884e8974e819ce190fca1d4f77bf64428001e6b62343d8da4392071f256",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/A11_assets_under_management.md": {
+      "sha256": "44d6134495e0d265592178e300779efd6fb979d284d5a99796199389e3348f9c",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/A12_trading_exposure.md": {
+      "sha256": "5930d49a18b572a8f5fd38271956a769040e7d4c8a9d38645bfecb6da413624e",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/A13_geographic_exposure.md": {
+      "sha256": "d3573481010af3654bb72d4f07bcd5e203fb600bde486a0f6b7f171a2a662337",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/B01_revenue.md": {
+      "sha256": "5942066d0fd57870d437a6619de72393532b10d48d4098f10cd39307622e3520",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/B03_ebitda_margin.md": {
+      "sha256": "2705cc20f3e7dbd6a5cbb46bb051b2a16e3037d391856878c3ea74b4441a3608",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/B06_debt_to_equity.md": {
+      "sha256": "57bff73d11595f21fc81df28ddddf50cc94139936e48309e7d78b4e954d8a009",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/B10_occupancy.md": {
+      "sha256": "dcc28a5bab74da87a0c20f58a711be3d85d0a7d83fc2c08861ac2fa1fad306e1",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/B11_revpar.md": {
+      "sha256": "ca03800209951aa6b4a4804d76b8a6eb64e49727ccb03a8b62b445b1c7f9e81c",
+      "role": "metric_spec"
+    },
+    "catalog/metrics/B13_capacity_utilization.md": {
+      "sha256": "eb00226168cbbed70d8fd8163beafd7f977d0326f43bf264bc65e295fb8983ab",
+      "role": "metric_spec"
+    },
+    "catalog/r4_v2/A03_liquidity_coverage_ratio.md": {
+      "sha256": "43620d35bd01d38fa65425c548d6b5ee184daa98f3402ed515ad18b5c61e4755",
+      "role": "metric_spec"
+    },
+    "catalog/r4_v2/A04_net_interest_margin.md": {
+      "sha256": "fa5f38fc1e06159dd1058a638785a144cac7c2b760200df16b0eda3fd696f32b",
+      "role": "metric_spec"
+    },
+    "catalog/r4_v2/A09_nonperforming_loan_ratio.md": {
+      "sha256": "100fbdb78122565097379b54ebd1e4cd7bff7621007d74c5ceceb8cd15490452",
+      "role": "metric_spec"
+    },
+    "catalog/r4_v2/A11_assets_under_management.md": {
+      "sha256": "f76e908820a2ce10dca9f0601c7a48c81bbde93769e45c4d89d5de497bd9dbc8",
+      "role": "metric_spec"
+    },
+    "catalog/r4_v2/A12_trading_exposure.md": {
+      "sha256": "b0aa4a0b6da8f6a58f297af4a4ebdec6a602b72cc5fc5c8c3e6a71652aca26b2",
+      "role": "metric_spec"
+    },
+    "catalog/r4_v2/A13_geographic_exposure.md": {
+      "sha256": "1768014b3ea9f412386a855bc1af957eb496f75b9276ec040b23d01cb932ff8c",
+      "role": "metric_spec"
+    },
+    "catalog/r5/B06_structured.md": {
+      "sha256": "3aabaac36204b03276a2f5c1c557ca4c7cd4bdb19a115a753f5abc0df6895421",
+      "role": "metric_spec"
+    },
+    "catalog/r5/history/B06_carrying_v2.md": {
+      "sha256": "047663913a7f445f665ceee3302566a02d225c62541172c4a63484329e449d0a",
+      "role": "metric_spec_historical"
+    },
+    "catalog/r5/history/B06_structured_v1.md": {
+      "sha256": "b3f167ed7e4cd2c3ad59db01db53866bfcf5e3d1c04de130d78c3a34145a8b8f",
+      "role": "metric_spec_historical"
+    },
+    "catalog/table_task_contracts.json": {
+      "sha256": "ece72e72a93d52fc82370d5cc2c7c72a3fc3ba79ba20c91ccdf230718986a8f9",
+      "role": "table_task_contracts"
+    },
+    "catalog/zero_ai_public_projection.json": {
+      "sha256": "dffbbf944488d1865c7b858504c4bc519e3e4210e15a159afefaba68287c0db5",
+      "role": "public_projection"
+    },
+    "config/company_registry.csv": {
+      "sha256": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+      "role": "baseline_sample_companies"
+    },
+    "config/issue_15_release_plan.json": {
+      "sha256": "b2feda3fc40f0cfdc05a1b9006aaf8ba3b055e778cfb4e4921eae9ab0e288fc7",
+      "role": "release_plan_index"
+    },
+    "config/metric_applicability.yaml": {
+      "sha256": "09457bfa3170149f2e86af52d5013605f04c7b13ec4724792993660cc5dbcf94",
+      "role": "sic_profile_rules"
+    },
+    "config/r5_b06_structured_v1.json": {
+      "sha256": "9f36028fe913263867af1c64392309ebd8e4ef55e1a9f0e31024030d8fdcd26a",
+      "role": "r5_policy"
+    },
+    "config/release_plans/issue_15_lodging_r3.json": {
+      "sha256": "ba618c01f2deb7bcbc60d545758c8d71b38a361feb6ced3ef96a62c44b27321e",
+      "role": "release_plan"
+    },
+    "config/release_plans/issue_28_b06_structured_draft.json": {
+      "sha256": "8359eaebff07264a435ad33358041a204347160c33c16d3ee383eb9b016fefb0",
+      "role": "release_plan_draft"
+    },
+    "config/release_plans/issue_28_r4_scoped_engine_v3.json": {
+      "sha256": "ba894b8c7af4ee809c1c09d7dc18d5b6a87e3b865d2e205176066ed19d6a49ab",
+      "role": "release_plan"
+    },
+    "config/source_strategy_fallback_representation.json": {
+      "sha256": "3905c4735488968b3f4e8e73394275f476a5a37dcb5386d7643676a77ec6ac3a",
+      "role": "fallback_representation"
+    },
+    "config/source_strategy_registry.json": {
+      "sha256": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
+      "role": "source_strategy_registry"
+    },
+    "config/vnext_release_plan.json": {
+      "sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+      "role": "legacy_migration_set"
+    },
+    "scripts/sec_pipeline.py": {
+      "sha256": "e7a489bd4d95ad413946c1b9c7ac0a709725ffacc18eb206637a38e8ae162c17",
+      "role": "code_citation_target",
+      "digest_scope": "cited_symbols"
+    },
+    "scripts/vnext/calculator.py": {
+      "sha256": "31e8dfc824bdc76bafca99e6bd096e1b7e95f3693b1c1a8cf29d8f37e5a629cf",
+      "role": "code_citation_target",
+      "digest_scope": "cited_symbols"
+    },
+    "scripts/vnext/zero_ai_r2.py": {
+      "sha256": "848f307177439b7045105a5df457dace2fce56da3fd803480f328e1a3a42c743",
+      "role": "code_citation_target",
+      "digest_scope": "cited_symbols"
+    }
+  },
+  "metrics": {
+    "A01": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "A01"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "A01 在 active R3 发布计划 cumulative_metric_ids 中，其可执行定义是 R2 确定性目录成员。",
+      "variants": [],
+      "development_references": []
+    },
+    "A02": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "A02"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "A03": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/r4_v2/A03_liquidity_coverage_ratio.md"
+      },
+      "binding_authority": "r4_offline_v3",
+      "selection_reason_zh": "A03 不在 active R3；唯一明确绑定它的用途是 Issue #28 R4 离线计划（issue_28_v3 authority_hashes 绑定 catalog/r4_v2）。Issue #15 的 catalog/metrics 版本是同一表格合同的历史变体。",
+      "variants": [
+        {
+          "role": "issue15_table_contract_historical",
+          "path": "catalog/metrics/A03_liquidity_coverage_ratio.md",
+          "binding_authority": "issue15_table_contracts"
+        }
+      ],
+      "development_references": []
+    },
+    "A04": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/r4_v2/A04_net_interest_margin.md"
+      },
+      "binding_authority": "r4_offline_v3",
+      "selection_reason_zh": "同 A03。",
+      "variants": [
+        {
+          "role": "issue15_table_contract_historical",
+          "path": "catalog/metrics/A04_net_interest_margin.md",
+          "binding_authority": "issue15_table_contracts"
+        }
+      ],
+      "development_references": []
+    },
+    "A05": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "A05"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "A06": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "A06"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "A07": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "A07"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "A08": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "A08"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "A09": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/r4_v2/A09_nonperforming_loan_ratio.md"
+      },
+      "binding_authority": "r4_offline_v3",
+      "selection_reason_zh": "同 A03；注册表把 A09 定义为 structured_first_ai_fallback，该 Spec 只是回退表格合同。",
+      "variants": [
+        {
+          "role": "issue15_table_contract_historical",
+          "path": "catalog/metrics/A09_nonperforming_loan_ratio.md",
+          "binding_authority": "issue15_table_contracts"
+        }
+      ],
+      "development_references": []
+    },
+    "A10": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "A10"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "A11": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/r4_v2/A11_assets_under_management.md"
+      },
+      "binding_authority": "r4_offline_v3",
+      "selection_reason_zh": "同 A03。",
+      "variants": [
+        {
+          "role": "issue15_table_contract_historical",
+          "path": "catalog/metrics/A11_assets_under_management.md",
+          "binding_authority": "issue15_table_contracts"
+        }
+      ],
+      "development_references": []
+    },
+    "A12": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/r4_v2/A12_trading_exposure.md"
+      },
+      "binding_authority": "r4_offline_v3",
+      "selection_reason_zh": "同 A03。",
+      "variants": [
+        {
+          "role": "issue15_table_contract_historical",
+          "path": "catalog/metrics/A12_trading_exposure.md",
+          "binding_authority": "issue15_table_contracts"
+        }
+      ],
+      "development_references": []
+    },
+    "A13": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/r4_v2/A13_geographic_exposure.md"
+      },
+      "binding_authority": "r4_offline_v3",
+      "selection_reason_zh": "同 A03；R4 版本把名称改为 International net revenue，Issue #15 版本 Geographic exposure 保留为历史变体。",
+      "variants": [
+        {
+          "role": "issue15_table_contract_historical",
+          "path": "catalog/metrics/A13_geographic_exposure.md",
+          "binding_authority": "issue15_table_contracts"
+        }
+      ],
+      "development_references": []
+    },
+    "B01": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/metrics/B01_revenue.md"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "B01 自 R1 起在 active 发布集合中；catalog/metrics/B01_revenue.md 是唯一 MetricSpec。",
+      "variants": [],
+      "development_references": []
+    },
+    "B02": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "B02"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "B03": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/metrics/B03_ebitda_margin.md"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 B01；B03 依赖 B01 closure。",
+      "variants": [],
+      "development_references": []
+    },
+    "B04": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "B04"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "B05": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "B05"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "B06": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/r5/B06_structured.md"
+      },
+      "binding_authority": "r5_b06_structured_v1",
+      "selection_reason_zh": "B06 不在 active R3；main 上唯一明确绑定 B06 结构化主路径的政策是 config/r5_b06_structured_v1.json（primary_spec）。catalog/metrics/B06_debt_to_equity.md 是注册表声明的 STRUCTURED_SOURCE_AMBIGUOUS 回退表格合同；r5/history 是被取代的 v1/v2。PR #43 上的更多 B06 后继版本未合并。",
+      "variants": [
+        {
+          "role": "ai_table_fallback_contract",
+          "path": "catalog/metrics/B06_debt_to_equity.md",
+          "binding_authority": "issue15_table_contracts"
+        },
+        {
+          "role": "historical_superseded",
+          "path": "catalog/r5/history/B06_carrying_v2.md",
+          "binding_authority": null
+        },
+        {
+          "role": "historical_superseded",
+          "path": "catalog/r5/history/B06_structured_v1.md",
+          "binding_authority": null
+        }
+      ],
+      "development_references": [
+        {
+          "path": "catalog/r5/B06_new_source_v2.md",
+          "sha256": "e34a540f246302cd67abfa4c98a6da62bcced32f14b28be30a64049e80bfd944",
+          "note_zh": "PR #43 metric_spec_paths.B06 列出的后继 Spec 之一（新来源）。"
+        },
+        {
+          "path": "catalog/r5/B06_guarded_v3.md",
+          "sha256": "e7b6e17c3d12bd85b112e24a68b7d655938761a1f29a76fb66dc35589f58be3b",
+          "note_zh": "PR #43 后继 Spec（guarded v3，nonmeaningful guard）。"
+        },
+        {
+          "path": "catalog/r5/B06_note_carrying_v4.md",
+          "sha256": "7958a21a738c3c46ba0532f0bc301ca8ddba782c3f88743fb706c7e4938f890e",
+          "note_zh": "PR #43 后继 Spec（note debt carrying v4）。"
+        },
+        {
+          "path": "catalog/r5/B06_bond_leases_v5.md",
+          "sha256": "bdca47ee444dd39ff874ef4094c1d5fa7d20d875d0a03ac2e227e58de3c2a305",
+          "note_zh": "PR #43 后继 Spec（bond debt and leases v5）。"
+        },
+        {
+          "path": "catalog/r5/B06_inclusive_table_v6.md",
+          "sha256": "37252e0b414667b2f8b3026951203f9a14ab3b959767fc05c3cfa4f1f9c58220",
+          "note_zh": "PR #43 后继 Spec（inclusive table v6）。"
+        }
+      ]
+    },
+    "B07": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "B07"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "B08": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "B08"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "B09": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "B09"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01。",
+      "variants": [],
+      "development_references": []
+    },
+    "B10": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/metrics/B10_occupancy.md"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "B10 在 active R3（lodging）集合中；单角色表格合同 lodging_occupancy_table_v2 与历史 disclosure group 一并作为变体记录。",
+      "variants": [
+        {
+          "role": "disclosure_group_historical",
+          "path": "catalog/disclosures/lodging_kpi_table.md",
+          "binding_authority": null
+        }
+      ],
+      "development_references": []
+    },
+    "B11": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/metrics/B11_revpar.md"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 B10。",
+      "variants": [
+        {
+          "role": "disclosure_group_historical",
+          "path": "catalog/disclosures/lodging_kpi_table.md",
+          "binding_authority": null
+        }
+      ],
+      "development_references": []
+    },
+    "B12": {
+      "definition_source_kind": "MAIN_DETERMINISTIC_CATALOG",
+      "primary": {
+        "path": "catalog/deterministic_metrics.json",
+        "member": "B12"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 A01；输出为 RPO 替代观测值。",
+      "variants": [],
+      "development_references": []
+    },
+    "B13": {
+      "definition_source_kind": "MAIN_STRUCTURED_SPEC",
+      "primary": {
+        "path": "catalog/metrics/B13_capacity_utilization.md"
+      },
+      "binding_authority": "issue15_table_contracts",
+      "selection_reason_zh": "B13 不在任何 vNext 发布计划中；main 上唯一结构化定义是 Issue #15 表格合同 financial_capacity_utilization_table_v1 绑定的 Spec。PR #43 的用户批准后继 Spec 未合并，只记为开发参考。",
+      "variants": [],
+      "development_references": [
+        {
+          "path": "catalog/r5/B13_production_capacity_v1.md",
+          "sha256": "6f3ec492ac4d0e5d3c767d8828dadb859a32ddf397a8209daf9255948fb0e286",
+          "note_zh": "PR #43 用户批准的后继 Spec：可比实际产量 ÷ 可用产能（Ford / Enphase）。"
+        },
+        {
+          "path": "catalog/r5/B13_capacity_disclosures_v1.md",
+          "sha256": "b3d8e9eebf46d49a6807120658b193ab371986c4ac6fcba6eee136eadc930629",
+          "note_zh": "PR #43 产能披露来源 Spec。"
+        }
+      ]
+    },
+    "C01": {
+      "definition_source_kind": "MAIN_EVENT_ROUTE",
+      "primary": {
+        "path": "catalog/event_routes.json",
+        "member": "C01"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "C01 在 active R3 集合中；可执行定义是零 AI 事件路由目录成员。",
+      "variants": [],
+      "development_references": [
+        {
+          "path": "catalog/ordinary_zero_ai/C01.md",
+          "sha256": "c0a86fd5f8fa239a3eefcf6cc611633444d3da3c246f72ef21115ea3d8e1468e",
+          "note_zh": "PR #43 普通零 AI 路径的 C01 Spec，未合并。"
+        }
+      ]
+    },
+    "C02": {
+      "definition_source_kind": "MAIN_TEXT_DEFINITION",
+      "primary": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "C02"
+      },
+      "binding_authority": "text_definition",
+      "selection_reason_zh": "main 上没有 C02 的 MetricSpec/目录成员；定义来自指标定义文档，方法来自 legacy Stage 08 代码引用。",
+      "variants": [],
+      "development_references": [
+        {
+          "path": "catalog/r6/C02_board_disclosures_v1.md",
+          "sha256": "63527ad5f6615215c936e55487e2ab751f98bbf3e9f76354404ae1c9ea0f9d2d",
+          "note_zh": "PR #43 r6 后继 Spec（ai_text，保留完整来源披露语句集合，需复核），未合并。"
+        }
+      ]
+    },
+    "C03": {
+      "definition_source_kind": "MAIN_TEXT_DEFINITION",
+      "primary": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "C03"
+      },
+      "binding_authority": "text_definition",
+      "selection_reason_zh": "main 上没有 C03 的 MetricSpec；注册表把 C03 定义为 structured_only / ecd_xbrl_v1，方法来自 legacy 代码引用。",
+      "variants": [],
+      "development_references": [
+        {
+          "path": "catalog/r5/C03_peo_total_compensation.md",
+          "sha256": "47050c897e8b1d73aa14c54e7f79efddbb1d6944af99df11810c3e932eb3be36",
+          "note_zh": "PR #43 C03 PEO total compensation Spec，未合并。"
+        },
+        {
+          "path": "catalog/r5/C03_reported_compensation_v2.md",
+          "sha256": "36bfd6ccc500b2bd1cb2234156af43eabaf8658dfeed3ed0f7983f818671c740",
+          "note_zh": "PR #43 C03 后继 v2（非 ecd 标注时读取 Summary Compensation Table），未合并。"
+        }
+      ]
+    },
+    "C04": {
+      "definition_source_kind": "MAIN_TEXT_DEFINITION",
+      "primary": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "C04"
+      },
+      "binding_authority": "text_definition",
+      "selection_reason_zh": "main 上没有 C04 的 MetricSpec；注册表把 C04 定义为 structured_only / auditor_fact_v1，方法来自 legacy 代码引用。",
+      "variants": [],
+      "development_references": [
+        {
+          "path": "catalog/r5/C04_auditor_changes.md",
+          "sha256": "d6d6f18e36873d6f88203ce1241f972cef91c88350edb531c00f1748f7c04b74",
+          "note_zh": "PR #43 C04 Spec v1，未合并。"
+        },
+        {
+          "path": "catalog/r5/C04_auditor_changes_v2.md",
+          "sha256": "596a442394f159c61a00aaab5d6e2b8b4cd32a897e1e98a01f80144b12f2f2fc",
+          "note_zh": "PR #43 C04 后继 v2（两来源定义：Item 4.01 与同一注册人本年/上年 AuditorName），未合并。"
+        }
+      ]
+    },
+    "D01": {
+      "definition_source_kind": "MAIN_TEXT_DEFINITION",
+      "primary": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "D01"
+      },
+      "binding_authority": "text_definition",
+      "selection_reason_zh": "main 上没有 D01 的 MetricSpec；方法来自 legacy Stage 09 代码引用。",
+      "variants": [],
+      "development_references": [
+        {
+          "path": "catalog/r6/D01_risk_factor_headings.md",
+          "sha256": "c782daf4ed1d49ef226adcf80d22dec9d72038f186931a67bc4e63638018096c",
+          "note_zh": "PR #43 r6 后继 Spec（复现完整 Item 1A 强调标题，ai_text，需复核），未合并。"
+        }
+      ]
+    },
+    "D02": {
+      "definition_source_kind": "MAIN_TEXT_DEFINITION",
+      "primary": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "D02"
+      },
+      "binding_authority": "text_definition",
+      "selection_reason_zh": "同 D01。",
+      "variants": [],
+      "development_references": [
+        {
+          "path": "catalog/r6/D02_legal_disclosures_v1.md",
+          "sha256": "66e25bccd5235d13d5c5edc03a8eb52f20fd65875a2eadaef961915a192b188f",
+          "note_zh": "PR #43 r6 后继 Spec（Item 3 / Item 8 / 引用附注的完整披露集合），未合并。"
+        }
+      ]
+    },
+    "D03": {
+      "definition_source_kind": "MAIN_TEXT_DEFINITION",
+      "primary": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "D03"
+      },
+      "binding_authority": "text_definition",
+      "selection_reason_zh": "main 上没有 D03 的 MetricSpec；PR #43 固定提交 8346c32 的 catalog 中也没有 D03 Spec。方法来自 legacy Stage 09 关键词扫描代码引用。",
+      "variants": [],
+      "development_references": []
+    },
+    "D04": {
+      "definition_source_kind": "MAIN_TEXT_DEFINITION",
+      "primary": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "D04"
+      },
+      "binding_authority": "text_definition",
+      "selection_reason_zh": "main 上没有 D04 的 MetricSpec；注册表把 D04 定义为 structured_first_ai_fallback / auditor_fact_v1；方法来自 legacy Stage 09 代码引用。",
+      "variants": [],
+      "development_references": [
+        {
+          "path": "catalog/r6/D04_going_concern_assessment_v1.md",
+          "sha256": "b0d4e25d4af8b49ca99efda0f04abd127258b12f0a2d0110c33fccb66faeed7f",
+          "note_zh": "PR #43 r6 后继 Spec（当期声明与历史疑虑/其他主体/条件性风险区分），未合并。"
+        }
+      ]
+    },
+    "E01": {
+      "definition_source_kind": "MAIN_EVENT_ROUTE",
+      "primary": {
+        "path": "catalog/event_routes.json",
+        "member": "E01"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "E01 在 active R3 集合中；可执行定义是零 AI 事件路由目录成员。",
+      "variants": [],
+      "development_references": []
+    },
+    "E02": {
+      "definition_source_kind": "MAIN_EVENT_ROUTE",
+      "primary": {
+        "path": "catalog/event_routes.json",
+        "member": "E02"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 E01。",
+      "variants": [],
+      "development_references": []
+    },
+    "E03": {
+      "definition_source_kind": "MAIN_EVENT_ROUTE",
+      "primary": {
+        "path": "catalog/event_routes.json",
+        "member": "E03"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 E01。",
+      "variants": [],
+      "development_references": []
+    },
+    "E04": {
+      "definition_source_kind": "MAIN_EVENT_ROUTE",
+      "primary": {
+        "path": "catalog/event_routes.json",
+        "member": "E04"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 E01。",
+      "variants": [],
+      "development_references": []
+    },
+    "E05": {
+      "definition_source_kind": "MAIN_EVENT_ROUTE",
+      "primary": {
+        "path": "catalog/event_routes.json",
+        "member": "E05"
+      },
+      "binding_authority": "active_release_r3",
+      "selection_reason_zh": "同 E01。",
+      "variants": [],
+      "development_references": []
+    }
+  }
+}
