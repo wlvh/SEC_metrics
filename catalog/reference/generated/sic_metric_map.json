@@ -2,7 +2,7 @@
   "applicability_values": {
     "APPLICABLE": "该行业应当查看此指标；基线已为该行业 traits 定义此指标。单个公司仍可能按指标自身规则得到 NOT_MEANINGFUL / NOT_AVAILABLE_SEC 等状态。",
     "CONDITIONAL": "只有在 condition 成立时该行业才查看此指标（例如年报确有可计算披露）；condition 字段必填。",
-    "NOT_APPLICABLE": "基线把此指标定义为对该行业结构性不适用（Spec/目录 applicability traits 或指标定义文档），预期结果为 N_A_STRUCTURAL 或不产出该坐标。",
+    "NOT_APPLICABLE": "基线把此指标定义为对该行业结构性不适用（Spec/目录 applicability traits、trait 配置或指标定义文档的定义层排除），预期结果为 N_A_STRUCTURAL 或不产出该坐标。资料不完整、实现未验证或未获生产授权都不能编码为 NOT_APPLICABLE；这类状态用 CONDITIONAL / PENDING_CONFIRMATION 并写明条件。",
     "PENDING_CONFIRMATION": "基线对该行业×指标没有明确规则，也没有结构性不适用声明；不能自动视为可用。"
   },
   "generated_by": "tools/generate_metrics_reference.py",
@@ -8039,19 +8039,22 @@
         "jpmorgan_chase"
       ],
       "basis": [
-        "02_指标定义_SEC_10公司单年指标.md#B. Commercial Risk Metrics"
+        "config/r5_b06_structured_v1.json#debt_scope_definition.bank_scope",
+        "config/r5_b06_structured_v1.json#debt_scope_definition.excluded",
+        "docs/evidence/r5_b06_scope/debt_scope_relationships.json (scope_class bank_funding, complete=false, unresolved BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED)",
+        "docs/r5_b06_structured.md（新集合明确适用于十公司；JPM B06 明确阻断行）"
       ],
-      "business_applicability": "NOT_APPLICABLE",
-      "business_priority": null,
-      "condition_en": "Baseline places B06 in the non-financial commercial-risk group; the Spec has no trait gate, but bank leverage is not defined by total debt / equity in the baseline.",
-      "condition_zh": "基线把 B06 归入“B. Commercial Risk Metrics（9 家非金融公司）”；Spec 本身无 trait 限制，但金融机构的杠杆不以 total debt / equity 衡量，基线未为其定义。",
+      "business_applicability": "CONDITIONAL",
+      "business_priority": "SUPPLEMENTARY",
+      "condition_en": "Computed under the selected R5 definition's separate bank funding scope (debt_scope_definition.bank_scope: recognized borrowings, notes/bonds and finance leases at reported carrying amounts; customer deposits and similar items excluded; no netting of assets). Results must carry the comparability limitation: not comparable with industrial total debt / equity and not a substitute for the group A regulatory capital metrics. The baseline JPM evidence is an incomplete bank_funding scope (BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED) recorded as an explicit blocked row rather than a value, and R5 has no production authorization. Those are data-completeness and implementation states, not business inapplicability.",
+      "condition_zh": "按所选 R5 定义的银行单独融资范围计算（debt_scope_definition.bank_scope：借款、债券、融资租赁按报表确认账面额计入，排除客户存款等，不抵销资产），结果必须标注可比性限制，不与工业公司的 total debt / equity 同质比较，也不替代 A 组监管资本指标。基线证据（JPM）为 bank_funding 范围未完成：融资租赁完整性未证明（BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED），候选包中为明确阻断行而非数值；R5 无生产授权。这些是资料完整性与实现/验证状态，不是业务不适用。",
       "industry_en": "Financial institutions (commercial banks)",
       "industry_zh": "金融机构（商业银行）",
       "metric_id": "B06",
       "metric_name_en": "Debt-to-equity",
       "metric_name_zh": "债务权益比",
       "profile": "financial_institution",
-      "rule_clause_id": "B06-default",
+      "rule_clause_id": "B06-fi",
       "sic_end": "6029",
       "sic_range_label_en": "Commercial banks",
       "sic_range_label_zh": "商业银行",
@@ -8229,12 +8232,13 @@
         "jpmorgan_chase"
       ],
       "basis": [
-        "02_指标定义_SEC_10公司单年指标.md#B. Commercial Risk Metrics"
+        "02_指标定义_SEC_10公司单年指标.md#B. Commercial Risk Metrics",
+        "catalog/metrics/B13_capacity_utilization.md#required_claims"
       ],
       "business_applicability": "NOT_APPLICABLE",
       "business_priority": null,
-      "condition_en": "Group B metrics are defined for non-financial companies; banks have no capacity utilization.",
-      "condition_zh": "B 组指标定义为非金融公司指标；银行没有产能利用率。",
+      "condition_en": "Group B is scoped to non-financial companies in the definition document; the selected B13 definition (Issue #15 table contract, required_claims.capacity_basis=production) is production-capacity based and banks have no production capacity; no selected definition or successor Spec defines capacity utilization for banks.",
+      "condition_zh": "B 组指标在定义文档中限定为非金融公司；所选 B13 定义（Issue #15 表格合同，required_claims.capacity_basis=production）以生产产能为口径，银行没有生产产能；没有任何所选定义或后继 Spec 为银行定义产能利用率。",
       "industry_en": "Financial institutions (commercial banks)",
       "industry_zh": "金融机构（商业银行）",
       "metric_id": "B13",

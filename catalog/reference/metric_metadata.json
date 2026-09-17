@@ -485,7 +485,8 @@
         "股东权益 ≤ 0 时主比率不输出数值（NOT_MEANINGFUL / NEEDS_REVIEW）。",
         "captive finance 维度（FordCreditMember 等）触发范围复核；银行与工业范围分别限定。",
         "R5 结构化 Spec 已合入 main 但 production_authorized=false，草案发布计划为 PENDING_FINAL_REVIEW；PR #43 上还有更多未合并的 B06 后继版本。",
-        "定义文档中的三层 resolver 描述（Tier 1/2/3）是 legacy 口径；R5 Spec 是当前绑定的可执行口径。"
+        "定义文档中的三层 resolver 描述（Tier 1/2/3）是 legacy 口径；R5 Spec 是当前绑定的可执行口径。",
+        "银行（financial traits）按 R5 debt_scope_definition.bank_scope 的单独银行融资范围计算并标注可比性限制；基线 JPM 证据为 bank_funding 范围未完成（融资租赁完整性未证明），候选包中是明确阻断行，不是 N_A_STRUCTURAL，也不是业务不适用。"
       ]
     },
     "B07": {
@@ -973,8 +974,8 @@
     },
     "D04": {
       "name_zh": "持续经营声明",
-      "description_zh": "审计意见、10-K 文本或 going concern 相关 XBRL 概念中的持续经营疑虑。main 基线扫描短语 going concern / substantial doubt：命中记录片段，未命中记录“未披露持续经营疑虑”；两者都是 TEXT_QUAL，未披露是正常结果而非解析失败。注册表把 D04 定义为 auditor_fact 结构化优先、ai_text 回退。",
-      "description_en": "Going-concern doubt in the audit opinion, 10-K text or going-concern XBRL concepts. The main baseline scans for the phrases going concern / substantial doubt: a hit records the snippet and a miss records “no going-concern doubt disclosed”; both are TEXT_QUAL and absence is a normal result rather than a parse failure. The registry defines D04 as auditor_fact structured-first with an ai_text fallback.",
+      "description_zh": "审计意见、10-K 文本或 going concern 相关 XBRL 概念中的持续经营疑虑。main 基线扫描短语 going concern / substantial doubt：命中记录片段，未命中记录“未披露持续经营疑虑”；两者都是 TEXT_QUAL；未命中是正常结果而非解析失败，但只是有界的短语未命中，不是有充分证据的“无持续经营疑虑”结论。注册表把 D04 定义为 auditor_fact 结构化优先、ai_text 回退。",
+      "description_en": "Going-concern doubt in the audit opinion, 10-K text or going-concern XBRL concepts. The main baseline scans for the phrases going concern / substantial doubt: a hit records the snippet and a miss records “no going-concern doubt disclosed”; both are TEXT_QUAL; a miss is a normal result rather than a parse failure, but it is only a bounded phrase miss, not an evidence-backed conclusion that no going-concern doubt exists. The registry defines D04 as auditor_fact structured-first with an ai_text fallback.",
       "unit": null,
       "expected_statuses": [
         "TEXT_QUAL"
@@ -982,6 +983,7 @@
       "legacy_success_status": "TEXT_QUAL",
       "legacy_source_class": "TEXT",
       "limitations_zh": [
+        "legacy 关键词未命中不能升级为有充分证据的“无持续经营疑虑”判断；审计意见与 XBRL 概念未在 main 基线中作为结构化来源实现。",
         "定义文档提到的 going concern XBRL concepts 未在 main 基线中实现为结构化来源，具体 tag 未指定。",
         "PR #43 的 r6 后继 Spec 区分当期声明、历史疑虑、其他主体与条件性风险，未合并。"
       ],

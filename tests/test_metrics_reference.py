@@ -412,6 +412,41 @@ class GeneratedTablesTest(unittest.TestCase):
             if any(kind.startswith("AI_TABLE_READ") for kind in types):
                 self.assertIn(record["metric_id"], table_metric_ids, record["metric_id"])
 
+    def test_bank_b06_follows_the_selected_r5_scope_not_the_legacy_grouping(self) -> None:
+        policy = _read_json("config/r5_b06_structured_v1.json")
+        scope = policy["debt_scope_definition"]
+        self.assertTrue(scope["bank_scope"])
+        self.assertIn("customer_deposits", scope["excluded"])
+        self.assertFalse(policy["production_authorized"])
+        evidence = _read_json("docs/evidence/r5_b06_scope/debt_scope_relationships.json")
+        bank_entries = [entry for entry in evidence["relationships"] if entry.get("scope_class") == "bank_funding"]
+        self.assertEqual(1, len(bank_entries))
+        self.assertFalse(bank_entries[0]["complete"])
+        self.assertIn("BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED", bank_entries[0]["unresolved"])
+        rows = [row for row in self.sic_map["rows"] if row["metric_id"] == "B06" and row["profile"] == "financial_institution"]
+        self.assertEqual(1, len(rows))
+        row = rows[0]
+        self.assertEqual(("CONDITIONAL", "SUPPLEMENTARY", "B06-fi"), (row["business_applicability"], row["business_priority"], row["rule_clause_id"]))
+        self.assertIn("config/r5_b06_structured_v1.json#debt_scope_definition.bank_scope", row["basis"])
+        self.assertIn("可比性限制", row["condition_zh"])
+        self.assertIn("BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED", row["condition_zh"])
+        b06 = self.by_metric["B06"]
+        self.assertIn(
+            {"sic_start": "6020", "sic_end": "6029", "profile": "financial_institution", "applicability": "CONDITIONAL", "priority": "SUPPLEMENTARY", "rule_clause_id": "B06-fi"},
+            b06["applicable_sic_ranges"],
+        )
+        self.assertEqual([], b06["industries_by_applicability"]["NOT_APPLICABLE"])
+        for row in self.sic_map["rows"]:
+            if row["business_applicability"] != "NOT_APPLICABLE":
+                continue
+            for basis in row["basis"]:
+                self.assertTrue(basis.startswith(generator.DEFINITION_LEVEL_BASIS_PREFIXES), (row["metric_id"], row["profile"], basis))
+                for marker in generator.IMPLEMENTATION_STATE_MARKERS:
+                    self.assertNotIn(marker, basis, (row["metric_id"], row["profile"], basis))
+        d04 = self.by_metric["D04"]
+        self.assertIn("有界的短语未命中", d04["description_zh"])
+        self.assertIn("bounded phrase miss", d04["description_en"])
+
     def test_primary_provenance_matches_declared_and_parsed_sources(self) -> None:
         selection = _read_json("catalog/reference/source_selection.json")
         for record in self.definitions["metrics"]:
@@ -576,6 +611,23 @@ class NegativeCasesTest(unittest.TestCase):
             default["applicability"] = "APPLICABLE"
             default["priority"] = "CORE"
         self._assert_error(mutate, "structurally inapplicable")
+
+    def test_incomplete_evidence_cannot_be_encoded_as_not_applicable(self) -> None:
+        def mutate(payload):
+            clause = [c for c in payload["metric_rules"]["B06"]["clauses"] if c["clause_id"] == "B06-fi"][0]
+            clause["applicability"] = "NOT_APPLICABLE"
+            clause["priority"] = None
+        self._assert_error(mutate, "NOT_APPLICABLE clause B06-fi needs a definition-level basis")
+
+    def test_not_applicable_basis_may_not_cite_authorization_state(self) -> None:
+        def mutate(payload):
+            clause = payload["metric_rules"]["B08"]["clauses"][-1]
+            clause["basis"] = ["catalog/deterministic_metrics.json#metrics.B08.applicability (production_authorized=false)"]
+        self._assert_error(mutate, "cites an implementation/authorization state")
+        self._assert_error(
+            lambda payload: payload["metric_rules"]["B08"]["clauses"][-1].__setitem__("basis", ["config/r5_b06_structured_v1.json#production_authorized"]),
+            "needs a definition-level basis",
+        )
 
     def test_unknown_trait_reference_is_rejected(self) -> None:
         def mutate(payload):
