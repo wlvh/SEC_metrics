@@ -230,7 +230,8 @@ class GeneratedTablesTest(unittest.TestCase):
             for row in rows:
                 if row["profile"] != "lodging":
                     self.assertEqual(("NOT_APPLICABLE", "STRUCTURAL_NOT_APPLICABLE"), (row["business_applicability"], row["structural_applicability"]))
-            self.assertEqual(["AI_TABLE_READ"], record["method"]["method_types"])
+            self.assertEqual(["AI_TABLE_READ"], record["method"]["reference_implementation"]["method_types"])
+            self.assertEqual("table", record["method"]["registry_target_route"]["ai_fallback_representation"])
             self.assertEqual(["table_claim"], [source["role"] for source in record["data_sources"]])
         self.assertEqual("(adr * occupancy)", generator._render_expression({"op": "multiply", "args": ["adr", "occupancy"]}))
 
@@ -251,7 +252,8 @@ class GeneratedTablesTest(unittest.TestCase):
 
     def test_event_and_text_methods_do_not_invent_tags_or_formulas(self) -> None:
         e01 = self.by_metric["E01"]
-        self.assertEqual(["EVENT_ITEM_RULE"], e01["method"]["method_types"])
+        self.assertEqual(["EVENT_ITEM_RULE"], e01["method"]["reference_implementation"]["method_types"])
+        self.assertIsNone(e01["method"]["registry_target_route"]["ai_fallback_representation"])
         self.assertIsNone(e01["formula"])
         self.assertEqual("event_count", e01["unit"]["canonical_unit"])
         roles = {source["role"]: source for source in e01["data_sources"]}
@@ -367,6 +369,80 @@ class GeneratedTablesTest(unittest.TestCase):
         self.assertEqual([], offenders)
 
 
+    def test_d04_method_and_route_are_not_inferred_from_route_ids(self) -> None:
+        d04 = self.by_metric["D04"]
+        method = d04["method"]
+        self.assertEqual(["LEGACY_TEXT_KEYWORD_RULE"], method["reference_implementation"]["method_types"])
+        target = method["registry_target_route"]
+        self.assertEqual("structured_first_ai_fallback", target["source_mode"])
+        self.assertEqual("auditor_fact_v1", target["structured_route_id"])
+        self.assertEqual("NOT_BOUND_ON_MAIN", target["structured_concept_binding_on_main"])
+        self.assertEqual("text", target["ai_fallback_representation"])
+        self.assertEqual(
+            "config/source_strategy_fallback_representation.json#fallback_representation_by_metric.D04",
+            target["ai_fallback_representation_basis"],
+        )
+        authority = _read_json("config/source_strategy_fallback_representation.json")
+        self.assertEqual({"A09": "table", "A13": "table", "B06": "table", "D04": "text"}, authority["fallback_representation_by_metric"])
+        serialized = json.dumps(d04, ensure_ascii=False)
+        self.assertNotIn("AuditorName", serialized)
+        self.assertNotIn("AI_TABLE_READ", serialized)
+        for source in d04["data_sources"]:
+            self.assertEqual([], source.get("concepts", []), source)
+        route_source = [source for source in d04["data_sources"] if source["role"] == "registry_structured_route"][0]
+        self.assertEqual("NOT_BOUND_ON_MAIN", route_source["concept_binding_on_main"])
+        c04 = self.by_metric["C04"]
+        self.assertEqual(["LEGACY_XBRL_FACT_RULE", "LEGACY_8K_ITEM_RULE"], c04["method"]["reference_implementation"]["method_types"])
+        self.assertEqual("LEGACY_CODE_CITATION", c04["method"]["registry_target_route"]["structured_concept_binding_on_main"])
+        self.assertEqual(["dei:AuditorName"], c04["data_sources"][0]["concepts"])
+        for record in self.definitions["metrics"]:
+            target = record["method"]["registry_target_route"]
+            description = target["structured_route_description"] or ""
+            self.assertNotIn("dei:", description, record["metric_id"])
+            self.assertNotIn("DEF 14A", description, record["metric_id"])
+            for metric_id, representation in authority["fallback_representation_by_metric"].items():
+                if record["metric_id"] == metric_id:
+                    self.assertEqual(representation, target["ai_fallback_representation"])
+            if "AI_TABLE_READ_FALLBACK" in record["method"]["reference_implementation"]["method_types"]:
+                self.assertEqual("table", target["ai_fallback_representation"], record["metric_id"])
+        contracts = _read_json("catalog/table_task_contracts.json")
+        table_metric_ids = {metric_id for contract in contracts["contracts"] for metric_id in contract["metric_ids"]}
+        for record in self.definitions["metrics"]:
+            types = record["method"]["reference_implementation"]["method_types"]
+            if any(kind.startswith("AI_TABLE_READ") for kind in types):
+                self.assertIn(record["metric_id"], table_metric_ids, record["metric_id"])
+
+    def test_primary_provenance_matches_declared_and_parsed_sources(self) -> None:
+        selection = _read_json("catalog/reference/source_selection.json")
+        for record in self.definitions["metrics"]:
+            primary = record["definition_source"]["primary"]
+            payload = (REPO_ROOT / primary["path"]).read_bytes()
+            self.assertEqual(generator.sha256_bytes(payload), primary["sha256"], record["metric_id"])
+            role = selection["inputs"][primary["path"]]["role"]
+            self.assertIn(role, generator.PRIMARY_ROLES_BY_KIND[record["definition_source"]["kind"]], record["metric_id"])
+            if record["definition_source"]["kind"] == "MAIN_DETERMINISTIC_CATALOG":
+                self.assertIn(record["metric_id"], json.loads(payload)["metrics"])
+            if record["definition_source"]["kind"] == "MAIN_EVENT_ROUTE":
+                self.assertIn(record["metric_id"], json.loads(payload)["routes"])
+            if record["definition_source"]["kind"] == "MAIN_TEXT_DEFINITION":
+                self.assertIn("### {} ".format(record["metric_id"]), payload.decode("utf-8"))
+            excerpt_source = record["definition_text_excerpt_source"]
+            self.assertEqual(generator.sha256_bytes((REPO_ROOT / excerpt_source["path"]).read_bytes()), excerpt_source["sha256"])
+
+
+def self_built_files():
+    """Return the committed generated bytes keyed by relative path."""
+    return {
+        relative: (REPO_ROOT / relative).read_bytes()
+        for relative in (
+            "catalog/reference/generated/metric_definitions.csv",
+            "catalog/reference/generated/metric_definitions.json",
+            "catalog/reference/generated/sic_metric_map.csv",
+            "catalog/reference/generated/sic_metric_map.json",
+        )
+    }
+
+
 class NegativeCasesTest(unittest.TestCase):
     """Malformed inputs, drift and tampering fail loudly."""
 
@@ -383,20 +459,75 @@ class NegativeCasesTest(unittest.TestCase):
             with self.assertRaisesRegex(ReferenceError, "(?s)SOURCE_DRIFT.*B01_revenue"):
                 generator.build_reference(root, verify_digests=True)
 
-    def test_code_digest_scope_ignores_unrelated_edits_but_not_cited_symbols(self) -> None:
+    def _calculator_variant(self, transform):
+        """Run build_reference on a temp copy whose calculator.py is transformed."""
         with _TempCopy() as root:
             path = root / "scripts" / "vnext" / "calculator.py"
             original = path.read_text(encoding="utf-8")
-            path.write_text(original + "\n\ndef _unrelated_helper_added_by_test():\n    return None\n", encoding="utf-8")
-            generator.build_reference(root, verify_digests=True)
-            edited = original.replace(
-                "    return set(applicability[\"all\"]).issubset(trait_set) and not (",
-                "    return set(applicability[\"all\"]).issubset(trait_set) and not (  # edited",
-            )
+            edited = transform(original)
             self.assertNotEqual(original, edited)
             path.write_text(edited, encoding="utf-8")
-            with self.assertRaisesRegex(ReferenceError, "(?s)SOURCE_DRIFT.*calculator.py.*scope cited_symbols"):
-                generator.build_reference(root, verify_digests=True)
+            return generator.build_reference(root, verify_digests=True)
+
+    def test_code_digest_scope_ignores_unrelated_additions(self) -> None:
+        built = self._calculator_variant(lambda text: text + "\n\ndef _unrelated_helper_added_by_test():\n    return None\n")
+        self.assertEqual(self_built_files(), built["files"])
+
+    def test_code_digest_scope_detects_plain_body_change(self) -> None:
+        with self.assertRaisesRegex(ReferenceError, "(?s)SOURCE_DRIFT.*calculator.py.*scope cited_symbols"):
+            self._calculator_variant(lambda text: text.replace(
+                "    return set(applicability[\"all\"]).issubset(trait_set) and not (",
+                "    return set(applicability[\"all\"]).issubset(trait_set) and not (  # edited",
+            ))
+
+    def test_code_digest_scope_detects_added_decorator(self) -> None:
+        def transform(text: str) -> str:
+            return text.replace(
+                "def metric_is_applicable(",
+                "def _wrap_added_by_test(function):\n    return function\n\n\n@_wrap_added_by_test\ndef metric_is_applicable(",
+                1,
+            )
+        with self.assertRaisesRegex(ReferenceError, "(?s)SOURCE_DRIFT.*calculator.py.*scope cited_symbols"):
+            self._calculator_variant(transform)
+
+    def test_code_digest_scope_rejects_duplicate_definition(self) -> None:
+        duplicate = "\n\ndef metric_is_applicable(*, applicability, traits):\n    return True\n"
+        with self.assertRaisesRegex(ReferenceError, "metric_is_applicable is bound 2 times at top level"):
+            self._calculator_variant(lambda text: text + duplicate)
+
+    def test_code_digest_scope_rejects_direct_rebinding(self) -> None:
+        rebinding = "\n\ndef _other_added_by_test(*, applicability, traits):\n    return False\n\n\nmetric_is_applicable = _other_added_by_test\n"
+        with self.assertRaisesRegex(ReferenceError, "metric_is_applicable is bound 2 times at top level"):
+            self._calculator_variant(lambda text: text + rebinding)
+
+    def test_code_digest_scope_survives_column_zero_comment_inside_body(self) -> None:
+        def transform(text: str) -> str:
+            marker = "    trait_set = set(traits)\n"
+            self.assertIn(marker, text)
+            return text.replace(marker, "# column-zero comment added by test\n    trait_set = set(list(traits))\n", 1)
+        with self.assertRaisesRegex(ReferenceError, "(?s)SOURCE_DRIFT.*calculator.py.*scope cited_symbols"):
+            self._calculator_variant(transform)
+
+    def test_symbol_block_includes_decorators_and_uses_parser_end_lines(self) -> None:
+        source = (
+            "import functools\n\n"
+            "@functools.lru_cache(maxsize=None)\n"
+            "def target(value):\n"
+            "    \"\"\"doc\"\"\"\n"
+            "# column-zero comment inside the body\n"
+            "    return value + 1\n\n\n"
+            "def other():\n    return target\n"
+        )
+        block = generator._symbol_block(source, "target", "test")
+        self.assertTrue(block.startswith("@functools.lru_cache"))
+        self.assertIn("return value + 1", block)
+        self.assertNotIn("def other", block)
+        with self.assertRaisesRegex(ReferenceError, "bound 2 times"):
+            generator._symbol_block(source + "\ntarget = other\n", "target", "test")
+        with self.assertRaisesRegex(ReferenceError, "not defined at top level"):
+            generator._symbol_block("if True:\n    def target():\n        return 1\n", "target", "test")
+        with self.assertRaisesRegex(ReferenceError, "not parseable Python"):
+            generator._symbol_block("def broken(:\n", "target", "test")
 
     def test_code_target_without_cited_symbol_scope_is_rejected(self) -> None:
         self._assert_error(
@@ -471,6 +602,83 @@ class NegativeCasesTest(unittest.TestCase):
             with self.assertRaisesRegex(ReferenceError, "SIC ranges overlap"):
                 generator.build_reference(root, verify_digests=True)
 
+    def test_deterministic_primary_pointing_at_event_routes_is_rejected(self) -> None:
+        self._assert_error(
+            lambda payload: payload["metrics"]["A05"]["primary"].__setitem__("path", "catalog/event_routes.json"),
+            "input role event_routes which is not allowed for MAIN_DETERMINISTIC_CATALOG",
+            relative="catalog/reference/source_selection.json",
+        )
+
+    def test_declared_role_cannot_disguise_wrong_content(self) -> None:
+        with _TempCopy() as root:
+            disguised = root / "catalog" / "deterministic_metrics_copy.json"
+            disguised.write_bytes((root / "catalog" / "event_routes.json").read_bytes())
+
+            def mutate(payload):
+                payload["inputs"]["catalog/deterministic_metrics_copy.json"] = {"sha256": None, "role": "deterministic_catalog"}
+                payload["metrics"]["A05"]["primary"]["path"] = "catalog/deterministic_metrics_copy.json"
+            _edit_json(root, "catalog/reference/source_selection.json", mutate)
+            generator.refresh_source_digests(root)
+            with self.assertRaisesRegex(ReferenceError, "is not a DETERMINISTIC_METRIC_CATALOG"):
+                generator.build_reference(root, verify_digests=True)
+
+    def test_event_primary_with_wrong_record_type_is_rejected(self) -> None:
+        with _TempCopy() as root:
+            disguised = root / "catalog" / "event_routes_copy.json"
+            disguised.write_bytes((root / "catalog" / "deterministic_metrics.json").read_bytes())
+
+            def mutate(payload):
+                payload["inputs"]["catalog/event_routes_copy.json"] = {"sha256": None, "role": "event_routes"}
+                payload["metrics"]["E01"]["primary"]["path"] = "catalog/event_routes_copy.json"
+            _edit_json(root, "catalog/reference/source_selection.json", mutate)
+            generator.refresh_source_digests(root)
+            with self.assertRaisesRegex(ReferenceError, "is not a DETERMINISTIC_EVENT_ROUTE_CATALOG"):
+                generator.build_reference(root, verify_digests=True)
+
+    def test_text_primary_must_be_the_single_text_definition_input(self) -> None:
+        self._assert_error(
+            lambda payload: payload["metrics"]["C02"]["primary"].__setitem__("path", "catalog/reference/README.md" if False else "config/company_registry.csv"),
+            "input role baseline_sample_companies which is not allowed for MAIN_TEXT_DEFINITION",
+            relative="catalog/reference/source_selection.json",
+        )
+        with _TempCopy() as root:
+            other = root / "docs_text_copy.md"
+            other.write_text("# no sections here\n", encoding="utf-8")
+
+            def mutate(payload):
+                payload["inputs"]["docs_text_copy.md"] = {"sha256": None, "role": "text_definition"}
+            _edit_json(root, "catalog/reference/source_selection.json", mutate)
+            generator.refresh_source_digests(root)
+            with self.assertRaisesRegex(ReferenceError, "Exactly one declared input must carry role text_definition"):
+                generator.build_reference(root, verify_digests=True)
+
+    def test_historical_spec_role_cannot_be_a_primary(self) -> None:
+        self._assert_error(
+            lambda payload: payload["metrics"]["B06"]["primary"].__setitem__("path", "catalog/r5/history/B06_structured_v1.md"),
+            "role metric_spec_historical which is not allowed for MAIN_STRUCTURED_SPEC",
+            relative="catalog/reference/source_selection.json",
+        )
+
+    def test_variant_path_with_non_spec_role_is_rejected(self) -> None:
+        self._assert_error(
+            lambda payload: payload["metrics"]["B06"]["variants"][0].__setitem__("path", "config/r5_b06_structured_v1.json"),
+            "has role r5_policy which is not a spec role",
+            relative="catalog/reference/source_selection.json",
+        )
+
+    def test_fallback_representation_authority_must_bind_the_registry(self) -> None:
+        with _TempCopy() as root:
+            _edit_json(root, "config/source_strategy_fallback_representation.json", lambda payload: payload.__setitem__("source_strategy_registry_sha256", "0" * 64))
+            generator.refresh_source_digests(root)
+            with self.assertRaisesRegex(ReferenceError, "bound to a different source_strategy_registry"):
+                generator.build_reference(root, verify_digests=True)
+        with _TempCopy() as root:
+            _edit_json(root, "config/source_strategy_fallback_representation.json", lambda payload: payload["fallback_representation_by_metric"].__setitem__("D04", "table"))
+            generator.refresh_source_digests(root)
+            built = generator.build_reference(root, verify_digests=True)
+            d04 = [record for record in built["metric_definitions"]["metrics"] if record["metric_id"] == "D04"][0]
+            self.assertEqual("table", d04["method"]["registry_target_route"]["ai_fallback_representation"])
+
     def test_unselected_metric_version_is_rejected(self) -> None:
         self._assert_error(
             lambda payload: payload["metrics"].pop("B06"),
@@ -487,7 +695,7 @@ class NegativeCasesTest(unittest.TestCase):
 
     def test_b06_primary_must_follow_r5_policy(self) -> None:
         self._assert_error(
-            lambda payload: payload["metrics"]["B06"]["primary"].__setitem__("path", "catalog/r5/history/B06_structured_v1.md"),
+            lambda payload: payload["metrics"]["B06"]["primary"].__setitem__("path", "catalog/metrics/B06_debt_to_equity.md"),
             "primary_spec",
             relative="catalog/reference/source_selection.json",
         )

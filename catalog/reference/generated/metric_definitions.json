@@ -63,6 +63,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### A01 Tier 1 capital ratio\n\n定义：Tier 1 capital / risk-weighted assets。  \n来源优先级：\n\n1. accession XBRL/iXBRL instance 中 Basel / regulatory capital 维度事实；\n2. MD&A / capital adequacy table；\n3. 找不到则 `NOT_AVAILABLE_SEC` 或 `NOT_EXTRACTED`。\n\n注意：entity-level companyfacts 可能没有当前可用值，不得用普通资产负债表估算。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A01",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Tier 1 capital divided by risk-weighted assets. The baseline reads the dimensioned regulatory-capital fact (Basel III standardized approach, parent company) from the target 10-K XBRL instance.",
       "description_zh": "一级资本除以风险加权资产。基线从目标 10-K 的 XBRL 实例读取带 Basel III 标准法与母公司维度的监管资本事实（DIM_XBRL）。",
       "formula": {
@@ -145,15 +150,24 @@
         "entity 级 companyfacts 可能没有当前可用值，不得用普通资产负债表估算。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "DIRECT_XBRL_FACT"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "XBRL instance of the target 10-K accession (dimensioned or custom facts)",
-        "structured_route_id": "accession_xbrl_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member A01 (adapter accession_xbrl, formula ids direct)",
+          "method_types": [
+            "DIRECT_XBRL_FACT"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route accession_xbrl_v1 (XBRL instance facts of the target accession); per-metric concepts and dimensions are bound by the selected definition, not by the route",
+          "structured_route_id": "accession_xbrl_v1"
+        }
       },
       "metric_id": "A01",
       "name_en": "Tier 1 capital ratio",
@@ -238,6 +252,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### A02 CET1 ratio\n\n定义：Common Equity Tier 1 capital / risk-weighted assets。  \n来源：同 A01。  \n必须注明 Basel 口径，例如 standardized / advanced approach。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A02",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Common Equity Tier 1 capital divided by risk-weighted assets, same Basel III standardized parent-company scope as A01.",
       "description_zh": "普通股一级资本除以风险加权资产，口径同 A01（Basel III 标准法、母公司维度）。",
       "formula": {
@@ -319,15 +338,24 @@
         "必须注明 Basel 口径（standardized / advanced）；维度成员名同 A01 的扩展限制。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "DIRECT_XBRL_FACT"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "XBRL instance of the target 10-K accession (dimensioned or custom facts)",
-        "structured_route_id": "accession_xbrl_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member A02 (adapter accession_xbrl, formula ids direct)",
+          "method_types": [
+            "DIRECT_XBRL_FACT"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route accession_xbrl_v1 (XBRL instance facts of the target accession); per-metric concepts and dimensions are bound by the selected definition, not by the route",
+          "structured_route_id": "accession_xbrl_v1"
+        }
       },
       "metric_id": "A02",
       "name_en": "CET1 ratio",
@@ -420,6 +448,11 @@
         ]
       },
       "definition_text_excerpt": "### A03 Liquidity coverage ratio\n\n定义：High Quality Liquid Assets / projected 30-day net cash outflows。  \n来源：MD&A liquidity / capital resources / Basel disclosure。  \n通常不是标准 companyfacts 指标。  \n表格抽取必须保存 `raw_header` 和 `raw_row` 原文锚点；若同时披露 firm\naverage 和银行子公司 LCR，主值优先 firm average。单位可以保存为 ratio\n或 percent，但必须在 notes 中说明转换口径。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A03",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "High-quality liquid assets divided by projected 30-day net cash outflows. Not a standard companyfacts fact; an AI table reader proposes exact cell locators from MD&A liquidity/regulatory tables, the firm-average scope is preferred and bank-subsidiary or period-end figures remain competing claims for review.",
       "description_zh": "优质流动性资产除以未来 30 天预计净现金流出。不是标准 companyfacts 事实；由 AI 读取 MD&A 流动性/监管披露表格并给出精确单元定位，firm 平均口径优先，银行子公司与期末口径作为竞争性声明留待复核。",
       "formula": {
@@ -476,15 +509,24 @@
         "R4 后继 Spec 只在离线计划中绑定，未进入 active 发布。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "AI_TABLE_READ"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "ai_table",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/r4_v2/A03_liquidity_coverage_ratio.md is the table task contract financial_liquidity_coverage_ratio_table_v1 (disclosure_group financial_statement)",
+          "method_types": [
+            "AI_TABLE_READ"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "table",
+          "ai_fallback_representation_basis": "registry source_mode ai_table",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "ai_table",
+          "structured_concept_binding_on_main": "SPEC:catalog/r4_v2/A03_liquidity_coverage_ratio.md",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "A03",
       "name_en": "Liquidity coverage ratio",
@@ -578,6 +620,11 @@
         ]
       },
       "definition_text_excerpt": "### A04 Net interest margin\n\n定义：net interest income / average interest-earning assets。  \n来源优先级：\n\n1. MD&A average balances table；\n2. 若未抽到平均生息资产，可用 `net interest income / average total assets` 作为 `OK_APPROX`，必须标注 proxy。\n\nMD&A 表格值必须保存 `raw_header` 和 `raw_row`，并注明 managed basis /\nnon-GAAP。若使用 proxy，必须与 companyfacts 的 net interest income 和\naverage total assets 可追溯；方向性互证要求 NIM 通常大于\n`net interest income / average total assets`，因为平均生息资产通常小于平均总资产。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A04",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Net interest income divided by average interest-earning assets. Read from the MD&A average-balance table anchored to the managed-basis literal; a net-interest-income / average-total-assets proxy must be labelled approximate.",
       "description_zh": "净利息收入除以平均生息资产。来自 MD&A 平均余额表，必须锚定 managed basis 文字；若使用净利息收入/平均总资产的 proxy，必须标注为近似。",
       "formula": {
@@ -634,15 +681,24 @@
         "R4 后继 Spec 只在离线计划中绑定，未进入 active 发布。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "AI_TABLE_READ"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "ai_table",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/r4_v2/A04_net_interest_margin.md is the table task contract financial_net_interest_margin_table_v1 (disclosure_group financial_statement)",
+          "method_types": [
+            "AI_TABLE_READ"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "table",
+          "ai_fallback_representation_basis": "registry source_mode ai_table",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "ai_table",
+          "structured_concept_binding_on_main": "SPEC:catalog/r4_v2/A04_net_interest_margin.md",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "A04",
       "name_en": "Net interest margin",
@@ -762,6 +818,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### A05 ROA\n\n定义：net income / average total assets。  \n净利润：优先 `NetIncomeLoss`，否则按净利润通用候选链。  \n平均总资产：`(Assets_t + Assets_t-1) / 2`。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A05",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Net income divided by average total assets, where the average is the arithmetic mean of current and prior period-end Assets.",
       "description_zh": "净利润除以平均总资产，平均总资产为本年末与上年末 Assets 的算术平均。",
       "formula": {
@@ -864,15 +925,24 @@
         "净利润候选链含 ProfitLoss，可能包含非控制权益。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "XBRL_FORMULA"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member A05 (adapter companyfacts, formula ids average_denominator_ratio)",
+          "method_types": [
+            "XBRL_FORMULA"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "A05",
       "name_en": "ROA",
@@ -991,6 +1061,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### A06 ROE\n\n定义：net income / average shareholders' equity。  \n可以同时报告 common-shareholder 口径和 total equity 口径。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A06",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Net income divided by average shareholders' equity (mean of current and prior period-end StockholdersEquity).",
       "description_zh": "净利润除以平均股东权益（本年末与上年末 StockholdersEquity 的算术平均）。",
       "formula": {
@@ -1093,15 +1168,24 @@
         "定义文档允许同时报告 common-shareholder 与 total equity 口径；确定性目录只实现 StockholdersEquity 分母。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "XBRL_FORMULA"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member A06 (adapter companyfacts, formula ids average_denominator_ratio)",
+          "method_types": [
+            "XBRL_FORMULA"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "A06",
       "name_en": "ROE",
@@ -1205,6 +1289,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### A07 Net income trends\n\n定义：本年净利润、上年净利润、同比变化。  \n单年任务中的趋势定义为 YoY pair。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A07",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Current-year net income minus prior-year net income; in the single-year task the trend is the YoY pair difference.",
       "description_zh": "本年净利润减上年净利润；单年任务中的“趋势”定义为 YoY pair 的差值。",
       "formula": {
@@ -1298,15 +1387,24 @@
         "输出为 USD 差额，不是百分比变化。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "XBRL_FORMULA"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member A07 (adapter companyfacts, formula ids difference)",
+          "method_types": [
+            "XBRL_FORMULA"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "A07",
       "name_en": "Net income trends",
@@ -1405,6 +1503,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### A08 Fee income vs interest income\n\n定义：noninterest income 与 net interest income 的相对占比。  \n来源：银行专用 XBRL concepts 或 MD&A revenue composition。  \n本指标按定义正文执行为 `noninterest income / net interest income`，不是\npure fee income。若来自 companyfacts / structured facts，状态可为 `OK`；\n若来自 MD&A 表格，状态可为 `MDA_OK`；若概念不确定，状态用 `NEEDS_REVIEW`。\nnotes 必须说明名称与定义的张力：noninterest income may include trading,\ninvestment banking, asset-management and other noninterest revenue。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A08",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Noninterest income divided by net interest income. Executed per the definition text; it is not pure fee income, since noninterest income may include trading, investment-banking and asset-management revenue.",
       "description_zh": "非利息收入除以净利息收入。按定义正文执行，不是纯手续费收入；noninterest income 可能包含交易、投行、资产管理等收入。",
       "formula": {
@@ -1494,15 +1597,24 @@
         "名称与定义存在张力，notes 必须说明。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "XBRL_FORMULA"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member A08 (adapter companyfacts, formula ids ratio)",
+          "method_types": [
+            "XBRL_FORMULA"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "A08",
       "name_en": "Fee income vs interest income",
@@ -1547,13 +1659,12 @@
       ],
       "data_sources": [
         {
+          "concept_binding_on_main": "NOT_BOUND_ON_MAIN",
           "concepts": [],
-          "filing_types": [
-            "10-K"
-          ],
-          "location": "XBRL instance of the target 10-K accession (dimensioned or custom facts)",
+          "filing_types": [],
+          "location": "SourceStrategy structured route accession_xbrl_v1 (XBRL instance facts of the target accession); per-metric concepts and dimensions are bound by the selected definition, not by the route",
           "locator_kind": "source_strategy_route",
-          "note": "declared structured-first route in config/source_strategy_registry.json; no main definition binds approved concepts for this route",
+          "note": "declared structured-first route in config/source_strategy_registry.json; no main definition binds approved concepts for this route, so nothing more specific is stated",
           "priority": "structured_first",
           "role": "structured_first_route"
         },
@@ -1604,6 +1715,11 @@
         ]
       },
       "definition_text_excerpt": "### A09 Non-performing loans / NPL ratio\n\n定义：nonaccrual / non-performing loans divided by total loans。  \n来源：credit risk table / XBRL concept inventory 正则 `/Nonaccrual|Nonperforming/`。  \n贷款总额概念需从 JPM concept inventory 中确认，不得硬编码。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A09",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Nonaccrual / non-performing loans divided by total loans. Structured accession XBRL first; the firmwide table contract is only the declared fallback on structured-source ambiguity and never bypasses the structured-first route.",
       "description_zh": "不良/非应计贷款除以贷款总额。结构化来源（accession XBRL）优先；仅在结构化来源歧义时才允许 firmwide 表格回退，表格任务不绕过结构化优先路线。",
       "formula": {
@@ -1660,18 +1776,26 @@
         "R4 后继 Spec 只在离线计划中绑定，未进入 active 发布。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [
-          "STRUCTURED_SOURCE_AMBIGUOUS"
-        ],
-        "method_types": [
-          "STRUCTURED_FACT",
-          "AI_TABLE_READ_FALLBACK"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_first_ai_fallback",
-        "structured_route_description": "XBRL instance of the target 10-K accession (dimensioned or custom facts)",
-        "structured_route_id": "accession_xbrl_v1"
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/r4_v2/A09_nonperforming_loan_ratio.md is the table task contract financial_nonperforming_loan_ratio_table_v1 (disclosure_group financial_statement)",
+          "method_types": [
+            "AI_TABLE_READ_FALLBACK"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "table",
+          "ai_fallback_representation_basis": "config/source_strategy_fallback_representation.json#fallback_representation_by_metric.A09",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [
+            "STRUCTURED_SOURCE_AMBIGUOUS"
+          ],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_first_ai_fallback",
+          "structured_concept_binding_on_main": "NOT_BOUND_ON_MAIN",
+          "structured_route_description": "SourceStrategy structured route accession_xbrl_v1 (XBRL instance facts of the target accession); per-metric concepts and dimensions are bound by the selected definition, not by the route",
+          "structured_route_id": "accession_xbrl_v1"
+        }
       },
       "metric_id": "A09",
       "name_en": "Non-performing loan ratio",
@@ -1772,6 +1896,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### A10 Loan loss reserves\n\n定义：allowance for credit losses / loans。  \n来源：allowance for credit losses 概念或 credit quality table。  \n主口径优先 retained-loans / before-allowance：\n\n```text\nFinancingReceivableAllowanceForCreditLossExcludingAccruedInterest\n/\nFinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss\n```\n\n注意排除证券类 credit loss reserve，例如 `DebtSecurities*Allowance*`。\n更宽的 loans denominator、held-for-sale、公允价值或 securities allowance\n只能作为 evidence candidate / notes，不得混入主值。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A10",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Allowance for credit losses divided by loans before allowance (retained loans), excluding securities-related credit-loss allowances.",
       "description_zh": "信用损失准备除以扣除准备前的贷款余额（retained loans, before allowance），排除证券类信用损失准备。",
       "formula": {
@@ -1861,15 +1990,24 @@
         "更宽的 loans 分母、held-for-sale、公允价值或 securities allowance 只能作为 evidence candidate，不得混入主值。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "XBRL_FORMULA"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member A10 (adapter companyfacts, formula ids ratio)",
+          "method_types": [
+            "XBRL_FORMULA"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "A10",
       "name_en": "Loan loss reserves",
@@ -1959,6 +2097,11 @@
         ]
       },
       "definition_text_excerpt": "### A11 AUM\n\n定义：Assets under management。  \n来源：MD&A / segment discussion。  \n非 GAAP 标准事实，通常为文本/表格抽取。表格抽取必须保存\n`raw_header` 和 `raw_row`，并注明金额单位和缩放。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A11",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Disclosed total assets under management; not a GAAP fact, read by the AI table reader from MD&A / segment tables with an exact total-AUM literal, while client assets / custody remain competing evidence.",
       "description_zh": "公司披露的 total assets under management；非 GAAP 标准事实，由 AI 读取 MD&A/分部表格并要求精确 total-AUM 字面量，client assets / custody 只是竞争性证据。",
       "formula": {
@@ -2015,15 +2158,24 @@
         "R4 后继 Spec 只在离线计划中绑定，未进入 active 发布。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "AI_TABLE_READ"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "ai_table",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/r4_v2/A11_assets_under_management.md is the table task contract financial_assets_under_management_table_v1 (disclosure_group financial_statement)",
+          "method_types": [
+            "AI_TABLE_READ"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "table",
+          "ai_fallback_representation_basis": "registry source_mode ai_table",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "ai_table",
+          "structured_concept_binding_on_main": "SPEC:catalog/r4_v2/A11_assets_under_management.md",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "A11",
       "name_en": "Assets under management",
@@ -2118,6 +2270,11 @@
         ]
       },
       "definition_text_excerpt": "### A12 Trading exposure\n\n定义：VaR 或 trading exposure。  \n来源：Item 7A / MD&A market risk table。  \n无数值则 `NOT_EXTRACTED`。若抽取 VaR 表格，必须保存 `raw_header` 和\n`raw_row`，并注明 confidence level、期间和金额单位。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A12",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Value-at-risk from Item 7A / MD&A market-risk tables. The contract accepts declared confidence/holding-period enum combinations; the legacy default is 95% confidence and one-day holding, and the R4 successor requires same-source text spans to prove that combination.",
       "description_zh": "Item 7A / MD&A 市场风险表中的 VaR。合同接受声明的置信度与持有期枚举组合，legacy 默认为 95% 置信度、一日持有期；R4 后继版本要求同源文本片段证明该组合。",
       "formula": {
@@ -2174,15 +2331,24 @@
         "R4 后继 Spec 只在离线计划中绑定，未进入 active 发布。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "AI_TABLE_READ"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "ai_table",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/r4_v2/A12_trading_exposure.md is the table task contract financial_value_at_risk_table_v1 (disclosure_group financial_statement)",
+          "method_types": [
+            "AI_TABLE_READ"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "table",
+          "ai_fallback_representation_basis": "registry source_mode ai_table",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "ai_table",
+          "structured_concept_binding_on_main": "SPEC:catalog/r4_v2/A12_trading_exposure.md",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "A12",
       "name_en": "Trading exposure",
@@ -2229,13 +2395,12 @@
       ],
       "data_sources": [
         {
+          "concept_binding_on_main": "NOT_BOUND_ON_MAIN",
           "concepts": [],
-          "filing_types": [
-            "10-K"
-          ],
-          "location": "XBRL instance of the target 10-K accession (dimensioned or custom facts)",
+          "filing_types": [],
+          "location": "SourceStrategy structured route accession_xbrl_v1 (XBRL instance facts of the target accession); per-metric concepts and dimensions are bound by the selected definition, not by the route",
           "locator_kind": "source_strategy_route",
-          "note": "declared structured-first route in config/source_strategy_registry.json; no main definition binds approved concepts for this route",
+          "note": "declared structured-first route in config/source_strategy_registry.json; no main definition binds approved concepts for this route, so nothing more specific is stated",
           "priority": "structured_first",
           "role": "structured_first_route"
         },
@@ -2286,6 +2451,11 @@
         ]
       },
       "definition_text_excerpt": "### A13 Geographic exposure\n\n定义：收入、资产或风险暴露按地区拆分。  \n来源：实例中的 geographic dimensions 或 MD&A 分部表。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "A13",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "The definition doc says revenue, assets or exposure split by geography; the R4 successor Spec narrows it to consolidated full-fiscal-year international / non-US net revenue in USD (explicitly not net income). Structured geographic dimension facts first; the international table fallback only on structured-source ambiguity.",
       "description_zh": "定义文档为“收入、资产或风险暴露按地区拆分”；R4 后继 Spec 把它收窄为合并口径的全财年国际/非美国净收入（USD，不是净利润）。结构化 geographic 维度事实优先，仅在结构化来源歧义时允许 international 表格回退。",
       "formula": {
@@ -2342,18 +2512,26 @@
         "未声明的 geography 字面量需 HUMAN 复核。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [
-          "STRUCTURED_SOURCE_AMBIGUOUS"
-        ],
-        "method_types": [
-          "STRUCTURED_FACT",
-          "AI_TABLE_READ_FALLBACK"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_first_ai_fallback",
-        "structured_route_description": "XBRL instance of the target 10-K accession (dimensioned or custom facts)",
-        "structured_route_id": "accession_xbrl_v1"
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/r4_v2/A13_geographic_exposure.md is the table task contract financial_geographic_exposure_table_v1 (disclosure_group financial_statement)",
+          "method_types": [
+            "AI_TABLE_READ_FALLBACK"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "table",
+          "ai_fallback_representation_basis": "config/source_strategy_fallback_representation.json#fallback_representation_by_metric.A13",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [
+            "STRUCTURED_SOURCE_AMBIGUOUS"
+          ],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_first_ai_fallback",
+          "structured_concept_binding_on_main": "NOT_BOUND_ON_MAIN",
+          "structured_route_description": "SourceStrategy structured route accession_xbrl_v1 (XBRL instance facts of the target accession); per-metric concepts and dimensions are bound by the selected definition, not by the route",
+          "structured_route_id": "accession_xbrl_v1"
+        }
       },
       "metric_id": "A13",
       "name_en": "International net revenue",
@@ -2474,7 +2652,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "SEC companyfacts annual facts selected by legacy_companyfacts_v1 (10-K form prefix, fiscal-year target period, target accession priority, filed/accession/unit tie-break)",
           "locator_kind": "xbrl_concept",
           "priority": "ordered_concept_chain",
           "role": "revenue"
@@ -2500,6 +2678,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### B01 Revenue\n\n定义：财年收入。  \n候选链：\n\n```text\nRevenueFromContractWithCustomerExcludingAssessedTax\n-> Revenues\n-> SalesRevenueNet\n-> RevenueFromContractWithCustomerIncludingAssessedTax\n```\n\n命中 tag 必须记录。\n\nvNext Spec：`catalog/metrics/B01_revenue.md` 按上述顺序使用 fully-qualified concepts，并把 `legacy_companyfacts_v1` 展开为 target period、10-K/FY、target accession priority 以及 `filed/accession/unit` tie-break 语义。其 `preserve_reported` policy 与冻结 baseline 一致：例如选中 `EUR 100` 时结果必须仍为 `EUR 100`，不能输出 `USD 100`；这不代表实现了换汇。B03 必须复用唯一 B01 `VerifiedObservation`，不得复制 Revenue resolver 或从结果 CSV 猜值。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B01",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Fiscal-year revenue. Selects exactly one companyfacts fact by the approved concept chain and preserves the selected fact's reported unit (no currency conversion).",
       "description_zh": "财年收入。按候选概念链从 companyfacts 选择唯一事实，保留所选事实的 reported unit（不换汇）。",
       "formula": {
@@ -2577,15 +2760,24 @@
         "legacy_companyfacts_v1 选择语义：目标期间、10-K/FY、目标 accession 优先、filed/accession/unit tie-break；歧义为 AMBIGUOUS_CANDIDATE。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "DIRECT_XBRL_FACT"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/metrics/B01_revenue.md (kind direct_numeric, source_mode structured)",
+          "method_types": [
+            "DIRECT_XBRL_FACT"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "SPEC:catalog/metrics/B01_revenue.md",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "B01",
       "name_en": "Revenue",
@@ -2764,6 +2956,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### B02 Revenue YoY growth\n\n定义：`(Revenue_t - Revenue_t-1) / Revenue_t-1`。  \n若公司主体不可比，例如合并年 successor/predecessor，标 `NOT_MEANINGFUL`。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B02",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "(Current revenue − prior revenue) ÷ prior revenue. NOT_MEANINGFUL when the entity is not comparable (successor/predecessor years).",
       "description_zh": "(本年收入 − 上年收入) ÷ 上年收入。主体不可比（successor/predecessor 合并年）时为 NOT_MEANINGFUL。",
       "formula": {
@@ -2859,15 +3056,24 @@
         "continuity_policy=REQUIRE_CONTINUOUS。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "XBRL_FORMULA"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member B02 (adapter companyfacts, formula ids growth)",
+          "method_types": [
+            "XBRL_FORMULA"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "B02",
       "name_en": "Revenue YoY growth",
@@ -2995,7 +3201,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "SEC companyfacts annual facts selected by legacy_companyfacts_v1 (10-K form prefix, fiscal-year target period, target accession priority, filed/accession/unit tie-break)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 1",
           "quality": "EXACT",
@@ -3013,7 +3219,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "SEC companyfacts annual facts selected by legacy_companyfacts_v1 (10-K form prefix, fiscal-year target period, target accession priority, filed/accession/unit tie-break)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 2",
           "quality": "APPROX",
@@ -3030,7 +3236,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "SEC companyfacts annual facts selected by legacy_companyfacts_v1 (10-K form prefix, fiscal-year target period, target accession priority, filed/accession/unit tie-break)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 1",
           "quality": "EXACT",
@@ -3046,7 +3252,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "SEC companyfacts annual facts selected by legacy_companyfacts_v1 (10-K form prefix, fiscal-year target period, target accession priority, filed/accession/unit tie-break)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 2",
           "quality": "EXACT",
@@ -3073,6 +3279,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### B03 EBITDA margin\n\n定义：`(Operating income + depreciation and amortization) / revenue`。  \n本任务命名为 GAAP EBITDA proxy，不加回 impairment。  \nD&A 优先使用直接候选链：\n\n```text\nDepreciationDepletionAndAmortization\n-> DepreciationAmortizationAndAccretionNet\n-> DepreciationAndAmortization\n```\n\n若直接 D&A 不存在，允许 composition fallback：\n\n```text\nDepreciation + AmortizationOfIntangibleAssets\n```\n\n启用条件必须同时满足：form 以 10-K 开头、`fp == FY`、start/end 与目标\n财年一致、duration 在 300–400 天、同 accession、同 USD unit、无维度、\n且直接 D&A 不可得。必须拒绝 `Accumulated*`、`Expected*`、\n`NextTwelveMonths`、`YearOne/YearTwo/YearThree*`、future amortization\nschedule concepts 和 asset balance concepts。\n\nOperating income 优先 `OperatingIncomeLoss`。若缺失，允许\n`pretax continuing income - aggregate nonoperating income/expense` 重建，\n但只能使用 aggregate bridge：\n\n```text\nNonoperatingIncomeExpense\n-> OtherNonoperatingIncomeExpense\n```\n\npretax candidates：\n\n```text\nIncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest\nIncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments\n```\n\n不得用利息、投资收益、其他收入、税费碎片拼 bridge。若\n`CostsAndExpenses` 存在，必须用 `Revenues - CostsAndExpenses` 交叉验证\nreconstructed operating income，容差 1%；若无法交叉验证，notes 必须写明\nassumption。使用重建 operating income 的 B03 状态为 `OK_APPROX`，notes\n必须写明 complete bridge assumption；impairment 仍不加回。\n\nvNext Spec：`catalog/metrics/B03_ebitda_margin.md` 是 direct/fallback、candidate cardinality、guard、cross-check、quality 与 formula 的可执行来源。B03 closure 必须包含 B01 closure。顶层 Revenue/OI/D&A 必须具有相同 accession、period、entity 与 compatible unit，且 annual duration 为 300–400 天；不兼容时 WITHHELD。Revenue 为零时保留可见结果行，语义为 `PUBLISHED / NOT_MEANINGFUL / DENOMINATOR_ZERO`，不是来源缺失。\n\nOI reconstruction 的 cross-check 冻结为：\n\n```text\nreconstructed = pretax - aggregate_nonoperating\nexpected = revenue - costs_and_expenses\ndenominator = abs(reconstructed) if reconstructed != 0 else Decimal(\"1\")\nrelative_error = abs(expected - reconstructed) / denominator\npass iff relative_error <= Decimal(\"0.01\")\n```\n\n直接 combined D&A 命中后不得再加 standalone amortization；只有 combined chain 全部不可用时才尝试 `Depreciation + AmortizationOfIntangibleAssets`。每个 branch 的选择/拒绝 reason、Observation ID、Decimal step、quality 与最终 formula 必须进入 ExecutionTrace，确保 FROZEN Run 可无 AI 重算。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B03",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "(Operating income + depreciation and amortization) ÷ revenue. Revenue reuses the single B01 observation; operating income prefers OperatingIncomeLoss and otherwise is reconstructed as pretax continuing income minus aggregate nonoperating income/expense, cross-checked against Revenues − CostsAndExpenses at 1% tolerance (OK_APPROX); D&A prefers the combined concept chain and only falls back to Depreciation + AmortizationOfIntangibleAssets when the whole chain is unavailable. Impairment is not added back.",
       "description_zh": "(营业利润 + 折旧摊销) ÷ 收入。收入复用 B01 的唯一观测；营业利润优先 OperatingIncomeLoss，缺失时以税前持续经营利润减合计非营业损益重建并用 Revenues − CostsAndExpenses 交叉验证（容差 1%，结果 OK_APPROX）；折旧摊销优先合并概念链，全部不可得时才允许 Depreciation + AmortizationOfIntangibleAssets。不加回减值。",
       "formula": {
@@ -3246,15 +3457,24 @@
         "收入为零时保留可见结果行：PUBLISHED / NOT_MEANINGFUL / DENOMINATOR_ZERO。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "XBRL_FORMULA"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/metrics/B03_ebitda_margin.md (kind derived_numeric, source_mode structured_and_derived)",
+          "method_types": [
+            "XBRL_FORMULA"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "SPEC:catalog/metrics/B03_ebitda_margin.md",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "B03",
       "name_en": "EBITDA margin",
@@ -3418,6 +3638,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### B04 Net income\n\n候选链：\n\n```text\nNetIncomeLoss\n-> ProfitLoss\n-> NetIncomeLossAvailableToCommonStockholdersBasic\n```\n\n若使用 `ProfitLoss`，需标注可能含 non-controlling interest。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B04",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Fiscal-year net income via NetIncomeLoss → ProfitLoss → NetIncomeLossAvailableToCommonStockholdersBasic; a ProfitLoss hit must be labelled as possibly including non-controlling interests.",
       "description_zh": "财年净利润，候选链 NetIncomeLoss → ProfitLoss → NetIncomeLossAvailableToCommonStockholdersBasic；使用 ProfitLoss 时需标注可能含非控制权益。",
       "formula": {
@@ -3498,15 +3723,24 @@
         "continuity_policy=REQUIRE_CONTINUOUS：successor stub period 为 NOT_MEANINGFUL。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "DIRECT_XBRL_FACT"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member B04 (adapter companyfacts, formula ids direct)",
+          "method_types": [
+            "DIRECT_XBRL_FACT"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "B04",
       "name_en": "Net income",
@@ -3670,6 +3904,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### B05 Free cash flow\n\n定义：`operating cash flow - capital expenditures`。  \nOCF：`NetCashProvidedByUsedInOperatingActivities`。  \nCapex 候选链：\n\n```text\nPaymentsToAcquirePropertyPlantAndEquipment\n-> PaymentsToAcquireProductiveAssets\n```\n\nFord 这类公司可能命中 `PaymentsToAcquireProductiveAssets`，必须允许。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B05",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Operating cash flow minus capital expenditures, with capex via PaymentsToAcquirePropertyPlantAndEquipment → PaymentsToAcquireProductiveAssets.",
       "description_zh": "经营活动现金流减资本支出；资本支出候选链 PaymentsToAcquirePropertyPlantAndEquipment → PaymentsToAcquireProductiveAssets。",
       "formula": {
@@ -3760,15 +3999,24 @@
         "continuity_policy=REQUIRE_CONTINUOUS。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "XBRL_FORMULA"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member B05 (adapter companyfacts, formula ids difference)",
+          "method_types": [
+            "XBRL_FORMULA"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "B05",
       "name_en": "Free cash flow",
@@ -3885,7 +4133,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "structured XBRL facts selected per the Spec's own roles and guards (registry structured route companyfacts_v1)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 1",
           "quality": "EXACT",
@@ -3901,7 +4149,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "structured XBRL facts selected per the Spec's own roles and guards (registry structured route companyfacts_v1)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 2",
           "quality": "EXACT",
@@ -3918,7 +4166,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "structured XBRL facts selected per the Spec's own roles and guards (registry structured route companyfacts_v1)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 3",
           "quality": "EXACT",
@@ -3934,7 +4182,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "structured XBRL facts selected per the Spec's own roles and guards (registry structured route companyfacts_v1)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 4",
           "quality": "EXACT",
@@ -3950,7 +4198,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "structured XBRL facts selected per the Spec's own roles and guards (registry structured route companyfacts_v1)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 5",
           "quality": "EXACT",
@@ -3966,7 +4214,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "structured XBRL facts selected per the Spec's own roles and guards (registry structured route companyfacts_v1)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 6",
           "quality": "EXACT",
@@ -3984,7 +4232,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "structured XBRL facts selected per the Spec's own roles and guards (registry structured route companyfacts_v1)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 7",
           "quality": "EXACT",
@@ -3999,7 +4247,7 @@
           "filing_types": [
             "10-K"
           ],
-          "location": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
+          "location": "structured XBRL facts selected per the Spec's own roles and guards (registry structured route companyfacts_v1)",
           "locator_kind": "xbrl_concept",
           "priority": "choose_first ordinal 1",
           "quality": "EXACT",
@@ -4092,6 +4340,11 @@
         ]
       },
       "definition_text_excerpt": "### B06 Debt-to-equity\n\n定义：`total debt / shareholders' equity`。  \n总债务 resolver 分三层：\n\nTier 1：直接总额概念，命中后直接作为 total debt，不允许再加任何 adder：\n\n```text\nDebtAndCapitalLeaseObligations\nLongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities\n```\n\nTier 2：同族 current + noncurrent sibling，只允许同族配对：\n\n```text\nLongTermDebtAndCapitalLeaseObligationsCurrent\n+ LongTermDebtAndCapitalLeaseObligationsNoncurrent\n\nLongTermDebtCurrent\n+ LongTermDebtNoncurrent\n\nFinanceLeaseLiabilityCurrent\n+ FinanceLeaseLiabilityNoncurrent\n```\n\nTier 3：只有在没有 Tier 1 总额、也没有完整同族 pair 时，才允许补充：\n\n```text\nShortTermBorrowings\nCommercialPaper\n```\n\n受限 fallback：若 Tier 1 和完整同族 pair 都不存在，且不存在\n`LongTermDebtAndCapitalLeaseObligationsCurrent` 这类同族 current sibling，\n可用 standalone `LongTermDebtAndCapitalLeaseObligations` 作为 total-like\ndebt base；一旦存在 current sibling，不得把该 standalone 概念与 current\n相加，也不得用它覆盖 Tier 1 总额。\n\n不得把 `LongTermDebtAndCapitalLeaseObligationsNoncurrent` 随便和\n`DebtCurrent` 拼接，除非能证明同族口径。必须排除 `DebtSecurities*`、\n`AvailableForSaleSecuritiesDebt*`、`DebtInstrumentFairValue`、\n`DebtInstrumentFaceAmount`、`DebtInstrumentUnamortized*`、\n`MaturitiesRepayments*`、`PaymentsDue*`、`ProceedsFromDebt*`、\n`RepaymentsOfDebt*`。  \n\n若 `shareholders' equity <= 0`，主 ratio 不输出数值，状态为\n`NOT_MEANINGFUL` 或 `NEEDS_REVIEW`，notes 写明：\n`Equity is negative; debt/equity ratio is not economically meaningful.`  \n\nFord/captive finance 公司若 instance dimensions 显示 captive finance scope，\n保留 consolidated candidate evidence，但主矩阵必须 `NEEDS_REVIEW`，除非已\n抽到工业口径。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B06",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Total debt divided by shareholders' equity. The R5 structured primary route resolves total debt through ordered choose_first branches over the defined financing-debt set (period-end carrying amounts of recognized borrowings, bonds and finance leases, disjoint classes counted once); the denominator is StockholdersEquity and must be positive; the consolidated-scope table task is only the fallback on structured-source ambiguity.",
       "description_zh": "总债务除以股东权益。R5 结构化主路径按定义的融资债务集合（已确认借款、债券与融资租赁的期末账面金额，互斥类别只计一次）逐层 choose_first 求 total debt，分母为 StockholdersEquity 且必须为正；结构化来源歧义时才进入 consolidated 口径的表格回退任务。",
       "formula": {
@@ -4342,18 +4595,27 @@
         "定义文档中的三层 resolver 描述（Tier 1/2/3）是 legacy 口径；R5 Spec 是当前绑定的可执行口径。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [
-          "STRUCTURED_SOURCE_AMBIGUOUS"
-        ],
-        "method_types": [
-          "XBRL_FORMULA",
-          "AI_TABLE_READ_FALLBACK"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_first_ai_fallback",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/r5/B06_structured.md (kind derived_numeric, source_mode structured); table fallback contract financial_debt_to_equity_table_v1 bound to variant catalog/metrics/B06_debt_to_equity.md",
+          "method_types": [
+            "XBRL_FORMULA",
+            "AI_TABLE_READ_FALLBACK"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "table",
+          "ai_fallback_representation_basis": "config/source_strategy_fallback_representation.json#fallback_representation_by_metric.B06",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [
+            "STRUCTURED_SOURCE_AMBIGUOUS"
+          ],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_first_ai_fallback",
+          "structured_concept_binding_on_main": "SPEC:catalog/r5/B06_structured.md",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "B06",
       "name_en": "Debt-to-equity",
@@ -4583,6 +4845,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### B07 Interest coverage ratio\n\n定义：`operating income / interest expense`。  \n利息费用候选链：\n\n```text\nInterestExpense\n-> InterestExpenseNonoperating\n-> InterestExpenseDebt\n```\n\n若 operating income <= 0，状态为 `NOT_MEANINGFUL`。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B07",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Operating income divided by interest expense; when operating income is missing it is reconstructed as pretax continuing income minus aggregate nonoperating income/expense (APPROX). NOT_MEANINGFUL when operating income ≤ 0.",
       "description_zh": "营业利润除以利息费用；营业利润缺失时以税前持续经营利润减合计非营业损益重建（APPROX）。营业利润 ≤ 0 时 NOT_MEANINGFUL。",
       "formula": {
@@ -4719,15 +4986,24 @@
         "利息费用候选链 InterestExpense → InterestExpenseNonoperating → InterestExpenseDebt。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "XBRL_FORMULA"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member B07 (adapter companyfacts, formula ids interest_coverage)",
+          "method_types": [
+            "XBRL_FORMULA"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "B07",
       "name_en": "Interest coverage ratio",
@@ -4891,6 +5167,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### B08 Current ratio\n\n定义：`current assets / current liabilities`。  \n来源：`AssetsCurrent` / `LiabilitiesCurrent`。  \nJPM 这种银行不适用，状态 `N_A_STRUCTURAL`。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B08",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Current assets divided by current liabilities (AssetsCurrent / LiabilitiesCurrent) at period end. Not applicable to banks.",
       "description_zh": "流动资产除以流动负债（AssetsCurrent / LiabilitiesCurrent），期末时点值。银行不适用。",
       "formula": {
@@ -4978,15 +5259,24 @@
       },
       "limitations_zh": [],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "XBRL_FORMULA"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member B08 (adapter companyfacts, formula ids ratio)",
+          "method_types": [
+            "XBRL_FORMULA"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "B08",
       "name_en": "Current ratio",
@@ -5131,6 +5421,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### B09 Cash reserves\n\n定义：cash and cash equivalents。  \n主概念：`CashAndCashEquivalentsAtCarryingValue`。  \n可另列 cash + short-term investments 备注，但不要混为主口径。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B09",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Period-end cash and cash equivalents (CashAndCashEquivalentsAtCarryingValue). Short-term investments are not mixed into the primary figure.",
       "description_zh": "期末现金及现金等价物（CashAndCashEquivalentsAtCarryingValue）。短期投资不混入主口径。",
       "formula": {
@@ -5207,15 +5502,24 @@
       },
       "limitations_zh": [],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "DIRECT_XBRL_FACT"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-        "structured_route_id": "companyfacts_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member B09 (adapter companyfacts, formula ids direct)",
+          "method_types": [
+            "DIRECT_XBRL_FACT"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+          "structured_route_id": "companyfacts_v1"
+        }
       },
       "metric_id": "B09",
       "name_en": "Cash reserves",
@@ -5311,6 +5615,11 @@
         ]
       },
       "definition_text_excerpt": "### B10 Occupancy rate（Marriott）\n\n定义：occupied rooms / available rooms。  \n来源：MD&A 或 8-K EX-99.1 operating statistics。  \n优先口径：Marriott 10-K Lodging Statistics 表的 `Comparable Systemwide Properties / Worldwide` 绝对值。  \n若只能抽到 regional breakdown 或同比变化，必须注明口径；若无法唯一选择 companywide 绝对值，标 `NOT_EXTRACTED`。\n\nvNext canonical unit 为 ratio，例如 legacy `69.3 percent` 对应 canonical `0.693`；legacy projection 再乘 100。B10 与 B11/ADR 必须来自同一次完整表格 disclosure-group Reader response，并经 HUMAN whole-ReviewUnit approval；不能只批准 occupancy 单格。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B10",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Occupied rooms divided by available rooms. An AI table reader proposes exact cell locators in the 10-K lodging-statistics table for the current-year comparable systemwide worldwide absolute value; the reported percent is declaratively converted to a canonical ratio; read in the same response as RevPAR / ADR and checked against RevPAR ≈ ADR × Occupancy at 1% tolerance.",
       "description_zh": "已售客房数除以可售客房数。由 AI 读取 10-K Lodging Statistics 表并提出精确单元定位，要求当年、Comparable Systemwide Properties、Worldwide 口径的绝对值；reported percent 声明式换算为 canonical ratio；与 RevPAR / ADR 同一次表格读取并满足 RevPAR ≈ ADR × Occupancy（1% 容差）。",
       "formula": {
@@ -5362,15 +5671,24 @@
         "整个 disclosure group 需 whole-ReviewUnit 批准，不能只批准 occupancy 单格。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "AI_TABLE_READ"
-        ],
-        "reader_family_id": "lodging_kpi_table",
-        "source_mode": "ai_table",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/metrics/B10_occupancy.md is the table task contract lodging_occupancy_table_v2 (disclosure_group lodging_kpi_table)",
+          "method_types": [
+            "AI_TABLE_READ"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "table",
+          "ai_fallback_representation_basis": "registry source_mode ai_table",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "lodging_kpi_table",
+          "source_mode": "ai_table",
+          "structured_concept_binding_on_main": "SPEC:catalog/metrics/B10_occupancy.md",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "B10",
       "name_en": "Occupancy rate",
@@ -5470,6 +5788,11 @@
         ]
       },
       "definition_text_excerpt": "### B11 RevPAR（Marriott）\n\n定义：revenue per available room。  \n来源：MD&A 或 8-K EX-99.1。  \n优先口径：Marriott 10-K Lodging Statistics 表的 `Comparable Systemwide Properties / Worldwide` 绝对值。  \n必须保存带 `RevPAR` 表头和所选行的表格/句子原文片段。  \n不得把 `RevPAR increased/decreased x%` 当作 USD 绝对值。\n\nvNext B11 canonical/reported unit 均为 USD，supporting ADR 也由 disclosure Spec 固定为 USD。Reader 负责提出精确 cell locator、period/scope claim、competing 与 unresolved；Evidence 只机械重读所给 cell/local labels，不得搜索另一个看似正确的 RevPAR。若 Reader 报告 B11 或 ADR 为 EUR/JPY/无单位，不进行汇率猜测或标签替换，B10/B11 结果整单 WITHHELD。B10/B11 的业务 required claims 为 current fiscal year、comparable property population、systemwide operating scope 与 worldwide geography，必须由 HUMAN reviewer 对整单确认。\n\n#### METH-01｜lodging identity 从 legacy 5% 收紧为 1%\n\nvNext 唯一预批准的方法变化是把 lodging identity 收紧到 1%；这不是“纯重构”。当前 Marriott frozen anchor 在 5% 与 1% 下均通过，因此其 value/status 不因本变化改变。\n\n```text\nexpected = adr * occupancy_ratio\nrelative_error = abs(revpar - expected) / abs(expected)\npass iff expected > 0 and relative_error <= Decimal(\"0.01\")\n```\n\n0.99% 与 1.00% 通过，1.01% 失败；比较使用未提前四舍五入的完整 Decimal。任一输入缺失/非有限、unit 不兼容或 expected<=0 时 identity 不成立，candidate/result 必须 WITHHELD。该方法变化必须在 Decision Register、Spec、compatibility receipt 与 release note 独立可见。\n\n#### Review、evidence grain 与 compatibility\n\n- ReviewDecision 绑定整个 B10/B11/ADR disclosure group 的完整表格、selected/competing/unresolved、Evidence、Spec/source 与 canonical/rendered context；决定只允许一条 supersedes 链。\n- B01/B03 结果业务字段要求 exact parity；B10/B11 的 value、unit、status、period、accession、form 与冻结 contract 要 exact，旧 parser 名、raw window 和 5% identity 文本属于声明式 method delta，不能伪造成旧 producer 仍在运行。\n- B03 evidence 从旧单行 `;`/`+` 聚合迁移为一个 source binding 一行；reconciliation receipt 必须按显式 `evidence_order` 精确重建冻结 aggregate 字段。不能把任意分号字符串 split 当作 source identity。\n- 任一 APPLICABLE migrated result WITHHELD 会阻断整个 publication candidate；Phase 1 不做 B01/B03/B10/B11 部分发布。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B11",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Room revenue per available room as a USD absolute value. Same scope and reading method as B10; RevPAR and supporting ADR accept USD only (other currencies WITHHOLD the whole unit) and growth percentages never substitute for the absolute value.",
       "description_zh": "每间可售客房的房费收入（USD 绝对值）。口径与读取方式同 B10；RevPAR 与 supporting ADR 只接受 USD，其他货币整单 WITHHELD；增长百分比不能冒充绝对值。",
       "formula": {
@@ -5520,15 +5843,24 @@
         "lodging identity 容差已从 legacy 5% 收紧为 1%（METH-01）。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "AI_TABLE_READ"
-        ],
-        "reader_family_id": "lodging_kpi_table",
-        "source_mode": "ai_table",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/metrics/B11_revpar.md is the table task contract lodging_revpar_table_v2 (disclosure_group lodging_kpi_table)",
+          "method_types": [
+            "AI_TABLE_READ"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "table",
+          "ai_fallback_representation_basis": "registry source_mode ai_table",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "lodging_kpi_table",
+          "source_mode": "ai_table",
+          "structured_concept_binding_on_main": "SPEC:catalog/metrics/B11_revpar.md",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "B11",
       "name_en": "RevPAR",
@@ -5613,6 +5945,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### B12 ARR / churn 可得性与 RPO/cRPO 替代值（Salesforce）\n\nARR 和 churn 未必在 SEC filing 中直接披露。  \n可用 RPO / cRPO 作为替代指标，但必须明确：\n\n```text\nRPO != ARR\ncRPO != ARR\n```\n\nchurn 如果没有明确披露，状态 `NOT_AVAILABLE_SEC` 或 `TEXT_QUAL`。\n\n当前 `metrics_matrix.csv` 的 B12 行不是 churn rate；它是 Salesforce 的\nRPO/cRPO 替代观测值。若产品需要真正的 churn rate，应拆成独立指标，\n并且只能消费 filing 中明确披露的 churn / retention / net retention 口径。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B12",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "ARR and churn are usually not disclosed directly in SEC filings; this metric outputs the undimensioned RevenueRemainingPerformanceObligation fact as an RPO substitute observation and states explicitly that RPO ≠ ARR and cRPO ≠ ARR. Undisclosed churn is NOT_AVAILABLE_SEC or TEXT_QUAL.",
       "description_zh": "ARR 与 churn 在 SEC 申报中通常不直接披露；本指标输出未维度化的 RevenueRemainingPerformanceObligation 事实作为 RPO 替代观测值，并明确 RPO ≠ ARR、cRPO ≠ ARR。churn 未明确披露时为 NOT_AVAILABLE_SEC 或 TEXT_QUAL。",
       "formula": {
@@ -5706,15 +6043,24 @@
         "若产品需要真正的 churn rate，应拆成独立指标并只消费明确披露的 churn / retention 口径。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "DIRECT_XBRL_FACT"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "structured_only",
-        "structured_route_description": "XBRL instance of the target 10-K accession (dimensioned or custom facts)",
-        "structured_route_id": "accession_xbrl_v1"
+        "reference_implementation": {
+          "basis": "catalog/deterministic_metrics.json member B12 (adapter accession_xbrl, formula ids direct)",
+          "method_types": [
+            "DIRECT_XBRL_FACT"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "DETERMINISTIC_CATALOG_MEMBER",
+          "structured_route_description": "SourceStrategy structured route accession_xbrl_v1 (XBRL instance facts of the target accession); per-metric concepts and dimensions are bound by the selected definition, not by the route",
+          "structured_route_id": "accession_xbrl_v1"
+        }
       },
       "metric_id": "B12",
       "name_en": "ARR / churn or RPO substitute",
@@ -5877,6 +6223,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### B13 Capacity utilization（Ford / Enphase）\n\n定义：actual production / capacity。  \nSEC 年报通常不披露可计算数值。  \n若只存在定性描述，状态 `TEXT_QUAL`；若未披露，状态 `NOT_AVAILABLE_SEC`。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "B13",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Actual production divided by capacity. SEC annual reports usually do not disclose a computable value: qualitative-only is TEXT_QUAL and undisclosed is NOT_AVAILABLE_SEC. The Issue #15 table contract on main accepts only a numeric production-capacity table claim; PR #43 carries a user-approved successor Spec (comparable actual production ÷ available capacity, Ford / Enphase) that is not merged.",
       "description_zh": "实际产量除以产能。SEC 年报通常不披露可计算数值：仅有定性描述时为 TEXT_QUAL，未披露为 NOT_AVAILABLE_SEC。main 上的 Issue #15 表格合同只接受 production 口径的数值表格声明；PR #43 有用户批准的后继 Spec（可比实际产量 ÷ 可用产能，Ford / Enphase），尚未合并。",
       "formula": {
@@ -5948,15 +6299,24 @@
         "legacy Stage 09 只捕获定性文本片段（TEXT_QUAL / NOT_AVAILABLE_SEC，value 为空），不做数值计算；非主适用公司的 B13 行会被移出主矩阵、写入 out-of-scope 观测文件。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "AI_TABLE_READ"
-        ],
-        "reader_family_id": "financial_statement",
-        "source_mode": "ai_table",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "MetricSpec catalog/metrics/B13_capacity_utilization.md is the table task contract financial_capacity_utilization_table_v1 (disclosure_group financial_statement)",
+          "method_types": [
+            "AI_TABLE_READ"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "table",
+          "ai_fallback_representation_basis": "registry source_mode ai_table",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "financial_statement",
+          "source_mode": "ai_table",
+          "structured_concept_binding_on_main": "SPEC:catalog/metrics/B13_capacity_utilization.md",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "B13",
       "name_en": "Capacity utilization",
@@ -6129,6 +6489,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### C01 CEO / CFO changes\n\n来源：8-K Item 5.02。  \n输出事件清单：date、accession、item code、brief。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "C01",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Event list of 8-K Item 5.02 within the fiscal-year window (date, accession, item code, brief). A zero-AI declarative item route read from the 8-K header item codes with a primary-document heading fallback.",
       "description_zh": "财年窗口内 8-K Item 5.02 的事件清单（日期、accession、item code、brief）。零 AI 的声明式 item 路由，来自 8-K 头文件 item code，必要时回退到主文档标题。",
       "formula": null,
@@ -6185,15 +6550,24 @@
         "successor/predecessor 公司的事件窗口按 PRIOR_CALENDAR_YEAR_START_TO_TARGET_END 扩展。"
       ],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "EVENT_ITEM_RULE"
-        ],
-        "reader_family_id": "corporate_events",
-        "source_mode": "structured_only",
-        "structured_route_description": "8-K filing index item codes within the fiscal-year window",
-        "structured_route_id": "8k_item_index_v1"
+        "reference_implementation": {
+          "basis": "catalog/event_routes.json member C01 (direct item codes 5.02)",
+          "method_types": [
+            "EVENT_ITEM_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "corporate_events",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "EVENT_ROUTE_MEMBER",
+          "structured_route_description": "SourceStrategy structured route 8k_item_index_v1 (8-K filing index item codes); item codes are bound by catalog/event_routes.json",
+          "structured_route_id": "8k_item_index_v1"
+        }
       },
       "metric_id": "C01",
       "name_en": "CEO / CFO changes",
@@ -6349,6 +6723,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### C02 Board composition\n\n来源：DEF 14A。  \n本轮可输出董事人数、独立董事数、委员会信息；若无法可靠结构化，状态 `TEXT_QUAL` 或 `NEEDS_REVIEW`。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "C02",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Board composition signal from the latest DEF 14A (director count, independent directors, committees). The main baseline only captures a board-section text snippet by keyword and yields qualitative TEXT_QUAL; structured counts need review; no MetricSpec exists on main.",
       "description_zh": "来自最新 DEF 14A 的董事会构成信号（董事人数、独立董事数、委员会信息）。main 基线只按关键词捕获董事会章节文本片段，输出定性状态 TEXT_QUAL，结构化人数需人工复核；无 MetricSpec。",
       "formula": null,
@@ -6402,16 +6781,24 @@
         "PR #43 的 r6 后继 Spec 改为保留完整来源披露语句集合（ai_text，需复核），未合并。"
       ],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "LEGACY_TEXT_OR_FACT_RULE",
-          "AI_TEXT_REVIEW"
-        ],
-        "reader_family_id": "governance_proxy",
-        "source_mode": "ai_text",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "legacy pipeline code cited in metric_metadata.json (scripts/sec_pipeline.py::stage_extract_def14a); no MetricSpec on main",
+          "method_types": [
+            "LEGACY_TEXT_KEYWORD_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "text",
+          "ai_fallback_representation_basis": "registry source_mode ai_text",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "governance_proxy",
+          "source_mode": "ai_text",
+          "structured_concept_binding_on_main": "NO_STRUCTURED_ROUTE",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "C02",
       "name_en": "Board composition",
@@ -6545,11 +6932,12 @@
           "role": "evidence_only"
         },
         {
+          "concept_binding_on_main": "LEGACY_CODE_CITATION",
           "concepts": [],
           "filing_types": [],
-          "location": "ecd XBRL facts of the latest DEF 14A",
+          "location": "SourceStrategy structured route ecd_xbrl_v1 (executive compensation disclosure XBRL facts); the concept is bound by the selected definition or a verified legacy code citation, not by the route",
           "locator_kind": "source_strategy_route",
-          "note": "declared target route in config/source_strategy_registry.json; main has no MetricSpec that binds concepts for it",
+          "note": "declared target route in config/source_strategy_registry.json; the concrete fact is bound only by the verified legacy code citation above (ecd:PeoTotalCompAmt)",
           "priority": "declared_target_route",
           "role": "registry_structured_route"
         }
@@ -6591,6 +6979,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### C03 Executive compensation signals\n\n来源：DEF 14A，优先 ecd XBRL facts。  \n候选：CEO / PEO total compensation。  \n若 ecd tags 不清楚，dump ecd inventory 并标 `NEEDS_REVIEW`。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "C03",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Principal executive officer total compensation, preferring the ecd:PeoTotalCompAmt XBRL fact in the DEF 14A (USD, target fiscal year); without ecd facts the status is NEEDS_REVIEW and the ecd inventory is dumped.",
       "description_zh": "首席执行官（PEO）总薪酬，优先取 DEF 14A 中 ecd XBRL 的 PeoTotalCompAmt 事实（USD，目标财年）；无 ecd 事实时状态 NEEDS_REVIEW 并导出 ecd inventory。",
       "formula": null,
@@ -6649,16 +7042,24 @@
         "PR #43 的 r5 后继 Spec 增加非 ecd 标注时从 Summary Compensation Table 读取的路线，未合并。"
       ],
       "method": {
-        "coverage_mode": "OPEN_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "LEGACY_TEXT_OR_FACT_RULE",
-          "STRUCTURED_FACT"
-        ],
-        "reader_family_id": "governance_proxy",
-        "source_mode": "structured_only",
-        "structured_route_description": "ecd XBRL facts of the latest DEF 14A",
-        "structured_route_id": "ecd_xbrl_v1"
+        "reference_implementation": {
+          "basis": "legacy pipeline code cited in metric_metadata.json (scripts/sec_pipeline.py::repair_c03_compensation, scripts/sec_pipeline.py::stage_extract_def14a); no MetricSpec on main",
+          "method_types": [
+            "LEGACY_XBRL_FACT_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "OPEN_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "governance_proxy",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "LEGACY_CODE_CITATION",
+          "structured_route_description": "SourceStrategy structured route ecd_xbrl_v1 (executive compensation disclosure XBRL facts); the concept is bound by the selected definition or a verified legacy code citation, not by the route",
+          "structured_route_id": "ecd_xbrl_v1"
+        }
       },
       "metric_id": "C03",
       "name_en": "Executive compensation signals",
@@ -6794,11 +7195,12 @@
           "role": "secondary"
         },
         {
+          "concept_binding_on_main": "LEGACY_CODE_CITATION",
           "concepts": [],
           "filing_types": [],
-          "location": "dei:AuditorName facts of the current and prior annual reports",
+          "location": "SourceStrategy structured route auditor_fact_v1 (auditor-report fact family); the fact used is bound per metric by its selected definition or a verified legacy code citation, not by the route",
           "locator_kind": "source_strategy_route",
-          "note": "declared target route in config/source_strategy_registry.json; main has no MetricSpec that binds concepts for it",
+          "note": "declared target route in config/source_strategy_registry.json; the concrete fact is bound only by the verified legacy code citation above (dei:AuditorName)",
           "priority": "declared_target_route",
           "role": "registry_structured_route"
         }
@@ -6840,6 +7242,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### C04 Auditor changes\n\n双路径：\n\n1. 8-K Item 4.01；\n2. 本年 vs 上年 10-K 的 `dei:AuditorName` instance fact。\n\n比较规则：\n\n- current/prior accession 和 period 必须写入证据链。\n- 若目标 filing 是 10-K/A 且不含 auditor report，可回退同财年原始 10-K。\n- 审计师名称比较需忽略标点和空白差异，例如 `KPMG LLP` 与 `KPMG, LLP` 视为同一名称。\n- successor/predecessor CIK 不可硬拼；无法得到同 CIK prior 10-K 时标 `NEEDS_REVIEW`。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "C04",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Auditor-change flag (0 = unchanged, 1 = changed). The baseline compares the current and prior 10-K dei:AuditorName facts for the same CIK, ignoring punctuation and whitespace; a change or a missing/conflicting name is NEEDS_REVIEW and an unchanged name is DIM_XBRL_OK. The definition doc also lists 8-K Item 4.01 as a second path.",
       "description_zh": "审计师是否变更的标记（0 = 未变更，1 = 变更）。基线比较同一 CIK 本年与上年 10-K 的 dei:AuditorName 事实，忽略标点与空白差异；变更或缺失/冲突时 NEEDS_REVIEW，未变更为 DIM_XBRL_OK。定义文档还列出 8-K Item 4.01 作为第二路径。",
       "formula": null,
@@ -6899,16 +7306,25 @@
         "10-K/A 不含审计报告时回退同财年原始 10-K；successor/predecessor 不可硬拼 CIK。"
       ],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "LEGACY_TEXT_OR_FACT_RULE",
-          "STRUCTURED_FACT"
-        ],
-        "reader_family_id": "auditor_report",
-        "source_mode": "structured_only",
-        "structured_route_description": "dei:AuditorName facts of the current and prior annual reports",
-        "structured_route_id": "auditor_fact_v1"
+        "reference_implementation": {
+          "basis": "legacy pipeline code cited in metric_metadata.json (scripts/sec_pipeline.py::repair_c04_auditor_changes, scripts/sec_pipeline.py::canonical_auditor_name); no MetricSpec on main",
+          "method_types": [
+            "LEGACY_XBRL_FACT_RULE",
+            "LEGACY_8K_ITEM_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "auditor_report",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "LEGACY_CODE_CITATION",
+          "structured_route_description": "SourceStrategy structured route auditor_fact_v1 (auditor-report fact family); the fact used is bound per metric by its selected definition or a verified legacy code citation, not by the route",
+          "structured_route_id": "auditor_fact_v1"
+        }
       },
       "metric_id": "C04",
       "name_en": "Auditor changes",
@@ -7059,6 +7475,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### D01 Risk factors summary\n\n来源：10-K Item 1A。  \n输出标题级摘要或主题清单。  \n状态 `TEXT_QUAL`。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "D01",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Title-level summary or theme list of 10-K Item 1A with qualitative status TEXT_QUAL. The main baseline only captures a text snippet at the Item 1A Risk Factors heading.",
       "description_zh": "10-K Item 1A 的标题级摘要或主题清单，定性状态 TEXT_QUAL。main 基线只按“Item 1A Risk Factors”标题捕获文本片段。",
       "formula": null,
@@ -7111,16 +7532,24 @@
         "PR #43 的 r6 后继 Spec 改为复现完整 Item 1A 的全部强调标题（ai_text，需复核），未合并。"
       ],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "LEGACY_TEXT_OR_FACT_RULE",
-          "AI_TEXT_REVIEW"
-        ],
-        "reader_family_id": "risk_legal_text",
-        "source_mode": "ai_text",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "legacy pipeline code cited in metric_metadata.json (scripts/sec_pipeline.py::stage_extract_mda_and_risk_text); no MetricSpec on main",
+          "method_types": [
+            "LEGACY_TEXT_KEYWORD_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "text",
+          "ai_fallback_representation_basis": "registry source_mode ai_text",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "risk_legal_text",
+          "source_mode": "ai_text",
+          "structured_concept_binding_on_main": "NO_STRUCTURED_ROUTE",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "D01",
       "name_en": "Risk factors summary",
@@ -7271,6 +7700,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### D02 Litigation disclosures\n\n来源：Item 3 / legal proceedings / contingencies notes。  \n若有 XBRL loss contingency accrual，记录概念和值；否则记录文本存在性。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "D02",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Existence of litigation disclosure in Item 3 / Legal Proceedings / contingency notes. The definition doc asks to record an XBRL loss-contingency accrual concept and value when present and otherwise text existence; the main baseline only captures heading/keyword text, TEXT_QUAL on a hit and NOT_AVAILABLE_SEC otherwise.",
       "description_zh": "Item 3 / Legal Proceedings / 或有事项附注中的诉讼披露存在性。定义文档要求若有 XBRL loss contingency accrual 则记录概念与值，否则记录文本存在性；main 基线只做标题/关键词文本捕获，命中为 TEXT_QUAL，否则 NOT_AVAILABLE_SEC。",
       "formula": null,
@@ -7322,16 +7756,24 @@
         "PR #43 的 r6 后继 Spec 记录 Item 3 / Item 8 / 引用附注的完整披露集合，未合并。"
       ],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "LEGACY_TEXT_OR_FACT_RULE",
-          "AI_TEXT_REVIEW"
-        ],
-        "reader_family_id": "risk_legal_text",
-        "source_mode": "ai_text",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "legacy pipeline code cited in metric_metadata.json (scripts/sec_pipeline.py::stage_extract_mda_and_risk_text); no MetricSpec on main",
+          "method_types": [
+            "LEGACY_TEXT_KEYWORD_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "text",
+          "ai_fallback_representation_basis": "registry source_mode ai_text",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "risk_legal_text",
+          "source_mode": "ai_text",
+          "structured_concept_binding_on_main": "NO_STRUCTURED_ROUTE",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "D02",
       "name_en": "Litigation disclosures",
@@ -7473,6 +7915,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### D03 Regulatory investigations\n\n来源：Item 1A / Item 3 / notes。  \n关键词包括 investigation、subpoena、inquiry、regulatory、SEC、DOJ、FTC、FDA 等。  \n输出命中段落和判断。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "D03",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Regulatory-investigation signals in Item 1A / Item 3 / notes: passages hit by the keywords investigation, subpoena, inquiry, regulatory, SEC, DOJ, FTC, FDA plus a judgement. The main baseline scans the whole 10-K text, TEXT_QUAL on a hit and NOT_AVAILABLE_SEC otherwise; no MetricSpec exists on main and PR #43 provides no successor Spec either.",
       "description_zh": "Item 1A / Item 3 / 附注中的监管调查线索：关键词 investigation、subpoena、inquiry、regulatory、SEC、DOJ、FTC、FDA 的命中段落与判断。main 基线在整篇 10-K 文本上做关键词扫描，命中为 TEXT_QUAL，否则 NOT_AVAILABLE_SEC；无 MetricSpec，PR #43 亦未提供后继 Spec。",
       "formula": null,
@@ -7524,16 +7971,24 @@
         "value 为空，unit 不适用。"
       ],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "LEGACY_TEXT_OR_FACT_RULE",
-          "AI_TEXT_REVIEW"
-        ],
-        "reader_family_id": "risk_legal_text",
-        "source_mode": "ai_text",
-        "structured_route_description": null,
-        "structured_route_id": null
+        "reference_implementation": {
+          "basis": "legacy pipeline code cited in metric_metadata.json (scripts/sec_pipeline.py::stage_extract_mda_and_risk_text); no MetricSpec on main",
+          "method_types": [
+            "LEGACY_TEXT_KEYWORD_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "text",
+          "ai_fallback_representation_basis": "registry source_mode ai_text",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "risk_legal_text",
+          "source_mode": "ai_text",
+          "structured_concept_binding_on_main": "NO_STRUCTURED_ROUTE",
+          "structured_route_description": null,
+          "structured_route_id": null
+        }
       },
       "metric_id": "D03",
       "name_en": "Regulatory investigations",
@@ -7655,11 +8110,12 @@
           "role": "primary"
         },
         {
+          "concept_binding_on_main": "NOT_BOUND_ON_MAIN",
           "concepts": [],
           "filing_types": [],
-          "location": "dei:AuditorName facts of the current and prior annual reports",
+          "location": "SourceStrategy structured route auditor_fact_v1 (auditor-report fact family); the fact used is bound per metric by its selected definition or a verified legacy code citation, not by the route",
           "locator_kind": "source_strategy_route",
-          "note": "declared target route in config/source_strategy_registry.json; main has no MetricSpec that binds concepts for it",
+          "note": "declared target route in config/source_strategy_registry.json; main has no MetricSpec or verified legacy citation that binds a concept for this route, so no concept or filing is stated",
           "priority": "declared_target_route",
           "role": "registry_structured_route"
         }
@@ -7693,6 +8149,11 @@
         "variants": []
       },
       "definition_text_excerpt": "### D04 Going concern statements\n\n来源：审计意见、10-K 文本、going concern XBRL concepts。  \n未披露 going concern doubt 通常是正常结果，应写“未披露持续经营疑虑”，不是 parse failure。",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "D04",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "Going-concern doubt in the audit opinion, 10-K text or going-concern XBRL concepts. The main baseline scans for the phrases going concern / substantial doubt: a hit records the snippet and a miss records “no going-concern doubt disclosed”; both are TEXT_QUAL and absence is a normal result rather than a parse failure. The registry defines D04 as auditor_fact structured-first with an ai_text fallback.",
       "description_zh": "审计意见、10-K 文本或 going concern 相关 XBRL 概念中的持续经营疑虑。main 基线扫描短语 going concern / substantial doubt：命中记录片段，未命中记录“未披露持续经营疑虑”；两者都是 TEXT_QUAL，未披露是正常结果而非解析失败。注册表把 D04 定义为 auditor_fact 结构化优先、ai_text 回退。",
       "formula": null,
@@ -7745,19 +8206,26 @@
         "PR #43 的 r6 后继 Spec 区分当期声明、历史疑虑、其他主体与条件性风险，未合并。"
       ],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [
-          "STRUCTURED_SOURCE_AMBIGUOUS"
-        ],
-        "method_types": [
-          "LEGACY_TEXT_OR_FACT_RULE",
-          "STRUCTURED_FACT",
-          "AI_TABLE_READ_FALLBACK"
-        ],
-        "reader_family_id": "auditor_report",
-        "source_mode": "structured_first_ai_fallback",
-        "structured_route_description": "dei:AuditorName facts of the current and prior annual reports",
-        "structured_route_id": "auditor_fact_v1"
+        "reference_implementation": {
+          "basis": "legacy pipeline code cited in metric_metadata.json (scripts/sec_pipeline.py::stage_extract_mda_and_risk_text); no MetricSpec on main",
+          "method_types": [
+            "LEGACY_TEXT_KEYWORD_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": "text",
+          "ai_fallback_representation_basis": "config/source_strategy_fallback_representation.json#fallback_representation_by_metric.D04",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [
+            "STRUCTURED_SOURCE_AMBIGUOUS"
+          ],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "auditor_report",
+          "source_mode": "structured_first_ai_fallback",
+          "structured_concept_binding_on_main": "NOT_BOUND_ON_MAIN",
+          "structured_route_description": "SourceStrategy structured route auditor_fact_v1 (auditor-report fact family); the fact used is bound per metric by its selected definition or a verified legacy code citation, not by the route",
+          "structured_route_id": "auditor_fact_v1"
+        }
       },
       "metric_id": "D04",
       "name_en": "Going concern statements",
@@ -7932,6 +8400,11 @@
         "variants": []
       },
       "definition_text_excerpt": "| E01 | M&A announcements | 1.01 / 2.01 / 8.01 + 关键词 | 8.01 需正文关键词确认 |",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "E01",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "8-K Item 1.01 / 2.01 events within the fiscal-year window, plus Item 8.01 events whose text contains merger / acquisition / combine / transaction keywords.",
       "description_zh": "财年窗口内 8-K Item 1.01 / 2.01 事件，以及正文含 merger / acquisition / combine / transaction 关键词的 Item 8.01 事件。",
       "formula": null,
@@ -7982,15 +8455,24 @@
         "Item 1.01 与 E05 同源；关键词匹配为 NFKC casefold 子串匹配。"
       ],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "EVENT_ITEM_RULE"
-        ],
-        "reader_family_id": "corporate_events",
-        "source_mode": "structured_only",
-        "structured_route_description": "8-K filing index item codes within the fiscal-year window",
-        "structured_route_id": "8k_item_index_v1"
+        "reference_implementation": {
+          "basis": "catalog/event_routes.json member E01 (direct item codes 1.01, 2.01)",
+          "method_types": [
+            "EVENT_ITEM_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "corporate_events",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "EVENT_ROUTE_MEMBER",
+          "structured_route_description": "SourceStrategy structured route 8k_item_index_v1 (8-K filing index item codes); item codes are bound by catalog/event_routes.json",
+          "structured_route_id": "8k_item_index_v1"
+        }
       },
       "metric_id": "E01",
       "name_en": "M&A announcements",
@@ -8150,6 +8632,11 @@
         "variants": []
       },
       "definition_text_excerpt": "| E02 | Bankruptcy filings | 1.03 | 预期多为零，零是正常结果 |",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "E02",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "8-K Item 1.03 events within the fiscal-year window; zero is the normal expected result.",
       "description_zh": "财年窗口内 8-K Item 1.03 事件；预期多为零，零是正常结果。",
       "formula": null,
@@ -8198,15 +8685,24 @@
       },
       "limitations_zh": [],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "EVENT_ITEM_RULE"
-        ],
-        "reader_family_id": "corporate_events",
-        "source_mode": "structured_only",
-        "structured_route_description": "8-K filing index item codes within the fiscal-year window",
-        "structured_route_id": "8k_item_index_v1"
+        "reference_implementation": {
+          "basis": "catalog/event_routes.json member E02 (direct item codes 1.03)",
+          "method_types": [
+            "EVENT_ITEM_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "corporate_events",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "EVENT_ROUTE_MEMBER",
+          "structured_route_description": "SourceStrategy structured route 8k_item_index_v1 (8-K filing index item codes); item codes are bound by catalog/event_routes.json",
+          "structured_route_id": "8k_item_index_v1"
+        }
       },
       "metric_id": "E02",
       "name_en": "Bankruptcy filings",
@@ -8366,6 +8862,11 @@
         "variants": []
       },
       "definition_text_excerpt": "| E03 | Leadership departures | 5.02 | 与 C01 同源 |",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "E03",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "8-K Item 5.02 events within the fiscal-year window, same source and shared claim group as C01.",
       "description_zh": "财年窗口内 8-K Item 5.02 事件，与 C01 同源并共享 claim group。",
       "formula": null,
@@ -8416,15 +8917,24 @@
         "不区分离任与任命。"
       ],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "EVENT_ITEM_RULE"
-        ],
-        "reader_family_id": "corporate_events",
-        "source_mode": "structured_only",
-        "structured_route_description": "8-K filing index item codes within the fiscal-year window",
-        "structured_route_id": "8k_item_index_v1"
+        "reference_implementation": {
+          "basis": "catalog/event_routes.json member E03 (direct item codes 5.02)",
+          "method_types": [
+            "EVENT_ITEM_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "corporate_events",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "EVENT_ROUTE_MEMBER",
+          "structured_route_description": "SourceStrategy structured route 8k_item_index_v1 (8-K filing index item codes); item codes are bound by catalog/event_routes.json",
+          "structured_route_id": "8k_item_index_v1"
+        }
       },
       "metric_id": "E03",
       "name_en": "Leadership departures",
@@ -8584,6 +9094,11 @@
         "variants": []
       },
       "definition_text_excerpt": "| E04 | Financial restatements | 4.02 | 高风险信号 |",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "E04",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "8-K Item 4.02 (non-reliance on previously issued financial statements) events within the fiscal-year window; a high-risk signal.",
       "description_zh": "财年窗口内 8-K Item 4.02（不可依赖既往财务报表）事件，高风险信号。",
       "formula": null,
@@ -8632,15 +9147,24 @@
       },
       "limitations_zh": [],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "EVENT_ITEM_RULE"
-        ],
-        "reader_family_id": "corporate_events",
-        "source_mode": "structured_only",
-        "structured_route_description": "8-K filing index item codes within the fiscal-year window",
-        "structured_route_id": "8k_item_index_v1"
+        "reference_implementation": {
+          "basis": "catalog/event_routes.json member E04 (direct item codes 4.02)",
+          "method_types": [
+            "EVENT_ITEM_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "corporate_events",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "EVENT_ROUTE_MEMBER",
+          "structured_route_description": "SourceStrategy structured route 8k_item_index_v1 (8-K filing index item codes); item codes are bound by catalog/event_routes.json",
+          "structured_route_id": "8k_item_index_v1"
+        }
       },
       "metric_id": "E04",
       "name_en": "Financial restatements",
@@ -8800,6 +9324,11 @@
         "variants": []
       },
       "definition_text_excerpt": "| E05 | Material agreements | 1.01 | 输出清单，不必全文抽合同条款 |",
+      "definition_text_excerpt_source": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "section": "E05",
+        "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99"
+      },
       "description_en": "List of 8-K Item 1.01 events within the fiscal-year window; contract terms are not extracted.",
       "description_zh": "财年窗口内 8-K Item 1.01 事件清单；不抽取合同条款。",
       "formula": null,
@@ -8850,15 +9379,24 @@
         "与 E01 的 Item 1.01 同源。"
       ],
       "method": {
-        "coverage_mode": "CLOSED_WORLD",
-        "fallback_trigger_codes": [],
-        "method_types": [
-          "EVENT_ITEM_RULE"
-        ],
-        "reader_family_id": "corporate_events",
-        "source_mode": "structured_only",
-        "structured_route_description": "8-K filing index item codes within the fiscal-year window",
-        "structured_route_id": "8k_item_index_v1"
+        "reference_implementation": {
+          "basis": "catalog/event_routes.json member E05 (direct item codes 1.01)",
+          "method_types": [
+            "EVENT_ITEM_RULE"
+          ]
+        },
+        "registry_target_route": {
+          "ai_fallback_representation": null,
+          "ai_fallback_representation_basis": "registry source_mode structured_only declares no AI fallback",
+          "coverage_mode": "CLOSED_WORLD",
+          "fallback_trigger_codes": [],
+          "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+          "reader_family_id": "corporate_events",
+          "source_mode": "structured_only",
+          "structured_concept_binding_on_main": "EVENT_ROUTE_MEMBER",
+          "structured_route_description": "SourceStrategy structured route 8k_item_index_v1 (8-K filing index item codes); item codes are bound by catalog/event_routes.json",
+          "structured_route_id": "8k_item_index_v1"
+        }
       },
       "metric_id": "E05",
       "name_en": "Material agreements",

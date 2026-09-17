@@ -46,7 +46,9 @@ tests/test_metrics_reference.py       专项测试（独立预期 + 反例）
 python3 tools/generate_metrics_reference.py --check
 ```
 
-只读校验：核对 40 个声明输入的摘要（数据/文档文件为整文件 sha256；`scripts/sec_pipeline.py`、`scripts/vnext/calculator.py`、`scripts/vnext/zero_ai_r2.py` 三个代码引用目标为 `digest_scope=cited_symbols`，只对被引用的顶层符号块取摘要，文件其他位置的无关改动不算漂移），再在内存中生成并与 `generated/` 逐字节比较；不写盘。
+只读校验：核对 41 个声明输入的摘要（数据/文档文件为整文件 sha256；`scripts/sec_pipeline.py`、`scripts/vnext/calculator.py`、`scripts/vnext/zero_ai_r2.py` 三个代码引用目标为 `digest_scope=cited_symbols`，只对被引用的顶层符号块取摘要，文件其他位置的无关改动不算漂移），再在内存中生成并与 `generated/` 逐字节比较；不写盘。
+
+被引用符号块由标准库 `ast` 定位：函数/类/赋值/import/for/with 的完整顶层绑定，含装饰器，按解析器的 `end_lineno` 截止（函数体内顶格注释不会截断）。同一符号在模块顶层被绑定多次（重复定义、直接重绑定）时明确拒绝，不静默取第一份；条件定义或嵌套定义不在支持范围内，按“未定义”报错。**覆盖边界**：符号块漂移检测只证明被引用的源码块字节未变，不证明其调用的其他函数、传递依赖或运行行为未变。
 
 ```bash
 python3 tools/generate_metrics_reference.py
@@ -80,6 +82,19 @@ python3 -m unittest tests.test_metrics_reference -v
 PR #43（固定提交 `8346c326f04be5a863dc8bf2f010087a6f2025a3`）上的后继 Spec 只以
 `development_references`（path + sha256 + 一句说明）记录，`verified_by_generator=false`；
 它们不是定义来源，也不代表上线状态。D03 在 main 与该提交上都没有 Spec。
+
+## 方法与目标路线分开表达
+
+定义表的 `method` 有两个互不推断的部分：
+
+- `reference_implementation`：所选 main 定义或经核对的 legacy 代码引用**实际做什么**（`XBRL_FORMULA`、`DIRECT_XBRL_FACT`、`AI_TABLE_READ`、`AI_TABLE_READ_FALLBACK`、`EVENT_ITEM_RULE`、`LEGACY_TEXT_KEYWORD_RULE`、`LEGACY_XBRL_FACT_RULE`、`LEGACY_8K_ITEM_RULE`），`basis` 指明依据（Spec 路径、目录成员、表格合同 id 或代码引用）。`AI_TABLE_READ*` 只在 `catalog/table_task_contracts.json` 存在该指标的表格合同时出现。
+- `registry_target_route`：`config/source_strategy_registry.json` **声明的目标策略**（source_mode、reader family、structured route、触发条件、coverage）。route 描述保持在路线层面，不推断具体 concept、filing 或审阅方式；`structured_concept_binding_on_main` 说明 main 上是否有定义或代码引用绑定了具体 concept（`SPEC:…` / `DETERMINISTIC_CATALOG_MEMBER` / `EVENT_ROUTE_MEMBER` / `LEGACY_CODE_CITATION` / `NOT_BOUND_ON_MAIN`）。`ai_fallback_representation`（table / text）对 `structured_first_ai_fallback` 指标只取自 main 上绑定注册表 sha256 的 `config/source_strategy_fallback_representation.json`（A09/A13/B06 = table，D04 = text），对 ai_table / ai_text 取自 source_mode 本身，structured_only 为 null。
+
+例如 D04：参考实现是 legacy 关键词扫描（`going concern|substantial doubt`）；目标路线为 auditor_fact_v1 结构化优先 + text 回退，main 上没有为该路线绑定任何 concept，因此不写任何 tag。C04 的 `dei:AuditorName` 来自其自身经核对的 legacy 代码引用，不由 route id 推出。
+
+## 出处与内容绑定
+
+每个指标的定义只从 `source_selection.json` 里 `primary.path` 指向的文件读取：路径必须是声明输入且其 `role` 与定义类别匹配（`metric_spec` / `deterministic_catalog` / `event_routes` / `text_definition`），文件还必须具有对应结构（Spec 前置 JSON 的 `metric_id`、`DETERMINISTIC_METRIC_CATALOG` 的 `metrics[id]`、`DETERMINISTIC_EVENT_ROUTE_CATALOG` 的 `routes[id]`、定义文档中的 `### <id>` 章节）。输出中的 path / member 或 section / sha256 因此始终对应实际用于生成的字节；错误引用在生成前被拒绝，刷新摘要或重新生成都不能使其自洽。变体路径同样限制为 Spec 类角色。
 
 ## 三个独立维度
 

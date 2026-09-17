@@ -43,9 +43,10 @@
     },
     "source_strategy_registry": {
       "paths": [
-        "config/source_strategy_registry.json"
+        "config/source_strategy_registry.json",
+        "config/source_strategy_fallback_representation.json"
       ],
-      "role": "Issue #15 的 39 指标 source_mode / reader family / structured route 骨架；不保存迁移状态。",
+      "role": "Issue #15 的 39 指标 source_mode / reader family / structured route 骨架，以及绑定该注册表 sha256 的 AI 回退表示（table / text）声明；不保存迁移状态，也不绑定具体 concept。",
       "state_label": null
     },
     "issue15_table_contracts": {
@@ -75,7 +76,7 @@
         "scripts/vnext/zero_ai_r2.py",
         "scripts/vnext/calculator.py"
       ],
-      "role": "legacy producer 方法与 vNext 公式/适用性语义的代码引用；生成器只核对 symbol 与字面量存在，不执行这些代码。这些文件的摘要范围是被引用的符号块（digest_scope=cited_symbols），文件其他位置的无关改动不算参考漂移。",
+      "role": "legacy producer 方法与 vNext 公式/适用性语义的代码引用；生成器只核对 symbol 与字面量存在，不执行这些代码。这些文件的摘要范围是 ast 定位的被引用顶层符号块（digest_scope=cited_symbols，含装饰器，重复绑定拒绝），文件其他位置的无关改动不算参考漂移；符号块摘要不覆盖其传递依赖或运行行为。",
       "state_label": null
     }
   },
@@ -220,6 +221,10 @@
       "sha256": "ba894b8c7af4ee809c1c09d7dc18d5b6a87e3b865d2e205176066ed19d6a49ab",
       "role": "release_plan"
     },
+    "config/source_strategy_fallback_representation.json": {
+      "sha256": "3905c4735488968b3f4e8e73394275f476a5a37dcb5386d7643676a77ec6ac3a",
+      "role": "fallback_representation"
+    },
     "config/source_strategy_registry.json": {
       "sha256": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
       "role": "source_strategy_registry"
@@ -229,17 +234,17 @@
       "role": "legacy_migration_set"
     },
     "scripts/sec_pipeline.py": {
-      "sha256": "14933c6fc1bd2dc4023fe9fa620e9ea442d0443a41d9d60c78437093736e2cd5",
+      "sha256": "e7a489bd4d95ad413946c1b9c7ac0a709725ffacc18eb206637a38e8ae162c17",
       "role": "code_citation_target",
       "digest_scope": "cited_symbols"
     },
     "scripts/vnext/calculator.py": {
-      "sha256": "693e4e9e3e2e9a682b230bf15b83d2113892f3e844916eb1af273ba541b3659b",
+      "sha256": "31e8dfc824bdc76bafca99e6bd096e1b7e95f3693b1c1a8cf29d8f37e5a629cf",
       "role": "code_citation_target",
       "digest_scope": "cited_symbols"
     },
     "scripts/vnext/zero_ai_r2.py": {
-      "sha256": "85f154108d67f37aa1bd14c153558c1d5c9188fe44a968950a9006d085544c11",
+      "sha256": "848f307177439b7045105a5df457dace2fce56da3fd803480f328e1a3a42c743",
       "role": "code_citation_target",
       "digest_scope": "cited_symbols"
     }

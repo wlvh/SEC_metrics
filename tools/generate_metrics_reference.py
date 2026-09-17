@@ -29,6 +29,7 @@ Determinism:
 from __future__ import annotations
 
 import argparse
+import ast
 import csv
 import hashlib
 import io
@@ -76,13 +77,29 @@ STRUCTURAL_VALUES = (
     "NO_STRUCTURAL_RULE",
 )
 # Closed set from config/source_strategy_registry.json; the test proves every
-# registry route id is described here.
+# registry route id is described here.  Descriptions stay at route level: the
+# concepts, filings and fallback representation of one metric are bound by its
+# selected definition, config/source_strategy_fallback_representation.json or
+# a verified legacy code citation, never inferred from the route id.
 STRUCTURED_ROUTE_DESCRIPTIONS = {
-    "companyfacts_v1": "SEC companyfacts API annual facts of the target 10-K (form 10-K prefix, fiscal-year period)",
-    "accession_xbrl_v1": "XBRL instance of the target 10-K accession (dimensioned or custom facts)",
-    "8k_item_index_v1": "8-K filing index item codes within the fiscal-year window",
-    "ecd_xbrl_v1": "ecd XBRL facts of the latest DEF 14A",
-    "auditor_fact_v1": "dei:AuditorName facts of the current and prior annual reports",
+    "companyfacts_v1": "SourceStrategy structured route companyfacts_v1 (SEC companyfacts entity-level facts); per-metric concept chains are bound by the selected definition, not by the route",
+    "accession_xbrl_v1": "SourceStrategy structured route accession_xbrl_v1 (XBRL instance facts of the target accession); per-metric concepts and dimensions are bound by the selected definition, not by the route",
+    "8k_item_index_v1": "SourceStrategy structured route 8k_item_index_v1 (8-K filing index item codes); item codes are bound by catalog/event_routes.json",
+    "ecd_xbrl_v1": "SourceStrategy structured route ecd_xbrl_v1 (executive compensation disclosure XBRL facts); the concept is bound by the selected definition or a verified legacy code citation, not by the route",
+    "auditor_fact_v1": "SourceStrategy structured route auditor_fact_v1 (auditor-report fact family); the fact used is bound per metric by its selected definition or a verified legacy code citation, not by the route",
+}
+# Roles that a metric's primary definition path may carry, per definition kind.
+PRIMARY_ROLES_BY_KIND = {
+    "MAIN_STRUCTURED_SPEC": {"metric_spec"},
+    "MAIN_DETERMINISTIC_CATALOG": {"deterministic_catalog"},
+    "MAIN_EVENT_ROUTE": {"event_routes"},
+    "MAIN_TEXT_DEFINITION": {"text_definition"},
+}
+VARIANT_ROLES = {"metric_spec", "metric_spec_historical", "disclosure_group"}
+LEGACY_LOCATOR_METHOD_TYPES = {
+    "text_regex": "LEGACY_TEXT_KEYWORD_RULE",
+    "xbrl_concept": "LEGACY_XBRL_FACT_RULE",
+    "8k_item_code": "LEGACY_8K_ITEM_RULE",
 }
 DETERMINISTIC_ADAPTER_DESCRIPTIONS = {
     "companyfacts": "SEC companyfacts API (entity-level standard taxonomy facts)",
@@ -98,12 +115,6 @@ DETERMINISTIC_FORMULA_TEMPLATES = {
     ("average_denominator_ratio", 3): "{0} / (({1} + {2}) / 2)",
     ("interest_coverage", 2): "{0} / {1}",
     ("interest_coverage", 3): "({0} - {1}) / {2}",
-}
-SOURCE_MODE_METHOD_TYPES = {
-    "structured_only": ["STRUCTURED_FACT"],
-    "structured_first_ai_fallback": ["STRUCTURED_FACT", "AI_TABLE_READ_FALLBACK"],
-    "ai_table": ["AI_TABLE_READ"],
-    "ai_text": ["AI_TEXT_REVIEW"],
 }
 MAP_CSV_COLUMNS = [
     "sic_start",
@@ -137,6 +148,7 @@ DEFINITIONS_CSV_COLUMNS = [
     "source_mode",
     "reader_family_id",
     "structured_route_id",
+    "ai_fallback_representation",
     "definition_source_kind",
     "definition_source_path",
     "binding_authority",
@@ -292,21 +304,69 @@ def cited_symbols(metadata: Mapping[str, Any]) -> Dict[str, List[str]]:
 # ---------------------------------------------------------------------------
 
 
+_AST_CACHE: Dict[str, ast.Module] = {}
+
+
+def _binding_span(node: ast.AST, symbol: str) -> Optional[Tuple[int, int, str]]:
+    """Return (start_line, end_line, kind) when a top-level node binds ``symbol``."""
+    if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+        if node.name != symbol:
+            return None
+        start = min([node.lineno] + [decorator.lineno for decorator in node.decorator_list])
+        return (start, int(node.end_lineno), type(node).__name__)
+    targets: List[ast.AST] = []
+    if isinstance(node, ast.Assign):
+        targets = list(node.targets)
+    elif isinstance(node, (ast.AnnAssign, ast.AugAssign)):
+        targets = [node.target]
+    elif isinstance(node, (ast.For, ast.AsyncFor)):
+        targets = [node.target]
+    elif isinstance(node, (ast.With, ast.AsyncWith)):
+        targets = [item.optional_vars for item in node.items if item.optional_vars is not None]
+    elif isinstance(node, (ast.Import, ast.ImportFrom)):
+        bound = [alias.asname or alias.name.split(".")[0] for alias in node.names]
+        return (node.lineno, int(node.end_lineno), type(node).__name__) if symbol in bound else None
+    names: List[str] = []
+    for target in targets:
+        for child in ast.walk(target):
+            if isinstance(child, ast.Name):
+                names.append(child.id)
+    if symbol in names:
+        return (node.lineno, int(node.end_lineno), type(node).__name__)
+    return None
+
+
 def _symbol_block(source: str, symbol: str, label: str) -> str:
-    """Return the top-level source block that defines ``symbol``."""
-    pattern = re.compile(
-        r"^(?:def\s+{0}\s*\(|class\s+{0}\b|{0}\s*=)".format(re.escape(symbol)), re.M
-    )
-    match = pattern.search(source)
-    if match is None:
+    """Return the complete top-level source block that binds ``symbol``.
+
+    The block is located with the standard-library ``ast`` module (function,
+    class, assignment, import, for/with targets), includes decorators, and is
+    cut by the parser's own ``end_lineno`` so column-0 comments inside a body
+    cannot truncate it.  A symbol that is bound more than once at module level
+    (duplicate definition, direct rebinding) is rejected instead of silently
+    taking the first binding.  Conditional or nested definitions are outside
+    the supported forms and are reported as undefined.
+    """
+    cache_key = sha256_bytes(source.encode("utf-8"))
+    tree = _AST_CACHE.get(cache_key)
+    if tree is None:
+        try:
+            tree = ast.parse(source)
+        except SyntaxError as error:
+            raise ReferenceError("{}: cited source is not parseable Python: {}".format(label, error)) from error
+        _AST_CACHE[cache_key] = tree
+    spans = [span for span in (_binding_span(node, symbol) for node in tree.body) if span is not None]
+    if not spans:
         raise ReferenceError("{}: symbol {} is not defined at top level".format(label, symbol))
-    lines = source[match.start():].split("\n")
-    block = [lines[0]]
-    for line in lines[1:]:
-        if line and not line[0].isspace() and line[0] not in ")]}":
-            break
-        block.append(line)
-    return "\n".join(block)
+    if len(spans) > 1:
+        raise ReferenceError(
+            "{}: symbol {} is bound {} times at top level (lines {}); ambiguous binding is not supported".format(
+                label, symbol, len(spans), ", ".join(str(span[0]) for span in spans)
+            )
+        )
+    start, end, _kind = spans[0]
+    lines = source.split("\n")
+    return "\n".join(lines[start - 1:end])
 
 
 def verify_citation(
@@ -917,13 +977,17 @@ def _data_sources_for(
             })
     elif kind == "MAIN_STRUCTURED_SPEC":
         formula = source.get("formula")
+        if source.get("selection_policy") == "legacy_companyfacts_v1":
+            structured_location = "SEC companyfacts annual facts selected by legacy_companyfacts_v1 (10-K form prefix, fiscal-year target period, target accession priority, filed/accession/unit tie-break)"
+        else:
+            structured_location = "structured XBRL facts selected per the Spec's own roles and guards (registry structured route {})".format(route_id)
         if formula:
             for entry in formula["inputs"]:
                 if entry["kind"] in ("structured_role", "extraction_role"):
                     sources.append({
                         "role": entry["role"],
                         "filing_types": ["10-K"],
-                        "location": STRUCTURED_ROUTE_DESCRIPTIONS.get(route_id, "structured XBRL facts"),
+                        "location": structured_location,
                         "locator_kind": "xbrl_concept",
                         "concepts": entry["approved_concepts"],
                         "cardinality": entry["cardinality"],
@@ -946,7 +1010,7 @@ def _data_sources_for(
                             "role": branch["role"],
                             "branch_ordinal": branch["branch_ordinal"],
                             "filing_types": ["10-K"],
-                            "location": STRUCTURED_ROUTE_DESCRIPTIONS.get(route_id, "structured XBRL facts"),
+                            "location": structured_location,
                             "locator_kind": "xbrl_concept",
                             "concepts": branch.get("approved_concepts") or sorted(
                                 {concept for concepts in branch.get("component_concepts", {}).values() for concept in concepts}
@@ -958,11 +1022,12 @@ def _data_sources_for(
         if source.get("source_mode") == "structured_first_ai_fallback" and not formula:
             sources.append({
                 "role": "structured_first_route",
-                "filing_types": ["10-K"],
-                "location": STRUCTURED_ROUTE_DESCRIPTIONS.get(route_id, "structured XBRL facts"),
+                "filing_types": [],
+                "location": STRUCTURED_ROUTE_DESCRIPTIONS[route_id],
                 "locator_kind": "source_strategy_route",
                 "concepts": [],
-                "note": "declared structured-first route in config/source_strategy_registry.json; no main definition binds approved concepts for this route",
+                "concept_binding_on_main": "NOT_BOUND_ON_MAIN",
+                "note": "declared structured-first route in config/source_strategy_registry.json; no main definition binds approved concepts for this route, so nothing more specific is stated",
                 "priority": "structured_first",
             })
         if source.get("source_mode") in ("ai_table",) or (
@@ -983,13 +1048,24 @@ def _data_sources_for(
         for text_source in metadata_entry.get("text_sources", []):
             sources.append(dict(text_source))
         if route_id is not None:
+            cited_concepts = sorted({
+                concept
+                for text_source in metadata_entry.get("text_sources", [])
+                if text_source.get("locator_kind") == "xbrl_concept" and text_source.get("role") in ("primary", "secondary")
+                for concept in text_source.get("concepts", [])
+            })
             sources.append({
                 "role": "registry_structured_route",
                 "filing_types": [],
                 "location": STRUCTURED_ROUTE_DESCRIPTIONS[route_id],
                 "locator_kind": "source_strategy_route",
                 "concepts": [],
-                "note": "declared target route in config/source_strategy_registry.json; main has no MetricSpec that binds concepts for it",
+                "concept_binding_on_main": "LEGACY_CODE_CITATION" if cited_concepts else "NOT_BOUND_ON_MAIN",
+                "note": (
+                    "declared target route in config/source_strategy_registry.json; the concrete fact is bound only by the verified legacy code citation above ({})".format(", ".join(cited_concepts))
+                    if cited_concepts else
+                    "declared target route in config/source_strategy_registry.json; main has no MetricSpec or verified legacy citation that binds a concept for this route, so no concept or filing is stated"
+                ),
                 "priority": "declared_target_route",
             })
     if kind == "MAIN_STRUCTURED_SPEC" and source.get("source_mode") == "structured_first_ai_fallback" and source.get("formula"):
@@ -1060,6 +1136,114 @@ def _period_and_scope(kind: str, source: Mapping[str, Any], projection_entry: Op
     }
 
 
+def _method_block(
+    *,
+    metric_id: str,
+    kind: str,
+    source: Mapping[str, Any],
+    registry_entry: Mapping[str, Any],
+    contracts_by_metric: Mapping[str, List[Dict[str, Any]]],
+    metadata_entry: Mapping[str, Any],
+    fallback_representation: Mapping[str, str],
+    chosen: Mapping[str, Any],
+) -> Dict[str, Any]:
+    """Describe the selected reference implementation and the registry target route separately.
+
+    The reference implementation is what the selected main definition (or the
+    verified legacy code citation) actually does.  The registry target route
+    is only what config/source_strategy_registry.json declares; its AI
+    fallback representation comes from
+    config/source_strategy_fallback_representation.json, never from the route
+    id or the reader family name.
+    """
+    contract_ids = [contract["task_contract_id"] for contract in contracts_by_metric.get(metric_id, [])]
+    source_mode = registry_entry["source_mode"]
+    route_id = registry_entry["structured_route_id"]
+    if kind == "MAIN_DETERMINISTIC_CATALOG":
+        formula_ids = {branch["formula_id"] for branch in source["branches"]}
+        method_types = ["DIRECT_XBRL_FACT" if formula_ids == {"direct"} else "XBRL_FORMULA"]
+        basis = "catalog/deterministic_metrics.json member {} (adapter {}, formula ids {})".format(
+            metric_id, source["adapter_id"], ", ".join(sorted(formula_ids))
+        )
+        binding = "DETERMINISTIC_CATALOG_MEMBER"
+    elif kind == "MAIN_EVENT_ROUTE":
+        method_types = ["EVENT_ITEM_RULE"]
+        basis = "catalog/event_routes.json member {} (direct item codes {})".format(metric_id, ", ".join(source["direct_item_codes"]))
+        binding = "EVENT_ROUTE_MEMBER"
+    elif kind == "MAIN_STRUCTURED_SPEC" and source.get("formula"):
+        method_types = ["XBRL_FORMULA" if source["kind"] == "derived_numeric" else "DIRECT_XBRL_FACT"]
+        basis = "MetricSpec {} (kind {}, source_mode {})".format(source["path"], source["kind"], source.get("source_mode"))
+        fallback_variants = [variant for variant in chosen["variants"] if variant["role"] == "ai_table_fallback_contract"]
+        if fallback_variants:
+            if not contract_ids:
+                raise ReferenceError("{}: ai_table fallback variant declared without a table task contract".format(metric_id))
+            method_types.append("AI_TABLE_READ_FALLBACK")
+            basis += "; table fallback contract {} bound to variant {}".format(", ".join(contract_ids), fallback_variants[0]["path"])
+        binding = "SPEC:{}".format(source["path"])
+    elif kind == "MAIN_STRUCTURED_SPEC":
+        if not contract_ids:
+            raise ReferenceError("{}: table contract spec without a table task contract".format(metric_id))
+        if source_mode == "ai_table":
+            method_types = ["AI_TABLE_READ"]
+            binding = "SPEC:{}".format(source["path"])
+        elif source_mode == "structured_first_ai_fallback":
+            method_types = ["AI_TABLE_READ_FALLBACK"]
+            binding = "NOT_BOUND_ON_MAIN"
+        else:
+            raise ReferenceError("{}: table contract spec with unexpected registry source_mode {}".format(metric_id, source_mode))
+        basis = "MetricSpec {} is the table task contract {} (disclosure_group {})".format(
+            source["path"], ", ".join(contract_ids), source.get("disclosure_group")
+        )
+    else:
+        method_types = []
+        for text_source in metadata_entry.get("text_sources", []):
+            if text_source.get("role") not in ("primary", "secondary"):
+                continue
+            method_type = LEGACY_LOCATOR_METHOD_TYPES.get(text_source.get("locator_kind"))
+            if method_type is None:
+                raise ReferenceError("{}: text source locator_kind {} has no method type".format(metric_id, text_source.get("locator_kind")))
+            if method_type not in method_types:
+                method_types.append(method_type)
+        citations = metadata_entry.get("legacy_method", {}).get("citations", [])
+        basis = "legacy pipeline code cited in metric_metadata.json ({}); no MetricSpec on main".format(
+            ", ".join("{}::{}".format(c["path"], c["symbol"]) for c in citations if c.get("symbol"))
+        )
+        has_concept = any(
+            text_source.get("locator_kind") == "xbrl_concept" and text_source.get("role") in ("primary", "secondary")
+            for text_source in metadata_entry.get("text_sources", [])
+        )
+        binding = "LEGACY_CODE_CITATION" if has_concept else ("NOT_BOUND_ON_MAIN" if route_id else "NO_STRUCTURED_ROUTE")
+    if source_mode == "structured_only":
+        representation, representation_basis = None, "registry source_mode structured_only declares no AI fallback"
+    elif source_mode == "ai_table":
+        representation, representation_basis = "table", "registry source_mode ai_table"
+    elif source_mode == "ai_text":
+        representation, representation_basis = "text", "registry source_mode ai_text"
+    else:
+        representation = fallback_representation[metric_id]
+        representation_basis = "config/source_strategy_fallback_representation.json#fallback_representation_by_metric.{}".format(metric_id)
+    if representation == "table" and source_mode != "ai_text" and kind == "MAIN_STRUCTURED_SPEC" and not contract_ids:
+        raise ReferenceError("{}: table representation declared without a table task contract".format(metric_id))
+    return {
+        "reference_implementation": {
+            "method_types": method_types,
+            "basis": basis,
+        },
+        "registry_target_route": {
+            "source_mode": source_mode,
+            "reader_family_id": registry_entry["reader_family_id"],
+            "structured_route_id": route_id,
+            "structured_route_description": STRUCTURED_ROUTE_DESCRIPTIONS.get(route_id),
+            "structured_concept_binding_on_main": binding,
+            "fallback_trigger_codes": list(registry_entry["fallback_trigger_codes"]),
+            "ai_fallback_representation": representation,
+            "ai_fallback_representation_basis": representation_basis,
+            "coverage_mode": registry_entry["coverage_mode"],
+            "note": "declared target strategy only; it does not state which concepts, filings or reviewers the current main implementation uses",
+        },
+    }
+
+
 def build_metric_definitions(
     *,
     selection: Mapping[str, Any],
@@ -1073,6 +1257,8 @@ def build_metric_definitions(
     release_context: Mapping[str, Any],
     migrated_metric_ids: Sequence[str],
     definition_document: str,
+    fallback_representation: Mapping[str, str],
+    text_definition_path: str,
 ) -> Dict[str, Any]:
     """Assemble one definition record per metric ID."""
     groups = metadata["groups"]
@@ -1100,16 +1286,11 @@ def build_metric_definitions(
             raise ReferenceError("{}: text-defined metrics need text_sources in metadata".format(metric_id))
         if kind != "MAIN_TEXT_DEFINITION" and meta.get("text_sources"):
             raise ReferenceError("{}: text_sources are only allowed for text-defined metrics".format(metric_id))
-        method_types = list(SOURCE_MODE_METHOD_TYPES[registry_entry["source_mode"]])
-        if kind == "MAIN_DETERMINISTIC_CATALOG":
-            formula_ids = {branch["formula_id"] for branch in source["branches"]}
-            method_types = ["DIRECT_XBRL_FACT" if formula_ids == {"direct"} else "XBRL_FORMULA"]
-        elif kind == "MAIN_EVENT_ROUTE":
-            method_types = ["EVENT_ITEM_RULE"]
-        elif kind == "MAIN_STRUCTURED_SPEC" and source.get("formula"):
-            method_types = ["XBRL_FORMULA" if source["kind"] == "derived_numeric" else "DIRECT_XBRL_FACT"] + method_types[1:]
-        elif kind == "MAIN_TEXT_DEFINITION":
-            method_types = ["LEGACY_TEXT_OR_FACT_RULE"] + method_types
+        method = _method_block(
+            metric_id=metric_id, kind=kind, source=source, registry_entry=registry_entry,
+            contracts_by_metric=contracts_by_metric, metadata_entry=meta,
+            fallback_representation=fallback_representation, chosen=chosen,
+        )
         name_en = source.get("name")
         formula_block: Optional[Dict[str, Any]] = None
         if kind == "MAIN_DETERMINISTIC_CATALOG":
@@ -1168,15 +1349,7 @@ def build_metric_definitions(
             "name_zh": meta["name_zh"],
             "description_zh": meta["description_zh"],
             "description_en": meta["description_en"],
-            "method": {
-                "method_types": method_types,
-                "source_mode": registry_entry["source_mode"],
-                "reader_family_id": registry_entry["reader_family_id"],
-                "structured_route_id": registry_entry["structured_route_id"],
-                "structured_route_description": STRUCTURED_ROUTE_DESCRIPTIONS.get(registry_entry["structured_route_id"]),
-                "fallback_trigger_codes": list(registry_entry["fallback_trigger_codes"]),
-                "coverage_mode": registry_entry["coverage_mode"],
-            },
+            "method": method,
             "definition_source": {
                 "kind": kind,
                 "primary": {k: v for k, v in source.items() if k in ("path", "member", "section", "sha256", "name", "kind", "source_mode")},
@@ -1216,6 +1389,11 @@ def build_metric_definitions(
             },
             "limitations_zh": list(meta.get("limitations_zh", [])),
             "definition_text_excerpt": extract_definition_section(definition_document, metric_id),
+            "definition_text_excerpt_source": {
+                "path": text_definition_path,
+                "sha256": sha256_bytes(loaded[text_definition_path]),
+                "section": metric_id,
+            },
         })
     return {
         "schema_version": 1,
@@ -1268,9 +1446,9 @@ def build_reference(repo_root: Path, *, verify_digests: bool = True) -> Dict[str
     for route_id in {entry["structured_route_id"] for entry in registry["metrics"].values()} - {None}:
         if route_id not in STRUCTURED_ROUTE_DESCRIPTIONS:
             raise ReferenceError("Structured route {} has no description".format(route_id))
-    deterministic = _json(loaded["catalog/deterministic_metrics.json"], "deterministic_metrics")
-    events = _json(loaded["catalog/event_routes.json"], "event_routes")
     projection = _json(loaded["catalog/zero_ai_public_projection.json"], "zero_ai_public_projection")
+    fallback_authority = _json(loaded["config/source_strategy_fallback_representation.json"], "source_strategy_fallback_representation")
+    fallback_representation = _fallback_representation(fallback_authority, registry, loaded["config/source_strategy_registry.json"])
     contracts = _json(loaded["catalog/table_task_contracts.json"], "table_task_contracts")
     contracts_by_metric: Dict[str, List[Dict[str, Any]]] = {}
     for contract in contracts["contracts"]:
@@ -1287,7 +1465,12 @@ def build_reference(repo_root: Path, *, verify_digests: bool = True) -> Dict[str
     r5_policy = _json(loaded["config/r5_b06_structured_v1.json"], "r5_b06_structured_v1")
     r5_draft = _json(loaded["config/release_plans/issue_28_b06_structured_draft.json"], "issue_28_b06_structured_draft")
     migrated = _json(loaded["config/vnext_release_plan.json"], "vnext_release_plan")["migrated_metric_ids"]
-    definition_document = loaded["02_指标定义_SEC_10公司单年指标.md"].decode("utf-8")
+    text_definition_paths = [relative for relative, entry in selection["inputs"].items() if entry["role"] == "text_definition"]
+    if len(text_definition_paths) != 1:
+        raise ReferenceError("Exactly one declared input must carry role text_definition")
+    text_definition_path = text_definition_paths[0]
+    definition_document = loaded[text_definition_path].decode("utf-8")
+    parsed_cache: Dict[str, Any] = {}
 
     definition_sources: Dict[str, Any] = {"__variants__": {}}
     selected_metrics = selection.get("metrics")
@@ -1304,43 +1487,68 @@ def build_reference(repo_root: Path, *, verify_digests: bool = True) -> Dict[str
         if chosen["binding_authority"] not in selection["binding_authorities"]:
             raise ReferenceError("{}: unknown binding_authority {}".format(metric_id, chosen["binding_authority"]))
         primary = chosen["primary"]
+        if not isinstance(primary, dict) or "path" not in primary:
+            raise ReferenceError("{}: primary must be an object with a path".format(metric_id))
         path = primary["path"]
         if path not in loaded:
             raise ReferenceError("{}: primary path {} is not a declared input".format(metric_id, path))
+        role = selection["inputs"][path]["role"]
+        if role not in PRIMARY_ROLES_BY_KIND[kind]:
+            raise ReferenceError(
+                "{}: primary path {} has input role {} which is not allowed for {} (allowed: {})".format(
+                    metric_id, path, role, kind, ", ".join(sorted(PRIMARY_ROLES_BY_KIND[kind]))
+                )
+            )
         digest = sha256_bytes(loaded[path])
         if kind == "MAIN_STRUCTURED_SPEC":
+            if set(primary) != {"path"}:
+                raise ReferenceError("{}: spec primary must have only a path".format(metric_id))
             front, _body = parse_front_matter(loaded[path].decode("utf-8"), path)
             if front.get("metric_id") != metric_id:
                 raise ReferenceError("{}: spec {} declares metric_id {}".format(metric_id, path, front.get("metric_id")))
             definition_sources[metric_id] = describe_spec_source(front, path, digest)
         elif kind == "MAIN_DETERMINISTIC_CATALOG":
-            member = deterministic["metrics"].get(primary.get("member"))
-            if member is None or primary.get("member") != metric_id:
-                raise ReferenceError("{}: deterministic member {} is missing".format(metric_id, primary.get("member")))
+            if set(primary) != {"path", "member"} or primary["member"] != metric_id:
+                raise ReferenceError("{}: deterministic primary needs path and member == metric id".format(metric_id))
+            catalog = parsed_cache.setdefault(path, _json(loaded[path], path))
+            if not isinstance(catalog, dict) or catalog.get("record_type") != "DETERMINISTIC_METRIC_CATALOG" or not isinstance(catalog.get("metrics"), dict):
+                raise ReferenceError("{}: {} is not a DETERMINISTIC_METRIC_CATALOG".format(metric_id, path))
+            member = catalog["metrics"].get(metric_id)
+            if member is None:
+                raise ReferenceError("{}: deterministic member {} is missing in {}".format(metric_id, metric_id, path))
             definition_sources[metric_id] = describe_deterministic_source(member, path, metric_id, digest)
         elif kind == "MAIN_EVENT_ROUTE":
-            route = events["routes"].get(primary.get("member"))
-            if route is None or primary.get("member") != metric_id:
-                raise ReferenceError("{}: event route {} is missing".format(metric_id, primary.get("member")))
-            definition_sources[metric_id] = describe_event_route(route, events, path, metric_id, digest)
+            if set(primary) != {"path", "member"} or primary["member"] != metric_id:
+                raise ReferenceError("{}: event primary needs path and member == metric id".format(metric_id))
+            catalog = parsed_cache.setdefault(path, _json(loaded[path], path))
+            if not isinstance(catalog, dict) or catalog.get("record_type") != "DETERMINISTIC_EVENT_ROUTE_CATALOG" or not isinstance(catalog.get("routes"), dict):
+                raise ReferenceError("{}: {} is not a DETERMINISTIC_EVENT_ROUTE_CATALOG".format(metric_id, path))
+            route = catalog["routes"].get(metric_id)
+            if route is None:
+                raise ReferenceError("{}: event route {} is missing in {}".format(metric_id, metric_id, path))
+            definition_sources[metric_id] = describe_event_route(route, catalog, path, metric_id, digest)
         else:
-            if primary.get("section") != metric_id:
-                raise ReferenceError("{}: text definition section must equal the metric id".format(metric_id))
-            extract_definition_section(definition_document, metric_id)
+            if set(primary) != {"path", "section"} or primary["section"] != metric_id:
+                raise ReferenceError("{}: text primary needs path and section == metric id".format(metric_id))
+            document = loaded[path].decode("utf-8")
+            section_text = extract_definition_section(document, metric_id)
             definition_sources[metric_id] = {
                 "path": path,
                 "section": metric_id,
                 "sha256": digest,
-                "name": registry["metrics"][metric_id].get("metric_name") or events["routes"].get(metric_id, {}).get("metric_name") or _text_definition_name(definition_document, metric_id),
+                "name": _text_definition_name(document, metric_id),
                 "kind": "text_definition",
                 "source_mode": registry["metrics"][metric_id]["source_mode"],
                 "applicability": None,
+                "section_sha256": sha256_bytes(section_text.encode("utf-8")),
             }
         for variant in chosen["variants"]:
             if set(variant) != {"role", "path", "binding_authority"}:
                 raise ReferenceError("{}: variant fields must be role, path, binding_authority".format(metric_id))
             if variant["path"] not in loaded:
                 raise ReferenceError("{}: variant path {} is not a declared input".format(metric_id, variant["path"]))
+            if selection["inputs"][variant["path"]]["role"] not in VARIANT_ROLES:
+                raise ReferenceError("{}: variant path {} has role {} which is not a spec role".format(metric_id, variant["path"], selection["inputs"][variant["path"]]["role"]))
             if variant["binding_authority"] is not None and variant["binding_authority"] not in selection["binding_authorities"]:
                 raise ReferenceError("{}: unknown variant binding_authority".format(metric_id))
             front, _body = parse_front_matter(loaded[variant["path"]].decode("utf-8"), variant["path"])
@@ -1387,6 +1595,8 @@ def build_reference(repo_root: Path, *, verify_digests: bool = True) -> Dict[str
         release_context=release_context,
         migrated_metric_ids=migrated,
         definition_document=definition_document,
+        fallback_representation=fallback_representation,
+        text_definition_path=text_definition_path,
     )
     return {
         "sic_metric_map": sic_map,
@@ -1398,6 +1608,29 @@ def build_reference(repo_root: Path, *, verify_digests: bool = True) -> Dict[str
             DEFINITIONS_CSV_PATH.as_posix(): render_csv(DEFINITIONS_CSV_COLUMNS, [definition_csv_row(record) for record in definitions["metrics"]]),
         },
     }
+
+
+def _fallback_representation(authority: Mapping[str, Any], registry: Mapping[str, Any], registry_bytes: bytes) -> Dict[str, str]:
+    """Return the per-metric AI fallback representation bound to the registry.
+
+    Mirrors the structural checks of scripts/vnext/table_task_contracts.py:
+    exact fields, record type, registry SHA-256 binding, metric set equal to
+    every structured_first_ai_fallback route, values in {table, text}.
+    """
+    expected_fields = {"schema_version", "record_type", "source_strategy_registry_sha256", "fallback_representation_by_metric"}
+    if not isinstance(authority, dict) or set(authority) != expected_fields:
+        raise ReferenceError("Fallback representation fields are not exact")
+    if authority["record_type"] != "ISSUE_15_SOURCE_STRATEGY_FALLBACK_REPRESENTATION":
+        raise ReferenceError("Fallback representation record_type differs")
+    if authority["source_strategy_registry_sha256"] != sha256_bytes(registry_bytes):
+        raise ReferenceError("Fallback representation is bound to a different source_strategy_registry.json")
+    representations = authority["fallback_representation_by_metric"]
+    expected = {metric_id for metric_id, entry in registry["metrics"].items() if entry["source_mode"] == "structured_first_ai_fallback"}
+    if not isinstance(representations, dict) or set(representations) != expected:
+        raise ReferenceError("Fallback representation metric set differs from the registry")
+    if any(value not in ("table", "text") for value in representations.values()):
+        raise ReferenceError("Fallback representation value is invalid")
+    return {metric_id: str(value) for metric_id, value in representations.items()}
 
 
 def _text_definition_name(document: str, metric_id: str) -> str:
@@ -1417,10 +1650,11 @@ def definition_csv_row(record: Mapping[str, Any]) -> Dict[str, Any]:
         "name_zh": record["name_zh"],
         "description_zh": record["description_zh"],
         "description_en": record["description_en"],
-        "method_types": record["method"]["method_types"],
-        "source_mode": record["method"]["source_mode"],
-        "reader_family_id": record["method"]["reader_family_id"],
-        "structured_route_id": record["method"]["structured_route_id"],
+        "method_types": record["method"]["reference_implementation"]["method_types"],
+        "source_mode": record["method"]["registry_target_route"]["source_mode"],
+        "reader_family_id": record["method"]["registry_target_route"]["reader_family_id"],
+        "structured_route_id": record["method"]["registry_target_route"]["structured_route_id"],
+        "ai_fallback_representation": record["method"]["registry_target_route"]["ai_fallback_representation"],
         "definition_source_kind": record["definition_source"]["kind"],
         "definition_source_path": record["definition_source"]["primary"]["path"],
         "binding_authority": record["definition_source"]["binding_authority"],
