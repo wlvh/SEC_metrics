@@ -96,6 +96,23 @@ PRIMARY_ROLES_BY_KIND = {
     "MAIN_TEXT_DEFINITION": {"text_definition"},
 }
 VARIANT_ROLES = {"metric_spec", "metric_spec_historical", "disclosure_group"}
+# A NOT_APPLICABLE business rule may only rest on definition-level sources:
+# Spec / catalog applicability, the trait configuration or the definition
+# document.  Evidence directories, release plans and authorization flags
+# describe implementation or data state and can never make an industry
+# "inapplicable" (Issue #44 acceptance finding on bank B06).
+DEFINITION_LEVEL_BASIS_PREFIXES = (
+    "catalog/",
+    "config/metric_applicability.yaml",
+    "02_指标定义_SEC_10公司单年指标.md",
+)
+IMPLEMENTATION_STATE_MARKERS = (
+    "docs/evidence/",
+    "release_plans/",
+    "production_authorized",
+    "complete=false",
+    "NOT_ESTABLISHED",
+)
 LEGACY_LOCATOR_METHOD_TYPES = {
     "text_regex": "LEGACY_TEXT_KEYWORD_RULE",
     "xbrl_concept": "LEGACY_XBRL_FACT_RULE",
@@ -453,8 +470,22 @@ def _validate_clauses(metric_id: str, clauses: Any, known_traits: Sequence[str],
             raise ReferenceError("{}: {} rows must not carry a priority".format(metric_id, clause["applicability"]))
         if clause["applicability"] in ("CONDITIONAL", "PENDING_CONFIRMATION", "NOT_APPLICABLE") and not clause["condition_zh"]:
             raise ReferenceError("{}: {} rows need condition_zh".format(metric_id, clause["applicability"]))
-        if not isinstance(clause["basis"], list) or not clause["basis"]:
-            raise ReferenceError("{}: basis must be a non-empty list".format(metric_id))
+        if not isinstance(clause["basis"], list) or not clause["basis"] or any(type(item) is not str or not item for item in clause["basis"]):
+            raise ReferenceError("{}: basis must be a non-empty list of strings".format(metric_id))
+        if clause["applicability"] == "NOT_APPLICABLE":
+            for basis in clause["basis"]:
+                if not basis.startswith(DEFINITION_LEVEL_BASIS_PREFIXES):
+                    raise ReferenceError(
+                        "{}: NOT_APPLICABLE clause {} needs a definition-level basis (one of {}); got {!r}".format(
+                            metric_id, clause["clause_id"], ", ".join(DEFINITION_LEVEL_BASIS_PREFIXES), basis
+                        )
+                    )
+                if any(marker in basis for marker in IMPLEMENTATION_STATE_MARKERS):
+                    raise ReferenceError(
+                        "{}: NOT_APPLICABLE clause {} cites an implementation/authorization state ({!r}); incomplete data or missing production authorization must be CONDITIONAL or PENDING_CONFIRMATION".format(
+                            metric_id, clause["clause_id"], basis
+                        )
+                    )
         is_last = index == len(clauses) - 1
         if is_last and clause["when"] != "DEFAULT":
             raise ReferenceError("{}: last clause must be DEFAULT".format(metric_id))

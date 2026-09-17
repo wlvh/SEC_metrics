@@ -98,7 +98,7 @@ PR #43（固定提交 `8346c326f04be5a863dc8bf2f010087a6f2025a3`）上的后继 
 
 ## 三个独立维度
 
-- **业务适用性**（映射表 `business_applicability`）：APPLICABLE / CONDITIONAL / NOT_APPLICABLE / PENDING_CONFIRMATION，来自 `sic_metric_rules.json` 的有序 clause；`business_priority` 是本目录的编制默认值（`priority_basis`），不是 pipeline 规则。
+- **业务适用性**（映射表 `business_applicability`）：APPLICABLE / CONDITIONAL / NOT_APPLICABLE / PENDING_CONFIRMATION，来自 `sic_metric_rules.json` 的有序 clause；`business_priority` 是本目录的编制默认值（`priority_basis`），不是 pipeline 规则。**NOT_APPLICABLE 只能来自定义层排除**（Spec/目录 applicability、trait 配置或定义文档），生成器要求其 basis 只引用这些来源，且不得引用证据目录、发布计划或 `production_authorized` 等实现/授权状态；资料不完整、实现未验证或未获生产授权一律用 CONDITIONAL / PENDING_CONFIRMATION 并写明条件。例：商业银行的 B06 按所选 R5 定义的 `bank_scope` 为 CONDITIONAL（单独银行融资范围、可比性限制；JPM 证据为 bank_funding 范围未完成、明确阻断），不是 NOT_APPLICABLE。
 - **结构性适用性**（映射表 `structural_applicability`）：由所选定义的 `applicability.all/none` 对行业 traits 求值（语义同 `scripts/vnext/calculator.py::metric_is_applicable`）。生成器拒绝“结构性不适用但业务标为适用”的规则。
 - **实现/验证情况**（定义表 `implementation_status`）：vNext 状态来自发布计划/政策文件的显式绑定；legacy 状态来自代码引用；`verification_scope_note` 说明基线证据只覆盖 10 家样本公司。有 Spec 不等于已上线，无 Spec 不等于只有未来规划。
 

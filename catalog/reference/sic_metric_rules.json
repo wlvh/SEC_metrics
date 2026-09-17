@@ -9,7 +9,7 @@
   "applicability_values": {
     "APPLICABLE": "该行业应当查看此指标；基线已为该行业 traits 定义此指标。单个公司仍可能按指标自身规则得到 NOT_MEANINGFUL / NOT_AVAILABLE_SEC 等状态。",
     "CONDITIONAL": "只有在 condition 成立时该行业才查看此指标（例如年报确有可计算披露）；condition 字段必填。",
-    "NOT_APPLICABLE": "基线把此指标定义为对该行业结构性不适用（Spec/目录 applicability traits 或指标定义文档），预期结果为 N_A_STRUCTURAL 或不产出该坐标。",
+    "NOT_APPLICABLE": "基线把此指标定义为对该行业结构性不适用（Spec/目录 applicability traits、trait 配置或指标定义文档的定义层排除），预期结果为 N_A_STRUCTURAL 或不产出该坐标。资料不完整、实现未验证或未获生产授权都不能编码为 NOT_APPLICABLE；这类状态用 CONDITIONAL / PENDING_CONFIRMATION 并写明条件。",
     "PENDING_CONFIRMATION": "基线对该行业×指标没有明确规则，也没有结构性不适用声明；不能自动视为可用。"
   },
   "priority_values": {
@@ -28,173 +28,1141 @@
     "note_en": "The baseline legacy pipeline attempts the default_non_fi extractor set for any SIC that matches no profile rule. That is only a runtime default, not a business confirmation. The reference map records unmatched SICs as PENDING_CONFIRMATION and states the default alongside it."
   },
   "industry_labels": {
-    "pharma": {"zh": "医药制剂", "en": "Pharmaceutical preparations"},
-    "manufacturing": {"zh": "制造业（电子元件、汽车）", "en": "Manufacturing (electronic components; motor vehicles)"},
-    "airline": {"zh": "定期航空运输", "en": "Scheduled air transportation"},
-    "telecom": {"zh": "电话通信", "en": "Telephone communications"},
-    "media": {"zh": "广播电视媒体", "en": "Broadcasting media"},
-    "retail": {"zh": "百货零售", "en": "Department-store retail"},
-    "financial_institution": {"zh": "金融机构（商业银行）", "en": "Financial institutions (commercial banks)"},
-    "lodging": {"zh": "酒店住宿", "en": "Lodging (hotels and motels)"},
-    "subscription_or_contract_revenue": {"zh": "软件与订阅/合同收入服务", "en": "Software and subscription or contract-revenue services"},
-    "default_non_fi": {"zh": "未命中 SIC 的默认非金融配置", "en": "Default non-financial profile for unmatched SIC codes"}
+    "pharma": {
+      "zh": "医药制剂",
+      "en": "Pharmaceutical preparations"
+    },
+    "manufacturing": {
+      "zh": "制造业（电子元件、汽车）",
+      "en": "Manufacturing (electronic components; motor vehicles)"
+    },
+    "airline": {
+      "zh": "定期航空运输",
+      "en": "Scheduled air transportation"
+    },
+    "telecom": {
+      "zh": "电话通信",
+      "en": "Telephone communications"
+    },
+    "media": {
+      "zh": "广播电视媒体",
+      "en": "Broadcasting media"
+    },
+    "retail": {
+      "zh": "百货零售",
+      "en": "Department-store retail"
+    },
+    "financial_institution": {
+      "zh": "金融机构（商业银行）",
+      "en": "Financial institutions (commercial banks)"
+    },
+    "lodging": {
+      "zh": "酒店住宿",
+      "en": "Lodging (hotels and motels)"
+    },
+    "subscription_or_contract_revenue": {
+      "zh": "软件与订阅/合同收入服务",
+      "en": "Software and subscription or contract-revenue services"
+    },
+    "default_non_fi": {
+      "zh": "未命中 SIC 的默认非金融配置",
+      "en": "Default non-financial profile for unmatched SIC codes"
+    }
   },
   "sic_range_labels": {
-    "2830-2839": {"zh": "药品", "en": "Drugs"},
-    "3670-3679": {"zh": "电子元件与配件", "en": "Electronic components and accessories"},
-    "3710-3719": {"zh": "机动车及机动车设备", "en": "Motor vehicles and motor vehicle equipment"},
-    "4510-4519": {"zh": "定期航空运输", "en": "Air transportation, scheduled"},
-    "4810-4819": {"zh": "电话通信", "en": "Telephone communications"},
-    "4830-4839": {"zh": "广播电视台", "en": "Radio and television broadcasting stations"},
-    "5310-5319": {"zh": "百货商店", "en": "Department stores"},
-    "6020-6029": {"zh": "商业银行", "en": "Commercial banks"},
-    "7010-7019": {"zh": "酒店与汽车旅馆", "en": "Hotels and motels"},
-    "7370-7379": {"zh": "计算机编程、数据处理及其他计算机相关服务", "en": "Computer programming, data processing, and other computer related services"}
+    "2830-2839": {
+      "zh": "药品",
+      "en": "Drugs"
+    },
+    "3670-3679": {
+      "zh": "电子元件与配件",
+      "en": "Electronic components and accessories"
+    },
+    "3710-3719": {
+      "zh": "机动车及机动车设备",
+      "en": "Motor vehicles and motor vehicle equipment"
+    },
+    "4510-4519": {
+      "zh": "定期航空运输",
+      "en": "Air transportation, scheduled"
+    },
+    "4810-4819": {
+      "zh": "电话通信",
+      "en": "Telephone communications"
+    },
+    "4830-4839": {
+      "zh": "广播电视台",
+      "en": "Radio and television broadcasting stations"
+    },
+    "5310-5319": {
+      "zh": "百货商店",
+      "en": "Department stores"
+    },
+    "6020-6029": {
+      "zh": "商业银行",
+      "en": "Commercial banks"
+    },
+    "7010-7019": {
+      "zh": "酒店与汽车旅馆",
+      "en": "Hotels and motels"
+    },
+    "7370-7379": {
+      "zh": "计算机编程、数据处理及其他计算机相关服务",
+      "en": "Computer programming, data processing, and other computer related services"
+    }
   },
   "metric_rules": {
-    "A01": {"clauses": [
-      {"clause_id": "A01-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.A01.applicability", "02_指标定义_SEC_10公司单年指标.md#A. Financial Institutions Metrics"]},
-      {"clause_id": "A01-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "监管资本比率只对金融机构 traits 定义；非金融行业为结构性不适用。", "condition_en": "Regulatory capital ratios are defined only for financial traits; structurally inapplicable elsewhere.", "basis": ["catalog/deterministic_metrics.json#metrics.A01.applicability"]}
-    ]},
-    "A02": {"clauses": [
-      {"clause_id": "A02-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.A02.applicability", "02_指标定义_SEC_10公司单年指标.md#A02"]},
-      {"clause_id": "A02-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "同 A01：仅金融机构 traits。", "condition_en": "Same as A01: financial traits only.", "basis": ["catalog/deterministic_metrics.json#metrics.A02.applicability"]}
-    ]},
-    "A03": {"clauses": [
-      {"clause_id": "A03-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "需年报 MD&A/监管披露中存在 firm 平均口径的 LCR 表格。", "condition_en": "Requires a firm-average LCR table in MD&A/regulatory disclosures.", "basis": ["catalog/r4_v2/A03_liquidity_coverage_ratio.md#applicability", "02_指标定义_SEC_10公司单年指标.md#A03"]},
-      {"clause_id": "A03-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "仅金融机构 traits。", "condition_en": "Financial traits only.", "basis": ["catalog/r4_v2/A03_liquidity_coverage_ratio.md#applicability"]}
-    ]},
-    "A04": {"clauses": [
-      {"clause_id": "A04-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "需 MD&A 平均余额表披露 managed basis 净息差；proxy 口径须标注。", "condition_en": "Requires a managed-basis NIM in the MD&A average-balance table; any proxy must be labelled.", "basis": ["catalog/r4_v2/A04_net_interest_margin.md#applicability", "02_指标定义_SEC_10公司单年指标.md#A04"]},
-      {"clause_id": "A04-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "仅金融机构 traits。", "condition_en": "Financial traits only.", "basis": ["catalog/r4_v2/A04_net_interest_margin.md#applicability"]}
-    ]},
-    "A05": {"clauses": [
-      {"clause_id": "A05-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.A05.applicability", "02_指标定义_SEC_10公司单年指标.md#A05"]},
-      {"clause_id": "A05-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "基线把 ROA 归入金融机构指标组；非金融行业未定义。", "condition_en": "Baseline defines ROA in the financial-institution group only.", "basis": ["catalog/deterministic_metrics.json#metrics.A05.applicability"]}
-    ]},
-    "A06": {"clauses": [
-      {"clause_id": "A06-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.A06.applicability", "02_指标定义_SEC_10公司单年指标.md#A06"]},
-      {"clause_id": "A06-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "基线把 ROE 归入金融机构指标组；非金融行业未定义。", "condition_en": "Baseline defines ROE in the financial-institution group only.", "basis": ["catalog/deterministic_metrics.json#metrics.A06.applicability"]}
-    ]},
-    "A07": {"clauses": [
-      {"clause_id": "A07-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.A07.applicability", "02_指标定义_SEC_10公司单年指标.md#A07"]},
-      {"clause_id": "A07-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "基线仅对金融机构 traits 定义；非金融公司的净利润见 B04。", "condition_en": "Defined for financial traits only; non-financial net income is B04.", "basis": ["catalog/deterministic_metrics.json#metrics.A07.applicability"]}
-    ]},
-    "A08": {"clauses": [
-      {"clause_id": "A08-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.A08.applicability", "02_指标定义_SEC_10公司单年指标.md#A08"]},
-      {"clause_id": "A08-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "银行收入结构指标；非金融行业结构性不适用。", "condition_en": "Bank revenue-mix metric; structurally inapplicable to non-financial traits.", "basis": ["catalog/deterministic_metrics.json#metrics.A08.applicability"]}
-    ]},
-    "A09": {"clauses": [
-      {"clause_id": "A09-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "结构化来源优先；仅在结构化来源歧义时才允许 firmwide 表格回退。", "condition_en": "Structured source first; the firmwide table fallback is allowed only on structured-source ambiguity.", "basis": ["catalog/r4_v2/A09_nonperforming_loan_ratio.md#applicability", "config/source_strategy_registry.json#metrics.A09"]},
-      {"clause_id": "A09-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "仅金融机构 traits。", "condition_en": "Financial traits only.", "basis": ["catalog/r4_v2/A09_nonperforming_loan_ratio.md#applicability"]}
-    ]},
-    "A10": {"clauses": [
-      {"clause_id": "A10-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.A10.applicability", "02_指标定义_SEC_10公司单年指标.md#A10"]},
-      {"clause_id": "A10-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "仅金融机构 traits。", "condition_en": "Financial traits only.", "basis": ["catalog/deterministic_metrics.json#metrics.A10.applicability"]}
-    ]},
-    "A11": {"clauses": [
-      {"clause_id": "A11-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "SUPPLEMENTARY", "condition_zh": "需公司披露资产管理业务的 total AUM；client assets / custody 不是别名。", "condition_en": "Requires a disclosed total assets-under-management figure; client assets or custody are not aliases.", "basis": ["catalog/r4_v2/A11_assets_under_management.md#applicability", "02_指标定义_SEC_10公司单年指标.md#A11"]},
-      {"clause_id": "A11-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "仅金融机构 traits。", "condition_en": "Financial traits only.", "basis": ["catalog/r4_v2/A11_assets_under_management.md#applicability"]}
-    ]},
-    "A12": {"clauses": [
-      {"clause_id": "A12-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "SUPPLEMENTARY", "condition_zh": "需 Item 7A / 市场风险表披露 VaR，并能证明 95% 置信度与一日持有期。", "condition_en": "Requires a VaR disclosure in Item 7A / market-risk tables with provable 95% confidence and one-day holding period.", "basis": ["catalog/r4_v2/A12_trading_exposure.md#applicability", "02_指标定义_SEC_10公司单年指标.md#A12"]},
-      {"clause_id": "A12-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "仅金融机构 traits。", "condition_en": "Financial traits only.", "basis": ["catalog/r4_v2/A12_trading_exposure.md#applicability"]}
-    ]},
-    "A13": {"clauses": [
-      {"clause_id": "A13-fi", "when": {"traits_all": ["financial"]}, "applicability": "APPLICABLE", "priority": "SUPPLEMENTARY", "condition_zh": "结构化 geographic 维度事实优先；仅在结构化来源歧义时允许 international 表格回退。", "condition_en": "Structured geographic dimension facts first; the international table fallback only on structured-source ambiguity.", "basis": ["catalog/r4_v2/A13_geographic_exposure.md#applicability", "config/source_strategy_registry.json#metrics.A13"]},
-      {"clause_id": "A13-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "基线仅对金融机构 traits 定义地区暴露；非金融行业的地区拆分未在基线定义（扩展候选，未支持）。", "condition_en": "Baseline defines geographic exposure for financial traits only; non-financial geographic splits are an unsupported extension candidate.", "basis": ["catalog/r4_v2/A13_geographic_exposure.md#applicability"]}
-    ]},
-    "B01": {"clauses": [
-      {"clause_id": "B01-nonfi", "when": {"traits_all": ["non_financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/metrics/B01_revenue.md#applicability", "02_指标定义_SEC_10公司单年指标.md#B01"]},
-      {"clause_id": "B01-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "Spec applicability.all=[non_financial]；金融机构结构性不适用。", "condition_en": "Spec applicability.all=[non_financial]; structurally inapplicable to financial traits.", "basis": ["catalog/metrics/B01_revenue.md#applicability"]}
-    ]},
-    "B02": {"clauses": [
-      {"clause_id": "B02-nonfi", "when": {"traits_all": ["non_financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "公司层面还要求主体连续可比（continuity_policy=REQUIRE_CONTINUOUS）；successor/predecessor 合并年为 NOT_MEANINGFUL。", "condition_en": "At company level the entity must be comparably continuous (continuity_policy=REQUIRE_CONTINUOUS); successor/predecessor years are NOT_MEANINGFUL.", "basis": ["catalog/deterministic_metrics.json#metrics.B02.applicability", "catalog/deterministic_metrics.json#metrics.B02.continuity_policy", "02_指标定义_SEC_10公司单年指标.md#B02"]},
-      {"clause_id": "B02-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "仅非金融 traits。", "condition_en": "Non-financial traits only.", "basis": ["catalog/deterministic_metrics.json#metrics.B02.applicability"]}
-    ]},
-    "B03": {"clauses": [
-      {"clause_id": "B03-nonfi", "when": {"traits_all": ["non_financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/metrics/B03_ebitda_margin.md#applicability", "02_指标定义_SEC_10公司单年指标.md#B03"]},
-      {"clause_id": "B03-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "Spec applicability.all=[non_financial]。", "condition_en": "Spec applicability.all=[non_financial].", "basis": ["catalog/metrics/B03_ebitda_margin.md#applicability"]}
-    ]},
-    "B04": {"clauses": [
-      {"clause_id": "B04-nonfi", "when": {"traits_all": ["non_financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.B04.applicability", "02_指标定义_SEC_10公司单年指标.md#B04"]},
-      {"clause_id": "B04-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "金融机构净利润见 A07。", "condition_en": "Financial-institution net income is A07.", "basis": ["catalog/deterministic_metrics.json#metrics.B04.applicability"]}
-    ]},
-    "B05": {"clauses": [
-      {"clause_id": "B05-nonfi", "when": {"traits_all": ["non_financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.B05.applicability", "02_指标定义_SEC_10公司单年指标.md#B05"]},
-      {"clause_id": "B05-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "仅非金融 traits。", "condition_en": "Non-financial traits only.", "basis": ["catalog/deterministic_metrics.json#metrics.B05.applicability"]}
-    ]},
-    "B06": {"clauses": [
-      {"clause_id": "B06-nonfi", "when": {"traits_all": ["non_financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "公司层面：股东权益 ≤ 0 时比率无经济意义；存在 captive finance 范围（如 Ford Credit）时须区分合并与工业口径。", "condition_en": "At company level: the ratio is not economically meaningful when equity ≤ 0; captive-finance scopes (e.g. Ford Credit) require consolidated vs industrial distinction.", "basis": ["02_指标定义_SEC_10公司单年指标.md#B06", "catalog/r5/B06_structured.md#quality_rule.scope_review_dimension_members"]},
-      {"clause_id": "B06-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "基线把 B06 归入“B. Commercial Risk Metrics（9 家非金融公司）”；Spec 本身无 trait 限制，但金融机构的杠杆不以 total debt / equity 衡量，基线未为其定义。", "condition_en": "Baseline places B06 in the non-financial commercial-risk group; the Spec has no trait gate, but bank leverage is not defined by total debt / equity in the baseline.", "basis": ["02_指标定义_SEC_10公司单年指标.md#B. Commercial Risk Metrics"]}
-    ]},
-    "B07": {"clauses": [
-      {"clause_id": "B07-nonfi", "when": {"traits_all": ["non_financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "公司层面：营业利润 ≤ 0 时为 NOT_MEANINGFUL。", "condition_en": "At company level: NOT_MEANINGFUL when operating income ≤ 0.", "basis": ["catalog/deterministic_metrics.json#metrics.B07.applicability", "02_指标定义_SEC_10公司单年指标.md#B07"]},
-      {"clause_id": "B07-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "仅非金融 traits。", "condition_en": "Non-financial traits only.", "basis": ["catalog/deterministic_metrics.json#metrics.B07.applicability"]}
-    ]},
-    "B08": {"clauses": [
-      {"clause_id": "B08-nonfi", "when": {"traits_all": ["non_financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.B08.applicability", "02_指标定义_SEC_10公司单年指标.md#B08"]},
-      {"clause_id": "B08-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "银行不适用流动比率（定义文档：JPM 这种银行不适用，状态 N_A_STRUCTURAL）。", "condition_en": "Current ratio is not applicable to banks (definition doc: N_A_STRUCTURAL).", "basis": ["catalog/deterministic_metrics.json#metrics.B08.applicability", "02_指标定义_SEC_10公司单年指标.md#B08"]}
-    ]},
-    "B09": {"clauses": [
-      {"clause_id": "B09-nonfi", "when": {"traits_all": ["non_financial"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": null, "condition_en": null, "basis": ["catalog/deterministic_metrics.json#metrics.B09.applicability", "02_指标定义_SEC_10公司单年指标.md#B09"]},
-      {"clause_id": "B09-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "仅非金融 traits。", "condition_en": "Non-financial traits only.", "basis": ["catalog/deterministic_metrics.json#metrics.B09.applicability"]}
-    ]},
-    "B10": {"clauses": [
-      {"clause_id": "B10-lodging", "when": {"traits_all": ["lodging"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "需年报 Lodging Statistics 表披露 Comparable Systemwide Properties / Worldwide 的当年绝对值；仅有地区拆分或同比变化时不能唯一选择。", "condition_en": "Requires the annual lodging-statistics table to disclose the current-year comparable systemwide worldwide absolute value; regional-only or percentage-change figures do not qualify.", "basis": ["catalog/metrics/B10_occupancy.md#applicability", "catalog/metrics/B10_occupancy.md#required_claims", "02_指标定义_SEC_10公司单年指标.md#B10"]},
-      {"clause_id": "B10-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "Spec applicability.all=[lodging]；其他行业为 N_A_STRUCTURAL。", "condition_en": "Spec applicability.all=[lodging]; N_A_STRUCTURAL elsewhere.", "basis": ["catalog/metrics/B10_occupancy.md#applicability"]}
-    ]},
-    "B11": {"clauses": [
-      {"clause_id": "B11-lodging", "when": {"traits_all": ["lodging"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "同 B10；RevPAR 与 ADR 必须为 USD，增长百分比不能冒充绝对值。", "condition_en": "Same as B10; RevPAR and supporting ADR must be USD, and growth percentages never substitute for the absolute value.", "basis": ["catalog/metrics/B11_revpar.md#applicability", "catalog/metrics/B11_revpar.md#required_claims", "02_指标定义_SEC_10公司单年指标.md#B11"]},
-      {"clause_id": "B11-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "Spec applicability.all=[lodging]。", "condition_en": "Spec applicability.all=[lodging].", "basis": ["catalog/metrics/B11_revpar.md#applicability"]}
-    ]},
-    "B12": {"clauses": [
-      {"clause_id": "B12-subscription", "when": {"traits_all": ["subscription_or_contract_revenue"]}, "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "输出的是 RPO / cRPO 替代观测值，不是 ARR，也不是 churn；需实例中存在未维度化的 RemainingPerformanceObligation 事实。", "condition_en": "The output is an RPO / cRPO substitute observation, not ARR and not churn; requires an undimensioned remaining-performance-obligation fact in the instance.", "basis": ["catalog/deterministic_metrics.json#metrics.B12.applicability", "02_指标定义_SEC_10公司单年指标.md#B12"]},
-      {"clause_id": "B12-default", "when": "DEFAULT", "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "applicability.all=[subscription_or_contract_revenue]；其他行业 N_A_STRUCTURAL。", "condition_en": "applicability.all=[subscription_or_contract_revenue]; N_A_STRUCTURAL elsewhere.", "basis": ["catalog/deterministic_metrics.json#metrics.B12.applicability"]}
-    ]},
-    "B13": {"clauses": [
-      {"clause_id": "B13-manufacturing", "when": {"profiles": ["manufacturing"]}, "applicability": "CONDITIONAL", "priority": "SUPPLEMENTARY", "condition_zh": "仅当年报披露可计算的实际产量与可用产能数值时才有数值结果；SEC 年报通常不披露，只有定性描述时为 TEXT_QUAL，未披露为 NOT_AVAILABLE_SEC。基线只对 manufacturing 配置 CapacityUtilizationExtractor（Ford / Enphase）。", "condition_en": "Numeric only when the annual report discloses computable actual production and available capacity; SEC annual reports usually do not, so qualitative-only is TEXT_QUAL and undisclosed is NOT_AVAILABLE_SEC. The baseline configures CapacityUtilizationExtractor for manufacturing only (Ford / Enphase).", "basis": ["config/metric_applicability.yaml#profiles.manufacturing.extractors", "02_指标定义_SEC_10公司单年指标.md#B13", "catalog/metrics/B13_capacity_utilization.md#required_claims"]},
-      {"clause_id": "B13-fi", "when": {"traits_all": ["financial"]}, "applicability": "NOT_APPLICABLE", "priority": null, "condition_zh": "B 组指标定义为非金融公司指标；银行没有产能利用率。", "condition_en": "Group B metrics are defined for non-financial companies; banks have no capacity utilization.", "basis": ["02_指标定义_SEC_10公司单年指标.md#B. Commercial Risk Metrics"]},
-      {"clause_id": "B13-default", "when": "DEFAULT", "applicability": "PENDING_CONFIRMATION", "priority": null, "condition_zh": "基线未为其他非金融行业定义产能利用率，也没有结构性不适用声明；legacy 代码仅在文本出现 capacity 关键词时才尝试。", "condition_en": "The baseline neither defines capacity utilization for other non-financial industries nor declares it structurally inapplicable; legacy code only attempts it when capacity keywords appear.", "basis": ["scripts/sec_pipeline.py::text_has_capacity_keywords", "scripts/sec_pipeline.py::CapacityUtilizationExtractor"]}
-    ]},
-    "C01": {"clauses": [
-      {"clause_id": "C01-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "所有公司；财年窗口内的 8-K Item 5.02。", "condition_en": "All companies; 8-K Item 5.02 within the fiscal-year window.", "basis": ["catalog/event_routes.json#routes.C01", "02_指标定义_SEC_10公司单年指标.md#C. Governance & Leadership（全部公司）"]}
-    ]},
-    "C02": {"clauses": [
-      {"clause_id": "C02-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "SUPPLEMENTARY", "condition_zh": "所有公司；需最新 DEF 14A；基线只产出定性文本证据（TEXT_QUAL），结构化人数需复核。", "condition_en": "All companies; requires the latest DEF 14A; the baseline yields qualitative text evidence (TEXT_QUAL) and structured counts need review.", "basis": ["02_指标定义_SEC_10公司单年指标.md#C02", "scripts/sec_pipeline.py::stage_extract_def14a"]}
-    ]},
-    "C03": {"clauses": [
-      {"clause_id": "C03-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "所有公司；需 DEF 14A 含 ecd XBRL 的 PeoTotalCompAmt 事实，否则 NEEDS_REVIEW / NOT_EXTRACTED。", "condition_en": "All companies; requires an ecd:PeoTotalCompAmt fact in the DEF 14A, otherwise NEEDS_REVIEW / NOT_EXTRACTED.", "basis": ["02_指标定义_SEC_10公司单年指标.md#C03", "config/source_strategy_registry.json#metrics.C03"]}
-    ]},
-    "C04": {"clauses": [
-      {"clause_id": "C04-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "所有公司；需同一 CIK 的本年与上年 10-K dei:AuditorName 事实，successor/predecessor 无同 CIK prior 10-K 时 NEEDS_REVIEW。", "condition_en": "All companies; requires current and prior 10-K dei:AuditorName facts for the same CIK; NEEDS_REVIEW when a successor/predecessor lacks a same-CIK prior 10-K.", "basis": ["02_指标定义_SEC_10公司单年指标.md#C04", "config/source_strategy_registry.json#metrics.C04"]}
-    ]},
-    "D01": {"clauses": [
-      {"clause_id": "D01-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "SUPPLEMENTARY", "condition_zh": "所有公司；10-K Item 1A 存在即可，输出为定性摘要/标题清单。", "condition_en": "All companies; needs 10-K Item 1A; output is a qualitative summary / heading list.", "basis": ["02_指标定义_SEC_10公司单年指标.md#D01", "02_指标定义_SEC_10公司单年指标.md#D. Risk & Legal（全部公司）"]}
-    ]},
-    "D02": {"clauses": [
-      {"clause_id": "D02-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "所有公司；Item 3 / 诉讼 / 或有事项附注文本存在性。", "condition_en": "All companies; text existence in Item 3 / litigation / contingency notes.", "basis": ["02_指标定义_SEC_10公司单年指标.md#D02"]}
-    ]},
-    "D03": {"clauses": [
-      {"clause_id": "D03-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "所有公司；关键词命中段落与判断。", "condition_en": "All companies; keyword-hit passages and judgement.", "basis": ["02_指标定义_SEC_10公司单年指标.md#D03"]}
-    ]},
-    "D04": {"clauses": [
-      {"clause_id": "D04-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "所有公司；“未披露持续经营疑虑”是正常结果而非解析失败。", "condition_en": "All companies; “no going-concern doubt disclosed” is a normal result, not a parse failure.", "basis": ["02_指标定义_SEC_10公司单年指标.md#D04"]}
-    ]},
-    "E01": {"clauses": [
-      {"clause_id": "E01-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "所有公司；财年窗口内 8-K Item 1.01 / 2.01，以及需关键词确认的 8.01。", "condition_en": "All companies; 8-K Items 1.01 / 2.01 plus keyword-confirmed 8.01 within the fiscal-year window.", "basis": ["catalog/event_routes.json#routes.E01", "02_指标定义_SEC_10公司单年指标.md#E. Event Signals（全部公司，财年窗口内 8-K）"]}
-    ]},
-    "E02": {"clauses": [
-      {"clause_id": "E02-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "所有公司；8-K Item 1.03；预期多为零，零是正常结果。", "condition_en": "All companies; 8-K Item 1.03; zero is the normal expected result.", "basis": ["catalog/event_routes.json#routes.E02", "02_指标定义_SEC_10公司单年指标.md#E. Event Signals（全部公司，财年窗口内 8-K）"]}
-    ]},
-    "E03": {"clauses": [
-      {"clause_id": "E03-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "SUPPLEMENTARY", "condition_zh": "所有公司；与 C01 同源（Item 5.02，共享 claim group）。", "condition_en": "All companies; same source as C01 (Item 5.02, shared claim group).", "basis": ["catalog/event_routes.json#routes.E03", "02_指标定义_SEC_10公司单年指标.md#E. Event Signals（全部公司，财年窗口内 8-K）"]}
-    ]},
-    "E04": {"clauses": [
-      {"clause_id": "E04-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "CORE", "condition_zh": "所有公司；8-K Item 4.02，高风险信号。", "condition_en": "All companies; 8-K Item 4.02, a high-risk signal.", "basis": ["catalog/event_routes.json#routes.E04", "02_指标定义_SEC_10公司单年指标.md#E. Event Signals（全部公司，财年窗口内 8-K）"]}
-    ]},
-    "E05": {"clauses": [
-      {"clause_id": "E05-all", "when": "DEFAULT", "applicability": "APPLICABLE", "priority": "SUPPLEMENTARY", "condition_zh": "所有公司；8-K Item 1.01 清单，不抽合同条款。", "condition_en": "All companies; 8-K Item 1.01 list without extracting contract terms.", "basis": ["catalog/event_routes.json#routes.E05", "02_指标定义_SEC_10公司单年指标.md#E. Event Signals（全部公司，财年窗口内 8-K）"]}
-    ]}
-  }
+    "A01": {
+      "clauses": [
+        {
+          "clause_id": "A01-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A01.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A. Financial Institutions Metrics"
+          ]
+        },
+        {
+          "clause_id": "A01-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "监管资本比率只对金融机构 traits 定义；非金融行业为结构性不适用。",
+          "condition_en": "Regulatory capital ratios are defined only for financial traits; structurally inapplicable elsewhere.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A01.applicability"
+          ]
+        }
+      ]
+    },
+    "A02": {
+      "clauses": [
+        {
+          "clause_id": "A02-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A02.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A02"
+          ]
+        },
+        {
+          "clause_id": "A02-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "同 A01：仅金融机构 traits。",
+          "condition_en": "Same as A01: financial traits only.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A02.applicability"
+          ]
+        }
+      ]
+    },
+    "A03": {
+      "clauses": [
+        {
+          "clause_id": "A03-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "需年报 MD&A/监管披露中存在 firm 平均口径的 LCR 表格。",
+          "condition_en": "Requires a firm-average LCR table in MD&A/regulatory disclosures.",
+          "basis": [
+            "catalog/r4_v2/A03_liquidity_coverage_ratio.md#applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A03"
+          ]
+        },
+        {
+          "clause_id": "A03-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "仅金融机构 traits。",
+          "condition_en": "Financial traits only.",
+          "basis": [
+            "catalog/r4_v2/A03_liquidity_coverage_ratio.md#applicability"
+          ]
+        }
+      ]
+    },
+    "A04": {
+      "clauses": [
+        {
+          "clause_id": "A04-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "需 MD&A 平均余额表披露 managed basis 净息差；proxy 口径须标注。",
+          "condition_en": "Requires a managed-basis NIM in the MD&A average-balance table; any proxy must be labelled.",
+          "basis": [
+            "catalog/r4_v2/A04_net_interest_margin.md#applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A04"
+          ]
+        },
+        {
+          "clause_id": "A04-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "仅金融机构 traits。",
+          "condition_en": "Financial traits only.",
+          "basis": [
+            "catalog/r4_v2/A04_net_interest_margin.md#applicability"
+          ]
+        }
+      ]
+    },
+    "A05": {
+      "clauses": [
+        {
+          "clause_id": "A05-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A05.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A05"
+          ]
+        },
+        {
+          "clause_id": "A05-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "基线把 ROA 归入金融机构指标组；非金融行业未定义。",
+          "condition_en": "Baseline defines ROA in the financial-institution group only.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A05.applicability"
+          ]
+        }
+      ]
+    },
+    "A06": {
+      "clauses": [
+        {
+          "clause_id": "A06-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A06.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A06"
+          ]
+        },
+        {
+          "clause_id": "A06-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "基线把 ROE 归入金融机构指标组；非金融行业未定义。",
+          "condition_en": "Baseline defines ROE in the financial-institution group only.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A06.applicability"
+          ]
+        }
+      ]
+    },
+    "A07": {
+      "clauses": [
+        {
+          "clause_id": "A07-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A07.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A07"
+          ]
+        },
+        {
+          "clause_id": "A07-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "基线仅对金融机构 traits 定义；非金融公司的净利润见 B04。",
+          "condition_en": "Defined for financial traits only; non-financial net income is B04.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A07.applicability"
+          ]
+        }
+      ]
+    },
+    "A08": {
+      "clauses": [
+        {
+          "clause_id": "A08-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A08.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A08"
+          ]
+        },
+        {
+          "clause_id": "A08-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "银行收入结构指标；非金融行业结构性不适用。",
+          "condition_en": "Bank revenue-mix metric; structurally inapplicable to non-financial traits.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A08.applicability"
+          ]
+        }
+      ]
+    },
+    "A09": {
+      "clauses": [
+        {
+          "clause_id": "A09-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "结构化来源优先；仅在结构化来源歧义时才允许 firmwide 表格回退。",
+          "condition_en": "Structured source first; the firmwide table fallback is allowed only on structured-source ambiguity.",
+          "basis": [
+            "catalog/r4_v2/A09_nonperforming_loan_ratio.md#applicability",
+            "config/source_strategy_registry.json#metrics.A09"
+          ]
+        },
+        {
+          "clause_id": "A09-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "仅金融机构 traits。",
+          "condition_en": "Financial traits only.",
+          "basis": [
+            "catalog/r4_v2/A09_nonperforming_loan_ratio.md#applicability"
+          ]
+        }
+      ]
+    },
+    "A10": {
+      "clauses": [
+        {
+          "clause_id": "A10-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A10.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A10"
+          ]
+        },
+        {
+          "clause_id": "A10-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "仅金融机构 traits。",
+          "condition_en": "Financial traits only.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.A10.applicability"
+          ]
+        }
+      ]
+    },
+    "A11": {
+      "clauses": [
+        {
+          "clause_id": "A11-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "SUPPLEMENTARY",
+          "condition_zh": "需公司披露资产管理业务的 total AUM；client assets / custody 不是别名。",
+          "condition_en": "Requires a disclosed total assets-under-management figure; client assets or custody are not aliases.",
+          "basis": [
+            "catalog/r4_v2/A11_assets_under_management.md#applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A11"
+          ]
+        },
+        {
+          "clause_id": "A11-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "仅金融机构 traits。",
+          "condition_en": "Financial traits only.",
+          "basis": [
+            "catalog/r4_v2/A11_assets_under_management.md#applicability"
+          ]
+        }
+      ]
+    },
+    "A12": {
+      "clauses": [
+        {
+          "clause_id": "A12-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "SUPPLEMENTARY",
+          "condition_zh": "需 Item 7A / 市场风险表披露 VaR，并能证明 95% 置信度与一日持有期。",
+          "condition_en": "Requires a VaR disclosure in Item 7A / market-risk tables with provable 95% confidence and one-day holding period.",
+          "basis": [
+            "catalog/r4_v2/A12_trading_exposure.md#applicability",
+            "02_指标定义_SEC_10公司单年指标.md#A12"
+          ]
+        },
+        {
+          "clause_id": "A12-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "仅金融机构 traits。",
+          "condition_en": "Financial traits only.",
+          "basis": [
+            "catalog/r4_v2/A12_trading_exposure.md#applicability"
+          ]
+        }
+      ]
+    },
+    "A13": {
+      "clauses": [
+        {
+          "clause_id": "A13-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "SUPPLEMENTARY",
+          "condition_zh": "结构化 geographic 维度事实优先；仅在结构化来源歧义时允许 international 表格回退。",
+          "condition_en": "Structured geographic dimension facts first; the international table fallback only on structured-source ambiguity.",
+          "basis": [
+            "catalog/r4_v2/A13_geographic_exposure.md#applicability",
+            "config/source_strategy_registry.json#metrics.A13"
+          ]
+        },
+        {
+          "clause_id": "A13-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "基线仅对金融机构 traits 定义地区暴露；非金融行业的地区拆分未在基线定义（扩展候选，未支持）。",
+          "condition_en": "Baseline defines geographic exposure for financial traits only; non-financial geographic splits are an unsupported extension candidate.",
+          "basis": [
+            "catalog/r4_v2/A13_geographic_exposure.md#applicability"
+          ]
+        }
+      ]
+    },
+    "B01": {
+      "clauses": [
+        {
+          "clause_id": "B01-nonfi",
+          "when": {
+            "traits_all": [
+              "non_financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/metrics/B01_revenue.md#applicability",
+            "02_指标定义_SEC_10公司单年指标.md#B01"
+          ]
+        },
+        {
+          "clause_id": "B01-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "Spec applicability.all=[non_financial]；金融机构结构性不适用。",
+          "condition_en": "Spec applicability.all=[non_financial]; structurally inapplicable to financial traits.",
+          "basis": [
+            "catalog/metrics/B01_revenue.md#applicability"
+          ]
+        }
+      ]
+    },
+    "B02": {
+      "clauses": [
+        {
+          "clause_id": "B02-nonfi",
+          "when": {
+            "traits_all": [
+              "non_financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "公司层面还要求主体连续可比（continuity_policy=REQUIRE_CONTINUOUS）；successor/predecessor 合并年为 NOT_MEANINGFUL。",
+          "condition_en": "At company level the entity must be comparably continuous (continuity_policy=REQUIRE_CONTINUOUS); successor/predecessor years are NOT_MEANINGFUL.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B02.applicability",
+            "catalog/deterministic_metrics.json#metrics.B02.continuity_policy",
+            "02_指标定义_SEC_10公司单年指标.md#B02"
+          ]
+        },
+        {
+          "clause_id": "B02-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "仅非金融 traits。",
+          "condition_en": "Non-financial traits only.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B02.applicability"
+          ]
+        }
+      ]
+    },
+    "B03": {
+      "clauses": [
+        {
+          "clause_id": "B03-nonfi",
+          "when": {
+            "traits_all": [
+              "non_financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/metrics/B03_ebitda_margin.md#applicability",
+            "02_指标定义_SEC_10公司单年指标.md#B03"
+          ]
+        },
+        {
+          "clause_id": "B03-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "Spec applicability.all=[non_financial]。",
+          "condition_en": "Spec applicability.all=[non_financial].",
+          "basis": [
+            "catalog/metrics/B03_ebitda_margin.md#applicability"
+          ]
+        }
+      ]
+    },
+    "B04": {
+      "clauses": [
+        {
+          "clause_id": "B04-nonfi",
+          "when": {
+            "traits_all": [
+              "non_financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B04.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#B04"
+          ]
+        },
+        {
+          "clause_id": "B04-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "金融机构净利润见 A07。",
+          "condition_en": "Financial-institution net income is A07.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B04.applicability"
+          ]
+        }
+      ]
+    },
+    "B05": {
+      "clauses": [
+        {
+          "clause_id": "B05-nonfi",
+          "when": {
+            "traits_all": [
+              "non_financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B05.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#B05"
+          ]
+        },
+        {
+          "clause_id": "B05-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "仅非金融 traits。",
+          "condition_en": "Non-financial traits only.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B05.applicability"
+          ]
+        }
+      ]
+    },
+    "B06": {
+      "clauses": [
+        {
+          "clause_id": "B06-nonfi",
+          "when": {
+            "traits_all": [
+              "non_financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "公司层面：股东权益 ≤ 0 时比率无经济意义；存在 captive finance 范围（如 Ford Credit）时须区分合并与工业口径。",
+          "condition_en": "At company level: the ratio is not economically meaningful when equity ≤ 0; captive-finance scopes (e.g. Ford Credit) require consolidated vs industrial distinction.",
+          "basis": [
+            "02_指标定义_SEC_10公司单年指标.md#B06",
+            "catalog/r5/B06_structured.md#quality_rule.scope_review_dimension_members"
+          ]
+        },
+        {
+          "clause_id": "B06-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "CONDITIONAL",
+          "priority": "SUPPLEMENTARY",
+          "condition_zh": "按所选 R5 定义的银行单独融资范围计算（debt_scope_definition.bank_scope：借款、债券、融资租赁按报表确认账面额计入，排除客户存款等，不抵销资产），结果必须标注可比性限制，不与工业公司的 total debt / equity 同质比较，也不替代 A 组监管资本指标。基线证据（JPM）为 bank_funding 范围未完成：融资租赁完整性未证明（BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED），候选包中为明确阻断行而非数值；R5 无生产授权。这些是资料完整性与实现/验证状态，不是业务不适用。",
+          "condition_en": "Computed under the selected R5 definition's separate bank funding scope (debt_scope_definition.bank_scope: recognized borrowings, notes/bonds and finance leases at reported carrying amounts; customer deposits and similar items excluded; no netting of assets). Results must carry the comparability limitation: not comparable with industrial total debt / equity and not a substitute for the group A regulatory capital metrics. The baseline JPM evidence is an incomplete bank_funding scope (BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED) recorded as an explicit blocked row rather than a value, and R5 has no production authorization. Those are data-completeness and implementation states, not business inapplicability.",
+          "basis": [
+            "config/r5_b06_structured_v1.json#debt_scope_definition.bank_scope",
+            "config/r5_b06_structured_v1.json#debt_scope_definition.excluded",
+            "docs/evidence/r5_b06_scope/debt_scope_relationships.json (scope_class bank_funding, complete=false, unresolved BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED)",
+            "docs/r5_b06_structured.md（新集合明确适用于十公司；JPM B06 明确阻断行）"
+          ]
+        },
+        {
+          "clause_id": "B06-default",
+          "when": "DEFAULT",
+          "applicability": "PENDING_CONFIRMATION",
+          "priority": null,
+          "condition_zh": "既无 financial 也无 non_financial trait 的配置：基线没有为其定义 B06 的范围。",
+          "condition_en": "Profiles with neither the financial nor the non_financial trait: the baseline defines no B06 scope for them.",
+          "basis": [
+            "catalog/company_traits.yaml#profile_traits"
+          ]
+        }
+      ]
+    },
+    "B07": {
+      "clauses": [
+        {
+          "clause_id": "B07-nonfi",
+          "when": {
+            "traits_all": [
+              "non_financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "公司层面：营业利润 ≤ 0 时为 NOT_MEANINGFUL。",
+          "condition_en": "At company level: NOT_MEANINGFUL when operating income ≤ 0.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B07.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#B07"
+          ]
+        },
+        {
+          "clause_id": "B07-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "仅非金融 traits。",
+          "condition_en": "Non-financial traits only.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B07.applicability"
+          ]
+        }
+      ]
+    },
+    "B08": {
+      "clauses": [
+        {
+          "clause_id": "B08-nonfi",
+          "when": {
+            "traits_all": [
+              "non_financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B08.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#B08"
+          ]
+        },
+        {
+          "clause_id": "B08-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "银行不适用流动比率（定义文档：JPM 这种银行不适用，状态 N_A_STRUCTURAL）。",
+          "condition_en": "Current ratio is not applicable to banks (definition doc: N_A_STRUCTURAL).",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B08.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#B08"
+          ]
+        }
+      ]
+    },
+    "B09": {
+      "clauses": [
+        {
+          "clause_id": "B09-nonfi",
+          "when": {
+            "traits_all": [
+              "non_financial"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": null,
+          "condition_en": null,
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B09.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#B09"
+          ]
+        },
+        {
+          "clause_id": "B09-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "仅非金融 traits。",
+          "condition_en": "Non-financial traits only.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B09.applicability"
+          ]
+        }
+      ]
+    },
+    "B10": {
+      "clauses": [
+        {
+          "clause_id": "B10-lodging",
+          "when": {
+            "traits_all": [
+              "lodging"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "需年报 Lodging Statistics 表披露 Comparable Systemwide Properties / Worldwide 的当年绝对值；仅有地区拆分或同比变化时不能唯一选择。",
+          "condition_en": "Requires the annual lodging-statistics table to disclose the current-year comparable systemwide worldwide absolute value; regional-only or percentage-change figures do not qualify.",
+          "basis": [
+            "catalog/metrics/B10_occupancy.md#applicability",
+            "catalog/metrics/B10_occupancy.md#required_claims",
+            "02_指标定义_SEC_10公司单年指标.md#B10"
+          ]
+        },
+        {
+          "clause_id": "B10-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "Spec applicability.all=[lodging]；其他行业为 N_A_STRUCTURAL。",
+          "condition_en": "Spec applicability.all=[lodging]; N_A_STRUCTURAL elsewhere.",
+          "basis": [
+            "catalog/metrics/B10_occupancy.md#applicability"
+          ]
+        }
+      ]
+    },
+    "B11": {
+      "clauses": [
+        {
+          "clause_id": "B11-lodging",
+          "when": {
+            "traits_all": [
+              "lodging"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "同 B10；RevPAR 与 ADR 必须为 USD，增长百分比不能冒充绝对值。",
+          "condition_en": "Same as B10; RevPAR and supporting ADR must be USD, and growth percentages never substitute for the absolute value.",
+          "basis": [
+            "catalog/metrics/B11_revpar.md#applicability",
+            "catalog/metrics/B11_revpar.md#required_claims",
+            "02_指标定义_SEC_10公司单年指标.md#B11"
+          ]
+        },
+        {
+          "clause_id": "B11-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "Spec applicability.all=[lodging]。",
+          "condition_en": "Spec applicability.all=[lodging].",
+          "basis": [
+            "catalog/metrics/B11_revpar.md#applicability"
+          ]
+        }
+      ]
+    },
+    "B12": {
+      "clauses": [
+        {
+          "clause_id": "B12-subscription",
+          "when": {
+            "traits_all": [
+              "subscription_or_contract_revenue"
+            ]
+          },
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "输出的是 RPO / cRPO 替代观测值，不是 ARR，也不是 churn；需实例中存在未维度化的 RemainingPerformanceObligation 事实。",
+          "condition_en": "The output is an RPO / cRPO substitute observation, not ARR and not churn; requires an undimensioned remaining-performance-obligation fact in the instance.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B12.applicability",
+            "02_指标定义_SEC_10公司单年指标.md#B12"
+          ]
+        },
+        {
+          "clause_id": "B12-default",
+          "when": "DEFAULT",
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "applicability.all=[subscription_or_contract_revenue]；其他行业 N_A_STRUCTURAL。",
+          "condition_en": "applicability.all=[subscription_or_contract_revenue]; N_A_STRUCTURAL elsewhere.",
+          "basis": [
+            "catalog/deterministic_metrics.json#metrics.B12.applicability"
+          ]
+        }
+      ]
+    },
+    "B13": {
+      "clauses": [
+        {
+          "clause_id": "B13-manufacturing",
+          "when": {
+            "profiles": [
+              "manufacturing"
+            ]
+          },
+          "applicability": "CONDITIONAL",
+          "priority": "SUPPLEMENTARY",
+          "condition_zh": "仅当年报披露可计算的实际产量与可用产能数值时才有数值结果；SEC 年报通常不披露，只有定性描述时为 TEXT_QUAL，未披露为 NOT_AVAILABLE_SEC。基线只对 manufacturing 配置 CapacityUtilizationExtractor（Ford / Enphase）。",
+          "condition_en": "Numeric only when the annual report discloses computable actual production and available capacity; SEC annual reports usually do not, so qualitative-only is TEXT_QUAL and undisclosed is NOT_AVAILABLE_SEC. The baseline configures CapacityUtilizationExtractor for manufacturing only (Ford / Enphase).",
+          "basis": [
+            "config/metric_applicability.yaml#profiles.manufacturing.extractors",
+            "02_指标定义_SEC_10公司单年指标.md#B13",
+            "catalog/metrics/B13_capacity_utilization.md#required_claims"
+          ]
+        },
+        {
+          "clause_id": "B13-fi",
+          "when": {
+            "traits_all": [
+              "financial"
+            ]
+          },
+          "applicability": "NOT_APPLICABLE",
+          "priority": null,
+          "condition_zh": "B 组指标在定义文档中限定为非金融公司；所选 B13 定义（Issue #15 表格合同，required_claims.capacity_basis=production）以生产产能为口径，银行没有生产产能；没有任何所选定义或后继 Spec 为银行定义产能利用率。",
+          "condition_en": "Group B is scoped to non-financial companies in the definition document; the selected B13 definition (Issue #15 table contract, required_claims.capacity_basis=production) is production-capacity based and banks have no production capacity; no selected definition or successor Spec defines capacity utilization for banks.",
+          "basis": [
+            "02_指标定义_SEC_10公司单年指标.md#B. Commercial Risk Metrics",
+            "catalog/metrics/B13_capacity_utilization.md#required_claims"
+          ]
+        },
+        {
+          "clause_id": "B13-default",
+          "when": "DEFAULT",
+          "applicability": "PENDING_CONFIRMATION",
+          "priority": null,
+          "condition_zh": "基线未为其他非金融行业定义产能利用率，也没有结构性不适用声明；legacy 代码仅在文本出现 capacity 关键词时才尝试。",
+          "condition_en": "The baseline neither defines capacity utilization for other non-financial industries nor declares it structurally inapplicable; legacy code only attempts it when capacity keywords appear.",
+          "basis": [
+            "scripts/sec_pipeline.py::text_has_capacity_keywords",
+            "scripts/sec_pipeline.py::CapacityUtilizationExtractor"
+          ]
+        }
+      ]
+    },
+    "C01": {
+      "clauses": [
+        {
+          "clause_id": "C01-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "所有公司；财年窗口内的 8-K Item 5.02。",
+          "condition_en": "All companies; 8-K Item 5.02 within the fiscal-year window.",
+          "basis": [
+            "catalog/event_routes.json#routes.C01",
+            "02_指标定义_SEC_10公司单年指标.md#C. Governance & Leadership（全部公司）"
+          ]
+        }
+      ]
+    },
+    "C02": {
+      "clauses": [
+        {
+          "clause_id": "C02-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "SUPPLEMENTARY",
+          "condition_zh": "所有公司；需最新 DEF 14A；基线只产出定性文本证据（TEXT_QUAL），结构化人数需复核。",
+          "condition_en": "All companies; requires the latest DEF 14A; the baseline yields qualitative text evidence (TEXT_QUAL) and structured counts need review.",
+          "basis": [
+            "02_指标定义_SEC_10公司单年指标.md#C02",
+            "scripts/sec_pipeline.py::stage_extract_def14a"
+          ]
+        }
+      ]
+    },
+    "C03": {
+      "clauses": [
+        {
+          "clause_id": "C03-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "所有公司；需 DEF 14A 含 ecd XBRL 的 PeoTotalCompAmt 事实，否则 NEEDS_REVIEW / NOT_EXTRACTED。",
+          "condition_en": "All companies; requires an ecd:PeoTotalCompAmt fact in the DEF 14A, otherwise NEEDS_REVIEW / NOT_EXTRACTED.",
+          "basis": [
+            "02_指标定义_SEC_10公司单年指标.md#C03",
+            "config/source_strategy_registry.json#metrics.C03"
+          ]
+        }
+      ]
+    },
+    "C04": {
+      "clauses": [
+        {
+          "clause_id": "C04-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "所有公司；需同一 CIK 的本年与上年 10-K dei:AuditorName 事实，successor/predecessor 无同 CIK prior 10-K 时 NEEDS_REVIEW。",
+          "condition_en": "All companies; requires current and prior 10-K dei:AuditorName facts for the same CIK; NEEDS_REVIEW when a successor/predecessor lacks a same-CIK prior 10-K.",
+          "basis": [
+            "02_指标定义_SEC_10公司单年指标.md#C04",
+            "config/source_strategy_registry.json#metrics.C04"
+          ]
+        }
+      ]
+    },
+    "D01": {
+      "clauses": [
+        {
+          "clause_id": "D01-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "SUPPLEMENTARY",
+          "condition_zh": "所有公司；10-K Item 1A 存在即可，输出为定性摘要/标题清单。",
+          "condition_en": "All companies; needs 10-K Item 1A; output is a qualitative summary / heading list.",
+          "basis": [
+            "02_指标定义_SEC_10公司单年指标.md#D01",
+            "02_指标定义_SEC_10公司单年指标.md#D. Risk & Legal（全部公司）"
+          ]
+        }
+      ]
+    },
+    "D02": {
+      "clauses": [
+        {
+          "clause_id": "D02-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "所有公司；Item 3 / 诉讼 / 或有事项附注文本存在性。",
+          "condition_en": "All companies; text existence in Item 3 / litigation / contingency notes.",
+          "basis": [
+            "02_指标定义_SEC_10公司单年指标.md#D02"
+          ]
+        }
+      ]
+    },
+    "D03": {
+      "clauses": [
+        {
+          "clause_id": "D03-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "所有公司；关键词命中段落与判断。",
+          "condition_en": "All companies; keyword-hit passages and judgement.",
+          "basis": [
+            "02_指标定义_SEC_10公司单年指标.md#D03"
+          ]
+        }
+      ]
+    },
+    "D04": {
+      "clauses": [
+        {
+          "clause_id": "D04-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "所有公司；“未披露持续经营疑虑”是正常结果而非解析失败。",
+          "condition_en": "All companies; “no going-concern doubt disclosed” is a normal result, not a parse failure.",
+          "basis": [
+            "02_指标定义_SEC_10公司单年指标.md#D04"
+          ]
+        }
+      ]
+    },
+    "E01": {
+      "clauses": [
+        {
+          "clause_id": "E01-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "所有公司；财年窗口内 8-K Item 1.01 / 2.01，以及需关键词确认的 8.01。",
+          "condition_en": "All companies; 8-K Items 1.01 / 2.01 plus keyword-confirmed 8.01 within the fiscal-year window.",
+          "basis": [
+            "catalog/event_routes.json#routes.E01",
+            "02_指标定义_SEC_10公司单年指标.md#E. Event Signals（全部公司，财年窗口内 8-K）"
+          ]
+        }
+      ]
+    },
+    "E02": {
+      "clauses": [
+        {
+          "clause_id": "E02-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "所有公司；8-K Item 1.03；预期多为零，零是正常结果。",
+          "condition_en": "All companies; 8-K Item 1.03; zero is the normal expected result.",
+          "basis": [
+            "catalog/event_routes.json#routes.E02",
+            "02_指标定义_SEC_10公司单年指标.md#E. Event Signals（全部公司，财年窗口内 8-K）"
+          ]
+        }
+      ]
+    },
+    "E03": {
+      "clauses": [
+        {
+          "clause_id": "E03-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "SUPPLEMENTARY",
+          "condition_zh": "所有公司；与 C01 同源（Item 5.02，共享 claim group）。",
+          "condition_en": "All companies; same source as C01 (Item 5.02, shared claim group).",
+          "basis": [
+            "catalog/event_routes.json#routes.E03",
+            "02_指标定义_SEC_10公司单年指标.md#E. Event Signals（全部公司，财年窗口内 8-K）"
+          ]
+        }
+      ]
+    },
+    "E04": {
+      "clauses": [
+        {
+          "clause_id": "E04-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "CORE",
+          "condition_zh": "所有公司；8-K Item 4.02，高风险信号。",
+          "condition_en": "All companies; 8-K Item 4.02, a high-risk signal.",
+          "basis": [
+            "catalog/event_routes.json#routes.E04",
+            "02_指标定义_SEC_10公司单年指标.md#E. Event Signals（全部公司，财年窗口内 8-K）"
+          ]
+        }
+      ]
+    },
+    "E05": {
+      "clauses": [
+        {
+          "clause_id": "E05-all",
+          "when": "DEFAULT",
+          "applicability": "APPLICABLE",
+          "priority": "SUPPLEMENTARY",
+          "condition_zh": "所有公司；8-K Item 1.01 清单，不抽合同条款。",
+          "condition_en": "All companies; 8-K Item 1.01 list without extracting contract terms.",
+          "basis": [
+            "catalog/event_routes.json#routes.E05",
+            "02_指标定义_SEC_10公司单年指标.md#E. Event Signals（全部公司，财年窗口内 8-K）"
+          ]
+        }
+      ]
+    }
+  },
+  "not_applicable_basis_rule": "NOT_APPLICABLE 子句的每条 basis 必须指向定义层来源（catalog/ 下的 Spec 或目录、config/metric_applicability.yaml、catalog/company_traits.yaml、02_指标定义 文档），不得引用证据目录、发布计划或 production_authorized 之类的实现/授权状态；生成器强制检查。"
 }
