@@ -1,0 +1,619 @@
+{
+ "status": "PASSED",
+ "duration_seconds": 105.404,
+ "jobs": 2,
+ "case_count": 122,
+ "exit_line": "exit=0",
+ "cases": [
+  {
+   "test": "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_r4_plan_uses_fast_runner_without_full_discovery",
+   "return_code": 0,
+   "duration_seconds": 0.375
+  },
+  {
+   "test": "tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_deepseek_chat_envelope_is_json_and_tool_free",
+   "return_code": 0,
+   "duration_seconds": 0.304
+  },
+  {
+   "test": "tests.vnext.test_annual_continuity.AnnualContinuationPermissionTest",
+   "return_code": 0,
+   "duration_seconds": 0.371
+  },
+  {
+   "test": "tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest",
+   "return_code": 0,
+   "duration_seconds": 1.872
+  },
+  {
+   "test": "tests.vnext.test_annual_continuity.AnnualModelConfigurationTest",
+   "return_code": 0,
+   "duration_seconds": 4.853
+  },
+  {
+   "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_no_requirement_and_other_task_retain_original_prompt",
+   "return_code": 0,
+   "duration_seconds": 4.682
+  },
+  {
+   "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_prompt_changes_only_instruction_and_its_task_identities",
+   "return_code": 0,
+   "duration_seconds": 4.611
+  },
+  {
+   "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_prompt_file_tamper_is_rejected_without_rewriting_repository",
+   "return_code": 0,
+   "duration_seconds": 3.03
+  },
+  {
+   "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_stage_three_counts_two_closed_attempts_before_new_slots",
+   "return_code": 0,
+   "duration_seconds": 0.37
+  },
+  {
+   "test": "tests.vnext.test_annual_publication",
+   "return_code": 0,
+   "duration_seconds": 1.252
+  },
+  {
+   "test": "tests.vnext.test_annual_publication_authority",
+   "return_code": 0,
+   "duration_seconds": 2.332
+  },
+  {
+   "test": "tests.vnext.test_annual_repair.AnnualLabelRegressionTest.test_policy_selects_new_requirement_only",
+   "return_code": 0,
+   "duration_seconds": 1.959
+  },
+  {
+   "test": "tests.vnext.test_annual_update.AnnualUpdateTest.test_candidate_leading_publication_survives_discovery_failure",
+   "return_code": 0,
+   "duration_seconds": 1.601
+  },
+  {
+   "test": "tests.vnext.test_annual_update.AnnualUpdateTest.test_publication_progress_is_explicit_and_run_specific",
+   "return_code": 0,
+   "duration_seconds": 1.62
+  },
+  {
+   "test": "tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest",
+   "return_code": 0,
+   "duration_seconds": 0.43
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_added_balance_sheet_financing_row_cannot_inherit_coverage",
+   "return_code": 0,
+   "duration_seconds": 1.923
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_approval_fields_and_duplicate_formula_not_part_of_proposal",
+   "return_code": 0,
+   "duration_seconds": 1.286
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_asset_payment_wrong_year_and_entity_do_not_become_liability",
+   "return_code": 0,
+   "duration_seconds": 3.212
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_outside_calculation_allowlist_cannot_disappear",
+   "return_code": 0,
+   "duration_seconds": 1.934
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_tax_loan_and_credit_facility_remain_unresolved",
+   "return_code": 0,
+   "duration_seconds": 3.169
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_development_modes_rebuild_real_source_relations",
+   "return_code": 0,
+   "duration_seconds": 4.93
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_dynamic_amounts_are_reread_with_new_test_identity",
+   "return_code": 0,
+   "duration_seconds": 3.676
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_forged_matching_ledger_has_no_admission",
+   "return_code": 0,
+   "duration_seconds": 0.788
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_missing_primary_or_note_is_not_zero",
+   "return_code": 0,
+   "duration_seconds": 1.907
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_primary_only_sign_conflict_is_not_whitespace",
+   "return_code": 0,
+   "duration_seconds": 1.933
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_reverse_subject_exclusion_and_inclusion_are_conflicts",
+   "return_code": 0,
+   "duration_seconds": 3.608
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_same_arithmetic_but_explicit_lease_exclusion_rejects_at_relation",
+   "return_code": 0,
+   "duration_seconds": 2.056
+  },
+  {
+   "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_selected_model_cannot_grant_inclusion_or_nonoverlap",
+   "return_code": 0,
+   "duration_seconds": 3.031
+  },
+  {
+   "test": "tests.vnext.test_capacity_applicability.CapacityApplicabilityTest",
+   "return_code": 0,
+   "duration_seconds": 0.392
+  },
+  {
+   "test": "tests.vnext.test_capacity_program_roles",
+   "return_code": 0,
+   "duration_seconds": 0.516
+  },
+  {
+   "test": "tests.vnext.test_capacity_quantity_roles",
+   "return_code": 0,
+   "duration_seconds": 0.579
+  },
+  {
+   "test": "tests.vnext.test_capacity_quantity_scope",
+   "return_code": 0,
+   "duration_seconds": 0.488
+  },
+  {
+   "test": "tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest",
+   "return_code": 0,
+   "duration_seconds": 0.416
+  },
+  {
+   "test": "tests.vnext.test_capacity_semantic_source.CapacitySemanticSourceTest",
+   "return_code": 0,
+   "duration_seconds": 0.435
+  },
+  {
+   "test": "tests.vnext.test_capacity_utilization_source.CapacityComparisonTest",
+   "return_code": 0,
+   "duration_seconds": 0.435
+  },
+  {
+   "test": "tests.vnext.test_continuous_call_ledger",
+   "return_code": 0,
+   "duration_seconds": 0.552
+  },
+  {
+   "test": "tests.vnext.test_continuous_call_policy",
+   "return_code": 0,
+   "duration_seconds": 0.199
+  },
+  {
+   "test": "tests.vnext.test_continuous_request_context",
+   "return_code": 0,
+   "duration_seconds": 1.787
+  },
+  {
+   "test": "tests.vnext.test_cutover_qualification.CutoverQualificationTest.test_layout_terminal_requires_approval_publish_and_validation",
+   "return_code": 0,
+   "duration_seconds": 0.396
+  },
+  {
+   "test": "tests.vnext.test_d04_native_assessment",
+   "return_code": 0,
+   "duration_seconds": 0.699
+  },
+  {
+   "test": "tests.vnext.test_deterministic_router.DeterministicRouterTest.test_e01_matched_event_key_set_has_exact_legacy_parity",
+   "return_code": 0,
+   "duration_seconds": 0.24
+  },
+  {
+   "test": "tests.vnext.test_governance_compensation_table",
+   "return_code": 0,
+   "duration_seconds": 0.225
+  },
+  {
+   "test": "tests.vnext.test_governance_signals",
+   "return_code": 0,
+   "duration_seconds": 0.205
+  },
+  {
+   "test": "tests.vnext.test_invocation_control",
+   "return_code": 0,
+   "duration_seconds": 8.455
+  },
+  {
+   "test": "tests.vnext.test_issue15_authority.Issue15AuthorityTest.test_reusable_producer_scopes_match_exact_base_call_graph",
+   "return_code": 0,
+   "duration_seconds": 0.545
+  },
+  {
+   "test": "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke",
+   "return_code": 0,
+   "duration_seconds": 2.3
+  },
+  {
+   "test": "tests.vnext.test_issue28_v2.Issue28V2FastTest.test_real_five_file_revision_has_exact_parent_and_no_activation",
+   "return_code": 0,
+   "duration_seconds": 0.415
+  },
+  {
+   "test": "tests.vnext.test_legacy_projector.LegacyProjectorTest.test_legacy_inventory_binds_frozen_commit_and_source_blobs",
+   "return_code": 0,
+   "duration_seconds": 0.206
+  },
+  {
+   "test": "tests.vnext.test_live_scoped_reader.LiveScopedEnvelopeTest",
+   "return_code": 0,
+   "duration_seconds": 3.643
+  },
+  {
+   "test": "tests.vnext.test_native_refresh_execution",
+   "return_code": 0,
+   "duration_seconds": 0.631
+  },
+  {
+   "test": "tests.vnext.test_native_request_construction",
+   "return_code": 0,
+   "duration_seconds": 7.862
+  },
+  {
+   "test": "tests.vnext.test_native_request_variants",
+   "return_code": 0,
+   "duration_seconds": 0.5
+  },
+  {
+   "test": "tests.vnext.test_native_source_runtime_policy",
+   "return_code": 0,
+   "duration_seconds": 0.387
+  },
+  {
+   "test": "tests.vnext.test_native_unit_index",
+   "return_code": 0,
+   "duration_seconds": 0.433
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_ambiguous_columns_dates_and_relevant_shards_are_not_no_change",
+   "return_code": 0,
+   "duration_seconds": 0.349
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_amendment_keeps_original_and_does_not_claim_current_success",
+   "return_code": 0,
+   "duration_seconds": 1.63
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_invalid_source_fiscal_label_and_cik_are_integrity_failures",
+   "return_code": 0,
+   "duration_seconds": 6.671
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_later_source_failure_is_not_relabelled_as_old_success",
+   "return_code": 0,
+   "duration_seconds": 0.347
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_latest_period_cannot_fall_back_when_only_amendment_is_present",
+   "return_code": 0,
+   "duration_seconds": 0.346
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_period_rechecks_entity_and_does_not_promote_quarter_to_year",
+   "return_code": 0,
+   "duration_seconds": 0.822
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_00",
+   "return_code": 0,
+   "duration_seconds": 1.267
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_01",
+   "return_code": 0,
+   "duration_seconds": 1.563
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_02",
+   "return_code": 0,
+   "duration_seconds": 2.262
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_03",
+   "return_code": 0,
+   "duration_seconds": 2.385
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_04",
+   "return_code": 0,
+   "duration_seconds": 5.29
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_05",
+   "return_code": 0,
+   "duration_seconds": 1.536
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_06",
+   "return_code": 0,
+   "duration_seconds": 1.86
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_07",
+   "return_code": 0,
+   "duration_seconds": 1.37
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_08",
+   "return_code": 0,
+   "duration_seconds": 1.934
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_09",
+   "return_code": 0,
+   "duration_seconds": 1.555
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_saved_noncalendar_inputs_use_dei_fiscal_label",
+   "return_code": 0,
+   "duration_seconds": 2.625
+  },
+  {
+   "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_unknown_subject_policy_isolated_without_using_predecessor",
+   "return_code": 0,
+   "duration_seconds": 1.546
+  },
+  {
+   "test": "tests.vnext.test_normal_candidate_authority",
+   "return_code": 0,
+   "duration_seconds": 1.413
+  },
+  {
+   "test": "tests.vnext.test_normal_candidate_semantics",
+   "return_code": 0,
+   "duration_seconds": 0.386
+  },
+  {
+   "test": "tests.vnext.test_normal_governance_input.AuditorV2InputTest",
+   "return_code": 0,
+   "duration_seconds": 0.383
+  },
+  {
+   "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_actual_legacy_attempt_is_pinned_without_inventing_id",
+   "return_code": 0,
+   "duration_seconds": 0.454
+  },
+  {
+   "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_imported_registry_cannot_relabel_a_different_subject",
+   "return_code": 0,
+   "duration_seconds": 0.376
+  },
+  {
+   "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_later_failed_get_never_falls_back_to_success",
+   "return_code": 0,
+   "duration_seconds": 0.384
+  },
+  {
+   "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_preparation_reads_original_proofs_without_derived_inventories",
+   "return_code": 0,
+   "duration_seconds": 1.58
+  },
+  {
+   "test": "tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest",
+   "return_code": 0,
+   "duration_seconds": 0.371
+  },
+  {
+   "test": "tests.vnext.test_normal_run_authority",
+   "return_code": 0,
+   "duration_seconds": 0.208
+  },
+  {
+   "test": "tests.vnext.test_normal_source_authority",
+   "return_code": 0,
+   "duration_seconds": 0.825
+  },
+  {
+   "test": "tests.vnext.test_normal_text_input_v2",
+   "return_code": 0,
+   "duration_seconds": 3.606
+  },
+  {
+   "test": "tests.vnext.test_offline_execution_session.OfflineExecutionSessionTest.test_unknown_is_terminal_and_cannot_be_retried",
+   "return_code": 0,
+   "duration_seconds": 2.152
+  },
+  {
+   "test": "tests.vnext.test_ordinary_isolated_publication.OrdinaryIsolatedPublicationBoundaryTest",
+   "return_code": 0,
+   "duration_seconds": 1.774
+  },
+  {
+   "test": "tests.vnext.test_ordinary_source_authority",
+   "return_code": 0,
+   "duration_seconds": 7.448
+  },
+  {
+   "test": "tests.vnext.test_ordinary_source_session",
+   "return_code": 0,
+   "duration_seconds": 5.024
+  },
+  {
+   "test": "tests.vnext.test_ordinary_storage_identity",
+   "return_code": 0,
+   "duration_seconds": 0.317
+  },
+  {
+   "test": "tests.vnext.test_prior_html_dependency",
+   "return_code": 0,
+   "duration_seconds": 0.437
+  },
+  {
+   "test": "tests.vnext.test_r4_live_authority.R4ExecutionPrefixTest",
+   "return_code": 0,
+   "duration_seconds": 0.472
+  },
+  {
+   "test": "tests.vnext.test_r4_live_authority.R4LiveAuthorityShapeTest",
+   "return_code": 0,
+   "duration_seconds": 0.413
+  },
+  {
+   "test": "tests.vnext.test_r4_live_plan.R4DraftPlanRiskTest",
+   "return_code": 0,
+   "duration_seconds": 0.29
+  },
+  {
+   "test": "tests.vnext.test_r4_projection.R4ProjectionBoundaryTest.test_complete_grid_rejects_missing_duplicate_extra_and_false_applicability",
+   "return_code": 0,
+   "duration_seconds": 0.219
+  },
+  {
+   "test": "tests.vnext.test_r4_publication_boundaries",
+   "return_code": 0,
+   "duration_seconds": 0.374
+  },
+  {
+   "test": "tests.vnext.test_r4_release_gate.R4ReleaseAggregateGateTest",
+   "return_code": 0,
+   "duration_seconds": 0.276
+  },
+  {
+   "test": "tests.vnext.test_r5_b06.B06PrimaryTest",
+   "return_code": 0,
+   "duration_seconds": 0.277
+  },
+  {
+   "test": "tests.vnext.test_r5_b06_followup",
+   "return_code": 0,
+   "duration_seconds": 1.829
+  },
+  {
+   "test": "tests.vnext.test_r5_b06_scope",
+   "return_code": 0,
+   "duration_seconds": 5.509
+  },
+  {
+   "test": "tests.vnext.test_r6_semantic_scope",
+   "return_code": 0,
+   "duration_seconds": 0.428
+  },
+  {
+   "test": "tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest",
+   "return_code": 0,
+   "duration_seconds": 0.525
+  },
+  {
+   "test": "tests.vnext.test_registration_event_discovery",
+   "return_code": 0,
+   "duration_seconds": 0.365
+  },
+  {
+   "test": "tests.vnext.test_regulatory_investigation_candidates",
+   "return_code": 0,
+   "duration_seconds": 0.266
+  },
+  {
+   "test": "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementFactsTest",
+   "return_code": 0,
+   "duration_seconds": 0.419
+  },
+  {
+   "test": "tests.vnext.test_replay.ReplayTest.test_validate_and_freeze_replays_run_before_pass",
+   "return_code": 0,
+   "duration_seconds": 0.515
+  },
+  {
+   "test": "tests.vnext.test_review_binding.ReviewBindingTest.test_optional_system_decision_is_auditable",
+   "return_code": 0,
+   "duration_seconds": 0.148
+  },
+  {
+   "test": "tests.vnext.test_scoped_reader.ScopedReaderTest.test_all_four_zero_call_classes_cannot_prepare_requests",
+   "return_code": 0,
+   "duration_seconds": 3.082
+  },
+  {
+   "test": "tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingTest",
+   "return_code": 0,
+   "duration_seconds": 0.388
+  },
+  {
+   "test": "tests.vnext.test_source_input_rule_roles",
+   "return_code": 0,
+   "duration_seconds": 0.37
+  },
+  {
+   "test": "tests.vnext.test_source_scope.SourceScopeTest.test_complete_native_candidate_and_evidence_are_bound",
+   "return_code": 0,
+   "duration_seconds": 3.242
+  },
+  {
+   "test": "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest.test_registry_covers_exact_39_without_migration_state",
+   "return_code": 0,
+   "duration_seconds": 2.389
+  },
+  {
+   "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_current_packet_persists_no_credit_and_zero_current_egress",
+   "return_code": 0,
+   "duration_seconds": 0.224
+  },
+  {
+   "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_current_packet_persists_sibling_and_financial_blockers",
+   "return_code": 0,
+   "duration_seconds": 0.219
+  },
+  {
+   "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_historical_stage_c_b_packet_remains_content_addressed",
+   "return_code": 0,
+   "duration_seconds": 0.22
+  },
+  {
+   "test": "tests.vnext.test_successor_invocation_control",
+   "return_code": 0,
+   "duration_seconds": 3.911
+  },
+  {
+   "test": "tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_occupancy_request_has_no_current_credit",
+   "return_code": 0,
+   "duration_seconds": 4.077
+  },
+  {
+   "test": "tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_revpar_request_has_no_current_credit",
+   "return_code": 0,
+   "duration_seconds": 6.352
+  },
+  {
+   "test": "tests.vnext.test_table_context_measurement.TableContextMeasurementTerminalTest.test_revpar_terminal_is_consumed_exact_and_non_credit",
+   "return_code": 0,
+   "duration_seconds": 2.927
+  },
+  {
+   "test": "tests.vnext.test_table_context_qualification_guard.TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two",
+   "return_code": 0,
+   "duration_seconds": 9.949
+  },
+  {
+   "test": "tests.vnext.test_table_stage_c_a_packet.TableStageCAPacketTest.test_packet_sections_preserve_stage_c_a_claim_boundaries",
+   "return_code": 0,
+   "duration_seconds": 0.214
+  },
+  {
+   "test": "tests.vnext.test_table_stage_c_financial_materialization",
+   "return_code": 0,
+   "duration_seconds": 0.158
+  },
+  {
+   "test": "tests.vnext.test_text_coverage",
+   "return_code": 0,
+   "duration_seconds": 0.166
+  },
+  {
+   "test": "tests.vnext.test_zero_ai_release.ZeroAiReleaseFastTest.test_r2_predecessor_bundle_fast_smoke",
+   "return_code": 0,
+   "duration_seconds": 0.32
+  }
+ ]
+}

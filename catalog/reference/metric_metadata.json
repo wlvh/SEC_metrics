@@ -1,0 +1,1129 @@
+{
+  "schema_version": 1,
+  "record_type": "METRIC_REFERENCE_METADATA",
+  "purpose": "仅在此维护机器来源不包含的人工补充：中英文名称与说明、legacy 方法说明及其代码引用、预期状态、已知限制与验证范围说明。公式、依赖、来源优先级、guard、单位和 applicability 由生成器从 source_selection.json 选定的机器来源读取，不在此重复维护。citations 中的 path/symbol/literals 由生成器逐条核对存在，防止说明与代码漂移。",
+  "groups": {
+    "A": {
+      "zh": "金融机构指标",
+      "en": "Financial institution metrics"
+    },
+    "B": {
+      "zh": "商业风险与经营指标（非金融公司）",
+      "en": "Commercial risk and operating metrics (non-financial companies)"
+    },
+    "C": {
+      "zh": "治理与领导层",
+      "en": "Governance and leadership"
+    },
+    "D": {
+      "zh": "风险与法律",
+      "en": "Risk and legal"
+    },
+    "E": {
+      "zh": "事件信号（财年窗口内 8-K）",
+      "en": "Event signals (8-K within the fiscal-year window)"
+    }
+  },
+  "status_vocabulary": {
+    "legacy": {
+      "citation": {
+        "path": "scripts/sec_pipeline.py",
+        "symbol": "ALLOWED_STATUSES",
+        "literals": [
+          "\"OK\"",
+          "\"OK_APPROX\"",
+          "\"DIM_XBRL_OK\"",
+          "\"MDA_OK\"",
+          "\"DEF14A_OK\"",
+          "\"8K_ITEM_OK\"",
+          "\"TEXT_QUAL\"",
+          "\"NOT_AVAILABLE_SEC\"",
+          "\"NOT_EXTRACTED\"",
+          "\"NOT_MEANINGFUL\"",
+          "\"N_A_STRUCTURAL\"",
+          "\"PARSE_FAILED\"",
+          "\"NEEDS_REVIEW\""
+        ]
+      },
+      "values": [
+        "OK",
+        "OK_APPROX",
+        "DIM_XBRL_OK",
+        "MDA_OK",
+        "DEF14A_OK",
+        "8K_ITEM_OK",
+        "TEXT_QUAL",
+        "NOT_AVAILABLE_SEC",
+        "NOT_EXTRACTED",
+        "NOT_MEANINGFUL",
+        "N_A_STRUCTURAL",
+        "PARSE_FAILED",
+        "NEEDS_REVIEW"
+      ]
+    },
+    "vnext": {
+      "citation": {
+        "path": "02_指标定义_SEC_10公司单年指标.md",
+        "symbol": null,
+        "literals": [
+          "PUBLISHED / NOT_MEANINGFUL / DENOMINATOR_ZERO",
+          "WITHHELD",
+          "N_A_STRUCTURAL"
+        ]
+      },
+      "values": [
+        "PUBLISHED",
+        "WITHHELD",
+        "NOT_MEANINGFUL",
+        "N_A_STRUCTURAL"
+      ]
+    }
+  },
+  "shared_citations": {
+    "deterministic_formula_evaluator": {
+      "path": "scripts/vnext/zero_ai_r2.py",
+      "symbol": "_formula_value",
+      "literals": [
+        "values[0] / ((values[1] + values[2]) / Decimal(2))",
+        "(values[0] - values[1]) / values[1]",
+        "(values[0] - values[1]) / values[2]"
+      ]
+    },
+    "trait_applicability": {
+      "path": "scripts/vnext/calculator.py",
+      "symbol": "metric_is_applicable",
+      "literals": [
+        "set(applicability[\"all\"]).issubset(trait_set)"
+      ]
+    },
+    "sic_profile_default": {
+      "path": "scripts/sec_pipeline.py",
+      "symbol": "profile_from_sic_rules",
+      "literals": [
+        "return \"default_non_fi\""
+      ]
+    },
+    "legacy_migrated_set": {
+      "path": "scripts/sec_pipeline.py",
+      "symbol": "MIGRATED_VNEXT_METRIC_IDS",
+      "literals": [
+        "frozenset({\"B01\", \"B03\", \"B10\", \"B11\"})"
+      ]
+    }
+  },
+  "verification_scope_note": {
+    "zh": "基线证据只覆盖 config/company_registry.csv 登记的 10 家样本公司及其最近一个已申报财年；样本公司通过不等于整个行业、全部年份已验证。vNext 状态来自发布计划与政策文件的显式绑定；legacy pipeline 的实现状态来自代码引用；本参考表不做生产能力审计。",
+    "en": "Baseline evidence covers only the 10 sample companies in config/company_registry.csv for their latest filed fiscal year; sample success does not validate an entire industry or every year. vNext states come from explicit release-plan/policy bindings; legacy implementation states come from code citations; this reference is not a production-capability audit."
+  },
+  "metrics": {
+    "A01": {
+      "name_zh": "一级资本比率",
+      "description_zh": "一级资本除以风险加权资产。基线从目标 10-K 的 XBRL 实例读取带 Basel III 标准法与母公司维度的监管资本事实（DIM_XBRL）。",
+      "description_en": "Tier 1 capital divided by risk-weighted assets. The baseline reads the dimensioned regulatory-capital fact (Basel III standardized approach, parent company) from the target 10-K XBRL instance.",
+      "expected_statuses": [
+        "DIM_XBRL_OK",
+        "NOT_AVAILABLE_SEC",
+        "NOT_EXTRACTED",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "approved concept 与 required_dimensions 使用 JPMorgan 实例中的成员名（jpm:BaselIIIStandardizedMember），其他银行的维度成员可能不同，需在扩展时核对。",
+        "entity 级 companyfacts 可能没有当前可用值，不得用普通资产负债表估算。"
+      ]
+    },
+    "A02": {
+      "name_zh": "普通股一级资本比率（CET1）",
+      "description_zh": "普通股一级资本除以风险加权资产，口径同 A01（Basel III 标准法、母公司维度）。",
+      "description_en": "Common Equity Tier 1 capital divided by risk-weighted assets, same Basel III standardized parent-company scope as A01.",
+      "expected_statuses": [
+        "DIM_XBRL_OK",
+        "NOT_AVAILABLE_SEC",
+        "NOT_EXTRACTED",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "必须注明 Basel 口径（standardized / advanced）；维度成员名同 A01 的扩展限制。"
+      ]
+    },
+    "A03": {
+      "name_zh": "流动性覆盖率（LCR）",
+      "description_zh": "优质流动性资产除以未来 30 天预计净现金流出。不是标准 companyfacts 事实；由 AI 读取 MD&A 流动性/监管披露表格并给出精确单元定位，firm 平均口径优先，银行子公司与期末口径作为竞争性声明留待复核。",
+      "description_en": "High-quality liquid assets divided by projected 30-day net cash outflows. Not a standard companyfacts fact; an AI table reader proposes exact cell locators from MD&A liquidity/regulatory tables, the firm-average scope is preferred and bank-subsidiary or period-end figures remain competing claims for review.",
+      "expected_statuses": [
+        "MDA_OK",
+        "NOT_EXTRACTED",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "reported unit 为 percent，canonical 为 ratio；换算口径必须在 notes 中说明。",
+        "R4 后继 Spec 只在离线计划中绑定，未进入 active 发布。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 09 通过 apply_fi_mda_table_metrics 从 MD&A 表格抽取，保存 raw_header / raw_row 锚点。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "apply_fi_mda_table_metrics",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "A04": {
+      "name_zh": "净息差（NIM）",
+      "description_zh": "净利息收入除以平均生息资产。来自 MD&A 平均余额表，必须锚定 managed basis 文字；若使用净利息收入/平均总资产的 proxy，必须标注为近似。",
+      "description_en": "Net interest income divided by average interest-earning assets. Read from the MD&A average-balance table anchored to the managed-basis literal; a net-interest-income / average-total-assets proxy must be labelled approximate.",
+      "expected_statuses": [
+        "MDA_OK",
+        "OK_APPROX",
+        "NOT_EXTRACTED",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "方向性互证：NIM 通常大于净利息收入/平均总资产。",
+        "R4 后继 Spec 只在离线计划中绑定，未进入 active 发布。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 09 通过 apply_fi_mda_table_metrics 从 MD&A 表格抽取。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "apply_fi_mda_table_metrics",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "A05": {
+      "name_zh": "总资产收益率（ROA）",
+      "description_zh": "净利润除以平均总资产，平均总资产为本年末与上年末 Assets 的算术平均。",
+      "description_en": "Net income divided by average total assets, where the average is the arithmetic mean of current and prior period-end Assets.",
+      "expected_statuses": [
+        "OK",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "净利润候选链含 ProfitLoss，可能包含非控制权益。"
+      ]
+    },
+    "A06": {
+      "name_zh": "净资产收益率（ROE）",
+      "description_zh": "净利润除以平均股东权益（本年末与上年末 StockholdersEquity 的算术平均）。",
+      "description_en": "Net income divided by average shareholders' equity (mean of current and prior period-end StockholdersEquity).",
+      "expected_statuses": [
+        "OK",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "定义文档允许同时报告 common-shareholder 与 total equity 口径；确定性目录只实现 StockholdersEquity 分母。"
+      ]
+    },
+    "A07": {
+      "name_zh": "净利润趋势（同比差额）",
+      "description_zh": "本年净利润减上年净利润；单年任务中的“趋势”定义为 YoY pair 的差值。",
+      "description_en": "Current-year net income minus prior-year net income; in the single-year task the trend is the YoY pair difference.",
+      "expected_statuses": [
+        "OK",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "输出为 USD 差额，不是百分比变化。"
+      ]
+    },
+    "A08": {
+      "name_zh": "非利息收入相对净利息收入",
+      "description_zh": "非利息收入除以净利息收入。按定义正文执行，不是纯手续费收入；noninterest income 可能包含交易、投行、资产管理等收入。",
+      "description_en": "Noninterest income divided by net interest income. Executed per the definition text; it is not pure fee income, since noninterest income may include trading, investment-banking and asset-management revenue.",
+      "expected_statuses": [
+        "OK",
+        "MDA_OK",
+        "NEEDS_REVIEW",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "名称与定义存在张力，notes 必须说明。"
+      ]
+    },
+    "A09": {
+      "name_zh": "不良贷款率（NPL ratio）",
+      "description_zh": "不良/非应计贷款除以贷款总额。结构化来源（accession XBRL）优先；仅在结构化来源歧义时才允许 firmwide 表格回退，表格任务不绕过结构化优先路线。",
+      "description_en": "Nonaccrual / non-performing loans divided by total loans. Structured accession XBRL first; the firmwide table contract is only the declared fallback on structured-source ambiguity and never bypasses the structured-first route.",
+      "expected_statuses": [
+        "OK",
+        "MDA_OK",
+        "NOT_EXTRACTED",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "贷款总额概念须从公司 concept inventory 确认，不得硬编码。",
+        "R4 后继 Spec 只在离线计划中绑定，未进入 active 发布。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy 通过 concept inventory 正则 /Nonaccrual|Nonperforming/ 与信用风险表抽取。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "apply_fi_mda_table_metrics",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "A10": {
+      "name_zh": "贷款损失准备率",
+      "description_zh": "信用损失准备除以扣除准备前的贷款余额（retained loans, before allowance），排除证券类信用损失准备。",
+      "description_en": "Allowance for credit losses divided by loans before allowance (retained loans), excluding securities-related credit-loss allowances.",
+      "expected_statuses": [
+        "OK",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "更宽的 loans 分母、held-for-sale、公允价值或 securities allowance 只能作为 evidence candidate，不得混入主值。"
+      ]
+    },
+    "A11": {
+      "name_zh": "资产管理规模（AUM）",
+      "description_zh": "公司披露的 total assets under management；非 GAAP 标准事实，由 AI 读取 MD&A/分部表格并要求精确 total-AUM 字面量，client assets / custody 只是竞争性证据。",
+      "description_en": "Disclosed total assets under management; not a GAAP fact, read by the AI table reader from MD&A / segment tables with an exact total-AUM literal, while client assets / custody remain competing evidence.",
+      "expected_statuses": [
+        "MDA_OK",
+        "NOT_EXTRACTED",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "必须保存 raw_header / raw_row 并注明金额单位与缩放。",
+        "R4 后继 Spec 只在离线计划中绑定，未进入 active 发布。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 09 通过 apply_fi_mda_table_metrics 从 MD&A 表格抽取。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "apply_fi_mda_table_metrics",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "A12": {
+      "name_zh": "交易风险暴露（VaR）",
+      "description_zh": "Item 7A / MD&A 市场风险表中的 VaR。合同接受声明的置信度与持有期枚举组合，legacy 默认为 95% 置信度、一日持有期；R4 后继版本要求同源文本片段证明该组合。",
+      "description_en": "Value-at-risk from Item 7A / MD&A market-risk tables. The contract accepts declared confidence/holding-period enum combinations; the legacy default is 95% confidence and one-day holding, and the R4 successor requires same-source text spans to prove that combination.",
+      "expected_statuses": [
+        "MDA_OK",
+        "NOT_EXTRACTED",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "regulatory VaR 与最大值属于禁止混淆项。",
+        "R4 后继 Spec 只在离线计划中绑定，未进入 active 发布。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 09 通过 apply_fi_mda_table_metrics 从 MD&A 表格抽取。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "apply_fi_mda_table_metrics",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "A13": {
+      "name_zh": "地区暴露（国际净收入）",
+      "description_zh": "定义文档为“收入、资产或风险暴露按地区拆分”；R4 后继 Spec 把它收窄为合并口径的全财年国际/非美国净收入（USD，不是净利润）。结构化 geographic 维度事实优先，仅在结构化来源歧义时允许 international 表格回退。",
+      "description_en": "The definition doc says revenue, assets or exposure split by geography; the R4 successor Spec narrows it to consolidated full-fiscal-year international / non-US net revenue in USD (explicitly not net income). Structured geographic dimension facts first; the international table fallback only on structured-source ambiguity.",
+      "expected_statuses": [
+        "OK",
+        "MDA_OK",
+        "NOT_EXTRACTED",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "Issue #15 版本名称为 Geographic exposure，R4 版本名称为 International net revenue；两者语义不同，本表以 R4 绑定版本为主并保留历史变体。",
+        "未声明的 geography 字面量需 HUMAN 复核。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 09 通过 apply_fi_mda_table_metrics 从 MD&A 分部表抽取。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "apply_fi_mda_table_metrics",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "B01": {
+      "name_zh": "营业收入",
+      "description_zh": "财年收入。按候选概念链从 companyfacts 选择唯一事实，保留所选事实的 reported unit（不换汇）。",
+      "description_en": "Fiscal-year revenue. Selects exactly one companyfacts fact by the approved concept chain and preserves the selected fact's reported unit (no currency conversion).",
+      "expected_statuses": [
+        "OK",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "legacy_companyfacts_v1 选择语义：目标期间、10-K/FY、目标 accession 优先、filed/accession/unit tie-break；歧义为 AMBIGUOUS_CANDIDATE。"
+      ]
+    },
+    "B02": {
+      "name_zh": "收入同比增长率",
+      "description_zh": "(本年收入 − 上年收入) ÷ 上年收入。主体不可比（successor/predecessor 合并年）时为 NOT_MEANINGFUL。",
+      "description_en": "(Current revenue − prior revenue) ÷ prior revenue. NOT_MEANINGFUL when the entity is not comparable (successor/predecessor years).",
+      "expected_statuses": [
+        "OK",
+        "NOT_MEANINGFUL",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "continuity_policy=REQUIRE_CONTINUOUS。"
+      ]
+    },
+    "B03": {
+      "name_zh": "EBITDA 利润率（GAAP EBITDA proxy）",
+      "description_zh": "(营业利润 + 折旧摊销) ÷ 收入。收入复用 B01 的唯一观测；营业利润优先 OperatingIncomeLoss，缺失时以税前持续经营利润减合计非营业损益重建并用 Revenues − CostsAndExpenses 交叉验证（容差 1%，结果 OK_APPROX）；折旧摊销优先合并概念链，全部不可得时才允许 Depreciation + AmortizationOfIntangibleAssets。不加回减值。",
+      "description_en": "(Operating income + depreciation and amortization) ÷ revenue. Revenue reuses the single B01 observation; operating income prefers OperatingIncomeLoss and otherwise is reconstructed as pretax continuing income minus aggregate nonoperating income/expense, cross-checked against Revenues − CostsAndExpenses at 1% tolerance (OK_APPROX); D&A prefers the combined concept chain and only falls back to Depreciation + AmortizationOfIntangibleAssets when the whole chain is unavailable. Impairment is not added back.",
+      "expected_statuses": [
+        "OK",
+        "OK_APPROX",
+        "NOT_MEANINGFUL",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "顶层 Revenue/OI/D&A 必须同 accession、同期间、同主体、兼容单位且年度时长 300–400 天，否则 WITHHELD。",
+        "收入为零时保留可见结果行：PUBLISHED / NOT_MEANINGFUL / DENOMINATOR_ZERO。"
+      ]
+    },
+    "B04": {
+      "name_zh": "净利润",
+      "description_zh": "财年净利润，候选链 NetIncomeLoss → ProfitLoss → NetIncomeLossAvailableToCommonStockholdersBasic；使用 ProfitLoss 时需标注可能含非控制权益。",
+      "description_en": "Fiscal-year net income via NetIncomeLoss → ProfitLoss → NetIncomeLossAvailableToCommonStockholdersBasic; a ProfitLoss hit must be labelled as possibly including non-controlling interests.",
+      "expected_statuses": [
+        "OK",
+        "NOT_MEANINGFUL",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "continuity_policy=REQUIRE_CONTINUOUS：successor stub period 为 NOT_MEANINGFUL。"
+      ]
+    },
+    "B05": {
+      "name_zh": "自由现金流",
+      "description_zh": "经营活动现金流减资本支出；资本支出候选链 PaymentsToAcquirePropertyPlantAndEquipment → PaymentsToAcquireProductiveAssets。",
+      "description_en": "Operating cash flow minus capital expenditures, with capex via PaymentsToAcquirePropertyPlantAndEquipment → PaymentsToAcquireProductiveAssets.",
+      "expected_statuses": [
+        "OK",
+        "NOT_MEANINGFUL",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "continuity_policy=REQUIRE_CONTINUOUS。"
+      ]
+    },
+    "B06": {
+      "name_zh": "债务权益比",
+      "description_zh": "总债务除以股东权益。R5 结构化主路径按定义的融资债务集合（已确认借款、债券与融资租赁的期末账面金额，互斥类别只计一次）逐层 choose_first 求 total debt，分母为 StockholdersEquity 且必须为正；结构化来源歧义时才进入 consolidated 口径的表格回退任务。",
+      "description_en": "Total debt divided by shareholders' equity. The R5 structured primary route resolves total debt through ordered choose_first branches over the defined financing-debt set (period-end carrying amounts of recognized borrowings, bonds and finance leases, disjoint classes counted once); the denominator is StockholdersEquity and must be positive; the consolidated-scope table task is only the fallback on structured-source ambiguity.",
+      "expected_statuses": [
+        "OK",
+        "OK_APPROX",
+        "NOT_MEANINGFUL",
+        "NEEDS_REVIEW",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "股东权益 ≤ 0 时主比率不输出数值（NOT_MEANINGFUL / NEEDS_REVIEW）。",
+        "captive finance 维度（FordCreditMember 等）触发范围复核；银行与工业范围分别限定。",
+        "R5 结构化 Spec 已合入 main 但 production_authorized=false，草案发布计划为 PENDING_FINAL_REVIEW；PR #43 上还有更多未合并的 B06 后继版本。",
+        "定义文档中的三层 resolver 描述（Tier 1/2/3）是 legacy 口径；R5 Spec 是当前绑定的可执行口径。"
+      ]
+    },
+    "B07": {
+      "name_zh": "利息保障倍数",
+      "description_zh": "营业利润除以利息费用；营业利润缺失时以税前持续经营利润减合计非营业损益重建（APPROX）。营业利润 ≤ 0 时 NOT_MEANINGFUL。",
+      "description_en": "Operating income divided by interest expense; when operating income is missing it is reconstructed as pretax continuing income minus aggregate nonoperating income/expense (APPROX). NOT_MEANINGFUL when operating income ≤ 0.",
+      "expected_statuses": [
+        "OK",
+        "OK_APPROX",
+        "NOT_MEANINGFUL",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "利息费用候选链 InterestExpense → InterestExpenseNonoperating → InterestExpenseDebt。"
+      ]
+    },
+    "B08": {
+      "name_zh": "流动比率",
+      "description_zh": "流动资产除以流动负债（AssetsCurrent / LiabilitiesCurrent），期末时点值。银行不适用。",
+      "description_en": "Current assets divided by current liabilities (AssetsCurrent / LiabilitiesCurrent) at period end. Not applicable to banks.",
+      "expected_statuses": [
+        "OK",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": []
+    },
+    "B09": {
+      "name_zh": "现金储备",
+      "description_zh": "期末现金及现金等价物（CashAndCashEquivalentsAtCarryingValue）。短期投资不混入主口径。",
+      "description_en": "Period-end cash and cash equivalents (CashAndCashEquivalentsAtCarryingValue). Short-term investments are not mixed into the primary figure.",
+      "expected_statuses": [
+        "OK",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": []
+    },
+    "B10": {
+      "name_zh": "入住率",
+      "description_zh": "已售客房数除以可售客房数。由 AI 读取 10-K Lodging Statistics 表并提出精确单元定位，要求当年、Comparable Systemwide Properties、Worldwide 口径的绝对值；reported percent 声明式换算为 canonical ratio；与 RevPAR / ADR 同一次表格读取并满足 RevPAR ≈ ADR × Occupancy（1% 容差）。",
+      "description_en": "Occupied rooms divided by available rooms. An AI table reader proposes exact cell locators in the 10-K lodging-statistics table for the current-year comparable systemwide worldwide absolute value; the reported percent is declaratively converted to a canonical ratio; read in the same response as RevPAR / ADR and checked against RevPAR ≈ ADR × Occupancy at 1% tolerance.",
+      "expected_statuses": [
+        "MDA_OK",
+        "NOT_EXTRACTED",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "prior_year、percentage_change、company_operated、regional_only 是禁止混淆项。",
+        "整个 disclosure group 需 whole-ReviewUnit 批准，不能只批准 occupancy 单格。"
+      ]
+    },
+    "B11": {
+      "name_zh": "每间可售房收入（RevPAR）",
+      "description_zh": "每间可售客房的房费收入（USD 绝对值）。口径与读取方式同 B10；RevPAR 与 supporting ADR 只接受 USD，其他货币整单 WITHHELD；增长百分比不能冒充绝对值。",
+      "description_en": "Room revenue per available room as a USD absolute value. Same scope and reading method as B10; RevPAR and supporting ADR accept USD only (other currencies WITHHOLD the whole unit) and growth percentages never substitute for the absolute value.",
+      "expected_statuses": [
+        "MDA_OK",
+        "NOT_EXTRACTED",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "lodging identity 容差已从 legacy 5% 收紧为 1%（METH-01）。"
+      ]
+    },
+    "B12": {
+      "name_zh": "ARR / churn 可得性与 RPO/cRPO 替代值",
+      "description_zh": "ARR 与 churn 在 SEC 申报中通常不直接披露；本指标输出未维度化的 RevenueRemainingPerformanceObligation 事实作为 RPO 替代观测值，并明确 RPO ≠ ARR、cRPO ≠ ARR。churn 未明确披露时为 NOT_AVAILABLE_SEC 或 TEXT_QUAL。",
+      "description_en": "ARR and churn are usually not disclosed directly in SEC filings; this metric outputs the undimensioned RevenueRemainingPerformanceObligation fact as an RPO substitute observation and states explicitly that RPO ≠ ARR and cRPO ≠ ARR. Undisclosed churn is NOT_AVAILABLE_SEC or TEXT_QUAL.",
+      "expected_statuses": [
+        "DIM_XBRL_OK",
+        "TEXT_QUAL",
+        "NOT_AVAILABLE_SEC",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "若产品需要真正的 churn rate，应拆成独立指标并只消费明确披露的 churn / retention 口径。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy 优先实例中的 RPO/cRPO 事实（concept_matches_rpo），否则按关键词从文本抽取。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "text_has_rpo_keywords",
+            "literals": [
+              "remaining performance obligation|RPO|cRPO"
+            ]
+          },
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "concept_matches_rpo",
+            "literals": [
+              "revenueremainingperformanceobligation"
+            ]
+          }
+        ]
+      }
+    },
+    "B13": {
+      "name_zh": "产能利用率",
+      "description_zh": "实际产量除以产能。SEC 年报通常不披露可计算数值：仅有定性描述时为 TEXT_QUAL，未披露为 NOT_AVAILABLE_SEC。main 上的 Issue #15 表格合同只接受 production 口径的数值表格声明；PR #43 有用户批准的后继 Spec（可比实际产量 ÷ 可用产能，Ford / Enphase），尚未合并。",
+      "description_en": "Actual production divided by capacity. SEC annual reports usually do not disclose a computable value: qualitative-only is TEXT_QUAL and undisclosed is NOT_AVAILABLE_SEC. The Issue #15 table contract on main accepts only a numeric production-capacity table claim; PR #43 carries a user-approved successor Spec (comparable actual production ÷ available capacity, Ford / Enphase) that is not merged.",
+      "expected_statuses": [
+        "TEXT_QUAL",
+        "NOT_AVAILABLE_SEC",
+        "MDA_OK",
+        "N_A_STRUCTURAL",
+        "PUBLISHED",
+        "WITHHELD"
+      ],
+      "limitations_zh": [
+        "manufacturing capacity 与 qualitative 是禁止混淆项。",
+        "legacy Stage 09 只捕获定性文本片段（TEXT_QUAL / NOT_AVAILABLE_SEC，value 为空），不做数值计算；非主适用公司的 B13 行会被移出主矩阵、写入 out-of-scope 观测文件。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy 对 manufacturing 配置 CapacityUtilizationExtractor，或在文本命中 capacity 关键词时尝试。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_mda_and_risk_text",
+            "literals": [
+              "capacity utilization|production capacity|",
+              "manufacturing capacity",
+              "\"TEXT_QUAL\" if capacity_quote else \"NOT_AVAILABLE_SEC\""
+            ]
+          },
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "text_has_capacity_keywords",
+            "literals": [
+              "capacity utilization|production capacity|manufacturing capacity"
+            ]
+          },
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "CapacityUtilizationExtractor",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "C01": {
+      "name_zh": "CEO / CFO 变动",
+      "description_zh": "财年窗口内 8-K Item 5.02 的事件清单（日期、accession、item code、brief）。零 AI 的声明式 item 路由，来自 8-K 头文件 item code，必要时回退到主文档标题。",
+      "description_en": "Event list of 8-K Item 5.02 within the fiscal-year window (date, accession, item code, brief). A zero-AI declarative item route read from the 8-K header item codes with a primary-document heading fallback.",
+      "expected_statuses": [
+        "8K_ITEM_OK",
+        "NOT_AVAILABLE_SEC",
+        "PUBLISHED"
+      ],
+      "limitations_zh": [
+        "与 E03 共享 leadership_item_5_02 claim group；同一事件不区分离任与任命。",
+        "successor/predecessor 公司的事件窗口按 PRIOR_CALENDAR_YEAR_START_TO_TARGET_END 扩展。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 07 按 8-K item 抽取事件并更新事件指标。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_8k_events",
+            "literals": []
+          },
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "apply_8k_event_metrics_from_events",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "C02": {
+      "name_zh": "董事会构成",
+      "description_zh": "来自最新 DEF 14A 的董事会构成信号（董事人数、独立董事数、委员会信息）。main 基线只按关键词捕获董事会章节文本片段，输出定性状态 TEXT_QUAL，结构化人数需人工复核；无 MetricSpec。",
+      "description_en": "Board composition signal from the latest DEF 14A (director count, independent directors, committees). The main baseline only captures a board-section text snippet by keyword and yields qualitative TEXT_QUAL; structured counts need review; no MetricSpec exists on main.",
+      "unit": null,
+      "expected_statuses": [
+        "TEXT_QUAL",
+        "NEEDS_REVIEW"
+      ],
+      "legacy_success_status": "TEXT_QUAL",
+      "legacy_source_class": "DEF14A",
+      "limitations_zh": [
+        "value 为空，unit 不适用。",
+        "PR #43 的 r6 后继 Spec 改为保留完整来源披露语句集合（ai_text，需复核），未合并。"
+      ],
+      "text_sources": [
+        {
+          "role": "primary",
+          "filing_types": [
+            "DEF 14A"
+          ],
+          "location": "proxy statement board section",
+          "locator_kind": "text_regex",
+          "patterns": [
+            "board of directors|director nominees|independent directors"
+          ],
+          "note_zh": "legacy Stage 08 用 def14a_quote 捕获首个命中片段。"
+        }
+      ],
+      "legacy_method": {
+        "summary_zh": "Stage 08：按关键词捕获 DEF 14A 董事会文本，命中为 TEXT_QUAL，否则 NEEDS_REVIEW；source_class DEF14A。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_def14a",
+            "literals": [
+              "board of directors|director nominees|",
+              "independent directors",
+              "board_status = \"TEXT_QUAL\" if board_quote else \"NEEDS_REVIEW\"",
+              "source_class=\"DEF14A\""
+            ]
+          }
+        ]
+      }
+    },
+    "C03": {
+      "name_zh": "高管薪酬信号",
+      "description_zh": "首席执行官（PEO）总薪酬，优先取 DEF 14A 中 ecd XBRL 的 PeoTotalCompAmt 事实（USD，目标财年）；无 ecd 事实时状态 NEEDS_REVIEW 并导出 ecd inventory。",
+      "description_en": "Principal executive officer total compensation, preferring the ecd:PeoTotalCompAmt XBRL fact in the DEF 14A (USD, target fiscal year); without ecd facts the status is NEEDS_REVIEW and the ecd inventory is dumped.",
+      "unit": "USD",
+      "expected_statuses": [
+        "DEF14A_OK",
+        "NEEDS_REVIEW",
+        "NOT_EXTRACTED"
+      ],
+      "legacy_success_status": "DEF14A_OK",
+      "legacy_source_class": "DEF14A",
+      "limitations_zh": [
+        "多个 PeoTotalCompAmt 命中目标财年时保留重复 context 供复核。",
+        "PR #43 的 r5 后继 Spec 增加非 ecd 标注时从 Summary Compensation Table 读取的路线，未合并。"
+      ],
+      "text_sources": [
+        {
+          "role": "primary",
+          "filing_types": [
+            "DEF 14A"
+          ],
+          "location": "ecd XBRL facts of the proxy statement",
+          "locator_kind": "xbrl_concept",
+          "concepts": [
+            "ecd:PeoTotalCompAmt"
+          ],
+          "note_zh": "unit iso4217:USD；按目标财年选择。"
+        },
+        {
+          "role": "evidence_only",
+          "filing_types": [
+            "DEF 14A"
+          ],
+          "location": "compensation table text",
+          "locator_kind": "text_regex",
+          "patterns": [
+            "summary compensation table|total compensation|principal executive officer"
+          ],
+          "note_zh": "仅作文本证据片段。"
+        }
+      ],
+      "legacy_method": {
+        "summary_zh": "Stage 08 dump ecd facts 并捕获薪酬表文本；repair_c03_compensation 把结果修正为 PeoTotalCompAmt 事实。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "repair_c03_compensation",
+            "literals": [
+              "PeoTotalCompAmt"
+            ]
+          },
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_def14a",
+            "literals": [
+              "summary compensation table|total compensation|",
+              "principal executive officer"
+            ]
+          }
+        ]
+      }
+    },
+    "C04": {
+      "name_zh": "审计师变更",
+      "description_zh": "审计师是否变更的标记（0 = 未变更，1 = 变更）。基线比较同一 CIK 本年与上年 10-K 的 dei:AuditorName 事实，忽略标点与空白差异；变更或缺失/冲突时 NEEDS_REVIEW，未变更为 DIM_XBRL_OK。定义文档还列出 8-K Item 4.01 作为第二路径。",
+      "description_en": "Auditor-change flag (0 = unchanged, 1 = changed). The baseline compares the current and prior 10-K dei:AuditorName facts for the same CIK, ignoring punctuation and whitespace; a change or a missing/conflicting name is NEEDS_REVIEW and an unchanged name is DIM_XBRL_OK. The definition doc also lists 8-K Item 4.01 as a second path.",
+      "unit": "flag_0_or_1",
+      "expected_statuses": [
+        "DIM_XBRL_OK",
+        "NEEDS_REVIEW"
+      ],
+      "legacy_success_status": "DIM_XBRL_OK",
+      "legacy_source_class": "DIM_XBRL",
+      "limitations_zh": [
+        "年末名称比较不能排除年内曾更换审计师。",
+        "10-K/A 不含审计报告时回退同财年原始 10-K；successor/predecessor 不可硬拼 CIK。"
+      ],
+      "text_sources": [
+        {
+          "role": "primary",
+          "filing_types": [
+            "10-K",
+            "10-K/A"
+          ],
+          "location": "dei cover facts of the current and prior annual report",
+          "locator_kind": "xbrl_concept",
+          "concepts": [
+            "dei:AuditorName"
+          ],
+          "note_zh": "current 与 prior 的 accession / period 写入证据链。"
+        },
+        {
+          "role": "secondary",
+          "filing_types": [
+            "8-K"
+          ],
+          "location": "Item 4.01 Changes in Registrant's Certifying Accountant",
+          "locator_kind": "8k_item_code",
+          "item_codes": [
+            "4.01"
+          ],
+          "note_zh": "定义文档列出的第二路径；legacy 修复步骤以 dei:AuditorName 比较替代仅 8-K 的检查。"
+        }
+      ],
+      "legacy_method": {
+        "summary_zh": "repair_c04_auditor_changes 读取本年/上年 dei:AuditorName，用 canonical_auditor_name 归一化后比较。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "repair_c04_auditor_changes",
+            "literals": [
+              "dei:AuditorName",
+              "\"NEEDS_REVIEW\" if changed else \"DIM_XBRL_OK\"",
+              "source_class=\"DIM_XBRL\""
+            ]
+          },
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "canonical_auditor_name",
+            "literals": [
+              "[^a-z0-9]+"
+            ]
+          }
+        ]
+      }
+    },
+    "D01": {
+      "name_zh": "风险因素摘要",
+      "description_zh": "10-K Item 1A 的标题级摘要或主题清单，定性状态 TEXT_QUAL。main 基线只按“Item 1A Risk Factors”标题捕获文本片段。",
+      "description_en": "Title-level summary or theme list of 10-K Item 1A with qualitative status TEXT_QUAL. The main baseline only captures a text snippet at the Item 1A Risk Factors heading.",
+      "unit": null,
+      "expected_statuses": [
+        "TEXT_QUAL",
+        "NOT_EXTRACTED"
+      ],
+      "legacy_success_status": "TEXT_QUAL",
+      "legacy_source_class": "TEXT",
+      "limitations_zh": [
+        "value 为空，unit 不适用。",
+        "PR #43 的 r6 后继 Spec 改为复现完整 Item 1A 的全部强调标题（ai_text，需复核），未合并。"
+      ],
+      "text_sources": [
+        {
+          "role": "primary",
+          "filing_types": [
+            "10-K"
+          ],
+          "location": "Item 1A Risk Factors",
+          "locator_kind": "text_regex",
+          "patterns": [
+            "Item\\s+1A\\.?\\s+Risk Factors|Risk Factors"
+          ],
+          "note_zh": "命中为 TEXT_QUAL，否则 NOT_EXTRACTED。"
+        }
+      ],
+      "legacy_method": {
+        "summary_zh": "Stage 09 snippet_for_pattern 捕获风险因素标题附近文本；source_class TEXT。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_mda_and_risk_text",
+            "literals": [
+              "Item\\s+1A\\.?\\s+Risk Factors|Risk Factors",
+              "\"TEXT_QUAL\" if risk_quote else \"NOT_EXTRACTED\"",
+              "source_class=\"TEXT\""
+            ]
+          }
+        ]
+      }
+    },
+    "D02": {
+      "name_zh": "诉讼披露",
+      "description_zh": "Item 3 / Legal Proceedings / 或有事项附注中的诉讼披露存在性。定义文档要求若有 XBRL loss contingency accrual 则记录概念与值，否则记录文本存在性；main 基线只做标题/关键词文本捕获，命中为 TEXT_QUAL，否则 NOT_AVAILABLE_SEC。",
+      "description_en": "Existence of litigation disclosure in Item 3 / Legal Proceedings / contingency notes. The definition doc asks to record an XBRL loss-contingency accrual concept and value when present and otherwise text existence; the main baseline only captures heading/keyword text, TEXT_QUAL on a hit and NOT_AVAILABLE_SEC otherwise.",
+      "unit": null,
+      "expected_statuses": [
+        "TEXT_QUAL",
+        "NOT_AVAILABLE_SEC"
+      ],
+      "legacy_success_status": "TEXT_QUAL",
+      "legacy_source_class": "TEXT",
+      "limitations_zh": [
+        "定义文档提到的 loss contingency accrual XBRL 概念未在 main 基线代码中实现为结构化来源，具体 tag 未指定。",
+        "PR #43 的 r6 后继 Spec 记录 Item 3 / Item 8 / 引用附注的完整披露集合，未合并。"
+      ],
+      "text_sources": [
+        {
+          "role": "primary",
+          "filing_types": [
+            "10-K"
+          ],
+          "location": "Item 3 Legal Proceedings / litigation text / contingency notes",
+          "locator_kind": "text_regex",
+          "patterns": [
+            "Item\\s+3\\.?\\s+Legal Proceedings|Legal Proceedings|litigation"
+          ],
+          "note_zh": "命中为 TEXT_QUAL，否则 NOT_AVAILABLE_SEC。"
+        }
+      ],
+      "legacy_method": {
+        "summary_zh": "Stage 09 snippet_for_pattern 捕获法律程序文本；source_class TEXT。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_mda_and_risk_text",
+            "literals": [
+              "Item\\s+3\\.?\\s+Legal Proceedings|Legal Proceedings|litigation",
+              "\"TEXT_QUAL\" if legal_quote else \"NOT_AVAILABLE_SEC\""
+            ]
+          }
+        ]
+      }
+    },
+    "D03": {
+      "name_zh": "监管调查",
+      "description_zh": "Item 1A / Item 3 / 附注中的监管调查线索：关键词 investigation、subpoena、inquiry、regulatory、SEC、DOJ、FTC、FDA 的命中段落与判断。main 基线在整篇 10-K 文本上做关键词扫描，命中为 TEXT_QUAL，否则 NOT_AVAILABLE_SEC；无 MetricSpec，PR #43 亦未提供后继 Spec。",
+      "description_en": "Regulatory-investigation signals in Item 1A / Item 3 / notes: passages hit by the keywords investigation, subpoena, inquiry, regulatory, SEC, DOJ, FTC, FDA plus a judgement. The main baseline scans the whole 10-K text, TEXT_QUAL on a hit and NOT_AVAILABLE_SEC otherwise; no MetricSpec exists on main and PR #43 provides no successor Spec either.",
+      "unit": null,
+      "expected_statuses": [
+        "TEXT_QUAL",
+        "NOT_AVAILABLE_SEC"
+      ],
+      "legacy_success_status": "TEXT_QUAL",
+      "legacy_source_class": "TEXT",
+      "limitations_zh": [
+        "关键词 SEC / regulatory 极易命中一般性语句；TEXT_QUAL 只表示命中了关键词，不代表存在实际监管调查，判断部分未自动化。",
+        "value 为空，unit 不适用。"
+      ],
+      "text_sources": [
+        {
+          "role": "primary",
+          "filing_types": [
+            "10-K"
+          ],
+          "location": "whole 10-K primary document text (risk/legal sections)",
+          "locator_kind": "text_regex",
+          "patterns": [
+            "investigation|subpoena|inquiry|regulatory|SEC|DOJ|FTC|FDA"
+          ],
+          "note_zh": "命中为 TEXT_QUAL，否则 NOT_AVAILABLE_SEC。"
+        }
+      ],
+      "legacy_method": {
+        "summary_zh": "Stage 09 关键词扫描；source_class TEXT。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_mda_and_risk_text",
+            "literals": [
+              "investigation|subpoena|inquiry|regulatory|SEC|DOJ|FTC|FDA",
+              "\"TEXT_QUAL\" if regulatory_quote else \"NOT_AVAILABLE_SEC\""
+            ]
+          }
+        ]
+      }
+    },
+    "D04": {
+      "name_zh": "持续经营声明",
+      "description_zh": "审计意见、10-K 文本或 going concern 相关 XBRL 概念中的持续经营疑虑。main 基线扫描短语 going concern / substantial doubt：命中记录片段，未命中记录“未披露持续经营疑虑”；两者都是 TEXT_QUAL，未披露是正常结果而非解析失败。注册表把 D04 定义为 auditor_fact 结构化优先、ai_text 回退。",
+      "description_en": "Going-concern doubt in the audit opinion, 10-K text or going-concern XBRL concepts. The main baseline scans for the phrases going concern / substantial doubt: a hit records the snippet and a miss records “no going-concern doubt disclosed”; both are TEXT_QUAL and absence is a normal result rather than a parse failure. The registry defines D04 as auditor_fact structured-first with an ai_text fallback.",
+      "unit": null,
+      "expected_statuses": [
+        "TEXT_QUAL"
+      ],
+      "legacy_success_status": "TEXT_QUAL",
+      "legacy_source_class": "TEXT",
+      "limitations_zh": [
+        "定义文档提到的 going concern XBRL concepts 未在 main 基线中实现为结构化来源，具体 tag 未指定。",
+        "PR #43 的 r6 后继 Spec 区分当期声明、历史疑虑、其他主体与条件性风险，未合并。"
+      ],
+      "text_sources": [
+        {
+          "role": "primary",
+          "filing_types": [
+            "10-K"
+          ],
+          "location": "audit opinion and 10-K text",
+          "locator_kind": "text_regex",
+          "patterns": [
+            "going concern|substantial doubt"
+          ],
+          "note_zh": "未命中时 evidence_quote 固定为“未披露持续经营疑虑”。"
+        }
+      ],
+      "legacy_method": {
+        "summary_zh": "Stage 09 短语扫描；source_class TEXT。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_mda_and_risk_text",
+            "literals": [
+              "going concern|substantial doubt",
+              "未披露持续经营疑虑",
+              "No going-concern doubt phrase found in 10-K text."
+            ]
+          }
+        ]
+      }
+    },
+    "E01": {
+      "name_zh": "并购公告",
+      "description_zh": "财年窗口内 8-K Item 1.01 / 2.01 事件，以及正文含 merger / acquisition / combine / transaction 关键词的 Item 8.01 事件。",
+      "description_en": "8-K Item 1.01 / 2.01 events within the fiscal-year window, plus Item 8.01 events whose text contains merger / acquisition / combine / transaction keywords.",
+      "expected_statuses": [
+        "8K_ITEM_OK",
+        "NOT_AVAILABLE_SEC",
+        "PUBLISHED"
+      ],
+      "limitations_zh": [
+        "Item 1.01 与 E05 同源；关键词匹配为 NFKC casefold 子串匹配。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 07 按 8-K item 抽取事件。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_8k_events",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "E02": {
+      "name_zh": "破产申请",
+      "description_zh": "财年窗口内 8-K Item 1.03 事件；预期多为零，零是正常结果。",
+      "description_en": "8-K Item 1.03 events within the fiscal-year window; zero is the normal expected result.",
+      "expected_statuses": [
+        "8K_ITEM_OK",
+        "NOT_AVAILABLE_SEC",
+        "PUBLISHED"
+      ],
+      "limitations_zh": [],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 07 按 8-K item 抽取事件。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_8k_events",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "E03": {
+      "name_zh": "领导层离任",
+      "description_zh": "财年窗口内 8-K Item 5.02 事件，与 C01 同源并共享 claim group。",
+      "description_en": "8-K Item 5.02 events within the fiscal-year window, same source and shared claim group as C01.",
+      "expected_statuses": [
+        "8K_ITEM_OK",
+        "NOT_AVAILABLE_SEC",
+        "PUBLISHED"
+      ],
+      "limitations_zh": [
+        "不区分离任与任命。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 07 按 8-K item 抽取事件。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_8k_events",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "E04": {
+      "name_zh": "财务重述",
+      "description_zh": "财年窗口内 8-K Item 4.02（不可依赖既往财务报表）事件，高风险信号。",
+      "description_en": "8-K Item 4.02 (non-reliance on previously issued financial statements) events within the fiscal-year window; a high-risk signal.",
+      "expected_statuses": [
+        "8K_ITEM_OK",
+        "NOT_AVAILABLE_SEC",
+        "PUBLISHED"
+      ],
+      "limitations_zh": [],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 07 按 8-K item 抽取事件。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_8k_events",
+            "literals": []
+          }
+        ]
+      }
+    },
+    "E05": {
+      "name_zh": "重大协议",
+      "description_zh": "财年窗口内 8-K Item 1.01 事件清单；不抽取合同条款。",
+      "description_en": "List of 8-K Item 1.01 events within the fiscal-year window; contract terms are not extracted.",
+      "expected_statuses": [
+        "8K_ITEM_OK",
+        "NOT_AVAILABLE_SEC",
+        "PUBLISHED"
+      ],
+      "limitations_zh": [
+        "与 E01 的 Item 1.01 同源。"
+      ],
+      "legacy_method": {
+        "summary_zh": "legacy Stage 07 按 8-K item 抽取事件。",
+        "citations": [
+          {
+            "path": "scripts/sec_pipeline.py",
+            "symbol": "stage_extract_8k_events",
+            "literals": []
+          }
+        ]
+      }
+    }
+  }
+}
