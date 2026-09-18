@@ -44,11 +44,17 @@ def main(argv=None):
                                                sort_keys=True) + "\n", encoding="utf-8")
     print("declared metrics %d, companies %d, requested years %d"
           % (matrix["declared_metric_count"], len(matrix["companies"]), matrix["requested_years"]))
-    print("target frame positions %d, enumerated %d, unreachable-period positions %d"
-          % (matrix["target_frame_positions"], matrix["enumerated_positions"],
-             matrix["missing_positions_from_unreachable_periods"]))
-    for status, count in sorted(matrix["status_counts"].items(), key=lambda item: -item[1]):
+    print("target frame positions %d, enumerated %d"
+          % (matrix["target_frame_positions"], matrix["enumerated_positions"]))
+    print("first blocking reason (NOT a count of remaining work per position):")
+    for status, count in sorted(matrix["first_blocking_reason_counts"].items(),
+                                key=lambda item: -item[1]):
         print("  %-38s %d" % (status, count))
+    print("independent dimensions, each counted over the whole frame:")
+    for name, count in sorted(matrix["dimension_counts"].items()):
+        print("  %-38s %d" % (name, count))
+    print("  %-38s %d" % ("missing BOTH a source and a route",
+                          matrix["positions_missing_source_and_route"]))
     return 0
 
 

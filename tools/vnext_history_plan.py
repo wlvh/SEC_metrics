@@ -33,15 +33,27 @@ def _summary(report):
             lines.append("%-36s %s %s" % (plan["company_id"], plan.get("plan_status"),
                                           str(plan.get("reason"))[:80]))
             continue
-        lines.append("%-36s targets=%d declared_get=%d new_acquisition=%d limitations=%d "
+        kinds = plan["new_acquisition_by_kind"]
+        lines.append("%-36s targets=%d declared_get=%d new_acquisition=%d (%s) limitations=%d "
                      "identity_ready=%s"
                      % (plan["company_id"], len(plan["target_candidates"]),
                         plan["deduplicated_known_get_count"], plan["new_acquisition_count"],
+                        ",".join("%s=%d" % item for item in sorted(kinds.items())) or "-",
                         len(plan["catalog_limitations"]),
                         ",".join(plan["annual_identity_ready_report_dates"]) or "-"))
     ready = [p for p in report["companies"] if p.get("plan_status") == "PLAN_READY"]
-    lines.append("TOTAL new acquisitions across %d planned companies: %d"
-                 % (len(ready), sum(p["new_acquisition_count"] for p in ready)))
+    totals = {}
+    for plan in ready:
+        for kind, count in plan["new_acquisition_by_kind"].items():
+            totals[kind] = totals.get(kind, 0) + count
+    lines.append("TOTAL new acquisitions across %d planned companies: %d (%s)"
+                 % (len(ready), sum(p["new_acquisition_count"] for p in ready),
+                    ",".join("%s=%d" % item for item in sorted(totals.items())) or "-"))
+    # Index discovery is not complete everywhere, so this total is a floor.
+    pending = [p for p in ready if p["further_requests_pending_index_discovery"]]
+    lines.append("This total is a FLOOR: %d of %d companies still have undiscovered accession "
+                 "indexes, and each one can declare further documents."
+                 % (len(pending), len(ready)))
     return "\n".join(lines)
 
 

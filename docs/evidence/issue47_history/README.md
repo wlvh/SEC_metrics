@@ -109,3 +109,26 @@ boundary, not a regression from this branch:
   rather than losing a race for CPU.
 
 Neither the test nor the cap was changed to make this green.
+
+## reconciled-2026-09-18/
+
+The plan and the matrix regenerated together on one commit, after the review
+that rejected "only two decisions remain". `RECONCILIATION.md` in that directory
+explains, per company, why the acquisition budget is 142 and not the 122 that
+was quoted on Issue #47, and why 130 is a real number that was never the whole
+budget. It also states the limited pilot this asks for — 22 requests over one
+additional annual year for 8 companies — and says what that pilot is predicted
+to establish, in a form that can be shown wrong.
+
+`source-plan-2026-09-18/` and `coverage-2026-09-18/` above are kept unchanged.
+They are the artifacts the wrong number was read from, and deleting them would
+remove the evidence of how it was produced.
+
+## github-ci-2026-09-18/
+
+The hosted-runner conclusions for this branch, per commit, read from the GitHub
+API rather than summarised. It records which run did not finish and the measured
+reason, and it is deliberately separate from `baseline-ed8bf11/`: the local
+records describe this development container and are not replaced by what a
+hosted runner did. On one point the two disagree, and the disagreement is stated
+rather than resolved in the branch's favour.
