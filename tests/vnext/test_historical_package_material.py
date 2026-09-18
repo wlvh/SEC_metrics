@@ -130,6 +130,74 @@ class HistoricalPackageMaterialTest(unittest.TestCase):
                     metric_id="B04", binding_id=installed["binding"]["binding_id"])
                 self.assertEqual(installed["binding"], replayed["binding"])
 
+    def test_a_tampered_or_unknown_historical_binding_is_refused_before_any_rebuild(self):
+        """The identity checks that do not need the Requirement engine.
+
+        `historical_run.replay_case` reads the saved binding, checks its
+        identity, restores the period selection and only then loads the
+        Requirement. Everything before that load is reachable from a package
+        installed by the ordinary historical installer, so these four refusals
+        are covered here rather than behind the registration patch - a negative
+        that only runs where the patch is applied is a negative that does not
+        run.
+
+        Each case re-computes the binding hash after tampering, so none of them
+        is caught by a stale digest.
+        """
+        from vnext.historical_run import BINDING_DIRECTORY as RUN_BINDINGS, replay_case
+        from vnext.canonical import content_hash
+
+        output = _fresh_output(os.environ["HISTORICAL_PACKAGE_MATERIAL_ROOT"] + "-negatives")
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                                 report_end=FY2024_END)
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")):
+            installed = install_historical_inputs(data_root=output / "pkg", company_id=MARRIOTT,
+                                                  metric_id="B04", period_selection=selection)
+        data_root = Path(installed["data_root"])
+        binding_id = installed["binding"]["binding_id"]
+        self.assertEqual(RUN_BINDINGS, BINDING_DIRECTORY)
+
+        refusals = {}
+
+        def refuse(label, **kwargs):
+            with self.assertRaises(Exception) as caught:
+                replay_case(data_root=data_root, manifest=None, **kwargs)
+            refusals[label] = str(caught.exception)
+
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")):
+            refuse("unknown_binding", binding_id="sha256:" + "0" * 64,
+                   company_id=MARRIOTT, metric_id="B04")
+            refuse("wrong_company", binding_id=binding_id,
+                   company_id="ford_motor_company", metric_id="B04")
+            refuse("wrong_metric", binding_id=binding_id, company_id=MARRIOTT, metric_id="B05")
+
+            # A binding re-signed onto a different year: the hash is recomputed
+            # so it is internally consistent, and it is still refused because
+            # the selection it names does not rebuild to the recorded identity.
+            saved = json.loads(
+                (data_root / BINDING_DIRECTORY / (binding_id[7:] + ".json")).read_text())
+            forged = {**saved, "target_report_end": "2023-12-31"}
+            forged.pop("binding_id")
+            forged["binding_id"] = content_hash(value=forged)
+            (data_root / BINDING_DIRECTORY / (forged["binding_id"][7:] + ".json")).write_text(
+                json.dumps(forged, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n")
+            refuse("resigned_onto_another_year", binding_id=forged["binding_id"],
+                   company_id=MARRIOTT, metric_id="B04")
+
+        self.assertEqual(4, len(refusals))
+        self.assertIn("HISTORICAL_RUN_BINDING_IDENTITY_REQUIRED", refusals["wrong_company"])
+        self.assertIn("HISTORICAL_RUN_BINDING_IDENTITY_REQUIRED", refusals["wrong_metric"])
+        self.assertIn("HISTORICAL_RUN_PERIOD_SELECTION_CHANGED",
+                      refusals["resigned_onto_another_year"])
+        # The unknown binding is refused by the source layer, not by a fallback.
+        self.assertNotIn("HISTORICAL_RUN_PERIOD_SELECTION_CHANGED", refusals["unknown_binding"])
+        # And the honest package is untouched by any of this.
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")):
+            again = replay_historical_inputs(data_root=data_root, company_id=MARRIOTT,
+                                             metric_id="B04", binding_id=binding_id)
+        self.assertEqual(installed["binding"], again["binding"])
+
     def test_a_period_installed_by_issuer_label_replays_as_the_same_request(self):
         """A label request is part of the identity, so the package must keep it.
 
