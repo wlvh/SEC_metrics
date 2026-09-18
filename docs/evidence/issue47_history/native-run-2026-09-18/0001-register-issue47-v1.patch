@@ -55,7 +55,14 @@ diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
      elif manifest.get("requirement_id") == "issue_28_v12":
          from .normal_run_v2 import validate_normal_run_authority
          validate_normal_run_authority(repo_root=repo_root, manifest=manifest,
-@@ -2345,6 +2365,8 @@
+@@ -2341,10 +2361,14 @@
+         str(wrapper["spec_semantic_hash"]): wrapper
+         for wrapper in compiled_specs.values()
+     }
+-    if manifest.get("requirement_id") == "issue_28_v14":
++    if manifest.get("requirement_id") == "issue_47_v1":
++        from .historical_run import prepare_text_contexts as prepare_text_run_contexts
++    elif manifest.get("requirement_id") == "issue_28_v14":
          from .capacity_run import prepare_text_contexts as prepare_text_run_contexts
      elif manifest.get("requirement_id") == "issue_28_v13":
          from .normal_run_v3 import prepare_text_contexts as prepare_text_run_contexts
@@ -64,6 +71,16 @@ diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
      elif manifest.get("requirement_id") == "issue_28_v12":
          from .normal_run_v2 import prepare_text_contexts as prepare_text_run_contexts
      else:
+@@ -2361,6 +2385,9 @@
+ 
+     def text_handlers(candidate):
+         arguments = text_contexts[candidate["candidate_hash"]]
++        if manifest.get("requirement_id") == "issue_47_v1":
++            from .normal_run_v3 import text_api
++            return text_api(arguments["compiled_spec"]["compiled"]["metric_id"])
+         if manifest.get("requirement_id") == "issue_28_v14":
+             from . import capacity_text_results
+             return capacity_text_results, capacity_text_results.build_text_review_unit
 diff --git a/scripts/vnext/records.py b/scripts/vnext/records.py
 --- a/scripts/vnext/records.py
 +++ b/scripts/vnext/records.py

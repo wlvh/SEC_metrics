@@ -99,6 +99,48 @@ def _binding(prepared, requirement):
     return historical_binding(prepared=prepared, requirement=requirement)
 
 
+def _text_execution(*, data_root, company_id, metric_id, prepared, requirement=None,
+                    traits=None, derivation_only=False):
+    """Compute one text metric's result from the installed sources.
+
+    Every step is the current route's: the candidate builder, the evidence
+    check, the review-unit builder, ``create_system_review_decision`` and
+    ``replay_text_result`` are imported unchanged. What is explicit here is that
+    the input is the pinned period's own filing rather than the latest one.
+    """
+    from datetime import datetime, timezone
+
+    from .historical_text_input import prepare_historical_business_text_input
+    from .normal_run_v3 import text_api
+    from .review import create_system_review_decision
+
+    rebuilt = prepare_historical_business_text_input(
+        repo_root=data_root, company_id=company_id, metric_id=metric_id,
+        period_selection=prepared["period_selection"])
+    _need(rebuilt["input_binding"]["input_binding_id"]
+          == prepared["component"]["input_binding_id"],
+          "HISTORICAL_TEXT_RUN_INPUT_BINDING_CHANGED")
+    api, review_builder = text_api(metric_id)
+    spec = prepared["compiled_specs"][metric_id]
+    arguments = {"compiled_spec": spec, **rebuilt["text_arguments"]}
+    candidate = api.create_deterministic_text_candidate(**arguments)
+    evidence = api.build_text_evidence(candidate=candidate, **arguments)
+    unit, assets = review_builder(compiled_spec=spec, candidate=candidate,
+                                  evidence_check=evidence,
+                                  source_bindings=arguments["source_references"])
+    if derivation_only:
+        return {"candidate": candidate, "evidence": evidence, "review_unit": unit}
+    decision = create_system_review_decision(
+        review_unit=unit, required_claims=spec["compiled"]["required_claims"],
+        decided_at_utc=datetime.now(timezone.utc).isoformat(), requirement=requirement)
+    result, trace, observations = api.replay_text_result(
+        company_traits=traits, candidate=candidate, evidence_check=evidence,
+        review_unit=unit, review_decisions=[decision], **arguments)
+    return {"records": [*prepared["records"], candidate, evidence, unit],
+            "terminal_records": [*observations, trace, result],
+            "review_unit": unit, "assets": assets, "decision": decision, "result": result}
+
+
 def create_historical_run(*, data_root, run_dir, company_id, metric_id, binding_id,
                           freeze=False):
     """Create one native Run for an installed historical period.
@@ -108,7 +150,8 @@ def create_historical_run(*, data_root, run_dir, company_id, metric_id, binding_
     binding is byte-identical to the one the installation recorded.
     """
     from .run_store import create_run, append_run_record, validate_and_freeze_run, \
-        load_frozen_run, _mechanically_replay_open_run
+        load_frozen_run, _mechanically_replay_open_run, write_review_assets, \
+        append_review_decision
     data_root, run_dir = _external(Path(data_root)), _external(Path(run_dir))
     _need(not run_dir.exists(), "HISTORICAL_RUN_PATH_EXISTS")
     case = replay_case(data_root=data_root, manifest=None, binding_id=binding_id,
@@ -116,6 +159,15 @@ def create_historical_run(*, data_root, run_dir, company_id, metric_id, binding_
     requirement = case["requirement"]
     traits = repository_company_traits(repo_root=data_root, company_id=company_id)
     prepared = case["input"]
+    text = None
+    if prepared["kind"] == "TEXT":
+        # The binding cannot carry the filing's bytes, so they are read again
+        # from the data root here. The review decision is created now rather
+        # than at preparation time because it binds this Requirement, which only
+        # the Run factory holds.
+        text = _text_execution(data_root=data_root, company_id=company_id,
+                               metric_id=metric_id, prepared=prepared,
+                               requirement=requirement, traits=traits)
     create_run(run_dir=run_dir, run_id=PREFIX + binding_id[7:], company_id=company_id,
                company_traits=traits, target_period=prepared["target_period"],
                source_references=prepared["source_references"],
@@ -127,20 +179,30 @@ def create_historical_run(*, data_root, run_dir, company_id, metric_id, binding_
                requirement_closure_hash=requirement["requirement_closure_hash"],
                artifact_requirement_generation="EXPLICIT_REQUIREMENT_V1")
     seen = {}
-    for record in prepared["records"]:
+    written = prepared["records"] if text is None else text["records"]
+    for record in written:
         identity = content_hash(value=record)
         _need(identity not in seen or seen[identity] == record,
               "HISTORICAL_RUN_RECORD_COLLISION")
         if identity not in seen:
             append_run_record(run_dir=run_dir, record=record)
             seen[identity] = record
+    if text is not None:
+        write_review_assets(run_dir=run_dir, review_unit=text["review_unit"],
+                            review_context_bytes=text["assets"]["review_context_bytes"],
+                            rendered_review_bytes=text["assets"]["rendered_review_bytes"])
+        append_review_decision(run_dir=run_dir, decision=text["decision"])
+        for record in text["terminal_records"]:
+            append_run_record(run_dir=run_dir, record=record)
     if freeze:
         validate_and_freeze_run(run_dir=run_dir, repo_root=data_root)
         manifest, stored, _ = load_frozen_run(run_dir=run_dir, repo_root=data_root)
     else:
         manifest, stored, _ = _mechanically_replay_open_run(
             run_dir=run_dir, repo_root=data_root, require_complete_results=True)
-    result = prepared["primary_result"]
+    # A structured case carried its result through the binding; a text case
+    # produced one here, so take whichever this case actually has.
+    result = prepared["primary_result"] if text is None else text["result"]
     _need(result in stored, "HISTORICAL_RUN_RESULT_CHANGED")
     return {"manifest": manifest, "result": result, "binding": case["binding"],
             "period_selection": case["period_selection"], "requirement_id": REQUIREMENT_ID,
@@ -213,6 +275,36 @@ def replay_case(*, data_root, manifest, spec=None, binding_id=None, company_id=N
             "observations": observations}
 
 
+def prepare_text_contexts(*, repo_root, manifest, records, compiled_specs, **unused):
+    """Hand ``run_store`` the bytes a text observation has to be replayed from.
+
+    The counterpart of ``normal_run_v3.prepare_text_contexts``, and the reason a
+    seventh registration hunk exists: the text arguments carry the filing's
+    bytes, which no Run record can hold, so the store asks the Requirement's own
+    module to produce them again. The candidate is re-derived and compared first,
+    so the bytes handed back are the ones that Run was actually built from.
+    """
+    candidates = [r for r in records if r["record_type"] == "DETERMINISTIC_TEXT_CANDIDATE"]
+    if not candidates:
+        return {}
+    _need(len(candidates) == len(compiled_specs) == 1,
+          "HISTORICAL_RUN_TEXT_EXACT_SET_REQUIRED")
+    spec = next(iter(compiled_specs.values()))
+    case = replay_case(data_root=repo_root, manifest=manifest)
+    _need(case["kind"] == "TEXT", "HISTORICAL_RUN_TEXT_ROUTE_REQUIRED")
+    from .historical_text_input import prepare_historical_business_text_input
+    from .normal_run_v3 import text_api
+    metric_id = spec["compiled"]["metric_id"]
+    rebuilt = prepare_historical_business_text_input(
+        repo_root=repo_root, company_id=case["input"]["company_id"], metric_id=metric_id,
+        period_selection=case["period_selection"])
+    arguments = {"compiled_spec": spec, **rebuilt["text_arguments"]}
+    api, _ = text_api(metric_id)
+    expected = api.create_deterministic_text_candidate(**arguments)
+    _need(candidates[0] == expected, "HISTORICAL_RUN_TEXT_CANDIDATE_CHANGED")
+    return {expected["candidate_hash"]: arguments}
+
+
 def validate_run_authority(*, repo_root, manifest, records, compiled_specs):
     """Re-derive a historical Run's whole case and compare it to what it holds.
 
@@ -230,6 +322,30 @@ def validate_run_authority(*, repo_root, manifest, records, compiled_specs):
     _need(sorted(source_records, key=lambda r: content_hash(value=r))
           == sorted(case["source_records"], key=lambda r: content_hash(value=r)),
           "HISTORICAL_RUN_SOURCE_RECORD_SET_CHANGED")
+    if case["kind"] == "TEXT":
+        # A text case computes its result inside the Run factory, so
+        # expected_records cannot carry it and comparing against them would
+        # always fail. What this authority owns is that the Run's candidate,
+        # evidence check and review unit are exactly what re-deriving from this
+        # data root produces. The observations beneath them are then bound to
+        # that same unit by run_store's own text replay, and the trace and
+        # result to those observations, so nothing is taken on trust - the
+        # chain is just anchored one record higher.
+        derived = _text_execution(data_root=repo_root,
+                                  company_id=case["input"]["company_id"],
+                                  metric_id=case["primary_metric_id"],
+                                  prepared=case["input"], derivation_only=True)
+        for key, record_type in (("candidate", "DETERMINISTIC_TEXT_CANDIDATE"),
+                                 ("evidence", "EVIDENCE_CHECK"),
+                                 ("review_unit", "REVIEW_UNIT")):
+            present = [r for r in records if r["record_type"] == record_type]
+            _need(present == [derived[key]],
+                  "HISTORICAL_RUN_TEXT_DERIVATION_CHANGED:" + record_type)
+        result = [r for r in records if r["record_type"] == "METRIC_RESULT"]
+        _need(len(result) == 1 and result[0].get("value_kind") == "TEXT_V1"
+              and result[0]["metric_id"] == case["primary_metric_id"],
+              "HISTORICAL_RUN_TEXT_RESULT_SHAPE_CHANGED")
+        return case
     kinds = {"DETERMINISTIC_VERIFIED_CLAIM", "VERIFIED_OBSERVATION", "EXECUTION_TRACE",
              "METRIC_RESULT"}
     expected = {content_hash(value=r): r for r in case["expected_records"]

@@ -30,6 +30,7 @@ from .normal_companyfacts_results import (CATALOG_PATH, NormalCompanyfactsError,
                                           _SOURCE_ERRORS, _authority, _filing_source,
                                           _prior_filing)
 from .normal_annual_input_v2 import exact_json_value
+from .specs import compile_spec_file
 from .normal_governance_input import _Sources
 from .normal_run_specs import validate_ordinary_spec_files
 from .observations import scope_key
@@ -190,6 +191,51 @@ def verify_historical_companyfacts_metrics(*, candidate, repo_root: Path, compan
     return rebuilt
 
 
+# A text metric does not live in the 22 zero-AI Spec set, and its result is not
+# computed here: the review decision binds the Requirement, which only the Run
+# factory holds. So this assembles the identity and the sources, and
+# create_historical_run computes the text result from them, exactly as the
+# current route splits the same work between normal_run_v2 and normal_run_v3.
+TEXT_METRICS = ("D02",)
+TEXT_SPEC_PATHS = {"D02": "catalog/r6/D02_legal_disclosures_v1.md"}
+
+
+def _historical_text_run_input(*, repo_root, company_id, metric_id, period_selection):
+    """Assemble the text case's identity without its raw bytes.
+
+    ``text_arguments`` carries the filing's bytes, which cannot enter a binding
+    that has to be JSON and content-addressed. The binding therefore records
+    which sources were admitted, and the Run factory re-prepares the same input
+    from the data root to obtain the bytes again.
+    """
+    from .historical_text_input import prepare_historical_business_text_input
+    prepared = prepare_historical_business_text_input(
+        repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+        period_selection=period_selection)
+    _need(prepared["input_status"] != "BLOCKED",
+          "HISTORICAL_TEXT_RUN_INPUT_BLOCKED:" + str(prepared["input_binding"]["limitations"]))
+    spec_path = TEXT_SPEC_PATHS[metric_id]
+    spec = compile_spec_file(path=repo_root / spec_path, dependency_specs={})
+    period = prepared["target_period"]
+    body = {"record_type": RUN_INPUT_RECORD_TYPE, "company_id": company_id,
+            "primary_metric_id": metric_id, "period_selection": period_selection,
+            "requested_metric_ids": [metric_id], "required_metric_ids": [metric_id],
+            "spec_paths": {metric_id: spec_path}, "compiled_specs": {metric_id: spec},
+            "records": prepared["records"], "source_records": prepared["records"],
+            "source_references": prepared["source_references"],
+            "source_proofs": prepared["source_proofs"],
+            "source_admission": prepared["admission"],
+            "primary_result": None, "results": {}, "traces": {},
+            "target_period": {"fiscal_year": period["fiscal_year"],
+                              "period_start": period["period_start"],
+                              "period_end": period["period_end"]},
+            "component": prepared["input_binding"], "kind": "TEXT",
+            "calls": {"provider": 0, "paid": 0, "sec": 0},
+            "native_run_status": "NOT_CREATED", "production_authorized": False}
+    body = exact_json_value(body)
+    return {**body, "input_id": content_hash(value=body)}
+
+
 def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id: str,
                                  period_selection):
     """Assemble one metric's complete historical graph for a Run factory.
@@ -203,6 +249,10 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     from .historical_zero_ai_results import (SUPPORTED_METRICS as ZERO_AI_METRICS,
                                              resolve_historical_zero_ai_metric)
     ACCESSION_METRICS = ("A01", "A02", "B12")
+    if metric_id in TEXT_METRICS:
+        return _historical_text_run_input(repo_root=repo_root, company_id=company_id,
+                                          metric_id=metric_id,
+                                          period_selection=period_selection)
     specifications = validate_ordinary_spec_files(repo_root=repo_root)
     _need(metric_id in specifications, "HISTORICAL_RUN_METRIC_NOT_IN_ZERO_AI_SET")
     expected_ids = {metric_id, *specifications[metric_id]["compiled_spec"]["compiled"]["dependencies"]}

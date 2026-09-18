@@ -236,7 +236,42 @@ Every row carries the pinned year, not the company's latest one, and the Run
 value and the row value agree — which is the pair that the B01 defect broke
 without either half looking wrong on its own.
 
-## What a historical text Run would still cost
+## The text Run: eight changes, and the prediction was half right
+
+The section that used to sit here called `prepare_text_contexts` the "likely
+seventh" hunk and said only building it would decide. Building it decided, and
+it corrected the prediction twice over.
+
+**The first obstacle was mine, not the store's.** `historical_run.validate_run_authority`
+compares a Run's computation graph against the records the rebuilt input
+produces. A text case computes its result inside the Run factory, so those
+records cannot contain it and the comparison always failed with
+`HISTORICAL_RUN_COMPLETE_COMPUTATION_GRAPH_CHANGED` — before `run_store` was
+reached at all. The authority now re-derives the candidate, the evidence check
+and the review unit from the data root and requires byte equality with the
+Run's, which anchors the chain one record higher rather than lowering it:
+`run_store` binds the observations to that same unit and the trace and result to
+those observations.
+
+**The store then needed two changes, not one.** `prepare_text_contexts` is
+selected by a requirement-id chain, and so is `text_handlers` fifteen lines
+below it. Falling through the second produced
+`build_text_evidence() got an unexpected keyword argument 'source_filings'`,
+because the default handler is D01's and takes a different signature.
+
+So the registration is now **eight changes in three files** (the diff shows
+seven hunks: the two `run_store` text changes are adjacent enough to merge).
+With them applied, Marriott's pinned 2025 D02 reaches a **FROZEN** native Run,
+`EXACT`, `TEXT_V1`, ten text items, `calls` zero.
+
+### It does not reach a public row, and that is the next piece
+
+`render_historical_run` refuses it with `HISTORICAL_PROJECTION_TEXT_ROUTE_NOT_WIRED`,
+which is exactly what this branch predicted when the text input was committed.
+The row needs the renderer's text branch, ported from
+`ordinary_projection`'s `text_payload` arm the way the source-derived evidence
+arm was. Until that exists, D02 is a Run and not a published position, and the
+coverage frame is not moved.
 
 `historical_text_input.py` proves the D02 *result* for a pinned period, and this
 branch's claim that the text metrics were blocked on a missing capability was
