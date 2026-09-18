@@ -143,14 +143,44 @@ presentation policy already assigns each metric:
 | text — `MDA`, `10-K`, `8K_ITEM`, `PROXY` | 18 | 900 | one capability that does not exist at all |
 | not in the presentation policy | 1 (`D03`) | 50 | no current route either, so not a historical gap |
 
-The 900 are behind **one** missing thing, not eighteen.
-`historical_projection.render_historical_run` refuses anything that is not
-`STRUCTURED` outright, so no text metric can produce a historical row whatever
-its own adapter does. Building a historical text route once moves all eighteen;
-building four structured ones moves 200 positions and reuses what is here.
-
 The 4 are `A13`, `B06`, `C03`, `C04`; the 18 are `A03 A04 A09 A11 A12 B10 B11
 B13 C01 C02 D01 D02 D04 E01 E02 E03 E04 E05`.
+
+#### Correction: the 18 are not one capability
+
+The first version of this section said the 900 sit behind **one** missing
+thing, on the strength of `render_historical_run` refusing anything that is not
+`STRUCTURED`. That refusal is real, but it is the last gate, not the only one,
+and the claim was wrong about what is behind it. The 18 are served by five
+different module families, each of which would need its own historical
+successor exactly as `historical_results`, `historical_zero_ai_results` and
+`historical_accession_results` are three successors and not one:
+
+| module family | metrics | positions |
+| --- | --- | ---: |
+| `ordinary_text_input` + `text_results_v2` | C02, D02 | 100 |
+| `financial_results` | A03, A04, A09, A11, A12 | 250 |
+| `normal_zero_ai_results` (event windows) | C01, E01–E05 | 300 |
+| `capacity_text_results` + `capacity_*_input` | B13, D04 | 100 |
+| `normal_lodging_results` | B10, B11 | 100 |
+| `normal_text_projection_v2` and others | D01 | 50 |
+
+`ordinary_text_input.prepare_current_business_text_input` also refuses every
+metric except C02 and D02 outright, so even that family is narrower than its
+name.
+
+The event-window group is worse than an implementation gap, and this is the
+part worth carrying into any plan. `historical_zero_ai_results` already exists
+as `normal_zero_ai_results`'s successor, and it refuses event windows on
+purpose, in its own words: each is defined relative to the current period, and
+answering one from today's latest filing would be a wrong answer. So C01 and
+E01–E05 raise a question about what a historical event window *means* before
+they raise one about how to compute it. Wiring them is not the work; deciding
+what they claim is.
+
+Priced honestly: 200 positions extend existing machinery, 400 need three new
+successors of a familiar shape, 300 need a semantic decision first, and 50
+(`D01`) plus 50 (`D03`) are their own cases.
 
 ```
 python3 - <<'EOF'
