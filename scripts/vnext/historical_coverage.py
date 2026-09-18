@@ -85,72 +85,87 @@ def _row(result):
             "period_end": result["period_end"]}
 
 
-def _resolved_rows(*, repo_root, company_id, selection, metrics):
-    """Resolve one period, or report why it could not be resolved.
+def _adapter_rows(*, repo_root, company_id, selection):
+    """Run every wired adapter independently and keep each one's own outcome.
 
-    A single period's limitation must not remove the other periods or the rest
-    of the frame from the matrix, so the failure is returned rather than raised.
+    One adapter's limitation is that adapter's metrics' own outcome. It must not
+    remove the metrics another adapter resolved for the same period, because a
+    Company Facts refusal about amendments says nothing about whether revenue or
+    an instant fact could be read from the same selected filing.
     """
+    from .historical_accession_results import resolve_historical_accession_metrics
     from .historical_results import resolve_historical_companyfacts_metrics
     from .historical_zero_ai_results import resolve_historical_zero_ai_metric
+
+    rows, adapters, component = {}, {}, None
+
+    def failed(error):
+        return {"reason": str(error), "error_type": type(error).__name__,
+                "category": getattr(error, "category", "IMPLEMENTATION_GAP")}
+
     try:
         component = resolve_historical_companyfacts_metrics(repo_root=repo_root,
                                                             company_id=company_id,
                                                             period_selection=selection)
+        for metric_id in WIRED_COMPANYFACTS_METRICS:
+            rows[metric_id] = _row(component["metrics"][metric_id]["result"])
+        adapters["companyfacts"] = None
     except (ValueError, KeyError, TypeError, OSError) as error:
-        return None, {}, {"reason": str(error), "error_type": type(error).__name__,
-                          "category": getattr(error, "category", "IMPLEMENTATION_GAP")}
-    rows = {}
+        adapters["companyfacts"] = failed(error)
+        for metric_id in WIRED_COMPANYFACTS_METRICS:
+            rows[metric_id] = {"status": _blocked_status(adapters["companyfacts"]),
+                               **adapters["companyfacts"]}
     for metric_id in WIRED_REVENUE_METRICS:
-        # Each adapter is its own route; a limitation in one is that metric's own
-        # outcome and must not remove the metrics the other routes resolved.
         try:
             revenue = resolve_historical_zero_ai_metric(repo_root=repo_root,
                                                         company_id=company_id,
                                                         metric_id=metric_id,
                                                         period_selection=selection)
             rows[metric_id] = _row(revenue["result"])
+            adapters.setdefault("revenue", None)
         except (ValueError, KeyError, TypeError, OSError) as error:
-            rows[metric_id] = {"status": "HISTORICAL_ROUTE_NOT_WIRED", "reason": str(error),
-                               "error_type": type(error).__name__,
-                               "category": getattr(error, "category", "IMPLEMENTATION_GAP")}
+            detail = failed(error)
+            adapters["revenue"] = detail
+            rows[metric_id] = {"status": _blocked_status(detail), **detail}
     try:
-        from .historical_accession_results import resolve_historical_accession_metrics
         instants = resolve_historical_accession_metrics(repo_root=repo_root,
                                                         company_id=company_id,
                                                         period_selection=selection)
         for metric_id in WIRED_ACCESSION_METRICS:
             rows[metric_id] = _row(instants["metrics"][metric_id]["result"])
+        adapters["accession"] = None
     except (ValueError, KeyError, TypeError, OSError) as error:
+        adapters["accession"] = failed(error)
         for metric_id in WIRED_ACCESSION_METRICS:
-            rows[metric_id] = {"status": "HISTORICAL_ROUTE_NOT_WIRED", "reason": str(error),
-                               "error_type": type(error).__name__,
-                               "category": getattr(error, "category", "IMPLEMENTATION_GAP")}
-    for metric_id in metrics:
-        result = component["metrics"][metric_id]["result"]
-        if result["applicability"] == "N_A_STRUCTURAL":
-            status = "N_A_STRUCTURAL"
-        elif result["publication"] == "WITHHELD":
-            status = "WITHHELD_SOURCE_OR_ROUTE"
-        elif result["value"] is None:
-            status = "NO_VALUE_PUBLISHED"
-        else:
-            status = "VALUE_" + result["quality"]
-        rows[metric_id] = {"status": status, "value": result["value"], "unit": result["unit"],
-                           "quality": result["quality"], "publication": result["publication"],
-                           "reason_code": result["reason_code"],
-                           "period_start": result["period_start"],
-                           "period_end": result["period_end"]}
-    return component, rows, None
+            rows[metric_id] = {"status": _blocked_status(adapters["accession"]),
+                               **adapters["accession"]}
+    return component, rows, adapters
+
+
+def _blocked_status(detail):
+    """A missing source and a missing implementation are different conclusions."""
+    return ("SOURCE_MISSING_DEPENDENCY"
+            if detail["category"] in {"SOURCE_UNAVAILABLE", "SOURCE_ACCESS_FAILED",
+                                      "SOURCE_INTEGRITY_ERROR"}
+            else "HISTORICAL_ROUTE_NOT_WIRED")
 
 
 def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
-    """Enumerate every target position and give each one exactly one status."""
+    """Enumerate every target position with independent status dimensions.
+
+    ``first_blocking_reason`` is a display convenience: it names what this
+    position hit first. It is NOT a claim that it is the only thing missing. A
+    position can lack its target original AND have no historical route, so the
+    four dimensions are recorded separately and counted separately. Reading the
+    first blocker as the only blocker is what makes a source budget look like
+    the whole remaining cost.
+    """
     metrics, policy = declared_metric_ids(repo_root=repo_root)
     configured = [c["company_id"] for c in _registry_rows(repo_root=repo_root)]
     selected = configured if company_ids is None else list(company_ids)
     _need(bool(selected) and len(selected) == len(set(selected))
           and set(selected) <= set(configured), "COVERAGE_COMPANY_SET_INVALID")
+    wired = set(WIRED_HISTORICAL_METRICS)
     positions = []
     company_reports = []
     for company_id in selected:
@@ -165,49 +180,66 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
                      if candidate["metadata_status"] != "METADATA_CANDIDATE_READY"
                      else "ORIGINAL_NOT_SAVED" if report_end not in identity_ready
                      else "PERIOD_ESTABLISHED"}
-            rows = {}
-            failure = None
+            rows, adapters, component = {}, {}, None
             if entry["period_status"] == "PERIOD_ESTABLISHED":
                 selection = resolve_period_selection(repo_root=repo_root,
                                                      company_id=company_id,
                                                      report_end=report_end)
                 entry["selection_id"] = selection["selection_id"]
-                component, rows, failure = _resolved_rows(
-                    repo_root=repo_root, company_id=company_id, selection=selection,
-                    metrics=WIRED_COMPANYFACTS_METRICS)
-                if failure is not None:
-                    entry["period_status"] = "ROUTE_BLOCKED"
-                    entry["route_error"] = failure
-                else:
+                component, rows, adapters = _adapter_rows(repo_root=repo_root,
+                                                          company_id=company_id,
+                                                          selection=selection)
+                entry["adapter_errors"] = {name: detail for name, detail in adapters.items()
+                                           if detail is not None}
+                if component is not None:
                     entry["fiscal_year"] = component["periods"]["current"]["fiscal_year"]
                     entry["prior_error"] = component["prior_error"]
             for metric_id in metrics:
-                if entry["period_status"] == "METADATA_BLOCKED":
-                    status, detail = "TARGET_PERIOD_METADATA_BLOCKED", {
+                established = entry["period_status"] != "METADATA_BLOCKED"
+                original_saved = entry["period_status"] == "PERIOD_ESTABLISHED"
+                implemented = metric_id in wired
+                row = rows.get(metric_id)
+                verified = bool(row) and row["status"].startswith(("VALUE_", "N_A_STRUCTURAL"))
+                if not established:
+                    first, detail = "TARGET_PERIOD_METADATA_BLOCKED", {
                         "reasons": candidate["metadata_blocking_reasons"]}
-                elif entry["period_status"] == "ORIGINAL_NOT_SAVED":
-                    status, detail = "SOURCE_MISSING_TARGET_ORIGINAL", {
+                elif not original_saved:
+                    first, detail = "SOURCE_MISSING_TARGET_ORIGINAL", {
                         "accession": candidate["current_filing"]["accessionNumber"],
                         "document_name": candidate["current_filing"]["primaryDocument"]}
-                elif entry["period_status"] == "ROUTE_BLOCKED":
-                    # A source limitation and a missing implementation are
-                    # different conclusions, so the failure's own category
-                    # decides which one this position reports.
-                    status = ("SOURCE_MISSING_DEPENDENCY"
-                              if failure["category"] in {"SOURCE_UNAVAILABLE",
-                                                         "SOURCE_ACCESS_FAILED",
-                                                         "SOURCE_INTEGRITY_ERROR"}
-                              else "HISTORICAL_ROUTE_NOT_WIRED")
-                    detail = dict(failure)
-                elif metric_id not in rows:
-                    status, detail = "HISTORICAL_ROUTE_NOT_WIRED", {
+                elif not implemented:
+                    first, detail = "HISTORICAL_ROUTE_NOT_WIRED", {
                         "note": "no historical route for this metric yet"}
                 else:
-                    status, detail = rows[metric_id]["status"], rows[metric_id]
-                positions.append({"company_id": company_id, "report_end": report_end,
-                                  "fiscal_year": entry["fiscal_year"], "metric_id": metric_id,
-                                  "status": status, "detail": detail})
+                    first, detail = row["status"], row
+                positions.append({
+                    "company_id": company_id, "report_end": report_end,
+                    "target_ordinal": candidate["target_ordinal"],
+                    "fiscal_year": entry["fiscal_year"], "metric_id": metric_id,
+                    "first_blocking_reason": first, "status": first, "detail": detail,
+                    "target_period_established": established,
+                    "target_original_saved": original_saved,
+                    "historical_route_implemented": implemented,
+                    "native_run_wired": False,
+                    "verified_outcome": verified})
             periods.append(entry)
+        # Positions whose target period was never discovered still belong to the
+        # frame. They are enumerated with the company and the ordinal that is
+        # missing, and never with an invented fiscal-year label.
+        for ordinal in range(len(plan["target_candidates"]) + 1, years + 1):
+            for metric_id in metrics:
+                positions.append({
+                    "company_id": company_id, "report_end": None,
+                    "target_ordinal": ordinal, "fiscal_year": None, "metric_id": metric_id,
+                    "first_blocking_reason": "TARGET_PERIOD_NOT_DISCOVERED",
+                    "status": "TARGET_PERIOD_NOT_DISCOVERED",
+                    "detail": {"reason": "fewer annual report ends are reachable from saved "
+                                         "submissions metadata than the requested window",
+                               "reachable_period_count": len(plan["target_candidates"]),
+                               "catalog_limitation_count": len(plan["catalog_limitations"])},
+                    "target_period_established": False, "target_original_saved": False,
+                    "historical_route_implemented": metric_id in wired,
+                    "native_run_wired": False, "verified_outcome": False})
         company_reports.append({"company_id": company_id, "requested_years": years,
                                 "target_period_count": len(plan["target_candidates"]),
                                 "periods": periods,
@@ -216,18 +248,29 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
     counts = {}
     for position in positions:
         counts[position["status"]] = counts.get(position["status"], 0) + 1
-    body = {"record_type": RECORD_TYPE, "schema_version": 1,
+    dimensions = {
+        "target_period_established": sum(p["target_period_established"] for p in positions),
+        "target_original_saved": sum(p["target_original_saved"] for p in positions),
+        "historical_route_implemented": sum(p["historical_route_implemented"] for p in positions),
+        "native_run_wired": sum(p["native_run_wired"] for p in positions),
+        "verified_outcome": sum(p["verified_outcome"] for p in positions)}
+    blocked_by_both = sum(1 for p in positions
+                          if not p["target_original_saved"] and not p["historical_route_implemented"])
+    body = {"record_type": RECORD_TYPE, "schema_version": 2,
             "declared_metric_ids": metrics, "declared_metric_count": len(metrics),
             "requested_years": years, "companies": selected,
             "target_frame_positions": len(selected) * len(metrics) * years,
             "enumerated_positions": len(positions),
-            "missing_positions_from_unreachable_periods":
-                len(selected) * len(metrics) * years - len(positions),
             "wired_historical_metric_ids": list(WIRED_HISTORICAL_METRICS),
-            "status_counts": counts, "company_reports": company_reports,
-            "positions": positions,
+            "first_blocking_reason_counts": counts, "status_counts": counts,
+            "dimension_counts": dimensions,
+            "positions_missing_source_and_route": blocked_by_both,
+            "first_blocking_reason_is_not_the_only_blocker": True,
+            "company_reports": company_reports, "positions": positions,
             "policy_sha256": sha256_file(path=ROOT / POLICY_PATH),
             "module_sha256": sha256_file(path=Path(__file__)),
             "calls": {"provider": 0, "paid": 0, "sec": 0},
             "native_run_created": False, "production_authorized": False}
+    _need(body["enumerated_positions"] == body["target_frame_positions"],
+          "COVERAGE_FRAME_NOT_FULLY_ENUMERATED")
     return {**body, "matrix_id": content_hash(value=body)}
