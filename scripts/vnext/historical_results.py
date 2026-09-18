@@ -189,17 +189,28 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     The installed Spec set, dependency closure and record-collision rules are
     the frozen current ones. Only the period is explicit.
     """
+    from .historical_zero_ai_results import (SUPPORTED_METRICS as REVENUE_METRICS,
+                                             resolve_historical_zero_ai_metric)
     specifications = validate_ordinary_spec_files(repo_root=repo_root)
     _need(metric_id in specifications, "HISTORICAL_RUN_METRIC_NOT_IN_ZERO_AI_SET")
     expected_ids = {metric_id, *specifications[metric_id]["compiled_spec"]["compiled"]["dependencies"]}
-    _need(expected_ids == {metric_id}, "HISTORICAL_RUN_DEPENDENT_METRIC_NOT_IMPLEMENTED")
-    component = resolve_historical_companyfacts_metrics(repo_root=repo_root, company_id=company_id,
-                                                        period_selection=period_selection)
-    _need(metric_id in component["metrics"], "HISTORICAL_RUN_METRIC_NOT_IN_COMPANYFACTS_ROUTE")
-    metric = component["metrics"][metric_id]
-    specs = {metric_id: metric["compiled_spec"]}
-    source_records = component["source_records"]
-    records = [*source_records, *metric["claims"], *metric["records"]]
+    if metric_id in REVENUE_METRICS:
+        component = resolve_historical_zero_ai_metric(repo_root=repo_root, company_id=company_id,
+                                                      metric_id=metric_id,
+                                                      period_selection=period_selection)
+        specs = {metric_id: component["compiled_spec"], **component["dependency_specs"]}
+        source_records = component["source_records"]
+        records = [*component["records"], *component["claims"]]
+    else:
+        _need(expected_ids == {metric_id}, "HISTORICAL_RUN_DEPENDENT_METRIC_NOT_IMPLEMENTED")
+        component = resolve_historical_companyfacts_metrics(repo_root=repo_root,
+                                                            company_id=company_id,
+                                                            period_selection=period_selection)
+        _need(metric_id in component["metrics"], "HISTORICAL_RUN_METRIC_NOT_IN_COMPANYFACTS_ROUTE")
+        metric = component["metrics"][metric_id]
+        specs = {metric_id: metric["compiled_spec"]}
+        source_records = component["source_records"]
+        records = [*source_records, *metric["claims"], *metric["records"]]
     unique = {}
     for record in records:
         key = content_hash(value=record)
@@ -221,6 +232,7 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     for metric_key, spec in specs.items():
         _need(spec == specifications[metric_key]["compiled_spec"],
               "HISTORICAL_RUN_INSTALLED_SPEC_DIFFERS_FROM_SOURCE_ROUTE:" + metric_key)
+    _need(set(specs) == expected_ids, "HISTORICAL_RUN_DEPENDENCY_SPEC_SET_CHANGED")
     primary = results[metric_id]
     period = component["prepared_input"]["table_input"]["target_period"]
     body = {"record_type": RUN_INPUT_RECORD_TYPE, "company_id": company_id,

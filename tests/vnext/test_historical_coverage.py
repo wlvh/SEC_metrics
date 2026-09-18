@@ -9,7 +9,7 @@ import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
-from vnext.historical_coverage import (WIRED_COMPANYFACTS_METRICS, CoverageError,
+from vnext.historical_coverage import (WIRED_HISTORICAL_METRICS, CoverageError,
                                        build_coverage_matrix, declared_metric_ids)
 
 
@@ -59,10 +59,10 @@ class HistoricalCoverageTest(unittest.TestCase):
                             for p in missing))
         resolved = [p for p in matrix["positions"] if p["report_end"] == "2026-01-31"]
         self.assertEqual(39, len(resolved))
-        wired = [p for p in resolved if p["metric_id"] in WIRED_COMPANYFACTS_METRICS]
-        self.assertEqual(len(WIRED_COMPANYFACTS_METRICS), len(wired))
+        wired = [p for p in resolved if p["metric_id"] in WIRED_HISTORICAL_METRICS]
+        self.assertEqual(len(WIRED_HISTORICAL_METRICS), len(wired))
         self.assertTrue(all(p["status"] != "HISTORICAL_ROUTE_NOT_WIRED" for p in wired))
-        unwired = [p for p in resolved if p["metric_id"] not in WIRED_COMPANYFACTS_METRICS]
+        unwired = [p for p in resolved if p["metric_id"] not in WIRED_HISTORICAL_METRICS]
         self.assertTrue(unwired)
         # An unwired route is an implementation gap, never a disclosure claim.
         self.assertEqual({"HISTORICAL_ROUTE_NOT_WIRED"}, {p["status"] for p in unwired})

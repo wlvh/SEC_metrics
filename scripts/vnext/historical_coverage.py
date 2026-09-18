@@ -39,6 +39,8 @@ RECORD_TYPE = "HISTORICAL_COVERAGE_MATRIX"
 # The historical routes that exist today. Everything else is an explicit gap.
 WIRED_COMPANYFACTS_METRICS = ("A05", "A06", "A07", "A08", "A10",
                               "B02", "B04", "B05", "B07", "B08", "B09")
+WIRED_REVENUE_METRICS = ("B01", "B03")
+WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS))
 
 
 class CoverageError(ValueError):
@@ -64,6 +66,23 @@ def declared_metric_ids(*, repo_root: Path):
     return metrics, policy
 
 
+def _classify(result):
+    if result["applicability"] == "N_A_STRUCTURAL":
+        return "N_A_STRUCTURAL"
+    if result["publication"] == "WITHHELD":
+        return "WITHHELD_SOURCE_OR_ROUTE"
+    if result["value"] is None:
+        return "NO_VALUE_PUBLISHED"
+    return "VALUE_" + result["quality"]
+
+
+def _row(result):
+    return {"status": _classify(result), "value": result["value"], "unit": result["unit"],
+            "quality": result["quality"], "publication": result["publication"],
+            "reason_code": result["reason_code"], "period_start": result["period_start"],
+            "period_end": result["period_end"]}
+
+
 def _resolved_rows(*, repo_root, company_id, selection, metrics):
     """Resolve one period, or report why it could not be resolved.
 
@@ -71,6 +90,7 @@ def _resolved_rows(*, repo_root, company_id, selection, metrics):
     of the frame from the matrix, so the failure is returned rather than raised.
     """
     from .historical_results import resolve_historical_companyfacts_metrics
+    from .historical_zero_ai_results import resolve_historical_zero_ai_metric
     try:
         component = resolve_historical_companyfacts_metrics(repo_root=repo_root,
                                                             company_id=company_id,
@@ -79,6 +99,19 @@ def _resolved_rows(*, repo_root, company_id, selection, metrics):
         return None, {}, {"reason": str(error), "error_type": type(error).__name__,
                           "category": getattr(error, "category", "IMPLEMENTATION_GAP")}
     rows = {}
+    for metric_id in WIRED_REVENUE_METRICS:
+        # The revenue route is its own source adapter; a limitation there is that
+        # metric's own outcome and must not remove the catalog metrics.
+        try:
+            revenue = resolve_historical_zero_ai_metric(repo_root=repo_root,
+                                                        company_id=company_id,
+                                                        metric_id=metric_id,
+                                                        period_selection=selection)
+            rows[metric_id] = _row(revenue["result"])
+        except (ValueError, KeyError, TypeError, OSError) as error:
+            rows[metric_id] = {"status": "HISTORICAL_ROUTE_NOT_WIRED", "reason": str(error),
+                               "error_type": type(error).__name__,
+                               "category": getattr(error, "category", "IMPLEMENTATION_GAP")}
     for metric_id in metrics:
         result = component["metrics"][metric_id]["result"]
         if result["applicability"] == "N_A_STRUCTURAL":
@@ -176,7 +209,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
             "enumerated_positions": len(positions),
             "missing_positions_from_unreachable_periods":
                 len(selected) * len(metrics) * years - len(positions),
-            "wired_historical_metric_ids": list(WIRED_COMPANYFACTS_METRICS),
+            "wired_historical_metric_ids": list(WIRED_HISTORICAL_METRICS),
             "status_counts": counts, "company_reports": company_reports,
             "positions": positions,
             "policy_sha256": sha256_file(path=ROOT / POLICY_PATH),

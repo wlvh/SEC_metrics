@@ -264,6 +264,51 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
                           "period_end": "2024-12-31"}, period)
         self.assertEqual("FISCAL_LABEL_FULL_DOCUMENT_REQUIRED", str(refused.exception))
 
+    def test_revenue_comes_from_the_selected_filing_s_own_accession(self):
+        from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
+        with original_sources_only():
+            newer = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                             report_end=FY2024_END)
+            older = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                             report_end=FY2023_END)
+            current = resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=MARRIOTT,
+                                                        metric_id="B01", period_selection=newer)
+            prior = resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=MARRIOTT,
+                                                      metric_id="B01", period_selection=older)
+        cik = 1048286
+        expected_current = original_fact(cik=cik, concept="Revenues", accession=FY2024_ACCESSION,
+                                         start="2024-01-01", end="2024-12-31")
+        expected_prior = original_fact(cik=cik, concept="Revenues", accession=FY2023_ACCESSION,
+                                       start="2023-01-01", end="2023-12-31")
+        self.assertEqual("EXACT", current["result"]["quality"])
+        self.assertEqual(Decimal(expected_current[1]), Decimal(current["result"]["value"]))
+        self.assertEqual(("2024-01-01", "2024-12-31"),
+                         (current["result"]["period_start"], current["result"]["period_end"]))
+        self.assertEqual("EXACT", prior["result"]["quality"])
+        self.assertEqual(Decimal(expected_prior[1]), Decimal(prior["result"]["value"]))
+        self.assertEqual(("2023-01-01", "2023-12-31"),
+                         (prior["result"]["period_start"], prior["result"]["period_end"]))
+        # Two periods of the same company resolve to different values and
+        # different identities; neither carries the other's answer.
+        self.assertNotEqual(current["result"]["value"], prior["result"]["value"])
+        self.assertNotEqual(current["component_id"], prior["component_id"])
+        for component in (current, prior):
+            self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, component["calls"])
+            self.assertFalse(component["latest_restated_values_used"])
+            self.assertEqual("NOT_CREATED", component["native_run_status"])
+
+    def test_an_unwired_revenue_route_variant_is_an_explicit_gap(self):
+        from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
+        from vnext.normal_zero_ai_results import NormalZeroAiError
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                                 report_end=FY2024_END)
+            with self.assertRaises(NormalZeroAiError) as event:
+                resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=MARRIOTT,
+                                                  metric_id="C01", period_selection=selection)
+        self.assertEqual("HISTORICAL_ZERO_AI_METRIC_NOT_WIRED:C01", str(event.exception))
+        self.assertEqual("IMPLEMENTATION_GAP", event.exception.category)
+
     def test_a_run_input_carries_the_selection_and_the_installed_spec(self):
         with original_sources_only():
             selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
