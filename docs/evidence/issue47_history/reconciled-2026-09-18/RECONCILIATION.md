@@ -228,6 +228,41 @@ for m in b["declared_metric_ids"]:
 EOF
 ```
 
+### Which family to wire next is a material question, not a code question
+
+The event family was worth wiring because the 8-K documents for the most recent
+pinned year were already saved: Marriott's 2025 window had ten of them, and 36
+positions became EXACT the moment the route existed. That is the test to apply
+to the next family, and it is cheap to run before writing any code.
+
+Governance (`C03`, `C04`, 100 positions, applicable to every company) fails it.
+The saved submissions indexes list **82** `DEF 14A` filings; **10** have their
+accession material saved, and every one of those ten was filed in 2026:
+
+```
+python3 - <<'EOF'
+import json, glob, os
+saved = {m.rsplit("_", 1)[-1] for m in os.listdir("evidence/accession_materials")}
+listed = hit = 0
+for path in glob.glob("evidence/submissions/CIK*.json"):
+    recent = (json.load(open(path)).get("filings", {}) or {}).get("recent", {}) or {}
+    for form, acc in zip(recent.get("form", []), recent.get("accessionNumber", [])):
+        if form == "DEF 14A":
+            listed += 1
+            hit += acc.replace("-", "") in saved
+print(listed, hit)
+EOF
+```
+
+So a historical governance route would resolve the most recent period and report
+a named source gap for every earlier one — roughly ten real positions out of a
+hundred, against thirty-six for the same effort on events. The 72 unsaved
+proxies are a concrete acquisition ask rather than a vague one, and they belong
+in the plan before the route does.
+
+This is recorded because the same check decides the remaining families, and it
+costs nothing to run first.
+
 ## What EXACT means in the coverage matrix, and what it does not
 
 The matrix stops at the metric result. It never renders a public row, so an
