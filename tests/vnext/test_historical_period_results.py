@@ -309,6 +309,53 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
         self.assertEqual("HISTORICAL_ZERO_AI_METRIC_NOT_WIRED:C01", str(event.exception))
         self.assertEqual("IMPLEMENTATION_GAP", event.exception.category)
 
+    def test_a_restated_comparative_does_not_reach_the_earlier_period(self):
+        """A real restatement in the repository's own saved Company Facts.
+
+        Marriott's FY2023 filing reports OtherOperatingActivitiesCashFlowStatement
+        for 2023 as 21,000,000. The FY2024 filing's comparative column for the
+        same period reports -138,000,000. Both rows live in the same saved JSON,
+        so which accession a period is bound to is what decides the value, and a
+        historical target must land on its own filing's first report.
+        """
+        from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
+        from vnext.sources import companyfacts_structured_facts
+        concept = "OtherOperatingActivitiesCashFlowStatement"
+        restated = original_fact(cik=1048286, concept=concept, accession=FY2024_ACCESSION,
+                                 start="2023-01-01", end="2023-12-31")
+        first_report = original_fact(cik=1048286, concept=concept, accession=FY2023_ACCESSION,
+                                     start="2023-01-01", end="2023-12-31")
+        self.assertNotEqual(restated[1], first_report[1])
+
+        with original_sources_only():
+            selections = {end: resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                                        report_end=end)
+                          for end in (FY2024_END, FY2023_END)}
+            components = {end: resolve_historical_zero_ai_metric(
+                repo_root=ROOT, company_id=MARRIOTT, metric_id="B01",
+                period_selection=selection) for end, selection in selections.items()}
+            raw = (ROOT / "evidence/companyfacts/CIK0001048286.json").read_bytes()
+            values = {}
+            for end, component in components.items():
+                reference = next(r for r in component["source_references"]
+                                 if r["source_role"] == "companyfacts")
+                facts = companyfacts_structured_facts(
+                    raw_bytes=raw, source_reference=reference, approved_concepts=[concept],
+                    allowed_ciks=["1048286"], include_instant=False)
+                rows = [f for f in facts if f["period_start"] == "2023-01-01"
+                        and f["period_end"] == "2023-12-31"]
+                self.assertEqual(1, len(rows), (end, rows))
+                values[end] = rows[0]["value"]
+        # Each target period reads its own filing's report of the same span.
+        self.assertEqual(FY2024_ACCESSION,
+                         next(r["accession"] for r in components[FY2024_END]["source_references"]
+                              if r["source_role"] == "companyfacts"))
+        self.assertEqual(FY2023_ACCESSION,
+                         next(r["accession"] for r in components[FY2023_END]["source_references"]
+                              if r["source_role"] == "companyfacts"))
+        self.assertEqual(Decimal(first_report[1]), Decimal(values[FY2023_END]))
+        self.assertEqual(Decimal(restated[1]), Decimal(values[FY2024_END]))
+
     def test_an_instant_fact_is_read_at_the_selected_period_end(self):
         from vnext.historical_accession_results import resolve_historical_accession_metrics
         with original_sources_only():
