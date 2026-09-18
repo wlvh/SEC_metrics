@@ -533,6 +533,93 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
         self.assertIn("8k", selection["reason"].rsplit("/", 1)[-1].lower())
         self.assertEqual("WITHHELD", prior["result"]["publication"])
 
+    def test_a_pinned_period_reads_its_own_filing_text_and_not_the_latest(self):
+        """The first historical text route, and why it was not a missing capability.
+
+        This branch recorded the eighteen text metrics as blocked on machinery
+        that does not exist. For D02 that was wrong in the same way the event
+        window was: `_current_metadata_context` already picks the 10-K whose
+        reportDate equals the pinned period end and checks it against the
+        selection's own filing, and the D02 candidate functions read only that
+        filing's bytes. The only thing assuming "latest" was which annual input
+        was prepared.
+
+        Two pinned years of one company must therefore produce different text,
+        which is the assertion that a route silently answering from the latest
+        filing would fail.
+        """
+        from datetime import datetime, timezone
+        from vnext import text_results_v2 as api
+        from vnext.historical_text_input import prepare_historical_business_text_input
+        from vnext.requirements import load_requirement_snapshot
+        from vnext.review import create_system_review_decision
+        from vnext.specs import compile_spec_file
+        from vnext.traits import repository_company_traits
+
+        spec = compile_spec_file(path=ROOT / "catalog/r6/D02_legal_disclosures_v1.md",
+                                 dependency_specs={})
+        requirement = load_requirement_snapshot(snapshot_dir=ROOT / "requirements" / "issue_28_v13")
+        traits = repository_company_traits(repo_root=ROOT, company_id=MARRIOTT)
+        seen = {}
+        with original_sources_only():
+            for report_end in (FY2024_END, "2023-12-31"):
+                selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                                     report_end=report_end)
+                prepared = prepare_historical_business_text_input(
+                    repo_root=ROOT, company_id=MARRIOTT, metric_id="D02",
+                    period_selection=selection)
+                self.assertEqual("PREPARED", prepared["input_status"])
+                self.assertEqual(selection["current_filing"]["accessionNumber"],
+                                 prepared["input_binding"]["target"]["accession"])
+                self.assertEqual([0, 0, 0], prepared["business_calls"])
+                arguments = {"compiled_spec": spec, **prepared["text_arguments"]}
+                candidate = api.create_deterministic_text_candidate(**arguments)
+                evidence = api.build_text_evidence(candidate=candidate, **arguments)
+                unit, _ = api.build_text_review_unit(
+                    compiled_spec=spec, candidate=candidate, evidence_check=evidence,
+                    source_bindings=arguments["source_references"])
+                decision = create_system_review_decision(
+                    review_unit=unit, required_claims=spec["compiled"]["required_claims"],
+                    decided_at_utc=datetime.now(timezone.utc).isoformat(),
+                    requirement=requirement)
+                result, _, observations = api.replay_text_result(
+                    company_traits=traits, candidate=candidate, evidence_check=evidence,
+                    review_unit=unit, review_decisions=[decision], **arguments)
+                self.assertEqual("EXACT", result["quality"])
+                self.assertEqual("TEXT_V1", result["value_kind"])
+                seen[report_end] = (result["text_payload"]["items"], observations,
+                                    prepared["target_period"])
+        current, prior = seen[FY2024_END], seen["2023-12-31"]
+        self.assertEqual(("2024-01-01", "2024-12-31"),
+                         (current[2]["period_start"], current[2]["period_end"]))
+        self.assertEqual(("2023-01-01", "2023-12-31"),
+                         (prior[2]["period_start"], prior[2]["period_end"]))
+        # Different filings, so different excerpts. Equality here would mean the
+        # route answered both years from one document.
+        self.assertNotEqual(current[0], prior[0])
+        self.assertTrue(current[0] and prior[0])
+
+    def test_the_proxy_backed_text_metric_is_refused_with_its_real_reason(self):
+        """C02 is held out by missing proxies, not by missing code.
+
+        Of the 82 DEF 14A filings the saved submissions indexes list, ten have
+        their accession material saved and all ten were filed in 2026. Wiring
+        C02 would resolve the most recent period and name a source gap for every
+        earlier one, so the refusal names the metric rather than pretending the
+        route is impossible.
+        """
+        from vnext.historical_text_input import prepare_historical_business_text_input
+        from vnext.normal_text_input_v2 import _need  # noqa: F401 - error type source
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                                 report_end=FY2024_END)
+            with self.assertRaises(ValueError) as refused:
+                prepare_historical_business_text_input(
+                    repo_root=ROOT, company_id=MARRIOTT, metric_id="C02",
+                    period_selection=selection)
+        self.assertEqual("HISTORICAL_TEXT_INPUT_METRIC_NOT_WIRED:C02", str(refused.exception))
+        self.assertEqual("IMPLEMENTATION_GAP", refused.exception.category)
+
     def test_a_restated_comparative_does_not_reach_the_earlier_period(self):
         """A real restatement in the repository's own saved Company Facts.
 
