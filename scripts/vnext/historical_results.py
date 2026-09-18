@@ -93,9 +93,17 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
             _need(period_selection["prior_filing"] is not None
                   and filing["accessionNumber"] == period_selection["prior_filing"]["accessionNumber"],
                   "HISTORICAL_COMPANYFACTS_PRIOR_DIFFERS_FROM_SELECTION")
-            documents = [reader.primary(filing)]
+            # The prior role needs that filing's own annual interval and its
+            # adjacency to the target, not an issuer fiscal-year label, so the
+            # accession's own authenticated instance is a valid substitute here
+            # exactly as it is on the frozen current route. The target role is a
+            # different question and still requires the full primary document.
+            primary = reader.primary(filing, required=False)
+            documents = [primary] if primary else reader.auditor_filing(filing)
             source_periods = [annual_period(raw=s["raw_bytes"], cik=prepared["entity"], filing=filing)
                               for s in documents]
+            _need(bool(source_periods) and all(p == source_periods[0] for p in source_periods),
+                  "HISTORICAL_COMPANYFACTS_PRIOR_NATIVE_PERIOD_CONFLICT")
             prior = source_periods[0]
             _need(date.fromisoformat(prior["period_end"]) + timedelta(days=1)
                   == date.fromisoformat(period["period_start"]),

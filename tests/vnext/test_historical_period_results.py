@@ -234,6 +234,16 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
             self.assertEqual("2024-12-31", result["period_end"])
 
     def test_a_missing_prior_source_blocks_only_the_metric_that_needs_it(self):
+        """A prior year is a date range, so its own instance may stand in for it.
+
+        The prior role needs that filing's annual interval and its adjacency to
+        the target, not an issuer fiscal-year label, so the historical route
+        falls back to the accession's own authenticated XBRL instance exactly as
+        the frozen current route does. What remains a real source gap is the
+        accession index that names those documents: without it there is nothing
+        to authenticate, and the ratio stays withheld rather than being computed
+        from the current filing's own comparative column.
+        """
         with original_sources_only():
             selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
                                                  report_end=FY2023_END)
@@ -241,7 +251,10 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
                 repo_root=ROOT, company_id=MARRIOTT, period_selection=selection)
         self.assertIsNotNone(component["prior_error"])
         self.assertTrue(component["prior_error"]["reason"].startswith("SAVED_SOURCE_MISSING:"))
-        self.assertIn("mar-20221231.htm", component["prior_error"]["reason"])
+        prior_accession = selection["prior_filing"]["accessionNumber"].replace("-", "")
+        self.assertIn(prior_accession + "/index.json", component["prior_error"]["reason"])
+        # The prior primary document is no longer what the route demands first.
+        self.assertNotIn("mar-20221231.htm", component["prior_error"]["reason"])
         self.assertIsNone(component["periods"]["prior"])
         withheld = component["metrics"]["B02"]["result"]
         self.assertEqual("WITHHELD", withheld["publication"])
@@ -253,6 +266,54 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
         self.assertEqual("EXACT", component["metrics"]["B04"]["result"]["quality"])
         self.assertEqual(Decimal(net[1]), Decimal(component["metrics"]["B04"]["result"]["value"]))
         self.assertEqual("EXACT", component["metrics"]["B05"]["result"]["quality"])
+
+    def test_a_prior_year_resolves_from_its_own_instance_when_its_html_is_absent(self):
+        """The fallback is the frozen route's, not a new source rule.
+
+        Ford's prior filing 0000037996-25-000013 has no saved primary HTML, only
+        its own authenticated inline XBRL instance. The frozen current route
+        already accepts that substitute for the prior role, because that role
+        supplies a date range and its adjacency, never an issuer label. Demanding
+        the HTML here made the ratio a source gap for six companies whose prior
+        year was in fact readable, so the expected value below is computed in
+        this file from the two original filings' own Company Facts entries.
+        """
+        cik = 37996
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT,
+                                                 company_id="ford_motor_company",
+                                                 report_end="2025-12-31")
+            component = resolve_historical_companyfacts_metrics(
+                repo_root=ROOT, company_id="ford_motor_company", period_selection=selection)
+        current_accession = selection["current_filing"]["accessionNumber"]
+        prior_accession = selection["prior_filing"]["accessionNumber"]
+        self.assertIsNone(component["prior_error"])
+        self.assertEqual({"fiscal_year": 2024, "period_start": "2024-01-01",
+                          "period_end": "2024-12-31"}, component["periods"]["prior"])
+        prior_documents = [r["document_name"] for r in component["source_records"]
+                           if r.get("accession") == prior_accession
+                           and r.get("source_role") == "auditor_facts"]
+        # The prior year is bound to the accession's own instance, and the
+        # primary document the selection names for it was never read.
+        self.assertEqual(["f-20241231_htm.xml"], prior_documents)
+        self.assertEqual("f-20241231.htm", selection["prior_filing"]["primaryDocument"])
+        self.assertNotIn("f-20241231.htm", [r.get("document_name")
+                                            for r in component["source_records"]])
+        current = original_fact(cik=cik,
+                                concept="RevenueFromContractWithCustomerExcludingAssessedTax",
+                                accession=current_accession,
+                                start="2025-01-01", end="2025-12-31")
+        # First-report semantics: the prior value comes from the prior filing's
+        # own accession, not from the current filing's comparative column.
+        prior = original_fact(cik=cik, concept="Revenues", accession=prior_accession,
+                              start="2024-01-01", end="2024-12-31")
+        b02 = component["metrics"]["B02"]["result"]
+        self.assertEqual("EXACT", b02["quality"])
+        self.assertEqual("ratio", b02["unit"])
+        self.assertEqual((Decimal(current[1]) - Decimal(prior[1])) / Decimal(prior[1]),
+                         Decimal(b02["value"]))
+        self.assertEqual("2025-01-01", b02["period_start"])
+        self.assertEqual("2025-12-31", b02["period_end"])
 
     def test_a_target_whose_own_original_is_not_saved_is_a_source_gap(self):
         with original_sources_only():
