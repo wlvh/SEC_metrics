@@ -1,0 +1,57 @@
+diff --git a/scripts/vnext/requirement_profile.py b/scripts/vnext/requirement_profile.py
+--- a/scripts/vnext/requirement_profile.py
++++ b/scripts/vnext/requirement_profile.py
+@@ -52,6 +52,7 @@
+     v13.PROFILE_REQUIREMENT_GENERATION: v13,
+     v14.PROFILE_REQUIREMENT_GENERATION: v14,
+     "PROFILE_DRIVEN_V15": ".requirement_profile_v15",
++    "PROFILE_DRIVEN_V16": ".requirement_profile_v16",
+ }
+ _LOADING_PATHS = ContextVar("requirement_loading_paths", default=())
+ 
+diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
+--- a/scripts/vnext/run_store.py
++++ b/scripts/vnext/run_store.py
+@@ -1921,6 +1921,19 @@
+                 or any(observations.get(o["observation_id"]) != o for o in expected["observations"])):
+             raise RunStoreError("Integrated ordinary result differs from full source replay")
+         return
++    if manifest.get("requirement_id") == "issue_47_v1":
++        from .historical_run import replay_case as historical_replay_case
++        expected = historical_replay_case(data_root=repo_root, manifest=manifest,
++                                          spec=compiled_spec)
++        metric_id = compiled_spec["compiled"]["metric_id"]
++        if (expected["kind"] != "STRUCTURED"
++                or expected["compiled_specs"].get(metric_id) != compiled_spec
++                or result != expected["results"].get(metric_id)
++                or trace != expected["traces"].get(metric_id)
++                or any(observations.get(o["observation_id"]) != o
++                       for o in expected["observations"])):
++            raise RunStoreError("Historical result differs from full source replay")
++        return
+     if manifest.get("requirement_id") == "issue_28_v12":
+         from .normal_run_v2 import replay_case
+         expected = replay_case(data_root=repo_root, manifest=manifest, spec=compiled_spec)
+@@ -2154,6 +2167,13 @@
+         from .normal_run_v3 import validate_normal_run_authority
+         ordinary_case = validate_normal_run_authority(repo_root=repo_root,manifest=manifest,
+             records=records,compiled_specs=compiled_specs)
++    elif manifest.get("requirement_id") == "issue_47_v1":
++        from .historical_run import validate_run_authority as validate_historical_authority
++        try:
++            ordinary_case = validate_historical_authority(repo_root=repo_root, manifest=manifest,
++                records=records, compiled_specs=compiled_specs)
++        except ValueError as error:
++            raise RunStoreError(str(error)) from error
+     elif manifest.get("requirement_id") == "issue_28_v12":
+         from .normal_run_v2 import validate_normal_run_authority
+         validate_normal_run_authority(repo_root=repo_root, manifest=manifest,
+@@ -2345,6 +2365,8 @@
+         from .capacity_run import prepare_text_contexts as prepare_text_run_contexts
+     elif manifest.get("requirement_id") == "issue_28_v13":
+         from .normal_run_v3 import prepare_text_contexts as prepare_text_run_contexts
++    elif manifest.get("requirement_id") == "issue_47_v1":
++        from .text_run_validation import prepare_text_run_contexts
+     elif manifest.get("requirement_id") == "issue_28_v12":
+         from .normal_run_v2 import prepare_text_contexts as prepare_text_run_contexts
+     else:
