@@ -215,6 +215,32 @@ that authority-named modules reference and no authority names; these four are
 the ones the Requirement-load chain actually reaches, and the rest are not
 claimed to be reached.
 
+## What a historical text Run would still cost
+
+`historical_text_input.py` proves the D02 *result* for a pinned period, and this
+branch's claim that the text metrics were blocked on a missing capability was
+wrong for the same reason the event claim was: the machinery is period-driven
+and only the input preparation assumed "latest". But a result is not a Run, and
+reading `run_store` before building the rest turned up where the next cost sits:
+
+```python
+if manifest.get("requirement_id") == "issue_28_v14":
+    from .capacity_run import prepare_text_contexts as prepare_text_run_contexts
+elif manifest.get("requirement_id") == "issue_28_v13":
+    from .normal_run_v3 import prepare_text_contexts as prepare_text_run_contexts
+elif manifest.get("requirement_id") == "issue_28_v12":
+    from .normal_run_v2 import prepare_text_contexts as prepare_text_run_contexts
+else:
+    from .text_run_validation import prepare_text_run_contexts
+```
+
+A historical TEXT Run falls into the `else`. Whether that generic path suits a
+binding this branch produces is not settled by reading it, so this is recorded
+as the likely **seventh** hunk rather than asserted as one — the pattern all day
+has been that only building it decides. What is already clear is that the
+observation replay beneath it (`text_review_replay`) dispatches on nothing at
+all, so the text protocol itself needs no new registration.
+
 ## What this still does not establish
 
 * Three companies, six company-periods, sixteen metrics. The other seven
