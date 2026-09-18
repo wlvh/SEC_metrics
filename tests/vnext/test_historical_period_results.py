@@ -314,6 +314,28 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
                          Decimal(b02["value"]))
         self.assertEqual("2025-01-01", b02["period_start"])
         self.assertEqual("2025-12-31", b02["period_end"])
+        # The plan and the consumer must agree about this document, and they
+        # answer two different questions about it. The consumer did not need it
+        # for the prior role, and the plan says exactly that in
+        # satisfies_source_roles; it still requires the document, because the
+        # same file is the target primary of the next year down, where an
+        # instance cannot stand in. Either half alone would misreport the work.
+        from vnext.normal_history_plan import plan_historical_sources
+        with original_sources_only():
+            plan = plan_historical_sources(repo_root=ROOT, company_id="ford_motor_company",
+                                           count=5)
+        item = next(i for i in plan["requirements"]
+                    if i["document_name"] == "f-20241231.htm")
+        self.assertEqual(["prior_annual_primary", "target_primary"], item["source_roles"])
+        self.assertEqual("MISSING_SAVED_SOURCE", item["saved_status"])
+        self.assertTrue(item["new_acquisition_required"])
+        self.assertEqual("FIRST_ACQUISITION", item["acquisition_kind"])
+        alternative = item["alternative_dependency"]
+        self.assertEqual("VERIFIED_ACCESSION_NATIVE_INSTANCE", alternative["status"])
+        self.assertEqual(["prior_annual_primary"], alternative["satisfies_source_roles"])
+        self.assertFalse(alternative["establishes_issuer_fiscal_label"])
+        self.assertEqual(["f-20241231_htm.xml"], alternative["instance_documents"])
+        self.assertEqual(component["periods"]["prior"], alternative["annual_period"])
 
     def test_a_target_whose_own_original_is_not_saved_is_a_source_gap(self):
         with original_sources_only():
