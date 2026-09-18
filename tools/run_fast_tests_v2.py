@@ -114,6 +114,7 @@ SOURCE_TESTS += ("tests.vnext.test_native_assessment_replay",)
 # saved originals, so they belong to the saved-source tier, not the 30s tier.
 SOURCE_TESTS += ("tests.vnext.test_normal_history_catalog",)
 SOURCE_TESTS += ("tests.vnext.test_historical_period_results",)
+SOURCE_TESTS += ("tests.vnext.test_historical_coverage",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
