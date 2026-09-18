@@ -10,3 +10,12 @@ diff --git a/.github/workflows/vnext-fast.yml b/.github/workflows/vnext-fast.yml
      steps:
        - name: Check out repository
          uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+@@ -112,7 +112,7 @@
+   capacity-program-native-runs:
+     name: vNext capacity program-role native Runs
+     runs-on: ubuntu-latest
+-    timeout-minutes: 20
++    timeout-minutes: 30
+     steps:
+       - name: Check out repository
+         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd

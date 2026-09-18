@@ -25,8 +25,9 @@ execution records only and must not be reported as a CI pass.
 ## The second one: the only red check on this PR is a cap, not a defect
 
 `0002-raise-capacity-native-runs-cap.patch` raises `timeout-minutes` on the
-`capacity-native-runs` job from 15 to 25. It is here for the same reason: this
-session cannot push `.github/workflows/`.
+`capacity-native-runs` job from 15 to 25 and on `capacity-program-native-runs`
+from 20 to 30. It is here for the same reason: this session cannot push
+`.github/workflows/`.
 
 ```
 git apply docs/evidence/issue47_history/ci-job-patch/0002-raise-capacity-native-runs-cap.patch
@@ -76,3 +77,22 @@ so 1.17% of the bytes, copied twice in this job — and it first appears at
 
 25 minutes leaves roughly ten minutes of headroom over the 14m40s of test time
 measured above, and matches a cap already used elsewhere in the same file.
+
+### The next run settled it
+
+At `e67b72c` (run 35371355437) the **same** `capacity-native-runs` job passed, in
+9m03s against the same 15-minute cap and the same code. What changed was the
+runner, not the branch. In that run `capacity-program-native-runs` was cancelled
+instead, at 20m16s against its 20-minute cap.
+
+The two failures are not identical and the patch should not pretend they are.
+The capacity job's log ends `Ran 2 tests in 879.759s / OK` and is then cancelled,
+so its work had finished. The program-role job's log has no result line at all
+and ends with `Terminate orphan process: pid (2392) (python3)` — it was cut in
+the middle of a test. The mechanism is the same cap, the evidence is not.
+
+Both jobs run `B13_REFERENCE_CONTEXT` material tests that this branch does not
+touch, and which job loses depends on how fast a runner it draws. The caps in
+the file after both patches are 10, 35, 30, 25, 30, 25, 30, 30, 30, 45, 30, 30
+and 20 for the added job, so neither raised cap becomes an outlier in the other
+direction.
