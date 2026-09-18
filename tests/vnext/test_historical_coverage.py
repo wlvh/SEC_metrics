@@ -74,7 +74,12 @@ class HistoricalCoverageTest(unittest.TestCase):
         # Each dimension is counted over the whole frame, independently.
         self.assertEqual({"target_period_established": 39 * 5, "target_original_saved": 39,
                           "historical_route_implemented": len(WIRED_HISTORICAL_METRICS) * 5,
-                          "native_run_wired": 0, "verified_outcome": 16},
+                          # 22 = the 16 metrics whose route resolves on this
+                          # company's one established period, plus the six event
+                          # metrics wired since. Hard-coding it is deliberate:
+                          # a route that quietly stopped resolving would leave
+                          # every other assertion here passing.
+                          "native_run_wired": 0, "verified_outcome": 22},
                          matrix["dimension_counts"])
         resolved = [p for p in matrix["positions"] if p["report_end"] == "2026-01-31"]
         self.assertEqual(39, len(resolved))
@@ -105,11 +110,17 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual(1, len(established))
         self.assertEqual("2025-12-31", established[0]["report_end"])
         errors = established[0]["adapter_errors"]
-        self.assertEqual({"companyfacts", "revenue"}, set(errors))
+        # Three adapters refuse this period, each on its own. The event window
+        # joined them when it was wired: it shares historical_zero_ai_results,
+        # which refuses an amended target, so it refuses for the same stated
+        # reason rather than inheriting another adapter's verdict.
+        self.assertEqual({"companyfacts", "revenue", "event_window"}, set(errors))
         self.assertEqual("HISTORICAL_COMPANYFACTS_AMENDED_TARGET_NOT_IMPLEMENTED",
                          errors["companyfacts"]["reason"])
         self.assertEqual("HISTORICAL_ZERO_AI_AMENDED_TARGET_NOT_IMPLEMENTED",
                          errors["revenue"]["reason"])
+        self.assertEqual("HISTORICAL_ZERO_AI_AMENDED_TARGET_NOT_IMPLEMENTED",
+                         errors["event_window"]["reason"])
         # An unimplemented amendment route is an implementation gap, never a
         # source gap and never a disclosure claim.
         self.assertEqual({"IMPLEMENTATION_GAP"},
