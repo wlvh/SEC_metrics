@@ -134,6 +134,87 @@ def load_annual_history(*, repo_root: Path, company_id: str, reader=None, requir
             "annual_rows": annual, "all_rows": rows, "limitations": limitations}
 
 
+def load_history_for_period(*, repo_root: Path, company_id: str, report_end: str, reader=None):
+    """Load exactly the blocks one target period and its prior year can need.
+
+    Loading is newest first and stops as soon as three facts hold, so the set of
+    read blocks depends only on the company and the requested report end:
+
+    * no unloaded shard can hold a filing dated on or after the target period
+      end, which is where an amendment of that period would appear;
+    * the immediately preceding annual report end is known, or the declared
+      history is exhausted;
+    * no unloaded shard can hold a filing dated on or after that prior end.
+
+    The unchanged latest-period selector enforces the first condition by
+    refusing to select while such a shard exists. Here the same invariant is
+    met by reading those blocks instead.
+    """
+    company = _company(repo_root, company_id)
+    _subject_policy(company)
+    cik = company["primary_cik"]
+    reader = reader if reader is not None else _Sources(repo_root, company_id, cik)
+    inventory = reader.read(submissions_url(cik=int(cik)),
+                            role="sec_submissions_inventory", media_type="application/json")
+    payload = strict_json_loads(text=inventory["raw_bytes"].decode("utf-8"))
+    shards = _history_index(payload, cik)
+    names = [inventory["source_reference"]["document_name"]]
+    rows = _filings(payload, inventory_name=names[0])
+    limitations = []
+    considered = []
+
+    def cutoff():
+        prior = max((row["reportDate"] for row in rows
+                     if row["form"] == "10-K" and row["reportDate"] < report_end), default="")
+        return prior or None
+
+    for shard in shards:
+        prior_end = cutoff()
+        if prior_end is not None and shard["filingTo"] < prior_end and shard["filingTo"] < report_end:
+            break
+        considered.append(shard["name"])
+        url = submissions_file_url(file_name=shard["name"])
+        source = reader.read(url, role="sec_submissions_history",
+                             media_type="application/json", required=False)
+        if source is None:
+            limitations.append({"kind": "HISTORY_SHARD_NOT_SAVED",
+                                "history_name": shard["name"], "source_url": url,
+                                "declared_filing_from": shard["filingFrom"],
+                                "declared_filing_to": shard["filingTo"]})
+            continue
+        body = strict_json_loads(text=source["raw_bytes"].decode("utf-8"))
+        _need("cik" not in body or str(body["cik"]).isdigit() and int(body["cik"]) == int(cik),
+              "HISTORY_SHARD_ENTITY_CONFLICT")
+        try:
+            shard_rows = _filings(body, inventory_name=shard["name"])
+        except NormalGovernanceInputError as error:
+            limitations.append({"kind": "HISTORY_SHARD_METADATA_REJECTED",
+                                "history_name": shard["name"], "source_url": url,
+                                "declared_filing_from": shard["filingFrom"],
+                                "declared_filing_to": shard["filingTo"],
+                                "reason": str(error), "error_category": error.category})
+            continue
+        problem = history_body_alignment(shard=shard, rows=shard_rows)
+        if problem:
+            limitations.append({"kind": "HISTORY_SHARD_SNAPSHOT_CONFLICT", **problem})
+        rows.extend(shard_rows)
+        names.append(shard["name"])
+    accessions = [row["accessionNumber"] for row in rows]
+    _need(len(accessions) == len(set(accessions)), "HISTORY_INVENTORY_ACCESSIONS_OVERLAP")
+    annual = sorted((row for row in rows if row["form"] in ANNUAL_FORMS),
+                    key=lambda row: (row["reportDate"], row["filingDate"], row["accessionNumber"]))
+    unloaded = sorted(shard["name"] for shard in shards
+                      if shard["name"] not in names and shard["filingTo"] >= report_end)
+    return {"company_id": company_id, "primary_cik": cik, "reader": reader,
+            "inventory": inventory, "declared_shards": shards, "loaded_inventories": names,
+            "considered_shards": considered, "required_annual_count": None,
+            "target_report_end": report_end, "prior_report_end": cutoff(),
+            "unloaded_history_reaching_period": unloaded,
+            "window_oldest_report_end": cutoff() or report_end,
+            "window_proven": not limitations and not unloaded,
+            "annual_rows": annual, "all_rows": rows, "limitations": limitations}
+
+
 def annual_periods(*, history):
     """Group the saved annual metadata by report end date, newest first.
 
