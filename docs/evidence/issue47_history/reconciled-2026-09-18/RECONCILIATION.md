@@ -154,15 +154,32 @@ Each family needs its own historical successor, in exactly the way
 `historical_accession_results` are three successors and not one. There is no
 single change that moves more than 300 positions.
 
-#### The event-window family is not an implementation gap
+#### The event family looks closest to wired, and its stated blocker does not survive inspection
 
-This is the part that matters for planning, and it is the reason the largest
-group is not the place to start. `historical_zero_ai_results` already exists as
-`normal_zero_ai_results`'s successor, and it refuses event windows on purpose.
-In its own words, each is defined relative to the current period, and answering
-one from today's latest filing would be a wrong answer. So C01 and E01–E05 need
-a decision about what a historical event window *claims* before anyone writes
-code for them. Wiring is not the work.
+C01 and E01–E05 have Spec documents in `catalog/ordinary_zero_ai/` alongside the
+wired sixteen, their applicability is `{"all": [], "none": []}` so no company is
+excluded, and `historical_zero_ai_results` already exists as
+`normal_zero_ai_results`'s successor. The only thing holding them out is
+`SUPPORTED_METRICS = ("B01", "B03")`.
+
+That module's own docstring — which this branch wrote — says event windows are
+refused because each is "defined relative to the current period". On reading
+`_event_sources`, that is not right. The window it discovers 8-K filings in is
+`prepared["table_input"]["target_period"]`'s `period_start`..`period_end`, and
+`historical_annual_input` pins exactly that field to the selected period. The
+window follows the pinned year, not today.
+
+What that leaves is a different and untested question: whether **completeness**
+of 8-K discovery can be proven over a past window. The route builds a
+`fy_8k_item_inventory` source set from the submissions index and its history
+shards, and a stale or missing shard means the set cannot be shown to be
+complete — which is precisely the JPMorgan defect the 12 snapshot-refresh
+requests in the plan exist to fix.
+
+This is recorded as a question, not a conclusion. Three earlier versions of this
+analysis were wrong because they reasoned from a partial reading, and the way to
+settle this one is to wire C01 behind the existing successor and run it, not to
+write a fourth paragraph about it.
 
 #### Two earlier versions of this section were wrong
 
