@@ -53,9 +53,24 @@ NEW_RULE_FILES = (
     "scripts/vnext/requirement_profile_v16.py",
 )
 
-# Two files the parent already binds, whose bytes a historical Run needs to be
-# the registered ones rather than the pre-registration ones: the engine registry
-# and the Run authority dispatch. They are NOT re-signed in the parent - the
+# One module the parent's authority does not name although its own named code
+# imports it at module scope. scripts/vnext/requirement_profile.py is in the
+# authority and begins by importing requirement_profile_v10 through v14; v11 is
+# the only one of the five missing from the list. The consequence is not
+# cosmetic: a delivery assembled strictly from the execution authority cannot
+# import requirement_profile, so it cannot load any Requirement and cannot
+# replay any Run. Measured by walking the module-scope import graph from the
+# 182 Python modules the authority names - the closure is 183, and this is the
+# one file in the difference.
+#
+# issue_28_v13's own manifest is not touched. A Requirement names the code its
+# own Runs execute, and this one does.
+AUTHORITY_ADDITIONS = ("scripts/vnext/requirement_profile_v11.py",)
+
+# Three files the parent already binds, whose bytes a historical Run needs to be
+# the registered ones rather than the pre-registration ones: the engine registry,
+# the Run authority dispatch, and the record semantics that decide whether a
+# fiscal label may sit in the calendar year before an instant's own. They are NOT re-signed in the parent - the
 # parent's manifest is untouched and its closure hash is unchanged. This
 # successor records what its own Runs execute, which is what an execution
 # authority is for. The consequence is stated rather than hidden: one data root
@@ -64,6 +79,14 @@ NEW_RULE_FILES = (
 RE_RECORDED_FROM_TREE = (
     "scripts/vnext/requirement_profile.py",
     "scripts/vnext/run_store.py",
+    # Added after a non-calendar fiscal year proved it necessary. Macy's fiscal
+    # 2025 ends 2026-01-31, so an instant measured at that period end carries
+    # fiscal_year 2025 with period_end.year 2026. validate_run_coordinates
+    # allows that only under point_in_time_fiscal_label, which both run_store
+    # and records decide from their own hard-coded set of requirement ids. Both
+    # sets had to learn issue_47_v1, and records.py is bound by the parent, so
+    # its patched bytes have to be recorded here too.
+    "scripts/vnext/records.py",
 )
 
 CONTRACT = """# Historical pinned-period development successor
@@ -126,7 +149,7 @@ def main(argv=None):
     # The execution authority is the parent's, plus the historical files a Run
     # of this generation actually executes. Nothing is dropped from it.
     authority = dict(parent_baseline["execution_authority"]["files"])
-    for relative in NEW_RULE_FILES:
+    for relative in NEW_RULE_FILES + AUTHORITY_ADDITIONS:
         authority[relative] = _binding(relative)
     diverged = []
     for relative in RE_RECORDED_FROM_TREE:

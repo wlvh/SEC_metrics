@@ -11,7 +11,7 @@ request, `calls` zero at every step.
 | step | result |
 | --- | --- |
 | 1 period selection | `sha256:9d092cd0…`, current `0001628280-25-004818`, prior `0001628280-24-004372` |
-| 2 input install | binding under `issue_47_v1`, 372 execution-authority files |
+| 2 input install | binding under `issue_47_v1`, 373 execution-authority files |
 | 3 native Run | `run:historical-period:8d6e4ef1…`, **SUCCESSOR_RUN**, **FROZEN**, FY2024, B04 = 2375000000 EXACT |
 | 4 new-process replay | same run id, same period, same value, 13 records, separate interpreter, no network |
 | 5 public row | Marriott International / 1048286 / B04 Net income / FY2024 / ANNUAL / 2024-01-01→2024-12-31 / 2375000000 USD / OK / 10-K filed 2025-02-11, 1 evidence row |
@@ -30,7 +30,8 @@ Four new files, none of which changes a frozen byte:
 * `requirements/issue_47_v1/` — the snapshot, minted from the tree by
   `tools/vnext_mint_historical_requirement.py` rather than written by hand. Its
   execution authority is the parent's 360 files plus the twelve historical
-  ones, so a Run of this generation records the code that produced it.
+  ones and one module the parent's own list omits, so a Run of this generation
+  records the code that produced it.
 * `historical_run.py` — install, create, replay and authority validation for a
   pinned period, calling `run_store` directly.
 * `historical_projection.py` — the public row. Same presentation policy, same
@@ -43,10 +44,69 @@ The Run store, the Calculator, the Specs, the applicability rules, the source
 readers and the presentation policy are imported unchanged. There is no second
 engine.
 
+## What running it on more than one company changed
+
+`native-run-matrix.json` is 96 attempted positions: 16 wired metrics across six
+company-periods and three companies, including two issuers whose fiscal year
+does not end in December. 90 reach a frozen native Run and a public row, 45 of
+those carrying a value and 45 a structural non-applicability. Every record says
+`calls: {provider:0, paid:0, sec:0}`.
+
+The six that did not are all one company, one grain, and one real defect, which
+is what the matrix was built to find.
+
+### Macy's instants, and the fourth and fifth hunks
+
+Macy's fiscal 2025 ends **2026-01-31**. An instant metric is measured at the
+period end, so its target period is `2026-01-31 -> 2026-01-31` with
+`fiscal_year` 2025. `records.validate_run_coordinates` requires
+`period_start.year <= fiscal_year <= period_end.year` unless `prior_label`,
+which needs an instant, `fiscal_year == period_end.year - 1`, **and**
+`point_in_time_fiscal_label`. That flag is decided from a hard-coded set of
+requirement ids ending at `issue_28_v13`, in **two** places:
+`run_store.py` and `records.py`. Neither knew `issue_47_v1`.
+
+Macy's ten duration metrics passed in the same case, because `2025 <= 2025 <=
+2026` holds for a year running `2025-02-02 -> 2026-01-31`. Three Marriott
+periods and Salesforce passed on every metric, because their labels and their
+period ends share a calendar year. So this was invisible until a non-calendar
+issuer was run, and invisible even then for ten of its sixteen metrics.
+
+`records.py` also has to join the re-recorded set, for the same reason
+`run_store.py` did: the parent binds its unpatched bytes, so a patched one makes
+the inherited authority entry stale and the snapshot stops loading. Three files
+now differ from what `issue_28_v13` records rather than two.
+
+### The estimate has now been wrong twice, in the same direction
+
+Two hunks were estimated from reading. Building the first Run found a third.
+Running six company-periods found a fourth and a fifth, in a second and third
+file. The pattern is worth stating plainly: every increase came from executing
+something, and none from re-reading the code.
+
+## One module the authority does not name
+
+`tools/vnext_authority_closure.py` walks the import graph outward from the
+Python modules an execution authority names. For `issue_28_v13` the answer is
+one file: `scripts/vnext/requirement_profile.py` is in the authority and imports
+`requirement_profile_v10` through `v14` at module scope, and `v11` is the only
+one of the five the list omits. Anything assembled strictly from that authority
+cannot import `requirement_profile`, so it cannot load a Requirement, so it
+cannot replay a Run.
+
+`issue_47_v1` names it. `issue_28_v13`'s manifest is untouched and its closure
+hash is unchanged; a Requirement names the code its own Runs execute, and this
+one does. Thirty further modules are reachable only through function-local
+imports on routes a historical Run never takes, and are reported separately
+rather than folded into the same number.
+
+This was found by trying to build a delivery from the authority alone, not by
+reading the list.
+
 ## The registration, and its exact cost
 
 `0001-register-issue47-v1.patch` holds the only edits to frozen-authority
-files: **three hunks in two files**.
+files: **six hunks in three files**.
 
 1. `requirement_profile.PROFILE_ENGINES` — one generation entry, registered as
    a module path string so a retained runtime never imports it.
@@ -54,18 +114,26 @@ files: **three hunks in two files**.
    `requirement_id`, dispatching authority validation to `historical_run`.
 3. `run_store._replay_structured_result` — one `elif` in the same shape,
    dispatching the structured replay.
+4. `run_store._validate_run_authority`'s frozen-replay branch — the same `elif`
+   once more.
+5. `run_store.create_run` — `issue_47_v1` added to the set that decides
+   `point_in_time_fiscal_label`.
+6. `records._validate_record_semantics` — the same id added to the second copy
+   of that set, which validates the manifest record itself.
 
 The third was not in the earlier estimate. It was found by building the Run:
 without it the replay falls through to the generic structured path, which
 demands an `accession` and `entity` on the calculation target that the shared
-`calculate_observation_metric` does not set. That is what an estimate misses
-and an execution finds.
+`calculate_observation_metric` does not set. The fifth and sixth were not in any
+estimate either, and neither appears at all until a non-calendar fiscal year is
+run — see Macy's above. That is what an estimate misses and an execution
+finds.
 
 Verified with `git apply --check` against this branch's head.
 
 ### Both halves, measured in the same tree
 
-With all three hunks applied to an isolated runtime copy:
+With all six hunks applied to an isolated runtime copy:
 
 * the new chain runs — steps 1 to 5 above;
 * an **existing `issue_28_v13` package**, installed before any seam edit, still
@@ -77,9 +145,9 @@ So registering the successor does not invalidate packages installed before it.
 
 ### The one thing that is not free
 
-`issue_47_v1`'s execution authority has to record `requirement_profile.py` and
-`run_store.py` **as the patch leaves them**, because those are the bytes its
-Runs execute. `issue_28_v13`'s manifest is untouched and its closure hash is
+`issue_47_v1`'s execution authority has to record `requirement_profile.py`,
+`run_store.py` and `records.py` **as the patch leaves them**, because those are
+the bytes its Runs execute. `issue_28_v13`'s manifest is untouched and its closure hash is
 unchanged at `sha256:047e4d40…`, which the minting tool prints on every run.
 The consequence, which the tool also prints:
 
@@ -91,10 +159,67 @@ ship: it must be re-minted in the same change that applies the registration.
 `tools/vnext_mint_historical_requirement.py --check` fails when the two are out
 of step, so this cannot be forgotten silently.
 
+## A delivery that does not need the checkout
+
+`portable-delivery.json` is `tools/vnext_historical_delivery.py`'s own output.
+It assembles `runtime/` from the Requirement's execution authority plus every
+`requirements/` snapshot, puts the installed `data/` and the frozen `run/`
+beside it, and replays from that directory alone:
+
+```
+python3 tools/vnext_historical_delivery.py \
+  --runtime-root <tree with the registration patch> \
+  --data-root <installed data root> --run-dir <frozen run> \
+  --delivery /tmp/delivery --output portable-delivery.json
+```
+
+45.2 MB: 13.8 MB of runtime, 31.5 MB of installed data, 24 KB of Run. The replay
+runs in a separate interpreter under `-I`, from working directory `/`, with only
+`PATH` and `PYTHONDONTWRITEBYTECODE` in the environment and no network. Result:
+Marriott FY2024 B04 = 2,375,000,000 EXACT, the row renders with its hash, and
+
+```
+"vnext_modules_outside_the_delivery": [],
+"sys_path_entries_outside_the_delivery": [],
+"depends_on_no_checkout": true
+```
+
+All 99 `vnext` modules that get loaded resolve inside the delivery. That is the
+claim checked rather than asserted.
+
+### This retracts an earlier conclusion of this branch
+
+`51b024b` recorded that "a self-contained package is not unimplemented, it is
+forbidden by an existing invariant", reading `B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED`
+as a prohibition. It is not one: `_external` refuses the data root *overlapping*
+the code root, and siblings do not overlap. The correction is this working
+delivery rather than a third paragraph about it.
+
+### Four files no authority names
+
+The delivery needs four files beyond the execution authority, and the report
+lists them rather than absorbing them:
+
+```
+docs/evidence/issue_28_r4_label_policy.json
+docs/evidence/issue_28_annual_candidate_policy.json
+docs/evidence/issue_28_annual_runtime_policy.json
+docs/evidence/issue_28_annual_repair_policy.json
+```
+
+`requirement_profile_v4` through `v7` read them at a runtime-root-relative path
+while a Requirement is loaded, so a delivery assembled from the authority alone
+stops on the first load with a missing-file error. They are policy inputs a Run
+is validated against. A broader scan finds 32 repository-relative data paths
+that authority-named modules reference and no authority names; these four are
+the ones the Requirement-load chain actually reaches, and the rest are not
+claimed to be reached.
+
 ## What this still does not establish
 
-* One company, one year, one metric. The other fifteen wired metrics and the
-  remaining four pinned years are not run here.
+* Three companies, six company-periods, sixteen metrics. The other seven
+  companies and the remaining pinned years are not run here, and no metric
+  outside the wired sixteen has a historical route at all.
 * `issue_28_v14` compatibility is untested, as in the earlier seam measurement:
   a v13 data root has never carried v15's engine.
 * Nothing is adopted, activated, published or merged. Every record says

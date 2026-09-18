@@ -12,6 +12,15 @@ diff --git a/scripts/vnext/requirement_profile.py b/scripts/vnext/requirement_pr
 diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
 --- a/scripts/vnext/run_store.py
 +++ b/scripts/vnext/run_store.py
+@@ -352,7 +352,7 @@
+         validate_run_coordinates(
+             target_period=target_period,
+             company_traits=normalized_traits,
+-            point_in_time_fiscal_label=requirement_id in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13"},
++            point_in_time_fiscal_label=requirement_id in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13", "issue_47_v1"},
+         )
+     except RecordError as error:
+         raise RunStoreError("Run business coordinates are invalid") from error
 @@ -1921,6 +1921,19 @@
                  or any(observations.get(o["observation_id"]) != o for o in expected["observations"])):
              raise RunStoreError("Integrated ordinary result differs from full source replay")
@@ -55,3 +64,15 @@ diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
      elif manifest.get("requirement_id") == "issue_28_v12":
          from .normal_run_v2 import prepare_text_contexts as prepare_text_run_contexts
      else:
+diff --git a/scripts/vnext/records.py b/scripts/vnext/records.py
+--- a/scripts/vnext/records.py
++++ b/scripts/vnext/records.py
+@@ -1215,7 +1215,7 @@
+         validate_run_coordinates(
+             target_period=record["target_period"],
+             company_traits=record["company_traits"],
+-            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13"},
++            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13", "issue_47_v1"},
+         )
+     if record_type == "AI_EXTRACTION_ATTEMPT":
+         observation = record["transport_observation"]

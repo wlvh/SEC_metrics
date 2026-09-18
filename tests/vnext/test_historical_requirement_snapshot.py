@@ -55,5 +55,44 @@ class HistoricalRequirementSnapshotTest(unittest.TestCase):
         self.assertEqual(0, tool.main(["--check"]))
 
 
+class ExecutionAuthorityClosureTest(unittest.TestCase):
+    """An authority that does not name what its own code imports is incomplete.
+
+    The point is not tidiness. A delivery assembled from the execution
+    authority - which is what the list is for - has to be able to import the
+    modules it names. ``requirement_profile.py`` is in the list and imports
+    ``requirement_profile_v10`` through ``v14`` at module scope; ``v11`` was the
+    only one of the five the parent's list omits, so anything built from the
+    authority alone fails on the first Requirement load.
+
+    This was found by building such a package, not by reading the list.
+    """
+
+    def test_the_historical_authority_names_everything_it_imports(self):
+        import sys
+        if str(REPO_ROOT) not in sys.path:
+            sys.path.insert(0, str(REPO_ROOT))
+        from tools.vnext_authority_closure import measure
+        report = measure(repo_root=REPO_ROOT, requirement_id="issue_47_v1")
+        self.assertEqual([], report["required_to_import_but_not_named"])
+        self.assertTrue(report["authority_is_import_complete"])
+        self.assertEqual(report["authority_python_modules"], report["module_scope_closure"])
+
+    def test_the_inherited_list_is_the_one_that_was_short(self):
+        """Pins where the gap came from, so the fix is not mistaken for noise.
+
+        issue_28_v13 is not modified by this branch, and this asserts its state
+        rather than changing it: the omission is inherited, and issue_47_v1
+        closes it for its own generation only.
+        """
+        import sys
+        if str(REPO_ROOT) not in sys.path:
+            sys.path.insert(0, str(REPO_ROOT))
+        from tools.vnext_authority_closure import measure
+        parent = measure(repo_root=REPO_ROOT, requirement_id="issue_28_v13")
+        self.assertEqual(["scripts/vnext/requirement_profile_v11.py"],
+                         parent["required_to_import_but_not_named"])
+
+
 if __name__ == "__main__":
     unittest.main()
