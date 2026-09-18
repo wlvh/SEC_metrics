@@ -87,3 +87,25 @@ hides an earlier one: the period is not established from metadata; the period is
 its own original document is not saved; the period is established but resolving it stopped, split
 into a source limitation and a missing implementation by the failure's own category; or the
 metric's own resolved outcome. No status here is a statement about what an issuer disclosed.
+
+### baseline-ed8bf11/source-material-v2-jobs2.json
+
+`tools/run_fast_tests_v2.py --suite source-material --jobs 2` on this branch, which is the tier
+the three Issue #47 short entries were registered into. Result: 70 selected entries, 69 at return
+code 0, one at return code 124.
+
+The three Issue #47 entries all pass well inside the tier's 240-second per-case cap:
+`test_normal_history_catalog` 19.0s, `test_historical_coverage` 28.7s,
+`test_historical_period_results` 72.3s.
+
+The single non-zero entry is `tests.vnext.test_normal_zero_ai_results`. It is an inherited
+boundary, not a regression from this branch:
+
+* the entry is pre-existing — it appears at line 47 of the base branch's own runner;
+* this branch changes `tools/run_fast_tests_v2.py` only by appending its own three entries, and
+  does not modify `scripts/vnext/normal_zero_ai_results.py` or that test at all;
+* run alone in this container it passes, `Ran 10 tests in 263.053s`, which is 23 seconds past the
+  tier's fixed 240-second cap. So this is the case genuinely exceeding the cap on this machine
+  rather than losing a race for CPU.
+
+Neither the test nor the cap was changed to make this green.
