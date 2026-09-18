@@ -226,6 +226,44 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
         self.assertIn("f-20241231.htm", str(missing.exception))
         self.assertEqual("SOURCE_UNAVAILABLE", missing.exception.category)
 
+    def test_an_accession_instance_cannot_establish_an_issuer_fiscal_label(self):
+        """Why a target year without its own primary HTML stays a source gap.
+
+        The prior-annual route may read an accession's own XBRL instance,
+        because it only needs that filing's dates and their adjacency. An
+        issuer fiscal-year label is a different claim: the frozen policy reads
+        the issuer's own explicit definition from the full document, and
+        Salesforce is the standing proof that the label and the DEI focus year
+        can differ. So the instance is accepted for a period and refused for a
+        label, and a target year whose own primary HTML is not saved is
+        reported as missing rather than labelled from the instance.
+        """
+        from sec_urls import companyfacts_url
+        from vnext.canonical import sha256_bytes
+        from vnext.fiscal_year_labels import FiscalYearLabelError, inspect_fiscal_year_labels
+        from vnext.normal_annual_input import annual_period
+        from vnext.normal_governance_input import _Sources
+        filing = {"form": "10-K", "reportDate": "2024-12-31", "filingDate": "2025-02-06",
+                  "accessionNumber": "0000037996-25-000013", "primaryDocument": "f-20241231.htm"}
+        with original_sources_only():
+            reader = _Sources(ROOT, "ford_motor_company", "37996")
+            documents = reader.auditor_filing(filing)
+            file_set = reader.file_sets[-1]
+            period = annual_period(raw=documents[0]["raw_bytes"], cik="37996", filing=filing)
+            facts = reader.read(companyfacts_url(cik=37996), accession=filing["accessionNumber"],
+                                role="companyfacts", media_type="application/json")
+            with self.assertRaises(FiscalYearLabelError) as refused:
+                inspect_fiscal_year_labels(
+                    primary_bytes=documents[0]["raw_bytes"], companyfacts_bytes=facts["raw_bytes"],
+                    expected_primary_sha256=sha256_bytes(content=documents[0]["raw_bytes"]),
+                    expected_companyfacts_sha256=sha256_bytes(content=facts["raw_bytes"]),
+                    expected_cik="37996", filing=filing)
+        self.assertFalse(file_set["primary_saved"])
+        self.assertEqual(["f-20241231_htm.xml"], file_set["expected_xml_documents"])
+        self.assertEqual({"fiscal_year": 2024, "period_start": "2024-01-01",
+                          "period_end": "2024-12-31"}, period)
+        self.assertEqual("FISCAL_LABEL_FULL_DOCUMENT_REQUIRED", str(refused.exception))
+
     def test_a_run_input_carries_the_selection_and_the_installed_spec(self):
         with original_sources_only():
             selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
