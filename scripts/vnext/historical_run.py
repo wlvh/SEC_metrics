@@ -177,6 +177,16 @@ def replay_case(*, data_root, manifest, spec=None, binding_id=None, company_id=N
         requested_fiscal_year=saved["requested_fiscal_year"])
     _need(selection["selection_id"] == saved["period_selection_id"],
           "HISTORICAL_RUN_PERIOD_SELECTION_CHANGED")
+    # The ordinary historical installer writes its bindings into this same
+    # directory under ``issue_28_v13``. Such a record would be rebuilt here
+    # against ``issue_47_v1``'s rules and fail below as an unexplained content
+    # change; the manifest check above only covers the Run's own claim, never
+    # the binding's. This sits after the period check rather than before it so
+    # that a record which does not rebuild its own period is reported as
+    # corrupt by whichever reader picks it up, instead of the diagnosis
+    # depending on which Requirement happened to read it.
+    _need(saved["requirement_id"] == REQUIREMENT_ID,
+          "HISTORICAL_RUN_BINDING_BELONGS_TO_ANOTHER_REQUIREMENT")
     requirement = _requirement(data_root)
     rebuilt = prepare_historical_run_input(repo_root=data_root, company_id=company_id,
                                            metric_id=saved["primary_metric_id"],

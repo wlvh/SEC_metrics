@@ -185,7 +185,30 @@ class HistoricalPackageMaterialTest(unittest.TestCase):
             refuse("resigned_onto_another_year", binding_id=forged["binding_id"],
                    company_id=MARRIOTT, metric_id="B04")
 
-        self.assertEqual(4, len(refusals))
+            # Both readers keep their bindings in one directory. A record
+            # re-signed onto the other Requirement is internally consistent and
+            # would otherwise be rebuilt against rules it was never bound to,
+            # failing only at the end as an unexplained content change.
+            crossed = {**saved, "requirement_id": "issue_47_v1"}
+            crossed.pop("binding_id")
+            crossed["binding_id"] = content_hash(value=crossed)
+            (data_root / BINDING_DIRECTORY / (crossed["binding_id"][7:] + ".json")).write_text(
+                json.dumps(crossed, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n")
+            with self.assertRaises(Exception) as caught:
+                replay_historical_inputs(data_root=data_root, company_id=MARRIOTT,
+                                         metric_id="B04", binding_id=crossed["binding_id"])
+            refusals["crossed_requirement_read_as_package"] = str(caught.exception)
+
+            # And the honest ``issue_28_v13`` binding read by the native Run
+            # reader is refused for the same stated reason, not as a mismatch.
+            refuse("package_binding_read_as_native_run", binding_id=binding_id,
+                   company_id=MARRIOTT, metric_id="B04")
+
+        self.assertEqual(6, len(refusals))
+        self.assertIn("HISTORICAL_BINDING_BELONGS_TO_ANOTHER_REQUIREMENT",
+                      refusals["crossed_requirement_read_as_package"])
+        self.assertIn("HISTORICAL_RUN_BINDING_BELONGS_TO_ANOTHER_REQUIREMENT",
+                      refusals["package_binding_read_as_native_run"])
         self.assertIn("HISTORICAL_RUN_BINDING_IDENTITY_REQUIRED", refusals["wrong_company"])
         self.assertIn("HISTORICAL_RUN_BINDING_IDENTITY_REQUIRED", refusals["wrong_metric"])
         self.assertIn("HISTORICAL_RUN_PERIOD_SELECTION_CHANGED",

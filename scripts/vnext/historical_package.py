@@ -132,6 +132,13 @@ def replay_historical_inputs(*, data_root, company_id, metric_id, binding_id):
                                          requested_fiscal_year=saved["requested_fiscal_year"])
     _need(selection["selection_id"] == saved["period_selection_id"],
           "HISTORICAL_PERIOD_SELECTION_CHANGED")
+    # ``historical_run`` writes its bindings into this same directory under
+    # ``issue_47_v1``. This reader only ever loads ``issue_28_v13``, so a binding
+    # minted under the other Requirement would be rebuilt against rules it was
+    # not bound to and fail at the end as a generic content change. Same
+    # ordering as the native reader: the period first, then whose record it is.
+    _need(saved["requirement_id"] == REQUIREMENT_ID,
+          "HISTORICAL_BINDING_BELONGS_TO_ANOTHER_REQUIREMENT")
     requirement = load_requirement_snapshot(snapshot_dir=data_root / "requirements" / REQUIREMENT_ID)
     rebuilt = prepare_historical_run_input(repo_root=data_root, company_id=company_id,
                                            metric_id=metric_id, period_selection=selection)
