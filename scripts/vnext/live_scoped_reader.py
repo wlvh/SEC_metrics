@@ -140,7 +140,7 @@ class LiveScopedReaderSession:
 
     __slots__ = ("_factory", "_root", "_requirement", "_authority", "_index",
                  "_base_files", "_sources", "_fixtures", "_invocation_authority",
-                 "_full_corpus_validation", "_company_authority_bytes")
+                 "_full_corpus_validation", "_company_authority_bytes", "_development")
 
     def __init__(self, *, factory, root, requirement, authority, index, base_files,
                  company_authority):
@@ -149,6 +149,8 @@ class LiveScopedReaderSession:
         self._factory = factory
         self._root = root
         self._requirement = requirement
+        from .r4_development import current_implementation
+        self._development = current_implementation(root, requirement)
         self._authority = authority
         self._index = index
         self._base_files = base_files
@@ -163,6 +165,8 @@ class LiveScopedReaderSession:
     def _check(self):
         if self._factory is not _SESSION_FACTORY:
             raise LiveScopedReaderError("Live-scoped session factory differs")
+        if self._development is not None:
+            self._development.check()
         _check_files(repo_root=self._root, bindings=self._base_files)
 
     def _company(self, source_id):
@@ -327,8 +331,10 @@ def _capture(*, session: LiveScopedReaderSession, fixture_id: str) -> LiveScoped
     from .ai_adapter import approved_scoped_transport_policy, build_scoped_provider_request_body
     from .r4_run_store import resolve_r4_run_target_period
     fixture, entry, source, scope, authority = session._fixture(fixture_id)
+    from .scoped_reader import MODEL_RESPONSIBILITIES_V1
     scoped = prepare_scoped_reader_request_in_session(context=source["scoped"],
-        source_scope_manifest_id=scope["source_scope_manifest_id"])
+        source_scope_manifest_id=scope["source_scope_manifest_id"],
+        interface_revision=session._development.interface_revision if session._development is not None else None)
     body = strict_json_loads(text=scoped.request_bytes.decode("utf-8"))
     body.pop("scoped_plan_id")
     body["record_type"] = INPUT_RECORD_TYPE
@@ -387,6 +393,11 @@ def _capture(*, session: LiveScopedReaderSession, fixture_id: str) -> LiveScoped
         "task_period": record["task_period"], "target_period": record["target_period"],
         "source_bound_proof_id": record["source_bound_proof_id"],
         "fixture_company_authority_id": record["fixture_company_authority_id"]})
+    if session._development is not None:
+        record["development_execution_binding_id"] = session._development.record["development_execution_binding_id"]
+        from .cell_selection import REVISION
+        if session._development.interface_revision == REVISION:
+            record['request_interface_revision'] = session._development.interface_revision
     record["live_scoped_reader_request_id"] = content_hash(value=record)
     return LiveScopedReaderRequest(factory=_REQUEST_FACTORY, record_bytes=canonical_json_bytes(value=record),
         request_bytes=reader_bytes, provider_request_body_bytes=outbound, output_schema_bytes=schema,
@@ -508,6 +519,12 @@ def parse_scoped_invocation_candidate(*, response_body: bytes, execution_id: str
             raise LiveScopedReaderError("Scoped response must be exact bytes")
         attempt_id = "attempt:" + execution_id.split(":", maxsplit=1)[1]
         text = response_body.decode("utf-8")
+        original_digest = sha256_bytes(content=response_body)
+        from .cell_selection import REVISION, expand_response
+        projected = request._session._development is not None and request._session._development.interface_revision == REVISION
+        if projected:
+            text, _projection = expand_response(request=strict_json_loads(text=request.request_bytes.decode()),
+                response_text=text, scope=scope)
         proof = scope["source_bound_proof"]
         if proof is None:
             task = authority["task_contract"]
@@ -524,6 +541,8 @@ def parse_scoped_invocation_candidate(*, response_body: bytes, execution_id: str
                 task_contract=authority["task_contract"], _offline_context=source["evidence"])
         if candidate["disclosure_group"] != authority["task_contract"]["disclosure_group"]:
             raise LiveScopedReaderError("Scoped response disclosure task differs")
+        if projected:
+            candidate['assistant_output_sha256'] = original_digest
         return candidate
     except (ValueError, UnicodeError, KeyError, IndexError, TypeError) as error:
         raise SchemaViolationError("Native scoped Reader rejected the response") from error
@@ -536,8 +555,10 @@ def validate_scoped_invocation_acceptance(*, response_body: bytes, execution_id:
     from .scoped_reader import check_scoped_reader_response
     try:
         request, (fixture, entry, source, scope, authority) = _acceptance_inputs(context=context)
+        from .scoped_reader import MODEL_RESPONSIBILITIES_V1
         prepared = prepare_scoped_reader_request_in_session(context=source["scoped"],
-            source_scope_manifest_id=scope["source_scope_manifest_id"])
+            source_scope_manifest_id=scope["source_scope_manifest_id"],
+            interface_revision=request._session._development.interface_revision if request._session._development is not None else None)
         label_rule = bound_label_policy(request._session._requirement)
         checked = check_scoped_reader_response(prepared_request=prepared,
             response_text=response_body.decode("utf-8"),
@@ -556,9 +577,13 @@ def validate_scoped_invocation_acceptance(*, response_body: bytes, execution_id:
             "candidate_hash": candidate["candidate_hash"], "candidate_record": candidate,
             "evidence_check_id": evidence["evidence_check_id"], "evidence_record": evidence,
             "evidence_candidate_hash": evidence["candidate_hash"], "evidence_status": evidence["status"],
-            "validator_semantic_version": (SCOPED_ACCEPTANCE_VERSION if label_rule == RAW_LABEL_POLICY
+            "validator_semantic_version": ("scoped-cell-selection-acceptance-v1" if request.identity.get('request_interface_revision')
+                else "scoped-development-acceptance-v1" if request._session._development is not None
+                else SCOPED_ACCEPTANCE_VERSION if label_rule == RAW_LABEL_POLICY
                 else "source-bound-scoped-reader-acceptance-v2"),
-            "validator_semantic_hash": (SCOPED_ACCEPTANCE_HASH if label_rule == RAW_LABEL_POLICY
+            "validator_semantic_hash": (content_hash(value={"parent":SCOPED_ACCEPTANCE_HASH,
+                "interface_revision":request._session._development.interface_revision, "label_policy":label_rule})
+                if request._session._development is not None else SCOPED_ACCEPTANCE_HASH if label_rule == RAW_LABEL_POLICY
                 else content_hash(value={"parent":SCOPED_ACCEPTANCE_HASH,"label_policy":label_rule})),
         }
     except (ValueError, UnicodeError, KeyError, IndexError, TypeError) as error:
@@ -607,8 +632,8 @@ def _replay_scoped_attempt(*, repo_root: Path, request_record: Mapping, payloads
         if (type(authorization_binding.get(key)) is not str
                 or re.fullmatch(r"sha256:[0-9a-f]{64}", authorization_binding[key]) is None):
             raise LiveScopedReaderError("Portable scoped authorization identity is malformed: " + key)
-    namespace = RUNTIME_ROOT + "/" + authorization_binding["pending_plan_id"].split(":", 1)[1]
-    namespace += "/entries/" + authorization_binding["entry_id"].split(":", 1)[1]
+    from .r4_live_authority import invocation_namespace
+    namespace = invocation_namespace(authorization_binding["pending_plan"], authorization_binding["entry_id"])
     if authorization_binding.get("invocation_namespace") != namespace:
         raise LiveScopedReaderError("Portable invocation namespace differs from plan/entry")
     if acceptance_context is None:

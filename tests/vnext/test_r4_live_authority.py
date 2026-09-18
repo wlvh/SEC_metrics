@@ -97,7 +97,7 @@ def private_shape_context():
         "call_bounds": {"target_minimum": 12, "target_maximum": 18, "hard_maximum": 24},
         "counts": {"planned_provider_calls": 12, "base_provider_calls": 9, "stability_provider_calls": 3},
         "stability_selection": selection}
-    session = SimpleNamespace(_requirement=requirement, _check=lambda: None, _root=ROOT.resolve())
+    session = SimpleNamespace(_requirement=requirement, _check=lambda: None, _root=ROOT.resolve(), _development=None)
     return authority.R4ExecutionPlanContext(factory=authority._PLAN_FACTORY, root=ROOT.resolve(),
         session=session, schedule=schedule, requests=requests,
         pointer={"publication_id": "unit:R3", "previous_publication_id": "unit:R2"},

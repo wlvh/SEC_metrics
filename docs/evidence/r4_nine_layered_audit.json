@@ -1,0 +1,2917 @@
+{
+  "record_type": "R4_NINE_RESPONSE_LAYERED_READ_ONLY_AUDIT",
+  "historical_provider_calls": 9,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "qualification_credit": "NONE",
+  "cases": [
+    {
+      "fixture_id": "r4_a03_production",
+      "original_native_status": "CONTENT_FAILED",
+      "native_first_failure": "Reader response is not strict JSON",
+      "audit_tier": "READ_ONLY_FIELDS_NOT_ADDITIONAL_EXECUTION_TERMINALS",
+      "response_sha256": "a17c3e1554a5d1ed2a27b8da201d6ad2b3a3433f45ae371f649eb27071067f28",
+      "finish_reason": "stop",
+      "channel": {
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "syntax": "FAIL",
+      "saved_json_schema": "NOT_EVALUATED",
+      "syntax_error": {
+        "message": "Expecting ',' delimiter",
+        "offset": 3023
+      },
+      "identity": {
+        "expected": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "observed_strings": [
+          "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+        ],
+        "status": "FAIL"
+      },
+      "selection": {
+        "status": "PASS",
+        "declared_value": "111",
+        "source_text": "111",
+        "source_cell": {
+          "ref": "85bb1ca1baa4/t65/28/6",
+          "locator": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000065",
+            "row_index": 28,
+            "column_index": 6,
+            "origin_row_index": 28,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "raw_text": "111&#160;",
+          "text": "111",
+          "header": false
+        },
+        "model_position": {
+          "derived_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "table_id": "table_000065",
+          "row_index": 28,
+          "column_index": 6,
+          "origin_row_index": 28,
+          "origin_column_index": 6,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "geometry_matches": true
+      },
+      "scope_labels": [
+        {
+          "claim": {
+            "dimension": "entity_scope",
+            "raw_value": "Firm",
+            "evidence_locator_ids": [
+              "cell_28_0"
+            ]
+          },
+          "source_checks": [
+            {
+              "source_cell": {
+                "ref": "85bb1ca1baa4/t65/28/0",
+                "locator": {
+                  "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                  "table_id": "table_000065",
+                  "row_index": 28,
+                  "column_index": 0,
+                  "origin_row_index": 28,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3
+                },
+                "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+                "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)",
+                "header": false
+              },
+              "literal_present": true
+            }
+          ],
+          "exact_alias": "firm"
+        },
+        {
+          "claim": {
+            "dimension": "aggregation",
+            "raw_value": "average",
+            "evidence_locator_ids": [
+              "cell_28_0"
+            ]
+          },
+          "source_checks": [
+            {
+              "source_cell": {
+                "ref": "85bb1ca1baa4/t65/28/0",
+                "locator": {
+                  "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                  "table_id": "table_000065",
+                  "row_index": 28,
+                  "column_index": 0,
+                  "origin_row_index": 28,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3
+                },
+                "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+                "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)",
+                "header": false
+              },
+              "literal_present": true
+            }
+          ],
+          "exact_alias": "average"
+        }
+      ],
+      "competitors": [
+        {
+          "status": "PASS",
+          "declared_value": "113",
+          "source_text": "113",
+          "source_cell": {
+            "ref": "85bb1ca1baa4/t65/28/12",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000065",
+              "row_index": 28,
+              "column_index": 12,
+              "origin_row_index": 28,
+              "origin_column_index": 12,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "113&#160;",
+            "text": "113",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "table_id": "table_000065",
+            "row_index": 28,
+            "column_index": 12,
+            "origin_row_index": 28,
+            "origin_column_index": 12,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2024",
+            "source": {
+              "kind": "YEAR",
+              "value": "2024",
+              "source_cells": [
+                {
+                  "ref": "85bb1ca1baa4/t65/2/12",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000065",
+                    "row_index": 2,
+                    "column_index": 12,
+                    "origin_row_index": 2,
+                    "origin_column_index": 12,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2024",
+                  "text": "2024",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "percent",
+            "source": {
+              "unit": "percent",
+              "canonical_unit": "ratio",
+              "factor": "0.01",
+              "normalized_value": "1.13",
+              "basis": "CERTIFIED_TASK_ROW_UNIT",
+              "source_scope_manifest_id": "sha256:b9bb7d348236a6e78850fe26ed079f9b994db58dc968ef2af474588961806b73",
+              "source_cells": [
+                {
+                  "ref": "85bb1ca1baa4/t65/28/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000065",
+                    "row_index": 28,
+                    "column_index": 0,
+                    "origin_row_index": 28,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+                  "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        },
+        {
+          "status": "PASS",
+          "declared_value": "113",
+          "source_text": "113",
+          "source_cell": {
+            "ref": "85bb1ca1baa4/t65/28/18",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000065",
+              "row_index": 28,
+              "column_index": 18,
+              "origin_row_index": 28,
+              "origin_column_index": 18,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "113&#160;",
+            "text": "113",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "table_id": "table_000065",
+            "row_index": 28,
+            "column_index": 18,
+            "origin_row_index": 28,
+            "origin_column_index": 18,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2023",
+            "source": {
+              "kind": "YEAR",
+              "value": "2023",
+              "source_cells": [
+                {
+                  "ref": "85bb1ca1baa4/t65/2/18",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000065",
+                    "row_index": 2,
+                    "column_index": 18,
+                    "origin_row_index": 2,
+                    "origin_column_index": 18,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2023",
+                  "text": "2023",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "percent",
+            "source": {
+              "unit": "percent",
+              "canonical_unit": "ratio",
+              "factor": "0.01",
+              "normalized_value": "1.13",
+              "basis": "CERTIFIED_TASK_ROW_UNIT",
+              "source_scope_manifest_id": "sha256:b9bb7d348236a6e78850fe26ed079f9b994db58dc968ef2af474588961806b73",
+              "source_cells": [
+                {
+                  "ref": "85bb1ca1baa4/t65/28/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000065",
+                    "row_index": 28,
+                    "column_index": 0,
+                    "origin_row_index": 28,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+                  "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        },
+        {
+          "status": "PASS",
+          "declared_value": "115",
+          "source_text": "115",
+          "source_cell": {
+            "ref": "85bb1ca1baa4/t65/29/6",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000065",
+              "row_index": 29,
+              "column_index": 6,
+              "origin_row_index": 29,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "115&#160;",
+            "text": "115",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "table_id": "table_000065",
+            "row_index": 29,
+            "column_index": 6,
+            "origin_row_index": 29,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2025",
+            "source": {
+              "kind": "YEAR",
+              "value": "2025",
+              "source_cells": [
+                {
+                  "ref": "85bb1ca1baa4/t65/2/6",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000065",
+                    "row_index": 2,
+                    "column_index": 6,
+                    "origin_row_index": 2,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2025",
+                  "text": "2025",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "percent",
+            "source": {
+              "unit": "percent",
+              "canonical_unit": "ratio",
+              "factor": "0.01",
+              "normalized_value": "1.15",
+              "basis": "CERTIFIED_TASK_ROW_UNIT",
+              "source_scope_manifest_id": "sha256:b9bb7d348236a6e78850fe26ed079f9b994db58dc968ef2af474588961806b73",
+              "source_cells": [
+                {
+                  "ref": "85bb1ca1baa4/t65/29/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000065",
+                    "row_index": 29,
+                    "column_index": 0,
+                    "origin_row_index": 29,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "\nJPMorgan Chase Bank, N.A. LCR (average)(b)",
+                  "text": "JPMorgan Chase Bank, N.A. LCR (average)(b)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        }
+      ],
+      "certified_target_source_cell": {
+        "ref": "85bb1ca1baa4/t65/28/6",
+        "locator": {
+          "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+          "table_id": "table_000065",
+          "row_index": 28,
+          "column_index": 6,
+          "origin_row_index": 28,
+          "origin_column_index": 6,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "raw_text": "111&#160;",
+        "text": "111",
+        "header": false
+      },
+      "same_row_cells_with_declared_value": [
+        {
+          "cell": {
+            "ref": "85bb1ca1baa4/t65/28/6",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000065",
+              "row_index": 28,
+              "column_index": 6,
+              "origin_row_index": 28,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "111&#160;",
+            "text": "111",
+            "header": false
+          },
+          "column_scope": {}
+        }
+      ]
+    },
+    {
+      "fixture_id": "r4_a03_alternate",
+      "original_native_status": "ACCEPTED",
+      "native_first_failure": null,
+      "audit_tier": "READ_ONLY_FIELDS_NOT_ADDITIONAL_EXECUTION_TERMINALS",
+      "response_sha256": "c20148a11396062085f16ef9f797ebb784f69b3944373dfa3e886feb91005f56",
+      "finish_reason": "stop",
+      "channel": {
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "syntax": "PASS",
+      "saved_json_schema": "PASS",
+      "identity": {
+        "expected": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+        "observed_strings": [
+          "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196"
+        ],
+        "status": "PASS"
+      },
+      "selection": {
+        "status": "PASS",
+        "declared_value": "115",
+        "source_text": "115",
+        "source_cell": {
+          "ref": "db51751b79bd/t75/4/3",
+          "locator": {
+            "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+            "table_id": "table_000075",
+            "row_index": 4,
+            "column_index": 3,
+            "origin_row_index": 4,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "raw_text": "115&#160;",
+          "text": "115",
+          "header": false
+        },
+        "model_position": {
+          "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+          "table_id": "table_000075",
+          "row_index": 4,
+          "column_index": 3,
+          "origin_row_index": 4,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "geometry_matches": true
+      },
+      "scope_labels": [],
+      "competitors": [
+        {
+          "status": "PASS",
+          "declared_value": "115",
+          "source_text": "115",
+          "source_cell": {
+            "ref": "db51751b79bd/t75/4/6",
+            "locator": {
+              "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+              "table_id": "table_000075",
+              "row_index": 4,
+              "column_index": 6,
+              "origin_row_index": 4,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "115&#160;",
+            "text": "115",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+            "table_id": "table_000075",
+            "row_index": 4,
+            "column_index": 6,
+            "origin_row_index": 4,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "2025Q4",
+            "source": {
+              "kind": "COLUMN_DATE",
+              "value": "2025-09-30",
+              "source_cells": [
+                {
+                  "ref": "db51751b79bd/t75/1/6",
+                  "locator": {
+                    "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                    "table_id": "table_000075",
+                    "row_index": 1,
+                    "column_index": 6,
+                    "origin_row_index": 1,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "Sep. 30, 2025",
+                  "text": "Sep. 30, 2025",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": false
+          },
+          "unit": {
+            "declared": "percent",
+            "source": {
+              "unit": "percent",
+              "canonical_unit": "ratio",
+              "factor": "0.01",
+              "normalized_value": "1.15",
+              "basis": "SOURCE_PERCENT_MARKER",
+              "source_cells": [
+                {
+                  "ref": "db51751b79bd/t75/4/8",
+                  "locator": {
+                    "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                    "table_id": "table_000075",
+                    "row_index": 4,
+                    "column_index": 8,
+                    "origin_row_index": 4,
+                    "origin_column_index": 8,
+                    "rowspan": 1,
+                    "colspan": 1
+                  },
+                  "raw_text": "%",
+                  "text": "%",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        },
+        {
+          "status": "PASS",
+          "declared_value": "116",
+          "source_text": "116",
+          "source_cell": {
+            "ref": "db51751b79bd/t75/4/9",
+            "locator": {
+              "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+              "table_id": "table_000075",
+              "row_index": 4,
+              "column_index": 9,
+              "origin_row_index": 4,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "116&#160;",
+            "text": "116",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+            "table_id": "table_000075",
+            "row_index": 4,
+            "column_index": 9,
+            "origin_row_index": 4,
+            "origin_column_index": 9,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "2024Q4",
+            "source": {
+              "kind": "COLUMN_DATE",
+              "value": "2024-12-31",
+              "source_cells": [
+                {
+                  "ref": "db51751b79bd/t75/1/9",
+                  "locator": {
+                    "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                    "table_id": "table_000075",
+                    "row_index": 1,
+                    "column_index": 9,
+                    "origin_row_index": 1,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "Dec. 31, 2024",
+                  "text": "Dec. 31, 2024",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "percent",
+            "source": {
+              "unit": "percent",
+              "canonical_unit": "ratio",
+              "factor": "0.01",
+              "normalized_value": "1.16",
+              "basis": "SOURCE_PERCENT_MARKER",
+              "source_cells": [
+                {
+                  "ref": "db51751b79bd/t75/4/11",
+                  "locator": {
+                    "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                    "table_id": "table_000075",
+                    "row_index": 4,
+                    "column_index": 11,
+                    "origin_row_index": 4,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1
+                  },
+                  "raw_text": "%",
+                  "text": "%",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        }
+      ],
+      "certified_target_source_cell": {
+        "ref": "db51751b79bd/t75/4/3",
+        "locator": {
+          "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+          "table_id": "table_000075",
+          "row_index": 4,
+          "column_index": 3,
+          "origin_row_index": 4,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "raw_text": "115&#160;",
+        "text": "115",
+        "header": false
+      },
+      "same_row_cells_with_declared_value": [
+        {
+          "cell": {
+            "ref": "db51751b79bd/t75/4/3",
+            "locator": {
+              "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+              "table_id": "table_000075",
+              "row_index": 4,
+              "column_index": 3,
+              "origin_row_index": 4,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "115&#160;",
+            "text": "115",
+            "header": false
+          },
+          "column_scope": {}
+        },
+        {
+          "cell": {
+            "ref": "db51751b79bd/t75/4/6",
+            "locator": {
+              "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+              "table_id": "table_000075",
+              "row_index": 4,
+              "column_index": 6,
+              "origin_row_index": 4,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "115&#160;",
+            "text": "115",
+            "header": false
+          },
+          "column_scope": {}
+        }
+      ]
+    },
+    {
+      "fixture_id": "r4_a04_production",
+      "original_native_status": "ACCEPTED",
+      "native_first_failure": null,
+      "audit_tier": "READ_ONLY_FIELDS_NOT_ADDITIONAL_EXECUTION_TERMINALS",
+      "response_sha256": "8709e82ebc4c982bcb2a3c6b747c04f6f32f47734306965f89061a90386226df",
+      "finish_reason": "stop",
+      "channel": {
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "syntax": "PASS",
+      "saved_json_schema": "PASS",
+      "identity": {
+        "expected": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "observed_strings": [
+          "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110"
+        ],
+        "status": "PASS"
+      },
+      "selection": {
+        "status": "PASS",
+        "declared_value": "2.50",
+        "source_text": "2.50",
+        "source_cell": {
+          "ref": "8e07d9852632/t100/10/3",
+          "locator": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000100",
+            "row_index": 10,
+            "column_index": 3,
+            "origin_row_index": 10,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "raw_text": "2.50&#160;",
+          "text": "2.50",
+          "header": false
+        },
+        "model_position": {
+          "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+          "table_id": "table_000100",
+          "row_index": 10,
+          "column_index": 3,
+          "origin_row_index": 10,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "geometry_matches": true
+      },
+      "scope_labels": [
+        {
+          "claim": {
+            "dimension": "basis",
+            "raw_value": "managed basis",
+            "evidence_locator_ids": [
+              "cell_10_0"
+            ]
+          },
+          "source_checks": [
+            {
+              "source_cell": {
+                "ref": "8e07d9852632/t100/10/0",
+                "locator": {
+                  "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                  "table_id": "table_000100",
+                  "row_index": 10,
+                  "column_index": 0,
+                  "origin_row_index": 10,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3
+                },
+                "raw_text": "\nNet yield on average interest-earning assets &#8211; managed basis",
+                "text": "Net yield on average interest-earning assets – managed basis",
+                "header": false
+              },
+              "literal_present": true
+            }
+          ],
+          "exact_alias": "managed_basis"
+        }
+      ],
+      "competitors": [
+        {
+          "status": "PASS",
+          "declared_value": "2.63",
+          "source_text": "2.63",
+          "source_cell": {
+            "ref": "8e07d9852632/t100/10/6",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000100",
+              "row_index": 10,
+              "column_index": 6,
+              "origin_row_index": 10,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "2.63&#160;",
+            "text": "2.63",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000100",
+            "row_index": 10,
+            "column_index": 6,
+            "origin_row_index": 10,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2024",
+            "source": {
+              "kind": "YEAR",
+              "value": "2024",
+              "source_cells": [
+                {
+                  "ref": "8e07d9852632/t100/1/6",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000100",
+                    "row_index": 1,
+                    "column_index": 6,
+                    "origin_row_index": 1,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2024",
+                  "text": "2024",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "percent",
+            "source": {
+              "unit": "percent",
+              "canonical_unit": "ratio",
+              "factor": "0.01",
+              "normalized_value": "0.0263",
+              "basis": "SOURCE_PERCENT_MARKER",
+              "source_cells": [
+                {
+                  "ref": "8e07d9852632/t100/10/9",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000100",
+                    "row_index": 10,
+                    "column_index": 9,
+                    "origin_row_index": 10,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "%",
+                  "text": "%",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        },
+        {
+          "status": "PASS",
+          "declared_value": "2.70",
+          "source_text": "2.70",
+          "source_cell": {
+            "ref": "8e07d9852632/t100/10/12",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000100",
+              "row_index": 10,
+              "column_index": 12,
+              "origin_row_index": 10,
+              "origin_column_index": 12,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "2.70&#160;",
+            "text": "2.70",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000100",
+            "row_index": 10,
+            "column_index": 12,
+            "origin_row_index": 10,
+            "origin_column_index": 12,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2023",
+            "source": {
+              "kind": "YEAR",
+              "value": "2023",
+              "source_cells": [
+                {
+                  "ref": "8e07d9852632/t100/1/12",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000100",
+                    "row_index": 1,
+                    "column_index": 12,
+                    "origin_row_index": 1,
+                    "origin_column_index": 12,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2023",
+                  "text": "2023",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "percent",
+            "source": {
+              "unit": "percent",
+              "canonical_unit": "ratio",
+              "factor": "0.01",
+              "normalized_value": "0.027",
+              "basis": "SOURCE_PERCENT_MARKER",
+              "source_cells": [
+                {
+                  "ref": "8e07d9852632/t100/10/14",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000100",
+                    "row_index": 10,
+                    "column_index": 14,
+                    "origin_row_index": 10,
+                    "origin_column_index": 14,
+                    "rowspan": 1,
+                    "colspan": 1
+                  },
+                  "raw_text": "%",
+                  "text": "%",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        }
+      ],
+      "certified_target_source_cell": {
+        "ref": "8e07d9852632/t100/10/3",
+        "locator": {
+          "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+          "table_id": "table_000100",
+          "row_index": 10,
+          "column_index": 3,
+          "origin_row_index": 10,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "raw_text": "2.50&#160;",
+        "text": "2.50",
+        "header": false
+      },
+      "same_row_cells_with_declared_value": [
+        {
+          "cell": {
+            "ref": "8e07d9852632/t100/10/3",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000100",
+              "row_index": 10,
+              "column_index": 3,
+              "origin_row_index": 10,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "2.50&#160;",
+            "text": "2.50",
+            "header": false
+          },
+          "column_scope": {}
+        }
+      ]
+    },
+    {
+      "fixture_id": "r4_a04_alternate",
+      "original_native_status": "CONTENT_FAILED",
+      "native_first_failure": "Reader table locator names an unsupplied asset",
+      "audit_tier": "READ_ONLY_FIELDS_NOT_ADDITIONAL_EXECUTION_TERMINALS",
+      "response_sha256": "6ce90263a678c3103b2e6931431a98bc2906321f0bfde555e79e97bca3d54d20",
+      "finish_reason": "stop",
+      "channel": {
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "syntax": "PASS",
+      "saved_json_schema": "PASS",
+      "identity": {
+        "expected": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+        "observed_strings": [
+          "sha256:12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe"
+        ],
+        "status": "FAIL"
+      },
+      "selection": {
+        "status": "PASS",
+        "declared_value": "2.47",
+        "source_text": "2.47",
+        "source_cell": {
+          "ref": "30c367b0fa5a/t84/7/3",
+          "locator": {
+            "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+            "table_id": "table_000084",
+            "row_index": 7,
+            "column_index": 3,
+            "origin_row_index": 7,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "raw_text": "2.47&#160;",
+          "text": "2.47",
+          "header": false
+        },
+        "model_position": {
+          "derived_asset_id": "sha256:12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+          "table_id": "table_000084",
+          "row_index": 7,
+          "column_index": 3,
+          "origin_row_index": 7,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "geometry_matches": true
+      },
+      "scope_labels": [
+        {
+          "claim": {
+            "dimension": "basis",
+            "raw_value": "taxable equivalent basis",
+            "evidence_locator_ids": [
+              "cell_7_0"
+            ]
+          },
+          "source_checks": [
+            {
+              "source_cell": {
+                "ref": "30c367b0fa5a/t84/7/0",
+                "locator": {
+                  "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                  "table_id": "table_000084",
+                  "row_index": 7,
+                  "column_index": 0,
+                  "origin_row_index": 7,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3
+                },
+                "raw_text": "\nNet interest margin(3)(4)",
+                "text": "Net interest margin(3)(4)",
+                "header": false
+              },
+              "literal_present": false
+            }
+          ],
+          "exact_alias": "managed_basis"
+        }
+      ],
+      "competitors": [
+        {
+          "status": "PASS",
+          "declared_value": "2.40",
+          "source_text": "2.40",
+          "source_cell": {
+            "ref": "30c367b0fa5a/t84/7/9",
+            "locator": {
+              "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+              "table_id": "table_000084",
+              "row_index": 7,
+              "column_index": 9,
+              "origin_row_index": 7,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "2.40&#160;",
+            "text": "2.40",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+            "table_id": "table_000084",
+            "row_index": 7,
+            "column_index": 9,
+            "origin_row_index": 7,
+            "origin_column_index": 9,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2024",
+            "source": {
+              "kind": "YEAR",
+              "value": "2024",
+              "source_cells": [
+                {
+                  "ref": "30c367b0fa5a/t84/1/9",
+                  "locator": {
+                    "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                    "table_id": "table_000084",
+                    "row_index": 1,
+                    "column_index": 9,
+                    "origin_row_index": 1,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2024",
+                  "text": "2024",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "percent",
+            "source": {
+              "unit": "percent",
+              "canonical_unit": "ratio",
+              "factor": "0.01",
+              "normalized_value": "0.024",
+              "basis": "CERTIFIED_TASK_ROW_UNIT",
+              "source_scope_manifest_id": "sha256:98ea543e93a7e514eb814ca0f03945678c4e756c58d4e4fad40777d05c794c75",
+              "source_cells": [
+                {
+                  "ref": "30c367b0fa5a/t84/7/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                    "table_id": "table_000084",
+                    "row_index": 7,
+                    "column_index": 0,
+                    "origin_row_index": 7,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "\nNet interest margin(3)(4)",
+                  "text": "Net interest margin(3)(4)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        },
+        {
+          "status": "PASS",
+          "declared_value": "2.46",
+          "source_text": "2.46",
+          "source_cell": {
+            "ref": "30c367b0fa5a/t84/7/15",
+            "locator": {
+              "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+              "table_id": "table_000084",
+              "row_index": 7,
+              "column_index": 15,
+              "origin_row_index": 7,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "2.46&#160;",
+            "text": "2.46",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+            "table_id": "table_000084",
+            "row_index": 7,
+            "column_index": 15,
+            "origin_row_index": 7,
+            "origin_column_index": 15,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2023",
+            "source": {
+              "kind": "YEAR",
+              "value": "2023",
+              "source_cells": [
+                {
+                  "ref": "30c367b0fa5a/t84/1/15",
+                  "locator": {
+                    "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                    "table_id": "table_000084",
+                    "row_index": 1,
+                    "column_index": 15,
+                    "origin_row_index": 1,
+                    "origin_column_index": 15,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2023",
+                  "text": "2023",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "percent",
+            "source": {
+              "unit": "percent",
+              "canonical_unit": "ratio",
+              "factor": "0.01",
+              "normalized_value": "0.0246",
+              "basis": "CERTIFIED_TASK_ROW_UNIT",
+              "source_scope_manifest_id": "sha256:98ea543e93a7e514eb814ca0f03945678c4e756c58d4e4fad40777d05c794c75",
+              "source_cells": [
+                {
+                  "ref": "30c367b0fa5a/t84/7/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                    "table_id": "table_000084",
+                    "row_index": 7,
+                    "column_index": 0,
+                    "origin_row_index": 7,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "\nNet interest margin(3)(4)",
+                  "text": "Net interest margin(3)(4)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        }
+      ],
+      "certified_target_source_cell": {
+        "ref": "30c367b0fa5a/t84/7/3",
+        "locator": {
+          "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+          "table_id": "table_000084",
+          "row_index": 7,
+          "column_index": 3,
+          "origin_row_index": 7,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "raw_text": "2.47&#160;",
+        "text": "2.47",
+        "header": false
+      },
+      "same_row_cells_with_declared_value": [
+        {
+          "cell": {
+            "ref": "30c367b0fa5a/t84/7/3",
+            "locator": {
+              "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+              "table_id": "table_000084",
+              "row_index": 7,
+              "column_index": 3,
+              "origin_row_index": 7,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "2.47&#160;",
+            "text": "2.47",
+            "header": false
+          },
+          "column_scope": {}
+        }
+      ]
+    },
+    {
+      "fixture_id": "r4_a09_production",
+      "original_native_status": "ACCEPTED",
+      "native_first_failure": null,
+      "audit_tier": "READ_ONLY_FIELDS_NOT_ADDITIONAL_EXECUTION_TERMINALS",
+      "response_sha256": "9064a92f4b07eefc84fdca05729eaaaa0161a9a77ce8e2029bc5545370f9af37",
+      "finish_reason": "stop",
+      "channel": {
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "syntax": "PASS",
+      "saved_json_schema": "PASS",
+      "identity": {
+        "expected": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "observed_strings": [
+          "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110"
+        ],
+        "status": "PASS"
+      },
+      "selection": {
+        "status": "PASS",
+        "declared_value": "0.66",
+        "source_text": "0.66",
+        "source_cell": {
+          "ref": "ab084f7d3bbf/t222/4/3",
+          "locator": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000222",
+            "row_index": 4,
+            "column_index": 3,
+            "origin_row_index": 4,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "raw_text": "0.66&#160;",
+          "text": "0.66",
+          "header": false
+        },
+        "model_position": {
+          "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+          "table_id": "table_000222",
+          "row_index": 4,
+          "column_index": 3,
+          "origin_row_index": 4,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "geometry_matches": true
+      },
+      "scope_labels": [
+        {
+          "claim": {
+            "dimension": "loan_population",
+            "raw_value": "Firmwide",
+            "evidence_locator_ids": [
+              "cell_4_0"
+            ]
+          },
+          "source_checks": [
+            {
+              "source_cell": {
+                "ref": "ab084f7d3bbf/t222/4/0",
+                "locator": {
+                  "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                  "table_id": "table_000222",
+                  "row_index": 4,
+                  "column_index": 0,
+                  "origin_row_index": 4,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3
+                },
+                "raw_text": "Firmwide nonaccrual loans to total loans outstanding",
+                "text": "Firmwide nonaccrual loans to total loans outstanding",
+                "header": false
+              },
+              "literal_present": true
+            }
+          ],
+          "exact_alias": "firmwide"
+        }
+      ],
+      "competitors": [
+        {
+          "status": "PASS",
+          "declared_value": "0.66",
+          "source_text": "0.66",
+          "source_cell": {
+            "ref": "ab084f7d3bbf/t222/4/9",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000222",
+              "row_index": 4,
+              "column_index": 9,
+              "origin_row_index": 4,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "0.66&#160;",
+            "text": "0.66",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000222",
+            "row_index": 4,
+            "column_index": 9,
+            "origin_row_index": 4,
+            "origin_column_index": 9,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2024",
+            "source": {
+              "kind": "YEAR",
+              "value": "2024",
+              "source_cells": [
+                {
+                  "ref": "ab084f7d3bbf/t222/1/9",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000222",
+                    "row_index": 1,
+                    "column_index": 9,
+                    "origin_row_index": 1,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2024",
+                  "text": "2024",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "ratio",
+            "source": {
+              "unit": "percent",
+              "canonical_unit": "ratio",
+              "factor": "0.01",
+              "normalized_value": "0.0066",
+              "basis": "SOURCE_PERCENT_MARKER",
+              "source_cells": [
+                {
+                  "ref": "ab084f7d3bbf/t222/4/11",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000222",
+                    "row_index": 4,
+                    "column_index": 11,
+                    "origin_row_index": 4,
+                    "origin_column_index": 11,
+                    "rowspan": 1,
+                    "colspan": 1
+                  },
+                  "raw_text": "%",
+                  "text": "%",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": false
+          }
+        }
+      ],
+      "certified_target_source_cell": {
+        "ref": "ab084f7d3bbf/t222/4/3",
+        "locator": {
+          "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+          "table_id": "table_000222",
+          "row_index": 4,
+          "column_index": 3,
+          "origin_row_index": 4,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "raw_text": "0.66&#160;",
+        "text": "0.66",
+        "header": false
+      },
+      "same_row_cells_with_declared_value": [
+        {
+          "cell": {
+            "ref": "ab084f7d3bbf/t222/4/3",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000222",
+              "row_index": 4,
+              "column_index": 3,
+              "origin_row_index": 4,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "0.66&#160;",
+            "text": "0.66",
+            "header": false
+          },
+          "column_scope": {}
+        },
+        {
+          "cell": {
+            "ref": "ab084f7d3bbf/t222/4/9",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000222",
+              "row_index": 4,
+              "column_index": 9,
+              "origin_row_index": 4,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "0.66&#160;",
+            "text": "0.66",
+            "header": false
+          },
+          "column_scope": {}
+        }
+      ]
+    },
+    {
+      "fixture_id": "r4_a11_production",
+      "original_native_status": "ACCEPTED",
+      "native_first_failure": null,
+      "audit_tier": "READ_ONLY_FIELDS_NOT_ADDITIONAL_EXECUTION_TERMINALS",
+      "response_sha256": "ae81f6d545cc404ef732c84ff83046f6399b8a889908ee713ac60a236626029f",
+      "finish_reason": "stop",
+      "channel": {
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "syntax": "PASS",
+      "saved_json_schema": "PASS",
+      "identity": {
+        "expected": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "observed_strings": [
+          "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110"
+        ],
+        "status": "PASS"
+      },
+      "selection": {
+        "status": "PASS",
+        "declared_value": "4,791",
+        "source_text": "4,791",
+        "source_cell": {
+          "ref": "90858afafe1e/t149/9/3",
+          "locator": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000149",
+            "row_index": 9,
+            "column_index": 3,
+            "origin_row_index": 9,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "raw_text": "4,791&#160;",
+          "text": "4,791",
+          "header": false
+        },
+        "model_position": {
+          "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+          "table_id": "table_000149",
+          "row_index": 9,
+          "column_index": 3,
+          "origin_row_index": 9,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "geometry_matches": true
+      },
+      "scope_labels": [
+        {
+          "claim": {
+            "dimension": "asset_scope",
+            "raw_value": "Total assets under management",
+            "evidence_locator_ids": [
+              "cell_9_0"
+            ]
+          },
+          "source_checks": [
+            {
+              "source_cell": {
+                "ref": "90858afafe1e/t149/9/0",
+                "locator": {
+                  "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                  "table_id": "table_000149",
+                  "row_index": 9,
+                  "column_index": 0,
+                  "origin_row_index": 9,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3
+                },
+                "raw_text": "Total assets under management",
+                "text": "Total assets under management",
+                "header": false
+              },
+              "literal_present": true
+            }
+          ],
+          "exact_alias": "total_assets_under_management"
+        }
+      ],
+      "competitors": [
+        {
+          "status": "PASS",
+          "declared_value": "4,045",
+          "source_text": "4,045",
+          "source_cell": {
+            "ref": "90858afafe1e/t149/9/6",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000149",
+              "row_index": 9,
+              "column_index": 6,
+              "origin_row_index": 9,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "4,045&#160;",
+            "text": "4,045",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000149",
+            "row_index": 9,
+            "column_index": 6,
+            "origin_row_index": 9,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "2024",
+            "source": {
+              "kind": "YEAR",
+              "value": "2024",
+              "source_cells": [
+                {
+                  "ref": "90858afafe1e/t149/2/6",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000149",
+                    "row_index": 2,
+                    "column_index": 6,
+                    "origin_row_index": 2,
+                    "origin_column_index": 6,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2024",
+                  "text": "2024",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "USD",
+            "source": {
+              "unit": "USD",
+              "canonical_unit": "USD",
+              "factor": "1000000000",
+              "normalized_value": "4045000000000",
+              "basis": "SOURCE_BOUND_TABLE_SCALE",
+              "source_cells": [
+                {
+                  "ref": "90858afafe1e/t149/2/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000149",
+                    "row_index": 2,
+                    "column_index": 0,
+                    "origin_row_index": 2,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "December 31, \n(in billions)",
+                  "text": "December 31, (in billions)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        },
+        {
+          "status": "PASS",
+          "declared_value": "3,422",
+          "source_text": "3,422",
+          "source_cell": {
+            "ref": "90858afafe1e/t149/9/9",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000149",
+              "row_index": 9,
+              "column_index": 9,
+              "origin_row_index": 9,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "3,422&#160;",
+            "text": "3,422",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000149",
+            "row_index": 9,
+            "column_index": 9,
+            "origin_row_index": 9,
+            "origin_column_index": 9,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "2023",
+            "source": {
+              "kind": "YEAR",
+              "value": "2023",
+              "source_cells": [
+                {
+                  "ref": "90858afafe1e/t149/2/9",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000149",
+                    "row_index": 2,
+                    "column_index": 9,
+                    "origin_row_index": 2,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2023",
+                  "text": "2023",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "USD",
+            "source": {
+              "unit": "USD",
+              "canonical_unit": "USD",
+              "factor": "1000000000",
+              "normalized_value": "3422000000000",
+              "basis": "SOURCE_BOUND_TABLE_SCALE",
+              "source_cells": [
+                {
+                  "ref": "90858afafe1e/t149/2/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000149",
+                    "row_index": 2,
+                    "column_index": 0,
+                    "origin_row_index": 2,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "December 31, \n(in billions)",
+                  "text": "December 31, (in billions)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        }
+      ],
+      "certified_target_source_cell": {
+        "ref": "90858afafe1e/t149/9/3",
+        "locator": {
+          "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+          "table_id": "table_000149",
+          "row_index": 9,
+          "column_index": 3,
+          "origin_row_index": 9,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "raw_text": "4,791&#160;",
+        "text": "4,791",
+        "header": false
+      },
+      "same_row_cells_with_declared_value": [
+        {
+          "cell": {
+            "ref": "90858afafe1e/t149/9/3",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000149",
+              "row_index": 9,
+              "column_index": 3,
+              "origin_row_index": 9,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "4,791&#160;",
+            "text": "4,791",
+            "header": false
+          },
+          "column_scope": {}
+        }
+      ]
+    },
+    {
+      "fixture_id": "r4_a11_alternate",
+      "original_native_status": "CONTENT_FAILED",
+      "native_first_failure": "Reader response is not strict JSON",
+      "audit_tier": "READ_ONLY_FIELDS_NOT_ADDITIONAL_EXECUTION_TERMINALS",
+      "response_sha256": "e7a0632e530f6cae95fe2f4934e70eef1cd7ee92b1222c2889968a9e8bc64872",
+      "finish_reason": "stop",
+      "channel": {
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "syntax": "FAIL",
+      "saved_json_schema": "NOT_EVALUATED",
+      "syntax_error": {
+        "message": "Expecting ',' delimiter",
+        "offset": 2610
+      },
+      "identity": {
+        "expected": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+        "observed_strings": [
+          "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+          "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519,"
+        ],
+        "status": "FAIL"
+      },
+      "selection": {
+        "status": "PASS",
+        "declared_value": "2,177,708",
+        "source_text": "2,177,708",
+        "source_cell": {
+          "ref": "ce8f8d973497/t69/35/16",
+          "locator": {
+            "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+            "table_id": "table_000069",
+            "row_index": 35,
+            "column_index": 16,
+            "origin_row_index": 35,
+            "origin_column_index": 16,
+            "rowspan": 1,
+            "colspan": 1
+          },
+          "raw_text": "2,177,708&#160;",
+          "text": "2,177,708",
+          "header": false
+        },
+        "model_position": {
+          "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+          "table_id": "table_000069",
+          "row_index": 35,
+          "column_index": 16,
+          "origin_row_index": 35,
+          "origin_column_index": 16,
+          "rowspan": 1,
+          "colspan": 1
+        },
+        "geometry_matches": true
+      },
+      "scope_labels": [
+        {
+          "claim": {
+            "dimension": "asset_scope",
+            "raw_value": "Total assets under management, end of year",
+            "evidence_locator_ids": [
+              "cell_35_0"
+            ]
+          },
+          "source_checks": [
+            {
+              "source_cell": {
+                "ref": "ce8f8d973497/t69/35/0",
+                "locator": {
+                  "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                  "table_id": "table_000069",
+                  "row_index": 35,
+                  "column_index": 0,
+                  "origin_row_index": 35,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3
+                },
+                "raw_text": "Total assets under management, end of year",
+                "text": "Total assets under management, end of year",
+                "header": false
+              },
+              "literal_present": true
+            }
+          ],
+          "exact_alias": null
+        }
+      ],
+      "competitors": [
+        {
+          "status": "PASS",
+          "declared_value": "1,882,211",
+          "source_text": "1,882,211",
+          "source_cell": {
+            "ref": "ce8f8d973497/t69/35/22",
+            "locator": {
+              "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+              "table_id": "table_000069",
+              "row_index": 35,
+              "column_index": 22,
+              "origin_row_index": 35,
+              "origin_column_index": 22,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "1,882,211&#160;",
+            "text": "1,882,211",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+            "table_id": "table_000069",
+            "row_index": 35,
+            "column_index": 22,
+            "origin_row_index": 35,
+            "origin_column_index": 22,
+            "rowspan": 1,
+            "colspan": 1
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2024",
+            "source": {
+              "kind": "YEAR",
+              "value": "2024",
+              "source_cells": [
+                {
+                  "ref": "ce8f8d973497/t69/5/21",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000069",
+                    "row_index": 5,
+                    "column_index": 21,
+                    "origin_row_index": 5,
+                    "origin_column_index": 21,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2024",
+                  "text": "2024",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "USD",
+            "source": {
+              "unit": "USD",
+              "canonical_unit": "USD",
+              "factor": "1000000",
+              "normalized_value": "1882211000000",
+              "basis": "SOURCE_BOUND_TABLE_SCALE",
+              "source_cells": [
+                {
+                  "ref": "ce8f8d973497/t69/5/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000069",
+                    "row_index": 5,
+                    "column_index": 0,
+                    "origin_row_index": 5,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "(Dollars in millions)",
+                  "text": "(Dollars in millions)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        },
+        {
+          "status": "PASS",
+          "declared_value": "2,177,708",
+          "source_text": "2,177,708",
+          "source_cell": {
+            "ref": "ce8f8d973497/t69/21/16",
+            "locator": {
+              "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+              "table_id": "table_000069",
+              "row_index": 21,
+              "column_index": 16,
+              "origin_row_index": 21,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "2,177,708&#160;",
+            "text": "2,177,708",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+            "table_id": "table_000069",
+            "row_index": 21,
+            "column_index": 16,
+            "origin_row_index": 21,
+            "origin_column_index": 16,
+            "rowspan": 1,
+            "colspan": 1
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2025",
+            "source": {
+              "kind": "YEAR",
+              "value": "2025",
+              "source_cells": [
+                {
+                  "ref": "ce8f8d973497/t69/5/15",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000069",
+                    "row_index": 5,
+                    "column_index": 15,
+                    "origin_row_index": 5,
+                    "origin_column_index": 15,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2025",
+                  "text": "2025",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "USD",
+            "source": {
+              "unit": "USD",
+              "canonical_unit": "USD",
+              "factor": "1000000",
+              "normalized_value": "2177708000000",
+              "basis": "SOURCE_BOUND_TABLE_SCALE",
+              "source_cells": [
+                {
+                  "ref": "ce8f8d973497/t69/5/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000069",
+                    "row_index": 5,
+                    "column_index": 0,
+                    "origin_row_index": 5,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "(Dollars in millions)",
+                  "text": "(Dollars in millions)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        },
+        {
+          "status": "FAIL",
+          "declared_value": "2,177,708",
+          "source_text": "1,882,211",
+          "source_cell": {
+            "ref": "ce8f8d973497/t69/30/16",
+            "locator": {
+              "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+              "table_id": "table_000069",
+              "row_index": 30,
+              "column_index": 16,
+              "origin_row_index": 30,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "1,882,211&#160;",
+            "text": "1,882,211",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519,",
+            "table_id": "table_000069",
+            "row_index": 30,
+            "column_index": 16,
+            "origin_row_index": 30,
+            "origin_column_index": 16,
+            "rowspan": 1,
+            "colspan": 1
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2025",
+            "source": {
+              "kind": "YEAR",
+              "value": "2025",
+              "source_cells": [
+                {
+                  "ref": "ce8f8d973497/t69/5/15",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000069",
+                    "row_index": 5,
+                    "column_index": 15,
+                    "origin_row_index": 5,
+                    "origin_column_index": 15,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "2025",
+                  "text": "2025",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "USD",
+            "source": {
+              "unit": "USD",
+              "canonical_unit": "USD",
+              "factor": "1000000",
+              "normalized_value": "1882211000000",
+              "basis": "SOURCE_BOUND_TABLE_SCALE",
+              "source_cells": [
+                {
+                  "ref": "ce8f8d973497/t69/5/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000069",
+                    "row_index": 5,
+                    "column_index": 0,
+                    "origin_row_index": 5,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "(Dollars in millions)",
+                  "text": "(Dollars in millions)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        }
+      ],
+      "certified_target_source_cell": {
+        "ref": "ce8f8d973497/t69/35/16",
+        "locator": {
+          "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+          "table_id": "table_000069",
+          "row_index": 35,
+          "column_index": 16,
+          "origin_row_index": 35,
+          "origin_column_index": 16,
+          "rowspan": 1,
+          "colspan": 1
+        },
+        "raw_text": "2,177,708&#160;",
+        "text": "2,177,708",
+        "header": false
+      },
+      "same_row_cells_with_declared_value": [
+        {
+          "cell": {
+            "ref": "ce8f8d973497/t69/35/16",
+            "locator": {
+              "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+              "table_id": "table_000069",
+              "row_index": 35,
+              "column_index": 16,
+              "origin_row_index": 35,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "2,177,708&#160;",
+            "text": "2,177,708",
+            "header": false
+          },
+          "column_scope": {}
+        }
+      ]
+    },
+    {
+      "fixture_id": "r4_a12_production",
+      "original_native_status": "ACCEPTED",
+      "native_first_failure": null,
+      "audit_tier": "READ_ONLY_FIELDS_NOT_ADDITIONAL_EXECUTION_TERMINALS",
+      "response_sha256": "5ae3114e529cceefb6db51db3b2e087bf69a945c63ce468570e3ab442850af6e",
+      "finish_reason": "stop",
+      "channel": {
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "syntax": "PASS",
+      "saved_json_schema": "PASS",
+      "identity": {
+        "expected": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "observed_strings": [
+          "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110"
+        ],
+        "status": "PASS"
+      },
+      "selection": {
+        "status": "PASS",
+        "declared_value": "40",
+        "source_text": "40",
+        "source_cell": {
+          "ref": "ef9e60c510a9/t280/20/4",
+          "locator": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000280",
+            "row_index": 20,
+            "column_index": 4,
+            "origin_row_index": 20,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1
+          },
+          "raw_text": "40&#160;",
+          "text": "40",
+          "header": false
+        },
+        "model_position": {
+          "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+          "table_id": "table_000280",
+          "row_index": 20,
+          "column_index": 4,
+          "origin_row_index": 20,
+          "origin_column_index": 4,
+          "rowspan": 1,
+          "colspan": 1
+        },
+        "geometry_matches": true
+      },
+      "scope_labels": [],
+      "competitors": [
+        {
+          "status": "PASS",
+          "declared_value": "47",
+          "source_text": "47",
+          "source_cell": {
+            "ref": "ef9e60c510a9/t280/20/25",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000280",
+              "row_index": 20,
+              "column_index": 25,
+              "origin_row_index": 20,
+              "origin_column_index": 25,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "47&#160;",
+            "text": "47",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            "table_id": "table_000280",
+            "row_index": 20,
+            "column_index": 25,
+            "origin_row_index": 20,
+            "origin_column_index": 25,
+            "rowspan": 1,
+            "colspan": 1
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2024",
+            "source": {
+              "kind": "YEAR",
+              "value": "2024",
+              "source_cells": [
+                {
+                  "ref": "ef9e60c510a9/t280/2/24",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000280",
+                    "row_index": 2,
+                    "column_index": 24,
+                    "origin_row_index": 2,
+                    "origin_column_index": 24,
+                    "rowspan": 1,
+                    "colspan": 18
+                  },
+                  "raw_text": "2024",
+                  "text": "2024",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "USD",
+            "source": {
+              "unit": "USD",
+              "canonical_unit": "USD",
+              "factor": "1000000",
+              "normalized_value": "47000000",
+              "basis": "SOURCE_BOUND_TABLE_SCALE",
+              "source_cells": [
+                {
+                  "ref": "ef9e60c510a9/t280/3/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+                    "table_id": "table_000280",
+                    "row_index": 3,
+                    "column_index": 0,
+                    "origin_row_index": 3,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "(in millions)",
+                  "text": "(in millions)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        }
+      ],
+      "certified_target_source_cell": {
+        "ref": "ef9e60c510a9/t280/20/4",
+        "locator": {
+          "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+          "table_id": "table_000280",
+          "row_index": 20,
+          "column_index": 4,
+          "origin_row_index": 20,
+          "origin_column_index": 4,
+          "rowspan": 1,
+          "colspan": 1
+        },
+        "raw_text": "40&#160;",
+        "text": "40",
+        "header": false
+      },
+      "same_row_cells_with_declared_value": [
+        {
+          "cell": {
+            "ref": "ef9e60c510a9/t280/20/4",
+            "locator": {
+              "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+              "table_id": "table_000280",
+              "row_index": 20,
+              "column_index": 4,
+              "origin_row_index": 20,
+              "origin_column_index": 4,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "40&#160;",
+            "text": "40",
+            "header": false
+          },
+          "column_scope": {}
+        }
+      ]
+    },
+    {
+      "fixture_id": "r4_a12_alternate",
+      "original_native_status": "CONTENT_FAILED",
+      "native_first_failure": "Reader response is not strict JSON",
+      "audit_tier": "READ_ONLY_FIELDS_NOT_ADDITIONAL_EXECUTION_TERMINALS",
+      "response_sha256": "a9033ed26ce2eedfdf2594d28d4a3a0ea3790f7e9c5df92a589dfd4463c4c95b",
+      "finish_reason": "stop",
+      "channel": {
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "syntax": "FAIL",
+      "saved_json_schema": "NOT_EVALUATED",
+      "syntax_error": {
+        "message": "Expecting ',' delimiter",
+        "offset": 3460
+      },
+      "identity": {
+        "expected": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+        "observed_strings": [
+          "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134"
+        ],
+        "status": "FAIL"
+      },
+      "selection": {
+        "status": "FAIL",
+        "declared_value": "78",
+        "source_text": "$",
+        "source_cell": {
+          "ref": "df019ae1e1ad/t147/23/15",
+          "locator": {
+            "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+            "table_id": "table_000147",
+            "row_index": 23,
+            "column_index": 15,
+            "origin_row_index": 23,
+            "origin_column_index": 15,
+            "rowspan": 1,
+            "colspan": 1
+          },
+          "raw_text": "$",
+          "text": "$",
+          "header": false
+        },
+        "model_position": {
+          "derived_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+          "table_id": "table_000147",
+          "row_index": 23,
+          "column_index": 15,
+          "origin_row_index": 23,
+          "origin_column_index": 15,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "geometry_matches": false
+      },
+      "scope_labels": [
+        {
+          "claim": {
+            "dimension": "confidence_level",
+            "raw_value": "95 percent",
+            "evidence_locator_ids": [
+              "cell_7_15"
+            ]
+          },
+          "source_checks": [
+            {
+              "source_cell": {
+                "ref": "df019ae1e1ad/t147/7/15",
+                "locator": {
+                  "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                  "table_id": "table_000147",
+                  "row_index": 7,
+                  "column_index": 15,
+                  "origin_row_index": 7,
+                  "origin_column_index": 15,
+                  "rowspan": 1,
+                  "colspan": 3
+                },
+                "raw_text": "95 percent",
+                "text": "95 percent",
+                "header": false
+              },
+              "literal_present": true
+            }
+          ],
+          "exact_alias": "ninety_five_percent"
+        }
+      ],
+      "competitors": [
+        {
+          "status": "PASS",
+          "declared_value": "72",
+          "source_text": "72",
+          "source_cell": {
+            "ref": "df019ae1e1ad/t147/15/9",
+            "locator": {
+              "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+              "table_id": "table_000147",
+              "row_index": 15,
+              "column_index": 9,
+              "origin_row_index": 15,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "72&#160;",
+            "text": "72",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+            "table_id": "table_000147",
+            "row_index": 15,
+            "column_index": 9,
+            "origin_row_index": 15,
+            "origin_column_index": 9,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2025",
+            "source": {
+              "kind": "COLUMN_DATE",
+              "value": "2025-12-31",
+              "source_cells": [
+                {
+                  "ref": "df019ae1e1ad/t147/6/9",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000147",
+                    "row_index": 6,
+                    "column_index": 9,
+                    "origin_row_index": 6,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 9
+                  },
+                  "raw_text": "December 31, 2025",
+                  "text": "December 31, 2025",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "USD",
+            "source": {
+              "unit": "USD",
+              "canonical_unit": "USD",
+              "factor": "1000000",
+              "normalized_value": "72000000",
+              "basis": "SOURCE_BOUND_TABLE_SCALE",
+              "source_cells": [
+                {
+                  "ref": "df019ae1e1ad/t147/7/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000147",
+                    "row_index": 7,
+                    "column_index": 0,
+                    "origin_row_index": 7,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 6
+                  },
+                  "raw_text": "(Dollars in millions)",
+                  "text": "(Dollars in millions)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        },
+        {
+          "status": "PASS",
+          "declared_value": "32",
+          "source_text": "32",
+          "source_cell": {
+            "ref": "df019ae1e1ad/t147/15/15",
+            "locator": {
+              "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+              "table_id": "table_000147",
+              "row_index": 15,
+              "column_index": 15,
+              "origin_row_index": 15,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2
+            },
+            "raw_text": "32&#160;",
+            "text": "32",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+            "table_id": "table_000147",
+            "row_index": 15,
+            "column_index": 15,
+            "origin_row_index": 15,
+            "origin_column_index": 15,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": true,
+          "period": {
+            "declared": "FY2025",
+            "source": {
+              "kind": "COLUMN_DATE",
+              "value": "2025-12-31",
+              "source_cells": [
+                {
+                  "ref": "df019ae1e1ad/t147/6/9",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000147",
+                    "row_index": 6,
+                    "column_index": 9,
+                    "origin_row_index": 6,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 9
+                  },
+                  "raw_text": "December 31, 2025",
+                  "text": "December 31, 2025",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          },
+          "unit": {
+            "declared": "USD",
+            "source": {
+              "unit": "USD",
+              "canonical_unit": "USD",
+              "factor": "1000000",
+              "normalized_value": "32000000",
+              "basis": "SOURCE_BOUND_TABLE_SCALE",
+              "source_cells": [
+                {
+                  "ref": "df019ae1e1ad/t147/7/0",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000147",
+                    "row_index": 7,
+                    "column_index": 0,
+                    "origin_row_index": 7,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 6
+                  },
+                  "raw_text": "(Dollars in millions)",
+                  "text": "(Dollars in millions)",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": true
+          }
+        },
+        {
+          "status": "FAIL",
+          "declared_value": "73",
+          "source_text": "$",
+          "source_cell": {
+            "ref": "df019ae1e1ad/t147/23/33",
+            "locator": {
+              "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+              "table_id": "table_000147",
+              "row_index": 23,
+              "column_index": 33,
+              "origin_row_index": 23,
+              "origin_column_index": 33,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "$",
+            "text": "$",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+            "table_id": "table_000147",
+            "row_index": 23,
+            "column_index": 33,
+            "origin_row_index": 23,
+            "origin_column_index": 33,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": false,
+          "period": {
+            "declared": "FY2025",
+            "source": {
+              "kind": "COLUMN_DATE",
+              "value": "2024-12-31",
+              "source_cells": [
+                {
+                  "ref": "df019ae1e1ad/t147/6/27",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000147",
+                    "row_index": 6,
+                    "column_index": 27,
+                    "origin_row_index": 6,
+                    "origin_column_index": 27,
+                    "rowspan": 1,
+                    "colspan": 9
+                  },
+                  "raw_text": "December 31, 2024",
+                  "text": "December 31, 2024",
+                  "header": false
+                }
+              ]
+            },
+            "consistent": false
+          },
+          "unit": {
+            "declared": "USD",
+            "source": {
+              "unit": "UNKNOWN",
+              "reason": "Cell is not a supported numeric claim"
+            },
+            "consistent": null
+          }
+        },
+        {
+          "status": "FAIL",
+          "declared_value": "38",
+          "source_text": "$",
+          "source_cell": {
+            "ref": "df019ae1e1ad/t147/23/39",
+            "locator": {
+              "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+              "table_id": "table_000147",
+              "row_index": 23,
+              "column_index": 39,
+              "origin_row_index": 23,
+              "origin_column_index": 39,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "$",
+            "text": "$",
+            "header": false
+          },
+          "model_position": {
+            "derived_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+            "table_id": "table_000147",
+            "row_index": 23,
+            "column_index": 39,
+            "origin_row_index": 23,
+            "origin_column_index": 39,
+            "rowspan": 1,
+            "colspan": 2
+          },
+          "geometry_matches": false,
+          "period": {
+            "declared": "FY2024",
+            "source": {
+              "kind": "UNKNOWN",
+              "value": null,
+              "source_cells": []
+            },
+            "consistent": null
+          },
+          "unit": {
+            "declared": "USD",
+            "source": {
+              "unit": "UNKNOWN",
+              "reason": "Cell is not a supported numeric claim"
+            },
+            "consistent": null
+          }
+        }
+      ],
+      "certified_target_source_cell": {
+        "ref": "df019ae1e1ad/t147/23/16",
+        "locator": {
+          "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+          "table_id": "table_000147",
+          "row_index": 23,
+          "column_index": 16,
+          "origin_row_index": 23,
+          "origin_column_index": 16,
+          "rowspan": 1,
+          "colspan": 1
+        },
+        "raw_text": "34&#160;",
+        "text": "34",
+        "header": false
+      },
+      "same_row_cells_with_declared_value": [
+        {
+          "cell": {
+            "ref": "df019ae1e1ad/t147/23/10",
+            "locator": {
+              "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+              "table_id": "table_000147",
+              "row_index": 23,
+              "column_index": 10,
+              "origin_row_index": 23,
+              "origin_column_index": 10,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "78&#160;",
+            "text": "78",
+            "header": false
+          },
+          "column_scope": {
+            "confidence_level": {
+              "value": "ninety_nine_percent",
+              "source_cells": [
+                {
+                  "ref": "df019ae1e1ad/t147/7/9",
+                  "locator": {
+                    "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+                    "table_id": "table_000147",
+                    "row_index": 7,
+                    "column_index": 9,
+                    "origin_row_index": 7,
+                    "origin_column_index": 9,
+                    "rowspan": 1,
+                    "colspan": 3
+                  },
+                  "raw_text": "99 percent",
+                  "text": "99 percent",
+                  "header": false
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "record_type": "R4_DEVELOPMENT_WIRING_RECORDED_VALIDATION",
+  "request_set_id": "sha256:c8608d448f3591c56d79057159e143aaf2506f8d550d9ae2101c98ae6408c42d",
+  "scope_approval": "docs/evidence/r4_development_task_approval.json",
+  "integration_tests": 3,
+  "integration_seconds": 561.285,
+  "recorded_nine_sample_result": {
+    "content_failed": 3,
+    "accepted": 6,
+    "independent_process_replay": "PASS",
+    "real_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "other_recorded_scenarios": [
+    "UNKNOWN: one mock invocation then STOP, no second entry",
+    "Acceptance receipt persistence failure: one mock invocation then STOP, even though error_class is EVIDENCE_FAILURE",
+    "Duplicate plan start rejected; sealed raw-response tamper blocks later entry; formal qualification rejects diagnostic plan"
+  ],
+  "final_additive_artifact_hardening": "Strict payload-field whitelist and rejection of qualification_terminal in diagnostic namespace tested separately after integration; no request or acceptance semantic changes.",
+  "artifact_boundary_tests": 1,
+  "fast_entries": 32,
+  "fast_status": "PASS",
+  "provider_egress_gate": "PASS",
+  "company_literal_gate": "PASS",
+  "qualification_publication_credit": "NONE",
+  "live_provider_calls_so_far": 0,
+  "unchanged": [
+    "requirements/issue_28_v3",
+    "historical failed executions",
+    "r4_run_store failure finalizer",
+    "PR33 head and runtime",
+    "active R3"
+  ],
+  "logs": {
+    "integration.log": {
+      "sha256": "1f976a4e52dbc99653ea9df2846e563f8fa729b5b43bde38433e18a46e41f9ba",
+      "size": 4341
+    },
+    "artifact-boundaries.log": {
+      "sha256": "6d3cac042343962e89a91c7e908a003392cf1280872d278459a7812f95e962fc",
+      "size": 326
+    },
+    "fast-final.json": {
+      "sha256": "36ec83380d7d7efee98f55578225ed3d7bddb43473298913047a31f154189c74",
+      "size": 9634
+    },
+    "egress-gate.json": {
+      "sha256": "da299ca5c8ddb447825b2a15f33ee01a7ba884d426a3ffafef6fbbb8a9df7997",
+      "size": 1796
+    }
+  }
+}
