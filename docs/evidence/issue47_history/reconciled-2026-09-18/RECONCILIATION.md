@@ -110,17 +110,24 @@ EOF
 
 | | positions | share |
 | --- | ---: | ---: |
-| on one of the 16 metrics that have a historical route | 800 | 41% |
-| on one of the other 23 declared metrics | **1,150** | **59%** |
+| on one of the **22** metrics that have a historical route | 1,100 | 56% |
+| on one of the other 17 declared metrics | **850** | **44%** |
 | | **1,950** | |
 
-**No number of SEC requests reaches those 1,150.** They are blocked on a route
-that does not exist yet, not on a document nobody has fetched. Within the 800
-that acquisition can reach: 146 already carry a verified outcome, 624 are
-missing the target filing's own original document, and 144 sit in a period that
-saved submissions metadata does not yet establish. (Those do not sum to 800
-because a position can be missing more than one thing at once — which is the
-reason the matrix reports independent dimensions instead of one status.)
+These were 16 and 800 against 1,150 when this section was first written. The six
+8-K event metrics moved 300 positions across the line, and the section below on
+what the remaining families cost explains why that move was cheap: they were
+held out by a constant and a comment, not by missing machinery. Real exact
+values rose from 67 to 103 and verified outcomes from 146 to 182 in the same
+regeneration, with no new request.
+
+**No number of SEC requests reaches those 850.** They are blocked on a route
+that does not exist yet, not on a document nobody has fetched. Within the 1,100
+that acquisition can reach, 182 already carry a verified outcome; the rest are
+missing the target filing's own original document or sit in a period saved
+submissions metadata does not establish. (Those do not sum, because a position
+can be missing more than one thing at once — which is why the matrix reports
+independent dimensions rather than one status.)
 
 So "how many GETs finish the backfill" is not answerable as asked. Acquisition
 finishes a part of the 800. Finishing the frame also needs 23 more historical
@@ -131,17 +138,17 @@ now out of date rather than wrong: it measures what this branch's coverage tool
 knows about, and the tool predates the native Run chain. Native Runs are counted
 in `../native-run-2026-09-18/native-run-matrix.json` instead.
 
-### "23 routes to implement" is eight families, and one of them is a question
+### "17 routes to implement" is seven families, and one was neither
 
-Saying the remaining 1,150 need 23 routes prices them as if they were alike.
-They are not. Grouped by the module family that implements each metric today —
-which is what a historical successor has to be written against — the 23 fall
-into eight:
+Saying the remaining positions need one route per metric prices them as if
+they were alike. They are not. Grouped by the module family that implements each
+metric today — which is what a historical successor has to be written against —
+the original 23 fell into eight, and the largest of those eight is now wired:
 
 | implementation family | metrics | positions |
 | --- | --- | ---: |
 | `financial_*` (bank measures) | A03, A04, A09, A11, A12, A13 | 300 |
-| `normal_zero_ai_results` / `deterministic_router` (event windows) | C01, E01–E05 | 300 |
+| ~~`normal_zero_ai_results` / `deterministic_router` (event windows)~~ **WIRED** | C01, E01–E05 | ~~300~~ |
 | `normal_text_input_v2` / `normal_text_projection_v2` | C02, D01, D02 | 150 |
 | `governance_*` | C03, C04 | 100 |
 | `capacity_*` | B13, D04 | 100 |
@@ -176,10 +183,23 @@ shards, and a stale or missing shard means the set cannot be shown to be
 complete — which is precisely the JPMorgan defect the 12 snapshot-refresh
 requests in the plan exist to fix.
 
-This is recorded as a question, not a conclusion. Three earlier versions of this
-analysis were wrong because they reasoned from a partial reading, and the way to
-settle this one is to wire C01 behind the existing successor and run it, not to
-write a fourth paragraph about it.
+#### Settled by running it: they are wired
+
+That is what happened. C01 and E01–E05 now resolve EXACT and PUBLISHED on
+Marriott's pinned 2025 window from 10 saved 8-K filings with zero calls, and the
+component rebuilds to the same `component_id`. The pinned 2023 window fails with
+`SAVED_SOURCE_MISSING` naming `d427456d8k.htm` — an acquisition gap of exactly
+the shape every other historical route reports, not a completeness-proof
+problem and not a definitional one.
+
+`_event_sources`, `project_event_result`, `_compiled_event_spec` and
+`calculate_observation_metric` are imported unchanged. The whole change was
+`SUPPORTED_METRICS`, the branch that calls them, and deleting a wrong sentence.
+
+The wired set is 22 metrics, the frame moves from 800 reachable positions to
+1,100, exact values from 67 to 103 and verified outcomes from 146 to 182, all
+without a request. Four earlier versions of this analysis reasoned from a
+partial reading and were wrong; this one was settled by running it.
 
 #### Two earlier versions of this section were wrong
 
