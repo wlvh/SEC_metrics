@@ -823,7 +823,9 @@ Issue #47 历史期间选择与目录：`PYTHONPATH=scripts python3 -m unittest 
 
 原生历史 Run 端到端（需先应用注册补丁）：`HISTORICAL_RUN_MATERIAL_ROOT=/absolute/new/root PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_historical_run_material`。覆盖固定期间选择 → 输入安装（Requirement 为 `issue_47_v1`）→ 原生 Run 创建与冻结 → **独立进程**冻结重放 → 公共行与收据，全程新增调用为 0，并核对该行带的是被固定的年度而不是公司最新年度。
 
-该用例有**两道跳过闸**，第二道是重点：链路需要 `issue_47_v1` 引擎在 `requirement_profile.PROFILE_ENGINES` 中登记并由 `run_store` 分派，那是 `issue_28_v13` 执行授权内两个文件的三处改动，以补丁形式交付在 `docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch`，不在本分支直接应用。补丁未落地时该用例 skip。**skip 不是 PASS，不得按 rc=0 记为通过**；因此它没有登记进 `tools/run_fast_tests_v2.py` 的任何层。已实测：在应用补丁的隔离运行时中该用例通过（111 秒），在本 checkout 中跳过。
+该用例有**两道跳过闸**，第二道是重点：链路需要 `issue_47_v1` 引擎在 `requirement_profile.PROFILE_ENGINES` 中登记并由 `run_store` 分派，那是 `issue_28_v13` 执行授权内两个文件的三处改动，以补丁形式交付在 `docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch`，不在本分支直接应用。补丁未落地时该用例 skip。**skip 不是 PASS，不得按 rc=0 记为通过**；因此它没有登记进 `tools/run_fast_tests_v2.py` 的任何层。已实测：在应用补丁的隔离运行时中两个用例都通过（合计 199 秒），在本 checkout 中两个都跳过。
+
+第二个用例 `test_a_structured_fact_without_a_verified_claim_still_renders_its_evidence` 钉住的是一个真实缺陷，不是假设的。公共行的证据有两条路：一条给带 verified claim id 的观察，一条给不带的观察（结构化 XBRL 事实绑定的是事实本身，不是谁核实过的声明）。`historical_projection` 原先只移植了第一条，于是每个 Company Facts 指标都会得到一个自身 Run 判为 EXACT、却渲染不出行的结果，报 `HISTORICAL_PROJECTION_OBSERVATION_WITHOUT_CLAIMS`。B04 走的是 claim 那条路，所以第一个用例从未碰到它；这是靠把矩阵真正跑起来才发现的，读代码没有发现。用例同时断言该观察确实不带任何 claim id，以免将来某次改动让它走回 claim 分支而断言依旧通过。
 
 同一隔离运行时中另测得：改动后运行时读取**补丁之前安装的 `issue_28_v13` 包**，`issue_28_v11/v12/v13` 的 Requirement、v13 的 Run Requirement 身份与历史输入重建五项探针全部 OK，即注册后继不会作废此前安装的包。代价是 `issue_47_v1` 必须按补丁后的字节记录那两个文件，`issue_28_v13` 的 manifest 与闭包哈希不变，因此一个数据根只能满足两者之一；`tools/vnext_mint_historical_requirement.py` 每次运行都会打印这一点，`--check` 在快照与代码树不一致时失败。
 

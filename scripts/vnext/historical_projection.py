@@ -20,7 +20,7 @@ from .canonical import content_hash, sha256_file, strict_json_file
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_run import REQUIREMENT_ID, replay_case
 from .normal_numeric_projection import (_period_label, _objects, _filings,
-                                        _selected_financial_locators)
+                                        _selected_financial_locators, _raw_value)
 from .normal_source_authority import ROOT
 from .ordinary_projection import POLICY_PATH, _claim_evidence
 from .run_store import _mechanically_replay_open_run, load_frozen_run
@@ -122,16 +122,42 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False):
             metric_fields=publication.METRIC_FIELDS)
     evidence = []
     claims = _claims(prepared)
-    financial_locators = _selected_financial_locators(metric, None)
+    # A structured Company Facts observation is bound to an XBRL fact, not to a
+    # verified claim, so it carries no claim identifiers at all. The ordinary
+    # projector has always had two branches here and this one had only the first,
+    # which made every revenue-route metric fail to render a row its own Run had
+    # already resolved as EXACT. The B13 quantity_statement branch is not ported:
+    # that is a text route, and case["kind"] == "STRUCTURED" is required above.
+    selection = case["results"][metric].get("selection")
+    financial_locators = _selected_financial_locators(metric, selection)
     for observation in ordered:
         binding = observation["source_binding"]
         identifiers = binding.get("verified_claim_ids",
                                   binding.get("matched_verified_claim_ids", []))
-        _need(bool(identifiers), "HISTORICAL_PROJECTION_OBSERVATION_WITHOUT_CLAIMS")
-        for identity in identifiers:
-            _need(identity in claims, "HISTORICAL_PROJECTION_SELECTED_CLAIM_MISSING")
-            evidence.append(_claim_evidence(claims[identity], observation, result, company,
-                                            projection, indexes, str(period["fiscal_year"])))
+        if identifiers:
+            for identity in identifiers:
+                _need(identity in claims, "HISTORICAL_PROJECTION_SELECTED_CLAIM_MISSING")
+                evidence.append(_claim_evidence(claims[identity], observation, result, company,
+                                                projection, indexes, str(period["fiscal_year"])))
+            continue
+        entry = projector._evidence_row(observation=observation, result=result, company=company,
+                                        projection=projection, source_index=indexes["sources"],
+                                        raw_index=indexes["raw"],
+                                        fiscal_year=str(period["fiscal_year"]))
+        entry.update(value_raw=_raw_value(observation, financial_locators, selection),
+                     context_or_dimension=json.dumps(
+                         {"source_binding": binding, "source_cells": financial_locators},
+                         ensure_ascii=False, sort_keys=True),
+                     evidence_quote="Normalized source-derived observation: "
+                                    + entry["evidence_quote"])
+        if "table_locator" in binding:
+            entry.update(value_raw=binding["reported_raw_text"],
+                         context_or_dimension=json.dumps(
+                             {"source_binding": binding,
+                              "source_cells": binding["source_witnesses"]},
+                             ensure_ascii=False, sort_keys=True),
+                         evidence_quote="Source table cell: " + binding["reported_raw_text"])
+        evidence.append(entry)
     label, note = _period_label(result, period)
     row["fiscal_period"] = label
     row["notes"] = " ".join([row.get("notes", ""), note,
@@ -159,9 +185,18 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False):
     if annual["fiscal_year_label_resolution"]["metadata_conflict_retained"]:
         row["notes"] += (" Fiscal label follows the explicit issuer definition; original "
                          "DEI/Company Facts labels remain in the source binding.")
-    if prepared["source_admission"]["source_credit"] == "RECORDED_TEST_ONLY":
+    admission = prepared["source_admission"]
+    recorded = admission["source_credit"] == "RECORDED_TEST_ONLY"
+    # Same two arms the ordinary renderer has. Only the first was ported, which
+    # is harmless while every historical package is built from already-saved
+    # bytes and becomes wrong the first time one is not: a row whose inputs
+    # include newly acquired SEC records would not say so.
+    if recorded:
         row["notes"] += (" Recorded source refresh test using preexisting SEC content; "
                          "no new SEC acquisition.")
+    elif admission.get("real_sec_credit") is True:
+        row["notes"] += (" Selected source inputs include new SEC acquisition records; "
+                         "each input retains its own acquisition identity.")
     _need(set(row) == set(publication.METRIC_FIELDS)
           and all(set(e) == set(publication.EVIDENCE_FIELDS) for e in evidence),
           "HISTORICAL_PUBLIC_ROW_SCHEMA_CHANGED")
@@ -180,5 +215,17 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False):
                "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
                "calls": {"provider": 0, "paid": 0, "sec": 0},
                "production_authorized": False}
+    # And the receipt carries the acquisition identity for the same reason the
+    # ordinary one does: a row that cost requests must be readable as such.
+    if recorded:
+        receipt.update(source_credit="RECORDED_TEST_ONLY",
+                       source_checkpoint_id=admission["checkpoint_id"],
+                       real_sec_credit=False)
+    elif "checkpoint_id" in admission:
+        receipt.update(source_credit=admission["source_credit"],
+                       source_checkpoint_id=admission["checkpoint_id"],
+                       real_sec_credit=admission["real_sec_credit"],
+                       selected_new_request_attempt_ids=admission[
+                           "selected_new_request_attempt_ids"])
     return {"row": row, "evidence": evidence,
             "receipt": {**receipt, "receipt_id": content_hash(value=receipt)}}

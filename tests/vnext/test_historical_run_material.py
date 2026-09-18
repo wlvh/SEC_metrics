@@ -30,6 +30,7 @@ FY2024_END = "2024-12-31"
 # Independent of the selector under test: computed in
 # test_historical_period_results from the original Company Facts JSON.
 MARRIOTT_FY2024_NET_INCOME = "2375000000"
+MARRIOTT_FY2024_REVENUE = "25100000000"
 
 FROZEN_REPLAY = """
 import json, socket, sys
@@ -126,6 +127,61 @@ class HistoricalRunMaterialTest(unittest.TestCase):
         self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, receipt["calls"])
         self.assertFalse(receipt["production_authorized"])
         self.assertTrue(rendered["evidence"])
+
+    def test_a_structured_fact_without_a_verified_claim_still_renders_its_evidence(self):
+        """An XBRL fact is bound to itself, not to a claim someone verified.
+
+        The ordinary renderer has always had two arms here: observations that
+        name verified claim ids, and observations that name none and carry a
+        source-derived evidence row instead. The historical renderer had only
+        the first, so every Company Facts metric produced a Run its own store
+        resolved as EXACT and then refused to render, with
+        HISTORICAL_PROJECTION_OBSERVATION_WITHOUT_CLAIMS. Nothing about the Run
+        was wrong; the row could not be built from it.
+
+        B04 above goes through the claims arm, so it never touched this.
+        """
+        from vnext.historical_projection import render_historical_run
+        from vnext.historical_run import create_historical_run, install_historical_run_inputs
+        from vnext.normal_period_selection import resolve_period_selection
+
+        output = _fresh_output(os.environ["HISTORICAL_RUN_MATERIAL_ROOT"] + "-structured")
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                                 report_end=FY2024_END)
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")), \
+             patch.object(socket, "getaddrinfo", side_effect=AssertionError("DNS forbidden")):
+            installed = install_historical_run_inputs(
+                data_root=output / "data", company_id=MARRIOTT, metric_id="B01",
+                period_selection=selection)
+            run = create_historical_run(data_root=output / "data", run_dir=output / "run",
+                                        company_id=MARRIOTT, metric_id="B01",
+                                        binding_id=installed["binding"]["binding_id"],
+                                        freeze=True)
+            rendered = render_historical_run(data_root=output / "data",
+                                             run_dir=output / "run", frozen=True)
+        self.assertEqual(MARRIOTT_FY2024_REVENUE, run["result"]["value"])
+        self.assertEqual("EXACT", run["result"]["quality"])
+        self.assertEqual(MARRIOTT_FY2024_REVENUE, rendered["row"]["value"])
+        self.assertEqual("2024", rendered["row"]["fiscal_year"])
+
+        # The arm under test is the one that runs, and it is reached because the
+        # binding names no claim at all - not because a claim lookup was skipped.
+        observations = [r for r in installed["installed"]["records"]
+                        if r["record_type"] == "VERIFIED_OBSERVATION"]
+        self.assertTrue(observations)
+        for observation in observations:
+            binding = observation["source_binding"]
+            self.assertFalse(binding.get("verified_claim_ids"))
+            self.assertFalse(binding.get("matched_verified_claim_ids"))
+        self.assertEqual(1, len(rendered["evidence"]))
+        entry = rendered["evidence"][0]
+        self.assertTrue(entry["evidence_quote"].startswith(
+            "Normalized source-derived observation: "), entry["evidence_quote"])
+        # A structured fact has no literal source cell, so its raw value stays
+        # empty rather than being invented from the normalized number.
+        self.assertEqual("", entry["value_raw"])
+        self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, rendered["receipt"]["calls"])
 
 
 if __name__ == "__main__":
