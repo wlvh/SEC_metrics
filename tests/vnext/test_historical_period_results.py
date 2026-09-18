@@ -138,6 +138,55 @@ class HistoricalPeriodSelectionTest(unittest.TestCase):
                          str(absent.exception))
         self.assertEqual("ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_INVALID", str(malformed.exception))
 
+    def test_a_forged_label_claim_is_refused_by_every_wired_adapter(self):
+        """Re-deriving the selection is not what catches a wrong label.
+
+        A selection re-signed with a different `requested_fiscal_year` survives
+        re-derivation, because the request is part of what is being derived: it
+        is echoed into the body and the body hashes to what was claimed. The
+        label is caught one layer further in, by `check_selected_label`, after
+        the frozen policy has read the filing's own DEI contexts. That check has
+        to be on the path of every adapter, not just the one it was written for,
+        so all three are exercised here.
+        """
+        from vnext.historical_accession_results import resolve_historical_accession_metrics
+        from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                                 report_end=FY2024_END)
+            forged = {**selection, "requested_fiscal_year": 2019}
+            forged["selection_id"] = content_hash(
+                value={k: v for k, v in forged.items() if k != "selection_id"})
+            # It is a coherent record: re-derivation reproduces it exactly.
+            rebuilt = restore_period_selection(
+                repo_root=ROOT, company_id=MARRIOTT,
+                target_report_end=forged["target_report_end"],
+                requested_fiscal_year=forged["requested_fiscal_year"])
+            self.assertEqual(forged, rebuilt)
+            refusals = []
+            for call in (
+                lambda: prepare_historical_annual_input(repo_root=ROOT, company_id=MARRIOTT,
+                                                        period_selection=forged),
+                lambda: resolve_historical_companyfacts_metrics(repo_root=ROOT,
+                                                                company_id=MARRIOTT,
+                                                                period_selection=forged),
+                lambda: resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=MARRIOTT,
+                                                          metric_id="B01",
+                                                          period_selection=forged),
+                lambda: resolve_historical_accession_metrics(repo_root=ROOT,
+                                                             company_id=MARRIOTT,
+                                                             period_selection=forged),
+            ):
+                with self.assertRaises(NormalAnnualInputError) as refused:
+                    call()
+                refusals.append(str(refused.exception))
+        self.assertEqual(["ORDINARY_PERIOD_SELECTION_FISCAL_LABEL_CONFLICT"] * 4, refusals)
+        # And the honest request for the same filing still resolves.
+        with original_sources_only():
+            prepared = prepare_historical_annual_input(repo_root=ROOT, company_id=MARRIOTT,
+                                                       period_selection=selection)
+        self.assertEqual(2024, prepared["table_input"]["target_period"]["fiscal_year"])
+
     def test_an_unknown_period_or_request_shape_is_an_explicit_refusal(self):
         with original_sources_only():
             with self.assertRaises(PeriodSelectionError) as both:
