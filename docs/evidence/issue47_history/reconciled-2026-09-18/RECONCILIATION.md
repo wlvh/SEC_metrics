@@ -131,6 +131,39 @@ now out of date rather than wrong: it measures what this branch's coverage tool
 knows about, and the tool predates the native Run chain. Native Runs are counted
 in `../native-run-2026-09-18/native-run-matrix.json` instead.
 
+### And "23 routes to implement" is three different costs
+
+Saying the remaining 1,150 need 23 routes is true and not useful, because those
+23 do not cost the same thing. Split by the route class the ordinary
+presentation policy already assigns each metric:
+
+| what the 23 are | metrics | positions | what it would take |
+| --- | ---: | ---: | --- |
+| structured family — `XBRL`, `DIM_XBRL`, `STD_XBRL`, `DERIVED` | 4 | 200 | extends the machinery the wired 16 already use |
+| text — `MDA`, `10-K`, `8K_ITEM`, `PROXY` | 18 | 900 | one capability that does not exist at all |
+| not in the presentation policy | 1 (`D03`) | 50 | no current route either, so not a historical gap |
+
+The 900 are behind **one** missing thing, not eighteen.
+`historical_projection.render_historical_run` refuses anything that is not
+`STRUCTURED` outright, so no text metric can produce a historical row whatever
+its own adapter does. Building a historical text route once moves all eighteen;
+building four structured ones moves 200 positions and reuses what is here.
+
+The 4 are `A13`, `B06`, `C03`, `C04`; the 18 are `A03 A04 A09 A11 A12 B10 B11
+B13 C01 C02 D01 D02 D04 E01 E02 E03 E04 E05`.
+
+```
+python3 - <<'EOF'
+import json
+b = json.load(open("docs/evidence/issue47_history/reconciled-2026-09-18/coverage-matrix.json"))
+p = json.load(open("config/ordinary_public_projection_v1.json"))["metrics"]
+wired = set(b["wired_historical_metric_ids"])
+STRUCTURED = {"DIM_XBRL", "STD_XBRL", "XBRL", "DERIVED"}
+for m in sorted(set(b["declared_metric_ids"]) - wired):
+    print(m, p.get(m, {}).get("projection", {}).get("source_class", "<absent>"))
+EOF
+```
+
 ## What EXACT means in the coverage matrix, and what it does not
 
 The matrix stops at the metric result. It never renders a public row, so an
