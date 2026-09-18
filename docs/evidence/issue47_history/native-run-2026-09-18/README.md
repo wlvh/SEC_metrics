@@ -215,6 +215,27 @@ that authority-named modules reference and no authority names; these four are
 the ones the Requirement-load chain actually reaches, and the rest are not
 claimed to be reached.
 
+### The event metrics do reach a Run and a row
+
+`event-native-runs.json`. When the event route was committed it was proven only
+through `prepare_historical_run_input`, and that was said at the time rather than
+glossed. It is now proven through the whole chain — installation, a frozen
+native Run, and a rendered public row — for all six metrics on Marriott's pinned
+2025 window, in 527 seconds with `calls` zero throughout:
+
+| metric | Run value | row value | row period | evidence rows |
+| --- | ---: | ---: | --- | ---: |
+| C01 | 3 | 3 | 2025-01-01 → 2025-12-31 | 3 |
+| E01 | 0 | 0 | 2025-01-01 → 2025-12-31 | 1 |
+| E02 | 0 | 0 | 2025-01-01 → 2025-12-31 | 1 |
+| E03 | 3 | 3 | 2025-01-01 → 2025-12-31 | 3 |
+| E04 | 0 | 0 | 2025-01-01 → 2025-12-31 | 1 |
+| E05 | 0 | 0 | 2025-01-01 → 2025-12-31 | 1 |
+
+Every row carries the pinned year, not the company's latest one, and the Run
+value and the row value agree — which is the pair that the B01 defect broke
+without either half looking wrong on its own.
+
 ## What a historical text Run would still cost
 
 `historical_text_input.py` proves the D02 *result* for a pinned period, and this
