@@ -110,6 +110,10 @@ SOURCE_TESTS += ("tests.vnext.test_capacity_text_results",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_d04_native_wiring",)
 SOURCE_TESTS += ("tests.vnext.test_native_assessment_replay",)
+# Issue #47 historical period selection and its catalog resolution read real
+# saved originals, so they belong to the saved-source tier, not the 30s tier.
+SOURCE_TESTS += ("tests.vnext.test_normal_history_catalog",)
+SOURCE_TESTS += ("tests.vnext.test_historical_period_results",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

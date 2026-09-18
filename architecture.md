@@ -993,3 +993,19 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 `ordinary_release_preparation`完整重放选中Run、来源和公共投影，继承未选行的原有字节及证据。`ordinary_isolated_publication`在新私有根使用现有publication核心进行切换/回退/恢复；旧ANNUAL类型只对明确新credit分派新验证器，不能凭调用方JSON获得写入权。规定范围无疑虑/无相关披露只有通过专项原件和Review检查才可选入。当前私有演练不触及actual active，不充当390验收或生产退出证明。
 <!-- capability-anchor: CAPABILITY.ordinary_private_release_draft -->
+
+### 历史期间选择与显式历史输入（Issue #47）
+
+普通路线的期间是隐式的：`select_filing()` 取 `max(reportDate)`，`prepare_case()`、`install_normal_inputs()`、`replay_case()` 和 `render_ordinary_run()` 各自重新准备一次"最新一期"。历史能力因此不能只在前端加年份。
+
+新增一层薄的历史后继，全部为新增文件，不改任何既有文件字节：
+
+- `scripts/vnext/normal_history_catalog.py`：由已保存的 submissions 主索引与必要分片构建完整年度申报目录。分片按窗口有界加载：只在还缺所需年度期末、或某声明分片仍可能覆盖最旧所需期末之后的修订时继续读。未保存、与声明范围不一致或被冻结元数据解析器拒绝的分片保留为显式缺口。目录只产出报告期末，不产出财年标签。
+- `config/normal_period_selection_v1.json` + `scripts/vnext/normal_period_selection.py`：把"公司 + 期间请求"证明成一份 `period_selection`。请求形式只有报告期末或发行人财年；调用方提供的 accession、期间日期或答案一律不接受，调用方回传的 selection 在使用前由源重新推导并要求相等。财年请求通过读候选申报自身 DEI 与冻结标签政策解析，不做日期算术。
+- `scripts/vnext/historical_annual_input.py` / `historical_results.py` / `historical_package.py`：固定期间的年度输入、目录指标解析、异目录安装与冷重放。
+
+**为什么是后继文件而不是可选参数**：`scripts/vnext/normal_annual_input_v2.py`、`normal_run_v3.py`、`normal_companyfacts_results.py`、`normal_run_inputs.py`、`normal_zero_ai_results.py`、`normal_accession_results.py` 属于 `issue_28_v13` 的 `rule_paths`，`normal_annual_input.py` 属于 `issue_28_v11` 的 `rule_paths`。`requirement_profile_v12/v14` 对这些文件做逐字节校验，任一改动会让 `load_requirement_snapshot('issue_28_v13')` 失败，当前普通路线的 `install_normal_inputs()` 立即报 `Normal candidate rule bytes differ`。这与 `normal_annual_input_v2`、`normal_run_v3` 当初以后继文件方式演进是同一条约定。
+
+计算侧没有第二套实现：指标目录、编译 Spec、`_deterministic_metric_graph`、适用性规则、来源读取器、来源准入与 DEI 年度读取器全部原样复用。首版口径保持"当期取当期选定申报、前期取前期选定申报"，不改用后续年报的比较数。凡是以当期为定义域的路线（修订范围、后继注册人利润表、事件窗口）在历史请求下返回明确的实现缺口，不回退到最新期。
+
+**尚未接通**：原生 Run。Run 需要显式 Requirement 身份，`load_run_requirement_snapshot()` 经 `requirement_profile.PROFILE_ENGINES` 解析该身份并调用 `validate_execution_authority()`。注册新的 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内；沿用 `issue_28_v13` 同样不成立，因为其 `replay_case()` 会重新准备最新期并拒绝历史绑定。该问题作为需要决定的阻塞记录在 Issue #47。
