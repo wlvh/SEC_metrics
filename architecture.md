@@ -1009,14 +1009,18 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 计算侧没有第二套实现：指标目录、编译 Spec、`_deterministic_metric_graph`、适用性规则、来源读取器、来源准入与 DEI 年度读取器全部原样复用。首版口径保持"当期取当期选定申报、前期取前期选定申报"，不改用后续年报的比较数。凡是以当期为定义域的路线（修订范围、后继注册人利润表、事件窗口）在历史请求下返回明确的实现缺口，不回退到最新期。
 
-**原生 Run：已测量，不是架构决定**。此前这里记的是"注册新 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内，因此阻塞"。那是读代码推出来的，`tools/vnext_requirement_seam.py` 做了实测，结论要改：
+**原生 Run：范围被缩小，但依然没有接通**。此前这里记的是「注册新 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内，因此阻塞」；上一版改成「已测量，不是架构决定」，那又走过了头。`tools/vnext_requirement_seam.py` 实际证明的范围只有这些：
 
-一份 Requirement 绑定字节有两处，它们在不同地方生效。`new_rule_files` 在 `load_profile_requirement_snapshot` 内对数据根与安装代码根双向校验，改坏它安装本身就失败；`execution_authority.files` 只在 `load_run_requirement_snapshot` 里由 `validate_execution_authority` 校验，改坏它只影响装载或创建 Run。`requirement_profile.py` 与 `run_store.py` 对 `issue_28_v13`、`issue_28_v14` 都**只在执行授权内、不在任何规则集内**。
+一份 Requirement 绑定字节有两处，生效位置不同。`new_rule_files` 在 `load_profile_requirement_snapshot` 内对数据根与安装代码根双向校验，改坏它安装本身就失败；`execution_authority.files` 只在 `load_run_requirement_snapshot` 里由 `validate_execution_authority` 校验，改坏它只影响装载或创建 Run。`requirement_profile.py` 与 `run_store.py` 对 `issue_28_v13`、`issue_28_v14` 都**只在执行授权内、不在任何规则集内**。
 
-接缝本身也不需要新发明：`PROFILE_ENGINES` 已有一个以模块路径字符串登记、仅在快照点名时才导入的世代，旁边写着理由——保留的运行时不必导入自己执行文件集之外的引擎；`run_store` 已按 Run 自身的 `requirement_id` 分派授权校验，并有一条进 `capacity_run` 的 `issue_28_v14` 分支。历史接缝就是同样位置、同样形状的一条引擎登记加一条 `elif`。
+接缝形状仓库已有：`PROFILE_ENGINES` 有一个以模块路径字符串登记、仅在快照点名时才导入的世代；`run_store` 已按 Run 自身的 `requirement_id` 分派授权校验，并有一条进 `capacity_run` 的 `issue_28_v14` 分支。
 
-实测结果：**已安装的包完全不受影响**——同一个包被改动后的运行时读取时，`load_requirement_snapshot`、`load_run_requirement_snapshot` 与历史重放全部通过，因为数据根自带那 360 个授权文件的副本，校验比的是副本而不是 checkout。真正会坏的是**改动之后新安装的包**：安装会把当时的 `requirement_profile.py`／`run_store.py` 复制进去，字节不再等于 `issue_28_v13` 记录的哈希，于是 `Run explicit Requirement identity differs`。要让新包重新可用，就得在那两份 manifest 里重记哈希，而这会改变 `baseline_sha256`、进而改变 `requirement_closure_hash`，让此前安装的包失去 Run 身份。仓库做过这笔交换：`8346c32` 在同一个提交里改了 v13 与 v14 两份 manifest。
+**已证明**：改动这两个文件后，一个**已安装的 v13 数据根**仍能加载其 Requirement、通过 Run 的 Requirement 身份校验、并重建历史输入——因为数据根自带那 360 个授权文件的副本，校验比的是副本。**会坏的**是改动之后**新安装**的包：安装把当时的字节复制进去，不再等于 manifest 记录的哈希，于是 `Run explicit Requirement identity differs`。要让新包可用需在 v13/v14 两份 manifest 里重记哈希，这会改变 `requirement_closure_hash`。仓库做过这笔交换（`8346c32` 同一提交改了两份 manifest）。
 
-所以 #47 需要的不是一个新的架构决定，而是让自己的 Requirement 登记**与 #28 下一次 Requirement 世代同批落地**，把重记哈希这件事按 #28 已经接受的理由做一次，而不是做两次。这是 #28 集成人的排期问题。
+**未证明**：完整的 `issue_28_v14` 兼容（该探针用的 v13 数据根从未持有 `requirement_profile_v15.py`，相关探针记为 NOT_COVERED，不是失败）；以及**任何原生历史 Run**。探针给 `load_run_requirement_snapshot` 的身份三元组取自刚加载的 Requirement，它校验的是 Run 身份的 Requirement 一侧，没有读取任何真实 Run 的记录、审核与终态；随后调用的 `replay_historical_inputs()` 重建的是输入包，不是原生 Run 重放。因此 `native_run_created` / `native_run_wired` 仍然是 `False`。
 
-顺带被同一次测量确定下来的还有一条：把改动后的运行时自身的树当作数据根时，`_external` 以 `B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED` 拒绝。也就是说"代码与数据同在一个目录的自包含包"不是还没做，而是被现有不变量明确禁止。历史材料测试因此按实际证明的内容标注：新进程、无网络、从已安装数据根重建，代码来自开发 checkout。
+「两条登记合入后 12 个后继模块就都不用写」同样未经证明：父版本加载器仍会递归读取父 Requirement，并对规则文件同时检查数据根与代码根的字节。共享规则如何演进要由真实安装与运行来证明。
+
+作废的是把 A/B/C/D 四个方案抛给用户选择这件事；剩下的是一项仍需负责人、提交、兼容验收与 #47 接入方式的工程依赖，记在 #47 而不是一句「等下一个世代」。
+
+**打包路径条件**：`_external` 拒绝的是**代码根与候选数据根重叠**，不是可移植交付。实测四种布局：同一棵树同时充当两者 REFUSED；数据根位于代码根内部 REFUSED；同一交付包下 `runtime/` 与 `data/` 并列 **ADMITTED**；代码根位于数据根内部 ADMITTED。所以「自包含包被现有不变量禁止」是错的，已更正。这只说明路径约束不排除该组织方式，不代表这种交付包已经实现或通过验证：可移植运行时仍需可信身份，数据不能自行指定另一套代码。历史材料测试因此仍按其实际证明的内容标注——新进程、无网络、从已安装数据根重建输入，代码来自开发 checkout。

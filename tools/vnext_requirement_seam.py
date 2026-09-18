@@ -66,15 +66,49 @@ def attempt(name, call):
         out[name] = type(error).__name__ + ": " + str(error)[:120]
 
 
+def engine_installed(rid):
+    """Is the engine this Requirement names present in THIS tree at all?
+
+    A data root carries only the files its own Requirement's execution
+    authority lists, so a v13 data root has never held issue_28_v14's engine
+    or snapshot. Probing it there measures nothing about compatibility, so it
+    is reported as not covered rather than as a failure.
+    """
+    import json
+    directory = root / "requirements" / rid
+    if not directory.is_dir():
+        return "this data root does not carry " + rid + "'s snapshot"
+    try:
+        baseline = json.loads((directory / "baseline_manifest.json").read_text())
+        validator = baseline["validator"]["path"]
+    except Exception as error:                      # noqa: BLE001 - reporting
+        return "baseline unreadable: " + str(error)[:60]
+    if not (root / validator).is_file():
+        return "this data root does not carry " + validator
+    return None
+
+
 loaded = {{}}
 for rid in ("issue_28_v11", "issue_28_v12", "issue_28_v13", "issue_28_v14"):
+    missing = engine_installed(rid)
+    if missing:
+        out["load_requirement_snapshot:" + rid] = "NOT_COVERED: " + missing
+        continue
+
     def load(rid=rid):
         loaded[rid] = load_requirement_snapshot(snapshot_dir=root / "requirements" / rid)
     attempt("load_requirement_snapshot:" + rid, load)
 
-# What a Run record carries is exactly this identity triple, so a Run of that
-# Requirement is simulated from the Requirement itself rather than invented.
+# The identity triple below is the one a Run record carries, taken from the
+# Requirement itself. That checks the Requirement side of a Run's identity and
+# NOT a Run: no Run record, records, review decision or terminal result is read
+# here, and none is created.
 for rid in ("issue_28_v13", "issue_28_v14"):
+    if rid not in loaded:
+        out["load_run_requirement_snapshot:" + rid] = (
+            "NOT_COVERED: its Requirement did not load in this tree")
+        continue
+
     def run_load(rid=rid):
         requirement = loaded[rid]
         load_run_requirement_snapshot(
@@ -186,6 +220,33 @@ def _apply_seam(root: Path):
     return changed
 
 
+def _layout_conditions(work: Path):
+    """Which code-root / data-root layouts the external-root rule admits.
+
+    The three conditions are read off ``b06_new_source._external`` and applied
+    here to directories that exist only for the probe. This measures the path
+    rule alone: a portable delivery still needs a trusted runtime identity, and
+    admitting a layout is not the same as having built one.
+    """
+    def admits(path: Path, root: Path):
+        path, root = path.resolve(), root.resolve()
+        return (path != root and root not in path.parents
+                and not (path / "outputs/active_publication.json").exists())
+
+    package = work / "layout-probe"
+    rows = {}
+    for label, root, data in (
+            ("one_tree_as_both_roots", package / "runtime", package / "runtime"),
+            ("data_root_inside_the_code_root", package / "runtime",
+             package / "runtime" / "data"),
+            ("runtime_and_data_beside_each_other", package / "runtime", package / "data"),
+            ("code_root_inside_the_data_root", package / "runtime", package)):
+        root.mkdir(parents=True, exist_ok=True)
+        data.mkdir(parents=True, exist_ok=True)
+        rows[label] = "ADMITTED" if admits(data, root) else "REFUSED"
+    return rows
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, required=True,
@@ -214,7 +275,7 @@ def main(argv=None):
     # The compatibility question is the already-installed package read by the
     # changed runtime, so the code root moves and the data root does not.
     after = _probe(root=root, scripts=variant / "scripts", **probe)
-    # And the same tree used as both, which the design refuses on purpose.
+    # And the one layout the design refuses: one tree used as both roots.
     self_contained = _probe(root=variant, scripts=variant / "scripts", **probe)
     unchanged = _probe(root=root, **probe)
 
@@ -224,7 +285,10 @@ def main(argv=None):
               "rule_and_authority_membership": _membership(root),
               "installed_package_under_its_own_runtime": before,
               "installed_package_under_the_changed_runtime": after,
-              "changed_runtime_reading_itself_as_a_data_root": self_contained,
+              "changed_runtime_with_one_tree_as_both_roots": self_contained,
+              "package_layout_conditions": _layout_conditions(work),
+              "proves_no_native_run": True,
+              "v14_compatibility_covered": False,
               "original_root_re_measured_afterwards": unchanged,
               "checkout_modified": False, "native_run_created": False,
               "calls": {"provider": 0, "paid": 0, "sec": 0},
@@ -243,9 +307,14 @@ def main(argv=None):
     for name in sorted(set(before) | set(after)):
         print("  %-44s %-30s %-30s"
               % (name, before.get(name, "-")[:30], after.get(name, "-")[:30]))
-    print("\nthe changed runtime asked to treat its own tree as the data root:")
+    print("\nthe one layout the design refuses, one tree as both roots:")
     for name in sorted(self_contained):
         print("  %-44s %s" % (name, self_contained[name][:60]))
+    print("\nwhich code-root / data-root layouts the external-root rule admits:")
+    for name, verdict in sorted(report["package_layout_conditions"].items()):
+        print("  %-44s %s" % (name, verdict))
+    print("\nnot covered by this measurement: full issue_28_v14 compatibility, and "
+          "any native Run.\nNo Run record is read or created here.")
     print("\noriginal root, re-measured after the copy was changed:")
     for name in sorted(unchanged):
         print("  %-44s %s" % (name, unchanged[name][:60]))

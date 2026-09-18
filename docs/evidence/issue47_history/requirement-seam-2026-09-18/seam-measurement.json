@@ -4,13 +4,13 @@
   "provider": 0,
   "sec": 0
  },
- "changed_runtime_reading_itself_as_a_data_root": {
+ "changed_runtime_with_one_tree_as_both_roots": {
   "load_requirement_snapshot:issue_28_v11": "OK",
   "load_requirement_snapshot:issue_28_v12": "OK",
   "load_requirement_snapshot:issue_28_v13": "OK",
-  "load_requirement_snapshot:issue_28_v14": "ModuleNotFoundError: No module named 'vnext.requirement_profile_v15'",
+  "load_requirement_snapshot:issue_28_v14": "NOT_COVERED: this data root does not carry scripts/vnext/requirement_profile_v15.py",
   "load_run_requirement_snapshot:issue_28_v13": "RequirementError: Run explicit Requirement identity differs",
-  "load_run_requirement_snapshot:issue_28_v14": "KeyError: 'issue_28_v14'",
+  "load_run_requirement_snapshot:issue_28_v14": "NOT_COVERED: its Requirement did not load in this tree",
   "replay_historical_inputs": "ValueError: B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED"
  },
  "checkout_modified": false,
@@ -18,33 +18,40 @@
   "load_requirement_snapshot:issue_28_v11": "OK",
   "load_requirement_snapshot:issue_28_v12": "OK",
   "load_requirement_snapshot:issue_28_v13": "OK",
-  "load_requirement_snapshot:issue_28_v14": "CanonicalError: Hash input must be a regular file: /tmp/claude-0/hist-mat2/mar-2024-B04/scripts/vnext/requirement_profile_v15.py",
+  "load_requirement_snapshot:issue_28_v14": "NOT_COVERED: this data root does not carry scripts/vnext/requirement_profile_v15.py",
   "load_run_requirement_snapshot:issue_28_v13": "OK",
-  "load_run_requirement_snapshot:issue_28_v14": "KeyError: 'issue_28_v14'",
+  "load_run_requirement_snapshot:issue_28_v14": "NOT_COVERED: its Requirement did not load in this tree",
   "replay_historical_inputs": "OK"
  },
  "installed_package_under_the_changed_runtime": {
   "load_requirement_snapshot:issue_28_v11": "OK",
   "load_requirement_snapshot:issue_28_v12": "OK",
   "load_requirement_snapshot:issue_28_v13": "OK",
-  "load_requirement_snapshot:issue_28_v14": "ModuleNotFoundError: No module named 'vnext.requirement_profile_v15'",
+  "load_requirement_snapshot:issue_28_v14": "NOT_COVERED: this data root does not carry scripts/vnext/requirement_profile_v15.py",
   "load_run_requirement_snapshot:issue_28_v13": "OK",
-  "load_run_requirement_snapshot:issue_28_v14": "KeyError: 'issue_28_v14'",
+  "load_run_requirement_snapshot:issue_28_v14": "NOT_COVERED: its Requirement did not load in this tree",
   "replay_historical_inputs": "OK"
  },
  "measured_data_root": "/tmp/claude-0/hist-mat2/mar-2024-B04",
- "modified_copy": "/tmp/claude-0/seam3/with-seam",
+ "modified_copy": "/tmp/claude-0/seam4/with-seam",
  "native_run_created": false,
  "original_root_re_measured_afterwards": {
   "load_requirement_snapshot:issue_28_v11": "OK",
   "load_requirement_snapshot:issue_28_v12": "OK",
   "load_requirement_snapshot:issue_28_v13": "OK",
-  "load_requirement_snapshot:issue_28_v14": "CanonicalError: Hash input must be a regular file: /tmp/claude-0/hist-mat2/mar-2024-B04/scripts/vnext/requirement_profile_v15.py",
+  "load_requirement_snapshot:issue_28_v14": "NOT_COVERED: this data root does not carry scripts/vnext/requirement_profile_v15.py",
   "load_run_requirement_snapshot:issue_28_v13": "OK",
-  "load_run_requirement_snapshot:issue_28_v14": "KeyError: 'issue_28_v14'",
+  "load_run_requirement_snapshot:issue_28_v14": "NOT_COVERED: its Requirement did not load in this tree",
   "replay_historical_inputs": "OK"
  },
+ "package_layout_conditions": {
+  "code_root_inside_the_data_root": "ADMITTED",
+  "data_root_inside_the_code_root": "REFUSED",
+  "one_tree_as_both_roots": "REFUSED",
+  "runtime_and_data_beside_each_other": "ADMITTED"
+ },
  "production_authorized": false,
+ "proves_no_native_run": true,
  "record_type": "REQUIREMENT_SEAM_MEASUREMENT",
  "rule_and_authority_membership": {
   "config/issue28_normal_results_v2.json": {
@@ -84,5 +91,6 @@
   "scripts/vnext/historical_zero_ai_results.py",
   "scripts/vnext/normal_history_catalog.py",
   "scripts/vnext/normal_period_selection.py"
- ]
+ ],
+ "v14_compatibility_covered": false
 }
