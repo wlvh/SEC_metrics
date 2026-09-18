@@ -8,10 +8,11 @@ import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
+from vnext.canonical import sha256_file
 from vnext.normal_history_catalog import (HistoryCatalogError, annual_periods,
-                                          load_annual_history,
-                                          plan_historical_sources,
+                                          catalog_identity, load_annual_history,
                                           target_period_candidates)
+from vnext.normal_history_plan import plan_historical_sources
 
 
 FORD_FIVE = ["2025-12-31", "2024-12-31", "2023-12-31", "2022-12-31", "2021-12-31"]
@@ -233,6 +234,36 @@ class HistoryCatalogTest(unittest.TestCase):
         self.assertEqual("SINGLE_ORIGINAL_ANNUAL", amended["original_status"])
         self.assertEqual(1, amended["amendment_count"])
         self.assertEqual("10-K", amended["original"]["form"])
+
+    def test_a_plan_cannot_reach_a_catalog_identity_or_a_selection(self):
+        """Improving the plan must not invalidate packages that read nothing new.
+
+        A catalog identity binds its own reader's bytes on purpose: a replay has
+        to prove the same reading produced the same catalog. While the
+        acquisition planning lived in that same file, every planning fix changed
+        `catalog_module_sha256`, so installed packages whose sources and reading
+        were identical stopped replaying. The planning is a separate module now,
+        and this pins the separation rather than trusting it.
+        """
+        with original_sources_only():
+            history = load_annual_history(repo_root=ROOT, company_id="marriott_international")
+            identity = catalog_identity(history=history)
+        catalog = ROOT / "scripts/vnext/normal_history_catalog.py"
+        plan = ROOT / "scripts/vnext/normal_history_plan.py"
+        self.assertTrue(plan.is_file())
+        # The identity binds the reader, and only the reader.
+        self.assertEqual(sha256_file(path=catalog), identity["catalog_module_sha256"])
+        self.assertNotIn(sha256_file(path=plan), identity.values())
+        # No plan byte can reach a catalog or a selection, because neither the
+        # reader nor the selector imports the planner. Prose may name it; an
+        # import may not.
+        for module in (catalog, ROOT / "scripts/vnext/normal_period_selection.py"):
+            imports = [line for line in module.read_text().splitlines()
+                       if line.startswith(("import ", "from ")) or " import " in line]
+            self.assertEqual([], [line for line in imports if "normal_history_plan" in line],
+                             module.name)
+        # And the planner is a consumer of the reader, never the reverse.
+        self.assertIn("from .normal_history_catalog import", plan.read_text())
 
     def test_an_invalid_window_or_company_is_an_explicit_refusal(self):
         with original_sources_only():

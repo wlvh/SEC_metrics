@@ -28,7 +28,7 @@ from pathlib import Path
 
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_annual_input import _registry_rows
-from .normal_history_catalog import plan_historical_sources
+from .normal_history_plan import plan_historical_sources
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
 from .sources import resolve_repository_file

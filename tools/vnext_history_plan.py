@@ -8,7 +8,7 @@ Purpose:
 
 Call relationships:
     Developers and the Issue #47 evidence archive call this script. It calls
-    ``scripts/vnext/normal_history_catalog.py`` and writes one JSON report.
+    ``scripts/vnext/normal_history_plan.py`` and writes one JSON report.
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
-from vnext.normal_history_catalog import inspect_historical_plans  # noqa: E402
+from vnext.normal_history_plan import inspect_historical_plans  # noqa: E402
 
 
 def _summary(report):

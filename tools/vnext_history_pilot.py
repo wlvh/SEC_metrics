@@ -29,7 +29,7 @@ if str(REPO_ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 from vnext.historical_results import resolve_historical_companyfacts_metrics  # noqa: E402
-from vnext.normal_history_catalog import plan_historical_sources  # noqa: E402
+from vnext.normal_history_plan import plan_historical_sources  # noqa: E402
 from vnext.normal_period_selection import resolve_period_selection  # noqa: E402
 
 
