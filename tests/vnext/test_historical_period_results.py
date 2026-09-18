@@ -309,6 +309,29 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
         self.assertEqual("HISTORICAL_ZERO_AI_METRIC_NOT_WIRED:C01", str(event.exception))
         self.assertEqual("IMPLEMENTATION_GAP", event.exception.category)
 
+    def test_an_instant_fact_is_read_at_the_selected_period_end(self):
+        from vnext.historical_accession_results import resolve_historical_accession_metrics
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id="salesforce",
+                                                 report_end="2026-01-31")
+            component = resolve_historical_accession_metrics(repo_root=ROOT,
+                                                             company_id="salesforce",
+                                                             period_selection=selection)
+        assets = component["metrics"]["B12"]["result"]
+        self.assertEqual("EXACT", assets["quality"])
+        self.assertEqual("72400000000", assets["value"])
+        # An instant is measured at the selected period end, not over a span.
+        self.assertEqual(("2026-01-31", "2026-01-31"),
+                         (assets["period_start"], assets["period_end"]))
+        # The installed applicability rules still decide structural scope; a
+        # bank-only measure stays N_A_STRUCTURAL rather than becoming missing.
+        for metric_id in ("A01", "A02"):
+            result = component["metrics"][metric_id]["result"]
+            self.assertEqual("N_A_STRUCTURAL", result["applicability"])
+            self.assertEqual("TRAIT_NOT_APPLICABLE", result["reason_code"])
+        self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, component["calls"])
+        self.assertFalse(component["latest_restated_values_used"])
+
     def test_a_run_input_carries_the_selection_and_the_installed_spec(self):
         with original_sources_only():
             selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,

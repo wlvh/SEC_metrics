@@ -40,7 +40,9 @@ RECORD_TYPE = "HISTORICAL_COVERAGE_MATRIX"
 WIRED_COMPANYFACTS_METRICS = ("A05", "A06", "A07", "A08", "A10",
                               "B02", "B04", "B05", "B07", "B08", "B09")
 WIRED_REVENUE_METRICS = ("B01", "B03")
-WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS))
+WIRED_ACCESSION_METRICS = ("A01", "A02", "B12")
+WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS
+                                        + WIRED_ACCESSION_METRICS))
 
 
 class CoverageError(ValueError):
@@ -100,8 +102,8 @@ def _resolved_rows(*, repo_root, company_id, selection, metrics):
                           "category": getattr(error, "category", "IMPLEMENTATION_GAP")}
     rows = {}
     for metric_id in WIRED_REVENUE_METRICS:
-        # The revenue route is its own source adapter; a limitation there is that
-        # metric's own outcome and must not remove the catalog metrics.
+        # Each adapter is its own route; a limitation in one is that metric's own
+        # outcome and must not remove the metrics the other routes resolved.
         try:
             revenue = resolve_historical_zero_ai_metric(repo_root=repo_root,
                                                         company_id=company_id,
@@ -109,6 +111,18 @@ def _resolved_rows(*, repo_root, company_id, selection, metrics):
                                                         period_selection=selection)
             rows[metric_id] = _row(revenue["result"])
         except (ValueError, KeyError, TypeError, OSError) as error:
+            rows[metric_id] = {"status": "HISTORICAL_ROUTE_NOT_WIRED", "reason": str(error),
+                               "error_type": type(error).__name__,
+                               "category": getattr(error, "category", "IMPLEMENTATION_GAP")}
+    try:
+        from .historical_accession_results import resolve_historical_accession_metrics
+        instants = resolve_historical_accession_metrics(repo_root=repo_root,
+                                                        company_id=company_id,
+                                                        period_selection=selection)
+        for metric_id in WIRED_ACCESSION_METRICS:
+            rows[metric_id] = _row(instants["metrics"][metric_id]["result"])
+    except (ValueError, KeyError, TypeError, OSError) as error:
+        for metric_id in WIRED_ACCESSION_METRICS:
             rows[metric_id] = {"status": "HISTORICAL_ROUTE_NOT_WIRED", "reason": str(error),
                                "error_type": type(error).__name__,
                                "category": getattr(error, "category", "IMPLEMENTATION_GAP")}
