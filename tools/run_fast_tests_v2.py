@@ -115,6 +115,11 @@ SOURCE_TESTS += ("tests.vnext.test_native_assessment_replay",)
 SOURCE_TESTS += ("tests.vnext.test_normal_history_catalog",)
 SOURCE_TESTS += ("tests.vnext.test_historical_period_results",)
 SOURCE_TESTS += ("tests.vnext.test_historical_coverage",)
+# This one reads no source material at all - it hashes the twelve rule files the
+# issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
+# because the snapshot has already drifted twice behind a rule-file change, and
+# a README asking the author to run --check did not stop either one.
+FAST_TESTS += ("tests.vnext.test_historical_requirement_snapshot",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
