@@ -21,25 +21,37 @@ from sec_urls import companyfacts_url, submissions_url
 
 from .annual_update import AnnualUpdateError
 from .batch_workflow import BatchWorkflowError, _structured_concepts
-from .calculator import calculate_metric, withheld_metric_result
+from .calculator import (calculate_metric, calculate_observation_metric,
+                         withheld_metric_result)
 from .canonical import content_hash, sha256_file
 from .historical_annual_input import prepare_historical_annual_input
 from .normal_annual_input_v2 import exact_json_value
 from .normal_governance_input import _Sources, NormalGovernanceInputError
-from .normal_zero_ai_results import (B01_SPEC_PATH, B03_SPEC_PATH, NormalZeroAiError,
-                                     _authority, _exact_set)
+from .normal_zero_ai_results import (B01_SPEC_PATH, B03_SPEC_PATH, EVENT_METRICS,
+                                     NormalZeroAiError, _authority, _compiled_event_spec,
+                                     _event_sources, _exact_set)
+from .observations import structured_observation
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .sources import companyfacts_structured_facts, SourceError
 from .specs import compile_spec_file
 from .traits import repository_company_traits
-from .deterministic_router import adapt_companyfacts
+from .deterministic_router import (adapt_companyfacts, load_event_route_catalog,
+                                   project_event_result)
 
 
 RECORD_TYPE = "HISTORICAL_ZERO_AI_SOURCE_RESULT"
-SUPPORTED_METRICS = ("B01", "B03")
+SUPPORTED_METRICS = ("B01", "B03", *EVENT_METRICS)
 _SOURCE_ERRORS = (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateError,
                   BatchWorkflowError, SourceError)
+
+
+class _EventRouteResolved(Exception):
+    """Control flow only: the event branch finished and skips the facts branch.
+
+    Raised and caught inside one function so the two routes keep the same
+    ``except`` clause for real source failures rather than duplicating it.
+    """
 
 
 def _need(condition, reason, category="SOURCE_INTEGRITY_ERROR"):
@@ -74,18 +86,62 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                                role="companyfacts", media_type="application/json")
     traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
     dependency_specs = {}
-    spec_path = B01_SPEC_PATH if metric_id == "B01" else B03_SPEC_PATH
-    if metric_id == "B03":
-        dependency_specs["B01"] = compile_spec_file(path=repo_root / B01_SPEC_PATH,
-                                                    dependency_specs={})
-    spec = compile_spec_file(path=repo_root / spec_path, dependency_specs=dependency_specs)
-    scope = {"entity_scope": "registrant", "period_basis": "source_annual_duration"}
+    catalog = None
+    if metric_id in EVENT_METRICS:
+        # The event window is the pinned period's own start and end. Nothing
+        # here reads "today": _event_sources takes the window from
+        # prepared["table_input"]["target_period"], which historical_annual_input
+        # sets to the selected period rather than the latest one.
+        catalog = load_event_route_catalog(repo_root=repo_root)
+        spec_path = None
+        spec_origin = {"catalog_path": "catalog/event_routes.json", "metric_id": metric_id}
+        spec = _compiled_event_spec(metric_id=metric_id, route=catalog["routes"][metric_id])
+        scope = {"coverage": "fiscal_year_source_set", "fiscal_year": period["fiscal_year"],
+                 "shared_claim_group_id": catalog["routes"][metric_id]["shared_claim_group_id"]}
+    else:
+        spec_path = B01_SPEC_PATH if metric_id == "B01" else B03_SPEC_PATH
+        spec_origin = {"spec_path": spec_path}
+        if metric_id == "B03":
+            dependency_specs["B01"] = compile_spec_file(path=repo_root / B01_SPEC_PATH,
+                                                        dependency_specs={})
+        spec = compile_spec_file(path=repo_root / spec_path, dependency_specs=dependency_specs)
+        scope = {"entity_scope": "registrant", "period_basis": "source_annual_duration"}
     target = {"company_id": company_id, "period_start": period["period_start"],
               "period_end": period["period_end"], "scope": scope,
               "scope_key": scope_key(scope=scope)}
     claims, source_sets, observations, dependency_records = [], [], [], []
+    filings = [prepared["filing"]]
     selection = {}
     try:
+        if metric_id in EVENT_METRICS:
+            claims, source_sets, events = _event_sources(
+                repo_root=repo_root, reader=reader, prepared=prepared, inventory=inventory)
+            filings.extend(events)
+            graph = project_event_result(
+                metric_id=metric_id, claims=claims, source_set_manifest=source_sets[-1],
+                inventory_source_reference=inventory["source_reference"],
+                target_period=period, catalog=catalog)
+            original = graph["observation"]
+            # The inventory reference and the event collection are distinct
+            # roles, exactly as the current route keeps them.
+            binding = {**original["source_binding"],
+                       "source_role": inventory["source_reference"]["source_role"],
+                       "source_set_role": source_sets[-1]["source_role"]}
+            observation = structured_observation(
+                metric_id=metric_id, semantic_role=original["semantic_role"],
+                company_id=company_id, period_start=period["period_start"],
+                period_end=period["period_end"], scope=original["scope"],
+                value=original["value"], unit=original["unit"],
+                quality=original["quality"], source_binding=binding)
+            result, trace = calculate_observation_metric(
+                compiled_spec=spec, target=target, company_traits=traits,
+                observation=observation)
+            observations = [observation]
+            selection = {"reason_code": result["reason_code"],
+                         "matched_verified_claim_ids": graph["matched_verified_claim_ids"],
+                         "source_event_accessions": sorted({f["accessionNumber"]
+                                                            for f in events})}
+            raise _EventRouteResolved
         manifest = _exact_set(prepared, inventory, facts_source, "companyfacts")
         source_sets = [manifest]
         approved = sorted(set(_structured_concepts(compiled_spec=spec)) | {
@@ -115,6 +171,8 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                      "source_reported_periods": sorted({(f["period_start"], f["period_end"])
                                                         for f in facts}),
                      "reason_code": result["reason_code"]}
+    except _EventRouteResolved:
+        pass
     except _SOURCE_ERRORS as error:
         reason = str(error)
         result, trace = withheld_metric_result(compiled_spec=spec, target=target,
@@ -129,7 +187,7 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     source_records = list(reader.records.values())
     input_binding = {"prepared_input": prepared, "target": target, "target_period": period,
                      "period_selection": period_selection, "amendment_input": None,
-                     "spec_origin": {"spec_path": spec_path},
+                     "spec_origin": spec_origin,
                      "spec_closure_hash": spec["spec_closure_hash"],
                      "authority_file_hashes": authority,
                      "dependency_spec_closure_hashes": {key: value["spec_closure_hash"]
@@ -141,7 +199,7 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                      "resolver_sha256": sha256_file(path=Path(__file__))}
     body = {"record_type": RECORD_TYPE, "company_id": company_id, "metric_id": metric_id,
             "period_selection": period_selection, "spec_path": spec_path,
-            "spec_origin": {"spec_path": spec_path}, "compiled_spec": spec,
+            "spec_origin": spec_origin, "compiled_spec": spec,
             "authority_file_hashes": authority, "dependency_specs": dependency_specs,
             "dependency_records": dependency_records, "input_binding": input_binding,
             "prepared_input": prepared, "target_period": period, "target": target,
@@ -149,7 +207,7 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
             "source_references": [r for r in source_records
                                   if r["record_type"] == "SOURCE_REFERENCE"],
             "source_proofs": proofs, "source_admission": admission,
-            "source_set_manifests": source_sets, "filings": [prepared["filing"]],
+            "source_set_manifests": source_sets, "filings": filings,
             "claims": claims, "selection": selection, "observations": observations,
             "result": result, "trace": trace,
             "records": list({content_hash(value=r): r for r in

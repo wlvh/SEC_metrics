@@ -198,13 +198,15 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     the frozen current ones. Only the period is explicit.
     """
     from .historical_accession_results import resolve_historical_accession_metrics
-    from .historical_zero_ai_results import (SUPPORTED_METRICS as REVENUE_METRICS,
+    # Revenue and the 8-K event windows share one adapter, as they do in the
+    # current route, so this follows that module's own supported set.
+    from .historical_zero_ai_results import (SUPPORTED_METRICS as ZERO_AI_METRICS,
                                              resolve_historical_zero_ai_metric)
     ACCESSION_METRICS = ("A01", "A02", "B12")
     specifications = validate_ordinary_spec_files(repo_root=repo_root)
     _need(metric_id in specifications, "HISTORICAL_RUN_METRIC_NOT_IN_ZERO_AI_SET")
     expected_ids = {metric_id, *specifications[metric_id]["compiled_spec"]["compiled"]["dependencies"]}
-    if metric_id in REVENUE_METRICS:
+    if metric_id in ZERO_AI_METRICS:
         component = resolve_historical_zero_ai_metric(repo_root=repo_root, company_id=company_id,
                                                       metric_id=metric_id,
                                                       period_selection=period_selection)

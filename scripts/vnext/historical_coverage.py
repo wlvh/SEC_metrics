@@ -41,8 +41,13 @@ WIRED_COMPANYFACTS_METRICS = ("A05", "A06", "A07", "A08", "A10",
                               "B02", "B04", "B05", "B07", "B08", "B09")
 WIRED_REVENUE_METRICS = ("B01", "B03")
 WIRED_ACCESSION_METRICS = ("A01", "A02", "B12")
+# The 8-K event windows. Their window is the pinned period's own start and end,
+# taken from prepare_historical_annual_input's target_period, so nothing here
+# reads the latest filing. They share historical_zero_ai_results with the
+# revenue route exactly as they share normal_zero_ai_results in the current one.
+WIRED_EVENT_METRICS = ("C01", "E01", "E02", "E03", "E04", "E05")
 WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS
-                                        + WIRED_ACCESSION_METRICS))
+                                        + WIRED_ACCESSION_METRICS + WIRED_EVENT_METRICS))
 
 
 class CoverageError(ValueError):
@@ -126,6 +131,20 @@ def _adapter_rows(*, repo_root, company_id, selection):
         except (ValueError, KeyError, TypeError, OSError) as error:
             detail = failed(error)
             adapters["revenue"] = detail
+            rows[metric_id] = {"status": _blocked_status(detail), **detail}
+    # Each event metric is its own route over the same 8-K window, so one
+    # metric's limitation is that metric's outcome and not the window's.
+    for metric_id in WIRED_EVENT_METRICS:
+        try:
+            event = resolve_historical_zero_ai_metric(repo_root=repo_root,
+                                                      company_id=company_id,
+                                                      metric_id=metric_id,
+                                                      period_selection=selection)
+            rows[metric_id] = _row(event["result"])
+            adapters.setdefault("event_window", None)
+        except (ValueError, KeyError, TypeError, OSError) as error:
+            detail = failed(error)
+            adapters["event_window"] = detail
             rows[metric_id] = {"status": _blocked_status(detail), **detail}
     try:
         instants = resolve_historical_accession_metrics(repo_root=repo_root,
@@ -211,6 +230,11 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
                     first, detail = "HISTORICAL_ROUTE_NOT_WIRED", {
                         "note": "no historical route for this metric yet"}
                 else:
+                    # Every wired metric must have been given a row above. A
+                    # missing one means an adapter was added to the wired set
+                    # without being run here, which is a defect in this builder
+                    # rather than something to report as a metric outcome.
+                    _need(row is not None, "COVERAGE_WIRED_METRIC_HAS_NO_ADAPTER:" + metric_id)
                     first, detail = row["status"], row
                 positions.append({
                     "company_id": company_id, "report_end": report_end,

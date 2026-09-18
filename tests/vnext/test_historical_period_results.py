@@ -469,17 +469,69 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
             self.assertFalse(component["latest_restated_values_used"])
             self.assertEqual("NOT_CREATED", component["native_run_status"])
 
-    def test_an_unwired_revenue_route_variant_is_an_explicit_gap(self):
+    def test_an_event_window_follows_the_pinned_period_and_not_the_latest_one(self):
+        """The 8-K window is the selected year's, and this is why it is wired.
+
+        This case previously asserted that C01 raised
+        HISTORICAL_ZERO_AI_METRIC_NOT_WIRED, and the module's docstring gave the
+        reason: an event window is "defined relative to the current period", so
+        answering one from today's latest filing would be wrong. Reading
+        ``_event_sources`` says otherwise. The window it discovers filings in is
+        ``prepared["table_input"]["target_period"]``'s own start and end, and
+        ``prepare_historical_annual_input`` pins that field to the selected
+        period. Nothing on the path consults the latest filing.
+
+        So the assertion is inverted rather than deleted: the window must be the
+        pinned year's, and it must differ between two pinned years of the same
+        company. A route that silently answered from today would pass the first
+        check and fail the second.
+        """
         from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
-        from vnext.normal_zero_ai_results import NormalZeroAiError
         with original_sources_only():
             selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
                                                  report_end=FY2024_END)
-            with self.assertRaises(NormalZeroAiError) as event:
-                resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=MARRIOTT,
-                                                  metric_id="C01", period_selection=selection)
-        self.assertEqual("HISTORICAL_ZERO_AI_METRIC_NOT_WIRED:C01", str(event.exception))
-        self.assertEqual("IMPLEMENTATION_GAP", event.exception.category)
+            earlier = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                               report_end="2023-12-31")
+            current = resolve_historical_zero_ai_metric(
+                repo_root=ROOT, company_id=MARRIOTT, metric_id="C01",
+                period_selection=selection)
+            prior = resolve_historical_zero_ai_metric(
+                repo_root=ROOT, company_id=MARRIOTT, metric_id="C01",
+                period_selection=earlier)
+        self.assertEqual(("2024-01-01", "2024-12-31"),
+                         (current["target_period"]["period_start"],
+                          current["target_period"]["period_end"]))
+        self.assertEqual(("2023-01-01", "2023-12-31"),
+                         (prior["target_period"]["period_start"],
+                          prior["target_period"]["period_end"]))
+        self.assertNotEqual(current["component_id"], prior["component_id"])
+        for component in (current, prior):
+            self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, component["calls"])
+            self.assertEqual("NOT_CREATED", component["native_run_status"])
+            self.assertFalse(component["latest_restated_values_used"])
+            self.assertEqual({"catalog_path": "catalog/event_routes.json", "metric_id": "C01"},
+                             component["spec_origin"])
+
+    def test_a_missing_event_document_is_a_named_source_gap_not_a_wiring_gap(self):
+        """And where the route cannot answer, it says which file is missing.
+
+        Marriott's 2023 window needs an 8-K this repository has not saved. That
+        is the same shape of limitation every other historical route reports -
+        a named document - rather than a claim that the metric has no route.
+        """
+        from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
+        with original_sources_only():
+            earlier = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                               report_end="2023-12-31")
+            prior = resolve_historical_zero_ai_metric(
+                repo_root=ROOT, company_id=MARRIOTT, metric_id="C01",
+                period_selection=earlier)
+        selection = prior["selection"]
+        self.assertEqual("SOURCE_UNAVAILABLE", selection["category"])
+        self.assertTrue(selection["reason"].startswith("SAVED_SOURCE_MISSING:"),
+                        selection["reason"])
+        self.assertIn("8k", selection["reason"].rsplit("/", 1)[-1].lower())
+        self.assertEqual("WITHHELD", prior["result"]["publication"])
 
     def test_a_restated_comparative_does_not_reach_the_earlier_period(self):
         """A real restatement in the repository's own saved Company Facts.
