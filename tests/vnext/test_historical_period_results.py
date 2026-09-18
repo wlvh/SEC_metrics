@@ -19,6 +19,7 @@ from vnext.historical_results import (prepare_historical_run_input,
 from vnext.normal_annual_input import NormalAnnualInputError
 from vnext.normal_annual_input_v2 import prepare_saved_annual_input as current_annual_input
 from vnext.normal_period_selection import (PeriodSelectionError, resolve_period_selection,
+                                           restore_period_selection,
                                            selected_historical_filing)
 
 
@@ -97,6 +98,45 @@ class HistoricalPeriodSelectionTest(unittest.TestCase):
         self.assertTrue(str(unreadable).startswith(
             "ORDINARY_PERIOD_SELECTION_CANDIDATE_SOURCE_UNAVAILABLE:"))
         self.assertEqual("SOURCE_UNAVAILABLE", unreadable.category)
+
+    def test_a_label_request_survives_being_stored_and_restored(self):
+        """A replay restores the request it installed, both halves of it.
+
+        The fiscal-year label is part of the selection identity, so a package
+        installed by label must be restorable by label. Restoring only the
+        report end rebuilds a different selection, which is exactly the
+        mismatch a replay would have reported as a changed period.
+        """
+        with original_sources_only():
+            asked = resolve_period_selection(repo_root=ROOT, company_id="salesforce",
+                                             fiscal_year=2026)
+            restored = restore_period_selection(
+                repo_root=ROOT, company_id="salesforce",
+                target_report_end=asked["target_report_end"],
+                requested_fiscal_year=asked["requested_fiscal_year"])
+            end_only = restore_period_selection(repo_root=ROOT, company_id="salesforce",
+                                                target_report_end=asked["target_report_end"])
+            by_end = resolve_period_selection(repo_root=ROOT, company_id="salesforce",
+                                              report_end=asked["target_report_end"])
+        self.assertEqual(asked, restored)
+        self.assertEqual(asked["selection_id"], restored["selection_id"])
+        # Same filing, different request, therefore a different identity.
+        self.assertNotEqual(asked["selection_id"], end_only["selection_id"])
+        self.assertEqual(by_end, end_only)
+        self.assertEqual(asked["current_filing"], end_only["current_filing"])
+        # A restored request is still re-derived from source, not trusted.
+        with original_sources_only():
+            with self.assertRaises(PeriodSelectionError) as absent:
+                restore_period_selection(repo_root=ROOT, company_id="salesforce",
+                                         target_report_end="2019-12-30",
+                                         requested_fiscal_year=2026)
+            with self.assertRaises(PeriodSelectionError) as malformed:
+                restore_period_selection(repo_root=ROOT, company_id="salesforce",
+                                         target_report_end=asked["target_report_end"],
+                                         requested_fiscal_year="2026")
+        self.assertEqual("ORDINARY_PERIOD_SELECTION_REPORT_END_NOT_IN_SAVED_SUBMISSIONS",
+                         str(absent.exception))
+        self.assertEqual("ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_INVALID", str(malformed.exception))
 
     def test_an_unknown_period_or_request_shape_is_an_explicit_refusal(self):
         with original_sources_only():

@@ -173,6 +173,33 @@ def resolve_period_selection(*, repo_root: Path, company_id: str, report_end=Non
                    requested_fiscal_year=fiscal_year)
 
 
+def restore_period_selection(*, repo_root: Path, company_id: str, target_report_end: str,
+                             requested_fiscal_year=None):
+    """Rebuild a selection that was already resolved, from its own recorded request.
+
+    A replay restores the request that was installed, not a fresh one. A period
+    installed as an issuer fiscal year keeps that label inside its identity, so
+    re-deriving it from the report end alone produces a different selection and
+    would reject a valid package for a difference that is not a change in the
+    sources.
+
+    The body is rebuilt from saved source, so a recorded request cannot
+    introduce a different filing, and the label claim is re-proven downstream
+    against the target filing's own DEI contexts by ``check_selected_label``.
+    What this deliberately does not re-prove is that no neighbouring report end
+    now carries the same label: that neighbour is an input of no period here and
+    is absent from an installed data root by design. Label uniqueness is proven
+    once, when the fiscal year is first resolved against the complete saved
+    submissions history.
+    """
+    _need(requested_fiscal_year is None
+          or (type(requested_fiscal_year) is int and 1900 <= requested_fiscal_year <= 9998),
+          "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_INVALID", "IMPLEMENTATION_GAP")
+    return _derive(repo_root=repo_root, company_id=company_id,
+                   report_end=_report_end(target_report_end),
+                   requested_fiscal_year=requested_fiscal_year)
+
+
 def issuer_fiscal_year(*, repo_root: Path, company_id: str, report_end: str):
     """Resolve one selected period's issuer fiscal-year label from its own source.
 

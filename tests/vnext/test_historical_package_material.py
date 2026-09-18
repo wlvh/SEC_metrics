@@ -1,4 +1,13 @@
-"""An installed historical period replays cold from its own data root.
+"""An installed historical period rebuilds from its own data root, in a new process.
+
+What this proves, precisely: a fresh interpreter with no warm state and no
+network reads the installed data root and reproduces the same binding identity,
+period and value. What it does not prove, and is not claimed to prove, is a
+self-contained package: the replaying process imports ``vnext`` from this
+development checkout, so the code comes from the checkout while only the
+inputs, sources and rule bytes come from the data root. A package that carries
+its own executable code is a separate question, and it is open on Issue #47
+together with the native Run identity.
 
 Opt-in: this test writes into a fresh external directory named by
 HISTORICAL_PACKAGE_MATERIAL_ROOT, exactly like the other ordinary material
@@ -24,7 +33,10 @@ from vnext.normal_period_selection import resolve_period_selection
 MARRIOTT = "marriott_international"
 FY2024_END = "2024-12-31"
 
-COLD_REPLAY = """
+# The replaying process is new, but its code is this checkout's: the inserted
+# path is the development ``scripts`` directory, not anything inside the data
+# root. Only the inputs and sources below come from the installed root.
+SEPARATE_PROCESS_REBUILD = """
 import json, socket, sys
 from pathlib import Path
 from unittest.mock import patch
@@ -45,7 +57,7 @@ print(json.dumps({{'binding_id': out['binding']['binding_id'],
 @unittest.skipUnless(os.environ.get("HISTORICAL_PACKAGE_MATERIAL_ROOT"),
                      "Requires an explicit fresh external material root")
 class HistoricalPackageMaterialTest(unittest.TestCase):
-    def test_installed_history_replays_cold_and_rejects_a_changed_period(self):
+    def test_installed_history_rebuilds_in_a_new_process_and_rejects_a_changed_metric(self):
         output = _fresh_output(os.environ["HISTORICAL_PACKAGE_MATERIAL_ROOT"])
         before = _protected()
         with original_sources_only():
@@ -69,7 +81,7 @@ class HistoricalPackageMaterialTest(unittest.TestCase):
         self.assertEqual(before, _protected())
 
         completed = subprocess.run(
-            [sys.executable, "-c", COLD_REPLAY.format(
+            [sys.executable, "-c", SEPARATE_PROCESS_REBUILD.format(
                 scripts=str(ROOT / "scripts"), root=str(data_root), company=MARRIOTT,
                 metric="B04", binding=binding_id)],
             capture_output=True, text=True, cwd=str(output),
@@ -117,6 +129,62 @@ class HistoricalPackageMaterialTest(unittest.TestCase):
                     data_root=Path(installed["data_root"]), company_id=MARRIOTT,
                     metric_id="B04", binding_id=installed["binding"]["binding_id"])
                 self.assertEqual(installed["binding"], replayed["binding"])
+
+    def test_a_period_installed_by_issuer_label_replays_as_the_same_request(self):
+        """A label request is part of the identity, so the package must keep it.
+
+        Marriott's year ending 2024-12-31 is asked for here as fiscal 2024, not
+        as a date. Restoring only the report end would rebuild a different
+        selection and report the package as changed, so this is the case that
+        proves the installed binding carries the request it was made with.
+        """
+        output = _fresh_output(os.environ["HISTORICAL_PACKAGE_MATERIAL_ROOT"] + "-label")
+        with original_sources_only():
+            by_label = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                                fiscal_year=2024)
+            by_end = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                              report_end=FY2024_END)
+        self.assertEqual(FY2024_END, by_label["target_report_end"])
+        self.assertEqual(2024, by_label["requested_fiscal_year"])
+        self.assertNotEqual(by_label["selection_id"], by_end["selection_id"])
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")), \
+             patch.object(socket, "getaddrinfo", side_effect=AssertionError("DNS forbidden")):
+            installed = install_historical_inputs(data_root=output / "mar-fy2024-B04",
+                                                  company_id=MARRIOTT, metric_id="B04",
+                                                  period_selection=by_label)
+        data_root = Path(installed["data_root"])
+        binding_id = installed["binding"]["binding_id"]
+        self.assertEqual(2024, installed["binding"]["requested_fiscal_year"])
+        self.assertEqual(by_label["selection_id"], installed["binding"]["period_selection_id"])
+
+        completed = subprocess.run(
+            [sys.executable, "-c", SEPARATE_PROCESS_REBUILD.format(
+                scripts=str(ROOT / "scripts"), root=str(data_root), company=MARRIOTT,
+                metric="B04", binding=binding_id)],
+            capture_output=True, text=True, cwd=str(output),
+            env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"})
+        self.assertEqual(0, completed.returncode, completed.stderr[-2000:])
+        replayed = json.loads(completed.stdout.strip().splitlines()[-1])
+        self.assertEqual(binding_id, replayed["binding_id"])
+        self.assertEqual(by_label["selection_id"], replayed["period_selection_id"])
+        self.assertEqual(installed["installed"]["primary_result"]["value"], replayed["value"])
+        self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, replayed["calls"])
+        # The same filing asked for the other way is a different package, and
+        # neither binding can be replayed as the other.
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")):
+            other = install_historical_inputs(data_root=output / "mar-2024-end-B04",
+                                              company_id=MARRIOTT, metric_id="B04",
+                                              period_selection=by_end)
+        self.assertNotEqual(binding_id, other["binding"]["binding_id"])
+        self.assertIsNone(other["binding"]["requested_fiscal_year"])
+        self.assertEqual(installed["binding"]["target_period"], other["binding"]["target_period"])
+        self.assertEqual(installed["installed"]["primary_result"]["value"],
+                         other["installed"]["primary_result"]["value"])
+        with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")):
+            with self.assertRaises(Exception):
+                replay_historical_inputs(data_root=data_root, company_id=MARRIOTT,
+                                         metric_id="B04",
+                                         binding_id=other["binding"]["binding_id"])
 
 
 if __name__ == "__main__":

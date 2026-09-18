@@ -48,6 +48,7 @@ def historical_binding(*, prepared, requirement):
             "company_id": prepared["company_id"],
             "period_selection_id": prepared["period_selection"]["selection_id"],
             "target_report_end": prepared["period_selection"]["target_report_end"],
+            "requested_fiscal_year": prepared["period_selection"]["requested_fiscal_year"],
             "input_id": prepared["input_id"],
             "source_admission": prepared["source_admission"],
             "spec_paths": prepared["spec_paths"],
@@ -121,9 +122,14 @@ def replay_historical_inputs(*, data_root, company_id, metric_id, binding_id):
     _need(saved["record_type"] == BINDING_RECORD_TYPE and saved["binding_id"] == binding_id
           and saved["company_id"] == company_id and saved["primary_metric_id"] == metric_id,
           "HISTORICAL_BINDING_IDENTITY_REQUIRED")
-    from .normal_period_selection import resolve_period_selection
-    selection = resolve_period_selection(repo_root=data_root, company_id=company_id,
-                                         report_end=saved["target_report_end"])
+    from .normal_period_selection import restore_period_selection
+    # Both halves of the original request are restored. A period asked for as an
+    # issuer fiscal year carries that label in its identity, so rebuilding it
+    # from the report end alone would report a package as changed when nothing
+    # about its sources had changed.
+    selection = restore_period_selection(repo_root=data_root, company_id=company_id,
+                                         target_report_end=saved["target_report_end"],
+                                         requested_fiscal_year=saved["requested_fiscal_year"])
     _need(selection["selection_id"] == saved["period_selection_id"],
           "HISTORICAL_PERIOD_SELECTION_CHANGED")
     requirement = load_requirement_snapshot(snapshot_dir=data_root / "requirements" / REQUIREMENT_ID)
