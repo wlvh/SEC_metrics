@@ -98,13 +98,17 @@ class HistoryCatalogTest(unittest.TestCase):
         self.assertEqual("VERIFIED_ACCESSION_NATIVE_INSTANCE", alternative["status"])
         self.assertEqual({"fiscal_year": 2024, "period_start": "2024-01-01",
                           "period_end": "2024-12-31"}, alternative["annual_period"])
+        self.assertEqual(["prior_annual_primary"], alternative["satisfies_source_roles"])
+        self.assertFalse(alternative["establishes_issuer_fiscal_label"])
         self.assertFalse(alternative["substitutes_html_text_range"])
         self.assertFalse(alternative["source_acquisition_credit"])
-        # The alternative closes the period-identity dependency only; a year whose
-        # own documents were never saved stays an acquisition requirement.
-        self.assertFalse(item["new_acquisition_required"])
-        self.assertEqual(["2025-12-31", "2024-12-31"],
-                         plan["annual_identity_ready_report_dates"])
+        # This one document serves both the 2025 prior role, which the instance
+        # can close, and the 2024 target role, which it cannot: an issuer fiscal
+        # label needs the full document. So it stays an acquisition requirement
+        # and 2024 is not reported as identity-ready.
+        self.assertEqual(["prior_annual_primary", "target_primary"], item["source_roles"])
+        self.assertTrue(item["new_acquisition_required"])
+        self.assertEqual(["2025-12-31"], plan["annual_identity_ready_report_dates"])
         unsatisfied = ("https://www.sec.gov/Archives/edgar/data/37996/"
                        "000003799622000013/f-20211231.htm")
         blocked = next(r for r in plan["requirements"] if r["source_url"] == unsatisfied)

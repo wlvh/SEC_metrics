@@ -1,0 +1,56 @@
+"""Emit the Issue #47 historical coverage matrix and its status distribution.
+
+Purpose:
+    Fix the target denominator (companies x declared metrics x requested annual
+    report ends) before any position is filled, and give every position exactly
+    one status. It reads saved bytes only and makes no SEC or model request.
+
+Call relationships:
+    Developers and the Issue #47 evidence archive call this script. It calls
+    ``scripts/vnext/historical_coverage.py``.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import socket
+import sys
+from pathlib import Path
+from unittest.mock import patch
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT / "scripts") not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT / "scripts"))
+
+from vnext.historical_coverage import build_coverage_matrix  # noqa: E402
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--company", action="append", dest="companies",
+                        help="Configured company_id; repeatable. Default: every company.")
+    parser.add_argument("--years", type=int, default=5)
+    parser.add_argument("--output", type=Path)
+    arguments = parser.parse_args(argv)
+    with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")), \
+         patch.object(socket, "getaddrinfo", side_effect=AssertionError("DNS forbidden")):
+        matrix = build_coverage_matrix(repo_root=REPO_ROOT, company_ids=arguments.companies,
+                                       years=arguments.years)
+    if arguments.output:
+        arguments.output.parent.mkdir(parents=True, exist_ok=True)
+        arguments.output.write_text(json.dumps(matrix, ensure_ascii=False, indent=1,
+                                               sort_keys=True) + "\n", encoding="utf-8")
+    print("declared metrics %d, companies %d, requested years %d"
+          % (matrix["declared_metric_count"], len(matrix["companies"]), matrix["requested_years"]))
+    print("target frame positions %d, enumerated %d, unreachable-period positions %d"
+          % (matrix["target_frame_positions"], matrix["enumerated_positions"],
+             matrix["missing_positions_from_unreachable_periods"]))
+    for status, count in sorted(matrix["status_counts"].items(), key=lambda item: -item[1]):
+        print("  %-38s %d" % (status, count))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

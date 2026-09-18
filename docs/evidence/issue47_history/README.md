@@ -54,3 +54,36 @@ contexts and is established when the document is read.
 yet run for a target accession. Those accessions are listed in
 `accession_indexes_not_yet_discovered`; the additional instance documents behind
 them are reported as not yet known rather than estimated as a number.
+
+## pilot-2026-09-18/
+
+`historical-period-outcomes.json` — output of `tools/vnext_history_pilot.py` over the four pilot
+companies' five most recent annual report ends. Regenerate with:
+
+```
+python3 tools/vnext_history_pilot.py --company marriott_international --company ford_motor_company \
+  --company salesforce --company macys --years 5 \
+  --output docs/evidence/issue47_history/pilot-2026-09-18/historical-period-outcomes.json
+```
+
+Every outcome is the real one: a value with its filing identity, a source limitation naming the
+exact missing document, or an implementation gap. `calls` is `{"provider":0,"paid":0,"sec":0}`.
+
+## coverage-2026-09-18/
+
+`coverage-matrix.json` — output of `tools/vnext_history_coverage.py`. The frame is
+companies × declared metrics × requested annual report ends, fixed before any position is
+filled. The declared metric count is read from the installed policy and checked against that
+policy's own `declared_issue_metric_count`, so D03 and the other pending metrics stay inside the
+denominator instead of being removed from it. Regenerate with:
+
+```
+python3 tools/vnext_history_coverage.py --years 5 \
+  --output docs/evidence/issue47_history/coverage-2026-09-18/coverage-matrix.json
+```
+
+Each position carries exactly one status under a fixed precedence, so a later limitation never
+hides an earlier one: the period is not established from metadata; the period is established but
+its own original document is not saved; the period is established but resolving it stopped, split
+into a source limitation and a missing implementation by the failure's own category; or the
+metric's own resolved outcome. No status here is a statement about what an issuer disclosed.

@@ -342,7 +342,8 @@ def _native_instance_alternative(reader, repo_root, filing, cik):
     return {"status": "VERIFIED_ACCESSION_NATIVE_INSTANCE",
             "annual_period": periods[0],
             "instance_documents": file_set["expected_xml_documents"],
-            "satisfies_dependency_classes": ["ANNUAL_PERIOD_IDENTITY"],
+            "satisfies_source_roles": ["prior_annual_primary"],
+            "establishes_issuer_fiscal_label": False,
             "substitutes_html_text_range": False,
             "source_acquisition_credit": False}
 
@@ -457,7 +458,10 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
             alternative = _native_instance_alternative(
                 reader, repo_root, filings_by_accession[item["accession"]], cik)
             item["alternative_dependency"] = alternative
-            if alternative["status"] == "VERIFIED_ACCESSION_NATIVE_INSTANCE":
+            # The alternative closes only the prior-annual role, so a document
+            # this plan also needs as a target primary still has to be acquired.
+            if (alternative["status"] == "VERIFIED_ACCESSION_NATIVE_INSTANCE"
+                    and item["source_roles"] == ["prior_annual_primary"]):
                 item["new_acquisition_required"] = False
     pending_index = [item for item in requirements
                      if item["dependency_class"] == "ACCESSION_INSTANCE_DISCOVERY"
@@ -506,6 +510,13 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
 def _identity_ready(candidate, requirements, cik):
     """Can this target period's own annual identity be read from saved bytes?
 
+    A target period needs its own primary document. The accession's own XBRL
+    instance closes the *prior* year's dependency, because that role only needs
+    dates and adjacency, but it cannot establish an issuer fiscal-year label:
+    the frozen label policy reads the issuer's explicit definition from the full
+    document and refuses an extracted instance outright. So the alternative is
+    deliberately not accepted here.
+
     This answers the period-identity question only. A metric still needs its
     own inputs, and a prior-year dependency is a different target's question.
     """
@@ -515,11 +526,7 @@ def _identity_ready(candidate, requirements, cik):
     url = accession_document_url(cik=int(cik), accession=filing["accessionNumber"],
                                  document_name=filing["primaryDocument"])
     item = next((r for r in requirements if r["source_url"] == url), None)
-    if item is None:
-        return False
-    return (item["saved_status"] == "VERIFIED_SAVED_SOURCE"
-            or item.get("alternative_dependency", {}).get("status")
-            == "VERIFIED_ACCESSION_NATIVE_INSTANCE")
+    return item is not None and item["saved_status"] == "VERIFIED_SAVED_SOURCE"
 
 
 def inspect_historical_plans(*, repo_root: Path, company_ids=None, count=5):
