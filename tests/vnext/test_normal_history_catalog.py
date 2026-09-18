@@ -166,6 +166,49 @@ class HistoryCatalogTest(unittest.TestCase):
         for name in missing:
             self.assertIn("https://data.sec.gov/submissions/" + name, declared)
 
+    def test_a_stale_shard_is_planned_as_a_refresh_not_treated_as_already_held(self):
+        """Saved and verifiable is not the same as current.
+
+        A shard whose saved body holds filings outside the range the saved index
+        declares for it is a stale snapshot. Its bytes are present and they
+        verify, so an acquisition plan keyed on saved status alone left every one
+        of these out and reported a smaller budget than the work needs, while the
+        catalog they feed stayed incoherent and blocked every period.
+
+        Coherence belongs to the index and the shard together, so both sides are
+        planned, and the refresh is one pass rather than a shard at a time:
+        re-reading one of them proves nothing about the other.
+        """
+        with original_sources_only():
+            plan = plan_historical_sources(repo_root=ROOT, company_id="jpmorgan_chase", count=5)
+        conflicting = {item["history_name"] for item in plan["catalog_limitations"]
+                       if item["kind"] == "HISTORY_SHARD_SNAPSHOT_CONFLICT"}
+        self.assertTrue(conflicting)
+        refresh = [item for item in plan["requirements"]
+                   if item["acquisition_kind"] == "SNAPSHOT_REFRESH"]
+        self.assertEqual(len(conflicting) + 1, len(refresh))
+        self.assertEqual(sorted(item["source_url"] for item in refresh),
+                         plan["snapshot_refresh_urls"])
+        self.assertTrue(plan["snapshot_refresh_is_one_coherent_pass"])
+        for item in refresh:
+            # Every one of them is saved and verifies, which is exactly why
+            # saved status alone could not see them.
+            self.assertEqual("VERIFIED_SAVED_SOURCE", item["saved_status"])
+            self.assertTrue(item["new_acquisition_required"])
+            self.assertIn(item["source_url"], plan["new_acquisition_urls"])
+        shards = {item["document_name"] for item in refresh
+                  if item["dependency_class"] == "SUBMISSIONS_HISTORY"}
+        self.assertEqual(conflicting, shards)
+        index = [item for item in refresh if item["dependency_class"] == "SUBMISSIONS_INDEX"]
+        self.assertEqual(1, len(index))
+        self.assertEqual(sorted(conflicting),
+                         index[0]["snapshot_conflict"]["conflicting_history_names"])
+        # The kinds partition the budget and every required item carries one.
+        self.assertEqual(plan["new_acquisition_count"], sum(plan["new_acquisition_by_kind"].values()))
+        self.assertEqual(len(refresh), plan["new_acquisition_by_kind"]["SNAPSHOT_REFRESH"])
+        self.assertEqual({bool(item["acquisition_kind"]) == item["new_acquisition_required"]
+                          for item in plan["requirements"]}, {True})
+
     def test_incomplete_index_discovery_is_reported_as_unknown_not_as_a_total(self):
         with original_sources_only():
             plan = plan_historical_sources(repo_root=ROOT, company_id="macys", count=5)

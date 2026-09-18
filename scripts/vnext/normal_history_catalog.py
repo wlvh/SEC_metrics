@@ -450,9 +450,16 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
                              "primary_cik": cik,
                              **_saved_state(reader, repo_root, item),
                              "new_acquisition_required": False,
+                             "acquisition_kind": None,
                              "source_acquisition_credit": False})
     for item in requirements:
         item["new_acquisition_required"] = item["saved_status"] != "VERIFIED_SAVED_SOURCE"
+        if item["saved_status"] == "MISSING_SAVED_SOURCE":
+            item["acquisition_kind"] = "FIRST_ACQUISITION"
+        elif item["saved_status"] == "SAVED_SOURCE_BLOCKED":
+            # Bytes exist but do not verify, so the saved copy has to be
+            # replaced rather than merely obtained.
+            item["acquisition_kind"] = "REPLACEMENT_ACQUISITION"
         if (item["dependency_class"] == "ANNUAL_PERIOD_IDENTITY"
                 and item["saved_status"] == "MISSING_SAVED_SOURCE"):
             alternative = _native_instance_alternative(
@@ -463,17 +470,52 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
             if (alternative["status"] == "VERIFIED_ACCESSION_NATIVE_INSTANCE"
                     and item["source_roles"] == ["prior_annual_primary"]):
                 item["new_acquisition_required"] = False
+                item["acquisition_kind"] = None
+    # A shard whose saved body does not sit inside the range the saved index
+    # declares for it is a stale snapshot, not a missing one: its bytes are
+    # present and they verify, which is exactly why marking acquisition by
+    # saved status alone left these out of the plan and made the budget look
+    # smaller than it is. Coherence is a property of the index and the shard
+    # together, so the pair is refreshed together and re-checked afterwards;
+    # refreshing one of them proves nothing about the other.
+    conflicts = {item["history_name"]: item for item in history["limitations"]
+                 if item["kind"] == "HISTORY_SHARD_SNAPSHOT_CONFLICT"}
+    refreshed = []
+    if conflicts:
+        for item in requirements:
+            if (item["dependency_class"] == "SUBMISSIONS_HISTORY"
+                    and item["document_name"] in conflicts):
+                conflict = conflicts[item["document_name"]]
+                item["snapshot_conflict"] = {
+                    "reason": conflict["reason"],
+                    "declared_filing_from": conflict["declared_filing_from"],
+                    "declared_filing_to": conflict["declared_filing_to"],
+                    "out_of_range_filing_count": len(conflict["out_of_range_filings"])}
+            elif item["dependency_class"] == "SUBMISSIONS_INDEX":
+                item["snapshot_conflict"] = {
+                    "reason": "DECLARES_THE_RANGES_THE_CONFLICTING_SHARDS_CONTRADICT",
+                    "conflicting_history_names": sorted(conflicts)}
+            else:
+                continue
+            item["new_acquisition_required"] = True
+            item["acquisition_kind"] = "SNAPSHOT_REFRESH"
+            refreshed.append(item["source_url"])
     pending_index = [item for item in requirements
                      if item["dependency_class"] == "ACCESSION_INSTANCE_DISCOVERY"
                      and item["saved_status"] != "VERIFIED_SAVED_SOURCE"]
     classes = sorted({item["dependency_class"] for item in requirements})
     by_class = {name: {"declared": 0, "verified_saved": 0, "new_acquisition_required": 0}
                 for name in classes}
+    by_kind = {}
     for item in requirements:
         entry = by_class[item["dependency_class"]]
         entry["declared"] += 1
         entry["verified_saved"] += int(item["saved_status"] == "VERIFIED_SAVED_SOURCE")
         entry["new_acquisition_required"] += int(item["new_acquisition_required"])
+        _need(bool(item["acquisition_kind"]) == item["new_acquisition_required"],
+              "HISTORY_PLAN_ACQUISITION_KIND_INCONSISTENT")
+        if item["acquisition_kind"]:
+            by_kind[item["acquisition_kind"]] = by_kind.get(item["acquisition_kind"], 0) + 1
     identity_ready = [candidate for candidate in candidates
                       if _identity_ready(candidate, requirements, cik)]
     body = {"record_type": PLAN_RECORD_TYPE, "schema_version": 1,
@@ -489,6 +531,9 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
             "new_acquisition_urls": sorted(item["source_url"] for item in requirements
                                            if item["new_acquisition_required"]),
             "new_acquisition_count": sum(1 for item in requirements if item["new_acquisition_required"]),
+            "new_acquisition_by_kind": by_kind,
+            "snapshot_refresh_urls": sorted(refreshed),
+            "snapshot_refresh_is_one_coherent_pass": bool(refreshed),
             "annual_identity_ready_report_dates": [c["report_date"] for c in identity_ready],
             "accession_indexes_not_yet_discovered": sorted(item["accession"] for item in pending_index),
             "further_requests_pending_index_discovery": bool(pending_index),
