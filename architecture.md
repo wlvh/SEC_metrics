@@ -1009,7 +1009,9 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 计算侧没有第二套实现：指标目录、编译 Spec、`_deterministic_metric_graph`、适用性规则、来源读取器、来源准入与 DEI 年度读取器全部原样复用。首版口径保持"当期取当期选定申报、前期取前期选定申报"，不改用后续年报的比较数。凡是以当期为定义域的路线（修订范围、后继注册人利润表、事件窗口）在历史请求下返回明确的实现缺口，不回退到最新期。
 
-**原生 Run：范围被缩小，但依然没有接通**。此前这里记的是「注册新 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内，因此阻塞」；上一版改成「已测量，不是架构决定」，那又走过了头。`tools/vnext_requirement_seam.py` 实际证明的范围只有这些：
+**原生 Run：已接通并端到端跑通一次**（Marriott FY2024 / B04，见 `docs/evidence/issue47_history/native-run-2026-09-18/`）。新增 `requirement_profile_v16.py`、`requirements/issue_47_v1/`、`historical_run.py`、`historical_projection.py` 四个新文件，未改任何冻结字节；注册所需的三处改动（`PROFILE_ENGINES` 一条、`run_store` 两条按 Run 自身 `requirement_id` 的分派）在两个执行授权内的文件里，以补丁交付。第三处是建 Run 时才发现的：缺它则结构化重放落到通用路径，而该路径要求 `calculation_target` 带 `accession`/`entity`，共享的 `calculate_observation_metric` 并不设置它们。实测同一棵树内两半都成立——新链路可跑，补丁之前安装的 `issue_28_v13` 包五项探针仍全 OK。代价是 `issue_47_v1` 按补丁后的字节记录那两个文件，`issue_28_v13` 的 manifest 与闭包哈希不变，故一个数据根只满足两者之一。以下是此前的范围记录，保留以说明结论如何收窄：
+
+**（历史记录）原生 Run：范围被缩小，但依然没有接通**。此前这里记的是「注册新 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内，因此阻塞」；上一版改成「已测量，不是架构决定」，那又走过了头。`tools/vnext_requirement_seam.py` 实际证明的范围只有这些：
 
 一份 Requirement 绑定字节有两处，生效位置不同。`new_rule_files` 在 `load_profile_requirement_snapshot` 内对数据根与安装代码根双向校验，改坏它安装本身就失败；`execution_authority.files` 只在 `load_run_requirement_snapshot` 里由 `validate_execution_authority` 校验，改坏它只影响装载或创建 Run。`requirement_profile.py` 与 `run_store.py` 对 `issue_28_v13`、`issue_28_v14` 都**只在执行授权内、不在任何规则集内**。
 
