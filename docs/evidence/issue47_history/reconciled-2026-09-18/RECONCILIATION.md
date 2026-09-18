@@ -131,66 +131,63 @@ now out of date rather than wrong: it measures what this branch's coverage tool
 knows about, and the tool predates the native Run chain. Native Runs are counted
 in `../native-run-2026-09-18/native-run-matrix.json` instead.
 
-### And "23 routes to implement" is three different costs
+### "23 routes to implement" is eight families, and one of them is a question
 
-Saying the remaining 1,150 need 23 routes is true and not useful, because those
-23 do not cost the same thing. Split by the route class the ordinary
-presentation policy already assigns each metric:
+Saying the remaining 1,150 need 23 routes prices them as if they were alike.
+They are not. Grouped by the module family that implements each metric today —
+which is what a historical successor has to be written against — the 23 fall
+into eight:
 
-| what the 23 are | metrics | positions | what it would take |
-| --- | ---: | ---: | --- |
-| structured family — `XBRL`, `DIM_XBRL`, `STD_XBRL`, `DERIVED` | 4 | 200 | extends the machinery the wired 16 already use |
-| text — `MDA`, `10-K`, `8K_ITEM`, `PROXY` | 18 | 900 | one capability that does not exist at all |
-| not in the presentation policy | 1 (`D03`) | 50 | no current route either, so not a historical gap |
-
-The 4 are `A13`, `B06`, `C03`, `C04`; the 18 are `A03 A04 A09 A11 A12 B10 B11
-B13 C01 C02 D01 D02 D04 E01 E02 E03 E04 E05`.
-
-#### Correction: the 18 are not one capability
-
-The first version of this section said the 900 sit behind **one** missing
-thing, on the strength of `render_historical_run` refusing anything that is not
-`STRUCTURED`. That refusal is real, but it is the last gate, not the only one,
-and the claim was wrong about what is behind it. The 18 are served by five
-different module families, each of which would need its own historical
-successor exactly as `historical_results`, `historical_zero_ai_results` and
-`historical_accession_results` are three successors and not one:
-
-| module family | metrics | positions |
+| implementation family | metrics | positions |
 | --- | --- | ---: |
-| `ordinary_text_input` + `text_results_v2` | C02, D02 | 100 |
-| `financial_results` | A03, A04, A09, A11, A12 | 250 |
-| `normal_zero_ai_results` (event windows) | C01, E01–E05 | 300 |
-| `capacity_text_results` + `capacity_*_input` | B13, D04 | 100 |
-| `normal_lodging_results` | B10, B11 | 100 |
-| `normal_text_projection_v2` and others | D01 | 50 |
+| `financial_*` (bank measures) | A03, A04, A09, A11, A12, A13 | 300 |
+| `normal_zero_ai_results` / `deterministic_router` (event windows) | C01, E01–E05 | 300 |
+| `normal_text_input_v2` / `normal_text_projection_v2` | C02, D01, D02 | 150 |
+| `governance_*` | C03, C04 | 100 |
+| `capacity_*` | B13, D04 | 100 |
+| `normal_lodging_results` / `lodging_table_source` | B10, B11 | 100 |
+| `b06_*` / `normal_*_debt_results` | B06 | 50 |
+| `r6_*` / `continuous_semantic_calls` | D03 | 50 |
 
-`ordinary_text_input.prepare_current_business_text_input` also refuses every
-metric except C02 and D02 outright, so even that family is narrower than its
-name.
+Each family needs its own historical successor, in exactly the way
+`historical_results`, `historical_zero_ai_results` and
+`historical_accession_results` are three successors and not one. There is no
+single change that moves more than 300 positions.
 
-The event-window group is worse than an implementation gap, and this is the
-part worth carrying into any plan. `historical_zero_ai_results` already exists
-as `normal_zero_ai_results`'s successor, and it refuses event windows on
-purpose, in its own words: each is defined relative to the current period, and
-answering one from today's latest filing would be a wrong answer. So C01 and
-E01–E05 raise a question about what a historical event window *means* before
-they raise one about how to compute it. Wiring them is not the work; deciding
-what they claim is.
+#### The event-window family is not an implementation gap
 
-Priced honestly: 200 positions extend existing machinery, 400 need three new
-successors of a familiar shape, 300 need a semantic decision first, and 50
-(`D01`) plus 50 (`D03`) are their own cases.
+This is the part that matters for planning, and it is the reason the largest
+group is not the place to start. `historical_zero_ai_results` already exists as
+`normal_zero_ai_results`'s successor, and it refuses event windows on purpose.
+In its own words, each is defined relative to the current period, and answering
+one from today's latest filing would be a wrong answer. So C01 and E01–E05 need
+a decision about what a historical event window *claims* before anyone writes
+code for them. Wiring is not the work.
+
+#### Two earlier versions of this section were wrong
+
+The first said the 900 text positions sit behind one missing capability,
+reasoning from `render_historical_run` refusing anything that is not
+`STRUCTURED`. That refusal is real but it is the last gate, not the only one.
+The second said four metrics were cheap extensions of the wired machinery and
+that C03 and C04 had no implementation at all; both came from grepping only
+`*results*.py`, and A13 belongs to the `financial_*` family while C03 and C04
+are implemented in `governance_*`. The table above is built from every module
+under `scripts/vnext/` that names each metric:
 
 ```
 python3 - <<'EOF'
-import json
+import json, re
+from pathlib import Path
 b = json.load(open("docs/evidence/issue47_history/reconciled-2026-09-18/coverage-matrix.json"))
-p = json.load(open("config/ordinary_public_projection_v1.json"))["metrics"]
 wired = set(b["wired_historical_metric_ids"])
-STRUCTURED = {"DIM_XBRL", "STD_XBRL", "XBRL", "DERIVED"}
-for m in sorted(set(b["declared_metric_ids"]) - wired):
-    print(m, p.get(m, {}).get("projection", {}).get("source_class", "<absent>"))
+mods = {p.name: p.read_text(errors="replace") for p in Path("scripts/vnext").glob("*.py")}
+for m in b["declared_metric_ids"]:
+    if m in wired:
+        continue
+    owners = sorted(n for n, t in mods.items()
+                    if re.search(r'["\']%s["\']' % m, t) and not n.startswith("historical_"))
+    print(m, owners[:3])
 EOF
 ```
 
