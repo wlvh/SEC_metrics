@@ -93,6 +93,58 @@ undiscovered accessions by name in `accession_indexes_not_yet_discovered`
 instead of estimating what is behind them, and `complete_plan_proven` is `false`
 wherever that is so.
 
+## The acquisition budget is an argument about the smaller half
+
+142 versus 122 is a real correction, but both numbers answer a question that
+covers 41% of the frame. Counted from the same artifact:
+
+```
+python3 - <<'EOF'
+import json
+b = json.load(open("docs/evidence/issue47_history/reconciled-2026-09-18/coverage-matrix.json"))
+wired = set(b["wired_historical_metric_ids"])
+on_wired = [p for p in b["positions"] if p["metric_id"] in wired]
+print(len(on_wired), len(b["positions"]) - len(on_wired))
+EOF
+```
+
+| | positions | share |
+| --- | ---: | ---: |
+| on one of the 16 metrics that have a historical route | 800 | 41% |
+| on one of the other 23 declared metrics | **1,150** | **59%** |
+| | **1,950** | |
+
+**No number of SEC requests reaches those 1,150.** They are blocked on a route
+that does not exist yet, not on a document nobody has fetched. Within the 800
+that acquisition can reach: 146 already carry a verified outcome, 624 are
+missing the target filing's own original document, and 144 sit in a period that
+saved submissions metadata does not yet establish. (Those do not sum to 800
+because a position can be missing more than one thing at once — which is the
+reason the matrix reports independent dimensions instead of one status.)
+
+So "how many GETs finish the backfill" is not answerable as asked. Acquisition
+finishes a part of the 800. Finishing the frame also needs 23 more historical
+routes, and each of those is implementation, not budget.
+
+The matrix's `native_run_wired` dimension reads 0 for every position, which is
+now out of date rather than wrong: it measures what this branch's coverage tool
+knows about, and the tool predates the native Run chain. Native Runs are counted
+in `../native-run-2026-09-18/native-run-matrix.json` instead.
+
+## What EXACT means in the coverage matrix, and what it does not
+
+The matrix stops at the metric result. It never renders a public row, so an
+`EXACT` position is a **resolved** value, not a publishable one. That gap is not
+theoretical: B01 and B03 were counted `EXACT` here while the historical renderer
+still refused to build a row from the very same Runs, because it had only one of
+the two evidence arms the ordinary renderer has. Reading the matrix alone, there
+was nothing to see — the counts were correct about what they measured.
+
+The refusal was found by building the native Run matrix, not by reading either
+artifact. The matrix now carries `public_row_rendering_not_measured: true` so
+the limitation travels with the numbers, and rows are counted separately in
+`../native-run-2026-09-18/native-run-matrix.json`.
+
 ## The acquisition this asks for now
 
 Not 142, and not a five-year budget. A **22-request pilot** over the

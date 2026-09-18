@@ -266,6 +266,12 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
             "dimension_counts": dimensions,
             "positions_missing_source_and_route": blocked_by_both,
             "first_blocking_reason_is_not_the_only_blocker": True,
+            # This frame stops at the metric result. It never renders a public
+            # row, so an EXACT position here is a resolved value, not a
+            # publishable one: B01 and B03 were counted EXACT while the
+            # historical renderer still refused them. Read the counts as
+            # resolution, and the native Run matrix for rows.
+            "public_row_rendering_not_measured": True,
             "company_reports": company_reports, "positions": positions,
             "policy_sha256": sha256_file(path=ROOT / POLICY_PATH),
             "module_sha256": sha256_file(path=Path(__file__)),
