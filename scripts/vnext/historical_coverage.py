@@ -46,8 +46,13 @@ WIRED_ACCESSION_METRICS = ("A01", "A02", "B12")
 # reads the latest filing. They share historical_zero_ai_results with the
 # revenue route exactly as they share normal_zero_ai_results in the current one.
 WIRED_EVENT_METRICS = ("C01", "E01", "E02", "E03", "E04", "E05")
+# The first text route. C02 shares its adapter and is not wired: its plan needs
+# the annual meeting's DEF 14A, and of the 82 proxies the saved submissions
+# indexes list, ten have accession material and all ten were filed in 2026.
+WIRED_TEXT_METRICS = ("D02",)
 WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS
-                                        + WIRED_ACCESSION_METRICS + WIRED_EVENT_METRICS))
+                                        + WIRED_ACCESSION_METRICS + WIRED_EVENT_METRICS
+                                        + WIRED_TEXT_METRICS))
 
 
 class CoverageError(ValueError):
@@ -146,6 +151,22 @@ def _adapter_rows(*, repo_root, company_id, selection):
             detail = failed(error)
             adapters["event_window"] = detail
             rows[metric_id] = {"status": _blocked_status(detail), **detail}
+    # The text route resolves its own result without a Run, the same way the
+    # other adapters do here. Adding a metric to the wired set without running
+    # it here is what produced row = None and a TypeError three layers away last
+    # time, so the two changes belong in one commit.
+    for metric_id in WIRED_TEXT_METRICS:
+        try:
+            from .historical_text_input import prepare_historical_business_text_input
+            text = _resolve_text_metric(repo_root=repo_root, company_id=company_id,
+                                        metric_id=metric_id, selection=selection,
+                                        prepare=prepare_historical_business_text_input)
+            rows[metric_id] = _row(text)
+            adapters.setdefault("business_text", None)
+        except (ValueError, KeyError, TypeError, OSError) as error:
+            detail = failed(error)
+            adapters["business_text"] = detail
+            rows[metric_id] = {"status": _blocked_status(detail), **detail}
     try:
         instants = resolve_historical_accession_metrics(repo_root=repo_root,
                                                         company_id=company_id,
@@ -159,6 +180,49 @@ def _adapter_rows(*, repo_root, company_id, selection):
             rows[metric_id] = {"status": _blocked_status(adapters["accession"]),
                                **adapters["accession"]}
     return component, rows, adapters
+
+
+def _resolve_text_metric(*, repo_root, company_id, metric_id, selection, prepare):
+    """One text metric's own result, without creating a Run.
+
+    The review decision a Run needs binds a Requirement, which this frame does
+    not hold, so the deterministic half is replayed and the system decision is
+    made against the parent snapshot. That is enough to decide the metric's
+    outcome, which is all this matrix reports.
+    """
+    from datetime import datetime, timezone
+
+    from .normal_run_v3 import text_api
+    from .requirements import load_requirement_snapshot
+    from .review import create_system_review_decision
+    from .specs import compile_spec_file
+    from .traits import repository_company_traits
+    from .historical_results import TEXT_SPEC_PATHS
+
+    prepared = prepare(repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+                       period_selection=selection)
+    _need(prepared["input_status"] != "BLOCKED",
+          "HISTORICAL_COVERAGE_TEXT_INPUT_BLOCKED:"
+          + str(prepared["input_binding"]["limitations"]))
+    spec = compile_spec_file(path=repo_root / TEXT_SPEC_PATHS[metric_id],
+                             dependency_specs={})
+    arguments = {"compiled_spec": spec, **prepared["text_arguments"]}
+    api, review_builder = text_api(metric_id)
+    candidate = api.create_deterministic_text_candidate(**arguments)
+    evidence = api.build_text_evidence(candidate=candidate, **arguments)
+    unit, _ = review_builder(compiled_spec=spec, candidate=candidate,
+                             evidence_check=evidence,
+                             source_bindings=arguments["source_references"])
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / "issue_28_v13")
+    decision = create_system_review_decision(
+        review_unit=unit, required_claims=spec["compiled"]["required_claims"],
+        decided_at_utc=datetime.now(timezone.utc).isoformat(), requirement=requirement)
+    result, _, _ = api.replay_text_result(
+        company_traits=repository_company_traits(repo_root=repo_root, company_id=company_id),
+        candidate=candidate, evidence_check=evidence, review_unit=unit,
+        review_decisions=[decision], **arguments)
+    return result
 
 
 def _blocked_status(detail):
