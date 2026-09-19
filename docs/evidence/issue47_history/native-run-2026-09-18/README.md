@@ -263,6 +263,23 @@ Every row carries the pinned year, not the company's latest one, and the Run
 value and the row value agree — which is the pair that the B01 defect broke
 without either half looking wrong on its own.
 
+### A second company, all 23 routes
+
+`ford-2025-matrix.json`: every wired metric on Ford's pinned 2025 period, 23
+attempted, **23 frozen Runs and 23 public rows, none failed**, 62.7 minutes,
+`calls` zero throughout. Fourteen carry a value, eight are structurally not
+applicable, one is `NOT_MEANINGFUL`.
+
+Three of those rows are worth naming because they are the reasons this company
+was chosen over another Marriott year:
+
+* `B04` is **-8,162,000,000**. A loss reaches the row as a loss; nothing clamps
+  a sign on the way through.
+* `B07` is `NOT_MEANINGFUL` with `RATIO_NUMERATOR_NOT_POSITIVE` rather than a
+  computed negative margin. The guard decides, not the arithmetic.
+* `D02` renders here too, so the text route is not a property of one issuer's
+  filing layout.
+
 ## The text Run: eight changes, and the prediction was half right
 
 The section that used to sit here called `prepare_text_contexts` the "likely
