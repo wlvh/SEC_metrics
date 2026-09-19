@@ -41,6 +41,12 @@ SOURCE_PREFIXES = (
     "tests.vnext.test_text_results",
     "tests.vnext.test_going_concern_source",
     "tests.vnext.test_fiscal_year_labels",
+    # Measured at 29.9 seconds standalone against the 30-second fast cap, so it
+    # fails under --jobs contention and passes alone. The fast tier's timeout
+    # comes from the frozen inherited entry and cannot be raised for one case;
+    # this selector reads complete saved qualification material, which is what
+    # the source tier is for.
+    "tests.vnext.test_table_context_qualification_guard.",
 )
 SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for p in SOURCE_PREFIXES)) + (
     "tests.vnext.test_normal_companyfacts_results",
