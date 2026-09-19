@@ -215,6 +215,28 @@ that authority-named modules reference and no authority names; these four are
 the ones the Requirement-load chain actually reaches, and the rest are not
 claimed to be reached.
 
+### The event archive could not tell pinned from latest, and now can
+
+`event-native-runs.json` below uses `2025-12-31` for all six metrics, and that
+is also this company's latest annual period. A route that quietly answered from
+the latest filing would have produced exactly the same six rows, so that archive
+on its own does not separate the two behaviours. The component-level case in
+`tests/vnext/test_historical_period_results.py` does separate them, but nothing
+at the Run and row level did.
+
+`pinned-versus-latest.json` closes that. C01 is run natively at `2024-12-31`,
+which is **not** the latest period, beside the same metric at `2025-12-31`:
+
+| requested | Run | value | row fiscal year | row period |
+| --- | --- | ---: | ---: | --- |
+| 2025-12-31 (latest) | `…5ef4b5f594c0` | 3 EXACT | 2025 | 2025-01-01 → 2025-12-31 |
+| 2024-12-31 | `…8bae5b812eff` | none, `HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED` | 2024 | 2024-01-01 → 2024-12-31 |
+
+Different Run identities, different windows, different outcomes. A route reading
+the latest filing would have answered 2024 with the same 3. That the older year
+resolves to a named source limitation rather than a value is the point: the
+window moved, and the material behind it did not follow.
+
 ### The event metrics do reach a Run and a row
 
 `event-native-runs.json`. When the event route was committed it was proven only
