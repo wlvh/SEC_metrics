@@ -63,12 +63,15 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False):
     case = replay_case(data_root=data_root, manifest=manifest)
     prepared = case["input"]
     metric = case["primary_metric_id"]
-    _need(case["kind"] == "STRUCTURED", "HISTORICAL_PROJECTION_TEXT_ROUTE_NOT_WIRED")
+    _need(case["kind"] in {"STRUCTURED", "TEXT"},
+          "HISTORICAL_PROJECTION_ROUTE_NOT_WIRED:" + str(case["kind"]))
+    text_route = case["kind"] == "TEXT"
     results = [r for r in records
                if r["record_type"] == "METRIC_RESULT" and r["metric_id"] == metric]
     _need(len(results) == 1, "HISTORICAL_PROJECTION_PRIMARY_RESULT_NOT_UNIQUE")
     result = results[0]
-    _need(result.get("value_kind") != "TEXT_V1", "HISTORICAL_PROJECTION_TEXT_ROUTE_NOT_WIRED")
+    _need((result.get("value_kind") == "TEXT_V1") == text_route,
+          "HISTORICAL_PROJECTION_VALUE_KIND_DISAGREES_WITH_ROUTE")
     spec = case["compiled_specs"][metric]
     policy = strict_json_file(path=ROOT / POLICY_PATH)
     _need(policy["record_type"] == "ORDINARY_INTEGRATED_PRESENTATION_POLICY"
@@ -78,8 +81,9 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False):
     item = policy["metrics"][metric]
     projection = {**item["projection"],
                   **item["spec_overrides"].get(prepared["spec_paths"][metric], {})}
-    same_unit = (projection["unit"] == spec["compiled"]["canonical_unit"]
-                 and projection["value_multiplier"] == "1")
+    # A text metric has no canonical numeric unit for the projection to agree with.
+    same_unit = text_route or (projection["unit"] == spec["compiled"].get("canonical_unit")
+                               and projection["value_multiplier"] == "1")
     percent_unit = (spec["compiled"]["canonical_unit"] == "ratio"
                     and projection["unit"] == "percent"
                     and projection["value_multiplier"] == "100"
@@ -120,44 +124,52 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False):
             result=result, trace=trace, company=company, spec=view, baseline_row=baseline,
             indexes=indexes, fiscal_year=str(period["fiscal_year"]),
             metric_fields=publication.METRIC_FIELDS)
-    evidence = []
-    claims = _claims(prepared)
-    # A structured Company Facts observation is bound to an XBRL fact, not to a
-    # verified claim, so it carries no claim identifiers at all. The ordinary
-    # projector has always had two branches here and this one had only the first,
-    # which made every revenue-route metric fail to render a row its own Run had
-    # already resolved as EXACT. The B13 quantity_statement branch is not ported:
-    # that is a text route, and case["kind"] == "STRUCTURED" is required above.
-    selection = case["results"][metric].get("selection")
-    financial_locators = _selected_financial_locators(metric, selection)
-    for observation in ordered:
-        binding = observation["source_binding"]
-        identifiers = binding.get("verified_claim_ids",
-                                  binding.get("matched_verified_claim_ids", []))
-        if identifiers:
-            for identity in identifiers:
-                _need(identity in claims, "HISTORICAL_PROJECTION_SELECTED_CLAIM_MISSING")
-                evidence.append(_claim_evidence(claims[identity], observation, result, company,
-                                                projection, indexes, str(period["fiscal_year"])))
-            continue
-        entry = projector._evidence_row(observation=observation, result=result, company=company,
-                                        projection=projection, source_index=indexes["sources"],
-                                        raw_index=indexes["raw"],
-                                        fiscal_year=str(period["fiscal_year"]))
-        entry.update(value_raw=_raw_value(observation, financial_locators, selection),
-                     context_or_dimension=json.dumps(
-                         {"source_binding": binding, "source_cells": financial_locators},
-                         ensure_ascii=False, sort_keys=True),
-                     evidence_quote="Normalized source-derived observation: "
-                                    + entry["evidence_quote"])
-        if "table_locator" in binding:
-            entry.update(value_raw=binding["reported_raw_text"],
+    if text_route:
+        # The row and its evidence come from the shared projector, exactly as on
+        # the current route: a disclosed item is its own evidence row, so there
+        # is no claim to look up and no source cell to quote. The invariant to
+        # assert is ordinary_projection's - every published item reaches the row.
+        _need(len(evidence) == len(result["text_payload"]["items"]),
+              "HISTORICAL_TEXT_EVIDENCE_SET_CHANGED")
+    else:
+        evidence = []
+        claims = _claims(prepared)
+        # A structured Company Facts observation is bound to an XBRL fact, not to a
+        # verified claim, so it carries no claim identifiers at all. The ordinary
+        # projector has always had two branches here and this one had only the first,
+        # which made every revenue-route metric fail to render a row its own Run had
+        # already resolved as EXACT. The B13 quantity_statement branch is not ported:
+        # that is a text route, and case["kind"] == "STRUCTURED" is required above.
+        selection = case["results"][metric].get("selection")
+        financial_locators = _selected_financial_locators(metric, selection)
+        for observation in ordered:
+            binding = observation["source_binding"]
+            identifiers = binding.get("verified_claim_ids",
+                                      binding.get("matched_verified_claim_ids", []))
+            if identifiers:
+                for identity in identifiers:
+                    _need(identity in claims, "HISTORICAL_PROJECTION_SELECTED_CLAIM_MISSING")
+                    evidence.append(_claim_evidence(claims[identity], observation, result, company,
+                                                    projection, indexes, str(period["fiscal_year"])))
+                continue
+            entry = projector._evidence_row(observation=observation, result=result, company=company,
+                                            projection=projection, source_index=indexes["sources"],
+                                            raw_index=indexes["raw"],
+                                            fiscal_year=str(period["fiscal_year"]))
+            entry.update(value_raw=_raw_value(observation, financial_locators, selection),
                          context_or_dimension=json.dumps(
-                             {"source_binding": binding,
-                              "source_cells": binding["source_witnesses"]},
+                             {"source_binding": binding, "source_cells": financial_locators},
                              ensure_ascii=False, sort_keys=True),
-                         evidence_quote="Source table cell: " + binding["reported_raw_text"])
-        evidence.append(entry)
+                         evidence_quote="Normalized source-derived observation: "
+                                        + entry["evidence_quote"])
+            if "table_locator" in binding:
+                entry.update(value_raw=binding["reported_raw_text"],
+                             context_or_dimension=json.dumps(
+                                 {"source_binding": binding,
+                                  "source_cells": binding["source_witnesses"]},
+                                 ensure_ascii=False, sort_keys=True),
+                             evidence_quote="Source table cell: " + binding["reported_raw_text"])
+            evidence.append(entry)
     label, note = _period_label(result, period)
     row["fiscal_period"] = label
     row["notes"] = " ".join([row.get("notes", ""), note,
