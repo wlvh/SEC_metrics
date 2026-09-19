@@ -64,7 +64,20 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
     prepared = prepare_historical_annual_input(repo_root=repo_root, company_id=company_id,
                                                period_selection=period_selection)
     verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
-    _need(not prepared["amendments"], "HISTORICAL_COMPANYFACTS_AMENDED_TARGET_NOT_IMPLEMENTED")
+    # A period carrying a 10-K/A used to refuse outright. The approved policy in
+    # config/annual_amendment_scope_v1.json already decides these shapes, and
+    # annual_amendment_scope proves the classification from the filings' own
+    # bytes, so this asks rather than refusing. The target stays the original
+    # filing either way: the amendment is evidence about whether the original's
+    # inputs still stand, never a source of values.
+    if prepared["amendments"]:
+        from .historical_amendment_admission import (AmendmentAdmissionError,
+                                                     amendment_admission)
+        try:
+            amendment_admission(repo_root=repo_root, company_id=company_id,
+                                metric_ids=sorted(routes), prepared=prepared)
+        except AmendmentAdmissionError as error:
+            _need(False, str(error))
     _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY",
           "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
     period = prepared["table_input"]["target_period"]

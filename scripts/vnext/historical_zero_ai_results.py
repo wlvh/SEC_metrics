@@ -72,8 +72,20 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     prepared = prepare_historical_annual_input(repo_root=repo_root, company_id=company_id,
                                                period_selection=period_selection)
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
-    _need(not prepared["amendments"], "HISTORICAL_ZERO_AI_AMENDED_TARGET_NOT_IMPLEMENTED",
-          "IMPLEMENTATION_GAP")
+    # See historical_amendment_admission: the approved policy decides these
+    # shapes per input class, so an event metric and a statement metric can get
+    # different answers on the same amendment - which is the point, because a
+    # Part III addition leaves the event window alone and does not clear the
+    # statement values.
+    if prepared["amendments"]:
+        from .historical_amendment_admission import (AmendmentAdmissionError,
+                                                     amendment_admission)
+        try:
+            amendment_admission(repo_root=repo_root, company_id=company_id,
+                                metric_ids=[metric_id], prepared=prepared,
+                                event_metric_ids=EVENT_METRICS)
+        except AmendmentAdmissionError as error:
+            _need(False, str(error), "SOURCE_SCOPE_NOT_CLEARED")
     _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY",
           "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED", "IMPLEMENTATION_GAP")
     period = prepared["table_input"]["target_period"]

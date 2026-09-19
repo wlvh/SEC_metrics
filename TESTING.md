@@ -867,6 +867,14 @@ Spec 修订机制本身：`PYTHONPATH=scripts python3 -m unittest tests.vnext.te
 
 这一组同样验了承重：把后继的逐项循环改成 `payload["items"][:64]`，16 个用例中 **10 个失败**；改回后全过。
 
+修订件准入：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_amendment_admission`（saved-source 层，实测 37.9 秒，读两份 10-K 与两份 10-K/A 的完整字节）。
+
+七个用例全部跑**真实申报**而不是构造 fixture——一份只在构造 fixture 上成立的政策，不能证明它判得了真申报。语料里两份修订件的差别正是政策存在的理由：Southwest 更正一个 exhibit 超链接、Paramount 补 Part III Items 10–14，所以同一个问题（这个指标可以解析吗）**按公司、按输入类别给出不同答案**。
+
+第一个用例先证明语料确实各带一份 10-K/A、Ford 确实没有——否则后面几个在断言空气。随后：链接更正清除两个输入类别；Part III 清除事件窗口而不清除报表数值，且拒绝理由必须含分类名、**必须不含 `NOT_IMPLEMENTED`**；政策的九个 `not_covered_metric_ids` 两家都拒；报表类与事件类不能合在一次判定里（`MIXED_INPUT_CLASSES`）；空事件集合时一切按报表类处理，即取更严的一侧而不是更松的一侧。
+
+承重的是 `test_the_two_companies_do_not_get_the_same_answer`：**一条无视分类、对任何修订都放行的路线，会通过其余全部用例，只挂在这一条上。**
+
 **后继协议的接线**（与上一条不同，这条测的是"有没有接上"而不是"实现对不对"）：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_protocol_wiring`。条目上限在三个文件、五处生效，模块本身正确不等于 Run 走得通，所以这三个用例直接调生产入口——`records.validate_record`、`constraints.verify_trace_observation_values`、`projector._projection_value`——each 喂一个 92 条的 payload（Pfizer D02 的真实条数）。
 
 它和 `test_historical_run_material` 一样需要注册补丁，**未打补丁时 skip，skip 不算 PASS**，所以同样不登记进 `tools/run_fast_tests_v2.py` 的任何层。跳过条件是从补丁**实际改到的三个模块源码**里数 `historical_text_protocol` 出现三次读出来的，不是去读补丁文件——补丁只打了一半时应当 skip 而不是报 PASS。

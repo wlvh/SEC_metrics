@@ -68,6 +68,9 @@ NEW_RULE_FILES = (
     # will render. This carries the second, so a file that decides how many
     # excerpts a result may hold is checked on both roots.
     "scripts/vnext/historical_text_protocol.py",
+    # Which amendments leave which inputs unchanged decides whether a pinned
+    # period resolves at all, so its bytes are checked on both roots.
+    "scripts/vnext/historical_amendment_admission.py",
     "scripts/vnext/requirement_profile_v16.py",
 )
 

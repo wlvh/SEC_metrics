@@ -1035,6 +1035,16 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 `incorporated_scopes` 改为按申报自己点名的限定取范围。语料里有四种写法：点名附注内某个标题（Marriott、Paramount）、点名两个小节（Lumen）、引用附注自身标题（Salesforce 的 Note 14 “Legal Proceedings and Claims”，那是附注的名字而非其中一节）、不点名（Ford 的 See Note 24）。被点名标题的范围到下一个被点名标题，最后一个到下一个**同级**标题。层级不在解析出的标志里（Lumen 把主题标题和个案标题都标 emphasized，Marriott 两者都不标），而在各自文档的字节里且写法不同——Lumen/Paramount 用斜体区分主题与个案，Marriott 用下划线加 22.5pt 缩进——所以 `caption_style` 只在同一文档内比较，不跨申报假设惯例。另需一个信号：分页处会以与主题标题相同的样式重复注册人名与 `(Continued)`（Paramount 的 Note 18 内有四处），页眉会重复而章节标题不会，同一判据也把它们挡在摘录之外。只有 `EXACT_NOTE` 才整取；Pfizer 的 Note 16A 无同号标题、解析器自记 `WIDER_PARENT_NOTE`（整个 Note 16，135 块），不整取并把差距留在覆盖记录里。实测：Marriott 10→11（只补回被词表漏掉的 1317）、Salesforce 9→15、Paramount 16→27、Lumen 15→41，其余五家逐字节不变，零块丢失。
 
+**修订件不再一律拒绝，而是去问已批准的政策**。历史路线原先对任何带 10-K/A 的目标期间直接 `AMENDED_TARGET_NOT_IMPLEMENTED`。六公司批次实测这吃掉 138 个坐标里的 38 个——Southwest 与 Paramount 的全部 Company Facts 与零 AI 指标。
+
+这一度被记成“需要用户定业务口径”，那是错的。`config/annual_amendment_scope_v1.json` 是已批准政策，它的 `link_purpose_pattern` 与 `part_iii_purpose_pattern` **逐字匹配的就是这两份申报的原文**，`no_change_patterns` 也是它们各自那句“不改动任何其他披露”。读两份修订件自己的 Explanatory Note 就能确认：Southwest 只更正 Exhibit 3.2 的超链接，Paramount 只补 Part III Items 10–14，两份都明写不改其他披露。所以那 38 个坐标是被两份按自身声明什么都没改的修订件挡住的。
+
+`scripts/vnext/historical_amendment_admission.py` 是本世代第 18 个规则文件，把两处 guard 由“见修订即拒”改为“按输入类别问政策”。事件指标需要 `FISCAL_EVENT_WINDOW`，报表类指标需要 `ORIGINAL_STATEMENT_VALUES`；两类不能合在一次判定里，因为**同一份修订对二者的答案不同**，这正是政策存在的理由。实测：Southwest 的链接更正两类都清除；Paramount 的 Part III 只清除事件窗口，报表类保持 `original_statement_admission_requires_further_review`。这与仓库既有规则一致——有限链接更正可接入 B01/B03/六事件/Company Facts，Part III 不自动批准财务或主体合并范围。
+
+三条边界写死在模块里：目标**始终是原始 10-K**，修订件只作为“原件输入是否仍成立”的证据，从不作为取值来源；政策的 9 个 `not_covered_metric_ids` 无论分类一律拒，因为 Part III 修订可能改变治理、法律、关联方与债务的解释；拒绝理由命名分类而不是 `NOT_IMPLEMENTED`——把已决的政策拒绝报成未实现，正是让一个已定的问题读起来还没定。
+
+政策自带 `production_authorized: false`，`issue_47_v1` 本身是 `NOT_ACTIVATED`，所以这里只是开发接线，不构成生产采纳。
+
 **64 不是一个界，是两个**。范围定位正确之后 Pfizer 的 D02 是 92 条 41,860 字（按 `max_text_chars` 自己的计法：各条长度之和加条间分隔符），字符只用了 64,000 预算的 65%，卡住它的是条目数。这个上限约束的是申报者怎么断段，不是披露量：九份年报里一条摘录平均 341（Ford）到 1,422（Southwest）字符，同样用满字符预算的申报，条目数可以差四倍。所以按仓库既有的 Spec 修订形状（`B06_new_source_v2.md`、`C03_reported_compensation_v2.md`、`B06_guarded_v3.md` 到 `B06_inclusive_table_v6.md`）新增 `catalog/r6/D02_legal_disclosures_v2.md`，与 v1 只差 64 → 192，v1 逐字节不变。192 = 最稀的那档（187 条）上取整到原上限的三倍，不是按 Pfizer 的 92 反推。
 
 **第一层：Spec 能声明多少，在编译器里**。`scripts/vnext/specs.py` 规定任何 `TEXT_V1` 策略最多声明 64 条，而它的字节被十四个已冻结 Requirement 世代（`issue_28_v2`–`v14` 与 `issue_47_v1`）的 execution authority 点名。改它的后果是实测出来的：`native_request_construction` 开作用域时逐个核对那份 authority 的文件字节，于是稳定抛 `NATIVE_REQUEST_CONSTRUCTION_RULE_CHANGED:scripts/vnext/specs.py`，`tests/vnext/test_native_request_construction.py` 的 13 个用例全红，整条 continuous 语义调用路线（D03/D04/B13）在带这个改动的树里起不来。第一版就是这么做的，fast suite 抓住了它。
