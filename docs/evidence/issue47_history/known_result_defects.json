@@ -19,15 +19,33 @@
    "evidence": "docs/evidence/issue47_history/d02-section-boundary/"
   },
   {
-   "defect_id": "D02_PFIZER_2025_NOTE_16A_UNRESOLVED",
+   "defect_id": "D02_PFIZER_2025_EXCEEDS_SPEC_ITEM_BOUND",
    "company_id": "pfizer",
    "metric_id": "D02",
    "period_end": "2025-12-31",
    "result_id": null,
-   "summary": "Item 3 incorporates Note 16A by reference. No heading carries that number, so _note_references falls back to the parent Note 16 and records WIDER_PARENT_NOTE. The incorporated sub-note is therefore never located, and its text reaches the result only where the six-word legal pattern happens to match.",
-   "repair": null,
-   "repair_state": "OPEN_NOT_REPAIRED",
-   "evidence": "docs/evidence/issue47_history/d02-section-boundary/referenced-note-resolution.json"
+   "summary": "Item 3 incorporates Note 16A by reference. The sub-note is now located: Note 16 carries 'A. Legal Proceedings' with B (guarantees), C (commitments), D (contingent consideration) and E (insurance) after it, and the scope runs from A to B. Correctly scoped, the excerpt set is 92 items and 41,860 characters against the Spec's max_items 64 and max_text_chars 64,000, so create_deterministic_text_candidate refuses with TEXT_V2_COMPLETE_EXCERPT_SET_EXCEEDS_ITEM_BOUND and this coordinate produces no result.",
+   "repair": "scripts/vnext/historical_text_results.incorporated_scopes locates the lettered sub-note; the remaining blocker is the Spec's item bound",
+   "repair_state": "SCOPE_LOCATED_BLOCKED_BY_APPROVED_SPEC_BOUND",
+   "evidence": "docs/evidence/issue47_history/d02-section-boundary/",
+   "blocking_decision": {
+    "question": "whether D02's max_items may be raised in a successor MetricSpec",
+    "measured": {
+     "pfizer_items": 92,
+     "pfizer_characters": 41860,
+     "max_items": 64,
+     "max_text_chars": 64000,
+     "largest_other_company_items": 53,
+     "southwest_characters_in_25_items": 35545
+    },
+    "why_it_is_a_business_decision": "max_items caps block count, and block count is a function of how the filer breaks paragraphs rather than of how much is disclosed. Raising it changes an approved MetricSpec, so it goes through the revision mechanism rather than being edited here.",
+    "not_done": [
+     "raising the bound",
+     "merging adjacent blocks to fit",
+     "narrowing the scope to fit",
+     "reverting to the parent-note skip"
+    ]
+   }
   }
  ]
 }

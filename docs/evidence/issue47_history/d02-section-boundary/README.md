@@ -225,6 +225,45 @@ times inside Paramount's Note 18 — so running furniture ends the section at th
 first page break. Furniture repeats inside the note; a section caption does
 not, and the same test keeps it out of the excerpts.
 
+### The lettered sub-note is now located, and the Spec bound is what blocks it
+
+Pfizer's Item 3 says "discussed in Note 16A". No heading is numbered 16A, so
+`_note_references` falls back to the parent and records `WIDER_PARENT_NOTE`.
+The sub-note is in the document all along:
+
+| block | text |
+| ---: | --- |
+| 3819 | `Note 16. Contingencies and Certain Commitments` |
+| **3821** | **`A. Legal Proceedings`** |
+| 3838 | `A1. Legal Proceedings--Patent Litigation` (nested under A) |
+| 3937 | `B. Guarantees and Indemnifications` |
+| 3947 | `C. Certain Commitments` |
+| 3950 | `D. Contingent Consideration for Acquisitions` |
+| 3952 | `E. Insurance` |
+
+So the incorporated scope is `[3821, 3937)` — Legal Proceedings, and not the
+guarantees, commitments, contingent consideration or insurance that follow it.
+`A1.` does not match the sub-note pattern because its letter is followed by a
+digit rather than a separator, and the same repetition rule that identifies a
+page break keeps the six repeated running headers out.
+
+Correctly scoped, Pfizer's D02 is **92 excerpts and 41,860 characters** against
+the Spec's `max_items` 64 and `max_text_chars` 64,000. It is past the item
+bound while using 65 percent of the character budget, so
+`create_deterministic_text_candidate` refuses with
+`TEXT_V2_COMPLETE_EXCERPT_SET_EXCEEDS_ITEM_BOUND` and this coordinate produces
+no result.
+
+That is the Spec speaking, and it is recorded rather than worked around. Item
+count is a function of how the filer breaks paragraphs, not of how much is
+disclosed: Southwest discloses 35,545 characters in 25 items, Pfizer 41,860 in
+92. Raising the bound changes an approved MetricSpec, so it goes through the
+revision mechanism. Not done here: raising the bound, merging adjacent blocks
+to fit, narrowing the scope to fit, or reverting to the parent-note skip that
+silently dropped the sub-note.
+
+The other eight registrants are unaffected — the largest is Ford at 53 items.
+
 ### Only an exactly resolved note is taken whole
 
 Applying that to every reference first broke Pfizer against the Spec's own

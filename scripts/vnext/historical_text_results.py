@@ -183,6 +183,58 @@ def _caption_like(document, block):
             and not text.endswith((".", ":", ";", ",", "\u3002")))
 
 
+_LETTERED_SUB_NOTE = re.compile(r"^(\d{1,2})([A-H])$")
+_TOP_LEVEL_LETTER = re.compile(r"^([A-H])[.)\s\u2014-]\s*(\S.{2,88})$")
+
+
+def _top_level_letter(document, block):
+    """The letter of a sub-note heading, when the block is one.
+
+    A sub-note heading is short, standalone and starts with its own letter.
+    ``A1. Legal Proceedings--Patent Litigation`` is nested under A and does not
+    match, because the letter is followed by a digit rather than a separator.
+    """
+    text = block["text"].strip()
+    if block["linked"] or len(text) > 90:
+        return None
+    match = _TOP_LEVEL_LETTER.match(text)
+    return None if match is None else match.group(1)
+
+
+def _lettered_sub_note_scopes(*, document, note, blocks, start, stop, repeated):
+    """The sub-note a reference named, when only its parent could be numbered.
+
+    The scope runs from the named letter's heading to the next sub-note letter,
+    so a reference to 16A takes Legal Proceedings and not the guarantees,
+    commitments, contingent consideration and insurance that follow it. A
+    reference whose letter has no heading returns nothing: the gap stays
+    visible in the coverage record rather than being filled with the parent.
+    """
+    match = _LETTERED_SUB_NOTE.match(str(note.get("requested_reference", "")).upper())
+    if match is None:
+        return []
+    headings = [(index, _top_level_letter(document, blocks[index]))
+                for index in range(start, stop)]
+    headings = [(index, letter) for index, letter in headings if letter is not None
+                and repeated[_normalized(blocks[index]["text"])] == 1]
+    named = [index for index, letter in headings if letter == match.group(2)]
+    if len(named) != 1:
+        return []
+    begin = named[0]
+    following = [index for index, _ in headings if index > begin]
+    end = following[0] if following else stop
+    if begin >= end:
+        return []
+    furniture = [index for index in range(begin, end)
+                 if repeated[_normalized(blocks[index]["text"])] > 1]
+    return [{"section_id": note["section_id"] + "_SUB_" + match.group(2),
+             "start_block": begin, "end_block_exclusive": end,
+             "requested_reference": note["requested_reference"],
+             "scope_relation": "LOCATED_LETTERED_SUB_NOTE",
+             "caption_text": blocks[begin]["text"],
+             "repeated_furniture_blocks": furniture}]
+
+
 def incorporated_scopes(*, document, raw_bytes, reference, note):
     """The parts of a referenced note that Item 3 says it incorporates.
 
@@ -207,6 +259,17 @@ def incorporated_scopes(*, document, raw_bytes, reference, note):
     """
     blocks = document["blocks"]
     start, stop = note["start_block"], note["end_block_exclusive"]
+    repeated = Counter(_normalized(blocks[index]["text"]) for index in range(start, stop))
+    if note.get("scope_relation") != "EXACT_NOTE":
+        # The reference named a lettered sub-note and `_note_references` found
+        # only its parent, which it records as WIDER_PARENT_NOTE. Taking the
+        # parent whole would be over-capture by the resolver's own
+        # classification; locating the sub-note is what the reference asked
+        # for. Pfizer's Item 3 names Note 16A, and Note 16 carries
+        # "A. Legal Proceedings" at block 3821 with B, C, D and E - guarantees,
+        # commitments, contingent consideration and insurance - after it.
+        return _lettered_sub_note_scopes(document=document, note=note, blocks=blocks,
+                                         start=start, stop=stop, repeated=repeated)
     quoted = []
     for occurrence in reference["source_occurrences"]:
         quoted.extend(_normalized(m.group(1)) for m in _QUOTED_CAPTION.finditer(occurrence["text"]))
@@ -218,7 +281,6 @@ def incorporated_scopes(*, document, raw_bytes, reference, note):
     inside = [index for index in named if _normalized(blocks[index]["text"]) != heading]
     if not inside:
         return [note]
-    repeated = Counter(_normalized(blocks[index]["text"]) for index in range(start, stop))
     scopes = []
     for position, begin in enumerate(inside):
         if position + 1 < len(inside):
@@ -293,14 +355,6 @@ def referenced_note_candidates(*, document, raw_bytes):
             reasons.append("UNRESOLVED_" + reference["reference"].upper().replace(" ", "_"))
             continue
         note = reference["range_candidates"][0]
-        # A note named by a lettered sub-number can resolve to its whole parent,
-        # which `_note_references` records as WIDER_PARENT_NOTE. Pfizer's Item 3
-        # names Note 16A, no heading carries that number, and the parent Note 16
-        # comes back at 135 blocks. Taking that whole would be over-capture by
-        # the resolver's own classification, so an inexact resolution adds
-        # nothing and stays visible in the coverage record.
-        if note.get("scope_relation") != "EXACT_NOTE":
-            continue
         for scope in incorporated_scopes(document=document, raw_bytes=raw_bytes,
                                          reference=reference, note=note):
             if not any(r["section_id"] == scope["section_id"]
