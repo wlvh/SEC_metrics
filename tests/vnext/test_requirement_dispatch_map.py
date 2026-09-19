@@ -28,8 +28,8 @@ def _tool():
 class RequirementDispatchMapTest(unittest.TestCase):
     def test_no_dispatch_chain_tests_one_requirement_id_twice(self):
         report = _tool().measure(repo_root=REPO_ROOT)
-        self.assertEqual([], report["unreachable_branches"])
-        self.assertTrue(report["every_branch_reachable"])
+        self.assertEqual([], report["duplicate_simple_conditions"])
+        self.assertTrue(report["no_duplicate_simple_dispatch_condition"])
         # The map is only useful if it actually found the chains.
         self.assertGreaterEqual(report["dispatch_chains"], 10)
         self.assertIn("issue_28_v13", report["requirement_ids_routed"])
@@ -52,6 +52,41 @@ class RequirementDispatchMapTest(unittest.TestCase):
         files = {site["file"] for site in report["membership_sites"]}
         self.assertIn("scripts/vnext/run_store.py", files)
         self.assertIn("scripts/vnext/records.py", files)
+
+    def test_a_compound_condition_is_left_unanalysed_rather_than_called_dead(self):
+        """The narrow claim, and why it has to stay narrow.
+
+            if requirement_id == X and mode == "TEXT": ...
+            elif requirement_id == X: ...
+
+        is reachable, and comparing bare id strings would report the second
+        branch as dead. So a condition that is not a single equality or
+        membership test is listed as unanalysed and never counted as a
+        duplicate. The tree already contains such conditions, which is why the
+        result is named no_duplicate_simple_dispatch_condition and not anything
+        about every branch being reachable.
+        """
+        import tempfile
+        from pathlib import Path
+        tool = _tool()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "scripts/vnext").mkdir(parents=True)
+            (root / "scripts/vnext/run_store.py").write_text(
+                'def route(manifest, mode):\n'
+                '    if manifest.get("requirement_id") == "issue_28_v13" and mode == "TEXT":\n'
+                '        from .a import handler\n'
+                '    elif manifest.get("requirement_id") == "issue_28_v13":\n'
+                '        from .b import handler\n'
+                '    else:\n'
+                '        from .c import handler\n'
+                '    return handler\n', encoding="utf-8")
+            report = tool.measure(repo_root=root)
+        self.assertEqual([], report["duplicate_simple_conditions"])
+        self.assertTrue(report["no_duplicate_simple_dispatch_condition"])
+        self.assertTrue(report["unanalysed_conditions"])
+        # And the real tree has some too, so this is not a synthetic concern.
+        self.assertTrue(_tool().measure(repo_root=REPO_ROOT)["unanalysed_conditions"])
 
     def test_the_check_catches_a_second_branch_on_an_id_already_matched(self):
         """And it is byte-level, not a spelling convention.
@@ -79,11 +114,12 @@ class RequirementDispatchMapTest(unittest.TestCase):
             for name in ("records.py", "requirement_profile.py"):
                 shutil.copy2(REPO_ROOT / "scripts/vnext" / name, root / "scripts/vnext" / name)
             report = tool.measure(repo_root=root)
-        self.assertFalse(report["every_branch_reachable"])
-        dead = report["unreachable_branches"]
+        self.assertFalse(report["no_duplicate_simple_dispatch_condition"])
+        dead = report["duplicate_simple_conditions"]
         self.assertTrue(any(entry["requirement_id"] == "issue_28_v14" for entry in dead), dead)
         # The honest tree still passes, so the failure came from the injection.
-        self.assertTrue(_tool().measure(repo_root=REPO_ROOT)["every_branch_reachable"])
+        self.assertTrue(_tool().measure(
+            repo_root=REPO_ROOT)["no_duplicate_simple_dispatch_condition"])
 
 
 if __name__ == "__main__":

@@ -233,9 +233,14 @@ which is **not** the latest period, beside the same metric at `2025-12-31`:
 | 2024-12-31 | `…8bae5b812eff` | none, `HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED` | 2024 | 2024-01-01 → 2024-12-31 |
 
 Different Run identities, different windows, different outcomes. A route reading
-the latest filing would have answered 2024 with the same 3. That the older year
-resolves to a named source limitation rather than a value is the point: the
-window moved, and the material behind it did not follow.
+the latest filing would have answered 2024 with the same 3.
+
+What this is evidence of, stated narrowly: **period isolation and missing-source
+handling** — the request was not replaced wholesale by the latest year's success,
+and the pinned period and its limitation both reach the public row. It is *not*
+an FY2024 event count, because no count was produced; and it does not generalise
+to every historical route. A positive historical result still needs a year whose
+8-K material is saved.
 
 ### The event metrics do reach a Run and a row
 
@@ -285,6 +290,35 @@ So the registration is now **eight changes in three files** (the diff shows
 seven hunks: the two `run_store` text changes are adjacent enough to merge).
 With them applied, Marriott's pinned 2025 D02 reaches a **FROZEN** native Run,
 `EXACT`, `TEXT_V1`, ten text items, `calls` zero.
+
+### The negatives, and which layer actually answered each one
+
+A negative that records only "it was refused" proves less than it reads. Three
+rounds of tampering with this Run make the point, and all three are kept because
+the difference between them is the finding:
+
+| round | cases reaching the layer they meant to test |
+| --- | --- |
+| tamper after freezing | **0 of 5** — every one answered by `records_file_hash` |
+| tamper while OPEN | **3 of 6** — three answered by record-schema validation |
+| substitute another year's genuine records | **3 of 3 so far** |
+
+`tools/vnext_refusal_layer.py` classifies a refusal to the layer that produced
+it — frozen-file seal, record schema, record graph, Requirement authority, text
+protocol — and each case declares which layer it meant to reach. A case blocked
+earlier is recorded as `inner_check_not_covered`: not a pass, not evidence the
+inner check is broken, just untested by that input.
+
+The first round is retained as a **frozen-file integrity test**, which is what
+it actually is. It does not support any claim about text semantics.
+
+What the rounds that did reach their layer establish: deleting the candidate or
+the evidence check is refused by `HISTORICAL_RUN_TEXT_DERIVATION_CHANGED` naming
+the record, deleting an observation by the store's own
+`Text reviewed observation exact set differs`, and a genuine record from another
+pinned year — internally consistent by construction, so nothing is decided by a
+hand-computed hash — is refused on meaning: a foreign review-unit binding, an
+absent execution trace, a candidate that does not re-derive.
 
 ### It does not reach a public row, and that is the next piece
 
