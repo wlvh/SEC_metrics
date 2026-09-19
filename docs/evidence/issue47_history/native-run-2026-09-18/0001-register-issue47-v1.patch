@@ -71,7 +71,7 @@ diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
      def text_handlers(candidate):
          arguments = text_contexts[candidate["candidate_hash"]]
 +        if manifest.get("requirement_id") == "issue_47_v1":
-+            from .normal_run_v3 import text_api
++            from .historical_text_results import text_api
 +            return text_api(arguments["compiled_spec"]["compiled"]["metric_id"])
          if manifest.get("requirement_id") == "issue_28_v14":
              from . import capacity_text_results

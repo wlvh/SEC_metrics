@@ -192,7 +192,7 @@ def _resolve_text_metric(*, repo_root, company_id, metric_id, selection, prepare
     """
     from datetime import datetime, timezone
 
-    from .normal_run_v3 import text_api
+    from .historical_text_results import text_api
     from .requirements import load_requirement_snapshot
     from .review import create_system_review_decision
     from .specs import compile_spec_file

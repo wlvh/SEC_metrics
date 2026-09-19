@@ -78,6 +78,27 @@ class ExecutionAuthorityClosureTest(unittest.TestCase):
         self.assertTrue(report["authority_is_import_complete"])
         self.assertEqual(report["authority_python_modules"], report["module_scope_closure"])
 
+    def test_a_module_this_generation_imports_directly_must_be_named(self):
+        """The check that a D02 Run needed and the module-scope one did not give.
+
+        `historical_run` imports `historical_text_input` inside a function, so
+        the module-scope closure stayed complete while a Run executed a module
+        no list named. The tool did report it - under a heading that said
+        absence there was not a defect - so the assertion is on the bucket that
+        treats this generation's own import lines as binding, and on the
+        one-hop rule: the thirteen rule files reach 206 of 215 modules
+        transitively through the parent's code, so a transitive test asserts
+        nothing.
+        """
+        import sys
+        if str(REPO_ROOT) not in sys.path:
+            sys.path.insert(0, str(REPO_ROOT))
+        from tools.vnext_authority_closure import measure
+        report = measure(repo_root=REPO_ROOT, requirement_id="issue_47_v1")
+        self.assertEqual([], report["imported_by_this_generation_but_not_named"])
+        self.assertTrue(report["authority_names_this_generation_routes"])
+        self.assertLess(report["new_rule_direct_imports"], report["reachable_closure"])
+
     def test_the_inherited_list_is_the_one_that_was_short(self):
         """Pins where the gap came from, so the fix is not mistaken for noise.
 

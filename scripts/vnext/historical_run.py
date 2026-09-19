@@ -111,7 +111,7 @@ def _text_execution(*, data_root, company_id, metric_id, prepared, requirement=N
     from datetime import datetime, timezone
 
     from .historical_text_input import prepare_historical_business_text_input
-    from .normal_run_v3 import text_api
+    from .historical_text_results import text_api
     from .review import create_system_review_decision
 
     rebuilt = prepare_historical_business_text_input(
@@ -293,7 +293,7 @@ def prepare_text_contexts(*, repo_root, manifest, records, compiled_specs, **unu
     case = replay_case(data_root=repo_root, manifest=manifest)
     _need(case["kind"] == "TEXT", "HISTORICAL_RUN_TEXT_ROUTE_REQUIRED")
     from .historical_text_input import prepare_historical_business_text_input
-    from .normal_run_v3 import text_api
+    from .historical_text_results import text_api
     metric_id = spec["compiled"]["metric_id"]
     rebuilt = prepare_historical_business_text_input(
         repo_root=repo_root, company_id=case["input"]["company_id"], metric_id=metric_id,

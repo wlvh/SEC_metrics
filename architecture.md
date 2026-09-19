@@ -1011,6 +1011,12 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 **原生 Run：已接通并端到端跑通一次**（Marriott FY2024 / B04，见 `docs/evidence/issue47_history/native-run-2026-09-18/`）。新增 `requirement_profile_v16.py`、`requirements/issue_47_v1/`、`historical_run.py`、`historical_projection.py` 四个新文件，未改任何冻结字节；注册所需的三处改动（`PROFILE_ENGINES` 一条、`run_store` 两条按 Run 自身 `requirement_id` 的分派）在两个执行授权内的文件里，以补丁交付。第三处是建 Run 时才发现的：缺它则结构化重放落到通用路径，而该路径要求 `calculation_target` 带 `accession`/`entity`，共享的 `calculate_observation_metric` 并不设置它们。实测同一棵树内两半都成立——新链路可跑，补丁之前安装的 `issue_28_v13` 包五项探针仍全 OK。代价是 `issue_47_v1` 按补丁后的字节记录那两个文件，`issue_28_v13` 的 manifest 与闭包哈希不变，故一个数据根只满足两者之一。以下是此前的范围记录，保留以说明结论如何收窄：
 
+**文本路线的章节边界修复**：`scripts/vnext/historical_text_results.py` 是该世代第 14 个规则文件。冻结的 `text_coverage.build_text_document` 把编号项的终点定在下一个编号标题，`_SUCCESSOR["3"] = {"4", "5"}` 又特意允许跳号（有些公司整项省略 Item 4）；Form 10-K 另外允许把高管信息作为**不编号项**放在 Part I 内。两者相遇时编号项越过不编号项，把高管章节当成自己的披露。九家已保存年报的实测：八家 Item 3 结束于 `Item 4. Mine Safety Disclosures`，只有 Pfizer 不报 Item 4、结束于 Item 5，因而吞掉中间 26 个高管块；五家带该不编号标题，Marriott 与 Southwest 只差两块和四块。所以这是表单要素撞上一处有意放宽，不是某家公司的排版。
+
+修复不能放在应该放的位置：`text_coverage.py` 的字节被 `issue_28_v11` 的规则集点名，其引擎在数据根与代码根双向校验，而 `issue_47_v1` 经父链加载它，改这个文件会让 v11 及其后所有 Requirement 无法加载（实测 `Normal candidate rule bytes differ: scripts/vnext/text_coverage.py`）。后继模块因此只收窄历史路线的已定位区间：`_derive_candidate`、`build_text_review_unit`、`legal_risk_candidates` 的扫描与记录形状校验全部原样复用，另有三个函数因为在冻结模块内以模块全局互相查找而必须复制，由"未收窄时逐字节等于冻结模块"的子集断言约束。普通路线保留原行为，直到某个能重记该文件的世代携带同一规则——这是明确限制，不是已关闭项。
+
+`scripts/vnext/historical_text_input.py` 同时补进规则集：D02 Run 每次都执行它，而原先规则集与继承授权都没点名。它之所以漏掉，是因为 `historical_run` 与 `historical_results` 都在函数内导入它，而 `tools/vnext_authority_closure.py` 只走模块级导入闭包。该工具现在多一类判断：本世代自有规则文件**直接导入**（一跳，不是传递闭包——13 个规则文件经父代码传递可达 215 个模块中的 206 个）却未被授权点名的模块，是缺陷而不是信息。
+
 **（历史记录）原生 Run：范围被缩小，但依然没有接通**。此前这里记的是「注册新 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内，因此阻塞」；上一版改成「已测量，不是架构决定」，那又走过了头。`tools/vnext_requirement_seam.py` 实际证明的范围只有这些：
 
 一份 Requirement 绑定字节有两处，生效位置不同。`new_rule_files` 在 `load_profile_requirement_snapshot` 内对数据根与安装代码根双向校验，改坏它安装本身就失败；`execution_authority.files` 只在 `load_run_requirement_snapshot` 里由 `validate_execution_authority` 校验，改坏它只影响装载或创建 Run。`requirement_profile.py` 与 `run_store.py` 对 `issue_28_v13`、`issue_28_v14` 都**只在执行授权内、不在任何规则集内**。

@@ -115,6 +115,10 @@ SOURCE_TESTS += ("tests.vnext.test_native_assessment_replay",)
 SOURCE_TESTS += ("tests.vnext.test_normal_history_catalog",)
 SOURCE_TESTS += ("tests.vnext.test_historical_period_results",)
 SOURCE_TESTS += ("tests.vnext.test_historical_coverage",)
+# A D02 Result held another item's text, passed every check and was published as
+# EXACT. This is the boundary that ends it and the control cases that stop the
+# boundary from cutting an item's own body, so it reads two filings in full.
+SOURCE_TESTS += ("tests.vnext.test_historical_text_boundary",)
 # This one reads no source material at all - it hashes the twelve rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

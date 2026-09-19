@@ -425,3 +425,5 @@ B13数值接线增量：capacity_utilization_source新增明确年度数量及�
 
 
 本轮后继接线：`native_unit_index.py`保留完整原单元及原请求，只将长单元ID的返回格式变为严格整数索引；不同请求无旧信用。`capacity_quantity_scope.py`/`capacity_quantity_roles.py`按原HTML断言范围及有限数量角色核验，未知量关系不能被OTHER或遗漏抹成未披露。`capacity_update_input.py`把原生成功收据、当前来源等价和普通逐指标历史接通，`ordinary_refresh_cycle.py`负责有限自动来源获取及新原生请求协调。`ordinary_release_preparation.py`及`ordinary_isolated_publication.py`复用统一发布核心作私有版本准备与恢复；正式生产保持未授权。当前状态以`continuation.md`和累计账本为准；前文阶段性的“未修复/仅准备”记录保留当时身份。
+
+Issue #47历史文本路线边界修复：`scripts/vnext/historical_text_results.py`为`issue_47_v1`第14个规则文件，把编号项的终点收窄到Form 10-K不编号的Part I项（高管信息）。冻结`text_coverage.py`的`_SUCCESSOR["3"]={"4","5"}`允许跳号以容纳省略Item 4的公司，表单又允许把高管章节放在Part I内，两者相遇时Item 3吞掉高管章节。九份已保存年报实测：八家结束于Item 4，只有Pfizer不报Item 4、多抓26块并以`EXACT`发布。修复不能改`text_coverage.py`——其字节被`issue_28_v11`规则集点名并在双根校验，普通路线保留原行为直到能重记该文件的世代携带同一规则。`historical_text_input.py`同时补进规则集（D02 Run每次执行却未被点名，因函数内导入而逃过模块级闭包检查）。冻结Run因closure改变不再冷读，须真实重算而非跳过；矩阵续跑键已含closure。材料见`docs/evidence/issue47_history/d02-section-boundary/`。Pfizer的Item 3唯一句子是77字符超链接，被继承的`_substantive`按导航排除，修复前后同样缺失，作为独立遗留问题记录。

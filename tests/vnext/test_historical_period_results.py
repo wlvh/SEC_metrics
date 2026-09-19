@@ -549,8 +549,8 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
         filing would fail.
         """
         from datetime import datetime, timezone
-        from vnext import text_results_v2 as api
         from vnext.historical_text_input import prepare_historical_business_text_input
+        from vnext.historical_text_results import text_api
         from vnext.requirements import load_requirement_snapshot
         from vnext.review import create_system_review_decision
         from vnext.specs import compile_spec_file
@@ -558,6 +558,8 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
 
         spec = compile_spec_file(path=ROOT / "catalog/r6/D02_legal_disclosures_v1.md",
                                  dependency_specs={})
+        # The route's own dispatch, so this exercises what a Run executes.
+        api, build_review_unit = text_api("D02")
         requirement = load_requirement_snapshot(snapshot_dir=ROOT / "requirements" / "issue_28_v13")
         traits = repository_company_traits(repo_root=ROOT, company_id=MARRIOTT)
         seen = {}
@@ -575,7 +577,7 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
                 arguments = {"compiled_spec": spec, **prepared["text_arguments"]}
                 candidate = api.create_deterministic_text_candidate(**arguments)
                 evidence = api.build_text_evidence(candidate=candidate, **arguments)
-                unit, _ = api.build_text_review_unit(
+                unit, _ = build_review_unit(
                     compiled_spec=spec, candidate=candidate, evidence_check=evidence,
                     source_bindings=arguments["source_references"])
                 decision = create_system_review_decision(

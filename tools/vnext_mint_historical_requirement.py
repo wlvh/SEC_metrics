@@ -45,11 +45,20 @@ NEW_RULE_FILES = (
     "scripts/vnext/normal_period_selection.py",
     "scripts/vnext/historical_annual_input.py",
     "scripts/vnext/historical_results.py",
+    # A D02 Run executes this, and neither the rule set nor the inherited
+    # authority named it. It was missed because historical_run and
+    # historical_results both import it inside a function, and the import
+    # closure tool walks module-scope imports only.
+    "scripts/vnext/historical_text_input.py",
     "scripts/vnext/historical_zero_ai_results.py",
     "scripts/vnext/historical_accession_results.py",
     "scripts/vnext/historical_package.py",
     "scripts/vnext/historical_run.py",
     "scripts/vnext/historical_projection.py",
+    # Added when a Pfizer D02 Result that passed every check turned out to hold
+    # another item's text. The repair belongs in text_coverage, whose bytes
+    # issue_28_v11 names, so this generation carries it as its own rule file.
+    "scripts/vnext/historical_text_results.py",
     "scripts/vnext/requirement_profile_v16.py",
 )
 
@@ -100,9 +109,18 @@ which re-checks its own rule bytes on both roots.
 What this generation binds in addition is the historical layer itself: the
 saved-submissions catalog reader, the acquisition planner, the period
 selection policy and selector, the pinned-period annual input, the three thin
-source adapters, the package installer and the historical Run wiring. A Run
-that declares this Requirement therefore records an execution authority that
-names the code that produced it.
+source adapters, the pinned-period text input, the package installer and the
+historical Run wiring. A Run that declares this Requirement therefore records
+an execution authority that names the code that produced it.
+
+It also binds one correction to inherited behaviour. A numbered Form 10-K item
+ends at the next numbered heading, and an omitted item is allowed to be closed
+by a later number; Form 10-K separately lets a registrant carry the executive
+officer information as an unnumbered item inside Part I. Where both apply the
+numbered item absorbs the unnumbered one, and this generation's text route
+closes it at that boundary instead. The correction is the historical route's
+only. The inherited route keeps the behaviour its own frozen bytes describe,
+because the file that decides it is named by `issue_28_v11`'s rule set.
 
 First-report semantics are unchanged: the current value comes from the current
 selected filing and the prior value from the prior selected filing. No
