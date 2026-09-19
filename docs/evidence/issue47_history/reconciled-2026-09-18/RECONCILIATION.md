@@ -238,13 +238,22 @@ land like this:
 
 | status | positions |
 | --- | ---: |
-| `VALUE_EXACT` | **11** |
+| `VALUE_EXACT` | **11**, one of which is wrong — see below |
 | `SOURCE_MISSING_TARGET_ORIGINAL` | 30 |
 | `TARGET_PERIOD_NOT_DISCOVERED` | 7 |
 | `TARGET_PERIOD_METADATA_BLOCKED` | 2 |
 
 Nine of the ten companies resolve one year each; JPMorgan does not, because its
 submissions shards are the defect the plan's 12 refresh requests exist to fix.
+
+**One of those eleven is not a D02 value at all.** Pfizer's row is 23,039
+characters beginning `INFORMATION ABOUT OUR EXECUTIVE OFFICERS`, because the
+located `ITEM_3` range runs past an unnumbered heading to `PART II` and
+swallows it. It is `EXACT` and `PUBLISHED`, so nothing in this matrix
+distinguishes it from a correct row. The current ordinary route produces the
+byte-identical payload from the same filing, so this is an inherited extraction
+defect rather than a historical-route one, and it is recorded with its evidence
+and its options in `../d02-section-boundary/`. Ten clean values, not eleven.
 
 The ratio is the transferable part. Wiring a route moves 50 positions from "no
 route" to "has a route", and **22% of them produce a value immediately**; the
