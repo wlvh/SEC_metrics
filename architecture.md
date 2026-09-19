@@ -993,3 +993,96 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 `ordinary_release_preparation`完整重放选中Run、来源和公共投影，继承未选行的原有字节及证据。`ordinary_isolated_publication`在新私有根使用现有publication核心进行切换/回退/恢复；旧ANNUAL类型只对明确新credit分派新验证器，不能凭调用方JSON获得写入权。规定范围无疑虑/无相关披露只有通过专项原件和Review检查才可选入。当前私有演练不触及actual active，不充当390验收或生产退出证明。
 <!-- capability-anchor: CAPABILITY.ordinary_private_release_draft -->
+
+### 历史期间选择与显式历史输入（Issue #47）
+
+普通路线的期间是隐式的：`select_filing()` 取 `max(reportDate)`，`prepare_case()`、`install_normal_inputs()`、`replay_case()` 和 `render_ordinary_run()` 各自重新准备一次"最新一期"。历史能力因此不能只在前端加年份。
+
+新增一层薄的历史后继，全部为新增文件，不改任何既有文件字节：
+
+- `scripts/vnext/normal_history_catalog.py`：只做读取。由已保存的 submissions 主索引与必要分片构建完整年度申报目录。分片按窗口有界加载：只在还缺所需年度期末、或某声明分片仍可能覆盖最旧所需期末之后的修订时继续读。未保存、与声明范围不一致或被冻结元数据解析器拒绝的分片保留为显式缺口。目录只产出报告期末，不产出财年标签。
+- `scripts/vnext/normal_history_plan.py`：把目录变成去重的获取计划。与目录分文件是有原因的，不是整理癖：`catalog_identity` 绑定目录模块自身的字节，以证明"同一套读取逻辑产出同一份目录"，而计划的规则本来就会不断改进。两者同处一个文件时，任何一次计划修复都会改变 `catalog_module_sha256`，让来源与读取都没有变化的已安装历史包无法重放。计划现在还区分三种获取：从未保存的首次获取、字节存在但校验不过的替换获取、字节存在且校验通过但与索引声明不一致的**快照刷新**。最后一种此前完全不进计划，JPMorgan 的 11 个陈旧分片因此被当成"已持有的材料"。索引与分片一起刷新并重新对齐，单独刷新一侧不证明另一侧。
+- `config/normal_period_selection_v1.json` + `scripts/vnext/normal_period_selection.py`：把"公司 + 期间请求"证明成一份 `period_selection`。请求形式只有报告期末或发行人财年；调用方提供的 accession、期间日期或答案一律不接受，调用方回传的 selection 在使用前由源重新推导并要求相等。财年请求通过读候选申报自身 DEI 与冻结标签政策解析，不做日期算术。
+- `scripts/vnext/historical_annual_input.py` / `historical_results.py` / `historical_package.py`：固定期间的年度输入、目录指标解析、异目录安装与冷重放。
+
+**为什么是后继文件而不是可选参数**：`scripts/vnext/normal_annual_input_v2.py`、`normal_run_v3.py`、`normal_companyfacts_results.py`、`normal_run_inputs.py`、`normal_zero_ai_results.py`、`normal_accession_results.py` 属于 `issue_28_v13` 的 `rule_paths`，`normal_annual_input.py` 属于 `issue_28_v11` 的 `rule_paths`。`requirement_profile_v12/v14` 对这些文件做逐字节校验，任一改动会让 `load_requirement_snapshot('issue_28_v13')` 失败，当前普通路线的 `install_normal_inputs()` 立即报 `Normal candidate rule bytes differ`。这与 `normal_annual_input_v2`、`normal_run_v3` 当初以后继文件方式演进是同一条约定。
+
+计算侧没有第二套实现：指标目录、编译 Spec、`_deterministic_metric_graph`、适用性规则、来源读取器、来源准入与 DEI 年度读取器全部原样复用。首版口径保持"当期取当期选定申报、前期取前期选定申报"，不改用后续年报的比较数。凡是以当期为定义域的路线（修订范围、后继注册人利润表、事件窗口）在历史请求下返回明确的实现缺口，不回退到最新期。
+
+**原生 Run：已接通并端到端跑通一次**（Marriott FY2024 / B04，见 `docs/evidence/issue47_history/native-run-2026-09-18/`）。新增 `requirement_profile_v16.py`、`requirements/issue_47_v1/`、`historical_run.py`、`historical_projection.py` 四个新文件，未改任何冻结字节；注册所需的三处改动（`PROFILE_ENGINES` 一条、`run_store` 两条按 Run 自身 `requirement_id` 的分派）在两个执行授权内的文件里，以补丁交付。第三处是建 Run 时才发现的：缺它则结构化重放落到通用路径，而该路径要求 `calculation_target` 带 `accession`/`entity`，共享的 `calculate_observation_metric` 并不设置它们。实测同一棵树内两半都成立——新链路可跑，补丁之前安装的 `issue_28_v13` 包五项探针仍全 OK。代价是 `issue_47_v1` 按补丁后的字节记录那两个文件，`issue_28_v13` 的 manifest 与闭包哈希不变，故一个数据根只满足两者之一。以下是此前的范围记录，保留以说明结论如何收窄：
+
+**覆盖汇总不再是第二条执行链**。`historical_coverage.py` 原本为每个已接线位置自建 candidate、Evidence、ReviewUnit，再加载父 Requirement 造 SYSTEM 审阅决定并算出结果——用第二套实现算出来的统计，不是关于这个系统的统计，而且两边在两个方向上都不一致：`native_run_wired` 被硬编码成 `False`（旁边有 114 个真实冻结 Run），B01/B03 被记为 EXACT（而历史投影仍拒绝它们）。
+
+现在分三层：**计划**只枚举目标、期间状态与来源依赖；**执行**仍由 `historical_run.py`/`historical_projection.py` 的原生入口产生 Run、结果行与证据；**汇总**由新增只读模块 `scripts/vnext/historical_run_receipts.py` 读取冻结 Run 的 `manifest.json`、按其自带的三个文件哈希校验 `records.jsonl`/`review_decisions.jsonl`/`validation.json`，再取出 `METRIC_RESULT`。它不重放、不解析财报、不造审阅决定；被编辑过的 run 目录以 `RUN_RECEIPT_FILE_CHANGED` 拒绝。
+
+四个状态分开保存，不互相顶替：路线是否实现、是否有 Run 收据（新增 `ROUTE_IMPLEMENTED_NOT_RUN`，它既不是未实现也不是披露缺失）、该 Run 自身的 validation 状态、内容是否被核查（`business_content_accepted` 恒为 `False`，任何收据字段都不能提供它）。已确认的内容缺陷由 `docs/evidence/issue47_history/known_result_defects.json` 按 `result_id` 或坐标登记：记录的 `VALUE_EXACT` 保留原样，但退出 `verified_outcome`——原件、旧结果和修复责任都不改。同一坐标有多份收据（同一位置在不同 closure 下跑过）全部保留并计数，不默默选一个。
+
+实测同一 390 个位置：**260.4 秒 → 4.7 秒**。验收条件不是"看起来只读"，而是"在无法执行时仍能产出"：三个指标解析器、两个文本候选工厂与系统审阅决定工厂全部替换为抛异常，报告仍必须生成。该测试同时暴露一个成本事实——计划层为确定期间要读申报自身的 DEI，因此仍会解析来源字节，这属于下一项（减少重复解析）的范围，不是第二条执行链。
+
+**同一次执行内共享解析**。按（解析器 × 源字节 × 参数）实测：一个 D02 Run 的创建对**同一份文档**发起 **80 次**解析——`prepare_business_text_sources` 被执行、授权重推、文本上下文重建和开放 Run 的机械重放各自调用共 16 次，每次都重新解析同一批不可变字节。`historical_text_results.shared_source_preparation()` 是一个**显式作用域**的进程内复用：键含 metric、calculation target、全部 source reference、source filings 与**每段原始字节的 SHA-256**（不信任调用方给的 `raw_asset_id`——信任调用方身份的键是可以被撞的键），存取都做深拷贝。
+
+**推导一次不减**：候选仍被独立重推三次，只是不再重复解析不可能改变的字节。作用域**可重入**——Run 创建开一个、内部文本执行再开一个，内层若绑定新字典就会遮蔽外层并在退出时丢弃自己（这个 bug 由整 Run 普查抓到：80 次只降到 25 次而不是 5 次）。
+
+实测同一 Run、同一安装输入：**80 次解析 → 5 次**（5 次就是一次完整准备），**105.9 秒 → 63.7 秒（40%）**，`result_id` 逐字节相同。隔离测量的候选+Evidence 段是 10 → 5、7.6 → 3.8 秒。
+
+不共享的那一次才是独立检查：`run_store.load_frozen_run` 不在任何作用域内，新进程冷读重新从原始证据解析，返回相同 status/quality/条目数（实测 28.1 秒）。反例覆盖身份隔离（同字节改称另一期间/另一主体仍被拒）、对象隔离（调用方改动拿到的对象不污染下一次）、作用域泄漏（块外不复用）与键的字节敏感性。
+
+**文本路线的章节边界修复**：`scripts/vnext/historical_text_results.py` 是该世代第 14 个规则文件。冻结的 `text_coverage.build_text_document` 把编号项的终点定在下一个编号标题，`_SUCCESSOR["3"] = {"4", "5"}` 又特意允许跳号（有些公司整项省略 Item 4）；Form 10-K 另外允许把高管信息作为**不编号项**放在 Part I 内。两者相遇时编号项越过不编号项，把高管章节当成自己的披露。九家已保存年报的实测：八家 Item 3 结束于 `Item 4. Mine Safety Disclosures`，只有 Pfizer 不报 Item 4、结束于 Item 5，因而吞掉中间 26 个高管块；五家带该不编号标题，Marriott 与 Southwest 只差两块和四块。所以这是表单要素撞上一处有意放宽，不是某家公司的排版。
+
+修复不能放在应该放的位置：`text_coverage.py` 的字节被 `issue_28_v11` 的规则集点名，其引擎在数据根与代码根双向校验，而 `issue_47_v1` 经父链加载它，改这个文件会让 v11 及其后所有 Requirement 无法加载（实测 `Normal candidate rule bytes differ: scripts/vnext/text_coverage.py`）。后继模块因此只收窄历史路线的已定位区间：`_derive_candidate`、`build_text_review_unit`、`legal_risk_candidates` 的扫描与记录形状校验全部原样复用，另有三个函数因为在冻结模块内以模块全局互相查找而必须复制，由"未收窄时逐字节等于冻结模块"的子集断言约束。普通路线保留原行为，直到某个能重记该文件的世代携带同一规则——这是明确限制，不是已关闭项。
+
+同一后继文件还带第二处修正。`legal_risk_candidates` 只在没有其他范围包含它时，才给已定位的被引用附注单独范围——这是去重护栏，否则 Item 8 内的附注会被扫两次、同一块出现在两个章节下。副作用是语义：Ford 的 Note 24 落在 Item 8 之外，33 个实体块全部进入结果；其余五家的附注都在 Item 8 内，于是按六个关键词过滤，按公司原文写法点名诉讼的块被丢弃——Pfizer 丢 39 块 19,918 字（比它整份结果还多）、Lumen 11 块 7,689 字、Paramount 6 块 6,851 字、Salesforce 4 块 5,097 字、Marriott 1 块 164 字。`REFERENCED_NOTES` 是 D02 三个声明章节之一，所以 `referenced_note_candidates` 让附注恢复附注身份，并用"最内层范围拥有该块"完成去重。**但整取附注是错的**：第一版对每个 `EXACT_NOTE` 整取，Marriott 由 10 条涨到 30 条，新增的 20 块正是本目录内容核查判定应当排除的担保表（1292–1306）、信用证（1307–1308）与保险赔付（1319–1320）；Lumen 新增的 43 块里有 15 块是合同承诺、路权与采购承诺。"只增不减"不是范围正确的证据。
+
+`incorporated_scopes` 改为按申报自己点名的限定取范围。语料里有四种写法：点名附注内某个标题（Marriott、Paramount）、点名两个小节（Lumen）、引用附注自身标题（Salesforce 的 Note 14 “Legal Proceedings and Claims”，那是附注的名字而非其中一节）、不点名（Ford 的 See Note 24）。被点名标题的范围到下一个被点名标题，最后一个到下一个**同级**标题。层级不在解析出的标志里（Lumen 把主题标题和个案标题都标 emphasized，Marriott 两者都不标），而在各自文档的字节里且写法不同——Lumen/Paramount 用斜体区分主题与个案，Marriott 用下划线加 22.5pt 缩进——所以 `caption_style` 只在同一文档内比较，不跨申报假设惯例。另需一个信号：分页处会以与主题标题相同的样式重复注册人名与 `(Continued)`（Paramount 的 Note 18 内有四处），页眉会重复而章节标题不会，同一判据也把它们挡在摘录之外。只有 `EXACT_NOTE` 才整取；Pfizer 的 Note 16A 无同号标题、解析器自记 `WIDER_PARENT_NOTE`（整个 Note 16，135 块），不整取并把差距留在覆盖记录里。实测：Marriott 10→11（只补回被词表漏掉的 1317）、Salesforce 9→15、Paramount 16→27、Lumen 15→41，其余五家逐字节不变，零块丢失。
+
+**修订件不再一律拒绝，而是去问已批准的政策**。历史路线原先对任何带 10-K/A 的目标期间直接 `AMENDED_TARGET_NOT_IMPLEMENTED`。六公司批次实测这吃掉 138 个坐标里的 38 个——Southwest 与 Paramount 的全部 Company Facts 与零 AI 指标。
+
+这一度被记成“需要用户定业务口径”，那是错的。`config/annual_amendment_scope_v1.json` 是已批准政策，它的 `link_purpose_pattern` 与 `part_iii_purpose_pattern` **逐字匹配的就是这两份申报的原文**，`no_change_patterns` 也是它们各自那句“不改动任何其他披露”。读两份修订件自己的 Explanatory Note 就能确认：Southwest 只更正 Exhibit 3.2 的超链接，Paramount 只补 Part III Items 10–14，两份都明写不改其他披露。所以那 38 个坐标是被两份按自身声明什么都没改的修订件挡住的。
+
+`scripts/vnext/historical_amendment_admission.py` 是本世代第 18 个规则文件，把两处 guard 由“见修订即拒”改为“按输入类别问政策”。事件指标需要 `FISCAL_EVENT_WINDOW`，报表类指标需要 `ORIGINAL_STATEMENT_VALUES`；两类不能合在一次判定里，因为**同一份修订对二者的答案不同**，这正是政策存在的理由。实测：Southwest 的链接更正两类都清除；Paramount 的 Part III 只清除事件窗口，报表类保持 `original_statement_admission_requires_further_review`。这与仓库既有规则一致——有限链接更正可接入 B01/B03/六事件/Company Facts，Part III 不自动批准财务或主体合并范围。
+
+三条边界写死在模块里：目标**始终是原始 10-K**，修订件只作为“原件输入是否仍成立”的证据，从不作为取值来源；政策的 9 个 `not_covered_metric_ids` 无论分类一律拒，因为 Part III 修订可能改变治理、法律、关联方与债务的解释；拒绝理由命名分类而不是 `NOT_IMPLEMENTED`——把已决的政策拒绝报成未实现，正是让一个已定的问题读起来还没定。
+
+政策自带 `production_authorized: false`，`issue_47_v1` 本身是 `NOT_ACTIVATED`，所以这里只是开发接线，不构成生产采纳。
+
+接上这条 guard 之后，批次立刻抓到我接得不完整：Southwest 的 14 个坐标从“被修订件挡住”变成 `Request-ledger locator evidence is invalid`。原因不是遮蔽的旧问题——是**准入要读修订件原件，而安装器从不安装它**。`install_historical_run_inputs` 复制的是 `prepare_*_input` 交出的 `source_proofs`，而修订件不在里面，于是装出来的数据根里 ledger 点名了修订件的字节、目录里却没有。修正在 `historical_annual_input`：修订件既然被读来判定“原件输入是否仍成立”，它就是这次准备的**已准入输入**，其 proof 必须和其余几份一起走。这条错误值得记下来，因为它正是“单独测函数全绿、接上去才露”的形状——`amendment_admission` 在仓库树里跑得通，只有装进隔离数据根之后才失败。
+
+**64 不是一个界，是两个**。范围定位正确之后 Pfizer 的 D02 是 92 条 41,860 字（按 `max_text_chars` 自己的计法：各条长度之和加条间分隔符），字符只用了 64,000 预算的 65%，卡住它的是条目数。这个上限约束的是申报者怎么断段，不是披露量：九份年报里一条摘录平均 341（Ford）到 1,422（Southwest）字符，同样用满字符预算的申报，条目数可以差四倍。所以按仓库既有的 Spec 修订形状（`B06_new_source_v2.md`、`C03_reported_compensation_v2.md`、`B06_guarded_v3.md` 到 `B06_inclusive_table_v6.md`）新增 `catalog/r6/D02_legal_disclosures_v2.md`，与 v1 只差 64 → 192，v1 逐字节不变。192 = 最稀的那档（187 条）上取整到原上限的三倍，不是按 Pfizer 的 92 反推。
+
+**第一层：Spec 能声明多少，在编译器里**。`scripts/vnext/specs.py` 规定任何 `TEXT_V1` 策略最多声明 64 条，而它的字节被十四个已冻结 Requirement 世代（`issue_28_v2`–`v14` 与 `issue_47_v1`）的 execution authority 点名。改它的后果是实测出来的：`native_request_construction` 开作用域时逐个核对那份 authority 的文件字节，于是稳定抛 `NATIVE_REQUEST_CONSTRUCTION_RULE_CHANGED:scripts/vnext/specs.py`，`tests/vnext/test_native_request_construction.py` 的 13 个用例全红，整条 continuous 语义调用路线（D03/D04/B13）在带这个改动的树里起不来。第一版就是这么做的，fast suite 抓住了它。
+
+修复形状与 `text_coverage` → `historical_text_results` 相同。`scripts/vnext/historical_spec_revision.py` 是第 16 个规则文件，它**不替换编译**：冻结的 `compile_spec` 仍做全部解析与校验，本模块把后继的前置内容按前驱声明的界编译一次，要求得到的 `compiled` 与 `prompt_bundle` 与前驱**完全相等**，然后才放回后继声明的界，并用冻结的 `content_hash` / `SEMANTIC_SET_PATHS` / `execution_semantics_hash` 重算三个哈希。
+
+这一步不是仪式。直接往编译结果里塞一个值也能得到一个可用的 Spec，但那会掩盖后继文件里**任何别的**改动——冻结编译器拒绝整份文件时只给一条消息，说不出是哪项检查失败的。负例覆盖七种：改 `required_sections`、`max_text_chars`、`allowed_source_roles`、`name`、`disclosure_group`、`quality_rule`、`metric_id` 的后继一律被拒；另有一个用例断言 `SPEC_FIELDS` 的 24 个字段全部落在 `compiled` 或 `prompt_bundle` 两侧之一——否则这个相等判断就有能被绕过的缝；再有一个用例断言空 `applicability` 与非法 `renderer` 由冻结编译器**先**拒（消息里不带 `Revised Spec`），以证明后继路径只加检查、不减检查。**这里上一版写错了两次，都由独立复核指出后逐棵树实测纠正**（材料：`docs/evidence/issue47_history/authority-divergence/three-trees.json`）。写的是「`issue_47_v1` 现在不重记任何继承文件，一个数据根可以同时满足两者」，依据是 mint 打印的 "no inherited authority entry differs from issue_28_v13"。那行确实打印了——**在未打注册补丁的仓库树里**。而真正执行历史 Run 的是**已打补丁的运行树**，在那里 mint 仍然列出 `requirement_profile.py`、`run_store.py`、`records.py` 三个重记文件。两棵树必须分别核对，前者的结果不能当作后者的兼容性结论。已安装数据根给出同样答案：`issue_47_v1` 对 `specs.py` 记的是 `4cddc435…`，与 `issue_28_v13`/`v14` **一致**；对另外三个文件记的是补丁后的字节，**不一致**。所以恢复 `specs.py` 的实际收益只有一条：把 `specs.py` 移出了分歧集合。第二处纠正：这个分歧也不是本次改动的代价。同一个已安装数据根里，14 个世代对`requirement_profile.py`、`run_store.py`、`records.py` 分别有 13、11、9 个不同哈希——「一棵代码树一次只满足一个世代」是这条 ratchet 的固有形状，不是这次引入的。
+
+**第二层：结果能渲染多少，在协议里**。64 同时是 `ORDERED_NEWLINE_V1` 文本结果协议的结构常量，写死在 `text_results.render_text_payload` 第 86 行，那里读不到任何 Spec。实测一次 D02 Run 经过该函数 **122 次、5 个调用点**（`payload_from_observations`、`build_text_result_and_trace`、`validate_text_record`、`verify_text_trace`、`projector._projection_value`），五个全部超界。所以只提高编译器允许声明的上限，结果仍然渲染不出第 65 条。
+
+`text_results.py` 是 `issue_28_v11` 的 `new_rule_file`（数据根与代码根双向校验），和 `text_coverage.py` 一样动不得，所以 `scripts/vnext/historical_text_protocol.py` 是本世代第 17 个规则文件，自带这一层的容量。
+
+**它只带了一个参数，没有少带一项检查**。五个函数逐字继承自冻结实现，唯一的编辑是把条目上限的字面量换成参数：payload 内的顺序、角色与观察 ID 的重复、逐项形状、文本合法性与编码、哈希格式、coverage 排序、三个审阅绑定、字符上限和渲染本身全部原样。保证方式是**差分**而不是描述——同一批 payload 同时喂给冻结实现和后继实现，在冻结上限之内两者必须返回完全相同的值、抛出完全相同的错误消息，26 个变异逐个比对（字段多一个、少一个、版本/种类/渲染器错、三个哈希格式、coverage 空/乱序/重复、items 空/非列表、逐项顺序/键/文本/编码/角色/观察 ID/重复）。省略 `max_items` 参数时默认值就是 64，所以没有东西靠"不传参"拿到容量。
+
+**提高容量增加验证量，不放松任何检查**，这一点由单独一组用例守住：每个逐项变异都在**第 80 项**再做一遍（冻结上限之内的 payload 永远到不了那里），必须以同样的理由被拒；另有一个用例断言 92 条渲染出来正好是 92 行且第 92 行是第 92 条——"只校验前 64 条"正是这里可能出错却看起来正常的方式。字符上限不变且仍把渲染器插入的换行算进去：192 条 × 332 字符加 191 个分隔符正好在 64,000 以内，192 × 333 就超。
+
+**容量跟着 Spec 身份走，payload 不能自报**。编译好的 Spec 在场的地方（构造与机械重放）用 `policy["max_items"]`，而那份 Spec 由 Run manifest 按字节绑定。Spec 不在场的地方（记录形状校验、轨迹校验、投影）用记录**已经携带**的 `spec_closure_hash`，拿去和本仓库自己编译出来的修订 Spec 比对——重算而不是写死常量，因为闭包哈希里含 `execution_semantics_hash()`，会随无关代码变动；进程内复用以 Spec 文件字节为键，缓存一个权限和缓存一次解析是两回事。伪造记录写 `"max_items": 192` 外加一个本仓库重建不出的 `spec_closure_hash`，拿到的仍是 64 并被拒；把同一条记录换成能重建的那个身份才通过。v1 的身份照样拿 64。
+
+**这次接线的真实代价，比上一版写的大**。`calculator`/`constraints`/`projector` 的字节本来由 `issue_28_v13` 继承记录，补丁一改就对不上（实测 `Successor execution authority bytes differ: scripts/vnext/calculator.py`，Run 建出来但冻结被拒），所以它们必须进 `RE_RECORDED_FROM_TREE`——重记文件由 3 个变成 **6 个**，注册补丁由三文件九处变成**六文件十三处**。也就是说本世代与父代的分歧**变宽了**，这是容量改动的实际成本，如实记下，不包装成隔离收益。
+
+所以 `TEXT_SPEC_PATHS["D02"]` 现在指向 v2：两层都接通了，路由声明的 192 是运行时真正兑现得了的数。v1 留在盘上并保持字节不变，因为已冻结的 Run 声明的是它，而两者 `spec_semantic_hash` 不同——不同的界就是不同的 Spec 身份。两层的完整测量在 `docs/evidence/issue47_history/d02-item-bound/`。
+
+`scripts/vnext/historical_text_input.py` 同时补进规则集：D02 Run 每次都执行它，而原先规则集与继承授权都没点名。它之所以漏掉，是因为 `historical_run` 与 `historical_results` 都在函数内导入它，而 `tools/vnext_authority_closure.py` 只走模块级导入闭包。该工具现在多一类判断：本世代自有规则文件**直接导入**（一跳，不是传递闭包——13 个规则文件经父代码传递可达 215 个模块中的 206 个）却未被授权点名的模块，是缺陷而不是信息。
+
+**（历史记录）原生 Run：范围被缩小，但依然没有接通**。此前这里记的是「注册新 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内，因此阻塞」；上一版改成「已测量，不是架构决定」，那又走过了头。`tools/vnext_requirement_seam.py` 实际证明的范围只有这些：
+
+一份 Requirement 绑定字节有两处，生效位置不同。`new_rule_files` 在 `load_profile_requirement_snapshot` 内对数据根与安装代码根双向校验，改坏它安装本身就失败；`execution_authority.files` 只在 `load_run_requirement_snapshot` 里由 `validate_execution_authority` 校验，改坏它只影响装载或创建 Run。`requirement_profile.py` 与 `run_store.py` 对 `issue_28_v13`、`issue_28_v14` 都**只在执行授权内、不在任何规则集内**。
+
+接缝形状仓库已有：`PROFILE_ENGINES` 有一个以模块路径字符串登记、仅在快照点名时才导入的世代；`run_store` 已按 Run 自身的 `requirement_id` 分派授权校验，并有一条进 `capacity_run` 的 `issue_28_v14` 分支。
+
+**已证明**：改动这两个文件后，一个**已安装的 v13 数据根**仍能加载其 Requirement、通过 Run 的 Requirement 身份校验、并重建历史输入——因为数据根自带那 360 个授权文件的副本，校验比的是副本。**会坏的**是改动之后**新安装**的包：安装把当时的字节复制进去，不再等于 manifest 记录的哈希，于是 `Run explicit Requirement identity differs`。要让新包可用需在 v13/v14 两份 manifest 里重记哈希，这会改变 `requirement_closure_hash`。仓库做过这笔交换（`8346c32` 同一提交改了两份 manifest）。
+
+**未证明**：完整的 `issue_28_v14` 兼容（该探针用的 v13 数据根从未持有 `requirement_profile_v15.py`，相关探针记为 NOT_COVERED，不是失败）；以及**任何原生历史 Run**。探针给 `load_run_requirement_snapshot` 的身份三元组取自刚加载的 Requirement，它校验的是 Run 身份的 Requirement 一侧，没有读取任何真实 Run 的记录、审核与终态；随后调用的 `replay_historical_inputs()` 重建的是输入包，不是原生 Run 重放。因此 `native_run_created` / `native_run_wired` 仍然是 `False`。
+
+「两条登记合入后 12 个后继模块就都不用写」同样未经证明：父版本加载器仍会递归读取父 Requirement，并对规则文件同时检查数据根与代码根的字节。共享规则如何演进要由真实安装与运行来证明。
+
+作废的是把 A/B/C/D 四个方案抛给用户选择这件事；剩下的是一项仍需负责人、提交、兼容验收与 #47 接入方式的工程依赖，记在 #47 而不是一句「等下一个世代」。
+
+**打包路径条件**：`_external` 拒绝的是**代码根与候选数据根重叠**，不是可移植交付。实测四种布局：同一棵树同时充当两者 REFUSED；数据根位于代码根内部 REFUSED；同一交付包下 `runtime/` 与 `data/` 并列 **ADMITTED**；代码根位于数据根内部 ADMITTED。所以「自包含包被现有不变量禁止」是错的，已更正。这只说明路径约束不排除该组织方式，不代表这种交付包已经实现或通过验证：可移植运行时仍需可信身份，数据不能自行指定另一套代码。历史材料测试因此仍按其实际证明的内容标注——新进程、无网络、从已安装数据根重建输入，代码来自开发 checkout。

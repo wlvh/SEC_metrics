@@ -1,0 +1,88 @@
+{
+ "record_type": "KNOWN_RESULT_DEFECT_REGISTER",
+ "schema_version": 1,
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "purpose": "Results this repository has confirmed hold wrong content. An entry withdraws a result from current delivery. It does not delete it, re-sign it, or relabel it as a structural non-applicability: the original Run stays readable so the defect can be demonstrated and the repair checked.",
+ "defects": [
+  {
+   "defect_id": "D02_PFIZER_2025_OFFICER_SECTION",
+   "company_id": "pfizer",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "result_id": "sha256:ab1bfcb4f1673b07580b64eab4b219744802bcac55ef04cb7c09f20c631fcd4a",
+   "run_id": "run:historical-period:fad2a7b37dfa0cdfc74e5b110f0b076a19d512b7059674719e611549930cc732",
+   "requirement_closure_hash": "sha256:a82225adf77f04414e7dfa7b46b48975f24b83ef24b467f2cb044fe59249098a",
+   "reported_quality": "EXACT",
+   "summary": "26 of 58 excerpts are executive-officer biography from the Form 10-K unnumbered Part I item, labelled EXPLICIT_LEGAL_SECTION_TEXT because ITEM_3 ran past that item to ITEM 5.",
+   "repair": "scripts/vnext/historical_text_results.py closes a numbered item at the form's unnumbered Part I item",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "evidence": "docs/evidence/issue47_history/d02-section-boundary/"
+  },
+  {
+   "defect_id": "D02_PFIZER_2025_EXCEEDS_ITEM_BOUND",
+   "company_id": "pfizer",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "summary": "Item 3 incorporates Note 16A by reference. The sub-note is located: Note 16 carries 'A. Legal Proceedings' with B (guarantees), C (commitments), D (contingent consideration) and E (insurance) after it, and the scope runs from A to B. Correctly scoped, the excerpt set is 92 items and 41,860 rendered characters - 65 percent of max_text_chars and 144 percent of max_items - so what stops this coordinate is the item count, not the scope and not the volume.",
+   "repair": "Three steps, all landed. scripts/vnext/historical_text_results.incorporated_scopes locates the lettered sub-note. scripts/vnext/historical_spec_revision.py raises what a Spec may declare, without changing specs.py. scripts/vnext/historical_text_protocol.py raises what ORDERED_NEWLINE_V1 will render, without changing text_results.py. The route declares catalog/r6/D02_legal_disclosures_v2.md.",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-section-boundary/",
+    "docs/evidence/issue47_history/d02-item-bound/"
+   ],
+   "recomputed": {
+    "items": 92,
+    "rendered_characters": 41860,
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "run_status": "FROZEN",
+    "separate_process_cold_read": "same run_id, FROZEN, 92 items",
+    "new_calls": {
+     "provider": 0,
+     "paid": 0,
+     "sec": 0
+    },
+    "evidence": "docs/evidence/issue47_history/d02-item-bound/raised-capacity-end-to-end.json",
+    "still_not_accepted": "that the 92 excerpts are the right 92. Evidence PASS and a frozen Run are not business content acceptance."
+   },
+   "closed_decision": {
+    "question": "whether this generation carries a successor text-result protocol so a result of more than 64 excerpts can be rendered at all",
+    "why_it_is_not_an_implementation_choice": "64 is a literal in text_results.render_text_payload, a new_rule_file of issue_28_v11 checked on both roots and in fourteen generations' execution authority. A successor would duplicate about 155 lines across five functions, two of which - validate_text_record and verify_text_trace - are the integrity checks on a text result, and would grow the registration patch from 3 files and 9 hunks to about 6 files and 14 hunks.",
+    "measured_scope": {
+     "filings_over_the_bound": [
+      "pfizer"
+     ],
+     "largest_under_the_bound": 53,
+     "filings_measured_at_2025_12_31": 7,
+     "reached_with_only_the_renderer_swapped_in_process": "PUBLIC_ROW"
+    },
+    "options": [
+     {
+      "id": "A",
+      "action": "carry a successor text-result protocol in this generation",
+      "cost": "about 155 duplicated lines including two integrity checks; patch 3->6 files"
+     },
+     {
+      "id": "B",
+      "action": "leave the bound at 64 and record this coordinate as refused by the protocol, with the measurement",
+      "cost": "Pfizer D02 produces no result in any year whose filing exceeds 64 excerpts"
+     }
+    ],
+    "recommendation": "B unless this coordinate must be delivered in this PR",
+    "not_done": [
+     "merging adjacent excerpts so the count fits, which trades one observation per source block for a smaller number",
+     "narrowing the scope so the count fits",
+     "routing a Spec that declares 192 while the runtime still refuses 65"
+    ],
+    "resolved": "Completed rather than withdrawn. Recording it as an A/B choice between doing the work and dropping the coordinate was the wrong framing: the capacity was already approved, and finding the bound in more places is wiring to finish, not a decision to re-open.",
+    "measured_cost_paid": {
+     "successor_lines": "five functions in historical_text_protocol.py",
+     "registration_patch": "3 files and 9 hunks became 6 files and 13 hunks",
+     "re_recorded_from_tree": "3 files became 6 - calculator.py, constraints.py and projector.py joined, because the patch now edits bytes issue_28_v13 records. The divergence between this generation and its parent is wider, not narrower.",
+     "guarantee": "differential: 26 mutations compared against the frozen implementation inside the old bound, and every item-level mutation re-run at index 80 where only the raised bound reaches"
+    }
+   }
+  }
+ ]
+}

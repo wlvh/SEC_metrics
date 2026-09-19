@@ -816,3 +816,71 @@ D04作用域回归：`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test
 
 
 请求构造短作用域：`PYTHONPATH=.:scripts python3 -m unittest -v tests.vnext.test_native_request_construction`，需要既有固定tokenizers依赖。覆盖完整原字符/输入类型/字段顺序、返回对象突变、实际规则/分词状态变更、源真实性仍逐次执行；只缓存确定性请求字节，原生收据和含义检查不缓存。完整源声明、预算和请求格式未改变。注册形式短回归`tests.vnext.test_registration_event_discovery`使用明确合成metadata；真实4原件及完整metadata检查单列，不依赖私有固定目录或永久missing状态。
+
+Issue #47 历史期间选择与目录：`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_history_catalog tests.vnext.test_historical_period_results`。目录测试用仓库自身已保存的 submissions 字节检查最近五个年度报告期末、其前一年依赖、去重后的缺口计划、未保存/不一致分片保持显式缺口、非自然年与53周期末按原样保留、修订归入自身期间而非第六个年度；候选一律 `fiscal_year=null`，财年标签只能由该申报自身 DEI 读出。期间选择测试检查重签的 selection 不能换入另一份申报、跨公司 selection 被拒、财年请求按发行人定义而非日期算术解析、候选原件未保存时如实报 `CANDIDATE_SOURCE_UNAVAILABLE`。历史结果测试的预期值在测试内由原始 Company Facts JSON 直接取值并独立算术得到，不调用被测选值器：Marriott FY2024 的 B02/B04/B05 与独立计算一致，FY2023 因前一年原件未保存只让 B02 WITHHELD 而 B04/B05 仍为 EXACT。两个入口按已保存原件读取，列入 saved-source 层（240秒），不放进30秒 fast 层。
+
+历史期间安装与冷重放：`HISTORICAL_PACKAGE_MATERIAL_ROOT=/absolute/new/root PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_historical_package_material`，独立 CI 作业 `historical-period-package`。覆盖异目录安装后在数据根内重建出相同绑定、新进程冷重放恢复相同绑定/期间/数值/选择身份且新增调用为0、两个期间并存不互相覆盖、未知绑定被拒。该测试不创建原生 Run：重放进程是新的、无网络、输入与来源全部来自已安装数据根，但代码来自开发 checkout，所以它证明的是新进程中的输入重建，不是可移植交付。`_external` 拒绝的是代码根与数据根**重叠**（同一棵树、或数据根位于代码根内部），并不拒绝同一交付包下 `runtime/` 与 `data/` 并列；先前写成「自包含包被现有不变量禁止」是错的，已更正，脱离开发 checkout 的可移植交付仍待实现与验证。原生 Run 的接缝成本由 `tools/vnext_requirement_seam.py` 测量，见 `docs/evidence/issue47_history/requirement-seam-2026-09-18/`：已证明的是已安装的 v13 数据根在改动后的运行时下仍可加载 Requirement、通过 Run 身份校验并重建输入；**未证明**完整 v14 兼容，也没有创建任何原生历史 Run。不在此处以放宽冻结合同的方式绕过。
+
+脱离开发 checkout 的交付重放：`python3 tools/vnext_historical_delivery.py --runtime-root <已应用注册补丁的树> --data-root <已安装数据根> --run-dir <已冻结 Run> --delivery /tmp/delivery --output portable-delivery.json`。`runtime/` 由该 Requirement 的执行授权加上全部 `requirements/` 快照组装，`data/` 与 `run/` 与它并列；重放在独立解释器中以 `-I` 运行，工作目录为 `/`，环境只有 `PATH` 与 `PYTHONDONTWRITEBYTECODE`，无网络。实测 45.2 MB（runtime 13.8 MB、data 31.5 MB、run 24 KB），Marriott FY2024 B04 = 2375000000 EXACT，公共行连同 row_hash 渲染成功，且 `vnext_modules_outside_the_delivery` 与 `sys_path_entries_outside_the_delivery` 都是空的——载入的 99 个 vnext 模块全部落在交付目录内，所以「不依赖开发 checkout」是被检查出来的，不是被声称的。
+
+这条更正了本分支 `51b024b` 的结论。当时把 `B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED` 读成禁止自包含交付，那是错的：`_external` 拒绝的是数据根与代码根**重叠**，并列不算重叠。该工具需要注册补丁才能产出可用交付，在未打补丁的 checkout 中会在第一次加载 Requirement 时失败；它报告中的 `extra_beyond_authority` 列出四个任何执行授权都没有点名、但 `requirement_profile_v4`–`v7` 在加载 Requirement 时按运行时根相对路径读取的策略文件。
+
+执行授权的导入闭包：`PYTHONPATH=scripts python3 tools/vnext_authority_closure.py --requirement-id issue_47_v1 --require-complete --require-own-routes`，其断言登记在 `tests.vnext.test_historical_requirement_snapshot`。从授权点名的 Python 模块出发走导入图，分三类报：模块作用域闭包里出现而授权没点名的，是缺陷（照授权组装的交付根本起不来）；只在函数内被父代码导入的，是信息；**本世代自有规则文件直接导入（一跳）却未被点名的，是缺陷**。第三类是补加的——`historical_text_input.py` 每次 D02 Run 都执行，却既不在规则集也不在继承授权里，因为 `historical_run` 与 `historical_results` 都在函数内导入它，它一直躺在第二类那份"不是缺陷"的清单里。必须是一跳而不是传递闭包：13 个规则文件经父代码可达 215 个模块中的 206 个，传递判断什么也断言不了。反例已实测——退回未登记该模块的快照时 `--require-own-routes` 退出码 1 并点名 `historical_text_input.py` 与 `historical_text_results.py`，登记后退 0。`issue_28_v13` 实测 `authority_is_import_complete: false`，缺的是 `scripts/vnext/requirement_profile_v11.py`——`requirement_profile.py` 在授权内且在模块作用域导入 v10 到 v14，五个里只漏了 v11。`issue_47_v1` 点名了它；父级 manifest 与闭包哈希不动。
+
+Requirement 快照与代码树一致：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_requirement_snapshot`，已登记进 `tools/run_fast_tests_v2.py` 的 30 秒层（实测 7.5 秒，不读任何来源材料，只对 12 个规则文件做哈希）。`requirements/issue_47_v1/baseline_manifest.json` 记录这 12 个文件的 sha256，`load_profile_requirement_snapshot` 会在数据根与代码根两侧核对；规则文件改了而没有重新 mint，快照就装不进任何数据根，而在真正尝试安装之前没有任何东西会报错。本分支已经因此漂移过两次（`25c8d72` 改了 historical_package/historical_run，`f59b614` 改了 historical_projection，两次都没重新 mint），当时唯一的防线只是 README 里一句「请运行 --check」——那不是防线。用例同时含一个反例：只让一个规则文件的哈希不同，`--check` 必须失败并点名 `baseline_manifest.json`，随后诚实的树仍然通过，以证明失败来自漂移而不是检查本身坏了。
+
+原生历史 Run 端到端（需先应用注册补丁）：`HISTORICAL_RUN_MATERIAL_ROOT=/absolute/new/root PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_historical_run_material`。覆盖固定期间选择 → 输入安装（Requirement 为 `issue_47_v1`）→ 原生 Run 创建与冻结 → **独立进程**冻结重放 → 公共行与收据，全程新增调用为 0，并核对该行带的是被固定的年度而不是公司最新年度。
+
+该用例有**两道跳过闸**，第二道是重点：链路需要 `issue_47_v1` 引擎在 `requirement_profile.PROFILE_ENGINES` 中登记并由 `run_store` 分派，那是 `issue_28_v13` 执行授权内**三个文件的八处改动**，以补丁形式交付在 `docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch`，不在本分支直接应用。
+
+这个数字被实测修正过三次，每次都由执行而不是阅读给出：估计时是两处；建第一个 Run 时发现结构化重放的分派是第三处；跑 Macy's 非自然年度时发现 `point_in_time_fiscal_label` 由两份硬编码 id 集合决定（`run_store` 与 `records` 各一处），是第五、六处；接 D02 文本路线时发现 `prepare_text_contexts` 与 `text_handlers` 是两条独立的 requirement-id 链，是第七、八处。`tools/vnext_dispatch_map.py` 现在把这些分派点机械列出来（打补丁后 17 条 if/elif 链加 4 个集合成员点，`issue_47_v1` 出现在其中 6 个路由点），并在同一条链重复测试同一个 id 时失败——那类死分支不改变任何行为，任何 Run 都不会因它失败，只有读才能发现，本分支确实写进去过一条。补丁未落地时该用例 skip。**skip 不是 PASS，不得按 rc=0 记为通过**；因此它没有登记进 `tools/run_fast_tests_v2.py` 的任何层。已实测：在应用补丁的隔离运行时中两个用例都通过（合计 199 秒），在本 checkout 中两个都跳过。
+
+第二个用例 `test_a_structured_fact_without_a_verified_claim_still_renders_its_evidence` 钉住的是一个真实缺陷，不是假设的。公共行的证据有两条路：一条给带 verified claim id 的观察，一条给不带的观察（结构化 XBRL 事实绑定的是事实本身，不是谁核实过的声明）。`historical_projection` 原先只移植了第一条，于是每个 Company Facts 指标都会得到一个自身 Run 判为 EXACT、却渲染不出行的结果，报 `HISTORICAL_PROJECTION_OBSERVATION_WITHOUT_CLAIMS`。B04 走的是 claim 那条路，所以第一个用例从未碰到它；这是靠把矩阵真正跑起来才发现的，读代码没有发现。用例同时断言该观察确实不带任何 claim id，以免将来某次改动让它走回 claim 分支而断言依旧通过。
+
+同一隔离运行时中另测得：改动后运行时读取**补丁之前安装的 `issue_28_v13` 包**，`issue_28_v11/v12/v13` 的 Requirement、v13 的 Run Requirement 身份与历史输入重建五项探针全部 OK，即注册后继不会作废此前安装的包。代价是 `issue_47_v1` 必须按补丁后的字节记录那两个文件，`issue_28_v13` 的 manifest 与闭包哈希不变，因此一个数据根只能满足两者之一；`tools/vnext_mint_historical_requirement.py` 每次运行都会打印这一点，`--check` 在快照与代码树不一致时失败。
+
+Requirement 接缝成本实测：`python3 tools/vnext_requirement_seam.py --data-root <已安装的历史包> --work <新的外部目录> --binding-id <绑定> --company-id <公司> --metric-id <指标>`。它复制该包、在副本上加一条引擎登记与一条 Run 授权分支，然后分进程测量同一个已安装包分别被原运行时和改动后的运行时读取的结果，并单独测量 `_external` admit 哪些代码根/数据根布局。它不写开发 checkout、不写 #28 的工作现场、不创建 Run、不发任何请求。它给 `load_run_requirement_snapshot` 的身份三元组取自刚加载的 Requirement，因此校验的是 Run 身份的 Requirement 一侧，**不读取也不产生任何真实 Run 记录**；数据根未持有的 Requirement 相关探针记为 `NOT_COVERED` 而不是失败。这是一次测量而不是一个测试：它的结论会随 `issue_28_v13`／`issue_28_v14` 的 manifest 变化，所以不进任何测试层，只在需要重新核对接缝成本时运行并把输出存进证据目录。
+
+历史期间 CI 作业待人工添加：本会话的 GitHub App 没有 `workflows` 权限，无法提交 `.github/workflows/vnext-fast.yml`。改动以补丁形式交付，不用照抄：`git apply docs/evidence/issue47_history/ci-job-patch/0001-add-historical-period-package-job.patch`。该补丁只追加一个 `historical-period-package` 作业（12 → 13 个作业，其余作业逐字节不变），沿用该文件既有原生作业的形状：同样固定的 `actions/checkout` 与 `actions/setup-python` SHA、Python 3.14、`PYTHONDONTWRITEBYTECODE=1`、`PYTHONPATH=scripts`，以及 `runner.temp` 下的 per-run 材料根；`timeout-minutes: 20`（该测试在本容器约 85 秒）。已用 `git apply --check` 对本分支 head 验证可直接应用。在该作业加入前，这条材料测试只有本地执行记录，不能写成 CI PASS。
+
+同一执行内共享解析：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_shared_sources`（saved-source 层，7 个用例 37 秒）。不只测"更快"，而是测三种可能出错的方式：身份被跨调用复用（同字节改称另一期间/另一主体必须仍被拒）、对象被跨调用共享（调用方清空拿到的 blocks，下一次必须完好）、复用泄漏到块外（`_SHARED_SOURCES` 在块外必须为 None）；另加键对字节敏感（改一个字节即换键）与作用域可重入（内层必须共享外层字典，而不是绑新字典）。可重入那条是整 Run 普查抓到的真实 bug：80 次解析只降到 25 次而非 5 次。端到端实测同一 Run 同一输入：80 次解析→5 次、105.9 秒→63.7 秒、`result_id` 相同；新进程冷读不进作用域、重新解析原始证据并返回相同 status/quality/条目数。
+
+`test_table_context_qualification_guard` 实测独立运行 29.9 秒，对着 30 秒的 fast 上限——单独跑通过、`--jobs 4` 下超时，已连续两次让 fast 层报 FAILED（rc=124，不是断言失败）。fast 层的超时来自冻结的旧入口、不能为单个用例提高，该用例又确实读取完整已保存 qualification 材料，因此移入 240 秒来源材料层。移后 fast 层 123 个用例 71.6 秒全过。
+
+覆盖汇总只读：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_coverage`（saved-source 层，7 个用例实测 23 秒，原为逐位置重算）。验收条件不是"看起来只读"：`test_the_report_entry_computes_no_metric_outcome` 把三个指标解析器、两个文本候选工厂与 `create_system_review_decision` 全部替换为抛异常，报告仍必须产出 195 个位置。它刻意**不**禁止所有 `HTMLParser.feed`——计划层为确定期间要读申报自身 DEI，一律禁止会因成本问题而失败，而成本属于另一项。`test_a_recorded_exact_result_is_not_a_verified_outcome_when_a_defect_names_it` 用临时 run 目录证明：同为 `VALUE_EXACT`，被缺陷登记点名的那条退出 `verified_outcome` 而状态不被改写；`test_an_edited_run_directory_is_not_the_run_its_manifest_describes` 改一字节即 `RUN_RECEIPT_FILE_CHANGED`。原"一个适配器的限制不移除另一个已解析的指标"用例改为直接调用三个 resolver——该性质在 resolver 里，不靠让报告去跑它们。端到端实测同样 390 个位置：260.4 秒 → 4.7 秒。
+
+Form 10-K 不编号项的章节边界：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_text_boundary`（saved-source 层，实测 44 秒，读 Pfizer 与 Macy's 两份年报原件）。四个用例的预期值都从文档自身的块读出，不由被测边界规则产生：Pfizer 的 ITEM_3 必须结束在标题块自己的下标；修正后的块集合必须是冻结集合的**真子集**，且差集恰好等于冻结集合与高管章节的交集（"没有少抓"的强形式，不是章节数比较）；Macy's 第 774 块在 Item 8 内点名首席执行官却不是标题，它的整套记录必须与冻结模块逐字节相等——语料自带这个反例，不需要构造；路由只把 D02 接到后继模块，C02 仍回父模块。另三个用例覆盖被引用附注，预期全部是从申报原文读出的**字面块号**，不是被测解析器返回的范围——上一版用生产解析器返回的整个附注范围当预期，结果整取了 Marriott 自己刚判定应排除的担保表、信用证与保险赔付，以及 Lumen 的合同承诺段，测试却通过。现在每家同时给"必须包含"与"必须排除"两组块号，并要求冻结集合一块不少：Marriott 必含 1312–1318、必排除 1292–1308 与 1319–1320；Lumen 必含两个并入小节的正文、必排除 3433–3454；Paramount 必含 Legal Matters 全节、必排除长期承诺/表外安排/赔偿说明及四处重复页眉。Salesforce 引的是 Note 14 自己的标题而不是其中一节，必须整取该附注；Pfizer 的 Note 16A 解析为`WIDER_PARENT_NOTE`，必须不整取。回归护栏：边界修复后九家里八家逐字节不变、Pfizer 58 条 22,982 字降到 32 条 18,373 字；附注修复后四家增加而零块丢失（Lumen 15→41、Paramount 16→27、Salesforce 9→15、Marriott 10→11），其余五家逐字节不变。第八个用例把“路由指向哪个 Spec”钉成一个决定而不是一处漂移：断言 `TEXT_SPEC_PATHS["D02"]` 仍是 v1，v1 声明 64 而 v2 声明 192，并且**从冻结渲染器自己读出协议的界**——给 `render_text_payload` 65 条格式完全合法的条目，必须抛 `TEXT_PAYLOAD_ITEMS_INVALID`，去掉一条后必须渲染出 64 行。这是读行为而不是读字面量，所以那个 64 被改动时用例会失败而不是默默跟着变。第九个用例说明 Pfizer 这个坐标被什么拦住：在 v1 下 `create_deterministic_text_candidate` 以 `EXCEEDS_ITEM_BOUND` 拒绝；换成 v2 的界之后同一批输入得到 92 条、41,860 字、Evidence PASS，且字符数严格小于 `max_text_chars`——即拦住它的是条目数，不是范围也不是体量。九个用例实测 113 秒，已在`SOURCE_TIMEOUT_OVERRIDES`给到 480 秒。
+
+Spec 修订机制本身：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_spec_revision`（30 秒层，实测 0.02 秒，只读两个 Spec 文件）。七个用例。断言冻结编译器**仍然**拒绝 v2（它哪天接受了，这个模块就是死代码）；断言修订只带来 `max_items` 一处差异且两个哈希都变；断言未登记为修订的 Spec 走冻结路径且结果逐字段相同；七种“改了别的”的后继（sections、字符界、allowed_source_roles、name、disclosure_group、quality_rule、metric_id）一律被拒，每一种都是拿**真实的 v2 前置内容**改一个字段生成的，不是构造的 fixture；超过后继上限的界被拒；最后一个用例断言 `SPEC_FIELDS` 的 24 个字段全部落在 `compiled` 或 `prompt_bundle` 两侧之一——少一个字段，那个相等判断就有一条能被绕过的缝。另有一个用例走反向：空 `applicability` 与非法 `renderer` 必须由冻结编译器**先**拒（消息里不带 `Revised Spec`），以证明后继路径只加检查、不减检查。
+
+后继文本结果协议：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_text_protocol`（30 秒层，实测 0.03 秒，不读来源材料）。十三个用例，分三组。
+
+第一组是**差分**，这是全部保证所在：同一批 payload 同时喂给冻结的 `text_results.render_text_payload` 和后继实现，在冻结上限之内两者必须返回完全相同的值、抛出**完全相同的错误消息**（不是"都拒了"）。26 个变异覆盖冻结渲染器的每一项检查——字段多一个/少一个、版本与种类与渲染器、三个审阅哈希格式、coverage 空/乱序/重复、items 空/非列表、逐项顺序/相邻交换/多键/少键/空文本/控制字符/非 NFC/超长/非法观察 ID/空角色/非字典、角色重复、观察 ID 重复。另有一个用例断言省略 `max_items` 参数时默认值就是冻结上限，所以没有东西靠"不传参"拿到容量。
+
+第二组是**容量确实只改了容量**。64 仍拒 65；提高后 65/92/192 都渲染出对应行数且最后一行是最后一条；193 被拒。关键的一个用例把每个逐项变异**在第 80 项**再做一遍——冻结上限之内的 payload 永远到不了那里，而"只校验前 64 条"正是这里可能出错却看起来正常的方式——要求同一理由被拒；另一个用例断言 92 条渲染出正好 92 行、逐行等于第 0…91 条，即合法的第 92 条没有被悄悄丢掉。字符上限用精确算术钉住：192 条 × 332 字符加 191 个分隔符是 63,935，在 64,000 之内；192 × 333 加 191 是 64,127，超出并以 `TEXT_VALUE_EMPTY_OR_TOO_LARGE` 被拒。分隔符必须算进去，否则 192 × 333 = 63,936 会看起来还在预算内。
+
+第三组是**容量跟 Spec 身份走**。只有本仓库能重新编译出来的修订 Spec 身份才拿到 192；未知哈希、空串、`None`、整数 192、字符串 `"192"` 一律回落到 64。一个伪造记录同时写 `"max_items": 192` 和一个重建不出的 `spec_closure_hash`，必须以 `TEXT_PAYLOAD_ITEMS_INVALID` 被拒，换成能重建的身份才通过——这就是"payload 不能自报容量"的实测形式。v1 的身份仍拿 64。最后一个用例在临时根里把 v2 的 `max_items` 改成 100，要求重新读出 100 而不是命中缓存返回 192：缓存一个权限和缓存一次解析是两回事。
+
+第四组是**轨迹的逐项检查也要走到第 92 条**。渲染器的检查在第二组已经覆盖，但 `verify_text_trace` 在渲染通过**之后**还要把每一条摘录和它点名的那份观察逐项比对——来源内容、语义角色、审阅质量、批准效力、顺序、Spec 身份、候选与审阅单元哈希、coverage。这段循环是复制来的代码，**一个在第 64 条之后停止比对的副本，照样渲染出 92 行、照样通过前三组**。
+
+这里的攻击形式要选对：把已建好的观察就地改一个字段，会被 `validate_record` 重算身份提前拦下——那证明的是记录层有效，不是轨迹比对有效。所以十种替换里有七种用生产工厂 `_build_text_observation` **重新构造一份内容不同但完全合法的观察**，再登记到轨迹仍然点名的那个身份下；`quality` 与 `approval_effect_hash` 不参与观察身份，可以直接改；最后一种是整条移除。每种都在第 7 条和第 80 条各做一遍，必须以**同一条理由**被拒。另有一个用例把 `input_observation_ids` 截到前 64 条，必须以 `TEXT_TRACE_INPUT_EXACT_SET_CHANGED` 被拒。
+
+这一组同样验了承重：把后继的逐项循环改成 `payload["items"][:64]`，16 个用例中 **10 个失败**；改回后全过。
+
+修订件准入：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_amendment_admission`（saved-source 层，实测 37.9 秒，读两份 10-K 与两份 10-K/A 的完整字节）。
+
+七个用例全部跑**真实申报**而不是构造 fixture——一份只在构造 fixture 上成立的政策，不能证明它判得了真申报。语料里两份修订件的差别正是政策存在的理由：Southwest 更正一个 exhibit 超链接、Paramount 补 Part III Items 10–14，所以同一个问题（这个指标可以解析吗）**按公司、按输入类别给出不同答案**。
+
+第一个用例先证明语料确实各带一份 10-K/A、Ford 确实没有——否则后面几个在断言空气。随后：链接更正清除两个输入类别；Part III 清除事件窗口而不清除报表数值，且拒绝理由必须含分类名、**必须不含 `NOT_IMPLEMENTED`**；政策的九个 `not_covered_metric_ids` 两家都拒；报表类与事件类不能合在一次判定里（`MIXED_INPUT_CLASSES`）；空事件集合时一切按报表类处理，即取更严的一侧而不是更松的一侧。
+
+承重的是 `test_the_two_companies_do_not_get_the_same_answer`：**一条无视分类、对任何修订都放行的路线，会通过其余全部用例，只挂在这一条上。**
+
+**后继协议的接线**（与上一条不同，这条测的是"有没有接上"而不是"实现对不对"）：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_protocol_wiring`。条目上限在三个文件、五处生效，模块本身正确不等于 Run 走得通，所以这三个用例直接调生产入口——`records.validate_record`、`constraints.verify_trace_observation_values`、`projector._projection_value`——each 喂一个 92 条的 payload（Pfizer D02 的真实条数）。
+
+它和 `test_historical_run_material` 一样需要注册补丁，**未打补丁时 skip，skip 不算 PASS**，所以同样不登记进 `tools/run_fast_tests_v2.py` 的任何层。跳过条件是从补丁**实际改到的三个模块源码**里数 `historical_text_protocol` 出现三次读出来的，不是去读补丁文件——补丁只打了一半时应当 skip 而不是报 PASS。
+
+**反例才是这组的承重墙**：每个用例都跑两遍，一遍让 payload 声明修订 Spec 的身份，一遍声明前驱的身份，后者必须以 `TEXT_PAYLOAD_ITEMS_INVALID` 被拒。两遍都通过就意味着这条路线只是给所有人放宽了上限，那正是这套安排要避免的失败。已实测该反例确实承重：在打补丁的运行树里把容量查找强制改成"对任何身份都返回 192"，三个用例**全部失败**；改回后全过。记录本身也按生产形状构造（`validate_record` 在到达文本校验之前先查完整 schema，半成品记录会因为错误的理由被拒、什么也证明不了）。
+
+实测在打补丁的运行树里 3 个用例 0.01 秒，在本 checkout 里 3 个 skip。
+
+历史目标年不能用 accession 实例替代主文档：`tests.vnext.test_historical_period_results.HistoricalCompanyfactsResultTest.test_an_accession_instance_cannot_establish_an_issuer_fiscal_label` 固定这条边界。前期年度路线可以读该 accession 自身的 XBRL 实例，因为它只需要该申报的起止日期与相邻性；发行人财年标签是另一回事，冻结政策要从完整文档读发行人自己的显式定义，`inspect_fiscal_year_labels` 对实例直接返回 `FISCAL_LABEL_FULL_DOCUMENT_REQUIRED`。Salesforce 是现成反证：同一个 `2026-01-31` 期末，其发行人标签为 FY2026 而 DEI focus 为 2025，Macy's 同一期末的标签则是 FY2025。因此目标年缺自身主 HTML 时如实记为来源缺失，不改标签政策、不用实例推标签。

@@ -41,6 +41,12 @@ SOURCE_PREFIXES = (
     "tests.vnext.test_text_results",
     "tests.vnext.test_going_concern_source",
     "tests.vnext.test_fiscal_year_labels",
+    # Measured at 29.9 seconds standalone against the 30-second fast cap, so it
+    # fails under --jobs contention and passes alone. The fast tier's timeout
+    # comes from the frozen inherited entry and cannot be raised for one case;
+    # this selector reads complete saved qualification material, which is what
+    # the source tier is for.
+    "tests.vnext.test_table_context_qualification_guard.",
 )
 SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for p in SOURCE_PREFIXES)) + (
     "tests.vnext.test_normal_companyfacts_results",
@@ -110,10 +116,40 @@ SOURCE_TESTS += ("tests.vnext.test_capacity_text_results",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_d04_native_wiring",)
 SOURCE_TESTS += ("tests.vnext.test_native_assessment_replay",)
+# Issue #47 historical period selection and its catalog resolution read real
+# saved originals, so they belong to the saved-source tier, not the 30s tier.
+SOURCE_TESTS += ("tests.vnext.test_normal_history_catalog",)
+SOURCE_TESTS += ("tests.vnext.test_historical_period_results",)
+SOURCE_TESTS += ("tests.vnext.test_historical_coverage",)
+# A D02 Result held another item's text, passed every check and was published as
+# EXACT. This is the boundary that ends it and the control cases that stop the
+# boundary from cutting an item's own body, so it reads two filings in full.
+SOURCE_TESTS += ("tests.vnext.test_historical_text_boundary",)
+# Identity isolation, object isolation and scope leakage for the shared parse.
+# It reads two filings in full; 32 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_shared_sources",)
+# This one reads no source material at all - it hashes the twelve rule files the
+# issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
+# because the snapshot has already drifted twice behind a rule-file change, and
+# a README asking the author to run --check did not stop either one.
+FAST_TESTS += ("tests.vnext.test_historical_requirement_snapshot",)
+# Parses three files and compares conditions; it reads no source material.
+# It exists because an unreachable dispatch branch changes no behaviour, so
+# no Run can fail on it - one shipped and a complete end-to-end Run passed.
+FAST_TESTS += ("tests.vnext.test_requirement_dispatch_map",)
+# The D02 Spec revision compiles above the frozen compiler's declared ceiling,
+# which fourteen Requirement generations bind by bytes. It reads two Spec files
+# and no source material; 0.02 seconds measured. Registered because the guard
+# that matters is a comparison, and a comparison that silently stops comparing
+# looks exactly like one that passes.
+FAST_TESTS += ("tests.vnext.test_historical_spec_revision",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
     "tests.vnext.test_continuous_sec_acquisition": 480,
+    # Nine cases over six filings' full 10-K bytes; measured at 97 seconds,
+    # which is close enough to the 240 default to fail on a slower runner.
+    "tests.vnext.test_historical_text_boundary": 480,
 }
 
 

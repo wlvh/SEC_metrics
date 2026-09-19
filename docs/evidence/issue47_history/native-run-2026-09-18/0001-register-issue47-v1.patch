@@ -1,0 +1,215 @@
+diff --git a/scripts/vnext/calculator.py b/scripts/vnext/calculator.py
+index 5c438f7..59b2d59 100644
+--- a/scripts/vnext/calculator.py
++++ b/scripts/vnext/calculator.py
+@@ -1278,7 +1278,12 @@ def calculate_text_metric(*, compiled_spec, target, company_traits, observations
+     This is a pure calculator. The native Run must separately replay originals,
+     Candidate/Evidence and the effective review chain with replay_text_result.
+     """
+-    from .text_results import build_text_result_and_trace, payload_from_observations, text_policy
++    # The successor protocol takes the item bound from this compiled Spec
++    # instead of a literal 64. A Spec declaring 64 therefore behaves exactly as
++    # before, which tests/vnext/test_historical_text_protocol proves by
++    # comparing both implementations on the same payloads.
++    from .historical_text_protocol import build_text_result_and_trace, payload_from_observations
++    from .text_results import text_policy
+     text_policy(compiled_spec)
+     fields = {"company_id", "period_start", "period_end", "accession", "entity", "scope", "scope_key"}
+     if set(target) != fields or target["scope_key"] != scope_key(scope=target["scope"]):
+diff --git a/scripts/vnext/constraints.py b/scripts/vnext/constraints.py
+index 1fd9977..fb9d8b2 100644
+--- a/scripts/vnext/constraints.py
++++ b/scripts/vnext/constraints.py
+@@ -235,7 +235,7 @@ def verify_trace_observation_values(
+             values, or final resolved values that differ from observations.
+     """
+     if "value_kind" in trace:
+-        from .text_results import verify_text_trace
++        from .historical_text_protocol import verify_text_trace
+         try:
+             verify_text_trace(trace=trace, observations=observations)
+         except ValueError as error:
+diff --git a/scripts/vnext/projector.py b/scripts/vnext/projector.py
+index 5baac69..c57553f 100644
+--- a/scripts/vnext/projector.py
++++ b/scripts/vnext/projector.py
+@@ -1850,10 +1850,10 @@ def _projection_value(
+     if result["value"] is None:
+         return ""
+     if result.get("value_kind") == "TEXT_V1":
+-        from .text_results import render_text_payload
++        from .historical_text_protocol import projection_value
+         if "value_multiplier" in projection or result["unit"] != "text":
+             raise ProjectionError("Text projection cannot apply numeric conversion")
+-        value = render_text_payload(payload=result["text_payload"])
++        value = projection_value(result=result)
+         if result["value"] != value:
+             raise ProjectionError("Text projection payload differs from Result")
+         return value
+diff --git a/scripts/vnext/records.py b/scripts/vnext/records.py
+index 2957176..190036c 100644
+--- a/scripts/vnext/records.py
++++ b/scripts/vnext/records.py
+@@ -1206,7 +1206,11 @@ def _validate_record_semantics(
+             raise RecordError(str(error)) from error
+     text_value = "value_kind" in record or "text_payload" in record
+     if text_value:
+-        from .text_results import validate_text_record
++        # Shape validation has no Run and no compiled Spec in scope. The
++        # successor resolves the item bound from the spec_closure_hash the
++        # record already carries, against Specs this repository compiles
++        # itself, and is the frozen validator in every other respect.
++        from .historical_text_protocol import validate_text_record
+         try:
+             validate_text_record(record=record)
+         except ValueError as error:
+@@ -1215,7 +1219,7 @@ def _validate_record_semantics(
+         validate_run_coordinates(
+             target_period=record["target_period"],
+             company_traits=record["company_traits"],
+-            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13"},
++            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13", "issue_47_v1"},
+         )
+     if record_type == "AI_EXTRACTION_ATTEMPT":
+         observation = record["transport_observation"]
+diff --git a/scripts/vnext/requirement_profile.py b/scripts/vnext/requirement_profile.py
+index 5420bc6..da06192 100644
+--- a/scripts/vnext/requirement_profile.py
++++ b/scripts/vnext/requirement_profile.py
+@@ -52,6 +52,7 @@ PROFILE_ENGINES = {
+     v13.PROFILE_REQUIREMENT_GENERATION: v13,
+     v14.PROFILE_REQUIREMENT_GENERATION: v14,
+     "PROFILE_DRIVEN_V15": ".requirement_profile_v15",
++    "PROFILE_DRIVEN_V16": ".requirement_profile_v16",
+ }
+ _LOADING_PATHS = ContextVar("requirement_loading_paths", default=())
+ 
+diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
+index 29e7cc3..1acbdef 100644
+--- a/scripts/vnext/run_store.py
++++ b/scripts/vnext/run_store.py
+@@ -352,7 +352,7 @@ def create_run(
+         validate_run_coordinates(
+             target_period=target_period,
+             company_traits=normalized_traits,
+-            point_in_time_fiscal_label=requirement_id in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13"},
++            point_in_time_fiscal_label=requirement_id in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13", "issue_47_v1"},
+         )
+     except RecordError as error:
+         raise RunStoreError("Run business coordinates are invalid") from error
+@@ -987,6 +987,11 @@ def _verify_review_assets(
+             raise RunStoreError("Rendered review changed before freeze")
+ 
+ 
++# Spec paths a later generation revises. Named here so a Run from a generation
++# that does not support them is refused without importing that generation.
++_REVISED_SPEC_PATHS = frozenset({"catalog/r6/D02_legal_disclosures_v2.md"})
++
++
+ def load_run_bound_specs(
+     *, repo_root: Path, manifest: Mapping[str, object]
+ ) -> Dict[str, Dict[str, object]]:
+@@ -1015,6 +1020,34 @@ def load_run_bound_specs(
+         if sha256_file(path=path) != manifest["spec_file_hashes"][relative]:
+             raise RunStoreError("Run Spec bytes changed before freeze/replay")
+         paths.append(path)
++    # The supported compile path is chosen by the Run's own verified version,
++    # before anything about the Spec is consulted. Dispatching on the Spec path
++    # alone made every Run in this store - including every issue_28 one - import
++    # and depend on the historical module, which is not the isolation this
++    # generation is meant to have.
++    if manifest.get("requirement_id") == "issue_47_v1":
++        # That generation's revised Spec raises one TEXT_V1 bound above the
++        # frozen compiler's ceiling, which fourteen Requirement generations bind
++        # by bytes, so it compiles through the generation's own revision module.
++        # That module compiles one file, not a dependency set: a revised Spec in
++        # a Run declaring several is refused rather than compiled in declaration
++        # order, because ordering is compile_spec_files' job and silently
++        # getting it wrong would be a wrong Spec identity, not an error.
++        from .historical_spec_revision import REVISED_TEXT_SPECS, compile_historical_spec_file
++        revised = [str(r) for r in manifest["spec_file_hashes"] if str(r) in REVISED_TEXT_SPECS]
++        if revised:
++            if len(revised) != 1 or len(manifest["spec_file_hashes"]) != 1:
++                raise RunStoreError("Run mixes a revised Spec with a dependency set")
++            try:
++                wrapper = compile_historical_spec_file(
++                    repo_root=repo_root, repo_relative_path=revised[0], dependency_specs={})
++            except SpecError as error:
++                raise RunStoreError("Run Spec closure cannot be compiled") from error
++            return {str(wrapper["compiled"]["metric_id"]): wrapper}
++    elif any(str(r) in _REVISED_SPEC_PATHS for r in manifest["spec_file_hashes"]):
++        # A Run from any other generation declaring a revised Spec is an
++        # unknown combination, not something to compile on either path.
++        raise RunStoreError("Run declares a revised Spec outside its generation")
+     try:
+         return compile_spec_files(paths=paths)
+     except SpecError as error:
+@@ -1921,6 +1954,19 @@ def _replay_structured_result(
+                 or any(observations.get(o["observation_id"]) != o for o in expected["observations"])):
+             raise RunStoreError("Integrated ordinary result differs from full source replay")
+         return
++    if manifest.get("requirement_id") == "issue_47_v1":
++        from .historical_run import replay_case as historical_replay_case
++        expected = historical_replay_case(data_root=repo_root, manifest=manifest,
++                                          spec=compiled_spec)
++        metric_id = compiled_spec["compiled"]["metric_id"]
++        if (expected["kind"] != "STRUCTURED"
++                or expected["compiled_specs"].get(metric_id) != compiled_spec
++                or result != expected["results"].get(metric_id)
++                or trace != expected["traces"].get(metric_id)
++                or any(observations.get(o["observation_id"]) != o
++                       for o in expected["observations"])):
++            raise RunStoreError("Historical result differs from full source replay")
++        return
+     if manifest.get("requirement_id") == "issue_28_v12":
+         from .normal_run_v2 import replay_case
+         expected = replay_case(data_root=repo_root, manifest=manifest, spec=compiled_spec)
+@@ -2154,6 +2200,13 @@ def _validate_record_graph(
+         from .normal_run_v3 import validate_normal_run_authority
+         ordinary_case = validate_normal_run_authority(repo_root=repo_root,manifest=manifest,
+             records=records,compiled_specs=compiled_specs)
++    elif manifest.get("requirement_id") == "issue_47_v1":
++        from .historical_run import validate_run_authority as validate_historical_authority
++        try:
++            ordinary_case = validate_historical_authority(repo_root=repo_root, manifest=manifest,
++                records=records, compiled_specs=compiled_specs)
++        except ValueError as error:
++            raise RunStoreError(str(error)) from error
+     elif manifest.get("requirement_id") == "issue_28_v12":
+         from .normal_run_v2 import validate_normal_run_authority
+         validate_normal_run_authority(repo_root=repo_root, manifest=manifest,
+@@ -2341,7 +2394,9 @@ def _validate_record_graph(
+         str(wrapper["spec_semantic_hash"]): wrapper
+         for wrapper in compiled_specs.values()
+     }
+-    if manifest.get("requirement_id") == "issue_28_v14":
++    if manifest.get("requirement_id") == "issue_47_v1":
++        from .historical_run import prepare_text_contexts as prepare_text_run_contexts
++    elif manifest.get("requirement_id") == "issue_28_v14":
+         from .capacity_run import prepare_text_contexts as prepare_text_run_contexts
+     elif manifest.get("requirement_id") == "issue_28_v13":
+         from .normal_run_v3 import prepare_text_contexts as prepare_text_run_contexts
+@@ -2349,7 +2404,12 @@ def _validate_record_graph(
+         from .normal_run_v2 import prepare_text_contexts as prepare_text_run_contexts
+     else:
+         from .text_run_validation import prepare_text_run_contexts
+-    from .text_results import build_text_result_and_trace
++    # The Requirement is in scope here, so the route says which generation it
++    # serves rather than relying on which tree it happens to run in.
++    if manifest.get("requirement_id") == "issue_47_v1":
++        from .historical_text_protocol import build_text_result_and_trace
++    else:
++        from .text_results import build_text_result_and_trace
+     try:
+         text_contexts = prepare_text_run_contexts(
+             repo_root=repo_root, manifest=manifest, records=records,
+@@ -2361,6 +2421,9 @@ def _validate_record_graph(
+ 
+     def text_handlers(candidate):
+         arguments = text_contexts[candidate["candidate_hash"]]
++        if manifest.get("requirement_id") == "issue_47_v1":
++            from .historical_text_results import text_api
++            return text_api(arguments["compiled_spec"]["compiled"]["metric_id"])
+         if manifest.get("requirement_id") == "issue_28_v14":
+             from . import capacity_text_results
+             return capacity_text_results, capacity_text_results.build_text_review_unit
