@@ -49,7 +49,7 @@ effective D-36 禁用仓库金额预算执法，花费权威是 `EXTERNAL_API_AC
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
 | 1 | 读取冻结 Contract 与 transfer/baseline | `requirements/issue_15_v1/CONTRACT.md`；`requirements/issue_15_v1/transfer_manifest.json`；`requirements/issue_15_v1/baseline_manifest.json` | Contract SHA-256 为 `9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec`；parent closure 与 foundation commit/tag/merge binding 一致 |
-| 2 | 加载自包含 Decision 和 WB-1 receipts | `requirements/issue_15_v1/decision_register.json`；`requirements/issue_15_v1/legacy_semantic_producer_inventory.json`；`requirements/issue_15_v1/source_strategy_baseline_receipt.json`；`requirements/issue_15_v1/foundation_verification_receipt.json` | `load_requirement_snapshot(issue_15_v1)` 通过；D-01 与 post-freeze D-36、D-35、D-26、D-07 effective tips 精确。D-07 same-ID chain保留全表/原序/无selector、200000 inclusive普通门与family-scoped failure domain；Occupancy/RevPAR measurement authorization均已消费且response不可qualification复用。latest additive tip只把holdout fixture收窄到Marriott FY2023，并允许同issuer但fiscal year/accession/source bytes均不同且material layout差异机械通过；每个new-cycle plan仍需exact-head审核、新execution、provider usage存在且actual prompt<=200000。39 指标 producer/matrix exact set闭合；最高 foundation 证据仅为`FAST_LOCAL_ONLY`。 |
+| 2 | 加载自包含 Decision 和 WB-1 receipts | `requirements/issue_15_v1/decision_register.json`；`requirements/issue_15_v1/legacy_semantic_producer_inventory.json`；`requirements/issue_15_v1/source_strategy_baseline_receipt.json`；`requirements/issue_15_v1/foundation_verification_receipt.json` | `load_requirement_snapshot(issue_15_v1)` 通过；Contract与 post-freeze D-36、D-35、D-26、D-07 effective tips 精确。D-07 same-ID chain保留全表/原序/无selector、200000 inclusive普通门与family-scoped failure domain；Occupancy/RevPAR measurement authorization均已消费且response不可qualification复用。latest additive tip只把holdout fixture收窄到Marriott FY2023，并允许同issuer但fiscal year/accession/source bytes均不同且至少两项material layout差异机械通过；每个new-cycle plan仍需exact-head审核、新execution、provider usage存在且actual prompt<=200000。39 指标 producer/matrix exact set闭合；最高 foundation 证据仅为`FAST_LOCAL_ONLY`。 |
 | 3 | 读取 inherited foundation | `requirements/ai_first_v3_3_1/` | 父目录 exact bytes 不变；其实现、evidence/publication/fail-closed invariants 被继承而不是重写 |
 | 4 | 加载 WB-2 target routing 与 ratchet state | `config/source_strategy_registry.json`；`config/issue_15_release_plan.json`；`config/release_plans/`；`scripts/vnext/source_strategy.py` | 39 metric ID 恰好各有一条；source mode只有四种；index active tip与不可变R1→R2 parent/content chain一致；parent metrics/keys/retired producers分别为child子集，removed/unretired exact set为空；已发布R1/R2保留各自historical Requirement closure且current closure单独返回，不因post-publication D-07 tip重签；family literal不含通用词 |
 | 5 | 验证 WB-2B deterministic source routing | `catalog/deterministic_metrics.json`；`catalog/event_routes.json`；`catalog/zero_ai_public_projection.json`；`scripts/vnext/deterministic_router.py`；`scripts/vnext/zero_ai_r2.py`；`scripts/vnext/public_projection.py` | 五个adapter只消费exact SourceReference/raw bytes；14财务与事件Result/Trace producer无legacy semantic input；8-K set由submissions shards和immutable acquisition receipt补集闭合；220 rows先独立渲染，legacy随后只作141×20字段oracle；C01/E03共用claim、E01事后parity、projection-independence gate及provider socket=0通过 |
@@ -141,6 +141,20 @@ publication switch在修改mirror前于独占锁内写`outputs/publication_switc
 | 3 | 再定位 unittest、Golden、repair、coverage 或请求失败 | `TESTING.md` 的失败定位 | 失败已对应到具体 test、check_id、company/metric、source path、artifact digest 或请求记录 |
 | 4 | 修复真实原因并重跑受影响层及下游 gate | `TESTING.md`；`architecture.md` 的阶段依赖与错误模型 | 没有放宽断言、静默跳过、重签旧证据或以 light 结果冒充 full |
 | 5 | 核对生成 artifact 与工作区范围 | `TESTING.md` 的写入副作用；`PR_Checklist.md` 的变更范围 | `git status` 只包含预期文件，失败证据与处置可复核 |
+
+### 已成功结果的业务核查与错误修复闭环
+
+本节用于开发、自审和验收。`EXACT`、成功退出、Run/公共行一致及重复运行一致分别证明各自的机械性质，不单独证明输出符合指标含义。核查按来源结构、期间、主体及计算路径选择有区分力的代表输入；发现矛盾后沿共同原因扩查，不只检查报错项，也不把开发核查变成日常逐公司/逐年人工审批。
+
+| 步骤 | 动作 | 权威引用 | 验收 |
+|---|---|---|---|
+| 1 | 固定受验代码、规则、来源和输出身份，直接阅读最终值/文本及其原件上下文 | 现有 MetricSpec；原始 SourceReference；Run、Result 与公共行证据；`TESTING.md` | 数值核对单位、符号、期间、主体和组成；文本核对起止边界、相邻标题、内部小节、应纳入/排除内容及引用目标；零值或空值不能仅由搜索未命中推出 |
+| 2 | 从最终行逆向定位到结果、候选及源范围，找到首次偏离既定含义的位置 | 现有计算/投影/解析实现与原件定位 | 区分输出传递、选值/范围、来源缺失和口径问题；相同输入的不同入口若结果相同，只能帮助判断继承关系，不能充当正确性证明；源码与重放一致仍可能共同重现错误 |
+| 3 | 复现最小失败并建立独立预期、正常对照和针对性反例 | 现有测试目录与 `TESTING.md` | 预期来自原件定位或独立算术，不由被测选择器/定位器生成；修复前暴露原缺陷、修复后通过，同时保留合法相邻结构和引用的正例。测某层检查时记录预期层与实际拒绝点；只被外层封印/schema拦下不算内层已覆盖，不关闭真实验证去换通过 |
+| 4 | 对已确认错误暂停验收采纳，并在原 Issue/既有验收记录中绑定受影响结果与修复责任 | 当前 Issue；Run/Result 身份；`AGENTS.md` 的权限与错误处理边界 | 错误不计入有效结果分子，但保留在目标分母、失败清单和原任务待办；保留原件、错误输出及旧冻结包，不删除、不重签，不改称结构性不适用或资料缺失；其他未核查项不自动成为正确结果。只暂停受影响动作，无依赖工作继续 |
+| 5 | 按共同根因检查共享消费者与受影响期间，修复通用规则 | 既定 MetricSpec；实际调用关系；`architecture.md` | 不写公司/CIK/固定原件通过特例；纠正实现对既定含义的偏离不自动变成口径变更。真正改变业务含义、资源、信任边界或正式采纳时才按权限集中对齐；临时拒绝只作保护，资料充分且适用的输入仍须恢复正向能力。普通路线受影响不直接等同正式已发布结果受影响，后者沿实际发布身份核查 |
+| 6 | 用修复版本重算受影响结果，复核内容并关联替代关系 | 现有原生运行、重放、投影及验收机制 | 同时验证正确输出、必要拒绝及无关路径无退化；恢复执行只复用来源、规则/运行身份与验收状态仍有效的结果，不因旧任务“已完成”跳过修复重算。旧错误版本保留，新结果在验收后才恢复计入有效结果；正式替换仍须发布权限 |
+| 7 | 以修复结果关闭缺陷，并把可复用部分留在现有 SOP 与回归测试 | 原 Issue；现有测试、执行证据与完成标准 | 已确认错误有可复现回归、修复提交、受影响范围核对及新结果；未修复仍属未完成，不能靠缩分母、加备注或普遍拒绝结案。SOP只沉淀通用动作，具体原件进入既有测试/证据，不另写独立特例手册或增加平行检查平台 |
 
 普通年度候选的完整发布链隔离演练：按 `docs/annual_publication.md` 准备完整包并用
 PublicationView回读，测试按 `TESTING.md` 对应章节；实际R3和正式root不切换。
