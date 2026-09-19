@@ -45,6 +45,7 @@ on every filing where neither correction changes anything.
 """
 from __future__ import annotations
 
+from collections import Counter
 import re
 
 from .canonical import content_hash, sha256_bytes
@@ -131,7 +132,124 @@ def narrow_document_sections(*, document):
     return corrected
 
 
-def referenced_note_candidates(*, document):
+_QUOTED_CAPTION = re.compile(r"[\"\u201c\u2018']([^\"\u201c\u201d\u2018\u2019']{4,120})[\"\u201d\u2019']")
+
+
+def _normalized(text):
+    return " ".join(text.split()).strip(" .:;,\u2014-").casefold()
+
+
+_SPAN = re.compile(rb"<span([^<>]*)>\s*$")
+_STYLE_ATTR = re.compile(rb'style="([^"]*)"')
+
+
+def caption_style(*, raw_bytes, block):
+    """The declaration the filing gives this caption's own span.
+
+    The level a caption sits at is not in the parsed flags - Lumen marks a
+    topic caption and a case caption both emphasized, Marriott marks neither -
+    but each filing carries it in its own bytes, and differently: Lumen and
+    Paramount separate a topic from a case by italic, Marriott by an underline
+    and a 22.5pt indent. Comparing a caption against its own document is
+    therefore the signal; no convention is assumed across filers. Colour is
+    dropped because it varies within a level.
+    """
+    window = raw_bytes[max(block["raw_start_byte"] - 300, 0):block["raw_start_byte"]]
+    span = _SPAN.search(window)
+    if span is None:
+        return None
+    style = _STYLE_ATTR.search(span.group(1))
+    if style is None:
+        return None
+    parts = sorted(part.strip() for part
+                   in style.group(1).decode("utf-8", "replace").split(";") if part.strip())
+    return "; ".join(part for part in parts if not part.startswith("color"))
+
+
+def _caption_like(document, block):
+    """A short standalone heading, judged on the block's own text.
+
+    The parsed flags give no level: Lumen marks a topic caption and a case
+    caption both emphasized, and Marriott marks neither. What every caption in
+    this corpus does share is being substantive, short and unpunctuated, and a
+    sentence that happens to look like one truncates the section early - an
+    under-capture that is visible - rather than admitting a neighbouring one.
+    """
+    text = block["text"].strip()
+    return (_substantive(document, block) and len(text) <= 120
+            and not text.endswith((".", ":", ";", ",", "\u3002")))
+
+
+def incorporated_scopes(*, document, raw_bytes, reference, note):
+    """The parts of a referenced note that Item 3 says it incorporates.
+
+    The filings name their own limits, and four shapes appear in this corpus:
+
+    * a caption inside the note - Marriott's "Litigation, Claims, and
+      Government Investigations" in Note 7, Paramount's "Legal Matters" in
+      Note 18;
+    * two captions - Lumen's "Principal Proceedings" and "Other Proceedings,
+      Disputes and Contingencies" in Note 17, whose remaining sections are
+      contractual commitments, right-of-way and purchase commitments;
+    * the note's own title quoted - Salesforce's Note 14 "Legal Proceedings
+      and Claims", which is a name for the whole note, not a limit inside it;
+    * no caption at all - Ford's "See Note 24".
+
+    A named caption runs to the next named caption, and the last one runs to
+    the next caption-like block. Taking the container instead was measured and
+    is wrong in both directions this corpus shows: it admits Marriott's
+    guarantee table, letters of credit and insurance recoveries, which its own
+    Item 3 does not incorporate, and fifteen blocks of Lumen's contractual
+    commitments.
+    """
+    blocks = document["blocks"]
+    start, stop = note["start_block"], note["end_block_exclusive"]
+    quoted = []
+    for occurrence in reference["source_occurrences"]:
+        quoted.extend(_normalized(m.group(1)) for m in _QUOTED_CAPTION.finditer(occurrence["text"]))
+    heading = _normalized(blocks[start - 1]["text"]) if start else ""
+    named = sorted({index for index in range(start, stop)
+                    if _normalized(blocks[index]["text"]) in quoted
+                    and _caption_like(document, blocks[index])})
+    # A quoted note title names the whole note; a quoted caption limits it.
+    inside = [index for index in named if _normalized(blocks[index]["text"]) != heading]
+    if not inside:
+        return [note]
+    repeated = Counter(_normalized(blocks[index]["text"]) for index in range(start, stop))
+    scopes = []
+    for position, begin in enumerate(inside):
+        if position + 1 < len(inside):
+            end = inside[position + 1]
+        else:
+            # A page break repeats the registrant name and the "(Continued)"
+            # line in the same style as a topic caption, four times inside
+            # Paramount's Note 18 alone, so a style match on its own ends the
+            # section at the first page break. Running furniture repeats; a
+            # section caption does not.
+            style = caption_style(raw_bytes=raw_bytes, block=blocks[begin])
+            siblings = [index for index in range(begin + 1, stop)
+                        if _caption_like(document, blocks[index])
+                        and repeated[_normalized(blocks[index]["text"])] == 1
+                        and (caption_style(raw_bytes=raw_bytes, block=blocks[index]) == style
+                             if style is not None else True)]
+            end = siblings[0] if siblings else stop
+        if begin >= end:
+            continue
+        # The same repetition that identifies a page break as furniture rather
+        # than a caption also keeps it out of the excerpts. This applies to the
+        # scopes this successor creates; a wholesale note keeps the inherited
+        # behaviour, which already carries Ford's running headers.
+        furniture = [index for index in range(begin, end)
+                     if repeated[_normalized(blocks[index]["text"])] > 1]
+        scopes.append({"section_id": note["section_id"] + "_CAPTION_" + str(begin),
+                       "start_block": begin, "end_block_exclusive": end,
+                       "requested_reference": note["requested_reference"],
+                       "scope_relation": "INCORPORATED_CAPTION",
+                       "caption_text": blocks[begin]["text"],
+                       "repeated_furniture_blocks": furniture})
+    return scopes
+
+def referenced_note_candidates(*, document, raw_bytes):
     """`legal_risk_candidates` with a referenced note kept as a note.
 
     The frozen scan appends a located note range only when no other range
@@ -172,20 +290,19 @@ def referenced_note_candidates(*, document):
             reasons.append("UNRESOLVED_" + reference["reference"].upper().replace(" ", "_"))
             continue
         note = reference["range_candidates"][0]
-        # A note the filing named by a lettered sub-number can resolve to its
-        # whole parent, which `_note_references` records as WIDER_PARENT_NOTE.
-        # Pfizer's Item 3 names Note 16A and no heading carries that number, so
-        # the parent Note 16 comes back at 135 blocks - 125 excerpts, past the
-        # Spec's own 64-item bound, while its 46,454 characters are inside the
-        # 64,000 one. Taking that whole would be over-capture by the resolver's
-        # own classification, so only an exact resolution is taken as a note.
-        # The wider resolution keeps today's behaviour and stays visible in the
-        # coverage record rather than being asserted as the referenced note.
+        # A note named by a lettered sub-number can resolve to its whole parent,
+        # which `_note_references` records as WIDER_PARENT_NOTE. Pfizer's Item 3
+        # names Note 16A, no heading carries that number, and the parent Note 16
+        # comes back at 135 blocks. Taking that whole would be over-capture by
+        # the resolver's own classification, so an inexact resolution adds
+        # nothing and stays visible in the coverage record.
         if note.get("scope_relation") != "EXACT_NOTE":
             continue
-        if not any(r["section_id"] == note["section_id"]
-                   and r["start_block"] == note["start_block"] for r in ranges):
-            ranges.append(note)
+        for scope in incorporated_scopes(document=document, raw_bytes=raw_bytes,
+                                         reference=reference, note=note):
+            if not any(r["section_id"] == scope["section_id"]
+                       and r["start_block"] == scope["start_block"] for r in ranges):
+                ranges.append(scope)
     owner = {}
     for scope in ranges:
         for index in range(scope["start_block"], scope["end_block_exclusive"]):
@@ -195,8 +312,9 @@ def referenced_note_candidates(*, document):
     legal, regulatory = [], []
     for scope in ranges:
         section = scope["section_id"]
+        furniture = set(scope.get("repeated_furniture_blocks", ()))
         for index in range(scope["start_block"], scope["end_block_exclusive"]):
-            if owner[index] is not scope:
+            if owner[index] is not scope or index in furniture:
                 continue
             block = document["blocks"][index]
             if not _substantive(document, block):
@@ -255,7 +373,9 @@ def prepare_business_text_sources(*, metric_id, **source_arguments):
     reference_id = next(iter(prepared["documents"]))
     document = prepared["documents"][reference_id]
     corrected = narrow_document_sections(document=document)
-    proposal = referenced_note_candidates(document=corrected)
+    proposal = referenced_note_candidates(
+        document=corrected,
+        raw_bytes=source_arguments["raw_bytes_by_id"][corrected["raw_asset_id"]])
     if corrected is document and proposal == prepared["proposals"][reference_id]:
         # Neither correction changed anything on this filing, so the frozen
         # record set is returned as it stands rather than rebuilt to equal it.

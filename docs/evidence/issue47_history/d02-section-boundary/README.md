@@ -184,6 +184,47 @@ because they contain the word.
 rule that decides it honestly: the innermost range containing a block owns it,
 so Item 8 does not also scan the note inside it.
 
+### Taking the whole note was wrong, and the measurement says so
+
+The first version of this repair gave every exactly resolved reference its own
+range and took it whole. That was checked against the content review in this
+same directory and contradicts it. Marriott went from 10 excerpts to 30, and
+the 20 added blocks are exactly the ones the review had judged **correctly**
+excluded: the guarantee table (1292–1306), Letters of Credit (1307–1308) and
+Insurance Recoveries (1319–1320). Lumen went to 58, of which 15 added blocks
+are its contractual commitments, right-of-way and purchase-commitment tables —
+sections its Item 3 does not incorporate.
+
+"Added blocks, removed none" is not evidence of a correct range. It was the
+same one-sided test this branch had already been told not to accept.
+
+The filings name their own limits, and four shapes appear in this corpus:
+
+| shape | filing | what Item 3 says |
+| --- | --- | --- |
+| one caption inside the note | Marriott, Paramount | `under the “Litigation, Claims, and Government Investigations” caption in Note 7` |
+| two captions | Lumen | `under the subheadings "Principal Proceedings" and "Other Proceedings, Disputes and Contingencies" in Note 17` |
+| the note's own title quoted | Salesforce | `see Note 14 “Legal Proceedings and Claims”` — a name for the note, not a limit inside it |
+| no caption | Ford | `See Note 24` |
+
+A named caption runs to the next named caption, and the last one runs to the
+next caption at the same level. The level is not in the parsed flags — Lumen
+marks a topic caption and a case caption both emphasized, Marriott marks
+neither — but each filing carries it in its own bytes, and differently:
+
+| filing | topic caption | caption nested under it |
+| --- | --- | --- |
+| Lumen | `font-weight:700` | `font-style:italic; font-weight:700`, in a `text-indent:27pt` div |
+| Paramount | `font-weight:700` | `font-style:italic; font-weight:700` |
+| Marriott | `font-style:italic; font-weight:400` | `text-decoration:underline`, in a `text-indent:22.5pt` div |
+
+So the comparison is against the caption's own document, not a convention
+across filers. One more signal was needed: a page break repeats the registrant
+name and the `(Continued)` line in the same style as a topic caption — four
+times inside Paramount's Note 18 — so running furniture ends the section at the
+first page break. Furniture repeats inside the note; a section caption does
+not, and the same test keeps it out of the excerpts.
+
 ### Only an exactly resolved note is taken whole
 
 Applying that to every reference first broke Pfizer against the Spec's own
@@ -206,15 +247,21 @@ here.
 | Ford | 53 → 53 | 18,025 | 0 | 0 |
 | Macy's | 3 → 3 | 1,181 | 0 | 0 |
 | Southwest | 25 → 25 | 35,521 | 0 | 0 |
-| Marriott | 10 → **30** | 4,924 → **8,318** | 20 | 0 |
+| Marriott | 10 → **11** | 4,924 → **5,088** | 1 | 0 |
 | Salesforce | 9 → **15** | 9,518 → **15,322** | 6 | 0 |
-| Lumen | 15 → **58** | 7,979 → **20,504** | 43 | 0 |
-| Paramount | 16 → **59** | 13,765 → **25,106** | 43 | 0 |
+| Paramount | 16 → **27** | 13,765 → **21,373** | 11 | 0 |
+| Lumen | 15 → **41** | 7,979 → **19,289** | 26 | 0 |
 | Pfizer | 58 → **32** | 22,982 → **18,373** | 0 | 26 |
 
-Pfizer is the only removal, and it is the officer section. Four registrants
-gain; none loses a block. Every result stays inside both Spec bounds and every
-Evidence check passes.
+Marriott gains exactly one block — 1317, the sentence inside the incorporated
+caption that the word list dropped — against 20 under the container rule.
+Pfizer is the only removal, and it is the officer section. No registrant loses
+a block, every result stays inside both Spec bounds, and every Evidence check
+passes.
+
+Each of those is checked against literal include and exclude block numbers read
+from the filings in `incorporated-caption-expectations.json`, not against a
+range the parser returned.
 
 ## Disposition of the wrong result
 

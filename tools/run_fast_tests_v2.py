@@ -132,6 +132,9 @@ SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
     "tests.vnext.test_continuous_sec_acquisition": 480,
+    # Seven cases over six filings' full 10-K bytes; measured at 136 seconds,
+    # which is close enough to the 240 default to fail on a slower runner.
+    "tests.vnext.test_historical_text_boundary": 480,
 }
 
 
