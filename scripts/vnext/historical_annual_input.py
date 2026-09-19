@@ -72,6 +72,18 @@ def prepare_original_historical_input(*, repo_root: Path, company_id: str, perio
     facts = read(companyfacts_url(cik=cik), accession)
     _need(_cik(strict_json_loads(text=facts["raw"].decode("utf-8"))["cik"]) == cik,
           "COMPANYFACTS_ENTITY_CONFLICT")
+    # An amendment on this period is read - by historical_amendment_admission -
+    # to decide whether the original's inputs still stand, so it is an admitted
+    # input of this preparation and its proof has to travel with the others.
+    # Leaving it out installed a data root the admission could not read, which
+    # the batch found as "Request-ledger locator evidence is invalid": the
+    # ledger named the amendment's bytes and the installed root did not carry
+    # them.
+    amendment_sources = [read(accession_document_url(cik=cik,
+                                                     accession=item["accessionNumber"],
+                                                     document_name=item["primaryDocument"]),
+                              item["accessionNumber"])
+                         for item in selection["amendments"]]
 
     def arguments(item):
         proof = item["proof"]
@@ -86,7 +98,8 @@ def prepare_original_historical_input(*, repo_root: Path, company_id: str, perio
             "companyfacts_input": arguments(facts),
             "table_input": {**arguments(primary), "source_media_type": "text/html",
                             "source_role": "target_primary"},
-            "source_proofs": [s["proof"] for s in (inventory, primary, facts)],
+            "source_proofs": [s["proof"] for s in (inventory, primary, facts,
+                                                   *amendment_sources)],
             "selection_rule": SELECTION_RULE,
             "period_selection": period_selection,
             "source_evidence": "LEDGER_BOUND_SAVED_BYTES",

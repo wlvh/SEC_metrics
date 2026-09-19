@@ -1045,6 +1045,8 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 政策自带 `production_authorized: false`，`issue_47_v1` 本身是 `NOT_ACTIVATED`，所以这里只是开发接线，不构成生产采纳。
 
+接上这条 guard 之后，批次立刻抓到我接得不完整：Southwest 的 14 个坐标从“被修订件挡住”变成 `Request-ledger locator evidence is invalid`。原因不是遮蔽的旧问题——是**准入要读修订件原件，而安装器从不安装它**。`install_historical_run_inputs` 复制的是 `prepare_*_input` 交出的 `source_proofs`，而修订件不在里面，于是装出来的数据根里 ledger 点名了修订件的字节、目录里却没有。修正在 `historical_annual_input`：修订件既然被读来判定“原件输入是否仍成立”，它就是这次准备的**已准入输入**，其 proof 必须和其余几份一起走。这条错误值得记下来，因为它正是“单独测函数全绿、接上去才露”的形状——`amendment_admission` 在仓库树里跑得通，只有装进隔离数据根之后才失败。
+
 **64 不是一个界，是两个**。范围定位正确之后 Pfizer 的 D02 是 92 条 41,860 字（按 `max_text_chars` 自己的计法：各条长度之和加条间分隔符），字符只用了 64,000 预算的 65%，卡住它的是条目数。这个上限约束的是申报者怎么断段，不是披露量：九份年报里一条摘录平均 341（Ford）到 1,422（Southwest）字符，同样用满字符预算的申报，条目数可以差四倍。所以按仓库既有的 Spec 修订形状（`B06_new_source_v2.md`、`C03_reported_compensation_v2.md`、`B06_guarded_v3.md` 到 `B06_inclusive_table_v6.md`）新增 `catalog/r6/D02_legal_disclosures_v2.md`，与 v1 只差 64 → 192，v1 逐字节不变。192 = 最稀的那档（187 条）上取整到原上限的三倍，不是按 Pfizer 的 92 反推。
 
 **第一层：Spec 能声明多少，在编译器里**。`scripts/vnext/specs.py` 规定任何 `TEXT_V1` 策略最多声明 64 条，而它的字节被十四个已冻结 Requirement 世代（`issue_28_v2`–`v14` 与 `issue_47_v1`）的 execution authority 点名。改它的后果是实测出来的：`native_request_construction` 开作用域时逐个核对那份 authority 的文件字节，于是稳定抛 `NATIVE_REQUEST_CONSTRUCTION_RULE_CHANGED:scripts/vnext/specs.py`，`tests/vnext/test_native_request_construction.py` 的 13 个用例全红，整条 continuous 语义调用路线（D03/D04/B13）在带这个改动的树里起不来。第一版就是这么做的，fast suite 抓住了它。
