@@ -111,7 +111,7 @@ def _text_execution(*, data_root, company_id, metric_id, prepared, requirement=N
     from datetime import datetime, timezone
 
     from .historical_text_input import prepare_historical_business_text_input
-    from .historical_text_results import text_api
+    from .historical_text_results import shared_source_preparation, text_api
     from .review import create_system_review_decision
 
     rebuilt = prepare_historical_business_text_input(
@@ -123,19 +123,26 @@ def _text_execution(*, data_root, company_id, metric_id, prepared, requirement=N
     api, review_builder = text_api(metric_id)
     spec = prepared["compiled_specs"][metric_id]
     arguments = {"compiled_spec": spec, **rebuilt["text_arguments"]}
-    candidate = api.create_deterministic_text_candidate(**arguments)
-    evidence = api.build_text_evidence(candidate=candidate, **arguments)
-    unit, assets = review_builder(compiled_spec=spec, candidate=candidate,
-                                  evidence_check=evidence,
-                                  source_bindings=arguments["source_references"])
-    if derivation_only:
-        return {"candidate": candidate, "evidence": evidence, "review_unit": unit}
-    decision = create_system_review_decision(
-        review_unit=unit, required_claims=spec["compiled"]["required_claims"],
-        decided_at_utc=datetime.now(timezone.utc).isoformat(), requirement=requirement)
-    result, trace, observations = api.replay_text_result(
-        company_traits=traits, candidate=candidate, evidence_check=evidence,
-        review_unit=unit, review_decisions=[decision], **arguments)
+    # The candidate is derived three times here - once directly, once inside
+    # build_text_evidence and once inside replay_text_result - and each
+    # derivation parsed the same immutable bytes again. The derivations stay;
+    # the parse is shared for the length of this one execution. Nothing outside
+    # this block reuses anything, so run_store's cold replay re-parses from the
+    # original evidence exactly as before.
+    with shared_source_preparation():
+        candidate = api.create_deterministic_text_candidate(**arguments)
+        evidence = api.build_text_evidence(candidate=candidate, **arguments)
+        unit, assets = review_builder(compiled_spec=spec, candidate=candidate,
+                                      evidence_check=evidence,
+                                      source_bindings=arguments["source_references"])
+        if derivation_only:
+            return {"candidate": candidate, "evidence": evidence, "review_unit": unit}
+        decision = create_system_review_decision(
+            review_unit=unit, required_claims=spec["compiled"]["required_claims"],
+            decided_at_utc=datetime.now(timezone.utc).isoformat(), requirement=requirement)
+        result, trace, observations = api.replay_text_result(
+            company_traits=traits, candidate=candidate, evidence_check=evidence,
+            review_unit=unit, review_decisions=[decision], **arguments)
     return {"records": [*prepared["records"], candidate, evidence, unit],
             "terminal_records": [*observations, trace, result],
             "review_unit": unit, "assets": assets, "decision": decision, "result": result}
@@ -149,11 +156,40 @@ def create_historical_run(*, data_root, run_dir, company_id, metric_id, binding_
     root through the same adapters, and the Run is written only if the rebuilt
     binding is byte-identical to the one the installation recorded.
     """
+    from .historical_text_results import shared_source_preparation
     from .run_store import create_run, append_run_record, validate_and_freeze_run, \
         load_frozen_run, _mechanically_replay_open_run, write_review_assets, \
         append_review_decision
     data_root, run_dir = _external(Path(data_root)), _external(Path(run_dir))
     _need(not run_dir.exists(), "HISTORICAL_RUN_PATH_EXISTS")
+    with shared_source_preparation():
+        return _create_historical_run(
+            data_root=data_root, run_dir=run_dir, company_id=company_id,
+            metric_id=metric_id, binding_id=binding_id, freeze=freeze,
+            create_run=create_run, append_run_record=append_run_record,
+            validate_and_freeze_run=validate_and_freeze_run,
+            load_frozen_run=load_frozen_run,
+            _mechanically_replay_open_run=_mechanically_replay_open_run,
+            write_review_assets=write_review_assets,
+            append_review_decision=append_review_decision)
+
+
+def _create_historical_run(*, data_root, run_dir, company_id, metric_id, binding_id,
+                           freeze, create_run, append_run_record, validate_and_freeze_run,
+                           load_frozen_run, _mechanically_replay_open_run,
+                           write_review_assets, append_review_decision):
+    """The body of one creation, inside one shared-parse scope.
+
+    A D02 creation prepares the same source set sixteen times: the execution,
+    the authority re-derivation, the text-context rebuild and the mechanical
+    replay of the open Run each derive the candidate again, and each one parsed
+    the same immutable bytes again - eighty parse calls on one document.
+
+    Every derivation is kept. What the scope removes is re-parsing bytes that
+    cannot have changed inside one creation. The independent check that does
+    not share anything is the one that matters: a cold read in a separate
+    process enters no scope and re-parses from the original evidence.
+    """
     case = replay_case(data_root=data_root, manifest=None, binding_id=binding_id,
                        company_id=company_id, metric_id=metric_id)
     requirement = case["requirement"]

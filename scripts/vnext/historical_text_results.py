@@ -46,6 +46,9 @@ on every filing where neither correction changes anything.
 from __future__ import annotations
 
 from collections import Counter
+from contextlib import contextmanager
+from contextvars import ContextVar
+import copy
 import re
 
 from .canonical import content_hash, sha256_bytes
@@ -358,6 +361,63 @@ def _width(scope):
     return scope["end_block_exclusive"] - scope["start_block"]
 
 
+# One execution prepares the same source set twice: once to build the candidate
+# and once to rebuild it inside build_text_evidence. Counted by (parser, source
+# bytes, parameters), that is six of the ten parse calls a D02 position makes -
+# build_text_document, reported_legal_fact_candidates and _bound_source twice
+# each with identical parameters, plus two of the four parse_accession_xbrl_source
+# calls. The remaining two are inside the frozen preparation and stay.
+#
+# The second preparation exists to re-derive the candidate independently, and
+# that is kept: the candidate is still derived twice, from a parse of the same
+# immutable bytes. What is not kept is parsing those bytes again, which is a
+# deterministic function of them. The reuse is explicit, process-local and
+# scoped to one `with` block; nothing reuses anything outside it, so a cold
+# replay in a new process re-parses from the original evidence as before.
+_SHARED_SOURCES = ContextVar("historical_text_shared_sources", default=None)
+
+
+@contextmanager
+def shared_source_preparation():
+    """Reuse one prepared source set inside one execution, never across them.
+
+    Not a cache of "this material is valid". The key carries the metric, the
+    calculation target, every source reference and the SHA-256 of every raw
+    byte string, so the same bytes claimed for a different period, entity or
+    scope are a different key and the frozen identity checks run again. What is
+    reused is the product of parsing exact bytes with exact parameters.
+    """
+    existing = _SHARED_SOURCES.get()
+    if existing is not None:
+        # Re-entrant on purpose. A Run creation opens the scope and the text
+        # execution inside it opens one too; binding a fresh dict there would
+        # hide the outer entries and drop its own on exit, which is what left
+        # five real preparations in a creation that should need one.
+        yield
+        return
+    token = _SHARED_SOURCES.set({})
+    try:
+        yield
+    finally:
+        _SHARED_SOURCES.reset(token)
+
+
+def _preparation_key(*, metric_id, source_arguments):
+    """The inputs a prepared source set is a deterministic function of.
+
+    Hashing the bytes rather than trusting ``raw_asset_id`` is deliberate: the
+    id is supplied by the caller, and a key that trusts a caller-supplied
+    identity is a key that can be made to collide.
+    """
+    return content_hash(value={
+        "metric_id": metric_id,
+        "target": source_arguments["target"],
+        "source_references": source_arguments["source_references"],
+        "source_filings": source_arguments["source_filings"],
+        "raw_bytes": {asset_id: sha256_bytes(content=raw) for asset_id, raw
+                      in sorted(source_arguments["raw_bytes_by_id"].items())}})
+
+
 def prepare_business_text_sources(*, metric_id, **source_arguments):
     """The frozen source preparation with the located ranges corrected.
 
@@ -368,6 +428,14 @@ def prepare_business_text_sources(*, metric_id, **source_arguments):
     """
     _need(metric_id in SUPPORTED_METRICS,
           "HISTORICAL_TEXT_BOUNDARY_METRIC_NOT_WIRED:" + str(metric_id))
+    shared = _SHARED_SOURCES.get()
+    key = None if shared is None else _preparation_key(metric_id=metric_id,
+                                                       source_arguments=source_arguments)
+    if key is not None and key in shared:
+        # A fresh copy every time. The frozen candidate builder walks these
+        # structures and the caller owns what it is handed, so returning the
+        # stored object would let one caller's edit reach the next one.
+        return copy.deepcopy(shared[key])
     prepared = frozen.prepare_business_text_sources(metric_id=metric_id, **source_arguments)
     _need(len(prepared["documents"]) == 1, "HISTORICAL_TEXT_BOUNDARY_EXPECTS_ONE_DOCUMENT")
     reference_id = next(iter(prepared["documents"]))
@@ -379,7 +447,7 @@ def prepare_business_text_sources(*, metric_id, **source_arguments):
     if corrected is document and proposal == prepared["proposals"][reference_id]:
         # Neither correction changed anything on this filing, so the frozen
         # record set is returned as it stands rather than rebuilt to equal it.
-        return prepared
+        return _remember(shared=shared, key=key, prepared=prepared)
     _need(proposal["coverage_status"] == "LOCAL_REQUESTED_RANGES_SCANNED",
           "HISTORICAL_TEXT_BOUNDARY_NAVIGATION_INCOMPLETE:" + str(proposal["coverage_reasons"]))
     _need(proposal["D02"]["candidates"], "HISTORICAL_TEXT_BOUNDARY_LEAVES_NO_DISCLOSURE_TEXT")
@@ -390,10 +458,18 @@ def prepare_business_text_sources(*, metric_id, **source_arguments):
     coverage["note_references"] = proposal["note_references"]
     coverage["section_boundary_policy"] = SECTION_BOUNDARY_POLICY
     coverage["coverage_hash"] = content_hash(value=coverage)
-    return {**prepared,
-            "documents": {**prepared["documents"], reference_id: corrected},
-            "coverages": {**prepared["coverages"], reference_id: coverage},
-            "proposals": {**prepared["proposals"], reference_id: proposal}}
+    return _remember(shared=shared, key=key, prepared={
+        **prepared,
+        "documents": {**prepared["documents"], reference_id: corrected},
+        "coverages": {**prepared["coverages"], reference_id: coverage},
+        "proposals": {**prepared["proposals"], reference_id: proposal}})
+
+
+def _remember(*, shared, key, prepared):
+    """Store a copy and hand back a copy, so neither side can reach the other."""
+    if key is not None:
+        shared[key] = copy.deepcopy(prepared)
+    return prepared
 
 
 def create_deterministic_text_candidate(*, compiled_spec, **source_arguments):
