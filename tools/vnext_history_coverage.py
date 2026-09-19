@@ -36,13 +36,20 @@ def main(argv=None):
                         help="Directory of frozen run directories. Outcomes are read "
                              "from their receipts; without it every implemented "
                              "position reports ROUTE_IMPLEMENTED_NOT_RUN.")
+    parser.add_argument("--requirement-closure-hash",
+                        help="Report receipts from this Requirement closure only. A "
+                             "coordinate run under several closures has several "
+                             "receipts; without this the position reports "
+                             "RUN_RECEIPT_AMBIGUOUS rather than picking one.")
     parser.add_argument("--output", type=Path)
     arguments = parser.parse_args(argv)
     with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")), \
          patch.object(socket, "getaddrinfo", side_effect=AssertionError("DNS forbidden")):
         matrix = build_coverage_matrix(repo_root=REPO_ROOT, company_ids=arguments.companies,
                                        years=arguments.years,
-                                       runs_root=arguments.runs_root)
+                                       runs_root=arguments.runs_root,
+                                       requirement_closure_hash=(
+                                           arguments.requirement_closure_hash))
     if arguments.output:
         arguments.output.parent.mkdir(parents=True, exist_ok=True)
         arguments.output.write_text(json.dumps(matrix, ensure_ascii=False, indent=1,
@@ -57,6 +64,9 @@ def main(argv=None):
         print("  %-38s %d" % (status, count))
     print("run receipts read %d (runs_root supplied: %s); this entry runs no metric"
           % (matrix["run_receipts_read"], matrix["runs_root_supplied"]))
+    print("closure requested: %s"
+          % (matrix["requested_requirement_closure_hash"] or "none - several receipts "
+             "for one coordinate report RUN_RECEIPT_AMBIGUOUS"))
     print("independent dimensions, each counted over the whole frame:")
     for name, count in sorted(matrix["dimension_counts"].items()):
         print("  %-38s %d" % (name, count))

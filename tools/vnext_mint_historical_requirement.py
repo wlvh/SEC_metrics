@@ -64,6 +64,10 @@ NEW_RULE_FILES = (
     # authority, so both roots check it.
     "catalog/r6/D02_legal_disclosures_v2.md",
     "scripts/vnext/historical_spec_revision.py",
+    # 64 was two bounds: what a Spec may declare, and what ORDERED_NEWLINE_V1
+    # will render. This carries the second, so a file that decides how many
+    # excerpts a result may hold is checked on both roots.
+    "scripts/vnext/historical_text_protocol.py",
     "scripts/vnext/requirement_profile_v16.py",
 )
 
@@ -101,6 +105,15 @@ RE_RECORDED_FROM_TREE = (
     # sets had to learn issue_47_v1, and records.py is bound by the parent, so
     # its patched bytes have to be recorded here too.
     "scripts/vnext/records.py",
+    # Wiring the successor protocol means the registration patch now edits
+    # three more files that issue_28_v13 already records, so their patched
+    # bytes have to be recorded here too. This makes the divergence between
+    # this generation and its parent WIDER - six files rather than three - and
+    # that is the actual cost of the capacity change, recorded rather than
+    # described as an isolation benefit.
+    "scripts/vnext/calculator.py",
+    "scripts/vnext/constraints.py",
+    "scripts/vnext/projector.py",
 )
 
 CONTRACT = """# Historical pinned-period development successor

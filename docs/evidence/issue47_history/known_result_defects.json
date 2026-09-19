@@ -25,13 +25,28 @@
    "period_end": "2025-12-31",
    "result_id": null,
    "summary": "Item 3 incorporates Note 16A by reference. The sub-note is located: Note 16 carries 'A. Legal Proceedings' with B (guarantees), C (commitments), D (contingent consideration) and E (insurance) after it, and the scope runs from A to B. Correctly scoped, the excerpt set is 92 items and 41,860 rendered characters - 65 percent of max_text_chars and 144 percent of max_items - so what stops this coordinate is the item count, not the scope and not the volume.",
-   "repair": "scripts/vnext/historical_text_results.incorporated_scopes locates the lettered sub-note. Raising the item bound needs two layers, not one. Layer 1 (what a Spec may declare) is done: catalog/r6/D02_legal_disclosures_v2.md declares 192 and scripts/vnext/historical_spec_revision.py compiles it without changing specs.py. Layer 2 (what the ORDERED_NEWLINE_V1 protocol will render) is open and is the reason the route still points at v1.",
-   "repair_state": "SCOPE_LOCATED_BLOCKED_BY_TEXT_RESULT_PROTOCOL_BOUND",
+   "repair": "Three steps, all landed. scripts/vnext/historical_text_results.incorporated_scopes locates the lettered sub-note. scripts/vnext/historical_spec_revision.py raises what a Spec may declare, without changing specs.py. scripts/vnext/historical_text_protocol.py raises what ORDERED_NEWLINE_V1 will render, without changing text_results.py. The route declares catalog/r6/D02_legal_disclosures_v2.md.",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
    "evidence": [
     "docs/evidence/issue47_history/d02-section-boundary/",
     "docs/evidence/issue47_history/d02-item-bound/"
    ],
-   "open_decision": {
+   "recomputed": {
+    "items": 92,
+    "rendered_characters": 41860,
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "run_status": "FROZEN",
+    "separate_process_cold_read": "same run_id, FROZEN, 92 items",
+    "new_calls": {
+     "provider": 0,
+     "paid": 0,
+     "sec": 0
+    },
+    "evidence": "docs/evidence/issue47_history/d02-item-bound/raised-capacity-end-to-end.json",
+    "still_not_accepted": "that the 92 excerpts are the right 92. Evidence PASS and a frozen Run are not business content acceptance."
+   },
+   "closed_decision": {
     "question": "whether this generation carries a successor text-result protocol so a result of more than 64 excerpts can be rendered at all",
     "why_it_is_not_an_implementation_choice": "64 is a literal in text_results.render_text_payload, a new_rule_file of issue_28_v11 checked on both roots and in fourteen generations' execution authority. A successor would duplicate about 155 lines across five functions, two of which - validate_text_record and verify_text_trace - are the integrity checks on a text result, and would grow the registration patch from 3 files and 9 hunks to about 6 files and 14 hunks.",
     "measured_scope": {
@@ -59,7 +74,14 @@
      "merging adjacent excerpts so the count fits, which trades one observation per source block for a smaller number",
      "narrowing the scope so the count fits",
      "routing a Spec that declares 192 while the runtime still refuses 65"
-    ]
+    ],
+    "resolved": "Completed rather than withdrawn. Recording it as an A/B choice between doing the work and dropping the coordinate was the wrong framing: the capacity was already approved, and finding the bound in more places is wiring to finish, not a decision to re-open.",
+    "measured_cost_paid": {
+     "successor_lines": "five functions in historical_text_protocol.py",
+     "registration_patch": "3 files and 9 hunks became 6 files and 13 hunks",
+     "re_recorded_from_tree": "3 files became 6 - calculator.py, constraints.py and projector.py joined, because the patch now edits bytes issue_28_v13 records. The divergence between this generation and its parent is wider, not narrower.",
+     "guarantee": "differential: 26 mutations compared against the frozen implementation inside the old bound, and every item-level mutation re-run at index 80 where only the raised bound reaches"
+    }
    }
   }
  ]

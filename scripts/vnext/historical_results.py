@@ -197,17 +197,13 @@ def verify_historical_companyfacts_metrics(*, candidate, repo_root: Path, compan
 # create_historical_run computes the text result from them, exactly as the
 # current route splits the same work between normal_run_v2 and normal_run_v3.
 TEXT_METRICS = ("D02",)
-# Still v1, and that is the current answer rather than an oversight. v2 raises
-# max_items to 192 and historical_spec_revision compiles it, but 64 turned out
-# to be two separate bounds: what a Spec may declare, and what the
-# ORDERED_NEWLINE_V1 text-result protocol will render. The second one is a
-# literal in text_results.render_text_payload, which every result of this kind
-# passes through five times, and that file is frozen as a rule file of
-# issue_28_v11. Routing v2 would put a Spec claiming 192 in front of a runtime
-# that still refuses 65, which is a false contract in the catalog, so the route
-# waits for the protocol decision rather than anticipating it.
-# docs/evidence/issue47_history/d02-item-bound/ has both layers measured.
-TEXT_SPEC_PATHS = {"D02": "catalog/r6/D02_legal_disclosures_v1.md"}
+# v2 declares max_items 192 where v1 declares 64. 64 was two bounds wearing one
+# number: what a Spec may declare, which historical_spec_revision raises without
+# touching the frozen compiler, and what ORDERED_NEWLINE_V1 will render, which
+# historical_text_protocol carries for this generation. Both are wired, so the
+# route can declare the capacity the runtime actually honours. v1 keeps its
+# bytes and its identity, because the Runs frozen under it declare it.
+TEXT_SPEC_PATHS = {"D02": "catalog/r6/D02_legal_disclosures_v2.md"}
 
 
 def _historical_text_run_input(*, repo_root, company_id, metric_id, period_selection):

@@ -33,11 +33,15 @@ MACYS_PERIOD = "2026-01-31"
 
 
 def _write_run(root, *, company_id, metric_id, period_end, result_id, quality="EXACT",
-               value="1", applicability="APPLICABLE", publication="PUBLISHED"):
+               value="1", applicability="APPLICABLE", publication="PUBLISHED",
+               status="FROZEN", validation="PASSED", closure="sha256:" + "0" * 64,
+               omit_hashes=()):
     """A minimal frozen run directory whose manifest describes its own files.
 
     Built here rather than copied from a real Run so the receipt reader is
-    tested on identity and hashing, not on one archived company.
+    tested on identity and hashing, not on one archived company. A real FROZEN
+    manifest carries all three file hashes, so this writes all three;
+    ``omit_hashes`` is how the absent-field case is built deliberately.
     """
     run_dir = Path(root)
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -49,22 +53,27 @@ def _write_run(root, *, company_id, metric_id, period_end, result_id, quality="E
     (run_dir / "records.jsonl").write_text(
         "".join(json.dumps(r, sort_keys=True) + "\n" for r in records), encoding="utf-8")
     (run_dir / "validation.json").write_text(
-        json.dumps({"record_type": "VALIDATION_RECEIPT", "status": "PASSED"},
+        json.dumps({"record_type": "VALIDATION_RECEIPT", "status": validation},
                    sort_keys=True) + "\n", encoding="utf-8")
+    (run_dir / "review_decisions.jsonl").write_text("", encoding="utf-8")
 
     def digest(name):
         return hashlib.sha256((run_dir / name).read_bytes()).hexdigest()
 
-    (run_dir / "manifest.json").write_text(json.dumps({
+    manifest = {
         "record_type": "SUCCESSOR_RUN", "run_id": "run:test:" + result_id[-8:],
-        "status": "FROZEN", "requirement_id": "issue_47_v1",
-        "requirement_closure_hash": "sha256:" + "0" * 64,
+        "status": status, "requirement_id": "issue_47_v1",
+        "requirement_closure_hash": closure,
         "company_id": company_id,
         "target_period": {"fiscal_year": 2025, "period_start": "2025-02-02",
                           "period_end": period_end},
         "records_file_hash": digest("records.jsonl"),
-        "validation_file_hash": digest("validation.json")},
-        sort_keys=True) + "\n", encoding="utf-8")
+        "review_decisions_file_hash": digest("review_decisions.jsonl"),
+        "validation_file_hash": digest("validation.json")}
+    for key in omit_hashes:
+        manifest.pop(key)
+    (run_dir / "manifest.json").write_text(
+        json.dumps(manifest, sort_keys=True) + "\n", encoding="utf-8")
     return run_dir
 
 
@@ -82,7 +91,7 @@ class HistoricalCoverageTest(unittest.TestCase):
             matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"], years=5)
         self.assertEqual(39 * 5, matrix["target_frame_positions"])
         self.assertEqual(39 * 5, matrix["enumerated_positions"])
-        self.assertEqual(2, matrix["schema_version"])
+        self.assertEqual(3, matrix["schema_version"])
         self.assertEqual(sum(matrix["status_counts"].values()), matrix["enumerated_positions"])
         self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, matrix["calls"])
         self.assertFalse(matrix["native_run_created"])
@@ -106,6 +115,7 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual(len(also_unwired), matrix["positions_missing_source_and_route"])
         self.assertTrue(matrix["first_blocking_reason_is_not_the_only_blocker"])
         self.assertEqual({"target_period_established": 39 * 5, "target_original_saved": 39,
+                          "run_receipt_hashes_verified": 0,
                           "historical_route_implemented": len(WIRED_HISTORICAL_METRICS) * 5,
                           "native_run_receipt": 0, "known_content_defect": 0,
                           "business_content_accepted": 0, "verified_outcome": 0},
@@ -202,6 +212,108 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertFalse(any(p["business_content_accepted"] for p in matrix["positions"]))
         self.assertEqual(2, matrix["dimension_counts"]["native_run_receipt"])
         self.assertEqual(1, matrix["dimension_counts"]["verified_outcome"])
+
+    def test_a_missing_identity_hash_is_not_a_passed_check(self):
+        """"Found no conflict" and "was not asked to check" are different answers.
+
+        The reader skipped an absent hash field and then reported
+        `manifest_file_hashes_verified: True` regardless, so a manifest that
+        supplied nothing to check read as fully verified.
+        """
+        with TemporaryDirectory(prefix="coverage-absent-") as temporary:
+            root = Path(temporary)
+            frozen = _write_run(root / "frozen", company_id="macys", metric_id="B01",
+                                period_end=MACYS_PERIOD, result_id="sha256:" + "c" * 64,
+                                omit_hashes=("review_decisions_file_hash",))
+            with self.assertRaises(RunReceiptError) as absent:
+                read_run_receipt(run_dir=frozen)
+            self.assertEqual("RUN_RECEIPT_HASH_ABSENT:review_decisions_file_hash",
+                             str(absent.exception))
+            # An OPEN Run may legitimately lack them; it is recorded as
+            # unverified rather than refused, and it is not a verified outcome.
+            opened = _write_run(root / "open", company_id="macys", metric_id="B01",
+                                period_end=MACYS_PERIOD, result_id="sha256:" + "d" * 64,
+                                status="OPEN", omit_hashes=("validation_file_hash",))
+            receipt = read_run_receipt(run_dir=opened)
+            self.assertFalse(receipt["manifest_file_hashes_verified"])
+            self.assertEqual(["validation.json"], receipt["unverified_files"])
+            self.assertEqual(["records.jsonl", "review_decisions.jsonl"],
+                             receipt["verified_files"])
+
+    def test_an_open_or_unvalidated_run_is_not_a_verified_outcome(self):
+        """FROZEN and PASSED are what make a recorded value a checked one."""
+        with TemporaryDirectory(prefix="coverage-states-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-open", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "e" * 64,
+                       status="OPEN")
+            _write_run(root / "run-failed", company_id="macys", metric_id="B02",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "f" * 64,
+                       validation="FAILED")
+            _write_run(root / "run-good", company_id="macys", metric_id="B03",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "1" * 64)
+            with original_sources_only():
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        rows = {p["metric_id"]: p for p in matrix["positions"]
+                if p["report_end"] == MACYS_PERIOD}
+        for metric in ("B01", "B02", "B03"):
+            # The recorded status is kept in every case; only the verified
+            # count moves, so nothing is relabelled to make the number work.
+            self.assertEqual("VALUE_EXACT", rows[metric]["status"])
+            self.assertTrue(rows[metric]["native_run_receipt"])
+        self.assertFalse(rows["B01"]["verified_outcome"])
+        self.assertFalse(rows["B02"]["verified_outcome"])
+        self.assertTrue(rows["B03"]["verified_outcome"])
+        self.assertEqual(1, matrix["dimension_counts"]["verified_outcome"])
+
+    def test_two_closures_for_one_coordinate_are_reported_not_picked(self):
+        """found[-1] took whichever directory sorted last and called it newest.
+
+        The two receipts here disagree on the value, and the one that sorts
+        last is the one the caller is not asking about, so an alphabetical pick
+        is visible rather than merely unproven.
+        """
+        old_closure, new_closure = "sha256:" + "0" * 64, "sha256:" + "9" * 64
+        with TemporaryDirectory(prefix="coverage-closures-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-a-new", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "2" * 64,
+                       value="222", closure=new_closure)
+            _write_run(root / "run-z-old", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "3" * 64,
+                       value="333", closure=old_closure)
+            with original_sources_only():
+                ambiguous = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                                  years=5, runs_root=root)
+                selected = build_coverage_matrix(
+                    repo_root=ROOT, company_ids=["macys"], years=5, runs_root=root,
+                    requirement_closure_hash=new_closure)
+                absent = build_coverage_matrix(
+                    repo_root=ROOT, company_ids=["macys"], years=5, runs_root=root,
+                    requirement_closure_hash="sha256:" + "7" * 64)
+
+        def row(matrix):
+            return next(p for p in matrix["positions"]
+                        if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+
+        self.assertEqual("RUN_RECEIPT_AMBIGUOUS", row(ambiguous)["status"])
+        self.assertEqual(2, row(ambiguous)["run_receipt_count"])
+        self.assertFalse(row(ambiguous)["verified_outcome"])
+        self.assertEqual(sorted([old_closure, new_closure]),
+                         row(ambiguous)["detail"]["requirement_closure_hashes"])
+
+        self.assertEqual("VALUE_EXACT", row(selected)["status"])
+        self.assertEqual("222", row(selected)["detail"]["value"])
+        self.assertEqual(new_closure, row(selected)["requirement_closure_hash"])
+        self.assertTrue(row(selected)["verified_outcome"])
+        self.assertEqual(new_closure, selected["requested_requirement_closure_hash"])
+
+        # A closure nothing ran is not a failure of the route and not a
+        # disclosure claim; it is that closure not having run this position.
+        self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", row(absent)["status"])
+        self.assertEqual(2, row(absent)["detail"]["receipts_under_other_closures"])
+        self.assertFalse(row(absent)["verified_outcome"])
 
     def test_an_edited_run_directory_is_not_the_run_its_manifest_describes(self):
         with TemporaryDirectory(prefix="coverage-receipts-") as temporary:

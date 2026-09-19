@@ -1,0 +1,54 @@
+{
+ "record_type": "D02_RAISED_CAPACITY_END_TO_END",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "what_this_is": "Pfizer's correctly scoped D02 - 92 excerpts, the set that the item bound refused - carried through native Run creation, freeze, a separate-process cold read and the public row. Clean process, the implementation on disk, no substitution of any kind.",
+ "not_the_earlier_probe": "The earlier PUBLIC_ROW result was reached with render_text_payload rebound in-process and is a feasibility probe only. This one is the acceptance: nothing is patched at runtime, and the cold read runs in a separate interpreter against the frozen run directory.",
+ "outcome": {
+  "duration_seconds": 235.4,
+  "evidence_count": 92,
+  "excerpt_characters": 41860,
+  "excerpt_items": 92,
+  "new_calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "publication": "PUBLISHED",
+  "quality": "EXACT",
+  "requirement_closure_hash": "sha256:1b6d9c87b9bc6487333893394744362e5bdc2c8e4c38637799c269c39685c5ea",
+  "requirement_id": "issue_47_v1",
+  "row_hash": "sha256:13ba5188e37eba6784d969967f53955f15fc50188999b7d9c1f929f909d02dc3",
+  "row_status": "TEXT_QUAL",
+  "run_id": "run:historical-period:3a222b03869dd8f223a3d5bf432777fd4ac19b518abb95841c6aa0fe96105d34",
+  "selection_id": "sha256:5a8696e10e937e1e89c552ec2b4b9c00980a5280003b47c65f54905fea203aff",
+  "separate_process_cold_read": {
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "requirement_closure_hash": "sha256:1b6d9c87b9bc6487333893394744362e5bdc2c8e4c38637799c269c39685c5ea",
+   "run_id": "run:historical-period:3a222b03869dd8f223a3d5bf432777fd4ac19b518abb95841c6aa0fe96105d34",
+   "spec_file_hashes": {
+    "catalog/r6/D02_legal_disclosures_v2.md": "e38edb44d2f4887a97d849f5b532b796a09df03c75d85f743c883346c5738c3a"
+   },
+   "status": "FROZEN",
+   "value_items": 92
+  },
+  "spec_file_hashes": {
+   "catalog/r6/D02_legal_disclosures_v2.md": "e38edb44d2f4887a97d849f5b532b796a09df03c75d85f743c883346c5738c3a"
+  },
+  "status": "FROZEN"
+ },
+ "what_it_shows": [
+  "92 items and 41,860 rendered characters reach a FROZEN Run with quality EXACT and publication PUBLISHED.",
+  "The Run declares catalog/r6/D02_legal_disclosures_v2.md by byte hash, so the capacity it used is the one its own Spec declares.",
+  "A separate process reloads the frozen run and returns the same run_id, the same FROZEN status and the same 92 items, having recompiled the Spec and re-rendered the payload.",
+  "92 Evidence entries and one public row, with new provider/paid/SEC calls all zero."
+ ],
+ "what_it_does_not_show": [
+  "That the 92 excerpts are the right 92. Evidence PASS and a frozen Run are not business content acceptance; that state is separate and still False.",
+  "Anything about the other 1,949 positions."
+ ],
+ "cost_measured": {
+  "seconds": 235.4,
+  "note": "A 32-item D02 took about 105 seconds before the shared-source work and 64 after; 92 items take 235. The growth is in the existing per-observation machinery, not in the capacity lookup, which measures 0.032 ms per call against a warm cache."
+ }
+}

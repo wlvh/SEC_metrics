@@ -133,23 +133,31 @@ def _matching_defect(*, defects, company_id, metric_id, report_end, result):
 
 
 def _position(*, company_id, report_end, ordinal, metric_id, established,
-              original_saved, implemented, found, defects, candidate):
+              original_saved, implemented, found, defects, candidate, closure=None):
     """One target position, with its four states kept apart.
 
     A route can exist without a Run, and a Run can record a result whose
     content is wrong. Neither collapses into the other, so the status names
     which of the two is missing and the defect flag is separate from both.
     """
-    fiscal_year, receipt, result, detail = None, None, None, None
+    fiscal_year, receipt, result, detail, ambiguous = None, None, None, None, False
     if found:
         # More than one receipt for a coordinate means the position was run
-        # under more than one Requirement closure. The newest is not
-        # automatically the answer, so all of them are reported and the status
-        # comes from the one whose closure the caller is asking about, which is
-        # the last written.
-        receipt = found[-1]["receipt"]
-        result = found[-1]["result"]
-        fiscal_year = (receipt["target_period"] or {}).get("fiscal_year")
+        # under more than one Requirement closure. Taking found[-1] took
+        # whichever run directory sorted last by name, and then called it "the
+        # last written" - it is neither. The caller names the closure it is
+        # asking about; without one, several receipts is an ambiguity to report
+        # rather than a winner to pick.
+        candidates = ([entry for entry in found
+                       if entry["receipt"]["requirement_closure_hash"] == closure]
+                      if closure is not None else list(found))
+        if len(candidates) == 1:
+            receipt = candidates[0]["receipt"]
+            result = candidates[0]["result"]
+        elif len(candidates) > 1:
+            ambiguous = True
+        fiscal_year = next(((entry["receipt"]["target_period"] or {}).get("fiscal_year")
+                            for entry in (candidates or found)), None)
     if not established:
         status = "TARGET_PERIOD_METADATA_BLOCKED"
         detail = {"reasons": candidate["metadata_blocking_reasons"]}
@@ -160,11 +168,20 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
     elif not implemented:
         status = "HISTORICAL_ROUTE_NOT_WIRED"
         detail = {"note": "no historical route for this metric yet"}
+    elif ambiguous:
+        # Several receipts and nothing to choose between them. Reporting any
+        # one of their outcomes would be reporting a guess.
+        status = "RUN_RECEIPT_AMBIGUOUS"
+        detail = {"note": "several receipts for this coordinate and no closure was requested",
+                  "requirement_closure_hashes": sorted(
+                      {entry["receipt"]["requirement_closure_hash"] for entry in found})}
     elif result is None:
         # Implemented and not run is not the same as not implemented, and it is
-        # not a disclosure claim either.
+        # not a disclosure claim either. A requested closure that no receipt
+        # carries lands here too, which is correct: that closure has not run it.
         status = "ROUTE_IMPLEMENTED_NOT_RUN"
-        detail = {"note": "a historical route exists and no Run receipt was found"}
+        detail = {"note": "a historical route exists and no Run receipt was found",
+                  "receipts_under_other_closures": len(found)}
     else:
         status = classify_result(result)
         detail = {key: result[key] for key in ("value", "unit", "quality", "publication",
@@ -189,12 +206,23 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
             # A recorded result is not a checked one. Content acceptance is a
             # separate state that no field of a Run receipt can supply.
             "business_content_accepted": False,
-            "verified_outcome": ran and defect is None
-            and status.startswith(("VALUE_", "N_A_STRUCTURAL"))}
+            "run_receipt_hashes_verified": bool(receipt
+                                                and receipt["manifest_file_hashes_verified"]),
+            # An outcome counts as verified only when a single unambiguous
+            # receipt supplied it, that Run is FROZEN and its own validation
+            # passed, its manifest hashes were actually checked, and no
+            # confirmed content defect withdraws it. A receipt that is OPEN,
+            # unvalidated, unverifiable or one of several is evidence of
+            # something, but not of a verified outcome.
+            "verified_outcome": (ran and defect is None
+                                 and status.startswith(("VALUE_", "N_A_STRUCTURAL"))
+                                 and receipt["run_status"] == "FROZEN"
+                                 and receipt["validation_status"] == "PASSED"
+                                 and receipt["manifest_file_hashes_verified"])}
 
 
 def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
-                          runs_root=None):
+                          runs_root=None, requirement_closure_hash=None):
     """Enumerate every target position with independent status dimensions.
 
     ``first_blocking_reason`` is a display convenience: it names what this
@@ -203,6 +231,11 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
     four dimensions are recorded separately and counted separately. Reading the
     first blocker as the only blocker is what makes a source budget look like
     the whole remaining cost.
+
+    ``requirement_closure_hash`` names which version's receipts to report. A
+    coordinate run under more than one closure has more than one receipt, and
+    without a selector the position reports ``RUN_RECEIPT_AMBIGUOUS`` rather
+    than picking whichever directory happened to sort last.
     """
     metrics, policy = declared_metric_ids(repo_root=repo_root)
     configured = [c["company_id"] for c in _registry_rows(repo_root=repo_root)]
@@ -242,7 +275,8 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                                      metric_id=metric_id, established=established,
                                      original_saved=original_saved,
                                      implemented=implemented, found=found,
-                                     defects=defects, candidate=candidate)
+                                     defects=defects, candidate=candidate,
+                                     closure=requirement_closure_hash)
                 if position["fiscal_year"] is not None and entry["fiscal_year"] is None:
                     entry["fiscal_year"] = position["fiscal_year"]
                 positions.append(position)
@@ -266,6 +300,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                     "native_run_receipt": False, "run_receipt_count": 0,
                     "run_id": None, "run_status": None,
                     "requirement_closure_hash": None, "validation_status": None,
+                    "run_receipt_hashes_verified": False,
                     "result_id": None, "known_content_defect": None,
                     "business_content_accepted": False, "verified_outcome": False})
         company_reports.append({"company_id": company_id, "requested_years": years,
@@ -283,12 +318,15 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
         "native_run_receipt": sum(p["native_run_receipt"] for p in positions),
         "known_content_defect": sum(p["known_content_defect"] is not None for p in positions),
         "business_content_accepted": sum(p["business_content_accepted"] for p in positions),
+        "run_receipt_hashes_verified": sum(p["run_receipt_hashes_verified"]
+                                           for p in positions),
         "verified_outcome": sum(p["verified_outcome"] for p in positions)}
     blocked_by_both = sum(1 for p in positions
                           if not p["target_original_saved"] and not p["historical_route_implemented"])
-    body = {"record_type": RECORD_TYPE, "schema_version": 2,
+    body = {"record_type": RECORD_TYPE, "schema_version": 3,
             "declared_metric_ids": metrics, "declared_metric_count": len(metrics),
             "requested_years": years, "companies": selected,
+            "requested_requirement_closure_hash": requirement_closure_hash,
             "target_frame_positions": len(selected) * len(metrics) * years,
             "enumerated_positions": len(positions),
             "wired_historical_metric_ids": list(WIRED_HISTORICAL_METRICS),

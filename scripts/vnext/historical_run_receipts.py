@@ -66,15 +66,25 @@ def read_run_receipt(*, run_dir: Path):
     if not manifest_path.is_file():
         return None
     manifest = strict_json_file(path=manifest_path)
+    # A field that is not there cannot be checked, and "found no conflict"
+    # because nothing was supplied is not verification. A FROZEN manifest
+    # carries all three, so an absent one there is a refusal; anywhere else the
+    # receipt records which were checked and which were not, and the caller
+    # decides what an unverified receipt is worth.
+    frozen = manifest.get("status") == "FROZEN"
+    verified, unverified = [], []
     for key, name in _HASHED_FILES:
         recorded = manifest.get(key)
         if recorded is None:
+            _need(not frozen, "RUN_RECEIPT_HASH_ABSENT:" + key)
+            unverified.append(name)
             continue
         path = run_dir / name
         _need(path.is_file() and not path.is_symlink(),
               "RUN_RECEIPT_FILE_MISSING:" + name)
         _need(sha256_file(path=path) == recorded,
               "RUN_RECEIPT_FILE_CHANGED:" + name)
+        verified.append(name)
     results = []
     for line in (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines():
         if not line.strip():
@@ -97,7 +107,8 @@ def read_run_receipt(*, run_dir: Path):
             "target_period": manifest.get("target_period"),
             "validation_status": validation,
             "results": sorted(results, key=lambda r: str(r["metric_id"])),
-            "manifest_file_hashes_verified": True,
+            "manifest_file_hashes_verified": not unverified,
+            "verified_files": verified, "unverified_files": unverified,
             "replayed": False, "business_content_verified": False}
     return {**body, "receipt_id": content_hash(value=body)}
 

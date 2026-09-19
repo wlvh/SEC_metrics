@@ -35,7 +35,10 @@
     "text_results.py::verify_text_trace"
    ],
    "renderer_calls_in_one_run": 122,
-   "reached_when_only_this_bound_is_lifted_in_process": "PUBLIC_ROW",
+   "reached_when_only_this_bound_is_lifted_in_process": {
+    "result": "PUBLIC_ROW",
+    "evidence_class": "FEASIBILITY_PROBE_UNDER_TEMPORARY_SUBSTITUTION"
+   },
    "successor_cost": {
     "functions_to_duplicate": [
      "render_text_payload",
@@ -58,9 +61,11 @@
   }
  ],
  "how_far_it_gets_with_only_the_renderer_bound_lifted": {
-  "method": "render_text_payload swapped in-process only; no file's bytes changed, so every Requirement byte check still read the real files and still passed",
+  "method": "render_text_payload rebound in-process with unittest.mock.patch; no file on disk was modified",
   "result": "PUBLIC_ROW",
-  "row_status": "TEXT_QUAL"
+  "row_status": "TEXT_QUAL",
+  "evidence_class": "FEASIBILITY_PROBE_UNDER_TEMPORARY_SUBSTITUTION",
+  "is_not": "end-to-end acceptance. unittest.mock.patch rebinds the name, so the disk file is untouched by construction and every byte check still passes - that proves the disk was not edited, NOT that the function which ran is the one the disk declares. Acceptance requires a clean process against the bound disk implementation."
  },
  "how_many_filings_this_affects": {
   "method": "create_deterministic_text_candidate on each company's saved filing at 2025-12-31",
