@@ -1,0 +1,32 @@
+{
+ "record_type": "HISTORICAL_AMENDED_TARGET_GAP",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "found_by": "running the six-company matrix under the completed D02 capacity route; two companies refuse most of their positions",
+ "refusals": [
+  "HISTORICAL_COMPANYFACTS_AMENDED_TARGET_NOT_IMPLEMENTED",
+  "HISTORICAL_ZERO_AI_AMENDED_TARGET_NOT_IMPLEMENTED",
+  "HISTORICAL_ACCESSION_AMENDED_TARGET_NOT_IMPLEMENTED"
+ ],
+ "what_it_is": "A development gap, named as one. When the selected target period carries an amendment, the historical route refuses rather than choosing a target, so the coordinate produces no result. This is correct behaviour under the project rule that an unimplemented route must not be reported as a disclosure problem - but it is a gap to close, not a source limitation.",
+ "not_a_regression": {
+  "checked": "git log -S on the refusal string, and the diff of this session's commits against the files that raise it",
+  "introduced_by": [
+   "267856d Select an explicit historical period and resolve its own catalog metrics",
+   "cd85a5e Resolve revenue and EBITDA margin for an explicitly selected historical period",
+   "2e4463e Read the instant-grain accession facts at a selected historical period end"
+  ],
+  "this_session_touched": "historical_results.py only at TEXT_SPEC_PATHS and its comment; the amendments guard is byte-identical"
+ },
+ "existing_material": {
+  "module": "scripts/vnext/annual_amendment_scope.py",
+  "its_own_statement": "'This additive source component is not wired into the running V14 batch. ... No metric value or Run is created here.'",
+  "so": "the ordinary route has amendment scope inspection as a source component and has not wired it into a Run either. Closing the historical gap is not a matter of calling an existing wired route.",
+  "policy": "config/annual_amendment_scope_v1.json"
+ },
+ "why_it_is_not_purely_mechanical": "Which filing is the target when a period carries a 10-K/A is a business question, and the repository already treats it as one: AGENTS.md records that limited link corrections may reach B01/B03, the six events and Company Facts, while Part III does not automatically approve a financial or subject-consolidation scope. Porting that into the historical route means deciding, per metric family, which amendment content is in scope for a pinned past period - and a pinned past period is exactly where a later amendment is most likely to change the answer.",
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}
