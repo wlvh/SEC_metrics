@@ -267,6 +267,31 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertTrue(rows["B03"]["verified_outcome"])
         self.assertEqual(1, matrix["dimension_counts"]["verified_outcome"])
 
+    def test_the_same_result_recorded_twice_is_one_outcome_not_an_ambiguity(self):
+        """A dependency metric's result is recorded in two Runs, and that is fine.
+
+        B03 consumes B01, so the B03 Run carries B01's result as well as its
+        own and the coordinate has two receipts under one closure. Measured on
+        the real batch: both carry the same result_id. Calling that ambiguous
+        withdrew four correct outcomes, so the test is on the result and not on
+        the count.
+        """
+        with TemporaryDirectory(prefix="coverage-same-") as temporary:
+            root = Path(temporary)
+            for name in ("run-b01", "run-b03-carrying-b01"):
+                _write_run(root / name, company_id="macys", metric_id="B01",
+                           period_end=MACYS_PERIOD, result_id="sha256:" + "4" * 64,
+                           value="4444")
+            with original_sources_only():
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        row = next(p for p in matrix["positions"]
+                   if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+        self.assertEqual("VALUE_EXACT", row["status"])
+        self.assertEqual("4444", row["detail"]["value"])
+        self.assertEqual(2, row["run_receipt_count"])
+        self.assertTrue(row["verified_outcome"])
+
     def test_two_closures_for_one_coordinate_are_reported_not_picked(self):
         """found[-1] took whichever directory sorted last and called it newest.
 
@@ -314,6 +339,47 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", row(absent)["status"])
         self.assertEqual(2, row(absent)["detail"]["receipts_under_other_closures"])
         self.assertFalse(row(absent)["verified_outcome"])
+
+    def test_a_repaired_coordinate_defect_stops_withdrawing_the_repaired_result(self):
+        """A defect that has been fixed must not keep withdrawing the fix.
+
+        The item-bound entry named a coordinate that could not produce a result
+        at all. Once the capacity was raised the coordinate produced the
+        correct 92-excerpt result, and the entry went on withdrawing it -
+        measured on the real batch, where Pfizer's D02 read as defective while
+        being exactly what the entry had asked for.
+        """
+        register = [
+            {"defect_id": "REPAIRED", "company_id": "macys", "metric_id": "B01",
+             "period_end": MACYS_PERIOD, "result_id": None,
+             "repair_state": "RULE_FIXED_RESULT_RECOMPUTED"},
+            {"defect_id": "OPEN", "company_id": "macys", "metric_id": "B02",
+             "period_end": MACYS_PERIOD, "result_id": None,
+             "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED"},
+            # A named result stays withdrawn whatever the repair state says:
+            # it points at one bad result, not at a coordinate.
+            {"defect_id": "NAMED", "company_id": "macys", "metric_id": "B03",
+             "period_end": MACYS_PERIOD, "result_id": "sha256:" + "5" * 64,
+             "repair_state": "RULE_FIXED_RESULT_RECOMPUTED"},
+        ]
+        with TemporaryDirectory(prefix="coverage-repaired-") as temporary:
+            root = Path(temporary)
+            for metric, result_id in (("B01", "a"), ("B02", "b"), ("B03", "5")):
+                _write_run(root / ("run-" + metric), company_id="macys", metric_id=metric,
+                           period_end=MACYS_PERIOD, result_id="sha256:" + result_id * 64)
+            with original_sources_only(), \
+                    patch("vnext.historical_coverage.known_result_defects",
+                          return_value=register):
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        rows = {p["metric_id"]: p for p in matrix["positions"]
+                if p["report_end"] == MACYS_PERIOD}
+        self.assertIsNone(rows["B01"]["known_content_defect"])
+        self.assertTrue(rows["B01"]["verified_outcome"])
+        self.assertEqual("OPEN", rows["B02"]["known_content_defect"])
+        self.assertFalse(rows["B02"]["verified_outcome"])
+        self.assertEqual("NAMED", rows["B03"]["known_content_defect"])
+        self.assertFalse(rows["B03"]["verified_outcome"])
 
     def test_an_edited_run_directory_is_not_the_run_its_manifest_describes(self):
         with TemporaryDirectory(prefix="coverage-receipts-") as temporary:

@@ -117,6 +117,14 @@ def _matching_defect(*, defects, company_id, metric_id, report_end, result):
     coordinate produces. A null ``result_id`` must not match a position that
     produced nothing: the first version of this compared None to None and
     marked all sixteen unwired metrics defective.
+
+    A coordinate-level entry stops withdrawing once its own ``repair_state``
+    records the result as recomputed. Without that, a repaired defect goes on
+    withdrawing the repaired result forever: the item-bound entry named a
+    coordinate that could not produce a result at all, and after the repair it
+    was withdrawing the correct 92-excerpt result it had asked for. An entry
+    naming a ``result_id`` is different - it names a specific bad result, which
+    stays withdrawn whatever later Runs do.
     """
     result_id = (result or {}).get("result_id")
     for defect in defects:
@@ -124,6 +132,8 @@ def _matching_defect(*, defects, company_id, metric_id, report_end, result):
         if named is not None:
             if result_id is not None and named == result_id:
                 return defect
+            continue
+        if str(defect.get("repair_state", "")).endswith("_RESULT_RECOMPUTED"):
             continue
         if (defect.get("company_id") == company_id
                 and defect.get("metric_id") == metric_id
@@ -151,7 +161,13 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
         candidates = ([entry for entry in found
                        if entry["receipt"]["requirement_closure_hash"] == closure]
                       if closure is not None else list(found))
-        if len(candidates) == 1:
+        # Several receipts for one coordinate is not automatically a
+        # disagreement. A dependency metric's result is recorded in its own Run
+        # and again in the Run that consumes it - B01 appears in the B01 Run
+        # and in the B03 Run - and those carry the same result_id, so they are
+        # one outcome seen twice. Ambiguity is when they differ.
+        if candidates and len({entry["result"]["result_id"]
+                               for entry in candidates}) == 1:
             receipt = candidates[0]["receipt"]
             result = candidates[0]["result"]
         elif len(candidates) > 1:
@@ -172,9 +188,10 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
         # Several receipts and nothing to choose between them. Reporting any
         # one of their outcomes would be reporting a guess.
         status = "RUN_RECEIPT_AMBIGUOUS"
-        detail = {"note": "several receipts for this coordinate and no closure was requested",
+        detail = {"note": "several receipts for this coordinate record different results",
                   "requirement_closure_hashes": sorted(
-                      {entry["receipt"]["requirement_closure_hash"] for entry in found})}
+                      {entry["receipt"]["requirement_closure_hash"] for entry in found}),
+                  "result_ids": sorted({entry["result"]["result_id"] for entry in found})}
     elif result is None:
         # Implemented and not run is not the same as not implemented, and it is
         # not a disclosure claim either. A requested closure that no receipt
