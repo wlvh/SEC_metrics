@@ -110,20 +110,22 @@ EOF
 
 | | positions | share |
 | --- | ---: | ---: |
-| on one of the **22** metrics that have a historical route | 1,100 | 56% |
-| on one of the other 17 declared metrics | **850** | **44%** |
+| on one of the **23** metrics that have a historical route | 1,150 | 59% |
+| on one of the other 16 declared metrics | **800** | **41%** |
 | | **1,950** | |
 
-These were 16 and 800 against 1,150 when this section was first written. The six
+These were 16 and 800 against 1,150 when this section was first written, and
+the shares have since crossed over: more of the frame now has a route than does
+not. The six
 8-K event metrics moved 300 positions across the line, and the section below on
 what the remaining families cost explains why that move was cheap: they were
 held out by a constant and a comment, not by missing machinery. Real exact
 values rose from 67 to 103 and verified outcomes from 146 to 182 in the same
 regeneration, with no new request.
 
-**No number of SEC requests reaches those 850.** They are blocked on a route
-that does not exist yet, not on a document nobody has fetched. Within the 1,100
-that acquisition can reach, 182 already carry a verified outcome; the rest are
+**No number of SEC requests reaches those 800.** They are blocked on a route
+that does not exist yet, not on a document nobody has fetched. Within the 1,150
+that acquisition can reach, 193 already carry a verified outcome; the rest are
 missing the target filing's own original document or sit in a period saved
 submissions metadata does not establish. (Those do not sum, because a position
 can be missing more than one thing at once — which is why the matrix reports
@@ -227,6 +229,33 @@ for m in b["declared_metric_ids"]:
     print(m, owners[:3])
 EOF
 ```
+
+### What one wired route is actually worth: 11 of 50
+
+D02 is the first text route, and the frame was regenerated with it rather than
+estimated from the one Marriott case that proved it. The 50 positions it adds
+land like this:
+
+| status | positions |
+| --- | ---: |
+| `VALUE_EXACT` | **11** |
+| `SOURCE_MISSING_TARGET_ORIGINAL` | 30 |
+| `TARGET_PERIOD_NOT_DISCOVERED` | 7 |
+| `TARGET_PERIOD_METADATA_BLOCKED` | 2 |
+
+Nine of the ten companies resolve one year each; JPMorgan does not, because its
+submissions shards are the defect the plan's 12 refresh requests exist to fix.
+
+The ratio is the transferable part. Wiring a route moves 50 positions from "no
+route" to "has a route", and **22% of them produce a value immediately**; the
+other 39 become named source gaps. That is why
+`historical_route_implemented` rose by 50 while
+`positions_missing_source_and_route` fell by only 39 — the difference is exactly
+the 11 that already had their original saved.
+
+So a route's worth is bounded by `target_original_saved`, which is 429 of 1,950
+across the whole frame. Implementing routes and acquiring documents are not
+alternatives; neither finishes without the other.
 
 ### Which family to wire next is a material question, not a code question
 
