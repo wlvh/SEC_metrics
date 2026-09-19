@@ -831,7 +831,9 @@ Requirement 快照与代码树一致：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scr
 
 原生历史 Run 端到端（需先应用注册补丁）：`HISTORICAL_RUN_MATERIAL_ROOT=/absolute/new/root PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_historical_run_material`。覆盖固定期间选择 → 输入安装（Requirement 为 `issue_47_v1`）→ 原生 Run 创建与冻结 → **独立进程**冻结重放 → 公共行与收据，全程新增调用为 0，并核对该行带的是被固定的年度而不是公司最新年度。
 
-该用例有**两道跳过闸**，第二道是重点：链路需要 `issue_47_v1` 引擎在 `requirement_profile.PROFILE_ENGINES` 中登记并由 `run_store` 分派，那是 `issue_28_v13` 执行授权内两个文件的三处改动，以补丁形式交付在 `docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch`，不在本分支直接应用。补丁未落地时该用例 skip。**skip 不是 PASS，不得按 rc=0 记为通过**；因此它没有登记进 `tools/run_fast_tests_v2.py` 的任何层。已实测：在应用补丁的隔离运行时中两个用例都通过（合计 199 秒），在本 checkout 中两个都跳过。
+该用例有**两道跳过闸**，第二道是重点：链路需要 `issue_47_v1` 引擎在 `requirement_profile.PROFILE_ENGINES` 中登记并由 `run_store` 分派，那是 `issue_28_v13` 执行授权内**三个文件的八处改动**，以补丁形式交付在 `docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch`，不在本分支直接应用。
+
+这个数字被实测修正过三次，每次都由执行而不是阅读给出：估计时是两处；建第一个 Run 时发现结构化重放的分派是第三处；跑 Macy's 非自然年度时发现 `point_in_time_fiscal_label` 由两份硬编码 id 集合决定（`run_store` 与 `records` 各一处），是第五、六处；接 D02 文本路线时发现 `prepare_text_contexts` 与 `text_handlers` 是两条独立的 requirement-id 链，是第七、八处。`tools/vnext_dispatch_map.py` 现在把这些分派点机械列出来（打补丁后 17 条 if/elif 链加 4 个集合成员点，`issue_47_v1` 出现在其中 6 个路由点），并在同一条链重复测试同一个 id 时失败——那类死分支不改变任何行为，任何 Run 都不会因它失败，只有读才能发现，本分支确实写进去过一条。补丁未落地时该用例 skip。**skip 不是 PASS，不得按 rc=0 记为通过**；因此它没有登记进 `tools/run_fast_tests_v2.py` 的任何层。已实测：在应用补丁的隔离运行时中两个用例都通过（合计 199 秒），在本 checkout 中两个都跳过。
 
 第二个用例 `test_a_structured_fact_without_a_verified_claim_still_renders_its_evidence` 钉住的是一个真实缺陷，不是假设的。公共行的证据有两条路：一条给带 verified claim id 的观察，一条给不带的观察（结构化 XBRL 事实绑定的是事实本身，不是谁核实过的声明）。`historical_projection` 原先只移植了第一条，于是每个 Company Facts 指标都会得到一个自身 Run 判为 EXACT、却渲染不出行的结果，报 `HISTORICAL_PROJECTION_OBSERVATION_WITHOUT_CLAIMS`。B04 走的是 claim 那条路，所以第一个用例从未碰到它；这是靠把矩阵真正跑起来才发现的，读代码没有发现。用例同时断言该观察确实不带任何 claim id，以免将来某次改动让它走回 claim 分支而断言依旧通过。
 
