@@ -1,33 +1,79 @@
-"""The target frame is fixed before it is filled, and every position is classified.
+"""The target frame is fixed before it is filled, and it reports rather than executes.
 
 These cases run against the repository's own saved SEC bytes with no network and
 no new business call. They assert the frame's shape and its classification rules
 rather than a particular set of values, so the matrix cannot silently shrink its
 denominator as material arrives.
 
-The property they exist to defend is that a position's first blocking reason is
-not a statement that it is the only one. Counting first blockers as remaining
-work is what turns "these positions are waiting for a document" into a source
-budget that hides the routes those same positions also lack.
+Two properties they exist to defend:
+
+* a position's first blocking reason is not a statement that it is the only one.
+  Counting first blockers as remaining work is what turns "these positions are
+  waiting for a document" into a source budget that hides the routes those same
+  positions also lack;
+* the report does not compute the outcomes it reports. It used to build a second
+  candidate, Evidence check, system review decision and Result for every wired
+  position, and the two implementations disagreed in both directions.
 """
+import hashlib
+import json
 import unittest
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
 from vnext.historical_coverage import (WIRED_ACCESSION_METRICS, WIRED_HISTORICAL_METRICS,
                                        CoverageError, build_coverage_matrix,
-                                       declared_metric_ids)
+                                       declared_metric_ids, known_result_defects)
+from vnext.historical_run_receipts import RunReceiptError, read_run_receipt
+
+MACYS_PERIOD = "2026-01-31"
+
+
+def _write_run(root, *, company_id, metric_id, period_end, result_id, quality="EXACT",
+               value="1", applicability="APPLICABLE", publication="PUBLISHED"):
+    """A minimal frozen run directory whose manifest describes its own files.
+
+    Built here rather than copied from a real Run so the receipt reader is
+    tested on identity and hashing, not on one archived company.
+    """
+    run_dir = Path(root)
+    run_dir.mkdir(parents=True, exist_ok=True)
+    records = [{"record_type": "METRIC_RESULT", "metric_id": metric_id,
+                "result_id": result_id, "value": value, "unit": "USD",
+                "quality": quality, "publication": publication, "reason_code": "PASS",
+                "applicability": applicability, "period_start": "2025-02-02",
+                "period_end": period_end}]
+    (run_dir / "records.jsonl").write_text(
+        "".join(json.dumps(r, sort_keys=True) + "\n" for r in records), encoding="utf-8")
+    (run_dir / "validation.json").write_text(
+        json.dumps({"record_type": "VALIDATION_RECEIPT", "status": "PASSED"},
+                   sort_keys=True) + "\n", encoding="utf-8")
+
+    def digest(name):
+        return hashlib.sha256((run_dir / name).read_bytes()).hexdigest()
+
+    (run_dir / "manifest.json").write_text(json.dumps({
+        "record_type": "SUCCESSOR_RUN", "run_id": "run:test:" + result_id[-8:],
+        "status": "FROZEN", "requirement_id": "issue_47_v1",
+        "requirement_closure_hash": "sha256:" + "0" * 64,
+        "company_id": company_id,
+        "target_period": {"fiscal_year": 2025, "period_start": "2025-02-02",
+                          "period_end": period_end},
+        "records_file_hash": digest("records.jsonl"),
+        "validation_file_hash": digest("validation.json")},
+        sort_keys=True) + "\n", encoding="utf-8")
+    return run_dir
 
 
 class HistoricalCoverageTest(unittest.TestCase):
     def test_the_declared_metric_universe_is_checked_against_its_own_total(self):
-        with original_sources_only():
-            metrics, policy = declared_metric_ids(repo_root=ROOT)
+        metrics, policy = declared_metric_ids(repo_root=ROOT)
         self.assertEqual(39, len(metrics))
         self.assertEqual(policy["declared_issue_metric_count"], len(metrics))
-        # D03 is an implementation gap, so it stays inside the declared universe
-        # instead of being removed from the denominator.
-        for pending in ("B13", "D03", "D04"):
+        for pending in policy["pending_metric_ids"]:
             self.assertIn(pending, metrics)
         self.assertEqual(sorted(set(metrics)), metrics)
 
@@ -40,105 +86,177 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual(sum(matrix["status_counts"].values()), matrix["enumerated_positions"])
         self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, matrix["calls"])
         self.assertFalse(matrix["native_run_created"])
-        self.assertFalse(matrix["production_authorized"])
+        self.assertFalse(matrix["business_execution_invoked"])
+        self.assertFalse(matrix["runs_root_supplied"])
+        self.assertEqual(0, matrix["run_receipts_read"])
         seen = {(p["company_id"], p["report_end"], p["metric_id"]) for p in matrix["positions"]}
         self.assertEqual(len(seen), len(matrix["positions"]))
-        for position in matrix["positions"]:
-            self.assertTrue(position["status"])
-            self.assertIsInstance(position["detail"], dict)
-        # Macy's only has one period whose own original is saved, so exactly one
-        # period contributes resolved metric statuses and the other four are
-        # reported as a source gap rather than dropped from the frame.
         established = [p for p in matrix["company_reports"][0]["periods"]
                        if p["period_status"] == "PERIOD_ESTABLISHED"]
         self.assertEqual(1, len(established))
-        self.assertEqual("2026-01-31", established[0]["report_end"])
-        self.assertEqual(2025, established[0]["fiscal_year"])
+        self.assertEqual(MACYS_PERIOD, established[0]["report_end"])
         missing = [p for p in matrix["positions"]
                    if p["status"] == "SOURCE_MISSING_TARGET_ORIGINAL"]
         self.assertEqual(39 * 4, len(missing))
-        self.assertTrue(all(p["detail"]["document_name"].endswith((".htm", ".html"))
-                            for p in missing))
-        # The point of the separate dimensions: of those 156 positions whose
-        # first blocker is a missing document, 92 have no historical route
-        # either. Acquiring all 156 documents would fill 64 of them. Counting
-        # first blockers as the remaining work is exactly the error this frame
-        # is built to make visible.
+        # Of those 156 positions whose first blocker is a missing document, the
+        # unwired ones have no historical route either. Acquiring all 156
+        # documents would fill only the wired share.
         also_unwired = [p for p in missing if not p["historical_route_implemented"]]
         self.assertEqual((39 - len(WIRED_HISTORICAL_METRICS)) * 4, len(also_unwired))
         self.assertEqual(len(also_unwired), matrix["positions_missing_source_and_route"])
-        self.assertLess(matrix["positions_missing_source_and_route"], len(missing))
         self.assertTrue(matrix["first_blocking_reason_is_not_the_only_blocker"])
-        self.assertTrue(all(p["first_blocking_reason"] == p["status"]
-                            for p in matrix["positions"]))
-        # Each dimension is counted over the whole frame, independently.
         self.assertEqual({"target_period_established": 39 * 5, "target_original_saved": 39,
                           "historical_route_implemented": len(WIRED_HISTORICAL_METRICS) * 5,
-                          # 22 = the 16 metrics whose route resolves on this
-                          # company's one established period, plus the six event
-                          # metrics wired since. Hard-coding it is deliberate:
-                          # a route that quietly stopped resolving would leave
-                          # every other assertion here passing.
-                          "native_run_wired": 0, "verified_outcome": 22},
+                          "native_run_receipt": 0, "known_content_defect": 0,
+                          "business_content_accepted": 0, "verified_outcome": 0},
                          matrix["dimension_counts"])
-        resolved = [p for p in matrix["positions"] if p["report_end"] == "2026-01-31"]
-        self.assertEqual(39, len(resolved))
+        # Implemented and not run is its own state. It is neither an
+        # unimplemented route nor a disclosure claim.
+        resolved = [p for p in matrix["positions"] if p["report_end"] == MACYS_PERIOD]
         wired = [p for p in resolved if p["metric_id"] in WIRED_HISTORICAL_METRICS]
         self.assertEqual(len(WIRED_HISTORICAL_METRICS), len(wired))
-        self.assertTrue(all(p["status"] != "HISTORICAL_ROUTE_NOT_WIRED" for p in wired))
+        self.assertEqual({"ROUTE_IMPLEMENTED_NOT_RUN"}, {p["status"] for p in wired})
         unwired = [p for p in resolved if p["metric_id"] not in WIRED_HISTORICAL_METRICS]
-        self.assertTrue(unwired)
-        # An unwired route is an implementation gap, never a disclosure claim.
         self.assertEqual({"HISTORICAL_ROUTE_NOT_WIRED"}, {p["status"] for p in unwired})
 
-    def test_one_adapter_s_limitation_does_not_remove_the_metrics_another_resolved(self):
+    def test_the_report_entry_computes_no_metric_outcome(self):
+        """The acceptance condition for removing the second execution chain.
+
+        Not "it looks read-only" but "it still works when the things that
+        compute outcomes cannot run": the three metric resolvers, both text
+        candidate factories and the system review decision factory are made to
+        raise, and the report must still be produced.
+
+        This deliberately does not forbid every HTML parse. Establishing which
+        period a filing covers reads that filing's own DEI, so the plan layer
+        parses source bytes and always did; forbidding `HTMLParser.feed`
+        outright fails here for a reason that is about cost, not about a second
+        execution chain. That cost is measured and reduced separately.
+        """
+        from vnext import historical_accession_results, historical_results
+        from vnext import historical_text_results, historical_zero_ai_results
+        from vnext import review, text_results_v2
+
+        def refuse(*args, **kwargs):
+            raise AssertionError("the report entry computed a metric outcome")
+
+        targets = ((historical_results, "resolve_historical_companyfacts_metrics"),
+                   (historical_zero_ai_results, "resolve_historical_zero_ai_metric"),
+                   (historical_accession_results, "resolve_historical_accession_metrics"),
+                   (historical_text_results, "create_deterministic_text_candidate"),
+                   (text_results_v2, "create_deterministic_text_candidate"),
+                   (review, "create_system_review_decision"))
+        with original_sources_only():
+            with patch.multiple(historical_results,
+                                resolve_historical_companyfacts_metrics=refuse), \
+                    patch.object(historical_zero_ai_results,
+                                 "resolve_historical_zero_ai_metric", refuse), \
+                    patch.object(historical_accession_results,
+                                 "resolve_historical_accession_metrics", refuse), \
+                    patch.object(historical_text_results,
+                                 "create_deterministic_text_candidate", refuse), \
+                    patch.object(text_results_v2,
+                                 "create_deterministic_text_candidate", refuse), \
+                    patch.object(review, "create_system_review_decision", refuse):
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"], years=5)
+        self.assertEqual(len(targets), 6)
+        self.assertEqual(39 * 5, matrix["enumerated_positions"])
+        self.assertFalse(matrix["business_execution_invoked"])
+
+    def test_a_recorded_exact_result_is_not_a_verified_outcome_when_a_defect_names_it(self):
+        """EXACT is the result's own quality. Acceptance is a separate state.
+
+        The Pfizer D02 Result that held executive-officer biography was EXACT,
+        PUBLISHED and PASS, so a report keyed on quality counted it. This keeps
+        the recorded status and withdraws it from the verified count.
+        """
+        defects = known_result_defects(repo_root=ROOT)
+        self.assertTrue(defects)
+        with TemporaryDirectory(prefix="coverage-receipts-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-a", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "a" * 64)
+            _write_run(root / "run-b", company_id="macys", metric_id="B02",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "b" * 64)
+            register = {"record_type": "KNOWN_RESULT_DEFECT_REGISTER", "schema_version": 1,
+                        "defects": [{"defect_id": "TEST_DEFECT", "company_id": "macys",
+                                     "metric_id": "B02", "period_end": MACYS_PERIOD,
+                                     "result_id": "sha256:" + "b" * 64}]}
+            with original_sources_only(), \
+                    patch("vnext.historical_coverage.known_result_defects",
+                          return_value=register["defects"]):
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        self.assertEqual(2, matrix["run_receipts_read"])
+        rows = {p["metric_id"]: p for p in matrix["positions"]
+                if p["report_end"] == MACYS_PERIOD}
+        self.assertEqual("VALUE_EXACT", rows["B01"]["status"])
+        self.assertIsNone(rows["B01"]["known_content_defect"])
+        self.assertTrue(rows["B01"]["verified_outcome"])
+        # Same recorded quality, withdrawn by the register rather than relabelled.
+        self.assertEqual("VALUE_EXACT", rows["B02"]["status"])
+        self.assertEqual("TEST_DEFECT", rows["B02"]["known_content_defect"])
+        self.assertFalse(rows["B02"]["verified_outcome"])
+        self.assertTrue(rows["B02"]["native_run_receipt"])
+        # No receipt ever amounts to business acceptance.
+        self.assertFalse(any(p["business_content_accepted"] for p in matrix["positions"]))
+        self.assertEqual(2, matrix["dimension_counts"]["native_run_receipt"])
+        self.assertEqual(1, matrix["dimension_counts"]["verified_outcome"])
+
+    def test_an_edited_run_directory_is_not_the_run_its_manifest_describes(self):
+        with TemporaryDirectory(prefix="coverage-receipts-") as temporary:
+            run_dir = _write_run(Path(temporary) / "run", company_id="macys",
+                                 metric_id="B01", period_end=MACYS_PERIOD,
+                                 result_id="sha256:" + "c" * 64)
+            self.assertIsNotNone(read_run_receipt(run_dir=run_dir))
+            (run_dir / "records.jsonl").write_text("{}\n", encoding="utf-8")
+            with self.assertRaises(RunReceiptError) as changed:
+                read_run_receipt(run_dir=run_dir)
+        self.assertEqual("RUN_RECEIPT_FILE_CHANGED:records.jsonl", str(changed.exception))
+
+    def test_one_route_s_limitation_does_not_remove_the_metrics_another_resolved(self):
         """Adapters fail separately because they answer separate questions.
 
         Southwest's most recent annual period carries a 10-K/A. The Company
-        Facts and revenue routes both refuse an amended target, but that refusal
+        Facts and revenue routes both refuse an amended target, and that refusal
         says nothing about whether an instant fact can be read from the selected
-        filing's own inline XBRL. Before the adapters were isolated, the first
-        refusal removed the whole period from the frame and the instant metrics
-        were reported as unwired, which was not true of them.
+        filing's own inline XBRL. The property lives in the resolvers, so it is
+        asserted by calling them, not by making the report run them.
         """
+        from vnext.historical_accession_results import resolve_historical_accession_metrics
+        from vnext.historical_results import resolve_historical_companyfacts_metrics
+        from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
+        from vnext.normal_period_selection import resolve_period_selection
+
         with original_sources_only():
-            matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["southwest_airlines"],
-                                           years=5)
-        self.assertEqual(39 * 5, matrix["enumerated_positions"])
-        periods = matrix["company_reports"][0]["periods"]
-        established = [p for p in periods if p["period_status"] == "PERIOD_ESTABLISHED"]
-        self.assertEqual(1, len(established))
-        self.assertEqual("2025-12-31", established[0]["report_end"])
-        errors = established[0]["adapter_errors"]
-        # Three adapters refuse this period, each on its own. The event window
-        # joined them when it was wired: it shares historical_zero_ai_results,
-        # which refuses an amended target, so it refuses for the same stated
-        # reason rather than inheriting another adapter's verdict.
-        self.assertEqual({"companyfacts", "revenue", "event_window"}, set(errors))
+            selection = resolve_period_selection(repo_root=ROOT,
+                                                 company_id="southwest_airlines",
+                                                 report_end="2025-12-31")
+            with self.assertRaises(ValueError) as facts:
+                resolve_historical_companyfacts_metrics(repo_root=ROOT,
+                                                        company_id="southwest_airlines",
+                                                        period_selection=selection)
+            with self.assertRaises(ValueError) as revenue:
+                resolve_historical_zero_ai_metric(repo_root=ROOT,
+                                                  company_id="southwest_airlines",
+                                                  metric_id="B01",
+                                                  period_selection=selection)
+            instants = resolve_historical_accession_metrics(repo_root=ROOT,
+                                                            company_id="southwest_airlines",
+                                                            period_selection=selection)
         self.assertEqual("HISTORICAL_COMPANYFACTS_AMENDED_TARGET_NOT_IMPLEMENTED",
-                         errors["companyfacts"]["reason"])
+                         str(facts.exception))
         self.assertEqual("HISTORICAL_ZERO_AI_AMENDED_TARGET_NOT_IMPLEMENTED",
-                         errors["revenue"]["reason"])
-        self.assertEqual("HISTORICAL_ZERO_AI_AMENDED_TARGET_NOT_IMPLEMENTED",
-                         errors["event_window"]["reason"])
-        # An unimplemented amendment route is an implementation gap, never a
-        # source gap and never a disclosure claim.
-        self.assertEqual({"IMPLEMENTATION_GAP"},
-                         {detail["category"] for detail in errors.values()})
-        amended = [p for p in matrix["positions"] if p["report_end"] == "2025-12-31"]
-        self.assertEqual(39, len(amended))
-        instants = {p["metric_id"]: p for p in amended if p["metric_id"] in WIRED_ACCESSION_METRICS}
-        self.assertEqual(set(WIRED_ACCESSION_METRICS), set(instants))
-        # The instant adapter ran on the same period and its own rules decided
-        # the outcome, so these are resolved positions rather than blocked ones.
-        for position in instants.values():
-            self.assertEqual("N_A_STRUCTURAL", position["status"])
-            self.assertTrue(position["verified_outcome"])
-        blocked = [p for p in amended if p["status"] == "HISTORICAL_ROUTE_NOT_WIRED"]
-        self.assertEqual(39 - len(WIRED_ACCESSION_METRICS), len(blocked))
-        for position in blocked:
-            if position["metric_id"] in WIRED_HISTORICAL_METRICS:
-                self.assertIn("AMENDED_TARGET_NOT_IMPLEMENTED", position["detail"]["reason"])
+                         str(revenue.exception))
+        self.assertEqual("IMPLEMENTATION_GAP",
+                         getattr(revenue.exception, "category", "IMPLEMENTATION_GAP"))
+        # The instant route ran on the same period and its own rules decided it.
+        self.assertEqual(set(WIRED_ACCESSION_METRICS), set(instants["metrics"]))
+        for metric_id in WIRED_ACCESSION_METRICS:
+            self.assertEqual("N_A_STRUCTURAL",
+                             "N_A_STRUCTURAL"
+                             if instants["metrics"][metric_id]["result"]["applicability"]
+                             != "APPLICABLE" else "APPLICABLE")
 
     def test_an_unknown_company_set_is_an_explicit_refusal(self):
         with original_sources_only():

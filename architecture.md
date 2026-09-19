@@ -1011,6 +1011,14 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 **原生 Run：已接通并端到端跑通一次**（Marriott FY2024 / B04，见 `docs/evidence/issue47_history/native-run-2026-09-18/`）。新增 `requirement_profile_v16.py`、`requirements/issue_47_v1/`、`historical_run.py`、`historical_projection.py` 四个新文件，未改任何冻结字节；注册所需的三处改动（`PROFILE_ENGINES` 一条、`run_store` 两条按 Run 自身 `requirement_id` 的分派）在两个执行授权内的文件里，以补丁交付。第三处是建 Run 时才发现的：缺它则结构化重放落到通用路径，而该路径要求 `calculation_target` 带 `accession`/`entity`，共享的 `calculate_observation_metric` 并不设置它们。实测同一棵树内两半都成立——新链路可跑，补丁之前安装的 `issue_28_v13` 包五项探针仍全 OK。代价是 `issue_47_v1` 按补丁后的字节记录那两个文件，`issue_28_v13` 的 manifest 与闭包哈希不变，故一个数据根只满足两者之一。以下是此前的范围记录，保留以说明结论如何收窄：
 
+**覆盖汇总不再是第二条执行链**。`historical_coverage.py` 原本为每个已接线位置自建 candidate、Evidence、ReviewUnit，再加载父 Requirement 造 SYSTEM 审阅决定并算出结果——用第二套实现算出来的统计，不是关于这个系统的统计，而且两边在两个方向上都不一致：`native_run_wired` 被硬编码成 `False`（旁边有 114 个真实冻结 Run），B01/B03 被记为 EXACT（而历史投影仍拒绝它们）。
+
+现在分三层：**计划**只枚举目标、期间状态与来源依赖；**执行**仍由 `historical_run.py`/`historical_projection.py` 的原生入口产生 Run、结果行与证据；**汇总**由新增只读模块 `scripts/vnext/historical_run_receipts.py` 读取冻结 Run 的 `manifest.json`、按其自带的三个文件哈希校验 `records.jsonl`/`review_decisions.jsonl`/`validation.json`，再取出 `METRIC_RESULT`。它不重放、不解析财报、不造审阅决定；被编辑过的 run 目录以 `RUN_RECEIPT_FILE_CHANGED` 拒绝。
+
+四个状态分开保存，不互相顶替：路线是否实现、是否有 Run 收据（新增 `ROUTE_IMPLEMENTED_NOT_RUN`，它既不是未实现也不是披露缺失）、该 Run 自身的 validation 状态、内容是否被核查（`business_content_accepted` 恒为 `False`，任何收据字段都不能提供它）。已确认的内容缺陷由 `docs/evidence/issue47_history/known_result_defects.json` 按 `result_id` 或坐标登记：记录的 `VALUE_EXACT` 保留原样，但退出 `verified_outcome`——原件、旧结果和修复责任都不改。同一坐标有多份收据（同一位置在不同 closure 下跑过）全部保留并计数，不默默选一个。
+
+实测同一 390 个位置：**260.4 秒 → 4.7 秒**。验收条件不是"看起来只读"，而是"在无法执行时仍能产出"：三个指标解析器、两个文本候选工厂与系统审阅决定工厂全部替换为抛异常，报告仍必须生成。该测试同时暴露一个成本事实——计划层为确定期间要读申报自身的 DEI，因此仍会解析来源字节，这属于下一项（减少重复解析）的范围，不是第二条执行链。
+
 **文本路线的章节边界修复**：`scripts/vnext/historical_text_results.py` 是该世代第 14 个规则文件。冻结的 `text_coverage.build_text_document` 把编号项的终点定在下一个编号标题，`_SUCCESSOR["3"] = {"4", "5"}` 又特意允许跳号（有些公司整项省略 Item 4）；Form 10-K 另外允许把高管信息作为**不编号项**放在 Part I 内。两者相遇时编号项越过不编号项，把高管章节当成自己的披露。九家已保存年报的实测：八家 Item 3 结束于 `Item 4. Mine Safety Disclosures`，只有 Pfizer 不报 Item 4、结束于 Item 5，因而吞掉中间 26 个高管块；五家带该不编号标题，Marriott 与 Southwest 只差两块和四块。所以这是表单要素撞上一处有意放宽，不是某家公司的排版。
 
 修复不能放在应该放的位置：`text_coverage.py` 的字节被 `issue_28_v11` 的规则集点名，其引擎在数据根与代码根双向校验，而 `issue_47_v1` 经父链加载它，改这个文件会让 v11 及其后所有 Requirement 无法加载（实测 `Normal candidate rule bytes differ: scripts/vnext/text_coverage.py`）。后继模块因此只收窄历史路线的已定位区间：`_derive_candidate`、`build_text_review_unit`、`legal_risk_candidates` 的扫描与记录形状校验全部原样复用，另有三个函数因为在冻结模块内以模块全局互相查找而必须复制，由"未收窄时逐字节等于冻结模块"的子集断言约束。普通路线保留原行为，直到某个能重记该文件的世代携带同一规则——这是明确限制，不是已关闭项。

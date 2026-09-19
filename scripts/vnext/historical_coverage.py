@@ -18,23 +18,37 @@ limitation never hides an earlier one:
    is established but resolving it stopped. Which one is decided by the
    failure's own category, because a missing source and a missing
    implementation are different conclusions and neither is a disclosure claim.
-4. the metric's own resolved outcome, including a structural non-applicability
-   the installed rules decide and a withheld result with its reason code.
+4. whether a native Run recorded an outcome for it, read from that Run's own
+   receipt.
 
-Nothing here executes a metric that the wired routes cannot execute, and
-nothing here turns a missing implementation into "the issuer did not disclose".
+This module plans and reports. It does not execute. It used to build a second
+candidate, a second Evidence check, a second system review decision and a
+second Result for every wired position, purely to fill a status column - and
+the two implementations disagreed in both directions, reporting
+``native_run_wired`` as a hard-coded ``False`` beside 114 real Runs and
+reporting B01 and B03 EXACT while the public renderer refused them. Outcomes
+now come from ``historical_run_receipts``, which reads a frozen Run.
+
+Four states stay apart because they are four different things: whether a route
+exists, whether a Run produced a result, whether that result passed its own
+validation, and whether its content has been checked. A position can be
+implemented and never run; a Run can be FROZEN and PASSED and hold another
+item's text. Nothing here turns a missing implementation into "the issuer did
+not disclose", and nothing here promotes EXACT into business acceptance.
 """
 from pathlib import Path
 
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_annual_input import _registry_rows
 from .normal_history_plan import plan_historical_sources
+from .historical_run_receipts import classify_result, collect_run_receipts, index_receipts
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
 from .sources import resolve_repository_file
 
 
 POLICY_PATH = "config/issue28_normal_results_v2.json"
+DEFECT_REGISTER_PATH = "docs/evidence/issue47_history/known_result_defects.json"
 RECORD_TYPE = "HISTORICAL_COVERAGE_MATRIX"
 # The historical routes that exist today. Everything else is an explicit gap.
 WIRED_COMPANYFACTS_METRICS = ("A05", "A06", "A07", "A08", "A10",
@@ -78,162 +92,109 @@ def declared_metric_ids(*, repo_root: Path):
     return metrics, policy
 
 
-def _classify(result):
-    if result["applicability"] == "N_A_STRUCTURAL":
-        return "N_A_STRUCTURAL"
-    if result["publication"] == "WITHHELD":
-        return "WITHHELD_SOURCE_OR_ROUTE"
-    if result["value"] is None:
-        return "NO_VALUE_PUBLISHED"
-    return "VALUE_" + result["quality"]
+def known_result_defects(*, repo_root: Path):
+    """Results this repository has confirmed hold wrong content.
 
-
-def _row(result):
-    return {"status": _classify(result), "value": result["value"], "unit": result["unit"],
-            "quality": result["quality"], "publication": result["publication"],
-            "reason_code": result["reason_code"], "period_start": result["period_start"],
-            "period_end": result["period_end"]}
-
-
-def _adapter_rows(*, repo_root, company_id, selection):
-    """Run every wired adapter independently and keep each one's own outcome.
-
-    One adapter's limitation is that adapter's metrics' own outcome. It must not
-    remove the metrics another adapter resolved for the same period, because a
-    Company Facts refusal about amendments says nothing about whether revenue or
-    an instant fact could be read from the same selected filing.
+    A defect entry withdraws a result from current delivery. It does not delete
+    it, re-sign it or relabel it as a structural non-applicability: the original
+    Run stays readable so the defect can be demonstrated and the repair checked.
     """
-    from .historical_accession_results import resolve_historical_accession_metrics
-    from .historical_results import resolve_historical_companyfacts_metrics
-    from .historical_zero_ai_results import resolve_historical_zero_ai_metric
-
-    rows, adapters, component = {}, {}, None
-
-    def failed(error):
-        return {"reason": str(error), "error_type": type(error).__name__,
-                "category": getattr(error, "category", "IMPLEMENTATION_GAP")}
-
-    try:
-        component = resolve_historical_companyfacts_metrics(repo_root=repo_root,
-                                                            company_id=company_id,
-                                                            period_selection=selection)
-        for metric_id in WIRED_COMPANYFACTS_METRICS:
-            rows[metric_id] = _row(component["metrics"][metric_id]["result"])
-        adapters["companyfacts"] = None
-    except (ValueError, KeyError, TypeError, OSError) as error:
-        adapters["companyfacts"] = failed(error)
-        for metric_id in WIRED_COMPANYFACTS_METRICS:
-            rows[metric_id] = {"status": _blocked_status(adapters["companyfacts"]),
-                               **adapters["companyfacts"]}
-    for metric_id in WIRED_REVENUE_METRICS:
-        try:
-            revenue = resolve_historical_zero_ai_metric(repo_root=repo_root,
-                                                        company_id=company_id,
-                                                        metric_id=metric_id,
-                                                        period_selection=selection)
-            rows[metric_id] = _row(revenue["result"])
-            adapters.setdefault("revenue", None)
-        except (ValueError, KeyError, TypeError, OSError) as error:
-            detail = failed(error)
-            adapters["revenue"] = detail
-            rows[metric_id] = {"status": _blocked_status(detail), **detail}
-    # Each event metric is its own route over the same 8-K window, so one
-    # metric's limitation is that metric's outcome and not the window's.
-    for metric_id in WIRED_EVENT_METRICS:
-        try:
-            event = resolve_historical_zero_ai_metric(repo_root=repo_root,
-                                                      company_id=company_id,
-                                                      metric_id=metric_id,
-                                                      period_selection=selection)
-            rows[metric_id] = _row(event["result"])
-            adapters.setdefault("event_window", None)
-        except (ValueError, KeyError, TypeError, OSError) as error:
-            detail = failed(error)
-            adapters["event_window"] = detail
-            rows[metric_id] = {"status": _blocked_status(detail), **detail}
-    # The text route resolves its own result without a Run, the same way the
-    # other adapters do here. Adding a metric to the wired set without running
-    # it here is what produced row = None and a TypeError three layers away last
-    # time, so the two changes belong in one commit.
-    for metric_id in WIRED_TEXT_METRICS:
-        try:
-            from .historical_text_input import prepare_historical_business_text_input
-            text = _resolve_text_metric(repo_root=repo_root, company_id=company_id,
-                                        metric_id=metric_id, selection=selection,
-                                        prepare=prepare_historical_business_text_input)
-            rows[metric_id] = _row(text)
-            adapters.setdefault("business_text", None)
-        except (ValueError, KeyError, TypeError, OSError) as error:
-            detail = failed(error)
-            adapters["business_text"] = detail
-            rows[metric_id] = {"status": _blocked_status(detail), **detail}
-    try:
-        instants = resolve_historical_accession_metrics(repo_root=repo_root,
-                                                        company_id=company_id,
-                                                        period_selection=selection)
-        for metric_id in WIRED_ACCESSION_METRICS:
-            rows[metric_id] = _row(instants["metrics"][metric_id]["result"])
-        adapters["accession"] = None
-    except (ValueError, KeyError, TypeError, OSError) as error:
-        adapters["accession"] = failed(error)
-        for metric_id in WIRED_ACCESSION_METRICS:
-            rows[metric_id] = {"status": _blocked_status(adapters["accession"]),
-                               **adapters["accession"]}
-    return component, rows, adapters
+    path = repo_root / DEFECT_REGISTER_PATH
+    if not path.is_file():
+        return []
+    register = strict_json_file(path=path)
+    _need(register["record_type"] == "KNOWN_RESULT_DEFECT_REGISTER",
+          "COVERAGE_DEFECT_REGISTER_TYPE_INVALID")
+    return register["defects"]
 
 
-def _resolve_text_metric(*, repo_root, company_id, metric_id, selection, prepare):
-    """One text metric's own result, without creating a Run.
+def _matching_defect(*, defects, company_id, metric_id, report_end, result):
+    """The defect entry that withdraws this position's result, if there is one.
 
-    The review decision a Run needs binds a Requirement, which this frame does
-    not hold, so the deterministic half is replayed and the system decision is
-    made against the parent snapshot. That is enough to decide the metric's
-    outcome, which is all this matrix reports.
+    An entry naming a ``result_id`` withdraws exactly that result. An entry
+    without one names a coordinate whose defect is not tied to a single Run -
+    an unresolved reference, for instance - and applies to whatever that
+    coordinate produces. A null ``result_id`` must not match a position that
+    produced nothing: the first version of this compared None to None and
+    marked all sixteen unwired metrics defective.
     """
-    from datetime import datetime, timezone
-
-    from .historical_text_results import text_api
-    from .requirements import load_requirement_snapshot
-    from .review import create_system_review_decision
-    from .specs import compile_spec_file
-    from .traits import repository_company_traits
-    from .historical_results import TEXT_SPEC_PATHS
-
-    prepared = prepare(repo_root=repo_root, company_id=company_id, metric_id=metric_id,
-                       period_selection=selection)
-    _need(prepared["input_status"] != "BLOCKED",
-          "HISTORICAL_COVERAGE_TEXT_INPUT_BLOCKED:"
-          + str(prepared["input_binding"]["limitations"]))
-    spec = compile_spec_file(path=repo_root / TEXT_SPEC_PATHS[metric_id],
-                             dependency_specs={})
-    arguments = {"compiled_spec": spec, **prepared["text_arguments"]}
-    api, review_builder = text_api(metric_id)
-    candidate = api.create_deterministic_text_candidate(**arguments)
-    evidence = api.build_text_evidence(candidate=candidate, **arguments)
-    unit, _ = review_builder(compiled_spec=spec, candidate=candidate,
-                             evidence_check=evidence,
-                             source_bindings=arguments["source_references"])
-    requirement = load_requirement_snapshot(
-        snapshot_dir=repo_root / "requirements" / "issue_28_v13")
-    decision = create_system_review_decision(
-        review_unit=unit, required_claims=spec["compiled"]["required_claims"],
-        decided_at_utc=datetime.now(timezone.utc).isoformat(), requirement=requirement)
-    result, _, _ = api.replay_text_result(
-        company_traits=repository_company_traits(repo_root=repo_root, company_id=company_id),
-        candidate=candidate, evidence_check=evidence, review_unit=unit,
-        review_decisions=[decision], **arguments)
-    return result
+    result_id = (result or {}).get("result_id")
+    for defect in defects:
+        named = defect.get("result_id")
+        if named is not None:
+            if result_id is not None and named == result_id:
+                return defect
+            continue
+        if (defect.get("company_id") == company_id
+                and defect.get("metric_id") == metric_id
+                and defect.get("period_end") == report_end):
+            return defect
+    return None
 
 
-def _blocked_status(detail):
-    """A missing source and a missing implementation are different conclusions."""
-    return ("SOURCE_MISSING_DEPENDENCY"
-            if detail["category"] in {"SOURCE_UNAVAILABLE", "SOURCE_ACCESS_FAILED",
-                                      "SOURCE_INTEGRITY_ERROR"}
-            else "HISTORICAL_ROUTE_NOT_WIRED")
+def _position(*, company_id, report_end, ordinal, metric_id, established,
+              original_saved, implemented, found, defects, candidate):
+    """One target position, with its four states kept apart.
+
+    A route can exist without a Run, and a Run can record a result whose
+    content is wrong. Neither collapses into the other, so the status names
+    which of the two is missing and the defect flag is separate from both.
+    """
+    fiscal_year, receipt, result, detail = None, None, None, None
+    if found:
+        # More than one receipt for a coordinate means the position was run
+        # under more than one Requirement closure. The newest is not
+        # automatically the answer, so all of them are reported and the status
+        # comes from the one whose closure the caller is asking about, which is
+        # the last written.
+        receipt = found[-1]["receipt"]
+        result = found[-1]["result"]
+        fiscal_year = (receipt["target_period"] or {}).get("fiscal_year")
+    if not established:
+        status = "TARGET_PERIOD_METADATA_BLOCKED"
+        detail = {"reasons": candidate["metadata_blocking_reasons"]}
+    elif not original_saved:
+        status = "SOURCE_MISSING_TARGET_ORIGINAL"
+        detail = {"accession": candidate["current_filing"]["accessionNumber"],
+                  "document_name": candidate["current_filing"]["primaryDocument"]}
+    elif not implemented:
+        status = "HISTORICAL_ROUTE_NOT_WIRED"
+        detail = {"note": "no historical route for this metric yet"}
+    elif result is None:
+        # Implemented and not run is not the same as not implemented, and it is
+        # not a disclosure claim either.
+        status = "ROUTE_IMPLEMENTED_NOT_RUN"
+        detail = {"note": "a historical route exists and no Run receipt was found"}
+    else:
+        status = classify_result(result)
+        detail = {key: result[key] for key in ("value", "unit", "quality", "publication",
+                                               "reason_code", "period_start", "period_end")}
+    defect = _matching_defect(defects=defects, company_id=company_id, metric_id=metric_id,
+                              report_end=report_end, result=result)
+    ran = result is not None
+    return {"company_id": company_id, "report_end": report_end,
+            "target_ordinal": ordinal, "fiscal_year": fiscal_year, "metric_id": metric_id,
+            "first_blocking_reason": status, "status": status, "detail": detail,
+            "target_period_established": established,
+            "target_original_saved": original_saved,
+            "historical_route_implemented": implemented,
+            "native_run_receipt": ran,
+            "run_receipt_count": len(found),
+            "run_id": receipt["run_id"] if receipt else None,
+            "run_status": receipt["run_status"] if receipt else None,
+            "requirement_closure_hash": receipt["requirement_closure_hash"] if receipt else None,
+            "validation_status": receipt["validation_status"] if receipt else None,
+            "result_id": (result or {}).get("result_id"),
+            "known_content_defect": defect["defect_id"] if defect else None,
+            # A recorded result is not a checked one. Content acceptance is a
+            # separate state that no field of a Run receipt can supply.
+            "business_content_accepted": False,
+            "verified_outcome": ran and defect is None
+            and status.startswith(("VALUE_", "N_A_STRUCTURAL"))}
 
 
-def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
+def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
+                          runs_root=None):
     """Enumerate every target position with independent status dimensions.
 
     ``first_blocking_reason`` is a display convenience: it names what this
@@ -249,6 +210,9 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
     _need(bool(selected) and len(selected) == len(set(selected))
           and set(selected) <= set(configured), "COVERAGE_COMPANY_SET_INVALID")
     wired = set(WIRED_HISTORICAL_METRICS)
+    defects = known_result_defects(repo_root=repo_root)
+    receipt_list = [] if runs_root is None else collect_run_receipts(runs_root=runs_root)
+    receipts = index_receipts(receipts=receipt_list)
     positions = []
     company_reports = []
     for company_id in selected:
@@ -263,53 +227,25 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
                      if candidate["metadata_status"] != "METADATA_CANDIDATE_READY"
                      else "ORIGINAL_NOT_SAVED" if report_end not in identity_ready
                      else "PERIOD_ESTABLISHED"}
-            rows, adapters, component = {}, {}, None
             if entry["period_status"] == "PERIOD_ESTABLISHED":
                 selection = resolve_period_selection(repo_root=repo_root,
                                                      company_id=company_id,
                                                      report_end=report_end)
                 entry["selection_id"] = selection["selection_id"]
-                component, rows, adapters = _adapter_rows(repo_root=repo_root,
-                                                          company_id=company_id,
-                                                          selection=selection)
-                entry["adapter_errors"] = {name: detail for name, detail in adapters.items()
-                                           if detail is not None}
-                if component is not None:
-                    entry["fiscal_year"] = component["periods"]["current"]["fiscal_year"]
-                    entry["prior_error"] = component["prior_error"]
             for metric_id in metrics:
                 established = entry["period_status"] != "METADATA_BLOCKED"
                 original_saved = entry["period_status"] == "PERIOD_ESTABLISHED"
                 implemented = metric_id in wired
-                row = rows.get(metric_id)
-                verified = bool(row) and row["status"].startswith(("VALUE_", "N_A_STRUCTURAL"))
-                if not established:
-                    first, detail = "TARGET_PERIOD_METADATA_BLOCKED", {
-                        "reasons": candidate["metadata_blocking_reasons"]}
-                elif not original_saved:
-                    first, detail = "SOURCE_MISSING_TARGET_ORIGINAL", {
-                        "accession": candidate["current_filing"]["accessionNumber"],
-                        "document_name": candidate["current_filing"]["primaryDocument"]}
-                elif not implemented:
-                    first, detail = "HISTORICAL_ROUTE_NOT_WIRED", {
-                        "note": "no historical route for this metric yet"}
-                else:
-                    # Every wired metric must have been given a row above. A
-                    # missing one means an adapter was added to the wired set
-                    # without being run here, which is a defect in this builder
-                    # rather than something to report as a metric outcome.
-                    _need(row is not None, "COVERAGE_WIRED_METRIC_HAS_NO_ADAPTER:" + metric_id)
-                    first, detail = row["status"], row
-                positions.append({
-                    "company_id": company_id, "report_end": report_end,
-                    "target_ordinal": candidate["target_ordinal"],
-                    "fiscal_year": entry["fiscal_year"], "metric_id": metric_id,
-                    "first_blocking_reason": first, "status": first, "detail": detail,
-                    "target_period_established": established,
-                    "target_original_saved": original_saved,
-                    "historical_route_implemented": implemented,
-                    "native_run_wired": False,
-                    "verified_outcome": verified})
+                found = receipts.get((company_id, metric_id, report_end), [])
+                position = _position(company_id=company_id, report_end=report_end,
+                                     ordinal=candidate["target_ordinal"],
+                                     metric_id=metric_id, established=established,
+                                     original_saved=original_saved,
+                                     implemented=implemented, found=found,
+                                     defects=defects, candidate=candidate)
+                if position["fiscal_year"] is not None and entry["fiscal_year"] is None:
+                    entry["fiscal_year"] = position["fiscal_year"]
+                positions.append(position)
             periods.append(entry)
         # Positions whose target period was never discovered still belong to the
         # frame. They are enumerated with the company and the ordinal that is
@@ -327,7 +263,11 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
                                "catalog_limitation_count": len(plan["catalog_limitations"])},
                     "target_period_established": False, "target_original_saved": False,
                     "historical_route_implemented": metric_id in wired,
-                    "native_run_wired": False, "verified_outcome": False})
+                    "native_run_receipt": False, "run_receipt_count": 0,
+                    "run_id": None, "run_status": None,
+                    "requirement_closure_hash": None, "validation_status": None,
+                    "result_id": None, "known_content_defect": None,
+                    "business_content_accepted": False, "verified_outcome": False})
         company_reports.append({"company_id": company_id, "requested_years": years,
                                 "target_period_count": len(plan["target_candidates"]),
                                 "periods": periods,
@@ -340,7 +280,9 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
         "target_period_established": sum(p["target_period_established"] for p in positions),
         "target_original_saved": sum(p["target_original_saved"] for p in positions),
         "historical_route_implemented": sum(p["historical_route_implemented"] for p in positions),
-        "native_run_wired": sum(p["native_run_wired"] for p in positions),
+        "native_run_receipt": sum(p["native_run_receipt"] for p in positions),
+        "known_content_defect": sum(p["known_content_defect"] is not None for p in positions),
+        "business_content_accepted": sum(p["business_content_accepted"] for p in positions),
         "verified_outcome": sum(p["verified_outcome"] for p in positions)}
     blocked_by_both = sum(1 for p in positions
                           if not p["target_original_saved"] and not p["historical_route_implemented"])
@@ -361,6 +303,9 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5):
             # resolution, and the native Run matrix for rows.
             "public_row_rendering_not_measured": True,
             "company_reports": company_reports, "positions": positions,
+            "run_receipts_read": len(receipt_list),
+            "runs_root_supplied": runs_root is not None,
+            "business_execution_invoked": False,
             "policy_sha256": sha256_file(path=ROOT / POLICY_PATH),
             "module_sha256": sha256_file(path=Path(__file__)),
             "calls": {"provider": 0, "paid": 0, "sec": 0},

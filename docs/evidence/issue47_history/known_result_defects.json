@@ -1,0 +1,33 @@
+{
+ "record_type": "KNOWN_RESULT_DEFECT_REGISTER",
+ "schema_version": 1,
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "purpose": "Results this repository has confirmed hold wrong content. An entry withdraws a result from current delivery. It does not delete it, re-sign it, or relabel it as a structural non-applicability: the original Run stays readable so the defect can be demonstrated and the repair checked.",
+ "defects": [
+  {
+   "defect_id": "D02_PFIZER_2025_OFFICER_SECTION",
+   "company_id": "pfizer",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "result_id": "sha256:ab1bfcb4f1673b07580b64eab4b219744802bcac55ef04cb7c09f20c631fcd4a",
+   "run_id": "run:historical-period:fad2a7b37dfa0cdfc74e5b110f0b076a19d512b7059674719e611549930cc732",
+   "requirement_closure_hash": "sha256:a82225adf77f04414e7dfa7b46b48975f24b83ef24b467f2cb044fe59249098a",
+   "reported_quality": "EXACT",
+   "summary": "26 of 58 excerpts are executive-officer biography from the Form 10-K unnumbered Part I item, labelled EXPLICIT_LEGAL_SECTION_TEXT because ITEM_3 ran past that item to ITEM 5.",
+   "repair": "scripts/vnext/historical_text_results.py closes a numbered item at the form's unnumbered Part I item",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "evidence": "docs/evidence/issue47_history/d02-section-boundary/"
+  },
+  {
+   "defect_id": "D02_PFIZER_2025_NOTE_16A_UNRESOLVED",
+   "company_id": "pfizer",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "summary": "Item 3 incorporates Note 16A by reference. No heading carries that number, so _note_references falls back to the parent Note 16 and records WIDER_PARENT_NOTE. The incorporated sub-note is therefore never located, and its text reaches the result only where the six-word legal pattern happens to match.",
+   "repair": null,
+   "repair_state": "OPEN_NOT_REPAIRED",
+   "evidence": "docs/evidence/issue47_history/d02-section-boundary/referenced-note-resolution.json"
+  }
+ ]
+}
