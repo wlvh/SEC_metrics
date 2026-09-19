@@ -92,6 +92,30 @@ def _chains(*, repo_root, relative):
     return found
 
 
+def _membership_sites(*, repo_root, relative):
+    """Dispatch spelled as ``requirement_id in {...}`` rather than if/elif.
+
+    Two of this branch's own registration changes are this shape, and the first
+    version of this tool did not see them - it only walked if/elif chains, so
+    the map it printed was incomplete in exactly the way it exists to prevent.
+    A duplicate inside a set is harmless; an omission is not, so these are
+    listed rather than checked for reachability.
+    """
+    tree = ast.parse((repo_root / relative).read_text(encoding="utf-8"))
+    sites = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Compare) or not node.ops:
+            continue
+        if not isinstance(node.ops[0], ast.In):
+            continue
+        ids = _requirement_ids(node.comparators[0])
+        if not ids:
+            continue
+        sites.append({"file": relative, "line": node.lineno,
+                      "requirement_ids": sorted(ids), "form": "membership"})
+    return sites
+
+
 def measure(*, repo_root):
     chains, unreachable = [], []
     for relative in SCANNED:
@@ -109,10 +133,16 @@ def measure(*, repo_root):
                     else:
                         seen[identifier] = branch["line"]
             chains.append(chain)
-    routed = sorted({i for c in chains for b in c["branches"] for i in b["requirement_ids"]})
-    return {"record_type": "REQUIREMENT_DISPATCH_MAP", "schema_version": 1,
+    membership = []
+    for relative in SCANNED:
+        if (repo_root / relative).is_file():
+            membership.extend(_membership_sites(repo_root=repo_root, relative=relative))
+    routed = sorted({i for c in chains for b in c["branches"] for i in b["requirement_ids"]}
+                    | {i for site in membership for i in site["requirement_ids"]})
+    return {"record_type": "REQUIREMENT_DISPATCH_MAP", "schema_version": 2,
             "scanned_files": [f for f in SCANNED if (repo_root / f).is_file()],
-            "dispatch_chains": len(chains), "requirement_ids_routed": routed,
+            "dispatch_chains": len(chains), "membership_sites": membership,
+            "requirement_ids_routed": routed,
             "unreachable_branches": unreachable,
             "every_branch_reachable": not unreachable, "chains": chains,
             "calls": {"provider": 0, "paid": 0, "sec": 0},

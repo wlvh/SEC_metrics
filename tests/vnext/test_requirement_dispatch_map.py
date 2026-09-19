@@ -34,6 +34,25 @@ class RequirementDispatchMapTest(unittest.TestCase):
         self.assertGreaterEqual(report["dispatch_chains"], 10)
         self.assertIn("issue_28_v13", report["requirement_ids_routed"])
 
+    def test_the_map_sees_set_membership_dispatch_too(self):
+        """The first version of this tool had the defect it exists to prevent.
+
+        It walked ``if/elif`` chains only, so it did not see dispatch spelled
+        ``requirement_id in {...}`` - and two of this branch's own registration
+        changes are that shape. A map that silently omits a form of dispatch is
+        worse than no map, because it reads as complete.
+        """
+        report = _tool().measure(repo_root=REPO_ROOT)
+        self.assertTrue(report["membership_sites"])
+        routed = {identifier for site in report["membership_sites"]
+                  for identifier in site["requirement_ids"]}
+        # The fiscal-label coordinates are decided this way in two files, and
+        # both must appear or the map is not showing the whole surface.
+        self.assertIn("issue_28_v13", routed)
+        files = {site["file"] for site in report["membership_sites"]}
+        self.assertIn("scripts/vnext/run_store.py", files)
+        self.assertIn("scripts/vnext/records.py", files)
+
     def test_the_check_catches_a_second_branch_on_an_id_already_matched(self):
         """And it is byte-level, not a spelling convention.
 
