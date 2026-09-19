@@ -1015,6 +1015,8 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 修复不能放在应该放的位置：`text_coverage.py` 的字节被 `issue_28_v11` 的规则集点名，其引擎在数据根与代码根双向校验，而 `issue_47_v1` 经父链加载它，改这个文件会让 v11 及其后所有 Requirement 无法加载（实测 `Normal candidate rule bytes differ: scripts/vnext/text_coverage.py`）。后继模块因此只收窄历史路线的已定位区间：`_derive_candidate`、`build_text_review_unit`、`legal_risk_candidates` 的扫描与记录形状校验全部原样复用，另有三个函数因为在冻结模块内以模块全局互相查找而必须复制，由"未收窄时逐字节等于冻结模块"的子集断言约束。普通路线保留原行为，直到某个能重记该文件的世代携带同一规则——这是明确限制，不是已关闭项。
 
+同一后继文件还带第二处修正。`legal_risk_candidates` 只在没有其他范围包含它时，才给已定位的被引用附注单独范围——这是去重护栏，否则 Item 8 内的附注会被扫两次、同一块出现在两个章节下。副作用是语义：Ford 的 Note 24 落在 Item 8 之外，33 个实体块全部进入结果；其余五家的附注都在 Item 8 内，于是按六个关键词过滤，按公司原文写法点名诉讼的块被丢弃——Pfizer 丢 39 块 19,918 字（比它整份结果还多）、Lumen 11 块 7,689 字、Paramount 6 块 6,851 字、Salesforce 4 块 5,097 字、Marriott 1 块 164 字。`REFERENCED_NOTES` 是 D02 三个声明章节之一，所以 `referenced_note_candidates` 让附注仍按附注整取，并用"最内层范围拥有该块"完成去重。只有 `EXACT_NOTE` 解析才整取：Pfizer 的 Item 3 点名 Note 16A 而文档无同号标题，解析器自己记为 `WIDER_PARENT_NOTE`（整个 Note 16，135 块），整取会得到 125 条、超过 Spec 自己的 64 条上限（同一文本 46,454 字仍在 64,000 字上限内），故保留原行为并把差距留在覆盖记录里。实测四家增加、零块丢失，其余五家逐字节不变。
+
 `scripts/vnext/historical_text_input.py` 同时补进规则集：D02 Run 每次都执行它，而原先规则集与继承授权都没点名。它之所以漏掉，是因为 `historical_run` 与 `historical_results` 都在函数内导入它，而 `tools/vnext_authority_closure.py` 只走模块级导入闭包。该工具现在多一类判断：本世代自有规则文件**直接导入**（一跳，不是传递闭包——13 个规则文件经父代码传递可达 215 个模块中的 206 个）却未被授权点名的模块，是缺陷而不是信息。
 
 **（历史记录）原生 Run：范围被缩小，但依然没有接通**。此前这里记的是「注册新 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内，因此阻塞」；上一版改成「已测量，不是架构决定」，那又走过了头。`tools/vnext_requirement_seam.py` 实际证明的范围只有这些：

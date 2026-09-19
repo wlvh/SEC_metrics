@@ -22,16 +22,26 @@ therefore narrows the located ranges for the historical route only, and the
 ordinary route keeps the defect until a generation that can re-record that file
 carries the same rule.
 
-``_derive_candidate``, ``build_text_review_unit``, the excerpt scan in
-``legal_risk_candidates`` and the record shape validator are the frozen ones,
-called unchanged. ``build_text_evidence``, ``reviewed_text_observations`` and
-``replay_text_result`` are duplicated for one reason each: they look up
+A second correction shares the file. ``legal_risk_candidates`` gives a located
+referenced note its own range only when no other range already contains it, as
+a deduplication guard, and the side effect is that a note inside Item 8 loses
+its note identity and is filtered by Item 8's keyword rule. Ford's note falls
+outside Item 8 and is taken whole; the other five referenced notes are inside
+it and drop blocks that name a proceeding in the filing's own words - 39 blocks
+and 19,918 characters for Pfizer alone. ``referenced_note_candidates`` keeps
+the note as a note and deduplicates by the rule that decides it honestly: the
+innermost range containing a block owns it.
+
+``_derive_candidate``, ``build_text_review_unit``, ``_note_references``,
+``_excerpt``, ``_substantive`` and the record shape validator are the frozen
+ones, called unchanged. ``build_text_evidence``, ``reviewed_text_observations``
+and ``replay_text_result`` are duplicated for one reason each: they look up
 ``prepare_business_text_sources`` and each other as module globals, so a
 successor cannot reach them without rebinding names in a frozen module. The
 duplication is held to the original by
 ``tests/vnext/test_historical_text_boundary.py``, which requires this module's
 candidate, Evidence, review unit and Result to equal the frozen module's exactly
-on every filing where nothing is narrowed.
+on every filing where neither correction changes anything.
 """
 from __future__ import annotations
 
@@ -39,7 +49,9 @@ import re
 
 from .canonical import content_hash, sha256_bytes
 from .records import validate_record
-from .text_business_candidates import legal_risk_candidates
+from .text_business_candidates import (_ACTION, _AUTHORITY, _LEGAL, _NEGATION, _POLICY_HASH,
+                                       _PROSPECTIVE, _check_document, _excerpt, _note_references,
+                                       _ranges, _substantive)
 from . import text_results_v2 as frozen
 from .text_results_v2 import TextResultV2Error, build_text_review_unit
 
@@ -119,6 +131,115 @@ def narrow_document_sections(*, document):
     return corrected
 
 
+def referenced_note_candidates(*, document):
+    """`legal_risk_candidates` with a referenced note kept as a note.
+
+    The frozen scan appends a located note range only when no other range
+    already contains it. That is a deduplication guard: without it a note
+    inside Item 8 would be scanned twice and the excerpt set would hold the
+    same block under two section ids. The side effect is semantic. A note
+    outside Item 8 keeps its `NOTE_` id and is taken whole; a note inside it
+    silently becomes Item 8 text and is kept only where `_LEGAL` matches
+    litigation, lawsuit, legal proceeding, legal claim, loss contingency or
+    litigation reserve.
+
+    Measured on the nine filings: Ford's Note 24 falls outside Item 8 and all
+    33 of its substantive blocks reach the result. Every other referenced note
+    is inside Item 8, and blocks naming a proceeding in the filing's own words
+    are dropped - 39 blocks and 19,918 characters for Pfizer, which is more
+    than its whole result contains, 11 and 7,689 for Lumen, 6 and 6,851 for
+    Paramount, 4 and 5,097 for Salesforce, 1 and 164 for Marriott. They
+    describe putative class actions, civil investigative demands, FCC letters
+    of inquiry and complaints filed in named courts.
+
+    `REFERENCED_NOTES` is one of D02's three declared sections, so this
+    restores the declared meaning rather than widening it. Deduplication is
+    kept by the rule that decides it honestly: the innermost range containing
+    a block owns it, so Item 8 does not also scan the note it contains.
+
+    What is not settled here is which part of a note is incorporated. Five of
+    the filings name a caption in Item 3 - Lumen names two subheadings inside
+    a note also holding commitments and other items - and this takes the whole
+    note, as Ford's already did. Capturing exactly the named caption is the
+    follow-up recorded in the evidence directory; it reduces to this whenever
+    Item 3 names no caption, as Pfizer's does not.
+    """
+    _check_document(document)
+    ranges, reasons = _ranges(document, ["ITEM_1A", "ITEM_3", "ITEM_8"])
+    references = _note_references(document, ranges)
+    for reference in references:
+        if reference["status"] != "LOCATED_NOTE_RANGE":
+            reasons.append("UNRESOLVED_" + reference["reference"].upper().replace(" ", "_"))
+            continue
+        note = reference["range_candidates"][0]
+        # A note the filing named by a lettered sub-number can resolve to its
+        # whole parent, which `_note_references` records as WIDER_PARENT_NOTE.
+        # Pfizer's Item 3 names Note 16A and no heading carries that number, so
+        # the parent Note 16 comes back at 135 blocks - 125 excerpts, past the
+        # Spec's own 64-item bound, while its 46,454 characters are inside the
+        # 64,000 one. Taking that whole would be over-capture by the resolver's
+        # own classification, so only an exact resolution is taken as a note.
+        # The wider resolution keeps today's behaviour and stays visible in the
+        # coverage record rather than being asserted as the referenced note.
+        if note.get("scope_relation") != "EXACT_NOTE":
+            continue
+        if not any(r["section_id"] == note["section_id"]
+                   and r["start_block"] == note["start_block"] for r in ranges):
+            ranges.append(note)
+    owner = {}
+    for scope in ranges:
+        for index in range(scope["start_block"], scope["end_block_exclusive"]):
+            held = owner.get(index)
+            if held is None or _width(scope) < _width(held):
+                owner[index] = scope
+    legal, regulatory = [], []
+    for scope in ranges:
+        section = scope["section_id"]
+        for index in range(scope["start_block"], scope["end_block_exclusive"]):
+            if owner[index] is not scope:
+                continue
+            block = document["blocks"][index]
+            if not _substantive(document, block):
+                if section == "ITEM_3" and block["text"].strip().casefold() in {"none", "none."}:
+                    legal.append(_excerpt(document, block, section,
+                                          ["EXPLICIT_NONE_IN_THIS_SECTION_ONLY"]))
+                continue
+            text = block["text"]
+            if (section == "ITEM_3" or section.startswith("NOTE_")
+                    or section == "ITEM_8" and _LEGAL.search(text)):
+                legal.append(_excerpt(document, block, section,
+                                      ["EXPLICIT_LEGAL_SECTION_TEXT" if section == "ITEM_3"
+                                       else "LEGAL_OR_CONTINGENCY_LANGUAGE_IN_NOTES"]))
+            if _ACTION.search(text) or _AUTHORITY.search(text):
+                labels = ["ACTION_LANGUAGE_PRESENT" if _ACTION.search(text)
+                          else "AUTHORITY_OR_GENERAL_REGULATION_MENTION"]
+                if _PROSPECTIVE.search(text):
+                    labels.append("HYPOTHETICAL_OR_GENERAL_LANGUAGE_PRESENT")
+                if _NEGATION.search(text):
+                    labels.append("NEGATION_OR_RESOLUTION_LANGUAGE_PRESENT")
+                regulatory.append(_excerpt(document, block, section, labels))
+    body = {"record_type": "LEGAL_REGULATORY_SOURCE_CANDIDATES",
+            "document_id": document["text_document_id"],
+            "source_reference_id": document["source_reference_id"], "checked_ranges": ranges,
+            "coverage_status": "INCOMPLETE" if reasons else "LOCAL_REQUESTED_RANGES_SCANNED",
+            "coverage_reasons": reasons, "note_references": references,
+            "semantic_scope_completeness_asserted": False,
+            "D02": {"finding_status": "SOURCE_EXCERPTS_FOUND" if legal
+                    else "NO_SUPPORTED_SOURCE_LANGUAGE", "candidates": legal,
+                    "interpretation": "VERBATIM_LEGAL_DISCLOSURES_NOT_TOTAL_CASE_OR_LIABILITY_ASSERTION"},
+            "D03": {"finding_status": "SOURCE_LANGUAGE_FOUND" if regulatory
+                    else "NO_MATCHED_SOURCE_LANGUAGE", "candidates": regulatory,
+                    "semantic_review_required": True, "actual_investigation_asserted": False},
+            "not_disclosed_confirmed": False, "native_result_created": False,
+            "publication_credit": False}
+    return {**body, "policy_hash": _POLICY_HASH,
+            "proposal_id": content_hash(value={**body, "policy_hash": _POLICY_HASH})}
+
+
+def _width(scope):
+    return scope["end_block_exclusive"] - scope["start_block"]
+
+
 def prepare_business_text_sources(*, metric_id, **source_arguments):
     """The frozen source preparation with the located ranges corrected.
 
@@ -134,9 +255,11 @@ def prepare_business_text_sources(*, metric_id, **source_arguments):
     reference_id = next(iter(prepared["documents"]))
     document = prepared["documents"][reference_id]
     corrected = narrow_document_sections(document=document)
-    if corrected is document:
+    proposal = referenced_note_candidates(document=corrected)
+    if corrected is document and proposal == prepared["proposals"][reference_id]:
+        # Neither correction changed anything on this filing, so the frozen
+        # record set is returned as it stands rather than rebuilt to equal it.
         return prepared
-    proposal = legal_risk_candidates(document=corrected)
     _need(proposal["coverage_status"] == "LOCAL_REQUESTED_RANGES_SCANNED",
           "HISTORICAL_TEXT_BOUNDARY_NAVIGATION_INCOMPLETE:" + str(proposal["coverage_reasons"]))
     _need(proposal["D02"]["candidates"], "HISTORICAL_TEXT_BOUNDARY_LEAVES_NO_DISCLOSURE_TEXT")

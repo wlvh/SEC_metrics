@@ -134,6 +134,88 @@ change four of the nine registrants:
 It is recorded here as an open inherited question, with the measurement that
 would scope it, rather than bundled into a boundary repair.
 
+## Reading the other eight found a second defect, of the opposite sign
+
+The ten D02 results this branch had produced were logged as "semantic review
+not performed". Performing it — reading the excerpt text of results that had
+passed, which is SOP 2 step 1 — found that a referenced note reaches the result
+whole or filtered depending on where it happens to sit.
+
+`legal_risk_candidates` appends a located note range only when no other range
+already contains it. That is a deduplication guard: a note inside Item 8 would
+otherwise be scanned twice and the same block would appear under two section
+ids. The side effect is semantic. A note outside Item 8 keeps its `NOTE_` id
+and every substantive block is taken; a note inside it is scanned under Item
+8's rule, which keeps a block only if it matches
+`litigation|lawsuits?|legal proceedings?|legal claims?|loss contingenc(y|ies)|litigation reserves?`.
+
+Ford's Note 24 falls outside Item 8. Every other referenced note is inside it.
+Counting the substantive blocks each note holds against the ones that reached
+the result, and then the dropped blocks that name a proceeding in the filing's
+own words — class action, complaint, court, subpoena, civil investigative
+demand, letter of inquiry, investigation, arbitration:
+
+| registrant | referenced note | own range | blocks in note | reached result | dropped naming a proceeding | characters |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| Ford | Note 24 | yes | 33 | 33 | 0 | 0 |
+| Marriott | Note 7 | no | 26 | 6 | 1 | 164 |
+| Salesforce | Note 14 | no | 12 | 6 | 4 | 5,097 |
+| Paramount | Note 18 | no | 55 | 12 | 6 | 6,851 |
+| Lumen | Note 17 | no | 56 | 13 | 11 | 7,689 |
+| Pfizer | Note 16A | no | 117 | 24 | 39 | 19,918 |
+
+Enphase, Macy's and Southwest reference no note; their Item 3 is self-contained.
+
+The raw gap overstates it, and reading the blocks is what shows that: most of
+what Marriott's filter dropped is guarantees, letters of credit and insurance
+recoveries, correctly excluded. What it also dropped is one sentence inside the
+caption Item 3 incorporates — "most inquiries and investigations by U.S.
+federal, U.S. state and foreign governmental authorities have been resolved" —
+because the word list has "litigation" and not "investigations", although the
+caption it sits under is named "Litigation, Claims, and Government
+Investigations". Lumen is the severe case: its "Principal Proceedings"
+subheading, named in Item 3, loses putative class actions filed in named
+courts, DOJ civil investigative demands, an FCC Letter of Inquiry and a state
+tax appeal, while heading blocks like "Lead-Sheathed Cable Litigation" are kept
+because they contain the word.
+
+`REFERENCED_NOTES` is one of D02's three declared sections, so
+`referenced_note_candidates` keeps a note as a note and deduplicates by the
+rule that decides it honestly: the innermost range containing a block owns it,
+so Item 8 does not also scan the note inside it.
+
+### Only an exactly resolved note is taken whole
+
+Applying that to every reference first broke Pfizer against the Spec's own
+bound — 125 excerpts against `max_items` 64, while the same text is 46,454
+characters against `max_text_chars` 64,000. The cause is not how much Pfizer
+discloses. Its Item 3 names **Note 16A**; no heading in the document carries
+that number, so `_note_references` falls back to the parent and records
+`WIDER_PARENT_NOTE` — the whole of Note 16, 135 blocks. Every other reference
+resolves `EXACT_NOTE`.
+
+Taking a wider-parent resolution whole would be over-capture by the resolver's
+own classification, so only an exact resolution is taken as a note. Pfizer
+keeps the inherited behaviour and the gap stays visible in the coverage record.
+Locating a lettered sub-note exactly is a follow-up, recorded and not done
+here.
+
+| registrant | items | characters | blocks added | blocks removed |
+| --- | ---: | ---: | ---: | ---: |
+| Enphase | 18 → 18 | 9,910 | 0 | 0 |
+| Ford | 53 → 53 | 18,025 | 0 | 0 |
+| Macy's | 3 → 3 | 1,181 | 0 | 0 |
+| Southwest | 25 → 25 | 35,521 | 0 | 0 |
+| Marriott | 10 → **30** | 4,924 → **8,318** | 20 | 0 |
+| Salesforce | 9 → **15** | 9,518 → **15,322** | 6 | 0 |
+| Lumen | 15 → **58** | 7,979 → **20,504** | 43 | 0 |
+| Paramount | 16 → **59** | 13,765 → **25,106** | 43 | 0 |
+| Pfizer | 58 → **32** | 22,982 → **18,373** | 0 | 26 |
+
+Pfizer is the only removal, and it is the officer section. Four registrants
+gain; none loses a block. Every result stays inside both Spec bounds and every
+Evidence check passes.
+
 ## Disposition of the wrong result
 
 The Pfizer D02 Result that was published as `EXACT` keeps its original Run

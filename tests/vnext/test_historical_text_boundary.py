@@ -16,10 +16,12 @@ from vnext import text_results_v2 as frozen
 from vnext.historical_text_input import prepare_historical_business_text_input
 from vnext.normal_period_selection import resolve_period_selection
 from vnext.specs import compile_spec_file
+from vnext.text_business_candidates import _substantive
 from vnext.text_coverage import build_text_document
 
 PFIZER = "pfizer"
 MACYS = "macys"
+LUMEN = "lumen_technologies"
 CAPTION = "information about our executive officers"
 
 
@@ -139,6 +141,72 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         with original_sources_only():
             self.assertEqual(frozen.create_deterministic_text_candidate(**arguments),
                              fixed.create_deterministic_text_candidate(**arguments))
+
+    def test_a_referenced_note_inside_item_eight_is_still_read_as_a_note(self):
+        """Lumen's Note 17 is incorporated by reference and mostly did not arrive.
+
+        `legal_risk_candidates` gives a located note its own range only when no
+        other range contains it, as a deduplication guard. Ford's note falls
+        outside Item 8 and all of it reaches the result; Lumen's is inside Item
+        8, so it was filtered by a six-word list that does not include "class
+        action", "complaint", "civil investigative demand" or "investigation" -
+        the words its own proceedings are written in.
+
+        The expectation is read from the note's own blocks: every substantive
+        block inside the exactly resolved note range must reach the excerpt set,
+        and nothing the frozen derivation selected may be lost.
+        """
+        spec, prepared = _text_arguments(LUMEN, "2025-12-31")
+        arguments = {"compiled_spec": spec, **prepared["text_arguments"]}
+        with original_sources_only():
+            before = frozen.create_deterministic_text_candidate(**arguments)
+            after = fixed.create_deterministic_text_candidate(**arguments)
+            evidence = fixed.build_text_evidence(candidate=after, **arguments)
+            sources = fixed.prepare_business_text_sources(
+                metric_id="D02", **prepared["text_arguments"])
+        self.assertEqual("PASS", evidence["status"])
+        reference_id = next(iter(sources["documents"]))
+        document = sources["documents"][reference_id]
+        references = sources["proposals"][reference_id]["note_references"]
+        self.assertEqual(1, len(references))
+        located = references[0]["range_candidates"][0]
+        self.assertEqual("EXACT_NOTE", located["scope_relation"])
+
+        expected = {index for index in range(located["start_block"],
+                                             located["end_block_exclusive"])
+                    if _substantive(document, document["blocks"][index])}
+        kept = {claim["block_index"] for claim in after["selected"].values()}
+        had = {claim["block_index"] for claim in before["selected"].values()}
+        self.assertTrue(expected)
+        self.assertEqual(set(), expected - kept)
+        self.assertEqual(set(), had - kept)
+        self.assertEqual(len(kept), len(after["selected"]))
+
+    def test_a_note_that_resolved_to_its_parent_is_not_taken_whole(self):
+        """Pfizer names Note 16A; no heading carries it, so Note 16 came back.
+
+        `_note_references` records that as WIDER_PARENT_NOTE. Taking 135 blocks
+        whole would be over-capture by the resolver's own classification, and
+        the Spec says so independently: 125 excerpts against its 64-item bound,
+        while the same text is 46,454 characters against its 64,000-character
+        one. So an inexact resolution keeps the inherited behaviour, and the
+        gap stays visible in the coverage record instead of being asserted as
+        the referenced note.
+        """
+        spec, prepared = _text_arguments(PFIZER, "2025-12-31")
+        arguments = {"compiled_spec": spec, **prepared["text_arguments"]}
+        with original_sources_only():
+            after = fixed.create_deterministic_text_candidate(**arguments)
+            sources = fixed.prepare_business_text_sources(
+                metric_id="D02", **prepared["text_arguments"])
+        reference_id = next(iter(sources["documents"]))
+        references = sources["proposals"][reference_id]["note_references"]
+        located = references[0]["range_candidates"][0]
+        self.assertEqual("WIDER_PARENT_NOTE", located["scope_relation"])
+        self.assertNotIn(located["section_id"],
+                         {claim["section_id"] for claim in after["selected"].values()})
+        self.assertEqual({"ITEM_8"},
+                         {claim["section_id"] for claim in after["selected"].values()})
 
     def test_the_successor_routes_only_the_metric_it_corrects(self):
         module, _ = fixed.text_api("D02")
