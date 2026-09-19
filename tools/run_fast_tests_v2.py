@@ -120,6 +120,10 @@ SOURCE_TESTS += ("tests.vnext.test_historical_coverage",)
 # because the snapshot has already drifted twice behind a rule-file change, and
 # a README asking the author to run --check did not stop either one.
 FAST_TESTS += ("tests.vnext.test_historical_requirement_snapshot",)
+# Parses three files and compares conditions; it reads no source material.
+# It exists because an unreachable dispatch branch changes no behaviour, so
+# no Run can fail on it - one shipped and a complete end-to-end Run passed.
+FAST_TESTS += ("tests.vnext.test_requirement_dispatch_map",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
