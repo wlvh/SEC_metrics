@@ -391,3 +391,21 @@ all, so the text protocol itself needs no new registration.
   a v13 data root has never carried v15's engine.
 * Nothing is adopted, activated, published or merged. Every record says
   `production_authorized: false`, and the row is a `FROZEN_CANDIDATE`.
+
+## Superseded by the section-boundary repair
+
+Every Run archived in this directory declares Requirement closure
+`sha256:a82225ad…`. The D02 section-boundary repair adds a rule file, so the
+generation's closure is now `sha256:d128dcdb…` and these Runs no longer cold
+read: `load_frozen_run` refuses at the `REQUIREMENT_AUTHORITY` layer with
+`Run explicit Requirement identity differs`, before any semantic replay.
+
+That is the intended effect for the Pfizer D02 Result this directory reports as
+`EXACT` — see `../d02-section-boundary/withdrawn-result.json` — and it applies
+to every other Run here for the same mechanical reason, not because anything
+else was found wrong with them. They are recomputed under the repaired
+generation rather than re-labelled; the matrix resume key now carries the
+closure hash so they cannot be skipped as finished.
+
+The counts in the JSON files here stay as the runs produced them. They are that
+run's record, not the current state.
