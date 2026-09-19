@@ -861,4 +861,12 @@ Spec 修订机制本身：`PYTHONPATH=scripts python3 -m unittest tests.vnext.te
 
 第三组是**容量跟 Spec 身份走**。只有本仓库能重新编译出来的修订 Spec 身份才拿到 192；未知哈希、空串、`None`、整数 192、字符串 `"192"` 一律回落到 64。一个伪造记录同时写 `"max_items": 192` 和一个重建不出的 `spec_closure_hash`，必须以 `TEXT_PAYLOAD_ITEMS_INVALID` 被拒，换成能重建的身份才通过——这就是"payload 不能自报容量"的实测形式。v1 的身份仍拿 64。最后一个用例在临时根里把 v2 的 `max_items` 改成 100，要求重新读出 100 而不是命中缓存返回 192：缓存一个权限和缓存一次解析是两回事。
 
+**后继协议的接线**（与上一条不同，这条测的是"有没有接上"而不是"实现对不对"）：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_protocol_wiring`。条目上限在三个文件、五处生效，模块本身正确不等于 Run 走得通，所以这三个用例直接调生产入口——`records.validate_record`、`constraints.verify_trace_observation_values`、`projector._projection_value`——each 喂一个 92 条的 payload（Pfizer D02 的真实条数）。
+
+它和 `test_historical_run_material` 一样需要注册补丁，**未打补丁时 skip，skip 不算 PASS**，所以同样不登记进 `tools/run_fast_tests_v2.py` 的任何层。跳过条件是从补丁**实际改到的三个模块源码**里数 `historical_text_protocol` 出现三次读出来的，不是去读补丁文件——补丁只打了一半时应当 skip 而不是报 PASS。
+
+**反例才是这组的承重墙**：每个用例都跑两遍，一遍让 payload 声明修订 Spec 的身份，一遍声明前驱的身份，后者必须以 `TEXT_PAYLOAD_ITEMS_INVALID` 被拒。两遍都通过就意味着这条路线只是给所有人放宽了上限，那正是这套安排要避免的失败。已实测该反例确实承重：在打补丁的运行树里把容量查找强制改成"对任何身份都返回 192"，三个用例**全部失败**；改回后全过。记录本身也按生产形状构造（`validate_record` 在到达文本校验之前先查完整 schema，半成品记录会因为错误的理由被拒、什么也证明不了）。
+
+实测在打补丁的运行树里 3 个用例 0.01 秒，在本 checkout 里 3 个 skip。
+
 历史目标年不能用 accession 实例替代主文档：`tests.vnext.test_historical_period_results.HistoricalCompanyfactsResultTest.test_an_accession_instance_cannot_establish_an_issuer_fiscal_label` 固定这条边界。前期年度路线可以读该 accession 自身的 XBRL 实例，因为它只需要该申报的起止日期与相邻性；发行人财年标签是另一回事，冻结政策要从完整文档读发行人自己的显式定义，`inspect_fiscal_year_labels` 对实例直接返回 `FISCAL_LABEL_FULL_DOCUMENT_REQUIRED`。Salesforce 是现成反证：同一个 `2026-01-31` 期末，其发行人标签为 FY2026 而 DEI focus 为 2025，Macy's 同一期末的标签则是 FY2025。因此目标年缺自身主 HTML 时如实记为来源缺失，不改标签政策、不用实例推标签。

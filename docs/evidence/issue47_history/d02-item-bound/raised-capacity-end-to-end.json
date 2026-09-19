@@ -50,5 +50,19 @@
  "cost_measured": {
   "seconds": 235.4,
   "note": "A 32-item D02 took about 105 seconds before the shared-source work and 64 after; 92 items take 235. The growth is in the existing per-observation machinery, not in the capacity lookup, which measures 0.032 ms per call against a warm cache."
+ },
+ "wiring_is_separately_tested": {
+  "test": "tests/vnext/test_historical_protocol_wiring.py",
+  "why_it_is_separate": "The module being correct is not the same as it being reached. The item bound is enforced at five places across three files, and only the registration patch routes them, so an isolated module test would pass with nothing wired.",
+  "entry_points_called": [
+   "records.validate_record",
+   "constraints.verify_trace_observation_values",
+   "projector._projection_value"
+  ],
+  "payload": "92 items, the size Pfizer's D02 produces",
+  "skip_rule": "skips unless the patch is applied, detected by reading the three patched modules' own source rather than the patch file, so a half-applied patch skips rather than reporting a pass. A skip is not a pass and it is not registered in any fast tier.",
+  "the_negative": "Each case runs twice - once declaring the revised Spec's identity, once declaring the predecessor's - and the second must be refused. Accepting both would mean the route simply raised the bound for everyone.",
+  "negative_proven_load_bearing": "Forcing the ceiling lookup to return 192 for every identity in the patched runtime made all three cases fail; restoring it made all three pass.",
+  "measured": "3 cases, 0.01 seconds in the patched runtime; 3 skips in the repository checkout"
  }
 }
