@@ -861,6 +861,12 @@ Spec 修订机制本身：`PYTHONPATH=scripts python3 -m unittest tests.vnext.te
 
 第三组是**容量跟 Spec 身份走**。只有本仓库能重新编译出来的修订 Spec 身份才拿到 192；未知哈希、空串、`None`、整数 192、字符串 `"192"` 一律回落到 64。一个伪造记录同时写 `"max_items": 192` 和一个重建不出的 `spec_closure_hash`，必须以 `TEXT_PAYLOAD_ITEMS_INVALID` 被拒，换成能重建的身份才通过——这就是"payload 不能自报容量"的实测形式。v1 的身份仍拿 64。最后一个用例在临时根里把 v2 的 `max_items` 改成 100，要求重新读出 100 而不是命中缓存返回 192：缓存一个权限和缓存一次解析是两回事。
 
+第四组是**轨迹的逐项检查也要走到第 92 条**。渲染器的检查在第二组已经覆盖，但 `verify_text_trace` 在渲染通过**之后**还要把每一条摘录和它点名的那份观察逐项比对——来源内容、语义角色、审阅质量、批准效力、顺序、Spec 身份、候选与审阅单元哈希、coverage。这段循环是复制来的代码，**一个在第 64 条之后停止比对的副本，照样渲染出 92 行、照样通过前三组**。
+
+这里的攻击形式要选对：把已建好的观察就地改一个字段，会被 `validate_record` 重算身份提前拦下——那证明的是记录层有效，不是轨迹比对有效。所以十种替换里有七种用生产工厂 `_build_text_observation` **重新构造一份内容不同但完全合法的观察**，再登记到轨迹仍然点名的那个身份下；`quality` 与 `approval_effect_hash` 不参与观察身份，可以直接改；最后一种是整条移除。每种都在第 7 条和第 80 条各做一遍，必须以**同一条理由**被拒。另有一个用例把 `input_observation_ids` 截到前 64 条，必须以 `TEXT_TRACE_INPUT_EXACT_SET_CHANGED` 被拒。
+
+这一组同样验了承重：把后继的逐项循环改成 `payload["items"][:64]`，16 个用例中 **10 个失败**；改回后全过。
+
 **后继协议的接线**（与上一条不同，这条测的是"有没有接上"而不是"实现对不对"）：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_protocol_wiring`。条目上限在三个文件、五处生效，模块本身正确不等于 Run 走得通，所以这三个用例直接调生产入口——`records.validate_record`、`constraints.verify_trace_observation_values`、`projector._projection_value`——each 喂一个 92 条的 payload（Pfizer D02 的真实条数）。
 
 它和 `test_historical_run_material` 一样需要注册补丁，**未打补丁时 skip，skip 不算 PASS**，所以同样不登记进 `tools/run_fast_tests_v2.py` 的任何层。跳过条件是从补丁**实际改到的三个模块源码**里数 `historical_text_protocol` 出现三次读出来的，不是去读补丁文件——补丁只打了一半时应当 skip 而不是报 PASS。

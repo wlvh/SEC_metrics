@@ -178,6 +178,152 @@ class CapacityIsTheOnlyThingThatChangedTest(unittest.TestCase):
         self.assertEqual(192 * 333 + 191, 64127)
 
 
+def _observations(payload, *, closure):
+    """Observations the trace names, built by the production factory.
+
+    Hand-rolled dicts would be refused by validate_record for the wrong reason
+    and prove nothing about the trace checks, so this uses the same constructor
+    reviewed_text_observations uses.
+    """
+    from vnext.observations import _build_text_observation
+    scope = {"kind": "CONSOLIDATED"}
+    built = {}
+    for item in payload["items"]:
+        binding = {"raw_asset_id": "sha256:" + "3" * 64,
+                   "source_reference_id": "sha256:" + "4" * 64,
+                   "accession": "0000000000-25-000001", "document_name": "form10k.htm",
+                   "source_role": "PRIMARY",
+                   "text_binding": {
+                       "protocol": "TEXT_V1", "spec_closure_hash": closure,
+                       "candidate_hash": payload["candidate_hash"],
+                       "review_unit_hash": payload["review_unit_hash"],
+                       "coverage_hash": payload["coverage_hashes"][0],
+                       "extent": "FULL_BLOCK", "document_id": "sha256:" + "2" * 64,
+                       "section_id": "ITEM_3", "block_index": item["order"],
+                       "raw_start_byte": item["order"] * 100,
+                       "raw_end_byte": item["order"] * 100 + 50,
+                       "raw_span_sha256": "%064x" % item["order"],
+                       "order": item["order"]}}
+        observation = _build_text_observation(
+            metric_id="D02", semantic_role=item["role"], company_id="pfizer",
+            period_start="2025-01-01", period_end="2025-12-31", scope=scope,
+            value=item["text"], source_binding=binding,
+            approval_effect_hash=payload["approval_effect_hash"])
+        built[observation["observation_id"]] = observation
+        item["observation_id"] = observation["observation_id"]
+    return built
+
+
+def _trace(payload, *, closure):
+    from vnext.canonical import content_hash
+    return {"record_type": "EXECUTION_TRACE", "value_kind": "TEXT_V1",
+            "spec_closure_hash": closure, "quality": "EXACT",
+            "result": "\n".join(item["text"] for item in payload["items"]),
+            "input_observation_ids": [item["observation_id"] for item in payload["items"]],
+            "steps": [{"event": "TEXT_RESULT_RENDER", "text_payload": payload,
+                       "payload_hash": content_hash(value=payload)}]}
+
+
+def _rebuilt(observation, **changes):
+    """A valid observation carrying different content, not a corrupted one.
+
+    Mutating a built observation in place is caught one layer earlier, by
+    validate_record recomputing its identity - which proves the record layer
+    works, not the trace comparison. The attack that reaches the trace checks
+    is a well-formed observation substituted for the expected one, so this
+    rebuilds through the production factory and the caller registers it under
+    the identity the trace still names.
+    """
+    from vnext.observations import _build_text_observation
+    fields = {"metric_id": observation["metric_id"],
+              "semantic_role": observation["semantic_role"],
+              "company_id": observation["company_id"],
+              "period_start": observation["period_start"],
+              "period_end": observation["period_end"],
+              "scope": observation["scope"], "value": observation["value"],
+              "source_binding": copy.deepcopy(observation["source_binding"]),
+              "approval_effect_hash": observation["approval_effect_hash"]}
+    binding_changes = changes.pop("text_binding", {})
+    fields.update(changes)
+    fields["source_binding"]["text_binding"].update(binding_changes)
+    return _build_text_observation(**fields)
+
+
+# What verify_text_trace checks per item after the renderer has passed: the
+# observation's own content, and the review bindings tying it to this payload.
+# Each swaps in a valid observation under the identity the trace names, except
+# the two fields that are not part of observation identity and so can be set
+# directly, and the removal case.
+TRACE_SUBSTITUTIONS = {
+    "value_replaced": lambda o, k: o.__setitem__(
+        k, _rebuilt(o[k], value="substituted disclosure text")),
+    "role_replaced": lambda o, k: o.__setitem__(k, _rebuilt(o[k], semantic_role="OTHER_ROLE")),
+    "order_replaced": lambda o, k: o.__setitem__(
+        k, _rebuilt(o[k], text_binding={"order": 999})),
+    "spec_identity_replaced": lambda o, k: o.__setitem__(
+        k, _rebuilt(o[k], text_binding={"spec_closure_hash": "sha256:" + "8" * 64})),
+    "candidate_replaced": lambda o, k: o.__setitem__(
+        k, _rebuilt(o[k], text_binding={"candidate_hash": "sha256:" + "7" * 64})),
+    "review_unit_replaced": lambda o, k: o.__setitem__(
+        k, _rebuilt(o[k], text_binding={"review_unit_hash": "sha256:" + "6" * 64})),
+    "coverage_replaced": lambda o, k: o.__setitem__(
+        k, _rebuilt(o[k], text_binding={"coverage_hash": "sha256:" + "5" * 64})),
+    # Quality and the approval effect are not part of observation identity, so
+    # these are the trace's own checks with a still-valid record.
+    "quality_lowered": lambda o, k: o[k].__setitem__("quality", "APPROXIMATE"),
+    "approval_effect_replaced": lambda o, k: o[k].__setitem__(
+        "approval_effect_hash", "sha256:" + "9" * 64),
+    "observation_removed": lambda o, k: o.pop(k),
+}
+
+
+class TraceChecksReachEveryItemTest(unittest.TestCase):
+    """The per-item trace checks are copied code, so they are checked past 64.
+
+    The renderer's own checks are covered above. These are the ones
+    verify_text_trace makes afterwards, comparing each item against the
+    observation it names. A copy that stopped comparing after the 64th item
+    would still render 92 items and still pass everything above.
+    """
+    def setUp(self):
+        self.closure = next(iter(revised_spec_ceilings()))
+
+    def _refusal(self, substitution, index):
+        payload = _payload(92)
+        observations = _observations(payload, closure=self.closure)
+        trace = _trace(payload, closure=self.closure)
+        substitution(observations, payload["items"][index]["observation_id"])
+        try:
+            successor.verify_text_trace(trace=trace, observations=observations)
+            return ("ACCEPTED", None)
+        except Exception as error:      # noqa: BLE001 - the refusal is the result
+            return ("REFUSED", str(error))
+
+    def test_an_unaltered_ninety_two_item_trace_is_accepted(self):
+        payload = _payload(92)
+        observations = _observations(payload, closure=self.closure)
+        successor.verify_text_trace(trace=_trace(payload, closure=self.closure),
+                                    observations=observations)
+
+    def test_every_substitution_is_refused_identically_inside_and_past_the_old_bound(self):
+        for name, substitution in TRACE_SUBSTITUTIONS.items():
+            with self.subTest(substitution=name):
+                inside = self._refusal(substitution, 7)
+                beyond = self._refusal(substitution, 80)
+                self.assertEqual("REFUSED", inside[0], name)
+                self.assertEqual(inside, beyond, name)
+
+    def test_the_trace_input_set_must_still_name_exactly_the_payload_items(self):
+        """Dropping everything past the frozen bound is the failure being ruled out."""
+        payload = _payload(92)
+        observations = _observations(payload, closure=self.closure)
+        trace = _trace(payload, closure=self.closure)
+        trace["input_observation_ids"] = trace["input_observation_ids"][:64]
+        with self.assertRaises(TextResultError) as raised:
+            successor.verify_text_trace(trace=trace, observations=observations)
+        self.assertEqual("TEXT_TRACE_INPUT_EXACT_SET_CHANGED", str(raised.exception))
+
+
 class CapacityFollowsSpecIdentityTest(unittest.TestCase):
     def test_only_a_spec_identity_this_repository_can_rebuild_raises_the_bound(self):
         ceilings = revised_spec_ceilings()
