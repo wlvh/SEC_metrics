@@ -59,6 +59,11 @@ NEW_RULE_FILES = (
     # another item's text. The repair belongs in text_coverage, whose bytes
     # issue_28_v11 names, so this generation carries it as its own rule file.
     "scripts/vnext/historical_text_results.py",
+    # The D02 Spec revision and the module that compiles it. A file whose bytes
+    # decide a metric's bound belongs in the rule set rather than only in the
+    # authority, so both roots check it.
+    "catalog/r6/D02_legal_disclosures_v2.md",
+    "scripts/vnext/historical_spec_revision.py",
     "scripts/vnext/requirement_profile_v16.py",
 )
 

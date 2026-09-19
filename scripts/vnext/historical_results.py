@@ -30,7 +30,7 @@ from .normal_companyfacts_results import (CATALOG_PATH, NormalCompanyfactsError,
                                           _SOURCE_ERRORS, _authority, _filing_source,
                                           _prior_filing)
 from .normal_annual_input_v2 import exact_json_value
-from .specs import compile_spec_file
+from .historical_spec_revision import compile_historical_spec_file
 from .normal_governance_input import _Sources
 from .normal_run_specs import validate_ordinary_spec_files
 from .observations import scope_key
@@ -197,6 +197,16 @@ def verify_historical_companyfacts_metrics(*, candidate, repo_root: Path, compan
 # create_historical_run computes the text result from them, exactly as the
 # current route splits the same work between normal_run_v2 and normal_run_v3.
 TEXT_METRICS = ("D02",)
+# Still v1, and that is the current answer rather than an oversight. v2 raises
+# max_items to 192 and historical_spec_revision compiles it, but 64 turned out
+# to be two separate bounds: what a Spec may declare, and what the
+# ORDERED_NEWLINE_V1 text-result protocol will render. The second one is a
+# literal in text_results.render_text_payload, which every result of this kind
+# passes through five times, and that file is frozen as a rule file of
+# issue_28_v11. Routing v2 would put a Spec claiming 192 in front of a runtime
+# that still refuses 65, which is a false contract in the catalog, so the route
+# waits for the protocol decision rather than anticipating it.
+# docs/evidence/issue47_history/d02-item-bound/ has both layers measured.
 TEXT_SPEC_PATHS = {"D02": "catalog/r6/D02_legal_disclosures_v1.md"}
 
 
@@ -215,7 +225,8 @@ def _historical_text_run_input(*, repo_root, company_id, metric_id, period_selec
     _need(prepared["input_status"] != "BLOCKED",
           "HISTORICAL_TEXT_RUN_INPUT_BLOCKED:" + str(prepared["input_binding"]["limitations"]))
     spec_path = TEXT_SPEC_PATHS[metric_id]
-    spec = compile_spec_file(path=repo_root / spec_path, dependency_specs={})
+    spec = compile_historical_spec_file(repo_root=repo_root, repo_relative_path=spec_path,
+                                        dependency_specs={})
     period = prepared["target_period"]
     body = {"record_type": RUN_INPUT_RECORD_TYPE, "company_id": company_id,
             "primary_metric_id": metric_id, "period_selection": period_selection,

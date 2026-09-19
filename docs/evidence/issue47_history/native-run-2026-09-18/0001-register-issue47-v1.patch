@@ -1,7 +1,21 @@
+diff --git a/scripts/vnext/records.py b/scripts/vnext/records.py
+index 2957176..db5197c 100644
+--- a/scripts/vnext/records.py
++++ b/scripts/vnext/records.py
+@@ -1215,7 +1215,7 @@ def _validate_record_semantics(
+         validate_run_coordinates(
+             target_period=record["target_period"],
+             company_traits=record["company_traits"],
+-            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13"},
++            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13", "issue_47_v1"},
+         )
+     if record_type == "AI_EXTRACTION_ATTEMPT":
+         observation = record["transport_observation"]
 diff --git a/scripts/vnext/requirement_profile.py b/scripts/vnext/requirement_profile.py
+index 5420bc6..da06192 100644
 --- a/scripts/vnext/requirement_profile.py
 +++ b/scripts/vnext/requirement_profile.py
-@@ -52,6 +52,7 @@
+@@ -52,6 +52,7 @@ PROFILE_ENGINES = {
      v13.PROFILE_REQUIREMENT_GENERATION: v13,
      v14.PROFILE_REQUIREMENT_GENERATION: v14,
      "PROFILE_DRIVEN_V15": ".requirement_profile_v15",
@@ -10,9 +24,10 @@ diff --git a/scripts/vnext/requirement_profile.py b/scripts/vnext/requirement_pr
  _LOADING_PATHS = ContextVar("requirement_loading_paths", default=())
  
 diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
+index 29e7cc3..637e91c 100644
 --- a/scripts/vnext/run_store.py
 +++ b/scripts/vnext/run_store.py
-@@ -352,7 +352,7 @@
+@@ -352,7 +352,7 @@ def create_run(
          validate_run_coordinates(
              target_period=target_period,
              company_traits=normalized_traits,
@@ -21,7 +36,33 @@ diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
          )
      except RecordError as error:
          raise RunStoreError("Run business coordinates are invalid") from error
-@@ -1921,6 +1921,19 @@
+@@ -1015,6 +1015,25 @@ def load_run_bound_specs(
+         if sha256_file(path=path) != manifest["spec_file_hashes"][relative]:
+             raise RunStoreError("Run Spec bytes changed before freeze/replay")
+         paths.append(path)
++    from .historical_spec_revision import REVISED_TEXT_SPECS
++    revised = [str(r) for r in manifest["spec_file_hashes"] if str(r) in REVISED_TEXT_SPECS]
++    if revised:
++        # A revised Spec raises one TEXT_V1 bound above the frozen compiler's
++        # ceiling, which fourteen Requirement generations bind by bytes, so it
++        # compiles through this generation's own revision module instead. That
++        # module compiles one file, not a dependency set: a revised Spec in a
++        # Run declaring several is refused rather than compiled in declaration
++        # order, because ordering is compile_spec_files' job and silently
++        # getting it wrong would be a wrong Spec identity, not an error.
++        from .historical_spec_revision import compile_historical_spec_file
++        if len(revised) != 1 or len(manifest["spec_file_hashes"]) != 1:
++            raise RunStoreError("Run mixes a revised Spec with a dependency set")
++        try:
++            wrapper = compile_historical_spec_file(
++                repo_root=repo_root, repo_relative_path=revised[0], dependency_specs={})
++        except SpecError as error:
++            raise RunStoreError("Run Spec closure cannot be compiled") from error
++        return {str(wrapper["compiled"]["metric_id"]): wrapper}
+     try:
+         return compile_spec_files(paths=paths)
+     except SpecError as error:
+@@ -1921,6 +1940,19 @@ def _replay_structured_result(
                  or any(observations.get(o["observation_id"]) != o for o in expected["observations"])):
              raise RunStoreError("Integrated ordinary result differs from full source replay")
          return
@@ -41,7 +82,7 @@ diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
      if manifest.get("requirement_id") == "issue_28_v12":
          from .normal_run_v2 import replay_case
          expected = replay_case(data_root=repo_root, manifest=manifest, spec=compiled_spec)
-@@ -2154,6 +2167,13 @@
+@@ -2154,6 +2186,13 @@ def _validate_record_graph(
          from .normal_run_v3 import validate_normal_run_authority
          ordinary_case = validate_normal_run_authority(repo_root=repo_root,manifest=manifest,
              records=records,compiled_specs=compiled_specs)
@@ -55,7 +96,7 @@ diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
      elif manifest.get("requirement_id") == "issue_28_v12":
          from .normal_run_v2 import validate_normal_run_authority
          validate_normal_run_authority(repo_root=repo_root, manifest=manifest,
-@@ -2341,7 +2361,9 @@
+@@ -2341,7 +2380,9 @@ def _validate_record_graph(
          str(wrapper["spec_semantic_hash"]): wrapper
          for wrapper in compiled_specs.values()
      }
@@ -66,7 +107,7 @@ diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
          from .capacity_run import prepare_text_contexts as prepare_text_run_contexts
      elif manifest.get("requirement_id") == "issue_28_v13":
          from .normal_run_v3 import prepare_text_contexts as prepare_text_run_contexts
-@@ -2361,6 +2383,9 @@
+@@ -2361,6 +2402,9 @@ def _validate_record_graph(
  
      def text_handlers(candidate):
          arguments = text_contexts[candidate["candidate_hash"]]
@@ -76,15 +117,3 @@ diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
          if manifest.get("requirement_id") == "issue_28_v14":
              from . import capacity_text_results
              return capacity_text_results, capacity_text_results.build_text_review_unit
-diff --git a/scripts/vnext/records.py b/scripts/vnext/records.py
---- a/scripts/vnext/records.py
-+++ b/scripts/vnext/records.py
-@@ -1215,7 +1215,7 @@
-         validate_run_coordinates(
-             target_period=record["target_period"],
-             company_traits=record["company_traits"],
--            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13"},
-+            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13", "issue_47_v1"},
-         )
-     if record_type == "AI_EXTRACTION_ATTEMPT":
-         observation = record["transport_observation"]

@@ -137,11 +137,17 @@ FAST_TESTS += ("tests.vnext.test_historical_requirement_snapshot",)
 # It exists because an unreachable dispatch branch changes no behaviour, so
 # no Run can fail on it - one shipped and a complete end-to-end Run passed.
 FAST_TESTS += ("tests.vnext.test_requirement_dispatch_map",)
+# The D02 Spec revision compiles above the frozen compiler's declared ceiling,
+# which fourteen Requirement generations bind by bytes. It reads two Spec files
+# and no source material; 0.02 seconds measured. Registered because the guard
+# that matters is a comparison, and a comparison that silently stops comparing
+# looks exactly like one that passes.
+FAST_TESTS += ("tests.vnext.test_historical_spec_revision",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
     "tests.vnext.test_continuous_sec_acquisition": 480,
-    # Seven cases over six filings' full 10-K bytes; measured at 136 seconds,
+    # Nine cases over six filings' full 10-K bytes; measured at 97 seconds,
     # which is close enough to the 240 default to fail on a slower runner.
     "tests.vnext.test_historical_text_boundary": 480,
 }

@@ -1035,6 +1035,22 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 `incorporated_scopes` 改为按申报自己点名的限定取范围。语料里有四种写法：点名附注内某个标题（Marriott、Paramount）、点名两个小节（Lumen）、引用附注自身标题（Salesforce 的 Note 14 “Legal Proceedings and Claims”，那是附注的名字而非其中一节）、不点名（Ford 的 See Note 24）。被点名标题的范围到下一个被点名标题，最后一个到下一个**同级**标题。层级不在解析出的标志里（Lumen 把主题标题和个案标题都标 emphasized，Marriott 两者都不标），而在各自文档的字节里且写法不同——Lumen/Paramount 用斜体区分主题与个案，Marriott 用下划线加 22.5pt 缩进——所以 `caption_style` 只在同一文档内比较，不跨申报假设惯例。另需一个信号：分页处会以与主题标题相同的样式重复注册人名与 `(Continued)`（Paramount 的 Note 18 内有四处），页眉会重复而章节标题不会，同一判据也把它们挡在摘录之外。只有 `EXACT_NOTE` 才整取；Pfizer 的 Note 16A 无同号标题、解析器自记 `WIDER_PARENT_NOTE`（整个 Note 16，135 块），不整取并把差距留在覆盖记录里。实测：Marriott 10→11（只补回被词表漏掉的 1317）、Salesforce 9→15、Paramount 16→27、Lumen 15→41，其余五家逐字节不变，零块丢失。
 
+**64 不是一个界，是两个**。范围定位正确之后 Pfizer 的 D02 是 92 条 41,860 字（按 `max_text_chars` 自己的计法：各条长度之和加条间分隔符），字符只用了 64,000 预算的 65%，卡住它的是条目数。这个上限约束的是申报者怎么断段，不是披露量：九份年报里一条摘录平均 341（Ford）到 1,422（Southwest）字符，同样用满字符预算的申报，条目数可以差四倍。所以按仓库既有的 Spec 修订形状（`B06_new_source_v2.md`、`C03_reported_compensation_v2.md`、`B06_guarded_v3.md` 到 `B06_inclusive_table_v6.md`）新增 `catalog/r6/D02_legal_disclosures_v2.md`，与 v1 只差 64 → 192，v1 逐字节不变。192 = 最稀的那档（187 条）上取整到原上限的三倍，不是按 Pfizer 的 92 反推。
+
+**第一层：Spec 能声明多少，在编译器里**。`scripts/vnext/specs.py` 规定任何 `TEXT_V1` 策略最多声明 64 条，而它的字节被十四个已冻结 Requirement 世代（`issue_28_v2`–`v14` 与 `issue_47_v1`）的 execution authority 点名。改它的后果是实测出来的：`native_request_construction` 开作用域时逐个核对那份 authority 的文件字节，于是稳定抛 `NATIVE_REQUEST_CONSTRUCTION_RULE_CHANGED:scripts/vnext/specs.py`，`tests/vnext/test_native_request_construction.py` 的 13 个用例全红，整条 continuous 语义调用路线（D03/D04/B13）在带这个改动的树里起不来。第一版就是这么做的，fast suite 抓住了它。
+
+修复形状与 `text_coverage` → `historical_text_results` 相同。`scripts/vnext/historical_spec_revision.py` 是第 16 个规则文件，它**不替换编译**：冻结的 `compile_spec` 仍做全部解析与校验，本模块把后继的前置内容按前驱声明的界编译一次，要求得到的 `compiled` 与 `prompt_bundle` 与前驱**完全相等**，然后才放回后继声明的界，并用冻结的 `content_hash` / `SEMANTIC_SET_PATHS` / `execution_semantics_hash` 重算三个哈希。
+
+这一步不是仪式。直接往编译结果里塞一个值也能得到一个可用的 Spec，但那会掩盖后继文件里**任何别的**改动——冻结编译器拒绝整份文件时只给一条消息，说不出是哪项检查失败的。负例覆盖七种：改 `required_sections`、`max_text_chars`、`allowed_source_roles`、`name`、`disclosure_group`、`quality_rule`、`metric_id` 的后继一律被拒；另有一个用例断言 `SPEC_FIELDS` 的 24 个字段全部落在 `compiled` 或 `prompt_bundle` 两侧之一——否则这个相等判断就有能被绕过的缝；再有一个用例断言空 `applicability` 与非法 `renderer` 由冻结编译器**先**拒（消息里不带 `Revised Spec`），以证明后继路径只加检查、不减检查。代价比第一版小得多：`issue_47_v1` 现在不重记任何继承文件（mint 实测打印 "no inherited authority entry differs from issue_28_v13"），一个数据根可以同时满足 `issue_47_v1` 与 `issue_28_v13`。
+
+**第二层：结果能渲染多少，在协议里——这一层未解决，是当前待决项**。64 同时是 `ORDERED_NEWLINE_V1` 文本结果协议的结构常量，写死在 `text_results.render_text_payload` 第 86 行，那里读不到任何 Spec。实测一次 D02 Run 经过该函数 **122 次、5 个调用点**（`payload_from_observations`、`build_text_result_and_trace`、`validate_text_record`、`verify_text_trace`、`projector._projection_value`），五个全部超界。只在**进程内**把这一个函数换掉（磁盘零改动，所有 Requirement 字节校验照常读真文件、照常通过），整条链一直走到 `PUBLIC_ROW`——所以除这一个字面量之外没有别的阻断，这是测出来的，不是推的。
+
+但 `text_results.py` 是 `issue_28_v11` 的 `new_rule_file`（引擎在数据根与代码根双向校验），同时在 v14 的执行授权内，和 `text_coverage.py` 一样动不得。后继要自带那 5 个函数（约 155 行），并在 `calculator`、`records`、`constraints`、`projector`、`run_store` 各加一条路由——这五处都是函数内 `from .text_results import ...`，所以路由本身便宜，但五个文件都被十四个世代按字节绑定，于是注册补丁由三文件九处扩成约六文件十四处。其中 `validate_text_record` 与 `verify_text_trace` 正是文本结果的完整性检查：一个静默漂移的完整性检查副本，照样能把它被要求检查的一切都检查通过。这不是可以顺手做掉的改动，所以按既有机制交回决策，没有先斩后奏。
+
+影响面已实测：2025-12-31 七家可选公司中只有 Pfizer 超界（92 条），次高是 Ford 的 53 条；另三家（JPM、Macy's、Salesforce）因财年与已存历史无法在该期末选出，那是它们的财年日历，不是 D02 的结论。
+
+所以 `TEXT_SPEC_PATHS["D02"]` **仍然指向 v1**。v2 与它的编译器已经提交并有测试，但让一个已接通的 Spec 声明运行时兑现不了的 192，是在目录里写一份假合同；接通与否是一个决定，`test_the_route_still_declares_the_bound_the_runtime_can_honour` 把这个决定钉在测试里，免得它变成漂移。两份文件都留在盘上，因为已冻结的 Run 声明的是 v1，而两者 `spec_semantic_hash` 不同——不同的界就是不同的 Spec 身份。两层的完整测量在 `docs/evidence/issue47_history/d02-item-bound/`。
+
 `scripts/vnext/historical_text_input.py` 同时补进规则集：D02 Run 每次都执行它，而原先规则集与继承授权都没点名。它之所以漏掉，是因为 `historical_run` 与 `historical_results` 都在函数内导入它，而 `tools/vnext_authority_closure.py` 只走模块级导入闭包。该工具现在多一类判断：本世代自有规则文件**直接导入**（一跳，不是传递闭包——13 个规则文件经父代码传递可达 215 个模块中的 206 个）却未被授权点名的模块，是缺陷而不是信息。
 
 **（历史记录）原生 Run：范围被缩小，但依然没有接通**。此前这里记的是「注册新 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内，因此阻塞」；上一版改成「已测量，不是架构决定」，那又走过了头。`tools/vnext_requirement_seam.py` 实际证明的范围只有这些：

@@ -553,11 +553,13 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
         from vnext.historical_text_results import text_api
         from vnext.requirements import load_requirement_snapshot
         from vnext.review import create_system_review_decision
-        from vnext.specs import compile_spec_file
+        from vnext.historical_results import TEXT_SPEC_PATHS
+        from vnext.historical_spec_revision import compile_historical_spec_file
         from vnext.traits import repository_company_traits
 
-        spec = compile_spec_file(path=ROOT / "catalog/r6/D02_legal_disclosures_v1.md",
-                                 dependency_specs={})
+        spec = compile_historical_spec_file(repo_root=ROOT,
+                                            repo_relative_path=TEXT_SPEC_PATHS["D02"],
+                                            dependency_specs={})
         # The route's own dispatch, so this exercises what a Run executes.
         api, build_review_unit = text_api("D02")
         requirement = load_requirement_snapshot(snapshot_dir=ROOT / "requirements" / "issue_28_v13")

@@ -15,6 +15,8 @@ from vnext import historical_text_results as fixed
 from vnext import text_results_v2 as frozen
 from vnext.historical_text_input import prepare_historical_business_text_input
 from vnext.normal_period_selection import resolve_period_selection
+from vnext.historical_results import TEXT_SPEC_PATHS
+from vnext.historical_spec_revision import compile_historical_spec_file
 from vnext.specs import compile_spec_file
 from vnext.text_coverage import build_text_document
 from vnext.text_results_v2 import TextResultV2Error, text_policy
@@ -35,8 +37,8 @@ def _text_arguments(company_id, report_end):
         prepared = prepare_historical_business_text_input(
             repo_root=ROOT, company_id=company_id, metric_id="D02",
             period_selection=selection)
-    spec = compile_spec_file(path=ROOT / "catalog/r6/D02_legal_disclosures_v1.md",
-                             dependency_specs={})
+    spec = compile_historical_spec_file(repo_root=ROOT, repo_relative_path=TEXT_SPEC_PATHS["D02"],
+                                        dependency_specs={})
     return spec, prepared
 
 
@@ -242,34 +244,70 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         for letter in "BCDE":
             self.assertGreaterEqual(letters[letter], scopes[0]["end_block_exclusive"])
 
-    def test_the_located_sub_note_currently_exceeds_the_spec_s_own_item_bound(self):
-        """Recorded because it is the Spec speaking, not a parser limitation.
+    def test_the_route_still_declares_the_bound_the_runtime_can_honour(self):
+        """v2 exists and compiles, and is deliberately not routed yet.
 
-        Correctly scoped, Pfizer's D02 is 92 excerpts and 41,860 characters
-        against `max_items` 64 and `max_text_chars` 64,000 - past the item
-        bound while using 65 percent of the character budget. Item count is a
-        function of how the filer breaks paragraphs: Southwest discloses 35,545
-        characters in 25 items, Pfizer 41,860 in 92.
-
-        Raising the bound changes an approved MetricSpec, so this asserts the
-        current refusal rather than working around it, and will fail the day
-        that decision is taken - which is when it should be revisited.
+        64 turned out to be two bounds, not one: what a Spec may declare, and
+        what `ORDERED_NEWLINE_V1` will render. The second is a literal in the
+        frozen `text_results.render_text_payload`, so a routed Spec claiming
+        192 would be a false contract. This states which of the two the route
+        carries, so flipping it is a decision rather than a drift.
         """
+        from vnext.historical_results import TEXT_SPEC_PATHS
+        from vnext.specs import compile_spec_file
+        from vnext.text_results import TextResultError, render_text_payload
+
+        self.assertEqual("catalog/r6/D02_legal_disclosures_v1.md", TEXT_SPEC_PATHS["D02"])
+        v1 = compile_spec_file(path=ROOT / TEXT_SPEC_PATHS["D02"], dependency_specs={})
+        v2 = compile_historical_spec_file(
+            repo_root=ROOT, repo_relative_path="catalog/r6/D02_legal_disclosures_v2.md",
+            dependency_specs={})
+        self.assertEqual(64, text_policy(v1)["max_items"])
+        self.assertEqual(192, text_policy(v2)["max_items"])
+        # The protocol's own bound, read out of the frozen renderer by handing
+        # it 65 well-formed items rather than by reading the literal.
+        payload = {"version": "TEXT_V1", "content_kind": "SOURCE_EXCERPTS",
+                   "renderer": "ORDERED_NEWLINE_V1", "coverage_hashes": ["sha256:" + "a" * 64],
+                   "candidate_hash": "sha256:" + "b" * 64,
+                   "review_unit_hash": "sha256:" + "c" * 64,
+                   "approval_effect_hash": "sha256:" + "d" * 64,
+                   "items": [{"order": n, "role": "R%d" % n, "text": "t%d" % n,
+                              "observation_id": "sha256:" + ("%064x" % n)} for n in range(65)]}
+        with self.assertRaises(TextResultError) as raised:
+            render_text_payload(payload=payload)
+        self.assertIn("TEXT_PAYLOAD_ITEMS_INVALID", str(raised.exception))
+        payload["items"] = payload["items"][:64]
+        self.assertEqual(64, len(render_text_payload(payload=payload).split("\n")))
+
+    def test_the_located_sub_note_is_built_and_refused_by_the_bound_not_the_scope(self):
+        """Pfizer's D02 excerpt set is complete; only the item count stops it."""
         spec, prepared = _text_arguments(PFIZER, "2025-12-31")
         arguments = {"compiled_spec": spec, **prepared["text_arguments"]}
         with original_sources_only():
-            sources = fixed.prepare_business_text_sources(
-                metric_id="D02", **prepared["text_arguments"])
-            with self.assertRaises(TextResultV2Error) as bound:
+            with self.assertRaises(TextResultV2Error) as raised:
                 fixed.create_deterministic_text_candidate(**arguments)
-        self.assertEqual("TEXT_V2_COMPLETE_EXCERPT_SET_EXCEEDS_ITEM_BOUND", str(bound.exception))
-        reference_id = next(iter(sources["documents"]))
-        excerpts = sources["proposals"][reference_id]["D02"]["candidates"]
-        policy = text_policy(spec)
-        self.assertEqual(64, policy["max_items"])
-        self.assertEqual(64000, policy["max_text_chars"])
-        self.assertGreater(len(excerpts), policy["max_items"])
-        self.assertLess(sum(len(e["text"]) for e in excerpts), policy["max_text_chars"])
+        self.assertIn("EXCEEDS_ITEM_BOUND", str(raised.exception))
+        # The set it refused is 92 items and 41,860 rendered characters - 144
+        # percent of the item bound and 65 percent of the character bound - so
+        # what stops this coordinate is the count, not the scope or the volume.
+        from vnext.historical_spec_revision import compile_historical_spec_file as revised
+        raised_spec = revised(repo_root=ROOT,
+                              repo_relative_path="catalog/r6/D02_legal_disclosures_v2.md",
+                              dependency_specs={})
+        with original_sources_only():
+            candidate = fixed.create_deterministic_text_candidate(
+                **{**arguments, "compiled_spec": raised_spec})
+            evidence = fixed.build_text_evidence(candidate=candidate,
+                                                 **{**arguments, "compiled_spec": raised_spec})
+        selected = candidate["selected"]
+        characters = sum(len(c["text"]) for c in selected.values()) + len(selected) - 1
+        self.assertEqual("PASS", evidence["status"])
+        self.assertEqual(92, len(selected))
+        self.assertEqual(41860, characters)
+        self.assertLess(characters, text_policy(raised_spec)["max_text_chars"])
+        # The sub-note's own text is in, and the sections after it are not.
+        sections = {claim["section_id"] for claim in selected.values()}
+        self.assertTrue({s for s in sections if s.endswith("_SUB_A")}, sections)
 
     def test_the_successor_routes_only_the_metric_it_corrects(self):
         module, _ = fixed.text_api("D02")

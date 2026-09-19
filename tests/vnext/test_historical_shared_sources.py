@@ -19,7 +19,8 @@ from tests.vnext.test_normal_zero_ai_results import original_sources_only
 from vnext import historical_text_results as fixed
 from vnext.historical_text_input import prepare_historical_business_text_input
 from vnext.normal_period_selection import resolve_period_selection
-from vnext.specs import compile_spec_file
+from vnext.historical_results import TEXT_SPEC_PATHS
+from vnext.historical_spec_revision import compile_historical_spec_file
 from vnext.text_results_v2 import TextResultV2Error
 
 MACYS = "macys"
@@ -33,8 +34,9 @@ def _arguments(company_id=MACYS, report_end=MACYS_END):
         prepared = prepare_historical_business_text_input(
             repo_root=ROOT, company_id=company_id, metric_id="D02",
             period_selection=selection)
-    spec = compile_spec_file(path=ROOT / "catalog/r6/D02_legal_disclosures_v1.md",
-                             dependency_specs={})
+    spec = compile_historical_spec_file(repo_root=ROOT,
+                                        repo_relative_path=TEXT_SPEC_PATHS["D02"],
+                                        dependency_specs={})
     return spec, prepared["text_arguments"]
 
 

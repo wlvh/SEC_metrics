@@ -1,0 +1,149 @@
+{
+ "record_type": "D02_ITEM_BOUND_INVESTIGATION",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "question": "Can D02's item bound be raised so Pfizer's incorporated sub-note produces a result?",
+ "answer": "Not by revising the MetricSpec alone. 64 is also a structural constant of the ORDERED_NEWLINE_V1 text-result protocol, hard-coded in text_results.render_text_payload, which every result of this kind passes through five times. A Spec may declare 192 and still be unable to produce 65 items.",
+ "layers": [
+  {
+   "layer": 1,
+   "file": "scripts/vnext/specs.py",
+   "line": 771,
+   "bound": "a TEXT_V1 Spec may declare max_items <= 64",
+   "frozen_by": "execution authority of issue_28_v2 through v14 and issue_47_v1 - fourteen generations",
+   "measured_consequence_of_changing_it": "NATIVE_REQUEST_CONSTRUCTION_RULE_CHANGED:scripts/vnext/specs.py when a native request-construction scope bound to issue_28_v14 opens against the tree; all 13 cases in tests/vnext/test_native_request_construction.py fail and the continuous semantic-call route cannot start",
+   "resolved_by": "scripts/vnext/historical_spec_revision.py carries the raised ceiling as a rule file of this generation; specs.py keeps its bytes"
+  },
+  {
+   "layer": 2,
+   "file": "scripts/vnext/text_results.py",
+   "line": 86,
+   "bound": "render_text_payload refuses a payload of more than 64 items, whatever the Spec says",
+   "frozen_by": "a new_rule_file of issue_28_v11, checked on both the data root and the code root, and in the execution authority of issue_28_v14",
+   "status": "UNRESOLVED - this is the open decision",
+   "call_sites_measured": [
+    "projector.py::_projection_value",
+    "text_results.py::build_text_result_and_trace",
+    "text_results.py::payload_from_observations",
+    "text_results.py::validate_text_record",
+    "text_results.py::verify_text_trace"
+   ],
+   "call_sites_over_the_bound": [
+    "projector.py::_projection_value",
+    "text_results.py::build_text_result_and_trace",
+    "text_results.py::payload_from_observations",
+    "text_results.py::validate_text_record",
+    "text_results.py::verify_text_trace"
+   ],
+   "renderer_calls_in_one_run": 122,
+   "reached_when_only_this_bound_is_lifted_in_process": "PUBLIC_ROW",
+   "successor_cost": {
+    "functions_to_duplicate": [
+     "render_text_payload",
+     "payload_from_observations",
+     "build_text_result_and_trace",
+     "validate_text_record",
+     "verify_text_trace"
+    ],
+    "approximate_lines": 155,
+    "files_needing_a_route": [
+     "scripts/vnext/calculator.py",
+     "scripts/vnext/records.py",
+     "scripts/vnext/constraints.py",
+     "scripts/vnext/projector.py",
+     "scripts/vnext/run_store.py"
+    ],
+    "registration_patch_growth": "3 files / 9 hunks becomes 6 files / about 14 hunks",
+    "why_it_is_not_a_small_change": "validate_text_record and verify_text_trace are the integrity checks on a text result. A duplicate of an integrity check that silently drifts from the original still passes everything it is asked to check."
+   }
+  }
+ ],
+ "how_far_it_gets_with_only_the_renderer_bound_lifted": {
+  "method": "render_text_payload swapped in-process only; no file's bytes changed, so every Requirement byte check still read the real files and still passed",
+  "result": "PUBLIC_ROW",
+  "row_status": "TEXT_QUAL"
+ },
+ "how_many_filings_this_affects": {
+  "method": "create_deterministic_text_candidate on each company's saved filing at 2025-12-31",
+  "over_64": [
+   "pfizer"
+  ],
+  "measured": [
+   {
+    "company": "enphase_energy",
+    "items": 18,
+    "rendered_characters": 9927,
+    "chars_per_item": 551.5,
+    "over_64": false
+   },
+   {
+    "company": "ford_motor_company",
+    "items": 53,
+    "rendered_characters": 18077,
+    "chars_per_item": 341.1,
+    "over_64": false
+   },
+   {
+    "company": "lumen_technologies",
+    "items": 41,
+    "rendered_characters": 19329,
+    "chars_per_item": 471.4,
+    "over_64": false
+   },
+   {
+    "company": "marriott_international",
+    "items": 11,
+    "rendered_characters": 5098,
+    "chars_per_item": 463.5,
+    "over_64": false
+   },
+   {
+    "company": "paramount_skydance_paramount_global",
+    "items": 27,
+    "rendered_characters": 21399,
+    "chars_per_item": 792.6,
+    "over_64": false
+   },
+   {
+    "company": "pfizer",
+    "items": 92,
+    "rendered_characters": 41860,
+    "chars_per_item": 455.0,
+    "over_64": true
+   },
+   {
+    "company": "southwest_airlines",
+    "items": 25,
+    "rendered_characters": 35545,
+    "chars_per_item": 1421.8,
+    "over_64": false
+   }
+  ],
+  "not_selectable_at_this_report_end": [
+   {
+    "company": "jpmorgan_chase",
+    "error": "PeriodSelectionError"
+   },
+   {
+    "company": "macys",
+    "error": "PeriodSelectionError"
+   },
+   {
+    "company": "salesforce",
+    "error": "PeriodSelectionError"
+   }
+  ],
+  "largest_under_the_bound": 53,
+  "note": "Three filers could not be selected at a calendar report end; that is their fiscal calendar and saved history, not a D02 outcome. Of the seven measured, one exceeds the bound."
+ },
+ "not_done": [
+  "duplicating the text-result protocol before the decision",
+  "merging adjacent excerpts so the count fits, which trades one observation per source block for a smaller number",
+  "narrowing the scope so the count fits",
+  "declaring 192 in a routed Spec while the protocol still caps results at 64"
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

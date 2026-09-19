@@ -19,31 +19,46 @@
    "evidence": "docs/evidence/issue47_history/d02-section-boundary/"
   },
   {
-   "defect_id": "D02_PFIZER_2025_EXCEEDS_SPEC_ITEM_BOUND",
+   "defect_id": "D02_PFIZER_2025_EXCEEDS_ITEM_BOUND",
    "company_id": "pfizer",
    "metric_id": "D02",
    "period_end": "2025-12-31",
    "result_id": null,
-   "summary": "Item 3 incorporates Note 16A by reference. The sub-note is now located: Note 16 carries 'A. Legal Proceedings' with B (guarantees), C (commitments), D (contingent consideration) and E (insurance) after it, and the scope runs from A to B. Correctly scoped, the excerpt set is 92 items and 41,860 characters against the Spec's max_items 64 and max_text_chars 64,000, so create_deterministic_text_candidate refuses with TEXT_V2_COMPLETE_EXCERPT_SET_EXCEEDS_ITEM_BOUND and this coordinate produces no result.",
-   "repair": "scripts/vnext/historical_text_results.incorporated_scopes locates the lettered sub-note; the remaining blocker is the Spec's item bound",
-   "repair_state": "SCOPE_LOCATED_BLOCKED_BY_APPROVED_SPEC_BOUND",
-   "evidence": "docs/evidence/issue47_history/d02-section-boundary/",
-   "blocking_decision": {
-    "question": "whether D02's max_items may be raised in a successor MetricSpec",
-    "measured": {
-     "pfizer_items": 92,
-     "pfizer_characters": 41860,
-     "max_items": 64,
-     "max_text_chars": 64000,
-     "largest_other_company_items": 53,
-     "southwest_characters_in_25_items": 35545
+   "summary": "Item 3 incorporates Note 16A by reference. The sub-note is located: Note 16 carries 'A. Legal Proceedings' with B (guarantees), C (commitments), D (contingent consideration) and E (insurance) after it, and the scope runs from A to B. Correctly scoped, the excerpt set is 92 items and 41,860 rendered characters - 65 percent of max_text_chars and 144 percent of max_items - so what stops this coordinate is the item count, not the scope and not the volume.",
+   "repair": "scripts/vnext/historical_text_results.incorporated_scopes locates the lettered sub-note. Raising the item bound needs two layers, not one. Layer 1 (what a Spec may declare) is done: catalog/r6/D02_legal_disclosures_v2.md declares 192 and scripts/vnext/historical_spec_revision.py compiles it without changing specs.py. Layer 2 (what the ORDERED_NEWLINE_V1 protocol will render) is open and is the reason the route still points at v1.",
+   "repair_state": "SCOPE_LOCATED_BLOCKED_BY_TEXT_RESULT_PROTOCOL_BOUND",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-section-boundary/",
+    "docs/evidence/issue47_history/d02-item-bound/"
+   ],
+   "open_decision": {
+    "question": "whether this generation carries a successor text-result protocol so a result of more than 64 excerpts can be rendered at all",
+    "why_it_is_not_an_implementation_choice": "64 is a literal in text_results.render_text_payload, a new_rule_file of issue_28_v11 checked on both roots and in fourteen generations' execution authority. A successor would duplicate about 155 lines across five functions, two of which - validate_text_record and verify_text_trace - are the integrity checks on a text result, and would grow the registration patch from 3 files and 9 hunks to about 6 files and 14 hunks.",
+    "measured_scope": {
+     "filings_over_the_bound": [
+      "pfizer"
+     ],
+     "largest_under_the_bound": 53,
+     "filings_measured_at_2025_12_31": 7,
+     "reached_with_only_the_renderer_swapped_in_process": "PUBLIC_ROW"
     },
-    "why_it_is_a_business_decision": "max_items caps block count, and block count is a function of how the filer breaks paragraphs rather than of how much is disclosed. Raising it changes an approved MetricSpec, so it goes through the revision mechanism rather than being edited here.",
+    "options": [
+     {
+      "id": "A",
+      "action": "carry a successor text-result protocol in this generation",
+      "cost": "about 155 duplicated lines including two integrity checks; patch 3->6 files"
+     },
+     {
+      "id": "B",
+      "action": "leave the bound at 64 and record this coordinate as refused by the protocol, with the measurement",
+      "cost": "Pfizer D02 produces no result in any year whose filing exceeds 64 excerpts"
+     }
+    ],
+    "recommendation": "B unless this coordinate must be delivered in this PR",
     "not_done": [
-     "raising the bound",
-     "merging adjacent blocks to fit",
-     "narrowing the scope to fit",
-     "reverting to the parent-note skip"
+     "merging adjacent excerpts so the count fits, which trades one observation per source block for a smaller number",
+     "narrowing the scope so the count fits",
+     "routing a Spec that declares 192 while the runtime still refuses 65"
     ]
    }
   }
