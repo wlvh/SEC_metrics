@@ -28,5 +28,58 @@
   "provider": 0,
   "paid": 0,
   "sec": 0
+ },
+ "resolution": {
+  "what_was_wrong_with_the_finding_above": "It recorded the gap as a business question needing a decision. The decision was already taken: config/annual_amendment_scope_v1.json is approved and its patterns are these two filings' own wording. Reading each amendment's explanatory note confirms neither changes what the refused metrics read.",
+  "wired_in": "scripts/vnext/historical_amendment_admission.py",
+  "measured_after": {
+   "southwest_airlines": {
+    "before": "4 of 23",
+    "after": "23 of 23, 0 failed",
+    "classification": "EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15",
+    "reading": "the policy clears both input classes, and it did"
+   },
+   "paramount_skydance_paramount_global": {
+    "before": "4 of 23",
+    "after": "4 of 23",
+    "classification": "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS",
+    "failures_now_split_by_cause": {
+     "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED": {
+      "count": 13,
+      "metric_ids": [
+       "A05",
+       "A06",
+       "A07",
+       "A08",
+       "A10",
+       "B01",
+       "B02",
+       "B03",
+       "B04",
+       "B05",
+       "B07",
+       "B08",
+       "B09"
+      ],
+      "is": "the approved policy deciding, not a gap. Part III does not automatically approve a financial or subject-consolidation scope."
+     },
+     "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED": {
+      "count": 6,
+      "metric_ids": [
+       "C01",
+       "E01",
+       "E02",
+       "E03",
+       "E04",
+       "E05"
+      ],
+      "is": "a second, independent implementation gap that the amendment guard had been masking. Paramount's subject_policy mode is SUCCESSOR_REGISTRANT_ONLY - CIK 2041610 with registered predecessor 813828 - and the zero-AI historical route requires CONTINUOUS_PRIMARY."
+     }
+    }
+   }
+  },
+  "a_prediction_that_was_wrong": "Paramount was predicted at 10 of 23 - four already passing plus six event metrics the policy clears. It came out at 4. The policy did clear the event window; the event metrics are stopped by the successor-registrant guard instead. The prediction was made from one guard while two apply, which is the same error as reading a first blocking reason as the only blocker.",
+  "net": "38 failures across the six-company matrix became 19",
+  "lead_for_the_successor_gap": "Not yet verified, and recorded as a lead rather than a conclusion: AGENTS.md states the ordinary route already rebuilds Paramount's six events from the registered primary and predecessor CIKs, so this may again be wiring rather than a decision. That has to be checked against the code before it is claimed."
  }
 }
