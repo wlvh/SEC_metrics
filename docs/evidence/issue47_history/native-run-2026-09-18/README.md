@@ -297,11 +297,15 @@ A negative that records only "it was refused" proves less than it reads. Three
 rounds of tampering with this Run make the point, and all three are kept because
 the difference between them is the finding:
 
-| round | cases reaching the layer they meant to test |
-| --- | --- |
-| tamper after freezing | **0 of 5** — every one answered by `records_file_hash` |
-| tamper while OPEN | **3 of 6** — three answered by record-schema validation |
-| substitute another year's genuine records | **3 of 3 so far** |
+| round | reached its layer | what answered instead |
+| --- | --- | --- |
+| tamper after freezing | **0 of 5** | `records_file_hash`, every time |
+| tamper while OPEN | **3 of 6** | record-schema validation, for the three hand re-signed |
+| substitute another year's genuine records | **4 of 4** | — |
+
+Seven cases reached the layer they were written for; eight were answered
+earlier and are recorded as untested at that layer, not as passes.
+`text-run-refusal-layers.json` holds the per-case attribution.
 
 `tools/vnext_refusal_layer.py` classifies a refusal to the layer that produced
 it — frozen-file seal, record schema, record graph, Requirement authority, text
@@ -315,10 +319,18 @@ it actually is. It does not support any claim about text semantics.
 What the rounds that did reach their layer establish: deleting the candidate or
 the evidence check is refused by `HISTORICAL_RUN_TEXT_DERIVATION_CHANGED` naming
 the record, deleting an observation by the store's own
-`Text reviewed observation exact set differs`, and a genuine record from another
-pinned year — internally consistent by construction, so nothing is decided by a
-hand-computed hash — is refused on meaning: a foreign review-unit binding, an
-absent execution trace, a candidate that does not re-derive.
+`Text reviewed observation exact set differs`, and all four substitutions of a
+genuine 2024 record into the 2025 Run are refused on meaning rather than shape:
+a foreign review-unit binding, an absent execution trace, a candidate that does
+not re-derive, and an observation whose SourceReference is not in this Run.
+Those records were produced by the real code for the same metric in another
+pinned year, so nothing there turns on a hash computed by hand.
+
+The three that never reached their layer are the hand re-signed ones. Their
+mutation left the record structurally invalid, so schema validation answered
+first. They are not evidence that the authority accepts a re-signed text result;
+they are evidence of nothing about it, and the substitution round is what covers
+that ground instead.
 
 ### It does not reach a public row, and that is the next piece
 
