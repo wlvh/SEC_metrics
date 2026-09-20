@@ -1,0 +1,33 @@
+{
+ "record_type": "HISTORICAL_SUCCESSOR_EVENT_GAP",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "refusal": "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED",
+ "affects": {
+  "company": "paramount_skydance_paramount_global",
+  "metric_ids": [
+   "C01",
+   "E01",
+   "E02",
+   "E03",
+   "E04",
+   "E05"
+  ],
+  "positions_in_this_matrix": 6
+ },
+ "what_was_checked": "Whether this is a decision or wiring, following the pattern where three earlier escalations turned out to be wiring with the policy already in the repository.",
+ "it_is_wiring_but_not_a_one_liner": {
+  "the_ordinary_route_already_admits_it": "normal_zero_ai_results computes registered_event = metric_id in EVENT_METRICS and subject_policy mode is SUCCESSOR_REGISTRANT_ONLY, widens the window with event_target_period(continuity_status='successor_predecessor'), and its guard reads CONTINUOUS_PRIMARY or registered_event or income_input. Cross-entity financial combination stays unauthorized; only the event window follows the continuity.",
+  "the_predecessor_sources_are_saved": "25 accession directories under CIK 813828 in evidence/accession_materials, so this is not a source gap",
+  "why_porting_the_guard_alone_is_not_enough": "Measured. Adding the same registered_event condition to the historical route gets past that guard and then fails with 'Run target period exceeds 53 weeks': the successor event window runs 2024-01-01 to 2025-12-31, and a Run coordinate may not exceed 371 days. The Run's coordinate and the event look-back window are two different things, which AGENTS.md already states, but historical_results assembles the Run coordinate as fiscal_year from the pinned period and period_start/period_end from the primary RESULT - so a widened result period becomes the Run's coordinate. For a continuous-primary company the two coincide, which is why this never showed.",
+  "what_a_complete_port_needs": [
+   "the Run coordinate to stay on the pinned period while the result keeps its widened window, without changing how the other routes derive theirs - B01 under a successor registrant legitimately reports a short period, so this cannot be a blanket change",
+   "the six-event difference allowance AGENTS.md describes in run_store, which recognises the divergence only for six-event records rebuilt from complete originals and consistent line by line, extended to this generation - another registration patch hunk"
+  ]
+ },
+ "why_the_guard_was_left_in_place": "The ported guard changed no outcome: E01 still failed, only with 'Run business coordinates are invalid' instead of a named refusal. Trading a named refusal for an unexplained one is worse for a reader, by the same standard applied to the amendment wiring earlier in this session, so the change was reverted and the finding recorded instead.",
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}
