@@ -537,6 +537,17 @@ D04的条件、例证或过去原因只影响其实际限定的断言；明确�
   `content_acceptance`。**未证明的一层在 `delivery_layer_unproven_reasons` 里
   写明理由**，不省略。`content_acceptance` 目前处处为 0。
   `verified_outcome` 只回答第一层，不能当交付率读。
+* `delivery_by_outcome` 把这三层与坐标自己说的话交叉：`VALUE`（实际数值）、
+  `STRUCTURALLY_NOT_APPLICABLE`（结构不适用）、`RAN_WITHOUT_A_VALUE`（跑过但没有值，
+  含显式 WITHHELD 与发布了但无值两种，桶内各自计数）、`NO_RESULT`。
+  **只看 `public_row` 的数分不出它们**——WITHHELD 的结果同样渲染
+  出一行，结构不适用也是。Marriott 2023 实测：29 个坐标到达公共行，其中 7 个
+  带数值、14 个结构不适用、8 个是冻结拒绝。把 29 当交付，就是把「机器跑通了」
+  读成「数在那里」。该交叉表是对整帧的划分，每层各 outcome 之和等于
+  `delivery_layer_counts` 的同名项。
+* `unreadable_run_directories` 列出 runs 根目录下 manifest 与自身文件对不上的
+  目录，按名字和理由报告而不是抛出——批次还在写时读该目录必然遇到一个。记录
+  区分两种：OPEN 是正在被写，FROZEN 是这个目录不是它声称的那个 Run。
 
 一个坐标在多个 Requirement 版本下跑过就有多份收据。不给
 `--requirement-closure-hash` 时报 `RUN_RECEIPT_VERSION_AMBIGUOUS`——**由文件名

@@ -661,6 +661,32 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
     # content check.
     delivery = {name: sum(p["delivery"][name]["proven"] for p in positions)
                 for name in ("native_run", "public_row", "content_acceptance")}
+    # Reaching a public row and delivering a value are different facts, and the
+    # layer count alone cannot tell them apart: a WITHHELD result renders a row
+    # too, and so does a structural non-applicability. Measured on one company's
+    # real material, 29 positions reached a public row and 7 of them carried a
+    # value. Reporting 29 as delivery would be reading "the machinery ran" as
+    # "the number is there", so the layers are crossed with what the position
+    # actually says.
+    # The bucket names are coarse on purpose, and each carries the statuses it
+    # is made of so the grouping can be checked rather than trusted. An explicit
+    # WITHHELD and a result that published no value are both "ran without a
+    # value" and are not the same thing, so they are counted apart inside it.
+    delivery_by_outcome = {}
+    for position in positions:
+        status = position["status"]
+        outcome = ("VALUE" if status.startswith("VALUE_")
+                   else "STRUCTURALLY_NOT_APPLICABLE" if status == "N_A_STRUCTURAL"
+                   else "RAN_WITHOUT_A_VALUE" if status in {"WITHHELD_SOURCE_OR_ROUTE",
+                                                            "NO_VALUE_PUBLISHED"}
+                   else "NO_RESULT")
+        row = delivery_by_outcome.setdefault(
+            outcome, {"positions": 0, "native_run": 0, "public_row": 0,
+                      "content_acceptance": 0, "statuses": {}})
+        row["positions"] += 1
+        row["statuses"][status] = row["statuses"].get(status, 0) + 1
+        for name in ("native_run", "public_row", "content_acceptance"):
+            row[name] += bool(position["delivery"][name]["proven"])
     unproven = {}
     for position in positions:
         for name, layer in position["delivery"].items():
@@ -708,6 +734,10 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             # whether it reads as a run being written or as a directory that is
             # not the Run it claims.
             "unreadable_run_directories": collected["unreadable"],
+            # Each delivery layer crossed with what the position says. A value,
+            # a structural non-applicability and a frozen refusal all reach a
+            # public row; only the first is a delivered number.
+            "delivery_by_outcome": delivery_by_outcome,
             "runs_root_supplied": runs_root is not None,
             "business_execution_invoked": False,
             "policy_sha256": sha256_file(path=ROOT / POLICY_PATH),

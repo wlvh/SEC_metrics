@@ -1119,3 +1119,26 @@ Run」，并把其余留给读者假定。每个坐标带 `delivery` 三层（`n
 `content_acceptance`），未证明的一层写明理由；`content_acceptance` 在本仓库处处为 false。
 收据另带坐标键分不开的身份：pinned 财年坐标、实际测量窗口、`scope_key`、`value_kind`、
 closure 与 run_id——不并入键（帧的行就是坐标），放在旁边使「合并」可核而非假定。
+
+**读取层的三处边界**（外部探针给出复现）。收据原先只核对自己的行/证据哈希，因此一份
+行与证据未动、只改了 run_id/Requirement/来源验证状态的收据照样被读入，该坐标仍计为
+到达公共行；现在重算收据自身身份，并要求它声称的运行、状态、Requirement 与 result
+都是这个 Run 的。**拒绝的落点也改了**：manifest 的三个文件哈希才是 Run 的完整性信封，
+`row_receipt.json` 不在其中，所以改坏它不该抹掉 records——单份 bundle 与单个不可读
+run 目录都按名报告而不抛出。`collect_run_receipts` 因此返回
+`{"receipts", "unreadable"}`，并区分 OPEN（正在被写）与 FROZEN（目录不是它声称的
+Run）；批次还在写时读 runs 根目录必然遇到前者。同版本、同期间选择、同结果的多份
+运行，各层分别关联承载它的证据，行层自报 `rendered_by`。期间选择与渲染器/展示策略
+摘要由读取方消费而不是仅写在旁边。
+
+**交付三层与坐标结论交叉**。`delivery_by_outcome` 把 `native_run`/`public_row`/
+`content_acceptance` 与 `VALUE`/`STRUCTURALLY_NOT_APPLICABLE`/`RAN_WITHOUT_A_VALUE`/
+`NO_RESULT` 交叉：WITHHELD 与结构不适用同样渲染出一行，所以只看 `public_row` 的数
+分不出它们。Marriott 2023 实测 29 个坐标到达公共行，其中 7 个带数值。
+
+**Issue #47 自己的获取准入**。`historical_source_acquisition.py` 与
+`tools/vnext_historical_sec.py` 用 `plan_historical_sources` 的去重声明做准入判断，
+因为原获取 CLI 的当期依赖发现实测只回溯一年。它不是规则文件（只做计划与准入、不执行
+Run）。执行缺席：`continuous_sec_acquisition.live_sec_session` 硬绑 `issue_28_v14`，
+其 ledger 读该 Issue 的委托、预算根与上限，复用即动用 #28 额度；`capture` 在构造任何
+传输之前以 `ISSUE_47_SEC_ALLOWANCE_NOT_GRANTED` 拒绝并点名所缺记录与字段。

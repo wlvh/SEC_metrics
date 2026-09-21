@@ -823,6 +823,54 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertFalse(junk["public_row"]["accepted"])
         self.assertTrue(junk["public_row"]["refusal"].startswith("ROW_BUNDLE_UNREADABLE:"))
 
+    def test_reaching_a_public_row_is_not_the_same_as_delivering_a_value(self):
+        """The layer count alone cannot tell them apart, so it is crossed.
+
+        A WITHHELD result renders a row, and so does a structural
+        non-applicability. Measured on one company's real material, 29
+        positions reached a public row and 7 of them carried a value.
+        Reporting 29 as delivery would read "the machinery ran" as "the number
+        is there".
+        """
+        with TemporaryDirectory(prefix="coverage-outcome-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-value", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "a" * 64,
+                       run_id="run:test:value", row_bundle="sha256:" + "a" * 64)
+            _write_run(root / "run-structural", company_id="macys", metric_id="B02",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "b" * 64,
+                       applicability="NOT_APPLICABLE", value=None,
+                       run_id="run:test:structural",
+                       row_bundle="sha256:" + "b" * 64, row_bundle_metric="B02")
+            _write_run(root / "run-withheld", company_id="macys", metric_id="B04",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "c" * 64,
+                       publication="WITHHELD", value=None, run_id="run:test:withheld",
+                       row_bundle="sha256:" + "c" * 64, row_bundle_metric="B04")
+            with original_sources_only():
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        crossed = matrix["delivery_by_outcome"]
+        # Three rows reached, one value.
+        self.assertEqual(3, matrix["delivery_layer_counts"]["public_row"])
+        self.assertEqual(1, crossed["VALUE"]["public_row"])
+        self.assertEqual(1, crossed["STRUCTURALLY_NOT_APPLICABLE"]["public_row"])
+        self.assertEqual(1, crossed["RAN_WITHOUT_A_VALUE"]["public_row"])
+        # And the bucket names what it is made of, so the grouping is checkable.
+        self.assertEqual({"WITHHELD_SOURCE_OR_ROUTE": 1},
+                         crossed["RAN_WITHOUT_A_VALUE"]["statuses"])
+        self.assertEqual({"VALUE_EXACT": 1}, crossed["VALUE"]["statuses"])
+        for row in crossed.values():
+            self.assertEqual(row["positions"], sum(row["statuses"].values()))
+        # Nothing is content-accepted anywhere, including the value.
+        self.assertEqual(0, sum(row["content_acceptance"] for row in crossed.values()))
+        # And the cross-tab is a partition of the frame, so no position is
+        # counted twice or left out of it.
+        self.assertEqual(len(matrix["positions"]),
+                         sum(row["positions"] for row in crossed.values()))
+        for name in ("native_run", "public_row", "content_acceptance"):
+            self.assertEqual(matrix["delivery_layer_counts"][name],
+                             sum(row[name] for row in crossed.values()))
+
     def test_one_unreadable_run_directory_does_not_take_the_report_down(self):
         """A runs root read while a batch is writing always holds one.
 
