@@ -1,0 +1,101 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "checked_the_same_way_for_c04": {
+  "finding": "auditor_filing reads each accession's index.json, and for Marriott's 2023 target and its prior the index is SAVED_SOURCE_MISSING - while both resolve for 2025. So a historical C04 wired today would deliver for the latest period, which the ordinary route already covers, and name a source gap for every earlier one.",
+  "so_the_earlier_assessment_narrows_again": "C04 is still the cleanest of the eight to wire, and wiring it delivers nothing new until class A's 33 ACCESSION_INSTANCE_DISCOVERY entries exist. That is worth knowing before writing the route rather than after."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "measured": {
+  "2023-12-31": {
+   "exact": 7,
+   "ids": [
+    "B01",
+    "B04",
+    "B05",
+    "B07",
+    "B08",
+    "B09",
+    "D02"
+   ],
+   "lost_against_the_latest": [
+    "B02",
+    "B03",
+    "C01",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+   ]
+  },
+  "2024-12-31": {
+   "exact": 9,
+   "ids": [
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B07",
+    "B08",
+    "B09",
+    "D02"
+   ],
+   "lost_against_the_latest": [
+    "C01",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+   ]
+  },
+  "2025-12-31": {
+   "exact": 15,
+   "ids": [
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B07",
+    "B08",
+    "B09",
+    "C01",
+    "D02",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+   ]
+  }
+ },
+ "record_type": "ISSUE_47_WHAT_AN_EARLIER_YEAR_COSTS",
+ "the_two_losses_have_different_causes": {
+  "b02_and_b03": {
+   "cause": "the prior period's original. Marriott's saved originals are 2023, 2024 and 2025, so the 2024 target has its prior year saved and the 2023 target does not. B03 consumes B02, which is why one missing input takes two positions.",
+   "lost_in": "2023 but not 2024, so it is not 'any earlier year'",
+   "reason_codes": [
+    "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED",
+    "ALL_BRANCHES_REJECTED"
+   ],
+   "why_it_matters_beyond_marriott": "this is the measured form of why the planner declares five primaries for four target-year gaps: each target reads the year before it, so a five-year frame needs six years of originals. A count that took one document per target year - which is what the withdrawn '30' did - would leave every earliest target in this state."
+  },
+  "the_six_event_metrics": {
+   "cause": "the fiscal window's 8-K bodies and headers are not saved for any year before the current one. Measured separately at 476 filings across eight companies, which is class B of the acquisition plan.",
+   "lost_in": "every non-latest year",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED"
+  }
+ },
+ "what_it_says_about_the_two_lines": {
+  "a_route_wired_without_its_material": "produces a named refusal, which is the correct behaviour and is still not a delivered number.",
+  "the_correction": "they are not independent either. Wiring a route does not deliver a value where its material is missing, and this is measured rather than reasoned: Marriott 2023 has every one of these routes wired and delivers 7 rather than 15. So the acquisition is not only what turns 11 periods into 50 - it is also what makes the already-wired routes deliver in the periods they reach.",
+  "the_earlier_claim": "that 142 acquisitions and 8 routes are two lines that do not substitute for each other."
+ },
+ "what_this_is": "Marriott is the only company with more than one target period whose original is saved, so it is the only place the question 'what does an earlier year deliver' can be measured rather than argued. All three ran in one batch against one pinned Requirement closure."
+}
