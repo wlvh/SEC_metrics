@@ -568,7 +568,9 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
           and set(selected) <= set(configured), "COVERAGE_COMPANY_SET_INVALID")
     wired = set(WIRED_HISTORICAL_METRICS)
     defects = known_result_defects(repo_root=repo_root)
-    receipt_list = [] if runs_root is None else collect_run_receipts(runs_root=runs_root)
+    collected = ({"receipts": [], "unreadable": []} if runs_root is None
+                 else collect_run_receipts(runs_root=runs_root))
+    receipt_list = collected["receipts"]
     receipts = index_receipts(receipts=receipt_list)
     positions = []
     company_reports = []
@@ -699,6 +701,13 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             "public_rows_are_read_not_rendered": True,
             "company_reports": company_reports, "positions": positions,
             "run_receipts_read": len(receipt_list),
+            # Directories under the runs root that hold a manifest their own
+            # files do not match. Reported here rather than raised, because one
+            # of them used to make the whole matrix unbuildable - and a runs
+            # root read while a batch is writing always holds one. Each says
+            # whether it reads as a run being written or as a directory that is
+            # not the Run it claims.
+            "unreadable_run_directories": collected["unreadable"],
             "runs_root_supplied": runs_root is not None,
             "business_execution_invoked": False,
             "policy_sha256": sha256_file(path=ROOT / POLICY_PATH),

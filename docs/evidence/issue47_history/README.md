@@ -132,3 +132,45 @@ reason, and it is deliberately separate from `baseline-ed8bf11/`: the local
 records describe this development container and are not replaced by what a
 hosted runner did. On one point the two disagree, and the disagreement is stated
 rather than resolved in the branch's favour.
+
+## frame-ceiling-today.json
+
+How much of the 10 x 39 x 5 frame can be attempted at all, measured from
+`plan_historical_sources` rather than inferred from a batch: **11 of 50 target
+periods have their original saved**. Only Marriott has more than one, with
+three; JPMorgan has none. So a batch over the eleven is not a sample, it is
+everything currently reachable, and the three-company five-year pilot on the
+open list is blocked on acquisition rather than on implementation.
+
+## d02-content-read/
+
+`finding.json` — the content read of Pfizer's D02 excerpt set, judged against
+the approved source definition rather than against the selector that produced
+it. Two claims in its first version were too strong and are withdrawn inside
+it: the archived block dump prints 150 characters per block and cannot support
+a judgement about a sentence further in, and `entity_scope: registrant` answers
+which entity a disclosure concerns rather than who is speaking.
+
+`pfizer-2025-scope-blocks.txt` — every block inside the four declared scope
+ranges with its index, flags, full length and the first 150 characters. It
+supports which blocks were selected, not what each one says in full.
+
+`pfizer-2025-decisive-blocks.json` — the six over-taken blocks whole, each with
+the byte span and span digest that locate it in the saved original, so the
+quotes can be checked without trusting the file.
+
+`audit-report-boundary.json` — the six filings read to settle where the audit
+report ends, including the candidate rule that passes five of them and fails
+the one it was written for.
+
+`keyword-proxy-scope.json` — what the `_LEGAL` keyword proxy on Item 8 actually
+carries across those six filings: seventeen blocks, fourteen of them correct.
+Narrowing it would cost the fourteen to remove three.
+
+## part-iii-statement-review/
+
+`finding.json` — the review the approved amendment policy asks for when it sets
+`original_statement_admission_requires_further_review`. Three independent
+grounds, the recommended option and its counter-argument. No policy file or
+clearing rule was changed: whether the finding should clear the input class is
+a correctness standard, not an implementation choice.

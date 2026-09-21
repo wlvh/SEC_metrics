@@ -236,18 +236,45 @@ def collect_run_receipts(*, runs_root: Path):
 
     A directory without a manifest is skipped rather than reported as a broken
     Run: the driver writes its own artifacts beside the run directories.
+
+    A directory that holds a manifest its own files do not match is reported
+    rather than raised. Reading one Run and refusing it is right - the
+    directory is not the Run it claims. Reading many and refusing all of them
+    over one is not: a runs root read while a batch is still writing always
+    holds a run mid-write, and raising there produced no report at all rather
+    than a report with one line missing. Measured on a live batch: three of 87
+    directories were OPEN with a manifest seconds old, and the whole matrix was
+    unbuildable because of them.
+
+    The two cases are not the same and the record says which. An OPEN run whose
+    files do not match its manifest is being written. A FROZEN one is a
+    directory that is not the Run it claims, and that is the loud case.
     """
     runs_root = Path(runs_root)
     _need(runs_root.is_dir() and not runs_root.is_symlink(),
           "RUN_RECEIPT_ROOT_INVALID:" + str(runs_root))
-    receipts = []
+    receipts, unreadable = [], []
     for child in sorted(runs_root.iterdir()):
         if not child.is_dir() or child.is_symlink():
             continue
-        receipt = read_run_receipt(run_dir=child)
+        try:
+            receipt = read_run_receipt(run_dir=child)
+        except RunReceiptError as refusal:
+            # The manifest itself parsed - the hash it carries is what failed -
+            # so the status it claims can be reported, as a claim.
+            claimed = None
+            try:
+                claimed = strict_json_file(path=child / "manifest.json").get("status")
+            except ValueError:
+                claimed = None
+            unreadable.append({"run_directory_name": child.name, "reason": str(refusal),
+                               "claimed_run_status": claimed,
+                               "reading": ("RUN_IS_BEING_WRITTEN" if claimed == "OPEN"
+                                           else "DIRECTORY_IS_NOT_THE_RUN_IT_CLAIMS")})
+            continue
         if receipt is not None:
             receipts.append(receipt)
-    return receipts
+    return {"receipts": receipts, "unreadable": unreadable}
 
 
 def result_identity(*, receipt, result):

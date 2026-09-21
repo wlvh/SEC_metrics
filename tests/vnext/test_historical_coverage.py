@@ -823,6 +823,54 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertFalse(junk["public_row"]["accepted"])
         self.assertTrue(junk["public_row"]["refusal"].startswith("ROW_BUNDLE_UNREADABLE:"))
 
+    def test_one_unreadable_run_directory_does_not_take_the_report_down(self):
+        """A runs root read while a batch is writing always holds one.
+
+        Reading one Run and refusing it is right - the directory is not the Run
+        its manifest claims. Reading many and refusing all of them over one is
+        not, and that is what used to happen: the whole matrix raised. Measured
+        against a live batch of 87 run directories, three were OPEN with a
+        manifest seconds old and no report could be produced at all.
+
+        The two cases are not the same strength and the record says which. An
+        OPEN run whose files do not match is being written; a FROZEN one is a
+        directory that is not the Run it claims.
+        """
+        result_id = "sha256:" + "a" * 64
+        for status, reading in (("OPEN", "RUN_IS_BEING_WRITTEN"),
+                                ("FROZEN", "DIRECTORY_IS_NOT_THE_RUN_IT_CLAIMS")):
+            with self.subTest(status=status):
+                with TemporaryDirectory(prefix="coverage-partial-") as temporary:
+                    root = Path(temporary)
+                    _write_run(root / "run-good", company_id="macys", metric_id="B01",
+                               period_end=MACYS_PERIOD, result_id=result_id,
+                               run_id="run:test:good", row_bundle=result_id)
+                    mid = _write_run(root / "run-mid-write", company_id="macys",
+                                     metric_id="B02", period_end=MACYS_PERIOD,
+                                     result_id="sha256:" + "b" * 64, status=status,
+                                     run_id="run:test:mid")
+                    # What a writer in progress leaves behind: the manifest is
+                    # already there and the records file is still growing.
+                    with (mid / "records.jsonl").open("a", encoding="utf-8") as file:
+                        file.write('{"record_type": "PARTIAL"}\n')
+                    with original_sources_only():
+                        matrix = build_coverage_matrix(repo_root=ROOT,
+                                                       company_ids=["macys"], years=5,
+                                                       runs_root=root)
+                rows = {p["metric_id"]: p for p in matrix["positions"]
+                        if p["report_end"] == MACYS_PERIOD}
+                # The readable Run still reports, all three layers.
+                self.assertTrue(rows["B01"]["delivery"]["native_run"]["proven"])
+                self.assertTrue(rows["B01"]["delivery"]["public_row"]["proven"])
+                # The unreadable one is named rather than silently absent.
+                self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", rows["B02"]["status"])
+                named = matrix["unreadable_run_directories"]
+                self.assertEqual(1, len(named))
+                self.assertEqual("run-mid-write", named[0]["run_directory_name"])
+                self.assertEqual(status, named[0]["claimed_run_status"])
+                self.assertEqual(reading, named[0]["reading"])
+                self.assertTrue(named[0]["reason"].startswith("RUN_RECEIPT_FILE_CHANGED"))
+
     def test_a_row_bundle_must_describe_the_run_it_is_lying_beside(self):
         """Agreeing with itself is not describing this Run.
 
@@ -1017,7 +1065,8 @@ class HistoricalCoverageTest(unittest.TestCase):
             _write_run(root / "run-stub", company_id="macys", metric_id="B01",
                        period_end=MACYS_PERIOD, result_id="sha256:" + "b" * 64,
                        run_id="run:test:stub")
-            index = index_receipts(receipts=collect_run_receipts(runs_root=root))
+            index = index_receipts(
+                receipts=collect_run_receipts(runs_root=root)["receipts"])
             with original_sources_only():
                 matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
                                                years=5, runs_root=root)

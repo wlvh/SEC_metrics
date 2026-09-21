@@ -147,6 +147,12 @@
  "status": "SUBMITTED_FOR_AUTHORISATION_NOT_EXECUTED",
  "supersedes": "schema_version 1 of this file, kept below as prior_revision. Its class-1 count of 30 is withdrawn for three measured reasons, all found by running the production planner instead of counting by hand.",
  "what_a_call_is": "one SEC request attempt through scripts/sec_http.SecHttpClient, logged in evidence/requests_log.csv whether it returns 200, returns an error status, or fails in transport. Implicit redirects are forbidden by the client, so a redirect is a terminal attempt and counts.",
+ "what_class_a_buys": {
+  "evidence": "docs/evidence/issue47_history/frame-ceiling-today.json",
+  "in_positions": "11 x 39 = 429 of 1,950 frame positions can be attempted at all today, before any question of whether a route is wired for them.",
+  "measured": "11 of the frame's 50 target periods have their original saved today. Only Marriott has more than one, with three; JPMorgan has none.",
+  "so": "class A's 142 acquisitions are what turn 11 periods into 50. No amount of implementation moves that number - a batch run over the other 39 periods produces SOURCE_MISSING_TARGET_ORIGINAL, not results."
+ },
  "what_is_asked_of_the_owner": {
   "not_asked": [
    "a per-URL or per-company approval",
