@@ -456,20 +456,36 @@ def shared_source_preparation():
         _SHARED_SOURCES.reset(token)
 
 
+# Every argument the frozen preparation takes, so the key is derived from all
+# of them rather than from a list kept by hand. The first version named four
+# and left out raw_blobs, which is where the original records live: a hit
+# returned before the frozen function could run, so a request whose raw_blobs
+# had been emptied - the state that makes the frozen function refuse with
+# TEXT_V2_ORIGINAL_SOURCE_MISSING - was served from the cache instead.
+# Declaring the set means the next argument added to the frozen signature
+# stops the key rather than being silently left out of it.
+PREPARATION_ARGUMENTS = frozenset({"target", "source_references", "raw_blobs",
+                                   "raw_bytes_by_id", "source_filings"})
+_BYTE_ARGUMENTS = ("raw_bytes_by_id",)
+
+
 def _preparation_key(*, metric_id, source_arguments):
     """The inputs a prepared source set is a deterministic function of.
 
     Hashing the bytes rather than trusting ``raw_asset_id`` is deliberate: the
     id is supplied by the caller, and a key that trusts a caller-supplied
-    identity is a key that can be made to collide.
+    identity is a key that can be made to collide. Everything else goes in as
+    given, including the original records, because those are what the frozen
+    preparation checks and what it derives the document from.
     """
-    return content_hash(value={
-        "metric_id": metric_id,
-        "target": source_arguments["target"],
-        "source_references": source_arguments["source_references"],
-        "source_filings": source_arguments["source_filings"],
-        "raw_bytes": {asset_id: sha256_bytes(content=raw) for asset_id, raw
-                      in sorted(source_arguments["raw_bytes_by_id"].items())}})
+    _need(set(source_arguments) == PREPARATION_ARGUMENTS,
+          "HISTORICAL_TEXT_SHARED_KEY_ARGUMENTS_CHANGED:"
+          + ",".join(sorted(set(source_arguments) ^ PREPARATION_ARGUMENTS)))
+    keyed = {name: value for name, value in source_arguments.items()
+             if name not in _BYTE_ARGUMENTS}
+    keyed["raw_bytes"] = {asset_id: sha256_bytes(content=raw) for asset_id, raw
+                          in sorted(source_arguments["raw_bytes_by_id"].items())}
+    return content_hash(value={"metric_id": metric_id, **keyed})
 
 
 def prepare_business_text_sources(*, metric_id, **source_arguments):
