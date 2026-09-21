@@ -1,0 +1,73 @@
+{
+ "blocks": [
+  {
+   "block_index": 1881,
+   "emphasis": false,
+   "raw_end_byte": 2029460,
+   "raw_span_sha256": "38aa70fdfcef9eed6f97c49abc9ad2d21cdb9d5429d5f34d52f4817f9507f66f",
+   "raw_start_byte": 2029392,
+   "text": "Evaluation of product liability and other product-related litigation",
+   "text_length": 68
+  },
+  {
+   "block_index": 1882,
+   "emphasis": false,
+   "raw_end_byte": 2031129,
+   "raw_span_sha256": "62300b870515a5bd7a7602b6bb4a6434d624c9b99986ac00575705fc541b1f4c",
+   "raw_start_byte": 2029610,
+   "text": "As discussed in Notes 1S and 16 to the consolidated financial statements, the Company is involved in product liability and other product-related litigation, which can include personal injury, consumer fraud, off-label promotion, securities, antitrust and breach of contract claims, among others. Certain of these pending product and other product-related legal proceedings could result in losses that could be substantial. The accrued liability and/or disclosure for the pending product liability and other product-related legal proceedings requires a complex series of judgments by the Company about future events, which involves a number of uncertainties.",
+   "text_length": 657
+  },
+  {
+   "block_index": 1883,
+   "emphasis": false,
+   "raw_end_byte": 2031516,
+   "raw_span_sha256": "c3ec7fb5f404aaad8222ab26e9528ad2e808bf8d338c190ab020bbf06190b6ba",
+   "raw_start_byte": 2031279,
+   "text": "We identified the evaluation of product liability and other product-related litigation as a critical audit matter. Challenging auditor judgment was required to evaluate the Company’s judgments about future events and uncertainties.",
+   "text_length": 231
+  },
+  {
+   "block_index": 1884,
+   "emphasis": false,
+   "raw_end_byte": 2032929,
+   "raw_span_sha256": "66d472f58fdc2a4ec7d5274f05383bd84fffd755c4969b2c61a6fcc27a77a0e8",
+   "raw_start_byte": 2031666,
+   "text": "The following are the primary procedures we performed to address this critical audit matter. We evaluated the design and tested the operating effectiveness of certain internal controls over the Company’s product liability and other product-related litigation processes, including controls related to (1) the evaluation of information from external and internal legal counsel, (2) forward-looking expectations, and (3) new legal proceedings, or other legal proceedings not currently reserved or disclosed. We read letters received directly from the Company’s external and internal legal counsel that described the Company’s probable or reasonably possible legal contingency to pending product liability and other product-related legal proceedings. We inspected the Company’s minutes from meetings of the Audit Committee, which included the status of key litigation matters. We evaluated the Company’s ability to estimate its monetary exposure to pending product and other product-related legal proceedings by comparing historically recorded liabilities to actual monetary amounts incurred upon resolution of prior legal matters. We analyzed relevant publicly available information about the Company, its competitors, and the industry.",
+   "text_length": 1233
+  },
+  {
+   "block_index": 2175,
+   "emphasis": false,
+   "raw_end_byte": 2462273,
+   "raw_span_sha256": "e1aa21bb8c60eab4db0cc8f4586e8d9b98aff27ff039340bf5b62a6cb838eec2",
+   "raw_start_byte": 2461231,
+   "text": "Our estimates are often based on complex judgments and assumptions that we believe to be reasonable, but that can be inherently uncertain and unpredictable. If our estimates and assumptions are not representative of actual outcomes, our results could be materially impacted. As future events and their effects cannot be determined with precision, our estimates and assumptions may prove to be incomplete or inaccurate, or unanticipated events and circumstances may occur that might cause us to change those estimates and assumptions. We are subject to risks and uncertainties that may cause actual results to differ from estimated amounts, such as changes in the healthcare environment, competition, litigation, legislation, development of competing assets by us or others, regulatory actions, or product recalls or withdrawals. We regularly evaluate our estimates and assumptions using historical experience and expectations about the future. We adjust our estimates and assumptions when facts and circumstances indicate the need for change.",
+   "text_length": 1042
+  },
+  {
+   "block_index": 2240,
+   "emphasis": false,
+   "raw_end_byte": 2511262,
+   "raw_span_sha256": "d70491d92a93e12ceed3caa4169dc14f0f8b631c3ea7258f1485a53e343917b4",
+   "raw_start_byte": 2510159,
+   "text": "In determining the reserve percentages for each pool of trade accounts receivables, we considered our historical experience with certain customers and customer types, regulatory and legal environments, country and political risk, and other relevant current and future forecasted macroeconomic factors. These credit risk indicators are monitored on a quarterly basis to determine whether there have been any changes in the economic environment that would indicate the established reserve percentages should be adjusted, and are considered on a regional basis to reflect more geographic-specific metrics. Additionally, write-offs and recoveries of customer receivables are tracked against collections on a quarterly basis to determine whether the reserve percentages remain appropriate. When management becomes aware of certain customer-specific factors that impact credit risk, specific allowances for these known troubled accounts are recorded. Trade accounts receivable are written off after all reasonable means to collect the full amount (including litigation, where appropriate) have been exhausted.",
+   "text_length": 1103
+  }
+ ],
+ "how_to_re_derive": "scripts/vnext/text_coverage.build_text_document over the raw bytes of the source_reference below, which the repository already holds; block_index indexes document['blocks']. raw_start_byte/raw_end_byte are offsets into those exact bytes and raw_span_sha256 is that span's digest, so each quote can be checked against the original without trusting this file.",
+ "not_a_full_text_archive": "only the blocks a judgement turns on are here. The other 93 are located by index and span in the run material rather than copied, because the immutable source already holds them.",
+ "record_type": "ISSUE_47_D02_DECISIVE_BLOCK_TEXT",
+ "source_document": {
+  "accession": "0000078003-26-000026",
+  "block_count": 4507,
+  "company_id": "pfizer",
+  "document_name": "pfe-20251231.htm",
+  "period_selection_id": "sha256:5a8696e10e937e1e89c552ec2b4b9c00980a5280003b47c65f54905fea203aff",
+  "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+  "raw_byte_length": 5222324,
+  "report_end": "2025-12-31",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm"
+ },
+ "why_this_file_exists": "pfizer-2025-scope-blocks.txt prints each block's first 150 characters. That is enough to say which blocks were selected and enough for a judgement whose decisive words are in the opening clause. It is not enough for a judgement about a sentence further in, and two of the six over-taken blocks are exactly that: the review checked and found the quoted sentence for block 2240 is not in the preview at all. So these six are re-derived from the saved original with the production parser and kept whole."
+}

@@ -36,6 +36,7 @@ implemented and never run; a Run can be FROZEN and PASSED and hold another
 item's text. Nothing here turns a missing implementation into "the issuer did
 not disclose", and nothing here promotes EXACT into business acceptance.
 """
+import re
 from pathlib import Path
 
 from .canonical import content_hash, sha256_file, strict_json_file
@@ -48,6 +49,7 @@ from . import historical_structural_results as structural
 from .sources import resolve_repository_file
 
 
+_SHA = re.compile(r"sha256:[0-9a-f]{64}\Z")
 POLICY_PATH = "config/issue28_normal_results_v2.json"
 DEFECT_REGISTER_PATH = "docs/evidence/issue47_history/known_result_defects.json"
 RECORD_TYPE = "HISTORICAL_COVERAGE_MATRIX"
@@ -123,7 +125,13 @@ def known_result_defects(*, repo_root: Path):
         # already names one bad result has nothing to release: it withdraws
         # that result, not the coordinate.
         _need(isinstance(release, dict) and isinstance(release.get("result_id"), str)
-              and release["result_id"], "COVERAGE_DEFECT_RELEASE_NAMES_NO_RESULT")
+              and bool(_SHA.match(release["result_id"])),
+              "COVERAGE_DEFECT_RELEASE_NAMES_NO_RESULT")
+        # A release that does not name the version it was produced under is
+        # refused at load rather than silently widened to every version.
+        _need(isinstance(release.get("requirement_closure_hash"), str)
+              and bool(_SHA.match(release["requirement_closure_hash"])),
+              "COVERAGE_DEFECT_RELEASE_NAMES_NO_VERSION")
         _need(defect.get("result_id") is None,
               "COVERAGE_DEFECT_RELEASE_ON_RESULT_SCOPED_ENTRY")
     return register["defects"]
@@ -150,8 +158,15 @@ def _release_covers(*, defect, result, receipt):
     result_id = (result or {}).get("result_id")
     if result_id is None or release.get("result_id") != result_id:
         return False
+    # Both fields are required. The first version read the version as
+    # optional - "closure is None or it matches" - so an entry that simply
+    # omitted it, or wrote null, released the coordinate under every version.
+    # The case name said the version must be named and the code only checked
+    # it when it happened to be there.
     closure = release.get("requirement_closure_hash")
-    return closure is None or (receipt or {}).get("requirement_closure_hash") == closure
+    if not isinstance(closure, str) or not _SHA.match(closure):
+        return False
+    return (receipt or {}).get("requirement_closure_hash") == closure
 
 
 def _matching_defect(*, defects, company_id, metric_id, report_end, result, receipt):
@@ -188,6 +203,9 @@ _AMBIGUITY_NOTES = {
         "closure and no closure was requested",
     "RUN_RECEIPT_AMBIGUOUS":
         "several receipts under one closure record different results",
+    "RUN_RECEIPT_IDENTITY_CONFLICT":
+        "receipts sharing one result identity disagree on the measurement that "
+        "identity is supposed to distinguish",
 }
 
 
@@ -199,7 +217,7 @@ def _completeness(entry):
             not receipt["manifest_file_hashes_verified"])
 
 
-def _select_receipt(*, found, closure):
+def _select_receipt(*, found, closure, selection_id=None):
     """Which receipt this position reports, in three separate steps.
 
     Version, then status, then duplicates - answering them together is what
@@ -224,7 +242,8 @@ def _select_receipt(*, found, closure):
     one outcome seen twice. Ambiguity is when the result identities differ.
     """
     empty = {"candidates": [], "receipt": None, "result": None,
-             "ambiguity": None, "status_uniform": True}
+             "ambiguity": None, "status_uniform": True,
+             "row": None, "row_ambiguity": None, "identity": None}
     if not found:
         return empty
     if closure is not None:
@@ -245,16 +264,101 @@ def _select_receipt(*, found, closure):
     uniform = len({_completeness(entry) for entry in ranked}) == 1
     if len({entry["result"]["result_id"] for entry in ranked}) > 1:
         return {"candidates": candidates, "receipt": None, "result": None,
-                "ambiguity": "RUN_RECEIPT_AMBIGUOUS", "status_uniform": uniform}
+                "ambiguity": "RUN_RECEIPT_AMBIGUOUS", "status_uniform": uniform,
+                "row": None, "row_ambiguity": None, "identity": None}
+    # The reason duplicates may be merged is that result_id is said to differ
+    # whenever the measurement does. Merging on that claim without checking it
+    # is assuming it; these entries carry what the coordinate key does not, so
+    # the claim is checked here and a disagreement is reported rather than
+    # averaged away. run_id is excluded because it is the one field two runs
+    # recording one result are expected to differ on.
+    measurements = {content_hash(value={key: value
+                                        for key, value in entry["identity"].items()
+                                        if key != "run_id"})
+                    for entry in ranked}
+    if len(measurements) > 1:
+        return {"candidates": candidates, "receipt": None, "result": None,
+                "ambiguity": "RUN_RECEIPT_IDENTITY_CONFLICT", "status_uniform": uniform,
+                "row": None, "row_ambiguity": None, "identity": None}
+    row, row_ambiguity = _row_evidence(candidates=ranked, selection_id=selection_id)
     return {"candidates": candidates, "receipt": ranked[0]["receipt"],
             "result": ranked[0]["result"], "ambiguity": None,
-            "status_uniform": uniform}
+            "status_uniform": uniform, "row": row, "row_ambiguity": row_ambiguity,
+            "identity": ranked[0]["identity"]}
+
+
+def _row_evidence(*, candidates, selection_id):
+    """Which of these runs rendered the row, which is not the same question.
+
+    Choosing one receipt to represent the position and then reading every
+    layer off it loses evidence that is really there. A dependency metric's
+    result is recorded in its own Run and again in the Run that consumes it -
+    B01 in the B01 Run and in the B03 Run - and the row for B01 is rendered
+    beside the B01 Run. Whichever of the two happened to sort first decided
+    whether the position read as having reached a public row at all, so the
+    same result read as rendered or not rendered depending on two run_ids.
+
+    So the version, the result identity and the period selection are settled
+    first - they are what makes these runs comparable - and then each layer is
+    associated with the evidence that actually carries it. The row layer names
+    its own run, which is how a reader can tell it is not the one the native
+    layer names.
+
+    Bundles that disagree on the period selection are not two views of one
+    measurement, so that is reported rather than resolved. A bundle the reader
+    refused, a bundle that was rendered from another result and no bundle at
+    all are three different facts, and each is named rather than collapsed
+    into "no row".
+
+    ``selection_id`` is the period selection this coordinate resolves to now.
+    The bundle carries the one the renderer used, and until they were compared
+    the field sat beside the key without being checked - a row rendered for a
+    different filing choice of the same coordinate would have counted.
+    """
+    bundles = [(entry, entry["receipt"].get("public_row")) for entry in candidates]
+    refused = [bundle["refusal"] for _, bundle in bundles
+               if bundle is not None and not bundle["accepted"]]
+    with_row = [entry for entry, bundle in bundles
+                if bundle is not None and bundle["accepted"]
+                and bundle["result_id"] == entry["result"]["result_id"]]
+    if not with_row:
+        if refused:
+            return None, sorted(refused)[0]
+        if any(bundle is not None for _, bundle in bundles):
+            return None, "ROW_BUNDLE_IS_FOR_ANOTHER_RESULT"
+        return None, None
+    selections = {entry["receipt"]["public_row"]["period_selection_id"]
+                  for entry in with_row}
+    if len(selections) > 1:
+        return None, "ROW_BUNDLE_PERIOD_SELECTION_AMBIGUOUS"
+    if selection_id is not None and selections != {selection_id}:
+        return None, "ROW_BUNDLE_PERIOD_SELECTION_IS_NOT_THIS_COORDINATE_S"
+    # The renderer is bound by the Requirement closure these candidates already
+    # share, so agreement here is that binding holding rather than a second
+    # policy. Checking it is how a bundle written by something other than the
+    # renderer that closure names stops being indistinguishable from one that
+    # was, and the digests are reported so the reader need not take it on trust.
+    renderers = {(entry["receipt"]["public_row"]["renderer_sha256"],
+                  entry["receipt"]["public_row"]["presentation_policy_sha256"])
+                 for entry in with_row}
+    if len(renderers) > 1:
+        return None, "ROW_BUNDLE_RENDERER_AMBIGUOUS"
+    # Prefer a row rendered from a frozen Run over one rendered from an open
+    # replay; among equals, the run_id keeps it deterministic.
+    ordered = sorted(with_row,
+                     key=lambda entry: (entry["receipt"]["public_row"]["status"]
+                                        != "FROZEN_CANDIDATE",
+                                        _completeness(entry),
+                                        str(entry["receipt"]["run_id"])))
+    chosen = ordered[0]
+    return {"receipt": chosen["receipt"], "bundle": chosen["receipt"]["public_row"],
+            "rendered_by_other_runs": len(with_row) - 1}, None
 
 
 NOT_PROVEN = "NOT_PROVEN"
 
 
-def _delivery(*, receipt, result, status, defect, defects):
+def _delivery(*, receipt, result, status, defect, defects, row=None, row_ambiguity=None):
     """The three layers a delivered position has, each proved or not.
 
     verified_outcome answers one question - did an unambiguous, frozen,
@@ -290,26 +394,42 @@ def _delivery(*, receipt, result, status, defect, defects):
         layers["native_run"] = {"proven": True, "run_id": receipt["run_id"],
                                 "requirement_closure_hash": receipt["requirement_closure_hash"],
                                 "result_id": result["result_id"]}
-    row = (receipt or {}).get("public_row")
+    # The row layer is associated with the run that rendered it, which is not
+    # always the run the native layer reports.
+    bundle = (row or {}).get("bundle")
     if result is None:
         layers["public_row"] = {"proven": False, "reason": NOT_PROVEN + ":NO_RESULT"}
-    elif row is None:
-        # No bundle beside the Run. The renderer may never have been called, or
-        # may have refused; neither is readable from here, and guessing which
-        # would be the report inventing a state.
+    elif row_ambiguity is not None:
+        layers["public_row"] = {"proven": False, "reason": row_ambiguity}
+    elif bundle is None:
+        # No bundle beside any of this version's runs for this result. The
+        # renderer may never have been called, or may have refused; neither is
+        # readable from here, and guessing which would be inventing a state.
         layers["public_row"] = {"proven": False,
                                 "reason": NOT_PROVEN + ":NO_ROW_BUNDLE_BESIDE_THE_RUN"}
-    elif row["result_id"] != result["result_id"]:
+    elif bundle["status"] != "FROZEN_CANDIDATE":
+        # A row rendered from a mechanical replay of an open Run is evidence of
+        # something; it is not evidence that a frozen Run reached a public row.
         layers["public_row"] = {"proven": False,
-                                "reason": "ROW_BUNDLE_IS_FOR_ANOTHER_RESULT",
-                                "row_result_id": row["result_id"]}
+                                "reason": "ROW_BUNDLE_IS_AN_OPEN_RUN_PREVIEW",
+                                "rendered_by": row["receipt"]["run_id"]}
     else:
-        layers["public_row"] = {"proven": True, "row_hash": row["row_hash"],
-                                "evidence_count": row["evidence_count"],
-                                "receipt_id": row["receipt_id"]}
+        layers["public_row"] = {"proven": True, "row_hash": bundle["row_hash"],
+                                "evidence_count": bundle["evidence_count"],
+                                "receipt_id": bundle["receipt_id"],
+                                "period_selection_id": bundle["period_selection_id"],
+                                # Named because it can differ from the run the
+                                # native layer reports, and a reader should not
+                                # have to assume they are the same.
+                                "rendered_by": row["receipt"]["run_id"],
+                                "renderer_sha256": bundle["renderer_sha256"],
+                                "presentation_policy_sha256":
+                                    bundle["presentation_policy_sha256"],
+                                "also_rendered_by": row["rendered_by_other_runs"]}
+    # The same predicate the withdrawal uses. Comparing only the result
+    # identity here let one entry appear as both withdrawn_by and released.
     released = [entry["defect_id"] for entry in defects
-                if isinstance(entry.get("released"), dict)
-                and entry["released"].get("result_id") == (result or {}).get("result_id")]
+                if _release_covers(defect=entry, result=result, receipt=receipt)]
     layers["content_acceptance"] = {
         "proven": False,
         "reason": NOT_PROVEN + ":NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_ISSUE",
@@ -319,7 +439,8 @@ def _delivery(*, receipt, result, status, defect, defects):
 
 
 def _position(*, company_id, report_end, ordinal, metric_id, established,
-              original_saved, implemented, found, defects, candidate, closure=None):
+              original_saved, implemented, found, defects, candidate, closure=None,
+              selection_id=None):
     """One target position, with its four states kept apart.
 
     A route can exist without a Run, and a Run can record a result whose
@@ -327,7 +448,8 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
     which of the two is missing and the defect flag is separate from both.
     """
     fiscal_year, detail = None, None
-    selection = _select_receipt(found=found, closure=closure)
+    selection = _select_receipt(found=found, closure=closure,
+                                selection_id=selection_id)
     receipt, result, ambiguity = (selection["receipt"], selection["result"],
                                   selection["ambiguity"])
     if found:
@@ -351,7 +473,14 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
         detail = {"note": _AMBIGUITY_NOTES[ambiguity],
                   "requirement_closure_hashes": sorted(
                       {entry["receipt"]["requirement_closure_hash"] for entry in found}),
-                  "result_ids": sorted({entry["result"]["result_id"] for entry in found})}
+                  "result_ids": sorted({entry["result"]["result_id"] for entry in found}),
+                  # What the coordinate key does not distinguish, shown rather
+                  # than summarised, because that is what the disagreement is
+                  # about when the result identities are equal.
+                  "measurements": sorted(
+                      ({key: value for key, value in entry["identity"].items()
+                        if key != "run_id"} for entry in found),
+                      key=lambda measurement: content_hash(value=measurement))}
     elif result is None:
         # Implemented and not run is not the same as not implemented, and it is
         # not a disclosure claim either. A requested closure that no receipt
@@ -384,6 +513,12 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
             "requirement_closure_hash": receipt["requirement_closure_hash"] if receipt else None,
             "validation_status": receipt["validation_status"] if receipt else None,
             "result_id": (result or {}).get("result_id"),
+            # The measurement behind the coordinate: the window actually
+            # measured, the scope and the value kind. Carried out of the
+            # selector so the summary reports what it merged on rather than
+            # leaving the fields beside the key unread.
+            "result_identity": selection["identity"],
+            "period_selection_id": selection_id,
             "known_content_defect": defect["defect_id"] if defect else None,
             # A recorded result is not a checked one. Content acceptance is a
             # separate state that no field of a Run receipt can supply.
@@ -400,7 +535,9 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
             # not proven. verified_outcome below is the first of them and is
             # not a delivery rate.
             "delivery": _delivery(receipt=receipt, result=result, status=status,
-                                  defect=defect, defects=defects),
+                                  defect=defect, defects=defects,
+                                  row=selection["row"],
+                                  row_ambiguity=selection["row_ambiguity"]),
             "verified_outcome": (ran and defect is None
                                  and status.startswith(("VALUE_", "N_A_STRUCTURAL"))
                                  and receipt["run_status"] == "FROZEN"
@@ -464,7 +601,8 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                                      original_saved=original_saved,
                                      implemented=implemented, found=found,
                                      defects=defects, candidate=candidate,
-                                     closure=requirement_closure_hash)
+                                     closure=requirement_closure_hash,
+                                     selection_id=entry["selection_id"])
                 if position["fiscal_year"] is not None and entry["fiscal_year"] is None:
                     entry["fiscal_year"] = position["fiscal_year"]
                 positions.append(position)
@@ -489,7 +627,8 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                     "run_id": None, "run_status": None,
                     "requirement_closure_hash": None, "validation_status": None,
                     "run_receipt_hashes_verified": False,
-                    "result_id": None, "known_content_defect": None,
+                    "result_id": None, "result_identity": None,
+                    "period_selection_id": None, "known_content_defect": None,
                     "receipt_status_uniform": True,
                     "delivery": _delivery(receipt=None, result=None,
                                           status="TARGET_PERIOD_NOT_DISCOVERED",

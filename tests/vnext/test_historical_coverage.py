@@ -29,14 +29,33 @@ from vnext.historical_coverage import (STRUCTURAL_APPLICABILITY_METRICS,
                                        CoverageError, build_coverage_matrix,
                                        declared_metric_ids, known_result_defects)
 from vnext.historical_run_receipts import RunReceiptError, read_run_receipt
+from vnext.normal_period_selection import resolve_period_selection
 
 MACYS_PERIOD = "2026-01-31"
+_SELECTION = {}
+
+
+def _selection_id():
+    """The period selection this coordinate really resolves to.
+
+    A bundle carries the selection the renderer used, and the report now
+    compares it with the one the coordinate resolves to. A fixture that wrote
+    a placeholder there would be testing the comparison against a value no
+    coordinate has, so it reads the real one once and caches it.
+    """
+    if not _SELECTION:
+        with original_sources_only():
+            _SELECTION["id"] = resolve_period_selection(
+                repo_root=ROOT, company_id="macys",
+                report_end=MACYS_PERIOD)["selection_id"]
+    return _SELECTION["id"]
 
 
 def _write_run(root, *, company_id, metric_id, period_end, result_id, quality="EXACT",
                value="1", applicability="APPLICABLE", publication="PUBLISHED",
                status="FROZEN", validation="PASSED", closure="sha256:" + "0" * 64,
-               omit_hashes=(), run_id=None, row_bundle=None):
+               omit_hashes=(), run_id=None, row_bundle=None, extra_results=(),
+               row_bundle_metric="B01", row_bundle_overrides=None):
     """A minimal frozen run directory whose manifest describes its own files.
 
     Built here rather than copied from a real Run so the receipt reader is
@@ -51,6 +70,12 @@ def _write_run(root, *, company_id, metric_id, period_end, result_id, quality="E
                 "quality": quality, "publication": publication, "reason_code": "PASS",
                 "applicability": applicability, "period_start": "2025-02-02",
                 "period_end": period_end}]
+    # A Run records the results it consumed as well as the one it targeted -
+    # B01's result appears in the B01 Run and again in the B03 Run - so a
+    # fixture has to be able to hold more than one.
+    for other_metric, other_result in extra_results:
+        records.append({**records[0], "metric_id": other_metric,
+                        "result_id": other_result})
     (run_dir / "records.jsonl").write_text(
         "".join(json.dumps(r, sort_keys=True) + "\n" for r in records), encoding="utf-8")
     (run_dir / "validation.json").write_text(
@@ -78,36 +103,45 @@ def _write_run(root, *, company_id, metric_id, period_end, result_id, quality="E
         json.dumps(manifest, sort_keys=True) + "\n", encoding="utf-8")
     if row_bundle is not None:
         _write_row_bundle(run_dir, run_id=manifest["run_id"], status=status,
-                          result_id=row_bundle)
+                          result_id=row_bundle, metric_id=row_bundle_metric,
+                          overrides=row_bundle_overrides)
     return run_dir
 
 
 def _write_row_bundle(run_dir, *, run_id, status, result_id, evidence_count=2,
-                      corrupt=False):
+                      corrupt=False, reseal=True, metric_id="B01", overrides=None):
     """What the public renderer persists beside a Run, built the same way.
 
-    The receipt carries the hashes of the row and the evidence it was written
-    with, so the reader checks the bundle rather than trusting it. ``corrupt``
-    edits the row after the hash is taken, which is the case that has to be
-    refused.
+    ``corrupt`` edits the row after its hash is taken. ``overrides`` edits the
+    receipt - by name rather than by keyword, because several of its fields
+    share names with this function's own arguments - and ``reseal`` decides
+    whether its own identity is
+    recomputed afterwards - which is the difference between a bundle that has
+    obviously been edited and one that agrees with itself while describing
+    another Run. The second is the case the first version of the reader
+    accepted.
     """
     from vnext.canonical import content_hash
-    row = {"metric_id": "B01", "value": "1", "status": "EXACT"}
+    row = {"metric_id": metric_id, "value": "1", "status": "EXACT"}
     evidence = [{"n": index} for index in range(evidence_count)]
-    receipt = {"record_type": "HISTORICAL_PERIOD_ROW_RECEIPT", "status": "FROZEN_CANDIDATE",
+    receipt = {"record_type": "HISTORICAL_PERIOD_ROW_RECEIPT",
+               "status": "FROZEN_CANDIDATE" if status == "FROZEN" else "VERIFIED_OPEN_PREVIEW",
                "run_id": run_id, "run_status": status, "requirement_id": "issue_47_v1",
-               "result_id": result_id, "primary_metric_id": "B01",
-               "period_selection_id": "sha256:" + "0" * 64,
+               "result_id": result_id, "primary_metric_id": metric_id,
+               "period_selection_id": _selection_id(),
                "row_hash": content_hash(value=row),
                "evidence_hash": content_hash(value=evidence),
                "evidence_count": len(evidence),
                "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+               "presentation_policy_sha256": "e" * 64, "renderer_sha256": "f" * 64,
                "production_authorized": False}
+    sealed = content_hash(value=receipt)
+    receipt = {**receipt, **(overrides or {})}
+    receipt["receipt_id"] = content_hash(value=receipt) if reseal else sealed
     if corrupt:
         row = {**row, "value": "999"}
     bundle = {"record_type": "HISTORICAL_PERIOD_ROW_BUNDLE", "schema_version": 1,
-              "row": row, "evidence": evidence,
-              "receipt": {**receipt, "receipt_id": content_hash(value=receipt)}}
+              "row": row, "evidence": evidence, "receipt": receipt}
     (Path(run_dir) / "row_receipt.json").write_text(
         json.dumps(bundle, sort_keys=True) + "\n", encoding="utf-8")
     return bundle
@@ -616,12 +650,72 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual(0, matrix["delivery_layer_counts"]["content_acceptance"])
 
     def test_a_row_bundle_for_another_result_does_not_count_as_this_one_s_row(self):
-        """A rendered row is evidence for the result it was rendered from."""
+        """A rendered row is evidence for the result it was rendered from.
+
+        Two different facts wear that description and they are not the same
+        strength. A bundle naming a result the Run does hold, under the metric
+        it says, is a real bundle for a different coordinate - the B01 row
+        rendered beside a Run that also recorded B03. A bundle naming a result
+        the Run never recorded is not a bundle for another coordinate; it does
+        not describe the Run it is lying beside at all, and the reader refuses
+        it by name instead of leaving the report to infer it.
+        """
+        b01, b03 = "sha256:" + "a" * 64, "sha256:" + "b" * 64
         with TemporaryDirectory(prefix="coverage-rowid-") as temporary:
             root = Path(temporary)
+            _write_run(root / "run-B03", company_id="macys", metric_id="B03",
+                       period_end=MACYS_PERIOD, result_id=b03,
+                       extra_results=(("B01", b01),),
+                       row_bundle=b03, row_bundle_metric="B03")
+            with original_sources_only():
+                held = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                             years=5, runs_root=root)
+        rows = {p["metric_id"]: p for p in held["positions"]
+                if p["report_end"] == MACYS_PERIOD}
+        # The bundle is B03's, so B03 reaches a public row and B01 does not.
+        self.assertTrue(rows["B03"]["delivery"]["public_row"]["proven"])
+        self.assertTrue(rows["B01"]["delivery"]["native_run"]["proven"])
+        self.assertFalse(rows["B01"]["delivery"]["public_row"]["proven"])
+        self.assertEqual("ROW_BUNDLE_IS_FOR_ANOTHER_RESULT",
+                         rows["B01"]["delivery"]["public_row"]["reason"])
+        with TemporaryDirectory(prefix="coverage-rowid-absent-") as temporary:
+            root = Path(temporary)
             _write_run(root / "run-B01", company_id="macys", metric_id="B01",
-                       period_end=MACYS_PERIOD, result_id="sha256:" + "a" * 64,
+                       period_end=MACYS_PERIOD, result_id=b01,
                        row_bundle="sha256:" + "e" * 64)
+            with original_sources_only():
+                absent = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        row = next(p for p in absent["positions"]
+                   if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+        self.assertTrue(row["delivery"]["native_run"]["proven"])
+        self.assertFalse(row["delivery"]["public_row"]["proven"])
+        self.assertEqual("ROW_BUNDLE_RESULT_IS_NOT_THIS_RUNS",
+                         row["delivery"]["public_row"]["reason"])
+
+    def test_a_row_rendered_for_another_period_selection_is_not_this_coordinate_s(self):
+        """The selection the coordinate resolves to is compared, not carried.
+
+        The report re-resolves the period selection for every established
+        coordinate and the renderer writes the one it used into the bundle.
+        Until they were compared, both were true statements sitting beside
+        each other: a row rendered from a different filing choice of the same
+        company and period end counted as this coordinate's public row.
+
+        A refusal here does not have to mean a bad bundle. It also happens
+        when saved metadata has moved since the Run - a later filing, a
+        refreshed shard - and the coordinate now selects a different original.
+        That is worth reporting rather than resolving, because which original
+        was measured is the difference the row would otherwise hide.
+        """
+        result_id = "sha256:" + "a" * 64
+        with TemporaryDirectory(prefix="coverage-rowsel-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-B01", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id=result_id,
+                       row_bundle=result_id,
+                       row_bundle_overrides={"period_selection_id":
+                                             "sha256:" + "7" * 64})
             with original_sources_only():
                 matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
                                                years=5, runs_root=root)
@@ -629,22 +723,280 @@ class HistoricalCoverageTest(unittest.TestCase):
                    if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
         self.assertTrue(row["delivery"]["native_run"]["proven"])
         self.assertFalse(row["delivery"]["public_row"]["proven"])
-        self.assertEqual("ROW_BUNDLE_IS_FOR_ANOTHER_RESULT",
+        self.assertEqual("ROW_BUNDLE_PERIOD_SELECTION_IS_NOT_THIS_COORDINATE_S",
+                         row["delivery"]["public_row"]["reason"])
+        # And the coordinate reports which selection it resolved to, so the
+        # two can be compared by a reader rather than taken on trust.
+        self.assertEqual(_selection_id(), row["period_selection_id"])
+
+    def test_every_field_the_reader_requires_is_one_the_renderer_writes(self):
+        """The fixture is not the writer, so the two are bound to each other.
+
+        These cases build bundles by hand. A reader that required a field the
+        renderer never writes would pass all of them and refuse every real
+        bundle, and a reader that stopped requiring one would pass them too.
+        So the required set is read off the renderer's own receipt literal
+        rather than off another copy of the list.
+        """
+        import ast
+        from vnext.historical_run_receipts import _ROW_BUNDLE_FIELDS
+        source = ast.parse(
+            (ROOT / "scripts/vnext/historical_projection.py").read_text(encoding="utf-8"))
+        function = next(node for node in ast.walk(source)
+                        if isinstance(node, ast.FunctionDef)
+                        and node.name == "render_historical_run")
+        written = set()
+        for node in ast.walk(function):
+            if not isinstance(node, ast.Assign) or not isinstance(node.value, ast.Dict):
+                continue
+            if [t.id for t in node.targets if isinstance(t, ast.Name)] != ["receipt"]:
+                continue
+            written = {key.value for key in node.value.keys
+                       if isinstance(key, ast.Constant) and isinstance(key.value, str)}
+        self.assertTrue(written, "the renderer's receipt literal was not found")
+        # receipt_id is sealed over the rest afterwards, so it is not in the
+        # literal; every other required field has to be.
+        self.assertEqual(set(), set(_ROW_BUNDLE_FIELDS) - {"receipt_id"} - written)
+
+    def test_two_rows_from_different_renderers_are_not_two_views_of_one_row(self):
+        """The renderer is closure-bound, so agreement is that binding holding.
+
+        The bundle records which renderer bytes and which presentation policy
+        produced the row. Both sat unread, so two rows for one result that came
+        out of different renderers would have been merged and whichever sorted
+        first reported - the same shape of mistake as picking a run and reading
+        every layer off it.
+        """
+        result_id = "sha256:" + "a" * 64
+        with TemporaryDirectory(prefix="coverage-renderer-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-a", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id=result_id,
+                       run_id="run:test:a", row_bundle=result_id)
+            _write_run(root / "run-b", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id=result_id,
+                       run_id="run:test:b", row_bundle=result_id,
+                       row_bundle_overrides={"renderer_sha256": "1" * 64})
+            with original_sources_only():
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        row = next(p for p in matrix["positions"]
+                   if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+        self.assertTrue(row["delivery"]["native_run"]["proven"])
+        self.assertFalse(row["delivery"]["public_row"]["proven"])
+        self.assertEqual("ROW_BUNDLE_RENDERER_AMBIGUOUS",
                          row["delivery"]["public_row"]["reason"])
 
-    def test_an_edited_row_bundle_is_refused_rather_than_read(self):
-        """The bundle is checked against its own hashes, like the records file."""
+    def test_an_edited_row_bundle_is_refused_without_erasing_the_run(self):
+        """The bundle is checked against its own hashes - and only the bundle.
+
+        This used to raise out of the whole read, which took the coverage
+        matrix down over one side-car file and discarded every other Run's
+        independently verified evidence with it. The manifest's three file
+        hashes are the Run's integrity envelope and they are checked
+        separately; row_receipt.json is not inside it, so an edited side-car
+        cannot forge the records and must not be allowed to erase them.
+        """
         with TemporaryDirectory(prefix="coverage-rowedit-") as temporary:
             run_dir = _write_run(Path(temporary) / "run", company_id="macys",
                                  metric_id="B01", period_end=MACYS_PERIOD,
                                  result_id="sha256:" + "a" * 64,
                                  row_bundle="sha256:" + "a" * 64)
-            self.assertIsNotNone(read_run_receipt(run_dir=run_dir)["public_row"])
+            self.assertTrue(read_run_receipt(run_dir=run_dir)["public_row"]["accepted"])
             _write_row_bundle(run_dir, run_id="run:test:" + "a" * 8, status="FROZEN",
                               result_id="sha256:" + "a" * 64, corrupt=True)
-            with self.assertRaises(RunReceiptError) as changed:
-                read_run_receipt(run_dir=run_dir)
-        self.assertEqual("ROW_BUNDLE_ROW_CHANGED", str(changed.exception))
+            receipt = read_run_receipt(run_dir=run_dir)
+        self.assertFalse(receipt["public_row"]["accepted"])
+        self.assertEqual("ROW_BUNDLE_ROW_CHANGED", receipt["public_row"]["refusal"])
+        # The Run itself still reads: its own files still hash to its manifest.
+        self.assertTrue(receipt["manifest_file_hashes_verified"])
+        self.assertEqual(["B01"], [r["metric_id"] for r in receipt["results"]])
+        # An unreadable bundle is a third state, named rather than reported as
+        # an absent row.
+        with TemporaryDirectory(prefix="coverage-rowjunk-") as temporary:
+            run_dir = _write_run(Path(temporary) / "run", company_id="macys",
+                                 metric_id="B01", period_end=MACYS_PERIOD,
+                                 result_id="sha256:" + "a" * 64,
+                                 row_bundle="sha256:" + "a" * 64)
+            (run_dir / "row_receipt.json").write_text("{not json", encoding="utf-8")
+            junk = read_run_receipt(run_dir=run_dir)
+        self.assertFalse(junk["public_row"]["accepted"])
+        self.assertTrue(junk["public_row"]["refusal"].startswith("ROW_BUNDLE_UNREADABLE:"))
+
+    def test_a_row_bundle_must_describe_the_run_it_is_lying_beside(self):
+        """Agreeing with itself is not describing this Run.
+
+        The first version of the reader checked the receipt's summary of its
+        own row and evidence and stopped there. An external probe rewrote the
+        receipt's run, its Requirement and its source validation, left the row
+        and the evidence untouched, and the bundle was still read - so the
+        position still counted as having reached a public row.
+
+        Each case here reseals the receipt, so its own identity is consistent
+        and the Run-binding checks are what has to refuse it. Without that
+        every case would stop at the identity check and the rest would be
+        unexercised.
+        """
+        result_id = "sha256:" + "a" * 64
+        run_id = "run:test:complete"
+        cases = {
+            "ROW_BUNDLE_IS_FOR_ANOTHER_RUN": {"run_id": "run:test:elsewhere"},
+            "ROW_BUNDLE_SOURCE_VALIDATION_CHANGED:NOT_REPLAYED":
+                {"source_validation": "NOT_REPLAYED"},
+            "ROW_BUNDLE_RESULT_IS_NOT_THIS_RUNS": {"result_id": "sha256:" + "e" * 64},
+            "ROW_BUNDLE_PERIOD_SELECTION_INVALID": {"period_selection_id": "not-a-hash"},
+            "ROW_BUNDLE_STATE_DISAGREES_WITH_RUN": {"status": "VERIFIED_OPEN_PREVIEW"},
+        }
+        for reason, changes in cases.items():
+            with self.subTest(reason=reason):
+                with TemporaryDirectory(prefix="coverage-bundle-bind-") as temporary:
+                    run_dir = _write_run(Path(temporary) / "run", company_id="macys",
+                                         metric_id="B01", period_end=MACYS_PERIOD,
+                                         result_id=result_id, run_id=run_id)
+                    _write_row_bundle(run_dir, run_id=run_id, status="FROZEN",
+                                      result_id=result_id, overrides=changes)
+                    refused = read_run_receipt(run_dir=run_dir)
+                self.assertFalse(refused["public_row"]["accepted"])
+                self.assertEqual(reason, refused["public_row"]["refusal"])
+                # Refusing the side-car does not refuse the Run. Its own three
+                # file hashes are checked separately and still hold.
+                self.assertTrue(refused["manifest_file_hashes_verified"])
+        # A receipt whose own identity was not recomputed is refused before any
+        # of those, which is a different failure and has its own reason.
+        with TemporaryDirectory(prefix="coverage-bundle-stale-") as temporary:
+            run_dir = _write_run(Path(temporary) / "run", company_id="macys",
+                                 metric_id="B01", period_end=MACYS_PERIOD,
+                                 result_id=result_id, run_id=run_id)
+            _write_row_bundle(run_dir, run_id=run_id, status="FROZEN",
+                              result_id=result_id, reseal=False,
+                              overrides={"requirement_id": "issue_28_v13"})
+            stale = read_run_receipt(run_dir=run_dir)
+        self.assertEqual("ROW_BUNDLE_RECEIPT_IDENTITY_CHANGED",
+                         stale["public_row"]["refusal"])
+
+    def test_a_row_rendered_by_one_run_is_not_lost_because_another_was_reported(self):
+        """B01's row is rendered beside the B01 Run, not beside B03's.
+
+        Choosing one receipt to represent the position and reading every layer
+        off it made the row layer depend on two run_ids: whichever sorted
+        first decided whether the position had reached a public row. The
+        version, the result identity and the period selection settle which
+        runs are comparable; after that each layer is associated with the
+        evidence that carries it, and the row layer names its own run.
+        """
+        result_id = "sha256:" + "a" * 64
+
+        def row_layer(with_bundle, without_bundle):
+            with TemporaryDirectory(prefix="coverage-row-assoc-") as temporary:
+                root = Path(temporary)
+                carrier = _write_run(root / with_bundle, company_id="macys",
+                                     metric_id="B01", period_end=MACYS_PERIOD,
+                                     result_id=result_id, run_id="run:test:" + with_bundle)
+                _write_row_bundle(carrier, run_id="run:test:" + with_bundle,
+                                  status="FROZEN", result_id=result_id)
+                _write_run(root / without_bundle, company_id="macys", metric_id="B01",
+                           period_end=MACYS_PERIOD, result_id=result_id,
+                           run_id="run:test:" + without_bundle)
+                with original_sources_only():
+                    matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                                   years=5, runs_root=root)
+            row = next(p for p in matrix["positions"]
+                       if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+            return row["delivery"]
+
+        later = row_layer("run-z-carrier", "run-a-plain")
+        earlier = row_layer("run-a-carrier", "run-z-plain")
+        for layers in (later, earlier):
+            self.assertTrue(layers["native_run"]["proven"])
+            self.assertTrue(layers["public_row"]["proven"])
+        # And the row names the run that rendered it, which is not always the
+        # run the native layer reports.
+        self.assertEqual("run:test:run-z-carrier", later["public_row"]["rendered_by"])
+        self.assertEqual("run:test:run-a-carrier", earlier["public_row"]["rendered_by"])
+        self.assertEqual("run:test:run-a-plain", later["native_run"]["run_id"])
+
+    def test_a_row_rendered_from_an_open_run_is_a_preview_not_a_public_row(self):
+        with TemporaryDirectory(prefix="coverage-row-preview-") as temporary:
+            root = Path(temporary)
+            run_dir = _write_run(root / "run-open", company_id="macys", metric_id="B01",
+                                 period_end=MACYS_PERIOD, result_id="sha256:" + "a" * 64,
+                                 status="OPEN", validation="PASSED",
+                                 run_id="run:test:open")
+            _write_row_bundle(run_dir, run_id="run:test:open", status="OPEN",
+                              result_id="sha256:" + "a" * 64)
+            with original_sources_only():
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        layers = next(p for p in matrix["positions"]
+                      if p["report_end"] == MACYS_PERIOD
+                      and p["metric_id"] == "B01")["delivery"]
+        self.assertFalse(layers["native_run"]["proven"])
+        self.assertFalse(layers["public_row"]["proven"])
+        self.assertEqual("ROW_BUNDLE_IS_AN_OPEN_RUN_PREVIEW",
+                         layers["public_row"]["reason"])
+
+    def test_a_release_without_a_version_does_not_match_every_version(self):
+        """The case name said the version must be named; the code did not.
+
+        "closure is None or it matches" reads as optional, so an entry that
+        omitted the field, or wrote null, released the coordinate under every
+        version. The display list had the same hole from the other side: it
+        compared only the result identity, so one entry could appear as both
+        withdrawn_by and released.
+        """
+        result_id = "sha256:" + "a" * 64
+        closure = "sha256:" + "0" * 64
+        def register(release):
+            return [{"defect_id": "D", "company_id": "macys", "metric_id": "B01",
+                     "period_end": MACYS_PERIOD, "result_id": None, "released": release}]
+        cases = {
+            "names this version": ({"result_id": result_id,
+                                    "requirement_closure_hash": closure}, True),
+            "names another version": ({"result_id": result_id,
+                                       "requirement_closure_hash": "sha256:" + "9" * 64}, False),
+            "omits the version": ({"result_id": result_id}, False),
+            "version is null": ({"result_id": result_id,
+                                 "requirement_closure_hash": None}, False),
+            "version is not a hash": ({"result_id": result_id,
+                                       "requirement_closure_hash": "any"}, False),
+        }
+        for name, (release, released) in cases.items():
+            with self.subTest(release=name):
+                with TemporaryDirectory(prefix="coverage-release-version-") as temporary:
+                    root = Path(temporary)
+                    _write_run(root / "run-B01", company_id="macys", metric_id="B01",
+                               period_end=MACYS_PERIOD, result_id=result_id)
+                    with original_sources_only(), \
+                            patch("vnext.historical_coverage.known_result_defects",
+                                  return_value=register(release)):
+                        matrix = build_coverage_matrix(repo_root=ROOT,
+                                                       company_ids=["macys"], years=5,
+                                                       runs_root=root)
+                row = next(p for p in matrix["positions"]
+                           if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+                acceptance = row["delivery"]["content_acceptance"]
+                self.assertEqual(released, row["known_content_defect"] is None, name)
+                self.assertEqual(released, "D" in acceptance["released_defect_ids"], name)
+                # Withdrawn and released are the same predicate seen from two
+                # sides; an entry can never be both.
+                self.assertFalse(acceptance["withdrawn_by"] == "D"
+                                 and "D" in acceptance["released_defect_ids"], name)
+
+    def test_a_release_that_names_no_version_is_refused_at_load(self):
+        register = {"record_type": "KNOWN_RESULT_DEFECT_REGISTER", "schema_version": 2,
+                    "defects": [{"defect_id": "X", "company_id": "macys",
+                                 "metric_id": "B01", "period_end": MACYS_PERIOD,
+                                 "result_id": None,
+                                 "released": {"result_id": "sha256:" + "a" * 64}}]}
+        with TemporaryDirectory(prefix="coverage-release-noversion-") as temporary:
+            root = Path(temporary)
+            (root / "docs" / "evidence" / "issue47_history").mkdir(parents=True)
+            (root / "docs" / "evidence" / "issue47_history"
+             / "known_result_defects.json").write_text(
+                json.dumps(register, sort_keys=True) + "\n", encoding="utf-8")
+            with self.assertRaises(CoverageError) as refused:
+                known_result_defects(repo_root=root)
+        self.assertEqual("COVERAGE_DEFECT_RELEASE_NAMES_NO_VERSION", str(refused.exception))
 
     def test_what_a_coordinate_key_does_not_distinguish_is_carried_beside_it(self):
         """Same coordinate, different measurement, and the report can say so.

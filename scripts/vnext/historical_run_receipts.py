@@ -18,6 +18,7 @@ recorded content is right: a Run can be FROZEN, PASSED and EXACT and still hold
 another item's text. Those are separate states and the report keeps them apart.
 """
 import json
+import re
 from pathlib import Path
 
 from .canonical import content_hash, sha256_file, strict_json_file
@@ -115,12 +116,33 @@ def read_run_receipt(*, run_dir: Path):
             "results": sorted(results, key=lambda r: str(r["metric_id"])),
             "manifest_file_hashes_verified": not unverified,
             "verified_files": verified, "unverified_files": unverified,
-            "public_row": read_row_bundle(run_dir=run_dir),
+            "public_row": read_row_bundle(run_dir=run_dir, manifest=manifest,
+                                          results=results),
             "replayed": False, "business_content_verified": False}
     return {**body, "receipt_id": content_hash(value=body)}
 
 
-def read_row_bundle(*, run_dir: Path):
+_SHA = re.compile(r"sha256:[0-9a-f]{64}\Z")
+# What the renderer writes and what a reader may therefore require. Listed so
+# that a bundle missing any of them is refused rather than read partially.
+_ROW_BUNDLE_FIELDS = ("status", "run_id", "run_status", "requirement_id", "result_id",
+                      "primary_metric_id", "period_selection_id", "row_hash",
+                      "evidence_hash", "evidence_count", "source_validation",
+                      # What produced the row, not just what it was produced
+                      # from. The renderer writes both and they were sitting
+                      # unread; two rows for one result that came out of
+                      # different renderer or policy bytes are not two views
+                      # of one row.
+                      "presentation_policy_sha256", "renderer_sha256",
+                      "production_authorized", "receipt_id")
+# The renderer's two states. A preview is rendered from a mechanical replay of
+# an open Run and is evidence of something; it is not evidence that a frozen
+# Run reached a public row, so the reader keeps them apart instead of calling
+# both "a row exists".
+ROW_BUNDLE_STATES = {"FROZEN_CANDIDATE": "FROZEN", "VERIFIED_OPEN_PREVIEW": "OPEN"}
+
+
+def read_row_bundle(*, run_dir: Path, manifest, results):
     """What the public renderer wrote beside this Run, if it wrote anything.
 
     A Run that froze and validated is not the same as a position that reached
@@ -129,27 +151,84 @@ def read_row_bundle(*, run_dir: Path):
     cover the published items. Without this the report could only say "a Run
     exists" and leave the reader to assume the rest.
 
-    The bundle is checked rather than trusted. Its receipt carries the hashes
-    of the row and the evidence it was written with, so an edited bundle is
-    refused the same way an edited records file is.
+    The bundle is checked rather than trusted, and the first version of this
+    check was not enough. It verified the receipt's summary of its own row and
+    evidence and stopped there, so a bundle whose row and evidence were
+    untouched but whose receipt named another Run, another Requirement and
+    ``NOT_REPLAYED`` was still read - and the position still counted as having
+    reached a public row. Verifying that a document agrees with itself is not
+    verifying that it describes the Run it is lying beside.
+
+    So three things are checked now. The receipt's own identity is recomputed,
+    which is what the stale ``receipt_id`` in that probe failed. The Run
+    identity it claims - run, status, Requirement - has to be this Run's. And
+    the result it claims has to be one this Run actually recorded, under the
+    metric the receipt names.
+
+    What this does not claim: that a Run itself could not be forged. This is a
+    reader refusing evidence that does not match what it sits beside, not a
+    proof about Run construction.
+
+    A refused bundle is reported, not raised. The manifest's three file hashes
+    are the Run's integrity envelope and they are checked separately; this file
+    is not inside it, so a side-car that has been edited cannot forge the
+    records and refusing it should not erase them. Raising here took the whole
+    matrix down over one directory and threw away every other Run's
+    independently verified evidence with it - the same shape of mistake as
+    picking one run to read every layer off.
     """
     path = Path(run_dir) / ROW_BUNDLE_NAME
     if not path.is_file() or path.is_symlink():
         return None
+    try:
+        checked = _check_row_bundle(path=path, manifest=manifest, results=results)
+    except RunReceiptError as refusal:
+        return {"accepted": False, "refusal": str(refusal),
+                **{key: None for key in _ROW_BUNDLE_FIELDS}}
+    except ValueError as unreadable:
+        # A bundle that is not readable JSON, or not the shape strict_json_file
+        # accepts. Named as unreadable rather than reported as absent, because
+        # "there is no row" and "the row cannot be read" are different facts.
+        return {"accepted": False, "refusal": "ROW_BUNDLE_UNREADABLE:" + str(unreadable),
+                **{key: None for key in _ROW_BUNDLE_FIELDS}}
+    return {"accepted": True, "refusal": None, **checked}
+
+
+def _check_row_bundle(*, path: Path, manifest, results):
+    """The checks themselves, raising so that each names its own failure."""
     bundle = strict_json_file(path=path)
     _need(bundle.get("record_type") == ROW_BUNDLE_RECORD_TYPE,
           "ROW_BUNDLE_TYPE_INVALID")
     receipt, row, evidence = bundle["receipt"], bundle["row"], bundle["evidence"]
+    _need(set(_ROW_BUNDLE_FIELDS) <= set(receipt), "ROW_BUNDLE_RECEIPT_FIELDS_MISSING")
     _need(receipt["row_hash"] == content_hash(value=row),
           "ROW_BUNDLE_ROW_CHANGED")
     _need(receipt["evidence_hash"] == content_hash(value=evidence),
           "ROW_BUNDLE_EVIDENCE_CHANGED")
     _need(receipt["evidence_count"] == len(evidence),
           "ROW_BUNDLE_EVIDENCE_COUNT_CHANGED")
-    return {key: receipt[key] for key in (
-        "status", "run_id", "run_status", "requirement_id", "result_id",
-        "primary_metric_id", "period_selection_id", "row_hash", "evidence_hash",
-        "evidence_count", "source_validation", "production_authorized", "receipt_id")}
+    # The renderer builds receipt_id over the receipt without it, so the same
+    # computation reproduces it here or the receipt has been edited since.
+    identity = {key: value for key, value in receipt.items() if key != "receipt_id"}
+    _need(receipt["receipt_id"] == content_hash(value=identity),
+          "ROW_BUNDLE_RECEIPT_IDENTITY_CHANGED")
+    _need(receipt["run_id"] == manifest.get("run_id")
+          and receipt["run_status"] == manifest.get("status")
+          and receipt["requirement_id"] == manifest.get("requirement_id"),
+          "ROW_BUNDLE_IS_FOR_ANOTHER_RUN")
+    _need(receipt["status"] in ROW_BUNDLE_STATES
+          and ROW_BUNDLE_STATES[receipt["status"]] == manifest.get("status"),
+          "ROW_BUNDLE_STATE_DISAGREES_WITH_RUN")
+    named = [result for result in results
+             if result["result_id"] == receipt["result_id"]
+             and result["metric_id"] == receipt["primary_metric_id"]]
+    _need(len(named) == 1, "ROW_BUNDLE_RESULT_IS_NOT_THIS_RUNS")
+    _need(isinstance(receipt["period_selection_id"], str)
+          and bool(_SHA.match(receipt["period_selection_id"])),
+          "ROW_BUNDLE_PERIOD_SELECTION_INVALID")
+    _need(receipt["source_validation"] == "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+          "ROW_BUNDLE_SOURCE_VALIDATION_CHANGED:" + str(receipt["source_validation"]))
+    return {key: receipt[key] for key in _ROW_BUNDLE_FIELDS}
 
 
 def collect_run_receipts(*, runs_root: Path):
