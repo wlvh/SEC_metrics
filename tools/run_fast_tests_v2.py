@@ -149,6 +149,12 @@ SOURCE_TESTS += ("tests.vnext.test_historical_structural_results",)
 # load-bearing case asks the old gate and the new one the same question, so a
 # gate that accepted everything fails here rather than in a fetch.
 SOURCE_TESTS += ("tests.vnext.test_historical_source_acquisition",)
+# The pinned governance selection C04 will read. It asks the frozen selector
+# and the successor the same question about the same period with the same
+# blocks, so a successor that merely returned something fails there; 26 seconds
+# measured. Registered before the route is wired, because the selection is what
+# the route will rest on.
+SOURCE_TESTS += ("tests.vnext.test_historical_governance_input",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
