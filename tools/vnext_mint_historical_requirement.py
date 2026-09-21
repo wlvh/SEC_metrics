@@ -79,6 +79,12 @@ NEW_RULE_FILES = (
     # decide whether a position gets a structural non-applicability or an
     # implementation gap, so both roots check it.
     "scripts/vnext/historical_structural_results.py",
+    # Which annual report a pinned period means for the governance roles. The
+    # frozen selector takes the maximum report date across the loaded rows,
+    # which answers only for the newest year; these bytes decide which filing
+    # C04 compares, so both roots check them.
+    "scripts/vnext/historical_governance_input.py",
+    "scripts/vnext/historical_governance_results.py",
     "scripts/vnext/requirement_profile_v16.py",
 )
 

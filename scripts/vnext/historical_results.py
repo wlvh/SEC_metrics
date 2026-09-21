@@ -286,13 +286,20 @@ def _run_coordinate(*, pinned, primary):
             "period_end": window["period_end"]}
 
 
-def _historical_structural_run_input(*, repo_root, company_id, metric_id, period_selection,
+def _historical_component_run_input(*, repo_root, company_id, metric_id, period_selection,
                                      resolve):
-    """A Run whose only result is that the metric does not apply here.
+    """The Run shape around a component that has already produced its Result.
 
-    The same shape as the other routes' run input, with the same pinned
-    coordinate and the same admitted source set - what differs is that there
-    are no claims and no observations, because nothing was read from a filing.
+    Two routes hand over a finished Result rather than a graph to evaluate,
+    and they differ in what is behind it. The structural one read no filing at
+    all, so it carries no claims and no observations - its Result is that the
+    metric does not apply to this company. C04 read several and carries an
+    observation, or a withheld Result naming the material it could not read.
+
+    What they share, and what this owns, is the Run's shape: the same pinned
+    coordinate, the same admitted source set, and the component's own records.
+    It was named for the first of the two before there was a second; the name
+    now says what it does rather than who first used it.
     """
     component = resolve(repo_root=repo_root, company_id=company_id, metric_id=metric_id,
                         period_selection=period_selection)
@@ -334,16 +341,27 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
                                                  resolve_historical_structural_metric,
                                                  structurally_not_applicable)
     ACCESSION_METRICS = ("A01", "A02", "B12")
+    from .historical_governance_results import (
+        SUPPORTED_METRICS as GOVERNANCE_METRICS,
+        resolve_historical_governance_metric)
     if metric_id in TEXT_METRICS:
         return _historical_text_run_input(repo_root=repo_root, company_id=company_id,
                                           metric_id=metric_id,
                                           period_selection=period_selection)
+    # C04's Spec is not in the ordinary twenty-two, so like the text and
+    # structural routes this answers before that set is consulted. The
+    # component owns the comparison; this owns only the Run's shape.
+    if metric_id in GOVERNANCE_METRICS:
+        return _historical_component_run_input(
+            repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+            period_selection=period_selection,
+            resolve=resolve_historical_governance_metric)
     # A metric the company's traits put outside its own gate. Checked before
     # the Spec set below, because these Specs are not in it: a liquidity
     # coverage ratio has no ordinary route to be in.
     if metric_id in STRUCTURAL_METRICS and structurally_not_applicable(
             repo_root=repo_root, company_id=company_id, metric_id=metric_id):
-        return _historical_structural_run_input(
+        return _historical_component_run_input(
             repo_root=repo_root, company_id=company_id, metric_id=metric_id,
             period_selection=period_selection,
             resolve=resolve_historical_structural_metric)

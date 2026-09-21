@@ -1136,6 +1136,14 @@ Run）；批次还在写时读 runs 根目录必然遇到前者。同版本、�
 `NO_RESULT` 交叉：WITHHELD 与结构不适用同样渲染出一行，所以只看 `public_row` 的数
 分不出它们。Marriott 2023 实测 29 个坐标到达公共行，其中 7 个带数值。
 
+**C04 的历史路线**。`historical_governance_input.py` 只替换一条规则：冻结的
+`select_governance_metadata` 取全部已载行 `reportDate` 的最大值当"当期"，那只对最新
+年正确。读分片的 cutoff 本来就按期间写，`resolve_c04` 的比较未动。
+`historical_governance_results.py` 负责组装并把结果交给 `_historical_component_run_input`
+（原名 `_historical_structural_run_input`；现在两条路线共用它，名字改为说它做什么）。
+SourceSetManifest 不是 Run 记录类型，故与事件路线一样放在自己的槽位而非 `records`。
+来源缺失在同一边界内变成 WITHHELD Result 并点名缺的文件，而不是抛出导致没有 Run。
+
 **Issue #47 自己的获取准入**。`historical_source_acquisition.py` 与
 `tools/vnext_historical_sec.py` 用 `plan_historical_sources` 的去重声明做准入判断，
 因为原获取 CLI 的当期依赖发现实测只回溯一年。它不是规则文件（只做计划与准入、不执行

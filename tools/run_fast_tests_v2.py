@@ -155,6 +155,10 @@ SOURCE_TESTS += ("tests.vnext.test_historical_source_acquisition",)
 # measured. Registered before the route is wired, because the selection is what
 # the route will rest on.
 SOURCE_TESTS += ("tests.vnext.test_historical_governance_input",)
+# C04 through the pinned route. Its load-bearing case answers one company for
+# two periods and requires two different answers, so a route that ignored the
+# period fails there rather than in a batch.
+SOURCE_TESTS += ("tests.vnext.test_historical_governance_results",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

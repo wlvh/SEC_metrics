@@ -67,9 +67,14 @@ WIRED_EVENT_METRICS = ("C01", "E01", "E02", "E03", "E04", "E05")
 # the annual meeting's DEF 14A, and of the 82 proxies the saved submissions
 # indexes list, ten have accession material and all ten were filed in 2026.
 WIRED_TEXT_METRICS = ("D02",)
+# Auditor changes. Its two inputs already had historical routes - the pinned
+# annual chain and the fiscal window's 8-K item index - so what it needed was
+# the selection between them, not a new reader. It delivers where the
+# accession material is saved and names a source gap where it is not.
+WIRED_GOVERNANCE_METRICS = ("C04",)
 WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS
                                         + WIRED_ACCESSION_METRICS + WIRED_EVENT_METRICS
-                                        + WIRED_TEXT_METRICS))
+                                        + WIRED_TEXT_METRICS + WIRED_GOVERNANCE_METRICS))
 # Eight more, but only where the company's own registry traits put the metric
 # outside its Spec's gate. Six are gated on `financial` and none of the
 # companies whose periods are reachable is a bank; two are gated on `lodging`
