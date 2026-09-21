@@ -78,13 +78,37 @@
  "record_type": "ISSUE_47_WHAT_AN_EARLIER_YEAR_COSTS",
  "the_two_losses_have_different_causes": {
   "b02_and_b03": {
-   "cause": "the prior period's original. Marriott's saved originals are 2023, 2024 and 2025, so the 2024 target has its prior year saved and the 2023 target does not. B03 consumes B02, which is why one missing input takes two positions.",
    "lost_in": "2023 but not 2024, so it is not 'any earlier year'",
    "reason_codes": [
     "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED",
     "ALL_BRANCHES_REJECTED"
    ],
-   "why_it_matters_beyond_marriott": "this is the measured form of why the planner declares five primaries for four target-year gaps: each target reads the year before it, so a five-year frame needs six years of originals. A count that took one document per target year - which is what the withdrawn '30' did - would leave every earliest target in this state."
+   "the_recorded_prior_error": "SAVED_SOURCE_MISSING:.../000162828023003485/index.json - Marriott's FY2022 annual accession, which is the prior of the 2023 target. B02 declares a component with accession_role 'prior', so the route refuses before building the graph; B03 consumes B02, which is why one missing input takes two positions.",
+   "two_explanations_that_were_wrong": {
+    "first": "'the prior period's original is not saved'. Falsified by Ford: its 2025 target's prior primary is also missing and B02 and B03 are both EXACT.",
+    "second": "'the prior accession's index.json'. Falsified by Marriott 2024: its prior accession index is missing too and B02 is EXACT.",
+    "what_the_reason_code_did": "it named index.json, which is the first file tried, not the requirement. Reading the code alone would have produced the second wrong explanation and it would have looked measured."
+   },
+   "what_the_three_cases_actually_show": {
+    "ford_2025_prior_2024": {
+     "b02": "EXACT",
+     "index_json": "SAVED",
+     "primary": "MISSING"
+    },
+    "marriott_2023_prior_2022": {
+     "b02": "FAILS",
+     "index_json": "MISSING",
+     "primary": "MISSING"
+    },
+    "marriott_2024_prior_2023": {
+     "b02": "EXACT",
+     "index_json": "MISSING",
+     "primary": "SAVED"
+    },
+    "so": "neither file on its own is the requirement. The prior accession's material is, and the one case of the three where none of it is saved is the one that fails.",
+    "the_limit_of_this": "that the route has a fallback between the two is an inference from three outcomes, not something read out of the code. What is measured is the table."
+   },
+   "why_it_matters_beyond_marriott": "each target reads the year before it, so a five-year frame needs six years of accession material rather than five. That is the measured form of why the planner declares five primaries for four target-year gaps, and why the withdrawn count of 30 - one document per target year - would have left every earliest target in this state."
   },
   "the_six_event_metrics": {
    "cause": "the fiscal window's 8-K bodies and headers are not saved for any year before the current one. Measured separately at 476 filings across eight companies, which is class B of the acquisition plan.",
