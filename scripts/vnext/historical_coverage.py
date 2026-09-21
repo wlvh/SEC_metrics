@@ -105,26 +105,56 @@ def known_result_defects(*, repo_root: Path):
     register = strict_json_file(path=path)
     _need(register["record_type"] == "KNOWN_RESULT_DEFECT_REGISTER",
           "COVERAGE_DEFECT_REGISTER_TYPE_INVALID")
+    for defect in register["defects"]:
+        release = defect.get("released")
+        if release is None:
+            continue
+        # A release that names nothing releases nothing, and an entry that
+        # already names one bad result has nothing to release: it withdraws
+        # that result, not the coordinate.
+        _need(isinstance(release, dict) and isinstance(release.get("result_id"), str)
+              and release["result_id"], "COVERAGE_DEFECT_RELEASE_NAMES_NO_RESULT")
+        _need(defect.get("result_id") is None,
+              "COVERAGE_DEFECT_RELEASE_ON_RESULT_SCOPED_ENTRY")
     return register["defects"]
 
 
-def _matching_defect(*, defects, company_id, metric_id, report_end, result):
+def _release_covers(*, defect, result, receipt):
+    """Does this entry's release name the result in front of us?
+
+    A coordinate-level entry has to be able to stop withdrawing, or a repaired
+    defect withdraws its own repair forever. What it must not do is stop
+    withdrawing because a field was edited to say the work was done. The first
+    version released on ``repair_state`` ending in ``_RESULT_RECOMPUTED``,
+    which meant the same unrepaired receipt and the same unrepaired result
+    changed from withdrawn to verified when that string changed - the register
+    was asserting the outcome rather than pointing at it.
+
+    So the release names the repaired result by identity, and the version it
+    was produced under. Any other result at that coordinate, including the one
+    the defect was raised against, stays withdrawn.
+    """
+    release = defect.get("released")
+    if not isinstance(release, dict):
+        return False
+    result_id = (result or {}).get("result_id")
+    if result_id is None or release.get("result_id") != result_id:
+        return False
+    closure = release.get("requirement_closure_hash")
+    return closure is None or (receipt or {}).get("requirement_closure_hash") == closure
+
+
+def _matching_defect(*, defects, company_id, metric_id, report_end, result, receipt):
     """The defect entry that withdraws this position's result, if there is one.
 
-    An entry naming a ``result_id`` withdraws exactly that result. An entry
-    without one names a coordinate whose defect is not tied to a single Run -
-    an unresolved reference, for instance - and applies to whatever that
-    coordinate produces. A null ``result_id`` must not match a position that
-    produced nothing: the first version of this compared None to None and
-    marked all sixteen unwired metrics defective.
-
-    A coordinate-level entry stops withdrawing once its own ``repair_state``
-    records the result as recomputed. Without that, a repaired defect goes on
-    withdrawing the repaired result forever: the item-bound entry named a
-    coordinate that could not produce a result at all, and after the repair it
-    was withdrawing the correct 92-excerpt result it had asked for. An entry
-    naming a ``result_id`` is different - it names a specific bad result, which
-    stays withdrawn whatever later Runs do.
+    An entry naming a ``result_id`` withdraws exactly that result and nothing
+    else - it names a specific bad result, which stays withdrawn whatever later
+    Runs do. An entry without one names a coordinate whose defect is not tied
+    to a single Run - an unresolved reference, for instance - and applies to
+    whatever that coordinate produces until its release names a repaired
+    result. A null ``result_id`` must not match a position that produced
+    nothing: the first version of this compared None to None and marked all
+    sixteen unwired metrics defective.
     """
     result_id = (result or {}).get("result_id")
     for defect in defects:
@@ -133,13 +163,82 @@ def _matching_defect(*, defects, company_id, metric_id, report_end, result):
             if result_id is not None and named == result_id:
                 return defect
             continue
-        if str(defect.get("repair_state", "")).endswith("_RESULT_RECOMPUTED"):
+        if _release_covers(defect=defect, result=result, receipt=receipt):
             continue
         if (defect.get("company_id") == company_id
                 and defect.get("metric_id") == metric_id
                 and defect.get("period_end") == report_end):
             return defect
     return None
+
+
+_AMBIGUITY_NOTES = {
+    "RUN_RECEIPT_VERSION_AMBIGUOUS":
+        "receipts for this coordinate were written under more than one Requirement "
+        "closure and no closure was requested",
+    "RUN_RECEIPT_AMBIGUOUS":
+        "several receipts under one closure record different results",
+}
+
+
+def _completeness(entry):
+    """How much of a receipt was actually checkable, strongest first."""
+    receipt = entry["receipt"]
+    return (receipt["run_status"] != "FROZEN",
+            receipt["validation_status"] != "PASSED",
+            not receipt["manifest_file_hashes_verified"])
+
+
+def _select_receipt(*, found, closure):
+    """Which receipt this position reports, in three separate steps.
+
+    Version, then status, then duplicates - answering them together is what
+    made the answer depend on the order the run directories were read in.
+
+    First, which Requirement version is being reported? A coordinate run under
+    two versions has two receipts, and taking whichever came first is picking a
+    version by filename. The caller names the version it is asking about; with
+    no name and more than one present, that is an ambiguity to report.
+
+    Second, within that version, what state is each receipt in? A result
+    recorded in a Run that never froze, never validated, or whose files no
+    longer hash to its manifest is weaker evidence than the same result in a
+    Run that did all three, so the receipts are ordered by that and the
+    strongest is the one reported. ``receipt_status_uniform`` says whether
+    there was anything to order.
+
+    Third, and only then: are the remaining receipts one outcome recorded twice
+    or two outcomes that disagree? A dependency metric's result is recorded in
+    its own Run and again in the Run that consumes it - B01 appears in the B01
+    Run and in the B03 Run - and those carry the same result_id, so they are
+    one outcome seen twice. Ambiguity is when the result identities differ.
+    """
+    empty = {"candidates": [], "receipt": None, "result": None,
+             "ambiguity": None, "status_uniform": True}
+    if not found:
+        return empty
+    if closure is not None:
+        candidates = [entry for entry in found
+                      if entry["receipt"]["requirement_closure_hash"] == closure]
+    else:
+        versions = {entry["receipt"]["requirement_closure_hash"] for entry in found}
+        if len(versions) > 1:
+            return {**empty, "candidates": list(found),
+                    "ambiguity": "RUN_RECEIPT_VERSION_AMBIGUOUS"}
+        candidates = list(found)
+    if not candidates:
+        return empty
+    ranked = sorted(candidates,
+                    key=lambda entry: (_completeness(entry),
+                                       str(entry["receipt"]["run_id"]),
+                                       str(entry["result"]["result_id"])))
+    uniform = len({_completeness(entry) for entry in ranked}) == 1
+    if len({entry["result"]["result_id"] for entry in ranked}) > 1:
+        return {"candidates": candidates, "receipt": None, "result": None,
+                "ambiguity": "RUN_RECEIPT_AMBIGUOUS", "status_uniform": uniform}
+    return {"candidates": candidates, "receipt": ranked[0]["receipt"],
+            "result": ranked[0]["result"], "ambiguity": None,
+            "status_uniform": uniform}
 
 
 def _position(*, company_id, report_end, ordinal, metric_id, established,
@@ -150,30 +249,13 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
     content is wrong. Neither collapses into the other, so the status names
     which of the two is missing and the defect flag is separate from both.
     """
-    fiscal_year, receipt, result, detail, ambiguous = None, None, None, None, False
+    fiscal_year, detail = None, None
+    selection = _select_receipt(found=found, closure=closure)
+    receipt, result, ambiguity = (selection["receipt"], selection["result"],
+                                  selection["ambiguity"])
     if found:
-        # More than one receipt for a coordinate means the position was run
-        # under more than one Requirement closure. Taking found[-1] took
-        # whichever run directory sorted last by name, and then called it "the
-        # last written" - it is neither. The caller names the closure it is
-        # asking about; without one, several receipts is an ambiguity to report
-        # rather than a winner to pick.
-        candidates = ([entry for entry in found
-                       if entry["receipt"]["requirement_closure_hash"] == closure]
-                      if closure is not None else list(found))
-        # Several receipts for one coordinate is not automatically a
-        # disagreement. A dependency metric's result is recorded in its own Run
-        # and again in the Run that consumes it - B01 appears in the B01 Run
-        # and in the B03 Run - and those carry the same result_id, so they are
-        # one outcome seen twice. Ambiguity is when they differ.
-        if candidates and len({entry["result"]["result_id"]
-                               for entry in candidates}) == 1:
-            receipt = candidates[0]["receipt"]
-            result = candidates[0]["result"]
-        elif len(candidates) > 1:
-            ambiguous = True
         fiscal_year = next(((entry["receipt"]["target_period"] or {}).get("fiscal_year")
-                            for entry in (candidates or found)), None)
+                            for entry in (selection["candidates"] or found)), None)
     if not established:
         status = "TARGET_PERIOD_METADATA_BLOCKED"
         detail = {"reasons": candidate["metadata_blocking_reasons"]}
@@ -184,11 +266,12 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
     elif not implemented:
         status = "HISTORICAL_ROUTE_NOT_WIRED"
         detail = {"note": "no historical route for this metric yet"}
-    elif ambiguous:
-        # Several receipts and nothing to choose between them. Reporting any
-        # one of their outcomes would be reporting a guess.
-        status = "RUN_RECEIPT_AMBIGUOUS"
-        detail = {"note": "several receipts for this coordinate record different results",
+    elif ambiguity is not None:
+        # Nothing to choose between the receipts. Reporting any one of their
+        # outcomes would be reporting a guess, and which guess would depend on
+        # the order the run directories happened to be read in.
+        status = ambiguity
+        detail = {"note": _AMBIGUITY_NOTES[ambiguity],
                   "requirement_closure_hashes": sorted(
                       {entry["receipt"]["requirement_closure_hash"] for entry in found}),
                   "result_ids": sorted({entry["result"]["result_id"] for entry in found})}
@@ -204,7 +287,7 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
         detail = {key: result[key] for key in ("value", "unit", "quality", "publication",
                                                "reason_code", "period_start", "period_end")}
     defect = _matching_defect(defects=defects, company_id=company_id, metric_id=metric_id,
-                              report_end=report_end, result=result)
+                              report_end=report_end, result=result, receipt=receipt)
     ran = result is not None
     return {"company_id": company_id, "report_end": report_end,
             "target_ordinal": ordinal, "fiscal_year": fiscal_year, "metric_id": metric_id,
@@ -214,6 +297,11 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
             "historical_route_implemented": implemented,
             "native_run_receipt": ran,
             "run_receipt_count": len(found),
+            # Several receipts for one coordinate that are not all in the same
+            # state. The reported one is the strongest; this says the others
+            # were not equal to it, so "FROZEN and PASSED" here does not mean
+            # every Run recording this result froze and passed.
+            "receipt_status_uniform": selection["status_uniform"],
             "run_id": receipt["run_id"] if receipt else None,
             "run_status": receipt["run_status"] if receipt else None,
             "requirement_closure_hash": receipt["requirement_closure_hash"] if receipt else None,
@@ -340,7 +428,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
         "verified_outcome": sum(p["verified_outcome"] for p in positions)}
     blocked_by_both = sum(1 for p in positions
                           if not p["target_original_saved"] and not p["historical_route_implemented"])
-    body = {"record_type": RECORD_TYPE, "schema_version": 3,
+    body = {"record_type": RECORD_TYPE, "schema_version": 4,
             "declared_metric_ids": metrics, "declared_metric_count": len(metrics),
             "requested_years": years, "companies": selected,
             "requested_requirement_closure_hash": requirement_closure_hash,

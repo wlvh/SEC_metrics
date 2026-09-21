@@ -35,7 +35,7 @@ MACYS_PERIOD = "2026-01-31"
 def _write_run(root, *, company_id, metric_id, period_end, result_id, quality="EXACT",
                value="1", applicability="APPLICABLE", publication="PUBLISHED",
                status="FROZEN", validation="PASSED", closure="sha256:" + "0" * 64,
-               omit_hashes=()):
+               omit_hashes=(), run_id=None):
     """A minimal frozen run directory whose manifest describes its own files.
 
     Built here rather than copied from a real Run so the receipt reader is
@@ -61,7 +61,8 @@ def _write_run(root, *, company_id, metric_id, period_end, result_id, quality="E
         return hashlib.sha256((run_dir / name).read_bytes()).hexdigest()
 
     manifest = {
-        "record_type": "SUCCESSOR_RUN", "run_id": "run:test:" + result_id[-8:],
+        "record_type": "SUCCESSOR_RUN",
+        "run_id": run_id or ("run:test:" + result_id[-8:]),
         "status": status, "requirement_id": "issue_47_v1",
         "requirement_closure_hash": closure,
         "company_id": company_id,
@@ -91,7 +92,7 @@ class HistoricalCoverageTest(unittest.TestCase):
             matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"], years=5)
         self.assertEqual(39 * 5, matrix["target_frame_positions"])
         self.assertEqual(39 * 5, matrix["enumerated_positions"])
-        self.assertEqual(3, matrix["schema_version"])
+        self.assertEqual(4, matrix["schema_version"])
         self.assertEqual(sum(matrix["status_counts"].values()), matrix["enumerated_positions"])
         self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, matrix["calls"])
         self.assertFalse(matrix["native_run_created"])
@@ -292,6 +293,88 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual(2, row["run_receipt_count"])
         self.assertTrue(row["verified_outcome"])
 
+    def test_the_reported_receipt_does_not_change_when_the_directories_swap_names(self):
+        """Same version, same result, two Runs in different states.
+
+        Deduplicating by result_id and then taking the first entry left the
+        answer to the order the run directories were read in: with one Run
+        frozen and validated and the other neither, swapping the two names
+        flipped the position between verified and not. The three questions are
+        now answered in order - version, then each receipt's state, then
+        duplicates - so the reported outcome is the same either way, and the
+        disagreement is reported rather than absorbed.
+        """
+        result_id = "sha256:" + "a" * 64
+
+        def matrix_with(first, second):
+            with TemporaryDirectory(prefix="coverage-order-") as temporary:
+                root = Path(temporary)
+                _write_run(root / first, company_id="macys", metric_id="B01",
+                           period_end=MACYS_PERIOD, result_id=result_id,
+                           run_id="run:test:complete")
+                _write_run(root / second, company_id="macys", metric_id="B01",
+                           period_end=MACYS_PERIOD, result_id=result_id,
+                           status="OPEN", validation="FAILED", run_id="run:test:open")
+                with original_sources_only():
+                    matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                                   years=5, runs_root=root)
+            return next(p for p in matrix["positions"]
+                        if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+
+        forward = matrix_with("run-a-complete", "run-z-open")
+        reversed_ = matrix_with("run-z-complete", "run-a-open")
+        self.assertEqual(forward["run_id"], reversed_["run_id"])
+        self.assertEqual(forward["verified_outcome"], reversed_["verified_outcome"])
+        self.assertEqual(forward["run_status"], reversed_["run_status"])
+        # And the answer is the strongest evidence, with the rest still visible.
+        self.assertEqual("run:test:complete", forward["run_id"])
+        self.assertTrue(forward["verified_outcome"])
+        self.assertEqual(2, forward["run_receipt_count"])
+        self.assertFalse(forward["receipt_status_uniform"])
+        self.assertFalse(reversed_["receipt_status_uniform"])
+
+    def test_one_result_under_two_versions_is_a_version_question_not_a_match(self):
+        """Identical results do not make the version they are reported under moot.
+
+        Deduplicating by result_id before choosing a version meant two
+        generations that happened to agree were reported as one receipt, and
+        which generation got the credit depended on directory order. The
+        version is chosen first, so with no selector this is reported.
+        """
+        result_id = "sha256:" + "a" * 64
+        old_closure, new_closure = "sha256:" + "1" * 64, "sha256:" + "2" * 64
+
+        def matrix_with(first, second, closure=None):
+            with TemporaryDirectory(prefix="coverage-versions-") as temporary:
+                root = Path(temporary)
+                _write_run(root / first, company_id="macys", metric_id="B01",
+                           period_end=MACYS_PERIOD, result_id=result_id,
+                           closure=old_closure, run_id="run:test:old")
+                _write_run(root / second, company_id="macys", metric_id="B01",
+                           period_end=MACYS_PERIOD, result_id=result_id,
+                           closure=new_closure, run_id="run:test:new")
+                with original_sources_only():
+                    matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                                   years=5, runs_root=root,
+                                                   requirement_closure_hash=closure)
+            return next(p for p in matrix["positions"]
+                        if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+
+        for first, second in (("run-a-old", "run-z-new"), ("run-a-new", "run-z-old")):
+            with self.subTest(order=first):
+                row = matrix_with(first, second)
+                self.assertEqual("RUN_RECEIPT_VERSION_AMBIGUOUS", row["status"])
+                self.assertIsNone(row["requirement_closure_hash"])
+                self.assertFalse(row["verified_outcome"])
+                self.assertEqual(sorted([old_closure, new_closure]),
+                                 row["detail"]["requirement_closure_hashes"])
+        # Naming the version answers it, and names which one answered.
+        selected = matrix_with("run-a-old", "run-z-new", closure=new_closure)
+        self.assertEqual("VALUE_EXACT", selected["status"])
+        self.assertEqual(new_closure, selected["requirement_closure_hash"])
+        self.assertEqual("run:test:new", selected["run_id"])
+        self.assertTrue(selected["verified_outcome"])
+
     def test_two_closures_for_one_coordinate_are_reported_not_picked(self):
         """found[-1] took whichever directory sorted last and called it newest.
 
@@ -322,7 +405,7 @@ class HistoricalCoverageTest(unittest.TestCase):
             return next(p for p in matrix["positions"]
                         if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
 
-        self.assertEqual("RUN_RECEIPT_AMBIGUOUS", row(ambiguous)["status"])
+        self.assertEqual("RUN_RECEIPT_VERSION_AMBIGUOUS", row(ambiguous)["status"])
         self.assertEqual(2, row(ambiguous)["run_receipt_count"])
         self.assertFalse(row(ambiguous)["verified_outcome"])
         self.assertEqual(sorted([old_closure, new_closure]),
@@ -340,7 +423,7 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual(2, row(absent)["detail"]["receipts_under_other_closures"])
         self.assertFalse(row(absent)["verified_outcome"])
 
-    def test_a_repaired_coordinate_defect_stops_withdrawing_the_repaired_result(self):
+    def test_a_release_names_the_repaired_result_and_not_merely_a_state(self):
         """A defect that has been fixed must not keep withdrawing the fix.
 
         The item-bound entry named a coordinate that could not produce a result
@@ -348,11 +431,21 @@ class HistoricalCoverageTest(unittest.TestCase):
         correct 92-excerpt result, and the entry went on withdrawing it -
         measured on the real batch, where Pfizer's D02 read as defective while
         being exactly what the entry had asked for.
+
+        The first fix released on ``repair_state`` ending in
+        ``_RESULT_RECOMPUTED``, so the same unrepaired receipt and the same
+        unrepaired result changed from withdrawn to verified when that string
+        was edited. B04 below is that negative: identical run, identical
+        result, a state string that says the work is done, and nothing
+        pointing at a repaired result.
         """
+        repaired = "sha256:" + "a" * 64
         register = [
-            {"defect_id": "REPAIRED", "company_id": "macys", "metric_id": "B01",
+            {"defect_id": "RELEASED", "company_id": "macys", "metric_id": "B01",
              "period_end": MACYS_PERIOD, "result_id": None,
-             "repair_state": "RULE_FIXED_RESULT_RECOMPUTED"},
+             "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
+             "released": {"result_id": repaired,
+                          "requirement_closure_hash": "sha256:" + "0" * 64}},
             {"defect_id": "OPEN", "company_id": "macys", "metric_id": "B02",
              "period_end": MACYS_PERIOD, "result_id": None,
              "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED"},
@@ -361,10 +454,21 @@ class HistoricalCoverageTest(unittest.TestCase):
             {"defect_id": "NAMED", "company_id": "macys", "metric_id": "B03",
              "period_end": MACYS_PERIOD, "result_id": "sha256:" + "5" * 64,
              "repair_state": "RULE_FIXED_RESULT_RECOMPUTED"},
+            # The negative: a state string asserting the repair, with no
+            # repaired result named.
+            {"defect_id": "ASSERTED", "company_id": "macys", "metric_id": "B04",
+             "period_end": MACYS_PERIOD, "result_id": None,
+             "repair_state": "RULE_FIXED_RESULT_RECOMPUTED"},
+            # A release naming a different result does not cover this one.
+            {"defect_id": "OTHER_RESULT", "company_id": "macys", "metric_id": "B05",
+             "period_end": MACYS_PERIOD, "result_id": None,
+             "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
+             "released": {"result_id": "sha256:" + "e" * 64}},
         ]
         with TemporaryDirectory(prefix="coverage-repaired-") as temporary:
             root = Path(temporary)
-            for metric, result_id in (("B01", "a"), ("B02", "b"), ("B03", "5")):
+            for metric, result_id in (("B01", "a"), ("B02", "b"), ("B03", "5"),
+                                      ("B04", "d"), ("B05", "9")):
                 _write_run(root / ("run-" + metric), company_id="macys", metric_id=metric,
                            period_end=MACYS_PERIOD, result_id="sha256:" + result_id * 64)
             with original_sources_only(), \
@@ -374,12 +478,51 @@ class HistoricalCoverageTest(unittest.TestCase):
                                                years=5, runs_root=root)
         rows = {p["metric_id"]: p for p in matrix["positions"]
                 if p["report_end"] == MACYS_PERIOD}
+        self.assertEqual(repaired, rows["B01"]["result_id"])
         self.assertIsNone(rows["B01"]["known_content_defect"])
         self.assertTrue(rows["B01"]["verified_outcome"])
-        self.assertEqual("OPEN", rows["B02"]["known_content_defect"])
-        self.assertFalse(rows["B02"]["verified_outcome"])
-        self.assertEqual("NAMED", rows["B03"]["known_content_defect"])
-        self.assertFalse(rows["B03"]["verified_outcome"])
+        for metric, defect_id in (("B02", "OPEN"), ("B03", "NAMED"),
+                                  ("B04", "ASSERTED"), ("B05", "OTHER_RESULT")):
+            self.assertEqual(defect_id, rows[metric]["known_content_defect"], metric)
+            self.assertFalse(rows[metric]["verified_outcome"], metric)
+
+    def test_a_release_must_also_name_the_version_that_produced_the_result(self):
+        """The same result identity under another closure is not this release."""
+        repaired = "sha256:" + "a" * 64
+        other = "sha256:" + "9" * 64
+        register = [{"defect_id": "RELEASED", "company_id": "macys", "metric_id": "B01",
+                     "period_end": MACYS_PERIOD, "result_id": None,
+                     "released": {"result_id": repaired,
+                                  "requirement_closure_hash": other}}]
+        with TemporaryDirectory(prefix="coverage-release-version-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-B01", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id=repaired)
+            with original_sources_only(), \
+                    patch("vnext.historical_coverage.known_result_defects",
+                          return_value=register):
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        row = next(p for p in matrix["positions"]
+                   if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+        self.assertEqual("RELEASED", row["known_content_defect"])
+        self.assertFalse(row["verified_outcome"])
+
+    def test_a_release_block_that_names_no_result_is_refused_at_load(self):
+        """An unreadable release is a refusal, not a silent non-release."""
+        register = {"record_type": "KNOWN_RESULT_DEFECT_REGISTER", "schema_version": 2,
+                    "defects": [{"defect_id": "X", "company_id": "macys",
+                                 "metric_id": "B01", "period_end": MACYS_PERIOD,
+                                 "result_id": None, "released": {"note": "done"}}]}
+        with TemporaryDirectory(prefix="coverage-release-bad-") as temporary:
+            root = Path(temporary)
+            (root / "docs" / "evidence" / "issue47_history").mkdir(parents=True)
+            (root / "docs" / "evidence" / "issue47_history"
+             / "known_result_defects.json").write_text(
+                json.dumps(register, sort_keys=True) + "\n", encoding="utf-8")
+            with self.assertRaises(CoverageError) as refused:
+                known_result_defects(repo_root=root)
+        self.assertEqual("COVERAGE_DEFECT_RELEASE_NAMES_NO_RESULT", str(refused.exception))
 
     def test_an_edited_run_directory_is_not_the_run_its_manifest_describes(self):
         with TemporaryDirectory(prefix="coverage-receipts-") as temporary:
@@ -392,50 +535,90 @@ class HistoricalCoverageTest(unittest.TestCase):
                 read_run_receipt(run_dir=run_dir)
         self.assertEqual("RUN_RECEIPT_FILE_CHANGED:records.jsonl", str(changed.exception))
 
-    def test_one_route_s_limitation_does_not_remove_the_metrics_another_resolved(self):
+    def test_three_routes_at_one_amended_period_give_three_different_answers(self):
         """Adapters fail separately because they answer separate questions.
 
-        Southwest's most recent annual period carries a 10-K/A. The Company
-        Facts and revenue routes both refuse an amended target, and that refusal
-        says nothing about whether an instant fact can be read from the selected
-        filing's own inline XBRL. The property lives in the resolvers, so it is
-        asserted by calling them, not by making the report run them.
+        Paramount's most recent annual period carries a 10-K/A that adds Part
+        III and says it changes nothing else. The approved policy reads that as
+        clearing the fiscal-event window and not the original statement values,
+        so the statement routes are refused by policy and name which class was
+        not cleared. The event route is refused for an unrelated reason it
+        names itself - a successor registrant scope that is not wired - and the
+        instant-fact route reads the selected filing's own inline XBRL and
+        succeeds. One period, three answers, three reasons.
+
+        Written against Southwest until the amendment policy was wired, where
+        it asserted two refusals that the policy then correctly stopped making;
+        that version went on asserting them and was red at HEAD. The property
+        lives in the resolvers, so it is asserted by calling them, not by
+        making the report run them.
         """
         from vnext.historical_accession_results import resolve_historical_accession_metrics
         from vnext.historical_results import resolve_historical_companyfacts_metrics
         from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
         from vnext.normal_period_selection import resolve_period_selection
 
+        company = "paramount_skydance_paramount_global"
         with original_sources_only():
-            selection = resolve_period_selection(repo_root=ROOT,
-                                                 company_id="southwest_airlines",
+            selection = resolve_period_selection(repo_root=ROOT, company_id=company,
                                                  report_end="2025-12-31")
             with self.assertRaises(ValueError) as facts:
-                resolve_historical_companyfacts_metrics(repo_root=ROOT,
-                                                        company_id="southwest_airlines",
+                resolve_historical_companyfacts_metrics(repo_root=ROOT, company_id=company,
                                                         period_selection=selection)
             with self.assertRaises(ValueError) as revenue:
-                resolve_historical_zero_ai_metric(repo_root=ROOT,
-                                                  company_id="southwest_airlines",
+                resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=company,
                                                   metric_id="B01",
                                                   period_selection=selection)
+            with self.assertRaises(ValueError) as event:
+                resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=company,
+                                                  metric_id="C01",
+                                                  period_selection=selection)
             instants = resolve_historical_accession_metrics(repo_root=ROOT,
-                                                            company_id="southwest_airlines",
+                                                            company_id=company,
                                                             period_selection=selection)
-        self.assertEqual("HISTORICAL_COMPANYFACTS_AMENDED_TARGET_NOT_IMPLEMENTED",
-                         str(facts.exception))
-        self.assertEqual("HISTORICAL_ZERO_AI_AMENDED_TARGET_NOT_IMPLEMENTED",
-                         str(revenue.exception))
+        refused_class = ("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED:"
+                         "ORIGINAL_STATEMENT_VALUES:"
+                         "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS")
+        self.assertEqual(refused_class, str(facts.exception))
+        self.assertEqual(refused_class, str(revenue.exception))
+        # A decided policy refusal and an unwired route are different states,
+        # and reporting the first as the second is what makes a settled
+        # question read as an open one.
+        self.assertEqual("HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED",
+                         str(event.exception))
         self.assertEqual("IMPLEMENTATION_GAP",
-                         getattr(revenue.exception, "category", "IMPLEMENTATION_GAP"))
-        # The instant route ran on the same period and its own rules decided it.
-        self.assertEqual(set(WIRED_ACCESSION_METRICS), set(instants["metrics"]))
-        for metric_id in WIRED_ACCESSION_METRICS:
-            self.assertEqual("N_A_STRUCTURAL",
-                             "N_A_STRUCTURAL"
-                             if instants["metrics"][metric_id]["result"]["applicability"]
-                             != "APPLICABLE" else "APPLICABLE")
+                         getattr(event.exception, "category", "IMPLEMENTATION_GAP"))
+        self.assertTrue(instants["metrics"])
 
+    def test_an_exhibit_link_correction_clears_both_input_classes(self):
+        """The positive control for the same policy, on the other classification.
+
+        Southwest's 10-K/A corrects an exhibit hyperlink and states in its own
+        explanatory note that it modifies no disclosure in the original filing.
+        Every route that was blocked by the presence of an amendment resolves.
+        """
+        from vnext.historical_accession_results import resolve_historical_accession_metrics
+        from vnext.historical_results import resolve_historical_companyfacts_metrics
+        from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
+        from vnext.normal_period_selection import resolve_period_selection
+
+        company = "southwest_airlines"
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=company,
+                                                 report_end="2025-12-31")
+            self.assertTrue(selection["current_amendments"])
+            facts = resolve_historical_companyfacts_metrics(repo_root=ROOT,
+                                                            company_id=company,
+                                                            period_selection=selection)
+            revenue = resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=company,
+                                                        metric_id="B01",
+                                                        period_selection=selection)
+            instants = resolve_historical_accession_metrics(repo_root=ROOT,
+                                                            company_id=company,
+                                                            period_selection=selection)
+        self.assertTrue(facts["metrics"])
+        self.assertIsNotNone(revenue["result"])
+        self.assertTrue(instants["metrics"])
     def test_an_unknown_company_set_is_an_explicit_refusal(self):
         with original_sources_only():
             with self.assertRaises(CoverageError) as unknown:

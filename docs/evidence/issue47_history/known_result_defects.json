@@ -1,6 +1,6 @@
 {
  "record_type": "KNOWN_RESULT_DEFECT_REGISTER",
- "schema_version": 1,
+ "schema_version": 2,
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "purpose": "Results this repository has confirmed hold wrong content. An entry withdraws a result from current delivery. It does not delete it, re-sign it, or relabel it as a structural non-applicability: the original Run stays readable so the defect can be demonstrated and the repair checked.",
  "defects": [
@@ -82,7 +82,17 @@
      "re_recorded_from_tree": "3 files became 6 - calculator.py, constraints.py and projector.py joined, because the patch now edits bytes issue_28_v13 records. The divergence between this generation and its parent is wider, not narrower.",
      "guarantee": "differential: 26 mutations compared against the frozen implementation inside the old bound, and every item-level mutation re-run at index 80 where only the raised bound reaches"
     }
+   },
+   "released": {
+    "result_id": "sha256:a394e0b53f201bb0e68a09197565f33de137d56a09ff5517a45b52a8d11dd6fb",
+    "run_id": "run:historical-period:3a222b03869dd8f223a3d5bf432777fd4ac19b518abb95841c6aa0fe96105d34",
+    "requirement_closure_hash": "sha256:1b6d9c87b9bc6487333893394744362e5bdc2c8e4c38637799c269c39685c5ea",
+    "items": 92,
+    "rendered_characters": 41860,
+    "what_this_releases": "This result and no other. The defect stays in force at this coordinate for any other result, including the ones produced before the repair.",
+    "what_it_does_not_assert": "That the 92 excerpts are the right 92. Business content acceptance is a separate state and is still open."
    }
   }
- ]
+ ],
+ "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released."
 }
