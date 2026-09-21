@@ -7,6 +7,7 @@ output. The corpus supplies both directions - Pfizer files no Item 4 and carries
 the unnumbered item inside Item 3, and Macy's and Paramount carry blocks naming
 a chief executive officer inside Item 8 that must not close anything.
 """
+import copy
 import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
@@ -30,7 +31,25 @@ SALESFORCE = "salesforce"
 CAPTION = "information about our executive officers"
 
 
+# Preparing a filing's input and deriving its document are the same work for
+# every case that reads the same filing, and this module reads Pfizer in ten of
+# them. The saved-source CI job was already fifteen seconds over its
+# thirty-five minute cap before these cases were added, so the fixture is built
+# once per filing and handed out as a copy - the cases assert on what the
+# selector does with the input, never on the preparation, so sharing the input
+# cannot weaken one.
+_PREPARED = {}
+_DOCUMENTS = {}
+
+
 def _text_arguments(company_id, report_end):
+    key = (company_id, report_end)
+    if key not in _PREPARED:
+        _PREPARED[key] = _prepare_text_arguments(company_id, report_end)
+    return copy.deepcopy(_PREPARED[key])
+
+
+def _prepare_text_arguments(company_id, report_end):
     with original_sources_only():
         selection = resolve_period_selection(repo_root=ROOT, company_id=company_id,
                                              report_end=report_end)
@@ -43,6 +62,13 @@ def _text_arguments(company_id, report_end):
 
 
 def _frozen_document(prepared, company_id):
+    key = (company_id, prepared["target_period"]["period_end"])
+    if key not in _DOCUMENTS:
+        _DOCUMENTS[key] = _build_frozen_document(prepared, company_id)
+    return copy.deepcopy(_DOCUMENTS[key])
+
+
+def _build_frozen_document(prepared, company_id):
     arguments = prepared["text_arguments"]
     reference = arguments["source_references"][0]
     return build_text_document(
@@ -84,7 +110,7 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         self.assertEqual(document["text_document_id"], corrected["frozen_text_document_id"])
         self.assertNotEqual(document["text_document_id"], corrected["text_document_id"])
 
-    def test_nothing_outside_the_officer_section_is_lost(self):
+    def test_nothing_outside_the_two_deliberate_removals_is_lost(self):
         """The no-under-capture guarantee, stated on the excerpt sets.
 
         It was a strict-subset assertion on the candidate. Two things changed
@@ -92,8 +118,14 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         subset, and Pfizer's candidate cannot be built at all while its 92
         excerpts exceed the Spec's 64-item bound. The guarantee itself is
         unchanged and is asserted on the proposals, which the bound does not
-        gate: every block the frozen derivation selected outside the officer
-        section is still selected.
+        gate.
+
+        There are now two deliberate removals rather than one, so the
+        guarantee names both: the officer section and the independent
+        auditor's report. Both are computed from the document - the officer
+        section from its own caption, the audit report from the same span rule
+        the successor applies - rather than listed by index, because a
+        guarantee that had to be handed the answer would not be one.
         """
         spec, prepared = _text_arguments(PFIZER, "2025-12-31")
         document = _frozen_document(prepared, PFIZER)
@@ -111,9 +143,17 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         officer_start = captions[0]
         officer_end = document["sections"]["ITEM_3"]["candidates"][0]["end_block_exclusive"]
         officer = set(range(officer_start, officer_end))
-        self.assertEqual(set(), (had - kept) - officer)
+        audited = {index for span in fixed.audit_report_spans(
+                       document=document,
+                       ranges=document["sections"]["ITEM_8"]["candidates"])["spans"]
+                   for index in range(span["start_block"], span["end_block_exclusive"])}
+        self.assertEqual(set(), (had - kept) - officer - audited)
         self.assertEqual(set(), kept & officer)
+        self.assertEqual(set(), kept & audited)
+        # Both removals actually removed something, so neither half of the
+        # subtraction above is idle.
         self.assertTrue(had & officer)
+        self.assertTrue(had & audited)
 
     def test_a_signature_line_naming_an_officer_does_not_close_an_item(self):
         """Macy's block 774 sits inside Item 8 and names a chief executive officer.
@@ -305,6 +345,14 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         same set. The earlier form asserted the refusal on the routed Spec,
         which stopped being v1 when the route moved; that form was red at HEAD
         3e45533.
+
+        It then pinned the set at 92 items and 41,860 characters, and went red
+        again the moment the heading repair made it 99 - a state assertion in a
+        case whose claim is a relationship. Every content repair moves that
+        number and none of them touches what this is about, so the bounds are
+        what is asserted: over the old item bound, under the character bound.
+        The measured set is 95 items as of this commit and the register carries
+        that number, where it belongs.
         """
         _, prepared = _text_arguments(PFIZER, "2025-12-31")
         from vnext.specs import compile_spec_file
@@ -331,8 +379,9 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         selected = candidate["selected"]
         characters = sum(len(c["text"]) for c in selected.values()) + len(selected) - 1
         self.assertEqual("PASS", evidence["status"])
-        self.assertEqual(92, len(selected))
-        self.assertEqual(41860, characters)
+        old_policy = text_policy(old_spec)
+        self.assertGreater(len(selected), old_policy["max_items"])
+        self.assertLess(characters, old_policy["max_text_chars"])
         self.assertLess(characters, text_policy(raised_spec)["max_text_chars"])
         # The sub-note's own text is in, and the sections after it are not.
         sections = {claim["section_id"] for claim in selected.values()}
@@ -396,21 +445,24 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
             self.assertIn(index, selected, text)
             self.assertEqual(text, selected[index]["text"].strip())
         self.assertEqual("PASS", evidence["status"])
-        self.assertEqual(99, len(selected))
+        # Not a total. This case is about seven headings, and pinning the whole
+        # set here is what made two other cases in this file go red on repairs
+        # that had nothing to do with them.
         # Nothing the bound was guarding came back with them: the bare page
         # numbers in the same runs stay out.
         for index in (3827, 3844, 3867, 3894, 3915):
             self.assertNotIn(index, selected)
 
-    def test_the_six_items_outside_the_approved_source_are_still_there(self):
-        """The repair is half of the defect, and the register says which half.
+    def test_four_of_the_six_are_gone_and_the_keyword_two_are_still_open(self):
+        """The repair is four of the six, and the register says which four.
 
-        Four of the six are the independent auditor's critical audit matter
-        and two are accounting policy admitted on one keyword. Narrowing that
-        means narrowing ITEM_8 to the contingencies notes the definition names,
-        which changes every filing's set and has been read on one. Asserting
-        they are still present keeps the open half visible rather than letting
-        a later change quietly decide it.
+        The audit report is not Item 3, not the legal proceedings section and
+        not a contingencies note, so the four blocks of the auditor's critical
+        audit matter leave. The two admitted on a single keyword - a
+        credit-loss policy whose match is "written off after all reasonable
+        means to collect ... (including litigation, where appropriate)" and a
+        risk list containing the word - are a different defect and stay, named,
+        so a later change cannot quietly decide them.
         """
         _, prepared = _text_arguments(PFIZER, "2025-12-31")
         from vnext.historical_spec_revision import compile_historical_spec_file as revised
@@ -421,9 +473,109 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
             candidate = fixed.create_deterministic_text_candidate(
                 **{"compiled_spec": spec, **prepared["text_arguments"]})
         selected = {claim["block_index"] for claim in candidate["selected"].values()}
-        self.assertTrue({1881, 1882, 1883, 1884, 2175, 2240} <= selected)
-        # And the two that belong there are there.
+        self.assertEqual(set(), {1881, 1882, 1883, 1884} & selected)
+        self.assertTrue({2175, 2240} <= selected)
+        # And the two that belong there are still there. A narrowing that
+        # reached them would satisfy the line above and be wrong.
         self.assertTrue({2302, 2351} <= selected)
+
+    def test_the_report_closes_on_a_signature_or_on_the_tenure_sentence(self):
+        """A signature-only rule passes five filings and fails the sixth.
+
+        Five of the six filings read close their audit report with a /s/ block.
+        Pfizer's has none - the tenure sentence is the last thing before the
+        city and the date, and it does not even use the usual wording: it says
+        the firm cannot determine the year it began. So a rule built on the
+        signature alone would have left both of Pfizer's openings unbounded,
+        which is exactly the filing the exclusion exists for.
+        """
+        _, prepared = _text_arguments(PFIZER, "2025-12-31")
+        document = _frozen_document(prepared, PFIZER)
+        item_8 = document["sections"]["ITEM_8"]["candidates"]
+        found = fixed.audit_report_spans(document=document, ranges=item_8)
+        self.assertEqual([], found["unclosed_openings"])
+        self.assertEqual(["AUDITOR_TENURE_STATEMENT"] * 2,
+                         [span["closed_by"] for span in found["spans"]])
+        blocks = document["blocks"]
+        # The closer is read out of the document, not taken from the rule.
+        closer = max(span["end_block_exclusive"] for span in found["spans"]) - 1
+        self.assertIn("auditor", blocks[closer]["text"])
+        self.assertFalse(blocks[closer]["text"].strip().startswith("/s/"))
+        # And a filing that does sign closes on the signature instead.
+        _, southwest = _text_arguments("southwest_airlines", "2025-12-31")
+        other = _frozen_document(southwest, "southwest_airlines")
+        signed = fixed.audit_report_spans(
+            document=other, ranges=other["sections"]["ITEM_8"]["candidates"])
+        self.assertEqual(["SIGNATURE"] * 2, [span["closed_by"] for span in signed["spans"]])
+
+    def test_a_report_outside_every_scanned_range_is_not_reported_as_unclosed(self):
+        """Pfizer carries a third report and it never closes.
+
+        The internal control report sits in Item 9A and has no signature block
+        and no tenure sentence, so no closer exists for it anywhere. It is also
+        outside every range the scan considers, so it could not exclude a block
+        even if it closed. Reporting it would invite a reader to think
+        something was missed when nothing was at stake.
+        """
+        _, prepared = _text_arguments(PFIZER, "2025-12-31")
+        document = _frozen_document(prepared, PFIZER)
+        whole = fixed.audit_report_spans(document=document)
+        self.assertTrue(whole["unclosed_openings"],
+                        "this case is only meaningful while that report exists")
+        item_8 = document["sections"]["ITEM_8"]["candidates"]
+        start, stop = item_8[0]["start_block"], item_8[0]["end_block_exclusive"]
+        for opening in whole["unclosed_openings"]:
+            self.assertFalse(start <= opening < stop)
+        self.assertEqual([], fixed.audit_report_spans(
+            document=document, ranges=item_8)["unclosed_openings"])
+
+    def test_a_report_title_with_no_closer_excludes_nothing(self):
+        """An unbounded exclusion could drop real disclosures silently.
+
+        A registered over-take is the lesser of the two, so an opening without
+        a closer is reported and excludes nothing.
+        """
+        _, prepared = _text_arguments(PFIZER, "2025-12-31")
+        document = _frozen_document(prepared, PFIZER)
+        item_8 = document["sections"]["ITEM_8"]["candidates"]
+        opening = fixed.audit_report_spans(
+            document=document, ranges=item_8)["spans"][0]["start_block"]
+        blocks = [{**block} for block in document["blocks"]]
+        for block in blocks[opening:]:
+            # Remove every closer after the first opening, leaving the title.
+            if block["text"].strip().startswith("/s/") or "auditor" in block["text"]:
+                block["text"] = "redacted for this case"
+        found = fixed.audit_report_spans(document={**document, "blocks": blocks},
+                                         ranges=item_8)
+        self.assertEqual([], found["spans"])
+        self.assertTrue(found["unclosed_openings"])
+
+    def test_the_exclusion_reaches_d02_only(self):
+        """D03 has its own approved source and was not measured here.
+
+        The first version of this skipped the whole block, which took the same
+        blocks out of the regulatory candidate set as well - on four filings
+        the rule was supposed to leave alone. The candidate counts were
+        identical either way, so only comparing the records found it.
+        """
+        _, prepared = _text_arguments("southwest_airlines", "2025-12-31")
+        document = _frozen_document(prepared, "southwest_airlines")
+        arguments = prepared["text_arguments"]
+        reference = arguments["source_references"][0]
+        proposal = fixed.referenced_note_candidates(
+            document=fixed.narrow_document_sections(document=document),
+            raw_bytes=arguments["raw_bytes_by_id"][reference["raw_asset_id"]])
+        spans = fixed.audit_report_spans(
+            document=document,
+            ranges=document["sections"]["ITEM_8"]["candidates"])["spans"]
+        inside = {index for span in spans
+                  for index in range(span["start_block"], span["end_block_exclusive"])}
+        self.assertTrue(inside, "this filing is only useful if it has an audit report")
+        regulatory = {claim["block_index"] for claim in proposal["D03"]["candidates"]}
+        self.assertTrue(inside & regulatory,
+                        "and only useful if D03 takes something from inside it")
+        legal = {claim["block_index"] for claim in proposal["D02"]["candidates"]}
+        self.assertEqual(set(), inside & legal)
 
     def test_the_successor_routes_only_the_metric_it_corrects(self):
         module, _ = fixed.text_api("D02")

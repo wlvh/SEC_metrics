@@ -1,208 +1,222 @@
 {
- "record_type": "KNOWN_RESULT_DEFECT_REGISTER",
- "schema_version": 2,
- "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
- "purpose": "Results this repository has confirmed hold wrong content. An entry withdraws a result from current delivery. It does not delete it, re-sign it, or relabel it as a structural non-applicability: the original Run stays readable so the defect can be demonstrated and the repair checked.",
  "defects": [
   {
-   "defect_id": "D02_PFIZER_2025_OFFICER_SECTION",
    "company_id": "pfizer",
+   "defect_id": "D02_PFIZER_2025_OFFICER_SECTION",
+   "evidence": "docs/evidence/issue47_history/d02-section-boundary/",
    "metric_id": "D02",
    "period_end": "2025-12-31",
-   "result_id": "sha256:ab1bfcb4f1673b07580b64eab4b219744802bcac55ef04cb7c09f20c631fcd4a",
-   "run_id": "run:historical-period:fad2a7b37dfa0cdfc74e5b110f0b076a19d512b7059674719e611549930cc732",
-   "requirement_closure_hash": "sha256:a82225adf77f04414e7dfa7b46b48975f24b83ef24b467f2cb044fe59249098a",
-   "reported_quality": "EXACT",
-   "summary": "26 of 58 excerpts are executive-officer biography from the Form 10-K unnumbered Part I item, labelled EXPLICIT_LEGAL_SECTION_TEXT because ITEM_3 ran past that item to ITEM 5.",
    "repair": "scripts/vnext/historical_text_results.py closes a numbered item at the form's unnumbered Part I item",
    "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
-   "evidence": "docs/evidence/issue47_history/d02-section-boundary/"
+   "reported_quality": "EXACT",
+   "requirement_closure_hash": "sha256:a82225adf77f04414e7dfa7b46b48975f24b83ef24b467f2cb044fe59249098a",
+   "result_id": "sha256:ab1bfcb4f1673b07580b64eab4b219744802bcac55ef04cb7c09f20c631fcd4a",
+   "run_id": "run:historical-period:fad2a7b37dfa0cdfc74e5b110f0b076a19d512b7059674719e611549930cc732",
+   "summary": "26 of 58 excerpts are executive-officer biography from the Form 10-K unnumbered Part I item, labelled EXPLICIT_LEGAL_SECTION_TEXT because ITEM_3 ran past that item to ITEM 5."
   },
   {
-   "defect_id": "D02_PFIZER_2025_EXCEEDS_ITEM_BOUND",
-   "company_id": "pfizer",
-   "metric_id": "D02",
-   "period_end": "2025-12-31",
-   "result_id": null,
-   "summary": "Item 3 incorporates Note 16A by reference. The sub-note is located: Note 16 carries 'A. Legal Proceedings' with B (guarantees), C (commitments), D (contingent consideration) and E (insurance) after it, and the scope runs from A to B. Correctly scoped, the excerpt set is 92 items and 41,860 rendered characters - 65 percent of max_text_chars and 144 percent of max_items - so what stops this coordinate is the item count, not the scope and not the volume.",
-   "repair": "Three steps, all landed. scripts/vnext/historical_text_results.incorporated_scopes locates the lettered sub-note. scripts/vnext/historical_spec_revision.py raises what a Spec may declare, without changing specs.py. scripts/vnext/historical_text_protocol.py raises what ORDERED_NEWLINE_V1 will render, without changing text_results.py. The route declares catalog/r6/D02_legal_disclosures_v2.md.",
-   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
-   "evidence": [
-    "docs/evidence/issue47_history/d02-section-boundary/",
-    "docs/evidence/issue47_history/d02-item-bound/"
-   ],
-   "recomputed": {
-    "items": 92,
-    "rendered_characters": 41860,
-    "quality": "EXACT",
-    "publication": "PUBLISHED",
-    "run_status": "FROZEN",
-    "separate_process_cold_read": "same run_id, FROZEN, 92 items",
-    "new_calls": {
-     "provider": 0,
-     "paid": 0,
-     "sec": 0
-    },
-    "evidence": "docs/evidence/issue47_history/d02-item-bound/raised-capacity-end-to-end.json",
-    "still_not_accepted": "that the 92 excerpts are the right 92. Evidence PASS and a frozen Run are not business content acceptance."
-   },
    "closed_decision": {
-    "question": "whether this generation carries a successor text-result protocol so a result of more than 64 excerpts can be rendered at all",
-    "why_it_is_not_an_implementation_choice": "64 is a literal in text_results.render_text_payload, a new_rule_file of issue_28_v11 checked on both roots and in fourteen generations' execution authority. A successor would duplicate about 155 lines across five functions, two of which - validate_text_record and verify_text_trace - are the integrity checks on a text result, and would grow the registration patch from 3 files and 9 hunks to about 6 files and 14 hunks.",
+    "measured_cost_paid": {
+     "guarantee": "differential: 26 mutations compared against the frozen implementation inside the old bound, and every item-level mutation re-run at index 80 where only the raised bound reaches",
+     "re_recorded_from_tree": "3 files became 6 - calculator.py, constraints.py and projector.py joined, because the patch now edits bytes issue_28_v13 records. The divergence between this generation and its parent is wider, not narrower.",
+     "registration_patch": "3 files and 9 hunks became 6 files and 13 hunks",
+     "successor_lines": "five functions in historical_text_protocol.py"
+    },
     "measured_scope": {
+     "filings_measured_at_2025_12_31": 7,
      "filings_over_the_bound": [
       "pfizer"
      ],
      "largest_under_the_bound": 53,
-     "filings_measured_at_2025_12_31": 7,
      "reached_with_only_the_renderer_swapped_in_process": "PUBLIC_ROW"
     },
-    "options": [
-     {
-      "id": "A",
-      "action": "carry a successor text-result protocol in this generation",
-      "cost": "about 155 duplicated lines including two integrity checks; patch 3->6 files"
-     },
-     {
-      "id": "B",
-      "action": "leave the bound at 64 and record this coordinate as refused by the protocol, with the measurement",
-      "cost": "Pfizer D02 produces no result in any year whose filing exceeds 64 excerpts"
-     }
-    ],
-    "recommendation": "B unless this coordinate must be delivered in this PR",
     "not_done": [
      "merging adjacent excerpts so the count fits, which trades one observation per source block for a smaller number",
      "narrowing the scope so the count fits",
      "routing a Spec that declares 192 while the runtime still refuses 65"
     ],
+    "options": [
+     {
+      "action": "carry a successor text-result protocol in this generation",
+      "cost": "about 155 duplicated lines including two integrity checks; patch 3->6 files",
+      "id": "A"
+     },
+     {
+      "action": "leave the bound at 64 and record this coordinate as refused by the protocol, with the measurement",
+      "cost": "Pfizer D02 produces no result in any year whose filing exceeds 64 excerpts",
+      "id": "B"
+     }
+    ],
+    "question": "whether this generation carries a successor text-result protocol so a result of more than 64 excerpts can be rendered at all",
+    "recommendation": "B unless this coordinate must be delivered in this PR",
     "resolved": "Completed rather than withdrawn. Recording it as an A/B choice between doing the work and dropping the coordinate was the wrong framing: the capacity was already approved, and finding the bound in more places is wiring to finish, not a decision to re-open.",
-    "measured_cost_paid": {
-     "successor_lines": "five functions in historical_text_protocol.py",
-     "registration_patch": "3 files and 9 hunks became 6 files and 13 hunks",
-     "re_recorded_from_tree": "3 files became 6 - calculator.py, constraints.py and projector.py joined, because the patch now edits bytes issue_28_v13 records. The divergence between this generation and its parent is wider, not narrower.",
-     "guarantee": "differential: 26 mutations compared against the frozen implementation inside the old bound, and every item-level mutation re-run at index 80 where only the raised bound reaches"
-    }
+    "why_it_is_not_an_implementation_choice": "64 is a literal in text_results.render_text_payload, a new_rule_file of issue_28_v11 checked on both roots and in fourteen generations' execution authority. A successor would duplicate about 155 lines across five functions, two of which - validate_text_record and verify_text_trace - are the integrity checks on a text result, and would grow the registration patch from 3 files and 9 hunks to about 6 files and 14 hunks."
    },
-   "released": {
-    "result_id": "sha256:a394e0b53f201bb0e68a09197565f33de137d56a09ff5517a45b52a8d11dd6fb",
-    "run_id": "run:historical-period:3a222b03869dd8f223a3d5bf432777fd4ac19b518abb95841c6aa0fe96105d34",
-    "requirement_closure_hash": "sha256:1b6d9c87b9bc6487333893394744362e5bdc2c8e4c38637799c269c39685c5ea",
-    "items": 92,
-    "rendered_characters": 41860,
-    "what_this_releases": "This result and no other. The defect stays in force at this coordinate for any other result, including the ones produced before the repair.",
-    "what_it_does_not_assert": "That the 92 excerpts are the right 92. Business content acceptance is a separate state and is still open."
-   }
-  },
-  {
-   "defect_id": "D02_PFIZER_2025_SCOPE_CONTENT_READ",
    "company_id": "pfizer",
+   "defect_id": "D02_PFIZER_2025_EXCEEDS_ITEM_BOUND",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-section-boundary/",
+    "docs/evidence/issue47_history/d02-item-bound/"
+   ],
    "metric_id": "D02",
    "period_end": "2025-12-31",
+   "recomputed": {
+    "evidence": "docs/evidence/issue47_history/d02-item-bound/raised-capacity-end-to-end.json",
+    "items": 92,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "rendered_characters": 41860,
+    "run_status": "FROZEN",
+    "separate_process_cold_read": "same run_id, FROZEN, 92 items",
+    "still_not_accepted": "that the 92 excerpts are the right 92. Evidence PASS and a frozen Run are not business content acceptance."
+   },
+   "released": {
+    "items": 92,
+    "rendered_characters": 41860,
+    "requirement_closure_hash": "sha256:1b6d9c87b9bc6487333893394744362e5bdc2c8e4c38637799c269c39685c5ea",
+    "result_id": "sha256:a394e0b53f201bb0e68a09197565f33de137d56a09ff5517a45b52a8d11dd6fb",
+    "run_id": "run:historical-period:3a222b03869dd8f223a3d5bf432777fd4ac19b518abb95841c6aa0fe96105d34",
+    "what_it_does_not_assert": "That the 92 excerpts are the right 92. Business content acceptance is a separate state and is still open.",
+    "what_this_releases": "This result and no other. The defect stays in force at this coordinate for any other result, including the ones produced before the repair."
+   },
+   "repair": "Three steps, all landed. scripts/vnext/historical_text_results.incorporated_scopes locates the lettered sub-note. scripts/vnext/historical_spec_revision.py raises what a Spec may declare, without changing specs.py. scripts/vnext/historical_text_protocol.py raises what ORDERED_NEWLINE_V1 will render, without changing text_results.py. The route declares catalog/r6/D02_legal_disclosures_v2.md.",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
    "result_id": null,
+   "summary": "Item 3 incorporates Note 16A by reference. The sub-note is located: Note 16 carries 'A. Legal Proceedings' with B (guarantees), C (commitments), D (contingent consideration) and E (insurance) after it, and the scope runs from A to B. Correctly scoped, the excerpt set is 92 items and 41,860 rendered characters - 65 percent of max_text_chars and 144 percent of max_items - so what stops this coordinate is the item count, not the scope and not the volume."
+  },
+  {
+   "company_id": "pfizer",
+   "corrected_count_would_be": {
+    "measured_now": 95,
+    "the_earlier_prediction_of_93": "assumed all six would leave together. They do not: the audit-report rule removes four and the keyword defect holds the other two, so 95 is where the repaired half lands. This is why the number had to stay a prediction rather than become a target - an implementation tuned until it emitted 93 would have had to remove two blocks for the wrong reason.",
+    "when_the_keyword_defect_is_repaired": "93, if and only if those two are the only ones it is holding. Not asserted."
+   },
+   "defect_id": "D02_PFIZER_2025_SCOPE_CONTENT_READ",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/"
+   ],
    "found_by": "reading the original filing's blocks in the declared scope ranges and judging each one against the approved source definition, rather than by re-running the selector that produced them",
-   "summary": "The 92-item set is not the 92 it should be. Six items are outside the approved source - four are the independent auditor's critical audit matter, whose speaker is not the registrant, and two are accounting-policy paragraphs admitted on a single occurrence of the word litigation. Seven in-scope sub-headings inside Note 16A are missing, so a reader of the excerpt set cannot tell which product or matter several paragraphs are about.",
+   "in_scope_items_missing": [
+    {
+     "block_index": 3858,
+     "cause": "REPEATED_WITHIN_SCOPE",
+     "text": "Comirnaty (tozinameran)"
+    },
+    {
+     "block_index": 3874,
+     "cause": "REPEATED_WITHIN_SCOPE",
+     "text": "Comirnaty (tozinameran)"
+    },
+    {
+     "block_index": 3870,
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12",
+     "text": "Paxlovid"
+    },
+    {
+     "block_index": 3882,
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12",
+     "text": "Asbestos"
+    },
+    {
+     "block_index": 3886,
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12",
+     "text": "Docetaxel"
+    },
+    {
+     "block_index": 3889,
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12",
+     "text": "Zantac"
+    },
+    {
+     "block_index": 3899,
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12",
+     "text": "Chantix"
+    }
+   ],
+   "measured_across_filings": {
+    "evidence": "docs/evidence/issue47_history/d02-content-read/audit-report-boundary.json",
+    "filings_read": [
+     "pfizer",
+     "southwest_airlines",
+     "lumen_technologies",
+     "enphase_energy",
+     "marriott_international",
+     "ford_motor_company"
+    ],
+    "how_often_it_bites": "only Pfizer over-takes. The other five take nothing from inside their audit reports, because only Pfizer's auditor names a litigation critical audit matter. Rare, and structural: any filing whose auditor names one is exposed.",
+    "no_op_elsewhere": "the other five filings' proposal records are byte-identical before and after - same proposal_id and same coverage_hash, not merely the same candidate count.",
+    "the_rule_that_failed": "closing the span at the firm's /s/ signature passes five filings and leaves both of Pfizer's openings unbounded - the one filing it was written for. Pfizer's report has no /s/ block; it closes with a tenure sentence that does not even use the usual wording.",
+    "what_varies": "the audit report is at the front of Item 8 in four, at the back in Southwest, and absent in Ford, whose whole Item 8 is one cross-reference block. Every filing carries two reports, and some also carry unemphasised mentions."
+   },
+   "metric_id": "D02",
    "out_of_scope_items": [
     {
      "block_index": 1881,
+     "state": "EXCLUDED",
      "text": "Evaluation of product liability and other product-related litigation",
      "why": "heading of the independent auditor's critical audit matter"
     },
     {
      "block_index": 1882,
+     "state": "EXCLUDED",
      "text": "As discussed in Notes 1S and 16 to the consolidated financial statements, the Company is involved in product liability and other product-related litigation...",
-     "why": "the auditor describing the matter, not the registrant's disclosure"
+     "why": "the auditor restating what Notes 1S and 16 say. Note 16A is already taken in full, so it adds no disclosure while mixing in a second document part"
     },
     {
      "block_index": 1883,
+     "state": "EXCLUDED",
      "text": "We identified the evaluation of product liability and other product-related litigation as a critical audit matter...",
-     "why": "'we' is the auditor; entity_scope is registrant"
+     "why": "the auditor's statement of why this was a critical audit matter"
     },
     {
      "block_index": 1884,
+     "state": "EXCLUDED",
      "text": "The following are the primary procedures we performed to address this critical audit matter...",
-     "why": "audit procedures, not a legal proceeding disclosure"
+     "why": "1,233 characters of audit procedures, which is not a legal proceeding"
     },
     {
      "block_index": 2175,
+     "state": "STILL_TAKEN",
      "text": "Our estimates are often based on complex judgments and assumptions...",
-     "why": "critical accounting estimates; matched on 'litigation' inside a list of risk factors"
+     "why": "critical accounting estimates; matched on 'litigation' inside a list of risk factors. The _LEGAL keyword defect, not the audit-report one"
     },
     {
      "block_index": 2240,
+     "state": "STILL_TAKEN",
      "text": "In determining the reserve percentages for each pool of trade accounts receivables...",
-     "why": "trade receivable credit-loss policy. The keyword occurs in 'written off after all reasonable means to collect the full amount (including litigation, where appropriate) have been exhausted' - debt collection, not a proceeding to disclose"
+     "why": "credit-loss policy; matched on 'written off after all reasonable means to collect the full amount (including litigation, where appropriate) have been exhausted'. Same keyword defect"
     }
    ],
-   "in_scope_items_missing": [
-    {
-     "block_index": 3858,
-     "text": "Comirnaty (tozinameran)",
-     "cause": "REPEATED_WITHIN_SCOPE"
-    },
-    {
-     "block_index": 3874,
-     "text": "Comirnaty (tozinameran)",
-     "cause": "REPEATED_WITHIN_SCOPE"
-    },
-    {
-     "block_index": 3870,
-     "text": "Paxlovid",
-     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12"
-    },
-    {
-     "block_index": 3882,
-     "text": "Asbestos",
-     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12"
-    },
-    {
-     "block_index": 3886,
-     "text": "Docetaxel",
-     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12"
-    },
-    {
-     "block_index": 3889,
-     "text": "Zantac",
-     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12"
-    },
-    {
-     "block_index": 3899,
-     "text": "Chantix",
-     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12"
-    }
-   ],
+   "partial_repair": {
+    "audit_report": "scripts/vnext/historical_text_results.audit_report_spans; 99 to 95, the four excluded",
+    "headings": "scripts/vnext/historical_text_results._page_furniture and _note_heading; 92 to 99, seven recovered",
+    "still_open": "the two keyword admissions, and with them the _LEGAL filter that stands in for 'is this a legal-proceedings disclosure'"
+   },
+   "period_end": "2025-12-31",
+   "repair_state": "TEN_OF_THIRTEEN_REPAIRED_TWO_KEYWORD_ITEMS_STILL_TAKEN",
+   "result_id": null,
+   "scope_note": "this withdraws the coordinate's result from current delivery. It does not change the approved definition: entity_scope registrant and source 'Item 3 / legal proceedings / contingencies notes' are what each item was judged against.",
+   "summary": "The 92-item set was not the 92 it should be: six items outside the approved source and seven in-scope sub-headings missing. Seven headings were recovered (92 to 99) and the four audit-report items were then excluded (99 to 95). Two items remain - accounting-policy paragraphs admitted on a single occurrence of the word litigation - and they are a different defect with a different cause.",
+   "the_reasoning_that_was_withdrawn": {
+    "what_replaced_it": "document part, supported by content. The approved source names Item 3, the legal proceedings section and the contingencies notes; the audit report is none of them. The content agrees: 1884 is audit procedures and 1882 restates a note already taken in full.",
+    "what_was_written": "'we' is the auditor; entity_scope is registrant.",
+    "why_it_was_wrong": "entity_scope answers which entity the disclosure concerns, not who is speaking. Block 1882, read whole, is about the registrant's own litigation exposure, so a rule excluding it for being in the auditor's voice would exclude a disclosure about the registrant. The Spec includes ITEM_8 explicitly."
+   },
    "two_distinct_causes": {
     "REPEATED_WITHIN_SCOPE": "historical_text_results counts normalised block text within the scope and treats anything appearing more than once as page furniture. That rule was added to drop running headers and it does. It also drops a product sub-heading that legitimately appears twice in one note - Comirnaty appears under 'Actions in Which We are the Defendant' and again under 'Matters Involving Pfizer and its Collaboration/Licensing Partners'.",
     "SUBSTANTIVE_MINIMUM_LENGTH_12": "text_business_candidates._substantive requires at least twelve characters. Product names are shorter than that: Zantac is six, Chantix seven, Paxlovid and Asbestos eight, Docetaxel nine. Orgovyx (relugolix) at nineteen is kept, so the set is inconsistent in a way that depends on how long the generic name is."
    },
-   "what_is_correct": "every substantive paragraph of Note 16A is present, in order, and the two in-scope items outside the sub-note - the contingencies note lead-in at 2302 and the Seagen legal-matters bullet at 2351 - are correctly included. The scope boundary [3821, 3937) is right: guarantees, commitments, contingent consideration and insurance all start at or after 3937 and none is in the set.",
-   "corrected_count_would_be": "92 minus 6 plus 7 = 93",
-   "repair_state": "HALF_REPAIRED_SEVEN_RECOVERED_SIX_STILL_TAKEN",
-   "evidence": "docs/evidence/issue47_history/d02-content-read/",
-   "scope_note": "this withdraws the coordinate's result from current delivery. It does not change the approved definition: entity_scope registrant and source 'Item 3 / legal proceedings / contingencies notes' are what each item was judged against.",
-   "partial_repair": {
-    "what_was_repaired": "the seven in-scope sub-headings; both causes",
-    "repeated_within_scope": "historical_text_results._page_furniture: a repeated block is furniture only when the block before or after it also repeats. The twenty running-header blocks all have a repeating neighbour; the two Comirnaty headings stand between blocks that occur once. No threshold and no list of known captions.",
-    "substantive_minimum_length_12": "historical_text_results._note_heading: inside a note an Item incorporated by reference, an emphasized unlinked block carrying a letter is content even under twelve characters. The bare page numbers in the same runs carry no letter and stay out, and the registrant name is excluded the same way _substantive excludes it.",
-    "measured": {
-     "selected_before": 92,
-     "selected_after": 99,
-     "recovered": [
-      3858,
-      3870,
-      3874,
-      3882,
-      3886,
-      3889,
-      3899
-     ],
-     "furniture_before": 22,
-     "furniture_after": 20,
-     "evidence_status": "PASS"
-    },
-    "what_is_not_repaired": "the six items outside the approved source. Four are the independent auditor's critical audit matter and two are accounting policy admitted on one occurrence of a keyword. The real cause is that ITEM_8 - the whole financial statements section - is scanned as a proxy for the 'contingencies notes' the definition names, and narrowing that changes every filing's set. One filing has been read; that is not enough to generalise from, so it stays open and the coordinate stays withdrawn.",
-    "next_step": "read a second and third filing's D02 set the same way before narrowing ITEM_8, so the narrowing is measured against more than the filing that motivated it"
-   }
+   "what_is_correct": "every substantive paragraph of Note 16A is present, in order, and the two in-scope items outside the sub-note - the contingencies note lead-in at 2302 and the Seagen legal-matters bullet at 2351 - are correctly included. The scope boundary [3821, 3937) is right: guarantees, commitments, contingent consideration and insurance all start at or after 3937 and none is in the set."
   }
  ],
- "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released."
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "purpose": "Results this repository has confirmed hold wrong content. An entry withdraws a result from current delivery. It does not delete it, re-sign it, or relabel it as a structural non-applicability: the original Run stays readable so the defect can be demonstrated and the repair checked.",
+ "record_type": "KNOWN_RESULT_DEFECT_REGISTER",
+ "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
+ "schema_version": 2
 }

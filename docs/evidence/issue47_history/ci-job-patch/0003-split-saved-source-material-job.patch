@@ -1,0 +1,49 @@
+diff --git a/.github/workflows/vnext-fast.yml b/.github/workflows/vnext-fast.yml
+index b502b3b..c0ea309 100644
+--- a/.github/workflows/vnext-fast.yml
++++ b/.github/workflows/vnext-fast.yml
+@@ -32,9 +32,29 @@ jobs:
+         run: python3 tools/run_fast_tests_v2.py --jobs 2
+ 
+   source-material:
+-    name: vNext saved-source material
++    name: vNext saved-source material (1/2)
+     runs-on: ubuntu-latest
+-    timeout-minutes: 35
++    timeout-minutes: 30
++    steps:
++      - name: Check out repository
++        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
++        with:
++          persist-credentials: false
++      - name: Set up Python 3.14
++        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
++        with:
++          python-version: "3.14"
++      - name: Install pinned offline request tokenizer
++        run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
++      - name: Run the first half of the saved-source material tests
++        env:
++          PYTHONDONTWRITEBYTECODE: "1"
++        run: python3 tools/run_fast_tests_v2.py --suite source-material --shard 1/2 --jobs 2
++
++  source-material-b:
++    name: vNext saved-source material (2/2)
++    runs-on: ubuntu-latest
++    timeout-minutes: 30
+     steps:
+       - name: Check out repository
+         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+@@ -46,10 +66,10 @@ jobs:
+           python-version: "3.14"
+       - name: Install pinned offline request tokenizer
+         run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+-      - name: Run complete saved-source material tests
++      - name: Run the second half of the saved-source material tests
+         env:
+           PYTHONDONTWRITEBYTECODE: "1"
+-        run: python3 tools/run_fast_tests_v2.py --suite source-material --jobs 2
++        run: python3 tools/run_fast_tests_v2.py --suite source-material --shard 2/2 --jobs 2
+ 
+   native-runs:
+     name: vNext ordinary native Runs

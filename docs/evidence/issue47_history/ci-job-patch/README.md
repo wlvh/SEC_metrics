@@ -96,3 +96,44 @@ touch, and which job loses depends on how fast a runner it draws. The caps in
 the file after both patches are 10, 35, 30, 25, 30, 25, 30, 30, 30, 45, 30, 30
 and 20 for the added job, so neither raised cap becomes an outlier in the other
 direction.
+
+## The third one: the saved-source job is at its cap, and so are two others
+
+Run 194 on head `85143c9` - the commit the last review pinned - completed with
+conclusion `cancelled`, and reading its thirteen jobs says why. Ten succeeded.
+Three were cancelled, each at exactly its own `timeout-minutes`:
+
+| job | cap | ran |
+|---|---|---|
+| `vNext capacity native Runs` | 15m | 15m15s |
+| `vNext capacity program-role native Runs` | 20m | 20m15s |
+| `vNext saved-source material` | 35m | 35m15s |
+
+A job that exceeds `timeout-minutes` is cancelled rather than failed, so the
+run reads as `cancelled` and no assertion failed anywhere. `0002` already
+covers the two capacity jobs. This is the third.
+
+`0003-split-saved-source-material-job.patch` splits the saved-source job in
+two, `--shard 1/2` and `--shard 2/2`, at 30 minutes each. Raising the single
+cap would work for a while and stop working again: the tier grows with the
+issue, it is already 76 cases, and one job means wall-clock feedback of over
+half an hour on every push.
+
+The `--shard i/n` option is in `tools/run_fast_tests_v2.py`, which this session
+can push, so the split is available before the patch is applied and the
+unsharded command keeps working unchanged if it never is. The partition is
+balanced by each case's own declared timeout rather than by count - the three
+long cases must not land together - and `tests/vnext/test_source_tier_shard.py`
+asserts that every case is in exactly one shard, that the shards do not move
+between runs, and that no shard carries more than its even share plus the
+heaviest single case.
+
+```
+git apply docs/evidence/issue47_history/ci-job-patch/0003-split-saved-source-material-job.patch
+```
+
+Verified with `git apply --check` against this branch's head.
+
+Until it is applied, the saved-source tier has local execution records only on
+any commit where it exceeds 35 minutes, and a `cancelled` run must not be read
+as a pass.

@@ -373,6 +373,83 @@ def incorporated_scopes(*, document, raw_bytes, reference, note):
                        "repeated_furniture_blocks": furniture})
     return scopes
 
+
+# An audit report's own title, as its own block. Measured on six filings: every
+# real heading carries leading emphasis and every mention of the report that is
+# not a heading does not - Marriott's two table-of-contents lines, Southwest's
+# reference, Enphase's "(PCAOB ID No. 34)" line and Ford's whole Item 8, which is
+# one cross-reference block.
+_AUDIT_REPORT_TITLE = re.compile(
+    r"\Areport of independent registered public accounting firm\Z", re.I)
+# Where it ends. Five of the six close with the firm's signature block; Pfizer's
+# has no /s/ block at all and closes with the auditor-tenure sentence, whose
+# wording is not fixed either - it says it cannot determine the year it began.
+# A rule built on the signature alone passes five filings and fails the one that
+# motivated it, which is why six were read before this was written.
+_AUDIT_REPORT_SIGNATURE = re.compile(r"\A/s/\s*\S")
+_AUDIT_REPORT_TENURE = re.compile(r"serv(?:ed|ing)\s+as\s+.{0,60}?auditor", re.I)
+_AUDIT_REPORT_CLOSER_MAX_CHARS = 400
+
+
+def audit_report_spans(*, document, ranges=None):
+    """The block ranges an independent auditor's report occupies.
+
+    D02's approved source names three places - Item 3, the legal proceedings
+    section and the contingencies notes. The audit report is none of them, and
+    it is inside Item 8, which the scan uses as a stand-in for the third. So a
+    critical audit matter about litigation matches the legal wording and is
+    taken as if the registrant had disclosed it.
+
+    The argument for excluding it is document part supported by content, not
+    speaker. entity_scope registrant says which entity the disclosure concerns,
+    and a critical audit matter about the registrant's litigation concerns the
+    registrant; what it discloses is the audit, and the procedures paragraph is
+    a description of what the auditor did.
+
+    Measured across six filings, this excludes four blocks in one of them and
+    nothing in the other five - Pfizer's auditor names a litigation critical
+    audit matter and the others' do not. So the defect is not routine, and it
+    is structural: any filing whose auditor names one is exposed to it.
+
+    An opening with no closer excludes nothing and is reported instead. An
+    unbounded exclusion could drop real disclosures silently, and a known
+    over-take that is registered is the lesser of the two.
+
+    ``ranges`` restricts which openings count, and the caller passes the ranges
+    it is about to scan. Pfizer carries a third report - the internal control
+    one, in Item 9A - which has no signature and no tenure sentence either, so
+    it never closes. It is also outside every scanned range, so it can exclude
+    nothing; reporting it as unclosed would invite a reader to think something
+    was missed when nothing was at stake. The closer is still looked for across
+    the whole document, because a report can end just past the range it opens
+    in.
+    """
+    blocks = document["blocks"]
+    inside = None if ranges is None else {
+        index for scope in ranges
+        for index in range(scope["start_block"], scope["end_block_exclusive"])}
+    spans, unclosed = [], []
+    for opening, block in enumerate(blocks):
+        if inside is not None and opening not in inside:
+            continue
+        if not (block.get("leading_emphasis")
+                and _AUDIT_REPORT_TITLE.match(block["text"].strip())):
+            continue
+        closing = next((index for index in range(opening + 1, len(blocks))
+                        if len(blocks[index]["text"]) <= _AUDIT_REPORT_CLOSER_MAX_CHARS
+                        and (_AUDIT_REPORT_SIGNATURE.match(blocks[index]["text"].strip())
+                             or _AUDIT_REPORT_TENURE.search(blocks[index]["text"]))), None)
+        if closing is None:
+            unclosed.append(opening)
+            continue
+        spans.append({"start_block": opening, "end_block_exclusive": closing + 1,
+                      "closed_by": ("SIGNATURE"
+                                    if _AUDIT_REPORT_SIGNATURE.match(
+                                        blocks[closing]["text"].strip())
+                                    else "AUDITOR_TENURE_STATEMENT")})
+    return {"spans": spans, "unclosed_openings": unclosed}
+
+
 def referenced_note_candidates(*, document, raw_bytes):
     """`legal_risk_candidates` with a referenced note kept as a note.
 
@@ -425,7 +502,10 @@ def referenced_note_candidates(*, document, raw_bytes):
             held = owner.get(index)
             if held is None or _width(scope) < _width(held):
                 owner[index] = scope
-    legal, regulatory = [], []
+    audit = audit_report_spans(document=document, ranges=ranges)
+    audited = {index for span in audit["spans"]
+               for index in range(span["start_block"], span["end_block_exclusive"])}
+    legal, regulatory, excluded = [], [], []
     for scope in ranges:
         section = scope["section_id"]
         furniture = set(scope.get("repeated_furniture_blocks", ()))
@@ -441,9 +521,18 @@ def referenced_note_candidates(*, document, raw_bytes):
             text = block["text"]
             if (section == "ITEM_3" or section.startswith("NOTE_")
                     or section == "ITEM_8" and _LEGAL.search(text)):
-                legal.append(_excerpt(document, block, section,
-                                      ["EXPLICIT_LEGAL_SECTION_TEXT" if section == "ITEM_3"
-                                       else "LEGAL_OR_CONTINGENCY_LANGUAGE_IN_NOTES"]))
+                # Only D02's branch. The first version skipped the whole block,
+                # which silently took the same blocks out of D03's regulatory
+                # set as well - a different metric with its own approved source,
+                # on four filings this rule was supposed to leave alone. The
+                # identical candidate counts hid it; comparing the records did
+                # not.
+                if index in audited:
+                    excluded.append(index)
+                else:
+                    legal.append(_excerpt(document, block, section,
+                                          ["EXPLICIT_LEGAL_SECTION_TEXT" if section == "ITEM_3"
+                                           else "LEGAL_OR_CONTINGENCY_LANGUAGE_IN_NOTES"]))
             if _ACTION.search(text) or _AUTHORITY.search(text):
                 labels = ["ACTION_LANGUAGE_PRESENT" if _ACTION.search(text)
                           else "AUTHORITY_OR_GENERAL_REGULATION_MENTION"]
@@ -458,6 +547,10 @@ def referenced_note_candidates(*, document, raw_bytes):
             "coverage_status": "INCOMPLETE" if reasons else "LOCAL_REQUESTED_RANGES_SCANNED",
             "coverage_reasons": reasons, "note_references": references,
             "semantic_scope_completeness_asserted": False,
+            **({"audit_report_scope": {**audit, "excluded_blocks": sorted(excluded),
+                                       "basis": "APPROVED_SOURCE_IS_ITEM_3_LEGAL_"
+                                                "PROCEEDINGS_AND_CONTINGENCIES_NOTES"}}
+               if excluded else {}),
             "D02": {"finding_status": "SOURCE_EXCERPTS_FOUND" if legal
                     else "NO_SUPPORTED_SOURCE_LANGUAGE", "candidates": legal,
                     "interpretation": "VERBATIM_LEGAL_DISCLOSURES_NOT_TOTAL_CASE_OR_LIABILITY_ASSERTION"},
