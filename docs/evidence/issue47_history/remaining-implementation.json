@@ -11,6 +11,11 @@
  },
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "record_type": "ISSUE_47_REMAINING_IMPLEMENTATION",
+ "so_the_next_implementation_is": {
+  "chosen": "C04",
+  "not_started_yet_and_why": "routing a metric edits historical_results.py, which is a rule file, so it moves the Requirement closure. A batch is running against the current one and is the evidence for it; changing the closure underneath the report it will produce would make that report describe a version nothing ran. The order is: finish the batch, report it against its own closure, then wire C04.",
+  "why": "it is the only one of the eight whose inputs both already have historical routes, so it composes rather than builds."
+ },
  "status_distribution_over_the_frame": {
   "HISTORICAL_ROUTE_NOT_WIRED": 94,
   "ROUTE_IMPLEMENTED_NOT_RUN": 335,
@@ -76,6 +81,35 @@
     "E05"
    ]
   }
+ },
+ "the_8_unwired_are_not_one_kind_of_work": {
+  "blocked_on_a_model_allowance": {
+   "ids": [
+    "B13",
+    "D01",
+    "D03",
+    "D04"
+   ],
+   "note": "this is a second allowance, not the SEC one. The acquisition plan's cap covers requests to SEC and says nothing about provider calls.",
+   "why": "D01 is source_mode ai_text; B13, D03 and D04 resolve through the semantic review path. None of them can produce a historical value without provider calls, and Issue #47 has no allowance of its own - the same missing record the SEC gate names."
+  },
+  "blocked_on_material": {
+   "ids": [
+    "C02",
+    "C03"
+   ],
+   "not_in_the_cap": "the acquisition plan does not include these proxies, because an unwired route has no dependency to declare. They enter the plan when a route does.",
+   "why": "both read the annual meeting DEF 14A. The saved submissions indexes list 85 proxies across the ten companies and ten are saved, all filed in 2026, so a historical C02 or C03 would resolve the most recent period and name a source gap for every earlier one. The missing proxies are the ask rather than the route - which is what historical_text_input already says about C02."
+  },
+  "unblocked_deterministic": {
+   "B06": "source_mode structured_first_ai_fallback, so the structured path comes first and several variants of it exist (v3 through v6). More guards than any other metric, so cheapest is not the same as easiest.",
+   "C04": "source_mode structured, disclosure_group auditor_report. Its resolver auditor_change_dual_source_v1 reads the AuditorName concept and the fiscal 8-K item 4.01 set - and both already have historical routes, the Company Facts one and the registered-event one whose window separation landed this round. This is the cleanest one to wire.",
+   "ids": [
+    "C04",
+    "B06"
+   ]
+  },
+  "why_this_cut_matters": "'eight routes to write' reads as eight units of the same work. Read from each metric's own Spec, they are three different blockers and only one of them is implementation."
  },
  "the_94_by_metric": {
   "B06": 11,
