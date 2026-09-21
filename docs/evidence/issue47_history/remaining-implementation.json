@@ -1,0 +1,93 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "how_to_read_it": {
+  "eleven_is_the_ceiling": "each unwired metric shows 11 because 11 is the number of target periods whose original is saved. The other 39 periods report SOURCE_MISSING_TARGET_ORIGINAL first, so the same metric is unwired there too and does not show in this count. Wiring all eight would move 88 positions today and 8 x 50 = 400 once the originals exist.",
+  "first_blocking_reason_is_not_the_only_one": "1170 positions report a missing original, and some of them also lack a route. The two are counted separately for that reason.",
+  "what_this_does_not_say": "nothing here is a statement that a wired route produces a correct value. Route, Run, public row and content acceptance are four separate states and only the first is counted here."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "record_type": "ISSUE_47_REMAINING_IMPLEMENTATION",
+ "status_distribution_over_the_frame": {
+  "HISTORICAL_ROUTE_NOT_WIRED": 94,
+  "ROUTE_IMPLEMENTED_NOT_RUN": 335,
+  "SOURCE_MISSING_TARGET_ORIGINAL": 1170,
+  "TARGET_PERIOD_METADATA_BLOCKED": 78,
+  "TARGET_PERIOD_NOT_DISCOVERED": 273,
+  "total": 1950
+ },
+ "the_39_metrics": {
+  "no_route_at_all": {
+   "count": 8,
+   "ids": [
+    "B06",
+    "B13",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D03",
+    "D04"
+   ],
+   "note": "these are exactly the amendment policy's nine not_covered_metric_ids minus D02. Not a coincidence - they are the debt composition, capacity, proxy-dependent governance and semantic routes, which is the same reason the amendment policy will not clear them automatically."
+  },
+  "structural_applicability_only": {
+   "count": 8,
+   "ids": [
+    "A03",
+    "A04",
+    "A09",
+    "A11",
+    "A12",
+    "A13",
+    "B10",
+    "B11"
+   ],
+   "what_that_means": "the Spec's own applicability and the registry's traits answer the question where the metric does not apply, and that is a real answer - N_A_STRUCTURAL, not a missing route. Where it does apply there is still no route: B10 and B11 for the one lodging company account for 6 of the 94."
+  },
+  "wired_historical_route": {
+   "count": 23,
+   "ids": [
+    "A01",
+    "A02",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A10",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B07",
+    "B08",
+    "B09",
+    "B12",
+    "C01",
+    "D02",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+   ]
+  }
+ },
+ "the_94_by_metric": {
+  "B06": 11,
+  "B10": 3,
+  "B11": 3,
+  "B13": 11,
+  "C02": 11,
+  "C03": 11,
+  "C04": 11,
+  "D01": 11,
+  "D03": 11,
+  "D04": 11
+ },
+ "what_this_is": "The part of the frame that is not waiting for a document. Measured over the whole 10 x 39 x 5 frame with no runs root, so the numbers are about routes rather than about any batch."
+}
