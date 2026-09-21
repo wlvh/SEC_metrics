@@ -35,7 +35,7 @@ MACYS_PERIOD = "2026-01-31"
 def _write_run(root, *, company_id, metric_id, period_end, result_id, quality="EXACT",
                value="1", applicability="APPLICABLE", publication="PUBLISHED",
                status="FROZEN", validation="PASSED", closure="sha256:" + "0" * 64,
-               omit_hashes=(), run_id=None):
+               omit_hashes=(), run_id=None, row_bundle=None):
     """A minimal frozen run directory whose manifest describes its own files.
 
     Built here rather than copied from a real Run so the receipt reader is
@@ -75,7 +75,41 @@ def _write_run(root, *, company_id, metric_id, period_end, result_id, quality="E
         manifest.pop(key)
     (run_dir / "manifest.json").write_text(
         json.dumps(manifest, sort_keys=True) + "\n", encoding="utf-8")
+    if row_bundle is not None:
+        _write_row_bundle(run_dir, run_id=manifest["run_id"], status=status,
+                          result_id=row_bundle)
     return run_dir
+
+
+def _write_row_bundle(run_dir, *, run_id, status, result_id, evidence_count=2,
+                      corrupt=False):
+    """What the public renderer persists beside a Run, built the same way.
+
+    The receipt carries the hashes of the row and the evidence it was written
+    with, so the reader checks the bundle rather than trusting it. ``corrupt``
+    edits the row after the hash is taken, which is the case that has to be
+    refused.
+    """
+    from vnext.canonical import content_hash
+    row = {"metric_id": "B01", "value": "1", "status": "EXACT"}
+    evidence = [{"n": index} for index in range(evidence_count)]
+    receipt = {"record_type": "HISTORICAL_PERIOD_ROW_RECEIPT", "status": "FROZEN_CANDIDATE",
+               "run_id": run_id, "run_status": status, "requirement_id": "issue_47_v1",
+               "result_id": result_id, "primary_metric_id": "B01",
+               "period_selection_id": "sha256:" + "0" * 64,
+               "row_hash": content_hash(value=row),
+               "evidence_hash": content_hash(value=evidence),
+               "evidence_count": len(evidence),
+               "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+               "production_authorized": False}
+    if corrupt:
+        row = {**row, "value": "999"}
+    bundle = {"record_type": "HISTORICAL_PERIOD_ROW_BUNDLE", "schema_version": 1,
+              "row": row, "evidence": evidence,
+              "receipt": {**receipt, "receipt_id": content_hash(value=receipt)}}
+    (Path(run_dir) / "row_receipt.json").write_text(
+        json.dumps(bundle, sort_keys=True) + "\n", encoding="utf-8")
+    return bundle
 
 
 class HistoricalCoverageTest(unittest.TestCase):
@@ -523,6 +557,115 @@ class HistoricalCoverageTest(unittest.TestCase):
             with self.assertRaises(CoverageError) as refused:
                 known_result_defects(repo_root=root)
         self.assertEqual("COVERAGE_DEFECT_RELEASE_NAMES_NO_RESULT", str(refused.exception))
+
+    def test_the_three_delivery_layers_are_reported_separately(self):
+        """A frozen Run, a rendered row and a checked value are three facts.
+
+        verified_outcome answers the first. Presenting it as a delivery rate
+        would read "a Run exists" as "the number is right and it reached the
+        output", so each layer carries its own proven flag and its own reason
+        when it is not proven.
+        """
+        result_id = "sha256:" + "a" * 64
+        with TemporaryDirectory(prefix="coverage-delivery-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-B01", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id=result_id,
+                       row_bundle=result_id)
+            _write_run(root / "run-B02", company_id="macys", metric_id="B02",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "b" * 64)
+            with original_sources_only():
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        rows = {p["metric_id"]: p for p in matrix["positions"]
+                if p["report_end"] == MACYS_PERIOD}
+        # B01 froze, validated and has a bundle naming its own result.
+        self.assertTrue(rows["B01"]["delivery"]["native_run"]["proven"])
+        self.assertTrue(rows["B01"]["delivery"]["public_row"]["proven"])
+        self.assertEqual(2, rows["B01"]["delivery"]["public_row"]["evidence_count"])
+        # B02 froze and validated and never reached a row.
+        self.assertTrue(rows["B02"]["delivery"]["native_run"]["proven"])
+        self.assertFalse(rows["B02"]["delivery"]["public_row"]["proven"])
+        self.assertEqual("NOT_PROVEN:NO_ROW_BUNDLE_BESIDE_THE_RUN",
+                         rows["B02"]["delivery"]["public_row"]["reason"])
+        # Neither is content-accepted, and both say why rather than omitting it.
+        for metric in ("B01", "B02"):
+            layer = rows[metric]["delivery"]["content_acceptance"]
+            self.assertFalse(layer["proven"])
+            self.assertTrue(layer["reason"].startswith("NOT_PROVEN:"))
+        self.assertEqual({"native_run": 2, "public_row": 1, "content_acceptance": 0},
+                         matrix["delivery_layer_counts"])
+        self.assertEqual(0, matrix["delivery_layer_counts"]["content_acceptance"])
+
+    def test_a_row_bundle_for_another_result_does_not_count_as_this_one_s_row(self):
+        """A rendered row is evidence for the result it was rendered from."""
+        with TemporaryDirectory(prefix="coverage-rowid-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-B01", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "a" * 64,
+                       row_bundle="sha256:" + "e" * 64)
+            with original_sources_only():
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        row = next(p for p in matrix["positions"]
+                   if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+        self.assertTrue(row["delivery"]["native_run"]["proven"])
+        self.assertFalse(row["delivery"]["public_row"]["proven"])
+        self.assertEqual("ROW_BUNDLE_IS_FOR_ANOTHER_RESULT",
+                         row["delivery"]["public_row"]["reason"])
+
+    def test_an_edited_row_bundle_is_refused_rather_than_read(self):
+        """The bundle is checked against its own hashes, like the records file."""
+        with TemporaryDirectory(prefix="coverage-rowedit-") as temporary:
+            run_dir = _write_run(Path(temporary) / "run", company_id="macys",
+                                 metric_id="B01", period_end=MACYS_PERIOD,
+                                 result_id="sha256:" + "a" * 64,
+                                 row_bundle="sha256:" + "a" * 64)
+            self.assertIsNotNone(read_run_receipt(run_dir=run_dir)["public_row"])
+            _write_row_bundle(run_dir, run_id="run:test:" + "a" * 8, status="FROZEN",
+                              result_id="sha256:" + "a" * 64, corrupt=True)
+            with self.assertRaises(RunReceiptError) as changed:
+                read_run_receipt(run_dir=run_dir)
+        self.assertEqual("ROW_BUNDLE_ROW_CHANGED", str(changed.exception))
+
+    def test_what_a_coordinate_key_does_not_distinguish_is_carried_beside_it(self):
+        """Same coordinate, different measurement, and the report can say so.
+
+        Company, metric and period end is the frame's coordinate and it is
+        coarser than a measurement: the pinned fiscal coordinate, the window
+        actually measured, the scope and the filing are separate facts. They
+        are not folded into the key - the frame has a row per coordinate - so
+        they travel beside it, and result_id already differs whenever any of
+        them does.
+        """
+        from vnext.historical_run_receipts import collect_run_receipts, index_receipts
+        with TemporaryDirectory(prefix="coverage-identity-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-full", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "a" * 64,
+                       run_id="run:test:full")
+            _write_run(root / "run-stub", company_id="macys", metric_id="B01",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "b" * 64,
+                       run_id="run:test:stub")
+            index = index_receipts(receipts=collect_run_receipts(runs_root=root))
+            with original_sources_only():
+                matrix = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                               years=5, runs_root=root)
+        entries = index[("macys", "B01", MACYS_PERIOD)]
+        self.assertEqual(2, len(entries))
+        for entry in entries:
+            self.assertEqual({"pinned_fiscal_year", "pinned_period_end",
+                              "measured_period_start", "measured_period_end",
+                              "scope_key", "value_kind", "requirement_closure_hash",
+                              "run_id"}, set(entry["identity"]))
+            self.assertEqual(2025, entry["identity"]["pinned_fiscal_year"])
+        self.assertEqual({"run:test:full", "run:test:stub"},
+                         {entry["identity"]["run_id"] for entry in entries})
+        # Two different results at one coordinate stay two, and the position
+        # reports the disagreement rather than reporting one of them.
+        row = next(p for p in matrix["positions"]
+                   if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B01")
+        self.assertEqual("RUN_RECEIPT_AMBIGUOUS", row["status"])
 
     def test_an_edited_run_directory_is_not_the_run_its_manifest_describes(self):
         with TemporaryDirectory(prefix="coverage-receipts-") as temporary:

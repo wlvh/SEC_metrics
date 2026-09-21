@@ -71,6 +71,10 @@ NEW_RULE_FILES = (
     # Which amendments leave which inputs unchanged decides whether a pinned
     # period resolves at all, so its bytes are checked on both roots.
     "scripts/vnext/historical_amendment_admission.py",
+    # Which submissions blocks a pinned period is read from. The frozen view
+    # scans only filings.recent; this decides which filing an earlier period
+    # means, so both roots check it.
+    "scripts/vnext/historical_metadata_context.py",
     "scripts/vnext/requirement_profile_v16.py",
 )
 

@@ -126,9 +126,15 @@ SOURCE_TESTS += ("tests.vnext.test_historical_coverage",)
 # boundary from cutting an item's own body, so it reads two filings in full.
 SOURCE_TESTS += ("tests.vnext.test_historical_text_boundary",)
 # Identity isolation, object isolation and scope leakage for the shared parse.
-# It reads two filings in full; 32 seconds measured.
+# It reads two filings in full; 43 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_shared_sources",)
-# This one reads no source material at all - it hashes the twelve rule files the
+# Which submissions blocks a pinned period may be read from. It reads six
+# companies' saved submissions indexes and shards and no filing bodies; 10
+# seconds measured. Registered because its positive cases and its negative
+# cases are the same comparison run against two implementations, so a change
+# that quietly re-narrows the view fails here rather than in a batch.
+SOURCE_TESTS += ("tests.vnext.test_historical_metadata_context",)
+# This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
 # a README asking the author to run --check did not stop either one.
@@ -143,6 +149,15 @@ FAST_TESTS += ("tests.vnext.test_requirement_dispatch_map",)
 # that matters is a comparison, and a comparison that silently stops comparing
 # looks exactly like one that passes.
 FAST_TESTS += ("tests.vnext.test_historical_spec_revision",)
+# The successor text protocol, checked differentially against the frozen one:
+# 26 mutations inside the old bound must give the same value or the same error
+# message, and every item-level mutation runs again at index 80. No source
+# material; 0.9 seconds measured.
+FAST_TESTS += ("tests.vnext.test_historical_text_protocol",)
+# The same capacity through the production entry points. It skips without the
+# registration patch, which is not a pass - it is registered so that a run
+# declaring the patch applied shows the skip rather than hiding it.
+FAST_TESTS += ("tests.vnext.test_historical_protocol_wiring",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

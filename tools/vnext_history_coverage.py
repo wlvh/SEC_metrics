@@ -67,6 +67,12 @@ def main(argv=None):
     print("closure requested: %s"
           % (matrix["requested_requirement_closure_hash"] or "none - a coordinate with "
              "receipts under several closures reports RUN_RECEIPT_VERSION_AMBIGUOUS"))
+    print("delivery layers (three separate facts, not one rate):")
+    for name in ("native_run", "public_row", "content_acceptance"):
+        print("  %-38s %d" % (name, matrix["delivery_layer_counts"][name]))
+        for reason, count in sorted(matrix["delivery_layer_unproven_reasons"].get(name, {}).items(),
+                                    key=lambda item: -item[1])[:4]:
+            print("      not proven: %-28s %d" % (reason[:28], count))
     print("independent dimensions, each counted over the whole frame:")
     for name, count in sorted(matrix["dimension_counts"].items()):
         print("  %-38s %d" % (name, count))

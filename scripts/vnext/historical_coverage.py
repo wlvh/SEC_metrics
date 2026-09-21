@@ -241,6 +241,73 @@ def _select_receipt(*, found, closure):
             "status_uniform": uniform}
 
 
+NOT_PROVEN = "NOT_PROVEN"
+
+
+def _delivery(*, receipt, result, status, defect, defects):
+    """The three layers a delivered position has, each proved or not.
+
+    verified_outcome answers one question - did an unambiguous, frozen,
+    validated Run record this result. That is the first layer only, and
+    reporting it as a delivery rate would be reading "a Run exists" as "the
+    number is right and it reached the output". So the layers are named and
+    each carries its own reason when it is not proven:
+
+    * ``native_run`` - which version produced what, frozen and validated;
+    * ``public_row`` - whether the renderer produced a row and its evidence,
+      read from the bundle it wrote rather than re-rendered here;
+    * ``content_acceptance`` - whether the value or excerpt range was checked
+      against the filing by something other than the code that produced it.
+
+    The third is NOT_PROVEN for every position in this repository today and
+    says so rather than being left out. A defect register entry is a recorded
+    finding, not an acceptance: it can withdraw a result and it can release a
+    named repaired one, and neither is a statement that the content is right.
+    """
+    layers = {}
+    if result is None:
+        layers["native_run"] = {"proven": False, "reason": status}
+    elif receipt["run_status"] != "FROZEN":
+        layers["native_run"] = {"proven": False,
+                                "reason": "RUN_NOT_FROZEN:" + str(receipt["run_status"])}
+    elif receipt["validation_status"] != "PASSED":
+        layers["native_run"] = {"proven": False,
+                                "reason": "VALIDATION_NOT_PASSED:"
+                                          + str(receipt["validation_status"])}
+    elif not receipt["manifest_file_hashes_verified"]:
+        layers["native_run"] = {"proven": False, "reason": "RUN_FILE_HASHES_UNVERIFIED"}
+    else:
+        layers["native_run"] = {"proven": True, "run_id": receipt["run_id"],
+                                "requirement_closure_hash": receipt["requirement_closure_hash"],
+                                "result_id": result["result_id"]}
+    row = (receipt or {}).get("public_row")
+    if result is None:
+        layers["public_row"] = {"proven": False, "reason": NOT_PROVEN + ":NO_RESULT"}
+    elif row is None:
+        # No bundle beside the Run. The renderer may never have been called, or
+        # may have refused; neither is readable from here, and guessing which
+        # would be the report inventing a state.
+        layers["public_row"] = {"proven": False,
+                                "reason": NOT_PROVEN + ":NO_ROW_BUNDLE_BESIDE_THE_RUN"}
+    elif row["result_id"] != result["result_id"]:
+        layers["public_row"] = {"proven": False,
+                                "reason": "ROW_BUNDLE_IS_FOR_ANOTHER_RESULT",
+                                "row_result_id": row["result_id"]}
+    else:
+        layers["public_row"] = {"proven": True, "row_hash": row["row_hash"],
+                                "evidence_count": row["evidence_count"],
+                                "receipt_id": row["receipt_id"]}
+    released = [entry["defect_id"] for entry in defects
+                if isinstance(entry.get("released"), dict)
+                and entry["released"].get("result_id") == (result or {}).get("result_id")]
+    layers["content_acceptance"] = {
+        "proven": False,
+        "reason": NOT_PROVEN + ":NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_ISSUE",
+        "withdrawn_by": defect["defect_id"] if defect else None,
+        "released_defect_ids": sorted(released)}
+    return layers
+
+
 def _position(*, company_id, report_end, ordinal, metric_id, established,
               original_saved, implemented, found, defects, candidate, closure=None):
     """One target position, with its four states kept apart.
@@ -319,6 +386,11 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
             # confirmed content defect withdraws it. A receipt that is OPEN,
             # unvalidated, unverifiable or one of several is evidence of
             # something, but not of a verified outcome.
+            # The three delivery layers, each with its own reason when it is
+            # not proven. verified_outcome below is the first of them and is
+            # not a delivery rate.
+            "delivery": _delivery(receipt=receipt, result=result, status=status,
+                                  defect=defect, defects=defects),
             "verified_outcome": (ran and defect is None
                                  and status.startswith(("VALUE_", "N_A_STRUCTURAL"))
                                  and receipt["run_status"] == "FROZEN"
@@ -407,6 +479,10 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                     "requirement_closure_hash": None, "validation_status": None,
                     "run_receipt_hashes_verified": False,
                     "result_id": None, "known_content_defect": None,
+                    "receipt_status_uniform": True,
+                    "delivery": _delivery(receipt=None, result=None,
+                                          status="TARGET_PERIOD_NOT_DISCOVERED",
+                                          defect=None, defects=defects),
                     "business_content_accepted": False, "verified_outcome": False})
         company_reports.append({"company_id": company_id, "requested_years": years,
                                 "target_period_count": len(plan["target_candidates"]),
@@ -426,6 +502,20 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
         "run_receipt_hashes_verified": sum(p["run_receipt_hashes_verified"]
                                            for p in positions),
         "verified_outcome": sum(p["verified_outcome"] for p in positions)}
+    # The same frame counted by delivery layer. These are cumulative in
+    # meaning, not by construction: a public row is only proven where a
+    # bundle beside the Run names this result, and the third layer is zero
+    # everywhere because nothing in this repository records an independent
+    # content check.
+    delivery = {name: sum(p["delivery"][name]["proven"] for p in positions)
+                for name in ("native_run", "public_row", "content_acceptance")}
+    unproven = {}
+    for position in positions:
+        for name, layer in position["delivery"].items():
+            if layer["proven"]:
+                continue
+            reasons = unproven.setdefault(name, {})
+            reasons[layer["reason"]] = reasons.get(layer["reason"], 0) + 1
     blocked_by_both = sum(1 for p in positions
                           if not p["target_original_saved"] and not p["historical_route_implemented"])
     body = {"record_type": RECORD_TYPE, "schema_version": 4,
@@ -437,14 +527,21 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             "wired_historical_metric_ids": list(WIRED_HISTORICAL_METRICS),
             "first_blocking_reason_counts": counts, "status_counts": counts,
             "dimension_counts": dimensions,
+            "delivery_layer_counts": delivery,
+            "delivery_layer_unproven_reasons": unproven,
+            "delivery_layers_are_not_one_number": (
+                "a frozen validated Run, a rendered public row and an independent "
+                "content check are three separate facts. Reporting the first as a "
+                "delivery rate would read 'a Run exists' as 'the number is right and "
+                "it reached the output'."),
             "positions_missing_source_and_route": blocked_by_both,
             "first_blocking_reason_is_not_the_only_blocker": True,
-            # This frame stops at the metric result. It never renders a public
-            # row, so an EXACT position here is a resolved value, not a
-            # publishable one: B01 and B03 were counted EXACT while the
-            # historical renderer still refused them. Read the counts as
-            # resolution, and the native Run matrix for rows.
-            "public_row_rendering_not_measured": True,
+            # This frame renders nothing. A public row counts here only when
+            # the renderer wrote a bundle beside the Run and that bundle names
+            # this result; a position whose row was rendered into a driver's
+            # memory and never persisted reads as NOT_PROVEN, which is what it
+            # is from here.
+            "public_rows_are_read_not_rendered": True,
             "company_reports": company_reports, "positions": positions,
             "run_receipts_read": len(receipt_list),
             "runs_root_supplied": runs_root is not None,

@@ -46,12 +46,31 @@ def _claims(prepared):
     return claims
 
 
-def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False):
+ROW_BUNDLE_NAME = "row_receipt.json"
+ROW_BUNDLE_RECORD_TYPE = "HISTORICAL_PERIOD_ROW_BUNDLE"
+
+
+def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persist=False):
     """Build one public row and its evidence from a historical Run.
 
     The Run is loaded through the same store, its whole case is re-derived from
     the data root, and the row's fiscal label comes from the selected filing's
     own annual input rather than from whatever the company filed most recently.
+
+    Args:
+        data_root: The installed data root the Run was created against.
+        run_dir: The run directory.
+        frozen: Load a frozen Run rather than mechanically replaying an open one.
+        persist: Also write the row, its evidence and the receipt beside the Run
+            as ``row_receipt.json``. Without this the row exists only in the
+            caller's memory, so a later reader has no way to say whether a
+            position reached a public row at all - and a summary that re-renders
+            it to find out is no longer reading, it is recomputing.
+
+    Returns:
+        The row, its evidence and the receipt. The receipt carries the row and
+        evidence hashes, so a persisted bundle can be checked rather than
+        trusted.
     """
     if frozen:
         manifest, records, _ = load_frozen_run(run_dir=run_dir, repo_root=data_root)
@@ -239,5 +258,16 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False):
                        real_sec_credit=admission["real_sec_credit"],
                        selected_new_request_attempt_ids=admission[
                            "selected_new_request_attempt_ids"])
-    return {"row": row, "evidence": evidence,
-            "receipt": {**receipt, "receipt_id": content_hash(value=receipt)}}
+    bundle = {"row": row, "evidence": evidence,
+              "receipt": {**receipt, "receipt_id": content_hash(value=receipt)}}
+    if persist:
+        # Written beside the Run rather than into its hashed files: the manifest
+        # binds records, decisions and validation, and this must not change any
+        # of them. It is its own checkable object - the receipt holds the hashes
+        # of the row and the evidence it is written with.
+        path = Path(run_dir) / ROW_BUNDLE_NAME
+        path.write_text(json.dumps({"record_type": ROW_BUNDLE_RECORD_TYPE,
+                                    "schema_version": 1, **bundle},
+                                   ensure_ascii=False, indent=1, sort_keys=True) + "\n",
+                        encoding="utf-8")
+    return bundle

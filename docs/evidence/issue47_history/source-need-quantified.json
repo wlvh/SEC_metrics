@@ -46,30 +46,30 @@
     "southwest_airlines|0000092380-24-000027|luv-20231231.htm",
     "southwest_airlines|0000092380-25-000024|luv-20241231.htm"
    ],
-   "shape": "one 10-K primary document per company-year; eight companies need four prior years each and Marriott needs two"
+   "shape": "one 10-K primary document per company-year: seven companies need four prior years each and Marriott needs two, because its 2023 and 2024 originals are already saved. Counted from the manifest above, not by hand - the first version of this sentence said eight companies times four plus two, which is 34."
   },
   "TARGET_PERIOD_NOT_DISCOVERED": {
    "positions": 273,
    "company_periods": 7,
-   "note": "a different problem: the period is not in the saved submissions at all, so it is metadata rather than a primary document. Not quantified as fetches here."
+   "note": "not quantified as fetches here, and not therefore zero. Measured since: JPMorgan's three unreachable ordinals are a source need - 57 of its 69 declared submissions shards are not saved - and Paramount's four are a successor-scope question about the predecessor CIK. See acquisition-plan.json classes 2 and 4."
   },
   "not_source_problems_at_all": {
    "ROUTE_IMPLEMENTED_NOT_RUN": 253,
    "HISTORICAL_ROUTE_NOT_WIRED": 176,
-   "TARGET_PERIOD_METADATA_BLOCKED": 78
+   "TARGET_PERIOD_METADATA_BLOCKED_was_listed_here_and_should_not_have_been": "see the correction above"
+  },
+  "TARGET_PERIOD_METADATA_BLOCKED": {
+   "positions": 78,
+   "company_periods": 2,
+   "correction": "this was filed under 'not source problems at all'. That was wrong. Both are JPMorgan, both are HISTORY_SNAPSHOT_CONFLICT, and the cause is that eleven saved shards hold filings outside their currently declared ranges because SEC re-partitioned them. Resolving it needs a refreshed index and refetched shards, which is a source need."
   }
  },
  "against_the_approved_budget": {
-  "policy": "config/issue28_continuous_calls_v1.json",
-  "maximum_additional_provider_paid_sec_calls": [
-   240,
-   240,
-   80
-  ],
-  "sec_allowance": 80,
-  "documents_needed": 30,
-  "reading": "30 document fetches against a cumulative SEC allowance of 80. The need fits inside the existing approved budget rather than requiring a new one.",
-  "what_is_not_known_here": "how much of the 80 is already consumed. The budget root is /Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13, a host-local path this container does not carry, so the remaining headroom cannot be read from here and must not be assumed."
+  "status": "WITHDRAWN",
+  "what_was_written": "'30 document fetches against a cumulative SEC allowance of 80. The need fits inside the existing approved budget rather than requiring a new one.'",
+  "wrong_on_authority": "the [240, 240, 80] allowance is bound to requirement_id issue_28_v14 and to a 390-coordinate scope, and #47's own text forbids borrowing #28's remainder. The acquisition capability is reusable; its authorisation is not transferable.",
+  "wrong_on_size": "30 was the first blocking reason only. Measured since: 476 event 8-K bodies and up to 40 JPMorgan submissions shards are behind it. The envelope is in the high hundreds, not 30.",
+  "replaced_by": "docs/evidence/issue47_history/acquisition-plan.json"
  },
  "the_acquisition_path_exists": {
   "entry": "tools/vnext_continuous_sec.py (plan | capture)",

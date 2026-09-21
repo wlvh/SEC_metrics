@@ -1,0 +1,393 @@
+{
+ "record_type": "ISSUE_47_ACQUISITION_PLAN",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "status": "SUBMITTED_FOR_AUTHORISATION_NOT_EXECUTED",
+ "withdrawn_conclusion": {
+  "what_was_written": "'30 SEC fetches against a cumulative allowance of 80. The need fits inside the existing approved budget rather than requiring a new one.' - docs/evidence/issue47_history/source-need-quantified.json",
+  "withdrawn": true,
+  "why_it_was_wrong_on_authority": "The [240, 240, 80] allowance in config/issue28_continuous_calls_v1.json is bound to requirement_id issue_28_v14 and to a scope of 10 companies x 39 metrics x 1 period = 390 coordinates. continuous_call_policy checks the delegation body, the scope, the budget root and that requirement_id. Issue #47's own text forbids borrowing #28's remainder. Finding that the acquisition tooling exists and is reusable is not the same as finding that its authorisation transfers - the capability may be reused, the permission may not.",
+  "why_it_was_also_wrong_on_size": "30 was the first blocking reason only. Counting the dependencies behind it puts the measured need at roughly seventeen times the whole #28 SEC allowance, so even if the authority question did not exist the arithmetic would not have held.",
+  "not_asked_of_the_user": "how much of #28's 80 is already consumed. That ledger is #28's, its budget root is a host-local path this container does not carry, and #47 should not be reading it either way."
+ },
+ "what_a_call_is": "one SEC request attempt through scripts/sec_http.SecHttpClient, logged in evidence/requests_log.csv whether it succeeds or fails. A filing whose body and header file are both needed is two attempts.",
+ "classes": {
+  "1_known_primary_documents": {
+   "count": 30,
+   "shape": "one 10-K primary document per company-year: seven companies need four prior years each and Marriott needs two, because Marriott's 2023 and 2024 originals are already saved",
+   "by_company": {
+    "enphase_energy": 4,
+    "ford_motor_company": 4,
+    "lumen_technologies": 4,
+    "macys": 4,
+    "marriott_international": 2,
+    "pfizer": 4,
+    "salesforce": 4,
+    "southwest_airlines": 4
+   },
+   "derivation": "generated from the manifest in source-need-quantified.json, not counted by hand",
+   "amendments_implied": {
+    "count": 0,
+    "measured": "annual_periods over the saved submissions reports no 10-K/A on any of the 30 periods. This is a measurement over metadata this repository already holds, not an assumption that none exist."
+   },
+   "certainty": "KNOWN_EXACT",
+   "note": "the two Salesforce documents in this class - crm-20230131.htm and crm-20220131.htm - are also the cheapest way to close the history-shard acceptance item, because their 10-K rows are in a shard"
+  },
+  "2_metadata_refreshes": {
+   "company": "jpmorgan_chase",
+   "why": "JPMorgan files enough that a submissions shard holds under two months. 69 shards are declared; 57 are not saved; 11 of the saved ones hold filings outside their currently declared range, because SEC re-partitions the shards and the saved bodies are from an older partitioning. The catalog therefore reaches only two annual periods and period selection refuses with ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT.",
+   "measured_today": {
+    "declared_shards": 69,
+    "not_saved": 57,
+    "reaching_back_to_2021_01_01": 40,
+    "of_those_not_saved": 28,
+    "saved_but_conflicting": 11
+   },
+   "bounded_request": {
+    "current_index_refresh": 1,
+    "shards": "at most 40",
+    "why_a_range": "the exact set is decided by the refreshed index, because re-partitioning changes which shard holds which dates. Bounded above by the 40 that reach the five-year window today."
+   },
+   "certainty": "BOUNDED_ABOVE"
+  },
+  "3_event_sources_for_the_wired_event_metrics": {
+   "metrics": [
+    "C01",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+   ],
+   "why": "these routes read the 8-K filings inside each fiscal window. The window's filings are known from saved metadata; their bodies are not saved for any year before the current one.",
+   "measured": {
+    "companies": 8,
+    "windows_per_company": 5,
+    "filings_in_window_total": 578,
+    "bodies_not_saved": 476,
+    "by_company": {
+     "enphase_energy": 33,
+     "ford_motor_company": 110,
+     "lumen_technologies": 79,
+     "macys": 56,
+     "marriott_international": 43,
+     "pfizer": 46,
+     "salesforce": 44,
+     "southwest_airlines": 65
+    },
+    "per_company_per_period": {
+     "marriott_international": {
+      "2025-12-31": {
+       "window_from_exclusive": "2024-12-31",
+       "filings": 10,
+       "saved": 10,
+       "missing": 0
+      },
+      "2024-12-31": {
+       "window_from_exclusive": "2023-12-31",
+       "filings": 8,
+       "saved": 0,
+       "missing": 8
+      },
+      "2023-12-31": {
+       "window_from_exclusive": "2022-12-31",
+       "filings": 12,
+       "saved": 0,
+       "missing": 12
+      },
+      "2022-12-31": {
+       "window_from_exclusive": "2021-12-31",
+       "filings": 9,
+       "saved": 0,
+       "missing": 9
+      },
+      "2021-12-31": {
+       "window_from_exclusive": "2020-12-31",
+       "filings": 14,
+       "saved": 0,
+       "missing": 14
+      }
+     },
+     "southwest_airlines": {
+      "2025-12-31": {
+       "window_from_exclusive": "2024-12-31",
+       "filings": 17,
+       "saved": 17,
+       "missing": 0
+      },
+      "2024-12-31": {
+       "window_from_exclusive": "2023-12-31",
+       "filings": 19,
+       "saved": 0,
+       "missing": 19
+      },
+      "2023-12-31": {
+       "window_from_exclusive": "2022-12-31",
+       "filings": 13,
+       "saved": 0,
+       "missing": 13
+      },
+      "2022-12-31": {
+       "window_from_exclusive": "2021-12-31",
+       "filings": 13,
+       "saved": 0,
+       "missing": 13
+      },
+      "2021-12-31": {
+       "window_from_exclusive": "2020-12-31",
+       "filings": 20,
+       "saved": 0,
+       "missing": 20
+      }
+     },
+     "ford_motor_company": {
+      "2025-12-31": {
+       "window_from_exclusive": "2024-12-31",
+       "filings": 17,
+       "saved": 17,
+       "missing": 0
+      },
+      "2024-12-31": {
+       "window_from_exclusive": "2023-12-31",
+       "filings": 22,
+       "saved": 0,
+       "missing": 22
+      },
+      "2023-12-31": {
+       "window_from_exclusive": "2022-12-31",
+       "filings": 26,
+       "saved": 0,
+       "missing": 26
+      },
+      "2022-12-31": {
+       "window_from_exclusive": "2021-12-31",
+       "filings": 28,
+       "saved": 0,
+       "missing": 28
+      },
+      "2021-12-31": {
+       "window_from_exclusive": "2020-12-31",
+       "filings": 34,
+       "saved": 0,
+       "missing": 34
+      }
+     },
+     "pfizer": {
+      "2025-12-31": {
+       "window_from_exclusive": "2024-12-31",
+       "filings": 9,
+       "saved": 9,
+       "missing": 0
+      },
+      "2024-12-31": {
+       "window_from_exclusive": "2023-12-31",
+       "filings": 12,
+       "saved": 0,
+       "missing": 12
+      },
+      "2023-12-31": {
+       "window_from_exclusive": "2022-12-31",
+       "filings": 15,
+       "saved": 0,
+       "missing": 15
+      },
+      "2022-12-31": {
+       "window_from_exclusive": "2021-12-31",
+       "filings": 10,
+       "saved": 0,
+       "missing": 10
+      },
+      "2021-12-31": {
+       "window_from_exclusive": "2020-12-31",
+       "filings": 9,
+       "saved": 0,
+       "missing": 9
+      }
+     },
+     "salesforce": {
+      "2026-01-31": {
+       "window_from_exclusive": "2025-01-31",
+       "filings": 11,
+       "saved": 11,
+       "missing": 0
+      },
+      "2025-01-31": {
+       "window_from_exclusive": "2024-01-31",
+       "filings": 8,
+       "saved": 0,
+       "missing": 8
+      },
+      "2024-01-31": {
+       "window_from_exclusive": "2023-01-31",
+       "filings": 5,
+       "saved": 0,
+       "missing": 5
+      },
+      "2023-01-31": {
+       "window_from_exclusive": "2022-01-31",
+       "filings": 14,
+       "saved": 0,
+       "missing": 14
+      },
+      "2022-01-31": {
+       "window_from_exclusive": "2021-01-31",
+       "filings": 17,
+       "saved": 0,
+       "missing": 17
+      }
+     },
+     "lumen_technologies": {
+      "2025-12-31": {
+       "window_from_exclusive": "2024-12-31",
+       "filings": 19,
+       "saved": 19,
+       "missing": 0
+      },
+      "2024-12-31": {
+       "window_from_exclusive": "2023-12-31",
+       "filings": 20,
+       "saved": 0,
+       "missing": 20
+      },
+      "2023-12-31": {
+       "window_from_exclusive": "2022-12-31",
+       "filings": 19,
+       "saved": 0,
+       "missing": 19
+      },
+      "2022-12-31": {
+       "window_from_exclusive": "2021-12-31",
+       "filings": 23,
+       "saved": 0,
+       "missing": 23
+      },
+      "2021-12-31": {
+       "window_from_exclusive": "2020-12-31",
+       "filings": 17,
+       "saved": 0,
+       "missing": 17
+      }
+     },
+     "macys": {
+      "2026-01-31": {
+       "window_from_exclusive": "2025-02-01",
+       "filings": 13,
+       "saved": 13,
+       "missing": 0
+      },
+      "2025-02-01": {
+       "window_from_exclusive": "2024-02-03",
+       "filings": 14,
+       "saved": 0,
+       "missing": 14
+      },
+      "2024-02-03": {
+       "window_from_exclusive": "2023-01-28",
+       "filings": 12,
+       "saved": 0,
+       "missing": 12
+      },
+      "2023-01-28": {
+       "window_from_exclusive": "2022-01-29",
+       "filings": 15,
+       "saved": 0,
+       "missing": 15
+      },
+      "2022-01-29": {
+       "window_from_exclusive": "2021-01-30",
+       "filings": 15,
+       "saved": 0,
+       "missing": 15
+      }
+     },
+     "enphase_energy": {
+      "2025-12-31": {
+       "window_from_exclusive": "2024-12-31",
+       "filings": 6,
+       "saved": 6,
+       "missing": 0
+      },
+      "2024-12-31": {
+       "window_from_exclusive": "2023-12-31",
+       "filings": 8,
+       "saved": 0,
+       "missing": 8
+      },
+      "2023-12-31": {
+       "window_from_exclusive": "2022-12-31",
+       "filings": 7,
+       "saved": 0,
+       "missing": 7
+      },
+      "2022-12-31": {
+       "window_from_exclusive": "2021-12-31",
+       "filings": 8,
+       "saved": 0,
+       "missing": 8
+      },
+      "2021-12-31": {
+       "window_from_exclusive": "2020-12-31",
+       "filings": 10,
+       "saved": 0,
+       "missing": 10
+      }
+     }
+    }
+   },
+   "reading": "the current fiscal window is fully saved for every one of the eight companies and the four prior windows are entirely unsaved - 0 of 476. That is not a sampling estimate; every row was checked.",
+   "header_files": "the Paramount event work needed a body and a header file per filing, so the attempt count is up to twice the filing count. Whether every one of the 476 is named by the event route for its window is decided by catalog/event_routes.json at run time and is not claimed here.",
+   "certainty": "BOUNDED_ABOVE",
+   "excluded": {
+    "jpmorgan_chase": "metadata incomplete, see class 2",
+    "paramount_skydance_paramount_global": "see class 4"
+   }
+  },
+  "4_determined_only_after_discovery": {
+   "paramount_successor_scope": {
+    "measured": "the successor CIK 2041610 has one annual period of its own. The four earlier periods belong to predecessor CIK 813828, for which this repository holds 25 accession directories.",
+    "two_questions": [
+     "whether an earlier period is in scope for this issue at all, which is a business question and is not asked here",
+     "if it is, which predecessor filings it needs, which is only knowable after the predecessor's own submissions metadata is read"
+    ]
+   },
+   "c02_proxies": {
+    "measured": "the saved indexes list 85 DEF 14A rows across the ten companies and one is saved per company, all filed in 2026. A historical C02 needs the annual meeting proxy for each pinned year.",
+    "bounded_above": "four prior years x nine companies = 36"
+   },
+   "what_the_30_documents_will_reveal": "each fetched 10-K names its own incorporated notes, exhibits and referenced documents. D02 alone reads only the primary document, but the other wired routes may name more.",
+   "certainty": "NOT_YET_MEASURABLE"
+  }
+ },
+ "total": {
+  "known_exact": 30,
+  "bounded_above_measured": 517,
+  "bounded_above_with_header_files": 993,
+  "not_yet_measurable": [
+   "paramount predecessor set",
+   "C02 proxies beyond the bound",
+   "whatever the 30 documents name"
+  ],
+  "reading": "the honest envelope for the full 39-metric five-year frame is in the high hundreds to low thousands of request attempts, not 30. Reporting 30 as the need was reporting the first blocking reason as the whole cost - the exact error this issue's own coverage tool was written to stop."
+ },
+ "what_is_asked_of_the_owner": {
+  "1_scope": "#47's own source-dependency scope: 10 companies x 39 metrics x 5 years, the four classes above, and no borrowing from #28's coordinate scope",
+  "2_cumulative_accounting": "#47's own ledger and budget root, separate from #28's. The existing evidence/requests_log.csv and immutable attempt store are reused as the transport record; what must be new is the permission binding and the running total.",
+  "3_bounded_cap": "a cumulative cap for #47. A first tranche of 30 closes class 1 and unblocks 1,170 positions' first blocker plus the history-shard acceptance item; class 3 is the one that decides whether the five-year frame is deliverable at all.",
+  "4_what_is_not_asked": [
+   "a per-URL or per-company approval",
+   "a reading of #28's private ledger",
+   "authorisation to execute before the permission exists"
+  ]
+ },
+ "the_capability_being_reused": {
+  "entry": "tools/vnext_continuous_sec.py plan|capture",
+  "session": "scripts/vnext/continuous_sec_acquisition.live_sec_session",
+  "properties": [
+   "the same SecHttpClient and official SEC origins",
+   "zero automatic retry",
+   "immutable attempt bodies, headers and SHA-256",
+   "the same request ledger"
+  ],
+  "what_is_not_reused": "issue_28_v14's authorisation, scope, budget root or running total"
+ },
+ "execution_discipline_after_authorisation": "continuous, under the cumulative cap: plan the tranche, capture it, install, run, and report against the cap. No per-URL question, no per-company question. If the cap is reached, stop and report what remains rather than continuing or re-asking."
+}

@@ -23,6 +23,8 @@ from pathlib import Path
 from .canonical import content_hash, sha256_file, strict_json_file
 
 RECORD_TYPE = "HISTORICAL_RUN_RECEIPT"
+ROW_BUNDLE_NAME = "row_receipt.json"
+ROW_BUNDLE_RECORD_TYPE = "HISTORICAL_PERIOD_ROW_BUNDLE"
 _HASHED_FILES = (("records_file_hash", "records.jsonl"),
                  ("review_decisions_file_hash", "review_decisions.jsonl"),
                  ("validation_file_hash", "validation.json"))
@@ -94,7 +96,11 @@ def read_run_receipt(*, run_dir: Path):
             continue
         results.append({key: record.get(key) for key in (
             "metric_id", "result_id", "value", "unit", "quality", "publication",
-            "reason_code", "applicability", "period_start", "period_end")})
+            "reason_code", "applicability", "period_start", "period_end",
+            # Two results can share company, metric and period end and still be
+            # different measurements. The scope and the value kind are what say
+            # so, and a coordinate key does not carry either.
+            "scope_key", "value_kind")})
     validation = None
     if (run_dir / "validation.json").is_file():
         validation = strict_json_file(path=run_dir / "validation.json").get("status")
@@ -109,8 +115,41 @@ def read_run_receipt(*, run_dir: Path):
             "results": sorted(results, key=lambda r: str(r["metric_id"])),
             "manifest_file_hashes_verified": not unverified,
             "verified_files": verified, "unverified_files": unverified,
+            "public_row": read_row_bundle(run_dir=run_dir),
             "replayed": False, "business_content_verified": False}
     return {**body, "receipt_id": content_hash(value=body)}
+
+
+def read_row_bundle(*, run_dir: Path):
+    """What the public renderer wrote beside this Run, if it wrote anything.
+
+    A Run that froze and validated is not the same as a position that reached
+    a public row: the renderer has its own refusals - an unwired route kind, a
+    unit the presentation policy disagrees with, an evidence set that does not
+    cover the published items. Without this the report could only say "a Run
+    exists" and leave the reader to assume the rest.
+
+    The bundle is checked rather than trusted. Its receipt carries the hashes
+    of the row and the evidence it was written with, so an edited bundle is
+    refused the same way an edited records file is.
+    """
+    path = Path(run_dir) / ROW_BUNDLE_NAME
+    if not path.is_file() or path.is_symlink():
+        return None
+    bundle = strict_json_file(path=path)
+    _need(bundle.get("record_type") == ROW_BUNDLE_RECORD_TYPE,
+          "ROW_BUNDLE_TYPE_INVALID")
+    receipt, row, evidence = bundle["receipt"], bundle["row"], bundle["evidence"]
+    _need(receipt["row_hash"] == content_hash(value=row),
+          "ROW_BUNDLE_ROW_CHANGED")
+    _need(receipt["evidence_hash"] == content_hash(value=evidence),
+          "ROW_BUNDLE_EVIDENCE_CHANGED")
+    _need(receipt["evidence_count"] == len(evidence),
+          "ROW_BUNDLE_EVIDENCE_COUNT_CHANGED")
+    return {key: receipt[key] for key in (
+        "status", "run_id", "run_status", "requirement_id", "result_id",
+        "primary_metric_id", "period_selection_id", "row_hash", "evidence_hash",
+        "evidence_count", "source_validation", "production_authorized", "receipt_id")}
 
 
 def collect_run_receipts(*, runs_root: Path):
@@ -132,6 +171,33 @@ def collect_run_receipts(*, runs_root: Path):
     return receipts
 
 
+def result_identity(*, receipt, result):
+    """What a coordinate key does not distinguish, kept beside it.
+
+    The key is company, metric and period end. That is the coordinate the
+    coverage frame enumerates, and it is deliberately coarser than a
+    measurement: the pinned fiscal coordinate, the window actually measured,
+    the scope and the filing the Run selected are all separate facts, and two
+    results can agree on the key and disagree on any of them.
+
+    They are not folded into the key, because the frame's rows are coordinates
+    and a report that keyed on the measurement would stop having a row per
+    coordinate. They are carried so that a merge can be checked instead of
+    assumed - result_id already differs whenever any of them does, so the
+    selector's equality test is exact, and this is what makes an inequality
+    readable when it happens.
+    """
+    period = receipt["target_period"] or {}
+    return {"pinned_fiscal_year": period.get("fiscal_year"),
+            "pinned_period_end": period.get("period_end"),
+            "measured_period_start": result.get("period_start"),
+            "measured_period_end": result.get("period_end"),
+            "scope_key": result.get("scope_key"),
+            "value_kind": result.get("value_kind"),
+            "requirement_closure_hash": receipt["requirement_closure_hash"],
+            "run_id": receipt["run_id"]}
+
+
 def index_receipts(*, receipts):
     """Receipts keyed by the coordinate a coverage position carries.
 
@@ -146,5 +212,7 @@ def index_receipts(*, receipts):
         for result in receipt["results"]:
             key = (receipt["company_id"], result["metric_id"],
                    result.get("period_end") or period.get("period_end"))
-            index.setdefault(key, []).append({"receipt": receipt, "result": result})
+            index.setdefault(key, []).append(
+                {"receipt": receipt, "result": result,
+                 "identity": result_identity(receipt=receipt, result=result)})
     return index
