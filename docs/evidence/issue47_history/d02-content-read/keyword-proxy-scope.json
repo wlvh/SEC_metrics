@@ -1,0 +1,147 @@
+{
+ "answer": "It is smaller than the defect and the proxy is mostly right. Narrowing it would cost fourteen correct disclosures to remove three wrong ones, so the fix has to be surgical and is not taken here.",
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "question": "The audit-report rule took four of Pfizer's six over-taken blocks. The other two are admitted by the _LEGAL keyword on an Item 8 block. How big is that half, and does narrowing the proxy fix it?",
+ "read_and_judged": {
+  "ford_motor_company": "none - its whole Item 8 is one cross-reference block, so its 53 excerpts come from Item 3 and Note 24",
+  "in_scope": {
+   "count": 14,
+   "enphase_energy": {
+    "1446": "'the Company is subject to loss contingencies, such as legal proceedings'",
+    "2015": "'The Company is subject to various legal proceedings and claims'"
+   },
+   "lumen_technologies": {
+    "3382": "'We are subject to various claims, legal proceedings and other contingent liabilities'",
+    "3383": "the quarterly review of litigation accrual liabilities"
+   },
+   "marriott_international": {
+    "1113": "'We are subject to various legal proceedings and claims ... We record an accrual'",
+    "1321": "the 'Other Legal Proceedings' heading",
+    "1322": "'We have been and are currently party to other legal proceedings'"
+   },
+   "pfizer": {
+    "2302": "the contingencies note lead-in",
+    "2351": "the Seagen legal matters bullet"
+   },
+   "southwest_airlines": {
+    "1428": "in the basis-of-presentation note, and a contingency about the registrant: after Winter Storm Elliott the Company 'could be subject to fines and/or penalties resulting from investigations by government agencies'",
+    "1580": "'The Company is from time to time subject to various legal proceedings and claims arising in the ordinary course'",
+    "1581": "the paid short-term military leave class action",
+    "1584": "the stay pending appeal in that action",
+    "1585": "the December 2019 putative class action by a former Customer Service Agent"
+   }
+  },
+  "out_of_scope": {
+   "count": 3,
+   "lumen_technologies": {
+    "1670": "legal-expense policy; the match is inside a list of advisory topics - 'external legal counsel to advise us on finance, regulatory, litigation, and other matters'. A second measured instance of the same shape."
+   },
+   "pfizer": {
+    "2175": "critical accounting estimates; the match is inside a list of risks - 'competition, litigation, legislation'",
+    "2240": "credit-loss policy; the match is a collection method - '(including litigation, where appropriate)'"
+   }
+  }
+ },
+ "record_type": "ISSUE_47_D02_ITEM_8_KEYWORD_PROXY_SCOPE",
+ "the_candidate_predicate": {
+  "observed": "every in-scope block predicates something of the registrant - 'is/are subject to', 'party to', 'could be subject to', 'we review our ... accrual' - or is a heading. Every out-of-scope block has the keyword inside a comma-separated enumeration or a parenthetical whose head noun is something else.",
+  "what_would_settle_it": "the same reading on filings from other periods and other issuers, and a negative case set built before the rule rather than from it.",
+  "why_it_is_not_implemented_here": "three over-takes out of seventeen is a registered defect; dropping any of the fourteen would be a silent loss of disclosed content. A grammatical predicate written from six filings at one period each is exactly the kind of rule that misfires on the seventh, and the asymmetry of the two errors says to be slow here."
+ },
+ "what_the_proxy_carries": {
+  "enphase_energy": {
+   "admitted_only_by_the_keyword": 2,
+   "blocks": [
+    1446,
+    2015
+   ],
+   "by_section": {
+    "ITEM_3": 16,
+    "ITEM_8": 2
+   },
+   "characters": 1147,
+   "total_candidates": 18
+  },
+  "ford_motor_company": {
+   "admitted_only_by_the_keyword": 0,
+   "blocks": [],
+   "by_section": {
+    "ITEM_3": 20,
+    "NOTE_24": 33
+   },
+   "characters": 0,
+   "total_candidates": 53
+  },
+  "lumen_technologies": {
+   "admitted_only_by_the_keyword": 3,
+   "blocks": [
+    1670,
+    3382,
+    3383
+   ],
+   "by_section": {
+    "ITEM_3": 1,
+    "ITEM_8": 3,
+    "NOTE_17_CAPTION_3387": 31,
+    "NOTE_17_CAPTION_3425": 6
+   },
+   "characters": 1972,
+   "total_candidates": 41
+  },
+  "marriott_international": {
+   "admitted_only_by_the_keyword": 3,
+   "blocks": [
+    1113,
+    1321,
+    1322
+   ],
+   "by_section": {
+    "ITEM_3": 3,
+    "ITEM_8": 3,
+    "NOTE_7_CAPTION_1312": 5
+   },
+   "characters": 929,
+   "total_candidates": 11
+  },
+  "pfizer": {
+   "admitted_only_by_the_keyword": 4,
+   "blocks": [
+    2175,
+    2240,
+    2302,
+    2351
+   ],
+   "by_section": {
+    "ITEM_8": 4,
+    "NOTE_16_SUB_A": 91
+   },
+   "characters": 3462,
+   "total_candidates": 95
+  },
+  "southwest_airlines": {
+   "admitted_only_by_the_keyword": 5,
+   "blocks": [
+    1428,
+    1580,
+    1581,
+    1584,
+    1585
+   ],
+   "by_section": {
+    "ITEM_3": 20,
+    "ITEM_8": 5
+   },
+   "characters": 5301,
+   "total_candidates": 25
+  }
+ },
+ "what_this_rules_out": {
+  "location_as_the_test": "does not work either. Southwest's 1428 is inside a policy section and belongs; Lumen's 1670 and Pfizer's 2175 and 2240 are inside policy sections and do not. What separates them is not where they sit.",
+  "narrowing_item_8_to_the_contingencies_notes": "would drop all fourteen. Pfizer's 2302 and 2351 are outside Note 16A, and Southwest's five, Marriott's three, Lumen's two and Enphase's two are Item 8 text the proxy is correctly keeping."
+ }
+}
