@@ -1,55 +1,49 @@
 {
- "record_type": "ISSUE_47_ACQUISITION_PLAN",
- "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
- "status": "SUBMITTED_FOR_AUTHORISATION_NOT_EXECUTED",
- "withdrawn_conclusion": {
-  "what_was_written": "'30 SEC fetches against a cumulative allowance of 80. The need fits inside the existing approved budget rather than requiring a new one.' - docs/evidence/issue47_history/source-need-quantified.json",
-  "withdrawn": true,
-  "why_it_was_wrong_on_authority": "The [240, 240, 80] allowance in config/issue28_continuous_calls_v1.json is bound to requirement_id issue_28_v14 and to a scope of 10 companies x 39 metrics x 1 period = 390 coordinates. continuous_call_policy checks the delegation body, the scope, the budget root and that requirement_id. Issue #47's own text forbids borrowing #28's remainder. Finding that the acquisition tooling exists and is reusable is not the same as finding that its authorisation transfers - the capability may be reused, the permission may not.",
-  "why_it_was_also_wrong_on_size": "30 was the first blocking reason only. Counting the dependencies behind it puts the measured need at roughly seventeen times the whole #28 SEC allowance, so even if the authority question did not exist the arithmetic would not have held.",
-  "not_asked_of_the_user": "how much of #28's 80 is already consumed. That ledger is #28's, its budget root is a host-local path this container does not carry, and #47 should not be reading it either way."
- },
- "what_a_call_is": "one SEC request attempt through scripts/sec_http.SecHttpClient, logged in evidence/requests_log.csv whether it succeeds or fails. A filing whose body and header file are both needed is two attempts.",
+ "calls": [
+  0,
+  0,
+  0
+ ],
  "classes": {
-  "1_known_primary_documents": {
-   "count": 30,
-   "shape": "one 10-K primary document per company-year: seven companies need four prior years each and Marriott needs two, because Marriott's 2023 and 2024 originals are already saved",
+  "A_annual_chain_and_metadata": {
    "by_company": {
-    "enphase_energy": 4,
-    "ford_motor_company": 4,
-    "lumen_technologies": 4,
-    "macys": 4,
-    "marriott_international": 2,
-    "pfizer": 4,
-    "salesforce": 4,
-    "southwest_airlines": 4
+    "enphase_energy": 9,
+    "ford_motor_company": 9,
+    "jpmorgan_chase": 70,
+    "lumen_technologies": 9,
+    "macys": 9,
+    "marriott_international": 9,
+    "paramount_skydance_paramount_global": 0,
+    "pfizer": 9,
+    "salesforce": 9,
+    "southwest_airlines": 9
    },
-   "derivation": "generated from the manifest in source-need-quantified.json, not counted by hand",
-   "amendments_implied": {
-    "count": 0,
-    "measured": "annual_periods over the saved submissions reports no 10-K/A on any of the 30 periods. This is a measurement over metadata this repository already holds, not an assumption that none exist."
+   "by_dependency_class": {
+    "ACCESSION_INSTANCE_DISCOVERY": 33,
+    "ANNUAL_PERIOD_IDENTITY": 40,
+    "SUBMISSIONS_HISTORY": 68,
+    "SUBMISSIONS_INDEX": 1
    },
-   "certainty": "KNOWN_EXACT",
-   "note": "the two Salesforce documents in this class - crm-20230131.htm and crm-20220131.htm - are also the cheapest way to close the history-shard acceptance item, because their 10-K rows are in a shard"
+   "certainty": "MEASURED_BY_THE_PRODUCTION_PLANNER",
+   "total": 142,
+   "what_the_classes_are": {
+    "ACCESSION_INSTANCE_DISCOVERY": "that accession's index.json",
+    "ANNUAL_PERIOD_IDENTITY": "the annual primary document for a pinned period, or the amendment primary where the chain names one",
+    "SUBMISSIONS_HISTORY": "a submissions history shard, all 68 of them JPMorgan's",
+    "SUBMISSIONS_INDEX": "one current submissions index refresh, JPMorgan's"
+   },
+   "why_jpmorgan_is_70_of_the_142": "JPMorgan files often enough that a shard holds under two months, and the saved shards were partitioned differently from the ones now declared. Its catalog therefore reaches two annual periods, so its other three periods are not in this count at all - they become measurable only after the shards land.",
+   "why_paramount_is_0": "the planner reaches one period for the successor registrant. Its four earlier periods belong to the predecessor and are not in this class."
   },
-  "2_metadata_refreshes": {
-   "company": "jpmorgan_chase",
-   "why": "JPMorgan files enough that a submissions shard holds under two months. 69 shards are declared; 57 are not saved; 11 of the saved ones hold filings outside their currently declared range, because SEC re-partitions the shards and the saved bodies are from an older partitioning. The catalog therefore reaches only two annual periods and period selection refuses with ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT.",
-   "measured_today": {
-    "declared_shards": 69,
-    "not_saved": 57,
-    "reaching_back_to_2021_01_01": 40,
-    "of_those_not_saved": 28,
-    "saved_but_conflicting": 11
+  "B_event_windows_for_the_wired_event_metrics": {
+   "attempts": 970,
+   "attempts_per_filing": 2,
+   "certainty": "MEASURED_OVER_SAVED_METADATA",
+   "filings": {
+    "eight_companies_measured": 476,
+    "paramount_predecessor_known": 9,
+    "total": 485
    },
-   "bounded_request": {
-    "current_index_refresh": 1,
-    "shards": "at most 40",
-    "why_a_range": "the exact set is decided by the refreshed index, because re-partitioning changes which shard holds which dates. Bounded above by the 40 that reach the five-year window today."
-   },
-   "certainty": "BOUNDED_ABOVE"
-  },
-  "3_event_sources_for_the_wired_event_metrics": {
    "metrics": [
     "C01",
     "E01",
@@ -58,336 +52,108 @@
     "E04",
     "E05"
    ],
-   "why": "these routes read the 8-K filings inside each fiscal window. The window's filings are known from saved metadata; their bodies are not saved for any year before the current one.",
-   "measured": {
-    "companies": 8,
-    "windows_per_company": 5,
-    "filings_in_window_total": 578,
-    "bodies_not_saved": 476,
-    "by_company": {
-     "enphase_energy": 33,
-     "ford_motor_company": 110,
-     "lumen_technologies": 79,
-     "macys": 56,
-     "marriott_international": 43,
-     "pfizer": 46,
-     "salesforce": 44,
-     "southwest_airlines": 65
-    },
-    "per_company_per_period": {
-     "marriott_international": {
-      "2025-12-31": {
-       "window_from_exclusive": "2024-12-31",
-       "filings": 10,
-       "saved": 10,
-       "missing": 0
-      },
-      "2024-12-31": {
-       "window_from_exclusive": "2023-12-31",
-       "filings": 8,
-       "saved": 0,
-       "missing": 8
-      },
-      "2023-12-31": {
-       "window_from_exclusive": "2022-12-31",
-       "filings": 12,
-       "saved": 0,
-       "missing": 12
-      },
-      "2022-12-31": {
-       "window_from_exclusive": "2021-12-31",
-       "filings": 9,
-       "saved": 0,
-       "missing": 9
-      },
-      "2021-12-31": {
-       "window_from_exclusive": "2020-12-31",
-       "filings": 14,
-       "saved": 0,
-       "missing": 14
-      }
-     },
-     "southwest_airlines": {
-      "2025-12-31": {
-       "window_from_exclusive": "2024-12-31",
-       "filings": 17,
-       "saved": 17,
-       "missing": 0
-      },
-      "2024-12-31": {
-       "window_from_exclusive": "2023-12-31",
-       "filings": 19,
-       "saved": 0,
-       "missing": 19
-      },
-      "2023-12-31": {
-       "window_from_exclusive": "2022-12-31",
-       "filings": 13,
-       "saved": 0,
-       "missing": 13
-      },
-      "2022-12-31": {
-       "window_from_exclusive": "2021-12-31",
-       "filings": 13,
-       "saved": 0,
-       "missing": 13
-      },
-      "2021-12-31": {
-       "window_from_exclusive": "2020-12-31",
-       "filings": 20,
-       "saved": 0,
-       "missing": 20
-      }
-     },
-     "ford_motor_company": {
-      "2025-12-31": {
-       "window_from_exclusive": "2024-12-31",
-       "filings": 17,
-       "saved": 17,
-       "missing": 0
-      },
-      "2024-12-31": {
-       "window_from_exclusive": "2023-12-31",
-       "filings": 22,
-       "saved": 0,
-       "missing": 22
-      },
-      "2023-12-31": {
-       "window_from_exclusive": "2022-12-31",
-       "filings": 26,
-       "saved": 0,
-       "missing": 26
-      },
-      "2022-12-31": {
-       "window_from_exclusive": "2021-12-31",
-       "filings": 28,
-       "saved": 0,
-       "missing": 28
-      },
-      "2021-12-31": {
-       "window_from_exclusive": "2020-12-31",
-       "filings": 34,
-       "saved": 0,
-       "missing": 34
-      }
-     },
-     "pfizer": {
-      "2025-12-31": {
-       "window_from_exclusive": "2024-12-31",
-       "filings": 9,
-       "saved": 9,
-       "missing": 0
-      },
-      "2024-12-31": {
-       "window_from_exclusive": "2023-12-31",
-       "filings": 12,
-       "saved": 0,
-       "missing": 12
-      },
-      "2023-12-31": {
-       "window_from_exclusive": "2022-12-31",
-       "filings": 15,
-       "saved": 0,
-       "missing": 15
-      },
-      "2022-12-31": {
-       "window_from_exclusive": "2021-12-31",
-       "filings": 10,
-       "saved": 0,
-       "missing": 10
-      },
-      "2021-12-31": {
-       "window_from_exclusive": "2020-12-31",
-       "filings": 9,
-       "saved": 0,
-       "missing": 9
-      }
-     },
-     "salesforce": {
-      "2026-01-31": {
-       "window_from_exclusive": "2025-01-31",
-       "filings": 11,
-       "saved": 11,
-       "missing": 0
-      },
-      "2025-01-31": {
-       "window_from_exclusive": "2024-01-31",
-       "filings": 8,
-       "saved": 0,
-       "missing": 8
-      },
-      "2024-01-31": {
-       "window_from_exclusive": "2023-01-31",
-       "filings": 5,
-       "saved": 0,
-       "missing": 5
-      },
-      "2023-01-31": {
-       "window_from_exclusive": "2022-01-31",
-       "filings": 14,
-       "saved": 0,
-       "missing": 14
-      },
-      "2022-01-31": {
-       "window_from_exclusive": "2021-01-31",
-       "filings": 17,
-       "saved": 0,
-       "missing": 17
-      }
-     },
-     "lumen_technologies": {
-      "2025-12-31": {
-       "window_from_exclusive": "2024-12-31",
-       "filings": 19,
-       "saved": 19,
-       "missing": 0
-      },
-      "2024-12-31": {
-       "window_from_exclusive": "2023-12-31",
-       "filings": 20,
-       "saved": 0,
-       "missing": 20
-      },
-      "2023-12-31": {
-       "window_from_exclusive": "2022-12-31",
-       "filings": 19,
-       "saved": 0,
-       "missing": 19
-      },
-      "2022-12-31": {
-       "window_from_exclusive": "2021-12-31",
-       "filings": 23,
-       "saved": 0,
-       "missing": 23
-      },
-      "2021-12-31": {
-       "window_from_exclusive": "2020-12-31",
-       "filings": 17,
-       "saved": 0,
-       "missing": 17
-      }
-     },
-     "macys": {
-      "2026-01-31": {
-       "window_from_exclusive": "2025-02-01",
-       "filings": 13,
-       "saved": 13,
-       "missing": 0
-      },
-      "2025-02-01": {
-       "window_from_exclusive": "2024-02-03",
-       "filings": 14,
-       "saved": 0,
-       "missing": 14
-      },
-      "2024-02-03": {
-       "window_from_exclusive": "2023-01-28",
-       "filings": 12,
-       "saved": 0,
-       "missing": 12
-      },
-      "2023-01-28": {
-       "window_from_exclusive": "2022-01-29",
-       "filings": 15,
-       "saved": 0,
-       "missing": 15
-      },
-      "2022-01-29": {
-       "window_from_exclusive": "2021-01-30",
-       "filings": 15,
-       "saved": 0,
-       "missing": 15
-      }
-     },
-     "enphase_energy": {
-      "2025-12-31": {
-       "window_from_exclusive": "2024-12-31",
-       "filings": 6,
-       "saved": 6,
-       "missing": 0
-      },
-      "2024-12-31": {
-       "window_from_exclusive": "2023-12-31",
-       "filings": 8,
-       "saved": 0,
-       "missing": 8
-      },
-      "2023-12-31": {
-       "window_from_exclusive": "2022-12-31",
-       "filings": 7,
-       "saved": 0,
-       "missing": 7
-      },
-      "2022-12-31": {
-       "window_from_exclusive": "2021-12-31",
-       "filings": 8,
-       "saved": 0,
-       "missing": 8
-      },
-      "2021-12-31": {
-       "window_from_exclusive": "2020-12-31",
-       "filings": 10,
-       "saved": 0,
-       "missing": 10
-      }
-     }
-    }
+   "not_included": "JPMorgan's event windows. Its catalog reaches two periods, so its windows cannot be enumerated until class A's shards land.",
+   "paramount_predecessor": {
+    "documents": [
+     "813828|0001193125-25-175027|d52142d8k.htm|2025-08-07",
+     "813828|0001193125-25-170521|d55470d8k.htm|2025-07-31",
+     "813828|0001193125-25-165497|d51931d8k.htm|2025-07-25",
+     "813828|0000813828-25-000019|para-20250702.htm|2025-07-08",
+     "813828|0000813828-25-000015|para-20250603.htm|2025-06-09",
+     "813828|0001193125-25-120877|d924390d8k.htm|2025-05-15",
+     "813828|0001193125-25-115947|d771259d8k.htm|2025-05-08",
+     "813828|0001193125-25-052917|d847459d8k.htm|2025-03-12",
+     "813828|0001193125-25-036747|d830953d8k.htm|2025-02-26"
+    ],
+    "moved_from": "class 4, determined only after discovery",
+    "moved_to": "here, as a known dependency",
+    "offline_wiring_verified": "tools/vnext_continuous_sec.py plan accepts both the body and the header of 0001193125-25-036747 as declared dependencies of paramount_skydance_paramount_global, returning OFFLINE_SOURCE_PLAN with calls [0, 0, 0]. The wiring for this class is proven, not assumed.",
+    "why": "the nine are named documents on a wired route for a pinned period that is already in scope, not a question about which periods belong to whom. docs/evidence/issue47_history/successor-event-gap/wired.json lists all nine; all nine were confirmed absent from evidence/accession_materials by an exhaustive scan, not by sampling."
    },
-   "reading": "the current fiscal window is fully saved for every one of the eight companies and the four prior windows are entirely unsaved - 0 of 476. That is not a sampling estimate; every row was checked.",
-   "header_files": "the Paramount event work needed a body and a header file per filing, so the attempt count is up to twice the filing count. Whether every one of the 476 is named by the event route for its window is decided by catalog/event_routes.json at run time and is not claimed here.",
-   "certainty": "BOUNDED_ABOVE",
-   "excluded": {
-    "jpmorgan_chase": "metadata incomplete, see class 2",
-    "paramount_skydance_paramount_global": "see class 4"
-   }
+   "why_two": "scripts/vnext/normal_zero_ai_results.py:96 reads the accession's hdr.sgml alongside the document, so an event filing costs a body and a header. Measured against the store: of 186 saved accession directories, 151 hold both and none holds a header without a body."
   },
-  "4_determined_only_after_discovery": {
-   "paramount_successor_scope": {
-    "measured": "the successor CIK 2041610 has one annual period of its own. The four earlier periods belong to predecessor CIK 813828, for which this repository holds 25 accession directories.",
-    "two_questions": [
-     "whether an earlier period is in scope for this issue at all, which is a business question and is not asked here",
-     "if it is, which predecessor filings it needs, which is only knowable after the predecessor's own submissions metadata is read"
-    ]
-   },
-   "c02_proxies": {
-    "measured": "the saved indexes list 85 DEF 14A rows across the ten companies and one is saved per company, all filed in 2026. A historical C02 needs the annual meeting proxy for each pinned year.",
-    "bounded_above": "four prior years x nine companies = 36"
-   },
-   "what_the_30_documents_will_reveal": "each fetched 10-K names its own incorporated notes, exhibits and referenced documents. D02 alone reads only the primary document, but the other wired routes may name more.",
-   "certainty": "NOT_YET_MEASURABLE"
+  "C_reserve_for_what_the_originals_name": {
+   "certainty": "BOUNDED_BY_CONSTRUCTION",
+   "derivation": "at most one amendment per company-period across the frame is 50, their accession indexes another 50, and 20 of margin. Not a percentage: the planner already found an amendment in Marriott's chain that the hand count missed, so this is the measured shape of the risk rather than a cushion.",
+   "spending_rule": "each reserve attempt records which fetched original named the document and under which role. A reserve attempt may not open a new class.",
+   "total": 120
   }
  },
- "total": {
-  "known_exact": 30,
-  "bounded_above_measured": 517,
-  "bounded_above_with_header_files": 993,
-  "not_yet_measurable": [
-   "paramount predecessor set",
-   "C02 proxies beyond the bound",
-   "whatever the 30 documents name"
-  ],
-  "reading": "the honest envelope for the full 39-metric five-year frame is in the high hundreds to low thousands of request attempts, not 30. Reporting 30 as the need was reporting the first blocking reason as the whole cost - the exact error this issue's own coverage tool was written to stop."
+ "counting_and_stopping": {
+  "at_the_cap": "stop, and write what remains by class against the cap. Do not continue, do not re-ask mid-run, do not start a tranche that cannot finish inside the remaining allowance.",
+  "counted": "every attempt, including failures. A 404, a 403, a transport failure and a redirect each cost one.",
+  "ledger_binding": {
+   "not_shared": "#28's [240, 240, 80] is bound to requirement_id issue_28_v14 and to its own 390-coordinate scope. #47 does not read it, does not draw on it, and does not ask the owner how much of it is left.",
+   "permission_record": "Issue #47's own budget root and cumulative counter, separate from Issue #28's. Each attempt is recorded against #47's counter with the class it was spent on and the requirement_id it was authorised under.",
+   "transport_record": "evidence/requests_log.csv and the immutable attempt store, unchanged and shared - the transport is the same, only the permission accounting is separate"
+  },
+  "retries": "zero automatic retries, the existing SecHttpClient policy. A failed document is recorded and the next document in the same class proceeds - one document's failure does not block the others.",
+  "unknown": "an attempt whose identity or count cannot be determined stops that class immediately and is counted as spent. Continuing past an UNKNOWN would make the running total unreliable, which is the one thing a cap cannot survive."
  },
- "what_is_asked_of_the_owner": {
-  "1_scope": "#47's own source-dependency scope: 10 companies x 39 metrics x 5 years, the four classes above, and no borrowing from #28's coordinate scope",
-  "2_cumulative_accounting": "#47's own ledger and budget root, separate from #28's. The existing evidence/requests_log.csv and immutable attempt store are reused as the transport record; what must be new is the permission binding and the running total.",
-  "3_bounded_cap": "a cumulative cap for #47. A first tranche of 30 closes class 1 and unblocks 1,170 positions' first blocker plus the history-shard acceptance item; class 3 is the one that decides whether the five-year frame is deliverable at all.",
-  "4_what_is_not_asked": [
-   "a per-URL or per-company approval",
-   "a reading of #28's private ledger",
-   "authorisation to execute before the permission exists"
+ "cumulative_cap": {
+  "arithmetic": "142 + 970 + 120",
+  "requested": 1232,
+  "this_is_the_number": "an execution stop-cap for Issue #47, not an estimate and not a guarantee of completion. The three are different things and the earlier revision conflated them by offering a class upper bound of 993 and a first tranche of 30 without ever naming a total.",
+  "what_it_does_not_cover": {
+   "c02_proxies": "the historical C02 route is not wired, so its proxies are not a dependency of anything that would run",
+   "consequence": "reaching those needs a separate increment with its own measured basis. They are named here so the cap is not read as covering the frame.",
+   "jpmorgan_event_windows": "unmeasurable until class A's 68 shards land",
+   "paramount_earlier_periods": "whether the predecessor's four earlier periods are in scope is a business question this plan does not answer"
+  }
+ },
+ "execution_discipline_after_authorisation": "continuous, under the cap: plan the tranche, capture it, install, run, report against the cap, take the next tranche. No per-URL question and no per-company question. At the cap, stop and report what remains.",
+ "how_this_revision_was_measured": {
+  "authority": "scripts/vnext/normal_history_plan.plan_historical_sources, the production planner, run over all ten configured companies with count=5. It deduplicates across roles, so a year serving as both target_primary and the next year's prior_annual_primary is one requirement, not two.",
+  "not_by_hand": "the earlier count was assembled by reading a manifest. This one is the planner's own new_acquisition_required set, grouped by its own dependency_class.",
+  "zero_calls": [
+   0,
+   0,
+   0
   ]
  },
- "the_capability_being_reused": {
-  "entry": "tools/vnext_continuous_sec.py plan|capture",
-  "session": "scripts/vnext/continuous_sec_acquisition.live_sec_session",
-  "properties": [
-   "the same SecHttpClient and official SEC origins",
-   "zero automatic retry",
-   "immutable attempt bodies, headers and SHA-256",
-   "the same request ledger"
-  ],
-  "what_is_not_reused": "issue_28_v14's authorisation, scope, budget root or running total"
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "offline_wiring_verification": {
+  "consequence_for_sequencing": "the wiring goes first and costs nothing. A cap can be granted before or after it; what cannot happen is spending against the cap while class A has no path.",
+  "status": "PARTIALLY_VERIFIED_AND_ONE_GAP_FOUND",
+  "the_gap": {
+   "measured_boundary": "salesforce crm-20250131.htm (one year back) is accepted; crm-20240131.htm (two years back) is refused with 'URL is not a declared dependency of this company'. The gate reaches one year, and the frame needs four.",
+   "what": "the acquisition CLI gates on normal_source_requirements.discover_saved_source_requirements, whose scope is the current annual period. It declares the current primary, one prior annual primary, the current fiscal-event window, the proxy, companyfacts and submissions.",
+   "what_it_is_not": "not a reason to widen the gate by hand or to pass URLs around it. The gate is what stops an arbitrary URL from being fetched, and the fix is to give it the historical declaration, not to remove it.",
+   "why_this_matters_to_the_ask": "it means class A is not merely waiting for permission. The declaration exists - plan_historical_sources produces it - and the acquisition entry point does not read it. Connecting the two is Issue #47's own offline work and needs no authorisation."
+  },
+  "verified": [
+   "class B, Paramount predecessor: tools/vnext_continuous_sec.py plan returns OFFLINE_SOURCE_PLAN with calls [0, 0, 0] for both the body and the header of 0001193125-25-036747",
+   "the annual chain is declared: plan_historical_sources names every class-A requirement with its URL, accession, role and saved state, deduplicated"
+  ]
  },
- "execution_discipline_after_authorisation": "continuous, under the cumulative cap: plan the tranche, capture it, install, run, and report against the cap. No per-URL question, no per-company question. If the cap is reached, stop and report what remains rather than continuing or re-asking."
+ "prior_revision": {
+  "why_30_was_wrong": [
+   "it counted one document per pinned period. The planner declares two - the primary document and that accession's index.json - and the index is what names the accession's other files.",
+   "it counted only the five target years. A five-year frame needs the year before the earliest target as well, because each target's prior-period comparison reads it: Salesforce needs crm-20210131.htm for the FY2022 target.",
+   "it recorded amendments_implied: 0, measured over the target periods only. The planner finds a prior_amendment_primary in Marriott's chain, so the measurement was over the wrong set rather than wrong in itself."
+  ],
+  "withdrawn_class_1_count": 30,
+  "withdrawn_conclusion": {
+   "not_asked_of_the_user": "how much of #28's 80 is already consumed. That ledger is #28's, its budget root is a host-local path this container does not carry, and #47 should not be reading it either way.",
+   "what_was_written": "'30 SEC fetches against a cumulative allowance of 80. The need fits inside the existing approved budget rather than requiring a new one.' - docs/evidence/issue47_history/source-need-quantified.json",
+   "why_it_was_also_wrong_on_size": "30 was the first blocking reason only. Counting the dependencies behind it puts the measured need at roughly seventeen times the whole #28 SEC allowance, so even if the authority question did not exist the arithmetic would not have held.",
+   "why_it_was_wrong_on_authority": "The [240, 240, 80] allowance in config/issue28_continuous_calls_v1.json is bound to requirement_id issue_28_v14 and to a scope of 10 companies x 39 metrics x 1 period = 390 coordinates. continuous_call_policy checks the delegation body, the scope, the budget root and that requirement_id. Issue #47's own text forbids borrowing #28's remainder. Finding that the acquisition tooling exists and is reusable is not the same as finding that its authorisation transfers - the capability may be reused, the permission may not.",
+   "withdrawn": true
+  }
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_ACQUISITION_PLAN",
+ "schema_version": 2,
+ "status": "SUBMITTED_FOR_AUTHORISATION_NOT_EXECUTED",
+ "supersedes": "schema_version 1 of this file, kept below as prior_revision. Its class-1 count of 30 is withdrawn for three measured reasons, all found by running the production planner instead of counting by hand.",
+ "what_a_call_is": "one SEC request attempt through scripts/sec_http.SecHttpClient, logged in evidence/requests_log.csv whether it returns 200, returns an error status, or fails in transport. Implicit redirects are forbidden by the client, so a redirect is a terminal attempt and counts.",
+ "what_is_asked_of_the_owner": {
+  "not_asked": [
+   "a per-URL or per-company approval",
+   "a reading of Issue #28's private ledger",
+   "authorisation to execute before the permission exists",
+   "an increment for the three uncovered items above, which have no measured basis yet and should not be approved on a guess"
+  ],
+  "one_thing": "a cumulative cap of 1232 SEC request attempts for Issue #47, bound to #47's own requirement and scope, with its own ledger."
+ }
 }
