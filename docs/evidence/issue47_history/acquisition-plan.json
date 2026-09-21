@@ -116,6 +116,12 @@
   "consequence_for_sequencing": "the wiring goes first and costs nothing. A cap can be granted before or after it; what cannot happen is spending against the cap while class A has no path.",
   "status": "PARTIALLY_VERIFIED_AND_ONE_GAP_FOUND",
   "the_gap": {
+   "closed": {
+    "measured": "the salesforce FY2024 primary that the existing CLI refuses now returns OFFLINE_SOURCE_PLAN with calls [0, 0, 0]; a URL nothing declares is refused as HISTORICAL_URL_IS_NOT_A_DECLARED_DEPENDENCY. The regression asks the old gate and the new one the same question in one case, so a gate that accepted everything would fail there rather than in a fetch.",
+    "not_a_rule_file": "it plans and gates rather than executing a Run, so nothing about a Run's meaning depends on its bytes - the same reason historical_coverage.py is not one. The frozen tool and the current-period discovery are untouched, because both are named in issue_28_v14's baseline and in the approved call policy's rule_paths.",
+    "what": "scripts/vnext/historical_source_acquisition.py and tools/vnext_historical_sec.py read Issue #47's own declaration - the planner's deduplicated new_acquisition_required set - instead of the current-period discovery.",
+    "what_is_still_absent": "execution. continuous_sec_acquisition.live_sec_session hard-binds issue_28_v14 and its ledger reads that issue's delegation, budget root and limits, so reusing it would be drawing on Issue #28's allowance. The capture command refuses before any transport is constructed."
+   },
    "measured_boundary": "salesforce crm-20250131.htm (one year back) is accepted; crm-20240131.htm (two years back) is refused with 'URL is not a declared dependency of this company'. The gate reaches one year, and the frame needs four.",
    "what": "the acquisition CLI gates on normal_source_requirements.discover_saved_source_requirements, whose scope is the current annual period. It declares the current primary, one prior annual primary, the current fiscal-event window, the proxy, companyfacts and submissions.",
    "what_it_is_not": "not a reason to widen the gate by hand or to pass URLs around it. The gate is what stops an arbitrary URL from being fetched, and the fix is to give it the historical declaration, not to remove it.",
@@ -160,6 +166,18 @@
    "authorisation to execute before the permission exists",
    "an increment for the three uncovered items above, which have no measured basis yet and should not be approved on a guess"
   ],
-  "one_thing": "a cumulative cap of 1232 SEC request attempts for Issue #47, bound to #47's own requirement and scope, with its own ledger."
+  "one_thing": "a cumulative cap of 1232 SEC request attempts for Issue #47, bound to #47's own requirement and scope, with its own ledger.",
+  "the_shape_of_the_grant": {
+   "current_state": "the file does not exist, and tools/vnext_historical_sec.py capture refuses with exactly that path and field list.",
+   "fields": [
+    "requirement_id (must be issue_47_v1, and a record carrying issue_28_v14 is refused rather than accepted as a fallback)",
+    "delegation_url and delegation_body_sha256 - the comment granting it",
+    "budget_root - Issue #47's own cumulative counter, not Issue #28's",
+    "maximum_additional_provider_paid_sec_calls - the cap, as [0, 0, 1232]",
+    "scope - this issue's coordinate scope and purposes"
+   ],
+   "path": "config/issue47_historical_calls_v1.json",
+   "why_this_is_here": "'a cap of 1232' is a number in a document. What the code would have to read is an object, and naming its fields makes the ask checkable rather than interpretable."
+  }
  }
 }

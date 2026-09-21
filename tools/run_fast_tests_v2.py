@@ -144,6 +144,11 @@ SOURCE_TESTS += ("tests.vnext.test_historical_event_window",)
 # a route that answered "not applicable" whenever asked would pass every
 # positive case here and be wrong about Marriott's occupancy.
 SOURCE_TESTS += ("tests.vnext.test_historical_structural_results",)
+# Issue #47's own dependency gate. It reads saved submissions metadata for two
+# companies and makes no request; 19 seconds measured. Registered because the
+# load-bearing case asks the old gate and the new one the same question, so a
+# gate that accepted everything fails here rather than in a fetch.
+SOURCE_TESTS += ("tests.vnext.test_historical_source_acquisition",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
