@@ -402,9 +402,14 @@ def _delivery(*, receipt, result, status, defect, defects, row=None, row_ambigui
     elif row_ambiguity is not None:
         layers["public_row"] = {"proven": False, "reason": row_ambiguity}
     elif bundle is None:
-        # No bundle beside any of this version's runs for this result. The
-        # renderer may never have been called, or may have refused; neither is
-        # readable from here, and guessing which would be inventing a state.
+        # No bundle beside any of this version's runs for this result. Three
+        # things produce that and none of them is readable from here: the
+        # renderer was never called, it refused, or - on a runs root a batch is
+        # still writing - the Run has frozen and its bundle is not written yet.
+        # The third was measured: a scan of a live batch found a FROZEN, PASSED,
+        # EXACT run with no bundle, and re-reading the same directory a moment
+        # later found the bundle present and accepted. Guessing which of the
+        # three it is would be inventing a state.
         layers["public_row"] = {"proven": False,
                                 "reason": NOT_PROVEN + ":NO_ROW_BUNDLE_BESIDE_THE_RUN"}
     elif bundle["status"] != "FROZEN_CANDIDATE":

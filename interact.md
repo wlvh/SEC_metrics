@@ -548,6 +548,9 @@ D04的条件、例证或过去原因只影响其实际限定的断言；明确�
 * `unreadable_run_directories` 列出 runs 根目录下 manifest 与自身文件对不上的
   目录，按名字和理由报告而不是抛出——批次还在写时读该目录必然遇到一个。记录
   区分两种：OPEN 是正在被写，FROZEN 是这个目录不是它声称的那个 Run。
+  同一原因在更细的粒度上也成立：`NOT_PROVEN:NO_ROW_BUNDLE_BESIDE_THE_RUN`
+  在批次仍在写时可能只是「收据还没写出来」，而不是渲染器拒绝——实测扫到过
+  一个 FROZEN/PASSED/EXACT 但当时没有收据的 Run，稍后重读即存在且被接受。
 
 一个坐标在多个 Requirement 版本下跑过就有多份收据。不给
 `--requirement-closure-hash` 时报 `RUN_RECEIPT_VERSION_AMBIGUOUS`——**由文件名
