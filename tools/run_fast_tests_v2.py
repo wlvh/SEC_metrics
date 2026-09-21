@@ -139,6 +139,11 @@ SOURCE_TESTS += ("tests.vnext.test_historical_metadata_context",)
 # both the historical and the ordinary route so they can be compared; 62
 # seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_event_window",)
+# Structural non-applicability: it prepares two companies' annual inputs from
+# saved originals; 38 seconds measured. Its load-bearing case is a refusal -
+# a route that answered "not applicable" whenever asked would pass every
+# positive case here and be wrong about Marriott's occupancy.
+SOURCE_TESTS += ("tests.vnext.test_historical_structural_results",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

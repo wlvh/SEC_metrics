@@ -75,6 +75,10 @@ NEW_RULE_FILES = (
     # scans only filings.recent; this decides which filing an earlier period
     # means, so both roots check it.
     "scripts/vnext/historical_metadata_context.py",
+    # Which metrics a company's traits put outside their own gate. Its bytes
+    # decide whether a position gets a structural non-applicability or an
+    # implementation gap, so both roots check it.
+    "scripts/vnext/historical_structural_results.py",
     "scripts/vnext/requirement_profile_v16.py",
 )
 

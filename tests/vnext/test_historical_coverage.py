@@ -24,7 +24,8 @@ from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
-from vnext.historical_coverage import (WIRED_ACCESSION_METRICS, WIRED_HISTORICAL_METRICS,
+from vnext.historical_coverage import (STRUCTURAL_APPLICABILITY_METRICS,
+                                       WIRED_ACCESSION_METRICS, WIRED_HISTORICAL_METRICS,
                                        CoverageError, build_coverage_matrix,
                                        declared_metric_ids, known_result_defects)
 from vnext.historical_run_receipts import RunReceiptError, read_run_receipt
@@ -144,14 +145,22 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual(39 * 4, len(missing))
         # Of those 156 positions whose first blocker is a missing document, the
         # unwired ones have no historical route either. Acquiring all 156
-        # documents would fill only the wired share.
+        # documents would fill only the routed share.
+        #
+        # Macy's is a retailer, so the eight trait-gated metrics have a route
+        # here - the structural one - and the count is per position rather than
+        # per metric. At Marriott two of the eight would not be routed and at a
+        # bank six would not; that is the property, not an accident of this
+        # company.
         also_unwired = [p for p in missing if not p["historical_route_implemented"]]
-        self.assertEqual((39 - len(WIRED_HISTORICAL_METRICS)) * 4, len(also_unwired))
+        routed = len(WIRED_HISTORICAL_METRICS) + len(STRUCTURAL_APPLICABILITY_METRICS)
+        self.assertEqual((39 - routed) * 4, len(also_unwired))
+        self.assertEqual(31, routed)
         self.assertEqual(len(also_unwired), matrix["positions_missing_source_and_route"])
         self.assertTrue(matrix["first_blocking_reason_is_not_the_only_blocker"])
         self.assertEqual({"target_period_established": 39 * 5, "target_original_saved": 39,
                           "run_receipt_hashes_verified": 0,
-                          "historical_route_implemented": len(WIRED_HISTORICAL_METRICS) * 5,
+                          "historical_route_implemented": routed * 5,
                           "native_run_receipt": 0, "known_content_defect": 0,
                           "business_content_accepted": 0, "verified_outcome": 0},
                          matrix["dimension_counts"])
@@ -161,7 +170,16 @@ class HistoricalCoverageTest(unittest.TestCase):
         wired = [p for p in resolved if p["metric_id"] in WIRED_HISTORICAL_METRICS]
         self.assertEqual(len(WIRED_HISTORICAL_METRICS), len(wired))
         self.assertEqual({"ROUTE_IMPLEMENTED_NOT_RUN"}, {p["status"] for p in wired})
-        unwired = [p for p in resolved if p["metric_id"] not in WIRED_HISTORICAL_METRICS]
+        # The eight trait-gated metrics also have a route at a retailer, and it
+        # is the structural one, so they read as implemented-and-not-run too.
+        structural = [p for p in resolved
+                      if p["metric_id"] in STRUCTURAL_APPLICABILITY_METRICS]
+        self.assertEqual(len(STRUCTURAL_APPLICABILITY_METRICS), len(structural))
+        self.assertEqual({"ROUTE_IMPLEMENTED_NOT_RUN"}, {p["status"] for p in structural})
+        unwired = [p for p in resolved
+                   if p["metric_id"] not in WIRED_HISTORICAL_METRICS
+                   and p["metric_id"] not in STRUCTURAL_APPLICABILITY_METRICS]
+        self.assertEqual(39 - routed, len(unwired))
         self.assertEqual({"HISTORICAL_ROUTE_NOT_WIRED"}, {p["status"] for p in unwired})
 
     def test_the_report_entry_computes_no_metric_outcome(self):

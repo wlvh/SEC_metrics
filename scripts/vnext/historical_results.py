@@ -286,6 +286,38 @@ def _run_coordinate(*, pinned, primary):
             "period_end": window["period_end"]}
 
 
+def _historical_structural_run_input(*, repo_root, company_id, metric_id, period_selection,
+                                     resolve):
+    """A Run whose only result is that the metric does not apply here.
+
+    The same shape as the other routes' run input, with the same pinned
+    coordinate and the same admitted source set - what differs is that there
+    are no claims and no observations, because nothing was read from a filing.
+    """
+    component = resolve(repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+                        period_selection=period_selection)
+    specs = {metric_id: component["compiled_spec"]}
+    primary = component["result"]
+    body = {"record_type": RUN_INPUT_RECORD_TYPE, "company_id": company_id,
+            "primary_metric_id": metric_id, "period_selection": period_selection,
+            "requested_metric_ids": [metric_id], "required_metric_ids": [metric_id],
+            "spec_paths": {metric_id: component["spec_path"]},
+            "compiled_specs": specs, "records": component["records"],
+            "source_records": component["source_records"],
+            "source_references": component["source_references"],
+            "source_proofs": component["source_proofs"],
+            "source_admission": component["source_admission"],
+            "primary_result": primary, "results": {metric_id: primary},
+            "traces": {metric_id: component["trace"]},
+            "target_period": _run_coordinate(pinned=component["target_period"],
+                                             primary=primary),
+            "component": component, "kind": "STRUCTURED",
+            "calls": {"provider": 0, "paid": 0, "sec": 0},
+            "native_run_status": "NOT_CREATED", "production_authorized": False}
+    body = exact_json_value(body)
+    return {**body, "input_id": content_hash(value=body)}
+
+
 def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id: str,
                                  period_selection):
     """Assemble one metric's complete historical graph for a Run factory.
@@ -298,11 +330,23 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     # current route, so this follows that module's own supported set.
     from .historical_zero_ai_results import (SUPPORTED_METRICS as ZERO_AI_METRICS,
                                              resolve_historical_zero_ai_metric)
+    from .historical_structural_results import (SUPPORTED_METRICS as STRUCTURAL_METRICS,
+                                                 resolve_historical_structural_metric,
+                                                 structurally_not_applicable)
     ACCESSION_METRICS = ("A01", "A02", "B12")
     if metric_id in TEXT_METRICS:
         return _historical_text_run_input(repo_root=repo_root, company_id=company_id,
                                           metric_id=metric_id,
                                           period_selection=period_selection)
+    # A metric the company's traits put outside its own gate. Checked before
+    # the Spec set below, because these Specs are not in it: a liquidity
+    # coverage ratio has no ordinary route to be in.
+    if metric_id in STRUCTURAL_METRICS and structurally_not_applicable(
+            repo_root=repo_root, company_id=company_id, metric_id=metric_id):
+        return _historical_structural_run_input(
+            repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+            period_selection=period_selection,
+            resolve=resolve_historical_structural_metric)
     specifications = validate_ordinary_spec_files(repo_root=repo_root)
     _need(metric_id in specifications, "HISTORICAL_RUN_METRIC_NOT_IN_ZERO_AI_SET")
     expected_ids = {metric_id, *specifications[metric_id]["compiled_spec"]["compiled"]["dependencies"]}

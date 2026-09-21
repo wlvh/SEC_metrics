@@ -44,6 +44,7 @@ from .normal_history_plan import plan_historical_sources
 from .historical_run_receipts import classify_result, collect_run_receipts, index_receipts
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
+from . import historical_structural_results as structural
 from .sources import resolve_repository_file
 
 
@@ -67,6 +68,15 @@ WIRED_TEXT_METRICS = ("D02",)
 WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS
                                         + WIRED_ACCESSION_METRICS + WIRED_EVENT_METRICS
                                         + WIRED_TEXT_METRICS))
+# Eight more, but only where the company's own registry traits put the metric
+# outside its Spec's gate. Six are gated on `financial` and none of the
+# companies whose periods are reachable is a bank; two are gated on `lodging`
+# and eight of the ten are not hotels. That is why this is not in the list
+# above: whether a route exists here is a fact about the pair, not about the
+# metric, and reporting it per metric would say the route exists for Marriott's
+# occupancy too - where it does not, and where saying "not applicable" would be
+# a false statement about the issuer rather than a missing implementation.
+STRUCTURAL_APPLICABILITY_METRICS = tuple(sorted(structural.SPEC_PATHS))
 
 
 class CoverageError(ValueError):
@@ -445,7 +455,8 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             for metric_id in metrics:
                 established = entry["period_status"] != "METADATA_BLOCKED"
                 original_saved = entry["period_status"] == "PERIOD_ESTABLISHED"
-                implemented = metric_id in wired
+                implemented = metric_id in wired or structural.structurally_not_applicable(
+                    repo_root=repo_root, company_id=company_id, metric_id=metric_id)
                 found = receipts.get((company_id, metric_id, report_end), [])
                 position = _position(company_id=company_id, report_end=report_end,
                                      ordinal=candidate["target_ordinal"],
@@ -525,6 +536,11 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             "target_frame_positions": len(selected) * len(metrics) * years,
             "enumerated_positions": len(positions),
             "wired_historical_metric_ids": list(WIRED_HISTORICAL_METRICS),
+            "structural_applicability_metric_ids": list(STRUCTURAL_APPLICABILITY_METRICS),
+            "a_route_can_be_company_specific": (
+                "historical_route_implemented is per position, not per metric: eight "
+                "metrics have a route only where the company's traits put them outside "
+                "their own gate."),
             "first_blocking_reason_counts": counts, "status_counts": counts,
             "dimension_counts": dimensions,
             "delivery_layer_counts": delivery,
