@@ -1086,3 +1086,36 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 作废的是把 A/B/C/D 四个方案抛给用户选择这件事；剩下的是一项仍需负责人、提交、兼容验收与 #47 接入方式的工程依赖，记在 #47 而不是一句「等下一个世代」。
 
 **打包路径条件**：`_external` 拒绝的是**代码根与候选数据根重叠**，不是可移植交付。实测四种布局：同一棵树同时充当两者 REFUSED；数据根位于代码根内部 REFUSED；同一交付包下 `runtime/` 与 `data/` 并列 **ADMITTED**；代码根位于数据根内部 ADMITTED。所以「自包含包被现有不变量禁止」是错的，已更正。这只说明路径约束不排除该组织方式，不代表这种交付包已经实现或通过验证：可移植运行时仍需可信身份，数据不能自行指定另一套代码。历史材料测试因此仍按其实际证明的内容标注——新进程、无网络、从已安装数据根重建输入，代码来自开发 checkout。
+
+### 历史 pinned 期间的三处结构变化（2026-09-21）
+
+**submissions 块视图从只扫 `recent` 改为按期间读入所需块**。原链路是
+`historical_text_input` → 冻结的 `normal_text_input_v2._current_metadata_context`，后者
+在「任一已声明 history shard 的 `filingTo` ≥ 目标期末」时拒绝，然后只扫
+`filings.recent`。实测这条拒绝覆盖本仓库自己的九个公司期间，其中 13 个 10-K 行本身就在
+shard 里。新增只读模块 `scripts/vnext/historical_metadata_context.py`（第 19 个规则文件），
+数据流改为 `historical_text_input` → `historical_metadata_context` →
+`normal_history_catalog.load_history_for_period`（既有目录读取器，newest-first、窗口证明后
+停止、未保存/错位/不可解析的 shard 留为显式限制）。不变量不变——未读的块不得持有
+filingDate ≥ 目标期末的申报——改为用**读进来**满足。调用方的 `_Sources` 传入，所以读到的
+每个块都经同一请求证明准入；`check_historical_metadata_scope` 取代冻结的
+`_check_selected_metadata_scope`，要求「读到的块」与「准入的块」是同一集合，且被选中的申报
+来自其中之一。`normal_text_input_v2.py` 字节未改，普通路线行为不变。
+
+**Run 坐标与测量窗口在 `historical_results` 内分开**。`_run_coordinate(pinned, primary)`：
+主结果窗口落在 pinned 期间内时沿用它（瞬时指标是年内一点、期间指标就是这一年；六公司批次
+117 个主结果全部落在内，故既有行为逐个不变），落在外时坐标保持 pinned。唯一会落在外的是
+接续主体的登记事件指标——已批准政策把事件窗口放宽到上一自然年年初。这带来第三处改动：
+`run_store` 的共享 `approved_registered_event_period` 读的是普通 case 的
+`input_binding.component.input_binding.registered_event_scope`，所以
+`historical_run.replay_case` 把自己的 component 以同一字段名暴露，一个检查服务两条路线，
+而不是在被十四个世代按字节绑定的文件里再加 hunk。
+
+**公共行成为可校验的持久对象**。`historical_projection.render_historical_run(persist=True)`
+把行、证据与收据写到 Run 旁的 `row_receipt.json`；收据自带行/证据哈希，
+`historical_run_receipts.read_row_bundle` 读取时逐一核对（改过即 `ROW_BUNDLE_ROW_CHANGED`）。
+覆盖汇总因此可以回答「这个坐标是否到达公共行」而**不重新渲染**——原先它只能说「存在一个
+Run」，并把其余留给读者假定。每个坐标带 `delivery` 三层（`native_run` / `public_row` /
+`content_acceptance`），未证明的一层写明理由；`content_acceptance` 在本仓库处处为 false。
+收据另带坐标键分不开的身份：pinned 财年坐标、实际测量窗口、`scope_key`、`value_kind`、
+closure 与 run_id——不并入键（帧的行就是坐标），放在旁边使「合并」可核而非假定。
