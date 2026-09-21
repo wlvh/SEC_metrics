@@ -201,6 +201,67 @@ def _top_level_letter(document, block):
     return None if match is None else match.group(1)
 
 
+def _note_heading(document, section, block):
+    """A short emphasized heading inside a note the filing itself pointed at.
+
+    The inherited `_substantive` needs twelve characters, which is right for
+    open-ended scanning: it is what keeps page numbers, tick marks and stray
+    fragments out. Inside a note an Item incorporated by reference it is wrong,
+    because the headings there are product and matter names and those are
+    short. Reading Pfizer's Note 16A against the filing found Zantac (six
+    characters), Chantix (seven), Paxlovid and Asbestos (eight) and Docetaxel
+    (nine) dropped, while Orgovyx (relugolix), Eliquis (apixaban), Oxbryta
+    (voxelotor), Nurtec (rimegepant) and Xtandi (enzalutamide) were kept -
+    whether a product heading survived depended on how long its generic name
+    was, which is not a rule anyone would write down. The paragraphs beneath
+    them were all present, so what the bound removed was the label saying which
+    matter each paragraph is about.
+
+    This widens nothing else. It applies only inside a located note scope,
+    only to an emphasized unlinked block, and only to one that carries a
+    letter - so the bare page numbers in the same run stay out, and the
+    running-header blocks are already gone as furniture.
+    """
+    if not section.startswith("NOTE_"):
+        return False
+    text = block["text"].strip()
+    # The registrant's own name is eleven characters for this filer and is
+    # excluded by _substantive for exactly that reason, so it is excluded here
+    # too rather than let back in through the side the bound was guarding.
+    names = {re.sub(r"\W", "", name).casefold()
+             for name in document.get("registrant_names", [])}
+    return bool(text and block.get("emphasized") and not block.get("linked")
+                and re.search(r"[A-Za-z]", text) and len(text) < 12
+                and re.sub(r"\W", "", text).casefold() not in names)
+
+
+def _page_furniture(*, blocks, start, stop, repeated):
+    """Blocks that repeat *and* sit next to another repeating block.
+
+    Repetition alone was the rule, and it is right about what it was written
+    for: a running header repeats verbatim on every page of a section, so
+    Pfizer's five-block group - registrant name, form title, page number,
+    "Notes to Consolidated Financial Statements", "Pfizer Inc. and Subsidiary
+    Companies" - is correctly dropped five times over.
+
+    It is wrong about a heading that legitimately repeats. Reading Pfizer's
+    Note 16A against the filing found "Comirnaty (tozinameran)" dropped twice,
+    once under "Actions in Which We are the Defendant" and once under "Matters
+    Involving Pfizer and its Collaboration/Licensing Partners", because a
+    product can be the subject of two different matters in one note.
+
+    What separates them is that furniture travels in company: a running header
+    is a run of blocks that repeats together, and each of its members has a
+    repeating neighbour. A repeated heading stands between two blocks that
+    occur once. So a repeated block is furniture when the block before or after
+    it also repeats, which needs no threshold and no list of known captions.
+    """
+    repeats = {index for index in range(start, stop)
+               if repeated[_normalized(blocks[index]["text"])] > 1}
+    return [index for index in sorted(repeats)
+            if (index - 1 in repeats) or (index + 1 in repeats)]
+
+
 def _lettered_sub_note_scopes(*, document, note, blocks, start, stop, repeated):
     """The sub-note a reference named, when only its parent could be numbered.
 
@@ -225,8 +286,7 @@ def _lettered_sub_note_scopes(*, document, note, blocks, start, stop, repeated):
     end = following[0] if following else stop
     if begin >= end:
         return []
-    furniture = [index for index in range(begin, end)
-                 if repeated[_normalized(blocks[index]["text"])] > 1]
+    furniture = _page_furniture(blocks=blocks, start=begin, stop=end, repeated=repeated)
     return [{"section_id": note["section_id"] + "_SUB_" + match.group(2),
              "start_block": begin, "end_block_exclusive": end,
              "requested_reference": note["requested_reference"],
@@ -304,8 +364,7 @@ def incorporated_scopes(*, document, raw_bytes, reference, note):
         # than a caption also keeps it out of the excerpts. This applies to the
         # scopes this successor creates; a wholesale note keeps the inherited
         # behaviour, which already carries Ford's running headers.
-        furniture = [index for index in range(begin, end)
-                     if repeated[_normalized(blocks[index]["text"])] > 1]
+        furniture = _page_furniture(blocks=blocks, start=begin, stop=end, repeated=repeated)
         scopes.append({"section_id": note["section_id"] + "_CAPTION_" + str(begin),
                        "start_block": begin, "end_block_exclusive": end,
                        "requested_reference": note["requested_reference"],
@@ -374,7 +433,7 @@ def referenced_note_candidates(*, document, raw_bytes):
             if owner[index] is not scope or index in furniture:
                 continue
             block = document["blocks"][index]
-            if not _substantive(document, block):
+            if not _substantive(document, block) and not _note_heading(document, section, block):
                 if section == "ITEM_3" and block["text"].strip().casefold() in {"none", "none."}:
                     legal.append(_excerpt(document, block, section,
                                           ["EXPLICIT_NONE_IN_THIS_SECTION_ONLY"]))

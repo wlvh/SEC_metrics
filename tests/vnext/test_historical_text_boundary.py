@@ -338,6 +338,93 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         sections = {claim["section_id"] for claim in selected.values()}
         self.assertTrue({s for s in sections if s.endswith("_SUB_A")}, sections)
 
+    def test_a_repeated_heading_is_not_page_furniture_unless_it_travels_with_one(self):
+        """Read off the filing: a product can be the subject of two matters.
+
+        Repetition alone dropped "Comirnaty (tozinameran)" at 3858 and 3874,
+        once under "Actions in Which We are the Defendant" and once under
+        "Matters Involving Pfizer and its Collaboration/Licensing Partners".
+        The twenty running-header blocks it is right about all have a
+        repeating neighbour; those two do not.
+        """
+        _, prepared = _text_arguments(PFIZER, "2025-12-31")
+        with original_sources_only():
+            source = fixed.prepare_business_text_sources(metric_id="D02",
+                                                         **prepared["text_arguments"])
+        coverage = source["coverages"][next(iter(source["coverages"]))]
+        note = next(scope for scope in coverage["ranges"]
+                    if scope["section_id"].startswith("NOTE_"))
+        furniture = set(note["repeated_furniture_blocks"])
+        self.assertNotIn(3858, furniture)
+        self.assertNotIn(3874, furniture)
+        # The five page-header runs are still gone, all four text blocks of
+        # each - the page number in the middle occurs once and is dropped by
+        # the inherited length rule instead.
+        self.assertEqual({3825, 3826, 3828, 3829, 3842, 3843, 3845, 3846,
+                          3865, 3866, 3868, 3869, 3892, 3893, 3895, 3896,
+                          3913, 3914, 3916, 3917}, furniture)
+        blocks = source["documents"][next(iter(source["documents"]))]["blocks"]
+        for index in sorted(furniture):
+            self.assertIn(blocks[index]["text"].strip(),
+                          {"Pfizer Inc.", "2025 Form 10-K",
+                           "Notes to Consolidated Financial Statements",
+                           "Pfizer Inc. and Subsidiary Companies"})
+
+    def test_a_short_heading_inside_an_incorporated_note_is_content(self):
+        """Whether a product heading survived depended on its generic name.
+
+        The inherited twelve-character minimum kept Orgovyx (relugolix) and
+        dropped Zantac, so the paragraphs beneath the short ones lost the label
+        saying which matter they are about. Inside a note an Item incorporated
+        by reference, a short emphasized heading is content.
+        """
+        _, prepared = _text_arguments(PFIZER, "2025-12-31")
+        from vnext.historical_spec_revision import compile_historical_spec_file as revised
+        spec = revised(repo_root=ROOT,
+                       repo_relative_path="catalog/r6/D02_legal_disclosures_v2.md",
+                       dependency_specs={})
+        arguments = {"compiled_spec": spec, **prepared["text_arguments"]}
+        with original_sources_only():
+            candidate = fixed.create_deterministic_text_candidate(**arguments)
+            evidence = fixed.build_text_evidence(candidate=candidate, **arguments)
+        selected = {claim["block_index"]: claim for claim in candidate["selected"].values()}
+        # The seven the reading found, by index and by the text at that index.
+        recovered = {3858: "Comirnaty (tozinameran)", 3874: "Comirnaty (tozinameran)",
+                     3870: "Paxlovid", 3882: "Asbestos", 3886: "Docetaxel",
+                     3889: "Zantac", 3899: "Chantix"}
+        for index, text in recovered.items():
+            self.assertIn(index, selected, text)
+            self.assertEqual(text, selected[index]["text"].strip())
+        self.assertEqual("PASS", evidence["status"])
+        self.assertEqual(99, len(selected))
+        # Nothing the bound was guarding came back with them: the bare page
+        # numbers in the same runs stay out.
+        for index in (3827, 3844, 3867, 3894, 3915):
+            self.assertNotIn(index, selected)
+
+    def test_the_six_items_outside_the_approved_source_are_still_there(self):
+        """The repair is half of the defect, and the register says which half.
+
+        Four of the six are the independent auditor's critical audit matter
+        and two are accounting policy admitted on one keyword. Narrowing that
+        means narrowing ITEM_8 to the contingencies notes the definition names,
+        which changes every filing's set and has been read on one. Asserting
+        they are still present keeps the open half visible rather than letting
+        a later change quietly decide it.
+        """
+        _, prepared = _text_arguments(PFIZER, "2025-12-31")
+        from vnext.historical_spec_revision import compile_historical_spec_file as revised
+        spec = revised(repo_root=ROOT,
+                       repo_relative_path="catalog/r6/D02_legal_disclosures_v2.md",
+                       dependency_specs={})
+        with original_sources_only():
+            candidate = fixed.create_deterministic_text_candidate(
+                **{"compiled_spec": spec, **prepared["text_arguments"]})
+        selected = {claim["block_index"] for claim in candidate["selected"].values()}
+        self.assertTrue({1881, 1882, 1883, 1884, 2175, 2240} <= selected)
+        # And the two that belong there are there.
+        self.assertTrue({2302, 2351} <= selected)
+
     def test_the_successor_routes_only_the_metric_it_corrects(self):
         module, _ = fixed.text_api("D02")
         self.assertIs(fixed, module)

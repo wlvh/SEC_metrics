@@ -176,9 +176,32 @@
    },
    "what_is_correct": "every substantive paragraph of Note 16A is present, in order, and the two in-scope items outside the sub-note - the contingencies note lead-in at 2302 and the Seagen legal-matters bullet at 2351 - are correctly included. The scope boundary [3821, 3937) is right: guarantees, commitments, contingent consideration and insurance all start at or after 3937 and none is in the set.",
    "corrected_count_would_be": "92 minus 6 plus 7 = 93",
-   "repair_state": "READ_AND_LOCATED_NOT_YET_REPAIRED",
+   "repair_state": "HALF_REPAIRED_SEVEN_RECOVERED_SIX_STILL_TAKEN",
    "evidence": "docs/evidence/issue47_history/d02-content-read/",
-   "scope_note": "this withdraws the coordinate's result from current delivery. It does not change the approved definition: entity_scope registrant and source 'Item 3 / legal proceedings / contingencies notes' are what each item was judged against."
+   "scope_note": "this withdraws the coordinate's result from current delivery. It does not change the approved definition: entity_scope registrant and source 'Item 3 / legal proceedings / contingencies notes' are what each item was judged against.",
+   "partial_repair": {
+    "what_was_repaired": "the seven in-scope sub-headings; both causes",
+    "repeated_within_scope": "historical_text_results._page_furniture: a repeated block is furniture only when the block before or after it also repeats. The twenty running-header blocks all have a repeating neighbour; the two Comirnaty headings stand between blocks that occur once. No threshold and no list of known captions.",
+    "substantive_minimum_length_12": "historical_text_results._note_heading: inside a note an Item incorporated by reference, an emphasized unlinked block carrying a letter is content even under twelve characters. The bare page numbers in the same runs carry no letter and stay out, and the registrant name is excluded the same way _substantive excludes it.",
+    "measured": {
+     "selected_before": 92,
+     "selected_after": 99,
+     "recovered": [
+      3858,
+      3870,
+      3874,
+      3882,
+      3886,
+      3889,
+      3899
+     ],
+     "furniture_before": 22,
+     "furniture_after": 20,
+     "evidence_status": "PASS"
+    },
+    "what_is_not_repaired": "the six items outside the approved source. Four are the independent auditor's critical audit matter and two are accounting policy admitted on one occurrence of a keyword. The real cause is that ITEM_8 - the whole financial statements section - is scanned as a proxy for the 'contingencies notes' the definition names, and narrowing that changes every filing's set. One filing has been read; that is not enough to generalise from, so it stays open and the coordinate stays withdrawn.",
+    "next_step": "read a second and third filing's D02 set the same way before narrowing ITEM_8, so the narrowing is measured against more than the filing that motivated it"
+   }
   }
  ],
  "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released."

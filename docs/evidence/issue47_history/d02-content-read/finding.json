@@ -109,5 +109,23 @@
   "change the approved definition - each item was judged against it, not against a new one",
   "repair the selector, which is a separate change with its own measurements",
   "say anything about the other eight companies' D02 sets, which have not been read"
- ]
+ ],
+ "repair": {
+  "half_done": true,
+  "in_scope_missed_recovered": {
+   "count": 7,
+   "selected_before": 92,
+   "selected_after": 99,
+   "evidence_status": "PASS"
+  },
+  "rules": {
+   "_page_furniture": "a repeated block is furniture only when the block before or after it also repeats - furniture travels in company",
+   "_note_heading": "inside a located note scope, an emphasized unlinked block carrying a letter is content even under twelve characters"
+  },
+  "out_of_scope_still_taken": {
+   "count": 6,
+   "why_not_yet": "the cause is that ITEM_8 is scanned as a proxy for the contingencies notes the definition names. Narrowing it changes every filing's set and one filing has been read. Inventing a rule for where the auditor's report ends from a single example is the mistake this whole exercise exists to avoid."
+  },
+  "coordinate_state": "STILL_WITHDRAWN"
+ }
 }
