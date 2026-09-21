@@ -13,6 +13,13 @@
  "record_type": "ISSUE_47_REMAINING_IMPLEMENTATION",
  "so_the_next_implementation_is": {
   "chosen": "C04",
+  "feasibility_checked_not_asserted": {
+   "a_first_reading_that_was_wrong": "grepping for 'event_input=' found no caller and suggested the path was test-only. It is built in normal_governance_input under a different spelling. The narrower conclusion that followed from the bad grep - that a historical C04 would mostly produce WITHHELD - does not follow.",
+   "the_auditor_comparison": "needs the pinned period's 10-K and the prior period's, both of which prepare_historical_annual_input already supplies - the planner carries prior_annual_primary as a role of the target rather than as a sixth year.",
+   "the_event_input": "needs the complete submissions index plus every history shard overlapping the target period, and resolve_c04 checks that the provided shards cover the needed ones. normal_governance_input already builds exactly that shape, including history_inputs, so the ordinary route handles shards; and historical_metadata_context reads a pinned period's shards through the existing catalog and proves the read set equals the admitted set.",
+   "what_remains_a_material_question": "whether the shards a given period needs are saved. They are for Marriott, whose three periods ran in this batch; JPMorgan has 57 of 69 unsaved, which is already class A of the acquisition plan. So C04 wired today would produce results where the shards exist and a named source gap where they do not, which is the correct behaviour rather than a reason to wait.",
+   "what_was_checked": "that C04's two inputs really do have historical routes, by reading resolve_c04's contract rather than by assuming it from the source_mode."
+  },
   "not_started_yet_and_why": "routing a metric edits historical_results.py, which is a rule file, so it moves the Requirement closure. A batch is running against the current one and is the evidence for it; changing the closure underneath the report it will produce would make that report describe a version nothing ran. The order is: finish the batch, report it against its own closure, then wire C04.",
   "why": "it is the only one of the eight whose inputs both already have historical routes, so it composes rather than builds."
  },
