@@ -1,0 +1,205 @@
+{
+ "agreed": [
+  "enphase_energy",
+  "ford_motor_company",
+  "lumen_technologies",
+  "macys",
+  "marriott_international",
+  "pfizer",
+  "salesforce",
+  "southwest_airlines"
+ ],
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "end_to_end": {
+  "cases": [
+   {
+    "company_id": "marriott_international",
+    "evidence_items": 1,
+    "period_end": "2025-12-31",
+    "publication": "PUBLISHED",
+    "quality": "NOT_MEANINGFUL",
+    "reason_code": "DENOMINATOR_NONPOSITIVE",
+    "row_fiscal_year": "2025",
+    "run_status": "FROZEN",
+    "spec": "catalog/r5/B06_guarded_v3.md",
+    "stage": "DENOMINATOR_GUARD",
+    "value": null
+   },
+   {
+    "company_id": "marriott_international",
+    "evidence_items": 0,
+    "note": "The accession directory index this filing needs is not saved. The position is a Result naming that, not a lost coordinate.",
+    "period_end": "2023-12-31",
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "reason_code": "HISTORICAL_B06_SOURCE_ROUTE_UNRESOLVED",
+    "row_fiscal_year": "2023",
+    "run_status": "FROZEN",
+    "spec": "catalog/r5/B06_new_source_v2.md",
+    "stage": "NO_STAGE_REACHED",
+    "value": null
+   },
+   {
+    "company_id": "enphase_energy",
+    "evidence_items": 3,
+    "period_end": "2025-12-31",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "row_fiscal_year": "2025",
+    "run_status": "FROZEN",
+    "spec": "catalog/r5/B06_note_carrying_v4.md",
+    "stage": "NOTE_CARRYING",
+    "value": "1.107959077222837051285943352"
+   },
+   {
+    "company_id": "macys",
+    "evidence_items": 5,
+    "period_end": "2026-01-31",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "row_fiscal_year": "2025",
+    "run_status": "FROZEN",
+    "spec": "catalog/r5/B06_bond_leases_v5.md",
+    "stage": "BOND",
+    "value": "0.5030864197530864197530864198"
+   }
+  ],
+  "new_calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "requirement_closure_hash": "sha256:95a0f340dbd55a8b1",
+  "what_each_case_proves": "Four pinned periods, four different outcomes, each installed into its own data root, frozen, and rendered to a public row with zero new calls. Two deliver values through two different grammars, so the cascade is not just reaching different stages, it is computing through them."
+ },
+ "frame_effect": {
+  "HISTORICAL_ROUTE_NOT_WIRED": {
+   "after": 72,
+   "before": 83
+  },
+  "b06_positions_by_first_blocking_reason": {
+   "ROUTE_IMPLEMENTED_NOT_RUN": 11,
+   "SOURCE_MISSING_TARGET_ORIGINAL": 30,
+   "TARGET_PERIOD_METADATA_BLOCKED": 2,
+   "TARGET_PERIOD_NOT_DISCOVERED": 7
+  },
+  "historical_route_implemented": {
+   "after": 1572,
+   "before": 1522
+  },
+  "measured_with": "tools/vnext_history_coverage.py over the whole 1950-position frame",
+  "reading": "Eleven is the number of pinned periods whose target original is saved, so it is what any newly wired metric moves today. The other 39 are the same acquisition dependency every wired metric shares; wiring does not change them and should not be reported as if it did.",
+  "wired_historical_metrics": {
+   "after": 25,
+   "before": 24
+  }
+ },
+ "measured": {
+  "enphase_energy": {
+   "agrees_with_ordinary_chain": true,
+   "blocked_by": null,
+   "cascade_stage": "NOTE_CARRYING",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "spec_path": "catalog/r5/B06_note_carrying_v4.md"
+  },
+  "ford_motor_company": {
+   "agrees_with_ordinary_chain": true,
+   "blocked_by": null,
+   "cascade_stage": "SPECIAL_SCOPE",
+   "quality": "NONE",
+   "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+   "spec_path": "catalog/r5/B06_new_source_v2.md"
+  },
+  "jpmorgan_chase": {
+   "agrees_with_ordinary_chain": null,
+   "blocked_by": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT",
+   "cascade_stage": null,
+   "quality": null,
+   "reason_code": null,
+   "spec_path": null
+  },
+  "lumen_technologies": {
+   "agrees_with_ordinary_chain": true,
+   "blocked_by": null,
+   "cascade_stage": "DENOMINATOR_GUARD",
+   "quality": "NOT_MEANINGFUL",
+   "reason_code": "DENOMINATOR_NONPOSITIVE",
+   "spec_path": "catalog/r5/B06_guarded_v3.md"
+  },
+  "macys": {
+   "agrees_with_ordinary_chain": true,
+   "blocked_by": null,
+   "cascade_stage": "BOND",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "spec_path": "catalog/r5/B06_bond_leases_v5.md"
+  },
+  "marriott_international": {
+   "agrees_with_ordinary_chain": true,
+   "blocked_by": null,
+   "cascade_stage": "DENOMINATOR_GUARD",
+   "quality": "NOT_MEANINGFUL",
+   "reason_code": "DENOMINATOR_NONPOSITIVE",
+   "spec_path": "catalog/r5/B06_guarded_v3.md"
+  },
+  "paramount_skydance_paramount_global": {
+   "agrees_with_ordinary_chain": null,
+   "blocked_by": "HistoricalDebtError: HISTORICAL_B06_SUCCESSOR_SCOPE_NOT_IMPLEMENTED",
+   "cascade_stage": null,
+   "quality": null,
+   "reason_code": null,
+   "spec_path": null
+  },
+  "pfizer": {
+   "agrees_with_ordinary_chain": true,
+   "blocked_by": null,
+   "cascade_stage": "FALLBACK_RESOLVER",
+   "quality": "NONE",
+   "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+   "spec_path": "catalog/r5/B06_new_source_v2.md"
+  },
+  "salesforce": {
+   "agrees_with_ordinary_chain": true,
+   "blocked_by": null,
+   "cascade_stage": "FALLBACK_RESOLVER",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "spec_path": "catalog/r5/B06_new_source_v2.md"
+  },
+  "southwest_airlines": {
+   "agrees_with_ordinary_chain": true,
+   "blocked_by": null,
+   "cascade_stage": "FALLBACK_RESOLVER",
+   "quality": "NONE",
+   "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+   "spec_path": "catalog/r5/B06_new_source_v2.md"
+  }
+ },
+ "not_measurable": {
+  "jpmorgan_chase": "Period selection refuses before B06 is reached: the saved submissions shards are incoherent after SEC re-partitioned them. Already named in the acquisition plan; not a B06 gap.",
+  "paramount_skydance_paramount_global": "HISTORICAL_B06_SUCCESSOR_SCOPE_NOT_IMPLEMENTED. The same successor-subject gap every historical route has, not one this route introduces."
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_B06_CASCADE_DIFFERENTIAL",
+ "stages_not_exercised_by_real_material": {
+  "CURRENT_INPUT_UNRESOLVED": "No current amendment here changes debt or equity, so the first stage's refusal path is implemented and not reached by real material.",
+  "INCLUSIVE": "No current filing in this repository matches the inclusive grammar. It is implemented and shares one implementation with the bond grammar; what stands behind it is the regression that re-derives the two frozen bodies' equivalence, not a Run."
+ },
+ "the_bug_the_differential_found": {
+  "cause": "The ordinary cascade reads TWO preparations of the same filing. normal_annual_input derives the fiscal year from the report end; normal_annual_input_v2 overwrites it with the issuer's own label. The source walk and the amendment scopes read the first, the Run's coordinate comes from the second. The first version of this module substituted one pinned input for both.",
+  "company_id": "salesforce",
+  "found_by": "The differential. Nine of ten companies passed with the bug in place.",
+  "regression": "tests.vnext.test_historical_debt_results.test_the_source_walk_reads_the_original_input_not_the_relabelled_one",
+  "symptom": "B06GuardError: B06_GUARD_ANNUAL_SOURCE_IDENTITY_CONFLICT",
+  "why_it_showed_up_only_here": "The two agree for every calendar-year filer. Salesforce's year ending 2026-01-31 is 2025 to the first and 2026 to the second, and the denominator guard re-derives the period from the filing's own bytes and compares the whole dict."
+ },
+ "what_this_is": "B06's ordinary route is not one reader. It is a cascade of seven stages, each of which resolves the issuer's LATEST annual filing for itself. The historical route substitutes the pinned period's preparations at every stage and reproduces the rest. This file records the check that the copy is faithful: both chains answering the same company for the same period.",
+ "why_all_seven": "Five different companies' current filings are answered by five different stages, two of them under different Specs than the others. Wiring one stage would have given the other four that stage's answer - confidently, with evidence, and wrong. An earlier attempt in this issue wired only the last stage and was deleted for exactly that reason."
+}

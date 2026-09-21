@@ -344,6 +344,8 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     from .historical_governance_results import (
         SUPPORTED_METRICS as GOVERNANCE_METRICS,
         resolve_historical_governance_metric)
+    from .historical_debt_results import (SUPPORTED_METRICS as DEBT_METRICS,
+                                          resolve_historical_debt_metric)
     if metric_id in TEXT_METRICS:
         return _historical_text_run_input(repo_root=repo_root, company_id=company_id,
                                           metric_id=metric_id,
@@ -356,6 +358,14 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
             repo_root=repo_root, company_id=company_id, metric_id=metric_id,
             period_selection=period_selection,
             resolve=resolve_historical_governance_metric)
+    # B06 answers the same way and for the same reason: its Spec is not in the
+    # ordinary twenty-two either, because the cascade chooses among several and
+    # the stage that answers decides which one this period's Result is under.
+    if metric_id in DEBT_METRICS:
+        return _historical_component_run_input(
+            repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+            period_selection=period_selection,
+            resolve=resolve_historical_debt_metric)
     # A metric the company's traits put outside its own gate. Checked before
     # the Spec set below, because these Specs are not in it: a liquidity
     # coverage ratio has no ordinary route to be in.

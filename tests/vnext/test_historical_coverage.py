@@ -187,9 +187,20 @@ class HistoricalCoverageTest(unittest.TestCase):
         # bank six would not; that is the property, not an accident of this
         # company.
         also_unwired = [p for p in missing if not p["historical_route_implemented"]]
+        # The two route families are disjoint, which is what makes adding their
+        # sizes a count of metrics rather than a double count. Asserted rather
+        # than assumed, because a metric that gained a real route while keeping
+        # its structural one would silently inflate the denominator.
+        self.assertEqual(set(), set(WIRED_HISTORICAL_METRICS)
+                         & set(STRUCTURAL_APPLICABILITY_METRICS))
         routed = len(WIRED_HISTORICAL_METRICS) + len(STRUCTURAL_APPLICABILITY_METRICS)
         self.assertEqual((39 - routed) * 4, len(also_unwired))
-        self.assertEqual(31, routed)
+        # And the constant lists agree with what the matrix itself marks. This
+        # was a literal - it went stale the first time a route was wired
+        # without touching this file, and a stale literal here reads as a
+        # failure of the route rather than of the count.
+        self.assertEqual(routed, len({p["metric_id"] for p in matrix["positions"]
+                                      if p["historical_route_implemented"]}))
         self.assertEqual(len(also_unwired), matrix["positions_missing_source_and_route"])
         self.assertTrue(matrix["first_blocking_reason_is_not_the_only_blocker"])
         self.assertEqual({"target_period_established": 39 * 5, "target_original_saved": 39,

@@ -85,6 +85,11 @@ NEW_RULE_FILES = (
     # C04 compares, so both roots check them.
     "scripts/vnext/historical_governance_input.py",
     "scripts/vnext/historical_governance_results.py",
+    # B06's ordinary route is a seven-stage cascade whose stages resolve their
+    # own latest inputs. These bytes decide which stage answers a pinned
+    # period, and therefore which Spec its Result is under, so both roots
+    # check them.
+    "scripts/vnext/historical_debt_results.py",
     "scripts/vnext/requirement_profile_v16.py",
 )
 

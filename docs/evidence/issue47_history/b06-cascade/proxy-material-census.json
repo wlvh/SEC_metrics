@@ -1,0 +1,90 @@
+{
+ "acquisition_consequence": "Distinguishing the rule needs a second proxy for at least one company - the one belonging to an earlier pinned period. That is a specific, small, named dependency, not an open-ended ask.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "correction_to_an_earlier_note": "AGENTS.md said 82 proxies are listed and ten have accession material saved, all filed in 2026. The measured shape is nine readable proxies - exactly one per company, the most recent - and Paramount lists none at all under its successor CIK. A first probe of this said zero, because it looked in evidence/accession_materials; the route does not look there, it resolves the document URL through the request ledger. Asking the code gave the answer the directory listing could not.",
+ "measured": {
+  "enphase_energy": {
+   "error": null,
+   "listed_in_recent": 16,
+   "readable_filing_dates": [
+    "2026-04-01"
+   ]
+  },
+  "ford_motor_company": {
+   "error": null,
+   "listed_in_recent": 7,
+   "readable_filing_dates": [
+    "2026-03-27"
+   ]
+  },
+  "jpmorgan_chase": {
+   "error": null,
+   "listed_in_recent": 1,
+   "readable_filing_dates": [
+    "2026-04-06"
+   ]
+  },
+  "lumen_technologies": {
+   "error": null,
+   "listed_in_recent": 11,
+   "readable_filing_dates": [
+    "2026-04-06"
+   ]
+  },
+  "macys": {
+   "error": null,
+   "listed_in_recent": 10,
+   "readable_filing_dates": [
+    "2026-03-31"
+   ]
+  },
+  "marriott_international": {
+   "error": null,
+   "listed_in_recent": 9,
+   "readable_filing_dates": [
+    "2026-03-27"
+   ]
+  },
+  "paramount_skydance_paramount_global": {
+   "error": null,
+   "listed_in_recent": 0,
+   "readable_filing_dates": []
+  },
+  "pfizer": {
+   "error": null,
+   "listed_in_recent": 6,
+   "readable_filing_dates": [
+    "2026-03-12"
+   ]
+  },
+  "salesforce": {
+   "error": null,
+   "listed_in_recent": 3,
+   "readable_filing_dates": [
+    "2026-04-16"
+   ]
+  },
+  "southwest_airlines": {
+   "error": null,
+   "listed_in_recent": 11,
+   "readable_filing_dates": [
+    "2026-03-27"
+   ]
+  }
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_PROXY_MATERIAL_CENSUS",
+ "totals": {
+  "companies": 10,
+  "companies_with_none": [
+   "paramount_skydance_paramount_global"
+  ],
+  "readable_proxies": 9
+ },
+ "what_this_blocks": "Not 'the route would name a gap for earlier periods' - that is true of C04 too and C04 was wired anyway. The block is sharper: a historical C02/C03 needs a rule for WHICH proxy belongs to a pinned fiscal year, and the frozen plan's rule - the latest proxy, if filed on or after the period end - selects the 2026 proxy for a 2023 period. The candidate replacement is 'the first DEF 14A filed after that fiscal year ends', which is consistent with every filing date observed here. But with one proxy saved per company, every rule that differs agrees on every testable case, so the replacement cannot be distinguished from the frozen one by anything this repository holds.",
+ "why": "C02 and C03 read the annual meeting's DEF 14A. Before wiring either, this measures what this repository actually holds - asked with the route's own reader rather than by listing a directory."
+}

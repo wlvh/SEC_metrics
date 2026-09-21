@@ -72,9 +72,15 @@ WIRED_TEXT_METRICS = ("D02",)
 # the selection between them, not a new reader. It delivers where the
 # accession material is saved and names a source gap where it is not.
 WIRED_GOVERNANCE_METRICS = ("C04",)
+# Debt over equity. Its ordinary route is a seven-stage cascade, not one
+# reader, and the stage that answers decides which Spec the Result is under.
+# All seven are wired or none: a period that reaches a later stage would
+# otherwise get an earlier stage's answer, confidently and wrongly.
+WIRED_DEBT_METRICS = ("B06",)
 WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS
                                         + WIRED_ACCESSION_METRICS + WIRED_EVENT_METRICS
-                                        + WIRED_TEXT_METRICS + WIRED_GOVERNANCE_METRICS))
+                                        + WIRED_TEXT_METRICS + WIRED_GOVERNANCE_METRICS
+                                        + WIRED_DEBT_METRICS))
 # Eight more, but only where the company's own registry traits put the metric
 # outside its Spec's gate. Six are gated on `financial` and none of the
 # companies whose periods are reachable is a bank; two are gated on `lodging`

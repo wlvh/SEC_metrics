@@ -1144,6 +1144,22 @@ Run）；批次还在写时读 runs 根目录必然遇到前者。同版本、�
 SourceSetManifest 不是 Run 记录类型，故与事件路线一样放在自己的槽位而非 `records`。
 来源缺失在同一边界内变成 WITHHELD Result 并点名缺的文件，而不是抛出导致没有 Run。
 
+**B06 的历史路线**。普通 B06 不是一个读取器而是七级级联：`b06_current_input` 的修订
+影响判断 → `ordinary_debt_guard` 的分母守卫 → `ordinary_special_debt_scope` →
+`normal_note_debt_results` → `normal_bond_debt_results` → `normal_inclusive_debt_results`
+→ 落到 `ordinary_remaining_cases`（那里**再调一次守卫**，NOT_MEANINGFUL 时用守卫自己
+的记录建结果，否则走 `normal_candidates._b06_resolution`），最后由 `normal_run_v3` 的
+else 分支包成 case 并统一经 `bind_current_debt_input` 绑定当期输入包。每级唯一的期间
+依赖都是那两个"取最新年报"的准备动作。`historical_debt_results.py` 逐级替换它们并复现
+其余组装，因为冻结入口不接受期间参数；**哪一级作答决定结果落在哪个 Spec 下**，所以
+只接一级会给到达更晚一级的公司一个错答案（实测 Marriott/Ford/Enphase/Macy's/Southwest
+分别停在五级、四个 Spec）。两个 anchor 必须分开：`normal_annual_input` 按报告期末推财
+年，`normal_annual_input_v2` 用发行人标签覆盖；来源走查与修订范围读前者（pinned 输入
+自带的 `original_input`），Run 坐标与 `annual_label_input` 取后者。bond 与 inclusive
+是同一算法，一份实现服务两者，由每次运行重新归约两个冻结体的回归担保。来源缺失在
+`HistoricalDebtSourceError` 边界内变成 WITHHELD Result 并点名缺的文件；已安装政策或
+权威不符仍用基类抛出，不被降级成 Result。
+
 **Issue #47 自己的获取准入**。`historical_source_acquisition.py` 与
 `tools/vnext_historical_sec.py` 用 `plan_historical_sources` 的去重声明做准入判断，
 因为原获取 CLI 的当期依赖发现实测只回溯一年。它不是规则文件（只做计划与准入、不执行
