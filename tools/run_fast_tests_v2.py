@@ -167,9 +167,14 @@ SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
     "tests.vnext.test_continuous_sec_acquisition": 480,
-    # Nine cases over six filings' full 10-K bytes; measured at 97 seconds,
+    # Nine cases over six filings' full 10-K bytes; measured at 192 seconds,
     # which is close enough to the 240 default to fail on a slower runner.
     "tests.vnext.test_historical_text_boundary": 480,
+    # Ten cases over the ordinary zero-AI routes, including the registered
+    # event union across two CIKs. Measured at 258 seconds alone - over the
+    # default, not near it - so it was timing out rather than flaking, and a
+    # timeout reads as a failure with no diagnosis at all.
+    "tests.vnext.test_normal_zero_ai_results": 600,
 }
 
 

@@ -92,6 +92,93 @@
     "what_this_releases": "This result and no other. The defect stays in force at this coordinate for any other result, including the ones produced before the repair.",
     "what_it_does_not_assert": "That the 92 excerpts are the right 92. Business content acceptance is a separate state and is still open."
    }
+  },
+  {
+   "defect_id": "D02_PFIZER_2025_SCOPE_CONTENT_READ",
+   "company_id": "pfizer",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "found_by": "reading the original filing's blocks in the declared scope ranges and judging each one against the approved source definition, rather than by re-running the selector that produced them",
+   "summary": "The 92-item set is not the 92 it should be. Six items are outside the approved source - four are the independent auditor's critical audit matter, whose speaker is not the registrant, and two are accounting-policy paragraphs admitted on a single occurrence of the word litigation. Seven in-scope sub-headings inside Note 16A are missing, so a reader of the excerpt set cannot tell which product or matter several paragraphs are about.",
+   "out_of_scope_items": [
+    {
+     "block_index": 1881,
+     "text": "Evaluation of product liability and other product-related litigation",
+     "why": "heading of the independent auditor's critical audit matter"
+    },
+    {
+     "block_index": 1882,
+     "text": "As discussed in Notes 1S and 16 to the consolidated financial statements, the Company is involved in product liability and other product-related litigation...",
+     "why": "the auditor describing the matter, not the registrant's disclosure"
+    },
+    {
+     "block_index": 1883,
+     "text": "We identified the evaluation of product liability and other product-related litigation as a critical audit matter...",
+     "why": "'we' is the auditor; entity_scope is registrant"
+    },
+    {
+     "block_index": 1884,
+     "text": "The following are the primary procedures we performed to address this critical audit matter...",
+     "why": "audit procedures, not a legal proceeding disclosure"
+    },
+    {
+     "block_index": 2175,
+     "text": "Our estimates are often based on complex judgments and assumptions...",
+     "why": "critical accounting estimates; matched on 'litigation' inside a list of risk factors"
+    },
+    {
+     "block_index": 2240,
+     "text": "In determining the reserve percentages for each pool of trade accounts receivables...",
+     "why": "trade receivable credit-loss policy. The keyword occurs in 'written off after all reasonable means to collect the full amount (including litigation, where appropriate) have been exhausted' - debt collection, not a proceeding to disclose"
+    }
+   ],
+   "in_scope_items_missing": [
+    {
+     "block_index": 3858,
+     "text": "Comirnaty (tozinameran)",
+     "cause": "REPEATED_WITHIN_SCOPE"
+    },
+    {
+     "block_index": 3874,
+     "text": "Comirnaty (tozinameran)",
+     "cause": "REPEATED_WITHIN_SCOPE"
+    },
+    {
+     "block_index": 3870,
+     "text": "Paxlovid",
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12"
+    },
+    {
+     "block_index": 3882,
+     "text": "Asbestos",
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12"
+    },
+    {
+     "block_index": 3886,
+     "text": "Docetaxel",
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12"
+    },
+    {
+     "block_index": 3889,
+     "text": "Zantac",
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12"
+    },
+    {
+     "block_index": 3899,
+     "text": "Chantix",
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12"
+    }
+   ],
+   "two_distinct_causes": {
+    "REPEATED_WITHIN_SCOPE": "historical_text_results counts normalised block text within the scope and treats anything appearing more than once as page furniture. That rule was added to drop running headers and it does. It also drops a product sub-heading that legitimately appears twice in one note - Comirnaty appears under 'Actions in Which We are the Defendant' and again under 'Matters Involving Pfizer and its Collaboration/Licensing Partners'.",
+    "SUBSTANTIVE_MINIMUM_LENGTH_12": "text_business_candidates._substantive requires at least twelve characters. Product names are shorter than that: Zantac is six, Chantix seven, Paxlovid and Asbestos eight, Docetaxel nine. Orgovyx (relugolix) at nineteen is kept, so the set is inconsistent in a way that depends on how long the generic name is."
+   },
+   "what_is_correct": "every substantive paragraph of Note 16A is present, in order, and the two in-scope items outside the sub-note - the contingencies note lead-in at 2302 and the Seagen legal-matters bullet at 2351 - are correctly included. The scope boundary [3821, 3937) is right: guarantees, commitments, contingent consideration and insurance all start at or after 3937 and none is in the set.",
+   "corrected_count_would_be": "92 minus 6 plus 7 = 93",
+   "repair_state": "READ_AND_LOCATED_NOT_YET_REPAIRED",
+   "evidence": "docs/evidence/issue47_history/d02-content-read/",
+   "scope_note": "this withdraws the coordinate's result from current delivery. It does not change the approved definition: entity_scope registrant and source 'Item 3 / legal proceedings / contingencies notes' are what each item was judged against."
   }
  ],
  "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released."
