@@ -244,52 +244,81 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         for letter in "BCDE":
             self.assertGreaterEqual(letters[letter], scopes[0]["end_block_exclusive"])
 
-    def test_the_route_still_declares_the_bound_the_runtime_can_honour(self):
-        """v2 exists and compiles, and is deliberately not routed yet.
+    def test_the_route_declares_only_a_bound_the_runtime_can_honour(self):
+        """The routed Spec's declared bound has to be one the renderer delivers.
 
         64 turned out to be two bounds, not one: what a Spec may declare, and
-        what `ORDERED_NEWLINE_V1` will render. The second is a literal in the
-        frozen `text_results.render_text_payload`, so a routed Spec claiming
-        192 would be a false contract. This states which of the two the route
-        carries, so flipping it is a decision rather than a drift.
+        what `ORDERED_NEWLINE_V1` will render. While only the first was raised,
+        routing v2 would have been a false contract, and this case said so by
+        asserting the route still pointed at v1. Both are raised now, so what
+        it asserts is the property rather than the state: the route points at
+        v2, the frozen renderer still refuses 65, and the successor renderer
+        delivers 192 for that Spec identity - so the declared number is one the
+        runtime can actually honour.
+
+        The earlier form of this case went on asserting v1 after the route
+        moved to v2 and was red at HEAD 3e45533; the source tier is not run in
+        CI, so nothing said so.
         """
         from vnext.historical_results import TEXT_SPEC_PATHS
+        from vnext import historical_text_protocol as protocol
         from vnext.specs import compile_spec_file
         from vnext.text_results import TextResultError, render_text_payload
 
-        self.assertEqual("catalog/r6/D02_legal_disclosures_v1.md", TEXT_SPEC_PATHS["D02"])
-        v1 = compile_spec_file(path=ROOT / TEXT_SPEC_PATHS["D02"], dependency_specs={})
+        self.assertEqual("catalog/r6/D02_legal_disclosures_v2.md", TEXT_SPEC_PATHS["D02"])
+        v1 = compile_spec_file(path=ROOT / "catalog/r6/D02_legal_disclosures_v1.md",
+                               dependency_specs={})
         v2 = compile_historical_spec_file(
-            repo_root=ROOT, repo_relative_path="catalog/r6/D02_legal_disclosures_v2.md",
-            dependency_specs={})
+            repo_root=ROOT, repo_relative_path=TEXT_SPEC_PATHS["D02"], dependency_specs={})
         self.assertEqual(64, text_policy(v1)["max_items"])
         self.assertEqual(192, text_policy(v2)["max_items"])
-        # The protocol's own bound, read out of the frozen renderer by handing
-        # it 65 well-formed items rather than by reading the literal.
-        payload = {"version": "TEXT_V1", "content_kind": "SOURCE_EXCERPTS",
-                   "renderer": "ORDERED_NEWLINE_V1", "coverage_hashes": ["sha256:" + "a" * 64],
-                   "candidate_hash": "sha256:" + "b" * 64,
-                   "review_unit_hash": "sha256:" + "c" * 64,
-                   "approval_effect_hash": "sha256:" + "d" * 64,
-                   "items": [{"order": n, "role": "R%d" % n, "text": "t%d" % n,
-                              "observation_id": "sha256:" + ("%064x" % n)} for n in range(65)]}
-        with self.assertRaises(TextResultError) as raised:
-            render_text_payload(payload=payload)
-        self.assertIn("TEXT_PAYLOAD_ITEMS_INVALID", str(raised.exception))
-        payload["items"] = payload["items"][:64]
-        self.assertEqual(64, len(render_text_payload(payload=payload).split("\n")))
+        # Both bounds read out of the renderers by handing them well-formed
+        # items rather than by reading a literal.
+        def payload(count):
+            return {"version": "TEXT_V1", "content_kind": "SOURCE_EXCERPTS",
+                    "renderer": "ORDERED_NEWLINE_V1", "coverage_hashes": ["sha256:" + "a" * 64],
+                    "candidate_hash": "sha256:" + "b" * 64,
+                    "review_unit_hash": "sha256:" + "c" * 64,
+                    "approval_effect_hash": "sha256:" + "d" * 64,
+                    "items": [{"order": n, "role": "R%d" % n, "text": "t%d" % n,
+                               "observation_id": "sha256:" + ("%064x" % n)}
+                              for n in range(count)]}
 
-    def test_the_located_sub_note_is_built_and_refused_by_the_bound_not_the_scope(self):
-        """Pfizer's D02 excerpt set is complete; only the item count stops it."""
-        spec, prepared = _text_arguments(PFIZER, "2025-12-31")
-        arguments = {"compiled_spec": spec, **prepared["text_arguments"]}
+        with self.assertRaises(TextResultError) as frozen_refusal:
+            render_text_payload(payload=payload(65))
+        self.assertIn("TEXT_PAYLOAD_ITEMS_INVALID", str(frozen_refusal.exception))
+        self.assertEqual(64, len(render_text_payload(payload=payload(64)).split("\n")))
+        # The successor honours what v2 declares, and only for v2's identity.
+        self.assertEqual(192, protocol.declared_spec_ceiling(
+            spec_closure_hash=v2["spec_closure_hash"]))
+        self.assertEqual(protocol.FROZEN_PROTOCOL_MAX_ITEMS, protocol.declared_spec_ceiling(
+            spec_closure_hash=v1["spec_closure_hash"]))
+        self.assertEqual(192, len(protocol.render_text_payload(
+            payload=payload(192), max_items=192).split("\n")))
+
+    def test_the_located_sub_note_is_the_only_thing_the_old_bound_was_refusing(self):
+        """Pfizer's D02 excerpt set is complete; only the item count stopped it.
+
+        The scope and the volume were never the problem, and the way to show
+        that is to run the same arguments through both Spec identities: the old
+        bound refuses the set for its count, the raised one accepts exactly the
+        same set. The earlier form asserted the refusal on the routed Spec,
+        which stopped being v1 when the route moved; that form was red at HEAD
+        3e45533.
+        """
+        _, prepared = _text_arguments(PFIZER, "2025-12-31")
+        from vnext.specs import compile_spec_file
+        old_spec = compile_spec_file(path=ROOT / "catalog/r6/D02_legal_disclosures_v1.md",
+                                     dependency_specs={})
+        arguments = {"compiled_spec": old_spec, **prepared["text_arguments"]}
         with original_sources_only():
             with self.assertRaises(TextResultV2Error) as raised:
                 fixed.create_deterministic_text_candidate(**arguments)
         self.assertIn("EXCEEDS_ITEM_BOUND", str(raised.exception))
         # The set it refused is 92 items and 41,860 rendered characters - 144
-        # percent of the item bound and 65 percent of the character bound - so
-        # what stops this coordinate is the count, not the scope or the volume.
+        # percent of the old item bound and 65 percent of the character bound -
+        # so what stopped this coordinate is the count, not the scope or the
+        # volume.
         from vnext.historical_spec_revision import compile_historical_spec_file as revised
         raised_spec = revised(repo_root=ROOT,
                               repo_relative_path="catalog/r6/D02_legal_disclosures_v2.md",

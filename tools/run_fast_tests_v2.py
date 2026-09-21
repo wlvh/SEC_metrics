@@ -134,6 +134,11 @@ SOURCE_TESTS += ("tests.vnext.test_historical_shared_sources",)
 # cases are the same comparison run against two implementations, so a change
 # that quietly re-narrows the view fails here rather than in a batch.
 SOURCE_TESTS += ("tests.vnext.test_historical_metadata_context",)
+# The event window a successor registrant measures, and the Run coordinate it
+# is not. It reads two companies' saved submissions and resolves C01 through
+# both the historical and the ordinary route so they can be compared; 62
+# seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_event_window",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

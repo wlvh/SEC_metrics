@@ -685,10 +685,11 @@ class HistoricalCoverageTest(unittest.TestCase):
         III and says it changes nothing else. The approved policy reads that as
         clearing the fiscal-event window and not the original statement values,
         so the statement routes are refused by policy and name which class was
-        not cleared. The event route is refused for an unrelated reason it
-        names itself - a successor registrant scope that is not wired - and the
-        instant-fact route reads the selected filing's own inline XBRL and
-        succeeds. One period, three answers, three reasons.
+        not cleared. The event route is cleared by that same amendment,
+        resolves over the widened successor window, and withholds on a named
+        missing predecessor document. The instant-fact route reads the selected
+        filing's own inline XBRL and succeeds. One period, three answers, three
+        reasons - a policy refusal, a source gap and a value.
 
         Written against Southwest until the amendment policy was wired, where
         it asserted two refusals that the policy then correctly stopped making;
@@ -712,10 +713,9 @@ class HistoricalCoverageTest(unittest.TestCase):
                 resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=company,
                                                   metric_id="B01",
                                                   period_selection=selection)
-            with self.assertRaises(ValueError) as event:
-                resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=company,
-                                                  metric_id="C01",
-                                                  period_selection=selection)
+            event = resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=company,
+                                                      metric_id="C01",
+                                                      period_selection=selection)
             instants = resolve_historical_accession_metrics(repo_root=ROOT,
                                                             company_id=company,
                                                             period_selection=selection)
@@ -724,13 +724,17 @@ class HistoricalCoverageTest(unittest.TestCase):
                          "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS")
         self.assertEqual(refused_class, str(facts.exception))
         self.assertEqual(refused_class, str(revenue.exception))
-        # A decided policy refusal and an unwired route are different states,
-        # and reporting the first as the second is what makes a settled
-        # question read as an open one.
-        self.assertEqual("HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED",
-                         str(event.exception))
-        self.assertEqual("IMPLEMENTATION_GAP",
-                         getattr(event.exception, "category", "IMPLEMENTATION_GAP"))
+        # The same amendment clears the event window, so the event route is not
+        # refused by policy at all. It resolves, reads the registered CIKs over
+        # the widened window, and withholds on a named missing document - a
+        # source gap, which is a third state again and not either refusal.
+        self.assertEqual("HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+                         event["result"]["reason_code"])
+        self.assertEqual("SOURCE_UNAVAILABLE", event["selection"]["category"])
+        self.assertTrue(event["selection"]["reason"].startswith("SAVED_SOURCE_MISSING:"))
+        self.assertEqual({"fiscal_year": 2025, "period_start": "2024-01-01",
+                          "period_end": "2025-12-31"},
+                         event["input_binding"]["registered_event_scope"]["window"])
         self.assertTrue(instants["metrics"])
 
     def test_an_exhibit_link_correction_clears_both_input_classes(self):

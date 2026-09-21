@@ -308,6 +308,14 @@ def replay_case(*, data_root, manifest, spec=None, binding_id=None, company_id=N
             "source_records": rebuilt["source_records"],
             "expected_records": rebuilt["records"], "target_period": rebuilt["target_period"],
             "results": rebuilt["results"], "traces": rebuilt["traces"],
+            # The shared registered-event check in run_store reads the case's
+            # component through the ordinary route's field name. Exposing the
+            # historical component under that name is an adapter, not a second
+            # source of truth: it is the same object this case already carries
+            # at ["input"]["component"], named so one check can serve both
+            # routes instead of a second hunk in a file fourteen generations
+            # bind by bytes.
+            "input_binding": {"component": rebuilt.get("component", {})},
             "observations": observations}
 
 

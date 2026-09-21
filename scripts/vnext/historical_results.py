@@ -256,6 +256,36 @@ def _historical_text_run_input(*, repo_root, company_id, metric_id, period_selec
     return {**body, "input_id": content_hash(value=body)}
 
 
+def _run_coordinate(*, pinned, primary):
+    """The Run's fiscal coordinate, which is not always the result's window.
+
+    The primary result's own window is used when it lies inside the pinned
+    period, and that covers every case this repository has run: an instant
+    metric measures a point in the year, and a duration metric measures the
+    year itself. Measured over 117 primary results from the batch, all 117 are
+    contained, so this rule changes none of them.
+
+    It is not the same rule as "take the result's window", and the difference
+    is a real case rather than a hypothetical one. A registered event metric on
+    a successor registrant measures a window the approved policy widens to the
+    prior calendar year's start - two years of filing dates. Taking that as the
+    coordinate makes the Run claim a fiscal year longer than 53 weeks and it is
+    refused, correctly: a fiscal coordinate is not a lookback window. Narrowing
+    the event sources to fit the coordinate would be the other wrong answer,
+    because it would drop filings the policy says belong to the measurement.
+
+    So when the result's window leaves the pinned period, the coordinate stays
+    pinned and the widened window stays on the result, where the record that
+    carries it also carries the scope evidence for why it is wider.
+    """
+    inside = (str(primary["period_start"]) >= str(pinned["period_start"])
+              and str(primary["period_end"]) <= str(pinned["period_end"]))
+    window = primary if inside else pinned
+    return {"fiscal_year": pinned["fiscal_year"],
+            "period_start": window["period_start"],
+            "period_end": window["period_end"]}
+
+
 def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id: str,
                                  period_selection):
     """Assemble one metric's complete historical graph for a Run factory.
@@ -335,9 +365,7 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
             "source_proofs": component["source_proofs"],
             "source_admission": component["source_admission"],
             "primary_result": primary, "results": results, "traces": traces,
-            "target_period": {"fiscal_year": period["fiscal_year"],
-                              "period_start": primary["period_start"],
-                              "period_end": primary["period_end"]},
+            "target_period": _run_coordinate(pinned=period, primary=primary),
             "component": component, "kind": "STRUCTURED",
             "calls": {"provider": 0, "paid": 0, "sec": 0},
             "native_run_status": "NOT_CREATED", "production_authorized": False}
