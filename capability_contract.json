@@ -128,7 +128,7 @@
         "anchor_id": "CAPABILITY.continuous_call_allowance",
         "type": "capability",
         "status": "active",
-        "statement": "2026-09-13 用户新批准以 issue_28_v14 后继规则绑定真实代登记评论，累计 provider240/paid240/SEC80，固定外部目录及追加记录跨阶段/进程累计；记录模式无真实信用。丢失终态按可能调用计账并停止受影响通道，原样请求重抽、移除末记录、重置目录和重标测试模式拒绝。D-36 禁用金额预检/预留/上限，未知 usage/cost 在本后继保持 null，历史规则不改。SEC 获取接线、语义验收及生产仍分别验证。",
+        "statement": "2026-09-13 用户新批准以 issue_28_v14 后继规则绑定真实代登记评论，累计 provider240/paid240/SEC80，固定外部目录及追加记录跨阶段/进程累计；记录模式无真实信用。丢失终态按可能调用计账并停止受影响通道，原样请求重抽、移除末记录、重置目录和重标测试模式拒绝。D-36 禁用金额预检/预留/上限，未知 usage/cost 在本后继保持 null，历史规则不改。SEC 获取接线、语义验收及生产仍分别验证。 2026-09-22用户对原110另授一次明确恢复例外，旧失败和累计不变，其他原样重抽仍拒绝。",
         "audience": [
           "developer",
           "reviewer"
@@ -136,6 +136,19 @@
         "test_anchor": "tests/vnext/test_continuous_call_ledger.py::ContinuousCallLedgerTest.test_reopen_and_changed_phase_do_not_reset_exhausted_total",
         "test_status": "automated_recorded",
         "since": "2026-09-13"
+      },
+      {
+        "anchor_id": "CAPABILITY.continuous_recovery_110",
+        "type": "capability",
+        "status": "active",
+        "statement": "原110 HTTP402且无可用模型输出，仅在绑定真实用户恢复评论后可按原业务摘要申领一次新编号；不改原账本/binding/初始化锚点/上限/失败。机会随claim追加消费，账本重读验证唯一授权重复并只消除110停止，新停止继续有效。记录测试不授真实权限；本轮后续仅B13/D04，D03与生产未授权。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_continuous_recovery_110.py::Recovery110Test.test_only_original_request_can_claim_once_and_old_history_stays",
+        "test_status": "automated_recorded",
+        "since": "2026-09-22"
       },
       {
         "anchor_id": "CAPABILITY.continuous_semantic_call_wiring",

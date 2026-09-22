@@ -151,6 +151,9 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
     policy = configured_transport_policy(requirement=requirement, repo_root=ROOT)
     source_bytes = canonical_json_bytes(value=source)
     from .canonical import sha256_bytes
+    histories = value['assessment'].get('recovered_http402_failures', [])
+    need(type(histories) is list and all(type(h) is dict for h in histories), 'RECOVERY110_REGISTERED_HISTORY_INVALID')
+    used_histories = []
     for row, request, summary in zip(value['native_requests'], expected, value['assessment']['completed']):
         need(row['semantic_request'] == request and row['request_id'] == summary['request_id']
              and row['terminal']['terminal_id'] == summary['terminal_id']
@@ -164,6 +167,12 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
         need(row['intent']['plan_id'] == row['plan']['ai_invocation_plan_id']
              and row['intent']['requirement_closure_hash'] == row['plan']['requirement_closure_hash']
              and row['terminal']['intent_id'] == row['intent']['intent_id'], 'NATIVE_INPUT_ORIGINAL_PLAN_CHANGED')
+        if 'recovery_authorization_id' in row['intent']:
+            matches = [h for h in histories if h.get('recovered_ordinal') == row['ordinal']]
+            need(len(matches) == 1, 'RECOVERY110_REGISTERED_HISTORY_MISSING_OR_DUPLICATED')
+            from .continuous_recovery_110 import validate_history
+            validate_history(history=matches[0], intent=row['intent'], terminal=row['terminal'], mode=value['mode'])
+            used_histories.append(matches[0])
         prepared = SimpleNamespace(source_bytes=source_bytes, request_bytes=canonical_json_bytes(value=request),
                                    requirement=requirement)
         acceptance = acceptor(prepared=prepared, plan=row['plan'], response_body=raw)
@@ -181,4 +190,5 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
              and acceptance['evidence_record'] == summary['evidence'], 'B13_NATIVE_INPUT_EVIDENCE_CHANGED')
         control._validate_acceptance_receipt(value=row['acceptance_receipt'], plan=row['plan'], response_body=raw)
     need(len(value['native_requests']) == len(value['assessment']['completed']), 'B13_NATIVE_INPUT_SUMMARY_SET_CHANGED')
+    need(used_histories == histories, 'RECOVERY110_REGISTERED_HISTORY_SET_CHANGED')
     return value

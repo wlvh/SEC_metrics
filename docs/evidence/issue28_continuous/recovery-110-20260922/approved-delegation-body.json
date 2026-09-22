@@ -1,0 +1,50 @@
+{
+  "record_type": "ISSUE28_HTTP402_RECOVERY_110_DELEGATION",
+  "approval_kind": "USER_DELEGATED_SINGLE_RECOVERY_ONLY",
+  "registered_by": "CODEX_ON_EXPLICIT_USER_INSTRUCTION",
+  "user_instruction_date": "2026-09-22",
+  "user_authorization": "用户在本会话明确回复“执行”，正式采用所附GPT-6 Pro第五节接续指令，确认充值已完成并批准原110一次受限重执行。此记录不是代码APPROVE或生产授权。",
+  "repository": "wlvh/SEC_metrics",
+  "issue_number": 28,
+  "budget_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+  "original_binding_id": "sha256:fc28545b68f44f4993716ee1005a731ed2ca5748cc12b830831df86c8fcfdb7a",
+  "original_ordinal": 110,
+  "original_intent_id": "sha256:cab3f5dc7d3ebdf63752cc57f5dc55d179749882d97ab416661fd5f9fd6478ef",
+  "original_terminal_id": "sha256:245e287794c2f241c4ad7ca18b64c06c652a95ad882e75b683818583145ea468",
+  "original_request_digest": "c13df85d996a6ba01c2bc13a8959013694ba494f783be7ee43474a6bd12d12e4",
+  "original_request_sha256": "8768088b71f7f54779ef4a9af1d4b113f45acc31cb42135961579764bab78af2",
+  "original_source_sha256": "4e0dde89514a0722f92804849148d75115a14b65a3c5a1b29d38afeda8d6e597",
+  "eligible_original_failure": "HTTP_402_WITHOUT_USABLE_MODEL_OUTPUT",
+  "maximum_new_executions_of_original_request": 1,
+  "consume_on": "NEW_CLAIM_APPEND_NOT_SUCCESS",
+  "maximum_cumulative_provider_paid_sec_calls": [
+    240,
+    240,
+    80
+  ],
+  "cumulative_before_recovery": [
+    61,
+    61,
+    49
+  ],
+  "automatic_retry_count": 0,
+  "other_failed_requests_may_repeat": false,
+  "request_digest_algorithm_may_change": false,
+  "business_source_grouping_prompt_output_contract_model_parameters_may_change_for_recovery": false,
+  "original_ledger_binding_anchor_history_may_change": false,
+  "following_provider_metric_ids": [
+    "B13",
+    "D04"
+  ],
+  "new_stop_conditions_remain_effective": true,
+  "new_budget_granted": false,
+  "D03_calls_authorized": false,
+  "account_operations_authorized": false,
+  "production_authorized": false,
+  "required_before_new_execution": [
+    "necessary_bound_recovery_implementation",
+    "scoped_independent_review",
+    "offline_real_entry_wiring"
+  ],
+  "resource_decision": "Increment deferred; base shortfall at least39, excluding all subsequent verification; original cap unchanged"
+}

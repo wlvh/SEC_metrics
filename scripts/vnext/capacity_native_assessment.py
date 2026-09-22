@@ -94,6 +94,7 @@ def collect_native_assessments(*, prepared_requests, ledger):
     by_id = {request['request_id']: prepared for request, prepared in zip(expected, prepared_requests)}
     need(len(by_id) == len(prepared_requests), 'B13_COMPLETE_REQUEST_SET_CHANGED')
     completed, failures = {}, []
+    recovered_failures = []
     with ledger.locked():
         state = ledger.snapshot()
         for row in state['rows']:
@@ -117,6 +118,14 @@ def collect_native_assessments(*, prepared_requests, ledger):
             replay = replay_native_response(prepared=prepared, path=path)
             success = replay['success']; acceptance = success['acceptance_receipt']
             terminal = strict_json_file(path=path / 'terminal.json')
+            intent = (strict_json_file(path=path / 'intent.json')
+                      if (ledger.root / 'recovery-110.json').exists() else {})
+            if 'recovery_authorization_id' in intent:
+                from .continuous_recovery_110 import history_for_success
+                history = history_for_success(ledger=ledger, intent=intent, terminal=terminal)
+                recovered_failures.append(history)
+                failures = [failure for failure in failures
+                            if failure['ordinal'] != history['authorization']['original_ordinal']]
             completed[identity] = {'request_id': identity, 'ordinal': row['ordinal'],
                 'terminal_id': terminal['terminal_id'], 'acceptance_receipt_id': success['acceptance_receipt_id'],
                 'candidate': acceptance['candidate_record'], 'evidence': acceptance['evidence_record'],
@@ -149,4 +158,6 @@ def collect_native_assessments(*, prepared_requests, ledger):
         'metric_result_created': False, 'review_complete': False, 'production_authorized': False}
     if any(version != 'BASE' for version in variants):
         body['native_request_variants'] = variants
+    if recovered_failures:
+        body['recovered_http402_failures'] = recovered_failures
     return {**body, 'assessment_set_id': content_hash(value=body)}

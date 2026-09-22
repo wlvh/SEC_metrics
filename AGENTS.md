@@ -42,6 +42,10 @@ ChatGPT review5189571246 与用户转交 Fable5.1 按6341530及明示模块登�
 
 `continuous_sec_acquisition.py`与`tools/vnext_continuous_sec.py`为本轮新有限SEC路径：原SecHttpClient/零重试/不可变尝试/日志前缀/同一总账，先验证完整离线接线再发真实请求。创建者登记acquired检查记录，旧recorded测试记录不升级。新获取信用只随实际选中的新请求传播；失败URL不污染其他成功来源。审核材料与可验证复用原件索引在`docs/evidence/issue28_continuous/ordinary-sec-acquisition/`。总预算仍240/240/80，不授生产、长期运行或旧额度复活。
 
+### 2026-09-22 原110受限恢复
+
+用户已采用[110一次恢复授权](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5775635612)，确认充值已处理；不查询账户或发探针。保持原账本/binding/锚点、240/240/80及全部旧失败。`continuous_recovery_110.py`只绑定110的HTTP402、无可用输出、终态和业务摘要；新claim消费一次机会，原件不改。新停止仍生效，D03不调用，至少39基础资源缺口暂缓决定。恢复实现/绑定/限定独审/离线入口检查完成后才能执行原业务请求，不能把授权登记写成已恢复。
+
 ## 0. 按任务选择阅读路径
 
 首次进入仓库时先判断任务，再读取对应的标准流程。`SOP.md` 是标准工作流的一级导航；专项文档负责提供具体事实和命令。

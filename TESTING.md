@@ -783,6 +783,10 @@ B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物�
 
 ### B13 新原生链与来源分组性能
 
+<!-- capability-anchor: CAPABILITY.continuous_recovery_110 -->
+
+`tests.vnext.test_continuous_recovery_110`与旧账本测试覆盖无授权停止、指定一次申领、原始文件/计数不变、重启/并发及申领中断、新停止保留、错误终态/摘要/模式/审批来源拒绝。`recovery-110-20260922/offline_wiring.py`用当前Enphase原业务工厂禁网验证402、受限新claim、原生成功及原成功复用，业务摘要必须与真实110相同；只计录制接线，不计真实结果。
+
 `tests.vnext.test_capacity_reference_contract`验证后继显式引用：未知/错类型/重复/歧义/跨单元引用、漏答、重签合同、旧109同类错误拒绝，以及原生Evidence和请求集合重建。`b13-strict-references-20260922/offline_material.py`禁网检验Enphase六组完整原生链及Ford十一组计划、代表性controller与漏单元失败；记录响应不计真实语义成功，耗时/结果以对应日志为准。
 
 2026-09-22：B13 native及program-role两个CI作业总时限均为30分钟，保留原步骤与断言。program-role单次本地完整计时604.545秒通过（隔离Python3.13.5、tokenizers0.22.2）；CI仍使用Python3.14，实际终态单独登记。证据见`docs/evidence/issue28_continuous/ci-capacity-timeouts-20260922/`。该调整不改变真实请求120秒限制。

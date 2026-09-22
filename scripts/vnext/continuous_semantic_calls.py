@@ -668,6 +668,11 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
              and ledger.binding['delegation_url'] == prepared.requirement['policy']['delegation_url']
              and ledger.binding['delegation_body_sha256'] == prepared.requirement['policy']['delegation_body_sha256']
              and ledger.binding['limits'] == [240,240,80], 'CONTINUOUS_LIVE_ALLOWANCE_CHANGED')
+        if prepared.requirement['policy'].get('recovery_110_policy_path'):
+            from .continuous_recovery_110 import authorization, read_authorization
+            need(request_fields.get('metric_id') in {'B13', 'D04'}, 'RECOVERY110_FOLLOWING_METRIC_FORBIDDEN')
+            need(read_authorization(ledger) == authorization(ledger=ledger, online=True),
+                 'RECOVERY110_LIVE_AUTHORIZATION_CHANGED')
         from .ai_adapter import api_key_environment_name
         import os
         need(bool(os.environ.get(api_key_environment_name(policy=policy),'').strip()),

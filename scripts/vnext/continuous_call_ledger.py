@@ -81,7 +81,12 @@ class CallLedger:
         need(len(paths)==len(claims), 'CONTINUOUS_LEDGER_CLAIM_SET_CHANGED')
         need([p.name for p in paths] == ['%04d' % (i+1) for i in range(len(paths))],
              'CONTINUOUS_LEDGER_SEQUENCE_CHANGED')
+        recovery = None
+        if (self.root/'recovery-110.json').exists():
+            from .continuous_recovery_110 import read_authorization
+            recovery = read_authorization(self)
         total = [0,0,0]; stopped = set(); requests = set(); rows = []
+        first_requests = {}; recovery_consumed = False; original_verified = False
         previous = None
         for path in paths:
             need(path.is_dir() and not path.is_symlink(), 'CONTINUOUS_LEDGER_SLOT_UNSAFE')
@@ -92,8 +97,20 @@ class CallLedger:
                  and intent['channel'] in {'PROVIDER','SEC'}, 'CONTINUOUS_LEDGER_INTENT_BINDING_CHANGED')
             previous = intent['intent_id']; channel = intent['channel']
             key = (channel,intent['request_digest'])
-            need(key not in requests, 'CONTINUOUS_LEDGER_DUPLICATE_REQUEST')
+            recovery_id = intent.get('recovery_authorization_id')
+            if recovery_id is not None:
+                need(recovery is not None and recovery_id == recovery['authorization_id']
+                     and original_verified and not recovery_consumed
+                     and key == ('PROVIDER', recovery['request_digest'])
+                     and first_requests.get(key) == recovery['original_ordinal']
+                     and stopped == {('PROVIDER', recovery['original_ordinal'])},
+                     'CONTINUOUS_RECOVERY_CLAIM_NOT_AUTHORIZED')
+                recovery_consumed = True
+                stopped.remove(('PROVIDER', recovery['original_ordinal']))
+            else:
+                need(key not in requests, 'CONTINUOUS_LEDGER_DUPLICATE_REQUEST')
             requests.add(key)
+            first_requests.setdefault(key, intent['ordinal'])
             terminal_path = path/'terminal.json'
             maximum = [1,1,0] if channel == 'PROVIDER' else [0,0,1]
             if terminal_path.exists():
@@ -106,34 +123,47 @@ class CallLedger:
                     from .canonical import sha256_file
                     need(sha256_file(path=resolve_repository_file(repo_root=path,repo_relative_path=relative)) == digest,
                          'CONTINUOUS_LEDGER_EVIDENCE_CHANGED:' + relative)
-                if terminal['stop_reason'] in _STOP: stopped.add(channel)
+                if recovery is not None and intent['ordinal'] == recovery['original_ordinal']:
+                    from .continuous_recovery_110 import validate_original
+                    validate_original(ledger=self, authorization=recovery, intent=intent, terminal=terminal, path=path)
+                    original_verified = True
+                if terminal['stop_reason'] in _STOP: stopped.add((channel, intent['ordinal']))
                 status = terminal['status']
             else:
                 # An admitted but interrupted execution may have reached the
                 # endpoint. It never silently releases its count or retries.
-                observed = maximum; stopped.add(channel); status = 'UNKNOWN_PENDING_RECONCILIATION'
+                observed = maximum; stopped.add((channel, intent['ordinal'])); status = 'UNKNOWN_PENDING_RECONCILIATION'
             total = [a+b for a,b in zip(total,observed)]
             rows.append({'ordinal':intent['ordinal'],'channel':channel,'status':status,'counts':observed})
         need(all(a<=b for a,b in zip(total,self.binding['limits'])), 'CONTINUOUS_TOTAL_COUNT_EXCEEDED')
-        return {'counts':total,'stopped_channels':sorted(stopped),'requests':requests,
+        need(recovery is None or original_verified, 'CONTINUOUS_RECOVERY_ORIGINAL_MISSING')
+        self._recovery_observation = (recovery, recovery_consumed, stopped)
+        return {'counts':total,'stopped_channels':sorted({channel for channel, _ in stopped}),'requests':requests,
                 'previous_intent_id':previous,'rows':rows}
 
     def claim(self, *, channel, request_digest, requirement, plan_id, purpose):
         state = self.snapshot()
         need(channel in {'PROVIDER','SEC'}, 'CONTINUOUS_CHANNEL_INVALID')
-        need(channel not in state['stopped_channels'], 'CONTINUOUS_CHANNEL_STOPPED:' + channel)
-        need((channel,request_digest) not in state['requests'], 'CONTINUOUS_UNCHANGED_REQUEST_REDRAW_FORBIDDEN')
+        recovery, consumed, stops = self._recovery_observation
+        recovering = (recovery is not None and not consumed and channel == 'PROVIDER'
+                      and request_digest == recovery['request_digest']
+                      and stops == {('PROVIDER', recovery['original_ordinal'])})
+        need(channel not in state['stopped_channels'] or recovering, 'CONTINUOUS_CHANNEL_STOPPED:' + channel)
+        need((channel,request_digest) not in state['requests'] or recovering, 'CONTINUOUS_UNCHANGED_REQUEST_REDRAW_FORBIDDEN')
         need(purpose in self.binding['purposes'], 'CONTINUOUS_PURPOSE_NOT_APPROVED')
         delta = [1,1,0] if channel == 'PROVIDER' else [0,0,1]
         need(all(a+b<=c for a,b,c in zip(state['counts'],delta,self.binding['limits'])),
              'CONTINUOUS_TOTAL_COUNT_EXHAUSTED')
         ordinal = len(state['rows'])+1
-        intent = _identified({'record_type':'CONTINUOUS_CALL_INTENT','ordinal':ordinal,
+        body = {'record_type':'CONTINUOUS_CALL_INTENT','ordinal':ordinal,
             'binding_id':self.binding['binding_id'],'previous_intent_id':state['previous_intent_id'],
             'channel':channel,'request_digest':request_digest,'plan_id':plan_id,'purpose':purpose,
             'requirement_id':requirement['requirement_id'],
             'requirement_closure_hash':requirement['requirement_closure_hash'],
-            'execution_mode':'LIVE' if self.live else 'RECORDED_TEST_ONLY'},'intent_id')
+            'execution_mode':'LIVE' if self.live else 'RECORDED_TEST_ONLY'}
+        if recovering:
+            body['recovery_authorization_id'] = recovery['authorization_id']
+        intent = _identified(body,'intent_id')
         path = self.root/'calls'/('%04d' % ordinal)
         # Separate append-only claim log detects a removed last slot as well
         # as middle gaps; a crash between writes rejects before further egress.
@@ -211,7 +241,12 @@ def live_ledger(*, requirement):
         'delegation_body_sha256':policy['delegation_body_sha256'],
         'root':policy['budget_root'],'limits':policy['maximum_additional_provider_paid_sec_calls'],
         'purposes':policy['scope']['purposes'],'execution_mode':'LIVE'}
-    return CallLedger(factory=_FACTORY,root=Path(body['root']),binding=_identified(body,'binding_id'),live=True)
+    ledger = CallLedger(factory=_FACTORY,root=Path(body['root']),binding=_identified(body,'binding_id'),live=True)
+    if policy.get('recovery_110_policy_path'):
+        from .continuous_recovery_110 import POLICY_PATH, install_live_authorization
+        need(policy['recovery_110_policy_path'] == POLICY_PATH, 'CONTINUOUS_RECOVERY_POLICY_UNSUPPORTED')
+        install_live_authorization(ledger=ledger, requirement=requirement)
+    return ledger
 
 
 def recorded_ledger(*, root, limits=(240,240,80)):
