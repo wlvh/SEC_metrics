@@ -2,7 +2,7 @@
 
 原目录、task/b06-new-source、同一Draft PR43，Issue级完整委托继续。读取实时HEAD/工作区、execution-state.json、review-5207290213/current-390.json和固定累计账本；局部修复/提交不是停点。
 
-已推HEAD **03b4c3cfacdcb3fa5d813eefff94c94f9f928b3c**。CI35002798921终态为10成功/1失败/1取消；来源发现新增加4 URL使旧总数断言失败，D04作业因15分钟总限时取消（checkout6分40秒、测试8分30秒）。原日志/取消/当前修复复验保存在ci-35002798921/。前次34955496714、34943286777均12/12成功，不覆盖后续代码。review5207290213为ChatGPT定向COMMENT，不是用户/全PR/生产批准。
+本轮起点已推HEAD **ed8bf11cbab76bc3d9b766d4b96d065a6cda10e6**（8346c32合并main af1984a）。本地122/122 fast通过；CI35245710633为11成功、capacity native15分钟与program-role20分钟超时。下述CI35002798921为历史记录。CI35002798921终态为10成功/1失败/1取消；来源发现新增加4 URL使旧总数断言失败，D04作业因15分钟总限时取消（checkout6分40秒、测试8分30秒）。原日志/取消/当前修复复验保存在ci-35002798921/。前次34955496714、34943286777均12/12成功，不覆盖后续代码。review5207290213为ChatGPT定向COMMENT，不是用户/全PR/生产批准。
 
 ## 已取得的真实结果
 
@@ -10,7 +10,7 @@ Ford、Pfizer FY2025 D04分别完成全部11组来源请求、原生结果/公�
 
 JPM A08 FY2025完成正常入口10次真实SEC刷新、原生候选/历史写入；相同固定实现重复触发保留原成功、0调用。它是已有坐标更新，不计第三个新增坐标。见ordinary-refresh-cycle/real-jpm-update/。
 
-Ford FY2025 D04在03b4/6ccf下通过正常入口对原11成功响应完整当前复验、登记及原生Run/公共行，1293.892秒，0新调用。原测试环境误挡必要本地Git命令的失败历史保留；独立冻结6ccf副本继续验证相同输入重复触发。见registered-native-update/current-real-ford-update-construction-session.json。
+Ford FY2025 D04在03b4/6ccf下通过正常入口对原11成功响应完整当前复验、登记及原生Run/公共行，1293.892秒，0新调用。原测试环境误挡必要本地Git命令的失败历史保留；独立冻结6ccf副本相同输入重复触发已通过，621.223秒、原Run复用、无新candidate、0/0/0。完整归档与原并行总账断言归因见registered-native-update/ford-repeat-real-material/README.md。见registered-native-update/current-real-ford-update-construction-session.json。
 
 ## 当前实际代码与验证
 
@@ -20,7 +20,7 @@ B13完整原件量的职责由程序验证，剩余来源仍须完整模型响�
 
 正常来源与运行政策已分开读取，有限新输入执行、ordinal计数和新年报CompanyFacts发现已接入。Enphase保存来源/6录制响应完整更新生命周期通过；小新财年通过3录制SEC/1录制WB3/Run/重复/失败保留/恢复。它们的证据不计真实坐标。
 
-私有发布已实际通过stage/publish、选中D04与历史Marriott B01原生/authority读取、rollback/restore。注入指针写后收据写前故障后，恢复复现独占锁内再取共享锁的自锁。修复已实测旧锁超时、新正确active通过及foreign拒绝，新的完整固定链仍在执行；未称恢复完成。旧R3部分历史只有CSV/evidence，不能伪造原生Run。116旧语义导出/78写边界退出准备通过，实际旧入口和active不改。
+私有发布已实际通过stage/publish、选中D04与历史Marriott B01原生/authority读取、rollback/restore。注入指针写后收据写前故障后，恢复复现独占锁内再取共享锁的自锁。修复已实测旧锁超时、新正确active通过及foreign拒绝，新的完整固定链已PASS，包含指针后中断恢复和损坏镜像修复；private-publication-material/summary.json与restore.log保存PASS_CURRENT_PRIVATE_PUBLICATION_AND_READERS及6865文件VERIFIED_RESTORE，0/0/0。旧R3部分历史只有CSV/evidence，不能伪造原生Run。116旧语义导出/78写边界退出准备通过，实际旧入口和active不改。
 
 ## 来源和审阅依赖
 
@@ -39,3 +39,9 @@ D03的6e5来源事实有效独立报告尚未找到；向既有ChatGPT审阅任�
 ## 最新B13真实验证
 
 109为Enphase V6完整任务首组，原模型将真实引用834放入不包含它的另一个unit，检查器以B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE拒绝；后五组未执行，Ford未开始。全部5unit有响应不等于引用归属正确。原请求/响应/收据/FAILED保持，0新增B13坐标。只进行错误归属的离线诊断与严格引用合同评估，不修改提示重新抽样。
+
+## 2026-09-22执行约束与下一步
+
+同一分支只追加提交；不操作PR52/Issue47，不合入历史分支。共享接口默认行为和绑定字节保持兼容，确需改动登记文件/函数并使用[shared-with-#47]提交标记。长命令nohup写日志、完成后一次tail；已通过大测试不复跑、不重新打包。子代理仅按最新用户限定用途、查重与单实例登记规则使用。
+
+依次：归档上述两个完成目录；修capacity program-role CI到30分钟并单次本地计时；离线诊断109及严格引用合同后Enphase6组、再Ford；D04剩余8坐标/71请求；复用已通过固定私有链，推进退出准备。B13总剩余17，现有余180/180/31；D03不调用，+38和审阅依赖仍待。
