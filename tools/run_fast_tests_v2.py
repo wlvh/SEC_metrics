@@ -219,6 +219,12 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # default is the same margin that was judged too thin above, so this keeps
     # an override, at the size the current cases actually need.
     "tests.vnext.test_historical_coverage": 480,
+    # 72 cases at 131 seconds measured together, up from 62 at roughly 100: the
+    # chain now runs three more times for the release-nothing cases and once in
+    # a child with no test package on its path. 131 against the 240 default is
+    # the same margin judged too thin twice above, and this module is the one
+    # whose timeout would read as "the acquisition chain broke".
+    "tests.vnext.test_historical_sec_session": 480,
 }
 
 

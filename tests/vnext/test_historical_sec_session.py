@@ -14,18 +14,23 @@ in the recorded path opens a socket.
 """
 from pathlib import Path
 from unittest.mock import patch
+import ast
 import atexit
 import hashlib
+import importlib.util
+import inspect
 import json
 import shutil
 import socket
+import subprocess
+import sys
 import tempfile
+import types
 import unittest
 
 from vnext.canonical import content_hash, strict_json_file
 from vnext.continuous_sec_acquisition import validate_acquisition_checkpoint
 from vnext.historical_sec_session import (HistoricalSessionError,
-                                          unclassified_verification_cases,
                                           install_historical_source_inputs,
                                           live_historical_session,
                                           recorded_historical_session,
@@ -39,6 +44,19 @@ from vnext.historical_source_acquisition import (POLICY_PATH, DELEGATION_TYPE,
                                                  historical_dependency,
                                                  request_is_in_scope)
 from vnext.normal_source_authority import MANIFEST_PATH, ROOT
+
+
+def _load_tool(name, relative):
+    """Import a ``tools/`` entry point by path; the directory is not a package."""
+    spec = importlib.util.spec_from_file_location(name, ROOT / relative)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+# The build side. Tests may import it; the business module may not, which is
+# the whole point of it living here.
+WIRING = _load_tool("vnext_historical_wiring", "tools/vnext_historical_wiring.py")
 
 # A declared Marriott dependency: the prior annual primary accession index that
 # B02 reads. Taken from the planner's own output, not written by hand.
@@ -356,6 +374,57 @@ class AGrantMustBindToAWiringReceiptThatIsStillTrue(unittest.TestCase):
             verify_offline_wiring(receipt_path=relative)
         self.assertIn("ISSUE_47_OFFLINE_WIRING_EVIDENCE_CHANGED", str(caught.exception))
         self.assertIn("historical_sec_session.py", str(caught.exception))
+
+    def test_the_receipt_accounts_for_the_suite_as_it_stands_now(self):
+        # What the hand-maintained selector list used to be for, moved to
+        # where it can be derived: the record says which cases the suite
+        # declared, and this compares that against reading the suite.
+        summary = WIRING.check(receipt_path=self.RECEIPT)
+        self.assertEqual("OFFLINE_WIRING_CURRENT", summary["status"])
+        receipt = strict_json_file(path=ROOT / self.RECEIPT)
+        run = receipt["verification_run"]
+        self.assertEqual(WIRING.declared_cases(), sorted(run["classes_declared"]))
+        self.assertEqual(sorted(WIRING.RECEIPT_DEPENDENT),
+                         sorted(run["classes_excluded"]))
+        self.assertGreaterEqual(run["tests_run"], len(run["classes_run"]))
+
+    def test_a_run_that_covered_only_part_of_the_suite_is_refused(self):
+        # Load-bearing: this is the defect the previous version shipped - a
+        # green run that excluded every regression the round had added. A
+        # verifier that only read the pass flag accepts it.
+        original = strict_json_file(path=ROOT / self.RECEIPT)
+        partial = {k: v for k, v in original.items() if k != "receipt_id"}
+        run = dict(original["verification_run"])
+        dropped = sorted(run["classes_run"])[0]
+        run["classes_run"] = [n for n in run["classes_run"] if n != dropped]
+        partial["verification_run"] = run
+        relative = "docs/evidence/issue47_history/acquisition-wiring/_partial.json"
+        target = ROOT / relative
+        self.addCleanup(target.unlink, missing_ok=True)
+        target.write_text(json.dumps(_seal(partial, "receipt_id")), encoding="utf-8")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            verify_offline_wiring(receipt_path=relative)
+        self.assertIn("ISSUE_47_OFFLINE_WIRING_CASES_NOT_ACCOUNTED_FOR",
+                      str(caught.exception))
+        self.assertIn(dropped, str(caught.exception))
+
+    def test_a_case_counted_as_both_run_and_excluded_is_refused(self):
+        # Otherwise the partition check above is satisfiable by moving a name
+        # into both lists, which would let an excluded class be reported as
+        # covered.
+        original = strict_json_file(path=ROOT / self.RECEIPT)
+        doubled = {k: v for k, v in original.items() if k != "receipt_id"}
+        run = dict(original["verification_run"])
+        run["classes_excluded"] = list(run["classes_excluded"]) + [run["classes_run"][0]]
+        doubled["verification_run"] = run
+        relative = "docs/evidence/issue47_history/acquisition-wiring/_doubled.json"
+        target = ROOT / relative
+        self.addCleanup(target.unlink, missing_ok=True)
+        target.write_text(json.dumps(_seal(doubled, "receipt_id")), encoding="utf-8")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            verify_offline_wiring(receipt_path=relative)
+        self.assertIn("ISSUE_47_OFFLINE_WIRING_CASES_NOT_ACCOUNTED_FOR",
+                      str(caught.exception))
 
     def test_a_receipt_claiming_success_it_did_not_have_is_refused(self):
         original = strict_json_file(path=ROOT / self.RECEIPT)
@@ -957,30 +1026,219 @@ class ATerminalMustAgreeWithTheReceiptItNames(unittest.TestCase):
                           "the unmodified chain must still resolve")
 
 
-class EveryVerificationCaseMustBeClassified(unittest.TestCase):
-    """A selector list with no coverage check drifts, and drift is invisible.
+class TheSuiteIsReadNotListed(unittest.TestCase):
+    """The builder must find the cases, not be told them.
 
-    The receipt attested a run of eight classes that was never revisited when
-    sixteen new cases arrived, so it excluded every regression that round added
-    - thirteen of which do not read the receipt at all.
+    Reproduced on the previous version: the receipt attested a run of eight
+    classes, written by hand and never revisited when sixteen new cases
+    arrived, so it excluded every regression that round had just added -
+    thirteen of which do not read the receipt at all. A coverage check over
+    the list was the first fix; reading the module instead is the second, and
+    it also takes the ``unittest`` import out of the business module.
     """
 
-    def test_no_test_class_is_left_out_of_both_sets(self):
-        self.assertEqual([], unclassified_verification_cases())
+    def test_every_declared_case_lands_in_exactly_one_phase(self):
+        declared = WIRING.declared_cases()
+        first, excluded = WIRING.split_cases(declared=declared)
+        self.assertEqual(sorted(set(first) | set(excluded)), sorted(declared))
+        self.assertEqual([], sorted(set(first) & set(excluded)))
+        self.assertIn(type(self).__name__, first,
+                      "this very class must be one the builder runs")
 
-    def test_the_excluded_set_is_only_what_reads_the_receipt(self):
-        from vnext.historical_sec_session import RECEIPT_DEPENDENT_SELECTORS
-        names = {s.rsplit(".", 1)[1] for s in RECEIPT_DEPENDENT_SELECTORS}
-        self.assertEqual({"AGrantMustBindToAWiringReceiptThatIsStillTrue",
-                          "DeletingEvidenceMustNotReduceTheCheck"}, names)
+    def test_the_collector_agrees_with_an_independent_reading_of_the_file(self):
+        # The collector introspects the imported module; this parses the file.
+        # Two derivations, so a collector quietly narrowed to a subset - the
+        # exact shape of the defect this replaced - disagrees with the source
+        # instead of producing a smaller receipt that is self-consistent.
+        source = ast.parse((ROOT / "tests/vnext/test_historical_sec_session.py")
+                           .read_text(encoding="utf-8"))
+        from_text = sorted(
+            node.name for node in source.body
+            if isinstance(node, ast.ClassDef)
+            and any(isinstance(base, ast.Attribute) and base.attr == "TestCase"
+                    for base in node.bases))
+        self.assertEqual(from_text, WIRING.declared_cases())
+        self.assertGreater(len(from_text), 1)
 
-    def test_this_round_s_regressions_are_in_the_builder_s_run(self):
-        from vnext.historical_sec_session import VERIFICATION_SELECTORS
-        names = {s.rsplit(".", 1)[1] for s in VERIFICATION_SELECTORS}
-        for required in ("AnAllowanceMustBeVerifiedNotMerelyPresent",
-                         "ATerminalFileIsNotAnOutcome",
-                         "BelongingToTheTaskIsNotNeedingAFetch"):
-            self.assertIn(required, names)
+    def test_a_new_case_needs_no_edit_in_any_list(self):
+        # The point of reading over listing. A class that exists only in this
+        # test is picked up, and lands in the phase that runs, without the
+        # builder or the business module naming it.
+        module = types.ModuleType("tests.vnext._synthetic_suite")
+
+        class AnOrdinaryNewRegression(unittest.TestCase):
+            pass
+
+        AnOrdinaryNewRegression.__module__ = module.__name__
+        module.AnOrdinaryNewRegression = AnOrdinaryNewRegression
+        module.BorrowedFromElsewhere = TheSuiteIsReadNotListed
+        with patch.object(WIRING.importlib, "import_module", return_value=module):
+            declared = WIRING.declared_cases("tests.vnext._synthetic_suite")
+        self.assertEqual(["AnOrdinaryNewRegression"], declared,
+                         "a class this module did not declare is not its case")
+        first, _ = WIRING.split_cases(declared=declared + list(WIRING.RECEIPT_DEPENDENT))
+        self.assertIn("AnOrdinaryNewRegression", first)
+
+    def test_the_business_module_names_no_test_case_and_imports_no_harness(self):
+        # Criterion: an ordinary new test must not require editing business
+        # code. The strongest form of that is that business code contains no
+        # case name at all, which this asserts against every declared name.
+        source = (ROOT / "scripts/vnext/historical_sec_session.py").read_text(
+            encoding="utf-8")
+        for name in WIRING.declared_cases():
+            self.assertNotIn(name, source)
+        # Imports, not words. The module still names the suite file, because
+        # it hashes it as evidence, and still explains in prose what used to
+        # live there; neither makes it depend on a test package. An import
+        # would, including one hidden inside a function, so the whole tree is
+        # walked rather than the top of the file.
+        imported = set()
+        for node in ast.walk(ast.parse(source)):
+            if isinstance(node, ast.Import):
+                imported.update(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom):
+                imported.add(node.module or "")
+        for forbidden in ("unittest", "importlib", "inspect", "subprocess"):
+            self.assertNotIn(forbidden, imported)
+        self.assertEqual([], [name for name in imported
+                              if name.split(".")[0] == "tests"])
+
+    def test_the_excluded_names_are_exactly_those_that_read_the_receipt(self):
+        # The one hand-written list, checked against what the classes do
+        # rather than against another list. Two directions fail here: a class
+        # moved into the exclusion without reading the receipt stops running
+        # and nothing else notices, and a class that does read it, left in
+        # phase one, makes the artifact unrebuildable after any change to the
+        # tree - because phase one runs before the new receipt is installed.
+        module = importlib.import_module(WIRING.SUITE_MODULE)
+        installed = WIRING.RECEIPT_PATH.rsplit("/", 1)[1]
+        reads = {name for name in WIRING.declared_cases()
+                 if installed in inspect.getsource(getattr(module, name))}
+        self.assertEqual(set(WIRING.RECEIPT_DEPENDENT), reads)
+
+    def test_an_exclusion_naming_no_case_is_refused(self):
+        # Renaming an excluded class would otherwise shrink the exclusion set
+        # to nothing and look like an improvement, while the class it named
+        # stopped running in either phase.
+        with self.assertRaises(WIRING.WiringBuildError) as caught:
+            WIRING.split_cases(declared=["Something"],
+                               receipt_dependent=("RenamedAwhileAgo",))
+        self.assertIn("ISSUE_47_WIRING_EXCLUSION_NAMES_NO_CASE", str(caught.exception))
+
+
+class TheBusinessModuleLoadsWhereNoTestPackageExists(unittest.TestCase):
+    """A delivery runtime has scripts/ and no tests/, and must still verify.
+
+    This is what 200 lines of selector lists, an ``importlib`` walk and a
+    ``unittest`` subprocess inside the business module cost: the module could
+    not honestly be said to load without the test package, and the check that
+    gates a live grant lived in the same file as the machinery that runs the
+    tests. Asserted by running a child whose path holds scripts/ only.
+    """
+
+    SOURCE = """
+import json
+import sys
+# Not a wiped path - the standard library still has to be there, or the child
+# fails for a reason that has nothing to do with the question. What is removed
+# is every entry that could make the repository root importable; the script
+# lives in a scratch directory, so sys.path[0] is that directory.
+sys.path[:] = [p for p in sys.path if p not in (%r, "", ".")]
+sys.path.insert(0, %r)
+try:
+    import tests  # noqa: F401
+    print(json.dumps({"test_package_importable": True}))
+    raise SystemExit(0)
+except ImportError:
+    pass
+from vnext.historical_sec_session import verify_offline_wiring
+receipt = verify_offline_wiring(receipt_path=%r)
+print(json.dumps({"test_package_importable": False,
+                  "receipt_id": receipt["receipt_id"],
+                  "modules": sorted(m for m in sys.modules if m.startswith("tests"))}))
+"""
+
+    def test_the_gate_still_answers_with_no_tests_directory_on_the_path(self):
+        receipt_path = ("docs/evidence/issue47_history/acquisition-wiring/"
+                        "offline-wiring-receipt.json")
+        scratch = Path(tempfile.mkdtemp(prefix="issue47-delivery-"))
+        self.addCleanup(shutil.rmtree, scratch, ignore_errors=True)
+        script = scratch / "delivery.py"
+        script.write_text(
+            self.SOURCE % (str(ROOT), str(ROOT / "scripts"), receipt_path),
+            encoding="utf-8")
+        done = subprocess.run([sys.executable, str(script)], cwd=str(scratch),
+                              capture_output=True, encoding="utf-8", timeout=600)
+        self.assertEqual(0, done.returncode, done.stderr[-2000:])
+        observed = json.loads(done.stdout)
+        self.assertIs(False, observed["test_package_importable"],
+                      "the child must not be able to reach the test package")
+        self.assertEqual([], observed["modules"])
+        self.assertEqual(strict_json_file(path=ROOT / receipt_path)["receipt_id"],
+                         observed["receipt_id"])
+
+
+class AFailedVerificationReleasesNothing(unittest.TestCase):
+    """One operation: a run that does not pass must leave no usable artifact.
+
+    The second phase has to read the installed file, so the install happens
+    before it passes. What makes that safe is the restore, and a restore is
+    exactly the kind of code that is written once and never exercised. Both
+    directions are asserted: an existing artifact comes back byte for byte,
+    and where there was none, none is left.
+    """
+
+    PHASE_ONE = {"tests_run": 7, "failures": 0, "errors": 0,
+                 "return_code": 0, "passed": True, "tail": ""}
+    PHASE_TWO = {"tests_run": 0, "failures": 1, "errors": 0,
+                 "return_code": 1, "passed": False, "tail": "phase two said no"}
+
+    def _runner(self):
+        outcomes = [self.PHASE_ONE, self.PHASE_TWO]
+
+        def runner(names):
+            self.calls.append(list(names))
+            return outcomes[len(self.calls) - 1]
+
+        self.calls = []
+        return runner
+
+    def _scratch_receipt_path(self, name):
+        relative = "docs/evidence/issue47_history/acquisition-wiring/" + name
+        self.addCleanup((ROOT / relative).unlink, missing_ok=True)
+        return relative
+
+    def test_an_existing_receipt_is_restored_byte_for_byte(self):
+        relative = self._scratch_receipt_path("_prior.json")
+        before = b'{"this": "is the receipt that was already installed"}\n'
+        (ROOT / relative).write_bytes(before)
+        with self.assertRaises(WIRING.WiringBuildError) as caught:
+            WIRING.build_and_install(receipt_path=relative, runner=self._runner())
+        self.assertIn("ISSUE_47_WIRING_SECOND_PHASE_DID_NOT_PASS", str(caught.exception))
+        self.assertEqual(before, (ROOT / relative).read_bytes())
+        self.assertEqual(2, len(self.calls), "both phases must have been reached")
+
+    def test_where_there_was_none_none_is_left(self):
+        relative = self._scratch_receipt_path("_fresh.json")
+        self.assertFalse((ROOT / relative).exists())
+        with self.assertRaises(WIRING.WiringBuildError):
+            WIRING.build_and_install(receipt_path=relative, runner=self._runner())
+        self.assertFalse((ROOT / relative).exists(),
+                         "a failed run must not release an artifact")
+
+    def test_a_first_phase_failure_never_reaches_the_file(self):
+        relative = self._scratch_receipt_path("_neverwritten.json")
+        self.calls = []
+
+        def runner(names):
+            self.calls.append(list(names))
+            return self.PHASE_TWO
+
+        with self.assertRaises(WIRING.WiringBuildError) as caught:
+            WIRING.build_and_install(receipt_path=relative, runner=runner)
+        self.assertIn("ISSUE_47_WIRING_FIRST_PHASE_DID_NOT_PASS", str(caught.exception))
+        self.assertEqual(1, len(self.calls))
+        self.assertFalse((ROOT / relative).exists())
 
 
 class TheApprovalAuthorityCannotComeFromTheFileBeingVerified(unittest.TestCase):

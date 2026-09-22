@@ -348,3 +348,75 @@ The session now records the slots it claims and reports from those.
 total, which a caller must not add to anything. A case drives the interleaving
 directly - two sessions on one ledger, the other one captures, ours refuses -
 and requires ours to report zero while the shared total has provably moved.
+
+## The test machinery left the business module, and the artifact became one command
+
+Six times in this issue the receipt went stale, and each time the cause was
+the same shape: producing it was a sequence a person had to get right. Two
+selector lists lived inside `scripts/vnext/historical_sec_session.py` and had
+to be edited whenever the suite gained a class; the builder ran through the
+acquisition CLI into a file outside the checkout; that file was copied to its
+committed path by hand; and the commits had to be ordered so the copy landed
+after the last edit to anything it hashed. 200 of that module's 894 lines were
+`importlib`, `inspect`, `unittest` and `subprocess` - a business module that
+could not honestly be said to load in a runtime with no test package, while
+the check that gates a live grant sat in the same file.
+
+Three things had to become true, and each is asserted rather than described.
+
+**The business module loads where there is no test package.** It now holds
+`execute_recorded_chain` (the chain), `seal_wiring_receipt` (the record) and
+`verify_offline_wiring` (the gate), and imports none of `unittest`,
+`importlib`, `inspect` or `subprocess` - asserted over the module's whole
+parse tree, including function-local imports, not by grepping for the words,
+because the module still names the suite file (it hashes it) and still
+explains in prose what used to live there.
+`TheBusinessModuleLoadsWhereNoTestPackageExists` runs a child whose `sys.path`
+has the repository root removed and `scripts/` added, requires `import tests`
+to fail there, and then requires the gate to verify the committed receipt
+anyway.
+
+**An ordinary new test requires no edit to any list.** `declared_cases()` in
+`tools/vnext_historical_wiring.py` reads the suite module and returns the
+`TestCase` subclasses it declares - inherited ones do not count, or the
+receipt's accounting would disagree with what ran. The one hand-written list
+left is `RECEIPT_DEPENDENT`, and it is checked against what the classes do:
+a class is excluded exactly when its source names the installed receipt. That
+check fails in both directions - a class parked in the exclusion without
+reading the receipt stops running and nothing notices, and a class that does
+read it, left in phase one, makes the artifact unrebuildable after any change,
+because phase one runs before the new receipt is installed.
+
+**From a fixed candidate to a usable artifact is one determinate operation.**
+`python3 tools/vnext_historical_wiring.py` drives the chain, reads the suite,
+runs everything that does not read the receipt, seals, installs at the
+committed path, then runs the receipt-dependent classes against the installed
+file. A failure anywhere restores what was installed before, byte for byte,
+and exits non-zero, so a failed run releases nothing. That is not only
+asserted in three cases; it was observed on the first real run of this tool,
+which failed phase two on a defect in one of the new cases and left the
+committed receipt byte-identical to `HEAD`. `--check` answers the cheaper
+question - is the installed artifact still true of this tree, and does it
+still account for the suite as it stands - without rebuilding.
+
+What the verifier gained rather than lost. It used to compare the receipt's
+selectors against a literal list in the same module, which is both the reason
+an ordinary test was an edit to business code and something unavailable in a
+runtime with no test package. It now checks the accounting as a property of
+the record: `classes_run` and `classes_excluded` must partition
+`classes_declared`, with no overlap and a non-empty run. A green run that
+covered nine of twenty-one classes - the defect the previous version shipped -
+is refused by name. The collector that produced those three sets is itself in
+`REQUIRED_WIRING_EVIDENCE`, so a builder weakened to declare less changes its
+own bytes and the grant falls with it; and the collector is cross-checked in
+the suite against a second, independent derivation that parses the test file
+rather than introspecting the imported module.
+
+What this does not fix. A receipt is still a record of a run, so a builder
+corrupted and then re-run produces a smaller receipt that is self-consistent;
+what the hashes establish is that the artifact on disk corresponds to this
+builder and this suite, which is the same property `mint` has and not a
+stronger one. The candidate-identity check is unchanged: editing any hashed
+file still invalidates the receipt. What changed is that restoring it is one
+command instead of five steps, so the discipline is enforceable rather than
+remembered.

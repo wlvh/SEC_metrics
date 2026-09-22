@@ -612,90 +612,109 @@ class HistoricalSecSession:
 
 WIRING_TYPE = "ISSUE_47_SEC_ACQUISITION_OFFLINE_WIRING"
 # Fixed and required, not whatever the receipt happens to list. Measured
-# against the previous version: a receipt carrying ``evidence: {}`` passed,
+# against an earlier version: a receipt carrying ``evidence: {}`` passed,
 # because the loop that re-hashes each named file simply ran zero times. A
-# check that switches off when its inputs are deleted is not a check.
+# check that switches off when its inputs are deleted is not a check. The
+# builder is in the set for the same reason the suite is: it decides which
+# cases run, so a builder weakened to run fewer of them must invalidate the
+# receipt it produced rather than silently keep conferring the grant.
 REQUIRED_WIRING_EVIDENCE = (
     "scripts/vnext/historical_sec_session.py",
     "scripts/vnext/historical_source_acquisition.py",
     "tests/vnext/test_historical_sec_session.py",
     "tools/vnext_historical_sec.py",
+    "tools/vnext_historical_wiring.py",
     "docs/evidence/issue47_history/acquisition-wiring/fault-injections.json",
 )
-# The classes the builder runs. The receipt-verifying class is deliberately
-# absent: it checks the receipt this builder is producing, so including it
-# would make the receipt's own evidence circular. Naming the exclusion is the
-# point - a builder that quietly ran a subset would look identical.
-_SUITE = "tests.vnext.test_historical_sec_session."
-# Everything the builder can honestly run, which is every class that does not
-# read the receipt being produced. The previous list named eight classes and
-# was never revisited when sixteen new cases arrived, so the receipt attested a
-# run that excluded every regression the round had just added - thirteen of
-# which have nothing to do with the receipt. A selector set that is a literal
-# with no coverage check drifts silently; ``unclassified_verification_cases``
-# below turns that drift into a failure.
-VERIFICATION_SELECTORS = tuple(_SUITE + name for name in (
-    "TheApprovalAuthorityCannotComeFromTheFileBeingVerified",
-    "ThisInvocationsCallCountIsNotTheLedgerDelta",
-    "AGrantMustComeFromAnApprovalNotFromTwoLocalFiles",
-    "ATerminalMustAgreeWithTheReceiptItNames",
-    "EveryVerificationCaseMustBeClassified",
-    "TheScopeGateMustPassTheRealDeclaration",
-    "AnAllowanceMustBeVerifiedNotMerelyPresent",
-    "ATerminalFileIsNotAnOutcome",
-    "BelongingToTheTaskIsNotNeedingAFetch",
-    "TheChainProducesASourceTheExistingReaderAccepts",
-    "TheGuaranteeComesFromTheFrozenValidator",
-    "TheSessionActuallyRoutesThroughTheFrozenValidator",
-    "TheGateRefusesWhatNothingDeclared",
-    "TheCountIsCumulativeAndCountsFailures",
-    "TheGrantedPathIsSeparateFromTheTestPath",
-    "TheRecordedPathOpensNoSocket",
-    "TheInstallerCarriesTheRuleInputsItClaims",
-))
-# These read the receipt this builder produces, so running them inside it would
-# make the evidence circular. They are named, with the reason, rather than
-# quietly absent - the whole defect above was an absence nobody could see.
-RECEIPT_DEPENDENT_SELECTORS = tuple(_SUITE + name for name in (
-    "AGrantMustBindToAWiringReceiptThatIsStillTrue",
-    "DeletingEvidenceMustNotReduceTheCheck",
-))
 
 
-def unclassified_verification_cases():
-    """Test classes in the suite that neither list accounts for.
+def execute_recorded_chain(*, root, response):
+    """Drive the acquisition chain offline once and report what happened.
 
-    A new class must be put in one of the two sets deliberately. Returning them
-    rather than raising lets a test report the names, which is what makes the
-    next omission visible instead of silent.
+    Gate, scope, claim, save, verified append, immutable proof, receipt,
+    terminal, frozen checkpoint replay and installation, in a single pass over
+    a recorded response. This is the business half of the wiring evidence and
+    it is all of that evidence this module owns.
+
+    Choosing, running and counting test cases used to live here too: two
+    hand-maintained selector lists, a coverage check over them and a
+    ``unittest`` subprocess, 200 lines that made this module unloadable
+    wherever the test package is absent and made every ordinary new test an
+    edit to business code. That work is now in
+    ``tools/vnext_historical_wiring.py``, which reads the suite rather than
+    listing it.
     """
-    import importlib
-    import inspect
-    import sys
-    import unittest
-    # The repository root, because the builder runs from a CLI whose path holds
-    # scripts/ only. Enumerating the suite is the whole job of this function,
-    # so it makes the suite importable rather than reporting "nothing found",
-    # which would read as "everything is classified".
-    if str(ROOT) not in sys.path:
-        sys.path.insert(0, str(ROOT))
-    module = importlib.import_module(VERIFICATION_SELECTORS[0].rsplit(".", 1)[0])
-    declared = {name for name, value in inspect.getmembers(module, inspect.isclass)
-                if issubclass(value, unittest.TestCase) and value.__module__ == module.__name__}
-    accounted = {selector.rsplit(".", 1)[1]
-                 for selector in VERIFICATION_SELECTORS + RECEIPT_DEPENDENT_SELECTORS}
-    return sorted(declared - accounted)
+    from .ordinary_source_authority import checkpoint_installation
+    session = recorded_historical_session(root=Path(root), response=response)
+    captured = session.capture(company_id=WIRING_COMPANY, url=WIRING_URL)
+    _need(captured["status"] == "SUCCEEDED", "ISSUE_47_OFFLINE_WIRING_CAPTURE_FAILED")
+    checkpoint, paths = checkpoint_installation(source_root=session.data_root)
+    _need(checkpoint["checkpoint_id"] == captured["checkpoint_id"] and bool(paths),
+          "ISSUE_47_OFFLINE_WIRING_INSTALLATION_FAILED")
+    return {"capture_status": captured["status"],
+            "execution_mode": session.ledger.mode,
+            "checkpoint_id": checkpoint["checkpoint_id"],
+            "installed_source_paths": len(paths),
+            "calls": session.calls_this_session()}
+
+
+def seal_wiring_receipt(*, chain, verification_run):
+    """Seal a measured chain and a measured test run into one record.
+
+    Neither half is decided here: ``chain`` is what the pass above returned
+    and ``verification_run`` is what the builder observed a separate process
+    do. An earlier version wrote ``frozen_validator_routing_verified: true``
+    and ``fault_injections_caught: true`` having run neither, which is the
+    reason both are now outcomes rather than fields. Fault injections are
+    still not claimed in this record at all - an injection edits the source
+    and re-runs, so no single process can perform one - they are recorded in
+    the file this receipt hashes.
+    """
+    _need(chain["capture_status"] == "SUCCEEDED" and chain["calls"] == [0, 0, 0],
+          "ISSUE_47_OFFLINE_WIRING_CHAIN_DID_NOT_SUCCEED")
+    evidence = {relative: sha256_file(path=ROOT / relative)
+                for relative in REQUIRED_WIRING_EVIDENCE}
+    return _sealed({"record_type": WIRING_TYPE, "schema_version": 2,
+                    "requirement_id": REQUIREMENT_ID, "calls": [0, 0, 0],
+                    "chain_executed_over_recorded_responses": True,
+                    "execution_mode": chain["execution_mode"],
+                    "capture_status": chain["capture_status"],
+                    "installed_source_paths": chain["installed_source_paths"],
+                    "verification_run": verification_run,
+                    "fault_injections_recorded_in": (
+                        "docs/evidence/issue47_history/acquisition-wiring/"
+                        "fault-injections.json, hashed by this receipt"),
+                    "checkpoint_validated_by": (
+                        "continuous_sec_acquisition.validate_acquisition_checkpoint, "
+                        "frozen under issue_28_v14 and not editable from this issue"),
+                    "what_that_validator_does_not_prove": (
+                        "that the grant is valid, that the request is in scope, that "
+                        "the cumulative count is intact, that an unknown outcome stops "
+                        "the channel, or that a stale snapshot is refreshed - those are "
+                        "this module's own checks"),
+                    "downstream_reader_accepted": True,
+                    "real_sec_credit": False, "production_authorized": False,
+                    "evidence": evidence}, "receipt_id")
 
 
 def verify_offline_wiring(*, receipt_path):
     """Refuse a live session unless the chain was exercised offline first.
 
     Same guarantee Issue #28's policy carries through
-    ``sec_wiring_receipt_path``. Two things the previous version did not do:
+    ``sec_wiring_receipt_path``. Three things an earlier version did not do:
     the evidence set must be exactly ``REQUIRED_WIRING_EVIDENCE``, so dropping
-    a file from the receipt drops the grant rather than the check; and the
+    a file from the receipt drops the grant rather than the check; the
     acceptance claim must be a recorded test outcome rather than a boolean the
-    builder wrote about itself.
+    builder wrote about itself; and the run must account for every case the
+    suite declared, so a run that quietly covered a subset is refused.
+
+    What it deliberately does not do is name the cases. Comparing against a
+    literal list here is what made an ordinary new test an edit to this file,
+    and it is unavailable anyway in a runtime that has no test package. The
+    accounting is checked as a property of the record - run and excluded
+    partition declared, with no overlap - and the builder that produced those
+    three sets is itself one of the hashed files, so a builder weakened to
+    declare less changes its own bytes and the grant falls.
     """
     _need(type(receipt_path) is str and receipt_path,
           "ISSUE_47_OFFLINE_WIRING_PATH_REQUIRED")
@@ -717,97 +736,38 @@ def verify_offline_wiring(*, receipt_path):
         _need(sha256_file(path=resolve_repository_file(
             repo_root=ROOT, repo_relative_path=relative)) == digest,
             "ISSUE_47_OFFLINE_WIRING_EVIDENCE_CHANGED:" + relative)
-    run = receipt["verification_run"]
-    _need(list(run.get("selectors", [])) == list(VERIFICATION_SELECTORS)
-          and list(run.get("excluded", [])) == list(RECEIPT_DEPENDENT_SELECTORS)
-          and run.get("unclassified_cases") == []
-          and run["passed"] is True and run["failures"] == 0
-          and run["errors"] == 0 and run["tests_run"] > 0
-          and run.get("return_code") == 0,
-          "ISSUE_47_OFFLINE_WIRING_VERIFICATION_RUN_DID_NOT_PASS:" + str(run)[:160])
+    _verify_case_accounting(run=receipt["verification_run"])
     return receipt
 
 
-def _run_verification_suite():
-    """Run the suite in a fresh process and report what happened.
+def _verify_case_accounting(*, run):
+    """The run must have covered everything the suite declared, and passed.
 
-    The builder used to write ``frozen_validator_routing_verified: true`` and
-    ``fault_injections_caught: true`` unconditionally, having run neither. A
-    file hash proves which version a test file is, never that the version was
-    executed and passed.
-
-    A subprocess rather than an in-process loader: it is the same command a
-    person runs, it starts from the repository root so the test package is
-    importable, and it cannot be influenced by whatever this process has
-    already imported.
+    Both halves matter and they fail differently. A run that passed but
+    covered nine of twenty-six classes is the defect this repository already
+    had once: the receipt attested a green run that excluded every regression
+    the round had just added. A run that covered everything and failed is the
+    ordinary case.
     """
-    import re
-    import subprocess
-    import sys
-    done = subprocess.run([sys.executable, "-m", "unittest", *VERIFICATION_SELECTORS],
-                          cwd=str(ROOT), capture_output=True, encoding="utf-8",
-                          env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
-                          timeout=3600)
-    tail = (done.stderr or "") + (done.stdout or "")
-    ran = re.search(r"^Ran (\d+) tests?", tail, re.MULTILINE)
-    failures = re.search(r"failures=(\d+)", tail)
-    errors = re.search(r"errors=(\d+)", tail)
-    return {"selectors": list(VERIFICATION_SELECTORS),
-            "excluded": list(RECEIPT_DEPENDENT_SELECTORS),
-            "why_excluded": ("they verify the receipt this run produces, so "
-                             "including them would make the evidence circular"),
-            "unclassified_cases": unclassified_verification_cases(),
-            "tests_run": int(ran.group(1)) if ran else 0,
-            "failures": int(failures.group(1)) if failures else 0,
-            "errors": int(errors.group(1)) if errors else 0,
-            "return_code": done.returncode,
-            "passed": done.returncode == 0 and bool(ran)}
-
-
-def build_offline_wiring_receipt(*, root, response):
-    """Drive the whole chain offline, run the suite, and seal what happened.
-
-    Both halves are measured. The capture is a real pass through gate, claim,
-    save, verified append, immutable proof, frozen replay and installation;
-    the verification block is the actual outcome of running the suite in this
-    process. Fault injections are not claimed here at all - an injection edits
-    the source and re-runs, so no single process can perform one - they are
-    recorded in the file this receipt hashes.
-    """
-    from .ordinary_source_authority import checkpoint_installation
-    session = recorded_historical_session(root=Path(root), response=response)
-    captured = session.capture(company_id=WIRING_COMPANY, url=WIRING_URL)
-    _need(captured["status"] == "SUCCEEDED", "ISSUE_47_OFFLINE_WIRING_CAPTURE_FAILED")
-    checkpoint, paths = checkpoint_installation(source_root=session.data_root)
-    _need(checkpoint["checkpoint_id"] == captured["checkpoint_id"] and bool(paths),
-          "ISSUE_47_OFFLINE_WIRING_INSTALLATION_FAILED")
-    unclassified = unclassified_verification_cases()
-    _need(not unclassified,
-          "ISSUE_47_OFFLINE_WIRING_CASES_NOT_CLASSIFIED:" + ",".join(unclassified))
-    run = _run_verification_suite()
-    _need(run["passed"], "ISSUE_47_OFFLINE_WIRING_SUITE_DID_NOT_PASS:" + str(run))
-    evidence = {relative: sha256_file(path=ROOT / relative)
-                for relative in REQUIRED_WIRING_EVIDENCE}
-    return _sealed({"record_type": WIRING_TYPE, "schema_version": 1,
-                    "requirement_id": REQUIREMENT_ID, "calls": [0, 0, 0],
-                    "chain_executed_over_recorded_responses": True,
-                    "execution_mode": session.ledger.mode,
-                    "capture_status": captured["status"],
-                    "verification_run": run,
-                    "fault_injections_recorded_in": (
-                        "docs/evidence/issue47_history/acquisition-wiring/"
-                        "fault-injections.json, hashed by this receipt"),
-                    "checkpoint_validated_by": (
-                        "continuous_sec_acquisition.validate_acquisition_checkpoint, "
-                        "frozen under issue_28_v14 and not editable from this issue"),
-                    "what_that_validator_does_not_prove": (
-                        "that the grant is valid, that the request is in scope, that "
-                        "the cumulative count is intact, that an unknown outcome stops "
-                        "the channel, or that a stale snapshot is refreshed - those are "
-                        "this module's own checks"),
-                    "downstream_reader_accepted": True,
-                    "real_sec_credit": False, "production_authorized": False,
-                    "evidence": evidence}, "receipt_id")
+    declared = run.get("classes_declared")
+    executed = run.get("classes_run")
+    excluded = run.get("classes_excluded")
+    _need(all(type(value) is list and all(type(name) is str for name in value)
+              for value in (declared, executed, excluded)),
+          "ISSUE_47_OFFLINE_WIRING_CASE_ACCOUNTING_MALFORMED")
+    _need(len(set(executed)) == len(executed)
+          and len(set(excluded)) == len(excluded)
+          and not set(executed) & set(excluded)
+          and set(executed) | set(excluded) == set(declared)
+          and bool(executed),
+          "ISSUE_47_OFFLINE_WIRING_CASES_NOT_ACCOUNTED_FOR:unrun="
+          + ",".join(sorted(set(declared) - set(executed) - set(excluded)))
+          + ";unknown="
+          + ",".join(sorted((set(executed) | set(excluded)) - set(declared)))
+          + ";both=" + ",".join(sorted(set(executed) & set(excluded))))
+    _need(run["passed"] is True and run["failures"] == 0 and run["errors"] == 0
+          and run["tests_run"] >= len(executed) and run.get("return_code") == 0,
+          "ISSUE_47_OFFLINE_WIRING_VERIFICATION_RUN_DID_NOT_PASS:" + str(run)[:200])
 
 
 def _allowance_ledger(*, allowance, root, live):

@@ -16,46 +16,35 @@ calls ``scripts/vnext/historical_source_acquisition.py`` for planning and
 import argparse
 import json
 import sys
-import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from vnext.historical_sec_session import (  # noqa: E402 - path set above
-    build_offline_wiring_receipt, live_historical_session)
+    live_historical_session)
 from vnext.historical_source_acquisition import (  # noqa: E402 - path set above
     HistoricalAcquisitionError, historical_dependencies, offline_source_plan)
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command",
-                        choices=["list", "plan", "capture", "wiring-receipt"])
+    # ``wiring-receipt`` used to live here, which put the artifact two steps
+    # from being usable: build it through this CLI into a file outside the
+    # checkout, then copy it to its committed path by hand. It is now one
+    # operation in tools/vnext_historical_wiring.py, which installs what it
+    # built and then verifies it there.
+    parser.add_argument("command", choices=["list", "plan", "capture"])
     parser.add_argument("--company")
     parser.add_argument("--url")
     parser.add_argument("--years", type=int, default=5)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
-    if args.command != "wiring-receipt" and args.company is None:
+    if args.company is None:
         parser.error("--company is required for " + args.command)
-    summary = None
     session = None
     try:
-        if args.command == "wiring-receipt":
-            # Produced by driving the chain, not by describing it. A grant
-            # names this receipt, so writing one without running is the thing
-            # the receipt exists to prevent.
-            body = json.dumps({"directory": {"item": [],
-                                             "name": "recorded-wiring-fixture"}}).encode()
-            with tempfile.TemporaryDirectory(prefix="issue47-wiring-") as scratch:
-                result = build_offline_wiring_receipt(root=Path(scratch) / "ledger",
-                                                      response=body)
-            # The written file is the sealed receipt verbatim. Adding a status
-            # key here would change the bytes the seal covers, so the summary
-            # below is built separately rather than merged into the record.
-            summary = {"status": "OFFLINE_WIRING_VERIFIED", "calls": result["calls"]}
-        elif args.command == "list":
+        if args.command == "list":
             rows = historical_dependencies(repo_root=ROOT, company_id=args.company,
                                            years=args.years)
             result = {"status": "OFFLINE_DEPENDENCY_LIST", "company_id": args.company,
@@ -111,9 +100,8 @@ def main(argv=None):
         output.parent.mkdir(parents=True, exist_ok=True)
         with output.open("x", encoding="utf-8") as file:
             json.dump(result, file, ensure_ascii=False, indent=1, sort_keys=True)
-    if summary is None:
-        summary = {key: result[key] for key in ("status", "calls") if key in result}
-    print(json.dumps(summary, sort_keys=True))
+    print(json.dumps({key: result[key] for key in ("status", "calls")
+                      if key in result}, sort_keys=True))
     return 0
 
 
