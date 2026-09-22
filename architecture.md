@@ -955,7 +955,7 @@ B13原生角色检查复用`_FactAttributes`展开实际单位命名空间；标
 
 ### B13 原生来源判断与文字候选
 
-显式`B13_SOURCE_REFERENCES_V1`将模型发现与单元审阅状态分开：发现只引用当前原件的kind/source_index，`capacity_reference_contract`核对唯一所属单元后恢复原验证器输入。未知、重复、歧义和跨单元混合引用拒绝；旧BASE/INDEXED_UNITS_V1不变。原始新请求/响应进入同一WB-3、Evidence和Run链，重读按保存的variant精确重建，默认普通入口可复用原成功但不会据此自动启用B13新调用。
+显式`B13_SOURCE_REFERENCES_V1`将模型发现与单元审阅状态分开：发现引用当前原件kind/source_index，局部编号的XML补充对象必须另带source_unit_index，`capacity_reference_contract`核对唯一所属单元后恢复原验证器输入。未知、重复、歧义和跨单元混合引用拒绝；旧BASE/INDEXED_UNITS_V1不变。原始新请求/响应进入同一WB-3、Evidence和Run链，重读按保存的variant精确重建，默认普通入口可复用原成功但不会据此自动启用B13新调用。
 
 `capacity_semantic_review` 按原限制组织完整来源，共享重复字段和 XML 样式并验证精确恢复。`capacity_native_assessment` 把每请求的原文、单元覆盖和有限角色检查接入既有 WB-3 Candidate/Evidence 成功链，再按完整请求集合重读；旧诊断终态不升级。`capacity_assessment_input` 复用普通来源私有登记边界，区分 LIVE 与 RECORDED_TEST_ONLY，数据包不能自行给响应登记。
 

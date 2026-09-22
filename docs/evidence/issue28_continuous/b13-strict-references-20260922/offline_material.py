@@ -16,7 +16,7 @@ from vnext.requirements import load_requirement_snapshot
 from vnext.normal_source_authority import ROOT
 from vnext import invocation_control as control,ai_adapter as adapter
 from tests.vnext.test_capacity_run_material import recorded_response
-base=Path('/tmp/sec_metrics_reference_20260922');base.mkdir(exist_ok=False)
+base=Path(os.environ.get('B13_REFERENCE_MATERIAL_ROOT','/tmp/sec_metrics_reference_20260922'));base.mkdir(exist_ok=False)
 evidence=Path(__file__).resolve().parent
 started=time.monotonic();requirement=load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v14')
 def response(request):

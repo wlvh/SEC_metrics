@@ -26,7 +26,9 @@ def _owners(base):
     for index, unit in enumerate(units):
         kind, items = _source_items(unit)
         for source_index in items:
-            key = (kind, source_index)
+            # Supplemental objects are enumerated inside each source unit;
+            # visible block and native fact ordinals belong to the document.
+            key = (kind, index, source_index) if kind == 'NATIVE_SUPPLEMENT' else (kind, source_index)
             need(key not in owners, 'B13_REFERENCE_AMBIGUOUS_SOURCE')
             owners[key] = index
     return owners
@@ -54,6 +56,15 @@ def upgrade_request(base):
          'B13_REFERENCE_BASE_PROTOCOL_UNSUPPORTED')
     count = len(body['units'])
     schema['properties']['findings'] = item['properties'].pop('findings')
+    evidence_schema = schema['properties']['findings']['items']['properties']['evidence']
+    ordinary = deepcopy(evidence_schema['items'])
+    ordinary['properties']['kind'] = {'enum': ['VISIBLE_BLOCK', 'NATIVE_FACT']}
+    supplement = deepcopy(ordinary)
+    supplement['properties']['kind'] = {'enum': ['NATIVE_SUPPLEMENT']}
+    supplement['properties']['source_unit_index'] = {'type': 'integer', 'minimum': 0, 'maximum': len(body['units']) - 1}
+    supplement['required'] = ['kind', 'source_index', 'source_unit_index']
+    evidence_schema['items'] = {'oneOf': [ordinary, supplement]}
+    protocol['supplement_evidence_fields'] = ['kind', 'source_index', 'source_unit_index']
     schema['properties'].pop('request_id')
     item['properties'].pop('unit_id')
     item['properties']['unit_index'] = {'type': 'integer', 'minimum': 0, 'maximum': count - 1}
@@ -62,6 +73,8 @@ def upgrade_request(base):
     unit_schema.update(minItems=count, maxItems=count)
     protocol['finding_reference_scope'] = (
         'Each root findings entry cites exact kind/source_index pairs from the supplied document. '
+        'NATIVE_SUPPLEMENT indices are local to a source unit: also include source_unit_index, '
+        'its zero-based position in supplied units. Other evidence kinds must omit source_unit_index. '
         'The program resolves their unique source unit. Do not put findings inside units. '
         'All evidence in one finding must belong to the same source unit. '
         'units contains exactly one review status per supplied unit, addressed by its zero-based unit_index. '
@@ -107,10 +120,17 @@ def restore_response(*, request, raw_response):
              and type(finding['evidence']) is list and finding['evidence'], 'B13_REFERENCE_FINDING_FIELDS_CHANGED')
         references = []
         for evidence in finding['evidence']:
-            need(type(evidence) is dict and set(evidence) == {'kind', 'source_index'}
-                 and type(evidence['kind']) is str and type(evidence['source_index']) is int,
+            need(type(evidence) is dict
+                 and type(evidence.get('kind')) is str and type(evidence.get('source_index')) is int,
                  'B13_REFERENCE_FIELDS_CHANGED')
-            key = (evidence['kind'], evidence['source_index'])
+            if evidence['kind'] == 'NATIVE_SUPPLEMENT':
+                need(set(evidence) == {'kind', 'source_index', 'source_unit_index'}
+                     and type(evidence['source_unit_index']) is int,
+                     'B13_REFERENCE_SUPPLEMENT_SCOPE_REQUIRED')
+                key = (evidence['kind'], evidence['source_unit_index'], evidence['source_index'])
+            else:
+                need(set(evidence) == {'kind', 'source_index'}, 'B13_REFERENCE_FIELDS_CHANGED')
+                key = (evidence['kind'], evidence['source_index'])
             need(key in owners, 'B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE')
             references.append(key)
         need(len(set(references)) == len(references), 'B13_REFERENCE_DUPLICATE_EVIDENCE')
@@ -119,6 +139,9 @@ def restore_response(*, request, raw_response):
         identity = content_hash(value=finding)
         need(identity not in seen, 'B13_REFERENCE_DUPLICATE_FINDING')
         seen.add(identity)
-        rows[indices.pop()]['findings'].append(deepcopy(finding))
+        normalized = deepcopy(finding)
+        for evidence in normalized['evidence']:
+            evidence.pop('source_unit_index', None)
+        rows[indices.pop()]['findings'].append(normalized)
     normalized = {'request_id': base['request_id'], 'units': [rows[i] for i in sorted(rows)]}
     return base, canonical_json_bytes(value=normalized), original

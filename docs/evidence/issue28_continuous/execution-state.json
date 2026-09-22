@@ -859,7 +859,27 @@
     "ci": "One observation per push",
     "shared_changes": []
   },
-  "subagent_register": [],
+  "subagent_register": [
+    {
+      "task_name": "review_b13_references_7d903ba",
+      "requested_label": "review-b13_references-7d903ba",
+      "purpose": "review",
+      "scope_paths": [
+        "scripts/vnext/capacity_reference_contract.py",
+        "scripts/vnext/capacity_semantic_review.py",
+        "scripts/vnext/native_unit_index.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "tests/vnext/test_capacity_reference_contract.py"
+      ],
+      "patch_sha": "7d903ba27a5586569029349e6433f85a0f0054da",
+      "spawned_at": "2026-09-22T10:12:00.970007+00:00",
+      "ended_at": "2026-09-22T10:18:27.936531+00:00",
+      "tool_calls": 43,
+      "result_path": "docs/evidence/issue28_continuous/b13-strict-references-20260922/independent-review/conclusion.md",
+      "verdict": "DONE_P1_SUPPLEMENT_LOCAL_INDEX_COLLISION"
+    }
+  ],
   "ci_capacity_20260922": {
     "baseline": "ed8bf11cbab76bc3d9b766d4b96d065a6cda10e6",
     "capacity_native_timeout_minutes": 30,
@@ -884,7 +904,7 @@
   },
   "b13_strict_references_20260922": {
     "version": "B13_SOURCE_REFERENCES_V1",
-    "status": "IMPLEMENTED_OFFLINE_MATERIAL_RUNNING",
+    "status": "SUPPLEMENT_SCOPE_REPAIRED_PENDING_SCOPED_RECHECK_AND_MATERIAL",
     "short_tests": "36 PASS 0.641s",
     "original109": "FAILED_TERMINAL_UNCHANGED",
     "prompt_bytes_unchanged": true,
@@ -894,8 +914,10 @@
       0
     ],
     "evidence": "b13-strict-references-20260922/",
-    "review": "待审：B13引用合同及原生接线 + 待本次commit SHA + b13-strict-references-20260922/independent-review/",
+    "review": "待审：B13补充对象引用范围修复 + 本次commit + b13-strict-references-20260922/independent-review/conclusion.md",
     "shared_function_edits": [],
-    "material_first_launch": "IMPORT_PATH_FAILURE_BEFORE_TEST_OR_CALL; corrected PYTHONPATH=scripts:."
+    "material_first_launch": "IMPORT_PATH_FAILURE_BEFORE_TEST_OR_CALL; corrected PYTHONPATH=scripts:.",
+    "supplement_repair": "Require explicit source_unit_index only for NATIVE_SUPPLEMENT; global block/fact references unchanged; never guess ambiguous owners",
+    "repair_tests": "17 scoped tests PASS 0.174s"
   }
 }

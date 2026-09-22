@@ -150,3 +150,32 @@ class CapacityReferenceContractTest(unittest.TestCase):
         self.assertNotEqual(other['request_id'], self.request['request_id'])
         self.assertEqual(request_digest(other, policy), request_digest(self.request, policy))
         self.assertNotEqual(request_digest(self.base, policy), request_digest(self.request, policy))
+
+    def test_local_supplement_indices_have_explicit_scope_and_never_guess(self):
+        from vnext.capacity_semantic_review import _shared_units
+        doc = self.source['units'][0]['document_id']
+        units = [_seal_unit(doc, 'NATIVE_SUPPLEMENTS', {'objects': [{'raw_xml':'<x>'+text+'</x>',
+            'namespace_environment_id':'ns', 'namespaces':{}, 'nested_objects':[]}]}, i)
+                 for i,text in enumerate(['first context','second context'])]
+        base = deepcopy(self.base)
+        base['units'],base['shared_source_dictionaries'] = _shared_units(units)
+        base['request_id'] = content_hash(value={k:v for k,v in base.items() if k != 'request_id'})
+        request = upgrade_request(base)
+        response = {'units':[{'unit_index':i,'reviewed':True,'unresolved':[],'calculation_limits':[]} for i in range(2)],
+            'findings':[{'kind':'OTHER_CONTEXT','subject':'TARGET_REGISTRANT','timing':'CURRENT_REPORT',
+                         'reason':'Explicitly scoped supplemental reference.',
+                         'evidence':[{'kind':'NATIVE_SUPPLEMENT','source_index':0,'source_unit_index':1}]}]}
+        _,raw,_ = restore_response(request=request,raw_response=canonical_json_bytes(value=response))
+        normalized = strict_json_loads(text=raw.decode())
+        self.assertEqual(normalized['units'][0]['findings'], [])
+        self.assertEqual(normalized['units'][1]['findings'][0]['evidence'], [{'kind':'NATIVE_SUPPLEMENT','source_index':0}])
+        for change in ('omitted','wrong_kind_unit','boolean','outside_index','outside_unit','mixed'):
+            bad = deepcopy(response); ev = bad['findings'][0]['evidence'][0]
+            if change == 'omitted': ev.pop('source_unit_index')
+            elif change == 'boolean': ev['source_unit_index'] = True
+            elif change == 'outside_index': ev['source_index'] = 1
+            elif change == 'outside_unit': ev['source_unit_index'] = 2
+            elif change == 'wrong_kind_unit': ev['kind'] = 'VISIBLE_BLOCK'
+            else: bad['findings'][0]['evidence'].append({**ev,'source_unit_index':0})
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                restore_response(request=request,raw_response=canonical_json_bytes(value=bad))

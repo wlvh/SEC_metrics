@@ -2,7 +2,7 @@
 
 原109仍为FAILED_TERMINAL/B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE。复用已归档real-109诊断：834属于第三个来源单元，模型误放第二个单元；来源没有丢失，原检查器正确拒绝。
 
-后继B13_SOURCE_REFERENCES_V1只用于新显式选择的请求。提示、完整原文、分组、必评项、程序数量角色和现有内容检查保持不变。模型在根层findings选择原始kind/source_index；程序仅在本请求同一原件中有唯一所属单元时解析。每个单元仍必须独立返回reviewed/unresolved/calculation_limits。不存在的索引、错kind、歧义、混合不同单元、重复引用/发现、漏答及篡改协议均拒绝。原嵌套失败不自动移动引用，不升级历史信用。
+后继B13_SOURCE_REFERENCES_V1只用于新显式选择的请求。提示、完整原文、分组、必评项、程序数量角色和现有内容检查保持不变。模型在根层findings选择原始kind/source_index；正文块/原生事实按原件全局索引解析，XML补充对象必须另带source_unit_index才能解析局部编号；程序只接受唯一完整来源身份。每个单元仍必须独立返回reviewed/unresolved/calculation_limits。不存在的索引、错kind、歧义、混合不同单元、重复引用/发现、漏答及篡改协议均拒绝。原嵌套失败不自动移动引用，不升级历史信用。
 
 新格式恢复后继续调用原完整B13内容验证器；它只消除重复填写引用所属单元的要求，不能证明模型分类正确、原文完备或完整指标成功。既有数量/范围、未决、Evidence、Review和Run验证仍独立执行。
 
@@ -11,3 +11,5 @@
 真实调用前仍须完成后继绑定、全链接线与独立限定差异审阅登记；此目录自身不提供调用或生产许可。新增0/0/0。原大材料不重打包。
 
 完整材料后台脚本第一次因PYTHONPATH未含仓库根在import tests处失败，未创建材料或请求；原offline-material.log保留，修正启动环境后另写offline-material-corrected.log。完整结果尚待，不能将短测试或原109合成诊断当成真实执行。
+
+完整材料第二次在请求选择阶段发现NATIVE_SUPPLEMENT的source_index为单元内enumerate，无法使用无范围的全局二元键；B13_REFERENCE_AMBIGUOUS_SOURCE按设计拒绝。原109完整来源有66个跨单元同名补充对象索引，诊断见supplement-index-diagnosis.json。未调用provider，未创建录制请求终态；后继修复需要显式补充对象单元范围，不能删除歧义守卫。

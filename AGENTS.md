@@ -208,7 +208,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `regulatory_investigation_candidates.py` / `going_concern_source.py` / `fiscal_year_labels.py`：D03事实候选及上下文、D04完整年报/修订原文分组、财年原文/机器标签对照；来源准备不能当成最终调查/持续经营结论或新规则激活。
 - `tools/run_fast_tests_v2.py`：当前CI分95个30秒短测试入口和34个240秒完整来源材料入口；先前124项均保留，并新增五个普通来源/输入材料套件。旧`tools/run_fast_tests.py`是V13冻结规则的一部分，保留原字节和历史入口。
 
-- `scripts/vnext/capacity_reference_contract.py`：显式新B13请求把发现放在根层，以原kind/source_index由程序核对唯一单元归属；完整单元审阅和原内容/数量验证保留。旧嵌套响应不重定位、不升级原109失败。接线与边界见`docs/evidence/issue28_continuous/b13-strict-references-20260922/`。
+- `scripts/vnext/capacity_reference_contract.py`：显式新B13请求把发现放在根层，以原kind/source_index核对归属，局部编号的XML补充对象另带source_unit_index；完整单元审阅和原内容/数量验证保留。旧嵌套响应不重定位、不升级原109失败。接线与边界见`docs/evidence/issue28_continuous/b13-strict-references-20260922/`。
 
 - `scripts/vnext/normal_candidates.py`、`normal_source_authority.py`、`normal_governance_input.py`：从已保存实际来源重建B06/C03/C04/D01候选，外部根与既存获取基线分开验证；V12记录已冻结、未正式激活。后继`normal_text_input_v2.py`为C02/D02保留必要来源和完整选源元数据，`text_results_v2.py`保留严格核验的披露事实与原文，不能推断总诉讼负债。
 - `scripts/vnext/text_results.py`、`text_review.py`、`text_run_validation.py`：原有记录中的显式TEXT_V1、完整原文候选/审阅/Run重读，旧数字记录不改。
