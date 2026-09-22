@@ -122,13 +122,38 @@
    ],
    "why_it_matters": "an external review measured what that leaves open: while the second phase runs, the gate and --check accept a receipt that has not finished being checked, and a process killed in that window leaves the unchecked artifact installed, because the restore never runs. Failing safely is not the same as never having exposed the thing",
    "why_they_could_not": "they observe the installed file after the run, and a restore puts it back, so the end state is identical. Only a case that looks at the installed file *while* the second phase is running separates the two orders - which is why the review's finding was invisible to the three cases written for it"
+  },
+  {
+   "caught_by": [
+    "TheEventDeclarationIsWhatTheRouteReads.test_the_declaration_for_a_period_is_exactly_what_the_route_reads",
+    "TheEventDeclarationIsWhatTheRouteReads.test_each_filing_is_declared_as_a_body_and_a_header",
+    "TheUnionIsOneDeclarationNotTwo.test_an_event_body_and_header_resolve_through_the_gate"
+   ],
+   "edit": "_filing_rows() emits only the primary document for each event filing, dropping the hdr.sgml row",
+   "id": "DECLARE_THE_BODY_BUT_NOT_THE_HEADER",
+   "outcome": "CAUGHT",
+   "round": "event-source-declaration",
+   "suite_result": "FAILED (failures=2, errors=1) of 72",
+   "why_it_matters": "the route reads two documents per accession, so a declaration naming one would halve the plan while looking complete, and every header would still be refused at the gate as undeclared"
+  },
+  {
+   "caught_by": [
+    "AnUnderivableWindowDeclaresNothingRatherThanNoFilings.test_a_period_without_its_primary_is_a_named_limitation",
+    "AnUnderivableWindowDeclaresNothingRatherThanNoFilings.test_the_limitation_names_the_file_that_would_unblock_it"
+   ],
+   "edit": "a period whose window cannot be derived is skipped without recording a limitation",
+   "id": "TREAT_AN_UNDERIVABLE_WINDOW_AS_AN_EMPTY_ONE",
+   "outcome": "CAUGHT",
+   "round": "event-source-declaration",
+   "suite_result": "FAILED (failures=1, errors=1) of 72",
+   "why_it_matters": "declaring zero filings for a period and declaring nothing for it look identical in a plan and mean opposite things. 31 of the frame's 50 periods are in this state, so a silent skip would read as 'these years need no event sources'"
   }
  ],
- "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",
+ "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py, scripts/vnext/historical_event_sources.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",
  "production_authorized": false,
  "real_sec_credit": false,
  "record_type": "ISSUE_47_ACQUISITION_FAULT_INJECTIONS",
  "schema_version": 1,
- "what_this_does_not_establish": "That the suite catches defects it has no case for. Of the ten injections, three were designed against cases that already existed and the third of the first round found that a case was missing and is recorded with its first, passing run. Nor does any of them establish that a builder corrupted and then re-run cannot produce a smaller receipt that is self-consistent: what the hashes establish is that the artifact on disk corresponds to this builder and this suite.",
+ "what_this_does_not_establish": "That the suite catches defects it has no case for. Of the twelve injections, three were designed against cases that already existed and the third of the first round found that a case was missing and is recorded with its first, passing run. Nor does any of them establish that a builder corrupted and then re-run cannot produce a smaller receipt that is self-consistent: what the hashes establish is that the artifact on disk corresponds to this builder and this suite.",
  "why_this_is_a_file_and_not_a_boolean": "A fault injection means editing the source and re-running the suite. The receipt builder runs in one process against one tree, so it cannot perform one, and a builder that writes fault_injections_caught: true regardless is asserting something it did not observe. This records what was actually run, so the claim can be checked rather than believed."
 }

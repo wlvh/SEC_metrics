@@ -1,0 +1,96 @@
+{
+ "how_it_is_accepted": "Not against a fixture. The suite runs the frozen route's own source discovery (_event_sources) over the saved corpus with a recording reader, and requires the declaration for that period to be exactly the set of URLs the route asked for. Measured for Marriott's newest period: 20 URLs read, 20 declared, zero either way.",
+ "per_company": {
+  "enphase_energy": {
+   "accessions": 6,
+   "event_rows": 12,
+   "mode": "CONTINUOUS_PRIMARY",
+   "need_fetch": 0,
+   "periods_without_a_derivable_window": 4
+  },
+  "ford_motor_company": {
+   "accessions": 17,
+   "event_rows": 34,
+   "mode": "CONTINUOUS_PRIMARY",
+   "need_fetch": 0,
+   "periods_without_a_derivable_window": 4
+  },
+  "jpmorgan_chase": {
+   "accessions": 20,
+   "event_rows": 40,
+   "mode": "CONTINUOUS_PRIMARY",
+   "need_fetch": 1,
+   "periods_without_a_derivable_window": 1
+  },
+  "lumen_technologies": {
+   "accessions": 19,
+   "event_rows": 38,
+   "mode": "CONTINUOUS_PRIMARY",
+   "need_fetch": 0,
+   "periods_without_a_derivable_window": 4
+  },
+  "macys": {
+   "accessions": 13,
+   "event_rows": 26,
+   "mode": "CONTINUOUS_PRIMARY",
+   "need_fetch": 0,
+   "periods_without_a_derivable_window": 4
+  },
+  "marriott_international": {
+   "accessions": 30,
+   "event_rows": 60,
+   "mode": "CONTINUOUS_PRIMARY",
+   "need_fetch": 40,
+   "periods_without_a_derivable_window": 2
+  },
+  "paramount_skydance_paramount_global": {
+   "accessions": 35,
+   "event_rows": 70,
+   "mode": "SUCCESSOR_REGISTRANT_ONLY",
+   "need_fetch": 18,
+   "periods_without_a_derivable_window": 0
+  },
+  "pfizer": {
+   "accessions": 9,
+   "event_rows": 18,
+   "mode": "CONTINUOUS_PRIMARY",
+   "need_fetch": 0,
+   "periods_without_a_derivable_window": 4
+  },
+  "salesforce": {
+   "accessions": 11,
+   "event_rows": 22,
+   "mode": "CONTINUOUS_PRIMARY",
+   "need_fetch": 1,
+   "periods_without_a_derivable_window": 4
+  },
+  "southwest_airlines": {
+   "accessions": 17,
+   "event_rows": 34,
+   "mode": "CONTINUOUS_PRIMARY",
+   "need_fetch": 0,
+   "periods_without_a_derivable_window": 4
+  }
+ },
+ "production_authorized": false,
+ "real_sec_credit": false,
+ "record_type": "ISSUE_47_EVENT_SOURCE_DECLARATION",
+ "the_corroboration_worth_naming": "Paramount's 18 outstanding rows are 9 predecessor 8-K bodies and their 9 headers. The repository recorded that same 9 independently, from the successor-event wiring round, by a different measurement path: 31 predecessor 8-K filings in the window, 9 of them with no saved body. Two derivations agreeing on the same nine is worth more than either alone.",
+ "totals": {
+  "accessions": 177,
+  "event_rows": 354,
+  "periods_declared": 19,
+  "periods_in_the_frame": 50,
+  "periods_without_a_derivable_window": 31,
+  "rows_still_needing_a_fetch": 60
+ },
+ "what_it_does_not_do": [
+  "It does not fetch anything and executes no metric.",
+  "It does not authorise anything: a grant still names the dependency classes, and FISCAL_EVENT_FILING is not in any approved scope today.",
+  "It does not restate which filings are in a window, which registrants count, or how wide a successor's window is - all three come from the frozen route, because a declaration written from a second reading of the same rules can drift from what is consumed.",
+  "It does not prove the six event coordinates will resolve once the files land; it proves the gate can admit the files they need."
+ ],
+ "what_this_is": "The fiscal-year 8-K bodies and headers the zero-AI event route reads for C01 and E01-E05, declared per target period so the acquisition gate can admit them. The planner declares four dependency classes and no event class, so every one of these URLs was refused by name as HISTORICAL_URL_IS_NOT_A_DECLARED_DEPENDENCY.",
+ "why_a_separate_module": "scripts/vnext/normal_history_plan.py is a NEW_RULE_FILE of issue_47_v1. Changing its bytes moves the Requirement closure, and the previous batch's 343 frozen Runs are evidence about the version that produced them. declared_frame takes the union instead. Outside the closure is not outside the checks: the rows carry the planner's fields, are classified by the planner's own _saved_state, pass the same scope gate, and the module's bytes are in REQUIRED_WIRING_EVIDENCE.",
+ "why_this_is_smaller_than_the_plan_s_970": "It is not the same measurement and should not be read as a correction downward. The acquisition plan's B class counted 476 unsaved 8-K bodies over eight companies' four prior fiscal-year windows. This declares only what it can derive: the event window comes from the target year's own document - the fiscal year's start date is in its DEI context, not in the submissions row - so a year whose annual primary is not saved has no derivable window and declares nothing at all. 31 of 50 periods are in that state, each with a named limitation pointing at the annual primary that would unblock it. So the declaration is a floor that grows as class A lands, not a ceiling that replaces the plan's estimate."
+}

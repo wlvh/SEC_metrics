@@ -484,3 +484,64 @@ and an executable test framework is gone; the dependency on the test sources
 as read-only evidence remains, deliberately.** That is what binds a grant to a
 specific suite. Shrinking a delivery bundle until it holds no test file would
 remove the binding, not improve it, and is not being attempted.
+
+## The event class the planner never declared
+
+`plan_historical_sources` declares four dependency classes - the submissions
+index, its history shards, Company Facts, and the two documents per annual
+accession. It declares no event class, so every fiscal-year 8-K body and
+header the zero-AI route reads for C01 and E01-E05 was refused by the gate as
+`HISTORICAL_URL_IS_NOT_A_DECLARED_DEPENDENCY`. No grant could unblock those
+coordinates while that held, whatever its scope said.
+
+`scripts/vnext/historical_event_sources.py` declares them, and
+`declared_frame` takes the union. It is a separate module because the planner
+is a `NEW_RULE_FILE` of `issue_47_v1`: changing its bytes moves the
+Requirement closure, and the previous batch's 343 frozen Runs are evidence
+about the version that produced them. Being outside the closure is not being
+outside the checks - the rows carry the planner's fields, are classified by
+the planner's own `_saved_state`, go through the same scope gate, and the
+module's bytes are in `REQUIRED_WIRING_EVIDENCE`.
+
+**The acceptance is not that a class name appeared in a list.** A dependency
+list can gain a name and be wrong in either direction: short, and the gate
+refuses a file the route needs; long, and a grant is spent on files nothing
+reads. So the case runs the frozen route's own source discovery over the
+saved corpus with a recording reader and requires the declaration for that
+period to be exactly the set of URLs the route asked for. Measured on
+Marriott's newest period: 20 read, 20 declared, zero either way.
+
+Measured across all ten companies: **354 event rows over 177 accessions, 60
+rows still needing a fetch**, two requests per accession - which is measured,
+not assumed, from 186 saved accession directories of which 151 hold both a
+body and a header and none holds a header alone.
+
+**Paramount is the corroboration worth naming.** Its 18 outstanding rows are
+9 predecessor 8-K bodies and their 9 headers - the same nine this repository
+recorded independently during the successor-event wiring round, by a
+different path (31 predecessor filings in the window, 9 with no saved body).
+Two derivations agreeing on the same nine is worth more than either alone.
+
+**Why this is smaller than the plan's 970, and why that is not a correction
+downward.** The event window comes from the target year's own document: the
+fiscal year's start date is in its DEI context, not in the submissions row.
+So a year whose annual primary is not saved has no derivable window, and the
+module declares nothing for it rather than declaring zero filings - the two
+read identically in a plan and mean opposite things. 31 of the frame's 50
+periods are in that state, each with a named limitation pointing at the
+annual primary that would unblock it. The declaration is therefore a floor
+that grows as class A lands, not a replacement for the plan's estimate.
+Deriving the window any other way would mean writing a second copy of a rule
+the route already owns, which is the drift this module exists to avoid.
+
+Two injections, both caught: dropping the header row from each filing, and
+skipping an underivable window without recording the limitation. A third
+thing the round found on its own: `recorded_historical_session` listed four
+dependency classes in its default scope while the declaration emitted five,
+so a recorded capture of a history shard was impossible and nothing said so.
+It surfaced only because adding a sixth class broke an unrelated case, so the
+default is now checked against the classes the declaration actually emits.
+
+**No authorization changes.** `FISCAL_EVENT_FILING` is in no approved scope,
+`config/issue47_historical_calls_v1.json` still does not exist, and `capture`
+still refuses with `ISSUE_47_SEC_ALLOWANCE_NOT_GRANTED`.

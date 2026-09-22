@@ -621,6 +621,11 @@ WIRING_TYPE = "ISSUE_47_SEC_ACQUISITION_OFFLINE_WIRING"
 REQUIRED_WIRING_EVIDENCE = (
     "scripts/vnext/historical_sec_session.py",
     "scripts/vnext/historical_source_acquisition.py",
+    # The event declaration. It lives outside the Requirement closure because
+    # the planner it extends is a rule file, and that is exactly why its bytes
+    # belong here: a declaration the gate admits from must be pinned by the
+    # same receipt as the gate.
+    "scripts/vnext/historical_event_sources.py",
     "tests/vnext/test_historical_sec_session.py",
     "tools/vnext_historical_sec.py",
     "tools/vnext_historical_wiring.py",
@@ -806,9 +811,17 @@ def live_historical_session():
 def recorded_historical_session(*, root, response, status=200, limits=(0, 0, 80),
                                 purposes=("historical_five_year_source_acquisition",),
                                 company_ids=("marriott_international",),
+                                # Every class the declaration emits, so the
+                                # recorded path can exercise all of them. The
+                                # first version listed four and omitted
+                                # SUBMISSIONS_HISTORY, so a recorded capture of
+                                # a history shard was impossible and nothing
+                                # said so; adding the event class found it.
                                 dependency_classes=("ACCESSION_INSTANCE_DISCOVERY",
                                                     "ANNUAL_PERIOD_IDENTITY",
-                                                    "COMPANYFACTS", "SUBMISSIONS_INDEX"),
+                                                    "COMPANYFACTS", "FISCAL_EVENT_FILING",
+                                                    "SUBMISSIONS_HISTORY",
+                                                    "SUBMISSIONS_INDEX"),
                                 earliest_report_end="2000-01-01",
                                 latest_report_end="2099-12-31",
                                 allowance_root=None):

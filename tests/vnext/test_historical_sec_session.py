@@ -16,6 +16,7 @@ from pathlib import Path
 from unittest.mock import patch
 import ast
 import atexit
+import copy
 import hashlib
 import importlib.util
 import inspect
@@ -36,6 +37,8 @@ from vnext.historical_sec_session import (HistoricalSessionError,
                                           live_historical_session,
                                           recorded_historical_session,
                                           verify_offline_wiring)
+from vnext.historical_event_sources import (EVENT_METRICS, declare_event_sources,
+                                            _registry_row, _window)
 from vnext.historical_source_acquisition import (POLICY_PATH, DELEGATION_TYPE,
                                                  TRUSTED_APPROVER, TRUSTED_REPOSITORY,
                                                  HistoricalAcquisitionError,
@@ -44,7 +47,12 @@ from vnext.historical_source_acquisition import (POLICY_PATH, DELEGATION_TYPE,
                                                  declared_frame,
                                                  historical_dependency,
                                                  request_is_in_scope)
+from vnext.normal_annual_input import _subject_policy
+from vnext.normal_governance_input import _Sources
+from vnext.normal_history_catalog import target_period_candidates
 from vnext.normal_source_authority import MANIFEST_PATH, ROOT
+from vnext.normal_zero_ai_results import _event_sources
+from sec_urls import submissions_url
 
 
 def _load_tool(name, relative):
@@ -78,6 +86,38 @@ def _receipt_under_check():
 # version of that check flagged the class doing the scanning.
 RECEIPT_READER_TOKENS = ("_receipt_under_check" + "()",
                          WIRING.RECEIPT_PATH.rsplit("/", 1)[1])
+
+_FRAMES = {}
+
+
+def _frame(company_id):
+    """One declaration per company per process, deep-copied to each caller.
+
+    Building it reads a company's whole saved submissions history - ten
+    seconds for JPMorgan's sixty-nine shards - and twelve cases ask for one.
+    It is an input here and never the thing under assertion: every case that
+    uses it asserts what the gate, the union or the route does *with* the
+    rows, so sharing the rows weakens nothing. The copy is what keeps that
+    true, since a case that mutated a shared row would change another's input.
+    """
+    if company_id not in _FRAMES:
+        _FRAMES[company_id] = declared_frame(repo_root=ROOT, company_id=company_id)
+    return copy.deepcopy(_FRAMES[company_id])
+
+
+def _rows(company_id):
+    return _frame(company_id)["requirements"]
+
+
+_EVENTS = {}
+
+
+def _events(company_id):
+    """The event declaration alone, shared on the same terms as the frame."""
+    if company_id not in _EVENTS:
+        _EVENTS[company_id] = declare_event_sources(repo_root=ROOT,
+                                                    company_id=company_id, count=5)
+    return copy.deepcopy(_EVENTS[company_id])
 
 # A declared Marriott dependency: the prior annual primary accession index that
 # B02 reads. Taken from the planner's own output, not written by hand.
@@ -519,6 +559,7 @@ def _grant_tree(*, scope_overrides=None, body_overrides=None, digest=None, url=N
              "company_ids": ["marriott_international"],
              "dependency_classes": ["ACCESSION_INSTANCE_DISCOVERY",
                                     "ANNUAL_PERIOD_IDENTITY", "COMPANYFACTS",
+                                    "FISCAL_EVENT_FILING", "SUBMISSIONS_HISTORY",
                                     "SUBMISSIONS_INDEX"],
              "earliest_report_end": "2000-01-01",
              "latest_report_end": "2099-12-31", **(scope_overrides or {})}
@@ -623,8 +664,7 @@ class AnAllowanceMustBeVerifiedNotMerelyPresent(unittest.TestCase):
         allowance["delegation_body_sha256"] = hashlib.sha256(body.encode()).hexdigest()
         (root / POLICY_PATH).write_text(json.dumps(allowance), encoding="utf-8")
         verified = acquisition_allowance(repo_root=root)
-        row = declared_dependencies(repo_root=ROOT,
-                                    company_id="marriott_international")[0]
+        row = _rows("marriott_international")[0]
         with self.assertRaises(HistoricalAcquisitionError) as caught:
             request_is_in_scope(allowance=verified, company_id="marriott_international",
                                 dependency=row,
@@ -747,8 +787,7 @@ class BelongingToTheTaskIsNotNeedingAFetch(unittest.TestCase):
         self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
 
     def test_an_already_saved_dependency_resolves_and_reports_reuse(self):
-        rows = declared_dependencies(repo_root=ROOT,
-                                     company_id="marriott_international")
+        rows = _rows("marriott_international")
         saved = [r for r in rows if not r["new_acquisition_required"]]
         self.assertTrue(saved, "this company has saved dependencies to test with")
         row = historical_dependency(repo_root=ROOT,
@@ -765,8 +804,7 @@ class BelongingToTheTaskIsNotNeedingAFetch(unittest.TestCase):
         # Load-bearing: this row carries VERIFIED_SAVED_SOURCE *and*
         # new_acquisition_required, so an implementation reading only the
         # first field passes every other case and fails here.
-        rows = declared_dependencies(repo_root=ROOT,
-                                     company_id="marriott_international")
+        rows = _rows("marriott_international")
         pending = [r for r in rows if r["new_acquisition_required"]][0]
         stale = {**pending, "saved_status": "VERIFIED_SAVED_SOURCE",
                  "new_acquisition_required": True,
@@ -853,13 +891,13 @@ class TheScopeGateMustPassTheRealDeclaration(unittest.TestCase):
         # production planner emits today.
         for company in ("marriott_international", "jpmorgan_chase"):
             with self.subTest(company=company):
-                frame = declared_frame(repo_root=ROOT, company_id=company)
+                frame = _frame(company)
                 self.assertTrue(frame["requirements"])
                 for row in frame["requirements"]:
                     self._admit(frame, company, row)
 
     def test_a_frame_level_dependency_is_admitted_on_the_frame_window(self):
-        frame = declared_frame(repo_root=ROOT, company_id="jpmorgan_chase")
+        frame = _frame("jpmorgan_chase")
         shards = [r for r in frame["requirements"]
                   if not any(str(c).startswith("period:") for c in r.get("consumers", []))]
         self.assertTrue(shards, "the declaration carries frame-level dependencies")
@@ -868,7 +906,7 @@ class TheScopeGateMustPassTheRealDeclaration(unittest.TestCase):
         self.assertEqual(frame["target_report_dates"], admitted["periods"])
 
     def test_a_row_that_names_periods_is_admitted_on_those(self):
-        frame = declared_frame(repo_root=ROOT, company_id="marriott_international")
+        frame = _frame("marriott_international")
         named = [r for r in frame["requirements"]
                  if any(str(c).startswith("period:") for c in r.get("consumers", []))]
         admitted = self._admit(frame, "marriott_international", named[0])
@@ -878,7 +916,7 @@ class TheScopeGateMustPassTheRealDeclaration(unittest.TestCase):
         # Not a hand-edited row this time: JPMorgan's shards are the real
         # SNAPSHOT_REFRESH population, and they are what the previous gate
         # refused.
-        frame = declared_frame(repo_root=ROOT, company_id="jpmorgan_chase")
+        frame = _frame("jpmorgan_chase")
         refresh = [r for r in frame["requirements"]
                    if r.get("acquisition_kind") == "SNAPSHOT_REFRESH"]
         self.assertTrue(refresh, "the planner marks refreshes for this company")
@@ -886,7 +924,7 @@ class TheScopeGateMustPassTheRealDeclaration(unittest.TestCase):
             self._admit(frame, "jpmorgan_chase", row)
 
     def test_wrong_company_class_and_window_are_still_refused(self):
-        frame = declared_frame(repo_root=ROOT, company_id="jpmorgan_chase")
+        frame = _frame("jpmorgan_chase")
         row = frame["requirements"][0]
         base = self._allowance(frame, "jpmorgan_chase")["scope"]
         for label, scope, expected in (
@@ -1412,3 +1450,190 @@ class ThisInvocationsCallCountIsNotTheLedgerDelta(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class TheEventDeclarationIsWhatTheRouteReads(unittest.TestCase):
+    """The only check that matters for a declaration: it equals consumption.
+
+    A dependency list can gain a class name and still be wrong in either
+    direction - short, and the gate refuses a file the route needs; long, and
+    a grant is spent on files nothing reads. So this does not compare against
+    a fixture. It runs the frozen event route's own source discovery over the
+    saved corpus, records every URL the route asks its reader for, and
+    requires the declaration for that period to be that set exactly.
+
+    The newest target period is the one where this can be measured at all:
+    the current fiscal-year windows are the only ones whose 8-K bodies and
+    headers are saved, which is the same fact that makes every earlier year's
+    event coordinates WITHHELD.
+    """
+
+    COMPANY = "marriott_international"
+
+    def _newest(self):
+        candidates = target_period_candidates(repo_root=ROOT, company_id=self.COMPANY,
+                                              count=5)
+        policy = _subject_policy(_registry_row(repo_root=ROOT, company_id=self.COMPANY))
+        window, ciks, reason = _window(repo_root=ROOT, company_id=self.COMPANY,
+                                       candidate=candidates[0], subject_policy=policy)
+        self.assertIsNone(reason, "the newest period's window must be derivable")
+        return candidates[0], window, ciks
+
+    def _urls_the_route_reads(self, window, cik):
+        reader = _Sources(ROOT, self.COMPANY, cik)
+        seen = []
+        underlying = reader.read
+
+        def record(url, **kwargs):
+            item = underlying(url, **kwargs)
+            seen.append((kwargs.get("role"), url))
+            return item
+
+        reader.read = record
+        inventory = reader.read(submissions_url(cik=int(cik)),
+                                role="sec_submissions_inventory",
+                                media_type="application/json")
+        prepared = {"company_id": self.COMPANY, "entity": cik,
+                    "table_input": {"target_period": window}}
+        _event_sources(repo_root=ROOT, reader=reader, prepared=prepared,
+                       inventory=inventory)
+        return {url for role, url in seen if role in ("fy_8k_primary", "fy_8k_header")}
+
+    def test_the_declaration_for_a_period_is_exactly_what_the_route_reads(self):
+        candidate, window, ciks = self._newest()
+        self.assertEqual(1, len(ciks), "this company has one registrant")
+        consumed = self._urls_the_route_reads(window, ciks[0])
+        self.assertTrue(consumed, "the route reads event sources for this window")
+        declared = self._declared_for(candidate["report_date"])
+        self.assertEqual(sorted(consumed), sorted(declared))
+
+    def _declared_for(self, label):
+        rows = _events(self.COMPANY)["requirements"]
+        return {row["source_url"] for row in rows
+                if row["dependency_class"] == "FISCAL_EVENT_FILING"
+                and any(str(c).startswith("period:" + label + ":")
+                        for c in row["consumers"])}
+
+    def test_each_filing_is_declared_as_a_body_and_a_header(self):
+        # Two requests per accession is measured, not assumed, and a
+        # declaration that named only the body would halve the plan while
+        # looking complete.
+        candidate, window, ciks = self._newest()
+        rows = [row for row in _events(self.COMPANY)["requirements"]
+                if row["dependency_class"] == "FISCAL_EVENT_FILING"]
+        by_accession = {}
+        for row in rows:
+            by_accession.setdefault(row["accession"], set()).update(row["source_roles"])
+        self.assertTrue(by_accession)
+        for accession, roles in by_accession.items():
+            self.assertEqual({"fy_8k_primary", "fy_8k_header"}, roles, accession)
+
+    def test_the_consumers_are_the_metrics_that_read_them(self):
+        candidate, window, ciks = self._newest()
+        label = candidate["report_date"]
+        rows = [row for row in _events(self.COMPANY)["requirements"]
+                if row["dependency_class"] == "FISCAL_EVENT_FILING"
+                and any(str(c).startswith("period:" + label + ":") for c in row["consumers"])]
+        self.assertTrue(rows)
+        for row in rows:
+            self.assertEqual(sorted("period:" + label + ":" + metric
+                                    for metric in EVENT_METRICS),
+                             sorted(row["consumers"]))
+
+
+class AnUnderivableWindowDeclaresNothingRatherThanNoFilings(unittest.TestCase):
+    """A period nothing can be enumerated for must not read as "no sources".
+
+    The window comes from the target year's own document - the start date is
+    in its DEI context, not in the submissions row - so a year whose primary
+    is not saved has no derivable window. Declaring zero filings there and
+    declaring nothing there look identical in a plan and mean the opposite
+    things, so the limitation is named and the period declares nothing.
+    """
+
+    COMPANY = "marriott_international"
+
+    def test_a_period_without_its_primary_is_a_named_limitation(self):
+        declaration = _events(self.COMPANY)
+        blocked = [item for item in declaration["limitations"]
+                   if item["kind"] == "EVENT_WINDOW_NOT_DERIVABLE"]
+        self.assertTrue(blocked, "earlier years have no saved primary in this repository")
+        for item in blocked:
+            self.assertIn("SAVED_SOURCE_MISSING:", item["reason"])
+            self.assertEqual(sorted(EVENT_METRICS),
+                             sorted(item["blocks_declaration_for_metrics"]))
+            declared = [row for row in declaration["requirements"]
+                        if any(str(c).startswith("period:" + item["report_date"] + ":")
+                               for c in row["consumers"])]
+            self.assertEqual([], declared,
+                             "a period with no derivable window declares nothing")
+
+    def test_the_limitation_names_the_file_that_would_unblock_it(self):
+        # The ordering it states is real: the event dependencies of a past
+        # year only become listable after that year's annual primary lands.
+        declaration = _events(self.COMPANY)
+        blocked = [item for item in declaration["limitations"]
+                   if item["kind"] == "EVENT_WINDOW_NOT_DERIVABLE"][0]
+        url = blocked["reason"].split("SAVED_SOURCE_MISSING:", 1)[1]
+        row = historical_dependency(repo_root=ROOT, company_id=self.COMPANY, url=url)
+        self.assertEqual("ANNUAL_PERIOD_IDENTITY", row["dependency_class"])
+        self.assertTrue(row["new_acquisition_required"])
+
+
+class TheUnionIsOneDeclarationNotTwo(unittest.TestCase):
+    """The gate has to reach the event rows, and reach each of them once.
+
+    Before the union, every fiscal-year 8-K body and header was refused as
+    ``HISTORICAL_URL_IS_NOT_A_DECLARED_DEPENDENCY`` - the class did not exist
+    in the planner. After it, the other failure becomes possible: a URL both
+    sides declare appearing twice, which ``historical_dependency`` refuses as
+    a plan that stopped being deduplicated.
+    """
+
+    COMPANY = "marriott_international"
+
+    def test_an_event_body_and_header_resolve_through_the_gate(self):
+        frame = _frame(self.COMPANY)
+        events = [row for row in frame["requirements"]
+                  if row["dependency_class"] == "FISCAL_EVENT_FILING"]
+        self.assertTrue(events)
+        for role in ("fy_8k_primary", "fy_8k_header"):
+            row = next(r for r in events if role in r["source_roles"])
+            found = historical_dependency(repo_root=ROOT, company_id=self.COMPANY,
+                                          url=row["source_url"])
+            self.assertEqual(row["source_url"], found["source_url"])
+
+    def test_no_url_is_declared_twice_after_the_union(self):
+        for company in (self.COMPANY, "jpmorgan_chase"):
+            with self.subTest(company=company):
+                urls = [row["source_url"] for row
+                        in _frame(company)["requirements"]]
+                self.assertEqual(len(urls), len(set(urls)))
+
+    def test_the_recorded_scope_covers_every_class_the_declaration_emits(self):
+        # Where the omission shows up first. The recorded default listed four
+        # classes; the declaration emitted five even before the event class,
+        # so a recorded capture of a history shard was impossible and nothing
+        # said so - the gap surfaced only when adding a sixth broke an
+        # unrelated case. Derived from the declaration, so the next class
+        # fails here.
+        import inspect as _inspect
+        default = _inspect.signature(recorded_historical_session)\
+            .parameters["dependency_classes"].default
+        company = _inspect.signature(recorded_historical_session)\
+            .parameters["company_ids"].default[0]
+        emitted = {row["dependency_class"] for row
+                   in _frame(company)["requirements"]}
+        self.assertEqual([], sorted(emitted - set(default)))
+
+    def test_a_url_both_sides_declare_keeps_both_sets_of_roles(self):
+        # The submissions index is declared by the planner for the frame and by
+        # the event declaration for the enumeration; merging must not drop
+        # either side's consumers, or a row would be in scope for one purpose
+        # and silently out of scope for the other.
+        frame = _frame(self.COMPANY)
+        shared = [row for row in frame["requirements"] if row.get("also_declared_by")]
+        self.assertTrue(shared, "the two declarations overlap on the submissions index")
+        for row in shared:
+            self.assertIn("historical_event_sources", row["also_declared_by"])
+            self.assertTrue(any(str(c).startswith("period:") for c in row["consumers"]))
+            self.assertTrue(any(not str(c).startswith("period:") for c in row["consumers"]))

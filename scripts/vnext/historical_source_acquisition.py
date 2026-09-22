@@ -127,12 +127,48 @@ def declared_frame(*, repo_root: Path, company_id: str, years: int = 5):
     several metrics across every period. Those carry no ``period:`` consumer,
     and the target window they serve is the frame's.
     """
+    # Imported here because that module imports this one's error type; the
+    # declaration is a successor to the planner, not a layer above it.
+    from .historical_event_sources import declare_event_sources
     plan = plan_historical_sources(repo_root=Path(repo_root), company_id=company_id,
                                    count=years)
     targets = sorted({candidate["report_date"] for candidate in plan["target_candidates"]
                       if candidate.get("report_date")})
-    return {"requirements": list(plan["requirements"]), "target_report_dates": targets,
-            "company_id": company_id, "plan_id": plan["plan_id"]}
+    # The planner declares four dependency classes and no event class, so the
+    # fiscal-year 8-K bodies and headers the zero-AI route reads for C01 and
+    # E01-E05 were refused by the gate as undeclared - every one of them. The
+    # planner is a NEW_RULE_FILE of this generation and extending it would move
+    # the closure the last batch's frozen Runs were produced under, so the
+    # event declaration is made beside it and unioned here.
+    events = declare_event_sources(repo_root=Path(repo_root), company_id=company_id,
+                                   count=years)
+    requirements = _union(planned=plan["requirements"], added=events["requirements"])
+    return {"requirements": requirements, "target_report_dates": targets,
+            "company_id": company_id, "plan_id": plan["plan_id"],
+            "event_declaration_limitations": events["limitations"]}
+
+
+def _union(*, planned, added):
+    """One row per URL, with both declarations' roles and consumers kept.
+
+    A URL both sides declare is one requirement, not two: ``historical_dependency``
+    refuses a URL the declaration lists twice, because a plan that stopped
+    being deduplicated is a different problem from a missing file. The planner's
+    row wins on the saved-state fields - it and the successor classify through
+    the same ``_saved_state``, so they agree, and preferring one of them keeps
+    that agreement checkable instead of assumed.
+    """
+    merged = {row["source_url"]: dict(row) for row in planned}
+    for row in added:
+        existing = merged.get(row["source_url"])
+        if existing is None:
+            merged[row["source_url"]] = dict(row)
+            continue
+        existing["source_roles"] = sorted(set(existing["source_roles"])
+                                          | set(row["source_roles"]))
+        existing["consumers"] = sorted(set(existing["consumers"]) | set(row["consumers"]))
+        existing.setdefault("also_declared_by", []).append(row["declared_by"])
+    return [merged[url] for url in sorted(merged)]
 
 
 def declared_dependencies(*, repo_root: Path, company_id: str, years: int = 5):
