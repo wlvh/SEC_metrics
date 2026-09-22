@@ -121,6 +121,10 @@ SOURCE_TESTS += ("tests.vnext.test_native_assessment_replay",)
 SOURCE_TESTS += ("tests.vnext.test_normal_history_catalog",)
 SOURCE_TESTS += ("tests.vnext.test_historical_period_results",)
 SOURCE_TESTS += ("tests.vnext.test_historical_coverage",)
+# Issue #47's acquisition chain installs the saved corpus and drives real
+# attempt and checkpoint primitives over recorded responses, so it reads
+# saved sources; it opens no socket, asserted by counting connects.
+SOURCE_TESTS += ("tests.vnext.test_historical_sec_session",)
 # A D02 Result held another item's text, passed every check and was published as
 # EXACT. This is the boundary that ends it and the control cases that stop the
 # boundary from cutting an item's own body, so it reads two filings in full.

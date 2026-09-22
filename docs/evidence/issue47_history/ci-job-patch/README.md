@@ -169,3 +169,33 @@ against `fc95cca`, singly and in sequence, and still apply. Until someone whose
 token carries the `workflows` permission applies them, this PR cannot reach a
 green terminal for reasons that have nothing to do with its diff, and a
 `cancelled` run must not be read as a pass in either direction.
+
+### Both capacity jobs measured locally, and `0002` revised because of it
+
+Both jobs that `0002` covers were run to completion in this development
+container, which is the measurement the earlier notes could not have: every CI
+observation of them is a cap, not a duration, because the cap is what stopped
+them.
+
+| job | local | passes | CI cap today |
+|---|---|---|---|
+| `capacity native Runs` (2 cases) | 1136.4s = 18m56s | yes | 15m |
+| `capacity program-role` (1 case) | 1803.4s = 30m03s | yes | 20m |
+
+Neither has an assertion problem. Both simply need more than they are allowed.
+
+Projecting onto CI uses the one job measured in both places: CI ran
+`capacity native Runs` to completion once, at 879.8s, against 1136.4s here, so
+this container is about **1.29x slower**. That puts `capacity native Runs` at
+roughly 14.7 minutes in CI and `capacity program-role` at roughly **23.3**.
+
+So `0002`'s original 30 for the program-role job was revised to **35**. 30
+would have left 6.7 minutes of headroom on a job that has already been
+cancelled twice, and a cap set just above the estimate is a cap that fails
+again on a slower-than-usual runner - which is how this job got here. 25 for
+`capacity native Runs` is unchanged: at roughly 14.7 minutes it has about ten
+minutes of headroom, and 25 is a cap already used elsewhere in the file.
+
+The ratio rests on a single job measured in both places, so it is an estimate
+and is written as one. What is not an estimate is that both jobs pass and that
+both exceed their current caps.

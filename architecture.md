@@ -1199,3 +1199,26 @@ Run）。执行缺席：`continuous_sec_acquisition.live_sec_session` 硬绑 `is
 `source_planner_parses_one_accession_per_established_period: True`，并说明为什么后者不是
 评估（读 pinned 申报自己的 DEI 上下文确认财年，不进入任何指标）。回归另覆盖三种区分：
 过去失败而今天准备成功、从未尝试而今天会被拒绝、以及内部程序异常。
+
+**Issue #47 的获取执行链**（`scripts/vnext/historical_sec_session.py`，非规则文件，入口
+`tools/vnext_historical_sec.py capture` 与 `wiring-receipt`）。三个新东西：`HistoricalCallLedger`
+是本 Issue 自己的累计计数（自己的根、自己的上限、fcntl 进程锁）；`HistoricalSecSession.capture`
+把声明门、claim、请求、不可变保存、逐行核验的追加与来源安装串成一次；
+`verify_offline_wiring` 让真实许可必须绑定一份跑出来的离线接线收据。
+
+**计数按 slot 而不是按结果**，所以失败天然计数：slot 在请求之前写下且永不删除。缺
+terminal 的 slot 让该通道停下——claim 之前与 **capture 开头**各检查一次。后者不是冗余：
+已保存短路在 claim 之前返回，所以只在 claim 处检查时，上一个 slot 缺 terminal 的会话仍会
+答"已保存、不需要调用"，而那是一个它无法为之担保的总账上算出来的答案。
+
+**凭据来自冻结代码**。`register_checkpoint` 写出的记录是
+`ORDINARY_SEC_ACQUISITION_CHECKPOINT`，由 `continuous_sec_acquisition.
+validate_acquisition_checkpoint` 重放；该函数被 `issue_28_v14` 按字节绑定，本 Issue 改不动。
+因此 `historical_sec_session.py` 不需要成为规则文件：来源凭据不落在它的字节上。遵守一个
+冻结验证器的契约，比自带一个私有验证器是更强而不是更弱的主张。未经修改的
+`ordinary_source_authority.checkpoint_installation` 与 `verify_ordinary_source_proofs`
+实测接受它产出的来源。
+
+**归属与凭据分开**。共享 journal 里的那条记录带 mode 与 captures、不带 Issue，所以它本身
+不是 #47 信用；`issue_47_v1` 写在本 Issue 总账的每个 slot 和旁边的 attribution 记录里。把
+这一点写出来，是因为下游按总账哈希查 journal，查到的东西不会告诉你是谁的额度付的账。

@@ -1,0 +1,26 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "capture_status": "SUCCEEDED",
+ "chain_executed_over_recorded_responses": true,
+ "checkpoint_validated_by": "continuous_sec_acquisition.validate_acquisition_checkpoint, frozen under issue_28_v14 and not editable from this issue",
+ "downstream_reader_accepted": true,
+ "evidence": {
+  "scripts/vnext/historical_sec_session.py": "ebe546350bc134a26fffbc2b1352a210425064b34821b6716b00bc6beb915af2",
+  "scripts/vnext/historical_source_acquisition.py": "5f2e52a359685fe6d4b7feade1b026ed9a96f2291159ab106cda033eba421ddc",
+  "tests/vnext/test_historical_sec_session.py": "77882ee3794ec75871e9c1448c2e44137c3d52d1032ddb77ae1dd6399ffbfbf5",
+  "tools/vnext_historical_sec.py": "9cb1a062360758d50e11aa116a7f0eb017856d7353e5353496b9536c780d9e4c"
+ },
+ "execution_mode": "RECORDED_TEST_ONLY",
+ "fault_injections_caught": true,
+ "frozen_validator_routing_verified": true,
+ "production_authorized": false,
+ "real_sec_credit": false,
+ "receipt_id": "sha256:8f1f2aac675522ae598f40114c90c4a486499476deca780d4656a4c0f549adff",
+ "record_type": "ISSUE_47_SEC_ACQUISITION_OFFLINE_WIRING",
+ "requirement_id": "issue_47_v1",
+ "schema_version": 1
+}

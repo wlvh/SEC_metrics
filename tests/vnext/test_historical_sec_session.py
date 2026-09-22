@@ -1,0 +1,399 @@
+"""Issue #47's acquisition chain, offline: allowance, count, request, save, install.
+
+The chain is exercised with recorded responses because Issue #47 has no SEC
+allowance. That is the point of building it now rather than beside a grant: an
+execution path that first runs on the day it is authorized is a path nobody has
+run, and the failures in this repository's history are mostly of the shape
+"each part worked alone and the seam did not".
+
+The load-bearing cases here are the ones that would pass under a weaker
+implementation: that a failed request still consumes a call, that a claim with
+no terminal blocks the channel, that the provenance guarantee comes from the
+frozen validator rather than from a self-consistent record, and that nothing
+in the recorded path opens a socket.
+"""
+from pathlib import Path
+from unittest.mock import patch
+import json
+import shutil
+import socket
+import tempfile
+import unittest
+
+from vnext.canonical import content_hash, strict_json_file
+from vnext.continuous_sec_acquisition import validate_acquisition_checkpoint
+from vnext.historical_sec_session import (HistoricalSessionError,
+                                          install_historical_source_inputs,
+                                          live_historical_session,
+                                          recorded_historical_session,
+                                          verify_offline_wiring)
+from vnext.historical_source_acquisition import (POLICY_PATH,
+                                                 HistoricalAcquisitionError)
+from vnext.normal_source_authority import MANIFEST_PATH, ROOT
+
+# A declared Marriott dependency: the prior annual primary accession index that
+# B02 reads. Taken from the planner's own output, not written by hand.
+DECLARED = ("https://www.sec.gov/Archives/edgar/data/1048286/"
+            "000162828021002433/index.json")
+OTHER_COMPANY = "ford_motor_company"
+BODY = json.dumps({"directory": {"item": [], "name": "recorded-development-fixture"}}).encode()
+
+
+def _seal(body, field):
+    return {**body, field: content_hash(value=body)}
+
+
+class _Chain:
+    """One successful recorded capture, installed once and copied per test.
+
+    Installing the baseline corpus is the expensive step and it is an input,
+    never the thing under assertion, so sharing it does not weaken a case.
+    """
+
+    root = None
+    result = None
+
+    @classmethod
+    def build(cls):
+        if cls.root is not None:
+            return
+        cls.root = Path(tempfile.mkdtemp(prefix="issue47-chain-"))
+        session = recorded_historical_session(root=cls.root / "ledger", response=BODY)
+        cls.result = session.capture(company_id="marriott_international", url=DECLARED)
+
+    @classmethod
+    def copy(cls, destination):
+        cls.build()
+        shutil.copytree(cls.root / "ledger", destination)
+        return destination
+
+
+class TheChainProducesASourceTheExistingReaderAccepts(unittest.TestCase):
+    """The deliverable is not a receipt; it is a source something can read."""
+
+    @classmethod
+    def setUpClass(cls):
+        _Chain.build()
+
+    def test_one_capture_runs_gate_request_save_and_checkpoint(self):
+        self.assertEqual(_Chain.result["status"], "SUCCEEDED")
+        self.assertEqual(_Chain.result["calls"], [0, 0, 0],
+                         "a recorded capture is not a real SEC call")
+        self.assertIs(_Chain.result["production_authorized"], False)
+        self.assertEqual(_Chain.result["terminal"]["counts"], [0, 0, 1],
+                         "the ledger still consumed its slot")
+
+    def test_the_unmodified_downstream_finds_and_verifies_the_source(self):
+        from vnext.ordinary_source_authority import (checkpoint_installation,
+                                                     verify_ordinary_source_proofs)
+        data_root = _Chain.root / "ledger/source-inputs"
+        checkpoint, paths = checkpoint_installation(source_root=data_root)
+        self.assertEqual(checkpoint["checkpoint_id"], _Chain.result["checkpoint_id"])
+        self.assertEqual(checkpoint["execution_mode"], "RECORDED_TEST_ONLY")
+        self.assertEqual(checkpoint["source_credit"], "RECORDED_TEST_ONLY")
+        self.assertTrue(paths, "the acquired attempt carries its body and headers")
+        proof = checkpoint["captures"][0]["receipt"]["proof"]
+        self.assertTrue(verify_ordinary_source_proofs(data_root=data_root, proofs=[proof]))
+
+    def test_attribution_is_separate_from_the_shared_checkpoint(self):
+        # The shared journal record carries mode and captures but not an issue,
+        # so reading it as Issue #47 credit would be reading in something that
+        # is not there. The attribution record beside this ledger is where the
+        # issue is named, and the ledger's own slots name it too.
+        from vnext.ordinary_source_authority import checkpoint_installation
+        checkpoint = checkpoint_installation(
+            source_root=_Chain.root / "ledger/source-inputs")[0]
+        self.assertNotIn("issue_47_v1", json.dumps(
+            {key: checkpoint[key] for key in
+             ("record_type", "execution_mode", "source_credit", "real_sec_credit")}),
+            "the shared record does not carry the issue")
+        written = sorted((_Chain.root / "ledger/acquisition-attribution").iterdir())
+        self.assertEqual(len(written), 1)
+        attribution = strict_json_file(path=written[0])
+        self.assertEqual(attribution["requirement_id"], "issue_47_v1")
+        self.assertEqual(attribution["checkpoint_id"], _Chain.result["checkpoint_id"])
+        self.assertEqual(attribution["ledger_sha256"], checkpoint["ledger_sha256"])
+        self.assertIn("not Issue #47 credit by itself",
+                      attribution["what_the_shared_checkpoint_does_not_say"])
+        slot = strict_json_file(path=_Chain.root / "ledger/calls/0001/intent.json")
+        self.assertEqual(slot["requirement_id"], "issue_47_v1")
+
+
+class TheGuaranteeComesFromTheFrozenValidator(unittest.TestCase):
+    """A self-consistent record is not provenance; the frozen replay is."""
+
+    @classmethod
+    def setUpClass(cls):
+        _Chain.build()
+
+    def _checkpoint(self):
+        from vnext.ordinary_source_authority import checkpoint_installation
+        return checkpoint_installation(source_root=_Chain.root / "ledger/source-inputs")[0]
+
+    def test_a_resealed_record_that_disagrees_with_the_ledger_is_rejected(self):
+        # Re-sealing keeps every hash self-consistent, so a validator that only
+        # checked its own seals would accept this. The row it names no longer
+        # matches the ledger, which is what must be caught.
+        data_root = _Chain.root / "ledger/source-inputs"
+        baseline = strict_json_file(path=ROOT / MANIFEST_PATH)
+        checkpoint = self._checkpoint()
+        capture = dict(checkpoint["captures"][0])
+        receipt = dict(capture["receipt"])
+        row = dict(receipt["ledger_row"])
+        row["content_sha256"] = "0" * 64
+        receipt["ledger_row"] = row
+        receipt.pop("receipt_id")
+        capture["receipt"] = _seal(receipt, "receipt_id")
+        altered = dict(checkpoint)
+        altered["captures"] = [capture]
+        altered.pop("checkpoint_id")
+        with self.assertRaises(Exception) as caught:
+            validate_acquisition_checkpoint(data_root, _seal(altered, "checkpoint_id"),
+                                            baseline)
+        self.assertIn("CHANGED", str(caught.exception))
+
+    def test_a_recorded_capture_cannot_be_relabelled_live(self):
+        data_root = _Chain.root / "ledger/source-inputs"
+        baseline = strict_json_file(path=ROOT / MANIFEST_PATH)
+        checkpoint = dict(self._checkpoint())
+        checkpoint["execution_mode"] = "LIVE"
+        checkpoint["real_sec_credit"] = True
+        checkpoint["source_credit"] = "VERIFIED_SEC_ACQUISITION"
+        checkpoint.pop("checkpoint_id")
+        with self.assertRaises(Exception) as caught:
+            validate_acquisition_checkpoint(data_root, _seal(checkpoint, "checkpoint_id"),
+                                            baseline)
+        self.assertIn("CHANGED", str(caught.exception))
+
+
+class TheSessionActuallyRoutesThroughTheFrozenValidator(unittest.TestCase):
+    """Proving the validator works is not proving this session calls it.
+
+    Added after a fault injection: replacing the ``validate_acquisition_
+    checkpoint`` call in ``register_checkpoint`` with ``pass`` left all the
+    other cases green, because they exercise the validator directly. The
+    module's central claim - that the provenance guarantee rests on frozen
+    code - had no case defending it.
+    """
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-routed-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def test_a_capture_calls_the_frozen_replay_once_on_what_it_enrolls(self):
+        import vnext.continuous_sec_acquisition as frozen
+        seen = []
+        real = frozen.validate_acquisition_checkpoint
+
+        def watched(data_root, checkpoint, baseline):
+            seen.append((Path(data_root), checkpoint))
+            return real(data_root, checkpoint, baseline)
+
+        session = recorded_historical_session(root=self.root / "ledger", response=BODY)
+        with patch.object(frozen, "validate_acquisition_checkpoint", watched):
+            result = session.capture(company_id="marriott_international", url=DECLARED)
+        self.assertEqual(len(seen), 1, "exactly one replay, over the whole ledger")
+        data_root, checked = seen[0]
+        self.assertEqual(data_root, session.data_root,
+                         "the replay must read this session's own installed root")
+        self.assertEqual(checked["checkpoint_id"], result["checkpoint_id"],
+                         "the record replayed is the record returned")
+
+    def test_a_refused_replay_enrolls_nothing(self):
+        from vnext.continuous_sec_acquisition import _journal
+        import vnext.continuous_sec_acquisition as frozen
+        session = recorded_historical_session(root=self.root / "ledger2", response=BODY)
+        before = set(_journal().iterdir()) if _journal().is_dir() else set()
+        with patch.object(frozen, "validate_acquisition_checkpoint",
+                          side_effect=ValueError("SEC_ACQUISITION_CHECKPOINT_MODE_CHANGED")):
+            with self.assertRaises(ValueError):
+                session.capture(company_id="marriott_international", url=DECLARED)
+        after = set(_journal().iterdir()) if _journal().is_dir() else set()
+        self.assertEqual(before, after,
+                         "a checkpoint the replay refused must not reach the journal")
+
+
+class TheGateRefusesWhatNothingDeclared(unittest.TestCase):
+    """The declaration is what may be fetched; the plan is not a suggestion."""
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-gate-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def test_an_undeclared_url_is_refused_by_name(self):
+        session = recorded_historical_session(root=self.root / "ledger", response=BODY)
+        undeclared = "https://www.sec.gov/Archives/edgar/data/1048286/undeclared.htm"
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            session.capture(company_id="marriott_international", url=undeclared)
+        self.assertIn("HISTORICAL_URL_IS_NOT_A_DECLARED_DEPENDENCY", str(caught.exception))
+        self.assertFalse((self.root / "ledger/calls").exists(),
+                         "a refused URL must not consume a slot")
+
+    def test_a_url_declared_for_one_company_is_not_declared_for_another(self):
+        # Load-bearing: a gate that accepted any declared URL regardless of
+        # company would pass the case above and fail only here.
+        session = recorded_historical_session(root=self.root / "ledger2", response=BODY)
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            session.capture(company_id=OTHER_COMPANY, url=DECLARED)
+        self.assertIn("HISTORICAL_URL_IS_NOT_A_DECLARED_DEPENDENCY", str(caught.exception))
+
+
+class TheCountIsCumulativeAndCountsFailures(unittest.TestCase):
+    """A ceiling that only counted successes would not be a ceiling."""
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-count-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def test_a_failed_request_consumes_its_call_and_admits_no_source(self):
+        ledger = self.root / "ledger"
+        session = recorded_historical_session(root=ledger, response=b"", status=404)
+        result = session.capture(company_id="marriott_international", url=DECLARED)
+        self.assertEqual(result["status"], "FAILED_TERMINAL")
+        self.assertIsNone(result["receipt"]["proof"],
+                          "a failed request cannot admit a source")
+        self.assertEqual(session.ledger.snapshot()["counts"], [0, 0, 1],
+                         "the failure still consumed a call")
+
+    def test_the_cumulative_limit_stops_the_next_capture(self):
+        ledger = self.root / "ledger-limit"
+        first = recorded_historical_session(root=ledger, response=BODY, limits=(0, 0, 1))
+        first.capture(company_id="marriott_international", url=DECLARED)
+        second = recorded_historical_session(root=ledger, response=BODY, limits=(0, 0, 1))
+        with self.assertRaises(HistoricalSessionError) as caught:
+            second.capture(company_id="marriott_international",
+                           url=DECLARED.replace("index.json", "mar-20201231.htm"))
+        self.assertIn("ISSUE_47_CUMULATIVE_LIMIT_REACHED", str(caught.exception))
+
+    def test_a_claim_with_no_terminal_blocks_the_channel(self):
+        # An intent with no terminal means the request may have gone out and
+        # nobody knows. Continuing past it is what makes a cumulative number
+        # untrustworthy, so it stops the channel rather than being skipped.
+        ledger = _Chain.copy(self.root / "lost")
+        (ledger / "calls/0001/terminal.json").unlink()
+        session = recorded_historical_session(root=ledger, response=BODY)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            session.capture(company_id="marriott_international", url=DECLARED)
+        self.assertIn("ISSUE_47_UNRESOLVED_TERMINAL_BLOCKS_THE_CHANNEL",
+                      str(caught.exception))
+        self.assertIn("0001", str(caught.exception))
+
+
+class TheGrantedPathIsSeparateFromTheTestPath(unittest.TestCase):
+    """Recorded work must not be able to write where a grant is counted."""
+
+    def test_live_refuses_while_issue_47_has_no_allowance_of_its_own(self):
+        self.assertFalse((ROOT / POLICY_PATH).exists(),
+                         "this case describes the current state; update it with the grant")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            live_historical_session()
+        self.assertIn("ISSUE_47_SEC_ALLOWANCE_NOT_GRANTED", str(caught.exception))
+        self.assertIn(POLICY_PATH, str(caught.exception))
+
+    def test_a_recorded_session_cannot_use_a_granted_budget_root(self):
+        from vnext.continuous_call_policy import POLICY_PATH as continuous
+        granted = strict_json_file(path=ROOT / continuous)["budget_root"]
+        with self.assertRaises(HistoricalSessionError) as caught:
+            recorded_historical_session(root=Path(granted), response=BODY)
+        self.assertIn("ISSUE_47_TEST_CANNOT_USE_A_GRANTED_LEDGER", str(caught.exception))
+
+    def test_a_recorded_session_refuses_to_be_handed_no_response(self):
+        with self.assertRaises(HistoricalSessionError) as caught:
+            recorded_historical_session(root=Path(tempfile.mkdtemp()), response=None)
+        self.assertIn("ISSUE_47_TRANSPORT_MODE_CHANGED", str(caught.exception))
+
+
+class AGrantMustBindToAWiringReceiptThatIsStillTrue(unittest.TestCase):
+    """The receipt is what makes "it was exercised offline" checkable later.
+
+    Issue #28's live path carries the same requirement. Without it, a grant
+    could point at a receipt written before the chain changed, which is the
+    same failure as a stale manifest: the evidence describes a version that is
+    no longer the one that would run.
+    """
+
+    RECEIPT = "docs/evidence/issue47_history/acquisition-wiring/offline-wiring-receipt.json"
+
+    def test_the_committed_receipt_verifies_against_the_current_tree(self):
+        receipt = verify_offline_wiring(receipt_path=self.RECEIPT)
+        self.assertEqual(receipt["requirement_id"], "issue_47_v1")
+        self.assertEqual(receipt["calls"], [0, 0, 0])
+        self.assertEqual(receipt["execution_mode"], "RECORDED_TEST_ONLY")
+        self.assertIs(receipt["real_sec_credit"], False)
+        self.assertIn("frozen under issue_28_v14", receipt["checkpoint_validated_by"])
+
+    def test_a_receipt_naming_a_changed_file_is_refused(self):
+        # Load-bearing: a check that only read the flags would pass every other
+        # case here and still accept a receipt for code that has since changed.
+        original = strict_json_file(path=ROOT / self.RECEIPT)
+        stale = dict(original)
+        stale["evidence"] = {**original["evidence"],
+                             "scripts/vnext/historical_sec_session.py": "0" * 64}
+        stale.pop("receipt_id")
+        scratch = Path(tempfile.mkdtemp(prefix="issue47-stale-"))
+        self.addCleanup(shutil.rmtree, scratch, ignore_errors=True)
+        relative = "docs/evidence/issue47_history/acquisition-wiring/stale.json"
+        target = ROOT / relative
+        self.addCleanup(target.unlink, missing_ok=True)
+        target.write_text(json.dumps(_seal(stale, "receipt_id")), encoding="utf-8")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            verify_offline_wiring(receipt_path=relative)
+        self.assertIn("ISSUE_47_OFFLINE_WIRING_EVIDENCE_CHANGED", str(caught.exception))
+        self.assertIn("historical_sec_session.py", str(caught.exception))
+
+    def test_a_receipt_claiming_success_it_did_not_have_is_refused(self):
+        original = strict_json_file(path=ROOT / self.RECEIPT)
+        forged = dict(original)
+        forged["chain_executed_over_recorded_responses"] = False
+        forged.pop("receipt_id")
+        relative = "docs/evidence/issue47_history/acquisition-wiring/forged.json"
+        target = ROOT / relative
+        self.addCleanup(target.unlink, missing_ok=True)
+        target.write_text(json.dumps(_seal(forged, "receipt_id")), encoding="utf-8")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            verify_offline_wiring(receipt_path=relative)
+        self.assertIn("ISSUE_47_OFFLINE_WIRING_CHANGED", str(caught.exception))
+
+
+class TheRecordedPathOpensNoSocket(unittest.TestCase):
+    """Zero egress is asserted by counting connects, not by trusting the mode."""
+
+    def test_a_whole_recorded_capture_makes_no_connection(self):
+        root = Path(tempfile.mkdtemp(prefix="issue47-egress-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        session = recorded_historical_session(root=root / "ledger", response=BODY)
+        with patch.object(socket.socket, "connect",
+                          side_effect=AssertionError("network forbidden")) as connect, \
+             patch.object(socket.socket, "connect_ex",
+                          side_effect=AssertionError("network forbidden")):
+            result = session.capture(company_id="marriott_international", url=DECLARED)
+        self.assertEqual(result["status"], "SUCCEEDED")
+        self.assertEqual(connect.call_count, 0)
+
+
+class TheInstallerCarriesTheRuleInputsItClaims(unittest.TestCase):
+    """The installed root must hold the configuration the manifest records."""
+
+    def test_the_presentation_path_under_config_is_excluded(self):
+        # It is installed from current bound code in the candidate runtime, and
+        # it is under config/, so "copy the data directories" is not a
+        # substitute for reading the parent's exclusion.
+        root = Path(tempfile.mkdtemp(prefix="issue47-install-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        install_historical_source_inputs(root=root / "source-inputs")
+        self.assertTrue((root / "source-inputs/config/company_registry.csv").is_file())
+        self.assertFalse(
+            (root / "source-inputs/config/ordinary_public_projection_v1.json").is_file(),
+            "the parent's presentation path must not be installed as a source input")
+
+    def test_an_unowned_existing_root_is_refused(self):
+        root = Path(tempfile.mkdtemp(prefix="issue47-unowned-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        (root / "source-inputs").mkdir()
+        with self.assertRaises(HistoricalSessionError) as caught:
+            install_historical_source_inputs(root=root / "source-inputs")
+        self.assertIn("ISSUE_47_SOURCE_ROOT_UNOWNED", str(caught.exception))
+
+
+if __name__ == "__main__":
+    unittest.main()

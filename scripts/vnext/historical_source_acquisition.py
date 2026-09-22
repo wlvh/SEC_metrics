@@ -42,9 +42,14 @@ REQUIREMENT_ID = "issue_47_v1"
 # own policy has. It does not exist, and that is the point: the refusal below
 # names a path rather than a feeling.
 POLICY_PATH = "config/issue47_historical_calls_v1.json"
+# ``sec_wiring_receipt_path`` mirrors the field Issue #28's own policy carries.
+# A grant has to name a receipt proving the execution chain was exercised
+# offline first, because an execution path that first runs on the day it is
+# authorized is a path nobody has run - which is how this issue's own
+# "each part worked alone and the seam did not" failures happened.
 REQUIRED_POLICY_FIELDS = ("requirement_id", "delegation_url", "delegation_body_sha256",
                           "budget_root", "maximum_additional_provider_paid_sec_calls",
-                          "scope")
+                          "scope", "sec_wiring_receipt_path")
 
 
 class HistoricalAcquisitionError(ValueError):
