@@ -40,6 +40,7 @@ def main(argv=None):
     if args.command != "wiring-receipt" and args.company is None:
         parser.error("--company is required for " + args.command)
     summary = None
+    session = None
     try:
         if args.command == "wiring-receipt":
             # Produced by driving the chain, not by describing it. A grant
@@ -77,8 +78,22 @@ def main(argv=None):
             result = session.capture(company_id=args.company, url=args.url,
                                      years=args.years)
     except HistoricalAcquisitionError as error:
-        print(json.dumps({"status": "REFUSED", "reason": str(error), "calls": [0, 0, 0]},
-                         sort_keys=True), file=sys.stderr)
+        # Not every refusal happens before a request. The receipt checks run
+        # after the transport, so reporting a flat [0, 0, 0] for any failure
+        # would under-report a call that had already gone out - and an
+        # under-reported call is exactly what makes a cumulative ceiling
+        # untrustworthy. Read the ledger instead of assuming.
+        calls, note = [0, 0, 0], "no ledger was opened before this refusal"
+        if session is not None:
+            try:
+                state = session.ledger.snapshot()
+                calls = state["counts"] if session.ledger.live else [0, 0, 0]
+                note = ("read from this issue's ledger after the refusal; "
+                        + str(len(state["blocked"])) + " slot(s) unresolved")
+            except Exception as unreadable:  # noqa: BLE001 - reported, not handled
+                calls, note = None, "ledger unreadable after the refusal: " + str(unreadable)
+        print(json.dumps({"status": "REFUSED", "reason": str(error), "calls": calls,
+                          "calls_source": note}, sort_keys=True), file=sys.stderr)
         return 2
     if args.output is not None:
         output = args.output.resolve()

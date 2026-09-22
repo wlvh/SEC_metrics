@@ -14,6 +14,7 @@ in the recorded path opens a socket.
 """
 from pathlib import Path
 from unittest.mock import patch
+import hashlib
 import json
 import shutil
 import socket
@@ -27,8 +28,12 @@ from vnext.historical_sec_session import (HistoricalSessionError,
                                           live_historical_session,
                                           recorded_historical_session,
                                           verify_offline_wiring)
-from vnext.historical_source_acquisition import (POLICY_PATH,
-                                                 HistoricalAcquisitionError)
+from vnext.historical_source_acquisition import (POLICY_PATH, DELEGATION_TYPE,
+                                                 HistoricalAcquisitionError,
+                                                 acquisition_allowance,
+                                                 declared_dependencies,
+                                                 historical_dependency,
+                                                 request_is_in_scope)
 from vnext.normal_source_authority import MANIFEST_PATH, ROOT
 
 # A declared Marriott dependency: the prior annual primary accession index that
@@ -393,6 +398,304 @@ class TheInstallerCarriesTheRuleInputsItClaims(unittest.TestCase):
         with self.assertRaises(HistoricalSessionError) as caught:
             install_historical_source_inputs(root=root / "source-inputs")
         self.assertIn("ISSUE_47_SOURCE_ROOT_UNOWNED", str(caught.exception))
+
+
+def _grant_tree(*, scope_overrides=None, body_overrides=None, digest=None, url=None):
+    """A tree holding a real, internally consistent Issue #47 allowance.
+
+    Built rather than fixtured, because every case below needs to move exactly
+    one field and see the refusal name that field.
+    """
+    root = Path(tempfile.mkdtemp(prefix="issue47-grant-"))
+    budget = Path(tempfile.mkdtemp(prefix="issue47-budget-"))
+    scope = {"purposes": ["historical_five_year_source_acquisition"],
+             "company_ids": ["marriott_international"],
+             "dependency_classes": ["ACCESSION_INSTANCE_DISCOVERY",
+                                    "ANNUAL_PERIOD_IDENTITY", "COMPANYFACTS",
+                                    "SUBMISSIONS_INDEX"],
+             "earliest_report_end": "2000-01-01",
+             "latest_report_end": "2099-12-31", **(scope_overrides or {})}
+    limits = [0, 0, 80]
+    approved = {"record_type": DELEGATION_TYPE, "requirement_id": "issue_47_v1",
+                "maximum_additional_provider_paid_sec_calls": limits,
+                "budget_root": str(budget), "scope": scope,
+                "production_authorized": False, **(body_overrides or {})}
+    body = json.dumps(approved, sort_keys=True)
+    comment_url = url or "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-1"
+    (root / "docs").mkdir(parents=True)
+    (root / "docs/delegation.json").write_text(
+        json.dumps({"html_url": comment_url, "body": body}), encoding="utf-8")
+    (root / "config").mkdir(parents=True)
+    (root / POLICY_PATH).write_text(json.dumps({
+        "requirement_id": "issue_47_v1", "delegation_url": comment_url,
+        "delegation_body_sha256": digest or hashlib.sha256(body.encode()).hexdigest(),
+        "delegation_record_path": "docs/delegation.json", "budget_root": str(budget),
+        "maximum_additional_provider_paid_sec_calls": limits, "scope": scope,
+        "sec_wiring_receipt_path": ("docs/evidence/issue47_history/"
+                                    "acquisition-wiring/offline-wiring-receipt.json"),
+    }), encoding="utf-8")
+    return root, budget
+
+
+class AnAllowanceMustBeVerifiedNotMerelyPresent(unittest.TestCase):
+    """Field presence is not authorization.
+
+    Reproduced before this was written: a policy carrying
+    ``delegation_url = "NOT-A-URL-AT-ALL"`` and
+    ``delegation_body_sha256 = "NOT-A-DIGEST"`` built a LIVE session and passed
+    the pre-request check, because no code path read the body those fields
+    describe.
+    """
+
+    def setUp(self):
+        self.made = []
+        self.addCleanup(lambda: [shutil.rmtree(p, ignore_errors=True)
+                                 for pair in self.made for p in pair])
+
+    def _tree(self, **kwargs):
+        pair = _grant_tree(**kwargs)
+        self.made.append(pair)
+        return pair
+
+    def test_a_valid_grant_is_read_hashed_and_accepted(self):
+        # The legal branch, exercised rather than assumed. A suite that only
+        # tested refusals would pass with a verifier that refuses everything.
+        root, budget = self._tree()
+        allowance = acquisition_allowance(repo_root=root)
+        self.assertEqual(allowance["requirement_id"], "issue_47_v1")
+        self.assertEqual(allowance["approved_delegation"]["record_type"], DELEGATION_TYPE)
+        self.assertEqual(allowance["budget_root"], str(budget))
+
+    def test_a_digest_that_matches_nothing_is_refused(self):
+        root, _ = self._tree(digest="0" * 64)
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root)
+        self.assertIn("ISSUE_47_DELEGATION_BODY_DOES_NOT_MATCH_ITS_DIGEST",
+                      str(caught.exception))
+
+    def test_a_non_digest_and_a_non_url_are_refused_by_shape(self):
+        root, _ = self._tree(digest="NOT-A-DIGEST")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root)
+        self.assertIn("ISSUE_47_ALLOWANCE_DIGEST_IS_NOT_A_SHA256", str(caught.exception))
+        root2, _ = self._tree(url="NOT-A-URL-AT-ALL")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root2)
+        self.assertIn("ISSUE_47_ALLOWANCE_URL_IS_NOT_AN_ISSUE_COMMENT",
+                      str(caught.exception))
+
+    def test_a_policy_cannot_grant_more_than_the_body_approved(self):
+        # Load-bearing: the policy file is a pointer to an approval, not a
+        # second place the approval can be written. A verifier that read the
+        # body but never compared it would pass every other case here.
+        root, _ = self._tree(body_overrides={
+            "scope": {"purposes": ["historical_five_year_source_acquisition"],
+                      "company_ids": ["marriott_international"],
+                      "dependency_classes": ["COMPANYFACTS"],
+                      "earliest_report_end": "2024-01-01",
+                      "latest_report_end": "2025-12-31"}})
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root)
+        self.assertIn("ISSUE_47_ALLOWANCE_WIDENS_THE_APPROVED_GRANT:scope",
+                      str(caught.exception))
+
+    def test_a_request_outside_the_approved_scope_is_refused_before_any_request(self):
+        root, budget = self._tree(scope_overrides={"company_ids": ["pfizer"]})
+        # The body must agree, or the widening check fires first.
+        record = json.loads((root / "docs/delegation.json").read_text())
+        allowance = json.loads((root / POLICY_PATH).read_text())
+        body = json.dumps({**json.loads(record["body"]),
+                           "scope": allowance["scope"]}, sort_keys=True)
+        record["body"] = body
+        (root / "docs/delegation.json").write_text(json.dumps(record), encoding="utf-8")
+        allowance["delegation_body_sha256"] = hashlib.sha256(body.encode()).hexdigest()
+        (root / POLICY_PATH).write_text(json.dumps(allowance), encoding="utf-8")
+        verified = acquisition_allowance(repo_root=root)
+        row = declared_dependencies(repo_root=ROOT,
+                                    company_id="marriott_international")[0]
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            request_is_in_scope(allowance=verified, company_id="marriott_international",
+                                dependency=row,
+                                purpose="historical_five_year_source_acquisition")
+        self.assertIn("ISSUE_47_COMPANY_NOT_IN_SCOPE", str(caught.exception))
+
+    def test_the_whole_legal_path_runs_over_recorded_transport(self):
+        # What the review asked for: not only "refuses when the file is
+        # missing", but a grant that is read, hashed, scope-checked and then
+        # actually used to capture.
+        root, budget = self._tree()
+        session = recorded_historical_session(root=budget / "ledger", response=BODY,
+                                              allowance_root=root)
+        result = session.capture(company_id="marriott_international", url=DECLARED)
+        self.assertEqual(result["status"], "SUCCEEDED")
+        self.assertEqual(result["calls"], [0, 0, 0])
+        plan = strict_json_file(path=budget / "ledger/calls/0001/sec-plan.json")
+        self.assertEqual(plan["scope_admission"]["company_id"], "marriott_international")
+        self.assertTrue(plan["scope_admission"]["periods"])
+
+
+class ATerminalFileIsNotAnOutcome(unittest.TestCase):
+    """Four states, because collapsing them is what hid the defect.
+
+    Reproduced before this was written: a terminal whose whole content was
+    ``{}``, and a sealed terminal recording ``UNKNOWN_REMOTE_OUTCOME``, both
+    stopped blocking the channel. Only an absent file blocked.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        _Chain.build()
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-terminal-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def _with_terminal(self, content, *, intent_id=None):
+        ledger = _Chain.copy(self.root / ("slot-" + str(len(list(self.root.iterdir())))))
+        slot = ledger / "calls/0001"
+        intent = strict_json_file(path=slot / "intent.json")
+        (slot / "terminal.json").unlink(missing_ok=True)
+        if content is not None:
+            body = content if intent_id is None else {**content, "intent_id": intent_id}
+            (slot / "terminal.json").write_text(json.dumps(body), encoding="utf-8")
+        session = recorded_historical_session(root=ledger, response=BODY)
+        del intent
+        try:
+            session.ledger.require_unblocked()
+            return None
+        except HistoricalSessionError as error:
+            return str(error)
+
+    def test_a_known_failure_resolves_the_slot_and_the_run_continues(self):
+        sealed = strict_json_file(
+            path=_Chain.root / "ledger/calls/0001/terminal.json")
+        failed = {k: v for k, v in sealed.items()
+                  if k not in {"terminal_id", "status", "stop_reason"}}
+        failed.update({"status": "FAILED_TERMINAL", "stop_reason": ""})
+        self.assertIsNone(self._with_terminal(_seal(failed, "terminal_id")),
+                          "a failure counts and does not block")
+
+    def test_a_sealed_unknown_outcome_does_not_resolve_it(self):
+        sealed = strict_json_file(
+            path=_Chain.root / "ledger/calls/0001/terminal.json")
+        unknown = {k: v for k, v in sealed.items()
+                   if k not in {"terminal_id", "status", "stop_reason"}}
+        unknown.update({"status": "UNKNOWN_REMOTE_OUTCOME",
+                        "stop_reason": "UNKNOWN_REMOTE_OUTCOME"})
+        message = self._with_terminal(_seal(unknown, "terminal_id"))
+        self.assertIsNotNone(message)
+        self.assertIn("OUTCOME_NOT_KNOWN", message)
+
+    def test_an_empty_terminal_does_not_resolve_it(self):
+        message = self._with_terminal({})
+        self.assertIsNotNone(message)
+        self.assertIn("TERMINAL_RECORD_DAMAGED", message)
+
+    def test_a_terminal_bound_to_another_intent_does_not_resolve_it(self):
+        sealed = strict_json_file(
+            path=_Chain.root / "ledger/calls/0001/terminal.json")
+        other = {k: v for k, v in sealed.items() if k != "terminal_id"}
+        other["intent_id"] = "sha256:" + "f" * 64
+        message = self._with_terminal(_seal(other, "terminal_id"))
+        self.assertIsNotNone(message)
+        self.assertIn("TERMINAL_BOUND_TO_ANOTHER_INTENT", message)
+
+    def test_an_absent_terminal_still_blocks(self):
+        message = self._with_terminal(None)
+        self.assertIsNotNone(message)
+        self.assertIn("TERMINAL_ABSENT", message)
+
+
+class BelongingToTheTaskIsNotNeedingAFetch(unittest.TestCase):
+    """Two questions the gate used to answer with one field.
+
+    Reproduced before this was written: an already-saved declared dependency
+    was refused as "not a declared dependency", and a planner row marked
+    ``SNAPSHOT_REFRESH`` - intact bytes that disagree with their index - was
+    short-circuited as a reuse and never reached a request.
+    """
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-gate2-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def test_an_already_saved_dependency_resolves_and_reports_reuse(self):
+        rows = declared_dependencies(repo_root=ROOT,
+                                     company_id="marriott_international")
+        saved = [r for r in rows if not r["new_acquisition_required"]]
+        self.assertTrue(saved, "this company has saved dependencies to test with")
+        row = historical_dependency(repo_root=ROOT,
+                                    company_id="marriott_international",
+                                    url=saved[0]["source_url"])
+        self.assertEqual(row["source_url"], saved[0]["source_url"])
+        session = recorded_historical_session(root=self.root / "ledger", response=BODY)
+        result = session.capture(company_id="marriott_international",
+                                 url=saved[0]["source_url"])
+        self.assertEqual(result["status"], "EXISTING_VERIFIED_SOURCE_REUSED")
+        self.assertEqual(result["calls"], [0, 0, 0])
+
+    def test_a_snapshot_refresh_row_reaches_a_request(self):
+        # Load-bearing: this row carries VERIFIED_SAVED_SOURCE *and*
+        # new_acquisition_required, so an implementation reading only the
+        # first field passes every other case and fails here.
+        rows = declared_dependencies(repo_root=ROOT,
+                                     company_id="marriott_international")
+        pending = [r for r in rows if r["new_acquisition_required"]][0]
+        stale = {**pending, "saved_status": "VERIFIED_SAVED_SOURCE",
+                 "new_acquisition_required": True,
+                 "acquisition_kind": "SNAPSHOT_REFRESH"}
+        session = recorded_historical_session(root=self.root / "refresh", response=BODY)
+        with patch("vnext.historical_sec_session.historical_dependency",
+                   return_value=stale):
+            result = session.capture(company_id="marriott_international",
+                                     url=stale["source_url"])
+        self.assertEqual(result["status"], "SUCCEEDED",
+                         "a refresh must reach a request, not report reuse")
+
+
+class DeletingEvidenceMustNotReduceTheCheck(unittest.TestCase):
+    """Reproduced: a receipt carrying ``evidence: {}`` was accepted."""
+
+    RECEIPT = "docs/evidence/issue47_history/acquisition-wiring/offline-wiring-receipt.json"
+
+    def _write(self, receipt, name):
+        relative = "docs/evidence/issue47_history/acquisition-wiring/" + name
+        target = ROOT / relative
+        self.addCleanup(target.unlink, missing_ok=True)
+        target.write_text(json.dumps(receipt), encoding="utf-8")
+        return relative
+
+    def test_an_empty_evidence_set_is_refused(self):
+        original = strict_json_file(path=ROOT / self.RECEIPT)
+        empty = {k: v for k, v in original.items() if k != "receipt_id"}
+        empty["evidence"] = {}
+        relative = self._write(_seal(empty, "receipt_id"), "_empty.json")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            verify_offline_wiring(receipt_path=relative)
+        self.assertIn("ISSUE_47_OFFLINE_WIRING_EVIDENCE_SET_CHANGED", str(caught.exception))
+
+    def test_dropping_one_required_file_is_refused_by_name(self):
+        original = strict_json_file(path=ROOT / self.RECEIPT)
+        dropped = {k: v for k, v in original.items() if k != "receipt_id"}
+        gone = "scripts/vnext/historical_sec_session.py"
+        dropped["evidence"] = {k: v for k, v in original["evidence"].items() if k != gone}
+        relative = self._write(_seal(dropped, "receipt_id"), "_dropped.json")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            verify_offline_wiring(receipt_path=relative)
+        self.assertIn(gone, str(caught.exception))
+
+    def test_a_verification_run_that_did_not_pass_is_refused(self):
+        # The acceptance claim is a recorded outcome, so a receipt claiming a
+        # run that failed must not confer a grant.
+        original = strict_json_file(path=ROOT / self.RECEIPT)
+        bad = {k: v for k, v in original.items() if k != "receipt_id"}
+        bad["verification_run"] = {**original["verification_run"],
+                                   "failures": 1, "passed": False, "return_code": 1}
+        relative = self._write(_seal(bad, "receipt_id"), "_failedrun.json")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            verify_offline_wiring(receipt_path=relative)
+        self.assertIn("ISSUE_47_OFFLINE_WIRING_VERIFICATION_RUN_DID_NOT_PASS",
+                      str(caught.exception))
 
 
 if __name__ == "__main__":

@@ -121,31 +121,44 @@ def attempt_for_position(*, records, company_id: str, metric_id: str, report_end
         "re_derived_now": False,
         "records": len(found),
         "artifacts": sorted({entry["artifact"] for entry in found}),
-        "failed_records": [{"case": entry.get("case"), "error": entry.get("error"),
-                            "error_type": entry.get("error_type"),
-                            "stop_stage": _stop_stage(entry.get("error_type")),
-                            "selection_id": entry.get("selection_id")}
+        # What the record actually holds is kept apart from what is derived
+        # from it. The batch wrote a case, an error and an error type; it did
+        # not write a stop stage or an execution version. Presenting a derived
+        # stage beside a recorded error, in one flat shape, makes the two read
+        # as equally observed - which is the same mistake as reporting a
+        # closure the record never carried.
+        "failed_records": [{"recorded": {"case": entry.get("case"),
+                                         "error": entry.get("error"),
+                                         "error_type": entry.get("error_type"),
+                                         "selection_id": entry.get("selection_id")},
+                            "inferred": {"stop_stage": _stop_stage(entry.get("error_type")),
+                                         "from": "the recorded error type alone",
+                                         "recorded_by_the_batch": False}}
                            for entry in failures],
         "records_claiming_a_run": len(ran),
-        # The records carry the position, the stage and the route's own error.
-        # They do not carry a Requirement closure, so this is the closure the
-        # report is scoped to, not one the record asserted.
-        "execution_identity": {
+        "execution_version_recorded_by_the_batch": None,
+        "why_the_execution_version_is_unproven": (
+            "the batch artifacts carry the position, the case and the route's own "
+            "error; they do not carry the Requirement closure or engine the attempt "
+            "ran under. A later batch can record it; it cannot be recovered from "
+            "these records."),
+        "report_context": {
             "requirement_closure_hash": report_closure,
-            "source": ("the report's own closure selector; the attempt records do "
-                       "not carry one" if report_closure is not None else
-                       "not established - no closure was requested and the records "
-                       "do not carry one"),
+            "this_is": ("the closure this report was scoped to, supplied by its "
+                        "caller. It is context for reading the record, not a fact "
+                        "the record asserted about the attempt."),
         },
     }
 
 
 def _stop_stage(error_type):
-    """Where the attempt stopped, as far as the recorded error type says.
+    """Where the attempt probably stopped, derived from the recorded error type.
 
     The runner records the exception class, which separates the two stages it
     can stop in - assembling the Run's inputs, or creating and freezing the Run
-    - without needing the runner to have labelled them.
+    - without the runner having labelled them. That makes this an inference
+    from one recorded field, not a stage the batch observed, and callers are
+    handed it under an ``inferred`` key for that reason.
     """
     if error_type is None:
         return None

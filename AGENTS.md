@@ -540,3 +540,19 @@ Issue #47 获取执行链已离线接通（`scripts/vnext/historical_sec_session
 **四次注错，两次找到真缺口**。(1)只数成功的slot→失败用例抓住。(2)去掉capture开头的`require_unblocked()`→用例抓住，而这个检查**本来就是写用例时发现的真bug**：已保存短路在claim之前返回，于是上一个slot缺terminal的会话仍会答"已保存、不需要调用"——**看起来最无害的那个答案正是漏过去的那个**。(3)把`register_checkpoint`里的验证器换成`pass`→**16个用例全绿**：它们都直接调验证器，"验证器管用"不等于"这个会话调了它"，模块的核心主张当时没有任何用例守着。新增`TheSessionActuallyRoutesThroughTheFrozenValidator`包住真验证器，要求对本会话自己的安装根恰好调用一次、且返回的就是被重放的那条记录；另一条要求被拒绝的重放**什么都不入账**。(4)先入账后验证→由(3)新增的第二条抓住。
 
 **真实许可必须绑定离线接线收据**：`REQUIRED_POLICY_FIELDS`新增`sec_wiring_receipt_path`（与#28同形），`live_historical_session`在构造任何传输之前核验该收据并逐个重算它点名的四个文件哈希。收据由`tools/vnext_historical_sec.py wiring-receipt`**跑一遍链路**产生而不是描述出来。**改了那四个文件中任何一个都要重新生成**——包括测试文件，因为收据的`fault_injections_caught`正是靠那些用例成立，削弱它们就必须让收据失效。这与`vnext_mint_historical_requirement.py`是同一条纪律，跳过它也是同一种失效形态。零SEC请求，全部记录`RECORDED_TEST_ONLY`/`real_sec_credit:false`，recorded构造器拒绝任何已配置预算根；获取计划的范围、上限与计数规则不变，#28额度不读不借。材料见`docs/evidence/issue47_history/acquisition-wiring/`。
+
+Issue #47 外部审阅(GPT-6 Pro,对`2293330`)点名获取链四处缺陷,**四条全部先复现再修**——审阅是线索,复现才是事实。**"只缺许可、执行链已完成"这句撤回。**
+
+**(1) 许可只验字段存在,不验授权成立。** `live_historical_session`只检查`delegation_url`与`delegation_body_sha256`非空,没有任何代码读取这两个字段所描述的正文,也没有把请求与获批范围逐项核对。实测:一份`delegation_url="NOT-A-URL-AT-ALL"`、`delegation_body_sha256="NOT-A-DIGEST"`的配置**构造出了LIVE会话并通过请求前检查**。**没有东西去哈希的摘要只是装饰。**现在:字段逐个定型(64位十六进制、issue-comment 形状的URL、三个非负上限、带公司/依赖类/期间窗口的scope);按`delegation_record_path`读出获批正文并重算哈希与声明摘要比对;并要求正文本身复述上限、账本根与scope——**政策文件是指向一次批准的指针,不是批准可以第二次被写下的地方**。每次capture再经`request_is_in_scope`按公司、依赖类与该依赖服务的目标期间核对。
+
+**(2) 终态文件存在被当成结果已知。** `snapshot()`只问`terminal.json`在不在,而`capture`对未知结果**同样**写终态,于是这条规则唯一存在理由的那种情况正是它不再拦截的。实测四种:无文件→拦(符合预期);已知失败→放行(符合"失败计数后继续");**已封存的`UNKNOWN_REMOTE_OUTCOME`→放行**;**内容只有`{}`→放行**。现在分四种状态并在拒绝里点名:`TERMINAL_ABSENT`/`TERMINAL_RECORD_DAMAGED`/`TERMINAL_BOUND_TO_ANOTHER_INTENT`/`OUTCOME_NOT_KNOWN:<status>`,只有"格式正确、绑定本intent、记录已知结果"的终态才解除阻塞。
+
+**(3) "属于任务"与"现在要不要取"是同一个字段。** 两个方向都实测到:已保存的声明依赖被判成**"非声明依赖"**(准入只搜未决行,所以门后那条复用分支根本到不了);而规划器标记`SNAPSHOT_REFRESH`的行同时带`VERIFIED_SAVED_SOURCE`和`new_acquisition_required`(字节完整但与所属索引不一致),`capture`只读第一个字段就返回复用,**刷新永远到不了请求**。现在`declared_dependencies`回答前者、`new_acquisition_required`回答后者,分开问。
+
+**(4) 接线收据能靠自报标志通过,删光证据反而不检查。** `verify_offline_wiring`遍历收据自己列出的证据,所以`evidence:{}`**被接受**——循环跑零次。生成器又把`frozen_validator_routing_verified`与`fault_injections_caught`无条件写成真,而它两样都没跑:**文件哈希证明测试文件是哪个版本,不证明那个版本被执行过并通过**。现在证据集必须逐项等于`REQUIRED_WIRING_EVIDENCE`(删一个文件是删掉资格而不是删掉检查);收据带`verification_run`块,是子进程实跑套件的实测结果;故障注入要改源码重跑、任何单进程都做不到,所以移入收据所哈希的`fault-injections.json`而不是写成布尔值。生成器**明确排除**验证本收据的那个类并把排除写进收据——否则证据自循环。
+
+**对"冻结验证器"的推论收窄**:复用`validate_acquisition_checkpoint`是对的,要求本会话真正调用它的两条用例保留。但它证明的是"保存原件、请求行、不可变尝试与来源凭据彼此相符",**不证明**授权有效、请求在范围内、累计计数完整、未知结果会停机、或陈旧快照会被刷新——上面四条缺陷恰好全部落在这个缝里。所以"来源校验落在冻结代码上"从来不意味着本模块自己的字节不需要纪律。
+
+**尝试记录区分"记录的"与"推断的"**:批次写了case/error/error_type,没写停止阶段也没写执行版本。现在`failed_records`分`recorded`与`inferred`两块(后者自带`recorded_by_the_batch:False`),`execution_version_recorded_by_the_batch`恒为null并说明不可从这些记录恢复,报表closure移到`report_context`并写明"这是读这条记录的上下文,不是记录对当时尝试的断言"。CLI的失败输出也不再一律写零调用——请求之后的收据检查也会失败,届时按实际账本读取并标明来源。
+
+**仍未做且已点名**:`plan_historical_sources`声明的四个依赖类里**没有事件窗口的8-K正文与头文件**(获取计划量到485份申报/970次尝试),所以这里那个Marriott年度索引的成功例子**不能证明事件类已接通——它没有**。该文件是`issue_47_v1`的`NEW_RULE_FILE`,扩展它会移动closure、让上一批343个冻结Run不再是"届时会运行的版本"的证据;正确修法是在非closure绑定的文件里写后继声明、与规划器的行取并集,尚未动手。材料见`docs/evidence/issue47_history/acquisition-wiring/`。

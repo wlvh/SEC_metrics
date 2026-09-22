@@ -1,0 +1,44 @@
+{
+ "record_type": "ISSUE_47_ACQUISITION_FAULT_INJECTIONS",
+ "schema_version": 1,
+ "why_this_is_a_file_and_not_a_boolean": "A fault injection means editing the source and re-running the suite. The receipt builder runs in one process against one tree, so it cannot perform one, and a builder that writes fault_injections_caught: true regardless is asserting something it did not observe. This records what was actually run, so the claim can be checked rather than believed.",
+ "method": "Each injection replaced the named code in scripts/vnext/historical_sec_session.py, then tests.vnext.test_historical_sec_session was run in full and the file restored from a copy taken beforehand.",
+ "injections": [
+  {
+   "id": "COUNT_ONLY_SUCCESSFUL_SLOTS",
+   "edit": "snapshot() increments counts only when terminal.json exists and its status is SUCCEEDED",
+   "why_it_matters": "a ceiling that ignores failures is not a ceiling",
+   "outcome": "CAUGHT",
+   "caught_by": ["TheCountIsCumulativeAndCountsFailures.test_a_failed_request_consumes_its_call_and_admits_no_source"],
+   "suite_result": "FAILED (failures=1) of 16"
+  },
+  {
+   "id": "DROP_THE_EARLY_UNBLOCKED_CHECK",
+   "edit": "capture() no longer calls ledger.require_unblocked() before installing sources",
+   "why_it_matters": "the already-saved short circuit returns before the claim, so without the early check a session whose previous slot has no terminal still answers 'already saved, no call needed' against a ledger it cannot account for. This injection reproduces a real bug that writing the case had found.",
+   "outcome": "CAUGHT",
+   "caught_by": ["TheCountIsCumulativeAndCountsFailures.test_a_claim_with_no_terminal_blocks_the_channel"],
+   "suite_result": "FAILED (errors=1) of 16"
+  },
+  {
+   "id": "SKIP_THE_FROZEN_VALIDATOR",
+   "edit": "register_checkpoint() replaces the validate_acquisition_checkpoint call with pass",
+   "why_it_matters": "this is the module's central claim - that the provenance guarantee rests on code this issue cannot edit",
+   "outcome": "NOT_CAUGHT_UNTIL_TWO_CASES_WERE_ADDED",
+   "first_run": "OK, all 16 cases green - every case exercised the validator directly, so the suite proved the validator works and never that this session calls it",
+   "caught_by": ["TheSessionActuallyRoutesThroughTheFrozenValidator.test_a_capture_calls_the_frozen_replay_once_on_what_it_enrolls", "TheSessionActuallyRoutesThroughTheFrozenValidator.test_a_refused_replay_enrolls_nothing"],
+   "suite_result_after_the_cases_were_added": "FAILED (failures=2) of 18"
+  },
+  {
+   "id": "ENROL_BEFORE_VALIDATING",
+   "edit": "register_checkpoint() writes the journal entry before calling the validator",
+   "why_it_matters": "a checkpoint the replay would refuse must not already be enrolled when it refuses",
+   "outcome": "CAUGHT",
+   "caught_by": ["TheSessionActuallyRoutesThroughTheFrozenValidator.test_a_refused_replay_enrolls_nothing"],
+   "suite_result": "FAILED (failures=1) of 18"
+  }
+ ],
+ "what_this_does_not_establish": "That the suite catches defects it has no case for. Three of the four injections were designed against cases that already existed; the third found that a case was missing and is recorded with its first, passing run rather than only its second.",
+ "production_authorized": false,
+ "real_sec_credit": false
+}

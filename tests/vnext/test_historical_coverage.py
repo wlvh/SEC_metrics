@@ -1467,10 +1467,17 @@ class PastAttemptAndPresentDiagnosisAreSeparateTest(unittest.TestCase):
             row = self._rows(attempts_root=Path(directory))["D02"]
         self.assertEqual("ROUTE_IMPLEMENTED_ATTEMPT_FAILED", row["status"])
         self.assertFalse(row["detail"]["attempt"]["re_derived_now"])
-        # The recorded error type places where it stopped, which is the second
-        # stage rather than input assembly.
-        self.assertEqual("RUN_CREATION_OR_FREEZE",
-                         row["detail"]["attempt"]["failed_records"][0]["stop_stage"])
+        # The stage is derived from the recorded error type, and is handed over
+        # as an inference rather than beside the recorded fields. A reader that
+        # flattened the two would present a guess as an observation.
+        failed = row["detail"]["attempt"]["failed_records"][0]
+        self.assertEqual("SYNTHETIC_PAST_FAILURE", failed["recorded"]["error"])
+        self.assertEqual("RUN_CREATION_OR_FREEZE", failed["inferred"]["stop_stage"])
+        self.assertFalse(failed["inferred"]["recorded_by_the_batch"])
+        self.assertNotIn("stop_stage", failed["recorded"],
+                         "a derived stage must not sit among the recorded fields")
+        self.assertIsNone(
+            row["detail"]["attempt"]["execution_version_recorded_by_the_batch"])
         with original_sources_only():
             selection = resolve_period_selection(repo_root=ROOT, company_id=self.COMPANY,
                                                  report_end=self.PERIOD)

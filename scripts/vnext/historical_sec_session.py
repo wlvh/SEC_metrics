@@ -56,7 +56,8 @@ from .batch_workflow import validate_request_attempt_binding
 from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_file
 from .historical_source_acquisition import (POLICY_PATH, REQUIREMENT_ID,
                                             HistoricalAcquisitionError,
-                                            acquisition_allowance, historical_dependency)
+                                            acquisition_allowance, historical_dependency,
+                                            request_is_in_scope)
 from .invocation_control import _exclusive_write_bytes, _exclusive_write_json
 from .normal_source_authority import MANIFEST_PATH, ROOT, _baseline_file
 from .sources import resolve_repository_file
@@ -195,6 +196,46 @@ def install_historical_source_inputs(*, root: Path):
         _exclusive_write_bytes(path=root / relative, content=raw)
 
 
+RESOLVED = {"SUCCEEDED", "FAILED_TERMINAL"}
+
+
+def _terminal_block_reason(*, slot, intent, mode):
+    """Why this slot still blocks the channel, or None when it is resolved.
+
+    The previous version asked only whether ``terminal.json`` existed. Measured
+    against that: a terminal whose whole content was ``{}``, and a properly
+    sealed terminal whose status was ``UNKNOWN_REMOTE_OUTCOME``, both stopped
+    blocking - and the second is exactly the case the rule exists for, because
+    ``capture`` writes a terminal for an unknown outcome too. A file is not an
+    outcome.
+
+    Four distinct states, because collapsing them is what hid the defect:
+    absent, unreadable or unsealed, bound to another intent, and a terminal
+    that records that nobody knows what happened. Only a well-formed terminal
+    for this intent, recording a known outcome, resolves the slot. A known
+    failure resolves it - failures count and the run continues - and an
+    unknown one does not, because continuing past an unknown makes the
+    cumulative count untrustworthy, which is the one thing a ceiling cannot
+    survive.
+    """
+    path = slot / "terminal.json"
+    if not path.is_file():
+        return "TERMINAL_ABSENT"
+    try:
+        terminal = strict_json_file(path=path)
+        _check_seal(terminal, "terminal_id")
+    except Exception:
+        return "TERMINAL_RECORD_DAMAGED"
+    if terminal.get("intent_id") != intent["intent_id"]:
+        return "TERMINAL_BOUND_TO_ANOTHER_INTENT"
+    if terminal.get("execution_mode") != mode:
+        return "TERMINAL_MODE_DIFFERS"
+    status = terminal.get("status")
+    if status not in RESOLVED:
+        return "OUTCOME_NOT_KNOWN:" + str(status)
+    return None
+
+
 class HistoricalCallLedger:
     """Issue #47's own cumulative count, with a process lock over its root.
 
@@ -243,9 +284,10 @@ class HistoricalCallLedger:
                   "ISSUE_47_LEDGER_MODE_CHANGED:" + slot.name)
             index = {"PROVIDER": 0, "PAID": 1, SEC: 2}[intent["channel"]]
             counts[index] += 1
-            if not (slot / "terminal.json").is_file():
+            reason = _terminal_block_reason(slot=slot, intent=intent, mode=self.mode)
+            if reason is not None:
                 blocked.append({"slot": slot.name, "channel": intent["channel"],
-                                "reason": "UNKNOWN_REMOTE_OUTCOME"})
+                                "reason": reason})
         return {"counts": counts, "limits": list(self.binding["limits"]),
                 "blocked": blocked, "slot_count": len(slots)}
 
@@ -266,7 +308,8 @@ class HistoricalCallLedger:
         state = self.snapshot()
         _need(not state["blocked"],
               "ISSUE_47_UNRESOLVED_TERMINAL_BLOCKS_THE_CHANNEL:"
-              + ",".join(item["slot"] for item in state["blocked"]))
+              + ",".join(item["slot"] + "=" + item["reason"]
+                         for item in state["blocked"]))
         return state
 
     def claim(self, *, channel, request_digest, plan_id, purpose):
@@ -336,6 +379,9 @@ class HistoricalSecSession:
         _need(self.ledger.binding["limits"]
               == list(self.allowance["maximum_additional_provider_paid_sec_calls"]),
               "ISSUE_47_LEDGER_LIMITS_DIFFER_FROM_ALLOWANCE")
+        _need(self.allowance["scope"].get("company_ids")
+              and self.allowance["scope"].get("dependency_classes"),
+              "ISSUE_47_ALLOWANCE_SCOPE_IS_NOT_ENFORCEABLE")
         if self.ledger.live:
             _need(self.ledger.root == Path(self.allowance["budget_root"])
                   and self.response is None,
@@ -351,9 +397,15 @@ class HistoricalSecSession:
             dependency = historical_dependency(repo_root=self.data_root,
                                                company_id=company_id, url=url,
                                                years=years)
-            if dependency["saved_status"] == "VERIFIED_SAVED_SOURCE":
+            # The planner, not the saved flag, decides whether a fetch is due.
+            # A SNAPSHOT_REFRESH row carries VERIFIED_SAVED_SOURCE *and*
+            # new_acquisition_required: its bytes are intact but disagree with
+            # the index it was declared under, so reading only the first field
+            # answered "already saved" about a source that needs refreshing.
+            if not dependency["new_acquisition_required"]:
                 return {"status": "EXISTING_VERIFIED_SOURCE_REUSED",
-                        "source": dependency, "calls": [0, 0, 0]}
+                        "source": dependency, "calls": [0, 0, 0],
+                        "acquisition_kind": dependency.get("acquisition_kind")}
             log = self.data_root / "evidence/requests_log.csv"
             validate_request_log_manifest(log_path=log)
             before = log.read_bytes()
@@ -369,10 +421,18 @@ class HistoricalSecSession:
                     "source_dependency": dependency, "request": request,
                     "source_ledger_before_sha256": sha256_bytes(content=before),
                     "source_row_count_before": len(old_rows)}
+            # Both halves, and in both modes. A URL being a real dependency is
+            # not the same as this grant allowing it to be fetched; and a scope
+            # check only the live path runs is a check nothing ever exercises,
+            # so the recorded session carries a scope too and is held to it.
+            purpose = self.allowance["scope"]["purposes"][0]
+            admitted = request_is_in_scope(allowance=self.allowance,
+                                           company_id=company_id,
+                                           dependency=dependency, purpose=purpose)
+            plan["scope_admission"] = admitted
             path, intent = self.ledger.claim(
                 channel=SEC, request_digest=content_hash(value=request),
-                plan_id=content_hash(value=plan),
-                purpose=self.allowance["scope"]["purposes"][0])
+                plan_id=content_hash(value=plan), purpose=purpose)
             _exclusive_write_json(path=path / "sec-plan.json", value=plan)
             document_name = Path(urlsplit(url).path).name
             _need(bool(document_name), "ISSUE_47_DOCUMENT_NAME_MISSING")
@@ -504,17 +564,44 @@ class HistoricalSecSession:
 
 
 WIRING_TYPE = "ISSUE_47_SEC_ACQUISITION_OFFLINE_WIRING"
+# Fixed and required, not whatever the receipt happens to list. Measured
+# against the previous version: a receipt carrying ``evidence: {}`` passed,
+# because the loop that re-hashes each named file simply ran zero times. A
+# check that switches off when its inputs are deleted is not a check.
+REQUIRED_WIRING_EVIDENCE = (
+    "scripts/vnext/historical_sec_session.py",
+    "scripts/vnext/historical_source_acquisition.py",
+    "tests/vnext/test_historical_sec_session.py",
+    "tools/vnext_historical_sec.py",
+    "docs/evidence/issue47_history/acquisition-wiring/fault-injections.json",
+)
+# The classes the builder runs. The receipt-verifying class is deliberately
+# absent: it checks the receipt this builder is producing, so including it
+# would make the receipt's own evidence circular. Naming the exclusion is the
+# point - a builder that quietly ran a subset would look identical.
+_SUITE = "tests.vnext.test_historical_sec_session."
+VERIFICATION_SELECTORS = tuple(_SUITE + name for name in (
+    "TheChainProducesASourceTheExistingReaderAccepts",
+    "TheGuaranteeComesFromTheFrozenValidator",
+    "TheSessionActuallyRoutesThroughTheFrozenValidator",
+    "TheGateRefusesWhatNothingDeclared",
+    "TheCountIsCumulativeAndCountsFailures",
+    "TheGrantedPathIsSeparateFromTheTestPath",
+    "TheRecordedPathOpensNoSocket",
+    "TheInstallerCarriesTheRuleInputsItClaims",
+))
+EXCLUDED_FROM_THE_BUILDER = _SUITE + "AGrantMustBindToAWiringReceiptThatIsStillTrue"
 
 
 def verify_offline_wiring(*, receipt_path):
     """Refuse a live session unless the chain was exercised offline first.
 
     Same guarantee Issue #28's policy carries through
-    ``sec_wiring_receipt_path``: the receipt names the modules and cases that
-    drove the whole chain over recorded responses, and every file it names is
-    re-hashed here. So a grant cannot be pointed at a stale receipt, and the
-    chain cannot be edited after the receipt was written without the change
-    being visible before the first request.
+    ``sec_wiring_receipt_path``. Two things the previous version did not do:
+    the evidence set must be exactly ``REQUIRED_WIRING_EVIDENCE``, so dropping
+    a file from the receipt drops the grant rather than the check; and the
+    acceptance claim must be a recorded test outcome rather than a boolean the
+    builder wrote about itself.
     """
     _need(type(receipt_path) is str and receipt_path,
           "ISSUE_47_OFFLINE_WIRING_PATH_REQUIRED")
@@ -525,23 +612,70 @@ def verify_offline_wiring(*, receipt_path):
           and receipt["requirement_id"] == REQUIREMENT_ID
           and receipt["calls"] == [0, 0, 0]
           and receipt["chain_executed_over_recorded_responses"] is True
-          and receipt["frozen_validator_routing_verified"] is True
-          and receipt["fault_injections_caught"] is True,
+          and receipt["real_sec_credit"] is False,
           "ISSUE_47_OFFLINE_WIRING_CHANGED")
+    named = set(receipt["evidence"])
+    _need(named == set(REQUIRED_WIRING_EVIDENCE),
+          "ISSUE_47_OFFLINE_WIRING_EVIDENCE_SET_CHANGED:missing="
+          + ",".join(sorted(set(REQUIRED_WIRING_EVIDENCE) - named)) + ";extra="
+          + ",".join(sorted(named - set(REQUIRED_WIRING_EVIDENCE))))
     for relative, digest in receipt["evidence"].items():
         _need(sha256_file(path=resolve_repository_file(
             repo_root=ROOT, repo_relative_path=relative)) == digest,
             "ISSUE_47_OFFLINE_WIRING_EVIDENCE_CHANGED:" + relative)
+    run = receipt["verification_run"]
+    _need(list(run.get("selectors", [])) == list(VERIFICATION_SELECTORS)
+          and run["passed"] is True and run["failures"] == 0
+          and run["errors"] == 0 and run["tests_run"] > 0
+          and run.get("return_code") == 0,
+          "ISSUE_47_OFFLINE_WIRING_VERIFICATION_RUN_DID_NOT_PASS:" + str(run)[:160])
     return receipt
 
 
-def build_offline_wiring_receipt(*, root, response):
-    """Drive the whole chain offline and seal what it proved.
+def _run_verification_suite():
+    """Run the suite in a fresh process and report what happened.
 
-    The receipt is produced by running the chain, not by describing it: the
-    capture below is a real pass through gate, claim, save, verified append,
-    immutable proof, frozen replay and installation, and the receipt records
-    the outcome it actually got.
+    The builder used to write ``frozen_validator_routing_verified: true`` and
+    ``fault_injections_caught: true`` unconditionally, having run neither. A
+    file hash proves which version a test file is, never that the version was
+    executed and passed.
+
+    A subprocess rather than an in-process loader: it is the same command a
+    person runs, it starts from the repository root so the test package is
+    importable, and it cannot be influenced by whatever this process has
+    already imported.
+    """
+    import re
+    import subprocess
+    import sys
+    done = subprocess.run([sys.executable, "-m", "unittest", *VERIFICATION_SELECTORS],
+                          cwd=str(ROOT), capture_output=True, encoding="utf-8",
+                          env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+                          timeout=3600)
+    tail = (done.stderr or "") + (done.stdout or "")
+    ran = re.search(r"^Ran (\d+) tests?", tail, re.MULTILINE)
+    failures = re.search(r"failures=(\d+)", tail)
+    errors = re.search(r"errors=(\d+)", tail)
+    return {"selectors": list(VERIFICATION_SELECTORS),
+            "excluded": EXCLUDED_FROM_THE_BUILDER,
+            "why_excluded": ("it verifies the receipt this run produces, so "
+                             "including it would make the evidence circular"),
+            "tests_run": int(ran.group(1)) if ran else 0,
+            "failures": int(failures.group(1)) if failures else 0,
+            "errors": int(errors.group(1)) if errors else 0,
+            "return_code": done.returncode,
+            "passed": done.returncode == 0 and bool(ran)}
+
+
+def build_offline_wiring_receipt(*, root, response):
+    """Drive the whole chain offline, run the suite, and seal what happened.
+
+    Both halves are measured. The capture is a real pass through gate, claim,
+    save, verified append, immutable proof, frozen replay and installation;
+    the verification block is the actual outcome of running the suite in this
+    process. Fault injections are not claimed here at all - an injection edits
+    the source and re-runs, so no single process can perform one - they are
+    recorded in the file this receipt hashes.
     """
     from .ordinary_source_authority import checkpoint_installation
     session = recorded_historical_session(root=Path(root), response=response)
@@ -550,21 +684,27 @@ def build_offline_wiring_receipt(*, root, response):
     checkpoint, paths = checkpoint_installation(source_root=session.data_root)
     _need(checkpoint["checkpoint_id"] == captured["checkpoint_id"] and bool(paths),
           "ISSUE_47_OFFLINE_WIRING_INSTALLATION_FAILED")
-    evidence = {relative: sha256_file(path=ROOT / relative) for relative in (
-        "scripts/vnext/historical_sec_session.py",
-        "scripts/vnext/historical_source_acquisition.py",
-        "tests/vnext/test_historical_sec_session.py",
-        "tools/vnext_historical_sec.py")}
+    run = _run_verification_suite()
+    _need(run["passed"], "ISSUE_47_OFFLINE_WIRING_SUITE_DID_NOT_PASS:" + str(run))
+    evidence = {relative: sha256_file(path=ROOT / relative)
+                for relative in REQUIRED_WIRING_EVIDENCE}
     return _sealed({"record_type": WIRING_TYPE, "schema_version": 1,
                     "requirement_id": REQUIREMENT_ID, "calls": [0, 0, 0],
                     "chain_executed_over_recorded_responses": True,
-                    "frozen_validator_routing_verified": True,
-                    "fault_injections_caught": True,
                     "execution_mode": session.ledger.mode,
                     "capture_status": captured["status"],
+                    "verification_run": run,
+                    "fault_injections_recorded_in": (
+                        "docs/evidence/issue47_history/acquisition-wiring/"
+                        "fault-injections.json, hashed by this receipt"),
                     "checkpoint_validated_by": (
                         "continuous_sec_acquisition.validate_acquisition_checkpoint, "
                         "frozen under issue_28_v14 and not editable from this issue"),
+                    "what_that_validator_does_not_prove": (
+                        "that the grant is valid, that the request is in scope, that "
+                        "the cumulative count is intact, that an unknown outcome stops "
+                        "the channel, or that a stale snapshot is refreshed - those are "
+                        "this module's own checks"),
                     "downstream_reader_accepted": True,
                     "real_sec_credit": False, "production_authorized": False,
                     "evidence": evidence}, "receipt_id")
@@ -600,12 +740,26 @@ def live_historical_session():
 
 
 def recorded_historical_session(*, root, response, status=200, limits=(0, 0, 80),
-                                purposes=("historical_five_year_source_acquisition",)):
+                                purposes=("historical_five_year_source_acquisition",),
+                                company_ids=("marriott_international",),
+                                dependency_classes=("ACCESSION_INSTANCE_DISCOVERY",
+                                                    "ANNUAL_PERIOD_IDENTITY",
+                                                    "COMPANYFACTS", "SUBMISSIONS_INDEX"),
+                                earliest_report_end="2000-01-01",
+                                latest_report_end="2099-12-31",
+                                allowance_root=None):
     """Offline tests only; no conversion of this session into production.
 
     The root must not be any configured budget root - neither Issue #28's nor
     Issue #47's - so a recorded run can never write into the place a granted
     count is kept.
+
+    ``allowance_root`` points at a tree holding a real allowance record, so the
+    whole legal path - reading the approved body, re-hashing it against the
+    declared digest, and holding every request to the approved scope - runs
+    over recorded transport. Without it the session carries a test allowance
+    with the same shape. Testing only that a missing allowance is refused
+    leaves the branch that matters unexercised.
     """
     root = Path(root).resolve()
     from .continuous_call_policy import POLICY_PATH as continuous_policy
@@ -613,11 +767,24 @@ def recorded_historical_session(*, root, response, status=200, limits=(0, 0, 80)
     if (ROOT / POLICY_PATH).is_file():
         live_roots.add(str(Path(strict_json_file(path=ROOT / POLICY_PATH)["budget_root"])))
     _need(str(root) not in live_roots, "ISSUE_47_TEST_CANNOT_USE_A_GRANTED_LEDGER")
-    allowance = {"requirement_id": REQUIREMENT_ID, "budget_root": str(root),
-                 "maximum_additional_provider_paid_sec_calls": list(limits),
-                 "scope": {"purposes": list(purposes)},
-                 "delegation_url": None, "delegation_body_sha256": None}
-    return HistoricalSecSession(factory=_FACTORY, allowance=allowance,
-                                ledger=_allowance_ledger(allowance=allowance, root=root,
-                                                         live=False),
-                                recorded_response=response, recorded_status=status)
+    if allowance_root is not None:
+        allowance = acquisition_allowance(repo_root=Path(allowance_root))
+        allowance = {**allowance, "verified_from": str(allowance_root)}
+    else:
+        allowance = {"requirement_id": REQUIREMENT_ID, "budget_root": str(root),
+                     "maximum_additional_provider_paid_sec_calls": list(limits),
+                     "scope": {"purposes": list(purposes),
+                               "company_ids": list(company_ids),
+                               "dependency_classes": list(dependency_classes),
+                               "earliest_report_end": earliest_report_end,
+                               "latest_report_end": latest_report_end},
+                     "delegation_url": None, "delegation_body_sha256": None,
+                     "recorded_test_allowance": True}
+    return HistoricalSecSession(
+        factory=_FACTORY, allowance=allowance,
+        ledger=_allowance_ledger(allowance={
+            **allowance,
+            "maximum_additional_provider_paid_sec_calls":
+                allowance["maximum_additional_provider_paid_sec_calls"]},
+            root=root, live=False),
+        recorded_response=response, recorded_status=status)

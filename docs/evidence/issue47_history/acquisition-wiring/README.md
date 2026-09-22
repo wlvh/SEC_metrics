@@ -113,3 +113,109 @@ No SEC request has been made. Every record here is `RECORDED_TEST_ONLY` with
 constructor refuses any configured budget root so a test can never write where
 a granted count is kept. The acquisition plan's scope, ceiling and counting
 rules are unchanged, and Issue #28's allowance is neither read nor borrowed.
+
+## Four defects an external review named, all reproduced before being fixed
+
+The previous section ended with "the chain is wired, only the grant is
+missing". That was too early. A review of `2293330` named four defects; each
+was reproduced against the tree first, because a review is a lead and a
+reproduction is a fact.
+
+### 1. The allowance checked that fields existed, not that a grant held
+
+`live_historical_session` verified only that `delegation_url` and
+`delegation_body_sha256` were non-empty. Nothing read the body those fields
+describe, and nothing compared the request against an approved scope.
+
+Reproduced: a policy carrying `delegation_url = "NOT-A-URL-AT-ALL"` and
+`delegation_body_sha256 = "NOT-A-DIGEST"` **built a LIVE session and passed
+the pre-request check**. A digest nothing is hashed against is decoration.
+
+Now: shapes are typed (64-hex digest, an issue-comment URL, three non-negative
+limits, a scope carrying companies, dependency classes and a period window);
+the approved body named by `delegation_record_path` is read and re-hashed
+against the declared digest; and the body must restate the limits, budget root
+and scope, so the policy file cannot grant more than the approval did - it is a
+pointer to an approval, not a second place one can be written. Every capture
+then passes `request_is_in_scope`, over the company, the dependency class and
+the target periods the dependency serves.
+
+### 2. A terminal file was treated as an outcome
+
+`snapshot()` asked only whether `terminal.json` existed. But `capture` writes a
+terminal for an unknown outcome too, so the one case the rule exists for was
+the one it stopped catching.
+
+| what the previous slot held | did the next claim proceed? |
+|---|---|
+| no terminal file | blocked, as intended |
+| a known failure, sealed | proceeded, as intended - failures count |
+| **a sealed `UNKNOWN_REMOTE_OUTCOME`** | **proceeded** |
+| **a terminal whose content was `{}`** | **proceeded** |
+
+Now four states are distinguished and named in the refusal: `TERMINAL_ABSENT`,
+`TERMINAL_RECORD_DAMAGED`, `TERMINAL_BOUND_TO_ANOTHER_INTENT`,
+`OUTCOME_NOT_KNOWN:<status>`. Only a well-formed terminal for this intent
+recording a known outcome resolves the slot.
+
+### 3. Belonging to the task and needing a fetch were one field
+
+Reproduced, both directions:
+
+- A declared dependency that was already saved was refused as **"not a declared
+  dependency"**, because admission searched only the outstanding rows - so the
+  reuse branch behind the gate was unreachable.
+- A row the planner marks `SNAPSHOT_REFRESH` carries `VERIFIED_SAVED_SOURCE`
+  **and** `new_acquisition_required` - intact bytes that disagree with the
+  index they were declared under. `capture` read only the first field and
+  returned `EXISTING_VERIFIED_SOURCE_REUSED`, so **the refresh never reached a
+  request**.
+
+Now `declared_dependencies` answers "does this belong to the task" and
+`new_acquisition_required` answers "is a fetch due", and they are asked
+separately.
+
+### 4. The wiring receipt could pass on flags it wrote about itself
+
+Two problems. `verify_offline_wiring` iterated whatever the receipt listed, so
+a receipt carrying `evidence: {}` **was accepted** - the loop ran zero times.
+And the builder wrote `frozen_validator_routing_verified: true` and
+`fault_injections_caught: true` unconditionally, having run neither: a file
+hash proves which version a test file is, never that the version was executed
+and passed.
+
+Now the evidence set must equal `REQUIRED_WIRING_EVIDENCE` exactly, so removing
+a file removes the grant rather than the check; the receipt carries a
+`verification_run` block that is the measured outcome of running the suite in a
+subprocess; and fault injections, which require editing the source and
+re-running and so cannot be performed by any single process, are recorded in
+`fault-injections.json` - which the receipt hashes - rather than asserted as a
+boolean. The builder deliberately excludes the class that verifies this
+receipt, and names the exclusion, because including it would make the evidence
+circular.
+
+### What the frozen validator proves, stated narrowly
+
+Reusing `validate_acquisition_checkpoint` was right and the two cases that
+require this session to route through it are kept. But it proves that the
+saved original, the request row, the immutable attempt and the source proof
+agree with each other. It does **not** prove that a grant is valid, that a
+request is in scope, that the cumulative count is intact, that an unknown
+outcome stops the channel, or that a stale snapshot gets refreshed. All four
+defects above sat in exactly that gap, so "the source check rests on frozen
+code" never implied this module's own bytes needed no discipline.
+
+### Still open: the event class is not in the declaration
+
+`plan_historical_sources` declares four dependency classes -
+`ACCESSION_INSTANCE_DISCOVERY`, `ANNUAL_PERIOD_IDENTITY`, `COMPANYFACTS`,
+`SUBMISSIONS_INDEX`. **None of them is the event window's 8-K bodies and
+headers**, which the acquisition plan sizes at 485 filings and 970 attempts.
+So the one worked example here, a Marriott accession index, does not show that
+the event class is reachable through this gate - it is not.
+
+That file is a `NEW_RULE_FILE` of `issue_47_v1`, so extending it moves the
+Requirement closure and the 343 frozen Runs of the last batch stop being
+evidence for the version that would then run. The fix is a successor
+declaration that unions the planner's rows with the event dependencies, in a
+file that is not closure-bound, and it is not written yet.
