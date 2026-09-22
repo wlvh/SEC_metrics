@@ -11,6 +11,7 @@ from .capacity_utilization_source import need
 from .capacity_native_assessment import collect_native_assessments, build_acceptance
 from .normal_source_authority import ROOT
 from .sources import resolve_repository_file
+from .native_unit_index import evidence_json_bytes
 
 EXPORT_PATH = 'config/ordinary_capacity_assessment.json'
 EXPORT_PATHS = {'B13': EXPORT_PATH, 'D04': 'config/ordinary_going_concern_assessment.json'}
@@ -79,11 +80,14 @@ def register_assessment_input(*, prepared_requests, ledger, include_source_snaps
         if field in source:
             body[field] = source[field]
     value = {**body, 'input_record_id': content_hash(value=body)}
-    from .ordinary_source_authority import _immutable
+    from sec_http import write_immutable_bytes
+    from git_workspace import first_symlink_in_path
     directory = _journal(value['mode'], metric) / input_key(source, requirement)
     need(not directory.is_symlink(), 'B13_ASSESSMENT_JOURNAL_ALIAS')
     directory.mkdir(exist_ok=True)
-    _immutable(directory / (value['input_record_id'][7:] + '.json'), value)
+    path = directory / (value['input_record_id'][7:] + '.json')
+    need(first_symlink_in_path(path=path) is None, 'ORDINARY_SOURCE_JOURNAL_ALIAS')
+    write_immutable_bytes(path=path, content=evidence_json_bytes(value))
     return value
 
 
@@ -149,7 +153,7 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
     need([r['request_id'] for r in value['native_requests']] == [r['request_id'] for r in expected]
          and value['assessment']['mode'] == value['mode'], 'B13_NATIVE_INPUT_REQUEST_SET_CHANGED')
     policy = configured_transport_policy(requirement=requirement, repo_root=ROOT)
-    source_bytes = canonical_json_bytes(value=source)
+    source_bytes = evidence_json_bytes(source)
     from .canonical import sha256_bytes
     histories = value['assessment'].get('recovered_http402_failures', [])
     need(type(histories) is list and all(type(h) is dict for h in histories), 'RECOVERY110_REGISTERED_HISTORY_INVALID')
@@ -173,7 +177,7 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
             from .continuous_recovery_110 import validate_history
             validate_history(history=matches[0], intent=row['intent'], terminal=row['terminal'], mode=value['mode'])
             used_histories.append(matches[0])
-        prepared = SimpleNamespace(source_bytes=source_bytes, request_bytes=canonical_json_bytes(value=request),
+        prepared = SimpleNamespace(source_bytes=source_bytes, request_bytes=evidence_json_bytes(request),
                                    requirement=requirement)
         acceptance = acceptor(prepared=prepared, plan=row['plan'], response_body=raw)
         if 'source_revalidation' in row:

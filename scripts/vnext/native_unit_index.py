@@ -114,11 +114,11 @@ def reconstruct_requests(source, variants=None):
     base = source_requests(source)
     if variants is None:
         return base
-    from .capacity_reference_contract import VERSION as REFERENCE_VERSION, upgrade_request as reference_request
+    from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, upgrade_request as reference_request
     need(type(variants) is list and len(variants)==len(base)
-         and all(type(v) is str and v in {BASE,VERSION,REFERENCE_VERSION} for v in variants),
+         and all(type(v) is str and v in {BASE,VERSION,REFERENCE_VERSION,COMPACT_VERSION} for v in variants),
          'NATIVE_REQUEST_VARIANT_CENSUS_CHANGED')
-    return [request if version==BASE else reference_request(request) if version==REFERENCE_VERSION else upgrade_request(request)
+    return [request if version==BASE else reference_request(request, compact=version==COMPACT_VERSION) if version in {REFERENCE_VERSION,COMPACT_VERSION} else upgrade_request(request)
             for request,version in zip(base,variants)]
 
 
@@ -130,10 +130,22 @@ def validate_request_partition(source, actual_requests):
         if actual==original:
             variants.append(BASE)
         elif 'source_reference_contract' in actual:
-            from .capacity_reference_contract import VERSION as REFERENCE_VERSION, upgrade_request as reference_request
-            need(actual==reference_request(original), 'NATIVE_REQUEST_VARIANT_NOT_SOURCE_BOUND')
-            variants.append(REFERENCE_VERSION)
+            from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, upgrade_request as reference_request
+            version=actual['source_reference_contract'].get('version')
+            need(version in {REFERENCE_VERSION,COMPACT_VERSION} and
+                 actual==reference_request(original,compact=version==COMPACT_VERSION), 'NATIVE_REQUEST_VARIANT_NOT_SOURCE_BOUND')
+            variants.append(version)
         else:
             need(actual==upgrade_request(original), 'NATIVE_REQUEST_VARIANT_NOT_SOURCE_BOUND')
             variants.append(VERSION)
     return variants
+
+
+def evidence_json_bytes(value):
+    """Keep source strings exact with unchanged canonical JSON framing.
+
+    Semantic hashes still use the historical canonicalizer. Evidence payloads
+    use the already validated lossless source serializer and its newline frame.
+    """
+    from .r6_semantic_source import _bytes
+    return _bytes(value) + b'\n'

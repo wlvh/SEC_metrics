@@ -195,7 +195,8 @@ def install_inputs(*, data_root, company_id, source_root=ROOT, assessment_mode=N
                         assessment_input_id=assessment_input_id, metric_id=metric_id, request_context_format=request_context_format,
                         complete_response_contract=complete_response_contract,current_runtime=current_runtime,source_snapshot=source_snapshot,program_quantity_roles=program_quantity_roles)
     requirement = load_requirement_snapshot(snapshot_dir=ROOT / 'requirements' / REQUIREMENT_ID)
-    extra = ({EXPORT_PATHS[metric_id]: canonical_json_bytes(value=case['registered_input'])}
+    from .native_unit_index import evidence_json_bytes
+    extra = ({EXPORT_PATHS[metric_id]: evidence_json_bytes(case['registered_input'])}
              if 'registered_input' in case else None)
     _install_case_inputs(data_root=data_root, source_root=source_root, company_id=company_id, case=case,
         requirement=requirement, extra_input_bytes=extra)

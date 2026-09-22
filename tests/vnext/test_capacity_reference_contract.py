@@ -39,6 +39,28 @@ class CapacityReferenceContractTest(unittest.TestCase):
         return restore_response(request=self.request,
                                 raw_response=canonical_json_bytes(value=self.response if response is None else response))
 
+    def test_compact_typed_codes_preserve_findings_and_reject_wrong_kind(self):
+        request=upgrade_request(self.base,compact=True)
+        self.assertEqual(restore_base_request(request),self.base)
+        books=request['response_protocol']['classification_codebooks'];f=self.response['findings'][0]
+        index=f['evidence'][0]['source_index']
+        row=[books[k].index(f[k]) for k in ('kind','subject','timing')]+[['B'+str(index)],f['reason']]
+        response={**deepcopy(self.response),'findings':[row]}
+        base,raw,original=restore_response(request=request,raw_response=canonical_json_bytes(value=response))
+        checked=validate_response(request=request,raw_response=canonical_json_bytes(value=response),source=self.source)
+        self.assertEqual(checked['unresolved'],[])
+        self.assertEqual(strict_json_loads(text=raw.decode())['units'][self.owner]['findings'],self.response['findings'])
+        for replacement in ['F'+str(index),'B999999','449','B01',True]:
+            bad=deepcopy(response);bad['findings'][0][3]=[replacement]
+            with self.subTest(reference=replacement),self.assertRaises(ValueError):
+                restore_response(request=request,raw_response=canonical_json_bytes(value=bad))
+        for position,value in [(0,True),(1,999),(4,'x'*97)]:
+            bad=deepcopy(response);bad['findings'][0][position]=value
+            with self.subTest(position=position),self.assertRaises(ValueError):
+                restore_response(request=request,raw_response=canonical_json_bytes(value=bad))
+        bad=deepcopy(response);bad['units'].pop()
+        with self.assertRaises(ValueError):restore_response(request=request,raw_response=canonical_json_bytes(value=bad))
+
     def test_flat_identity_roundtrip_preserves_prompt_source_and_semantics(self):
         before = deepcopy(self.base)
         base, raw, original = self.decode()

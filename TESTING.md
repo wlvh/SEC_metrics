@@ -783,7 +783,9 @@ B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物�
 
 ### B13 新原生链与来源分组性能
 
-`tests.vnext.test_continuous_source_unit_bytes`验证U+037E在NFC JSON中被改写时，`SemanticRequest.validate`在付费申领前拒绝不一致的单元字节/哈希/ID。原Greek字符和普通ASCII合法输入仍通过；此guard不修复原113、不改序列化或摘要算法。当前D04实际工厂禁网接线另见d04-remaining-20260922/preflight-current-wiring.log。
+112—114定向验证：`tests.vnext.test_continuous_source_unit_bytes`、`tests.vnext.test_d04_native_assessment`、`tests.vnext.test_capacity_reference_contract`及`tests.vnext.test_native_unit_index`。原114保存响应只作离线回归，混合真实疑虑不因活动类别重叠被排除。紧凑引用测试拒绝错类型编号、越界类别、布尔编号、漏单元及过长理由。`failures-112-114-repair/`保存实际来源禁网接线、输出测量、成功复用与冷读实际结果；不得把录制样本升级真实信用。
+
+`tests.vnext.test_continuous_source_unit_bytes`验证U+037E在NFC JSON中被改写时，`SemanticRequest.validate`在付费申领前拒绝不一致的单元字节/哈希/ID。原Greek字符和普通ASCII合法输入仍通过；原113失败和摘要算法不改；新增反例同时核对无损source/request/HTTP及普通ASCII字节兼容。当前D04实际工厂禁网接线另见d04-remaining-20260922/preflight-current-wiring.log。
 
 <!-- capability-anchor: CAPABILITY.continuous_recovery_110 -->
 

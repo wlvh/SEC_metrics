@@ -988,7 +988,9 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 ### 普通更新与私有完整版本的后继接线
 
-`SemanticRequest.validate`在controller申领前按原单元payload字节/长度/ID检查完整性，提前拒绝NFC序列化等造成的自相矛盾输入；不将该程序表示缺口写成SEC披露不足，也不改request_digest算法或原请求。无损序列化的端到端修复仍单独承担。
+112—114增量仅处理来源表示和输出合同。D04对已证明的具体活动延续，允许提示原有的条件性经营风险类别重叠；只有该关系适用，估值、真实疑虑、混合句中的其他断言仍逐项检查。B13可显式选择B13_TYPED_COMPACT_REFERENCES_V2：固定类别编号、B/F/S带类型引用和短理由，保留每个单元状态、必评项、未决和原内容验证；不改变来源分组，原V1成功仍原样选用。实测输出容量不是模型输出保证，4096限制不变。
+
+`SemanticRequest.validate`在controller申领前按原单元payload字节/长度/ID检查完整性，提前拒绝NFC序列化等造成的自相矛盾输入；不将该程序表示缺口写成SEC披露不足，也不改request_digest算法或原请求。原生source/request、实际HTTP内容、登记及安装导出、冷读改用既有无损来源JSON序列化并保留原规范化JSON的换行框架；语义hash仍用原canonical规则，原source构造模块与request_digest字节不变。NFC已稳定的请求保持原字节，原113不升级。
 
 <!-- capability-anchor: CAPABILITY.continuous_recovery_110 -->
 
