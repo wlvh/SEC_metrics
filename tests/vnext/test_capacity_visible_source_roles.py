@@ -19,6 +19,8 @@ class VisibleSourceRoleTest(unittest.TestCase):
         for text,kind in [('Our manufacturing capacity is constrained.','CAPACITY_QUALITATIVE'),
                           ('Normal utilization of our manufacturing facility determines cost allocation.','CAPACITY_QUALITATIVE'),
                           ('We plan to expand our manufacturing capacity.','PLANNED_CAPACITY'),
+                          ('We plan to expand our manufacturing capacity and have no debt.','PLANNED_CAPACITY'),
+                          ('We have no debt and plan to expand our manufacturing capacity.','PLANNED_CAPACITY'),
                           ('The battery has a storage capacity of5 kWh.','PRODUCT_STORAGE_OR_INSTALLED_CAPACITY'),
                           ('Shares are available for issuance. The battery has capacity of 5 kWh.','PRODUCT_STORAGE_OR_INSTALLED_CAPACITY')]:
             with self.subTest(text=text):self.assertFalse(self.check(text,kind))
@@ -27,5 +29,25 @@ class VisibleSourceRoleTest(unittest.TestCase):
                      'If demand improves, we could expand production capacity.',
                      'We plan to repay notes. Manufacturing capacity is unchanged.',
                      'We plan to repay notes while our production capacity is unchanged.',
-                     'We plan to reduce costs in manufacturing capacity management.']:
+                     'We plan to reduce costs in manufacturing capacity management.',
+                     'We scrapped plans to expand our manufacturing capacity.',
+                     'Our plans to expand manufacturing capacity were abandoned.',
+                     'We planned to expand production capacity but abandoned the plan.']:
             with self.subTest(text=text):self.assertTrue(self.check(text,'PLANNED_CAPACITY'))
+
+    def test_complete_response_preserves_plan_with_unrelated_debt_denial(self):
+        from tests.vnext.test_capacity_utilization_source import quantity_source
+        from vnext.capacity_program_roles import program_source
+        from vnext.capacity_semantic_review import requests_from_source,validate_response
+        from vnext.r6_semantic_source import _bytes
+        for statement,expected in [('We plan to expand our manufacturing capacity and have no debt.',False),
+                                   ('We do not plan to expand our manufacturing capacity.',True),
+                                   ('We scrapped plans to expand our manufacturing capacity.',True)]:
+            source,_=quantity_source('<p>'+statement+'</p>');source=program_source(source)
+            request=requests_from_source(source)[0];unit=source['units'][0]
+            index=next(b['block_index'] for b in unit['payload']['blocks'] if b['text']==statement)
+            response={'request_id':request['request_id'],'units':[{'unit_id':unit['unit_id'],'reviewed':True,'unresolved':[],
+                'calculation_limits':[],'findings':[{'kind':'PLANNED_CAPACITY','subject':'TARGET_REGISTRANT','timing':'CURRENT_REPORT',
+                'evidence':[{'kind':'VISIBLE_BLOCK','source_index':index}],'reason':'Synthetic source-scope regression.'}]}]}
+            checked=validate_response(request=request,raw_response=_bytes(response),source=source)
+            with self.subTest(statement=statement):self.assertEqual(bool(checked['unresolved']),expected)

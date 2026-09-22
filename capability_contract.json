@@ -1109,6 +1109,19 @@
         "test_anchor": "tests/vnext/test_ordinary_isolated_publication.py::OrdinaryIsolatedPublicationBoundaryTest.test_self_signed_marker_cannot_register_an_existing_workspace",
         "test_status": "automated_recorded",
         "since": "2026-09-15"
+      },
+      {
+        "anchor_id": "CAPABILITY.b13_visible_source_role_guard",
+        "type": "capability",
+        "status": "active",
+        "statement": "B13对可见正文中声称的定性产能、规划产能和产品/装机能力增加有限的必要来源关系检查；只读host恢复的原文，不用模型理由证明标签。未建立关系返回实现未决，不自动换类别或推断披露缺失。该检查不证明全部自然语言含义，也不替代主体、期间、数量和全来源验证。原111保留SUCCEEDED历史，但B1022的产品容量标签当前复验未决，不再宣称可直接复用。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_capacity_visible_source_roles.py::VisibleSourceRoleTest.test_complete_response_preserves_plan_with_unrelated_debt_denial",
+        "test_status": "automated_recorded",
+        "since": "2026-09-23"
       }
     ],
     "capability_boundaries": [

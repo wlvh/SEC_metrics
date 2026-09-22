@@ -38,3 +38,50 @@ PATH=/Library/Developer/CommandLineTools/usr/bin:$PATH PYTHONPATH=scripts:. /tmp
 共 45 次工具调用（按更保守的计数，将 14 次 `functions.exec` 外层调度、29 次 `exec_command`、2 次 `write_stdin` 全部计入）；未使用子代理。共 2 条普通消息：一条开工说明、一份最终报告，无问题。用时约 20 分钟，低于 80 次工具调用 / 90 分钟 / 3 条消息上限。
 
 写入仅限本 `independent-review/` 证据目录中的 conclusion.md 与日志；未打包归档。
+
+
+---
+
+# ccd7df0 增量独审（2026-09-22 17:27:18 UTC）
+
+**结论：发现 1 项应修复的 P2 误拦截；本增量暂不通过。** 原111的B1022确有原文与标签定义不符，当前增加未决是必要纠正，不能为保留旧成功而扩大原定义。本段只审查新差异，不重复审批 a87 代码；前文“原111通过当前内容检查”只适用于当时 a87 检查器，不能用于 ccd7df0 下复用。
+
+Base `26d9d947a37cf622c5fc6781b6b8cb36931a395e`；patch `ccd7df0da5d08950181af61fc21e0867cb627d3d`。范围为委托中的两份源码、新增测试及baseline，诊断README/all-110-rows/逐项来源索引，以及 calls/0111和0170原件。四个工作文件与patch逐字节相等，3处涉及变更源码的baseline绑定正确。
+
+## P2：不要让同一句中无关的否定词推翻已经明确的产能计划
+
+位置：`scripts/vnext/capacity_quantity_roles.py:257–258`（否定词集合在241行）。
+
+完整 `capacity_semantic_review.validate_response` 可复现：
+
+- `We plan to expand our manufacturing capacity.` → 零未决。
+- `We plan to expand our manufacturing capacity and have no debt.` → 新增 `B13_VISIBLE_SOURCE_ROLE_NOT_ESTABLISHED`。
+- 同一第二句、同一来源和模型回答，用base检查器是零未决。
+
+第二句的 `no` 只修饰债务，不否认扩建计划；新增实现却在整句搜索 `uncertain`，把明确支持的计划标成来源关系未证明。这会增加资料充分时的开发性阻断，也不符合“必要来源关系检查”的准确边界。建议将否定/条件判断限定到所匹配的计划断言，而非整句；针对“直接否定计划”和“并列无关否定”各留一个反例。证据：`increment-ccd-plan-repro.log`、`increment-ccd-regression-integrity.log`。此发现不要求全自然语言理解，也不要求放宽原111定义。
+
+## 原111 B1022：确认当前不能按原通过结论复用
+
+直接核对原111 request中的类别定义：`Energy storage, installed generating capacity or individual product capability; not manufacturing capacity.`。B1022原文讲存货成本、间接制造费用资本化和得州制造设施正常利用率，没有能源存储、装机或单个产品能力的内容。原响应将它标成 `PRODUCT_STORAGE_OR_INSTALLED_CAPACITY`，并在理由中自行增加“individual product/facility capability”；其中facility并不在原类别定义中。
+
+当前完整响应检查仍返回5条原发现，但明确增加B1022的角色未证明记录。原111的 `SUCCEEDED` 保留历史含义，不能把它重写为失败，也不能把当前未决说成可原样复用；没有自动改标签或发替换请求。该结论来自原定义、原文及原响应逐项核对，不是对修复README的复述。原文/响应见 `increment-ccd-originals.log`。
+
+## 原170及新检查的实际范围
+
+逐行核对all-110-rows与原170原响应：110行原数组、零基类别解码、全部引用的原单元归属和来源文本均相等；诊断所列原件摘要匹配。新必要检查对107行标出角色未证明；其余3行属于 `SALES_OR_SHIPMENTS`，不在新增检查范围内，不能据此证明销售标签、主体或期间正确。原170完整响应仍首先以 `B13_REFERENCE_DUPLICATE_FINDING` 拒绝；没有去重成成功数据集。
+
+新检查只覆盖三个角色且全部证据为可见正文的finding。原生事实、补充XML及其他角色在此函数中直接跳过；不能把“没有新增未决”解释为通用语义通过。它按任一引用中的匹配句建立必要关系，不证明每个引用都相关，也不单独核验主体和期间。
+
+补充限制：`We scrapped plans to expand our manufacturing capacity.` 在完整响应检查下仍可零未决通过，新函数没有识别scrapped对计划的取消。这不是本次新增的接受回归（旧检查同样不提供该语义保障），故不另列新P2；但它是“语句词面匹配不等于计划仍成立”的实测反例，应限制对新检查的能力表述。其他直接否定/条件句、股票计划冒充产品容量、B1022式成本利用率冒充产品容量，新增检查能够标出未决。见 `increment-ccd-boundaries.log`。
+
+## 测试、原件与边界
+
+指定三套测试 exit0，25 tests通过（0.235秒），见 `increment-ccd-tests.log`：
+
+```sh
+PATH=/Library/Developer/CommandLineTools/usr/bin:$PATH PYTHONPATH=scripts:. /tmp/sec_metrics_ci_20260922_venv/bin/python -m unittest tests.vnext.test_capacity_visible_source_roles tests.vnext.test_capacity_reference_contract tests.vnext.test_capacity_quantity_roles
+```
+
+另外执行短原件检查、完整响应级三句反例及base/patch对比；审阅前后35个原件文件摘要相同。没有创建Candidate/Evidence/Run、执行长链、修改源码或原件、调用模型/SEC/账户、commit/push、子代理或外部消息，也未触碰#47/PR52。报告只记录当前差异，不授生产、原样重发或替换调用权限。
+
+本增量工具调用23次（保守含7次functions.exec、13次exec_command、1次write_stdin、2次clock），连同原45次累计68次；本增量仅1份最终消息，累计3条普通消息。未到硬截止17:32:30Z。

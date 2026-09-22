@@ -238,7 +238,7 @@ def validate_visible_source_label_roles(*, findings):
     planning = (r'\b(?:plan(?:s|ned)?|intend(?:s|ed)?|expect(?:s|ed)?)\s+to\s+'
                 r'(?:expand|increase|reduce|add)\s+' + qualifiers + r'(?:manufacturing|production)\s+capacity\b|'
                 r'\b(?:planned|proposed|future|expected)\s+' + qualifiers + r'(?:manufacturing|production)\s+capacity\b')
-    uncertain = r'\b(?:not|never|no|hypothetical|illustrative|abandoned|cancelled|canceled|if|unless|would|could|might)\b'
+    uncertain = r'\b(?:not|never|no|hypothetical|illustrative|abandoned|scrapped|dropped|rejected|cancelled|canceled|if|unless|would|could|might)\b'
     unresolved = []
     for finding in findings:
         kind = finding['kind']
@@ -254,8 +254,17 @@ def validate_visible_source_label_roles(*, findings):
                 if kind == 'CAPACITY_QUALITATIVE':
                     supported |= has_physical or re.search(utilization+'|'+restriction, sentence, re.I) is not None
                 elif kind == 'PLANNED_CAPACITY':
-                    supported |= (has_physical and re.search(planning, sentence, re.I) is not None
-                                  and re.search(uncertain, sentence, re.I) is None)
+                    for plan in re.finditer(planning, sentence, re.I):
+                        prefix, suffix = sentence[:plan.start()], sentence[plan.end():]
+                        # A coordinated debt denial does not negate the plan.
+                        # Preserve conditional framing and local cancellation.
+                        local_prefix = re.split(r';|\b(?:and|but)\b', prefix, flags=re.I)[-1]
+                        local_suffix = re.split(r';|\b(?:and|but)\b', suffix, flags=re.I)[0]
+                        conditional = re.search(r'\b(?:if|unless|hypothetical|illustrative)\b', prefix, re.I)
+                        cancelled_later = re.search(r'\b(?:scrapped|cancelled|canceled|abandoned|dropped|rejected)\s+'
+                            r'(?:(?:the|our|these|those)\s+)?(?:plans?|expansion|it|them)\b', suffix, re.I)
+                        supported |= (has_physical and not conditional and not cancelled_later
+                                      and re.search(uncertain, local_prefix + ' ' + local_suffix, re.I) is None)
                 else:
                     supported |= re.search(product, sentence, re.I) is not None
         if not supported:
