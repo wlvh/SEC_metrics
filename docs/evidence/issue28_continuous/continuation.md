@@ -1,4 +1,4 @@
-# Issue28当前恢复入口（累计至109）
+# Issue28当前恢复入口（累计至110）
 
 原目录、task/b06-new-source、同一Draft PR43，Issue级完整委托继续。读取实时HEAD/工作区、execution-state.json、review-5207290213/current-390.json和固定累计账本；局部修复/提交不是停点。
 
@@ -47,3 +47,9 @@ D03的6e5来源事实有效独立报告尚未找到；向既有ChatGPT审阅任�
 依次：归档上述两个完成目录；修capacity program-role CI到30分钟并单次本地计时；离线诊断109及严格引用合同后Enphase6组、再Ford；D04剩余8坐标/71请求；复用已通过固定私有链，推进退出准备。B13总剩余17，现有余180/180/31；D03不调用，+38和审阅依赖仍待。
 
 CI时限增量：两个B13作业均30分钟，program-role完整本地计时604.545秒PASS（进程605.007秒），6请求录制链/Run/公共行/三类篡改反例，0/0/0。见ci-capacity-timeouts-20260922/。
+
+## 2026-09-22当前真实停点
+
+后继B13_SOURCE_REFERENCES_V1补充对象范围修复58e85b1限定独审通过，完整离线Enphase6原生Run/公共行及Ford11计划/代表接线336.098秒PASS，D04当前工厂48.321秒PASS，绑定2685e0d。
+
+首个新真实请求110返回HTTP_402，FAILED_TERMINAL且无Candidate/Evidence/Run；后续Enphase、Ford和D04均未发。固定累计61/61/49、余179/179/31，PROVIDER已停止，未知usage保持null。不得重试、改提示、换通道、清账或解除停止。需要外部服务/账务处理及符合原停止规则的明确恢复决定；本任务未检查或操作账户。D03仍不调用，原+38申请仍未批准；若基础剩余218不变，当前实测至少缺39，不暗增预算。只继续合法零调用工作。证据见b13-strict-references-20260922/real-110/。
