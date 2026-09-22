@@ -96,6 +96,7 @@ FAST_TESTS += ("tests.vnext.test_semantic_source_grouping.SemanticSourceGrouping
 FAST_TESTS += ("tests.vnext.test_capacity_reference_contract",)
 FAST_TESTS += ("tests.vnext.test_continuous_recovery_110",)
 FAST_TESTS += ("tests.vnext.test_continuous_source_unit_bytes",)
+FAST_TESTS += ("tests.vnext.test_capacity_visible_source_roles",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)
 SOURCE_TESTS += ("tests.vnext.test_r6_semantic_verification",)

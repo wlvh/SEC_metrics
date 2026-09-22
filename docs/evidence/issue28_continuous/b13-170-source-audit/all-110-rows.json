@@ -1,0 +1,4569 @@
+{
+  "record_type": "FAILED_RESPONSE_DIAGNOSTIC_ONLY",
+  "source_call": 170,
+  "raw_hashes": {
+    "intent.json": "053a7fbc7d0cb9a4e118c53a122febdea17890226407a2f03143f797a7081487",
+    "terminal.json": "41b43c1023e595bfc416a378075208d7b653abdac088606330448b7e93603295",
+    "source.json": "4e0dde89514a0722f92804849148d75115a14b65a3c5a1b29d38afeda8d6e597",
+    "semantic-request.json": "d5f0506cd9980cee7cf1cdc7130d3c5bb314c30341c9972f5cda2b90af5160dc",
+    "wire/raw-response.bin": "48479ae5b3d37cc1c2991a853f700593ac5127863906d0485ef223031d0ea153",
+    "wire/assistant-output.bin": "068cb9e46e379125cf89eaa8f02ccb03030cf1884bfc6b27bade88ce950b6696"
+  },
+  "program_mapping": "Exact zero-based codebook decoding; no shifted or inferred codes",
+  "codebooks": {
+    "kind": [
+      "CAPACITY_QUALITATIVE",
+      "SALES_OR_SHIPMENTS",
+      "PRODUCT_STORAGE_OR_INSTALLED_CAPACITY",
+      "PLANNED_CAPACITY",
+      "MONETARY_CREDIT_CAPACITY",
+      "OTHER_ENTITY",
+      "HISTORICAL_STATEMENT",
+      "CONDITIONAL_OR_BOILERPLATE",
+      "OTHER_CONTEXT"
+    ],
+    "subject": [
+      "TARGET_REGISTRANT",
+      "OTHER_ENTITY",
+      "UNRESOLVED"
+    ],
+    "timing": [
+      "CURRENT_REPORT",
+      "HISTORICAL",
+      "CONDITIONAL",
+      "UNRESOLVED"
+    ]
+  },
+  "definitions": {
+    "CAPACITY_QUALITATIVE": "Relevant source statement about production capacity, utilization or operational restrictions without a comparable actual-output/capacity pair. Retain its actual subject and time; do not manufacture a ratio.",
+    "CONDITIONAL_OR_BOILERPLATE": "A hypothetical statement, not an actual measured quantity.",
+    "HISTORICAL_STATEMENT": "A statement about an earlier period; preserve the original period.",
+    "MONETARY_CREDIT_CAPACITY": "Borrowing/credit facility amount denominated in currency, not physical capacity.",
+    "OTHER_CONTEXT": "Navigation hit or contextual statement unrelated to production-capacity utilization. Explain why; absence of a navigation hit never excludes a source unit.",
+    "OTHER_ENTITY": "Only another entity is the subject; do not apply this to the registrant's expressly identified contract manufacturing arrangements.",
+    "PLANNED_CAPACITY": "Future or proposed capacity, not available current capacity.",
+    "PRODUCT_STORAGE_OR_INSTALLED_CAPACITY": "Energy storage, installed generating capacity or individual product capability; not manufacturing capacity.",
+    "SALES_OR_SHIPMENTS": "Amounts sold, shipped, delivered or wholesaled, not evidence of actual production."
+  },
+  "rows": [
+    {
+      "row": 1,
+      "raw_tuple": [
+        0,
+        0,
+        0,
+        [
+          "B2011"
+        ],
+        "Purchase obligations for component inventory per production forecast; no output/capacity pair."
+      ],
+      "decoded_classification": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Purchase obligations for component inventory per production forecast; no output/capacity pair.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2011
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2011,
+            "html_quotation_context": false,
+            "raw_end_byte": 2291678,
+            "raw_span_sha256": "fb3a477568e28268540630f6cdbe62f6c86ab1c62d358dea814a6750d2ac9992",
+            "raw_start_byte": 2291165,
+            "text": "The Company has contractual obligations related to component inventory that it, and its contract manufacturers procure on its behalf in accordance with its production forecast as well as other inventory related purchase commitments. As of December 31, 2025, these purchase obligations totaled approximately $252.3 million."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:4420bb300190b36825007fc50c06c876f1766ceb06e94f0d9ba532b266649848",
+      "duplicate_rows": [
+        1
+      ]
+    },
+    {
+      "row": 2,
+      "raw_tuple": [
+        0,
+        0,
+        0,
+        [
+          "B2377"
+        ],
+        "CEO no longer reviews US manufacturing incremental cost due to tariff impact."
+      ],
+      "decoded_classification": {
+        "kind": "CAPACITY_QUALITATIVE",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "CEO no longer reviews US manufacturing incremental cost due to tariff impact.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2377
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2377,
+            "html_quotation_context": false,
+            "raw_end_byte": 2750557,
+            "raw_span_sha256": "6702b883de30394c926bf547ae2352c2150e0c711daacb6d4d952131850c1d5f",
+            "raw_start_byte": 2750209,
+            "text": "(1) Represents consolidated cost of revenue, excluding stock-based compensation, acquisition related amortization and income-based government grants. Effective the fourth quarter of 2025, the CEO no longer reviews incremental cost for manufacturing in the United States due to tariff impact of products manufactured in India."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:5f8f23ba0e41c9e7bd9afff245533f2248dd8a4e09510d75bd7cf04370fcd8be",
+      "duplicate_rows": [
+        2
+      ]
+    },
+    {
+      "row": 3,
+      "raw_tuple": [
+        1,
+        0,
+        1,
+        [
+          "B2357"
+        ],
+        "Net revenues for years ended December 31, 2025, 2024 and 2023."
+      ],
+      "decoded_classification": {
+        "kind": "SALES_OR_SHIPMENTS",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "HISTORICAL"
+      },
+      "reason": "Net revenues for years ended December 31, 2025, 2024 and 2023.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2357
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2357,
+            "html_quotation_context": false,
+            "raw_end_byte": 2718549,
+            "raw_span_sha256": "a737652d4393ae8e97d63509a449478cf91bdcd905ff2eb546ca0f18d391eebd",
+            "raw_start_byte": 2716148,
+            "text": "Net revenues$1,472,985 $1,330,383 $2,290,786"
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:cd2192945634ffa4865605ea07c3e8c4c6d8e7d578566298b56531ce3d3d56f4",
+      "duplicate_rows": [
+        3
+      ]
+    },
+    {
+      "row": 4,
+      "raw_tuple": [
+        1,
+        0,
+        1,
+        [
+          "B2301"
+        ],
+        "One customer accounted for 39%, 48% and 40% of net revenues in 2025-2023."
+      ],
+      "decoded_classification": {
+        "kind": "SALES_OR_SHIPMENTS",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "HISTORICAL"
+      },
+      "reason": "One customer accounted for 39%, 48% and 40% of net revenues in 2025-2023.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2301
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2301,
+            "html_quotation_context": false,
+            "raw_end_byte": 2635888,
+            "raw_span_sha256": "3b2c23b790bb98f37fff1c5b532df7dfdb8840a048e842952c90801245d8bad7",
+            "raw_start_byte": 2635255,
+            "text": "In the years ended December 31, 2025, 2024 and 2023, one customer accounted for approximately 39%, 48% and 40%, respectively, of the Company’s net revenues."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:719ba95bb26eb02adf0174748ac0757ecefa99a8de1649cb9cac32ece008dfa1",
+      "duplicate_rows": [
+        4
+      ]
+    },
+    {
+      "row": 5,
+      "raw_tuple": [
+        1,
+        0,
+        1,
+        [
+          "B2382"
+        ],
+        "Net revenues table based on destination of shipments referenced."
+      ],
+      "decoded_classification": {
+        "kind": "SALES_OR_SHIPMENTS",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "HISTORICAL"
+      },
+      "reason": "Net revenues table based on destination of shipments referenced.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2382
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2382,
+            "html_quotation_context": false,
+            "raw_end_byte": 2753003,
+            "raw_span_sha256": "f4333a9353dfddc95dd774787614d9368395eacd3fe04607251328bc3657fe11",
+            "raw_start_byte": 2752161,
+            "text": "See Note 3. “Revenue Recognition,” for the table presenting net revenues (based on the destination of shipments). The following table presents long-lived assets by geographic region as of the periods presented:"
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:eff00b4f3d848fb16f11e5e7481b5021a0344fb98b34437e7a4b90a9de100adf",
+      "duplicate_rows": [
+        5
+      ]
+    },
+    {
+      "row": 6,
+      "raw_tuple": [
+        2,
+        0,
+        0,
+        [
+          "B2028"
+        ],
+        "ESPP shares reserved for issuance; equity plan capacity, not manufacturing."
+      ],
+      "decoded_classification": {
+        "kind": "PRODUCT_STORAGE_OR_INSTALLED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "ESPP shares reserved for issuance; equity plan capacity, not manufacturing.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2028
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2028,
+            "html_quotation_context": false,
+            "raw_end_byte": 2308880,
+            "raw_span_sha256": "a9ef48a5ff915596251f89b52173f889ede7e93b500c9d3fea0a7b163befe0ba",
+            "raw_start_byte": 2306060,
+            "text": "The 2011 Employee Stock Purchase Plan (“ESPP”) became effective immediately upon the execution and delivery of the underwriting agreement for the Company’s initial public offering on March 29, 2012. The ESPP authorized the issuance of 669,603 shares of the Company’s common stock pursuant to purchase rights granted to employees. The number of shares of common stock reserved for issuance will automatically increase, on each January 1, by a lesser of (i) 700,000 shares of the Company’s common stock or (ii) 1.0% of the total number of shares of the Company’s common stock outstanding on December 31 of the preceding calendar year, as determined by the Company’s board of directors. In 2022, the Company’s board of directors waived the automatic increase of 700,000 shares that were to be added on January 1, 2023 for issuance under the ESPP and no additional shares were added to the plan on January 1, 2023. As of December 31, 2025, 2,797,029 shares remained available for future issuance under the ESPP. On January 1, 2026, the shares available for issuance under the ESPP automatically increased by 700,000 shares."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:154e01789175f500ea4a49c6d0eb6b629048fdb2a41568ec3cf408bc5cfba9e8",
+      "duplicate_rows": [
+        6
+      ]
+    },
+    {
+      "row": 7,
+      "raw_tuple": [
+        2,
+        0,
+        0,
+        [
+          "B2024"
+        ],
+        "2021 Plan shares reserved for issuance; equity plan capacity."
+      ],
+      "decoded_classification": {
+        "kind": "PRODUCT_STORAGE_OR_INSTALLED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2021 Plan shares reserved for issuance; equity plan capacity.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2024
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2024,
+            "html_quotation_context": false,
+            "raw_end_byte": 2304418,
+            "raw_span_sha256": "170de4d3d1025cbf6cf3b8b6c69124f90e504090ffdfed865889e7b879504f8a",
+            "raw_start_byte": 2301470,
+            "text": "On May 19, 2021, at the 2021 annual meeting of stockholders of the Company, the stockholders approved the 2021 Equity Incentive Plan (the “2021 Plan”), as the successor to the 2011 Plan. The 2021 Plan was amended and restated at the 2025 annual meeting of stockholders of the Company to increase the number of shares of common stock authorized for issuance thereunder by an additional 4,000,000 shares. The 2021 Plan provides for the grant of incentive stock options, SARS, RSAs, RSUs, PSUs and other forms of equity compensation. Eligible participants under the 2021 Plan include Company’s employees, directors and consultants. The 2021 Plan provides, among other things, that the number of shares of the Company’s common stock, $0.00001 par value per share, reserved for issuance under the 2021 Plan (subject to adjustment for certain changes in the Company’s capitalization) is equal to: (A) the sum of (i) 13,100,456 newly reserved shares of the Company’s common stock and (ii) 5,256,517 Returning Shares (as defined below) as such shares become available from time to time as set forth in the 2021 Plan. “Returning Shares” means shares subject to any outstanding award granted under the 2011 Plan (“Prior Plan Award”) that are (i) not issued because such Prior Plan Award or any portion thereof expires or otherwise terminates without all of the shares covered by such Prior Plan Award having been issued, or is settled in cash; (ii) forfeited back to or repurchased by the Company because of a failure to vest; or (iii) reacquired or withheld (or not issued) by the Company to satisfy the purchase price of, or a tax withholding obligation in connection with, a Prior Plan Award that is a Full Value Award (as defined in the 2021 Plan). As of December 31, 2025, 5,978,943 shares remained available for issuance under the 2021 Plan."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:70ac085dcf0df2a062afeaa0b9761d347e1522d9c8b0868e45a06f3676655f40",
+      "duplicate_rows": [
+        7
+      ]
+    },
+    {
+      "row": 8,
+      "raw_tuple": [
+        2,
+        0,
+        0,
+        [
+          "B2022"
+        ],
+        "2011 Plan shares issuable; equity compensation plan capacity."
+      ],
+      "decoded_classification": {
+        "kind": "PRODUCT_STORAGE_OR_INSTALLED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2011 Plan shares issuable; equity compensation plan capacity.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2022
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2022,
+            "html_quotation_context": false,
+            "raw_end_byte": 2301074,
+            "raw_span_sha256": "626a5cb0fc5e1cc6dc5e8f392c2696ed9130539bd523225d1c080ec9f4b6bb16",
+            "raw_start_byte": 2299315,
+            "text": "Under the 2011 Equity Incentive Plan (the “2011 Plan”), the Company could initially issue up to 2,643,171 shares of its common stock pursuant to stock options, stock appreciation rights (“SARS”), restricted stock awards (“RSA”), RSUs, PSUs, and other forms of equity compensation, or collectively, stock awards, all of which may be granted to employees, including officers, and to non-employee directors and consultants. Options granted under the 2011 Plan before August 1, 2012 generally expire 10 years after the grant date and options granted thereafter generally expire seven years after the grant date. Equity awards granted under the 2011 Plan generally vested over a four-year period from the date of grant based on continued service to the Company. As of May 19, 2021, no further stock options or other stock awards may be granted under the 2011 Plan."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:5ee7b872e13954910a0e313ce0fbaa40032a16c92dc6ac522de2911a04264392",
+      "duplicate_rows": [
+        8
+      ]
+    },
+    {
+      "row": 9,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2402"
+        ],
+        "2026 Restructuring Plan estimated charges; future plan, not capacity."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2026 Restructuring Plan estimated charges; future plan, not capacity.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2402
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2402,
+            "html_quotation_context": false,
+            "raw_end_byte": 2774957,
+            "raw_span_sha256": "d4271915db7aa0c935dc844ce7921437f7f4a7fb3195e708bb21a8e09b532803",
+            "raw_start_byte": 2772271,
+            "text": "On January 20, 2026, the Company notified employees of actions approved by management to better align the Company’s workforce and cost structure with its business needs and strategic priorities (the “2026 Restructuring Plan”). In connection with the 2026 Restructuring Plan, the Company estimates that it will incur approximately $4.6 million in restructuring and asset impairment charges, of which approximately $4.2 million will be expected to be incurred in the first quarter of 2026 and approximately $3.7 million will be total cash expenditures. The estimated impact of charges related to the 2026 Restructuring Plan is expected to be approximately $3.8 million in employee severance and benefits related to the reduction in headcount affecting less than 6% of the Company's workforce, or approximately 160 employees, $0.7 million in asset impairment charges and $0.1 million related to office closures. Because the 2026 Restructuring Plan was approved and communicated to employees after December 31, 2025, the Company has not recognized any related charges in the consolidated financial statements for the year ended December 31, 2025."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:04bce169b8f3b9f75240c7edacb65775523378a483d4f4e145664f115eb37578",
+      "duplicate_rows": [
+        9
+      ]
+    },
+    {
+      "row": 10,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2017"
+        ],
+        "2023 Repurchase Program authorized up to $1.0 billion; monetary authorization."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2023 Repurchase Program authorized up to $1.0 billion; monetary authorization.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2017
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2017,
+            "html_quotation_context": false,
+            "raw_end_byte": 2295547,
+            "raw_span_sha256": "9ef59594f73b893aafd817345dae843a0b2221884120258f2be291c137e73f61",
+            "raw_start_byte": 2294921,
+            "text": "In July 2023, the board of directors authorized a share repurchase program (the “2023 Repurchase Program”) pursuant to which the Company was authorized to repurchase up to $1.0 billion of the Company’s common stock. The Company may repurchase shares of common stock from time to time through solicited or unsolicited transactions in the open market, in privately negotiated transactions or pursuant to a Rule 10b5-1 plan."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:637ec79ad89d86055111039672f71bab89dfde1e9ecb084d4a91423324485268",
+      "duplicate_rows": [
+        10
+      ]
+    },
+    {
+      "row": 11,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2019"
+        ],
+        "Remaining repurchase authorization under 2023 Repurchase Program."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Remaining repurchase authorization under 2023 Repurchase Program.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2019
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2019,
+            "html_quotation_context": false,
+            "raw_end_byte": 2298328,
+            "raw_span_sha256": "2d241b16e64a3cfb2e46d34e047a0498da738a11e07d3d772a712472a6621fef",
+            "raw_start_byte": 2298011,
+            "text": "As of December 31, 2025, $268.7 million remains available for repurchase of shares under the 2023 Repurchase Program."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:c774463aaced09327018531fa3f0ec445406864268aa4afd039f0d3f5e09de8d",
+      "duplicate_rows": [
+        11
+      ]
+    },
+    {
+      "row": 12,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2011"
+        ],
+        "Purchase obligations of approximately $252.3 million as of December 31, 2025."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Purchase obligations of approximately $252.3 million as of December 31, 2025.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2011
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2011,
+            "html_quotation_context": false,
+            "raw_end_byte": 2291678,
+            "raw_span_sha256": "fb3a477568e28268540630f6cdbe62f6c86ab1c62d358dea814a6750d2ac9992",
+            "raw_start_byte": 2291165,
+            "text": "The Company has contractual obligations related to component inventory that it, and its contract manufacturers procure on its behalf in accordance with its production forecast as well as other inventory related purchase commitments. As of December 31, 2025, these purchase obligations totaled approximately $252.3 million."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:554acce364552d924e5046f576bc7a7f6503952285b1763105a070f13f7b2a66",
+      "duplicate_rows": [
+        12
+      ]
+    },
+    {
+      "row": 13,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2282"
+        ],
+        "AMPTC benefits recognized; income-based government grants, not production."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "AMPTC benefits recognized; income-based government grants, not production.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2282
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2282,
+            "html_quotation_context": false,
+            "raw_end_byte": 2620963,
+            "raw_span_sha256": "879b97611886fd4e9e2d3cc3d83bc749c6dceb7a4fcf9239f3d9de709f0b003f",
+            "raw_start_byte": 2618525,
+            "text": "For the years ended December 31, 2025,and 2024, benefits recognized from the AMPTC of $238.7 million, and $157.5 million, respectively, were recorded as a prepaid income tax of $227.5 million and $94.9 million (included in Prepaid Expenses and Other Assets), reduction of income tax payable of $11.2 million and $62.7 million on the consolidated balance sheet for the year ended December 31, 2025 and 2024, respectively, and as a reduction to cost of revenues of $238.7 million and $157.5 million on the consolidated statements of operations for the year ended December 31, 2025 and 2024, respectively. Amounts recognized in the consolidated financial statements are based on management’s judgement and interpretation of the most current guidance."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:760cb5dd317c709cef2ba5e3d25c70da894addf16c032d68421970795ddd7229",
+      "duplicate_rows": [
+        13
+      ]
+    },
+    {
+      "row": 14,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2284"
+        ],
+        "OBBBA clean energy tax credit changes; tax law context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "OBBBA clean energy tax credit changes; tax law context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2284
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2284,
+            "html_quotation_context": false,
+            "raw_end_byte": 2622511,
+            "raw_span_sha256": "c840b9dcbdedb496d549aa3b59e0957b24d90b7c9df938aa838451783ec79a30",
+            "raw_start_byte": 2621951,
+            "text": "Among the significant changes to the clean energy provisions are those related to the repeal of the Section 25D residential solar incentive tax credit starting after December 31, 2025, and the Section 48E tax credit after December 31, 2027, if construction is not started within 12 months of the enactment. The OBBBA expanded the new non-Foreign Entity of Concern requirements to the Section 45X tax credit, denying tax credits for projects owned or controlled by certain foreign entities or that use components from or make payments to these foreign entities."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:4dd2f0f232dbbe62f2a9c5b934cd86691f775f5033b08f52b7d5b4efbbc9a8b7",
+      "duplicate_rows": [
+        14,
+        64
+      ]
+    },
+    {
+      "row": 15,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2285"
+        ],
+        "SB 302 gross income exclusion; tax law context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "SB 302 gross income exclusion; tax law context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2285
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2285,
+            "html_quotation_context": false,
+            "raw_end_byte": 2623213,
+            "raw_span_sha256": "e4c554940cc88457fb6ad7df14f706d9b8a646d9ed8143f35e4d489f5dde6861",
+            "raw_start_byte": 2622713,
+            "text": "On October 1, 2025, the Governor of California signed Senate Bill 302 (“SB 302”) into law. SB 302 provides a gross income exclusion for taxpayers that either elect to receive direct payments from the Internal Revenue Service or receive payment from transfer of certain federal clean energy tax credits beginning tax years on or after January 1, 2026, and before January 1, 2031. The Company is currently evaluating the impacts of SB 302 on its condensed consolidated financial statements."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:cff679505f003bfc61db9b268a78f4f7c621783530507ee7c242efd4d369ee68",
+      "duplicate_rows": [
+        15,
+        65
+      ]
+    },
+    {
+      "row": 16,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2400"
+        ],
+        "Investment in SunPower convertible notes; related party transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Investment in SunPower convertible notes; related party transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2400
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2400,
+            "html_quotation_context": false,
+            "raw_end_byte": 2771582,
+            "raw_span_sha256": "aeca52892c008e4d1887c823ed5d0329789d5a7f094dffb70f5f6e1470bb920c",
+            "raw_start_byte": 2769644,
+            "text": "In September 2025, the Company invested $6.3 million in cash to purchase convertible notes with an aggregate principal amount of $7.0 million issued by SunPower. The CEO of SunPower also serves as a member of the Company’s Board of Directors, and therefore this transaction constitutes a related party transaction. The notes bear an interest rate of 7% per annum and mature on July 1, 2029. The initial conversion rate is 467.8363 shares of SunPower common stock per $1,000 principal amount of notes (equivalent to a conversion price of approximately $2.14 per share). The terms of the transaction were reviewed and approved by the Company’s Audit Committee and were determined to be on an arm’s-length basis. See Note 7. “Fair Value Measurements” for additional information related to this purchase."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:4b488d9016ab7ccc86b6f8b59bc2dc11e11ffe1b89d9d3ad5ca5d21952d25a87",
+      "duplicate_rows": [
+        16,
+        66
+      ]
+    },
+    {
+      "row": 17,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1954"
+        ],
+        "Settlement of Notes due 2025; debt repayment, not production."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Settlement of Notes due 2025; debt repayment, not production.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1954
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1954,
+            "html_quotation_context": false,
+            "raw_end_byte": 2248251,
+            "raw_span_sha256": "79342f6e8505d86d0ed055f615c37834a8edc6766ec792e188058fb9a0611012",
+            "raw_start_byte": 2247271,
+            "text": "The Company settled all of its outstanding 0.25% convertible senior notes due 2025 (the “Notes due 2025”) on March 1, 2025. As part of the settlement, the Company paid $102.2 million in cash towards principal amount of the Notes due 2025 and no shares were issued in connection with the settlement as the conversion value was less than the principal amount of the Notes due 2025. Following the settlement, there were no Notes due 2025 outstanding as of December 31, 2025."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:96df9ac99e152657881a7107be839a4237098a80020a8cba2acec1d5b9d9b412",
+      "duplicate_rows": [
+        17
+      ]
+    },
+    {
+      "row": 18,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1927"
+        ],
+        "Notes due 2028 issuance and net proceeds; financing."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Notes due 2028 issuance and net proceeds; financing.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1927
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1927,
+            "html_quotation_context": false,
+            "raw_end_byte": 2214041,
+            "raw_span_sha256": "b383622f73d0010054945bb44260519c980b3609d0cc2cf2192041502b3005ee",
+            "raw_start_byte": 2212852,
+            "text": "On March 1, 2021, the Company issued $575.0 million aggregate principal amount of its 0.0% convertible senior notes due 2028 (the “Notes due 2028”). The Notes due 2028 will not bear regular interest, and the principal amount of the Notes due 2028 will not accrete. The Notes due 2028 are general unsecured obligations and are governed by an indenture between the Company and U.S. Bank National Association, as trustee. The Notes due 2028 will mature on March 1, 2028, unless earlier repurchased by the Company or converted at the option of the holders. The Company received approximately $566.4 million in net proceeds, after deducting the initial purchasers’ discount, from the issuance of the Notes due 2028."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:7fee728c937feec3ffca30020f1c18db5428a1b45196bb40145594acf01d9d3a",
+      "duplicate_rows": [
+        18,
+        68
+      ]
+    },
+    {
+      "row": 19,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1939"
+        ],
+        "Notes due 2026 issuance and net proceeds; financing."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Notes due 2026 issuance and net proceeds; financing.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1939
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1939,
+            "html_quotation_context": false,
+            "raw_end_byte": 2230933,
+            "raw_span_sha256": "9f43b27085a6dcc691b36c043cf015b814aa66cb49bb0e5f3c763589df7cd2fa",
+            "raw_start_byte": 2229254,
+            "text": "On March 1, 2021, the Company issued $575.0 million aggregate principal amount of 0.0% convertible senior notes due 2026 (the “Notes due 2026”). In addition, on March 12, 2021, the Company issued an additional $57.5 million aggregate principal amount of the Notes due 2026 pursuant to the initial purchasers’ full exercise of the over-allotment option for additional Notes due 2026. The Notes due 2026 will not bear regular interest, and the principal amount of the Notes due 2026 will not accrete. The Notes due 2026 are general unsecured obligations and are governed by an indenture between the Company and U.S. Bank National Association, as trustee. The Notes due 2026 will mature on March 1, 2026, unless repurchased earlier by the Company or converted at the option of the holders. The Company received approximately $623.0 million in net proceeds, after deducting the initial purchasers’ discount, from the issuance of the Notes due 2026."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:d4da96615640245ff7d688c81c229a737bebd6670b577cb47b9279a4c5d144c7",
+      "duplicate_rows": [
+        19,
+        69
+      ]
+    },
+    {
+      "row": 20,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1935"
+        ],
+        "Notes due 2028 Hedge cost; financing transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Notes due 2028 Hedge cost; financing transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1935
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1935,
+            "html_quotation_context": false,
+            "raw_end_byte": 2225783,
+            "raw_span_sha256": "695d469c7b39be5e7efee2b22c83bc7d8b45f5de0fac832478e0963d0a4782b1",
+            "raw_start_byte": 2224372,
+            "text": "In connection with the offering of the Notes due 2028, the Company entered into privately-negotiated convertible note hedge transactions (“Notes due 2028 Hedge”) pursuant to which the Company has the option to purchase a total of approximately 2.0 million shares of its common stock (subject to anti-dilution adjustments), which is the same number of shares initially issuable upon conversion of the Notes due 2028, at a price of $284.87 per share. The total cost of the convertible note hedge transactions was approximately $161.6 million. The convertible note hedge transactions are expected generally to reduce potential dilution to the Company’s common stock upon any conversion of the Notes due 2028 and/or offset any cash payments the Company is required to make in excess of the principal amount of converted notes, as the case may be."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:c716b45d3f3e1b8dd3abf5a3948f80dc5d2b49fc35e5c3dd8eef97caa226feb5",
+      "duplicate_rows": [
+        20,
+        70
+      ]
+    },
+    {
+      "row": 21,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1936"
+        ],
+        "2028 Warrants proceeds; financing transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2028 Warrants proceeds; financing transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1936
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1936,
+            "html_quotation_context": false,
+            "raw_end_byte": 2228266,
+            "raw_span_sha256": "0e61183d29b37d0e7807e51102b7b5b5b37a3821383f7c27cfce9ce90a6d1603",
+            "raw_start_byte": 2225985,
+            "text": "Additionally, the Company separately entered into privately-negotiated warrant transactions (the “2028 Warrants”) whereby the Company sold warrants to acquire approximately 2.0 million shares of the Company’s common stock (subject to anti-dilution adjustments) at an initial strike price of $397.91 per share. The Company received aggregate proceeds of approximately $123.4 million from the sale of the 2028 Warrants. If the market value per share of the Company’s common stock, as measured under the 2028 Warrants, exceeds the strike price of the 2028 Warrants, the 2028 Warrants will have a dilutive effect on the Company’s earnings per share, unless the Company elects, subject to certain conditions, to settle the 2028 Warrants in cash. Taken together, the purchase of the Notes due 2028 Hedge and the sale of the 2028 Warrants are intended to reduce potential dilution from the conversion of the Notes due 2028 and to effectively increase the overall conversion price from $284.87 to $397.91 per share. The 2028 Warrants are only exercisable on the applicable expiration dates in accordance with the Notes due 2028 Hedge. Subject to the other terms of the 2028 Warrants, the first expiration date applicable to the Notes due 2028 Hedge is June 1, 2028, and the final expiration date applicable to the Notes due 2028 Hedge is July 27, 2028."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:8834cc95d117878cc6f49f0a8a1729c8b45f9d54802232cdb00398e12d8708b4",
+      "duplicate_rows": [
+        21,
+        71
+      ]
+    },
+    {
+      "row": 22,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1948"
+        ],
+        "Notes due 2026 Hedge cost; financing transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Notes due 2026 Hedge cost; financing transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1948
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1948,
+            "html_quotation_context": false,
+            "raw_end_byte": 2242460,
+            "raw_span_sha256": "c04eed3b70d2f670d281e281d5248c9c183a7166d80967ae2bdce18b371a1608",
+            "raw_start_byte": 2240866,
+            "text": "In connection with the offering of the Notes due 2026 (including in connection with the issuance of additional Notes due 2026 upon the initial purchasers’ exercise of their over-allotment option), the Company entered into privately-negotiated convertible note hedge transactions (the “Notes due 2026 Hedge”) pursuant to which the Company has the option to purchase a total of approximately 2.1 million shares of its common stock (subject to anti-dilution adjustments), which is the same number of shares initially issuable upon conversion of the Notes due 2026, at a price of $307.47 per share, which is the initial conversion price of the Notes due 2026. The total cost of the Notes due 2026 Hedge was approximately $124.6 million. The Notes due 2026 Hedge are expected generally to reduce potential dilution to the Company’s common stock upon any conversion of the Notes due 2026 and/or offset any cash payments the Company is required to make in excess of the principal amount of converted notes, as the case may be."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:a5c8161e0f81ce5fb1a9af1987c3c76be24357a18245f7361e533928a3122523",
+      "duplicate_rows": [
+        22,
+        72
+      ]
+    },
+    {
+      "row": 23,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1951"
+        ],
+        "2026 Warrants proceeds; financing transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2026 Warrants proceeds; financing transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1951
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1951,
+            "html_quotation_context": false,
+            "raw_end_byte": 2246286,
+            "raw_span_sha256": "954a742dc4dbd4231af575491f9837c60fe035f9b0b5135e52d5bef4fec85069",
+            "raw_start_byte": 2243884,
+            "text": "Additionally, the Company separately entered into privately-negotiated warrant transactions, including in connection with the issuance of additional Notes due 2026 upon the initial purchasers’ exercise of their over-allotment option (the “2026 Warrants”), whereby the Company sold warrants to acquire approximately 2.1 million shares of the Company’s common stock (subject to anti-dilution adjustments) at an initial strike price of $397.91 per share. The Company received aggregate proceeds of approximately $97.4 million from the sale of the 2026 Warrants. If the market value per share of the Company’s common stock, as measured under the 2026 Warrants, exceeds the strike price of the 2026 Warrants, the 2026 Warrants will have a dilutive effect on the Company’s earnings per share, unless the Company elects, subject to certain conditions, to settle the 2026 Warrants in cash. Taken together, the purchase of the Notes due 2026 Hedge and the sale of the 2026 Warrants are intended to reduce potential dilution from the conversion of the Notes due 2026 and to effectively increase the overall conversion price from $307.47 to $397.91 per share. The 2026 Warrants are only exercisable on the applicable expiration dates in accordance with the 2026 Warrants. Subject to the other terms of the 2026 Warrants, the first expiration date applicable to the Warrants is June 1, 2026, and the final expiration date applicable to the 2026 Warrants is July 27, 2026."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:480d1bd0e7b9db18c6c2586351d9c1da58ef730060cdb77100c9863e5a69e081",
+      "duplicate_rows": [
+        23,
+        73
+      ]
+    },
+    {
+      "row": 24,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1957"
+        ],
+        "2025 Warrants expired unexercised; financing transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2025 Warrants expired unexercised; financing transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1957
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1957,
+            "html_quotation_context": false,
+            "raw_end_byte": 2250255,
+            "raw_span_sha256": "b86e97d68ccbb6cab806e85ae259223641d8ecfd23b76247e42a7e2aba118d51",
+            "raw_start_byte": 2249425,
+            "text": "Additionally, the Company separately entered into privately-negotiated warrant transactions in connection with the offering of the Notes due 2025 whereby the Company sold the 2025 Warrants to acquire approximately 3.9 million shares of the Company’s common stock (subject to anti-dilution adjustments) at an initial strike price of $106.94 per share. None of the 2025 Warrants were exercised and all expired during the year ended December 31, 2025."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:fec3d45a42839e6f829ff3856e3be99a01ffd6abeb05ccbf049976c1adba487d",
+      "duplicate_rows": [
+        24,
+        74
+      ]
+    },
+    {
+      "row": 25,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2018"
+        ],
+        "Share repurchases during 2025, 2024 and 2023; equity transactions."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Share repurchases during 2025, 2024 and 2023; equity transactions.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2018
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2018,
+            "html_quotation_context": false,
+            "raw_end_byte": 2297760,
+            "raw_span_sha256": "07e4fae8ee7e519b3269e39251190f3fed5bb9919191756eeb357c08f2384548",
+            "raw_start_byte": 2295749,
+            "text": "During the year ended December 31, 2025, 2024 and 2023, the Company repurchased and subsequently retired 2,297,053, 4,543,016 and 2,029,894 shares, respectively, of common stock from the open market at an average cost of $56.58, $86.15 and $103.45 per share, respectively, for a total of $130.0 million, $391.4 million and $210.0 million, respectively."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:59234b7bdc141ac5012652b9dd0499e76a1c0948e690b69bf7b714271874a8f4",
+      "duplicate_rows": [
+        25,
+        75
+      ]
+    },
+    {
+      "row": 26,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2061"
+        ],
+        "Unrecognized stock-based compensation expense; equity compensation."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Unrecognized stock-based compensation expense; equity compensation.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2061
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2061,
+            "html_quotation_context": false,
+            "raw_end_byte": 2352199,
+            "raw_span_sha256": "c4d16a087eb867d458733557b80fb50352456e698c7ae909192a16f0207e562f",
+            "raw_start_byte": 2351544,
+            "text": "As of December 31, 2025, there was approximately $277.1 million of total unrecognized stock-based compensation expense related to unvested equity awards, which are expected to be recognized over a weighted-average period of 2.4 years."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:eade865666b60468f9ce710c457153ad402d92842c273c25dd9c931cfa462ef0",
+      "duplicate_rows": [
+        26,
+        76
+      ]
+    },
+    {
+      "row": 27,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2262"
+        ],
+        "Tax credit and net operating loss carryforwards; tax attributes."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Tax credit and net operating loss carryforwards; tax attributes.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2262
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2262,
+            "html_quotation_context": false,
+            "raw_end_byte": 2594285,
+            "raw_span_sha256": "03eb01531b35297b43afe531f03ff4bd2cc532f80046a79367d09f57337d67f2",
+            "raw_start_byte": 2593367,
+            "text": "The Company has approximately $8.8 million of federal tax credit and $8.3 million of state tax credit carryforwards. The federal credits begin to expire in 2031 and the state credits can be carried forward indefinitely. As of December 31, 2025, the Company has foreign net operating losses of $5.5 million from the acquisition of GreenCom, which can be carried over indefinitely."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:12f9675494203308aa3266f0863d14212f47751745f4d245d02b6ca80c3ff61a",
+      "duplicate_rows": [
+        27,
+        77
+      ]
+    },
+    {
+      "row": 28,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2266"
+        ],
+        "Gross unrecognized tax benefits; tax position."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Gross unrecognized tax benefits; tax position.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2266
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2266,
+            "html_quotation_context": false,
+            "raw_end_byte": 2597059,
+            "raw_span_sha256": "648e6bf3dcb74f66daf1e2b5785a4ca834f1362ad0092e2f839e5a6c7afbb479",
+            "raw_start_byte": 2596490,
+            "text": "As of December 31, 2025, the total amount of gross unrecognized tax benefits was $23.5 million, of which $21.8 million, if recognized, would impact the Company’s effective tax rate."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:1b54b769ab13bf68c7753319a8cf679f79eb092e5404857f678d746006bef709",
+      "duplicate_rows": [
+        28,
+        78
+      ]
+    },
+    {
+      "row": 29,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2280"
+        ],
+        "Interest and penalties related to unrecognized tax benefits."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Interest and penalties related to unrecognized tax benefits.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2280
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2280,
+            "html_quotation_context": false,
+            "raw_end_byte": 2617843,
+            "raw_span_sha256": "a10dd8e9c627176d9668e6943eda899dca91d425e1c920fe755e9a9847b8732a",
+            "raw_start_byte": 2615866,
+            "text": "The Company includes interest and penalties related to unrecognized tax benefits within the income tax provision. In the years ended December 31, 2025, 2024 and 2023, the total amount of gross interest and penalties accrued was $6.6 million, $6.1 million and $2.9 million, respectively. Both the unrecognized tax benefits and the associated interest and penalties that are not expected to result in payment or receipt of cash within one year are classified as other non-current liabilities in the consolidated balance sheets. In connection with tax matters, the Company’s interest and penalty expense recognized in 2025, 2024 and 2023 in the consolidated statements of operations was $0.4 million, $2.3 million and $3.8 million, respectively."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:913f7244927039ef8f28ef1a8c076b8a194b1257a696911e625184a6fb4580c5",
+      "duplicate_rows": [
+        29,
+        79
+      ]
+    },
+    {
+      "row": 30,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2286"
+        ],
+        "Net tax payments by jurisdiction; tax payments."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Net tax payments by jurisdiction; tax payments.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2286
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2286,
+            "html_quotation_context": false,
+            "raw_end_byte": 2623634,
+            "raw_span_sha256": "237646950b8a81afc49586296491e9957ef3c5758cba77e2d2e55b287f95daaa",
+            "raw_start_byte": 2623544,
+            "text": "The Company made net tax payments during the year ended December 31, 2025 as follows:"
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:6d7f890dc54101a1d2396d7687a22a60bf46777d795508dae6e4d78af1f85018",
+      "duplicate_rows": [
+        30,
+        80
+      ]
+    },
+    {
+      "row": 31,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2293"
+        ],
+        "Total net tax payments; tax payments."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Total net tax payments; tax payments.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2293
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2293,
+            "html_quotation_context": false,
+            "raw_end_byte": 2630394,
+            "raw_span_sha256": "4b33a1b2a7025a780ebbb5cc5d2bd0fcd7b1e372a5320cfcdf91eaf04d9a6490",
+            "raw_start_byte": 2629584,
+            "text": "Total$20,450"
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:13ac04af53e498ce436bf05e1b79cffd62ae0f0745d69f14b70ac20f25cbdeb6",
+      "duplicate_rows": [
+        31,
+        81
+      ]
+    },
+    {
+      "row": 32,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2300"
+        ],
+        "Accounts receivable concentration; credit risk."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Accounts receivable concentration; credit risk.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2300
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2300,
+            "html_quotation_context": false,
+            "raw_end_byte": 2635004,
+            "raw_span_sha256": "96c4132914a1b43319b1f89bf63d371a85a18ccef9d1dc1a559e1eb82eb51e59",
+            "raw_start_byte": 2634030,
+            "text": "Accounts receivable can be potentially exposed to a concentration of credit risk with its major customers. As of December 31, 2025, amounts due from three customers represented approximately 31%, 22% and 14% of the total accounts receivable balance, as compared to one customer represented approximately 43% of the total accounts receivable balance as of December 31, 2024."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:a5a9e9f9218a70edf853e6ee51f1b5b7342c2f0152e88a8ccfa4f94e4ad221d8",
+      "duplicate_rows": [
+        32,
+        82
+      ]
+    },
+    {
+      "row": 33,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2349"
+        ],
+        "Single operating and reportable segment; segment context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Single operating and reportable segment; segment context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2349
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2349,
+            "html_quotation_context": false,
+            "raw_end_byte": 2710717,
+            "raw_span_sha256": "495c70db58e5d5938efd34c1dee91f11ca9fa49a351f13c2c46e6e1a4fa97893",
+            "raw_start_byte": 2709000,
+            "text": "The Company’s chief operating decision maker is the Chief Executive Officer (the “CEO”). The Company has one business activity, which entails the design, development, manufacture and sale of solutions for the solar PV industry. There are no segment managers who are held accountable for operations, operating results or plans for levels or components below the consolidated unit level. Accordingly, management has determined that the Company has a single operating and reportable segment. The accounting policies related to operating and reportable segments are the same as those described in Note 2, “Summary of Significant Accounting Policies”. The primary measure of segment profit or loss is consolidated net income as presented below and is used by the CEO for the purpose of evaluating segment performance and allocation of budget to support business expansion, new product development and operational efficiencies."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:36cc8ac51951310da5bc88422993fb851659c58e9129c3ff0b141d4ee3797ef8",
+      "duplicate_rows": [
+        33,
+        83
+      ]
+    },
+    {
+      "row": 34,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2398"
+        ],
+        "Segment assets reviewed at consolidated level; segment context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Segment assets reviewed at consolidated level; segment context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2398
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2398,
+            "html_quotation_context": false,
+            "raw_end_byte": 2768941,
+            "raw_span_sha256": "4e1c32181d2d307e9885b6ab64905ceb49112e56397a391e8cf0213617bd08c0",
+            "raw_start_byte": 2768812,
+            "text": "The segment assets are not reviewed by the CODM at a different asset level or category and is reviewed at the consolidated level."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:4c0f818d85ae2fc5e36b726c10a906fa83a0a27ae827cf85436997a94d3ef665",
+      "duplicate_rows": [
+        34,
+        84
+      ]
+    },
+    {
+      "row": 35,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2409"
+        ],
+        "Disclosure controls evaluation; controls context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Disclosure controls evaluation; controls context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2409
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2409,
+            "html_quotation_context": false,
+            "raw_end_byte": 2778974,
+            "raw_span_sha256": "86fd8bcc6e0fc4ea92733a27f0c2229433e83744eaaa5df775f60769c6c77633",
+            "raw_start_byte": 2777953,
+            "text": "We carried out an evaluation required by the Exchange Act, under the supervision and with the participation of our principal executive officer and principal financial officer, of the effectiveness of the design and operation of our disclosure controls and procedures, as defined in Rule 13a-15(e) of the Exchange Act, as of December 31, 2025. Based on this evaluation, our principal executive officer and principal financial officer concluded that our disclosure controls and procedures were effective to provide reasonable assurance that information required to be disclosed by us in the reports that we file or submit under the Exchange Act is recorded, processed, summarized and reported within the time periods specified in the SEC’s rules and forms and to provide reasonable assurance that such information is accumulated and communicated to our management, including our principal executive officer and principal financial officer, as appropriate to allow timely decisions regarding required disclosures."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:f1de9482ae5f635acfa12a8e11f88442fe77c14206dc74b66c4baf7f390466f6",
+      "duplicate_rows": [
+        35,
+        85
+      ]
+    },
+    {
+      "row": 36,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2411"
+        ],
+        "Internal control over financial reporting assessment; controls context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Internal control over financial reporting assessment; controls context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2411
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2411,
+            "html_quotation_context": false,
+            "raw_end_byte": 2780434,
+            "raw_span_sha256": "a0a018e8a0a23ad3428300de6cfc0002b0aa21083a242e1ae48cfb76398240ec",
+            "raw_start_byte": 2779431,
+            "text": "Management is responsible for establishing and maintaining adequate internal control over financial reporting in providing reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with generally accepted accounting principles, as defined in Rule 13a-15(f) of the Exchange Act. Management has assessed the effectiveness of our internal control over financial reporting based on criteria set forth in Internal Control – Integrated Framework issued by the Committee of Sponsoring Organizations of the Treadway Commission (2013). As a result of this assessment, management concluded that, as of December 31, 2025, our internal control over financial reporting was effective. Our independent registered public accounting firm, Deloitte & Touche LLP, has issued an audit report on our internal control over financial reporting, which appears in Part II, Item 8 of this Annual Report on Form 10-K."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:d2c5c6a7acff2ed17a92862173fdd2c3eaaaa15e2aa914e6024515c519e91338",
+      "duplicate_rows": [
+        36,
+        86
+      ]
+    },
+    {
+      "row": 37,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2413"
+        ],
+        "No changes in internal control; controls context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "No changes in internal control; controls context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2413
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2413,
+            "html_quotation_context": false,
+            "raw_end_byte": 2781135,
+            "raw_span_sha256": "1febbe44a9846e0895c3286a5b8133c975f120d758695b49ea7ccf70dc1e7b43",
+            "raw_start_byte": 2780873,
+            "text": "There were no changes in our internal control over financial reporting that occurred during the most recent year ended December 31, 2025 that materially affected, or are reasonably likely to materially affect, our internal control over financial reporting."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:9c489da1ae2f66673ecede461caadf84aa84f8bd4a8da772d6ca059b36afc39d",
+      "duplicate_rows": [
+        37,
+        87
+      ]
+    },
+    {
+      "row": 38,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2415"
+        ],
+        "Limitations on controls; controls context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Limitations on controls; controls context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2415
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2415,
+            "html_quotation_context": false,
+            "raw_end_byte": 2782292,
+            "raw_span_sha256": "597912eef17ed58d2f8a06664ba732bfedefe741c86e22d34548078b13160a71",
+            "raw_start_byte": 2781545,
+            "text": "Our disclosure controls and procedures and internal control over financial reporting are designed to provide reasonable assurance of achieving their objectives as specified above. Management does not expect, however, that our disclosure controls and procedures or our internal control over financial reporting will prevent or detect all errors and fraud. Any control system, no matter how well designed and operated, is based upon certain assumptions and can provide only reasonable, not absolute, assurance that its objectives will be met. Further, no evaluation of controls can provide absolute assurance that misstatements due to error or fraud will not occur or that all control issues and instances of fraud, if any, have been detected by us."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:b3632295aeed42feb3a73ace1927939ea4f641f1223ec125dab965850a288af2",
+      "duplicate_rows": [
+        38,
+        88
+      ]
+    },
+    {
+      "row": 39,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2418"
+        ],
+        "No Rule 10b5-1 trading plan disclosures; governance context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "No Rule 10b5-1 trading plan disclosures; governance context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2418
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2418,
+            "html_quotation_context": false,
+            "raw_end_byte": 2783762,
+            "raw_span_sha256": "0ffb44a4155fe55f1cdf2392d51fea7745b011e6313a5e4888eb368d07d0e05a",
+            "raw_start_byte": 2783031,
+            "text": "There are no disclosures required by this Item 9B, including those relating to “Rule 10b5-1 trading arrangements” and “non-Rule 10b5-1 trading arrangements,” as those terms are defined in Item 408 of Regulation S-K."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:73d3995dbc612b41b239c7ae201c2662b5ffdc23b039dcedc94105f48689e2b9",
+      "duplicate_rows": [
+        39,
+        89
+      ]
+    },
+    {
+      "row": 40,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2420"
+        ],
+        "Foreign jurisdiction inspections disclosure not applicable; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Foreign jurisdiction inspections disclosure not applicable; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2420
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2420,
+            "html_quotation_context": false,
+            "raw_end_byte": 2784339,
+            "raw_span_sha256": "a3014a36534d5612e7e04f74fc455b30bd0101d370991d349923efd6cc69ebc0",
+            "raw_start_byte": 2784324,
+            "text": "Not applicable."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:e708d461b1cce55dff8c73226cc7c396a7b30206aa6b0f43316d0f5f7d1543cf",
+      "duplicate_rows": [
+        40,
+        90
+      ]
+    },
+    {
+      "row": 41,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2425"
+        ],
+        "Proxy statement incorporation by reference; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Proxy statement incorporation by reference; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2425
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2425,
+            "html_quotation_context": false,
+            "raw_end_byte": 2787115,
+            "raw_span_sha256": "9a4934bd22c92367714283aa7cc186e7f6801624bce21c88e2fd0b89087ba125",
+            "raw_start_byte": 2786760,
+            "text": "The information required regarding our directors is incorporated by reference from the information contained in the section entitled “Election of Directors” in our definitive Proxy Statement for the 2026 Annual Meeting of Stockholders (our “Proxy Statement”), a copy of which will be filed with the SEC on or before April 30, 2026."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:5a3aa428154ef157014a6dfa735f2f4c3cf092ac68d1314a5f2fd32e2dde7121",
+      "duplicate_rows": [
+        41,
+        91
+      ]
+    },
+    {
+      "row": 42,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2426"
+        ],
+        "Executive officers information incorporated by reference; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Executive officers information incorporated by reference; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2426
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2426,
+            "html_quotation_context": false,
+            "raw_end_byte": 2787507,
+            "raw_span_sha256": "010f19feed8e780d2225eeee9fab17b785c39fd2643bacdda73eb56a47011bc4",
+            "raw_start_byte": 2787317,
+            "text": "The information required regarding our executive officers is incorporated by reference from the information contained in the section entitled “Management” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:b7ab20abe3e3c0ef33e041e2697720816455e507512dfc7b9b5cb6f7b4eb7f20",
+      "duplicate_rows": [
+        42,
+        92
+      ]
+    },
+    {
+      "row": 43,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2427"
+        ],
+        "Section 16(a) reporting compliance incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Section 16(a) reporting compliance incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2427
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2427,
+            "html_quotation_context": false,
+            "raw_end_byte": 2787954,
+            "raw_span_sha256": "03c9babda9b75a338afd04be9ebaadfe16a56da192448f48ad060156935d7db4",
+            "raw_start_byte": 2787709,
+            "text": "The information required regarding Section 16(a) beneficial ownership reporting compliance is incorporated by reference from the information contained in the section entitled “Delinquent Section 16(a) Reports” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:91c411f51c5ed837733dda77d324dfb80b05e8e957ae6769ddace3bf80fb99df",
+      "duplicate_rows": [
+        43,
+        93
+      ]
+    },
+    {
+      "row": 44,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2428"
+        ],
+        "Audit committee information incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Audit committee information incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2428
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2428,
+            "html_quotation_context": false,
+            "raw_end_byte": 2788566,
+            "raw_span_sha256": "e7eec28739b61b27968a86af294ade630a4212cfde6fd4e63f21c77fae1a0b78",
+            "raw_start_byte": 2788156,
+            "text": "The information required with respect to procedures by which security holders may recommend nominees to our board of directors, and the composition of our Audit Committee, and whether we have an “audit committee financial expert,” is incorporated by reference from the information contained in the section entitled “Information Regarding Committees of the Board” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:8d40c6ae46092e6b24c65d363365006bc85000b18b465167cb7f1a882c29dd29",
+      "duplicate_rows": [
+        44,
+        94
+      ]
+    },
+    {
+      "row": 45,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2430"
+        ],
+        "Insider trading policy; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Insider trading policy; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2430
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2430,
+            "html_quotation_context": false,
+            "raw_end_byte": 2789470,
+            "raw_span_sha256": "7757d9ca8abfc8a264bfcf87242199912c900b5cb65fdb5839c60dabea530754",
+            "raw_start_byte": 2788975,
+            "text": "We have adopted a Policy Against Trading on the Basis of Inside Information governing the purchase, sale and/or other dispositions of our securities by our directors, officers and employees. A copy of this policy is filed as an exhibit to this Annual Report on Form 10-K. The information required regarding our insider trading policies and procedures is incorporated by reference from the information contained in the section entitled “Insider Trading Policy” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:b29637cab8d9e4852e3c987487c7d07b176a50d41668005599020b6e4217593a",
+      "duplicate_rows": [
+        45,
+        95
+      ]
+    },
+    {
+      "row": 46,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2432"
+        ],
+        "Code of conduct; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Code of conduct; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2432
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2432,
+            "html_quotation_context": false,
+            "raw_end_byte": 2790724,
+            "raw_span_sha256": "05b3f704618bdbdbe05ccb91d1ce834de7154548acd1ed482122d9640e4718c3",
+            "raw_start_byte": 2789872,
+            "text": "We have a written code of conduct that applies to all our executive officers, directors and employees. Our Code of Conduct is available on our website at http://investor.enphase.com/corporate-governance. A copy of our Code of Conduct may also be obtained free of charge by writing to our Secretary, Enphase Energy, Inc., 47281 Bayside Parkway, Fremont, CA 94538. If we make any substantive amendments to our Code of Conduct or grant any waiver from a provision of the Code of Conduct to any executive officer or director, we intend to promptly disclose the nature of the amendment or waiver on our website."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:e4657976ccf7a694e017d936abe8d99406adcb2b4592197ef89f2a2c75b4db5a",
+      "duplicate_rows": [
+        46,
+        96
+      ]
+    },
+    {
+      "row": 47,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2434"
+        ],
+        "Executive compensation incorporated by reference; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Executive compensation incorporated by reference; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2434
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2434,
+            "html_quotation_context": false,
+            "raw_end_byte": 2791638,
+            "raw_span_sha256": "6caf2ca863f999a975c70621f6d88f3cbccb845cdc83de6dbf1c167bab108216",
+            "raw_start_byte": 2791241,
+            "text": "The information required regarding the compensation of our directors and executive officers is incorporated by reference from the information contained in the sections entitled “Executive Compensation,” “Director Compensation,” “Compensation Committee Interlocks and Insider Participation” and “Compensation Committee Report” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:eb621893938fef7fd96662e53601d8ae322c6a1c540f0bd458047714ef697851",
+      "duplicate_rows": [
+        47,
+        97
+      ]
+    },
+    {
+      "row": 48,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2436"
+        ],
+        "Security ownership incorporated by reference; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Security ownership incorporated by reference; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2436
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2436,
+            "html_quotation_context": false,
+            "raw_end_byte": 2792543,
+            "raw_span_sha256": "e7e2c0b1f66b2445b462ba12d2d629855c997376441b9d88ab8c510091089776",
+            "raw_start_byte": 2792227,
+            "text": "The information required regarding security ownership of our 5% or greater stockholders and of our directors and executive officers is incorporated by reference from the information contained in the section entitled “Security Ownership of Certain Beneficial Owners and Management” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:f8d22ecdf0bd2845a11bb22a632cf909c5163b26bfcaa35425c99f2b4bef9573",
+      "duplicate_rows": [
+        48,
+        98
+      ]
+    },
+    {
+      "row": 49,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2438"
+        ],
+        "Equity compensation plan information incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Equity compensation plan information incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2438
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2438,
+            "html_quotation_context": false,
+            "raw_end_byte": 2793230,
+            "raw_span_sha256": "99b06b98059dfa9656a9942e9f1cd0e65ac856400ad1ba3876bfcbd2921611f2",
+            "raw_start_byte": 2792966,
+            "text": "The information required regarding securities authorized for issuance under our equity compensation plans is incorporated by reference from the information contained in the section entitled “Equity Compensation Plan Information” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:9c5fc07555e445b412ab3674f8165bb1ac3f01bffc938999314def68f8d202ae",
+      "duplicate_rows": [
+        49,
+        99
+      ]
+    },
+    {
+      "row": 50,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2440"
+        ],
+        "Related transactions incorporated by reference; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Related transactions incorporated by reference; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2440
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2440,
+            "html_quotation_context": false,
+            "raw_end_byte": 2794117,
+            "raw_span_sha256": "dd8353d62bff2b8f5380a802112036afd4d95e34345d6bfbfb40cb489a2ee80a",
+            "raw_start_byte": 2793798,
+            "text": "The information required regarding related transactions is incorporated herein by reference from the information contained in the section entitled “Transactions With Related Persons” and, with respect to director independence, the section entitled “Election of Directors” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:62e676161bb5ea991838e7c5a6893733d936378c7048d7459258562e6569d04a",
+      "duplicate_rows": [
+        50,
+        100
+      ]
+    },
+    {
+      "row": 51,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2444"
+        ],
+        "Principal accountant fees incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Principal accountant fees incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2444
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2444,
+            "html_quotation_context": false,
+            "raw_end_byte": 2796630,
+            "raw_span_sha256": "6b491ea7a4a419fbf4513a4902a5bf00949d0965263015a5d16931071d6c1bad",
+            "raw_start_byte": 2796275,
+            "text": "The information required is incorporated by reference from the information contained in the sections entitled “Principal Accountant Fees and Services” and “Pre-Approval Policies and Procedures” in the Proposal entitled “Ratification of Selection of Independent Registered Public Accounting Firm” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:d4ef96e97bc431a66c8c4bd381d5beaa9dc86be3d1e7306702ca3c12b8896e20",
+      "duplicate_rows": [
+        51,
+        101
+      ]
+    },
+    {
+      "row": 52,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2448"
+        ],
+        "Consolidated financial statements incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Consolidated financial statements incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2448
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2448,
+            "html_quotation_context": false,
+            "raw_end_byte": 2797976,
+            "raw_span_sha256": "81de1f4e6da2bf7213537279a680be24261b5ffca6d93b35c254b8930e171db7",
+            "raw_start_byte": 2797665,
+            "text": "The information concerning our consolidated financial statements, and Report of Independent Registered Public Accounting Firm required by this Item is incorporated by reference herein to the section of this Annual Report on Form 10-K in Part II, Item 8, Consolidated Financial Statements and Supplementary Data."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:85ddef2ee36c5e3b56018ee00b4ee3352518877afa0bd4b6c3c0b7018eae105b",
+      "duplicate_rows": [
+        52,
+        102
+      ]
+    },
+    {
+      "row": 53,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2449"
+        ],
+        "No schedules provided; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "No schedules provided; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2449
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2449,
+            "html_quotation_context": false,
+            "raw_end_byte": 2798365,
+            "raw_span_sha256": "633e6a98e1dc39a8318a5031c338c28aa8426ed85093299bf879b170f53f58f6",
+            "raw_start_byte": 2798178,
+            "text": "No schedules are provided because they are not applicable, not required under the instructions, or the requested information is shown in the financial statements or related notes thereto."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:1908d6e2f6c4ce8571a149c1c2fc258db4057c0bd9411445264701855528a460",
+      "duplicate_rows": [
+        53,
+        103
+      ]
+    },
+    {
+      "row": 54,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2451"
+        ],
+        "Exhibits filed or incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Exhibits filed or incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2451
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2451,
+            "html_quotation_context": false,
+            "raw_end_byte": 2798889,
+            "raw_span_sha256": "4f77b61ca0905d3f520b09353c4e9102ea8509bfde08745ef843784fd27f74e0",
+            "raw_start_byte": 2798741,
+            "text": "The exhibits listed below are filed as part of this Annual Report on Form 10-K or incorporated herein by reference, in each case as indicated below."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:af03c4f8c07515354bb8451b8918ca889532a8e4f7ed5f9326fb680dd04ae43e",
+      "duplicate_rows": [
+        54,
+        104
+      ]
+    },
+    {
+      "row": 55,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2670"
+        ],
+        "Form 10-K summary none; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Form 10-K summary none; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2670
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2670,
+            "html_quotation_context": false,
+            "raw_end_byte": 2949275,
+            "raw_span_sha256": "ca7b8edc1e452056ab8b99d176422af3a8c1499770dbb72bfe1498ae3980c104",
+            "raw_start_byte": 2949221,
+            "text": "Item 16. Form 10-K Summary"
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:b94a88ef391070a89f2097fdd418faaceee18ab2b6bcb936697c4d8fb2b74a71",
+      "duplicate_rows": [
+        55,
+        105
+      ]
+    },
+    {
+      "row": 56,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2671"
+        ],
+        "Form 10-K summary none; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Form 10-K summary none; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2671
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2671,
+            "html_quotation_context": false,
+            "raw_end_byte": 2949482,
+            "raw_span_sha256": "903ea500e7ccf842c1312b6c2f964e3e98ff146456cecec717e9a0e122bf735f",
+            "raw_start_byte": 2949477,
+            "text": "None."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:6e871573fb4beec482f5bac790c18733cdbecb697e2d851b7e8d6f1975810cda",
+      "duplicate_rows": [
+        56,
+        106
+      ]
+    },
+    {
+      "row": 57,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2675"
+        ],
+        "Report signed on February 13, 2026; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Report signed on February 13, 2026; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2675
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2675,
+            "html_quotation_context": false,
+            "raw_end_byte": 2951796,
+            "raw_span_sha256": "f68b8d795e4a3f9854de8d9cc5653ed6fa3386fe7e48464c0705275198c4e170",
+            "raw_start_byte": 2951557,
+            "text": "Pursuant to the requirements of Section 13 or 15(d) of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned, thereunto duly authorized on February 13, 2026."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:4b3051829489a1b1977066125c10a8acca3e26cfc6393362e9f51159e710a8c1",
+      "duplicate_rows": [
+        57,
+        107
+      ]
+    },
+    {
+      "row": 58,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2684"
+        ],
+        "Power of attorney; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Power of attorney; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2684
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2684,
+            "html_quotation_context": false,
+            "raw_end_byte": 2957335,
+            "raw_span_sha256": "49bfc14faecf9e8301fc038d05ca5f80af8568324f8708d461053c277f19c761",
+            "raw_start_byte": 2956295,
+            "text": "KNOW ALL PERSONS BY THESE PRESENTS, that each person whose signature appears below constitutes and appoints Badrinarayanan Kothandaraman and Mandy Yang, jointly and severally, as his or her true and lawful attorneys-in-fact and agents, with full power of substitution and resubstitution, for him or her and in his or her name, place and stead, in any and all capacities, to sign any and all amendments to this Annual Report on Form 10-K and to file the same, with all exhibits thereto, and other documents in connection therewith, with the Securities and Exchange Commission, granting unto said attorneys-in-fact and agents full power and authority to do and perform each and every act and thing requisite or necessary to be done in and about the premises hereby ratifying and confirming all that said attorneys-in-fact and agents, or his or her substitute or substitutes, may lawfully do or cause to be done by virtue hereof."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:a8ae4639bab872a3b4af7ee0848bf5de543db7b3ab10d5e3aefc5577d88a9b68",
+      "duplicate_rows": [
+        58,
+        108
+      ]
+    },
+    {
+      "row": 59,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2685"
+        ],
+        "Report signed by persons on behalf of registrant; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Report signed by persons on behalf of registrant; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2685
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2685,
+            "html_quotation_context": false,
+            "raw_end_byte": 2957738,
+            "raw_span_sha256": "046b00fb1b83da7c6966442b52d4e8ff93f31c365f1da3aa28c2a32277a778b5",
+            "raw_start_byte": 2957537,
+            "text": "Pursuant to the requirements of the Securities Exchange Act of 1934, this report has been signed below by the following persons on behalf of the registrant and in the capacities on the dates indicated."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:412f63db29b3399310c0e59f72ff13d22ce9ffdbebcb81cd18a820fa8b770236",
+      "duplicate_rows": [
+        59,
+        109
+      ]
+    },
+    {
+      "row": 60,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2406"
+        ],
+        "Changes in accountants disclosure none; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Changes in accountants disclosure none; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2406
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2406,
+            "html_quotation_context": false,
+            "raw_end_byte": 2777183,
+            "raw_span_sha256": "903ea500e7ccf842c1312b6c2f964e3e98ff146456cecec717e9a0e122bf735f",
+            "raw_start_byte": 2777178,
+            "text": "None."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:3ec15b765168933083333443dd925bf90e814f36993f72665ed7aacf3720c1a7",
+      "duplicate_rows": [
+        60,
+        110
+      ]
+    },
+    {
+      "row": 61,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2402"
+        ],
+        "2026 Restructuring Plan estimated charges; future plan."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2026 Restructuring Plan estimated charges; future plan.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2402
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2402,
+            "html_quotation_context": false,
+            "raw_end_byte": 2774957,
+            "raw_span_sha256": "d4271915db7aa0c935dc844ce7921437f7f4a7fb3195e708bb21a8e09b532803",
+            "raw_start_byte": 2772271,
+            "text": "On January 20, 2026, the Company notified employees of actions approved by management to better align the Company’s workforce and cost structure with its business needs and strategic priorities (the “2026 Restructuring Plan”). In connection with the 2026 Restructuring Plan, the Company estimates that it will incur approximately $4.6 million in restructuring and asset impairment charges, of which approximately $4.2 million will be expected to be incurred in the first quarter of 2026 and approximately $3.7 million will be total cash expenditures. The estimated impact of charges related to the 2026 Restructuring Plan is expected to be approximately $3.8 million in employee severance and benefits related to the reduction in headcount affecting less than 6% of the Company's workforce, or approximately 160 employees, $0.7 million in asset impairment charges and $0.1 million related to office closures. Because the 2026 Restructuring Plan was approved and communicated to employees after December 31, 2025, the Company has not recognized any related charges in the consolidated financial statements for the year ended December 31, 2025."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:4cf7020cb58cc22006affb3a310b6d55a8a84d74ab9ca6ae86c600c37ad4c246",
+      "duplicate_rows": [
+        61
+      ]
+    },
+    {
+      "row": 62,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2011"
+        ],
+        "Purchase obligations for component inventory; contractual obligations."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Purchase obligations for component inventory; contractual obligations.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2011
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2011,
+            "html_quotation_context": false,
+            "raw_end_byte": 2291678,
+            "raw_span_sha256": "fb3a477568e28268540630f6cdbe62f6c86ab1c62d358dea814a6750d2ac9992",
+            "raw_start_byte": 2291165,
+            "text": "The Company has contractual obligations related to component inventory that it, and its contract manufacturers procure on its behalf in accordance with its production forecast as well as other inventory related purchase commitments. As of December 31, 2025, these purchase obligations totaled approximately $252.3 million."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:8e02d3e5495ed444db1e9d716d471f02ab08c3976a7f3f5b53ec224be2d8b178",
+      "duplicate_rows": [
+        62
+      ]
+    },
+    {
+      "row": 63,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2282"
+        ],
+        "AMPTC benefits recognized; income-based government grants."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "AMPTC benefits recognized; income-based government grants.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2282
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2282,
+            "html_quotation_context": false,
+            "raw_end_byte": 2620963,
+            "raw_span_sha256": "879b97611886fd4e9e2d3cc3d83bc749c6dceb7a4fcf9239f3d9de709f0b003f",
+            "raw_start_byte": 2618525,
+            "text": "For the years ended December 31, 2025,and 2024, benefits recognized from the AMPTC of $238.7 million, and $157.5 million, respectively, were recorded as a prepaid income tax of $227.5 million and $94.9 million (included in Prepaid Expenses and Other Assets), reduction of income tax payable of $11.2 million and $62.7 million on the consolidated balance sheet for the year ended December 31, 2025 and 2024, respectively, and as a reduction to cost of revenues of $238.7 million and $157.5 million on the consolidated statements of operations for the year ended December 31, 2025 and 2024, respectively. Amounts recognized in the consolidated financial statements are based on management’s judgement and interpretation of the most current guidance."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:bca0be05e3ba5fe875e2477c414d6949b3d329630c6791859e4f2d8b53ec5aef",
+      "duplicate_rows": [
+        63
+      ]
+    },
+    {
+      "row": 64,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2284"
+        ],
+        "OBBBA clean energy tax credit changes; tax law context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "OBBBA clean energy tax credit changes; tax law context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2284
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2284,
+            "html_quotation_context": false,
+            "raw_end_byte": 2622511,
+            "raw_span_sha256": "c840b9dcbdedb496d549aa3b59e0957b24d90b7c9df938aa838451783ec79a30",
+            "raw_start_byte": 2621951,
+            "text": "Among the significant changes to the clean energy provisions are those related to the repeal of the Section 25D residential solar incentive tax credit starting after December 31, 2025, and the Section 48E tax credit after December 31, 2027, if construction is not started within 12 months of the enactment. The OBBBA expanded the new non-Foreign Entity of Concern requirements to the Section 45X tax credit, denying tax credits for projects owned or controlled by certain foreign entities or that use components from or make payments to these foreign entities."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:4dd2f0f232dbbe62f2a9c5b934cd86691f775f5033b08f52b7d5b4efbbc9a8b7",
+      "duplicate_rows": [
+        14,
+        64
+      ]
+    },
+    {
+      "row": 65,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2285"
+        ],
+        "SB 302 gross income exclusion; tax law context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "SB 302 gross income exclusion; tax law context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2285
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2285,
+            "html_quotation_context": false,
+            "raw_end_byte": 2623213,
+            "raw_span_sha256": "e4c554940cc88457fb6ad7df14f706d9b8a646d9ed8143f35e4d489f5dde6861",
+            "raw_start_byte": 2622713,
+            "text": "On October 1, 2025, the Governor of California signed Senate Bill 302 (“SB 302”) into law. SB 302 provides a gross income exclusion for taxpayers that either elect to receive direct payments from the Internal Revenue Service or receive payment from transfer of certain federal clean energy tax credits beginning tax years on or after January 1, 2026, and before January 1, 2031. The Company is currently evaluating the impacts of SB 302 on its condensed consolidated financial statements."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:cff679505f003bfc61db9b268a78f4f7c621783530507ee7c242efd4d369ee68",
+      "duplicate_rows": [
+        15,
+        65
+      ]
+    },
+    {
+      "row": 66,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2400"
+        ],
+        "Investment in SunPower convertible notes; related party transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Investment in SunPower convertible notes; related party transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2400
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2400,
+            "html_quotation_context": false,
+            "raw_end_byte": 2771582,
+            "raw_span_sha256": "aeca52892c008e4d1887c823ed5d0329789d5a7f094dffb70f5f6e1470bb920c",
+            "raw_start_byte": 2769644,
+            "text": "In September 2025, the Company invested $6.3 million in cash to purchase convertible notes with an aggregate principal amount of $7.0 million issued by SunPower. The CEO of SunPower also serves as a member of the Company’s Board of Directors, and therefore this transaction constitutes a related party transaction. The notes bear an interest rate of 7% per annum and mature on July 1, 2029. The initial conversion rate is 467.8363 shares of SunPower common stock per $1,000 principal amount of notes (equivalent to a conversion price of approximately $2.14 per share). The terms of the transaction were reviewed and approved by the Company’s Audit Committee and were determined to be on an arm’s-length basis. See Note 7. “Fair Value Measurements” for additional information related to this purchase."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:4b488d9016ab7ccc86b6f8b59bc2dc11e11ffe1b89d9d3ad5ca5d21952d25a87",
+      "duplicate_rows": [
+        16,
+        66
+      ]
+    },
+    {
+      "row": 67,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1954"
+        ],
+        "Settlement of Notes due 2025; debt repayment."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Settlement of Notes due 2025; debt repayment.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1954
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1954,
+            "html_quotation_context": false,
+            "raw_end_byte": 2248251,
+            "raw_span_sha256": "79342f6e8505d86d0ed055f615c37834a8edc6766ec792e188058fb9a0611012",
+            "raw_start_byte": 2247271,
+            "text": "The Company settled all of its outstanding 0.25% convertible senior notes due 2025 (the “Notes due 2025”) on March 1, 2025. As part of the settlement, the Company paid $102.2 million in cash towards principal amount of the Notes due 2025 and no shares were issued in connection with the settlement as the conversion value was less than the principal amount of the Notes due 2025. Following the settlement, there were no Notes due 2025 outstanding as of December 31, 2025."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:f77994bd457cb1432a293b70ca4b7c4c0dc86941b50a485b8fe5728bece8a6be",
+      "duplicate_rows": [
+        67
+      ]
+    },
+    {
+      "row": 68,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1927"
+        ],
+        "Notes due 2028 issuance and net proceeds; financing."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Notes due 2028 issuance and net proceeds; financing.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1927
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1927,
+            "html_quotation_context": false,
+            "raw_end_byte": 2214041,
+            "raw_span_sha256": "b383622f73d0010054945bb44260519c980b3609d0cc2cf2192041502b3005ee",
+            "raw_start_byte": 2212852,
+            "text": "On March 1, 2021, the Company issued $575.0 million aggregate principal amount of its 0.0% convertible senior notes due 2028 (the “Notes due 2028”). The Notes due 2028 will not bear regular interest, and the principal amount of the Notes due 2028 will not accrete. The Notes due 2028 are general unsecured obligations and are governed by an indenture between the Company and U.S. Bank National Association, as trustee. The Notes due 2028 will mature on March 1, 2028, unless earlier repurchased by the Company or converted at the option of the holders. The Company received approximately $566.4 million in net proceeds, after deducting the initial purchasers’ discount, from the issuance of the Notes due 2028."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:7fee728c937feec3ffca30020f1c18db5428a1b45196bb40145594acf01d9d3a",
+      "duplicate_rows": [
+        18,
+        68
+      ]
+    },
+    {
+      "row": 69,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1939"
+        ],
+        "Notes due 2026 issuance and net proceeds; financing."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Notes due 2026 issuance and net proceeds; financing.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1939
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1939,
+            "html_quotation_context": false,
+            "raw_end_byte": 2230933,
+            "raw_span_sha256": "9f43b27085a6dcc691b36c043cf015b814aa66cb49bb0e5f3c763589df7cd2fa",
+            "raw_start_byte": 2229254,
+            "text": "On March 1, 2021, the Company issued $575.0 million aggregate principal amount of 0.0% convertible senior notes due 2026 (the “Notes due 2026”). In addition, on March 12, 2021, the Company issued an additional $57.5 million aggregate principal amount of the Notes due 2026 pursuant to the initial purchasers’ full exercise of the over-allotment option for additional Notes due 2026. The Notes due 2026 will not bear regular interest, and the principal amount of the Notes due 2026 will not accrete. The Notes due 2026 are general unsecured obligations and are governed by an indenture between the Company and U.S. Bank National Association, as trustee. The Notes due 2026 will mature on March 1, 2026, unless repurchased earlier by the Company or converted at the option of the holders. The Company received approximately $623.0 million in net proceeds, after deducting the initial purchasers’ discount, from the issuance of the Notes due 2026."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:d4da96615640245ff7d688c81c229a737bebd6670b577cb47b9279a4c5d144c7",
+      "duplicate_rows": [
+        19,
+        69
+      ]
+    },
+    {
+      "row": 70,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1935"
+        ],
+        "Notes due 2028 Hedge cost; financing transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Notes due 2028 Hedge cost; financing transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1935
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1935,
+            "html_quotation_context": false,
+            "raw_end_byte": 2225783,
+            "raw_span_sha256": "695d469c7b39be5e7efee2b22c83bc7d8b45f5de0fac832478e0963d0a4782b1",
+            "raw_start_byte": 2224372,
+            "text": "In connection with the offering of the Notes due 2028, the Company entered into privately-negotiated convertible note hedge transactions (“Notes due 2028 Hedge”) pursuant to which the Company has the option to purchase a total of approximately 2.0 million shares of its common stock (subject to anti-dilution adjustments), which is the same number of shares initially issuable upon conversion of the Notes due 2028, at a price of $284.87 per share. The total cost of the convertible note hedge transactions was approximately $161.6 million. The convertible note hedge transactions are expected generally to reduce potential dilution to the Company’s common stock upon any conversion of the Notes due 2028 and/or offset any cash payments the Company is required to make in excess of the principal amount of converted notes, as the case may be."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:c716b45d3f3e1b8dd3abf5a3948f80dc5d2b49fc35e5c3dd8eef97caa226feb5",
+      "duplicate_rows": [
+        20,
+        70
+      ]
+    },
+    {
+      "row": 71,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1936"
+        ],
+        "2028 Warrants proceeds; financing transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2028 Warrants proceeds; financing transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1936
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1936,
+            "html_quotation_context": false,
+            "raw_end_byte": 2228266,
+            "raw_span_sha256": "0e61183d29b37d0e7807e51102b7b5b5b37a3821383f7c27cfce9ce90a6d1603",
+            "raw_start_byte": 2225985,
+            "text": "Additionally, the Company separately entered into privately-negotiated warrant transactions (the “2028 Warrants”) whereby the Company sold warrants to acquire approximately 2.0 million shares of the Company’s common stock (subject to anti-dilution adjustments) at an initial strike price of $397.91 per share. The Company received aggregate proceeds of approximately $123.4 million from the sale of the 2028 Warrants. If the market value per share of the Company’s common stock, as measured under the 2028 Warrants, exceeds the strike price of the 2028 Warrants, the 2028 Warrants will have a dilutive effect on the Company’s earnings per share, unless the Company elects, subject to certain conditions, to settle the 2028 Warrants in cash. Taken together, the purchase of the Notes due 2028 Hedge and the sale of the 2028 Warrants are intended to reduce potential dilution from the conversion of the Notes due 2028 and to effectively increase the overall conversion price from $284.87 to $397.91 per share. The 2028 Warrants are only exercisable on the applicable expiration dates in accordance with the Notes due 2028 Hedge. Subject to the other terms of the 2028 Warrants, the first expiration date applicable to the Notes due 2028 Hedge is June 1, 2028, and the final expiration date applicable to the Notes due 2028 Hedge is July 27, 2028."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:8834cc95d117878cc6f49f0a8a1729c8b45f9d54802232cdb00398e12d8708b4",
+      "duplicate_rows": [
+        21,
+        71
+      ]
+    },
+    {
+      "row": 72,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1948"
+        ],
+        "Notes due 2026 Hedge cost; financing transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Notes due 2026 Hedge cost; financing transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1948
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1948,
+            "html_quotation_context": false,
+            "raw_end_byte": 2242460,
+            "raw_span_sha256": "c04eed3b70d2f670d281e281d5248c9c183a7166d80967ae2bdce18b371a1608",
+            "raw_start_byte": 2240866,
+            "text": "In connection with the offering of the Notes due 2026 (including in connection with the issuance of additional Notes due 2026 upon the initial purchasers’ exercise of their over-allotment option), the Company entered into privately-negotiated convertible note hedge transactions (the “Notes due 2026 Hedge”) pursuant to which the Company has the option to purchase a total of approximately 2.1 million shares of its common stock (subject to anti-dilution adjustments), which is the same number of shares initially issuable upon conversion of the Notes due 2026, at a price of $307.47 per share, which is the initial conversion price of the Notes due 2026. The total cost of the Notes due 2026 Hedge was approximately $124.6 million. The Notes due 2026 Hedge are expected generally to reduce potential dilution to the Company’s common stock upon any conversion of the Notes due 2026 and/or offset any cash payments the Company is required to make in excess of the principal amount of converted notes, as the case may be."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:a5c8161e0f81ce5fb1a9af1987c3c76be24357a18245f7361e533928a3122523",
+      "duplicate_rows": [
+        22,
+        72
+      ]
+    },
+    {
+      "row": 73,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1951"
+        ],
+        "2026 Warrants proceeds; financing transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2026 Warrants proceeds; financing transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1951
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1951,
+            "html_quotation_context": false,
+            "raw_end_byte": 2246286,
+            "raw_span_sha256": "954a742dc4dbd4231af575491f9837c60fe035f9b0b5135e52d5bef4fec85069",
+            "raw_start_byte": 2243884,
+            "text": "Additionally, the Company separately entered into privately-negotiated warrant transactions, including in connection with the issuance of additional Notes due 2026 upon the initial purchasers’ exercise of their over-allotment option (the “2026 Warrants”), whereby the Company sold warrants to acquire approximately 2.1 million shares of the Company’s common stock (subject to anti-dilution adjustments) at an initial strike price of $397.91 per share. The Company received aggregate proceeds of approximately $97.4 million from the sale of the 2026 Warrants. If the market value per share of the Company’s common stock, as measured under the 2026 Warrants, exceeds the strike price of the 2026 Warrants, the 2026 Warrants will have a dilutive effect on the Company’s earnings per share, unless the Company elects, subject to certain conditions, to settle the 2026 Warrants in cash. Taken together, the purchase of the Notes due 2026 Hedge and the sale of the 2026 Warrants are intended to reduce potential dilution from the conversion of the Notes due 2026 and to effectively increase the overall conversion price from $307.47 to $397.91 per share. The 2026 Warrants are only exercisable on the applicable expiration dates in accordance with the 2026 Warrants. Subject to the other terms of the 2026 Warrants, the first expiration date applicable to the Warrants is June 1, 2026, and the final expiration date applicable to the 2026 Warrants is July 27, 2026."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:480d1bd0e7b9db18c6c2586351d9c1da58ef730060cdb77100c9863e5a69e081",
+      "duplicate_rows": [
+        23,
+        73
+      ]
+    },
+    {
+      "row": 74,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B1957"
+        ],
+        "2025 Warrants expired unexercised; financing transaction."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "2025 Warrants expired unexercised; financing transaction.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 1957
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 1957,
+            "html_quotation_context": false,
+            "raw_end_byte": 2250255,
+            "raw_span_sha256": "b86e97d68ccbb6cab806e85ae259223641d8ecfd23b76247e42a7e2aba118d51",
+            "raw_start_byte": 2249425,
+            "text": "Additionally, the Company separately entered into privately-negotiated warrant transactions in connection with the offering of the Notes due 2025 whereby the Company sold the 2025 Warrants to acquire approximately 3.9 million shares of the Company’s common stock (subject to anti-dilution adjustments) at an initial strike price of $106.94 per share. None of the 2025 Warrants were exercised and all expired during the year ended December 31, 2025."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:fec3d45a42839e6f829ff3856e3be99a01ffd6abeb05ccbf049976c1adba487d",
+      "duplicate_rows": [
+        24,
+        74
+      ]
+    },
+    {
+      "row": 75,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2018"
+        ],
+        "Share repurchases during 2025, 2024 and 2023; equity transactions."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Share repurchases during 2025, 2024 and 2023; equity transactions.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2018
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2018,
+            "html_quotation_context": false,
+            "raw_end_byte": 2297760,
+            "raw_span_sha256": "07e4fae8ee7e519b3269e39251190f3fed5bb9919191756eeb357c08f2384548",
+            "raw_start_byte": 2295749,
+            "text": "During the year ended December 31, 2025, 2024 and 2023, the Company repurchased and subsequently retired 2,297,053, 4,543,016 and 2,029,894 shares, respectively, of common stock from the open market at an average cost of $56.58, $86.15 and $103.45 per share, respectively, for a total of $130.0 million, $391.4 million and $210.0 million, respectively."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:59234b7bdc141ac5012652b9dd0499e76a1c0948e690b69bf7b714271874a8f4",
+      "duplicate_rows": [
+        25,
+        75
+      ]
+    },
+    {
+      "row": 76,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2061"
+        ],
+        "Unrecognized stock-based compensation expense; equity compensation."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Unrecognized stock-based compensation expense; equity compensation.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2061
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2061,
+            "html_quotation_context": false,
+            "raw_end_byte": 2352199,
+            "raw_span_sha256": "c4d16a087eb867d458733557b80fb50352456e698c7ae909192a16f0207e562f",
+            "raw_start_byte": 2351544,
+            "text": "As of December 31, 2025, there was approximately $277.1 million of total unrecognized stock-based compensation expense related to unvested equity awards, which are expected to be recognized over a weighted-average period of 2.4 years."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:eade865666b60468f9ce710c457153ad402d92842c273c25dd9c931cfa462ef0",
+      "duplicate_rows": [
+        26,
+        76
+      ]
+    },
+    {
+      "row": 77,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2262"
+        ],
+        "Tax credit and net operating loss carryforwards; tax attributes."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Tax credit and net operating loss carryforwards; tax attributes.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2262
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2262,
+            "html_quotation_context": false,
+            "raw_end_byte": 2594285,
+            "raw_span_sha256": "03eb01531b35297b43afe531f03ff4bd2cc532f80046a79367d09f57337d67f2",
+            "raw_start_byte": 2593367,
+            "text": "The Company has approximately $8.8 million of federal tax credit and $8.3 million of state tax credit carryforwards. The federal credits begin to expire in 2031 and the state credits can be carried forward indefinitely. As of December 31, 2025, the Company has foreign net operating losses of $5.5 million from the acquisition of GreenCom, which can be carried over indefinitely."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:12f9675494203308aa3266f0863d14212f47751745f4d245d02b6ca80c3ff61a",
+      "duplicate_rows": [
+        27,
+        77
+      ]
+    },
+    {
+      "row": 78,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2266"
+        ],
+        "Gross unrecognized tax benefits; tax position."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Gross unrecognized tax benefits; tax position.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2266
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2266,
+            "html_quotation_context": false,
+            "raw_end_byte": 2597059,
+            "raw_span_sha256": "648e6bf3dcb74f66daf1e2b5785a4ca834f1362ad0092e2f839e5a6c7afbb479",
+            "raw_start_byte": 2596490,
+            "text": "As of December 31, 2025, the total amount of gross unrecognized tax benefits was $23.5 million, of which $21.8 million, if recognized, would impact the Company’s effective tax rate."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:1b54b769ab13bf68c7753319a8cf679f79eb092e5404857f678d746006bef709",
+      "duplicate_rows": [
+        28,
+        78
+      ]
+    },
+    {
+      "row": 79,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2280"
+        ],
+        "Interest and penalties related to unrecognized tax benefits."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Interest and penalties related to unrecognized tax benefits.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2280
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2280,
+            "html_quotation_context": false,
+            "raw_end_byte": 2617843,
+            "raw_span_sha256": "a10dd8e9c627176d9668e6943eda899dca91d425e1c920fe755e9a9847b8732a",
+            "raw_start_byte": 2615866,
+            "text": "The Company includes interest and penalties related to unrecognized tax benefits within the income tax provision. In the years ended December 31, 2025, 2024 and 2023, the total amount of gross interest and penalties accrued was $6.6 million, $6.1 million and $2.9 million, respectively. Both the unrecognized tax benefits and the associated interest and penalties that are not expected to result in payment or receipt of cash within one year are classified as other non-current liabilities in the consolidated balance sheets. In connection with tax matters, the Company’s interest and penalty expense recognized in 2025, 2024 and 2023 in the consolidated statements of operations was $0.4 million, $2.3 million and $3.8 million, respectively."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:913f7244927039ef8f28ef1a8c076b8a194b1257a696911e625184a6fb4580c5",
+      "duplicate_rows": [
+        29,
+        79
+      ]
+    },
+    {
+      "row": 80,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2286"
+        ],
+        "Net tax payments by jurisdiction; tax payments."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Net tax payments by jurisdiction; tax payments.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2286
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2286,
+            "html_quotation_context": false,
+            "raw_end_byte": 2623634,
+            "raw_span_sha256": "237646950b8a81afc49586296491e9957ef3c5758cba77e2d2e55b287f95daaa",
+            "raw_start_byte": 2623544,
+            "text": "The Company made net tax payments during the year ended December 31, 2025 as follows:"
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:6d7f890dc54101a1d2396d7687a22a60bf46777d795508dae6e4d78af1f85018",
+      "duplicate_rows": [
+        30,
+        80
+      ]
+    },
+    {
+      "row": 81,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2293"
+        ],
+        "Total net tax payments; tax payments."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Total net tax payments; tax payments.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2293
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2293,
+            "html_quotation_context": false,
+            "raw_end_byte": 2630394,
+            "raw_span_sha256": "4b33a1b2a7025a780ebbb5cc5d2bd0fcd7b1e372a5320cfcdf91eaf04d9a6490",
+            "raw_start_byte": 2629584,
+            "text": "Total$20,450"
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:13ac04af53e498ce436bf05e1b79cffd62ae0f0745d69f14b70ac20f25cbdeb6",
+      "duplicate_rows": [
+        31,
+        81
+      ]
+    },
+    {
+      "row": 82,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2300"
+        ],
+        "Accounts receivable concentration; credit risk."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Accounts receivable concentration; credit risk.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2300
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2300,
+            "html_quotation_context": false,
+            "raw_end_byte": 2635004,
+            "raw_span_sha256": "96c4132914a1b43319b1f89bf63d371a85a18ccef9d1dc1a559e1eb82eb51e59",
+            "raw_start_byte": 2634030,
+            "text": "Accounts receivable can be potentially exposed to a concentration of credit risk with its major customers. As of December 31, 2025, amounts due from three customers represented approximately 31%, 22% and 14% of the total accounts receivable balance, as compared to one customer represented approximately 43% of the total accounts receivable balance as of December 31, 2024."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:a5a9e9f9218a70edf853e6ee51f1b5b7342c2f0152e88a8ccfa4f94e4ad221d8",
+      "duplicate_rows": [
+        32,
+        82
+      ]
+    },
+    {
+      "row": 83,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2349"
+        ],
+        "Single operating and reportable segment; segment context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Single operating and reportable segment; segment context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2349
+          },
+          "unit_index": 0,
+          "unit_id": "sha256:1013d285313004e02c82561ffd3c0ea5531b2999eaf4244a57b95b67a37efdad",
+          "source_item": {
+            "block_index": 2349,
+            "html_quotation_context": false,
+            "raw_end_byte": 2710717,
+            "raw_span_sha256": "495c70db58e5d5938efd34c1dee91f11ca9fa49a351f13c2c46e6e1a4fa97893",
+            "raw_start_byte": 2709000,
+            "text": "The Company’s chief operating decision maker is the Chief Executive Officer (the “CEO”). The Company has one business activity, which entails the design, development, manufacture and sale of solutions for the solar PV industry. There are no segment managers who are held accountable for operations, operating results or plans for levels or components below the consolidated unit level. Accordingly, management has determined that the Company has a single operating and reportable segment. The accounting policies related to operating and reportable segments are the same as those described in Note 2, “Summary of Significant Accounting Policies”. The primary measure of segment profit or loss is consolidated net income as presented below and is used by the CEO for the purpose of evaluating segment performance and allocation of budget to support business expansion, new product development and operational efficiencies."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:36cc8ac51951310da5bc88422993fb851659c58e9129c3ff0b141d4ee3797ef8",
+      "duplicate_rows": [
+        33,
+        83
+      ]
+    },
+    {
+      "row": 84,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2398"
+        ],
+        "Segment assets reviewed at consolidated level; segment context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Segment assets reviewed at consolidated level; segment context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2398
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2398,
+            "html_quotation_context": false,
+            "raw_end_byte": 2768941,
+            "raw_span_sha256": "4e1c32181d2d307e9885b6ab64905ceb49112e56397a391e8cf0213617bd08c0",
+            "raw_start_byte": 2768812,
+            "text": "The segment assets are not reviewed by the CODM at a different asset level or category and is reviewed at the consolidated level."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:4c0f818d85ae2fc5e36b726c10a906fa83a0a27ae827cf85436997a94d3ef665",
+      "duplicate_rows": [
+        34,
+        84
+      ]
+    },
+    {
+      "row": 85,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2409"
+        ],
+        "Disclosure controls evaluation; controls context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Disclosure controls evaluation; controls context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2409
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2409,
+            "html_quotation_context": false,
+            "raw_end_byte": 2778974,
+            "raw_span_sha256": "86fd8bcc6e0fc4ea92733a27f0c2229433e83744eaaa5df775f60769c6c77633",
+            "raw_start_byte": 2777953,
+            "text": "We carried out an evaluation required by the Exchange Act, under the supervision and with the participation of our principal executive officer and principal financial officer, of the effectiveness of the design and operation of our disclosure controls and procedures, as defined in Rule 13a-15(e) of the Exchange Act, as of December 31, 2025. Based on this evaluation, our principal executive officer and principal financial officer concluded that our disclosure controls and procedures were effective to provide reasonable assurance that information required to be disclosed by us in the reports that we file or submit under the Exchange Act is recorded, processed, summarized and reported within the time periods specified in the SEC’s rules and forms and to provide reasonable assurance that such information is accumulated and communicated to our management, including our principal executive officer and principal financial officer, as appropriate to allow timely decisions regarding required disclosures."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:f1de9482ae5f635acfa12a8e11f88442fe77c14206dc74b66c4baf7f390466f6",
+      "duplicate_rows": [
+        35,
+        85
+      ]
+    },
+    {
+      "row": 86,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2411"
+        ],
+        "Internal control over financial reporting assessment; controls context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Internal control over financial reporting assessment; controls context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2411
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2411,
+            "html_quotation_context": false,
+            "raw_end_byte": 2780434,
+            "raw_span_sha256": "a0a018e8a0a23ad3428300de6cfc0002b0aa21083a242e1ae48cfb76398240ec",
+            "raw_start_byte": 2779431,
+            "text": "Management is responsible for establishing and maintaining adequate internal control over financial reporting in providing reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with generally accepted accounting principles, as defined in Rule 13a-15(f) of the Exchange Act. Management has assessed the effectiveness of our internal control over financial reporting based on criteria set forth in Internal Control – Integrated Framework issued by the Committee of Sponsoring Organizations of the Treadway Commission (2013). As a result of this assessment, management concluded that, as of December 31, 2025, our internal control over financial reporting was effective. Our independent registered public accounting firm, Deloitte & Touche LLP, has issued an audit report on our internal control over financial reporting, which appears in Part II, Item 8 of this Annual Report on Form 10-K."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:d2c5c6a7acff2ed17a92862173fdd2c3eaaaa15e2aa914e6024515c519e91338",
+      "duplicate_rows": [
+        36,
+        86
+      ]
+    },
+    {
+      "row": 87,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2413"
+        ],
+        "No changes in internal control; controls context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "No changes in internal control; controls context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2413
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2413,
+            "html_quotation_context": false,
+            "raw_end_byte": 2781135,
+            "raw_span_sha256": "1febbe44a9846e0895c3286a5b8133c975f120d758695b49ea7ccf70dc1e7b43",
+            "raw_start_byte": 2780873,
+            "text": "There were no changes in our internal control over financial reporting that occurred during the most recent year ended December 31, 2025 that materially affected, or are reasonably likely to materially affect, our internal control over financial reporting."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:9c489da1ae2f66673ecede461caadf84aa84f8bd4a8da772d6ca059b36afc39d",
+      "duplicate_rows": [
+        37,
+        87
+      ]
+    },
+    {
+      "row": 88,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2415"
+        ],
+        "Limitations on controls; controls context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Limitations on controls; controls context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2415
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2415,
+            "html_quotation_context": false,
+            "raw_end_byte": 2782292,
+            "raw_span_sha256": "597912eef17ed58d2f8a06664ba732bfedefe741c86e22d34548078b13160a71",
+            "raw_start_byte": 2781545,
+            "text": "Our disclosure controls and procedures and internal control over financial reporting are designed to provide reasonable assurance of achieving their objectives as specified above. Management does not expect, however, that our disclosure controls and procedures or our internal control over financial reporting will prevent or detect all errors and fraud. Any control system, no matter how well designed and operated, is based upon certain assumptions and can provide only reasonable, not absolute, assurance that its objectives will be met. Further, no evaluation of controls can provide absolute assurance that misstatements due to error or fraud will not occur or that all control issues and instances of fraud, if any, have been detected by us."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:b3632295aeed42feb3a73ace1927939ea4f641f1223ec125dab965850a288af2",
+      "duplicate_rows": [
+        38,
+        88
+      ]
+    },
+    {
+      "row": 89,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2418"
+        ],
+        "No Rule 10b5-1 trading plan disclosures; governance context."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "No Rule 10b5-1 trading plan disclosures; governance context.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2418
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2418,
+            "html_quotation_context": false,
+            "raw_end_byte": 2783762,
+            "raw_span_sha256": "0ffb44a4155fe55f1cdf2392d51fea7745b011e6313a5e4888eb368d07d0e05a",
+            "raw_start_byte": 2783031,
+            "text": "There are no disclosures required by this Item 9B, including those relating to “Rule 10b5-1 trading arrangements” and “non-Rule 10b5-1 trading arrangements,” as those terms are defined in Item 408 of Regulation S-K."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:73d3995dbc612b41b239c7ae201c2662b5ffdc23b039dcedc94105f48689e2b9",
+      "duplicate_rows": [
+        39,
+        89
+      ]
+    },
+    {
+      "row": 90,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2420"
+        ],
+        "Foreign jurisdiction inspections disclosure not applicable; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Foreign jurisdiction inspections disclosure not applicable; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2420
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2420,
+            "html_quotation_context": false,
+            "raw_end_byte": 2784339,
+            "raw_span_sha256": "a3014a36534d5612e7e04f74fc455b30bd0101d370991d349923efd6cc69ebc0",
+            "raw_start_byte": 2784324,
+            "text": "Not applicable."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:e708d461b1cce55dff8c73226cc7c396a7b30206aa6b0f43316d0f5f7d1543cf",
+      "duplicate_rows": [
+        40,
+        90
+      ]
+    },
+    {
+      "row": 91,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2425"
+        ],
+        "Proxy statement incorporation by reference; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Proxy statement incorporation by reference; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2425
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2425,
+            "html_quotation_context": false,
+            "raw_end_byte": 2787115,
+            "raw_span_sha256": "9a4934bd22c92367714283aa7cc186e7f6801624bce21c88e2fd0b89087ba125",
+            "raw_start_byte": 2786760,
+            "text": "The information required regarding our directors is incorporated by reference from the information contained in the section entitled “Election of Directors” in our definitive Proxy Statement for the 2026 Annual Meeting of Stockholders (our “Proxy Statement”), a copy of which will be filed with the SEC on or before April 30, 2026."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:5a3aa428154ef157014a6dfa735f2f4c3cf092ac68d1314a5f2fd32e2dde7121",
+      "duplicate_rows": [
+        41,
+        91
+      ]
+    },
+    {
+      "row": 92,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2426"
+        ],
+        "Executive officers information incorporated by reference; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Executive officers information incorporated by reference; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2426
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2426,
+            "html_quotation_context": false,
+            "raw_end_byte": 2787507,
+            "raw_span_sha256": "010f19feed8e780d2225eeee9fab17b785c39fd2643bacdda73eb56a47011bc4",
+            "raw_start_byte": 2787317,
+            "text": "The information required regarding our executive officers is incorporated by reference from the information contained in the section entitled “Management” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:b7ab20abe3e3c0ef33e041e2697720816455e507512dfc7b9b5cb6f7b4eb7f20",
+      "duplicate_rows": [
+        42,
+        92
+      ]
+    },
+    {
+      "row": 93,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2427"
+        ],
+        "Section 16(a) reporting compliance incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Section 16(a) reporting compliance incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2427
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2427,
+            "html_quotation_context": false,
+            "raw_end_byte": 2787954,
+            "raw_span_sha256": "03c9babda9b75a338afd04be9ebaadfe16a56da192448f48ad060156935d7db4",
+            "raw_start_byte": 2787709,
+            "text": "The information required regarding Section 16(a) beneficial ownership reporting compliance is incorporated by reference from the information contained in the section entitled “Delinquent Section 16(a) Reports” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:91c411f51c5ed837733dda77d324dfb80b05e8e957ae6769ddace3bf80fb99df",
+      "duplicate_rows": [
+        43,
+        93
+      ]
+    },
+    {
+      "row": 94,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2428"
+        ],
+        "Audit committee information incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Audit committee information incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2428
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2428,
+            "html_quotation_context": false,
+            "raw_end_byte": 2788566,
+            "raw_span_sha256": "e7eec28739b61b27968a86af294ade630a4212cfde6fd4e63f21c77fae1a0b78",
+            "raw_start_byte": 2788156,
+            "text": "The information required with respect to procedures by which security holders may recommend nominees to our board of directors, and the composition of our Audit Committee, and whether we have an “audit committee financial expert,” is incorporated by reference from the information contained in the section entitled “Information Regarding Committees of the Board” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:8d40c6ae46092e6b24c65d363365006bc85000b18b465167cb7f1a882c29dd29",
+      "duplicate_rows": [
+        44,
+        94
+      ]
+    },
+    {
+      "row": 95,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2430"
+        ],
+        "Insider trading policy; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Insider trading policy; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2430
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2430,
+            "html_quotation_context": false,
+            "raw_end_byte": 2789470,
+            "raw_span_sha256": "7757d9ca8abfc8a264bfcf87242199912c900b5cb65fdb5839c60dabea530754",
+            "raw_start_byte": 2788975,
+            "text": "We have adopted a Policy Against Trading on the Basis of Inside Information governing the purchase, sale and/or other dispositions of our securities by our directors, officers and employees. A copy of this policy is filed as an exhibit to this Annual Report on Form 10-K. The information required regarding our insider trading policies and procedures is incorporated by reference from the information contained in the section entitled “Insider Trading Policy” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:b29637cab8d9e4852e3c987487c7d07b176a50d41668005599020b6e4217593a",
+      "duplicate_rows": [
+        45,
+        95
+      ]
+    },
+    {
+      "row": 96,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2432"
+        ],
+        "Code of conduct; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Code of conduct; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2432
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2432,
+            "html_quotation_context": false,
+            "raw_end_byte": 2790724,
+            "raw_span_sha256": "05b3f704618bdbdbe05ccb91d1ce834de7154548acd1ed482122d9640e4718c3",
+            "raw_start_byte": 2789872,
+            "text": "We have a written code of conduct that applies to all our executive officers, directors and employees. Our Code of Conduct is available on our website at http://investor.enphase.com/corporate-governance. A copy of our Code of Conduct may also be obtained free of charge by writing to our Secretary, Enphase Energy, Inc., 47281 Bayside Parkway, Fremont, CA 94538. If we make any substantive amendments to our Code of Conduct or grant any waiver from a provision of the Code of Conduct to any executive officer or director, we intend to promptly disclose the nature of the amendment or waiver on our website."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:e4657976ccf7a694e017d936abe8d99406adcb2b4592197ef89f2a2c75b4db5a",
+      "duplicate_rows": [
+        46,
+        96
+      ]
+    },
+    {
+      "row": 97,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2434"
+        ],
+        "Executive compensation incorporated by reference; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Executive compensation incorporated by reference; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2434
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2434,
+            "html_quotation_context": false,
+            "raw_end_byte": 2791638,
+            "raw_span_sha256": "6caf2ca863f999a975c70621f6d88f3cbccb845cdc83de6dbf1c167bab108216",
+            "raw_start_byte": 2791241,
+            "text": "The information required regarding the compensation of our directors and executive officers is incorporated by reference from the information contained in the sections entitled “Executive Compensation,” “Director Compensation,” “Compensation Committee Interlocks and Insider Participation” and “Compensation Committee Report” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:eb621893938fef7fd96662e53601d8ae322c6a1c540f0bd458047714ef697851",
+      "duplicate_rows": [
+        47,
+        97
+      ]
+    },
+    {
+      "row": 98,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2436"
+        ],
+        "Security ownership incorporated by reference; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Security ownership incorporated by reference; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2436
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2436,
+            "html_quotation_context": false,
+            "raw_end_byte": 2792543,
+            "raw_span_sha256": "e7e2c0b1f66b2445b462ba12d2d629855c997376441b9d88ab8c510091089776",
+            "raw_start_byte": 2792227,
+            "text": "The information required regarding security ownership of our 5% or greater stockholders and of our directors and executive officers is incorporated by reference from the information contained in the section entitled “Security Ownership of Certain Beneficial Owners and Management” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:f8d22ecdf0bd2845a11bb22a632cf909c5163b26bfcaa35425c99f2b4bef9573",
+      "duplicate_rows": [
+        48,
+        98
+      ]
+    },
+    {
+      "row": 99,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2438"
+        ],
+        "Equity compensation plan information incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Equity compensation plan information incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2438
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2438,
+            "html_quotation_context": false,
+            "raw_end_byte": 2793230,
+            "raw_span_sha256": "99b06b98059dfa9656a9942e9f1cd0e65ac856400ad1ba3876bfcbd2921611f2",
+            "raw_start_byte": 2792966,
+            "text": "The information required regarding securities authorized for issuance under our equity compensation plans is incorporated by reference from the information contained in the section entitled “Equity Compensation Plan Information” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:9c5fc07555e445b412ab3674f8165bb1ac3f01bffc938999314def68f8d202ae",
+      "duplicate_rows": [
+        49,
+        99
+      ]
+    },
+    {
+      "row": 100,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2440"
+        ],
+        "Related transactions incorporated by reference; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Related transactions incorporated by reference; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2440
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2440,
+            "html_quotation_context": false,
+            "raw_end_byte": 2794117,
+            "raw_span_sha256": "dd8353d62bff2b8f5380a802112036afd4d95e34345d6bfbfb40cb489a2ee80a",
+            "raw_start_byte": 2793798,
+            "text": "The information required regarding related transactions is incorporated herein by reference from the information contained in the section entitled “Transactions With Related Persons” and, with respect to director independence, the section entitled “Election of Directors” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:62e676161bb5ea991838e7c5a6893733d936378c7048d7459258562e6569d04a",
+      "duplicate_rows": [
+        50,
+        100
+      ]
+    },
+    {
+      "row": 101,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2444"
+        ],
+        "Principal accountant fees incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Principal accountant fees incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2444
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2444,
+            "html_quotation_context": false,
+            "raw_end_byte": 2796630,
+            "raw_span_sha256": "6b491ea7a4a419fbf4513a4902a5bf00949d0965263015a5d16931071d6c1bad",
+            "raw_start_byte": 2796275,
+            "text": "The information required is incorporated by reference from the information contained in the sections entitled “Principal Accountant Fees and Services” and “Pre-Approval Policies and Procedures” in the Proposal entitled “Ratification of Selection of Independent Registered Public Accounting Firm” in our Proxy Statement."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:d4ef96e97bc431a66c8c4bd381d5beaa9dc86be3d1e7306702ca3c12b8896e20",
+      "duplicate_rows": [
+        51,
+        101
+      ]
+    },
+    {
+      "row": 102,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2448"
+        ],
+        "Consolidated financial statements incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Consolidated financial statements incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2448
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2448,
+            "html_quotation_context": false,
+            "raw_end_byte": 2797976,
+            "raw_span_sha256": "81de1f4e6da2bf7213537279a680be24261b5ffca6d93b35c254b8930e171db7",
+            "raw_start_byte": 2797665,
+            "text": "The information concerning our consolidated financial statements, and Report of Independent Registered Public Accounting Firm required by this Item is incorporated by reference herein to the section of this Annual Report on Form 10-K in Part II, Item 8, Consolidated Financial Statements and Supplementary Data."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:85ddef2ee36c5e3b56018ee00b4ee3352518877afa0bd4b6c3c0b7018eae105b",
+      "duplicate_rows": [
+        52,
+        102
+      ]
+    },
+    {
+      "row": 103,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2449"
+        ],
+        "No schedules provided; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "No schedules provided; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2449
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2449,
+            "html_quotation_context": false,
+            "raw_end_byte": 2798365,
+            "raw_span_sha256": "633e6a98e1dc39a8318a5031c338c28aa8426ed85093299bf879b170f53f58f6",
+            "raw_start_byte": 2798178,
+            "text": "No schedules are provided because they are not applicable, not required under the instructions, or the requested information is shown in the financial statements or related notes thereto."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:1908d6e2f6c4ce8571a149c1c2fc258db4057c0bd9411445264701855528a460",
+      "duplicate_rows": [
+        53,
+        103
+      ]
+    },
+    {
+      "row": 104,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2451"
+        ],
+        "Exhibits filed or incorporated; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Exhibits filed or incorporated; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2451
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2451,
+            "html_quotation_context": false,
+            "raw_end_byte": 2798889,
+            "raw_span_sha256": "4f77b61ca0905d3f520b09353c4e9102ea8509bfde08745ef843784fd27f74e0",
+            "raw_start_byte": 2798741,
+            "text": "The exhibits listed below are filed as part of this Annual Report on Form 10-K or incorporated herein by reference, in each case as indicated below."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:af03c4f8c07515354bb8451b8918ca889532a8e4f7ed5f9326fb680dd04ae43e",
+      "duplicate_rows": [
+        54,
+        104
+      ]
+    },
+    {
+      "row": 105,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2670"
+        ],
+        "Form 10-K summary none; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Form 10-K summary none; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2670
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2670,
+            "html_quotation_context": false,
+            "raw_end_byte": 2949275,
+            "raw_span_sha256": "ca7b8edc1e452056ab8b99d176422af3a8c1499770dbb72bfe1498ae3980c104",
+            "raw_start_byte": 2949221,
+            "text": "Item 16. Form 10-K Summary"
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:b94a88ef391070a89f2097fdd418faaceee18ab2b6bcb936697c4d8fb2b74a71",
+      "duplicate_rows": [
+        55,
+        105
+      ]
+    },
+    {
+      "row": 106,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2671"
+        ],
+        "Form 10-K summary none; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Form 10-K summary none; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2671
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2671,
+            "html_quotation_context": false,
+            "raw_end_byte": 2949482,
+            "raw_span_sha256": "903ea500e7ccf842c1312b6c2f964e3e98ff146456cecec717e9a0e122bf735f",
+            "raw_start_byte": 2949477,
+            "text": "None."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:6e871573fb4beec482f5bac790c18733cdbecb697e2d851b7e8d6f1975810cda",
+      "duplicate_rows": [
+        56,
+        106
+      ]
+    },
+    {
+      "row": 107,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2675"
+        ],
+        "Report signed on February 13, 2026; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Report signed on February 13, 2026; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2675
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2675,
+            "html_quotation_context": false,
+            "raw_end_byte": 2951796,
+            "raw_span_sha256": "f68b8d795e4a3f9854de8d9cc5653ed6fa3386fe7e48464c0705275198c4e170",
+            "raw_start_byte": 2951557,
+            "text": "Pursuant to the requirements of Section 13 or 15(d) of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned, thereunto duly authorized on February 13, 2026."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:4b3051829489a1b1977066125c10a8acca3e26cfc6393362e9f51159e710a8c1",
+      "duplicate_rows": [
+        57,
+        107
+      ]
+    },
+    {
+      "row": 108,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2684"
+        ],
+        "Power of attorney; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Power of attorney; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2684
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2684,
+            "html_quotation_context": false,
+            "raw_end_byte": 2957335,
+            "raw_span_sha256": "49bfc14faecf9e8301fc038d05ca5f80af8568324f8708d461053c277f19c761",
+            "raw_start_byte": 2956295,
+            "text": "KNOW ALL PERSONS BY THESE PRESENTS, that each person whose signature appears below constitutes and appoints Badrinarayanan Kothandaraman and Mandy Yang, jointly and severally, as his or her true and lawful attorneys-in-fact and agents, with full power of substitution and resubstitution, for him or her and in his or her name, place and stead, in any and all capacities, to sign any and all amendments to this Annual Report on Form 10-K and to file the same, with all exhibits thereto, and other documents in connection therewith, with the Securities and Exchange Commission, granting unto said attorneys-in-fact and agents full power and authority to do and perform each and every act and thing requisite or necessary to be done in and about the premises hereby ratifying and confirming all that said attorneys-in-fact and agents, or his or her substitute or substitutes, may lawfully do or cause to be done by virtue hereof."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:a8ae4639bab872a3b4af7ee0848bf5de543db7b3ab10d5e3aefc5577d88a9b68",
+      "duplicate_rows": [
+        58,
+        108
+      ]
+    },
+    {
+      "row": 109,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2685"
+        ],
+        "Report signed by persons on behalf of registrant; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Report signed by persons on behalf of registrant; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2685
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2685,
+            "html_quotation_context": false,
+            "raw_end_byte": 2957738,
+            "raw_span_sha256": "046b00fb1b83da7c6966442b52d4e8ff93f31c365f1da3aa28c2a32277a778b5",
+            "raw_start_byte": 2957537,
+            "text": "Pursuant to the requirements of the Securities Exchange Act of 1934, this report has been signed below by the following persons on behalf of the registrant and in the capacities on the dates indicated."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:412f63db29b3399310c0e59f72ff13d22ce9ffdbebcb81cd18a820fa8b770236",
+      "duplicate_rows": [
+        59,
+        109
+      ]
+    },
+    {
+      "row": 110,
+      "raw_tuple": [
+        3,
+        0,
+        0,
+        [
+          "B2406"
+        ],
+        "Changes in accountants disclosure none; governance."
+      ],
+      "decoded_classification": {
+        "kind": "PLANNED_CAPACITY",
+        "subject": "TARGET_REGISTRANT",
+        "timing": "CURRENT_REPORT"
+      },
+      "reason": "Changes in accountants disclosure none; governance.",
+      "references": [
+        {
+          "reference": {
+            "kind": "VISIBLE_BLOCK",
+            "source_index": 2406
+          },
+          "unit_index": 1,
+          "unit_id": "sha256:beb31659a14da855a20f775f36218281cf5aaeefc654b01ad6ec7e1dd61e64e7",
+          "source_item": {
+            "block_index": 2406,
+            "html_quotation_context": false,
+            "raw_end_byte": 2777183,
+            "raw_span_sha256": "903ea500e7ccf842c1312b6c2f964e3e98ff146456cecec717e9a0e122bf735f",
+            "raw_start_byte": 2777178,
+            "text": "None."
+          }
+        }
+      ],
+      "identical_finding_id": "sha256:3ec15b765168933083333443dd925bf90e814f36993f72665ed7aacf3720c1a7",
+      "duplicate_rows": [
+        60,
+        110
+      ]
+    }
+  ],
+  "unit_review_census": [
+    {
+      "unit_index": 0,
+      "reviewed": true,
+      "unresolved": [],
+      "calculation_limits": []
+    },
+    {
+      "unit_index": 1,
+      "reviewed": true,
+      "unresolved": [],
+      "calculation_limits": []
+    },
+    {
+      "unit_index": 2,
+      "reviewed": true,
+      "unresolved": [],
+      "calculation_limits": []
+    },
+    {
+      "unit_index": 3,
+      "reviewed": true,
+      "unresolved": [],
+      "calculation_limits": []
+    }
+  ],
+  "credit": "NONE; no modified response, Candidate, Evidence, Run or accepted classification set emitted"
+}

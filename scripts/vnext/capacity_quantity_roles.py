@@ -217,3 +217,47 @@ def validate_quantity_role_findings(*,units,findings,period,quantity_scope=None)
                 and any(e['kind']=='VISIBLE_BLOCK' and e['source_index']==index
                     for e in f['resolved_evidence']) for f in findings),'B13_SOURCE_PHYSICAL_QUANTITY_CLASSIFICATION_CONFLICT')
     return unresolved
+
+
+def validate_visible_source_label_roles(*, findings):
+    """Require a source relation for positive narrative roles, not a model reason.
+
+    These are necessary bounded checks, not a general semantic proof. Unknown
+    formulations stay unresolved; no alternate label or successful result is
+    inferred. Numeric/native roles keep their separate existing validators.
+    """
+    from .regulatory_investigation_candidates import _sentences
+    physical = r'\b(?:manufacturing|production)\s+(?:capacity|capabilities)\b'
+    utilization = r'\butili[sz]ation\s+(?:of|at)\s+(?:(?:our|the|its|their|company[’\x27]s)\s+)?(?:[A-Za-z-]+\s+){0,4}manufacturing\s+(?:facility|facilities|plant|plants)\b'
+    restriction = r'\b(?:restrict\w*|limit\w*|constrain\w*)\s+(?:[A-Za-z-]+\s+){0,4}(?:production|manufacturing)\b'
+    product = (r'\b(?:energy|battery)\s+storage\s+capacity\b|'
+               r'\binstalled\s+(?:solar|wind|generating|generation)\s+capacity\b|'
+               r'\b(?:battery|batteries|storage\s+system|inverter|solar\s+panel)\b[^.;!?]{0,64}'
+               r'\b(?:capacity|rated)\b[^.;!?]{0,48}\b(?:kWh|MWh|GWh|kW|MW|GW)\b')
+    planning = r'\b(?:plan(?:s|ned|ning)?|intend(?:s|ed)?|propos(?:e[sd]?|al)|expect(?:s|ed)?|future)\b'
+    uncertain = r'\b(?:not|never|no\s+longer|abandoned|cancelled|canceled|if|unless|would|could|might)\b'
+    unresolved = []
+    for finding in findings:
+        kind = finding['kind']
+        if kind not in {'CAPACITY_QUALITATIVE', 'PLANNED_CAPACITY', 'PRODUCT_STORAGE_OR_INSTALLED_CAPACITY'}:
+            continue
+        evidence = finding['resolved_evidence']
+        if not evidence or any(e['kind'] != 'VISIBLE_BLOCK' for e in evidence):
+            continue
+        supported = False
+        for ref in evidence:
+            for _, _, sentence in _sentences(ref['text']):
+                has_physical = re.search(physical, sentence, re.I) is not None
+                if kind == 'CAPACITY_QUALITATIVE':
+                    supported |= has_physical or re.search(utilization+'|'+restriction, sentence, re.I) is not None
+                elif kind == 'PLANNED_CAPACITY':
+                    supported |= (has_physical and re.search(planning, sentence, re.I) is not None
+                                  and re.search(uncertain, sentence, re.I) is None)
+                else:
+                    supported |= re.search(product, sentence, re.I) is not None
+        if not supported:
+            unresolved.append({'unit_id': finding['unit_id'],
+                'source_indices': [e['source_index'] for e in evidence],
+                'claimed_kind': kind, 'reason': 'B13_VISIBLE_SOURCE_ROLE_NOT_ESTABLISHED',
+                'scope': 'Necessary source relation missing; not a relabeling or disclosure-absence conclusion'})
+    return unresolved

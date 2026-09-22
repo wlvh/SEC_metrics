@@ -366,7 +366,8 @@ def validate_response(*, request, raw_response, source=None):
                 production = re.search(r'\b(?:produced|manufactur(?:e|es|ed|ing)|production|output)\b', text, re.I)
                 need(not sales or production is not None, 'B13_SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION')
     from .capacity_utilization_source import validate_explicit_quantity_classifications
-    from .capacity_quantity_roles import validate_quantity_role_findings
+    from .capacity_quantity_roles import validate_quantity_role_findings, validate_visible_source_label_roles
+    checked['unresolved'].extend(validate_visible_source_label_roles(findings=checked['findings']))
     role_units=source['units'] if program is not None else units
     role_findings=([f for f in checked['findings'] if f not in program['program_findings']]+program_complete['program_findings']
                    if program is not None else checked['findings'])
