@@ -55,17 +55,42 @@ POLICY_PATH = "config/issue47_historical_calls_v1.json"
 # ``delegation_body_sha256 = "NOT-A-DIGEST"`` built a LIVE session and passed
 # the pre-request check, because no code path ever read the body those fields
 # describe. A digest nothing is hashed against is decoration.
-REQUIRED_POLICY_FIELDS = ("requirement_id", "delegation_url", "delegation_body_sha256",
+# ``repository`` and ``approver_login`` exist because the previous version
+# proved only that two local files agreed with each other. Measured: a comment
+# record and a policy written side by side in a temporary tree, with any author
+# and any repository's URL, were accepted - so an approval could be written by
+# the executor and then confirmed by the executor's other file.
+REQUIRED_POLICY_FIELDS = ("requirement_id", "repository", "approver_login",
+                          "delegation_url", "delegation_body_sha256",
                           "delegation_record_path", "budget_root",
                           "maximum_additional_provider_paid_sec_calls",
                           "scope", "sec_wiring_receipt_path")
 DELEGATION_TYPE = "ISSUE_47_HISTORICAL_SEC_DELEGATION"
+ISSUE_NUMBER = 47
+# Not every declared dependency serves one named period, and requiring that it
+# does refused the majority of the real declaration. Measured on the planner's
+# own rows: a submissions index and the history shards carry
+# ``historical_catalog``, and Company Facts carries metric ids - 71 of
+# JPMorgan's 75 rows, including all 69 shards and the 12 SNAPSHOT_REFRESH rows
+# the previous fix was supposed to unblock. A frame-level dependency is checked
+# against the frame's own target window instead.
+PERIOD_CONSUMER = "period:"
+FRAME_BASIS = "FRAME_TARGET_WINDOW"
+PERIOD_BASIS = "PERIOD_CONSUMERS"
 SCOPE_FIELDS = ("purposes", "company_ids", "dependency_classes",
                 "earliest_report_end", "latest_report_end")
 _HEX64 = re.compile(r"\A[0-9a-f]{64}\Z")
 _DATE = re.compile(r"\A[0-9]{4}-[0-9]{2}-[0-9]{2}\Z")
-_COMMENT_URL = re.compile(
-    r"\Ahttps://github\.com/[^/]+/[^/]+/issues/[0-9]+#issuecomment-[0-9]+\Z")
+def _comment_url(*, repository):
+    """The one URL shape this issue's delegation may have.
+
+    Bound to the declared repository and to issue 47 rather than to "some
+    GitHub issue comment", which is what let a URL from another repository
+    through.
+    """
+    return re.compile(r"\Ahttps://github\.com/" + re.escape(repository)
+                      + r"/issues/" + str(ISSUE_NUMBER)
+                      + r"#issuecomment-([1-9][0-9]*)\Z")
 
 
 class HistoricalAcquisitionError(ValueError):
@@ -77,20 +102,37 @@ def _need(condition, reason):
         raise HistoricalAcquisitionError(reason)
 
 
+def declared_frame(*, repo_root: Path, company_id: str, years: int = 5):
+    """The whole declaration, plus the target window the frame is asking for.
+
+    Two kinds of dependency live in here and the difference matters to scope.
+    Some serve named periods - an annual primary, an accession index. Others
+    serve the frame itself: a submissions index and its history shards are what
+    make the target periods discoverable at all, and Company Facts answers
+    several metrics across every period. Those carry no ``period:`` consumer,
+    and the target window they serve is the frame's.
+    """
+    plan = plan_historical_sources(repo_root=Path(repo_root), company_id=company_id,
+                                   count=years)
+    targets = sorted({candidate["report_date"] for candidate in plan["target_candidates"]
+                      if candidate.get("report_date")})
+    return {"requirements": list(plan["requirements"]), "target_report_dates": targets,
+            "company_id": company_id, "plan_id": plan["plan_id"]}
+
+
 def declared_dependencies(*, repo_root: Path, company_id: str, years: int = 5):
     """Every source this company's five-year frame declares, saved or not.
 
     Whether a URL belongs to the task and whether it still needs fetching are
-    two questions, and the previous version answered only the second. Measured
+    two questions, and an earlier version answered only the second. Measured
     against that: a dependency already saved was refused as "not a declared
     dependency", so the reuse branch behind the gate could never be reached,
     and a row the planner marks ``SNAPSHOT_REFRESH`` - stale bytes that are
     intact but disagree with the index - was short-circuited as a reuse and
     never reached a request.
     """
-    plan = plan_historical_sources(repo_root=Path(repo_root), company_id=company_id,
-                                   count=years)
-    return list(plan["requirements"])
+    return declared_frame(repo_root=repo_root, company_id=company_id,
+                          years=years)["requirements"]
 
 
 def historical_dependencies(*, repo_root: Path, company_id: str, years: int = 5):
@@ -148,9 +190,14 @@ def _typed(policy):
     _need(_HEX64.match(str(policy["delegation_body_sha256"]) or ""),
           "ISSUE_47_ALLOWANCE_DIGEST_IS_NOT_A_SHA256:"
           + str(policy["delegation_body_sha256"])[:40])
-    _need(_COMMENT_URL.match(str(policy["delegation_url"]) or ""),
-          "ISSUE_47_ALLOWANCE_URL_IS_NOT_AN_ISSUE_COMMENT:"
-          + str(policy["delegation_url"])[:60])
+    _need(type(policy["repository"]) is str and policy["repository"].count("/") == 1,
+          "ISSUE_47_ALLOWANCE_REPOSITORY_MALFORMED:" + str(policy["repository"])[:40])
+    _need(type(policy["approver_login"]) is str and policy["approver_login"],
+          "ISSUE_47_ALLOWANCE_APPROVER_MALFORMED")
+    _need(_comment_url(repository=policy["repository"]).match(
+        str(policy["delegation_url"]) or ""),
+        "ISSUE_47_ALLOWANCE_URL_IS_NOT_THIS_ISSUE_S_COMMENT:"
+        + str(policy["delegation_url"])[:70])
     limits = policy["maximum_additional_provider_paid_sec_calls"]
     _need(type(limits) is list and len(limits) == 3
           and all(type(value) is int and value >= 0 for value in limits),
@@ -173,14 +220,46 @@ def _typed(policy):
           "ISSUE_47_ALLOWANCE_SCOPE_WINDOW_INVERTED")
 
 
-def _delegation(*, repo_root: Path, policy):
+def github_comment_reader(path):
+    """Read one comment from GitHub, through the boundary the repository uses.
+
+    Kept as a named function so the live path has one, and so a test can pass
+    a different reader without the production path ever having a default that
+    returns a local file.
+    """
+    from .annual_candidate import _github
+    return _github(path)
+
+
+def _provenance(*, comment, policy, where):
+    """The fields that say this comment is the approval, not a copy of one."""
+    match = _comment_url(repository=policy["repository"]).match(policy["delegation_url"])
+    issue_api = ("https://api.github.com/repos/" + policy["repository"]
+                 + "/issues/" + str(ISSUE_NUMBER))
+    _need(comment.get("html_url") == policy["delegation_url"]
+          and str(comment.get("id")) == match[1]
+          and comment.get("issue_url") == issue_api,
+          "ISSUE_47_DELEGATION_IS_NOT_ON_THIS_ISSUE:" + where)
+    _need(comment.get("user", {}).get("login") == policy["approver_login"],
+          "ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER:" + where + ":"
+          + str(comment.get("user", {}).get("login")))
+
+
+def _delegation(*, repo_root: Path, policy, reader=None):
     """The approved text itself, re-hashed, and required to say the same thing.
 
-    This is the check whose absence the review reproduced. Reading the body the
-    digest describes is what makes the digest mean anything, and requiring the
-    body to restate the limits, budget root and scope is what stops a policy
-    file from widening a grant the approver never gave: the policy is a pointer
-    to an approval, not a second place the approval can be written.
+    Three layers, because the previous two were not enough. The body the digest
+    names is read and re-hashed - a digest nothing is hashed against is
+    decoration. The body must restate the limits, budget root and scope, so the
+    policy cannot grant more than the approval did. And the comment must carry
+    the provenance of an approval on this issue by the declared approver.
+
+    ``reader`` is what separates a real approval from a local copy of one.
+    Verified against the previous version: a comment record and a policy
+    written side by side in a temporary tree were accepted, with any author and
+    any repository's URL. When a reader is supplied - the live path always
+    supplies one - the comment is fetched from GitHub and the local record must
+    match it byte for byte, so a pair the executor wrote cannot authorize.
     """
     from .canonical import sha256_bytes, strict_json_file
     path = Path(repo_root) / policy["delegation_record_path"]
@@ -192,9 +271,14 @@ def _delegation(*, repo_root: Path, policy):
     _need(sha256_bytes(content=comment["body"].encode("utf-8"))
           == policy["delegation_body_sha256"],
           "ISSUE_47_DELEGATION_BODY_DOES_NOT_MATCH_ITS_DIGEST")
-    _need(comment.get("html_url") == policy["delegation_url"],
-          "ISSUE_47_DELEGATION_RECORD_IS_FOR_ANOTHER_COMMENT:"
-          + str(comment.get("html_url"))[:60])
+    _provenance(comment=comment, policy=policy, where="saved_record")
+    if reader is not None:
+        match = _comment_url(repository=policy["repository"]).match(policy["delegation_url"])
+        fetched = reader("repos/" + policy["repository"] + "/issues/comments/" + match[1])
+        _need(type(fetched) is dict, "ISSUE_47_DELEGATION_FETCH_DID_NOT_RETURN_A_COMMENT")
+        _provenance(comment=fetched, policy=policy, where="fetched")
+        _need(fetched.get("body") == comment["body"],
+              "ISSUE_47_SAVED_DELEGATION_DIFFERS_FROM_THE_ONE_ON_GITHUB")
     try:
         approved = json.loads(comment["body"])
     except ValueError:
@@ -209,10 +293,10 @@ def _delegation(*, repo_root: Path, policy):
               "ISSUE_47_ALLOWANCE_WIDENS_THE_APPROVED_GRANT:" + field)
     _need(approved.get("production_authorized") is False,
           "ISSUE_47_DELEGATION_MUST_NOT_AUTHORIZE_PRODUCTION")
-    return approved
+    return {**approved, "provenance_verified_against_github": reader is not None}
 
 
-def acquisition_allowance(*, repo_root: Path):
+def acquisition_allowance(*, repo_root: Path, delegation_reader=None):
     """Issue #47's own SEC allowance, verified rather than merely present.
 
     Issue #28's allowance is bound to ``requirement_id`` ``issue_28_v14`` and to
@@ -240,17 +324,28 @@ def acquisition_allowance(*, repo_root: Path):
           "ISSUE_47_SEC_ALLOWANCE_IS_FOR_ANOTHER_REQUIREMENT:"
           + str(policy["requirement_id"]))
     _typed(policy)
-    policy["approved_delegation"] = _delegation(repo_root=repo_root, policy=policy)
+    policy["approved_delegation"] = _delegation(repo_root=repo_root, policy=policy,
+                                                reader=delegation_reader)
     return policy
 
 
-def request_is_in_scope(*, allowance, company_id, dependency, purpose):
+def request_is_in_scope(*, allowance, company_id, dependency, purpose,
+                       frame_report_dates=None):
     """Whether this exact request is one the approval covers.
 
-    A URL being a real dependency of the task is not the same as this grant
-    allowing it to be fetched. Both have to hold: the gate above answers the
-    first, and this answers the second, over the company, the dependency class
-    and the target periods the dependency serves.
+    A URL being a real dependency is not the same as this grant allowing it to
+    be fetched. Both have to hold: the declaration answers the first, and this
+    answers the second, over the company, the dependency class and the periods
+    the dependency serves.
+
+    ``frame_report_dates`` is what a frame-level dependency is checked against.
+    Requiring a ``period:`` consumer on every row refused the submissions index,
+    every history shard and Company Facts - most of the real declaration - and
+    the case that was supposed to prove refresh worked did not catch it,
+    because it reused an annual row that happens to carry a period tag. The
+    fix is not to drop the window check but to name the right window: a
+    dependency that makes the targets discoverable is in scope when the targets
+    are.
     """
     scope = allowance["scope"]
     _need(purpose in scope["purposes"],
@@ -260,11 +355,21 @@ def request_is_in_scope(*, allowance, company_id, dependency, purpose):
     _need(dependency["dependency_class"] in scope["dependency_classes"],
           "ISSUE_47_DEPENDENCY_CLASS_NOT_IN_SCOPE:"
           + str(dependency["dependency_class"]))
-    periods = sorted({consumer.split(":")[1] for consumer in dependency.get("consumers", [])
-                      if consumer.startswith("period:") and len(consumer.split(":")) > 1})
-    _need(periods, "ISSUE_47_DEPENDENCY_SERVES_NO_NAMED_PERIOD")
+    named = sorted({consumer.split(":")[1]
+                    for consumer in dependency.get("consumers", [])
+                    if str(consumer).startswith(PERIOD_CONSUMER)
+                    and len(str(consumer).split(":")) > 1})
+    if named:
+        periods, basis = named, PERIOD_BASIS
+    else:
+        periods = sorted(frame_report_dates or ())
+        basis = FRAME_BASIS
+        _need(periods,
+              "ISSUE_47_FRAME_TARGET_WINDOW_UNKNOWN:"
+              + str(dependency["dependency_class"]))
     outside = [period for period in periods
                if not scope["earliest_report_end"] <= period <= scope["latest_report_end"]]
     _need(not outside, "ISSUE_47_TARGET_PERIOD_NOT_IN_SCOPE:" + ",".join(outside))
     return {"company_id": company_id, "purpose": purpose,
-            "dependency_class": dependency["dependency_class"], "periods": periods}
+            "dependency_class": dependency["dependency_class"],
+            "periods": periods, "period_basis": basis}

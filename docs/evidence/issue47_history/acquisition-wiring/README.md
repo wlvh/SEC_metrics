@@ -219,3 +219,93 @@ Requirement closure and the 343 frozen Runs of the last batch stop being
 evidence for the version that would then run. The fix is a successor
 declaration that unions the planner's rows with the event dependencies, in a
 file that is not closure-bound, and it is not written yet.
+
+## The next review found that the previous round's fix broke the legitimate path
+
+The sharpest finding first, because it is the pattern rather than the bug: the
+scope gate added to close finding 1 **refused most of the real declaration**,
+and the case written to prove the refresh fix did not catch it.
+
+`request_is_in_scope` required every dependency to carry a `period:` consumer.
+Measured against the production planner's own rows:
+
+| dependency class | consumers the planner emits | old gate |
+|---|---|---|
+| annual primary, accession index | `period:2025-12-31` | passed |
+| submissions index | `historical_catalog` | **refused** |
+| history shards | `historical_catalog` | **refused** |
+| Company Facts | `A05`, `B02`, … | **refused** |
+
+For JPMorgan that is **71 of 75 rows, including all 69 history shards and all
+12 `SNAPSHOT_REFRESH` rows** - the exact population the refresh fix existed
+for. So the previous round's "refresh now reaches a request" was true of the
+branch and false of the system.
+
+The refresh case missed it because it took a Marriott row that needed
+acquiring and **edited** it into a refresh, keeping the annual row's period
+tag. A hand-made row cannot show that the real ones pass.
+
+The fix is not to drop the window check but to name the right window. A
+dependency that serves named periods is checked against those; one that makes
+the targets discoverable at all - an index, a shard, Company Facts - is
+checked against the frame's own target window, and the admission record says
+which basis it used. All 91 real rows across both companies now pass, and
+wrong company, wrong class, wrong window and wrong purpose still refuse.
+
+`TheScopeGateMustPassTheRealDeclaration` iterates the planner's live output
+rather than a fixture, so this class of mistake fails here rather than in
+production.
+
+## Three further findings, each reproduced
+
+**A grant was still two local files agreeing with each other.** Reading the
+body and re-hashing it stopped "only one file changed", but both files came
+from the same tree, so an approval could be written by the executor and
+confirmed by the executor's other file; the URL check accepted any
+repository's issue comment. Now the policy declares `repository` and
+`approver_login`, the URL must be a comment on **this** repository's issue 47,
+the comment's `id`, `issue_url` and author must agree, and the live path
+supplies a reader that fetches the comment from GitHub and requires the saved
+record to match it byte for byte. An offline read returns
+`provenance_verified_against_github: false` rather than silently looking the
+same.
+
+**A terminal named a receipt that nothing read.** A sealed terminal naming a
+missing receipt, or one belonging to another request, left the channel
+unblocked and the next claim succeeded. The frozen source validator would
+refuse such a ledger, but only after the next request had gone out, and this
+check exists to run before it. Five more states are now named:
+`RECEIPT_ABSENT`, `RECEIPT_RECORD_DAMAGED`, `TERMINAL_NAMES_ANOTHER_RECEIPT`,
+`RECEIPT_BOUND_TO_ANOTHER_INTENT`, `RECEIPT_AND_TERMINAL_DISAGREE`.
+
+**The receipt attested a run that excluded every regression of the round that
+produced it.** The selector list named eight classes and was never revisited
+when sixteen cases arrived, thirteen of which do not read the receipt at all.
+The list now holds fifteen classes, the two that read the receipt are named
+with their reason, and `unclassified_verification_cases()` makes a class that
+belongs to neither set a failure - it caught four of this round's own new
+classes immediately. The receipt went from **18 tests over 8 classes to 48
+over 15**.
+
+The CLI also reported the ledger's running total in the same `calls` field
+that carries a single invocation's count on success. They are now `calls` and
+`cumulative_calls`, because a caller that adds up the first must not add the
+second.
+
+## Injections, re-run against the current tree
+
+| injection | caught by |
+|---|---|
+| require a `period:` consumer on every row | 4 of the 5 scope cases |
+| drop the fetched-vs-saved body comparison | the locally-written-pair case |
+| stop reading the receipt a terminal names | all three receipt-binding cases |
+| leave a new test class out of both selector sets | the classification case |
+
+## A test-hygiene defect that masqueraded as 21 code failures
+
+Mid-round the suite reported 21 errors on an unchanged tree. The cause was
+`No space left on device`: every recorded session installs a full baseline
+corpus, and the shared fixture never removed its temporary root, so repeated
+runs filled the disk. The fixtures now register their own cleanup. Recording
+it because the failure looked like a code regression and was not - and because
+a leaking fixture will eventually be blamed for a defect it did not cause.

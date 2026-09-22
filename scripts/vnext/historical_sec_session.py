@@ -56,8 +56,8 @@ from .batch_workflow import validate_request_attempt_binding
 from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_file
 from .historical_source_acquisition import (POLICY_PATH, REQUIREMENT_ID,
                                             HistoricalAcquisitionError,
-                                            acquisition_allowance, historical_dependency,
-                                            request_is_in_scope)
+                                            acquisition_allowance, declared_frame,
+                                            historical_dependency, request_is_in_scope)
 from .invocation_control import _exclusive_write_bytes, _exclusive_write_json
 from .normal_source_authority import MANIFEST_PATH, ROOT, _baseline_file
 from .sources import resolve_repository_file
@@ -233,6 +233,28 @@ def _terminal_block_reason(*, slot, intent, mode):
     status = terminal.get("status")
     if status not in RESOLVED:
         return "OUTCOME_NOT_KNOWN:" + str(status)
+    # A terminal names a receipt; until this read it, a terminal could name a
+    # receipt that was missing or belonged to another request and still resolve
+    # the slot. Measured against that: both cases left blocked empty and the
+    # next claim succeeded. The frozen source validator would refuse such a
+    # ledger later, but "later" is after the next request has gone out, and
+    # this check exists to run before it.
+    receipt_path = slot / "sec-receipt.json"
+    if not receipt_path.is_file():
+        return "RECEIPT_ABSENT"
+    try:
+        receipt = strict_json_file(path=receipt_path)
+        _check_seal(receipt, "receipt_id")
+    except Exception:
+        return "RECEIPT_RECORD_DAMAGED"
+    if receipt.get("receipt_id") != terminal.get("sec_receipt_id"):
+        return "TERMINAL_NAMES_ANOTHER_RECEIPT"
+    if receipt.get("intent_id") != intent["intent_id"]:
+        return "RECEIPT_BOUND_TO_ANOTHER_INTENT"
+    if receipt.get("status") != status:
+        return "RECEIPT_AND_TERMINAL_DISAGREE:" + str(receipt.get("status"))
+    if receipt.get("execution_mode") != mode:
+        return "RECEIPT_MODE_DIFFERS"
     return None
 
 
@@ -394,9 +416,12 @@ class HistoricalSecSession:
         with self.ledger.locked():
             self.ledger.require_unblocked()
             install_historical_source_inputs(root=self.data_root)
-            dependency = historical_dependency(repo_root=self.data_root,
-                                               company_id=company_id, url=url,
-                                               years=years)
+            frame = declared_frame(repo_root=self.data_root, company_id=company_id,
+                                   years=years)
+            matches = [row for row in frame["requirements"] if row["source_url"] == url]
+            _need(matches, "HISTORICAL_URL_IS_NOT_A_DECLARED_DEPENDENCY:" + url)
+            _need(len(matches) == 1, "HISTORICAL_URL_IS_DECLARED_MORE_THAN_ONCE:" + url)
+            dependency = matches[0]
             # The planner, not the saved flag, decides whether a fetch is due.
             # A SNAPSHOT_REFRESH row carries VERIFIED_SAVED_SOURCE *and*
             # new_acquisition_required: its bytes are intact but disagree with
@@ -428,7 +453,8 @@ class HistoricalSecSession:
             purpose = self.allowance["scope"]["purposes"][0]
             admitted = request_is_in_scope(allowance=self.allowance,
                                            company_id=company_id,
-                                           dependency=dependency, purpose=purpose)
+                                           dependency=dependency, purpose=purpose,
+                                           frame_report_dates=frame["target_report_dates"])
             plan["scope_admission"] = admitted
             path, intent = self.ledger.claim(
                 channel=SEC, request_digest=content_hash(value=request),
@@ -580,7 +606,21 @@ REQUIRED_WIRING_EVIDENCE = (
 # would make the receipt's own evidence circular. Naming the exclusion is the
 # point - a builder that quietly ran a subset would look identical.
 _SUITE = "tests.vnext.test_historical_sec_session."
+# Everything the builder can honestly run, which is every class that does not
+# read the receipt being produced. The previous list named eight classes and
+# was never revisited when sixteen new cases arrived, so the receipt attested a
+# run that excluded every regression the round had just added - thirteen of
+# which have nothing to do with the receipt. A selector set that is a literal
+# with no coverage check drifts silently; ``unclassified_verification_cases``
+# below turns that drift into a failure.
 VERIFICATION_SELECTORS = tuple(_SUITE + name for name in (
+    "AGrantMustComeFromAnApprovalNotFromTwoLocalFiles",
+    "ATerminalMustAgreeWithTheReceiptItNames",
+    "EveryVerificationCaseMustBeClassified",
+    "TheScopeGateMustPassTheRealDeclaration",
+    "AnAllowanceMustBeVerifiedNotMerelyPresent",
+    "ATerminalFileIsNotAnOutcome",
+    "BelongingToTheTaskIsNotNeedingAFetch",
     "TheChainProducesASourceTheExistingReaderAccepts",
     "TheGuaranteeComesFromTheFrozenValidator",
     "TheSessionActuallyRoutesThroughTheFrozenValidator",
@@ -590,7 +630,38 @@ VERIFICATION_SELECTORS = tuple(_SUITE + name for name in (
     "TheRecordedPathOpensNoSocket",
     "TheInstallerCarriesTheRuleInputsItClaims",
 ))
-EXCLUDED_FROM_THE_BUILDER = _SUITE + "AGrantMustBindToAWiringReceiptThatIsStillTrue"
+# These read the receipt this builder produces, so running them inside it would
+# make the evidence circular. They are named, with the reason, rather than
+# quietly absent - the whole defect above was an absence nobody could see.
+RECEIPT_DEPENDENT_SELECTORS = tuple(_SUITE + name for name in (
+    "AGrantMustBindToAWiringReceiptThatIsStillTrue",
+    "DeletingEvidenceMustNotReduceTheCheck",
+))
+
+
+def unclassified_verification_cases():
+    """Test classes in the suite that neither list accounts for.
+
+    A new class must be put in one of the two sets deliberately. Returning them
+    rather than raising lets a test report the names, which is what makes the
+    next omission visible instead of silent.
+    """
+    import importlib
+    import inspect
+    import sys
+    import unittest
+    # The repository root, because the builder runs from a CLI whose path holds
+    # scripts/ only. Enumerating the suite is the whole job of this function,
+    # so it makes the suite importable rather than reporting "nothing found",
+    # which would read as "everything is classified".
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
+    module = importlib.import_module(VERIFICATION_SELECTORS[0].rsplit(".", 1)[0])
+    declared = {name for name, value in inspect.getmembers(module, inspect.isclass)
+                if issubclass(value, unittest.TestCase) and value.__module__ == module.__name__}
+    accounted = {selector.rsplit(".", 1)[1]
+                 for selector in VERIFICATION_SELECTORS + RECEIPT_DEPENDENT_SELECTORS}
+    return sorted(declared - accounted)
 
 
 def verify_offline_wiring(*, receipt_path):
@@ -625,6 +696,8 @@ def verify_offline_wiring(*, receipt_path):
             "ISSUE_47_OFFLINE_WIRING_EVIDENCE_CHANGED:" + relative)
     run = receipt["verification_run"]
     _need(list(run.get("selectors", [])) == list(VERIFICATION_SELECTORS)
+          and list(run.get("excluded", [])) == list(RECEIPT_DEPENDENT_SELECTORS)
+          and run.get("unclassified_cases") == []
           and run["passed"] is True and run["failures"] == 0
           and run["errors"] == 0 and run["tests_run"] > 0
           and run.get("return_code") == 0,
@@ -657,9 +730,10 @@ def _run_verification_suite():
     failures = re.search(r"failures=(\d+)", tail)
     errors = re.search(r"errors=(\d+)", tail)
     return {"selectors": list(VERIFICATION_SELECTORS),
-            "excluded": EXCLUDED_FROM_THE_BUILDER,
-            "why_excluded": ("it verifies the receipt this run produces, so "
-                             "including it would make the evidence circular"),
+            "excluded": list(RECEIPT_DEPENDENT_SELECTORS),
+            "why_excluded": ("they verify the receipt this run produces, so "
+                             "including them would make the evidence circular"),
+            "unclassified_cases": unclassified_verification_cases(),
             "tests_run": int(ran.group(1)) if ran else 0,
             "failures": int(failures.group(1)) if failures else 0,
             "errors": int(errors.group(1)) if errors else 0,
@@ -684,6 +758,9 @@ def build_offline_wiring_receipt(*, root, response):
     checkpoint, paths = checkpoint_installation(source_root=session.data_root)
     _need(checkpoint["checkpoint_id"] == captured["checkpoint_id"] and bool(paths),
           "ISSUE_47_OFFLINE_WIRING_INSTALLATION_FAILED")
+    unclassified = unclassified_verification_cases()
+    _need(not unclassified,
+          "ISSUE_47_OFFLINE_WIRING_CASES_NOT_CLASSIFIED:" + ",".join(unclassified))
     run = _run_verification_suite()
     _need(run["passed"], "ISSUE_47_OFFLINE_WIRING_SUITE_DID_NOT_PASS:" + str(run))
     evidence = {relative: sha256_file(path=ROOT / relative)
@@ -729,7 +806,11 @@ def live_historical_session():
     regardless, because an execution path that first appears alongside its
     grant is a path nobody has run.
     """
-    allowance = acquisition_allowance(repo_root=ROOT)
+    # The live path always supplies the reader, so a grant is verified against
+    # the comment on GitHub rather than against a second local file.
+    from .historical_source_acquisition import github_comment_reader
+    allowance = acquisition_allowance(repo_root=ROOT,
+                                      delegation_reader=github_comment_reader)
     _need(allowance["delegation_body_sha256"] and allowance["delegation_url"],
           "ISSUE_47_ALLOWANCE_DELEGATION_INCOMPLETE:" + POLICY_PATH)
     verify_offline_wiring(receipt_path=allowance["sec_wiring_receipt_path"])

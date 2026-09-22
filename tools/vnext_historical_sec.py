@@ -41,6 +41,7 @@ def main(argv=None):
         parser.error("--company is required for " + args.command)
     summary = None
     session = None
+    before_sec = 0
     try:
         if args.command == "wiring-receipt":
             # Produced by driving the chain, not by describing it. A grant
@@ -75,6 +76,7 @@ def main(argv=None):
             # exercised offline, so a refusal here names the missing grant
             # rather than a missing implementation.
             session = live_historical_session()
+            before_sec = session.ledger.snapshot()["counts"][2]
             result = session.capture(company_id=args.company, url=args.url,
                                      years=args.years)
     except HistoricalAcquisitionError as error:
@@ -83,17 +85,27 @@ def main(argv=None):
         # would under-report a call that had already gone out - and an
         # under-reported call is exactly what makes a cumulative ceiling
         # untrustworthy. Read the ledger instead of assuming.
-        calls, note = [0, 0, 0], "no ledger was opened before this refusal"
+        # Two different numbers, so two fields. `calls` is what this invocation
+        # spent, which is what a caller adds up; `cumulative_calls` is the
+        # ledger's running total, which a caller must not add to anything. The
+        # previous version put the cumulative total into `calls` on the failure
+        # branch and the per-invocation count on the success branch, so the
+        # same field meant two things depending on the outcome.
+        spent, cumulative = [0, 0, 0], None
+        note = "no ledger was opened before this refusal"
         if session is not None:
             try:
                 state = session.ledger.snapshot()
-                calls = state["counts"] if session.ledger.live else [0, 0, 0]
+                cumulative = state["counts"]
+                spent = [0, 0, 0] if not session.ledger.live else [
+                    0, 0, 1 if state["counts"][2] > before_sec else 0]
                 note = ("read from this issue's ledger after the refusal; "
                         + str(len(state["blocked"])) + " slot(s) unresolved")
             except Exception as unreadable:  # noqa: BLE001 - reported, not handled
-                calls, note = None, "ledger unreadable after the refusal: " + str(unreadable)
-        print(json.dumps({"status": "REFUSED", "reason": str(error), "calls": calls,
-                          "calls_source": note}, sort_keys=True), file=sys.stderr)
+                spent, note = None, "ledger unreadable after the refusal: " + str(unreadable)
+        print(json.dumps({"status": "REFUSED", "reason": str(error), "calls": spent,
+                          "cumulative_calls": cumulative, "calls_source": note},
+                         sort_keys=True), file=sys.stderr)
         return 2
     if args.output is not None:
         output = args.output.resolve()

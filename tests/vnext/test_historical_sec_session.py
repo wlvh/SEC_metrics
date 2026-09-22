@@ -14,6 +14,7 @@ in the recorded path opens a socket.
 """
 from pathlib import Path
 from unittest.mock import patch
+import atexit
 import hashlib
 import json
 import shutil
@@ -24,6 +25,7 @@ import unittest
 from vnext.canonical import content_hash, strict_json_file
 from vnext.continuous_sec_acquisition import validate_acquisition_checkpoint
 from vnext.historical_sec_session import (HistoricalSessionError,
+                                          unclassified_verification_cases,
                                           install_historical_source_inputs,
                                           live_historical_session,
                                           recorded_historical_session,
@@ -32,6 +34,7 @@ from vnext.historical_source_acquisition import (POLICY_PATH, DELEGATION_TYPE,
                                                  HistoricalAcquisitionError,
                                                  acquisition_allowance,
                                                  declared_dependencies,
+                                                 declared_frame,
                                                  historical_dependency,
                                                  request_is_in_scope)
 from vnext.normal_source_authority import MANIFEST_PATH, ROOT
@@ -53,6 +56,12 @@ class _Chain:
 
     Installing the baseline corpus is the expensive step and it is an input,
     never the thing under assertion, so sharing it does not weaken a case.
+
+    It also removes itself at exit. An installed corpus is large, every
+    recorded session makes one, and an earlier version of this file left one
+    behind per process - which eventually filled the disk and turned every
+    case in the suite into an unrelated OSError. A fixture that leaks is a
+    fixture that will one day be blamed for a defect it did not cause.
     """
 
     root = None
@@ -63,6 +72,7 @@ class _Chain:
         if cls.root is not None:
             return
         cls.root = Path(tempfile.mkdtemp(prefix="issue47-chain-"))
+        atexit.register(shutil.rmtree, cls.root, ignore_errors=True)
         session = recorded_historical_session(root=cls.root / "ledger", response=BODY)
         cls.result = session.capture(company_id="marriott_international", url=DECLARED)
 
@@ -400,14 +410,19 @@ class TheInstallerCarriesTheRuleInputsItClaims(unittest.TestCase):
         self.assertIn("ISSUE_47_SOURCE_ROOT_UNOWNED", str(caught.exception))
 
 
-def _grant_tree(*, scope_overrides=None, body_overrides=None, digest=None, url=None):
+def _grant_tree(*, scope_overrides=None, body_overrides=None, digest=None, url=None,
+                repository="wlvh/SEC_metrics", approver=None):
     """A tree holding a real, internally consistent Issue #47 allowance.
 
-    Built rather than fixtured, because every case below needs to move exactly
-    one field and see the refusal name that field.
+    Built rather than fixtured, because every case needs to move exactly one
+    field and see the refusal name that field. ``repository`` is separate from
+    ``url`` on purpose: a policy that declares this repository while pointing
+    at another one's comment is precisely the case worth refusing.
     """
     root = Path(tempfile.mkdtemp(prefix="issue47-grant-"))
     budget = Path(tempfile.mkdtemp(prefix="issue47-budget-"))
+    for leaked in (root, budget):
+        atexit.register(shutil.rmtree, leaked, ignore_errors=True)
     scope = {"purposes": ["historical_five_year_source_acquisition"],
              "company_ids": ["marriott_international"],
              "dependency_classes": ["ACCESSION_INSTANCE_DISCOVERY",
@@ -421,13 +436,18 @@ def _grant_tree(*, scope_overrides=None, body_overrides=None, digest=None, url=N
                 "budget_root": str(budget), "scope": scope,
                 "production_authorized": False, **(body_overrides or {})}
     body = json.dumps(approved, sort_keys=True)
-    comment_url = url or "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-1"
+    comment_url = url or ("https://github.com/" + repository
+                          + "/issues/47#issuecomment-1")
+    login = approver or repository.split("/")[0]
+    comment = {"html_url": comment_url, "body": body, "id": 1,
+               "issue_url": "https://api.github.com/repos/" + repository + "/issues/47",
+               "user": {"login": login}}
     (root / "docs").mkdir(parents=True)
-    (root / "docs/delegation.json").write_text(
-        json.dumps({"html_url": comment_url, "body": body}), encoding="utf-8")
+    (root / "docs/delegation.json").write_text(json.dumps(comment), encoding="utf-8")
     (root / "config").mkdir(parents=True)
     (root / POLICY_PATH).write_text(json.dumps({
-        "requirement_id": "issue_47_v1", "delegation_url": comment_url,
+        "requirement_id": "issue_47_v1", "repository": repository,
+        "approver_login": login, "delegation_url": comment_url,
         "delegation_body_sha256": digest or hashlib.sha256(body.encode()).hexdigest(),
         "delegation_record_path": "docs/delegation.json", "budget_root": str(budget),
         "maximum_additional_provider_paid_sec_calls": limits, "scope": scope,
@@ -481,7 +501,7 @@ class AnAllowanceMustBeVerifiedNotMerelyPresent(unittest.TestCase):
         root2, _ = self._tree(url="NOT-A-URL-AT-ALL")
         with self.assertRaises(HistoricalAcquisitionError) as caught:
             acquisition_allowance(repo_root=root2)
-        self.assertIn("ISSUE_47_ALLOWANCE_URL_IS_NOT_AN_ISSUE_COMMENT",
+        self.assertIn("ISSUE_47_ALLOWANCE_URL_IS_NOT_THIS_ISSUE_S_COMMENT",
                       str(caught.exception))
 
     def test_a_policy_cannot_grant_more_than_the_body_approved(self):
@@ -567,13 +587,28 @@ class ATerminalFileIsNotAnOutcome(unittest.TestCase):
             return str(error)
 
     def test_a_known_failure_resolves_the_slot_and_the_run_continues(self):
-        sealed = strict_json_file(
-            path=_Chain.root / "ledger/calls/0001/terminal.json")
+        # Both records have to say the same thing now, which is the point: a
+        # terminal that disagrees with its receipt is a fifth state, not a
+        # failure that may be counted and moved past.
+        sealed = strict_json_file(path=_Chain.root / "ledger/calls/0001/terminal.json")
         failed = {k: v for k, v in sealed.items()
                   if k not in {"terminal_id", "status", "stop_reason"}}
         failed.update({"status": "FAILED_TERMINAL", "stop_reason": ""})
-        self.assertIsNone(self._with_terminal(_seal(failed, "terminal_id")),
-                          "a failure counts and does not block")
+
+        def both(slot):
+            receipt = strict_json_file(path=slot / "sec-receipt.json")
+            changed = {k: v for k, v in receipt.items() if k != "receipt_id"}
+            changed["status"] = "FAILED_TERMINAL"
+            resealed = _seal(changed, "receipt_id")
+            (slot / "sec-receipt.json").write_text(json.dumps(resealed), encoding="utf-8")
+            bound = {**failed, "sec_receipt_id": resealed["receipt_id"]}
+            (slot / "terminal.json").write_text(
+                json.dumps(_seal(bound, "terminal_id")), encoding="utf-8")
+
+        ledger = _Chain.copy(self.root / "known-failure")
+        both(ledger / "calls/0001")
+        session = recorded_historical_session(root=ledger, response=BODY)
+        session.ledger.require_unblocked()
 
     def test_a_sealed_unknown_outcome_does_not_resolve_it(self):
         sealed = strict_json_file(
@@ -696,6 +731,255 @@ class DeletingEvidenceMustNotReduceTheCheck(unittest.TestCase):
             verify_offline_wiring(receipt_path=relative)
         self.assertIn("ISSUE_47_OFFLINE_WIRING_VERIFICATION_RUN_DID_NOT_PASS",
                       str(caught.exception))
+
+
+class TheScopeGateMustPassTheRealDeclaration(unittest.TestCase):
+    """Refusing bad input is half a gate; the other half is letting work through.
+
+    This class exists because the previous round's scope check was written and
+    tested against a row that happens to carry a ``period:`` consumer, and so
+    the case that proved refresh worked passed while the gate refused most of
+    the real declaration: 71 of JPMorgan's 75 rows, including all 69 history
+    shards and the 12 SNAPSHOT_REFRESH rows the refresh fix was for.
+    """
+
+    def _allowance(self, frame, company):
+        rows = frame["requirements"]
+        return {"scope": {"purposes": ["p"], "company_ids": [company],
+                          "dependency_classes": sorted({r["dependency_class"] for r in rows}),
+                          "earliest_report_end": "2000-01-01",
+                          "latest_report_end": "2099-12-31"}}
+
+    def _admit(self, frame, company, row, allowance=None):
+        return request_is_in_scope(allowance=allowance or self._allowance(frame, company),
+                                   company_id=company, dependency=row, purpose="p",
+                                   frame_report_dates=frame["target_report_dates"])
+
+    def test_every_row_the_planner_declares_is_admissible(self):
+        # Load-bearing and deliberately not a fixture: these are the rows the
+        # production planner emits today.
+        for company in ("marriott_international", "jpmorgan_chase"):
+            with self.subTest(company=company):
+                frame = declared_frame(repo_root=ROOT, company_id=company)
+                self.assertTrue(frame["requirements"])
+                for row in frame["requirements"]:
+                    self._admit(frame, company, row)
+
+    def test_a_frame_level_dependency_is_admitted_on_the_frame_window(self):
+        frame = declared_frame(repo_root=ROOT, company_id="jpmorgan_chase")
+        shards = [r for r in frame["requirements"]
+                  if not any(str(c).startswith("period:") for c in r.get("consumers", []))]
+        self.assertTrue(shards, "the declaration carries frame-level dependencies")
+        admitted = self._admit(frame, "jpmorgan_chase", shards[0])
+        self.assertEqual("FRAME_TARGET_WINDOW", admitted["period_basis"])
+        self.assertEqual(frame["target_report_dates"], admitted["periods"])
+
+    def test_a_row_that_names_periods_is_admitted_on_those(self):
+        frame = declared_frame(repo_root=ROOT, company_id="marriott_international")
+        named = [r for r in frame["requirements"]
+                 if any(str(c).startswith("period:") for c in r.get("consumers", []))]
+        admitted = self._admit(frame, "marriott_international", named[0])
+        self.assertEqual("PERIOD_CONSUMERS", admitted["period_basis"])
+
+    def test_the_refresh_rows_the_planner_actually_marks_are_admissible(self):
+        # Not a hand-edited row this time: JPMorgan's shards are the real
+        # SNAPSHOT_REFRESH population, and they are what the previous gate
+        # refused.
+        frame = declared_frame(repo_root=ROOT, company_id="jpmorgan_chase")
+        refresh = [r for r in frame["requirements"]
+                   if r.get("acquisition_kind") == "SNAPSHOT_REFRESH"]
+        self.assertTrue(refresh, "the planner marks refreshes for this company")
+        for row in refresh:
+            self._admit(frame, "jpmorgan_chase", row)
+
+    def test_wrong_company_class_and_window_are_still_refused(self):
+        frame = declared_frame(repo_root=ROOT, company_id="jpmorgan_chase")
+        row = frame["requirements"][0]
+        base = self._allowance(frame, "jpmorgan_chase")["scope"]
+        for label, scope, expected in (
+                ("company", {**base, "company_ids": ["pfizer"]},
+                 "ISSUE_47_COMPANY_NOT_IN_SCOPE"),
+                ("class", {**base, "dependency_classes": ["NOTHING"]},
+                 "ISSUE_47_DEPENDENCY_CLASS_NOT_IN_SCOPE"),
+                ("window", {**base, "earliest_report_end": "1900-01-01",
+                            "latest_report_end": "1900-12-31"},
+                 "ISSUE_47_TARGET_PERIOD_NOT_IN_SCOPE"),
+                ("purpose", base, "ISSUE_47_PURPOSE_NOT_IN_SCOPE")):
+            with self.subTest(label):
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    request_is_in_scope(allowance={"scope": scope},
+                                        company_id=("jpmorgan_chase" if label != "company"
+                                                    else "jpmorgan_chase"),
+                                        dependency=row,
+                                        purpose=("q" if label == "purpose" else "p"),
+                                        frame_report_dates=frame["target_report_dates"])
+                self.assertIn(expected, str(caught.exception))
+
+
+class AGrantMustComeFromAnApprovalNotFromTwoLocalFiles(unittest.TestCase):
+    """Two files agreeing with each other is not an approval.
+
+    Reproduced against the previous version: a comment record and a policy
+    written side by side in a temporary tree were accepted, with any author and
+    any repository's URL, so the executor could write an approval and then have
+    the executor's other file confirm it.
+    """
+
+    def setUp(self):
+        self.made = []
+        self.addCleanup(lambda: [shutil.rmtree(p, ignore_errors=True)
+                                 for pair in self.made for p in pair])
+
+    def _tree(self, **kwargs):
+        pair = _grant_tree(**kwargs)
+        self.made.append(pair)
+        return pair
+
+    def _reader_for(self, root):
+        comment = json.loads((root / "docs/delegation.json").read_text())
+        return lambda path: comment
+
+    def test_a_comment_url_from_another_repository_is_refused(self):
+        root, _ = self._tree(url="https://github.com/someone/else/issues/47#issuecomment-1",
+                             repository="wlvh/SEC_metrics")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root)
+        self.assertIn("ISSUE_47_ALLOWANCE_URL_IS_NOT_THIS_ISSUE_S_COMMENT",
+                      str(caught.exception))
+
+    def test_a_comment_by_someone_other_than_the_approver_is_refused(self):
+        root, _ = self._tree()
+        comment = json.loads((root / "docs/delegation.json").read_text())
+        comment["user"] = {"login": "not-the-approver"}
+        (root / "docs/delegation.json").write_text(json.dumps(comment), encoding="utf-8")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root)
+        self.assertIn("ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER",
+                      str(caught.exception))
+
+    def test_a_locally_written_pair_does_not_survive_a_real_read(self):
+        # Load-bearing: this is the case the previous version passed. The local
+        # pair is self-consistent; what refuses it is the comment GitHub
+        # actually returns.
+        root, _ = self._tree()
+        acquisition_allowance(repo_root=root)  # consistent on its own
+        elsewhere = {"html_url": json.loads((root / POLICY_PATH).read_text())["delegation_url"],
+                     "id": 1, "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
+                     "user": {"login": "wlvh"}, "body": '{"record_type": "SOMETHING_ELSE"}'}
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root, delegation_reader=lambda path: elsewhere)
+        self.assertIn("ISSUE_47_SAVED_DELEGATION_DIFFERS_FROM_THE_ONE_ON_GITHUB",
+                      str(caught.exception))
+
+    def test_a_matching_real_read_is_accepted_and_says_so(self):
+        root, _ = self._tree()
+        allowance = acquisition_allowance(repo_root=root,
+                                          delegation_reader=self._reader_for(root))
+        self.assertTrue(allowance["approved_delegation"]
+                        ["provenance_verified_against_github"])
+        offline = acquisition_allowance(repo_root=root)
+        self.assertFalse(offline["approved_delegation"]
+                         ["provenance_verified_against_github"],
+                         "an offline read must not claim it was verified")
+
+    def test_the_fetched_comment_must_also_be_on_this_issue(self):
+        root, _ = self._tree()
+        comment = json.loads((root / "docs/delegation.json").read_text())
+        foreign = {**comment, "issue_url":
+                   "https://api.github.com/repos/wlvh/SEC_metrics/issues/28"}
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root, delegation_reader=lambda path: foreign)
+        self.assertIn("ISSUE_47_DELEGATION_IS_NOT_ON_THIS_ISSUE:fetched",
+                      str(caught.exception))
+
+
+class ATerminalMustAgreeWithTheReceiptItNames(unittest.TestCase):
+    """A terminal names a receipt; until this, nothing read it.
+
+    Reproduced: a sealed terminal naming a missing receipt, and one naming a
+    receipt belonging to another request, both left the channel unblocked and
+    the next claim succeeded.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        _Chain.build()
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-receipt-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def _blocked(self, mutate):
+        ledger = _Chain.copy(self.root / ("case-" + str(len(list(self.root.iterdir())))))
+        mutate(ledger / "calls/0001")
+        session = recorded_historical_session(root=ledger, response=BODY)
+        try:
+            session.ledger.require_unblocked()
+            return None
+        except HistoricalSessionError as error:
+            return str(error)
+
+    def test_a_missing_receipt_blocks(self):
+        message = self._blocked(lambda slot: (slot / "sec-receipt.json").unlink())
+        self.assertIsNotNone(message)
+        self.assertIn("RECEIPT_ABSENT", message)
+
+    def test_a_terminal_naming_another_receipt_blocks(self):
+        def mutate(slot):
+            terminal = strict_json_file(path=slot / "terminal.json")
+            other = {k: v for k, v in terminal.items() if k != "terminal_id"}
+            other["sec_receipt_id"] = "sha256:" + "a" * 64
+            (slot / "terminal.json").write_text(
+                json.dumps(_seal(other, "terminal_id")), encoding="utf-8")
+        message = self._blocked(mutate)
+        self.assertIsNotNone(message)
+        self.assertIn("TERMINAL_NAMES_ANOTHER_RECEIPT", message)
+
+    def test_a_receipt_that_disagrees_about_the_outcome_blocks(self):
+        def mutate(slot):
+            receipt = strict_json_file(path=slot / "sec-receipt.json")
+            changed = {k: v for k, v in receipt.items() if k != "receipt_id"}
+            changed["status"] = "FAILED_TERMINAL"
+            sealed = _seal(changed, "receipt_id")
+            (slot / "sec-receipt.json").write_text(json.dumps(sealed), encoding="utf-8")
+            terminal = strict_json_file(path=slot / "terminal.json")
+            bound = {k: v for k, v in terminal.items() if k != "terminal_id"}
+            bound["sec_receipt_id"] = sealed["receipt_id"]
+            (slot / "terminal.json").write_text(
+                json.dumps(_seal(bound, "terminal_id")), encoding="utf-8")
+        message = self._blocked(mutate)
+        self.assertIsNotNone(message)
+        self.assertIn("RECEIPT_AND_TERMINAL_DISAGREE", message)
+
+    def test_a_complete_and_agreeing_slot_does_not_block(self):
+        self.assertIsNone(self._blocked(lambda slot: None),
+                          "the unmodified chain must still resolve")
+
+
+class EveryVerificationCaseMustBeClassified(unittest.TestCase):
+    """A selector list with no coverage check drifts, and drift is invisible.
+
+    The receipt attested a run of eight classes that was never revisited when
+    sixteen new cases arrived, so it excluded every regression that round added
+    - thirteen of which do not read the receipt at all.
+    """
+
+    def test_no_test_class_is_left_out_of_both_sets(self):
+        self.assertEqual([], unclassified_verification_cases())
+
+    def test_the_excluded_set_is_only_what_reads_the_receipt(self):
+        from vnext.historical_sec_session import RECEIPT_DEPENDENT_SELECTORS
+        names = {s.rsplit(".", 1)[1] for s in RECEIPT_DEPENDENT_SELECTORS}
+        self.assertEqual({"AGrantMustBindToAWiringReceiptThatIsStillTrue",
+                          "DeletingEvidenceMustNotReduceTheCheck"}, names)
+
+    def test_this_round_s_regressions_are_in_the_builder_s_run(self):
+        from vnext.historical_sec_session import VERIFICATION_SELECTORS
+        names = {s.rsplit(".", 1)[1] for s in VERIFICATION_SELECTORS}
+        for required in ("AnAllowanceMustBeVerifiedNotMerelyPresent",
+                         "ATerminalFileIsNotAnOutcome",
+                         "BelongingToTheTaskIsNotNeedingAFetch"):
+            self.assertIn(required, names)
 
 
 if __name__ == "__main__":

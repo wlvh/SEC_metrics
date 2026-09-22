@@ -10,26 +10,36 @@
  "downstream_reader_accepted": true,
  "evidence": {
   "docs/evidence/issue47_history/acquisition-wiring/fault-injections.json": "00b44cb0bddc8f9991723a292eabef4bcf3d6cfa5c5052544a4355aed81d6f96",
-  "scripts/vnext/historical_sec_session.py": "012ae0cd9e06f7b116f38144ead6cde0bc9075f97e533e5c2332588da89aabe1",
-  "scripts/vnext/historical_source_acquisition.py": "e00d396084d4d80cc300bc5c9c530180bdfe0bd572e8732bda6c6caf84b1ddd8",
-  "tests/vnext/test_historical_sec_session.py": "2ffc9d4be0defc3210927f706ec3715e4115dd14cf16fbcc31ecd1e2bddbbbfe",
-  "tools/vnext_historical_sec.py": "ebbc882336f6f55f849b5bd6c477ceefb0e45f8cf62549ce1a4e23cbba93049f"
+  "scripts/vnext/historical_sec_session.py": "ea8a5e811b765e3d77127e8aeb013e1fb39554eb5dbc4037f3786aae1677949d",
+  "scripts/vnext/historical_source_acquisition.py": "e217c978fb7afb11f508e047270d2639db52a7fb5c520087a9406b37e27335a0",
+  "tests/vnext/test_historical_sec_session.py": "4dd9e03394d17cc9a5adf09022f8be83030aa1fa5ba65e3b7844a74c349cf5d3",
+  "tools/vnext_historical_sec.py": "cdf9afdcb50412ad3ca45776c68574ef2c570a32bff29d0445fddc242e09dc0b"
  },
  "execution_mode": "RECORDED_TEST_ONLY",
  "fault_injections_recorded_in": "docs/evidence/issue47_history/acquisition-wiring/fault-injections.json, hashed by this receipt",
  "production_authorized": false,
  "real_sec_credit": false,
- "receipt_id": "sha256:1fc1edf73c2febb9bb07431d887c10d70b1f604411f344dc6fd90a4902151806",
+ "receipt_id": "sha256:09b7a2b2fdfdb37aa3189be632a0c0c0d3cd9408aa90cb68e4395148b4e2c564",
  "record_type": "ISSUE_47_SEC_ACQUISITION_OFFLINE_WIRING",
  "requirement_id": "issue_47_v1",
  "schema_version": 1,
  "verification_run": {
   "errors": 0,
-  "excluded": "tests.vnext.test_historical_sec_session.AGrantMustBindToAWiringReceiptThatIsStillTrue",
+  "excluded": [
+   "tests.vnext.test_historical_sec_session.AGrantMustBindToAWiringReceiptThatIsStillTrue",
+   "tests.vnext.test_historical_sec_session.DeletingEvidenceMustNotReduceTheCheck"
+  ],
   "failures": 0,
   "passed": true,
   "return_code": 0,
   "selectors": [
+   "tests.vnext.test_historical_sec_session.AGrantMustComeFromAnApprovalNotFromTwoLocalFiles",
+   "tests.vnext.test_historical_sec_session.ATerminalMustAgreeWithTheReceiptItNames",
+   "tests.vnext.test_historical_sec_session.EveryVerificationCaseMustBeClassified",
+   "tests.vnext.test_historical_sec_session.TheScopeGateMustPassTheRealDeclaration",
+   "tests.vnext.test_historical_sec_session.AnAllowanceMustBeVerifiedNotMerelyPresent",
+   "tests.vnext.test_historical_sec_session.ATerminalFileIsNotAnOutcome",
+   "tests.vnext.test_historical_sec_session.BelongingToTheTaskIsNotNeedingAFetch",
    "tests.vnext.test_historical_sec_session.TheChainProducesASourceTheExistingReaderAccepts",
    "tests.vnext.test_historical_sec_session.TheGuaranteeComesFromTheFrozenValidator",
    "tests.vnext.test_historical_sec_session.TheSessionActuallyRoutesThroughTheFrozenValidator",
@@ -39,8 +49,9 @@
    "tests.vnext.test_historical_sec_session.TheRecordedPathOpensNoSocket",
    "tests.vnext.test_historical_sec_session.TheInstallerCarriesTheRuleInputsItClaims"
   ],
-  "tests_run": 18,
-  "why_excluded": "it verifies the receipt this run produces, so including it would make the evidence circular"
+  "tests_run": 48,
+  "unclassified_cases": [],
+  "why_excluded": "they verify the receipt this run produces, so including them would make the evidence circular"
  },
  "what_that_validator_does_not_prove": "that the grant is valid, that the request is in scope, that the cumulative count is intact, that an unknown outcome stops the channel, or that a stale snapshot is refreshed - those are this module's own checks"
 }
