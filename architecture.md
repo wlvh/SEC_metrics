@@ -1166,3 +1166,36 @@ else 分支包成 case 并统一经 `bind_current_debt_input` 绑定当期输入
 Run）。执行缺席：`continuous_sec_acquisition.live_sec_session` 硬绑 `issue_28_v14`，
 其 ledger 读该 Issue 的委托、预算根与上限，复用即动用 #28 额度；`capture` 在构造任何
 传输之前以 `ISSUE_47_SEC_ALLOWANCE_NOT_GRANTED` 拒绝并点名所缺记录与字段。
+
+**过去的尝试与今天的诊断是两个数据源，不能由一个模块同时回答**。覆盖表原先用
+`historical_route_refusal.probe_route_refusal` 回答"这个位置为什么没有 Run"：它调用完整
+准备入口，因此**会进入生成指标结果的路线**（实测一次探针 6 次 calculator 调用），而同一份
+记录同时声明 `business_execution_invoked: False`。它的 `except Exception` 还把
+`AssertionError` 一起吞掉，于是一个断言失败读起来像一次业务拒绝。
+
+现在分成两条互不代替的链：
+
+- **过去**：`scripts/vnext/historical_attempt_records.py`（只读，非规则文件）读批次自己
+  的 `native-run-matrix.json`，取出失败位置的错误、错误类型、停在哪一层（`stop_stage`：
+  `RUN_INPUT_ASSEMBLY` 还是 `RUN_CREATION_OR_FREEZE`）与期间选择 id。它只陈述记录过什么，
+  不重新执行，也不声称当前实现会给同样的答案。覆盖表读它：有失败记录即
+  `ROUTE_IMPLEMENTED_ATTEMPT_FAILED` 并附产物路径与 `re_derived_now: false`；没有记录则
+  `historical_attempt: UNPROVEN`，并明写"这不等于什么都没尝试过"。
+- **今天**：`historical_route_refusal.diagnose_route` 与 `tools/vnext_history_diagnose.py`
+  是**独立入口**，自报 `business_execution_invoked: True` 并携带执行身份（世代、引擎是否
+  在本树注册、baseline manifest 哈希）。结果分三类：`ROUTE_DECLINED`（命中九个已命名路线
+  异常类之一，带路线自己的原话）、`ROUTE_PREPARED_THE_POSITION`（准备成功，且明写未检查
+  结果内容）、`PROGRAM_FAULT`（其他异常，明写"这是程序中断不是路线拒绝"）。`AssertionError`
+  原样抛出。把任意异常统一算作准入拒绝，正是把实现缺陷读成业务结论的方式。
+
+**零调用的验收条件是外层计数，而这个仪器第一版是空的**。第一版在 `vnext.calculator` 的
+模块属性上打桩，而调用方早已 `from X import name` 绑好名字，于是一段真的在计算的代码读出
+零次调用。现在 `_count_business_entries()` 遍历全部已加载 `vnext` 模块的绑定逐个打桩，并在
+某个名字**没有任何绑定**时直接拒绝——否则名字一改，测试会静默变回空的；正例对照必须看到
+调用。修好的仪器立刻抓到：`parse_accession_xbrl_source` 在**每一种报告模式**下每个已确定
+期间被调用一次，来自 `normal_history_plan._native_instance_alternative` → `annual_period`。
+所以覆盖表的 `business_execution_invoked` 不再是一个裸 `False`，而是结构化声明：
+`metric_evaluated: False`、`calculator_calls: 0`、
+`source_planner_parses_one_accession_per_established_period: True`，并说明为什么后者不是
+评估（读 pinned 申报自己的 DEI 上下文确认财年，不进入任何指标）。回归另覆盖三种区分：
+过去失败而今天准备成功、从未尝试而今天会被拒绝、以及内部程序异常。

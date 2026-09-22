@@ -208,10 +208,13 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # 10-K bytes - eight complete resolutions, plus a fifth company's Run
     # input. Measured alone before registering it.
     "tests.vnext.test_historical_debt_results": 900,
-    # 31 shape cases at 139 seconds, plus five that ask the routes themselves:
-    # separating a refused position from an unreached one costs a route
-    # preparation per position, measured at 343 seconds for the five.
-    "tests.vnext.test_historical_coverage": 900,
+    # 42 cases at 144 seconds measured together. The earlier 900 was sized for
+    # five cases that asked the routes themselves - 343 seconds of route
+    # preparation per position - and those are gone: the report no longer runs
+    # a route, so the cases now assert that it does not. 144 against the 240
+    # default is the same margin that was judged too thin above, so this keeps
+    # an override, at the size the current cases actually need.
+    "tests.vnext.test_historical_coverage": 480,
 }
 
 

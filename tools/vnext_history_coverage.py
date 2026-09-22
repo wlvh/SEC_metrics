@@ -41,12 +41,13 @@ def main(argv=None):
                              "coordinate run under several closures has several "
                              "receipts; without this the position reports "
                              "RUN_RECEIPT_VERSION_AMBIGUOUS rather than picking one.")
-    parser.add_argument("--explain-not-run", action="store_true",
-                        help="Ask each wired position that has no receipt whether its "
-                             "route declines it today, separating a refused position "
-                             "from one nothing has reached. Costs a route preparation "
-                             "per such position; without it the position says the "
-                             "distinction was not computed.")
+    parser.add_argument("--attempts-root", type=Path,
+                        help="Directory of batch outputs (native-run-matrix.json). "
+                             "Supplies what a batch recorded about positions that "
+                             "produced no Run, which separates an attempt that failed "
+                             "from a position nothing reached. Read as a statement "
+                             "about the past; it cannot confer run status, and without "
+                             "it such a position says the distinction is unproven.")
     parser.add_argument("--output", type=Path)
     arguments = parser.parse_args(argv)
     with patch.object(socket.socket, "connect", side_effect=AssertionError("Network forbidden")), \
@@ -54,7 +55,7 @@ def main(argv=None):
         matrix = build_coverage_matrix(repo_root=REPO_ROOT, company_ids=arguments.companies,
                                        years=arguments.years,
                                        runs_root=arguments.runs_root,
-                                       explain_not_run=arguments.explain_not_run,
+                                       attempts_root=arguments.attempts_root,
                                        requirement_closure_hash=(
                                            arguments.requirement_closure_hash))
     if arguments.output:

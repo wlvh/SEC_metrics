@@ -137,3 +137,35 @@ Verified with `git apply --check` against this branch's head.
 Until it is applied, the saved-source tier has local execution records only on
 any commit where it exceeds 35 minutes, and a `cancelled` run must not be read
 as a pass.
+
+### Run 213 repeats it, which settles whether it is the runner
+
+Run 35682468392 on head `fc95cca` completed `cancelled` with the same shape:
+ten of thirteen jobs succeeded and the same three were cancelled, each at its
+own job-level cap.
+
+| job | cap | job ran | step cut at |
+|---|---|---|---|
+| `vNext capacity native Runs` | 15m | 15m04s | 14m33s |
+| `vNext capacity program-role native Runs` | 20m | 20m17s | 19m48s |
+| `vNext saved-source material` | 35m | 35m22s | 34m47s |
+
+No assertion failed in any of the thirteen. The earlier note argued from run
+194 that which capacity job loses depends on the runner drawn; run 213 loses
+**both**, and the saved-source job with them, nineteen commits later. So the
+caps are not a runner-draw coincidence at two of the three, and the tier has
+not stopped growing.
+
+What this round adds to the third patch's case: the saved-source tier gained
+four cases and lost a 343-second one, and the `test_historical_coverage`
+override came down from 900 to 480 because the cases that asked the routes are
+gone. That moves the shard weights to 10500 and 10440 - still two jobs of the
+same size, which is the point of weighing by each case's own budget rather than
+by count.
+
+None of the three is applied, because this session cannot push
+`.github/workflows/`. All three were re-checked with `git apply --check`
+against `fc95cca`, singly and in sequence, and still apply. Until someone whose
+token carries the `workflows` permission applies them, this PR cannot reach a
+green terminal for reasons that have nothing to do with its diff, and a
+`cancelled` run must not be read as a pass in either direction.

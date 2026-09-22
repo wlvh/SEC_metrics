@@ -15,8 +15,11 @@ Two properties they exist to defend:
   candidate, Evidence check, system review decision and Result for every wired
   position, and the two implementations disagreed in both directions.
 """
+import collections
+import contextlib
 import hashlib
 import json
+import sys
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -1258,83 +1261,6 @@ if __name__ == "__main__":
     unittest.main()
 
 
-class RefusedIsNotNotRunTest(unittest.TestCase):
-    """A position an approved policy declines is not a position nothing reached.
-
-    Both leave no Run receipt, so both used to report ROUTE_IMPLEMENTED_NOT_RUN
-    and the table said "never run" about a determinate, reproducible blocker.
-    The load-bearing case asks two metrics at the same company and period and
-    requires two different answers: a probe that answered one way for
-    everything would pass every other case here and fail this one.
-    """
-
-    # Paramount's Part III amendment is cleared for the event input class and
-    # not for statement values, so at one period one wired metric is refused
-    # and another is not. Measured, not chosen.
-    COMPANY = "paramount_skydance_paramount_global"
-    PERIOD = "2025-12-31"
-    REFUSED = "B01"
-    PREPARES = "D02"
-
-    def _positions(self, *, explain):
-        with original_sources_only():
-            matrix = build_coverage_matrix(repo_root=ROOT, company_ids=[self.COMPANY],
-                                           years=1, explain_not_run=explain)
-        return {p["metric_id"]: p for p in matrix["positions"]
-                if p["report_end"] == self.PERIOD}
-
-    def test_one_company_one_period_two_answers(self):
-        """The whole point, stated as a contrast rather than as a count."""
-        rows = self._positions(explain=True)
-        refused, prepares = rows[self.REFUSED], rows[self.PREPARES]
-        self.assertEqual("ROUTE_IMPLEMENTED_REFUSED", refused["status"])
-        self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", prepares["status"])
-        # The reason is the route's own words. A reason reworded by the
-        # reporting layer cannot be matched against the route that emits it.
-        self.assertIn("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
-                      refused["detail"]["reason"])
-        self.assertIn("ORIGINAL_STATEMENT_VALUES", refused["detail"]["reason"])
-        self.assertEqual("NormalZeroAiError", refused["detail"]["error_type"])
-        # And the one that is genuinely unrun says so positively: the route
-        # prepared it, so a Run could be created.
-        self.assertTrue(prepares["detail"]["route_refusal_derived"])
-        self.assertIn("unrun rather than refused",
-                      prepares["detail"]["refused_vs_not_attempted"])
-
-    def test_without_asking_the_table_does_not_claim_nothing_was_attempted(self):
-        """Not computing the distinction and asserting its absence differ."""
-        rows = self._positions(explain=False)
-        for metric_id in (self.REFUSED, self.PREPARES):
-            with self.subTest(metric_id=metric_id):
-                position = rows[metric_id]
-                self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", position["status"])
-                self.assertFalse(position["detail"]["route_refusal_derived"])
-                self.assertIn("not computed",
-                              position["detail"]["refused_vs_not_attempted"])
-
-    def test_the_refusal_is_derived_and_not_remembered(self):
-        """Asked twice, the same position answers the same way from the tree.
-
-        An attempt log would answer from a record of the past, and a record can
-        be edited to say anything. This asks the route, so the only way to
-        change the answer is to change what the route does.
-        """
-        from vnext.historical_route_refusal import probe_route_refusal
-        with original_sources_only():
-            selection = resolve_period_selection(repo_root=ROOT, company_id=self.COMPANY,
-                                                 report_end=self.PERIOD)
-            first = probe_route_refusal(repo_root=ROOT, company_id=self.COMPANY,
-                                        metric_id=self.REFUSED,
-                                        period_selection=selection)
-            second = probe_route_refusal(repo_root=ROOT, company_id=self.COMPANY,
-                                         metric_id=self.REFUSED,
-                                         period_selection=selection)
-        self.assertEqual(first, second)
-        self.assertTrue(first["refused"])
-        self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, first["calls"])
-        self.assertFalse(first["native_run_created"])
-
-
 class LumenContentDefectIsRegisteredTest(unittest.TestCase):
     """A found content error that is not registered still counts as verified.
 
@@ -1366,3 +1292,272 @@ class LumenContentDefectIsRegisteredTest(unittest.TestCase):
         self.assertTrue(confirmed["result_id"].startswith("sha256:"))
         self.assertTrue(confirmed["run_id"].startswith("run:historical-period:"))
         self.assertEqual(41, confirmed["items"])
+
+
+# Names a business evaluation goes through. Counted at every binding rather
+# than at the defining module: the callers do `from .calculator import ...` at
+# import time, so patching the definition after they loaded leaves them holding
+# the original and the counter reads zero for code that really does compute.
+_BUSINESS_ENTRIES = (("vnext.calculator", "calculate_metric"),
+                     ("vnext.calculator", "calculate_observation_metric"),
+                     ("vnext.deterministic_router", "parse_accession_xbrl_source"),
+                     ("vnext.historical_text_results", "prepare_business_text_sources"))
+
+
+@contextlib.contextmanager
+def _count_business_entries():
+    """Count every call to a business entry, through every module that holds it.
+
+    Yields the counter. Refuses when a name has no binding to patch, because a
+    renamed entry would otherwise make every zero-execution case pass by
+    measuring nothing.
+    """
+    import importlib
+    counts = collections.Counter()
+    patches, found = [], collections.Counter()
+    for module_name, attribute in _BUSINESS_ENTRIES:
+        target = getattr(importlib.import_module(module_name), attribute)
+
+        def wrap(real, name=attribute):
+            def wrapper(*args, **kwargs):
+                counts[name] += 1
+                return real(*args, **kwargs)
+            return wrapper
+
+        for loaded in list(sys.modules.values()):
+            if loaded is None or not getattr(loaded, "__name__", "").startswith("vnext"):
+                continue
+            if getattr(loaded, attribute, None) is target:
+                patches.append(patch.object(loaded, attribute, wrap(target)))
+                found[attribute] += 1
+    missing = [name for _, name in _BUSINESS_ENTRIES if not found[name]]
+    if missing:
+        raise AssertionError("no binding to count for: " + ", ".join(missing))
+    with contextlib.ExitStack() as stack:
+        for entry in patches:
+            stack.enter_context(entry)
+        yield counts
+
+
+class ReportComputesNothingInAnyModeTest(unittest.TestCase):
+    """The report reads receipts and records. It does not evaluate a metric.
+
+    The first attempt at separating a refused position from an unreached one
+    asked the route again, and the route assembly reaches the calculator -
+    measured at six calls for one position that can prepare - so the report
+    computed the outcomes it was reporting while still declaring that it did
+    not. Substituting a raising stub is not enough to catch that: the probe
+    caught every exception, so an assertion forbidding the call came back as a
+    tidy refusal and the report still succeeded. These cases count calls at the
+    outer layer instead.
+    """
+
+    COMPANY = "macys"
+
+    def _counted(self, **arguments):
+        """Run the report with every business entry counted rather than blocked."""
+        with original_sources_only(), _count_business_entries() as counts:
+            matrix = build_coverage_matrix(repo_root=ROOT, company_ids=[self.COMPANY],
+                                           years=1, **arguments)
+        return matrix, counts
+
+    def test_no_mode_evaluates_a_metric(self):
+        """Counted, not blocked, and for every mode the report still has.
+
+        The assertion is not a blanket zero, because counting showed the source
+        planner parses one accession instance per established period to fix
+        that period's identity from the filing's own DEI. So the property is:
+        the calculator is never reached, and the parse count is the planner's
+        and does not move between modes. A mode that started evaluating would
+        move both.
+        """
+        with TemporaryDirectory() as directory:
+            artifact = Path(directory) / "case" / "native-run-matrix.json"
+            artifact.parent.mkdir(parents=True)
+            artifact.write_text(json.dumps({
+                "record_type": "HISTORICAL_NATIVE_RUN_MATRIX",
+                "positions": [{"company_id": self.COMPANY, "metric_id": "B02",
+                               "report_end": MACYS_PERIOD, "stage": "FAILED",
+                               "case": "case", "error": "SYNTHETIC_RECORD",
+                               "error_type": "NormalCompanyfactsError"}]}))
+            modes = {
+                "plain": {},
+                "with_attempts": {"attempts_root": Path(directory)},
+                "with_closure": {"requirement_closure_hash": "sha256:" + "0" * 64},
+                "with_attempts_and_closure": {"attempts_root": Path(directory),
+                                              "requirement_closure_hash": "sha256:" + "0" * 64},
+            }
+            observed = {}
+            for label, arguments in modes.items():
+                with self.subTest(mode=label):
+                    matrix, counts = self._counted(**arguments)
+                    self.assertEqual(0, counts["calculate_metric"])
+                    self.assertEqual(0, counts["calculate_observation_metric"])
+                    self.assertEqual(0, counts["prepare_business_text_sources"])
+                    self.assertFalse(matrix["business_execution_invoked"])
+                    meaning = matrix["what_business_execution_invoked_means"]
+                    self.assertFalse(meaning["metric_evaluated"])
+                    self.assertEqual(0, meaning["calculator_calls"])
+                    self.assertTrue(
+                        meaning["source_planner_parses_one_accession_per_established_period"])
+                    established = [entry for report in matrix["company_reports"]
+                                   for entry in report["periods"]
+                                   if entry["period_status"] == "PERIOD_ESTABLISHED"]
+                    self.assertEqual(len(established),
+                                     counts["parse_accession_xbrl_source"])
+                    observed[label] = dict(counts)
+            # One count for every mode. A mode that added evaluation would not
+            # match the others, which is what makes comparing them worth doing.
+            self.assertEqual(1, len(set(map(str, observed.values()))), observed)
+
+    def test_the_counter_itself_can_see_a_call(self):
+        """Otherwise the case above passes because nothing was instrumented.
+
+        The same instrument is pointed at the diagnostic, which does run the
+        route assembly, and must see calls. This is not decoration: the first
+        version patched the attribute on ``vnext.calculator`` only, and the
+        callers bind these names at import, so by the time a test patched the
+        defining module the routes already held the original. It read zero for
+        a route that really does compute - the instrument was measuring
+        nothing, which is how the report's own claim survived.
+        """
+        from vnext.historical_route_refusal import diagnose_route
+        with original_sources_only(), _count_business_entries() as counts:
+            selection = resolve_period_selection(repo_root=ROOT, company_id=self.COMPANY,
+                                                 report_end=MACYS_PERIOD)
+            diagnosis = diagnose_route(repo_root=ROOT, company_id=self.COMPANY,
+                                       metric_id="B02", period_selection=selection)
+        self.assertEqual("ROUTE_PREPARED_THE_POSITION", diagnosis["outcome"])
+        self.assertTrue(diagnosis["business_execution_invoked"])
+        self.assertTrue(counts, "the instrument saw no business call at all")
+
+
+class PastAttemptAndPresentDiagnosisAreSeparateTest(unittest.TestCase):
+    """Two questions, two answers, neither standing in for the other.
+
+    What a batch attempted and where it stopped is in its records. What the
+    loaded implementation does with a position now is a diagnosis. A position
+    can have failed then and prepare now - code gets fixed - and a position
+    nothing ever touched can be declined now. So "it prepares today" is not
+    evidence that nothing was attempted, and the report must not say it is.
+    """
+
+    COMPANY = "paramount_skydance_paramount_global"
+    PERIOD = "2025-12-31"
+
+    def _rows(self, **arguments):
+        with original_sources_only():
+            matrix = build_coverage_matrix(repo_root=ROOT, company_ids=[self.COMPANY],
+                                           years=1, **arguments)
+        return {p["metric_id"]: p for p in matrix["positions"]
+                if p["report_end"] == self.PERIOD}
+
+    def test_failed_then_and_prepares_now_keeps_both_answers(self):
+        """D02 really does prepare today; the record says an attempt failed."""
+        from vnext.historical_route_refusal import diagnose_route
+        with TemporaryDirectory() as directory:
+            artifact = Path(directory) / "batch" / "native-run-matrix.json"
+            artifact.parent.mkdir(parents=True)
+            artifact.write_text(json.dumps({
+                "record_type": "HISTORICAL_NATIVE_RUN_MATRIX",
+                "positions": [{"company_id": self.COMPANY, "metric_id": "D02",
+                               "report_end": self.PERIOD, "stage": "FAILED",
+                               "case": "batch", "error": "SYNTHETIC_PAST_FAILURE",
+                               "error_type": "HistoricalRunError"}]}))
+            row = self._rows(attempts_root=Path(directory))["D02"]
+        self.assertEqual("ROUTE_IMPLEMENTED_ATTEMPT_FAILED", row["status"])
+        self.assertFalse(row["detail"]["attempt"]["re_derived_now"])
+        # The recorded error type places where it stopped, which is the second
+        # stage rather than input assembly.
+        self.assertEqual("RUN_CREATION_OR_FREEZE",
+                         row["detail"]["attempt"]["failed_records"][0]["stop_stage"])
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=self.COMPANY,
+                                                 report_end=self.PERIOD)
+            diagnosis = diagnose_route(repo_root=ROOT, company_id=self.COMPANY,
+                                       metric_id="D02", period_selection=selection)
+        # Present and past disagree, and both are kept.
+        self.assertEqual("ROUTE_PREPARED_THE_POSITION", diagnosis["outcome"])
+        self.assertIn("says nothing about whether this position",
+                      diagnosis["what_this_cannot_say"])
+
+    def test_no_record_says_unproven_rather_than_never_attempted(self):
+        """B01 is declined today, and that is not a statement about the past."""
+        from vnext.historical_route_refusal import diagnose_route
+        row = self._rows()["B01"]
+        self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", row["status"])
+        self.assertEqual("UNPROVEN", row["detail"]["historical_attempt"])
+        self.assertIn("unproven", row["detail"]["what_is_not_claimed"])
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=self.COMPANY,
+                                                 report_end=self.PERIOD)
+            diagnosis = diagnose_route(repo_root=ROOT, company_id=self.COMPANY,
+                                       metric_id="B01", period_selection=selection)
+        self.assertEqual("ROUTE_DECLINED", diagnosis["outcome"])
+        # Declined now, unproven then. The report does not borrow the diagnosis.
+        self.assertNotIn("DECLINED", row["status"])
+
+    def test_a_record_cannot_confer_run_status(self):
+        """Only a verified receipt does. A record claiming one is not one."""
+        with TemporaryDirectory() as directory:
+            artifact = Path(directory) / "batch" / "native-run-matrix.json"
+            artifact.parent.mkdir(parents=True)
+            artifact.write_text(json.dumps({
+                "record_type": "HISTORICAL_NATIVE_RUN_MATRIX",
+                "positions": [{"company_id": self.COMPANY, "metric_id": "B01",
+                               "report_end": self.PERIOD, "stage": "PUBLIC_ROW",
+                               "case": "batch", "run_id": "run:historical-period:ffff",
+                               "quality": "EXACT", "publication": "PUBLISHED"}]}))
+            row = self._rows(attempts_root=Path(directory))["B01"]
+        self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", row["status"])
+        self.assertFalse(row["native_run_receipt"])
+        self.assertEqual("RECORDED_WITHOUT_A_FAILURE", row["detail"]["historical_attempt"])
+
+
+class ADeclineAndABreakageAreDifferentTest(unittest.TestCase):
+    """The diagnosis classifies what it caught instead of absorbing it.
+
+    The first version wrapped the assembly in ``except Exception`` and called
+    everything a refusal, so a KeyError, a broken loop and an assertion
+    forbidding the calculator all came back as "the route declines this". The
+    last of those is why the earlier zero-execution case could not fail.
+    """
+
+    def _diagnose(self, error):
+        import vnext.historical_results as results
+        from vnext.historical_route_refusal import diagnose_route
+        with patch.object(results, "prepare_historical_run_input", side_effect=error):
+            return diagnose_route(repo_root=ROOT, company_id="macys", metric_id="B02",
+                                  period_selection={"selection_id": "sha256:" + "0" * 64})
+
+    def test_a_route_error_class_is_a_decline(self):
+        from vnext.normal_companyfacts_results import NormalCompanyfactsError
+        diagnosis = self._diagnose(NormalCompanyfactsError("NAMED_REFUSAL"))
+        self.assertEqual("ROUTE_DECLINED", diagnosis["outcome"])
+        self.assertEqual("NAMED_REFUSAL", diagnosis["reason"])
+
+    def test_an_internal_fault_is_not_a_decline(self):
+        for error in (KeyError("component"), RuntimeError("iteration state lost"),
+                      TypeError("not subscriptable")):
+            with self.subTest(error=type(error).__name__):
+                diagnosis = self._diagnose(error)
+                self.assertEqual("PROGRAM_FAULT", diagnosis["outcome"])
+                self.assertEqual(type(error).__name__, diagnosis["error_type"])
+                self.assertIn("program breaking", diagnosis["not_a_decline"])
+
+    def test_an_assertion_is_never_absorbed(self):
+        """A guard that asserts must stop the diagnosis, not become a refusal."""
+        with self.assertRaises(AssertionError) as raised:
+            self._diagnose(AssertionError("business calculator called"))
+        self.assertEqual("business calculator called", str(raised.exception))
+
+    def test_the_diagnosis_names_the_version_it_exercised(self):
+        from vnext.historical_route_refusal import execution_identity
+        identity = execution_identity(repo_root=ROOT)
+        self.assertEqual("issue_47_v1", identity["requirement_id"])
+        self.assertTrue(identity["closure_is_this_tree_not_a_reports_selector"])
+        # This tree does not register the generation's engine, so the closure is
+        # not readable here and the record says so rather than omitting it.
+        self.assertFalse(identity["engine_registered_in_this_tree"])
+        self.assertIsNone(identity["requirement_closure_hash"])
+        self.assertIn("could not freeze a Run", identity["closure_note"])

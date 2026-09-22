@@ -36,14 +36,13 @@ implemented and never run; a Run can be FROZEN and PASSED and hold another
 item's text. Nothing here turns a missing implementation into "the issuer did
 not disclose", and nothing here promotes EXACT into business acceptance.
 """
-import functools
 import re
 from pathlib import Path
 
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_annual_input import _registry_rows
 from .normal_history_plan import plan_historical_sources
-from .historical_route_refusal import probe_route_refusal
+from .historical_attempt_records import attempt_for_position, collect_attempt_records
 from .historical_run_receipts import classify_result, collect_run_receipts, index_receipts
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
@@ -458,7 +457,7 @@ def _delivery(*, receipt, result, status, defect, defects, row=None, row_ambigui
 
 def _position(*, company_id, report_end, ordinal, metric_id, established,
               original_saved, implemented, found, defects, candidate, closure=None,
-              selection_id=None, ask_route=None):
+              selection_id=None, attempt=None):
     """One target position, with its four states kept apart.
 
     A route can exist without a Run, and a Run can record a result whose
@@ -504,30 +503,29 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
         # not a disclosure claim either. A requested closure that no receipt
         # carries lands here too, which is correct: that closure has not run it.
         #
-        # But it is also not the same as refused. A position an approved policy
-        # declines leaves no receipt either, so both arrive here and the table
-        # reads "never run" about a determinate blocker. When the caller asks,
-        # the route is asked now - a refusal is reproducible, so this is a
-        # measurement rather than a memory of an attempt. When the caller does
-        # not ask, the detail says the distinction was not computed instead of
-        # implying nothing was attempted.
-        refusal = None if ask_route is None else ask_route()
-        if refusal is not None and refusal["refused"]:
-            status = "ROUTE_IMPLEMENTED_REFUSED"
-            detail = {"note": "the historical route declines this position today",
-                      "reason": refusal["reason"], "error_type": refusal["error_type"],
-                      "category": refusal["category"],
+        # It is also not the same as attempted and failed. A refusal leaves no
+        # receipt, so both arrive here. What separates them is what the batch
+        # recorded, which is a statement about the past; asking the route again
+        # would answer a different question and would re-compute results inside
+        # the reporting path, which this summary does not do.
+        if attempt is not None and attempt["failed_records"]:
+            status = "ROUTE_IMPLEMENTED_ATTEMPT_FAILED"
+            detail = {"note": "a batch recorded an attempt at this position that failed",
+                      "attempt": attempt,
+                      "current_implementation_not_consulted": (
+                          "this says what was recorded, not what the route would do now"),
                       "receipts_under_other_closures": len(found)}
         else:
             status = "ROUTE_IMPLEMENTED_NOT_RUN"
             detail = {"note": "a historical route exists and no Run receipt was found",
                       "receipts_under_other_closures": len(found),
-                      "route_refusal_derived": refusal is not None,
-                      "refused_vs_not_attempted": (
-                          "the route prepares this position, so it is unrun rather than "
-                          "refused" if refusal is not None else
-                          "not computed; ask with explain_not_run to separate a refused "
-                          "position from one nothing has reached")}
+                      "historical_attempt": ("RECORDED_WITHOUT_A_FAILURE" if attempt
+                                             else "UNPROVEN"),
+                      "what_is_not_claimed": (
+                          "that nothing was attempted. No attempt record covers this "
+                          "position, so whether one was made is unproven here"
+                          if attempt is None else
+                          "that the recorded attempt failed; it did not record one")}
     else:
         status = classify_result(result)
         detail = {key: result[key] for key in ("value", "unit", "quality", "publication",
@@ -587,7 +585,7 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
 
 def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                           runs_root=None, requirement_closure_hash=None,
-                          explain_not_run=False):
+                          attempts_root=None):
     """Enumerate every target position with independent status dimensions.
 
     ``first_blocking_reason`` is a display convenience: it names what this
@@ -602,11 +600,16 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
     without a selector the position reports ``RUN_RECEIPT_AMBIGUOUS`` rather
     than picking whichever directory happened to sort last.
 
-    ``explain_not_run`` asks each wired position that has no receipt whether
-    its route declines it today, separating a refused position from one nothing
-    has reached. It costs a route preparation per such position, so it is off
-    by default; with it off the position says the distinction was not computed
-    rather than implying nothing was attempted.
+    ``attempts_root`` supplies what a batch recorded about positions that
+    produced no Run, which is what separates an attempt that failed from a
+    position nothing reached. It is read as a statement about the past and
+    cannot confer run status: only a verified receipt does that. Without it,
+    such a position says the distinction is unproven rather than implying
+    nothing was attempted.
+
+    This entry computes no metric outcome in any mode. It reads receipts and
+    records; it does not ask a route what it would do now, because that answers
+    a different question and would re-compute results inside the report.
     """
     metrics, policy = declared_metric_ids(repo_root=repo_root)
     configured = [c["company_id"] for c in _registry_rows(repo_root=repo_root)]
@@ -617,6 +620,8 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
     defects = known_result_defects(repo_root=repo_root)
     collected = ({"receipts": [], "unreadable": []} if runs_root is None
                  else collect_run_receipts(runs_root=runs_root))
+    attempts = ({"records": {}, "unreadable": [], "rejected": []} if attempts_root is None
+                else collect_attempt_records(attempts_root=attempts_root))
     receipt_list = collected["receipts"]
     receipts = index_receipts(receipts=receipt_list)
     positions = []
@@ -644,13 +649,10 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                 implemented = metric_id in wired or structural.structurally_not_applicable(
                     repo_root=repo_root, company_id=company_id, metric_id=metric_id)
                 found = receipts.get((company_id, metric_id, report_end), [])
-                ask_route = None
-                if (explain_not_run and original_saved and implemented
-                        and metric_id in wired):
-                    ask_route = functools.partial(
-                        probe_route_refusal, repo_root=repo_root,
-                        company_id=company_id, metric_id=metric_id,
-                        period_selection=selection)
+                attempt = attempt_for_position(
+                    records=attempts["records"], company_id=company_id,
+                    metric_id=metric_id, report_end=report_end,
+                    report_closure=requirement_closure_hash)
                 position = _position(company_id=company_id, report_end=report_end,
                                      ordinal=candidate["target_ordinal"],
                                      metric_id=metric_id, established=established,
@@ -659,7 +661,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                                      defects=defects, candidate=candidate,
                                      closure=requirement_closure_hash,
                                      selection_id=entry["selection_id"],
-                                     ask_route=ask_route)
+                                     attempt=attempt)
                 if position["fiscal_year"] is not None and entry["fiscal_year"] is None:
                     entry["fiscal_year"] = position["fiscal_year"]
                 positions.append(position)
@@ -794,7 +796,30 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             # public row; only the first is a delivered number.
             "delivery_by_outcome": delivery_by_outcome,
             "runs_root_supplied": runs_root is not None,
+            "attempts_root_supplied": attempts_root is not None,
+            "unreadable_attempt_artifacts": attempts["unreadable"],
+            "rejected_attempt_records": attempts["rejected"],
+            # A bare False here was imprecise, and counting the calls rather
+            # than blocking them showed why: no mode evaluates a metric - zero
+            # calculator calls in every mode - but the source planner does
+            # parse one accession instance per established period, in
+            # normal_history_plan._native_instance_alternative, to establish
+            # that period's identity from the filing's own DEI. That is
+            # planning, not evaluation, and it predates this reader.
             "business_execution_invoked": False,
+            "what_business_execution_invoked_means": {
+                "metric_evaluated": False,
+                "calculator_calls": 0,
+                "source_planner_parses_one_accession_per_established_period": True,
+                "why_that_is_not_evaluation": (
+                    "annual_period reads the pinned filing's own DEI contexts to fix "
+                    "which period this is. No Candidate, Evidence, review decision or "
+                    "Result is produced, and no metric formula is applied."),
+                "measured_by": ("tests.vnext.test_historical_coverage."
+                                "ReportComputesNothingInAnyModeTest, which counts every "
+                                "binding of the business entries rather than replacing "
+                                "them with a raising stub"),
+            },
             "policy_sha256": sha256_file(path=ROOT / POLICY_PATH),
             "module_sha256": sha256_file(path=Path(__file__)),
             "calls": {"provider": 0, "paid": 0, "sec": 0},
