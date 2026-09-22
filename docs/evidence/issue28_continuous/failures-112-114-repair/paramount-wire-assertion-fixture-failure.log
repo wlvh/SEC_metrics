@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/failures-112-114-repair/paramount_lossless_material.py", line 26, in <module>
+    assert '\u037e' in json.loads(json.loads(item.provider_request_body_bytes)['messages'][1]['content'])['units'][0]['payload'].get('blocks',[{'text':''}])[0].get('text','') or b'\xcd\xbe' in item.provider_request_body_bytes
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+KeyError: 0

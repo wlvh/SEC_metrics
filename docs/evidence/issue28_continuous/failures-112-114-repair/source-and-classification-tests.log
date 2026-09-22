@@ -1,0 +1,14 @@
+..F....................
+======================================================================
+FAIL: test_native_serialization_and_wire_preserve_unicode_without_changing_canonical (tests.vnext.test_continuous_source_unit_bytes.SourceUnitBytesTest.test_native_serialization_and_wire_preserve_unicode_without_changing_canonical)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_continuous_source_unit_bytes.py", line 41, in test_native_serialization_and_wire_preserve_unicode_without_changing_canonical
+    self.assertEqual(_source_json(self.source('Plain; unchanged')),_json(self.source('Plain; unchanged')))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'{"m[439 chars]ea20145282509fa9427e3e7859c630e56a94bc65cc8165e32c88dcb1"}]}' != b'{"m[439 chars]ea20145282509fa9427e3e7859c630e56a94bc65cc8165e32c88dcb1"}]}\n'
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.325s
+
+FAILED (failures=1)
