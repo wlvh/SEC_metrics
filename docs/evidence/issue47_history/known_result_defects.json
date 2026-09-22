@@ -91,8 +91,17 @@
   },
   {
    "company_id": "pfizer",
+   "completeness_direction": {
+    "done": "2026-09-22",
+    "evidence": "docs/evidence/issue47_history/d02-content-read/pfizer-2025-both-directions.json",
+    "still_not_covered": "the 2,226 untaken blocks inside Item 8 outside the note. They are the _LEGAL keyword proxy's question, measured and open.",
+    "verdict": "the 25 untaken are five identical page headers of five blocks each, judged by counting repetition in the document rather than by asking the rule that excluded them. Nothing reading as a disclosure is dropped inside this scope.",
+    "what_it_did_find": "Item 3 itself, taken by no one: the range held one block and the selection took zero. Registered as D02_PFIZER_2025_HYPERLINKED_ITEM_THREE_DROPPED and repaired.",
+    "what_was_read": "all 116 blocks inside the located note scope [3821, 3937), the 91 taken and the 25 not"
+   },
    "corrected_count_would_be": {
-    "measured_now": 95,
+    "accepted_by_the_reading": "94 of 96. The two the reading rejects are 2175 and 2240, held by the keyword proxy, and they are why this coordinate stays withdrawn.",
+    "measured_now": "96 after the hyperlinked Item 3 sentence was restored; 95 before it",
     "the_earlier_prediction_of_93": "assumed all six would leave together. They do not: the audit-report rule removes four and the keyword defect holds the other two, so 95 is where the repaired half lands. This is why the number had to stay a prediction rather than become a target - an implementation tuned until it emitted 93 would have had to remove two blocks for the wrong reason.",
     "when_the_keyword_defect_is_repaired": "93, if and only if those two are the only ones it is holding. Not asserted."
    },
@@ -244,6 +253,37 @@
     "why_out_of_scope": "an accounting policy for legal fees. The keyword sits in a comma list of advisory subjects whose head noun is counsel costs, not a proceeding the registrant is party to."
    },
    "why_it_was_missing": "The census named this block in prose inside the Pfizer entry's still_open note - 'Pfizer's two plus Lumen's 1670' - which the machine-read layer never sees. So the repository had found the error and was still counting the result as verified: known_content_defect was 1 when two coordinates were known bad. Finding an error and withdrawing it are two separate acts and only the second one moves a number."
+  },
+  {
+   "company_id": "pfizer",
+   "defect_id": "D02_PFIZER_2025_HYPERLINKED_ITEM_THREE_DROPPED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/hyperlinked-item-three.json",
+    "docs/evidence/issue47_history/d02-content-read/pfizer-2025-both-directions.json"
+   ],
+   "found_by": "the completeness direction of the content read: enumerating every block inside each declared range that the selection does not take. Reading only the taken set cannot see this.",
+   "it_was_not_registered_before": "it was recorded in prose in two READMEs and in AGENTS.md, and d02-content-read/finding.json asserted it was 'already registered as a separate defect'. It was not in this file, so it withdrew nothing. That claim has been corrected in finding.json.",
+   "measured": {
+    "evidence": "docs/evidence/issue47_history/d02-content-read/hyperlinked-item-three.json",
+    "filings_measured": [
+     "pfizer",
+     "marriott_international",
+     "southwest_airlines",
+     "ford_motor_company",
+     "lumen_technologies",
+     "enphase_energy"
+    ],
+    "no_op_elsewhere": "the other five filings' proposal records are byte-identical - same proposal_id, not merely the same count - and every D03 candidate set in the corpus is unchanged, Pfizer's included",
+    "pfizer": "95 -> 96, adding block 937 and removing nothing"
+   },
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "repair": "scripts/vnext/historical_text_results._hyperlinked_sentence asks the frozen rule again with the anchor taken off, and _d02_section is now one expression both paths ask. Thirteen of the fourteen blocks the clause could otherwise let into D02 are 'Table of Contents' and the frozen navigation-header pattern already rejects them, so no second discriminator was added.",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "result_id": null,
+   "severity": "set composition, not lost substance: Note 16A is taken in full, so the disclosure the sentence points at was already present.",
+   "summary": "Pfizer's whole Item 3 is one 77-character hyperlinked sentence and _substantive drops any linked block under 120 characters, so the first source the approved definition names contributed nothing. Lumen's Item 3 is the same kind of sentence, 226 characters and unlinked, and is taken - the two filings answered the same content differently on the anchor alone.",
+   "what_stays_open": "a hyperlink of twelve characters or more that is not a navigation header and repeats inside a note scope would be admitted once per occurrence. No filing here holds one, so this is recorded rather than guarded."
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

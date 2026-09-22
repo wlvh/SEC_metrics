@@ -140,8 +140,9 @@
   "ITEM_1A": 0,
   "ITEM_3": 0,
   "NOTE_16_SUB_A": 84,
+  "a_claim_this_record_made_that_was_not_true": "the line above used to say the hyperlink was 'already registered as a separate defect'. It was recorded in prose in two READMEs and in AGENTS.md and was never in known_result_defects.json, which is the file that withdraws results. Prose does not withdraw anything, and a claim that something is registered is the kind that stops anyone checking.",
   "elsewhere_in_ITEM_8": 8,
-  "note": "NOTE_16_SUB_A is nested inside ITEM_8, so the two are not additive. ITEM_3's single block is the 77-character hyperlink already registered as a separate defect."
+  "note": "NOTE_16_SUB_A is nested inside ITEM_8, so the two are not additive. ITEM_3's single block is the 77-character hyperlink, now repaired and registered - see hyperlinked-item-three.json."
  },
  "why_the_six_are_not_fixed_yet": {
   "next_step": "read a second and a third filing the same way - full text, independently located must-include and must-exclude expectations formed before the rule changes - then change the rule.",

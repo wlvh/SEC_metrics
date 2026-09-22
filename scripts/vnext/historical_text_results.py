@@ -235,6 +235,55 @@ def _note_heading(document, section, block):
                 and re.sub(r"\W", "", text).casefold() not in names)
 
 
+def _d02_section(section, text):
+    """Whether a declared range puts a block in D02's excerpt set.
+
+    Item 3 and a note an Item incorporates are the approved source itself, so
+    every substantive block in them counts; Item 8 at large is not, so a block
+    there needs the legal keyword. Both the ordinary path and the hyperlinked
+    one below ask this, because restating it in two places is how they drift.
+    """
+    return bool(section == "ITEM_3" or section.startswith("NOTE_")
+                or section == "ITEM_8" and _LEGAL.search(text))
+
+
+def _hyperlinked_sentence(*, document, block):
+    """A sentence the inherited rule drops for being a short hyperlink.
+
+    `_substantive` rejects any linked block under 120 characters. That clause
+    is load-bearing - across the six filings read here it holds 365 blocks
+    inside the declared ranges - and it is wrong about Pfizer's Item 3, which
+    is one 77-character hyperlinked sentence, "Certain legal proceedings in
+    which we are involved are discussed in Note 16A.", and so is the whole of
+    the item the approved source names first, dropped entire. Lumen is the
+    control: its Item 3 is the same kind of sentence, an incorporation by
+    reference to a note, 226 characters and not hyperlinked, and it is taken.
+    The two filings answer the same content differently, and the difference is
+    whether the registrant wrapped the sentence in an anchor.
+
+    Nothing new decides which is which. Of the 365 held blocks only 14 could
+    reach D02 at all; thirteen are the string "Table of Contents", and the
+    frozen rule's own navigation-header pattern already rejects every one of
+    them once the link flag is out of the way. So this asks `_substantive` the
+    question with the hyperlink taken off rather than inventing a second
+    discriminator, and the corpus answers 13 out of 14 correctly by itself.
+
+    There is no length test because there is nothing for one to do: this is
+    only asked after `_substantive` has already refused the block, and the
+    only way it refuses a linked block of 120 characters or more is on one of
+    the conditions re-asked here.
+
+    What this leaves open is recorded rather than guarded: a hyperlink of
+    twelve characters or more that is not a navigation header and repeats
+    inside a note would be admitted once per occurrence. No filing here holds
+    one, so a condition against it would be an unexercised guard, and this
+    Issue has enough of those already.
+    """
+    if not block["linked"]:
+        return False
+    return bool(_substantive(document, {**block, "linked": False}))
+
+
 def _page_furniture(*, blocks, start, stop, repeated):
     """Blocks that repeat *and* sit next to another repeating block.
 
@@ -517,10 +566,20 @@ def referenced_note_candidates(*, document, raw_bytes):
                 if section == "ITEM_3" and block["text"].strip().casefold() in {"none", "none."}:
                     legal.append(_excerpt(document, block, section,
                                           ["EXPLICIT_NONE_IN_THIS_SECTION_ONLY"]))
+                # Appended to D02's list only, never to the shared gate. Adding
+                # an alternative to _substantive up here would widen D03's
+                # regulatory set on every filing at the same time, which is the
+                # mistake the audit-report rule already made once.
+                elif (index not in audited
+                      and _hyperlinked_sentence(document=document, block=block)
+                      and _d02_section(section, block["text"])):
+                    legal.append(_excerpt(
+                        document, block, section,
+                        ["EXPLICIT_LEGAL_SECTION_TEXT" if section == "ITEM_3"
+                         else "LEGAL_OR_CONTINGENCY_LANGUAGE_IN_NOTES"]))
                 continue
             text = block["text"]
-            if (section == "ITEM_3" or section.startswith("NOTE_")
-                    or section == "ITEM_8" and _LEGAL.search(text)):
+            if _d02_section(section, text):
                 # Only D02's branch. The first version skipped the whole block,
                 # which silently took the same blocks out of D03's regulatory
                 # set as well - a different metric with its own approved source,

@@ -28,6 +28,8 @@ LUMEN = "lumen_technologies"
 MARRIOTT = "marriott_international"
 PARAMOUNT = "paramount_skydance_paramount_global"
 SALESFORCE = "salesforce"
+ENPHASE = "enphase_energy"
+SOUTHWEST = "southwest_airlines"
 CAPTION = "information about our executive officers"
 
 
@@ -582,6 +584,128 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         self.assertIs(fixed, module)
         parent, _ = fixed.text_api("C02")
         self.assertIs(frozen, parent)
+
+
+def _proposal(company_id, report_end="2025-12-31"):
+    _, prepared = _text_arguments(company_id, report_end)
+    document = _frozen_document(prepared, company_id)
+    arguments = prepared["text_arguments"]
+    reference = arguments["source_references"][0]
+    return fixed.referenced_note_candidates(
+        document=fixed.narrow_document_sections(document=document),
+        raw_bytes=arguments["raw_bytes_by_id"][reference["raw_asset_id"]]), document
+
+
+class HyperlinkedSentenceTest(unittest.TestCase):
+    """A sentence the registrant wrapped in an anchor is still a sentence.
+
+    `_substantive` drops any linked block under 120 characters. Pfizer's whole
+    Item 3 is one such block - a 77-character hyperlinked sentence - so the
+    item the approved source names first contributed nothing. Lumen is the
+    control and the reason the pair is load-bearing: its Item 3 is the same
+    kind of sentence, an incorporation by reference to a note, and it is taken
+    because it is 226 characters and carries no anchor. A rule that keyed on
+    anything but the anchor would leave the two filings as they were.
+    """
+
+    def test_the_hyperlinked_sentence_is_taken_and_the_unlinked_one_still_is(self):
+        """Both expectations are read out of the filings, not from the rule."""
+        for company_id, linked in ((PFIZER, True), (LUMEN, False)):
+            with self.subTest(company_id):
+                proposal, document = _proposal(company_id)
+                item_3 = document["sections"]["ITEM_3"]["candidates"]
+                self.assertEqual(1, len(item_3), item_3)
+                sentences = [
+                    index for index in range(item_3[0]["start_block"],
+                                             item_3[0]["end_block_exclusive"])
+                    if document["blocks"][index]["text"].strip().endswith(".")
+                    and "Note" in document["blocks"][index]["text"]]
+                self.assertEqual(1, len(sentences), sentences)
+                block = document["blocks"][sentences[0]]
+                self.assertIs(linked, bool(block["linked"]),
+                              "the corpus has to supply both sides of the contrast")
+                taken = {claim["block_index"] for claim in proposal["D02"]["candidates"]}
+                self.assertIn(sentences[0], taken, block["text"])
+
+    def test_a_navigation_link_in_the_same_position_stays_out(self):
+        """What the dropped clause was protecting, and still is.
+
+        Three filings carry `Table of Contents` links inside a declared range.
+        Nothing new rejects them: asking the frozen rule with the anchor taken
+        off is enough, because its navigation-header pattern already knows
+        what they are. Admitting every linked block instead adds nine of them
+        here.
+        """
+        for company_id in (MARRIOTT, SOUTHWEST, ENPHASE):
+            with self.subTest(company_id):
+                proposal, document = _proposal(company_id)
+                ranges = proposal["checked_ranges"]
+                links = [index for scope in ranges
+                         for index in range(scope["start_block"],
+                                            scope["end_block_exclusive"])
+                         if document["blocks"][index]["linked"]
+                         and document["blocks"][index]["text"].strip().casefold()
+                         == "table of contents"]
+                self.assertTrue(links, "this filing is only useful if it carries them")
+                taken = {claim["block_index"] for claim in proposal["D02"]["candidates"]}
+                self.assertEqual(set(), set(links) & taken)
+
+    def test_a_hyperlinked_block_still_has_to_sit_where_d02_takes_blocks(self):
+        """Item 8 at large is not the approved source, anchor or no anchor.
+
+        Pfizer's Item 8 is full of short hyperlinked cross-references - "(a)See
+        Note 17A.", "See Note 5 for further information regarding income
+        taxes." - and none of them carries the legal keyword. Admitting a
+        hyperlinked block without asking where it sits takes twenty more
+        blocks from this filing alone.
+        """
+        proposal, document = _proposal(PFIZER)
+        owner = {}
+        for scope in proposal["checked_ranges"]:
+            for index in range(scope["start_block"], scope["end_block_exclusive"]):
+                held = owner.get(index)
+                width = scope["end_block_exclusive"] - scope["start_block"]
+                if held is None or width < held[1]:
+                    owner[index] = (scope["section_id"], width)
+        elsewhere = [index for index, (section, _) in owner.items()
+                     if section == "ITEM_8"
+                     and document["blocks"][index]["linked"]
+                     and fixed._hyperlinked_sentence(document=document,
+                                                     block=document["blocks"][index])
+                     and not fixed._LEGAL.search(document["blocks"][index]["text"])]
+        self.assertTrue(elsewhere, "this filing is only useful if it carries them")
+        taken = {claim["block_index"] for claim in proposal["D02"]["candidates"]}
+        self.assertEqual(set(), set(elsewhere) & taken)
+
+    def test_the_admission_is_d02_s_and_d03_is_not_asked(self):
+        """Stated because the placement is a choice, not because a filing shows it.
+
+        The branch appends to D02's list rather than opening the shared gate,
+        which is the shape the audit-report rule had to be corrected into after
+        it silently moved D03's candidates on four filings. Wiring this one
+        into the shared gate instead leaves every D03 set in this corpus
+        byte-identical, so no case here can tell the two apart - the narrow
+        placement is kept because it bounds what the change can touch, and
+        that is recorded rather than claimed to be tested.
+        """
+        proposal, document = _proposal(PFIZER)
+        item_3 = document["sections"]["ITEM_3"]["candidates"][0]
+        admitted = [index for index in range(item_3["start_block"],
+                                             item_3["end_block_exclusive"])
+                    if document["blocks"][index]["linked"]]
+        self.assertEqual(1, len(admitted), admitted)
+        self.assertIn(admitted[0],
+                      {claim["block_index"] for claim in proposal["D02"]["candidates"]})
+        self.assertNotIn(admitted[0],
+                         {claim["block_index"] for claim in proposal["D03"]["candidates"]})
+
+    def test_one_section_rule_serves_both_paths(self):
+        """Two copies of the same policy is how the two paths come apart."""
+        self.assertTrue(fixed._d02_section("ITEM_3", "anything at all"))
+        self.assertTrue(fixed._d02_section("NOTE_16_SUB_A", "anything at all"))
+        self.assertFalse(fixed._d02_section("ITEM_8", "anything at all"))
+        self.assertTrue(fixed._d02_section("ITEM_8", "various legal proceedings"))
+        self.assertFalse(fixed._d02_section("ITEM_1A", "various legal proceedings"))
 
 
 if __name__ == "__main__":
