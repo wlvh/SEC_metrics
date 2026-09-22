@@ -234,8 +234,11 @@ def validate_visible_source_label_roles(*, findings):
                r'\binstalled\s+(?:solar|wind|generating|generation)\s+capacity\b|'
                r'\b(?:battery|batteries|storage\s+system|inverter|solar\s+panel)\b[^.;!?]{0,64}'
                r'\b(?:capacity|rated)\b[^.;!?]{0,48}\b(?:kWh|MWh|GWh|kW|MW|GW)\b')
-    planning = r'\b(?:plan(?:s|ned|ning)?|intend(?:s|ed)?|propos(?:e[sd]?|al)|expect(?:s|ed)?|future)\b'
-    uncertain = r'\b(?:not|never|no\s+longer|abandoned|cancelled|canceled|if|unless|would|could|might)\b'
+    qualifiers = r'(?:(?:our|the|its|their|combined|annual|total|domestic|global|existing)\s+)*'
+    planning = (r'\b(?:plan(?:s|ned)?|intend(?:s|ed)?|expect(?:s|ed)?)\s+to\s+'
+                r'(?:expand|increase|reduce|add)\s+' + qualifiers + r'(?:manufacturing|production)\s+capacity\b|'
+                r'\b(?:planned|proposed|future|expected)\s+' + qualifiers + r'(?:manufacturing|production)\s+capacity\b')
+    uncertain = r'\b(?:not|never|no|hypothetical|illustrative|abandoned|cancelled|canceled|if|unless|would|could|might)\b'
     unresolved = []
     for finding in findings:
         kind = finding['kind']

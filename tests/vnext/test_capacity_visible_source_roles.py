@@ -25,5 +25,7 @@ class VisibleSourceRoleTest(unittest.TestCase):
     def test_negated_hypothetical_or_disconnected_plan_is_not_proven(self):
         for text in ['We do not plan to expand manufacturing capacity.',
                      'If demand improves, we could expand production capacity.',
-                     'We plan to repay notes. Manufacturing capacity is unchanged.']:
+                     'We plan to repay notes. Manufacturing capacity is unchanged.',
+                     'We plan to repay notes while our production capacity is unchanged.',
+                     'We plan to reduce costs in manufacturing capacity management.']:
             with self.subTest(text=text):self.assertTrue(self.check(text,'PLANNED_CAPACITY'))
