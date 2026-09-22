@@ -22,21 +22,19 @@ this development container, and the nearest comparable job in that file uses 30.
 Until it is applied, `tests.vnext.test_historical_package_material` has local
 execution records only and must not be reported as a CI pass.
 
-## The second one: the only red check on this PR is a cap, not a defect
+## The second one was retired, and the file is gone
 
-`0002-raise-capacity-native-runs-cap.patch` raises `timeout-minutes` on the
-`capacity-native-runs` job from 15 to 25 and on `capacity-program-native-runs`
-from 20 to 30. It is here for the same reason: this session cannot push
-`.github/workflows/`.
+`0002-raise-capacity-native-runs-cap.patch` used to raise `timeout-minutes` on
+`capacity-native-runs` from 15 to 25 and on `capacity-program-native-runs` from
+20 to 30. It was deleted in 8ee21e5 because Issue #28's branch had already done
+that job with its own numbers - upstream `0e2d9a8` sets both to 30 - and
+applying this one on top would have lowered one of them. The instruction to
+apply it stayed in this file after the patch itself was removed, which is an
+instruction that cannot be followed; it is removed here.
 
-```
-git apply docs/evidence/issue47_history/ci-job-patch/0002-raise-capacity-native-runs-cap.patch
-```
-
-Verified with `git apply --check` on its own and after `0001`, in both orders;
-`0001` appends at the end of the file and `0002` touches line 93, so they do not
-overlap. After both, the file still parses to 13 jobs and the only changed key
-is that one cap.
+Those two caps are upstream's jobs, not this issue's, and nothing here proposes
+a change to them. What was measured is left below as information for whoever
+owns them.
 
 ### What was measured
 
@@ -171,6 +169,8 @@ green terminal for reasons that have nothing to do with its diff, and a
 `cancelled` run must not be read as a pass in either direction.
 
 ### Both capacity jobs measured locally, and `0002` revised because of it
+
+*Historical. `0002` no longer exists - see "The second one was retired" above. The measurements below stand; the patch they justified does not.*
 
 Both jobs that `0002` covers were run to completion in this development
 container, which is the measurement the earlier notes could not have: every CI
