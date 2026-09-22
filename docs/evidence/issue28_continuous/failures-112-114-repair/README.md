@@ -19,3 +19,13 @@
 新紧凑B13非空/空回答及无损INDEXED D04三次录制controller验收通过，复用了首次已成功的录制槽，没有重复执行它。汇总脚本先后遇到计时float及terminal无ordinal字段错误，原日志保留；只补报告或未执行部分，不重跑已通过长链。
 
 实际新执行闭包ad0b4f4下旧收据被拒，新的offline-wiring.json绑定当前短接线、冷读、fast及独审原件，validate_wiring_receipt已实际PASS。旧收据原文件不改。113/114依然没有原样重发权。B13新合同按既有6/11分组、111原请求复用、其余最多16次修后验证，真实结果另记live-b13-summary.json，不以录制结果预报成功。
+
+## 本轮真实终态（覆盖上文执行前检查点）
+
+78734de3 / ad0b4f4的最终接线实际通过后，按Enphase→Ford顺序有界执行；111原V1请求被直接复用，没有重新收费。170 Enphase新紧凑合同请求完整返回2677tokens/finish_reason=stop，110条发现的引用全部属于所供单元，未出现原449错种类归属；但46组完全重复触发既有B13_REFERENCE_DUPLICATE_FINDING。没有自动去重、改类别或把它升级成功；重复关口之后的完整语义验收没有成立。输出容量和引用表达的改善不等于B13公司完成。
+
+171 Ford返回HTTP402 / Insufficient Balance，停止PROVIDER。新增2/2/0，累计122/122/49、余118/118/31，171的usage/cost仍null。110机会早已在111消费，不能用于171；没有账户查询/操作、探针或自动重试。原113/114同摘要未重发，170亦无原样再抽许可。本轮新增完整公司结果0，既有八家D04候选不变。
+
+基础余量162对118，缺口至少44；增额暂缓、D03不调用。账户/服务处理和新明确恢复决定与次数预算分开；不能把118次余额当作服务账户有款证明。四项B06、Paramount C04、完整更新/390迁移/旧入口退出仍未完成。
+
+新170/171原始wire、intent和terminal已按原字节保存；170请求与已提交group112-compact-request.json逐SHA相同，其他完整原件路径及SHA见各real目录的original-references.json。完整本机账本与临时录制安装副本没有冒充提交的全便携包。final-production-unchanged.json再次核对actual active和两个镜像未变。
