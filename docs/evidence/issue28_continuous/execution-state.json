@@ -28,8 +28,8 @@
     "long_running_schedule": false
   },
   "actual_new_calls": {
-    "provider": 63,
-    "paid": 63,
+    "provider": 65,
+    "paid": 65,
     "sec": 49,
     "unknown": 0
   },
@@ -751,13 +751,13 @@
     "provider_and_sec_wiring": "Current recovery110 provider wiring PASS; B13/D04 only; no new SEC wiring or calls"
   },
   "current_observed_call_totals": {
-    "through_ordinal": 112,
-    "provider": 63,
-    "paid": 63,
+    "through_ordinal": 114,
+    "provider": 65,
+    "paid": 65,
     "SEC": 49,
     "remaining": {
-      "provider": 177,
-      "paid": 177,
+      "provider": 175,
+      "paid": 175,
       "SEC": 31
     },
     "original_caps": [
@@ -765,12 +765,12 @@
       240,
       80
     ],
-    "last_call": "112 B13 response truncated;111 authorized recovery succeeded; D04 ongoing separately"
+    "last_call": "114 complete model response rejected by category check;113 input serialization inconsistency; six other companies had no provider claim"
   },
   "pending_increment_request": {
     "status": "DEFERRED_BY_USER_NO_INCREASE_GRANTED",
-    "minimum_provider_gap": 40,
-    "minimum_paid_gap": 40,
+    "minimum_provider_gap": 42,
+    "minimum_paid_gap": 42,
     "SEC_gap_for_this_base_plan": 0,
     "base_remaining": {
       "B13": 16,
@@ -778,7 +778,7 @@
       "D03_first_proposal": 130
     },
     "base_sum": 217,
-    "current_provider_paid_remaining": 177,
+    "current_provider_paid_remaining": 175,
     "excludes_all_subsequent_verification": true,
     "D03_calls_authorized": false,
     "original_caps": [
@@ -786,7 +786,7 @@
       240,
       80
     ],
-    "snapshot_scope": "After112 before D04 batch; final dynamic counts still to be recorded"
+    "snapshot_scope": "Through114; no additional allowance granted"
   },
   "current_live_b13_v6": {
     "ordinal": 109,
@@ -1019,5 +1019,16 @@
     "following_B13_failure": "112 finish_reason=length,4096output; prefix also contains wrong-kind source449; no retry",
     "invariants": "recovery-110-20260922/after-recovery-invariants.json"
   },
-  "call_count_snapshot_scope": "Last completed B13 phase through112. D04 is running; its append-only live summary and fixed ledger supersede this snapshot until the next checkpoint."
+  "call_count_snapshot_scope": "Final first D04 batch snapshot through114; zero-call preparation for six unattempted companies follows.",
+  "source_unit_preflight_guard": {
+    "status": "18_SHORT_TESTS_AND_CURRENT_D04_FACTORY_PASS",
+    "reason": "113 Greek question mark normalized by source serialization; check before paying, not repair of old113",
+    "review": "待审：来源单元付费前完整性检查 + 本次commit + d04-remaining-20260922/",
+    "request_digest_unchanged": true,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  }
 }

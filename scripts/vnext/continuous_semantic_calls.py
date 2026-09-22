@@ -76,6 +76,19 @@ def _json(value):
     return canonical_json_bytes(value=value)
 
 
+def validate_source_unit_bytes(source):
+    """Reject a lossy source packet before any request can claim a paid slot."""
+    if source.get('metric_id') not in {'B13', 'D04'}:
+        return
+    from .r6_semantic_source import _bytes
+    for unit in source['units']:
+        raw = _bytes(unit['payload'])
+        need(unit['payload_sha256'] == sha256_bytes(content=raw)
+             and unit['payload_bytes'] == len(raw)
+             and unit['unit_id'] == content_hash(value={k:v for k,v in unit.items() if k != 'unit_id'}),
+             'CONTINUOUS_SOURCE_UNIT_SERIALIZATION_CHANGED')
+
+
 def request_body(request, policy):
     payload = {k:v for k,v in request.items() if k not in
         {'system_prompt','provider_request_sent','provider_tokens_measured','production_authorized'}}
@@ -205,6 +218,7 @@ class SemanticRequest:
         request = strict_json_loads(text=self.request_bytes.decode())
         need(source['semantic_source_id'] == content_hash(value={k:v for k,v in source.items() if k!='semantic_source_id'}),
              'CONTINUOUS_SOURCE_CHANGED')
+        validate_source_unit_bytes(source)
         allowed_control_root=Path(self.requirement['policy']['budget_root'])/'source-inputs'
         from .continuous_call_ledger import CallLedger, _FACTORY as ledger_factory
         registered_source = (type(self.source_ledger) is CallLedger and self.source_ledger._factory is ledger_factory)

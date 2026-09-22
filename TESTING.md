@@ -783,6 +783,8 @@ B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物�
 
 ### B13 新原生链与来源分组性能
 
+`tests.vnext.test_continuous_source_unit_bytes`验证U+037E在NFC JSON中被改写时，`SemanticRequest.validate`在付费申领前拒绝不一致的单元字节/哈希/ID。原Greek字符和普通ASCII合法输入仍通过；此guard不修复原113、不改序列化或摘要算法。当前D04实际工厂禁网接线另见d04-remaining-20260922/preflight-current-wiring.log。
+
 <!-- capability-anchor: CAPABILITY.continuous_recovery_110 -->
 
 `tests.vnext.test_continuous_recovery_110`与旧账本测试覆盖无授权停止、指定一次申领、原始文件/计数不变、重启/并发及申领中断、新停止保留、错误终态/摘要/模式/审批来源拒绝。`recovery-110-20260922/offline_wiring.py`用当前Enphase原业务工厂禁网验证402、受限新claim、原生成功及原成功复用，业务摘要必须与真实110相同；只计录制接线，不计真实结果。

@@ -988,6 +988,8 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 ### 普通更新与私有完整版本的后继接线
 
+`SemanticRequest.validate`在controller申领前按原单元payload字节/长度/ID检查完整性，提前拒绝NFC序列化等造成的自相矛盾输入；不将该程序表示缺口写成SEC披露不足，也不改request_digest算法或原请求。无损序列化的端到端修复仍单独承担。
+
 <!-- capability-anchor: CAPABILITY.continuous_recovery_110 -->
 
 原110恢复由`continuous_recovery_110`在原账本追加固定授权记录，按已绑定GitHub用户评论核实原根、binding、110 intent/terminal及业务摘要。`CallLedger`保留全部旧文件/计数；授权未消费时只有原业务请求能越过110停止，新claim保存authorization_id并消耗机会。snapshot只承认这一有来源的重复，移除的仅是110停止原因；新UNKNOWN/402/来源失败仍停，第三次相同请求拒绝。旧默认返回结构及无授权行为不变，无新额度/新根或生产权限。
