@@ -147,6 +147,6 @@ def collect_native_assessments(*, prepared_requests, ledger):
         'all_source_requests_accepted': not missing, 'proposed_branch': branch,
         'source_findings': findings, 'mode': 'LIVE' if ledger.live else 'RECORDED_TEST_ONLY',
         'metric_result_created': False, 'review_complete': False, 'production_authorized': False}
-    if 'INDEXED_UNITS_V1' in variants:
+    if any(version != 'BASE' for version in variants):
         body['native_request_variants'] = variants
     return {**body, 'assessment_set_id': content_hash(value=body)}

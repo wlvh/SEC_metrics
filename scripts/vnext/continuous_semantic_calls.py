@@ -53,6 +53,7 @@ SEMANTIC_RULE_PATHS = (
     'scripts/vnext/capacity_update_input.py',
     'scripts/vnext/native_request_construction.py',
     'scripts/vnext/native_unit_index.py',
+    'scripts/vnext/capacity_reference_contract.py',
     'scripts/vnext/continuous_request_context.py',
     'config/tokenizers/deepseek_v41/tokenizer.json.gz',
     'requirements-continuous-context.txt')
@@ -120,6 +121,9 @@ def request_digest(request, policy):
         # this digest compares semantic inputs and the response contract only.
         body['indexed_unit_contract'] = {k:v for k,v in request['indexed_unit_contract'].items()
                                          if k != 'base_request_id'}
+    if 'source_reference_contract' in request:
+        body['source_reference_contract'] = {k:v for k,v in request['source_reference_contract'].items()
+                                              if k != 'base_request_id'}
     return sha256_bytes(content=_json(body))
 
 
@@ -231,9 +235,13 @@ class SemanticRequest:
             source_equivalence(current=current,original=source)
         original_requests = source_requests(source)
         if request not in original_requests:
-            from .native_unit_index import restore_base_request
-            need('indexed_unit_contract' in request and restore_base_request(request) in original_requests,
-                 'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
+            if 'source_reference_contract' in request:
+                from .capacity_reference_contract import restore_base_request
+                need(restore_base_request(request) in original_requests, 'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
+            else:
+                from .native_unit_index import restore_base_request
+                need('indexed_unit_contract' in request and restore_base_request(request) in original_requests,
+                     'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
         need(configured_transport_policy(requirement=self.requirement,repo_root=ROOT) == policy
              and request_body(request,policy) == self.provider_request_body_bytes
              and _json(request['response_protocol']) == self.output_schema_bytes,
@@ -316,7 +324,7 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
         _json(request['response_protocol']),requirement,authority,data_root,source_ledger) for request in source_requests(source)]
 
 
-def select_native_request_variants(*, prepared_requests, ledger):
+def select_native_request_variants(*, prepared_requests, ledger, source_references=False):
     """Keep exact successful receipts; use indexed output for other groups.
 
     Selection is read-only and covers the existing complete source partition.
@@ -336,9 +344,20 @@ def select_native_request_variants(*, prepared_requests, ledger):
     originals = [strict_json_loads(text=p.request_bytes.decode()) for p in prepared_requests]
     need(validate_request_partition(source, originals) == [BASE] * len(originals),
          'NATIVE_VARIANT_BASE_PARTITION_REQUIRED')
+    need(type(source_references) is bool and (not source_references or source['metric_id']=='B13'),
+         'NATIVE_REFERENCE_SELECTION_INVALID')
     alternatives = [upgrade_request(r) for r in originals]
-    candidates = {r['request_id']:(i,version) for i,pair in enumerate(zip(originals, alternatives))
-                  for r,version in zip(pair,(BASE,VERSION))}
+    variant_requests = [{BASE:r, VERSION:a} for r,a in zip(originals,alternatives)]
+    selected_version = VERSION
+    if source_references and source.get('program_quantity_role_contract_version'):
+        from .capacity_reference_contract import VERSION as REFERENCE_VERSION, upgrade_request as reference_request
+        for versions, original in zip(variant_requests,originals):
+            versions[REFERENCE_VERSION] = reference_request(original)
+        if source_references:
+            selected_version = REFERENCE_VERSION
+    need(not source_references or selected_version != VERSION, 'NATIVE_REFERENCE_PROGRAM_SOURCE_REQUIRED')
+    candidates = {r['request_id']:(i,version) for i,versions in enumerate(variant_requests)
+                  for version,r in versions.items()}
     successful = {}
     with ledger.locked():
         state = ledger.snapshot()
@@ -350,12 +369,20 @@ def select_native_request_variants(*, prepared_requests, ledger):
             if not saved_path.exists():
                 continue
             saved = strict_json_file(path=saved_path)
+            if 'source_reference_contract' in saved and saved.get('request_id') not in candidates:
+                from .capacity_reference_contract import VERSION as REFERENCE_VERSION, restore_base_request as reference_base
+                if saved.get('source_id') == source['semantic_source_id']:
+                    original = reference_base(saved)
+                    need(original in originals, 'NATIVE_REFERENCE_SAVED_SOURCE_CHANGED')
+                    i = originals.index(original)
+                    variant_requests[i][REFERENCE_VERSION] = saved
+                    candidates[saved['request_id']] = (i, REFERENCE_VERSION)
             match = candidates.get(saved.get('request_id'))
             if match is None:
                 continue
             i,version = match
             need(i not in successful, 'NATIVE_VARIANT_MULTIPLE_SUCCESSFUL_VERSIONS')
-            request = originals[i] if version == BASE else alternatives[i]
+            request = variant_requests[i][version]
             need(saved == request, 'NATIVE_VARIANT_SAVED_REQUEST_CHANGED')
             prepared = prepared_requests[i]
             policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
@@ -370,12 +397,12 @@ def select_native_request_variants(*, prepared_requests, ledger):
         if i in successful:
             item, entry = successful[i]
         else:
-            request = alternatives[i]
+            request = variant_requests[i][selected_version]
             policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
             item = replace(prepared, request_bytes=_json(request),
                 provider_request_body_bytes=request_body(request,policy),
                 output_schema_bytes=_json(request['response_protocol']))
-            entry = {'request_id':request['request_id'], 'variant':VERSION, 'original_ordinal':None}
+            entry = {'request_id':request['request_id'], 'variant':selected_version, 'original_ordinal':None}
         selected.append(item); report.append(entry)
     return selected, report
 

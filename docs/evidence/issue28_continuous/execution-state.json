@@ -874,6 +874,28 @@
       0
     ],
     "evidence": "ci-capacity-timeouts-20260922/",
-    "CI": "PENDING_SINGLE_OBSERVATION_AFTER_PUSH"
+    "CI": {
+      "run_id": 35714090354,
+      "head": "0e2d9a8969fda1ae79b6598029f259336a5c115c",
+      "single_observation": "QUEUED",
+      "evidence": "ci-capacity-timeouts-20260922/ci-once.json",
+      "repeated_observation": false
+    }
+  },
+  "b13_strict_references_20260922": {
+    "version": "B13_SOURCE_REFERENCES_V1",
+    "status": "IMPLEMENTED_OFFLINE_MATERIAL_RUNNING",
+    "short_tests": "36 PASS 0.641s",
+    "original109": "FAILED_TERMINAL_UNCHANGED",
+    "prompt_bytes_unchanged": true,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "b13-strict-references-20260922/",
+    "review": "待审：B13引用合同及原生接线 + 待本次commit SHA + b13-strict-references-20260922/independent-review/",
+    "shared_function_edits": [],
+    "material_first_launch": "IMPORT_PATH_FAILURE_BEFORE_TEST_OR_CALL; corrected PYTHONPATH=scripts:."
   }
 }

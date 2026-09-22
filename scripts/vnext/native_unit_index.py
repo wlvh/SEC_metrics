@@ -114,10 +114,12 @@ def reconstruct_requests(source, variants=None):
     base = source_requests(source)
     if variants is None:
         return base
+    from .capacity_reference_contract import VERSION as REFERENCE_VERSION, upgrade_request as reference_request
     need(type(variants) is list and len(variants)==len(base)
-         and all(type(v) is str and v in {BASE,VERSION} for v in variants),
+         and all(type(v) is str and v in {BASE,VERSION,REFERENCE_VERSION} for v in variants),
          'NATIVE_REQUEST_VARIANT_CENSUS_CHANGED')
-    return [request if version==BASE else upgrade_request(request) for request,version in zip(base,variants)]
+    return [request if version==BASE else reference_request(request) if version==REFERENCE_VERSION else upgrade_request(request)
+            for request,version in zip(base,variants)]
 
 
 def validate_request_partition(source, actual_requests):
@@ -127,6 +129,10 @@ def validate_request_partition(source, actual_requests):
     for original,actual in zip(base,actual_requests):
         if actual==original:
             variants.append(BASE)
+        elif 'source_reference_contract' in actual:
+            from .capacity_reference_contract import VERSION as REFERENCE_VERSION, upgrade_request as reference_request
+            need(actual==reference_request(original), 'NATIVE_REQUEST_VARIANT_NOT_SOURCE_BOUND')
+            variants.append(REFERENCE_VERSION)
         else:
             need(actual==upgrade_request(original), 'NATIVE_REQUEST_VARIANT_NOT_SOURCE_BOUND')
             variants.append(VERSION)
