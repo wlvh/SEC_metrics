@@ -384,9 +384,20 @@ class HistoricalSecSession:
     def __init__(self, *, factory, ledger, allowance, recorded_response=None,
                  recorded_status=200):
         _need(factory is _FACTORY, "ISSUE_47_SESSION_FACTORY_REQUIRED")
+        # bytes answers every URL with the same body, which is all a
+        # single-document chain needs. A dict answers each URL with its own,
+        # which is what a chain over several documents needs - a refresh of a
+        # submissions index and its shards is not one document, and the index
+        # and each shard have to disagree for the check under test to mean
+        # anything. Nothing else is accepted, so a live session still carries
+        # no recorded body at all.
         _need((ledger.live and recorded_response is None)
-              or (not ledger.live and type(recorded_response) is bytes),
+              or (not ledger.live and type(recorded_response) in (bytes, dict)),
               "ISSUE_47_TRANSPORT_MODE_CHANGED")
+        if type(recorded_response) is dict:
+            _need(recorded_response and all(type(key) is str and type(value) is bytes
+                                            for key, value in recorded_response.items()),
+                  "ISSUE_47_RECORDED_RESPONSE_MAP_INVALID")
         self._factory = factory
         self.ledger = ledger
         self.allowance = allowance
@@ -414,6 +425,19 @@ class HistoricalSecSession:
             _need(self.ledger.root == Path(self.allowance["budget_root"])
                   and self.response is None,
                   "ISSUE_47_LIVE_SESSION_MUST_USE_THE_GRANTED_ROOT")
+
+    def _recorded_body(self, *, url):
+        """The body this session answers one URL with, or a named refusal.
+
+        A missing entry is a refusal rather than a fallback to some other
+        document: answering a URL with another URL's bytes is the failure a
+        multi-document chain is meant to expose, and it would look like a pass.
+        """
+        if type(self.response) is bytes:
+            return self.response
+        _need(url in self.response,
+              "ISSUE_47_RECORDED_RESPONSE_NOT_PROVIDED:" + url)
+        return self.response[url]
 
     def capture(self, *, company_id, url, years=5):
         """Fetch one declared dependency and prove what the ledger then holds."""
@@ -479,7 +503,8 @@ class HistoricalSecSession:
                 result = client.fetch(url=url, purpose=LIVE_PURPOSE, local_path=target)
             else:
                 result = client._persist_result(
-                    url=url, status_code=self.response_status, body=self.response,
+                    url=url, status_code=self.response_status,
+                    body=self._recorded_body(url=url),
                     headers={"Content-Type": dependency["media_type"]},
                     local_path=target,
                     error="" if self.response_status == 200 else "RECORDED_HTTP_FAILURE")

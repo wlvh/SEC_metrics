@@ -1,0 +1,165 @@
+{
+ "one_document_cleared_twelve_rows": "Twelve rows carried SNAPSHOT_REFRESH - eleven shards and the index - and one refreshed index cleared all of them. That is the planner's own claim made checkable: coherence is a property of the index and the shards together, so refreshing one of them is what re-checks the pair.",
+ "production_authorized": false,
+ "real_sec_credit": false,
+ "record_type": "ISSUE_47_METADATA_REFRESH_CHAIN",
+ "the_case_that_makes_it_mean_something": "test_capturing_the_same_bytes_again_does_not_clear_the_conflict. Same chain, same gate, same checkpoint, same installation - only the body is the unchanged index - and the conflict has to survive it. Without that, a chain that cleared the conflict because something was re-saved, re-registered or re-installed would pass every other case.",
+ "the_chain": {
+  "after_conflicting_shards": 0,
+  "after_refresh_rows": 0,
+  "before_conflicting_shards": 11,
+  "before_installed_root_refresh_rows": 12,
+  "before_repository_refresh_rows": 12,
+  "calls": [
+   0,
+   0,
+   0
+  ],
+  "capture_status": "SUCCEEDED",
+  "checkpoint_id": "sha256:55e0c12018de3b653b814f09bae6810a877ce5c74436cbc1c8b3a252e0c51b4e",
+  "declared_rows_after": 115,
+  "declared_rows_before": 115,
+  "documents_captured": 1,
+  "installed_paths": 2,
+  "seconds": 78.8
+ },
+ "the_conflict_measured_from_both_sides": {
+  "a_number_this_corrects": "The plan reports out_of_range_filing_count 2 for shard 001, which reads like two filings drifted. That count is over the forms the reader retains, and shard 001 holds only two of them; all 2079 raw rows are outside. The conflict is total, not marginal.",
+  "cik": 19617,
+  "company_id": "jpmorgan_chase",
+  "newest_declared_range_end": "2025-08-13",
+  "newest_saved_filing_date": "2025-07-02",
+  "per_shard": [
+   {
+    "body_from": "2025-05-30",
+    "body_to": "2025-07-02",
+    "declared_from": "2025-07-15",
+    "declared_to": "2025-08-13",
+    "name": "CIK0000019617-submissions-001.json",
+    "raw_rows": 2079,
+    "relevant_inside": 0,
+    "relevant_rows": 2
+   },
+   {
+    "body_from": "2025-04-21",
+    "body_to": "2025-05-29",
+    "declared_from": "2025-06-05",
+    "declared_to": "2025-07-13",
+    "name": "CIK0000019617-submissions-002.json",
+    "raw_rows": 2002,
+    "relevant_inside": 0,
+    "relevant_rows": 3
+   },
+   {
+    "body_from": "2025-03-18",
+    "body_to": "2025-04-18",
+    "declared_from": "2025-04-30",
+    "declared_to": "2025-06-03",
+    "name": "CIK0000019617-submissions-003.json",
+    "raw_rows": 2021,
+    "relevant_inside": 0,
+    "relevant_rows": 4
+   },
+   {
+    "body_from": "2025-02-13",
+    "body_to": "2025-03-17",
+    "declared_from": "2025-03-26",
+    "declared_to": "2025-04-28",
+    "name": "CIK0000019617-submissions-004.json",
+    "raw_rows": 2046,
+    "relevant_inside": 0,
+    "relevant_rows": 1
+   },
+   {
+    "body_from": "2025-01-07",
+    "body_to": "2025-02-12",
+    "declared_from": "2025-02-25",
+    "declared_to": "2025-03-24",
+    "name": "CIK0000019617-submissions-005.json",
+    "raw_rows": 2062,
+    "relevant_inside": 0,
+    "relevant_rows": 7
+   },
+   {
+    "body_from": "2024-11-29",
+    "body_to": "2025-01-06",
+    "declared_from": "2025-01-17",
+    "declared_to": "2025-02-23",
+    "name": "CIK0000019617-submissions-006.json",
+    "raw_rows": 2082,
+    "relevant_inside": 0,
+    "relevant_rows": 2
+   },
+   {
+    "body_from": "2024-10-29",
+    "body_to": "2024-11-27",
+    "declared_from": "2024-12-05",
+    "declared_to": "2025-01-15",
+    "name": "CIK0000019617-submissions-007.json",
+    "raw_rows": 2084,
+    "relevant_inside": 0,
+    "relevant_rows": 0
+   },
+   {
+    "body_from": "2024-09-19",
+    "body_to": "2024-10-28",
+    "declared_from": "2024-11-04",
+    "declared_to": "2024-12-03",
+    "name": "CIK0000019617-submissions-008.json",
+    "raw_rows": 2002,
+    "relevant_inside": 0,
+    "relevant_rows": 5
+   },
+   {
+    "body_from": "2024-08-12",
+    "body_to": "2024-09-18",
+    "declared_from": "2024-10-01",
+    "declared_to": "2024-11-02",
+    "name": "CIK0000019617-submissions-009.json",
+    "raw_rows": 2025,
+    "relevant_inside": 0,
+    "relevant_rows": 1
+   },
+   {
+    "body_from": "2024-07-11",
+    "body_to": "2024-08-09",
+    "declared_from": "2024-08-23",
+    "declared_to": "2024-09-29",
+    "name": "CIK0000019617-submissions-010.json",
+    "raw_rows": 2041,
+    "relevant_inside": 0,
+    "relevant_rows": 4
+   },
+   {
+    "body_from": "2024-06-06",
+    "body_to": "2024-07-10",
+    "declared_from": "2024-07-22",
+    "declared_to": "2024-08-21",
+    "name": "CIK0000019617-submissions-011.json",
+    "raw_rows": 2014,
+    "relevant_inside": 0,
+    "relevant_rows": 2
+   },
+   {
+    "body_from": "2024-05-02",
+    "body_to": "2024-06-05",
+    "declared_from": "2024-06-14",
+    "declared_to": "2024-07-20",
+    "name": "CIK0000019617-submissions-012.json",
+    "raw_rows": 2060,
+    "relevant_inside": 0,
+    "relevant_rows": 5
+   }
+  ],
+  "saved_shards": 12,
+  "shards_whose_relevant_filings_are_all_outside_their_declared_range": 12,
+  "what_that_means": "Not drift. Every saved shard body sits entirely outside its own declared range and lands between the declared ranges of the next two shards - SEC re-partitioned the history and the saved bodies predate that. The newest saved filing is 2025-07-02 and the newest declared range does not begin until 2025-07-15, so the filings the current shards hold were never saved here."
+ },
+ "what_this_does_not_establish": [
+  "That JPMorgan's metadata is now coherent with SEC. It is not; the saved bodies are still the stale side and still need fetching.",
+  "That the 57 never-saved shards are addressed. They are a separate limitation and this leaves them exactly as they were.",
+  "Any authorization. Zero SEC calls, RECORDED_TEST_ONLY throughout, and a live capture still refuses with ISSUE_47_SEC_ALLOWANCE_NOT_GRANTED."
+ ],
+ "what_was_missing": "A SNAPSHOT_REFRESH row reaching a request was the only part of the refresh path with a case. Everything after it - save, ledger row, receipt, terminal, frozen checkpoint replay, installation, and a re-plan on the root the refresh acted on - had none, so 'the gate accepts a refresh request' was standing in for 'a refresh finishes'.",
+ "why_the_refreshed_document_is_the_index": "A faithful refresh of the bodies cannot be derived from saved bytes, by the measurement above. So the document refreshed here is the index, and its bytes are derived rather than invented: each saved shard's declared range becomes that shard's own minimum and maximum filing date. Entries for shards never saved are left untouched, so the separate '57 shards not saved' limitation is neither hidden nor changed. This proves the mechanism, not SEC's current metadata - the real repair for this company is an acquisition and is named as one."
+}

@@ -219,14 +219,14 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # default is the same margin that was judged too thin above, so this keeps
     # an override, at the size the current cases actually need.
     "tests.vnext.test_historical_coverage": 480,
-    # 82 cases at 246 seconds measured together. It was 374 before the
-    # declaration each company needs - ten seconds for JPMorgan's sixty-nine
-    # shards - was built once per process and deep-copied to the twelve cases
-    # that read it; they assert what the gate and the union do with the rows,
-    # never how the rows were built, so sharing them weakens nothing. 246
-    # against the 240 default is over it, not near it, and this module is the
-    # one whose timeout would read as "the acquisition chain broke".
-    "tests.vnext.test_historical_sec_session": 480,
+    # 91 cases at 379 seconds measured together. The refresh chain runs a whole acquisition - install, capture,
+    # checkpoint, installation, and three plans of a company with sixty-nine
+    # declared shards - once for its class and once more for the case that
+    # re-captures unchanged bytes, which is the case that makes the rest mean
+    # anything. Each company's declaration is still built once per process and
+    # deep-copied to the cases that read it. This module is the one whose
+    # timeout would read as "the acquisition chain broke".
+    "tests.vnext.test_historical_sec_session": 900,
 }
 
 

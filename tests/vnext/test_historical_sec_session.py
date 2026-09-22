@@ -32,6 +32,7 @@ import unittest
 
 from vnext.canonical import content_hash, strict_json_file
 from vnext.continuous_sec_acquisition import validate_acquisition_checkpoint
+from vnext.annual_update import saved_source
 from vnext.historical_sec_session import (HistoricalSessionError,
                                           install_historical_source_inputs,
                                           live_historical_session,
@@ -48,11 +49,12 @@ from vnext.historical_source_acquisition import (POLICY_PATH, DELEGATION_TYPE,
                                                  historical_dependency,
                                                  request_is_in_scope)
 from vnext.normal_annual_input import _subject_policy
-from vnext.normal_governance_input import _Sources
+from vnext.normal_governance_input import _Sources, _filings, _history_index
 from vnext.normal_history_catalog import target_period_candidates
 from vnext.normal_source_authority import MANIFEST_PATH, ROOT
 from vnext.normal_zero_ai_results import _event_sources
-from sec_urls import submissions_url
+from vnext.ordinary_source_authority import checkpoint_installation
+from sec_urls import submissions_file_url, submissions_url
 
 
 def _load_tool(name, relative):
@@ -1637,3 +1639,218 @@ class TheUnionIsOneDeclarationNotTwo(unittest.TestCase):
             self.assertIn("historical_event_sources", row["also_declared_by"])
             self.assertTrue(any(str(c).startswith("period:") for c in row["consumers"]))
             self.assertTrue(any(not str(c).startswith("period:") for c in row["consumers"]))
+
+
+class ARefreshIsFinishedWhenThePlanStopsAskingForIt(unittest.TestCase):
+    """The whole chain, not the gate accepting a refresh request.
+
+    The planner marks a dependency ``SNAPSHOT_REFRESH`` when its saved bytes
+    are intact and verify but disagree with the index that declares them. Up
+    to here the only thing exercised was that such a row reaches a request.
+    This runs the rest: capture, save, ledger row, receipt, terminal, frozen
+    checkpoint replay, installation, and then a re-plan on the root the
+    refresh acted on - and requires the plan to stop asking.
+
+    **What the recorded body is.** The conflict in this repository is that
+    every saved shard body sits entirely outside its own declared range: SEC
+    re-partitioned the history and the saved bodies predate that. A faithful
+    refresh of the *bodies* cannot be derived from saved bytes, because the
+    filings the current shards hold were never saved here - the newest saved
+    filing is older than the newest declared range even begins. So the
+    document refreshed here is the index, and its bytes are **derived**: each
+    saved shard's declared range becomes that shard's own minimum and maximum
+    filing date. Entries for shards never saved are left untouched, so the
+    separate "not saved" limitation is neither hidden nor changed.
+
+    That makes this a proof of the mechanism, not of SEC's current metadata.
+    The real repair for this company is an acquisition, and it is named as
+    one. What the mechanism has to show is that one refreshed document clears
+    every row the conflict produced - which is the planner's own claim, that
+    coherence is a property of the index and the shards together.
+    """
+
+    COMPANY = "jpmorgan_chase"
+    CIK = 19617
+    _chain = None
+
+    @classmethod
+    def chain(cls):
+        """Run the chain once; every case reads the same recorded outcome."""
+        if cls._chain is not None:
+            return cls._chain
+        payload, measured = cls._measure(ROOT)
+        scratch = Path(tempfile.mkdtemp(prefix="issue47-refresh-"))
+        atexit.register(shutil.rmtree, scratch, ignore_errors=True)
+        session = recorded_historical_session(
+            root=scratch / "ledger", company_ids=(cls.COMPANY,),
+            response={submissions_url(cik=cls.CIK): cls._derived_index(payload, measured)})
+        install_historical_source_inputs(root=session.data_root)
+        before = cls._state(session.data_root)
+        result = session.capture(company_id=cls.COMPANY, url=submissions_url(cik=cls.CIK))
+        checkpoint, paths = checkpoint_installation(source_root=session.data_root)
+        cls._chain = {"measured": measured, "before_repository": cls._state(ROOT),
+                      "before": before, "result": result, "checkpoint": checkpoint,
+                      "installed_paths": len(paths), "calls": session.calls_this_session(),
+                      "after": cls._state(session.data_root),
+                      "after_measured": cls._measure(session.data_root)[1]}
+        return cls._chain
+
+    @classmethod
+    def _state(cls, root):
+        rows = declared_frame(repo_root=root, company_id=cls.COMPANY)["requirements"]
+        return {"rows": len(rows),
+                "refresh": sorted(r["document_name"] for r in rows
+                                  if r.get("acquisition_kind") == "SNAPSHOT_REFRESH"),
+                "conflicting": sorted(
+                    r["document_name"] for r in rows
+                    if r.get("snapshot_conflict", {}).get("reason")
+                    == "SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT")}
+
+    @classmethod
+    def _measure(cls, root):
+        """What the two sides say, read from each of them."""
+        index = saved_source(repo_root=root, url=submissions_url(cik=cls.CIK), accession="")
+        payload = json.loads(index["raw"].decode("utf-8"))
+        measured = []
+        for shard in _history_index(payload, str(cls.CIK)):
+            item = saved_source(repo_root=root,
+                                url=submissions_file_url(file_name=shard["name"]),
+                                accession="")
+            if item is None:
+                continue
+            body = json.loads(item["raw"].decode("utf-8"))
+            relevant = _filings(body, inventory_name=shard["name"])
+            measured.append({
+                "name": shard["name"], "declared_from": shard["filingFrom"],
+                "declared_to": shard["filingTo"], "body_from": min(body["filingDate"]),
+                "body_to": max(body["filingDate"]), "relevant_rows": len(relevant),
+                "relevant_inside": sum(1 for row in relevant
+                                       if shard["filingFrom"] <= row["filingDate"]
+                                       <= shard["filingTo"])})
+        return payload, measured
+
+    @classmethod
+    def _derived_index(cls, payload, measured, *, derive=True):
+        spans = {row["name"]: row for row in measured}
+        body = json.loads(json.dumps(payload))
+        if derive:
+            for entry in body["filings"]["files"]:
+                row = spans.get(entry["name"])
+                if row is not None:
+                    entry["filingFrom"] = row["body_from"]
+                    entry["filingTo"] = row["body_to"]
+        return json.dumps(body, ensure_ascii=False).encode("utf-8")
+
+    def test_the_conflict_is_there_before_and_on_the_root_the_refresh_acts_on(self):
+        chain = self.chain()
+        self.assertTrue(chain["before_repository"]["conflicting"])
+        self.assertEqual(chain["before_repository"]["conflicting"],
+                         chain["before"]["conflicting"],
+                         "the installed root inherits the repository's conflict")
+        # The index is asked for too: its declared ranges are the other half
+        # of the disagreement, so refreshing a shard alone proves nothing.
+        self.assertIn("CIK%010d.json" % self.CIK, chain["before"]["refresh"])
+
+    def test_the_saved_bodies_are_wholly_outside_their_declared_ranges(self):
+        # Not "a few filings drifted". Every saved shard's relevant filings
+        # are outside its own declared range, which is what a re-partition
+        # looks like, and is why the real repair is an acquisition.
+        measured = self.chain()["measured"]
+        self.assertTrue(measured)
+        carrying = [row for row in measured if row["relevant_rows"]]
+        self.assertTrue(carrying)
+        self.assertEqual([], [row["name"] for row in carrying if row["relevant_inside"]])
+        self.assertLess(max(row["body_to"] for row in measured),
+                        max(row["declared_to"] for row in measured),
+                        "the newest saved filing predates the newest declared range")
+
+    def test_the_capture_reaches_a_request_and_a_checkpoint(self):
+        chain = self.chain()
+        self.assertEqual("SUCCEEDED", chain["result"]["status"])
+        self.assertEqual([0, 0, 0], chain["calls"], "recorded, so no SEC call")
+        self.assertEqual(chain["result"]["checkpoint_id"],
+                         chain["checkpoint"]["checkpoint_id"])
+        self.assertTrue(chain["installed_paths"],
+                        "the frozen validator accepted it and named its inputs")
+
+    def test_after_the_refresh_the_plan_asks_for_nothing(self):
+        # The acceptance. Not "the gate admitted the request" - the plan, re-
+        # derived from the root the refresh installed into, no longer marks a
+        # single row for refresh and no longer reports a single conflict.
+        chain = self.chain()
+        self.assertEqual([], chain["after"]["refresh"])
+        self.assertEqual([], chain["after"]["conflicting"])
+        self.assertEqual(chain["before"]["rows"], chain["after"]["rows"],
+                         "a refresh must not change what the frame declares")
+
+    def test_the_refreshed_index_describes_the_bodies_rather_than_replacing_them(self):
+        chain = self.chain()
+        after = {row["name"]: row for row in chain["after_measured"]}
+        self.assertEqual(sorted(after), sorted(row["name"] for row in chain["measured"]))
+        for row in chain["measured"]:
+            with self.subTest(row["name"]):
+                # Same bytes on the shard side: only the index moved.
+                self.assertEqual(row["body_from"], after[row["name"]]["body_from"])
+                self.assertEqual(row["body_to"], after[row["name"]]["body_to"])
+                self.assertEqual(row["body_from"], after[row["name"]]["declared_from"])
+                self.assertEqual(row["body_to"], after[row["name"]]["declared_to"])
+
+    def test_capturing_the_same_bytes_again_does_not_clear_the_conflict(self):
+        # Load-bearing. Without it, a chain that cleared the conflict because
+        # something was re-saved, re-registered or re-installed would pass
+        # every case above. Same chain, same gate, same checkpoint - only the
+        # body is the unchanged index, and the conflict has to survive it.
+        payload, measured = self._measure(ROOT)
+        scratch = Path(tempfile.mkdtemp(prefix="issue47-norefresh-"))
+        self.addCleanup(shutil.rmtree, scratch, ignore_errors=True)
+        session = recorded_historical_session(
+            root=scratch / "ledger", company_ids=(self.COMPANY,),
+            response={submissions_url(cik=self.CIK):
+                      self._derived_index(payload, measured, derive=False)})
+        result = session.capture(company_id=self.COMPANY,
+                                 url=submissions_url(cik=self.CIK))
+        self.assertEqual("SUCCEEDED", result["status"])
+        after = self._state(session.data_root)
+        self.assertTrue(after["conflicting"],
+                        "re-saving the same index must leave the conflict standing")
+        self.assertEqual(self.chain()["before_repository"]["conflicting"],
+                         after["conflicting"])
+
+
+class ARecordedBodyMustBeTheOneAskedFor(unittest.TestCase):
+    """A chain over several documents needs several bodies, and the right one.
+
+    The recorded session answered every URL with one body, which is all a
+    single-document chain needs. A refresh is not one document - the index and
+    the shards have to disagree for the check under test to mean anything - so
+    a session may now carry a map. What the map must never do is answer a URL
+    it was not given a body for: a fallback would hand one document's bytes to
+    another's request and look like a pass.
+    """
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-body-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def test_a_url_the_map_does_not_carry_is_refused_by_name(self):
+        session = recorded_historical_session(root=self.root / "ledger",
+                                              response={"https://data.sec.gov/other": BODY})
+        with self.assertRaises(HistoricalSessionError) as caught:
+            session.capture(company_id="marriott_international", url=DECLARED)
+        self.assertIn("ISSUE_47_RECORDED_RESPONSE_NOT_PROVIDED", str(caught.exception))
+        self.assertIn(DECLARED, str(caught.exception))
+
+    def test_the_map_must_carry_bytes_under_string_keys(self):
+        for label, response in (("empty", {}), ("not bytes", {DECLARED: "text"}),
+                                ("not a url key", {1: BODY})):
+            with self.subTest(label):
+                with self.assertRaises(HistoricalSessionError) as caught:
+                    recorded_historical_session(root=self.root / label, response=response)
+                self.assertIn("ISSUE_47_RECORDED_RESPONSE", str(caught.exception))
+
+    def test_a_single_body_still_answers_every_url(self):
+        # The old form is unchanged, because every other case in this file
+        # uses it and none of them should have had to move.
+        session = recorded_historical_session(root=self.root / "bytes", response=BODY)
+        result = session.capture(company_id="marriott_international", url=DECLARED)
+        self.assertEqual("SUCCEEDED", result["status"])
