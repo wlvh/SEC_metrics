@@ -196,3 +196,66 @@ class HistoricalCompensationResultsTest(unittest.TestCase):
     def test_c03_is_registered_as_wired(self):
         self.assertIn("C03", SUPPORTED_METRICS)
         self.assertIn("C03", WIRED_HISTORICAL_METRICS)
+
+
+class ComponentCarriesWhatItBindsTest(unittest.TestCase):
+    """An observation's derived asset has to be a record of the same Run.
+
+    A batch found this: C03's compensation-table stage rebuilds the annual
+    report's grid and binds the observation to it, and the component did not
+    carry the grid. Every case in this file asserted on the component's result,
+    which was right, so none of them could see it - the Run factory refuses it
+    later, with "Observation DerivedAsset is absent", in a tree these cases
+    cannot create a Run in.
+
+    So the claim is made where it can be checked here: through
+    `prepare_historical_run_input`, on the records the Run would be built from.
+    The two companies are the point - one resolves through the stage that builds
+    a grid and one through the stage that does not, so a route that carried no
+    assets and a route that invented one both fail.
+    """
+
+    def test_the_stage_that_builds_a_grid_carries_it(self):
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=PARAMOUNT,
+                                                 report_end=PARAMOUNT_PERIOD)
+            prepared = prepare_historical_run_input(
+                repo_root=ROOT, company_id=PARAMOUNT, metric_id="C03",
+                period_selection=selection)
+        observations = [r for r in prepared["records"]
+                        if r.get("record_type") == "VERIFIED_OBSERVATION"]
+        self.assertEqual(1, len(observations))
+        named = observations[0]["source_binding"].get("derived_asset_id")
+        self.assertIsNotNone(named, "this company is only useful if its stage binds one")
+        carried = {r["derived_asset_id"] for r in prepared["records"]
+                   if r.get("record_type") == "DERIVED_ASSET"}
+        self.assertIn(named, carried)
+
+    def test_the_stage_that_builds_none_carries_none(self):
+        """The other half: carrying an asset nothing names is its own defect."""
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                                 report_end=DELIVERS)
+            prepared = prepare_historical_run_input(
+                repo_root=ROOT, company_id=MARRIOTT, metric_id="C03",
+                period_selection=selection)
+        observations = [r for r in prepared["records"]
+                        if r.get("record_type") == "VERIFIED_OBSERVATION"]
+        self.assertEqual(1, len(observations))
+        self.assertIsNone(observations[0]["source_binding"].get("derived_asset_id"))
+        self.assertEqual([], [r for r in prepared["records"]
+                              if r.get("record_type") == "DERIVED_ASSET"])
+
+    def test_the_check_sits_where_every_component_route_passes(self):
+        """Four routes, one check - not four copies that drift apart."""
+        from vnext.historical_results import _check_bound_assets
+        _check_bound_assets(records=[
+            {"record_type": "DERIVED_ASSET", "derived_asset_id": "sha256:a"},
+            {"record_type": "VERIFIED_OBSERVATION",
+             "source_binding": {"derived_asset_id": "sha256:a"}}])
+        with self.assertRaises(Exception) as refused:
+            _check_bound_assets(records=[
+                {"record_type": "VERIFIED_OBSERVATION",
+                 "source_binding": {"derived_asset_id": "sha256:a"}}])
+        self.assertIn("HISTORICAL_COMPONENT_DERIVED_ASSET_NOT_CARRIED",
+                      str(refused.exception))

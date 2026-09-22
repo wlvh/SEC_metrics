@@ -184,6 +184,13 @@ def _component(*, root, company_id, metric_id, period_selection, prepared, reade
     # records rather than appended to them. The observation references them by
     # id, and a reader that wants the manifest a reference names finds it here.
     records = list(source_records)
+    # The compensation-table stage rebuilds the annual report's table grid and
+    # binds the observation to it. That asset is a record of this Run: without
+    # it the Run factory refuses the observation with "Observation DerivedAsset
+    # is absent", which is what a batch found for the one company this stage
+    # answers. The stage that does not build a grid returns none and this adds
+    # nothing.
+    records.extend(resolution.get("derived_assets", ()))
     if resolution["observation"] is not None:
         records.append(resolution["observation"])
     records.extend([resolution["trace"], resolution["result"]])

@@ -356,6 +356,35 @@ def _run_coordinate(*, pinned, primary):
             "period_end": window["period_end"]}
 
 
+def _check_bound_assets(*, records):
+    """Every asset an observation names has to be a record of the same Run.
+
+    Asked here because this is the one place all four component routes pass
+    through, and because the Run factory asks it too - only later, in a tree
+    this one cannot create a Run in. Two routes have now shipped without it and
+    were found by a batch: the compensation-table stage of C03 rebuilds the
+    annual report's grid and did not carry it, and the lodging route needed its
+    grid recognised before a Run could be frozen at all. The cost of finding
+    that at freeze time rather than here is a whole batch.
+
+    Args:
+        records: The component's records, observations and assets together.
+
+    Raises:
+        HistoricalResultsError: Naming the asset that is missing, so the report
+            says which record the route did not carry rather than that the Run
+            would not freeze.
+    """
+    present = {str(record.get("derived_asset_id")) for record in records
+               if record.get("record_type") == "DERIVED_ASSET"}
+    for record in records:
+        if record.get("record_type") != "VERIFIED_OBSERVATION":
+            continue
+        named = record.get("source_binding", {}).get("derived_asset_id")
+        _need(named is None or str(named) in present,
+              "HISTORICAL_COMPONENT_DERIVED_ASSET_NOT_CARRIED:" + str(named))
+
+
 def _historical_component_run_input(*, repo_root, company_id, metric_id, period_selection,
                                      resolve):
     """The Run shape around a component that has already produced its Result.
@@ -373,6 +402,7 @@ def _historical_component_run_input(*, repo_root, company_id, metric_id, period_
     """
     component = resolve(repo_root=repo_root, company_id=company_id, metric_id=metric_id,
                         period_selection=period_selection)
+    _check_bound_assets(records=component["records"])
     specs = {metric_id: component["compiled_spec"]}
     primary = component["result"]
     body = {"record_type": RUN_INPUT_RECORD_TYPE, "company_id": company_id,
