@@ -1,0 +1,99 @@
+{
+ "answer_counts": {
+  "REFUSED_AGAIN": 13
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "how": "the policy was stood down inside this probe only, by patching the admission entry in the probe's own process. No policy file, clearance rule or repository byte was changed; the patch is named in the record it returns so it cannot be mistaken for a clearance.",
+ "next_blockers": {
+  "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED": 11,
+  "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED": 2
+ },
+ "positions": [
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "A05",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "A06",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "A07",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "A08",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "A10",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalZeroAiError",
+   "metric_id": "B01",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "B02",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalZeroAiError",
+   "metric_id": "B03",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "B04",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "B05",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "B07",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "B08",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  },
+  {
+   "error_type": "NormalCompanyfactsError",
+   "metric_id": "B09",
+   "next": "REFUSED_AGAIN",
+   "reason": "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+  }
+ ],
+ "production_authorized": false,
+ "question": "if the approved policy cleared ORIGINAL_STATEMENT_VALUES for this amendment, would these thirteen positions produce results?",
+ "record_type": "ISSUE_47_PARAMOUNT_BEHIND_THE_AMENDMENT_POLICY",
+ "what_this_means": "the policy decision and the successor-subject implementation are two separate pieces of work. Reporting the first as the blocker for all thirteen would hide the second."
+}

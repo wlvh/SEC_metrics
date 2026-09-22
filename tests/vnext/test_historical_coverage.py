@@ -1256,3 +1256,113 @@ class HistoricalCoverageTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RefusedIsNotNotRunTest(unittest.TestCase):
+    """A position an approved policy declines is not a position nothing reached.
+
+    Both leave no Run receipt, so both used to report ROUTE_IMPLEMENTED_NOT_RUN
+    and the table said "never run" about a determinate, reproducible blocker.
+    The load-bearing case asks two metrics at the same company and period and
+    requires two different answers: a probe that answered one way for
+    everything would pass every other case here and fail this one.
+    """
+
+    # Paramount's Part III amendment is cleared for the event input class and
+    # not for statement values, so at one period one wired metric is refused
+    # and another is not. Measured, not chosen.
+    COMPANY = "paramount_skydance_paramount_global"
+    PERIOD = "2025-12-31"
+    REFUSED = "B01"
+    PREPARES = "D02"
+
+    def _positions(self, *, explain):
+        with original_sources_only():
+            matrix = build_coverage_matrix(repo_root=ROOT, company_ids=[self.COMPANY],
+                                           years=1, explain_not_run=explain)
+        return {p["metric_id"]: p for p in matrix["positions"]
+                if p["report_end"] == self.PERIOD}
+
+    def test_one_company_one_period_two_answers(self):
+        """The whole point, stated as a contrast rather than as a count."""
+        rows = self._positions(explain=True)
+        refused, prepares = rows[self.REFUSED], rows[self.PREPARES]
+        self.assertEqual("ROUTE_IMPLEMENTED_REFUSED", refused["status"])
+        self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", prepares["status"])
+        # The reason is the route's own words. A reason reworded by the
+        # reporting layer cannot be matched against the route that emits it.
+        self.assertIn("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+                      refused["detail"]["reason"])
+        self.assertIn("ORIGINAL_STATEMENT_VALUES", refused["detail"]["reason"])
+        self.assertEqual("NormalZeroAiError", refused["detail"]["error_type"])
+        # And the one that is genuinely unrun says so positively: the route
+        # prepared it, so a Run could be created.
+        self.assertTrue(prepares["detail"]["route_refusal_derived"])
+        self.assertIn("unrun rather than refused",
+                      prepares["detail"]["refused_vs_not_attempted"])
+
+    def test_without_asking_the_table_does_not_claim_nothing_was_attempted(self):
+        """Not computing the distinction and asserting its absence differ."""
+        rows = self._positions(explain=False)
+        for metric_id in (self.REFUSED, self.PREPARES):
+            with self.subTest(metric_id=metric_id):
+                position = rows[metric_id]
+                self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", position["status"])
+                self.assertFalse(position["detail"]["route_refusal_derived"])
+                self.assertIn("not computed",
+                              position["detail"]["refused_vs_not_attempted"])
+
+    def test_the_refusal_is_derived_and_not_remembered(self):
+        """Asked twice, the same position answers the same way from the tree.
+
+        An attempt log would answer from a record of the past, and a record can
+        be edited to say anything. This asks the route, so the only way to
+        change the answer is to change what the route does.
+        """
+        from vnext.historical_route_refusal import probe_route_refusal
+        with original_sources_only():
+            selection = resolve_period_selection(repo_root=ROOT, company_id=self.COMPANY,
+                                                 report_end=self.PERIOD)
+            first = probe_route_refusal(repo_root=ROOT, company_id=self.COMPANY,
+                                        metric_id=self.REFUSED,
+                                        period_selection=selection)
+            second = probe_route_refusal(repo_root=ROOT, company_id=self.COMPANY,
+                                         metric_id=self.REFUSED,
+                                         period_selection=selection)
+        self.assertEqual(first, second)
+        self.assertTrue(first["refused"])
+        self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, first["calls"])
+        self.assertFalse(first["native_run_created"])
+
+
+class LumenContentDefectIsRegisteredTest(unittest.TestCase):
+    """A found content error that is not registered still counts as verified.
+
+    The keyword-proxy census named three wrongly admitted blocks: two of
+    Pfizer's and one of Lumen's. Only Pfizer had entries, and Lumen's appeared
+    solely in prose inside a Pfizer entry, which the machine-read layer never
+    sees. So the register said one coordinate was bad while the repository knew
+    of two.
+    """
+
+    def test_the_register_names_lumen_where_the_census_does(self):
+        defects = known_result_defects(repo_root=ROOT)
+        companies = {(d["company_id"], d["metric_id"], d["period_end"]) for d in defects
+                     if d.get("result_id") is None and not d.get("released")}
+        self.assertIn(("lumen_technologies", "D02", "2025-12-31"), companies)
+        self.assertIn(("pfizer", "D02", "2025-12-31"), companies)
+
+    def test_the_two_entries_name_one_shared_cause(self):
+        """Two coordinates, one defect. Registering them as unrelated would
+        read as two independent problems and hide that one repair closes both.
+        """
+        defects = {d["defect_id"]: d for d in known_result_defects(repo_root=ROOT)}
+        lumen = defects["D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY"]
+        self.assertEqual(["D02_PFIZER_2025_SCOPE_CONTENT_READ"], lumen["same_cause_as"])
+        self.assertIn("_LEGAL", lumen["shared_root_cause"])
+        # The entry names where it was confirmed, so the claim is checkable
+        # against a Run rather than against the census that predicted it.
+        confirmed = lumen["confirmed_in"]
+        self.assertTrue(confirmed["result_id"].startswith("sha256:"))
+        self.assertTrue(confirmed["run_id"].startswith("run:historical-period:"))
+        self.assertEqual(41, confirmed["items"])

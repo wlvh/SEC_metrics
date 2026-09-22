@@ -1,0 +1,67 @@
+{
+ "SOURCE_MISSING_TARGET_ORIGINAL": {
+  "classification": "ACQUISITION",
+  "note": "30 target-year originals was the first count and is withdrawn; the production planner's deduplicated set is 142 dependencies, and each target also needs the prior year's accession material.",
+  "positions": 1170
+ },
+ "TARGET_PERIOD_METADATA_BLOCKED": {
+  "classification": "ACQUISITION",
+  "measured": "both JPMorgan, HISTORY_SNAPSHOT_CONFLICT from SEC re-partitioning",
+  "positions": 78
+ },
+ "TARGET_PERIOD_NOT_DISCOVERED": {
+  "jpmorgan_chase": {
+   "classification": "ACQUISITION",
+   "measured": "68 catalog limitations: 57 HISTORY_SHARD_NOT_SAVED and 11 SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT. Only 2025-12-31 and 2024-12-31 are reachable.",
+   "positions": 117,
+   "target_ordinals": [
+    3,
+    4,
+    5
+   ]
+  },
+  "paramount_skydance_paramount_global": {
+   "classification": "SUBJECT_SCOPE_IMPLEMENTATION_AND_ACQUISITION",
+   "measured": "zero catalog limitations - nothing is reported missing. The successor CIK 2041610 has exactly one 10-K (2025-12-31); the predecessor CIK 813828 has six (2024 back to 2019) and all six are already listed in this repository's saved submissions. The period catalog does not cross the subject transition, so the earlier ends are not discovered even though the filings are known.",
+   "ordinal_2_needs_no_acquisition": {
+    "note": "this original is on disk. These 39 positions are blocked on the period catalog alone, so they are the counter-example to the withdrawn claim: no download moves them and implementation does.",
+    "positions": 39,
+    "predecessor_accession": "0000813828-25-000005",
+    "primary_document": "para-20241231.htm",
+    "primary_saved": true,
+    "report_end": "2024-12-31"
+   },
+   "ordinals_3_to_5_need_both": {
+    "originals_not_saved": [
+     "para-20231231.htm",
+     "para-20221231.htm",
+     "viac-20211231.htm"
+    ],
+    "positions": 117
+   },
+   "positions": 156,
+   "target_ordinals": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "positions": 273
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "corrected_reading": {
+  "acquisition_only": 1365,
+  "both": 117,
+  "implementation_only": 39,
+  "why_it_matters": "an acquisition grant sized to the whole 1521 would be sized to work that acquisition cannot do, and the 39 positions that need no grant would sit behind one."
+ },
+ "how_it_was_measured": "the frame's own positions were grouped by company and target ordinal, then each group's planner limitations were read, and for Paramount the successor and predecessor submissions were counted and the predecessor originals checked against the request ledger.",
+ "production_authorized": false,
+ "record_type": "ISSUE_47_FRAME_BLOCKER_CLASSIFICATION",
+ "withdrawn_claim": "'1521 of the frame waits on acquisition and no amount of implementation moves it'. Measured, that is wrong for at least 39 positions and misleading for another 117."
+}

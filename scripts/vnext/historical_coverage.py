@@ -36,12 +36,14 @@ implemented and never run; a Run can be FROZEN and PASSED and hold another
 item's text. Nothing here turns a missing implementation into "the issuer did
 not disclose", and nothing here promotes EXACT into business acceptance.
 """
+import functools
 import re
 from pathlib import Path
 
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_annual_input import _registry_rows
 from .normal_history_plan import plan_historical_sources
+from .historical_route_refusal import probe_route_refusal
 from .historical_run_receipts import classify_result, collect_run_receipts, index_receipts
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
@@ -456,7 +458,7 @@ def _delivery(*, receipt, result, status, defect, defects, row=None, row_ambigui
 
 def _position(*, company_id, report_end, ordinal, metric_id, established,
               original_saved, implemented, found, defects, candidate, closure=None,
-              selection_id=None):
+              selection_id=None, ask_route=None):
     """One target position, with its four states kept apart.
 
     A route can exist without a Run, and a Run can record a result whose
@@ -501,9 +503,31 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
         # Implemented and not run is not the same as not implemented, and it is
         # not a disclosure claim either. A requested closure that no receipt
         # carries lands here too, which is correct: that closure has not run it.
-        status = "ROUTE_IMPLEMENTED_NOT_RUN"
-        detail = {"note": "a historical route exists and no Run receipt was found",
-                  "receipts_under_other_closures": len(found)}
+        #
+        # But it is also not the same as refused. A position an approved policy
+        # declines leaves no receipt either, so both arrive here and the table
+        # reads "never run" about a determinate blocker. When the caller asks,
+        # the route is asked now - a refusal is reproducible, so this is a
+        # measurement rather than a memory of an attempt. When the caller does
+        # not ask, the detail says the distinction was not computed instead of
+        # implying nothing was attempted.
+        refusal = None if ask_route is None else ask_route()
+        if refusal is not None and refusal["refused"]:
+            status = "ROUTE_IMPLEMENTED_REFUSED"
+            detail = {"note": "the historical route declines this position today",
+                      "reason": refusal["reason"], "error_type": refusal["error_type"],
+                      "category": refusal["category"],
+                      "receipts_under_other_closures": len(found)}
+        else:
+            status = "ROUTE_IMPLEMENTED_NOT_RUN"
+            detail = {"note": "a historical route exists and no Run receipt was found",
+                      "receipts_under_other_closures": len(found),
+                      "route_refusal_derived": refusal is not None,
+                      "refused_vs_not_attempted": (
+                          "the route prepares this position, so it is unrun rather than "
+                          "refused" if refusal is not None else
+                          "not computed; ask with explain_not_run to separate a refused "
+                          "position from one nothing has reached")}
     else:
         status = classify_result(result)
         detail = {key: result[key] for key in ("value", "unit", "quality", "publication",
@@ -562,7 +586,8 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
 
 
 def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
-                          runs_root=None, requirement_closure_hash=None):
+                          runs_root=None, requirement_closure_hash=None,
+                          explain_not_run=False):
     """Enumerate every target position with independent status dimensions.
 
     ``first_blocking_reason`` is a display convenience: it names what this
@@ -576,6 +601,12 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
     coordinate run under more than one closure has more than one receipt, and
     without a selector the position reports ``RUN_RECEIPT_AMBIGUOUS`` rather
     than picking whichever directory happened to sort last.
+
+    ``explain_not_run`` asks each wired position that has no receipt whether
+    its route declines it today, separating a refused position from one nothing
+    has reached. It costs a route preparation per such position, so it is off
+    by default; with it off the position says the distinction was not computed
+    rather than implying nothing was attempted.
     """
     metrics, policy = declared_metric_ids(repo_root=repo_root)
     configured = [c["company_id"] for c in _registry_rows(repo_root=repo_root)]
@@ -613,6 +644,13 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                 implemented = metric_id in wired or structural.structurally_not_applicable(
                     repo_root=repo_root, company_id=company_id, metric_id=metric_id)
                 found = receipts.get((company_id, metric_id, report_end), [])
+                ask_route = None
+                if (explain_not_run and original_saved and implemented
+                        and metric_id in wired):
+                    ask_route = functools.partial(
+                        probe_route_refusal, repo_root=repo_root,
+                        company_id=company_id, metric_id=metric_id,
+                        period_selection=selection)
                 position = _position(company_id=company_id, report_end=report_end,
                                      ordinal=candidate["target_ordinal"],
                                      metric_id=metric_id, established=established,
@@ -620,7 +658,8 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                                      implemented=implemented, found=found,
                                      defects=defects, candidate=candidate,
                                      closure=requirement_closure_hash,
-                                     selection_id=entry["selection_id"])
+                                     selection_id=entry["selection_id"],
+                                     ask_route=ask_route)
                 if position["fiscal_year"] is not None and entry["fiscal_year"] is None:
                     entry["fiscal_year"] = position["fiscal_year"]
                 positions.append(position)

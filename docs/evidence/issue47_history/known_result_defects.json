@@ -212,6 +212,38 @@
     "SUBSTANTIVE_MINIMUM_LENGTH_12": "text_business_candidates._substantive requires at least twelve characters. Product names are shorter than that: Zantac is six, Chantix seven, Paxlovid and Asbestos eight, Docetaxel nine. Orgovyx (relugolix) at nineteen is kept, so the set is inconsistent in a way that depends on how long the generic name is."
    },
    "what_is_correct": "every substantive paragraph of Note 16A is present, in order, and the two in-scope items outside the sub-note - the contingencies note lead-in at 2302 and the Seagen legal-matters bullet at 2351 - are correctly included. The scope boundary [3821, 3937) is right: guarantees, commitments, contingent consideration and insurance all start at or after 3937 and none is in the set."
+  },
+  {
+   "company_id": "lumen_technologies",
+   "confirmed_in": {
+    "how": "read out of the batch Run's own records rather than inferred from the census: the observation at block 1670 is present and its value is the text above. Every other batch D02 result was swept for the census's three wrong blocks and none carries one.",
+    "items": 41,
+    "reported_quality": "EXACT",
+    "requirement_closure_hash": "sha256:95a0f340dbd55a8b10b0fd562f4d5285b558dc4294e80a755282cc2a15a7280b",
+    "result_id": "sha256:cb34c9819da92e7b18602ade3f8e2e0dfe33db27b5f19cf8e72cdc34c6cbbb8c",
+    "run_id": "run:historical-period:81223cbf74b704298a5f225082709d225db885bcc87121d1bcebc907a274f9ad"
+   },
+   "defect_id": "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/keyword-proxy-scope.json",
+    "docs/evidence/issue47_history/native-run-batch-25-metrics.json"
+   ],
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "result_id": null,
+   "same_cause_as": [
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "scope_note": "This withdraws the coordinate's result from current delivery. The other 40 items are the ones the census judged correct, including Lumen's two correctly admitted Item 8 blocks; withdrawing the set is not a claim that they are wrong, it is that a set with a wrong member is not the right set.",
+   "shared_root_cause": "scripts/vnext/text_business_candidates._LEGAL standing in for 'is this a legal-proceedings disclosure' on Item 8 blocks that the filing does not incorporate by name. Measured across six filings the proxy admits 17 Item 8 blocks, 14 of them correctly; the three wrong ones are Pfizer's 2175 and 2240 and this one. Narrowing the proxy would cost the fourteen to remove the three, so the repair is surgical and is not written from six filings at one period each.",
+   "summary": "Block 1670 is Lumen's external-legal-counsel cost policy, admitted to the excerpt set because the word litigation appears inside a list of advisory matters. It is not a legal-proceedings disclosure, so the 41-item set is not the set it should be.",
+   "the_block": {
+    "block_index": 1670,
+    "text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on finance, regulatory, litigation, and other matters. Subject to certain exceptions, we expense these costs as the related services are received.",
+    "why_out_of_scope": "an accounting policy for legal fees. The keyword sits in a comma list of advisory subjects whose head noun is counsel costs, not a proceeding the registrant is party to."
+   },
+   "why_it_was_missing": "The census named this block in prose inside the Pfizer entry's still_open note - 'Pfizer's two plus Lumen's 1670' - which the machine-read layer never sees. So the repository had found the error and was still counting the result as verified: known_content_defect was 1 when two coordinates were known bad. Finding an error and withdrawing it are two separate acts and only the second one moves a number."
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
