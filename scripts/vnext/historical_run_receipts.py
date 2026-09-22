@@ -22,9 +22,11 @@ import re
 from pathlib import Path
 
 from .canonical import content_hash, sha256_file, strict_json_file
+# The writer owns where the bundle goes; this reads the same expression
+# rather than a second copy of it.
+from .historical_projection import ROW_BUNDLE_NAME, row_bundle_path
 
 RECORD_TYPE = "HISTORICAL_RUN_RECEIPT"
-ROW_BUNDLE_NAME = "row_receipt.json"
 ROW_BUNDLE_RECORD_TYPE = "HISTORICAL_PERIOD_ROW_BUNDLE"
 _HASHED_FILES = (("records_file_hash", "records.jsonl"),
                  ("review_decisions_file_hash", "review_decisions.jsonl"),
@@ -177,7 +179,7 @@ def read_row_bundle(*, run_dir: Path, manifest, results):
     independently verified evidence with it - the same shape of mistake as
     picking one run to read every layer off.
     """
-    path = Path(run_dir) / ROW_BUNDLE_NAME
+    path = row_bundle_path(run_dir=run_dir)
     if not path.is_file() or path.is_symlink():
         return None
     try:

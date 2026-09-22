@@ -50,6 +50,24 @@ ROW_BUNDLE_NAME = "row_receipt.json"
 ROW_BUNDLE_RECORD_TYPE = "HISTORICAL_PERIOD_ROW_BUNDLE"
 
 
+def row_bundle_path(*, run_dir):
+    """Where a Run's persisted row bundle lives: beside the Run, never in it.
+
+    One expression, because the writer and the reader disagreeing about it is
+    silent in both directions - a reader that looks in the wrong place reports
+    no row where there is one, and a writer that puts it in the wrong place
+    makes the Run itself unreadable.
+
+    Args:
+        run_dir: The run directory.
+
+    Returns:
+        The bundle path, a sibling of ``run_dir`` rather than a child.
+    """
+    run_dir = Path(run_dir)
+    return run_dir.parent / (run_dir.name + "." + ROW_BUNDLE_NAME)
+
+
 def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persist=False):
     """Build one public row and its evidence from a historical Run.
 
@@ -261,11 +279,18 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
     bundle = {"row": row, "evidence": evidence,
               "receipt": {**receipt, "receipt_id": content_hash(value=receipt)}}
     if persist:
-        # Written beside the Run rather than into its hashed files: the manifest
-        # binds records, decisions and validation, and this must not change any
-        # of them. It is its own checkable object - the receipt holds the hashes
-        # of the row and the evidence it is written with.
-        path = Path(run_dir) / ROW_BUNDLE_NAME
+        # Written beside the run directory, not inside it. Not changing the
+        # manifest's three hashed files is necessary and was already true; it is
+        # not sufficient. A frozen Run's directory has to hold exactly the
+        # artifacts its records name - that check is what stops an unhashed file
+        # from sitting there unaccounted for - and this receipt is deliberately
+        # unhashed by the manifest, so inside is precisely where it must not be.
+        # Measured: with the receipt in the directory, `load_frozen_run` refuses
+        # every historical Run whose row was persisted, with "Run validation
+        # artifact exact set differs". It is still its own checkable object: the
+        # receipt holds the hashes of the row and the evidence it was written
+        # with.
+        path = row_bundle_path(run_dir=run_dir)
         path.write_text(json.dumps({"record_type": ROW_BUNDLE_RECORD_TYPE,
                                     "schema_version": 1, **bundle},
                                    ensure_ascii=False, indent=1, sort_keys=True) + "\n",

@@ -32,6 +32,7 @@ from vnext.historical_coverage import (STRUCTURAL_APPLICABILITY_METRICS,
                                        CoverageError, build_coverage_matrix,
                                        declared_metric_ids, known_result_defects)
 from vnext.historical_run_receipts import RunReceiptError, read_run_receipt
+from vnext.historical_projection import ROW_BUNDLE_NAME, row_bundle_path
 from vnext.normal_period_selection import resolve_period_selection
 
 MACYS_PERIOD = "2026-01-31"
@@ -145,7 +146,7 @@ def _write_row_bundle(run_dir, *, run_id, status, result_id, evidence_count=2,
         row = {**row, "value": "999"}
     bundle = {"record_type": "HISTORICAL_PERIOD_ROW_BUNDLE", "schema_version": 1,
               "row": row, "evidence": evidence, "receipt": receipt}
-    (Path(run_dir) / "row_receipt.json").write_text(
+    row_bundle_path(run_dir=run_dir).write_text(
         json.dumps(bundle, sort_keys=True) + "\n", encoding="utf-8")
     return bundle
 
@@ -832,7 +833,7 @@ class HistoricalCoverageTest(unittest.TestCase):
                                  metric_id="B01", period_end=MACYS_PERIOD,
                                  result_id="sha256:" + "a" * 64,
                                  row_bundle="sha256:" + "a" * 64)
-            (run_dir / "row_receipt.json").write_text("{not json", encoding="utf-8")
+            row_bundle_path(run_dir=run_dir).write_text("{not json", encoding="utf-8")
             junk = read_run_receipt(run_dir=run_dir)
         self.assertFalse(junk["public_row"]["accepted"])
         self.assertTrue(junk["public_row"]["refusal"].startswith("ROW_BUNDLE_UNREADABLE:"))
@@ -1282,6 +1283,57 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual("COVERAGE_COMPANY_SET_INVALID", str(unknown.exception))
         self.assertEqual("COVERAGE_COMPANY_SET_INVALID", str(duplicated.exception))
 
+
+
+class RowBundleLocationTest(unittest.TestCase):
+    """The receipt goes beside the run directory, and both sides agree on where.
+
+    This is the invariant a whole batch of frozen Runs was silently violating.
+    `render_historical_run(persist=True)` wrote the receipt inside the run
+    directory. The manifest's three file hashes were untouched, which was the
+    thing the code set out to protect - but a frozen Run's directory has to hold
+    exactly the artifacts its records name, and the receipt is deliberately not
+    one of them. Measured against the real store: with the receipt inside,
+    `load_frozen_run` refuses the Run with "Run validation artifact exact set
+    differs"; remove that one file and the same Run reads.
+
+    The end-to-end proof needs a real historical Run, which cannot be created in
+    this tree - it needs the registration patch the runtime tree carries - so
+    that half was measured there and is recorded in the evidence directory. What
+    is asserted here is the property that made it possible: the path is outside
+    the run directory, and the writer and the reader derive it from one
+    expression rather than two copies.
+    """
+
+    def test_the_bundle_is_not_inside_the_run_directory(self):
+        run_dir = Path("/runs/run-marriott-2025-B10")
+        path = row_bundle_path(run_dir=run_dir)
+        self.assertNotIn(run_dir, path.parents)
+        self.assertEqual(run_dir.parent, path.parent)
+        self.assertTrue(path.name.endswith(ROW_BUNDLE_NAME))
+        self.assertIn(run_dir.name, path.name,
+                      "a sibling has to say which Run it belongs to")
+
+    def test_the_writer_and_the_reader_use_the_same_expression(self):
+        """Two copies of a path disagree silently in both directions.
+
+        A reader looking in the wrong place reports no row where there is one;
+        a writer putting it in the wrong place makes the Run unreadable. So
+        this asserts they are the same object, not merely that they agree on
+        one example.
+        """
+        from vnext import historical_projection, historical_run_receipts
+        self.assertIs(historical_projection.row_bundle_path,
+                      historical_run_receipts.row_bundle_path)
+        self.assertIs(historical_projection.ROW_BUNDLE_NAME,
+                      historical_run_receipts.ROW_BUNDLE_NAME)
+
+    def test_two_runs_in_one_root_do_not_collide(self):
+        root = Path("/runs")
+        first = row_bundle_path(run_dir=root / "run-marriott-2025-B10")
+        second = row_bundle_path(run_dir=root / "run-marriott-2025-B11")
+        self.assertNotEqual(first, second)
+        self.assertEqual(root, first.parent)
 
 if __name__ == "__main__":
     unittest.main()
