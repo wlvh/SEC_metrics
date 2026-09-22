@@ -420,3 +420,67 @@ stronger one. The candidate-identity check is unchanged: editing any hashed
 file still invalidates the receipt. What changed is that restoring it is one
 command instead of five steps, so the discipline is enforceable rather than
 remembered.
+
+## Correction: failing safely is not the same as never having exposed it
+
+The section above says a failed run "restores what was installed before, byte
+for byte", and offers as evidence that the tool's first real run failed phase
+two and left the committed receipt byte-identical to `HEAD`. That observation
+is true and the restore did work. **It is not the property the build needed**,
+and an external review measured the difference.
+
+The order was: write the new receipt to the installed path, run phase two,
+restore the old bytes on failure. So between the write and the verdict there
+is a window in which the new receipt is installed and has not finished being
+checked - and `verify_offline_wiring` has no way to know that, because it
+checks file hashes and the recorded phase-one run, not whether a phase two is
+still in flight. Three states, measured:
+
+| state | observed |
+|---|---|
+| both phases pass | build succeeds; gate and `--check` accept |
+| phase two returns a failure | **the gate and `--check` accepted the new receipt before the failure was returned**; the old file was then restored |
+| the phase-two process is killed before the restore can run | **the unchecked receipt stays installed; the gate accepts it and `--check` returns `OFFLINE_WIRING_CURRENT`** |
+
+The three cases written for the restore could not see any of this: they look
+at the installed file *after* the run, and a restore makes the end state
+identical either way.
+
+**The fix is the order, and it deletes code rather than adding it.** The
+receipt is now written to a candidate path beside the installed one; phase two
+is told, by name, to check that candidate; only a pass reaches the installed
+path, through the repository's existing `atomic_write_bytes`. There is no
+backup and no restore, because there is nothing to undo: a failure or a kill
+leaves the previous bytes, or no file where there was none, without any code
+having to run to make that true. The candidate is removed in a `finally`, and
+a stray one is inert - a grant names the installed path and nothing else.
+
+Two things moved with it. The receipt-dependent cases no longer hard-code the
+installed path; they ask `_receipt_under_check()`, which reads
+`ISSUE_47_WIRING_RECEIPT_PATH` and falls back to the installed path for
+standalone runs, so phase two checks the file this run produced rather than
+the one the previous run left. And the rule that decides which classes are
+receipt-dependent now matches either spelling - asking for the receipt under
+check, or naming the installed file - with its tokens assembled outside any
+class body, because the first version spelled them inside the class doing the
+scanning and flagged itself.
+
+The injection is recorded as `INSTALL_FIRST_AND_RESTORE_AFTERWARDS`, with the
+three cases that **passed** under it named alongside the one that caught it.
+Which cases cannot tell the difference is the whole point of the one that can.
+
+## Scope of the "no test package" claim, narrowed
+
+The same review narrowed a claim in the section above. What
+`TheBusinessModuleLoadsWhereNoTestPackageExists` proves is that the module
+loads and the gate answers when `tests` cannot be imported and no test
+framework runs. It does **not** prove the module is independent of the test
+sources on disk: `REQUIRED_WIRING_EVIDENCE` names the suite file, the builder
+and the fault-injection record, and `verify_offline_wiring` refuses when any
+of them is missing, because it re-hashes each one.
+
+So the accurate statement is: **the dependency on an importable test package
+and an executable test framework is gone; the dependency on the test sources
+as read-only evidence remains, deliberately.** That is what binds a grant to a
+specific suite. Shrinking a delivery bundle until it holds no test file would
+remove the binding, not improve it, and is not being attempted.

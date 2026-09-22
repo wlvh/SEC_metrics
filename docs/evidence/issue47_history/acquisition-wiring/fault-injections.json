@@ -105,13 +105,30 @@
    "outcome": "CAUGHT",
    "round": "test-machinery-moved-out-of-the-business-module",
    "why_it_matters": "this is the previous version's actual defect - a green run over a fraction of the suite - and it is the one the verifier now has to catch without naming the cases, because naming them is unavailable where there is no test package"
+  },
+  {
+   "caught_by": [
+    "AFailedVerificationReleasesNothing.test_the_second_phase_checks_the_candidate_while_the_old_one_is_installed"
+   ],
+   "edit": "build_and_install() writes the new receipt to the installed path, tells the second phase to check that path, and restores the previous bytes if it fails - the shape the previous round shipped",
+   "id": "INSTALL_FIRST_AND_RESTORE_AFTERWARDS",
+   "outcome": "CAUGHT",
+   "round": "verify-the-candidate-before-installing-it",
+   "suite_result": "FAILED (failures=1) of 63",
+   "which_cases_could_not_tell": [
+    "AFailedVerificationReleasesNothing.test_an_existing_receipt_is_never_written_over_before_the_check_passes",
+    "AFailedVerificationReleasesNothing.test_where_there_was_none_none_is_left",
+    "AFailedVerificationReleasesNothing.test_a_first_phase_failure_never_reaches_the_file"
+   ],
+   "why_it_matters": "an external review measured what that leaves open: while the second phase runs, the gate and --check accept a receipt that has not finished being checked, and a process killed in that window leaves the unchecked artifact installed, because the restore never runs. Failing safely is not the same as never having exposed the thing",
+   "why_they_could_not": "they observe the installed file after the run, and a restore puts it back, so the end state is identical. Only a case that looks at the installed file *while* the second phase is running separates the two orders - which is why the review's finding was invisible to the three cases written for it"
   }
  ],
- "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. One injection is run differently and says so: its catching cases are in phase two, so the whole builder was run against the injected tree.",
+ "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",
  "production_authorized": false,
  "real_sec_credit": false,
  "record_type": "ISSUE_47_ACQUISITION_FAULT_INJECTIONS",
  "schema_version": 1,
- "what_this_does_not_establish": "That the suite catches defects it has no case for. Of the nine injections, three were designed against cases that already existed and the third of the first round found that a case was missing and is recorded with its first, passing run. Nor does any of them establish that a builder corrupted and then re-run cannot produce a smaller receipt that is self-consistent: what the hashes establish is that the artifact on disk corresponds to this builder and this suite.",
+ "what_this_does_not_establish": "That the suite catches defects it has no case for. Of the ten injections, three were designed against cases that already existed and the third of the first round found that a case was missing and is recorded with its first, passing run. Nor does any of them establish that a builder corrupted and then re-run cannot produce a smaller receipt that is self-consistent: what the hashes establish is that the artifact on disk corresponds to this builder and this suite.",
  "why_this_is_a_file_and_not_a_boolean": "A fault injection means editing the source and re-running the suite. The receipt builder runs in one process against one tree, so it cannot perform one, and a builder that writes fault_injections_caught: true regardless is asserting something it did not observe. This records what was actually run, so the claim can be checked rather than believed."
 }

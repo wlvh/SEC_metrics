@@ -48,6 +48,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 # is no test package at all, which is asserted from the suite itself.
 sys.path.insert(0, str(ROOT))
 
+from vnext.canonical import atomic_write_bytes  # noqa: E402 - path set above
 from vnext.historical_sec_session import (  # noqa: E402 - path set above
     REQUIRED_WIRING_EVIDENCE, execute_recorded_chain, seal_wiring_receipt,
     verify_offline_wiring)
@@ -55,6 +56,15 @@ from vnext.historical_sec_session import (  # noqa: E402 - path set above
 SUITE_MODULE = "tests.vnext.test_historical_sec_session"
 RECEIPT_PATH = ("docs/evidence/issue47_history/acquisition-wiring/"
                 "offline-wiring-receipt.json")
+# Where the candidate sits while it is being checked. It has to be inside the
+# repository because the gate resolves paths against the repository root, and
+# it must not be the installed path: an artifact at any other path confers
+# nothing, because a grant names the installed path and nothing else.
+CANDIDATE_PREFIX = "_candidate-"
+# How the second phase is told which file to check. A committed default would
+# mean the cases read whatever is already installed, which is the one file the
+# run has not produced.
+RECEIPT_PATH_VARIABLE = "ISSUE_47_WIRING_RECEIPT_PATH"
 # The one list that cannot be derived, and the reason it is a list: these
 # classes read the receipt this run produces, so running them before it exists
 # would fail: before the install there is either no receipt or a receipt for
@@ -114,20 +124,25 @@ def split_cases(*, declared, receipt_dependent=RECEIPT_DEPENDENT):
     return first, sorted(set(receipt_dependent))
 
 
-def run_cases(names):
+def run_cases(names, *, receipt_path=None):
     """Run the named cases in a fresh process and report what happened.
 
     A subprocess rather than an in-process loader: it is the same command a
     person runs, it starts from the repository root so the test package is
     importable, and it cannot be influenced by whatever this process has
-    already imported - including, in phase two, a receipt this process read
-    before installing a new one.
+    already imported.
+
+    ``receipt_path`` names the file the receipt-reading cases must check. In
+    phase two that is this run's candidate, never the installed artifact:
+    checking the installed one would answer a question about the previous run.
     """
     selectors = [SUITE_MODULE + "." + name for name in names]
+    environment = {**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}
+    if receipt_path is not None:
+        environment[RECEIPT_PATH_VARIABLE] = receipt_path
     done = subprocess.run([sys.executable, "-m", "unittest", *selectors],
                           cwd=str(ROOT), capture_output=True, encoding="utf-8",
-                          env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
-                          timeout=3600)
+                          env=environment, timeout=3600)
     tail = (done.stderr or "") + (done.stdout or "")
     ran = re.search(r"^Ran (\d+) tests?", tail, re.MULTILINE)
     failures = re.search(r"failures=(\d+)", tail)
@@ -172,38 +187,46 @@ def _write(path, receipt):
 
 def build_and_install(*, receipt_path=RECEIPT_PATH, runner=run_cases,
                       collector=declared_cases):
-    """The one operation: build, install, then verify against what is installed.
+    """The one operation: build, check the candidate, then install it.
 
-    Phase two has to read the installed file, so the install happens before it
-    passes. What makes that safe is the restore: if phase two fails, or raises,
-    whatever was installed before is put back byte for byte and the failure
-    propagates. So a failed run never leaves a new artifact, and never damages
-    the old one either.
+    The order is load-bearing. An earlier version installed first and restored
+    the previous bytes if the second phase failed, which left a window where
+    the gate and ``--check`` accepted a receipt that was still being checked -
+    and a process killed inside that window left the unchecked artifact in
+    place, because the code that would have put the old one back never ran.
+    An external review measured all three cases.
+
+    So nothing is written to the installed path until every check has passed.
+    The candidate lives beside it under a different name, the second phase is
+    told to check that name, and the install is one atomic replacement. A
+    failure or a kill leaves the previous bytes, or no file where there was
+    none, without any code having to run to make that true.
     """
     receipt = build(runner=runner, collector=collector)
     target = ROOT / receipt_path
-    prior = target.read_bytes() if target.exists() else None
+    replaced = target.exists()
+    candidate_relative = receipt_path.rsplit("/", 1)[0] + "/" + CANDIDATE_PREFIX \
+        + receipt_path.rsplit("/", 1)[1]
+    candidate = ROOT / candidate_relative
     try:
-        # Inside the try, not before it: write_text truncates first, so a
-        # failure part-way through leaves a shorter file, and that is exactly
-        # the state the restore below exists to undo.
-        _write(target, receipt)
-        outcome = runner(list(receipt["verification_run"]["classes_excluded"]))
+        _write(candidate, receipt)
+        outcome = runner(list(receipt["verification_run"]["classes_excluded"]),
+                         receipt_path=candidate_relative)
         if not outcome["passed"]:
             raise WiringBuildError("ISSUE_47_WIRING_SECOND_PHASE_DID_NOT_PASS:"
                                    + outcome.get("tail", "")[-1200:])
-    except BaseException:
-        if prior is None:
-            target.unlink(missing_ok=True)
-        else:
-            target.write_bytes(prior)
-        raise
+        atomic_write_bytes(path=target, content=candidate.read_bytes())
+    finally:
+        # A stray candidate is inert - no grant names it - but leaving one
+        # behind would show up as an untracked file and read like an artifact.
+        candidate.unlink(missing_ok=True)
     return {"status": "OFFLINE_WIRING_VERIFIED", "calls": receipt["calls"],
             "receipt_path": receipt_path, "receipt_id": receipt["receipt_id"],
-            "replaced_an_existing_receipt": prior is not None,
+            "replaced_an_existing_receipt": replaced,
+            "checked_before_install_at": candidate_relative,
             "classes_declared": len(receipt["verification_run"]["classes_declared"]),
             "tests_run_before_install": receipt["verification_run"]["tests_run"],
-            "tests_run_against_the_installed_receipt": outcome["tests_run"],
+            "tests_run_against_the_candidate": outcome["tests_run"],
             "evidence_files": len(REQUIRED_WIRING_EVIDENCE)}
 
 

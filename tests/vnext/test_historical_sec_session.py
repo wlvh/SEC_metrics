@@ -20,6 +20,7 @@ import hashlib
 import importlib.util
 import inspect
 import json
+import os
 import shutil
 import socket
 import subprocess
@@ -57,6 +58,26 @@ def _load_tool(name, relative):
 # The build side. Tests may import it; the business module may not, which is
 # the whole point of it living here.
 WIRING = _load_tool("vnext_historical_wiring", "tools/vnext_historical_wiring.py")
+
+
+def _receipt_under_check():
+    """Which receipt this run is asking about.
+
+    The builder produces a candidate, checks it, and only then installs it, so
+    it points these cases at the candidate by name. A hard-coded default would
+    make them answer about the file already on disk - the one file the run did
+    not produce - which is how an unchecked artifact came to be accepted while
+    it was still being checked. Standalone runs still get the installed path.
+    """
+    return os.environ.get(WIRING.RECEIPT_PATH_VARIABLE, WIRING.RECEIPT_PATH)
+
+
+# How "this class reads the receipt the run produces" is detected, assembled
+# out here rather than inside the class that scans with it: a scanner whose
+# own body spells its tokens matches itself, which is exactly how the first
+# version of that check flagged the class doing the scanning.
+RECEIPT_READER_TOKENS = ("_receipt_under_check" + "()",
+                         WIRING.RECEIPT_PATH.rsplit("/", 1)[1])
 
 # A declared Marriott dependency: the prior annual primary accession index that
 # B02 reads. Taken from the planner's own output, not written by hand.
@@ -346,7 +367,8 @@ class AGrantMustBindToAWiringReceiptThatIsStillTrue(unittest.TestCase):
     no longer the one that would run.
     """
 
-    RECEIPT = "docs/evidence/issue47_history/acquisition-wiring/offline-wiring-receipt.json"
+    def setUp(self):
+        self.RECEIPT = _receipt_under_check()
 
     def test_the_committed_receipt_verifies_against_the_current_tree(self):
         receipt = verify_offline_wiring(receipt_path=self.RECEIPT)
@@ -761,7 +783,8 @@ class BelongingToTheTaskIsNotNeedingAFetch(unittest.TestCase):
 class DeletingEvidenceMustNotReduceTheCheck(unittest.TestCase):
     """Reproduced: a receipt carrying ``evidence: {}`` was accepted."""
 
-    RECEIPT = "docs/evidence/issue47_history/acquisition-wiring/offline-wiring-receipt.json"
+    def setUp(self):
+        self.RECEIPT = _receipt_under_check()
 
     def _write(self, receipt, name):
         relative = "docs/evidence/issue47_history/acquisition-wiring/" + name
@@ -1111,10 +1134,12 @@ class TheSuiteIsReadNotListed(unittest.TestCase):
         # phase one, makes the artifact unrebuildable after any change to the
         # tree - because phase one runs before the new receipt is installed.
         module = importlib.import_module(WIRING.SUITE_MODULE)
-        installed = WIRING.RECEIPT_PATH.rsplit("/", 1)[1]
         reads = {name for name in WIRING.declared_cases()
-                 if installed in inspect.getsource(getattr(module, name))}
-        self.assertEqual(set(WIRING.RECEIPT_DEPENDENT), reads)
+                 if any(token in inspect.getsource(getattr(module, name))
+                        for token in RECEIPT_READER_TOKENS)}
+        self.assertEqual(set(WIRING.RECEIPT_DEPENDENT), reads,
+                         "both spellings count: asking for the receipt under "
+                         "check, and naming the installed file directly")
 
     def test_an_exclusion_naming_no_case_is_refused(self):
         # Renaming an excluded class would otherwise shrink the exclusion set
@@ -1159,8 +1184,7 @@ print(json.dumps({"test_package_importable": False,
 """
 
     def test_the_gate_still_answers_with_no_tests_directory_on_the_path(self):
-        receipt_path = ("docs/evidence/issue47_history/acquisition-wiring/"
-                        "offline-wiring-receipt.json")
+        receipt_path = _receipt_under_check()
         scratch = Path(tempfile.mkdtemp(prefix="issue47-delivery-"))
         self.addCleanup(shutil.rmtree, scratch, ignore_errors=True)
         script = scratch / "delivery.py"
@@ -1179,25 +1203,31 @@ print(json.dumps({"test_package_importable": False,
 
 
 class AFailedVerificationReleasesNothing(unittest.TestCase):
-    """One operation: a run that does not pass must leave no usable artifact.
+    """One operation: nothing reaches the installed path until it has passed.
 
-    The second phase has to read the installed file, so the install happens
-    before it passes. What makes that safe is the restore, and a restore is
-    exactly the kind of code that is written once and never exercised. Both
-    directions are asserted: an existing artifact comes back byte for byte,
-    and where there was none, none is left.
+    An earlier version installed first and put the previous bytes back if the
+    second phase failed. An external review measured what that left open: in
+    the window between the write and the verdict, the gate and ``--check``
+    accepted a receipt that was still being checked, and a process killed in
+    that window left the unchecked artifact installed, because the code that
+    would have restored the old one never ran.
+
+    So the order is the fix, not a bigger restore. The candidate is written
+    beside the installed path, the second phase is told to check that name,
+    and only a pass reaches the installed path - atomically. A kill needs no
+    code to run in order to leave the previous bytes in place.
     """
 
     PHASE_ONE = {"tests_run": 7, "failures": 0, "errors": 0,
                  "return_code": 0, "passed": True, "tail": ""}
-    PHASE_TWO = {"tests_run": 0, "failures": 1, "errors": 0,
-                 "return_code": 1, "passed": False, "tail": "phase two said no"}
+    PHASE_TWO_FAILS = {"tests_run": 0, "failures": 1, "errors": 0,
+                       "return_code": 1, "passed": False, "tail": "phase two said no"}
 
     def _runner(self):
-        outcomes = [self.PHASE_ONE, self.PHASE_TWO]
+        outcomes = [self.PHASE_ONE, self.PHASE_TWO_FAILS]
 
-        def runner(names):
-            self.calls.append(list(names))
+        def runner(names, *, receipt_path=None):
+            self.calls.append({"names": list(names), "receipt_path": receipt_path})
             return outcomes[len(self.calls) - 1]
 
         self.calls = []
@@ -1205,40 +1235,77 @@ class AFailedVerificationReleasesNothing(unittest.TestCase):
 
     def _scratch_receipt_path(self, name):
         relative = "docs/evidence/issue47_history/acquisition-wiring/" + name
+        candidate = relative.rsplit("/", 1)[0] + "/" + WIRING.CANDIDATE_PREFIX + name
         self.addCleanup((ROOT / relative).unlink, missing_ok=True)
-        return relative
+        self.addCleanup((ROOT / candidate).unlink, missing_ok=True)
+        return relative, candidate
 
-    def test_an_existing_receipt_is_restored_byte_for_byte(self):
-        relative = self._scratch_receipt_path("_prior.json")
+    def test_an_existing_receipt_is_never_written_over_before_the_check_passes(self):
+        relative, candidate = self._scratch_receipt_path("_prior.json")
         before = b'{"this": "is the receipt that was already installed"}\n'
         (ROOT / relative).write_bytes(before)
         with self.assertRaises(WIRING.WiringBuildError) as caught:
             WIRING.build_and_install(receipt_path=relative, runner=self._runner())
         self.assertIn("ISSUE_47_WIRING_SECOND_PHASE_DID_NOT_PASS", str(caught.exception))
         self.assertEqual(before, (ROOT / relative).read_bytes())
+        self.assertFalse((ROOT / candidate).exists(), "the candidate is cleaned up")
         self.assertEqual(2, len(self.calls), "both phases must have been reached")
 
     def test_where_there_was_none_none_is_left(self):
-        relative = self._scratch_receipt_path("_fresh.json")
+        relative, candidate = self._scratch_receipt_path("_fresh.json")
         self.assertFalse((ROOT / relative).exists())
         with self.assertRaises(WIRING.WiringBuildError):
             WIRING.build_and_install(receipt_path=relative, runner=self._runner())
         self.assertFalse((ROOT / relative).exists(),
                          "a failed run must not release an artifact")
+        self.assertFalse((ROOT / candidate).exists())
 
     def test_a_first_phase_failure_never_reaches_the_file(self):
-        relative = self._scratch_receipt_path("_neverwritten.json")
+        relative, candidate = self._scratch_receipt_path("_neverwritten.json")
         self.calls = []
 
-        def runner(names):
-            self.calls.append(list(names))
-            return self.PHASE_TWO
+        def runner(names, *, receipt_path=None):
+            self.calls.append({"names": list(names), "receipt_path": receipt_path})
+            return self.PHASE_TWO_FAILS
 
         with self.assertRaises(WIRING.WiringBuildError) as caught:
             WIRING.build_and_install(receipt_path=relative, runner=runner)
         self.assertIn("ISSUE_47_WIRING_FIRST_PHASE_DID_NOT_PASS", str(caught.exception))
         self.assertEqual(1, len(self.calls))
         self.assertFalse((ROOT / relative).exists())
+        self.assertFalse((ROOT / candidate).exists())
+
+    def test_the_second_phase_checks_the_candidate_while_the_old_one_is_installed(self):
+        # Load-bearing, and the case an implementation that installs first and
+        # restores afterwards cannot pass: at the moment the second phase
+        # runs, the path it was handed must exist, must not be the installed
+        # path, and the installed path must still hold the previous bytes.
+        relative, candidate = self._scratch_receipt_path("_ordering.json")
+        before = b'{"installed": "before this run"}\n'
+        (ROOT / relative).write_bytes(before)
+        seen = {}
+
+        def runner(names, *, receipt_path=None):
+            self.calls.append({"names": list(names), "receipt_path": receipt_path})
+            if len(self.calls) == 1:
+                return self.PHASE_ONE
+            seen["receipt_path"] = receipt_path
+            seen["candidate_bytes"] = (ROOT / receipt_path).read_bytes()
+            seen["installed_bytes"] = (ROOT / relative).read_bytes()
+            return {**self.PHASE_ONE, "tests_run": 3}
+
+        self.calls = []
+        summary = WIRING.build_and_install(receipt_path=relative, runner=runner)
+        self.assertEqual(candidate, seen["receipt_path"])
+        self.assertNotEqual(relative, seen["receipt_path"])
+        self.assertEqual(before, seen["installed_bytes"],
+                         "the installed receipt must still be the previous one "
+                         "while its replacement is being checked")
+        # And only then does the checked candidate become the installed file.
+        self.assertEqual(seen["candidate_bytes"], (ROOT / relative).read_bytes())
+        self.assertEqual(summary["receipt_id"],
+                         json.loads(seen["candidate_bytes"])["receipt_id"])
+        self.assertFalse((ROOT / candidate).exists())
 
 
 class TheApprovalAuthorityCannotComeFromTheFileBeingVerified(unittest.TestCase):
