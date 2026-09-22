@@ -1328,6 +1328,29 @@ class RowBundleLocationTest(unittest.TestCase):
         self.assertIs(historical_projection.ROW_BUNDLE_NAME,
                       historical_run_receipts.ROW_BUNDLE_NAME)
 
+    def test_a_root_of_directories_with_no_run_is_reported_not_empty(self):
+        """"I looked in the wrong place" is not an absence.
+
+        The batch writes `<root>/<period>/run-<period>-<metric>` and the scan
+        is one level. Pointing the coverage report at that root found nothing
+        and reported every position as having a route and never having been
+        run - with 372 Runs sitting one level below. The report was not wrong
+        about what it saw; it was wrong to call what it saw an absence.
+
+        An empty root is still empty: nothing was skipped there, so there is
+        nothing to report.
+        """
+        from vnext.historical_run_receipts import collect_run_receipts
+        with TemporaryDirectory(prefix="coverage-nested-") as temporary:
+            root = Path(temporary)
+            (root / "marriott-2025" / "run-marriott-2025-B10").mkdir(parents=True)
+            with self.assertRaises(Exception) as refused:
+                collect_run_receipts(runs_root=root)
+        self.assertIn("RUN_RECEIPT_ROOT_HOLDS_NO_RUNS", str(refused.exception))
+        with TemporaryDirectory(prefix="coverage-empty-") as temporary:
+            self.assertEqual({"receipts": [], "unreadable": []},
+                             collect_run_receipts(runs_root=Path(temporary)))
+
     def test_two_runs_in_one_root_do_not_collide(self):
         root = Path("/runs")
         first = row_bundle_path(run_dir=root / "run-marriott-2025-B10")

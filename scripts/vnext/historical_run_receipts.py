@@ -256,9 +256,11 @@ def collect_run_receipts(*, runs_root: Path):
     _need(runs_root.is_dir() and not runs_root.is_symlink(),
           "RUN_RECEIPT_ROOT_INVALID:" + str(runs_root))
     receipts, unreadable = [], []
+    directories = 0
     for child in sorted(runs_root.iterdir()):
         if not child.is_dir() or child.is_symlink():
             continue
+        directories += 1
         try:
             receipt = read_run_receipt(run_dir=child)
         except RunReceiptError as refusal:
@@ -276,6 +278,15 @@ def collect_run_receipts(*, runs_root: Path):
             continue
         if receipt is not None:
             receipts.append(receipt)
+    # A root full of directories and no Run is reported, not returned empty.
+    # Measured: a batch writes `<root>/<period>/run-<period>-<metric>`, the scan
+    # is one level, and pointing the report at that root found nothing - so
+    # every position read as "has a route and was never run" when 372 Runs
+    # existed one level down. An absence has to be established before it is
+    # reported as a fact, and "I looked in the wrong place" is not an absence.
+    _need(not directories or receipts or unreadable,
+          "RUN_RECEIPT_ROOT_HOLDS_NO_RUNS:" + str(directories)
+          + " directories, none carrying a manifest: " + str(runs_root))
     return {"receipts": receipts, "unreadable": unreadable}
 
 
