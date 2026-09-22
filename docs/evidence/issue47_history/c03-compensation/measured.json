@@ -1,0 +1,51 @@
+{
+ "fault_injections": [
+  {
+   "caught_by": [
+    "test_an_earlier_period_names_the_proxy_it_could_not_read",
+    "test_the_pinned_proxy_is_not_the_one_the_current_period_uses"
+   ],
+   "id": "TAKE_THE_LATEST_PROXY_INSTEAD_OF_THE_PINNED_ONE",
+   "note": "under it an earlier period produces a value, from a proxy that reports a different year",
+   "outcome": "CAUGHT"
+  },
+  {
+   "caught_by": [
+    "test_the_current_period_matches_the_ordinary_route_stage_for_stage",
+    "test_the_two_companies_are_answered_by_different_stages"
+   ],
+   "id": "CARRY_ONLY_THE_PROXY_STAGE",
+   "outcome": "CAUGHT"
+  }
+ ],
+ "measured_current_period": {
+  "companies_compared": 10,
+  "matching_quality_reason_value_and_stage": 9,
+  "not_compared": {
+   "jpmorgan_chase": "period selection refuses with ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT, the shard re-partition already named in the acquisition plan. Not introduced here."
+  },
+  "stage_split": {
+   "C03_peo_total_compensation.md": 8,
+   "C03_reported_compensation_v2.md": 1
+  }
+ },
+ "measured_earlier_periods": {
+  "all_filed_in": 2026,
+  "consequence": "Only the current period delivers. An earlier period selects the proxy that first reported it - listed in submissions, not saved here - and the failure names that exact URL rather than falling back to the saved one. Marriott FY2024 selects 0001140361-25-010600 and reports C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND.",
+  "saved_proxies_per_company": 1,
+  "this_is_a_source_gap": "Wiring and delivering are two things. This is the first; the four earlier years per company need the proxies, which are class A of the acquisition plan."
+ },
+ "production_authorized": false,
+ "real_sec_credit": false,
+ "record_type": "ISSUE_47_C03_HISTORICAL_ROUTE",
+ "the_proxy_is_pinned_not_latest": "The frozen selector takes the latest DEF 14A, which is the right filing when the pinned period is the current one. The successor takes the earliest DEF 14A filed after the pinned period ended, which is the same filing for the current period - asserted against the ordinary route, not assumed - and a different one for every earlier period. Taking the latest would read a later proxy's restatement as an earlier year's first report.",
+ "two_tests_this_round_had_to_rewrite": "test_an_unwired_governance_metric_is_refused_by_name used C03 as its example and now uses C02, which is ai_text and genuinely unwired. Two coverage cases asserted the refusals the previous commit's successor ports had already replaced - they were red before this change and are rewritten to the states those routes now produce, four at one period rather than three.",
+ "what_it_is": "CEO pay for a pinned annual period. Like B06 it is a cascade, not one reader: the annual-meeting proxy's pay-versus-performance facts first, the annual report's own compensation table second, and the stage that answers decides which Spec the Result is under.",
+ "what_this_does_not_establish": [
+  "Delivery beyond the current period, which needs the earlier proxies.",
+  "Content acceptance of any value: a frozen Run says the route computed something under bytes it bound, not that the number is right.",
+  "Anything about C02, which reads the proxy as text and needs a model call this route does not make."
+ ],
+ "why_both_stages": "Measured across the ten companies on the ordinary route: nine are answered by the proxy stage and one - Paramount - by the compensation table. A route carrying only the first would give that company the first stage's answer, confidently and wrongly.",
+ "wired_historical_metrics": 26
+}

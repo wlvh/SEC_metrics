@@ -72,7 +72,14 @@ WIRED_TEXT_METRICS = ("D02",)
 # annual chain and the fiscal window's 8-K item index - so what it needed was
 # the selection between them, not a new reader. It delivers where the
 # accession material is saved and names a source gap where it is not.
-WIRED_GOVERNANCE_METRICS = ("C04",)
+# CEO pay is the other one this route answers. Like B06 it is a cascade - the
+# annual-meeting proxy's pay-versus-performance facts first, the annual
+# report's own compensation table second - and one of this repository's ten
+# companies is answered by the second stage, so carrying only the first would
+# give that company the first stage's answer. The proxy is pinned to the
+# period rather than taken as the latest, which is what keeps a later proxy's
+# restatement out of an earlier year.
+WIRED_GOVERNANCE_METRICS = ("C03", "C04")
 # Debt over equity. Its ordinary route is a seven-stage cascade, not one
 # reader, and the stage that answers decides which Spec the Result is under.
 # All seven are wired or none: a period that reaches a later stage would

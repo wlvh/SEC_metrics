@@ -58,11 +58,11 @@ def select_historical_governance_metadata(*, prepared: Mapping, history: Mapping
             for the filing the period selection pinned.
 
     Returns:
-        The same keys the frozen selector returns for the roles C04 reads, with
-        ``selected_by`` naming how each was chosen. The proxy roles are absent
-        rather than empty: C03 reads the annual meeting DEF 14A and this does
-        not resolve it, so returning an empty proxy set would read as "there is
-        no proxy" instead of "this does not answer that".
+        The same keys the frozen selector returns for the roles C04 and C03
+        read, with ``selected_by`` naming how each was chosen. The proxy role
+        is pinned rather than latest, and its absence is named - a period with
+        no proxy after it in the loaded blocks says so, which is a different
+        fact from a company that files none.
 
     Raises:
         HistoricalGovernanceError: When the pinned annual report is not in the
@@ -88,6 +88,22 @@ def select_historical_governance_metadata(*, prepared: Mapping, history: Mapping
                                and prior_end and row["reportDate"] == prior_end])
     events = [row for row in rows if row["form"] in _EVENT_FORMS
               and period["period_start"] <= row["filingDate"] <= period["period_end"]]
+    # The annual-meeting proxy that reports this period's compensation is the
+    # first one filed after the period ended. The frozen selector takes the
+    # latest proxy there is, which is the same filing when the pinned period
+    # is the current one - and that equality is asserted rather than assumed,
+    # by comparing the two routes' answers for the current period. Amendments
+    # belong to the proxy they follow, so they stop at the next one.
+    proxies = sorted([row for row in rows if row["form"] == "DEF 14A"],
+                     key=lambda row: (row["filingDate"], row["accessionNumber"]))
+    after = [row for row in proxies if row["filingDate"] > period["period_end"]]
+    proxy = after[0] if after else None
+    following = [row for row in proxies
+                 if proxy is not None and row["filingDate"] > proxy["filingDate"]]
+    proxy_amendments = _order([
+        row for row in rows if row["form"] == "DEF 14A/A" and proxy is not None
+        and row["filingDate"] >= proxy["filingDate"]
+        and (not following or row["filingDate"] < following[0]["filingDate"])])
     return {"record_type": RECORD_TYPE, "schema_version": 1,
             "pinned_period": {"period_start": period["period_start"],
                               "period_end": period["period_end"],
@@ -101,8 +117,12 @@ def select_historical_governance_metadata(*, prepared: Mapping, history: Mapping
                              else "NO_SAME_CIK_PRIOR_IN_LOADED_BLOCKS"),
             "events": sorted(events, key=lambda row: (row["filingDate"],
                                                       row["accessionNumber"])),
+            "pinned_def14a": proxy, "def14a_amendments": proxy_amendments,
+            "def14a_status": ("EARLIEST_SAME_CIK_DEF14A_AFTER_THE_PINNED_PERIOD" if proxy
+                              else "NO_SAME_CIK_DEF14A_AFTER_THE_PINNED_PERIOD_IN_LOADED_BLOCKS"),
             "selected_by": {"annual": "PINNED_PERIOD_END_EQUALITY",
                             "prior": "GREATEST_ANNUAL_REPORT_END_BEFORE_THE_PINNED_ONE",
-                            "events": "FILING_DATE_INSIDE_THE_PINNED_PERIOD"},
+                            "events": "FILING_DATE_INSIDE_THE_PINNED_PERIOD",
+                            "def14a": "EARLIEST_FILING_DATE_AFTER_THE_PINNED_PERIOD_END"},
             "loaded_blocks": sorted(history["loaded_inventories"]),
             "value_taken_from_any_filing": False}

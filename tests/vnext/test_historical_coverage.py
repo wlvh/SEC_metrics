@@ -1159,24 +1159,31 @@ class HistoricalCoverageTest(unittest.TestCase):
                 read_run_receipt(run_dir=run_dir)
         self.assertEqual("RUN_RECEIPT_FILE_CHANGED:records.jsonl", str(changed.exception))
 
-    def test_three_routes_at_one_amended_period_give_three_different_answers(self):
-        """Adapters fail separately because they answer separate questions.
+    def test_four_routes_at_one_amended_period_give_four_different_answers(self):
+        """Adapters answer separately because they answer separate questions.
 
         Paramount's most recent annual period carries a 10-K/A that adds Part
         III and says it changes nothing else. The approved policy reads that as
-        clearing the fiscal-event window and not the original statement values,
-        so the statement routes are refused by policy and name which class was
-        not cleared. The event route is cleared by that same amendment,
-        resolves over the widened successor window, and withholds on a named
-        missing predecessor document. The instant-fact route reads the selected
-        filing's own inline XBRL and succeeds. One period, three answers, three
-        reasons - a policy refusal, a source gap and a value.
+        clearing the fiscal-event window and not the original statement values.
+        Four answers come out of one period:
 
-        Written against Southwest until the amendment policy was wired, where
-        it asserted two refusals that the policy then correctly stopped making;
-        that version went on asserting them and was red at HEAD. The property
-        lives in the resolvers, so it is asserted by calling them, not by
-        making the report run them.
+        * Company Facts refuses the statement-class metrics by policy, per
+          metric and by name, and resolves the ones this company's traits
+          exclude - because structural applicability is prior to the amendment
+          question and a metric that reads no input cannot have an input class
+          in doubt.
+        * Revenue resolves through the approved current-income proof, which
+          carries its own amendment check, and reports NOT_MEANINGFUL because
+          the successor's first period is 146 days.
+        * The event route is cleared by the same amendment, resolves over the
+          widened successor window, and withholds on a named missing
+          predecessor document - a source gap.
+        * The instant-fact route reads the selected filing's own inline XBRL
+          and succeeds.
+
+        This asserted two raised refusals until those two routes were wired;
+        the property is the separation, not the particular failures, so it now
+        asserts the four states they actually produce.
         """
         from vnext.historical_accession_results import resolve_historical_accession_metrics
         from vnext.historical_results import resolve_historical_companyfacts_metrics
@@ -1187,13 +1194,12 @@ class HistoricalCoverageTest(unittest.TestCase):
         with original_sources_only():
             selection = resolve_period_selection(repo_root=ROOT, company_id=company,
                                                  report_end="2025-12-31")
-            with self.assertRaises(ValueError) as facts:
-                resolve_historical_companyfacts_metrics(repo_root=ROOT, company_id=company,
+            facts = resolve_historical_companyfacts_metrics(repo_root=ROOT,
+                                                            company_id=company,
+                                                            period_selection=selection)
+            revenue = resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=company,
+                                                        metric_id="B01",
                                                         period_selection=selection)
-            with self.assertRaises(ValueError) as revenue:
-                resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=company,
-                                                  metric_id="B01",
-                                                  period_selection=selection)
             event = resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=company,
                                                       metric_id="C01",
                                                       period_selection=selection)
@@ -1203,12 +1209,31 @@ class HistoricalCoverageTest(unittest.TestCase):
         refused_class = ("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED:"
                          "ORIGINAL_STATEMENT_VALUES:"
                          "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS")
-        self.assertEqual(refused_class, str(facts.exception))
-        self.assertEqual(refused_class, str(revenue.exception))
-        # The same amendment clears the event window, so the event route is not
-        # refused by policy at all. It resolves, reads the registered CIKs over
-        # the widened window, and withholds on a named missing document - a
-        # source gap, which is a third state again and not either refusal.
+        applicable = {key: value for key, value in facts["metrics"].items()
+                      if value["result"]["applicability"] == "APPLICABLE"}
+        structural = {key: value for key, value in facts["metrics"].items()
+                      if value["result"]["applicability"] == "N_A_STRUCTURAL"}
+        self.assertTrue(applicable and structural,
+                        "the same period has to show both, or the ordering is untested")
+        for key, value in applicable.items():
+            with self.subTest(key):
+                self.assertEqual("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+                                 value["result"]["reason_code"])
+                self.assertEqual("APPROVED_AMENDMENT_POLICY_REFUSAL",
+                                 value["selection"]["category"])
+                self.assertEqual(refused_class,
+                                 value["selection"]["amendment_policy_decision"])
+        for key, value in structural.items():
+            with self.subTest(key):
+                self.assertEqual("TRAIT_NOT_APPLICABLE", value["result"]["reason_code"])
+        # A second state: an approved proof, its own amendment check, and an
+        # answer that is a judgement about the period rather than a refusal.
+        self.assertEqual("NOT_MEANINGFUL", revenue["result"]["quality"])
+        self.assertEqual("ANNUAL_DURATION_OUT_OF_RANGE", revenue["result"]["reason_code"])
+        self.assertEqual("CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES",
+                         revenue["input_binding"]["amendment_input"]["input_class"])
+        # A third: the same amendment clears the event window, so this route is
+        # not refused by policy at all and withholds on a named missing file.
         self.assertEqual("HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
                          event["result"]["reason_code"])
         self.assertEqual("SOURCE_UNAVAILABLE", event["selection"]["category"])
@@ -1216,6 +1241,7 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual({"fiscal_year": 2025, "period_start": "2024-01-01",
                           "period_end": "2025-12-31"},
                          event["input_binding"]["registered_event_scope"]["window"])
+        # And a fourth: a value.
         self.assertTrue(instants["metrics"])
 
     def test_an_exhibit_link_correction_clears_both_input_classes(self):
@@ -1489,7 +1515,13 @@ class PastAttemptAndPresentDiagnosisAreSeparateTest(unittest.TestCase):
                       diagnosis["what_this_cannot_say"])
 
     def test_no_record_says_unproven_rather_than_never_attempted(self):
-        """B01 is declined today, and that is not a statement about the past."""
+        """What the route says today is not a statement about the past.
+
+        B01 was declined here until the successor income proof was wired and
+        now it prepares the position. Either way the report says UNPROVEN,
+        because it is answering a different question - whether this position
+        was ever attempted - and it does not borrow the diagnosis to answer it.
+        """
         from vnext.historical_route_refusal import diagnose_route
         row = self._rows()["B01"]
         self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", row["status"])
@@ -1500,9 +1532,12 @@ class PastAttemptAndPresentDiagnosisAreSeparateTest(unittest.TestCase):
                                                  report_end=self.PERIOD)
             diagnosis = diagnose_route(repo_root=ROOT, company_id=self.COMPANY,
                                        metric_id="B01", period_selection=selection)
-        self.assertEqual("ROUTE_DECLINED", diagnosis["outcome"])
-        # Declined now, unproven then. The report does not borrow the diagnosis.
+        self.assertIn(diagnosis["outcome"],
+                      {"ROUTE_DECLINED", "ROUTE_PREPARED_THE_POSITION"})
+        self.assertNotEqual("PROGRAM_FAULT", diagnosis["outcome"])
+        # Whatever today's answer is, the report does not take it as history.
         self.assertNotIn("DECLINED", row["status"])
+        self.assertNotIn("PREPARED", row["status"])
 
     def test_a_record_cannot_confer_run_status(self):
         """Only a verified receipt does. A record claiming one is not one."""

@@ -90,17 +90,19 @@ class HistoricalGovernanceResultsTest(unittest.TestCase):
         self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, prepared["calls"])
 
     def test_an_unwired_governance_metric_is_refused_by_name(self):
-        """C03 reads the annual meeting proxy and is not wired here.
+        """C03 used to be the example here; now C02 is, and for a real reason.
 
-        Answering for it would be inventing a route, and the refusal names the
-        metric so the frame reports a gap rather than a silence.
+        C02 reads the proxy as text and its source strategy is ``ai_text``, so
+        it needs a model call this route does not make. Answering for it would
+        be inventing a route, and the refusal names the metric so the frame
+        reports a gap rather than a silence.
         """
         with original_sources_only():
             selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
                                                  report_end=DELIVERS)
             with self.assertRaises(HistoricalGovernanceError) as refused:
                 resolve_historical_governance_metric(
-                    repo_root=ROOT, company_id=MARRIOTT, metric_id="C03",
+                    repo_root=ROOT, company_id=MARRIOTT, metric_id="C02",
                     period_selection=selection)
         self.assertTrue(str(refused.exception).startswith(
             "HISTORICAL_GOVERNANCE_METRIC_NOT_WIRED:"))
@@ -108,3 +110,89 @@ class HistoricalGovernanceResultsTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+PARAMOUNT = "paramount_skydance_paramount_global"
+PARAMOUNT_PERIOD = "2025-12-31"
+
+
+def _resolve_c03(company_id, report_end):
+    with original_sources_only():
+        selection = resolve_period_selection(repo_root=ROOT, company_id=company_id,
+                                             report_end=report_end)
+        return resolve_historical_governance_metric(
+            repo_root=ROOT, company_id=company_id, metric_id="C03",
+            period_selection=selection)
+
+
+def _ordinary_c03(company_id):
+    from vnext.normal_candidates import _governance_resolution
+    from vnext.normal_governance_input import prepare_saved_governance_input
+    with original_sources_only():
+        prepared = prepare_saved_governance_input(repo_root=ROOT, company_id=company_id)
+        path, resolution = _governance_resolution(data_root=ROOT, preparation=prepared,
+                                                  metric_id="C03")
+        period = prepared["input_binding"]["prepared_annual_input"]["table_input"]
+        return path, resolution, period["target_period"]
+
+
+class HistoricalCompensationResultsTest(unittest.TestCase):
+    """C03 for a pinned period: two stages, and a proxy chosen by that period.
+
+    The ordinary route tries the annual-meeting proxy's pay-versus-performance
+    facts first and the annual report's own compensation table second. Nine of
+    this repository's ten companies are answered by the first stage and one by
+    the second, so a route carrying either alone gives the other's companies an
+    answer that is confident and wrong - which is why both are here.
+
+    The proxy is pinned rather than latest. For the current period those are
+    the same filing, and that equality is asserted against the ordinary route
+    rather than assumed; for an earlier period they are not, and taking the
+    latest would read a later proxy's restatement as that year's first report.
+    """
+
+    def test_the_current_period_matches_the_ordinary_route_stage_for_stage(self):
+        for company_id in (MARRIOTT, PARAMOUNT):
+            with self.subTest(company_id):
+                path, ordinary, period = _ordinary_c03(company_id)
+                historical = _resolve_c03(company_id, period["period_end"])
+                for field in ("quality", "reason_code", "value"):
+                    self.assertEqual(ordinary["result"][field],
+                                     historical["result"][field], field)
+                self.assertEqual(path, historical["spec_path"],
+                                 "the same stage has to answer, not just the same value")
+
+    def test_the_two_companies_are_answered_by_different_stages(self):
+        # Load-bearing for "both stages or neither": if this ever stops being
+        # true the cascade has collapsed into one stage and the case above
+        # would no longer notice a route that carried only that one.
+        paths = {company_id: _resolve_c03(company_id, PARAMOUNT_PERIOD
+                                          if company_id == PARAMOUNT else DELIVERS)["spec_path"]
+                 for company_id in (MARRIOTT, PARAMOUNT)}
+        self.assertEqual(2, len(set(paths.values())), paths)
+
+    def test_an_earlier_period_names_the_proxy_it_could_not_read(self):
+        # The pinned rule, stated where it bites. This repository holds one
+        # proxy per company and it is the current one, so an earlier period's
+        # first proxy is listed and not saved. A latest-proxy rule would read
+        # the saved one and produce a value here; this names the file instead.
+        component = _resolve_c03(MARRIOTT, "2024-12-31")
+        self.assertIsNone(component["result"]["value"])
+        self.assertEqual("C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND",
+                         component["result"]["reason_code"])
+        named = [entry.get("reason", "") for entry in component["limitation"]["details"]]
+        missing = [reason for reason in named if reason.startswith("SAVED_SOURCE_MISSING:")]
+        self.assertTrue(missing, named)
+        self.assertIn("def14a", missing[0].lower())
+
+    def test_the_pinned_proxy_is_not_the_one_the_current_period_uses(self):
+        current = _resolve_c03(MARRIOTT, DELIVERS)
+        earlier = _resolve_c03(MARRIOTT, "2024-12-31")
+        self.assertEqual("PASS", current["result"]["reason_code"])
+        self.assertIsNotNone(current["result"]["value"])
+        self.assertIsNone(earlier["result"]["value"],
+                          "the current period's proxy must not answer an earlier one")
+
+    def test_c03_is_registered_as_wired(self):
+        self.assertIn("C03", SUPPORTED_METRICS)
+        self.assertIn("C03", WIRED_HISTORICAL_METRICS)
