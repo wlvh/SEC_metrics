@@ -787,8 +787,8 @@
   "latest_delivery_head": "ed8bf11cbab76bc3d9b766d4b96d065a6cda10e6",
   "current_applied_binding": {
     "ordinary_V14": "sha256:047e4d4061740281e125ae8fde7ddf3277e0d00bf250b574c040c48bcf8f1bf8",
-    "continuous_V15": "sha256:1ef08f67e6ef52e8fc4185d65b4c124a18c8d4e2dc8814495ea431e5a0fe7e1d",
-    "provider_and_sec_wiring": "Current provider V6 wiring complete at1ef08f;109 native response rejected and B13 shared contract paused. Current SEC wiring not renewed; no SEC calls. D04 current affected-path wiring being checked separately."
+    "continuous_V15": "sha256:2685e0daa0313f842a52331de31219871377fb4e85978f2bcbf601cc8e4b118c",
+    "provider_and_sec_wiring": "Provider current scoped B13 reference contract and D04 base factory PASS; SEC wiring not renewed, no SEC calls."
   },
   "current_observed_call_totals": {
     "through_ordinal": 109,
@@ -878,6 +878,25 @@
       "tool_calls": 43,
       "result_path": "docs/evidence/issue28_continuous/b13-strict-references-20260922/independent-review/conclusion.md",
       "verdict": "DONE_P1_SUPPLEMENT_LOCAL_INDEX_COLLISION"
+    },
+    {
+      "task_name": "review_b13_references_7d903ba",
+      "requested_label": "review-b13_references-7d903ba",
+      "purpose": "review",
+      "scope_paths": [
+        "scripts/vnext/capacity_reference_contract.py",
+        "scripts/vnext/capacity_semantic_review.py",
+        "scripts/vnext/native_unit_index.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "tests/vnext/test_capacity_reference_contract.py"
+      ],
+      "patch_sha": "58e85b1a7de7dded2a7befb9f3519f8d42a7b66d",
+      "spawned_at": "2026-09-22T10:20:33.897761+00:00",
+      "ended_at": "2026-09-22T10:23:19.841632+00:00",
+      "tool_calls": 51,
+      "result_path": "docs/evidence/issue28_continuous/b13-strict-references-20260922/independent-review/conclusion.md",
+      "verdict": "DONE_SCOPED_P1_REPAIR_PASS"
     }
   ],
   "ci_capacity_20260922": {
@@ -904,7 +923,7 @@
   },
   "b13_strict_references_20260922": {
     "version": "B13_SOURCE_REFERENCES_V1",
-    "status": "SUPPLEMENT_SCOPE_REPAIRED_PENDING_SCOPED_RECHECK_AND_MATERIAL",
+    "status": "OFFLINE_WIRING_AND_SCOPED_REVIEW_PASS_REAL_CALLS_NOT_YET_STARTED",
     "short_tests": "36 PASS 0.641s",
     "original109": "FAILED_TERMINAL_UNCHANGED",
     "prompt_bytes_unchanged": true,
@@ -914,10 +933,13 @@
       0
     ],
     "evidence": "b13-strict-references-20260922/",
-    "review": "待审：B13补充对象引用范围修复 + 本次commit + b13-strict-references-20260922/independent-review/conclusion.md",
+    "review": "限定差异独立审阅：58e85b1原P1关闭，17指定测试和13归属反例通过；完整Run/真实调用不在独审范围；b13-strict-references-20260922/independent-review/conclusion.md",
     "shared_function_edits": [],
     "material_first_launch": "IMPORT_PATH_FAILURE_BEFORE_TEST_OR_CALL; corrected PYTHONPATH=scripts:.",
     "supplement_repair": "Require explicit source_unit_index only for NATIVE_SUPPLEMENT; global block/fact references unchanged; never guess ambiguous owners",
-    "repair_tests": "17 scoped tests PASS 0.174s"
+    "repair_tests": "17 scoped tests PASS 0.174s",
+    "offline_seconds": 336.098,
+    "d04_wiring_seconds": 48.321,
+    "offline_wiring": "b13-strict-references-20260922/offline-wiring.json"
   }
 }

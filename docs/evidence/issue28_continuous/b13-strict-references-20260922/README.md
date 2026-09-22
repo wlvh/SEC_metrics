@@ -13,3 +13,5 @@
 完整材料后台脚本第一次因PYTHONPATH未含仓库根在import tests处失败，未创建材料或请求；原offline-material.log保留，修正启动环境后另写offline-material-corrected.log。完整结果尚待，不能将短测试或原109合成诊断当成真实执行。
 
 完整材料第二次在请求选择阶段发现NATIVE_SUPPLEMENT的source_index为单元内enumerate，无法使用无范围的全局二元键；B13_REFERENCE_AMBIGUOUS_SOURCE按设计拒绝。原109完整来源有66个跨单元同名补充对象索引，诊断见supplement-index-diagnosis.json。未调用provider，未创建录制请求终态；后继修复需要显式补充对象单元范围，不能删除歧义守卫。
+
+修复58e85b1经同一代理限定复核，原P1关闭、13归属反例拒绝、17指定测试通过。完整材料最终336.098秒PASS：Enphase6录制原生Run/公共行/默认成功复用；Ford11受限计划及代表出口/controller、两公司缺单元拒绝。D04当前基线工厂/出口/原生验收48.321秒PASS。最终计数与合同短测试另见final-count-contract-tests.log；当前接线收据offline-wiring.json绑定本版本实际执行文件，未声称模型语义或真实坐标完成。

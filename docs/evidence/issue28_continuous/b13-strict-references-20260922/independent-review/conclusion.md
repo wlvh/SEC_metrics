@@ -30,3 +30,20 @@
 审阅范围为指定五个实现文件（capacity_reference_contract、capacity_semantic_review、native_unit_index、continuous_semantic_calls、capacity_native_assessment，以及其必要依赖）、指定测试、config/issue28_continuous_calls_v1.json 与 requirements/issue_28_v14 的父子差异；必要依赖只读。另读取指定原 109 与本次证据入口。其他并发任务的 execution-state 和材料改动未触碰。
 
 工具计数：本子任务共 16 次 functions.exec 编排调用；内部实际 27 次叶子工具调用（25 次 exec_command，2 次 write_stdin）；若编排和叶子均计，共 43 次，低于 80 次上限。包含本报告落盘及最终 HEAD 核验调用；未使用子代理。用户可见消息只有一次开工说明及一次最终报告。
+
+
+## 58e85b1 增量独立复核：原 P1 在限定代码范围内关闭
+
+受审 SHA：`58e85b1a7de7dded2a7befb9f3519f8d42a7b66d`；父 SHA：`7d903ba27a5586569029349e6433f85a0f0054da`。本次仅复核 `capacity_reference_contract.py`、对应测试和 V14 baseline 的增量，没有重开独立代理或扩大审阅范围。原报告及失败日志完整保留。
+
+原 P1 修复成立：补充 XML 引用现在明确带 `source_unit_index`，以 `(kind, source_unit_index, source_index)` 在当前请求的原单元数组中定位；可见文本和原生 fact 仍使用其原文档索引。还原时先校验所属单元，再移除仅属于新传输协议的范围字段，交给原完整内容验证器；没有对旧嵌套响应自动移动引用。
+
+我独立重建原 P1 的有效小反例，一个可见正文单元及两个各有局部索引 0 的补充 XML 单元。本次旧嵌套验收、新请求构造、新格式完整 `validate_response` 和原生 `build_acceptance` 均通过。分别引用两个补充单元时，核对了最终 `unit_id` 和恢复的原始 XML 字节，二者没有混用。该检查比新增仓库测试中的单纯格式还原更深入，但仍是合成来源的小范围验证。
+
+对应错误归属边界实际执行 13 个反例：遗漏范围、布尔范围、负数或越界单元、把补充引用指向可见正文单元、负数或越界来源索引、错误 kind、单个 finding 混合两个所属单元、重复引用、重复 finding、未审阅及缺少单元，全部拒绝。状态行顺序调换后恢复结果字节一致。见 `supplement-repair-adversarial-tests.log`。
+
+指定三模块命令重新独立运行：17 项通过、0 失败、0 跳过，0.195 秒；见 `supplement-repair-unit-tests.log`。执行端 `supplement-repair-tests.log` 已读取，但未以执行端测试替代本次独立执行。两处 V14 新文件绑定与实际文件 SHA256/8512 bytes 一致。复核及测试时 HEAD 与上述 SHA 一致。
+
+结论为“原 P1 的实现及相应限定反例复核通过，未发现这三个文件增量中的新增阻断”，不撤销前版确实失败的事实。来源定位可靠不等于模型给出的业务分类正确；补充单元的选择仍是显式模型输出，程序只验证其范围和原始内容。没有重跑完整材料、Ford/Enphase 全请求、注册冷读或完整 Run，没有真实调用，不为尚未取得的完整离线接线收据或生产信用背书。是否完成下一阶段完整材料应另按实际新输出记录。
+
+本次追加共 3 次 functions.exec、5 次 exec_command，即新增 8 次工具调用；同代理累计 19 次编排、32 次叶子工具调用，合计 51 次，未重置原限额。累计用户可见消息为 3 条（原开工说明、原最终报告、本次最终报告）。仅追加本结论和两份独立测试日志，源码、旧证据及其他工作区改动未触碰。

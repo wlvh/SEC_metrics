@@ -1,0 +1,18 @@
+Prior P1 reproduction with 1 visible + 2 supplements: old nested PASS; new request construction PASS.
+Full source validator and native build_acceptance PASS; each scoped reference restores its own original XML.
+omitted REJECTED B13_REFERENCE_SUPPLEMENT_SCOPE_REQUIRED
+boolean REJECTED B13_REFERENCE_SUPPLEMENT_SCOPE_REQUIRED
+negative_unit REJECTED B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE
+outside_unit REJECTED B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE
+visible_unit REJECTED B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE
+negative_index REJECTED B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE
+outside_index REJECTED B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE
+wrong_kind REJECTED B13_REFERENCE_FIELDS_CHANGED
+cross_unit REJECTED B13_REFERENCE_CROSS_UNIT_FINDING
+duplicate_evidence REJECTED B13_REFERENCE_DUPLICATE_EVIDENCE
+duplicate_finding REJECTED B13_REFERENCE_DUPLICATE_FINDING
+unreviewed REJECTED D04_UNIT_REVIEW_MISSING_OR_DUPLICATE
+missing_unit REJECTED B13_REFERENCE_RESPONSE_CENSUS_CHANGED
+Response status-row reordering preserves exact owner mapping: PASS
+Both revised V14 exact-file bindings PASS: {'sha256': '03cf1f177a69ba3b5321de20426d277be8a6b7c3210fedbcde0ce726e855619e', 'size': 8512}
+Tested HEAD verified; no calls, no full material or Run execution.
