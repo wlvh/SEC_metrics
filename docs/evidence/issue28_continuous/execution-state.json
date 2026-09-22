@@ -28,28 +28,29 @@
     "long_running_schedule": false
   },
   "actual_new_calls": {
-    "provider": 65,
-    "paid": 65,
+    "provider": 120,
+    "paid": 120,
     "sec": 49,
     "unknown": 0
   },
   "current_work": [
-    "110 recovery completed once at111; original110 retains failure/count; originalbinding/anchor/terminals/claimprefix unchanged.",
-    "112B13 incomplete4096-token response with an additional invalid reference in complete prefix; no redraw; B13 coordinate still incomplete.",
-    "D04 remaining8 company tasks running under max71 new provider requests; no D03 or SEC calls; follow d04-remaining-20260922/live-summary.json.",
-    "Bounded zero-call inspection continues on B06/C04 exact unresolved source/policy relationships without changing definitions."
+    "110受限恢复已在111一次执行成功并消费，原110及112/113/114失败保留。",
+    "D04六家55组全部成功，六个完整原生OPEN候选/公共格式行及持久化Python3.9禁网冷读全部PASS。",
+    "普通V14/V15未冻结执行绑定修复通过原生B08检查；125fast已通过，当前新HEAD CI另列。",
+    "B13输出合同/引用、Paramount无损来源表示、Enphase类别冲突仍为开发缺口；不重试失败、不借用110例外。"
   ],
   "next": [
-    "Finish or preserve every D04 coordinate terminal without retry; aggregate actual complete results and remaining exceptions.",
-    "Keep111 for future completeB13 set;112cannot be repaired into accepted history or retried under the already-consumed110grant.",
-    "Keep D03 excluded and no increased allowance; resume other scope-safe zero-call source/normal-update/retirement work."
+    "集中交付本次恢复及六个D04增量；保留整体Issue未完成责任。",
+    "待审：付费前来源完整性检查40ca426，d04-remaining-20260922/；不由父代理自审。",
+    "离线解决112输出合同与引用、113无损表示、114分类边界；新请求须重新满足明确权限和绑定，110机会已耗尽。",
+    "D03无调用；资源增额决定暂缓，基础至少42缺口；四项B06、Paramount C04、完整390更新及生产迁移未完成。"
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
   "remaining_review_dependency": "6e5 D03 source-fact independent report not found; existing ChatGPT review task dispatch returned Too many requests with no new task message. No retry, rename, model change or reset.",
   "historical_state_snapshot": "review-5207290213/historical-before-through104-state/execution-state.json",
   "historical_continuation_snapshot": "review-5207290213/historical-before-through104-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
-  "ledger_implementation_status": "RECOVERY110_CONSUMED_ONCE_AT111; ORIGINAL110_AND_PREFIX_UNCHANGED; THROUGH112_COUNTS63_63_49; D04_RUNNING_SEPARATE_REPORT",
+  "ledger_implementation_status": "169_SEALED_SLOTS_PROVIDER120_PAID120_SEC49_NO_STOP_OR_UNKNOWN; original110failure remains; recovery111 consumed",
   "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
   "full_acceptance": false,
   "external_dependencies": [
@@ -139,15 +140,12 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "3883f9ca70cb1c210e66eb36479acbbe3d826f72",
-    "workflow": "vNext fast suite",
-    "run_id": 35716887065,
-    "conclusion": "SUCCESS",
-    "updated_at": "2026-09-22T11:19:20Z",
-    "capacity_native_seconds": 962,
-    "capacity_program_seconds": 1208,
-    "evidence": "recovery-110-20260922/ci-3883f9c-final.json",
-    "correction": "35716887021 was the reference-table workflow, not main CI; no rerun or timeout change"
+    "head": "6b1b979795038dd73add1ac8a64c7a3b603d95c7",
+    "run_id": 35738245649,
+    "conclusion": "FAILURE",
+    "cause": "Ordinary V14 manifest bound old continuous_call_ledger bytes; successor downstream failures",
+    "repair": "d04-remaining-20260922/ordinary-binding-repair.json",
+    "local_validation": "PASS native B08 and current V14/V15 bindings19.753s; current HEAD CI observed separately after push."
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -160,7 +158,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:1ef08f67e6ef52e8fc4185d65b4c124a18c8d4e2dc8814495ea431e5a0fe7e1d",
+  "current_v15_development_closure": "sha256:93cad4a8534451ce6e2359b2cf2a6b28f185d7aefa7b0c32916494a3a54d11ad",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -660,16 +658,16 @@
     "reference_complete_d04_run": "PASS_303.536_SECONDS_RECORDED_RESPONSE_ONLY",
     "material": "review-5207290213/"
   },
-  "current_390_index": "review-5207290213/current-390.json",
+  "current_390_index": "d04-remaining-20260922/current-390.json",
   "current_request_census": {
     "D04_total": 93,
-    "D04_completed_exact_groups": 22,
-    "D04_remaining": 71,
-    "B13_remaining": 17,
+    "D04_completed_exact_groups": 77,
+    "D04_remaining": 16,
+    "B13_remaining": 16,
     "D03_proposal_remaining": 130,
-    "base_remaining": 218,
-    "provider_paid_remaining": 179,
-    "known_base_shortfall": 39,
+    "base_remaining": 162,
+    "provider_paid_remaining": 120,
+    "known_base_shortfall": 42,
     "conditional_tail": "D03 verification plus genuinely changed update/final requests, not yet measured",
     "sec_known_metadata_remaining": 19,
     "sec_remaining": 31,
@@ -744,20 +742,20 @@
     "material": "paramount-c04-source-inspection/registration-variants-real-material/",
     "current_metric_complete": false
   },
-  "latest_delivery_head": "3883f9ca70cb1c210e66eb36479acbbe3d826f72",
+  "latest_delivery_head": "6b1b979795038dd73add1ac8a64c7a3b603d95c7",
   "current_applied_binding": {
-    "ordinary_V14": "sha256:047e4d4061740281e125ae8fde7ddf3277e0d00bf250b574c040c48bcf8f1bf8",
-    "continuous_V15": "sha256:4cc2d5ee63b181942e41da6411d52e6cbe4763ed841c6638ec1553bba113c4ee",
-    "provider_and_sec_wiring": "Current recovery110 provider wiring PASS; B13/D04 only; no new SEC wiring or calls"
+    "ordinary_V14": "sha256:1711224d7715d81b066e304f5ba14f7b1501a96ec7b47095c25b5dedf76108f1",
+    "continuous_V15": "sha256:93cad4a8534451ce6e2359b2cf2a6b28f185d7aefa7b0c32916494a3a54d11ad",
+    "provider_and_sec_wiring": "No fresh real-call wiring claimed for metadata-repaired closure; original new candidates retain own0f724fa installed runtime and call identities."
   },
   "current_observed_call_totals": {
-    "through_ordinal": 114,
-    "provider": 65,
-    "paid": 65,
+    "through_ordinal": 169,
+    "provider": 120,
+    "paid": 120,
     "SEC": 49,
     "remaining": {
-      "provider": 175,
-      "paid": 175,
+      "provider": 120,
+      "paid": 120,
       "SEC": 31
     },
     "original_caps": [
@@ -765,7 +763,7 @@
       240,
       80
     ],
-    "last_call": "114 complete model response rejected by category check;113 input serialization inconsistency; six other companies had no provider claim"
+    "last_call": "169 Macys D04 SUCCEEDED;55 source requests and all6 local native Runs complete; no global stop."
   },
   "pending_increment_request": {
     "status": "DEFERRED_BY_USER_NO_INCREASE_GRANTED",
@@ -774,11 +772,11 @@
     "SEC_gap_for_this_base_plan": 0,
     "base_remaining": {
       "B13": 16,
-      "D04": 71,
+      "D04": 16,
       "D03_first_proposal": 130
     },
-    "base_sum": 217,
-    "current_provider_paid_remaining": 175,
+    "base_sum": 162,
+    "current_provider_paid_remaining": 120,
     "excludes_all_subsequent_verification": true,
     "D03_calls_authorized": false,
     "original_caps": [
@@ -786,7 +784,7 @@
       240,
       80
     ],
-    "snapshot_scope": "Through114; no additional allowance granted"
+    "snapshot_scope": "Through169;55 D04 request groups accepted, remaining16 D04 groups include two failed first groups; all further verification excluded"
   },
   "current_live_b13_v6": {
     "ordinal": 109,
@@ -796,7 +794,8 @@
     "executed": 1,
     "following_requests_executed": 0,
     "coordinate_completed": false,
-    "paused": "B13 shared contract pending source-reference attribution analysis; no prompt redraw"
+    "paused": "B13 shared contract pending source-reference attribution analysis; no prompt redraw",
+    "historical_observation_only": true
   },
   "current_b13_v6_independent_review": {
     "patch": "4e9428ce69b4ab8298e35ac98116fa68bbc549afe20d3336fed2a7ba8b704b34",
@@ -934,7 +933,7 @@
       "D03 already excluded pending review and resources"
     ],
     "external_decision_required": "110 recovery decision fulfilled; no account action pending",
-    "safe_work": "Offline validation, evidence, release and retirement preparation only",
+    "safe_work": "Original110stop resolved by consumed111; other failed requests cannot use its exception.",
     "account_status": "USER_CONFIRMED_HANDLED_NOT_INDEPENDENTLY_INSPECTED",
     "recovery_consumed": true,
     "recovery_success_ordinal": 111
@@ -1019,16 +1018,44 @@
     "following_B13_failure": "112 finish_reason=length,4096output; prefix also contains wrong-kind source449; no retry",
     "invariants": "recovery-110-20260922/after-recovery-invariants.json"
   },
-  "call_count_snapshot_scope": "Final first D04 batch snapshot through114; zero-call preparation for six unattempted companies follows.",
+  "call_count_snapshot_scope": "All real executions through169 complete; subsequent local Run completion/cold reads are zero-call.",
   "source_unit_preflight_guard": {
     "status": "18_SHORT_TESTS_AND_CURRENT_D04_FACTORY_PASS",
     "reason": "113 Greek question mark normalized by source serialization; check before paying, not repair of old113",
-    "review": "待审：来源单元付费前完整性检查 + 本次commit + d04-remaining-20260922/",
+    "review": "待审：来源单元付费前完整性检查 + 40ca426 + d04-remaining-20260922/",
     "request_digest_unchanged": true,
     "new_calls": [
       0,
       0,
       0
     ]
+  },
+  "d04_new_results": {
+    "source_group_successes": 55,
+    "source_group_failures": [
+      113,
+      114
+    ],
+    "new_calls": [
+      57,
+      57,
+      0
+    ],
+    "total_budget_max": 71,
+    "complete_native_candidates": [
+      "marriott_international",
+      "southwest_airlines",
+      "jpmorgan_chase",
+      "salesforce",
+      "lumen_technologies",
+      "macys"
+    ],
+    "local_finish_pending": [],
+    "material": "d04-remaining-20260922/",
+    "no_retry_of_failed_calls": true,
+    "native_results": "d04-remaining-20260922/six-native-results.json",
+    "cold_read": "d04-remaining-20260922/cold-verified-marriott_international-summary.json",
+    "cold_status": "PASS_PERSISTED_NEW_CANDIDATES_AND_COLD_READ",
+    "cold_seconds": 763.524
   }
 }
