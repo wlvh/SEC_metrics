@@ -416,6 +416,8 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
         resolve_historical_governance_metric)
     from .historical_debt_results import (SUPPORTED_METRICS as DEBT_METRICS,
                                           resolve_historical_debt_metric)
+    from .historical_lodging_results import (SUPPORTED_METRICS as LODGING_METRICS,
+                                             resolve_historical_lodging_metric)
     if metric_id in TEXT_METRICS:
         return _historical_text_run_input(repo_root=repo_root, company_id=company_id,
                                           metric_id=metric_id,
@@ -436,6 +438,16 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
             repo_root=repo_root, company_id=company_id, metric_id=metric_id,
             period_selection=period_selection,
             resolve=resolve_historical_debt_metric)
+    # B10 and B11 are trait-gated too, so this sits above the structural check
+    # and answers only where the gate is open. The structural route keeps the
+    # other side: for a company that is not a lodging operator the answer is
+    # that the metric does not apply, and it is that route's to give.
+    if metric_id in LODGING_METRICS and not structurally_not_applicable(
+            repo_root=repo_root, company_id=company_id, metric_id=metric_id):
+        return _historical_component_run_input(
+            repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+            period_selection=period_selection,
+            resolve=resolve_historical_lodging_metric)
     # A metric the company's traits put outside its own gate. Checked before
     # the Spec set below, because these Specs are not in it: a liquidity
     # coverage ratio has no ordinary route to be in.

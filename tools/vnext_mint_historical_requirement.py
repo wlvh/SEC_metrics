@@ -90,6 +90,11 @@ NEW_RULE_FILES = (
     # period, and therefore which Spec its Result is under, so both roots
     # check them.
     "scripts/vnext/historical_debt_results.py",
+    # B10 and B11 read a table in the annual report itself, and the ordinary
+    # source preparation resolves that report as the newest one. These bytes
+    # decide which filing's table a pinned period is read from, so both roots
+    # check them.
+    "scripts/vnext/historical_lodging_results.py",
     "scripts/vnext/requirement_profile_v16.py",
 )
 

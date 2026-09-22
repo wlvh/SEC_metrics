@@ -80,6 +80,9 @@ WIRED_TEXT_METRICS = ("D02",)
 # period rather than taken as the latest, which is what keeps a later proxy's
 # restatement out of an earlier year.
 WIRED_GOVERNANCE_METRICS = ("C03", "C04")
+# B10 and B11 where the lodging gate is open; where it is not, the structural
+# route still answers and they stay in STRUCTURAL_APPLICABILITY_METRICS.
+WIRED_LODGING_METRICS = ("B10", "B11")
 # Debt over equity. Its ordinary route is a seven-stage cascade, not one
 # reader, and the stage that answers decides which Spec the Result is under.
 # All seven are wired or none: a period that reaches a later stage would
@@ -88,16 +91,24 @@ WIRED_DEBT_METRICS = ("B06",)
 WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS
                                         + WIRED_ACCESSION_METRICS + WIRED_EVENT_METRICS
                                         + WIRED_TEXT_METRICS + WIRED_GOVERNANCE_METRICS
-                                        + WIRED_DEBT_METRICS))
-# Eight more, but only where the company's own registry traits put the metric
-# outside its Spec's gate. Six are gated on `financial` and none of the
-# companies whose periods are reachable is a bank; two are gated on `lodging`
-# and eight of the ten are not hotels. That is why this is not in the list
-# above: whether a route exists here is a fact about the pair, not about the
-# metric, and reporting it per metric would say the route exists for Marriott's
-# occupancy too - where it does not, and where saying "not applicable" would be
-# a false statement about the issuer rather than a missing implementation.
-STRUCTURAL_APPLICABILITY_METRICS = tuple(sorted(structural.SPEC_PATHS))
+                                        + WIRED_DEBT_METRICS + WIRED_LODGING_METRICS))
+# The metrics whose *only* route is the closed side of a trait gate: the answer
+# is that the metric does not apply to this issuer, and there is no open side to
+# reach. Six are gated on `financial`, and the one company whose traits open
+# that gate has no reachable period, so there is nothing to write an open side
+# against yet.
+#
+# Derived by subtraction rather than listed, because B10 and B11 were here until
+# their open side was wired and the two sets have to stay disjoint: they are
+# added to count the metrics that have a route, and a metric in both would be
+# counted twice. Subtraction means the next metric to gain an open side leaves
+# this tuple by itself instead of waiting for someone to remember. The closed
+# side is still dispatched for them - that is `historical_structural_results`'s
+# own supported set, which this does not touch - and it is a fact about the
+# company-metric pair, so it is counted per position and never reported as a
+# route.
+STRUCTURAL_APPLICABILITY_METRICS = tuple(sorted(set(structural.SPEC_PATHS)
+                                                - set(WIRED_HISTORICAL_METRICS)))
 
 
 class CoverageError(ValueError):

@@ -168,6 +168,12 @@ SOURCE_TESTS += ("tests.vnext.test_historical_governance_results",)
 # field for field; a copy checked against itself could not find a
 # transcription error, so this is the only place one shows up.
 SOURCE_TESTS += ("tests.vnext.test_historical_debt_results",)
+# B10 and B11 through the pinned route. Two cases carry it: one answers the
+# current period and requires seventeen observation-binding fields to match the
+# ordinary route's, and one answers Marriott for three years and requires three
+# different values in each metric - a route that read the newest filing would
+# satisfy everything else in that file.
+SOURCE_TESTS += ("tests.vnext.test_historical_lodging_results",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
