@@ -125,5 +125,38 @@
   "paid": 0,
   "sec": 0
  },
- "production_authorized": false
+ "production_authorized": false,
+ "fault_injections": {
+  "method": "each edit is applied to scripts/vnext/historical_lodging_results.py, the suite is run, the module is put back. The count of failures is the measurement; zero means the suite cannot tell the difference, which is recorded rather than hidden.",
+  "caught": [
+   {
+    "injection": "TAKE_THE_LATEST_FILING",
+    "edit": "prepare_historical_annual_input replaced by prepare_saved_annual_input",
+    "cases_failed": 4,
+    "why_it_matters": "this is the whole route. Three periods would return the newest year's value."
+   },
+   {
+    "injection": "COMPILE_THE_AI_SPEC",
+    "edit": "SPEC_PATHS points at catalog/metrics instead of catalog/ordinary_lodging",
+    "cases_failed": 4,
+    "why_it_matters": "the same table read under a different Spec identity"
+   },
+   {
+    "injection": "ANSWER_THE_CLOSED_GATE_TOO",
+    "edit": "the applicability refusal is removed",
+    "cases_failed": 2,
+    "why_it_matters": "two routes would answer the same company-metric pair"
+   }
+  ],
+  "not_caught_by_the_real_corpus": {
+   "injection": "DROP_THE_SCOPE_AND_PERIOD_CHECK",
+   "edit": "the _need on fact['scope'] and fact['period'] is removed",
+   "cases_failed_before": 0,
+   "why": "inspect_lodging_table_source already re-derives the source's own annual interval from its bytes and refuses a mismatch, and the scope comes from the same compiled Spec, so on every filing here the check is redundant.",
+   "what_was_done": "the check is kept - the ordinary route makes it, and a pinned route that checks less than the route it mirrors is a weakening - and a case was added that constructs the divergence it defends against by making the inspector return a fact about another period. The input is constructed and the case says so; what it asserts is that no value comes out.",
+   "case": "test_a_fact_about_another_period_is_refused_rather_than_used",
+   "cases_failed_after": 1,
+   "and_it_is_the_only_case_that_can_tell": "re-running the same edit against the eight-case suite fails exactly one case - the constructed one. The other seven still cannot tell the difference, which is the correct outcome: they read real filings, where the inspector's own period check makes this one redundant."
+  }
+ }
 }

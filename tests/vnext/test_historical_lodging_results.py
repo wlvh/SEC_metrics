@@ -175,6 +175,50 @@ class HistoricalLodgingResultsTest(unittest.TestCase):
             self.assertIn(metric_id, SUPPORTED_METRICS)
             self.assertIn(metric_id, WIRED_HISTORICAL_METRICS)
 
+    def test_a_fact_about_another_period_is_refused_rather_than_used(self):
+        """A guard no filing exercises, exercised by constructing the divergence.
+
+        The four fault injections run against this suite caught three of the
+        four edits; dropping this check changed nothing on any real filing,
+        because `inspect_lodging_table_source` already re-derives the source's
+        own annual interval from its bytes and the scope comes from the same
+        compiled Spec. The check is kept anyway - the ordinary route makes it,
+        and a pinned route that checks less than the route it mirrors is a
+        weakening - so it is exercised here by making the inspector return a
+        fact about a different period, which is exactly the divergence it
+        defends against.
+
+        The input is constructed and says so. What it must not do is produce a
+        value: a route that took the fact at its word would return the same
+        number under the wrong period.
+        """
+        from unittest import mock
+
+        import vnext.historical_lodging_results as route
+
+        real = route.inspect_lodging_table_source
+
+        def shifted(**kwargs):
+            component = real(**kwargs)
+            facts = dict(component["selection"]["facts"])
+            for metric_id, fact in facts.items():
+                period = dict(fact["period"])
+                period["period_end"] = "1999-12-31"
+                facts[metric_id] = {**fact, "period": period}
+            selection = {**component["selection"], "facts": facts}
+            return {**component, "selection": selection}
+
+        with mock.patch.object(route, "inspect_lodging_table_source", shifted):
+            component = _historical(MARRIOTT, CURRENT, "B10")
+        self.assertIsNone(component["result"]["value"])
+        self.assertEqual("HISTORICAL_LODGING_SOURCE_ROUTE_UNRESOLVED",
+                         component["result"]["reason_code"])
+        self.assertIn("HISTORICAL_LODGING_SCOPE_OR_PERIOD_CHANGED",
+                      component["limitation"]["reason"])
+        # And the unpatched call still delivers, so the case is about the
+        # divergence rather than about the patch being present.
+        self.assertIsNotNone(_historical(MARRIOTT, CURRENT, "B10")["result"]["value"])
+
 
 if __name__ == "__main__":
     unittest.main()
