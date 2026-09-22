@@ -783,6 +783,8 @@ B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物�
 
 ### B13 新原生链与来源分组性能
 
+2026-09-22：B13 native及program-role两个CI作业总时限均为30分钟，保留原步骤与断言。program-role单次本地完整计时604.545秒通过（隔离Python3.13.5、tokenizers0.22.2）；CI仍使用Python3.14，实际终态单独登记。证据见`docs/evidence/issue28_continuous/ci-capacity-timeouts-20260922/`。该调整不改变真实请求120秒限制。
+
 `test_semantic_source_grouping.SemanticSourceGroupingTest` 比较原分组边界、共享字典、单独大对象与超限拒绝；其 MaterialTest 从真实两公司原件重建全部81个单元，与优化前材料逐字段相同。JPM完整来源/三种错误分类测试仍保留原240秒限制。性能剖析的中断不算PASS，修复后的完整测试须独立返回成功。
 
 `test_capacity_semantic_review` 验证字段共享的精确恢复、JSON键重排后的相同请求、缺单元、遗漏候选、假引文及两个真实完整包。`test_capacity_native_assessment` 从实际原件经过原factory/opener/WB-3，在禁网下验证原生Candidate/Evidence成功、遗漏单元终态失败，以及单个成功请求不能产生全范围缺失结论。`test_capacity_text_results` 检查真实季度产能原文经Review/Calculator成为TEXT_V1，拒绝假完整标记、掩盖数值对、错期间、原件变化和缺有效Review。

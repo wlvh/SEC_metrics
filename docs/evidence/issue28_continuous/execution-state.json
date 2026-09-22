@@ -859,5 +859,21 @@
     "ci": "One observation per push",
     "shared_changes": []
   },
-  "subagent_register": []
+  "subagent_register": [],
+  "ci_capacity_20260922": {
+    "baseline": "ed8bf11cbab76bc3d9b766d4b96d065a6cda10e6",
+    "capacity_native_timeout_minutes": 30,
+    "capacity_program_timeout_minutes": 30,
+    "local_result": "PASS",
+    "test_seconds": 604.545,
+    "process_seconds": 605.007,
+    "interpreter": "Python3.13.5; tokenizers0.22.2",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "ci-capacity-timeouts-20260922/",
+    "CI": "PENDING_SINGLE_OBSERVATION_AFTER_PUSH"
+  }
 }
