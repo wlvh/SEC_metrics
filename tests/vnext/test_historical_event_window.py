@@ -112,25 +112,102 @@ class TheHistoricalRouteAnswersAsTheOrdinaryOneDoesTest(unittest.TestCase):
         self.assertEqual(PINNED, self.historical["pinned_target_period"])
 
 
-class ASuccessorStatementMetricIsStillAnExplicitGapTest(unittest.TestCase):
-    def test_widening_an_event_window_did_not_wire_the_statement_routes(self):
-        """B01 for a successor registrant needs the current income input.
+class ASuccessorStatementMetricUsesTheApprovedIncomeProofTest(unittest.TestCase):
+    """The gap this class used to assert is closed, and narrower now.
 
-        That is defined against the current period and is not ported, so it
-        stays an explicit gap. Paramount's amendment refuses it one step
-        earlier, so what is asserted is that the refusal is named and is one of
-        the two - never silence, and never a value.
-        """
+    B01 and B03 for a successor registrant need the current income input the
+    ordinary route builds: the registrant's own originals, the period its
+    income statement actually covers, and a Part III revenue-correction check.
+    That input names the filing it proved, so it transfers to a historical
+    target exactly when that filing is this target - and where it does not,
+    the named gap stands rather than a proof about one report admitting
+    another.
+
+    Two things it is not. It is not a new amendment decision: the income
+    input carries the approved proof the ordinary route already uses in place
+    of the family question, for this case only. And it is not a value: the
+    successor's first period is 146 days, so the Spec's annual-duration guard
+    reports NOT_MEANINGFUL, which is the answer, not a refusal.
+    """
+
+    METRICS = ("B01", "B03")
+
+    def _selection(self):
+        return resolve_period_selection(repo_root=ROOT, company_id=SUCCESSOR,
+                                        report_end=PERIOD)
+
+    def test_the_answers_are_the_ordinary_chain_s_answers(self):
+        # Load-bearing: it was measured that passing the guard alone left the
+        # route asking Company Facts for the pinned fiscal year, which this
+        # registrant never reported, and returning MISSING_CANDIDATE - an
+        # answer about a period nobody filed. Comparing fields against the
+        # ordinary chain, the measured window included, is what catches that.
+        from vnext.normal_zero_ai_results import resolve_ordinary_zero_ai_metric
+        fields = ("applicability", "quality", "reason_code", "value",
+                  "period_start", "period_end")
         with original_sources_only():
-            selection = resolve_period_selection(repo_root=ROOT, company_id=SUCCESSOR,
-                                                 report_end=PERIOD)
-            with self.assertRaises(ValueError) as refused:
-                resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=SUCCESSOR,
-                                                  metric_id="B01",
-                                                  period_selection=selection)
-        self.assertIn(str(refused.exception).split(":")[0],
-                      {"HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
-                       "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"})
+            selection = self._selection()
+            for metric_id in self.METRICS:
+                with self.subTest(metric_id):
+                    historical = resolve_historical_zero_ai_metric(
+                        repo_root=ROOT, company_id=SUCCESSOR, metric_id=metric_id,
+                        period_selection=selection)["result"]
+                    ordinary = resolve_ordinary_zero_ai_metric(
+                        repo_root=ROOT, company_id=SUCCESSOR,
+                        metric_id=metric_id)["result"]
+                    self.assertEqual({k: ordinary[k] for k in fields},
+                                     {k: historical[k] for k in fields})
+                    self.assertEqual("ANNUAL_DURATION_OUT_OF_RANGE",
+                                     historical["reason_code"])
+
+    def test_the_result_carries_the_measured_window_not_the_pinned_year(self):
+        with original_sources_only():
+            resolved = resolve_historical_zero_ai_metric(
+                repo_root=ROOT, company_id=SUCCESSOR, metric_id="B01",
+                period_selection=self._selection())
+        result = resolved["result"]
+        pinned = resolved["input_binding"]["prepared_input"]["table_input"]["target_period"]
+        self.assertNotEqual(pinned["period_start"], result["period_start"])
+        self.assertEqual(pinned["period_end"], result["period_end"])
+        self.assertTrue(pinned["period_start"] <= result["period_start"])
+
+    def test_the_income_proof_is_recorded_as_the_input_it_is(self):
+        with original_sources_only():
+            resolved = resolve_historical_zero_ai_metric(
+                repo_root=ROOT, company_id=SUCCESSOR, metric_id="B01",
+                period_selection=self._selection())
+        binding = resolved["input_binding"]
+        self.assertEqual("CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES",
+                         binding["amendment_input"]["input_class"])
+        self.assertEqual("INPUT_PROPERTY_PROVEN", binding["amendment_input"]["decision"])
+        self.assertTrue(binding["current_income_input"])
+
+    def test_a_proof_about_another_filing_does_not_transfer(self):
+        # The whole condition. A current-period proof used to admit a
+        # different target would be a proof about one report standing behind
+        # another's values, and it is refused by the name it always had.
+        from unittest.mock import patch
+        import vnext.historical_zero_ai_results as route
+        real = route._successor_income_input
+
+        def elsewhere(*, repo_root, company_id, metric_id, prepared):
+            built = real(repo_root=repo_root, company_id=company_id,
+                         metric_id=metric_id, prepared=prepared)
+            self.assertIsNotNone(built, "the real proof is about this target")
+            moved = {**prepared, "filing": {**prepared["filing"],
+                                            "accessionNumber": "0000000000-00-000000"}}
+            return real(repo_root=repo_root, company_id=company_id,
+                        metric_id=metric_id, prepared=moved)
+
+        with original_sources_only():
+            selection = self._selection()
+            with patch.object(route, "_successor_income_input", elsewhere):
+                with self.assertRaises(ValueError) as refused:
+                    resolve_historical_zero_ai_metric(
+                        repo_root=ROOT, company_id=SUCCESSOR, metric_id="B01",
+                        period_selection=selection)
+        self.assertIn("HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED",
+                      str(refused.exception))
 
 
 if __name__ == "__main__":

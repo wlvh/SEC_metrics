@@ -98,6 +98,32 @@ def event_measurement_window(*, repo_root: Path, company_id: str, pinned, regist
     return window, scope
 
 
+INCOME_STATEMENT_METRICS = frozenset({"B01", "B03"})
+
+
+def _successor_income_input(*, repo_root: Path, company_id: str, metric_id: str, prepared):
+    """The ordinary current-income proof, when it is about this exact target.
+
+    The ordinary route builds this for a successor registrant's B01 and B03
+    because the successor's own statement values need a proof of which period
+    the income statement actually covers. It is built against the current
+    period and names the filing it proved, so it transfers to a historical
+    target only when that filing is this target - otherwise it would be a
+    proof about one report being used to admit another, which is the failure
+    this whole route exists to avoid. Anything else returns None and the
+    caller keeps the named gap.
+    """
+    if (metric_id not in INCOME_STATEMENT_METRICS
+            or prepared["subject_policy"]["mode"] != "SUCCESSOR_REGISTRANT_ONLY"):
+        return None
+    from .ordinary_income_input import prepare_current_income_input
+    income_input = prepare_current_income_input(repo_root=repo_root, company_id=company_id)
+    proved = income_input["annual_input"]["filing"]["accessionNumber"]
+    if proved != prepared["filing"]["accessionNumber"]:
+        return None
+    return income_input
+
+
 def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str,
                                       period_selection):
     """Resolve revenue, or EBITDA margin with its rebuilt revenue dependency.
@@ -116,7 +142,25 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     # different answers on the same amendment - which is the point, because a
     # Part III addition leaves the event window alone and does not clear the
     # statement values.
-    if prepared["amendments"]:
+    pinned = prepared["table_input"]["target_period"]
+    registered_event = (metric_id in EVENT_METRICS
+                        and prepared["subject_policy"]["mode"] == "SUCCESSOR_REGISTRANT_ONLY")
+    # A successor registrant's own statement values need the current income
+    # input the ordinary route builds. That input is defined against the
+    # current period and carries its own approved amendment proof - the
+    # registrant's original HTML, XML and Company Facts, the period it
+    # actually reports, and a Part III revenue-correction check - so where it
+    # describes this target it applies verbatim, and where it does not the gap
+    # stands and says so. An event window needs none of it.
+    income_input = _successor_income_input(repo_root=repo_root, company_id=company_id,
+                                           metric_id=metric_id, prepared=prepared)
+    _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY" or registered_event
+          or income_input is not None,
+          "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED", "IMPLEMENTATION_GAP")
+    # Asked after the income input, because that input is the narrower proof
+    # for exactly this case and the ordinary route uses it in place of the
+    # family question. Every other shape still asks the family question first.
+    if prepared["amendments"] and income_input is None:
         from .historical_amendment_admission import (AmendmentAdmissionError,
                                                      amendment_admission)
         try:
@@ -125,15 +169,6 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                                 event_metric_ids=EVENT_METRICS)
         except AmendmentAdmissionError as error:
             _need(False, str(error), "SOURCE_SCOPE_NOT_CLEARED")
-    pinned = prepared["table_input"]["target_period"]
-    registered_event = (metric_id in EVENT_METRICS
-                        and prepared["subject_policy"]["mode"] == "SUCCESSOR_REGISTRANT_ONLY")
-    # A successor registrant's own statement values need the current income
-    # input the ordinary route builds, which is defined against the current
-    # period; that stays an implementation gap and says so. An event window
-    # does not need it.
-    _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY" or registered_event,
-          "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED", "IMPLEMENTATION_GAP")
     period, registered_scope = event_measurement_window(
         repo_root=repo_root, company_id=company_id, pinned=pinned,
         registered_event=registered_event)
@@ -167,6 +202,15 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                                                         dependency_specs={})
         spec = compile_spec_file(path=repo_root / spec_path, dependency_specs=dependency_specs)
         scope = {"entity_scope": "registrant", "period_basis": "source_annual_duration"}
+    if income_input is not None:
+        # The successor reports its own statement period, not the pinned
+        # fiscal year, and the proof above is what establishes which one that
+        # is. Leaving the pinned period here asked Company Facts for a year
+        # this registrant never reported and got MISSING_CANDIDATE - an answer
+        # about a period nobody filed, which is worse than the named gap it
+        # replaced. The Run keeps the pinned coordinate; the result keeps the
+        # measured window, the same separation the event window already uses.
+        period = {**period, **income_input["statement_period"]}
     target = {"company_id": company_id, "period_start": period["period_start"],
               "period_end": period["period_end"], "scope": scope,
               "scope_key": scope_key(scope=scope)}
@@ -254,13 +298,32 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
         observations = []
         selection = {"reason_code": result["reason_code"], "reason": reason,
                      "category": getattr(error, "category", "SOURCE_INTEGRITY_ERROR")}
+    if income_input is not None and observations:
+        # The same check the ordinary route runs: the observations must be the
+        # ones the income proof is about, so an admitted proof cannot stand
+        # behind a value it never described.
+        from .ordinary_income_input import verify_income_observations
+        selection = {**selection,
+                     "income_observation_checks": verify_income_observations(income_input,
+                                                                             observations)}
     proofs = list({content_hash(value=p): p for p in
                    [*prepared["source_proofs"],
+                    *([] if income_input is None else income_input["source_proofs"]),
                     *[entry["proof"] for entry in reader.proofs.values()]]}.values())
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=proofs)
-    source_records = list(reader.records.values())
+    source_records = list({content_hash(value=r): r for r in
+                           [*reader.records.values(),
+                            *([] if income_input is None
+                              else income_input["source_records"])]}.values())
     input_binding = {"prepared_input": prepared, "target": target, "target_period": period,
-                     "period_selection": period_selection, "amendment_input": None,
+                     "period_selection": period_selection,
+                     "amendment_input": (None if income_input is None else {
+                         **income_input["amendment_input"],
+                         "decision": "INPUT_PROPERTY_PROVEN",
+                         "input_class": "CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES",
+                         "current_income_checks": income_input["amendment_checks"]}),
+                     "current_income_input": (None if income_input is None
+                                              else income_input["income_input_id"]),
                      "spec_origin": spec_origin,
                      "spec_closure_hash": spec["spec_closure_hash"],
                      "authority_file_hashes": authority,

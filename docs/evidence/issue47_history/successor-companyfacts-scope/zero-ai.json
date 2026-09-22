@@ -1,0 +1,55 @@
+{
+ "answers_now": {
+  "B01": "APPLICABLE / NOT_MEANINGFUL / ANNUAL_DURATION_OUT_OF_RANGE / None, period 2025-08-08..2025-12-31",
+  "B03": "APPLICABLE / NOT_MEANINGFUL / ANNUAL_DURATION_OUT_OF_RANGE / None, period 2025-08-08..2025-12-31"
+ },
+ "company_id": "paramount_skydance_paramount_global",
+ "compared_with_the_ordinary_chain": {
+  "differing_metrics": 0,
+  "fields_compared": [
+   "applicability",
+   "quality",
+   "reason_code",
+   "value",
+   "period_start",
+   "period_end"
+  ],
+  "note": "NOT_MEANINGFUL is the answer, not a refusal: the successor's first period is 146 days and the Spec's annual-duration guard says a 146-day period is not an annual measurement."
+ },
+ "coordinates_moved": 2,
+ "fault_injections": [
+  {
+   "caught_by": [
+    "ASuccessorStatementMetricUsesTheApprovedIncomeProofTest.test_a_proof_about_another_filing_does_not_transfer"
+   ],
+   "id": "LET_A_PROOF_ABOUT_ANOTHER_FILING_TRANSFER",
+   "outcome": "CAUGHT",
+   "why_it_matters": "a current-period proof admitting a different target is one report standing behind another report's values"
+  },
+  {
+   "caught_by": [
+    "ASuccessorStatementMetricUsesTheApprovedIncomeProofTest.test_the_answers_are_the_ordinary_chain_s_answers",
+    "ASuccessorStatementMetricUsesTheApprovedIncomeProofTest.test_the_result_carries_the_measured_window_not_the_pinned_year"
+   ],
+   "id": "KEEP_THE_PINNED_YEAR_AS_THE_MEASURED_PERIOD",
+   "outcome": "CAUGHT",
+   "why_it_matters": "this is the first attempt's actual defect, kept as a case"
+  }
+ ],
+ "metrics": [
+  "B01",
+  "B03"
+ ],
+ "production_authorized": false,
+ "real_sec_credit": false,
+ "record_type": "ISSUE_47_SUCCESSOR_ZERO_AI_SCOPE",
+ "running_total_of_the_thirteen": "Seven of Paramount's thirteen refused coordinates now answer: five structural Company Facts metrics and these two. Six remain blocked by the Part III amendment question, which is decided, answered 'not cleared', and not this task's to change.",
+ "target_report_end": "2025-12-31",
+ "the_first_attempt_was_wrong_and_was_measured": "Passing the guard alone left the route computing over the pinned fiscal year 2025-01-01..2025-12-31, which this registrant never reported, and returning MISSING_CANDIDATE for B01 and REUSE_CARDINALITY_FAILED for B03. An answer about a period nobody filed is worse than the named gap it replaced. The measured period has to come from the proof, and the Run keeps the pinned coordinate - the same separation the event window already uses.",
+ "what_changed": "The historical zero-AI route refused a successor registrant's B01 and B03 outright. The ordinary route answers both, using the current income input: the registrant's own HTML, XML and Company Facts, the period its income statement actually covers, and a Part III revenue-correction check. That input names the filing it proved, so it is asked for here and transfers only when that filing is this target.",
+ "what_this_does_not_establish": [
+  "That either value is available. Both are NOT_MEANINGFUL, which is the approved answer for a 146-day first period, not a number.",
+  "Anything about earlier Paramount periods, which period discovery still does not reach across the subject transition.",
+  "Any authorization: no SEC call, no model call, no production adoption."
+ ]
+}
