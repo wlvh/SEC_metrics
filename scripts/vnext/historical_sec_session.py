@@ -393,6 +393,12 @@ class HistoricalSecSession:
         self.response = recorded_response
         self.response_status = recorded_status
         self.data_root = ledger.root / "source-inputs"
+        # What this session claimed, so a caller never has to infer it from the
+        # shared ledger's total. Two snapshots around a capture are not taken
+        # under the same lock, so another process finishing a request between
+        # them makes the difference read as this invocation's - attributing
+        # somebody else's call to us.
+        self.claimed_slots = []
 
     def _check(self):
         _need(self._factory is _FACTORY, "ISSUE_47_SESSION_FACTORY_REQUIRED")
@@ -459,6 +465,9 @@ class HistoricalSecSession:
             path, intent = self.ledger.claim(
                 channel=SEC, request_digest=content_hash(value=request),
                 plan_id=content_hash(value=plan), purpose=purpose)
+            self.claimed_slots.append({"intent_id": intent["intent_id"],
+                                       "ordinal": intent["ordinal"],
+                                       "channel": intent["channel"]})
             _exclusive_write_json(path=path / "sec-plan.json", value=plan)
             document_name = Path(urlsplit(url).path).name
             _need(bool(document_name), "ISSUE_47_DOCUMENT_NAME_MISSING")
@@ -484,6 +493,18 @@ class HistoricalSecSession:
                     "checkpoint_id": checkpoint["checkpoint_id"],
                     "calls": [0, 0, int(self.ledger.live)],
                     "production_authorized": False}
+
+    def calls_this_session(self):
+        """What this session actually claimed, by channel.
+
+        Derived from the slots this object claimed, not from the ledger's
+        running total. The ledger is shared, and the total moving between two
+        reads says only that somebody made a request - not that we did.
+        """
+        counts = [0, 0, 0]
+        for slot in self.claimed_slots:
+            counts[{"PROVIDER": 0, "PAID": 1, SEC: 2}[slot["channel"]]] += 1
+        return counts if self.ledger.live else [0, 0, 0]
 
     def _receipt(self, *, intent, path, log, before, old_rows, url, result, dependency,
                  company_id):
@@ -614,6 +635,8 @@ _SUITE = "tests.vnext.test_historical_sec_session."
 # with no coverage check drifts silently; ``unclassified_verification_cases``
 # below turns that drift into a failure.
 VERIFICATION_SELECTORS = tuple(_SUITE + name for name in (
+    "TheApprovalAuthorityCannotComeFromTheFileBeingVerified",
+    "ThisInvocationsCallCountIsNotTheLedgerDelta",
     "AGrantMustComeFromAnApprovalNotFromTwoLocalFiles",
     "ATerminalMustAgreeWithTheReceiptItNames",
     "EveryVerificationCaseMustBeClassified",

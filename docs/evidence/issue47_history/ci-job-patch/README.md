@@ -239,3 +239,54 @@ not be grantable at all; and the permission is not "may edit one YAML file" but
 "may execute arbitrary code in an environment holding the repository's secrets",
 which GitHub gates separately for that reason. Three workflow edits across an
 entire issue is not a rate that justifies standing access.
+
+## Retraction: do not paste a whole workflow file, and `0002` is gone
+
+The earlier section here told the reader to copy `vnext-fast.patched.yml` over
+`.github/workflows/vnext-fast.yml` in the GitHub editor. **That instruction is
+withdrawn and the file is deleted.** It was written when nobody else was
+touching the workflow. Issue #28's branch has since changed it, and a
+whole-file paste would have silently reverted their commit.
+
+Upstream `0e2d9a8` ("ci: allow thirty minutes for complete capacity native
+jobs") on `task/b06-new-source` sets both capacity jobs to 30 minutes.
+
+| job | was | upstream now | this issue's measurement |
+|---|---|---|---|
+| `capacity native Runs` | 15 | **30** | 1136s local ≈ 14.7 min in CI - ample |
+| `capacity program-role` | 20 | **30** | 1803s local ≈ 23.3 min in CI - about 6.7 min of headroom |
+| `saved-source material` | 35 | 35 (untouched) | hit its cap at 34m47s |
+
+So `0002-raise-capacity-native-runs-cap.patch` is **retired**: upstream did
+that job, with its own numbers, and this issue has no business re-deciding
+them. The measurement is offered as information, not as a change - 30 for the
+program-role job is above the estimate but not by much, and whoever owns that
+job should know the estimate exists.
+
+What remains is only what belongs to this issue, and `0003` was **regenerated
+against upstream's current file** rather than against this branch's stale copy:
+
+- `0001-add-historical-period-package-job.patch` - adds a job that runs this
+  issue's own package test.
+- `0003-split-saved-source-material-job.patch` - splits the saved-source tier
+  into two 30-minute shards. Upstream did not touch this job, and it is the
+  tier that carries this issue's thirteen historical test modules.
+
+Both were re-checked with `git apply --check` against upstream `0e2d9a8`,
+singly and in sequence. **Apply them as patches, on top of whatever the file
+says at the time.** A file this issue rendered earlier is a snapshot of one
+moment and two branches now write here.
+
+## What the merge checkout means for reading CI
+
+The workflow triggers on `pull_request` and checks out without a ref, so a run
+tests the **merge** of this branch with its base, not this branch alone. Two
+consequences worth stating rather than assuming:
+
+- Upstream's 30-minute caps should reach this PR's next run without anything
+  being applied here, because the merge ref is recomputed as the base advances.
+  That is a prediction from how the trigger works; it is confirmed by reading a
+  run that started after `0e2d9a8`, not by this paragraph.
+- "PR 52 passed at `27a28d9`" is therefore imprecise on its own. What a run
+  tested is a head **and** a base, and where a historical runtime is involved,
+  a registration patch as well.

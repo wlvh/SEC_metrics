@@ -41,7 +41,6 @@ def main(argv=None):
         parser.error("--company is required for " + args.command)
     summary = None
     session = None
-    before_sec = 0
     try:
         if args.command == "wiring-receipt":
             # Produced by driving the chain, not by describing it. A grant
@@ -76,7 +75,6 @@ def main(argv=None):
             # exercised offline, so a refusal here names the missing grant
             # rather than a missing implementation.
             session = live_historical_session()
-            before_sec = session.ledger.snapshot()["counts"][2]
             result = session.capture(company_id=args.company, url=args.url,
                                      years=args.years)
     except HistoricalAcquisitionError as error:
@@ -92,17 +90,16 @@ def main(argv=None):
         # branch and the per-invocation count on the success branch, so the
         # same field meant two things depending on the outcome.
         spent, cumulative = [0, 0, 0], None
-        note = "no ledger was opened before this refusal"
+        note = "no session was opened before this refusal"
         if session is not None:
+            spent = session.calls_this_session()
+            note = ("counted from the slots this session claimed, not from a "
+                    "difference in the shared ledger total")
             try:
-                state = session.ledger.snapshot()
-                cumulative = state["counts"]
-                spent = [0, 0, 0] if not session.ledger.live else [
-                    0, 0, 1 if state["counts"][2] > before_sec else 0]
-                note = ("read from this issue's ledger after the refusal; "
-                        + str(len(state["blocked"])) + " slot(s) unresolved")
+                cumulative = session.ledger.snapshot()["counts"]
             except Exception as unreadable:  # noqa: BLE001 - reported, not handled
-                spent, note = None, "ledger unreadable after the refusal: " + str(unreadable)
+                cumulative = None
+                note += "; cumulative unreadable: " + str(unreadable)
         print(json.dumps({"status": "REFUSED", "reason": str(error), "calls": spent,
                           "cumulative_calls": cumulative, "calls_source": note},
                          sort_keys=True), file=sys.stderr)

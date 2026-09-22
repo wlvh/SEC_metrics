@@ -10,16 +10,16 @@
  "downstream_reader_accepted": true,
  "evidence": {
   "docs/evidence/issue47_history/acquisition-wiring/fault-injections.json": "00b44cb0bddc8f9991723a292eabef4bcf3d6cfa5c5052544a4355aed81d6f96",
-  "scripts/vnext/historical_sec_session.py": "ea8a5e811b765e3d77127e8aeb013e1fb39554eb5dbc4037f3786aae1677949d",
-  "scripts/vnext/historical_source_acquisition.py": "e217c978fb7afb11f508e047270d2639db52a7fb5c520087a9406b37e27335a0",
-  "tests/vnext/test_historical_sec_session.py": "4dd9e03394d17cc9a5adf09022f8be83030aa1fa5ba65e3b7844a74c349cf5d3",
-  "tools/vnext_historical_sec.py": "cdf9afdcb50412ad3ca45776c68574ef2c570a32bff29d0445fddc242e09dc0b"
+  "scripts/vnext/historical_sec_session.py": "910ecd4972b7494201275e623383e64d18fe6686b0e25166cf1c2ea370c4d3f0",
+  "scripts/vnext/historical_source_acquisition.py": "d61ff43303dada8d23d5781fb01e0fb9e29aae34dd57f8076f375a72eb565382",
+  "tests/vnext/test_historical_sec_session.py": "0eb1032101793766ba0c3bfa35b48ad5248b63a4c667cd921f22dbd841b652a6",
+  "tools/vnext_historical_sec.py": "67263effcbe8da960e03a64b04db96e0657d6d9969276eccace070587a664239"
  },
  "execution_mode": "RECORDED_TEST_ONLY",
  "fault_injections_recorded_in": "docs/evidence/issue47_history/acquisition-wiring/fault-injections.json, hashed by this receipt",
  "production_authorized": false,
  "real_sec_credit": false,
- "receipt_id": "sha256:09b7a2b2fdfdb37aa3189be632a0c0c0d3cd9408aa90cb68e4395148b4e2c564",
+ "receipt_id": "sha256:65994cbf9ceb30aeff84c0ce9299552260e8b57b97d95fce90289fbaa04f8649",
  "record_type": "ISSUE_47_SEC_ACQUISITION_OFFLINE_WIRING",
  "requirement_id": "issue_47_v1",
  "schema_version": 1,
@@ -33,6 +33,8 @@
   "passed": true,
   "return_code": 0,
   "selectors": [
+   "tests.vnext.test_historical_sec_session.TheApprovalAuthorityCannotComeFromTheFileBeingVerified",
+   "tests.vnext.test_historical_sec_session.ThisInvocationsCallCountIsNotTheLedgerDelta",
    "tests.vnext.test_historical_sec_session.AGrantMustComeFromAnApprovalNotFromTwoLocalFiles",
    "tests.vnext.test_historical_sec_session.ATerminalMustAgreeWithTheReceiptItNames",
    "tests.vnext.test_historical_sec_session.EveryVerificationCaseMustBeClassified",
@@ -49,7 +51,7 @@
    "tests.vnext.test_historical_sec_session.TheRecordedPathOpensNoSocket",
    "tests.vnext.test_historical_sec_session.TheInstallerCarriesTheRuleInputsItClaims"
   ],
-  "tests_run": 48,
+  "tests_run": 56,
   "unclassified_cases": [],
   "why_excluded": "they verify the receipt this run produces, so including them would make the evidence circular"
  },

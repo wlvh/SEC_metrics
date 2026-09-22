@@ -67,6 +67,21 @@ REQUIRED_POLICY_FIELDS = ("requirement_id", "repository", "approver_login",
                           "scope", "sec_wiring_receipt_path")
 DELEGATION_TYPE = "ISSUE_47_HISTORICAL_SEC_DELEGATION"
 ISSUE_NUMBER = 47
+# The trust anchor, and deliberately not a field of the allowance. An earlier
+# version read ``repository`` and ``approver_login`` out of the same file it
+# was verifying, so the file named its own approver. Measured against that:
+# changing the comment author alone was refused, but changing the author *and*
+# ``approver_login`` together was accepted, and so was moving the URL, the
+# issue and ``repository`` to another repository together. A policy that picks
+# its own authority proves only that it agrees with itself.
+#
+# This is the project's own identity, not a business literal: it says which
+# repository's issue 47 can carry this issue's delegation. It follows the shape
+# the repository already uses - Issue #28's frozen ``validate_comment`` binds
+# the repository from outside the record and requires the comment's author to
+# be that repository's owner.
+TRUSTED_REPOSITORY = "wlvh/SEC_metrics"
+TRUSTED_APPROVER = TRUSTED_REPOSITORY.split("/")[0]
 # Not every declared dependency serves one named period, and requiring that it
 # does refused the majority of the real declaration. Measured on the planner's
 # own rows: a submissions index and the history shards carry
@@ -190,10 +205,16 @@ def _typed(policy):
     _need(_HEX64.match(str(policy["delegation_body_sha256"]) or ""),
           "ISSUE_47_ALLOWANCE_DIGEST_IS_NOT_A_SHA256:"
           + str(policy["delegation_body_sha256"])[:40])
-    _need(type(policy["repository"]) is str and policy["repository"].count("/") == 1,
-          "ISSUE_47_ALLOWANCE_REPOSITORY_MALFORMED:" + str(policy["repository"])[:40])
-    _need(type(policy["approver_login"]) is str and policy["approver_login"],
-          "ISSUE_47_ALLOWANCE_APPROVER_MALFORMED")
+    # The allowance may restate the anchor; it may not choose it. Both fields
+    # are compared against the constants above rather than merely typed, so a
+    # policy cannot move the approval to another repository or another approver
+    # by editing itself and the record it points at in the same breath.
+    _need(policy["repository"] == TRUSTED_REPOSITORY,
+          "ISSUE_47_ALLOWANCE_NAMES_ANOTHER_REPOSITORY:" + str(policy["repository"])[:60]
+          + " (trusted: " + TRUSTED_REPOSITORY + ")")
+    _need(policy["approver_login"] == TRUSTED_APPROVER,
+          "ISSUE_47_ALLOWANCE_NAMES_ANOTHER_APPROVER:" + str(policy["approver_login"])[:60]
+          + " (trusted: " + TRUSTED_APPROVER + ")")
     _need(_comment_url(repository=policy["repository"]).match(
         str(policy["delegation_url"]) or ""),
         "ISSUE_47_ALLOWANCE_URL_IS_NOT_THIS_ISSUE_S_COMMENT:"

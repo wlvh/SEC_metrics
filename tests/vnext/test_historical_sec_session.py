@@ -31,6 +31,7 @@ from vnext.historical_sec_session import (HistoricalSessionError,
                                           recorded_historical_session,
                                           verify_offline_wiring)
 from vnext.historical_source_acquisition import (POLICY_PATH, DELEGATION_TYPE,
+                                                 TRUSTED_APPROVER, TRUSTED_REPOSITORY,
                                                  HistoricalAcquisitionError,
                                                  acquisition_allowance,
                                                  declared_dependencies,
@@ -980,6 +981,108 @@ class EveryVerificationCaseMustBeClassified(unittest.TestCase):
                          "ATerminalFileIsNotAnOutcome",
                          "BelongingToTheTaskIsNotNeedingAFetch"):
             self.assertIn(required, names)
+
+
+class TheApprovalAuthorityCannotComeFromTheFileBeingVerified(unittest.TestCase):
+    """A policy that names its own approver proves only self-consistency.
+
+    Reproduced against the previous version: changing the comment author alone
+    was refused, but changing the author *and* ``approver_login`` together was
+    accepted, and so was moving the URL, the issue and ``repository`` to
+    another repository together. The one-sided cases were real tests; what was
+    missing was the case where both sides move.
+    """
+
+    def setUp(self):
+        self.made = []
+        self.addCleanup(lambda: [shutil.rmtree(p, ignore_errors=True)
+                                 for pair in self.made for p in pair])
+
+    def _tree(self, **kwargs):
+        pair = _grant_tree(**kwargs)
+        self.made.append(pair)
+        return pair
+
+    def test_moving_the_author_and_the_approver_field_together_is_refused(self):
+        root, _ = self._tree(repository=TRUSTED_REPOSITORY, approver="somebody-else")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root)
+        self.assertIn("ISSUE_47_ALLOWANCE_NAMES_ANOTHER_APPROVER", str(caught.exception))
+
+    def test_moving_the_url_and_the_repository_field_together_is_refused(self):
+        root, _ = self._tree(repository="attacker/repo", approver="attacker",
+                             url="https://github.com/attacker/repo/issues/47#issuecomment-1")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root)
+        self.assertIn("ISSUE_47_ALLOWANCE_NAMES_ANOTHER_REPOSITORY", str(caught.exception))
+
+    def test_the_anchor_is_this_repository_and_its_owner(self):
+        # The constant is the authority, so a case has to say what it is -
+        # otherwise a future edit could point it anywhere and every other case
+        # here would still pass.
+        self.assertEqual("wlvh/SEC_metrics", TRUSTED_REPOSITORY)
+        self.assertEqual(TRUSTED_REPOSITORY.split("/")[0], TRUSTED_APPROVER)
+
+    def test_the_anchor_agrees_with_the_repository_identity_already_committed(self):
+        # A second witness, so the constant is not the only thing that knows
+        # which repository this is. The existing approved call policy names it
+        # for its own issue; borrowing the identity is not borrowing the grant.
+        from vnext.continuous_call_policy import POLICY_PATH as continuous
+        self.assertEqual(TRUSTED_REPOSITORY,
+                         strict_json_file(path=ROOT / continuous)["repository"])
+
+    def test_a_grant_on_the_trusted_repository_is_still_accepted(self):
+        root, budget = self._tree()
+        allowance = acquisition_allowance(repo_root=root)
+        self.assertEqual(TRUSTED_REPOSITORY, allowance["repository"])
+        self.assertEqual(str(budget), allowance["budget_root"])
+
+
+class ThisInvocationsCallCountIsNotTheLedgerDelta(unittest.TestCase):
+    """Two unlocked reads of a shared total cannot attribute a call.
+
+    The previous version reported one call for this invocation whenever the
+    ledger's SEC total had grown between the reads around a capture. Those
+    reads are not inside the capture's lock, so a request another process
+    finished in between was reported as ours.
+    """
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-attrib-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def test_a_session_that_claimed_nothing_reports_nothing(self):
+        session = recorded_historical_session(root=self.root / "a", response=BODY)
+        self.assertEqual([0, 0, 0], session.calls_this_session())
+        with self.assertRaises(HistoricalAcquisitionError):
+            session.capture(company_id="marriott_international",
+                            url="https://www.sec.gov/Archives/edgar/data/1048286/none.htm")
+        self.assertEqual([0, 0, 0], session.calls_this_session(),
+                         "a refusal before the claim consumes nothing")
+
+    def test_another_process_advancing_the_total_is_not_attributed_here(self):
+        # The interleaving the old expression got wrong: we read the total,
+        # somebody else completes a request, we refuse before claiming, and we
+        # read the total again. Simulated by moving the ledger forward between
+        # the reads, which is exactly what a second process would do.
+        ledger_root = self.root / "shared"
+        other = recorded_historical_session(root=ledger_root, response=BODY)
+        mine = recorded_historical_session(root=ledger_root, response=BODY)
+        before = mine.ledger.snapshot()["counts"][2]
+        other.capture(company_id="marriott_international", url=DECLARED)
+        after = mine.ledger.snapshot()["counts"][2]
+        self.assertEqual(before + 1, after, "the shared total did move")
+        self.assertEqual([0, 0, 0], mine.calls_this_session(),
+                         "but this session claimed nothing, so it spent nothing")
+        self.assertEqual(1, len(other.claimed_slots),
+                         "and the session that did claim says so")
+
+    def test_a_session_that_claimed_reports_its_own_slots(self):
+        session = recorded_historical_session(root=self.root / "own", response=BODY)
+        session.capture(company_id="marriott_international", url=DECLARED)
+        self.assertEqual(1, len(session.claimed_slots))
+        self.assertEqual([0, 0, 0], session.calls_this_session(),
+                         "recorded mode spends no real call, and says so")
 
 
 if __name__ == "__main__":

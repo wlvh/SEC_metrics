@@ -309,3 +309,42 @@ corpus, and the shared fixture never removed its temporary root, so repeated
 runs filled the disk. The fixtures now register their own cleanup. Recording
 it because the failure looked like a code regression and was not - and because
 a leaking fixture will eventually be blamed for a defect it did not cause.
+
+## The approval authority now comes from outside the file being verified
+
+The previous round read `repository` and `approver_login` out of the same
+policy it was checking, so the file chose its own authority. One-sided cases
+were tested and refused; the case where both sides move was not.
+
+Measured against that version:
+
+| what moved | old result |
+|---|---|
+| the comment's author alone | refused, correctly |
+| **the author *and* `approver_login` together** | **accepted** |
+| the comment URL alone | refused, correctly |
+| **the URL, the issue and `repository` together** | **accepted** |
+
+`TRUSTED_REPOSITORY` is now a constant in the module, with the approver being
+its owner - the shape Issue #28's frozen `validate_comment` already uses,
+where the repository is bound from outside the record and the comment's author
+must be that repository's owner. The allowance may restate the anchor; it may
+not choose it. Both "together" cases now refuse by name, the legitimate grant
+still passes, and a case asserts the constant agrees with the repository named
+in the already-committed call policy, so the constant is not its own only
+witness. Borrowing that repository identity is not borrowing that issue's
+grant.
+
+## A per-invocation count is not a difference in a shared total
+
+The CLI reported one call for this invocation whenever the ledger's SEC total
+had grown between two reads taken around a capture. Those reads are not inside
+the capture's lock, so this interleaving attributed another process's request
+to us: read total, another process completes a request, we refuse before
+claiming, read total again, report one call.
+
+The session now records the slots it claims and reports from those.
+`calls` is what this session claimed; `cumulative_calls` is the ledger's
+total, which a caller must not add to anything. A case drives the interleaving
+directly - two sessions on one ledger, the other one captures, ours refuses -
+and requires ours to report zero while the shared total has provably moved.
