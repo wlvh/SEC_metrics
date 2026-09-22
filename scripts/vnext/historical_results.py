@@ -70,19 +70,42 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
     # bytes, so this asks rather than refusing. The target stays the original
     # filing either way: the amendment is evidence about whether the original's
     # inputs still stand, never a source of values.
-    if prepared["amendments"]:
+    traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
+    # Structural applicability is prior to the amendment question and is asked
+    # first. A metric this company's traits exclude reads no input at all, so
+    # no input class can be in doubt for it; refusing it because an amendment
+    # left the original's statement values unproven says the values could not
+    # be read when there were none to read. Measured on Paramount: five of the
+    # eleven are N_A_STRUCTURAL and were being refused on an amendment
+    # classification that cannot reach them.
+    applicable = sorted(metric_id for metric_id, route in routes.items()
+                        if metric_is_applicable(applicability=route["applicability"],
+                                                traits=traits))
+    amendment_error = None
+    if prepared["amendments"] and applicable:
         from .historical_amendment_admission import (AmendmentAdmissionError,
                                                      amendment_admission)
         try:
             amendment_admission(repo_root=repo_root, company_id=company_id,
-                                metric_ids=sorted(routes), prepared=prepared)
+                                metric_ids=applicable, prepared=prepared)
         except AmendmentAdmissionError as error:
-            _need(False, str(error))
-    _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY",
-          "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
+            # Carried per metric rather than raised for the family: the
+            # metrics it does reach still report it, and it is the same
+            # message as before, so an approved policy refusal never reads as
+            # an implementation gap.
+            amendment_error = str(error)
+    # A successor registrant used to refuse all eleven metrics outright. The
+    # ordinary route has had an answer for each of them for some time, and it
+    # is an approved one: the catalog's REQUIRE_CONTINUOUS routes report
+    # ENTITY_CONTINUITY_NOT_COMPARABLE, the current-instant ALLOW routes read
+    # this registrant's own facts, and anything else still refuses. Refusing
+    # where an approved answer exists reports an implementation gap that is
+    # not there, so this asks the same question the ordinary chain asks and
+    # gets the same three answers - measured against it, not assumed.
+    subject_error = ("HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED"
+                     if prepared["subject_policy"]["mode"] != "CONTINUOUS_PRIMARY" else None)
     period = prepared["table_input"]["target_period"]
     registry = next(r for r in _registry_rows(repo_root=repo_root) if r["company_id"] == company_id)
-    traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
     reader = _Sources(repo_root, company_id, prepared["entity"])
     inventory = reader.read(submissions_url(cik=int(prepared["entity"])),
                             role="sec_submissions_inventory", media_type="application/json")
@@ -156,19 +179,66 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
                 entity=None, unit=None)
         else:
             try:
+                # An approved amendment refusal reaches the metrics it is about
+                # and no further. It is raised here, inside the per-metric
+                # handler, so it lands as this metric's named reason instead of
+                # ending the whole resolve.
+                _need(amendment_error is None, amendment_error)
+                # The same guard the ordinary route runs, on the same catalog
+                # policy and the same registry row. It needs the authenticated
+                # registrant and period, not statement values, so it is asked
+                # before the prior-period walk is required of anything.
+                continuity_guard = (bool(subject_error)
+                                    and route["continuity_policy"] == "REQUIRE_CONTINUOUS"
+                                    and registry["entity_continuity_status"] != "continuous")
                 requires_prior = any(c["accession_role"] == "prior" for b in route["branches"]
                                      for c in b["components"])
-                _need(not requires_prior or prior_error is None,
-                      (prior_error or {}).get("reason"))
-                graph = _deterministic_metric_graph(context=context, company_id=company_id,
-                                                    metric_id=metric_id)
-                result, trace = graph["result"], graph["trace"]
+                if continuity_guard:
+                    graph = _deterministic_metric_graph(context=context, company_id=company_id,
+                                                        metric_id=metric_id)
+                    result, trace = graph["result"], graph["trace"]
+                    _need(result["quality"] == "NOT_MEANINGFUL"
+                          and result["reason_code"] == "ENTITY_CONTINUITY_NOT_COMPARABLE"
+                          and result["value"] is None and not graph["claims"]
+                          and graph["observation"] is None,
+                          "HISTORICAL_COMPANYFACTS_CONTINUITY_GUARD_CHANGED")
+                    detail = {"category": "APPROVED_COMPARABILITY_LIMIT",
+                              "reason": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+                              "continuity_policy": route["continuity_policy"],
+                              "entity_continuity_status": registry["entity_continuity_status"],
+                              "subject_policy": prepared["subject_policy"],
+                              "statement_values_used": False}
+                else:
+                    # The installed catalog already permits these current-instant
+                    # metrics across a registrant transition. Their facts still
+                    # come from this primary CIK and this accession only; that
+                    # is not comparable annual performance and is not claimed as
+                    # any. Every other successor case keeps the refusal.
+                    instant_scope = (route["continuity_policy"] == "ALLOW" and instant
+                                     and all(c["accession_role"] == "current"
+                                             and c["period_role"] == "current_instant"
+                                             for b in route["branches"] for c in b["components"]))
+                    _need(not subject_error or instant_scope, subject_error)
+                    _need(not requires_prior or prior_error is None,
+                          (prior_error or {}).get("reason"))
+                    graph = _deterministic_metric_graph(context=context, company_id=company_id,
+                                                        metric_id=metric_id)
+                    result, trace = graph["result"], graph["trace"]
             except (*_SOURCE_ERRORS, NormalCompanyfactsError, DecimalException) as error:
-                detail = {"reason": str(error), "error_type": type(error).__name__,
-                          "category": "SOURCE_OR_IMPLEMENTATION_UNRESOLVED"}
                 graph = {"claims": [], "projection_claims": [], "observation": None}
-                result, trace = withheld_metric_result(compiled_spec=spec, target=target,
-                                                       reason_code="HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED")
+                # An approved policy refusal and an unresolved route are two
+                # different answers and must not share a reason code. Reporting
+                # a decided question as SOURCE_OR_IMPLEMENTATION_UNRESOLVED is
+                # what makes a settled question read as still open.
+                decided = amendment_error is not None and str(error) == amendment_error
+                detail = {"reason": str(error), "error_type": type(error).__name__,
+                          "category": ("APPROVED_AMENDMENT_POLICY_REFUSAL" if decided
+                                       else "SOURCE_OR_IMPLEMENTATION_UNRESOLVED"),
+                          "amendment_policy_decision": amendment_error if decided else None}
+                result, trace = withheld_metric_result(
+                    compiled_spec=spec, target=target,
+                    reason_code=("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED" if decided
+                                 else "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED"))
         observations = [graph["observation"]] if graph["observation"] else []
         results[metric_id] = {"metric_id": metric_id, "compiled_spec": spec, "target": target,
                               "selection": detail, "claims": graph["claims"],

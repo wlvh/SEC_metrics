@@ -713,3 +713,100 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+PARAMOUNT = "paramount_skydance_paramount_global"
+PARAMOUNT_FY2025_END = "2025-12-31"
+
+
+class SuccessorRegistrantCompanyfactsTest(unittest.TestCase):
+    """A successor registrant has answers, and they are the approved ones.
+
+    The historical route refused all eleven Company Facts metrics for a
+    successor registrant while the ordinary route had been answering each of
+    them: the catalog's REQUIRE_CONTINUOUS routes report
+    ENTITY_CONTINUITY_NOT_COMPARABLE, the current-instant ALLOW routes read
+    this registrant's own facts, and the rest still refuse. Refusing where an
+    approved answer exists reports an implementation gap that is not there.
+
+    Two blockers sat on these coordinates and they were independent. This
+    closes the second; the first - whether a Part III amendment clears
+    ORIGINAL_STATEMENT_VALUES - is a decided policy question whose answer is
+    "not cleared", and it is now reported as that rather than as an
+    unresolved route.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.selection = resolve_period_selection(repo_root=ROOT, company_id=PARAMOUNT,
+                                                 report_end=PARAMOUNT_FY2025_END)
+        cls.resolved = resolve_historical_companyfacts_metrics(
+            repo_root=ROOT, company_id=PARAMOUNT, period_selection=cls.selection)
+
+    @staticmethod
+    def _answers(bundle):
+        return {key: (value["result"]["applicability"], value["result"]["quality"],
+                      value["result"]["reason_code"], str(value["result"]["value"]))
+                for key, value in bundle["metrics"].items()}
+
+    def test_a_metric_this_company_cannot_have_is_not_refused_by_an_amendment(self):
+        # Structural applicability is prior to the amendment question: a
+        # metric the traits exclude reads no input, so no input class can be
+        # in doubt for it. Five of the eleven were being refused on a
+        # classification that cannot reach them.
+        structural = {key: value for key, value in self.resolved["metrics"].items()
+                      if value["result"]["applicability"] == "N_A_STRUCTURAL"}
+        self.assertTrue(structural)
+        for key, value in structural.items():
+            with self.subTest(key):
+                self.assertEqual("TRAIT_NOT_APPLICABLE", value["result"]["reason_code"])
+                self.assertIsNone(value["result"]["value"])
+
+    def test_a_decided_policy_refusal_does_not_read_as_an_unresolved_route(self):
+        blocked = {key: value for key, value in self.resolved["metrics"].items()
+                   if value["result"]["applicability"] == "APPLICABLE"}
+        self.assertTrue(blocked)
+        for key, value in blocked.items():
+            with self.subTest(key):
+                self.assertEqual("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED",
+                                 value["result"]["reason_code"])
+                self.assertEqual("APPROVED_AMENDMENT_POLICY_REFUSAL",
+                                 value["selection"]["category"])
+                self.assertIn("ORIGINAL_STATEMENT_VALUES",
+                              value["selection"]["amendment_policy_decision"])
+
+    def test_with_the_policy_question_set_aside_the_answers_are_the_ordinary_ones(self):
+        # Load-bearing. A port that invented its own successor treatment would
+        # pass every other case here and fail this one: all eleven answers,
+        # including two exact values, must equal what the ordinary chain says
+        # about this registrant. The stand-down is confined to this process and
+        # returns a probe-marked record; no policy file is touched.
+        from unittest.mock import patch
+        from vnext.normal_companyfacts_results import resolve_ordinary_companyfacts_metrics
+        probe = {"record_type": "PROBE_ONLY_AMENDMENT_ADMISSION", "admitted": True}
+        with patch("vnext.historical_amendment_admission.amendment_admission",
+                   return_value=probe):
+            historical = resolve_historical_companyfacts_metrics(
+                repo_root=ROOT, company_id=PARAMOUNT, period_selection=self.selection)
+        ordinary = resolve_ordinary_companyfacts_metrics(repo_root=ROOT, company_id=PARAMOUNT)
+        self.assertEqual(self._answers(ordinary), self._answers(historical))
+        values = [key for key, answer in self._answers(historical).items()
+                  if answer[1] == "EXACT"]
+        self.assertTrue(values, "the current-instant routes carry values, not just refusals")
+        limits = [key for key, answer in self._answers(historical).items()
+                  if answer[2] == "ENTITY_CONTINUITY_NOT_COMPARABLE"]
+        self.assertTrue(limits, "and the annual routes carry the approved comparability limit")
+
+    def test_a_continuous_registrant_is_untouched(self):
+        # The guard is asked only when the subject policy says successor, so a
+        # continuous company must take the same path it always did.
+        selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
+                                             report_end=FY2024_END)
+        resolved = resolve_historical_companyfacts_metrics(
+            repo_root=ROOT, company_id=MARRIOTT, period_selection=selection)
+        categories = {(value.get("selection") or {}).get("category")
+                      for value in resolved["metrics"].values()}
+        self.assertNotIn("APPROVED_COMPARABILITY_LIMIT", categories)
+        self.assertNotIn("APPROVED_AMENDMENT_POLICY_REFUSAL", categories)
+        self.assertTrue(any(value["result"]["quality"] == "EXACT"
+                            for value in resolved["metrics"].values()))
