@@ -1,0 +1,737 @@
+{
+ "attempted_metric_position_count": 43,
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "companies": [
+  "marriott_international",
+  "southwest_airlines",
+  "ford_motor_company",
+  "pfizer",
+  "jpmorgan_chase",
+  "salesforce",
+  "lumen_technologies",
+  "macys",
+  "paramount_skydance_paramount_global",
+  "enphase_energy"
+ ],
+ "exact_metric_position_count": 9,
+ "native_run_created": false,
+ "outcomes": [
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "marriott_international",
+   "component_id": "sha256:a1fe7c41649366c83272b7f1da4929210c675dd28e43a86fa6c8ccacd9ed0908",
+   "current_accession": "0001048286-26-000007",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "resolved_by": "STRUCTURED",
+     "unit": "USD",
+     "value": "22970926"
+    }
+   ],
+   "period_start": "2025-01-01",
+   "prior_accession": "0001628280-25-004818",
+   "prior_error": null,
+   "prior_fiscal_year": 2024,
+   "report_end": "2025-12-31",
+   "selection_id": "sha256:7228ac7bcdc0ba3663303921cd3b9a98224f2ab0b3d0fadbbcb3245fdde77e9c",
+   "status": "RESOLVED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "marriott_international",
+   "component_id": "sha256:0f441cfbb28359d814d028cf2abcfa0fad06e06bd094699ae6fedfc885238a56",
+   "current_accession": "0001628280-25-004818",
+   "fiscal_year": 2024,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "publication": "WITHHELD",
+     "quality": "NONE",
+     "reason_code": "C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND",
+     "resolved_by": "STRUCTURED",
+     "unit": null,
+     "value": null
+    }
+   ],
+   "period_start": "2024-01-01",
+   "prior_accession": "0001628280-24-004372",
+   "prior_error": null,
+   "prior_fiscal_year": 2023,
+   "report_end": "2024-12-31",
+   "selection_id": "sha256:9d092cd097918c71df121096c19c83f268e98fdc84cc84b2655d472373d7501f",
+   "status": "RESOLVED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "marriott_international",
+   "component_id": "sha256:50cf1cb0509d4c11bcc51b7a9d7c5f4c559adfc8aa0bec6475b44cf13430eff4",
+   "current_accession": "0001628280-24-004372",
+   "fiscal_year": 2023,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "publication": "WITHHELD",
+     "quality": "NONE",
+     "reason_code": "C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND",
+     "resolved_by": "STRUCTURED",
+     "unit": null,
+     "value": null
+    }
+   ],
+   "period_start": "2023-01-01",
+   "prior_accession": null,
+   "prior_error": {
+    "error_type": "NormalGovernanceInputError",
+    "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/index.json"
+   },
+   "prior_fiscal_year": null,
+   "report_end": "2023-12-31",
+   "selection_id": "sha256:0f579446182bc48880fa5b2de4550a4e51f5f8b23d4196af7ebd32008ce80710",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "marriott_international",
+   "current_accession": "0001628280-23-003485",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001628280-22-002666",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm",
+   "report_end": "2022-12-31",
+   "selection_id": "sha256:3492fc0a87a8cbbc8956ecbfaa64fbcd48da79bd7d4e8b875e50aa6a20029e10",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "marriott_international",
+   "current_accession": "0001628280-22-002666",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001628280-21-002433",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+   "report_end": "2021-12-31",
+   "selection_id": "sha256:a7706cdbf16916ad06c7786226a39af764be141ec05cc44beb86668898554500",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "southwest_airlines",
+   "component_id": "sha256:9a6909faadc302693097849e52312c906cdb9cfe5406feb1840aee8b80d705bb",
+   "current_accession": "0000092380-26-000004",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "resolved_by": "STRUCTURED",
+     "unit": "USD",
+     "value": "16587882"
+    }
+   ],
+   "period_start": "2025-01-01",
+   "prior_accession": "0000092380-25-000024",
+   "prior_error": null,
+   "prior_fiscal_year": 2024,
+   "report_end": "2025-12-31",
+   "selection_id": "sha256:7c26802489ed33e99d7039dda55d621bdb24563d2c2f77fae8ffb8fd0e15cc1e",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "southwest_airlines",
+   "current_accession": "0000092380-25-000024",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000092380-24-000027",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm",
+   "report_end": "2024-12-31",
+   "selection_id": "sha256:3f38b543e10d49e905b6c013e99f7a50737aee9798462d2a7cc25e0886f9b17e",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "southwest_airlines",
+   "current_accession": "0000092380-24-000027",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000092380-23-000010",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/92380/000009238024000027/luv-20231231.htm",
+   "report_end": "2023-12-31",
+   "selection_id": "sha256:999cca12842f7a4572402464cdc65d58650cd644a6a101238426eed6f7df6429",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "southwest_airlines",
+   "current_accession": "0000092380-23-000010",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000092380-22-000007",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/92380/000009238023000010/luv-20221231.htm",
+   "report_end": "2022-12-31",
+   "selection_id": "sha256:07e342d8016cd3ac5848b6b26f324b42b75f7cdf773a1ac10a20cdc05606039b",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "southwest_airlines",
+   "current_accession": "0000092380-22-000007",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000092380-21-000033",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/92380/000009238022000007/luv-20211231.htm",
+   "report_end": "2021-12-31",
+   "selection_id": "sha256:96e2a984d3f1fd95d3217912711d6b3c27c86a989edac8e10f8ef22b65d7490b",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "ford_motor_company",
+   "component_id": "sha256:338c276102dfd47e106edc369cdd51e2d8ed2d62c0e0c2878956dc9a1481fd83",
+   "current_accession": "0000037996-26-000015",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "resolved_by": "STRUCTURED",
+     "unit": "USD",
+     "value": "27519558"
+    }
+   ],
+   "period_start": "2025-01-01",
+   "prior_accession": "0000037996-25-000013",
+   "prior_error": null,
+   "prior_fiscal_year": 2024,
+   "report_end": "2025-12-31",
+   "selection_id": "sha256:d370dd523b2c12f5fa50c586900882d89a02576884125d4e853a8b15ae338c72",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "ford_motor_company",
+   "current_accession": "0000037996-25-000013",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000037996-24-000009",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+   "report_end": "2024-12-31",
+   "selection_id": "sha256:ade65db3697c750187c8a41b1f73cb6b950795df89f73ff60e3f48a48d0c5f0c",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "ford_motor_company",
+   "current_accession": "0000037996-24-000009",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000037996-23-000012",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231.htm",
+   "report_end": "2023-12-31",
+   "selection_id": "sha256:dfc046345cb85186313083a1a0c3eb8d1dcf46f02186261e50b365e2e559367b",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "ford_motor_company",
+   "current_accession": "0000037996-23-000012",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000037996-22-000013",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231.htm",
+   "report_end": "2022-12-31",
+   "selection_id": "sha256:68a767364715194e5cd6156a1d5140f60a609eb5789beb3207399b85142e0b17",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "ford_motor_company",
+   "current_accession": "0000037996-22-000013",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000037996-21-000012",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231.htm",
+   "report_end": "2021-12-31",
+   "selection_id": "sha256:24ae5fa03e74f2c534955bfb2118c05d7201b76239839766c6b96f82944eae7e",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "pfizer",
+   "component_id": "sha256:62f8a453eb03530eb3f665367e447b9979291c7bdff351a461268e183f5b1632",
+   "current_accession": "0000078003-26-000026",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "resolved_by": "STRUCTURED",
+     "unit": "USD",
+     "value": "27585301"
+    }
+   ],
+   "period_start": "2025-01-01",
+   "prior_accession": "0000078003-25-000054",
+   "prior_error": null,
+   "prior_fiscal_year": 2024,
+   "report_end": "2025-12-31",
+   "selection_id": "sha256:5a8696e10e937e1e89c552ec2b4b9c00980a5280003b47c65f54905fea203aff",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "pfizer",
+   "current_accession": "0000078003-25-000054",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000078003-24-000039",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231.htm",
+   "report_end": "2024-12-31",
+   "selection_id": "sha256:8e223d49af987bb3229dc382e281c098553c0562d7d8bca3edf9f656a68c7e33",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "pfizer",
+   "current_accession": "0000078003-24-000039",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000078003-23-000024",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231.htm",
+   "report_end": "2023-12-31",
+   "selection_id": "sha256:0e1159f10dd4b7cf47e36f7df9d89f4eeaf9512809c86fff22287207f9151182",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "pfizer",
+   "current_accession": "0000078003-23-000024",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000078003-22-000027",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/78003/000007800323000024/pfe-20221231.htm",
+   "report_end": "2022-12-31",
+   "selection_id": "sha256:ab79ba8e6c1c77a59ae71920fe357ff175d85b72b7b760b8594d026b7c16a8aa",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "pfizer",
+   "current_accession": "0000078003-22-000027",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000078003-21-000038",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/78003/000007800322000027/pfe-20211231.htm",
+   "report_end": "2021-12-31",
+   "selection_id": "sha256:e2f49feb4b08fbf553a3d31fe81b99a248a344877066cbd6360dea7303e58b8c",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "jpmorgan_chase",
+   "error_type": "PeriodSelectionError",
+   "reason": "ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT",
+   "report_end": "2025-12-31",
+   "status": "PERIOD_SELECTION_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "jpmorgan_chase",
+   "error_type": "PeriodSelectionError",
+   "reason": "ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT",
+   "report_end": "2024-12-31",
+   "status": "PERIOD_SELECTION_BLOCKED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "salesforce",
+   "component_id": "sha256:6acca3ffaec2157a967f6489b20bcbeb9ac53e60e8486fc2fe7294ebc9cd830e",
+   "current_accession": "0001108524-26-000060",
+   "fiscal_year": 2026,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "resolved_by": "STRUCTURED",
+     "unit": "USD",
+     "value": "49379252"
+    }
+   ],
+   "period_start": "2025-02-01",
+   "prior_accession": "0001108524-25-000006",
+   "prior_error": null,
+   "prior_fiscal_year": 2025,
+   "report_end": "2026-01-31",
+   "selection_id": "sha256:ff1ec5a497e578ce24d93ed8f470e0e3119121c677c8debc3e40745dd69508de",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "salesforce",
+   "current_accession": "0001108524-25-000006",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001108524-24-000005",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+   "report_end": "2025-01-31",
+   "selection_id": "sha256:0d90e07ac41bd81b561c4a9f5671a14b8211ee891c1211b9c4b1989edb36bb97",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "salesforce",
+   "current_accession": "0001108524-24-000005",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001108524-23-000011",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852424000005/crm-20240131.htm",
+   "report_end": "2024-01-31",
+   "selection_id": "sha256:401af8c0345217a59e22f77c8703cb2c8fc1998954ff13eb258a26b66caad676",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "salesforce",
+   "current_accession": "0001108524-23-000011",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001108524-22-000013",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852423000011/crm-20230131.htm",
+   "report_end": "2023-01-31",
+   "selection_id": "sha256:a405903655323864d4464333fb9987f88ab762358f1a4360d9b0f88c81b60bed",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "salesforce",
+   "current_accession": "0001108524-22-000013",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001108524-22-000008",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852422000013/crm-20220131.htm",
+   "report_end": "2022-01-31",
+   "selection_id": "sha256:a3012a7bc55a4c05a19247312662a546bf13d9adf49b0e0d2c5f4af14f33768f",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "lumen_technologies",
+   "component_id": "sha256:81e602b6c83368653f69b0487e31eb93cbcd638580e3e70fd05985ef309f2245",
+   "current_accession": "0000018926-26-000014",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "resolved_by": "STRUCTURED",
+     "unit": "USD",
+     "value": "24936641"
+    }
+   ],
+   "period_start": "2025-01-01",
+   "prior_accession": "0000018926-25-000010",
+   "prior_error": null,
+   "prior_fiscal_year": 2024,
+   "report_end": "2025-12-31",
+   "selection_id": "sha256:e82601f4f15e4ffac1e8e8638e360b904fbcc9cb65c7475f47289951b90d0563",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "lumen_technologies",
+   "current_accession": "0000018926-25-000010",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000018926-24-000016",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm",
+   "report_end": "2024-12-31",
+   "selection_id": "sha256:c1eb511d8b3dbabedd2e18f2531a4a5abadac88b18935cfb6361e0d58b947395",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "lumen_technologies",
+   "current_accession": "0000018926-24-000016",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000018926-23-000013",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/18926/000001892624000016/lumn-20231231.htm",
+   "report_end": "2023-12-31",
+   "selection_id": "sha256:b9d3f0698eaacd0a3caa28a3df918b76b98fd0f1afa91cd13d8b71ed80e63d6d",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "lumen_technologies",
+   "current_accession": "0000018926-23-000013",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000018926-22-000007",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+   "report_end": "2022-12-31",
+   "selection_id": "sha256:ceb884464bbec18d25c53d8c08f22d9f4de1e4f267e82e1eaaac7b342571c342",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "lumen_technologies",
+   "current_accession": "0000018926-22-000007",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000018926-21-000017",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/18926/000001892622000007/lumn-20211231.htm",
+   "report_end": "2021-12-31",
+   "selection_id": "sha256:89f58a5701c3c23c3bd8e9f4fc384d15c768caf3324532402b760c6dc38eaf9d",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "macys",
+   "component_id": "sha256:ea08cba9f9d5946538bb3685f26c82328daf38a7574e3ea50188f4ee148480a7",
+   "current_accession": "0001628280-26-021721",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-02",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "resolved_by": "STRUCTURED",
+     "unit": "USD",
+     "value": "14104067"
+    }
+   ],
+   "period_start": "2025-02-02",
+   "prior_accession": "0001628280-25-014315",
+   "prior_error": null,
+   "prior_fiscal_year": 2024,
+   "report_end": "2026-01-31",
+   "selection_id": "sha256:65e2c0b4567dec431a27ccf3dc37734bcb6afeb77993b2f8f5de17d877cfad80",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "macys",
+   "current_accession": "0001628280-25-014315",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001628280-24-012734",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm",
+   "report_end": "2025-02-01",
+   "selection_id": "sha256:7e0e7c5d29324a430fe8c29771ed640ee40521b5170b102a25daa2065d031781",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "macys",
+   "current_accession": "0001628280-24-012734",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001628280-23-009154",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203.htm",
+   "report_end": "2024-02-03",
+   "selection_id": "sha256:a36f955c4bbda93d6ad04835ce2c712ff06c170b2cc625f3ee640fd6f227cd8c",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "macys",
+   "current_accession": "0001628280-23-009154",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001564590-22-011726",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+   "report_end": "2023-01-28",
+   "selection_id": "sha256:80d25bda514fd0885b9d65a939f9611b5fd2eaeba5ee7ed4e5bcaddc1b0df85c",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "macys",
+   "current_accession": "0001564590-22-011726",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001564590-21-016119",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/m-10k_20220129.htm",
+   "report_end": "2022-01-29",
+   "selection_id": "sha256:416e271860b5a0470b3e804e7fad2d245c0269d9f07d33cc9d5245f3e83ba555",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "component_id": "sha256:a1922ec024fa852270f729634b32d62a9938f774974d23c36ad2280dc9e5a353",
+   "current_accession": "0002041610-26-000011",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2025-12-31",
+     "period_start": "2025-08-07",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "resolved_by": "STRUCTURED",
+     "unit": "USD",
+     "value": "63211569"
+    }
+   ],
+   "period_start": "2025-01-01",
+   "prior_accession": null,
+   "prior_error": {
+    "error_type": "NormalCompanyfactsError",
+    "reason": "NORMAL_COMPANYFACTS_PRIOR_ORDINARY_MISSING_OR_AMBIGUOUS"
+   },
+   "prior_fiscal_year": null,
+   "report_end": "2025-12-31",
+   "selection_id": "sha256:94f833a9be9a9bbeca5196bdca178a368b7f2533c09c01ec12d2128c61a45e2f",
+   "status": "RESOLVED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "enphase_energy",
+   "component_id": "sha256:f35e51d304ef8d29346681d694f59bdf99d6bf6c74e01f35091ad6cfc9685d41",
+   "current_accession": "0001463101-26-000013",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "C03",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "resolved_by": "STRUCTURED",
+     "unit": "USD",
+     "value": "9601958"
+    }
+   ],
+   "period_start": "2025-01-01",
+   "prior_accession": "0001463101-25-000024",
+   "prior_error": null,
+   "prior_fiscal_year": 2024,
+   "report_end": "2025-12-31",
+   "selection_id": "sha256:c46d8f315d443a04a6d5a4044d7381e8fd3696ce52949edaacf166720c9005fa",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "enphase_energy",
+   "current_accession": "0001463101-25-000024",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001463101-24-000024",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+   "report_end": "2024-12-31",
+   "selection_id": "sha256:722e8b5898d974e4ff9fcf83d9837c66db39505481d2956ee5c702d692bba2a5",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "enphase_energy",
+   "current_accession": "0001463101-24-000024",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001463101-23-000025",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1463101/000146310124000024/enph-20231231.htm",
+   "report_end": "2023-12-31",
+   "selection_id": "sha256:50db3c88d2bf5c09752aaff46bef6b8975c60688f374651d8da21ef9b55d4329",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "enphase_energy",
+   "current_accession": "0001463101-23-000025",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001463101-22-000016",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1463101/000146310123000025/enph-20221231.htm",
+   "report_end": "2022-12-31",
+   "selection_id": "sha256:ab1d2ff9eb395c69279a473aea4524a3c43e1e65cbcb6cef6bf3e56ab66395e3",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "enphase_energy",
+   "current_accession": "0001463101-22-000016",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001463101-21-000016",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1463101/000146310122000016/enph-20211231.htm",
+   "report_end": "2021-12-31",
+   "selection_id": "sha256:d520c1fb635ef16c5f4dfc12b5e73026af353e0b6f85cfcba72e80371a91dd28",
+   "status": "SOURCE_BLOCKED"
+  }
+ ],
+ "production_authorized": false,
+ "record_type": "HISTORICAL_PERIOD_PILOT_REPORT",
+ "requested_metrics": [
+  "C03"
+ ],
+ "requested_years": 5,
+ "resolved_period_count": 11,
+ "schema_version": 1,
+ "target_period_count": 43
+}

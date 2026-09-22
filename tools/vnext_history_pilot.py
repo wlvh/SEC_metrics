@@ -36,6 +36,25 @@ from vnext.normal_period_selection import resolve_period_selection  # noqa: E402
 DEFAULT_METRICS = ("B02", "B04", "B05")
 
 
+def _dispatched_outcome(*, repo_root, company_id, metric_id, selection):
+    """One metric resolved by whichever route owns it, or a named refusal."""
+    from vnext.historical_results import prepare_historical_run_input
+    try:
+        prepared = prepare_historical_run_input(repo_root=repo_root, company_id=company_id,
+                                                metric_id=metric_id,
+                                                period_selection=selection)
+    except (ValueError, KeyError, TypeError, OSError) as error:
+        return {"metric_id": metric_id, "status": "ROUTE_REFUSED", "reason": str(error),
+                "error_type": type(error).__name__,
+                "category": getattr(error, "category", "IMPLEMENTATION_ERROR")}
+    result = prepared["primary_result"]
+    return {"metric_id": metric_id, "value": result["value"], "unit": result["unit"],
+            "quality": result["quality"], "publication": result["publication"],
+            "reason_code": result["reason_code"], "period_start": result["period_start"],
+            "period_end": result["period_end"], "applicability": result["applicability"],
+            "resolved_by": prepared["kind"]}
+
+
 def _outcome(*, repo_root, company_id, report_end, metrics):
     try:
         selection = resolve_period_selection(repo_root=repo_root, company_id=company_id,
@@ -59,6 +78,17 @@ def _outcome(*, repo_root, company_id, report_end, metrics):
                 "category": getattr(error, "category", "IMPLEMENTATION_ERROR")}
     rows = []
     for metric_id in metrics:
+        # Not every wired metric is in the Company Facts bundle. C03, C04, B06,
+        # the revenue and event routes and the text route each have their own
+        # resolver, and reading them all out of one bundle silently reported on
+        # a single adapter - it raised KeyError the first time a caller asked
+        # for one of the others, which is the honest failure but not a usable
+        # report. The dispatcher already knows which resolver owns a metric, so
+        # this asks it rather than restating the mapping.
+        if metric_id not in component["metrics"]:
+            rows.append(_dispatched_outcome(repo_root=repo_root, company_id=company_id,
+                                            metric_id=metric_id, selection=selection))
+            continue
         result = component["metrics"][metric_id]["result"]
         rows.append({"metric_id": metric_id, "value": result["value"], "unit": result["unit"],
                      "quality": result["quality"], "publication": result["publication"],

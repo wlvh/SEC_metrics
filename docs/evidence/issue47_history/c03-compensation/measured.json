@@ -18,6 +18,22 @@
    "outcome": "CAUGHT"
   }
  ],
+ "frame_measured_after_wiring": {
+  "a_tool_gap_this_found": "The pilot read every metric out of the Company Facts bundle and raised KeyError the first time it was asked for C03. Four wired routes - C03, C04, B06 and the text route - were unreportable by it. It now asks the dispatcher which resolver owns a metric instead of restating the mapping, and records which route answered.",
+  "period_selection_blocked": 2,
+  "positions_enumerated": 43,
+  "resolved": 11,
+  "resolved_without_a_value": 2,
+  "route_not_wired_positions_in_the_full_frame": {
+   "after_b06_and_c03": 61,
+   "before_this_round": 83
+  },
+  "source_blocked": 30,
+  "tool": "tools/vnext_history_pilot.py --metric C03, ten companies, five years",
+  "values_delivered": 9,
+  "what_the_thirty_are": "periods whose annual original is not saved at all",
+  "what_the_two_are": "Marriott's two earlier periods whose annual original is saved. Their proxies are not, so they report C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND and name the proxy - which is the route working, not failing."
+ },
  "measured_current_period": {
   "companies_compared": 10,
   "matching_quality_reason_value_and_stage": 9,
