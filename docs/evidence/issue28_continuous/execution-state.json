@@ -28,27 +28,28 @@
     "long_running_schedule": false
   },
   "actual_new_calls": {
-    "provider": 61,
-    "paid": 61,
+    "provider": 63,
+    "paid": 63,
     "sec": 49,
     "unknown": 0
   },
   "current_work": [
-    "Narrow110 recovery implementation; existing ledger/old calls remain unchanged; account handled by user, not an outstanding account action.",
-    "Ledger positive/negative tests passed; actual business entry offline wiring running; scoped review pending.",
-    "Correct current/historical handoff fields and main CI success; no CI redesign or allowance increase."
+    "110 recovery completed once at111; original110 retains failure/count; originalbinding/anchor/terminals/claimprefix unchanged.",
+    "112B13 incomplete4096-token response with an additional invalid reference in complete prefix; no redraw; B13 coordinate still incomplete.",
+    "D04 remaining8 company tasks running under max71 new provider requests; no D03 or SEC calls; follow d04-remaining-20260922/live-summary.json.",
+    "Bounded zero-call inspection continues on B06/C04 exact unresolved source/policy relationships without changing definitions."
   ],
   "next": [
-    "Complete exact recovery binding, offline entry test and scoped independent review; register actual authorization state without calling it consumed.",
-    "Execute original110 business request once as a new ordinal; Enphase then Ford then remaining8 D04; new stop conditions remain effective.",
-    "D03 no requests; at least39 base deficit deferred. Continue independent B06/C04, normal update and retirement responsibilities."
+    "Finish or preserve every D04 coordinate terminal without retry; aggregate actual complete results and remaining exceptions.",
+    "Keep111 for future completeB13 set;112cannot be repaired into accepted history or retried under the already-consumed110grant.",
+    "Keep D03 excluded and no increased allowance; resume other scope-safe zero-call source/normal-update/retirement work."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
   "remaining_review_dependency": "6e5 D03 source-fact independent report not found; existing ChatGPT review task dispatch returned Too many requests with no new task message. No retry, rename, model change or reset.",
   "historical_state_snapshot": "review-5207290213/historical-before-through104-state/execution-state.json",
   "historical_continuation_snapshot": "review-5207290213/historical-before-through104-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
-  "ledger_implementation_status": "110_SEALED_SLOTS; PROVIDER61_PAID61_SEC49; PROVIDER_STOPPED_BY_110; RECOVERY_IMPLEMENTATION_PENDING_VALIDATION",
+  "ledger_implementation_status": "RECOVERY110_CONSUMED_ONCE_AT111; ORIGINAL110_AND_PREFIX_UNCHANGED; THROUGH112_COUNTS63_63_49; D04_RUNNING_SEPARATE_REPORT",
   "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
   "full_acceptance": false,
   "external_dependencies": [
@@ -750,13 +751,13 @@
     "provider_and_sec_wiring": "Current recovery110 provider wiring PASS; B13/D04 only; no new SEC wiring or calls"
   },
   "current_observed_call_totals": {
-    "through_ordinal": 110,
-    "provider": 61,
-    "paid": 61,
+    "through_ordinal": 112,
+    "provider": 63,
+    "paid": 63,
     "SEC": 49,
     "remaining": {
-      "provider": 179,
-      "paid": 179,
+      "provider": 177,
+      "paid": 177,
       "SEC": 31
     },
     "original_caps": [
@@ -764,27 +765,28 @@
       240,
       80
     ],
-    "last_call": "Enphase B13 source references request110 FAILED_TERMINAL HTTP_402; no Candidate/Evidence/Run; PROVIDER stopped"
+    "last_call": "112 B13 response truncated;111 authorized recovery succeeded; D04 ongoing separately"
   },
   "pending_increment_request": {
     "status": "DEFERRED_BY_USER_NO_INCREASE_GRANTED",
-    "minimum_provider_gap": 39,
-    "minimum_paid_gap": 39,
+    "minimum_provider_gap": 40,
+    "minimum_paid_gap": 40,
     "SEC_gap_for_this_base_plan": 0,
     "base_remaining": {
-      "B13": 17,
+      "B13": 16,
       "D04": 71,
       "D03_first_proposal": 130
     },
-    "base_sum": 218,
-    "current_provider_paid_remaining": 179,
+    "base_sum": 217,
+    "current_provider_paid_remaining": 177,
     "excludes_all_subsequent_verification": true,
     "D03_calls_authorized": false,
     "original_caps": [
       240,
       240,
       80
-    ]
+    ],
+    "snapshot_scope": "After112 before D04 batch; final dynamic counts still to be recorded"
   },
   "current_live_b13_v6": {
     "ordinal": 109,
@@ -925,16 +927,17 @@
   },
   "provider_http402_stop": {
     "ordinal": 110,
-    "status": "SEALED_PROVIDER_STOP_NO_RETRY",
+    "status": "ORIGINAL110_RETAINED_RECOVERY_CONSUMED_AT111",
     "affected_work": [
       "B13 remaining complete source tasks",
       "D04 remaining8 coordinates/71 requests",
       "D03 already excluded pending review and resources"
     ],
-    "external_decision_required": "110 limited recovery now explicitly approved; implementation/binding/scoped review/offline wiring still required before execution",
+    "external_decision_required": "110 recovery decision fulfilled; no account action pending",
     "safe_work": "Offline validation, evidence, release and retirement preparation only",
     "account_status": "USER_CONFIRMED_HANDLED_NOT_INDEPENDENTLY_INSPECTED",
-    "recovery_consumed": false
+    "recovery_consumed": true,
+    "recovery_success_ordinal": 111
   },
   "historical_checkpoint_fields_before_recovery110": {
     "ledger_implementation_status": "108_SEALED_SLOTS; PROVIDER59_PAID59_SEC49; ALL_PRIOR_FAILURES_RETAINED",
@@ -1005,11 +1008,16 @@
     "user_confirmed_account_credit_handled": true,
     "account_inspected": false,
     "scope": "One new execution of original110 business digest; same ledger/root/binding/anchor/caps; then B13/D04; no other failed redraw",
-    "authorization_consumed": false,
-    "provider_recovered": false,
-    "implementation_status": "BOUND_SCOPED_REVIEW_AND_OFFLINE_WIRING_PASS_REAL_EXECUTION_NEXT",
+    "authorization_consumed": true,
+    "provider_recovered": true,
+    "implementation_status": "RECOVERY_EXECUTED_ONCE_AND_ORIGINAL_BYTES_VERIFIED",
     "evidence": "recovery-110-20260922/",
     "review": "限定差异独立审阅：d179284通过；recovery-110-20260922/independent-review/conclusion.md",
-    "fast": "124 PASS60.894s"
-  }
+    "fast": "124 PASS60.894s",
+    "consumed_at_ordinal": 111,
+    "actual_original_business_request": "SUCCEEDED_AT_111_NATIVE_CANDIDATE_EVIDENCE_NOT_COMPLETE_B13",
+    "following_B13_failure": "112 finish_reason=length,4096output; prefix also contains wrong-kind source449; no retry",
+    "invariants": "recovery-110-20260922/after-recovery-invariants.json"
+  },
+  "call_count_snapshot_scope": "Last completed B13 phase through112. D04 is running; its append-only live summary and fixed ledger supersede this snapshot until the next checkpoint."
 }

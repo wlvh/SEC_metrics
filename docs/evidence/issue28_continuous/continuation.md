@@ -1,4 +1,4 @@
-# Issue28当前恢复入口（恢复110实施中）
+# Issue28当前恢复入口（110恢复成功，D04运行中）
 
 原目录、task/b06-new-source、同一Draft PR43。最新已推基线3883f9ca70cb1c210e66eb36479acbbe3d826f72；当前HEAD以git/PR实时值为准。
 
@@ -31,3 +31,9 @@ B13严格引用合同58e85b1限定独审及336.098秒完整离线链通过；不
 四项B06来源关系、Paramount C04的后继来源/比较规则、正常更新、完整390及整图旧依赖退出继续承担；不能把实现缺口写成披露不足。无Ready、合并、正式采纳、部署、active切换或长期运行权限。
 
 历史检查点在execution-state.json的historical_checkpoint_fields_before_recovery110及Git历史中保留，不覆盖本入口当前事实。
+
+## 本轮实际进展：以此节覆盖上文实施前检查点
+
+110的一次授权已在新111申领时消费，111实际SUCCEEDED并形成原生Candidate/Evidence；原110仍失败，binding/初始化锚点/原110槽终态及claims前缀逐SHA不变。112的后续Enphase响应以finish_reason=length结束、输出4096，完整前缀还含错种类引用449；不重试、不升级原失败，B13仍无完整新坐标。
+
+B13阶段截至112累计63/63/49、余177/177/31。D04剩余8坐标已独立启动，当前动态事实以d04-remaining-20260922/live-summary.json及固定账本为准，不能把上面的阶段快照当成运行中的实时累计。D03/SEC均未启动。
