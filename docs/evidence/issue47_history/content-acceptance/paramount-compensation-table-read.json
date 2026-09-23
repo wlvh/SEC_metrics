@@ -1,0 +1,27 @@
+{
+ "an_internal_check_the_other_readings_do_not_have": "the row's five components sum to its total, so the number is confirmed by the table's own arithmetic as well as by matching the published value.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "paramount_skydance_paramount_global",
+ "components": {
+  "all_other_compensation": "1693523",
+  "bonus": "0",
+  "non_equity_incentive_plan_compensation": "1410000",
+  "salary": "1408046",
+  "stock_awards": "58700000"
+ },
+ "document": "evidence/accession_materials/paramount_skydance_paramount_global_2041610_000114036126016758/ef20071103_10ka.htm",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "period_end": "2025-12-31",
+ "production_authorized": false,
+ "published": "63211569",
+ "record_type": "ISSUE_47_COMPENSATION_TABLE_READ",
+ "total_read": "63211569",
+ "verdict": "MATCH",
+ "what_this_is": "the one C03 this repository answers from an annual report's own Summary Compensation Table rather than from a proxy's ecd facts, read off that table.",
+ "where": "the Summary Compensation Table, row 'David Ellison / Chairman and CEO', year 2025. The table's own preamble says it covers the period from the Closing Date to December 31, 2025.",
+ "which_document_it_is_in_and_why_that_is_not_odd": "the 10-K/A, not the 10-K. That amendment exists to add Part III Items 10-14, which is where a Summary Compensation Table lives, so C03 reading it is the amendment being used for exactly what it is. The same amendment is what the approved policy declines to clear for this company's statement-class inputs, and those are different questions about the same document."
+}

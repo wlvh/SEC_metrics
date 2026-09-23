@@ -2658,6 +2658,27 @@
    "what_this_does_not_establish": "what is established is that the proxy reports this PEO total for this period. It does not establish that PEO total compensation is the right signal, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C03_PARAMOUNT_2025",
+   "accepted_value": "63211569",
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json",
+   "method": "the Summary Compensation Table's own CEO row, read off the table. Its five components sum to its total, so the number is confirmed by the table's arithmetic as well as by matching the published value.",
+   "metric_id": "C03",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "components": {
+     "all_other_compensation": "1693523",
+     "bonus": "0",
+     "non_equity_incentive_plan_compensation": "1410000",
+     "salary": "1408046",
+     "stock_awards": "58700000"
+    },
+    "document": "evidence/accession_materials/paramount_skydance_paramount_global_2041610_000114036126016758/ef20071103_10ka.htm",
+    "where": "the Summary Compensation Table, row 'David Ellison / Chairman and CEO', year 2025. The table's own preamble says it covers the period from the Closing Date to December 31, 2025."
+   },
+   "what_this_does_not_establish": "that the Summary Compensation Table total is the right pay signal, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C03_SOUTHWEST_2025",
    "accepted_value": "16587882",
    "company_id": "southwest_airlines",
@@ -5011,7 +5032,8 @@
   "docs/evidence/issue47_history/content-acceptance/lodging-table-read.json",
   "docs/evidence/issue47_history/content-acceptance/event-count-read.json",
   "docs/evidence/issue47_history/content-acceptance/governance-read.json",
-  "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json"
+  "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+  "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json"
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "not_here_and_why": {

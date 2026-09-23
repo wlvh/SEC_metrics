@@ -15,6 +15,7 @@ LODGING = EVIDENCE + "lodging-table-read.json"
 EVENTS = EVIDENCE + "event-count-read.json"
 GOVERNANCE = EVIDENCE + "governance-read.json"
 TEXT = EVIDENCE + "d02-both-directions-read.json"
+COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
            "marriott-2023": "2023-12-31", "ford-2025": "2025-12-31",
            "pfizer-2025": "2025-12-31", "lumen-2025": "2025-12-31",
@@ -175,6 +176,23 @@ for label, case in sorted(textual.items()):
         "read_from": {"excerpts": case["excerpts"], "chars": case["chars"]},
         "method": TEXT_METHOD, "what_this_does_not_establish": TEXT_LIMIT})
 
+table = json.loads((REPO / COMPENSATION).read_text())
+if table["verdict"] == "MATCH":
+    entries.append({
+        "acceptance_id": "CONTENT_C03_PARAMOUNT_2025",
+        "company_id": table["company_id"], "metric_id": "C03",
+        "period_end": table["period_end"], "accepted_value": table["published"],
+        "evidence": COMPENSATION,
+        "read_from": {"document": table["document"], "where": table["where"],
+                      "components": table["components"]},
+        "method": "the Summary Compensation Table's own CEO row, read off the "
+                  "table. Its five components sum to its total, so the number "
+                  "is confirmed by the table's arithmetic as well as by "
+                  "matching the published value.",
+        "what_this_does_not_establish":
+            "that the Summary Compensation Table total is the right pay signal, "
+            "nor " + COMMON})
+
 register = {
  "record_type": "INDEPENDENT_CONTENT_ACCEPTANCE_REGISTER", "schema_version": 1,
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
@@ -187,7 +205,7 @@ register = {
                     "Run computing something else has not been checked. A "
                     "result a defect withdraws is never accepted, whatever is "
                     "written here.",
- "generated_from": [CROSS, LODGING, EVENTS, GOVERNANCE, TEXT],
+ "generated_from": [CROSS, LODGING, EVENTS, GOVERNANCE, TEXT, COMPENSATION],
  "not_here_and_why": {
   "salesforce B03": "the accession's facts carry "
                     "DepreciationDepletionAndAmortization, first in the "
