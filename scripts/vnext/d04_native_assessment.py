@@ -238,6 +238,13 @@ def check_source_classifications(*, request, units, findings):
                 e['kind'] == evidence_kind and e['source_index'] == index for e in f['resolved_evidence'])]
             def matches(f, r):
                 kind_matches = (f['kind'] == r['kind'] or
+                    # V5 explicitly permits ordinary conditional business risks.
+                    # This overlap applies only to a proved concrete activity,
+                    # never to a valuation premise or a going-concern assertion.
+                    (r['kind'] == 'VALUATION_OR_OTHER_MEANING'
+                     and _specific_continuation_activity(r['statement_text'])
+                     and f['kind'] == 'CONDITIONAL_OR_BOILERPLATE'
+                     and f['timing'] == 'CONDITIONAL') or
                     f['kind'] == 'HISTORICAL_STATEMENT' and r['timing'] == 'HISTORICAL' or
                     f['kind'] == 'OTHER_ENTITY' and r['subject'] == 'OTHER_ENTITY')
                 return (kind_matches and (r['subject'] is None or f['subject'] == r['subject'])

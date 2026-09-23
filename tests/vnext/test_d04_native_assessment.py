@@ -41,6 +41,21 @@ def response_for(request, kind='DOUBT_DISCLOSED', timing='CURRENT_REPORT'):
 
 
 class D04NativeProtocolTest(unittest.TestCase):
+    def test_specific_activity_overlapping_conditional_category_and_mixed_doubt(self):
+        activity='If our suppliers lose their ability to continue investing in their businesses, our operations could be harmed.'
+        for kind,timing in [('VALUATION_OR_OTHER_MEANING','CURRENT_REPORT'),('CONDITIONAL_OR_BOILERPLATE','CONDITIONAL')]:
+            request=request_for(activity);response=response_for(request,kind,timing)
+            response['units'][0]['findings'][0]['subject']='OTHER_ENTITY'
+            checked=validate_response(request=request,raw_response=_bytes(response))
+            self.assertEqual(checked['unresolved'],[])
+        for text in [activity+' There is substantial doubt about our ability to continue as a going concern.',
+                     'There is substantial doubt about our ability to continue as a going concern.',
+                     'The going concern element of goodwill is valued using discounted cash flows.']:
+            request=request_for(text);response=response_for(request,'CONDITIONAL_OR_BOILERPLATE','CONDITIONAL')
+            with self.subTest(text=text),self.assertRaisesRegex(ValueError,'D04_SOURCE_.*CONFLICT'):
+                validate_response(request=request,raw_response=_bytes(response))
+
+
     def test_complete_response_contract_is_source_bound_and_cannot_drop_units(self):
         source = source_packet();source.update(record_type='D04_COMPLETE_SEMANTIC_SOURCE',metric_id='D04')
         first = source['units'][0]

@@ -42,6 +42,16 @@ ChatGPT review5189571246 与用户转交 Fable5.1 按6341530及明示模块登�
 
 `continuous_sec_acquisition.py`与`tools/vnext_continuous_sec.py`为本轮新有限SEC路径：原SecHttpClient/零重试/不可变尝试/日志前缀/同一总账，先验证完整离线接线再发真实请求。创建者登记acquired检查记录，旧recorded测试记录不升级。新获取信用只随实际选中的新请求传播；失败URL不污染其他成功来源。审核材料与可验证复用原件索引在`docs/evidence/issue28_continuous/ordinary-sec-acquisition/`。总预算仍240/240/80，不授生产、长期运行或旧额度复活。
 
+### 2026-09-22 原110受限恢复
+
+170完整离线诊断另见`b13-170-source-audit/`。原111 B1022被确认将制造成本利用率归为产品容量；SUCCEEDED历史保留，当前复用受阻，不能为保留旧成功放宽定义。来源角色检查的两项具体P2在ec311e2d由用户转交外部限定复核结案；原代理发现仍保留历史原义，不扩成全B13批准。后继有含义角色V3仅为显式离线候选，真实申领前阻断；78779bf限定离线独审通过，不证明模型准确或授真实验证，见`b13-meaningful-role-v3/independent-review/`。
+
+本轮a87db7f限定独审及新接线已完成；170紧凑响应完整但重复发现被拒，171 Ford HTTP402使PROVIDER停止。累计122/122/49、余118/118/31；110机会已消费，未获171恢复或113/114/170同摘要重发许可。当前事实以execution-state/continuation和Issue28第3节为准。
+
+后续112—114修复不重开110：原始证据采用无损序列化，历史canonical及业务摘要算法不变；D04纠正特定活动与条件性风险的类别重叠，B13显式紧凑合同保留来源及必评集合。新增差异独审与最终绑定接线分别验收；摘要不变的113/114原样重发仍未授权，D03不调用。当前进度见`failures-112-114-repair/`与执行状态。
+
+用户已采用[110一次恢复授权](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5775635612)，确认充值已处理；不查询账户或发探针。保持原账本/binding/锚点、240/240/80及全部旧失败。`continuous_recovery_110.py`只绑定110的HTTP402、无可用输出、终态和业务摘要；新claim消费一次机会，原件不改。新停止仍生效，D03不调用，至少39基础资源缺口暂缓决定。恢复实现/绑定/限定独审/离线入口检查完成后才能执行原业务请求，不能把授权登记写成已恢复。
+
 ## 0. 按任务选择阅读路径
 
 首次进入仓库时先判断任务，再读取对应的标准流程。`SOP.md` 是标准工作流的一级导航；专项文档负责提供具体事实和命令。
@@ -208,6 +218,8 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `regulatory_investigation_candidates.py` / `going_concern_source.py` / `fiscal_year_labels.py`：D03事实候选及上下文、D04完整年报/修订原文分组、财年原文/机器标签对照；来源准备不能当成最终调查/持续经营结论或新规则激活。
 - `scripts/vnext/historical_metadata_context.py` / `historical_projection.py` 的 `persist`：前者是普通pinned期间的submissions块视图，按既有历史目录读入该期间需要的每个块并要求"读到的块"等于"准入的块"，冻结的recent-only视图字节不改；后者把公共行、证据与收据写到Run旁`row_receipt.json`，收据自带行/证据哈希供只读核对。二者都不改指标口径、不授生产信用。
 - `tools/run_fast_tests_v2.py`：当前CI分95个30秒短测试入口和34个240秒完整来源材料入口；先前124项均保留，并新增五个普通来源/输入材料套件。旧`tools/run_fast_tests.py`是V13冻结规则的一部分，保留原字节和历史入口。
+
+- `scripts/vnext/capacity_reference_contract.py`：显式新B13请求把发现放在根层，以原kind/source_index核对归属，局部编号的XML补充对象另带source_unit_index；完整单元审阅和原内容/数量验证保留。旧嵌套响应不重定位、不升级原109失败。接线与边界见`docs/evidence/issue28_continuous/b13-strict-references-20260922/`。
 
 - `scripts/vnext/normal_candidates.py`、`normal_source_authority.py`、`normal_governance_input.py`：从已保存实际来源重建B06/C03/C04/D01候选，外部根与既存获取基线分开验证；V12记录已冻结、未正式激活。后继`normal_text_input_v2.py`为C02/D02保留必要来源和完整选源元数据，`text_results_v2.py`保留严格核验的披露事实与原文，不能推断总诉讼负债。
 - `scripts/vnext/text_results.py`、`text_review.py`、`text_run_validation.py`：原有记录中的显式TEXT_V1、完整原文候选/审阅/Run重读，旧数字记录不改。

@@ -1,0 +1,42 @@
+{
+  "reviewed_sha": "78779bf34ccae4ea076f391e790c264f6eebd964",
+  "base_sha": "ec311e2d8829ec6f7dd3440713a454aebe6b50ba",
+  "observed_head": "ed1634c5b4acb4c3c0e97b782ce8b0bc62f00bfd",
+  "files": [
+    {
+      "path": "scripts/vnext/capacity_reference_contract.py",
+      "sha256": "355059a56cc866aedd371957da9735246a29ee4f2cebdc97fbbe4d82fbb569c6",
+      "bytes": 16148,
+      "matches_reviewed_sha": true,
+      "execution_authority_matches": true,
+      "new_rule_files_matches": true
+    },
+    {
+      "path": "scripts/vnext/continuous_semantic_calls.py",
+      "sha256": "03531d2d3e91fff9e406456e8422aa5beeb15edc86e351da6ec792bfbbf0d56b",
+      "bytes": 47707,
+      "matches_reviewed_sha": true,
+      "execution_authority_matches": true,
+      "new_rule_files_matches": true
+    },
+    {
+      "path": "scripts/vnext/native_unit_index.py",
+      "sha256": "810a1a2d64fa7b177df5920af0b88b42c6730df39075237da821b6c9990b1c95",
+      "bytes": 8989,
+      "matches_reviewed_sha": true,
+      "execution_authority_matches": true
+    },
+    {
+      "path": "tests/vnext/test_capacity_reference_contract.py",
+      "sha256": "adb154a77cb9a520ceebbab99ddbe93022741dbc5d05aaed1e635e1a8c24c08a",
+      "bytes": 16890,
+      "matches_reviewed_sha": true
+    },
+    {
+      "path": "requirements/issue_28_v14/baseline_manifest.json",
+      "sha256": "01c29a8b0b2b99b0205c26b3f45d0ac4780458e2ae667615257a3e433a067046",
+      "bytes": 82682,
+      "matches_reviewed_sha": true
+    }
+  ]
+}

@@ -783,6 +783,22 @@ B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物�
 
 ### B13 新原生链与来源分组性能
 
+<!-- capability-anchor: CAPABILITY.b13_visible_source_role_guard -->
+
+`tests.vnext.test_capacity_visible_source_roles`覆盖股票额度/债务/治理误标、正确产能计划与产品能力、混合块、无关债务否定以及真实取消/条件计划；包括完整响应级P2回归。`b13-170-source-audit/`仅输出诊断，不改原170或把去重/改标签的数据登记成功。126fast与定向检查分开记录；独审提出P2后的父会话修复仍待独立闭环。
+
+112—114定向验证：`tests.vnext.test_continuous_source_unit_bytes`、`tests.vnext.test_d04_native_assessment`、`tests.vnext.test_capacity_reference_contract`及`tests.vnext.test_native_unit_index`。原114保存响应只作离线回归，混合真实疑虑不因活动类别重叠被排除。紧凑引用测试拒绝错类型编号、越界类别、布尔编号、漏单元及过长理由。`failures-112-114-repair/`保存实际来源禁网接线、输出测量、成功复用与冷读实际结果；不得把录制样本升级真实信用。
+
+`tests.vnext.test_continuous_source_unit_bytes`验证U+037E在NFC JSON中被改写时，`SemanticRequest.validate`在付费申领前拒绝不一致的单元字节/哈希/ID。原Greek字符和普通ASCII合法输入仍通过；原113失败和摘要算法不改；新增反例同时核对无损source/request/HTTP及普通ASCII字节兼容。当前D04实际工厂禁网接线另见d04-remaining-20260922/preflight-current-wiring.log。
+
+<!-- capability-anchor: CAPABILITY.continuous_recovery_110 -->
+
+`tests.vnext.test_continuous_recovery_110`与旧账本测试覆盖无授权停止、指定一次申领、原始文件/计数不变、重启/并发及申领中断、新停止保留、错误终态/摘要/模式/审批来源拒绝。`recovery-110-20260922/offline_wiring.py`用当前Enphase原业务工厂禁网验证402、受限新claim、原生成功及原成功复用，业务摘要必须与真实110相同；只计录制接线，不计真实结果。
+
+`tests.vnext.test_capacity_reference_contract`验证后继显式引用：未知/错类型/重复/歧义/跨单元引用、漏答、重签合同、旧109同类错误拒绝，以及原生Evidence和请求集合重建。`b13-strict-references-20260922/offline_material.py`禁网检验Enphase六组完整原生链及Ford十一组计划、代表性controller与漏单元失败；记录响应不计真实语义成功，耗时/结果以对应日志为准。
+
+2026-09-22：B13 native及program-role两个CI作业总时限均为30分钟，保留原步骤与断言。program-role单次本地完整计时604.545秒通过（隔离Python3.13.5、tokenizers0.22.2）；CI仍使用Python3.14，实际终态单独登记。证据见`docs/evidence/issue28_continuous/ci-capacity-timeouts-20260922/`。该调整不改变真实请求120秒限制。
+
 `test_semantic_source_grouping.SemanticSourceGroupingTest` 比较原分组边界、共享字典、单独大对象与超限拒绝；其 MaterialTest 从真实两公司原件重建全部81个单元，与优化前材料逐字段相同。JPM完整来源/三种错误分类测试仍保留原240秒限制。性能剖析的中断不算PASS，修复后的完整测试须独立返回成功。
 
 `test_capacity_semantic_review` 验证字段共享的精确恢复、JSON键重排后的相同请求、缺单元、遗漏候选、假引文及两个真实完整包。`test_capacity_native_assessment` 从实际原件经过原factory/opener/WB-3，在禁网下验证原生Candidate/Evidence成功、遗漏单元终态失败，以及单个成功请求不能产生全范围缺失结论。`test_capacity_text_results` 检查真实季度产能原文经Review/Calculator成为TEXT_V1，拒绝假完整标记、掩盖数值对、错期间、原件变化和缺有效Review。

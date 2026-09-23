@@ -96,6 +96,7 @@ def _prepare_registered_update(*,source_root,company_id,metric_id,options,ledger
     current_prepared=prepare_requests(company_id=company_id,metric_id=metric_id,native=metric_id=='D04',
         reference_context=True,complete_response_contract=options['complete_response_contract'],
         source_root=source_root,source_ledger=ledger,program_quantity_roles=options.get('program_quantity_roles',False))
+    from .continuous_semantic_calls import _source_json
     template=current_prepared[0];current=strict_json_loads(text=template.source_bytes.decode())
     candidates={}
     with ledger.locked():
@@ -112,7 +113,7 @@ def _prepare_registered_update(*,source_root,company_id,metric_id,options,ledger
         try:equivalence=source_equivalence(current=current,original=original)
         except ValueError:continue
         policy=configured_transport_policy(requirement=requirement,repo_root=ROOT)
-        prepared=[replace(template,source_bytes=_json(original),request_bytes=_json(request),
+        prepared=[replace(template,source_bytes=_source_json(original),request_bytes=_source_json(request),
             provider_request_body_bytes=request_body(request,policy),output_schema_bytes=_json(request['response_protocol']),
             replay_only=True,current_source_bytes=template.source_bytes,
             current_source_ledger_sha256=sha256_file(path=Path(source_root)/'evidence/requests_log.csv'))

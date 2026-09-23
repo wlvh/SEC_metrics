@@ -955,6 +955,8 @@ B13原生角色检查复用`_FactAttributes`展开实际单位命名空间；标
 
 ### B13 原生来源判断与文字候选
 
+显式`B13_SOURCE_REFERENCES_V1`将模型发现与单元审阅状态分开：发现引用当前原件kind/source_index，局部编号的XML补充对象必须另带source_unit_index，`capacity_reference_contract`核对唯一所属单元后恢复原验证器输入。未知、重复、歧义和跨单元混合引用拒绝；旧BASE/INDEXED_UNITS_V1不变。原始新请求/响应进入同一WB-3、Evidence和Run链，重读按保存的variant精确重建，默认普通入口可复用原成功但不会据此自动启用B13新调用。
+
 `capacity_semantic_review` 按原限制组织完整来源，共享重复字段和 XML 样式并验证精确恢复。`capacity_native_assessment` 把每请求的原文、单元覆盖和有限角色检查接入既有 WB-3 Candidate/Evidence 成功链，再按完整请求集合重读；旧诊断终态不升级。`capacity_assessment_input` 复用普通来源私有登记边界，区分 LIVE 与 RECORDED_TEST_ONLY，数据包不能自行给响应登记。
 
 `capacity_text_results` 复用 TEXT_V1 的 Review/Observation/Calculator；`capacity_run` 复用普通输入安装和 Run 写入代码，显式选择已批准 B13 定义所在的 V15。Run 和公共行从登记、原件和有效 Review 重新构造；当前只接通文字分支，数值对、缺失、不适用和正常更新编排仍待完成。说明见 `docs/ordinary_capacity_results.md`。
@@ -985,6 +987,18 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 当前D04关系检查将条件、因果/让步、例证及历史原因与当前谓语分别绑定；具体实现不支持不会形成未披露。限定Chat Completions计数新增continuous_request_context，绑定完整两消息/JSON响应提示/官方分词器及格式版本，包含4096输出预留；原服务、200000/8MiB/120秒与零重试不变。新分组在source/request中显式选择，旧原请求保留身份，格式提示须经完整私有登记和原生请求重验。LIVE实际输入计数不符时封存原响应并停止受影响provider通道。材料见docs/evidence/issue28_continuous/review-5207290213/与request-context-counting/。
 
 ### 普通更新与私有完整版本的后继接线
+
+<!-- capability-anchor: CAPABILITY.b13_visible_source_role_guard -->
+
+可见来源角色检查`validate_visible_source_label_roles`在B13恢复原文后的响应检查中执行，三个正向叙述角色没有对应来源关系时进入未决；原文与模型解释分开，数字/原生事实及其他角色仍由原检查负责，不能把未新增未决当成全部语义通过。计划否定只检查匹配断言，避免并列无关否定误伤。170逐行诊断显示数量检查不覆盖大量定性标签错误；111 B1022当前也不满足原产品容量定义，历史终态保留但当前复用受阻。
+
+112—114增量仅处理来源表示和输出合同。D04对已证明的具体活动延续，允许提示原有的条件性经营风险类别重叠；只有该关系适用，估值、真实疑虑、混合句中的其他断言仍逐项检查。B13可显式选择B13_TYPED_COMPACT_REFERENCES_V2：固定类别编号、B/F/S带类型引用和短理由，保留每个单元状态、必评项、未决和原内容验证；不改变来源分组，原V1成功仍原样选用。实测输出容量不是模型输出保证，4096限制不变。
+
+`SemanticRequest.validate`在controller申领前按原单元payload字节/长度/ID检查完整性，提前拒绝NFC序列化等造成的自相矛盾输入；不将该程序表示缺口写成SEC披露不足，也不改request_digest算法或原请求。原生source/request、实际HTTP内容、登记及安装导出、冷读改用既有无损来源JSON序列化并保留原规范化JSON的换行框架；语义hash仍用原canonical规则，原source构造模块与request_digest字节不变。NFC已稳定的请求保持原字节，原113不升级。
+
+<!-- capability-anchor: CAPABILITY.continuous_recovery_110 -->
+
+原110恢复由`continuous_recovery_110`在原账本追加固定授权记录，按已绑定GitHub用户评论核实原根、binding、110 intent/terminal及业务摘要。`CallLedger`保留全部旧文件/计数；授权未消费时只有原业务请求能越过110停止，新claim保存authorization_id并消耗机会。snapshot只承认这一有来源的重复，移除的仅是110停止原因；新UNKNOWN/402/来源失败仍停，第三次相同请求拒绝。旧默认返回结构及无授权行为不变，无新额度/新根或生产权限。
 
 `capacity_update_input`复用原生请求收据与普通来源创建者登记，将完整旧请求的当前来源等价检查接到逐指标更新历史。当前输入的原件目录与执行规则目录显式分开；只能忽略已列明的获取/实现身份差异，实质来源或请求变化不能复用旧信用。新输入有限执行默认0请求，经原调用器与固定账本；B13真实路径仍暂停，D03未接，跨来源部分旧组复用仍是实现缺口。
 

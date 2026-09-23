@@ -53,6 +53,7 @@ SEMANTIC_RULE_PATHS = (
     'scripts/vnext/capacity_update_input.py',
     'scripts/vnext/native_request_construction.py',
     'scripts/vnext/native_unit_index.py',
+    'scripts/vnext/capacity_reference_contract.py',
     'scripts/vnext/continuous_request_context.py',
     'config/tokenizers/deepseek_v41/tokenizer.json.gz',
     'requirements-continuous-context.txt')
@@ -75,10 +76,33 @@ def _json(value):
     return canonical_json_bytes(value=value)
 
 
+def _source_json(value):
+    """Keep native source/request strings exact; legacy semantic JSON is unchanged."""
+    if value.get('metric_id') in {'B13', 'D04'}:
+        from .native_unit_index import evidence_json_bytes
+        return evidence_json_bytes(value)
+    return _json(value)
+
+
+def validate_source_unit_bytes(source):
+    """Reject a lossy source packet before any request can claim a paid slot."""
+    if source.get('metric_id') not in {'B13', 'D04'}:
+        return
+    from .r6_semantic_source import _bytes
+    for unit in source['units']:
+        raw = _bytes(unit['payload'])
+        need(unit['payload_sha256'] == sha256_bytes(content=raw)
+             and unit['payload_bytes'] == len(raw)
+             and unit['unit_id'] == content_hash(value={k:v for k,v in unit.items() if k != 'unit_id'}),
+             'CONTINUOUS_SOURCE_UNIT_SERIALIZATION_CHANGED')
+
+
 def request_body(request, policy):
     payload = {k:v for k,v in request.items() if k not in
         {'system_prompt','provider_request_sent','provider_tokens_measured','production_authorized'}}
-    return _json({'model':policy.model,'messages':[
+    from .native_unit_index import evidence_json_bytes
+    encode = evidence_json_bytes if request.get('metric_id') in {'B13', 'D04'} else _json
+    return encode({'model':policy.model,'messages':[
         {'role':'system','content':request['system_prompt']},
         {'role':'user','content':json.dumps(payload,ensure_ascii=False,sort_keys=True,separators=(',',':'))}],
         'response_format':{'type':'json_object'},'temperature':0,'max_tokens':4096,
@@ -120,6 +144,9 @@ def request_digest(request, policy):
         # this digest compares semantic inputs and the response contract only.
         body['indexed_unit_contract'] = {k:v for k,v in request['indexed_unit_contract'].items()
                                          if k != 'base_request_id'}
+    if 'source_reference_contract' in request:
+        body['source_reference_contract'] = {k:v for k,v in request['source_reference_contract'].items()
+                                              if k != 'base_request_id'}
     return sha256_bytes(content=_json(body))
 
 
@@ -201,6 +228,7 @@ class SemanticRequest:
         request = strict_json_loads(text=self.request_bytes.decode())
         need(source['semantic_source_id'] == content_hash(value={k:v for k,v in source.items() if k!='semantic_source_id'}),
              'CONTINUOUS_SOURCE_CHANGED')
+        validate_source_unit_bytes(source)
         allowed_control_root=Path(self.requirement['policy']['budget_root'])/'source-inputs'
         from .continuous_call_ledger import CallLedger, _FACTORY as ledger_factory
         registered_source = (type(self.source_ledger) is CallLedger and self.source_ledger._factory is ledger_factory)
@@ -231,9 +259,13 @@ class SemanticRequest:
             source_equivalence(current=current,original=source)
         original_requests = source_requests(source)
         if request not in original_requests:
-            from .native_unit_index import restore_base_request
-            need('indexed_unit_contract' in request and restore_base_request(request) in original_requests,
-                 'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
+            if 'source_reference_contract' in request:
+                from .capacity_reference_contract import restore_base_request
+                need(restore_base_request(request) in original_requests, 'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
+            else:
+                from .native_unit_index import restore_base_request
+                need('indexed_unit_contract' in request and restore_base_request(request) in original_requests,
+                     'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
         need(configured_transport_policy(requirement=self.requirement,repo_root=ROOT) == policy
              and request_body(request,policy) == self.provider_request_body_bytes
              and _json(request['response_protocol']) == self.output_schema_bytes,
@@ -311,15 +343,18 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     else:
         from .ordinary_source_authority import verify_ordinary_source_proofs
         verify_ordinary_source_proofs(data_root=data_root,proofs=source['source_proofs'])
-    raw = _json(source)
-    return [SemanticRequest(_FACTORY,raw,_json(request),request_body(request,policy),
+    raw = _source_json(source)
+    return [SemanticRequest(_FACTORY,raw,_source_json(request),request_body(request,policy),
         _json(request['response_protocol']),requirement,authority,data_root,source_ledger) for request in source_requests(source)]
 
 
-def select_native_request_variants(*, prepared_requests, ledger):
+def select_native_request_variants(*, prepared_requests, ledger, source_references=False,
+                                   compact_references=False, semantic_role_labels=False):
     """Keep exact successful receipts; use indexed output for other groups.
 
     Selection is read-only and covers the existing complete source partition.
+    Semantic role labels are opt-in for offline preparation; they never turn a
+    failed or currently invalid historical response into fresh-call authority.
     A success that fails current replay stops selection rather than buying a
     replacement. Failed original requests retain their original terminal.
     """
@@ -336,9 +371,30 @@ def select_native_request_variants(*, prepared_requests, ledger):
     originals = [strict_json_loads(text=p.request_bytes.decode()) for p in prepared_requests]
     need(validate_request_partition(source, originals) == [BASE] * len(originals),
          'NATIVE_VARIANT_BASE_PARTITION_REQUIRED')
+    need(type(compact_references) is bool and (not compact_references or source_references),
+         'NATIVE_COMPACT_REFERENCE_SELECTION_INVALID')
+    need(type(semantic_role_labels) is bool and (not semantic_role_labels or
+         (source_references and compact_references and source['metric_id']=='B13')),
+         'NATIVE_ROLE_LABEL_SELECTION_INVALID')
+    need(type(source_references) is bool and (not source_references or source['metric_id']=='B13'),
+         'NATIVE_REFERENCE_SELECTION_INVALID')
     alternatives = [upgrade_request(r) for r in originals]
-    candidates = {r['request_id']:(i,version) for i,pair in enumerate(zip(originals, alternatives))
-                  for r,version in zip(pair,(BASE,VERSION))}
+    variant_requests = [{BASE:r, VERSION:a} for r,a in zip(originals,alternatives)]
+    selected_version = VERSION
+    if source_references and source.get('program_quantity_role_contract_version'):
+        from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, ROLE_VERSION, upgrade_request as reference_request
+        for versions, original in zip(variant_requests,originals):
+            versions[REFERENCE_VERSION] = reference_request(original)
+            if compact_references:
+                versions[COMPACT_VERSION] = reference_request(original, compact=True)
+                if semantic_role_labels:
+                    versions[ROLE_VERSION] = reference_request(original, compact=True, role_labels=True)
+        if source_references:
+            selected_version = (ROLE_VERSION if semantic_role_labels else
+                                COMPACT_VERSION if compact_references else REFERENCE_VERSION)
+    need(not source_references or selected_version != VERSION, 'NATIVE_REFERENCE_PROGRAM_SOURCE_REQUIRED')
+    candidates = {r['request_id']:(i,version) for i,versions in enumerate(variant_requests)
+                  for version,r in versions.items()}
     successful = {}
     with ledger.locked():
         state = ledger.snapshot()
@@ -350,16 +406,25 @@ def select_native_request_variants(*, prepared_requests, ledger):
             if not saved_path.exists():
                 continue
             saved = strict_json_file(path=saved_path)
+            if 'source_reference_contract' in saved and saved.get('request_id') not in candidates:
+                from .capacity_reference_contract import VERSION as REFERENCE_VERSION, restore_base_request as reference_base
+                if saved.get('source_id') == source['semantic_source_id']:
+                    original = reference_base(saved)
+                    need(original in originals, 'NATIVE_REFERENCE_SAVED_SOURCE_CHANGED')
+                    i = originals.index(original)
+                    saved_version = saved['source_reference_contract']['version']
+                    variant_requests[i][saved_version] = saved
+                    candidates[saved['request_id']] = (i, saved_version)
             match = candidates.get(saved.get('request_id'))
             if match is None:
                 continue
             i,version = match
             need(i not in successful, 'NATIVE_VARIANT_MULTIPLE_SUCCESSFUL_VERSIONS')
-            request = originals[i] if version == BASE else alternatives[i]
+            request = variant_requests[i][version]
             need(saved == request, 'NATIVE_VARIANT_SAVED_REQUEST_CHANGED')
             prepared = prepared_requests[i]
             policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
-            selected = replace(prepared, request_bytes=_json(request),
+            selected = replace(prepared, request_bytes=_source_json(request),
                 provider_request_body_bytes=request_body(request, policy),
                 output_schema_bytes=_json(request['response_protocol']))
             replay = replay_native_response(prepared=selected, path=path)
@@ -370,12 +435,12 @@ def select_native_request_variants(*, prepared_requests, ledger):
         if i in successful:
             item, entry = successful[i]
         else:
-            request = alternatives[i]
+            request = variant_requests[i][selected_version]
             policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
-            item = replace(prepared, request_bytes=_json(request),
+            item = replace(prepared, request_bytes=_source_json(request),
                 provider_request_body_bytes=request_body(request,policy),
                 output_schema_bytes=_json(request['response_protocol']))
-            entry = {'request_id':request['request_id'], 'variant':VERSION, 'original_ordinal':None}
+            entry = {'request_id':request['request_id'], 'variant':selected_version, 'original_ordinal':None}
         selected.append(item); report.append(entry)
     return selected, report
 
@@ -599,6 +664,10 @@ def execute_d04_assessment(*, prepared, ledger, recorded_wire=None):
 def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
+    if request_fields.get('metric_id') == 'B13':
+        from .capacity_reference_contract import ROLE_VERSION
+        need(not (ledger.live and request_fields.get('source_reference_contract', {}).get('version') == ROLE_VERSION),
+             'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED')
     need(not prepared.replay_only, 'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
     if prepared.source_ledger is not None:
         need(prepared.source_ledger.live==ledger.live and prepared.source_ledger.root==ledger.root,
@@ -641,6 +710,11 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
              and ledger.binding['delegation_url'] == prepared.requirement['policy']['delegation_url']
              and ledger.binding['delegation_body_sha256'] == prepared.requirement['policy']['delegation_body_sha256']
              and ledger.binding['limits'] == [240,240,80], 'CONTINUOUS_LIVE_ALLOWANCE_CHANGED')
+        if prepared.requirement['policy'].get('recovery_110_policy_path'):
+            from .continuous_recovery_110 import authorization, read_authorization
+            need(request_fields.get('metric_id') in {'B13', 'D04'}, 'RECOVERY110_FOLLOWING_METRIC_FORBIDDEN')
+            need(read_authorization(ledger) == authorization(ledger=ledger, online=True),
+                 'RECOVERY110_LIVE_AUTHORIZATION_CHANGED')
         from .ai_adapter import api_key_environment_name
         import os
         need(bool(os.environ.get(api_key_environment_name(policy=policy),'').strip()),

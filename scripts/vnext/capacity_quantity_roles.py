@@ -217,3 +217,70 @@ def validate_quantity_role_findings(*,units,findings,period,quantity_scope=None)
                 and any(e['kind']=='VISIBLE_BLOCK' and e['source_index']==index
                     for e in f['resolved_evidence']) for f in findings),'B13_SOURCE_PHYSICAL_QUANTITY_CLASSIFICATION_CONFLICT')
     return unresolved
+
+
+def validate_visible_source_label_roles(*, findings):
+    """Require a source relation for positive narrative roles, not a model reason.
+
+    These are necessary bounded checks, not a general semantic proof. Unknown
+    formulations stay unresolved; no alternate label or successful result is
+    inferred. Numeric/native roles keep their separate existing validators.
+    """
+    from .regulatory_investigation_candidates import _sentences
+    physical = r'\b(?:manufacturing|production)\s+(?:capacity|capabilities)\b'
+    utilization = r'\butili[sz]ation\s+(?:of|at)\s+(?:(?:our|the|its|their|company[’\x27]s)\s+)?(?:[A-Za-z-]+\s+){0,4}manufacturing\s+(?:facility|facilities|plant|plants)\b'
+    restriction = r'\b(?:restrict\w*|limit\w*|constrain\w*)\s+(?:[A-Za-z-]+\s+){0,4}(?:production|manufacturing)\b'
+    product = (r'\b(?:energy|battery)\s+storage\s+capacity\b|'
+               r'\binstalled\s+(?:solar|wind|generating|generation)\s+capacity\b|'
+               r'\b(?:battery|batteries|storage\s+system|inverter|solar\s+panel)\b[^.;!?]{0,64}'
+               r'\b(?:capacity|rated)\b[^.;!?]{0,48}\b(?:kWh|MWh|GWh|kW|MW|GW)\b')
+    qualifiers = r'(?:(?:our|the|its|their|combined|annual|total|domestic|global|existing)\s+)*'
+    planning = (r'\b(?:plan(?:s|ned)?|intend(?:s|ed)?|expect(?:s|ed)?)\s+to\s+'
+                r'(?:expand|increase|reduce|add)\s+' + qualifiers + r'(?:manufacturing|production)\s+capacity\b|'
+                r'\b(?:planned|proposed|future|expected)\s+' + qualifiers + r'(?:manufacturing|production)\s+capacity\b')
+    uncertain = r'\b(?:not|never|no|hypothetical|illustrative|abandoned|scrapped|dropped|rejected|cancelled|canceled|if|unless|would|could|might)\b'
+    cancellation = (r'\b(?:scrapped|cancelled|canceled|abandoned|dropped|rejected)\s+'
+                    r'(?:(?:the|our|these|those)\s+)?(?:plans?|expansion|it|them)\b')
+
+    def affirmative_cancellation(suffix):
+        for action in re.finditer(cancellation, suffix, re.I):
+            # Bind not/never to this cancellation, not to the earlier plan or
+            # another coordinated assertion (such as "have no debt").
+            clause = re.split(r';|\b(?:and|but)\b', suffix[:action.start()], flags=re.I)[-1]
+            if re.search(r'\b(?:(?:have|has|had|did|was|were)\s+)?(?:not|never)\s+$', clause, re.I) is None:
+                return True
+        return False
+
+    unresolved = []
+    for finding in findings:
+        kind = finding['kind']
+        if kind not in {'CAPACITY_QUALITATIVE', 'PLANNED_CAPACITY', 'PRODUCT_STORAGE_OR_INSTALLED_CAPACITY'}:
+            continue
+        evidence = finding['resolved_evidence']
+        if not evidence or any(e['kind'] != 'VISIBLE_BLOCK' for e in evidence):
+            continue
+        supported = False
+        for ref in evidence:
+            for _, _, sentence in _sentences(ref['text']):
+                has_physical = re.search(physical, sentence, re.I) is not None
+                if kind == 'CAPACITY_QUALITATIVE':
+                    supported |= has_physical or re.search(utilization+'|'+restriction, sentence, re.I) is not None
+                elif kind == 'PLANNED_CAPACITY':
+                    for plan in re.finditer(planning, sentence, re.I):
+                        prefix, suffix = sentence[:plan.start()], sentence[plan.end():]
+                        # A coordinated debt denial does not negate the plan.
+                        # Preserve conditional framing and local cancellation.
+                        local_prefix = re.split(r';|\b(?:and|but)\b', prefix, flags=re.I)[-1]
+                        local_suffix = re.split(r';|\b(?:and|but)\b', suffix, flags=re.I)[0]
+                        conditional = re.search(r'\b(?:if|unless|hypothetical|illustrative)\b', prefix, re.I)
+                        cancelled_later = affirmative_cancellation(suffix)
+                        supported |= (has_physical and not conditional and not cancelled_later
+                                      and re.search(uncertain, local_prefix + ' ' + local_suffix, re.I) is None)
+                else:
+                    supported |= re.search(product, sentence, re.I) is not None
+        if not supported:
+            unresolved.append({'unit_id': finding['unit_id'],
+                'source_indices': [e['source_index'] for e in evidence],
+                'claimed_kind': kind, 'reason': 'B13_VISIBLE_SOURCE_ROLE_NOT_ESTABLISHED',
+                'scope': 'Necessary source relation missing; not a relabeling or disclosure-absence conclusion'})
+    return unresolved

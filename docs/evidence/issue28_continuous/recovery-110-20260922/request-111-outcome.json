@@ -1,0 +1,79 @@
+{
+  "ordinal": 111,
+  "intent": {
+    "binding_id": "sha256:fc28545b68f44f4993716ee1005a731ed2ca5748cc12b830831df86c8fcfdb7a",
+    "channel": "PROVIDER",
+    "execution_mode": "LIVE",
+    "intent_id": "sha256:339e148b0638c8149c45dd668722d3796233649f799bee90fc57a36ae2fc7ea9",
+    "ordinal": 111,
+    "plan_id": "sha256:146423502568efc1cca02653ee04680e18d9d0ad8d40937b4f46d6f6d9665d93",
+    "previous_intent_id": "sha256:cab3f5dc7d3ebdf63752cc57f5dc55d179749882d97ab416661fd5f9fd6478ef",
+    "purpose": "remaining_development_feasibility",
+    "record_type": "CONTINUOUS_CALL_INTENT",
+    "recovery_authorization_id": "sha256:80f95dc90166c4d5dccde20ba8ea13a8eaf246a4db4391bd2e67b3386280510b",
+    "request_digest": "c13df85d996a6ba01c2bc13a8959013694ba494f783be7ee43474a6bd12d12e4",
+    "requirement_closure_hash": "sha256:4cc2d5ee63b181942e41da6411d52e6cbe4763ed841c6638ec1553bba113c4ee",
+    "requirement_id": "issue_28_v14"
+  },
+  "terminal": {
+    "counts": [
+      1,
+      1,
+      0
+    ],
+    "counts_kind": "ACTUAL_OR_UNKNOWN_CHARGED",
+    "evidence": {
+      "execution-rules.json": "b209a5c6ab6f70ea005608dda4afd47ee54f7ecf295c0f7ee4209aea0ddd06e0",
+      "execution-rules.tar.gz": "203b0ca404007ae35ecd410830855ec8d48c432c2eab225a55222ba598d7f8d9",
+      "intent.json": "220333cfb55b57aa043487b245e7df35103c0985d1dd6eee28026d4dab3d4a27",
+      "invocation_control/acceptances/72d06922f039c440724059d2f3493fab3ca0f7c566f8e06244bf7ac2ddf93605/receipt.json": "2ed195ca76b312da115a7ed64b0da6b24c9364862795ec4be8f106e77e88ebbe",
+      "invocation_control/attempts/73d100795fd35b4add3e4093f9ed5fac3d98919cef3c531181f20f911ce40364/01_30000fc052b2e0d8646ca5941cf34300de3e9e08842693dd6a785d0cd6b71280.json": "7b74c0e1ee5b1d79cf5a8bbd18ce162254b71daea3832df58f39e3dda0a851b8",
+      "invocation_control/egress/73d100795fd35b4add3e4093f9ed5fac3d98919cef3c531181f20f911ce40364/01.json": "4f0243339658d76d77d6baae5576630b021bb3ac8746f97fc2a7c4e0ff0e93bf",
+      "invocation_control/executions/73d100795fd35b4add3e4093f9ed5fac3d98919cef3c531181f20f911ce40364.json": "44e6b574b3783333c5a7ab03578c7ceb35548e091a0d06b455393a9e639b0b99",
+      "invocation_control/plans/146423502568efc1cca02653ee04680e18d9d0ad8d40937b4f46d6f6d9665d93.json": "c77143db228a200764cce2511ea93e218aaf8d63b8271ae1456f00c895e784a5",
+      "invocation_control/requests/72d06922f039c440724059d2f3493fab3ca0f7c566f8e06244bf7ac2ddf93605.bin": "c3ec3698217dcb2e4d8282ca3a5284ff0abf4e66b53cd62fceb69d8b14514f77",
+      "invocation_control/reservation_archive/72d06922f039c440724059d2f3493fab3ca0f7c566f8e06244bf7ac2ddf93605/73d100795fd35b4add3e4093f9ed5fac3d98919cef3c531181f20f911ce40364.json": "23e2956b278d7bf7c48056e1c265a476e1164959339c191fc5734e861a9cfba4",
+      "invocation_control/responses/72d06922f039c440724059d2f3493fab3ca0f7c566f8e06244bf7ac2ddf93605/receipt.json": "7af8bb7e19d1b5d99bc0dd01e0ebaf9ee3df4ce46cdd7422d875bb225b84c4c4",
+      "invocation_control/responses/72d06922f039c440724059d2f3493fab3ca0f7c566f8e06244bf7ac2ddf93605/response.bin": "6bbb7653caa01efc4cc1cd909c2fe935c7afc59a538aa8155dff121514a9ee05",
+      "semantic-request.json": "8768088b71f7f54779ef4a9af1d4b113f45acc31cb42135961579764bab78af2",
+      "source.json": "4e0dde89514a0722f92804849148d75115a14b65a3c5a1b29d38afeda8d6e597",
+      "wire/assistant-output.bin": "6bbb7653caa01efc4cc1cd909c2fe935c7afc59a538aa8155dff121514a9ee05",
+      "wire/journal.json": "c852e70f8407f21276e0aa8797f5c2cbf4d7a464179d5aef6232355796cfa147",
+      "wire/raw-response.bin": "5852b3c4a73983a7a4f112141b54ab194c26cb9f1fbec6aed4573313f2a432e3"
+    },
+    "execution_receipt_id": "sha256:890bf29cab532715be66871b87cbe7a84a7f20e2e23de6a1142c76f3d221d75b",
+    "intent_id": "sha256:339e148b0638c8149c45dd668722d3796233649f799bee90fc57a36ae2fc7ea9",
+    "record_type": "CONTINUOUS_CALL_TERMINAL",
+    "status": "SUCCEEDED",
+    "stop_reason": "",
+    "terminal_id": "sha256:582e658cef8a31ab3fffcb770163629c60fc2cc0156bbf42868e13b4ea2cbacd"
+  },
+  "wire_journal": {
+    "ai_invocation_plan_id": "sha256:146423502568efc1cca02653ee04680e18d9d0ad8d40937b4f46d6f6d9665d93",
+    "assistant_output_sha256": "6bbb7653caa01efc4cc1cd909c2fe935c7afc59a538aa8155dff121514a9ee05",
+    "error_class": "",
+    "error_detail": "",
+    "execution_id": "sha256:73d100795fd35b4add3e4093f9ed5fac3d98919cef3c531181f20f911ce40364",
+    "intent_id": "sha256:339e148b0638c8149c45dd668722d3796233649f799bee90fc57a36ae2fc7ea9",
+    "mode": "LIVE",
+    "observed_at_utc": "2026-09-22T12:02:20.827754Z",
+    "provider_request_id": "aa662529-b7fe-4554-80bf-69ae2fbfed98",
+    "raw_response_sha256": "5852b3c4a73983a7a4f112141b54ab194c26cb9f1fbec6aed4573313f2a432e3",
+    "record_type": "CONTINUOUS_ORIGINAL_WIRE",
+    "request_sha256": "c3ec3698217dcb2e4d8282ca3a5284ff0abf4e66b53cd62fceb69d8b14514f77",
+    "status_code": 200,
+    "usage": {
+      "actual_cost": null,
+      "cache_hit_input_tokens": 0,
+      "cache_miss_input_tokens": 185233,
+      "input_tokens": 185233,
+      "output_tokens": 550
+    },
+    "wire_id": "sha256:a0e7abea2e1ce5ed9068c09068dc9730c958bce27542484e08da482489f07cf5"
+  },
+  "finish_reason": "stop",
+  "native_candidate_evidence_created": true,
+  "source_request_sha256": "8768088b71f7f54779ef4a9af1d4b113f45acc31cb42135961579764bab78af2",
+  "complete_company_result": false,
+  "original_call_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0111"
+}

@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b13-strict-references-20260922/probe109.py", line 17, in <module>
+    base,normalized,_=restore_indexed(request=request,raw_response=raw)
+                      ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/native_unit_index.py", line 93, in restore_response
+    base = restore_base_request(request)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/native_unit_index.py", line 66, in restore_base_request
+    need(type(meta) is dict and set(meta)=={'version','base_request_id','request_id_schema','unit_id_schema','unit_count_bounds'}
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and meta['version']==VERSION and request['system_prompt'].endswith(SUFFIX),
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'NATIVE_INDEX_CONTRACT_CHANGED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/native_unit_index.py", line 26, in need
+    raise ValueError(reason)
+ValueError: NATIVE_INDEX_CONTRACT_CHANGED

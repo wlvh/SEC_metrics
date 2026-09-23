@@ -1,0 +1,38 @@
+{
+  "status": "B13_PAUSED_AFTER_FAILURE_NO_RETRY",
+  "code_requirement": "sha256:2685e0daa0313f842a52331de31219871377fb4e85978f2bcbf601cc8e4b118c",
+  "before": [
+    60,
+    60,
+    49
+  ],
+  "companies": [
+    {
+      "company_id": "enphase_energy",
+      "planned_requests": 6,
+      "calls": [
+        {
+          "ordinal": 110,
+          "status": "FAILED_TERMINAL",
+          "call_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0110",
+          "stop_reason": "HTTP_402"
+        }
+      ],
+      "status": "FAILED_TERMINAL_SCOPE_PAUSED"
+    }
+  ],
+  "allowed_provider_requests": 17,
+  "production_authorized": false,
+  "after": [
+    61,
+    61,
+    49
+  ],
+  "new_calls": [
+    1,
+    1,
+    0
+  ],
+  "last_ordinal": 110,
+  "seconds": 29.028
+}

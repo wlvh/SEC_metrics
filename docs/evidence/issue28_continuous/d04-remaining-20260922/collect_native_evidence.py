@@ -1,0 +1,17 @@
+import pathlib,json,csv,shutil,hashlib,collections
+p=pathlib.Path('docs/evidence/issue28_continuous');e=p/'d04-remaining-20260922';root=pathlib.Path('/tmp/sec_metrics_d04_unattempted6_live_20260922')
+companies=['marriott_international','southwest_airlines','jpmorgan_chase','salesforce','lumen_technologies','macys']
+def save(path,obj):path.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n')
+index=json.loads((p/'review-5207290213/current-390.json').read_text());index['parent_index']='review-5207290213/current-390.json';index['as_of']='2026-09-22_THROUGH_CALL169_SIX_NEW_D04_NATIVE_CANDIDATES';delivery=[]
+for company in companies:
+ src=root/company;dst=e/'native-results'/company;dst.mkdir(parents=True,exist_ok=True)
+ for name in ['run','rows']:shutil.copytree(src/name,dst/name,dirs_exist_ok=True)
+ shutil.copyfile(src/'summary.json',dst/'summary.json')
+ summary=json.loads((src/'summary.json').read_text());records=[json.loads(l) for l in (src/'run/records.jsonl').read_text().splitlines()];result=next(r for r in records if r['record_type']=='METRIC_RESULT');row=next(csv.DictReader((src/'rows/metrics_matrix.csv').open()))
+ item={'company_id':company,'run_id':summary['run_id'],'result':result,'public_row':row,'calls':summary.get('calls',summary.get('original_call_ordinals',[])),'persistent_candidate_root':str(pathlib.Path('/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/native-candidate-results-20260922')/company),'committed_material_is_full_portable_runtime':False,'new_archive_created':False};delivery.append(item)
+ old=next(x for x in index['rows'] if x['company_id']==company and x['metric_id']=='D04');history={k:v for k,v in old.items() if k!='evidence_history'};old['evidence_history'].append(history)
+ old.update(result_category='DEFINED_SCOPE_TEXT_STATEMENT',quality=result['quality'],applicability=result['applicability'],value=result['value'],unit=result['unit'],reason_code=result['reason_code'],source_period={'fiscal_year':int(row['fiscal_year']),'period_start':result['period_start'],'period_end':result['period_end']},implementation_identity={'run_id':summary['run_id'],'result_id':result['result_id'],'spec_closure_hash':result['spec_closure_hash'],'head':'6b1b979795038dd73add1ac8a64c7a3b603d95c7','evidence_date':'2026-09-22','current_code_replay_claim':False},evidence_type='REAL_PROVIDER_COMPLETE_SAVED_SOURCE_ASSESSMENT_NATIVE_OPEN',selected_evidence={'path':str(dst),'selector':company+'/D04'},run_status='OPEN',public_row_status='TEXT_QUAL_CANDIDATE_ONLY',native_publication_status=result['publication'],new_real_result_this_review=True,remaining_responsibility='Normal update and unified390 acceptance; no formal adoption; fixed installed runtime cold read separately recorded')
+index['categories']=dict(collections.Counter(r['result_category'] for r in index['rows']));index['native_record_count']=376;index['native_result_or_valid_noncomputing_state_count']=371;save(e/'current-390.json',index);save(e/'six-native-results.json',delivery)
+prior=json.loads((p/'ordinary-release-preparation/current-zero-call-20260922/summary.json').read_text())['production_files_after'];current={n:hashlib.sha256(pathlib.Path(n).read_bytes()).hexdigest() for n in prior};assert current==prior
+save(e/'production-unchanged.json',{'status':'PASS','production_files':current,'new_calls':[0,0,0],'fixed_private_chain_reused':True,'full390_acceptance':False,'active_switched':False})
+print(json.dumps({'companies':len(delivery),'categories':index['categories'],'rows':len(index['rows']),'production_unchanged':True}))

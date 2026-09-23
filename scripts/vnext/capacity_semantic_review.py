@@ -249,6 +249,14 @@ def requests_from_source(source):
 
 
 def validate_response(*, request, raw_response, source=None):
+    if 'source_reference_contract' in request:
+        from .capacity_reference_contract import restore_response
+        need(type(raw_response) is bytes and len(raw_response) <= strict_json_file(path=ROOT / review_policy_path(request))['max_response_bytes'],
+             'B13_RESPONSE_TOO_LARGE')
+        base, normalized, original = restore_response(request=request, raw_response=raw_response)
+        checked = validate_response(request=base, raw_response=normalized, source=source)
+        checked.update(request_id=request['request_id'], response=original)
+        return checked
     if 'indexed_unit_contract' in request:
         from .native_unit_index import restore_response
         need(type(raw_response) is bytes and len(raw_response) <= strict_json_file(path=ROOT / review_policy_path(request))['max_response_bytes'],
@@ -358,7 +366,8 @@ def validate_response(*, request, raw_response, source=None):
                 production = re.search(r'\b(?:produced|manufactur(?:e|es|ed|ing)|production|output)\b', text, re.I)
                 need(not sales or production is not None, 'B13_SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION')
     from .capacity_utilization_source import validate_explicit_quantity_classifications
-    from .capacity_quantity_roles import validate_quantity_role_findings
+    from .capacity_quantity_roles import validate_quantity_role_findings, validate_visible_source_label_roles
+    checked['unresolved'].extend(validate_visible_source_label_roles(findings=checked['findings']))
     role_units=source['units'] if program is not None else units
     role_findings=([f for f in checked['findings'] if f not in program['program_findings']]+program_complete['program_findings']
                    if program is not None else checked['findings'])
