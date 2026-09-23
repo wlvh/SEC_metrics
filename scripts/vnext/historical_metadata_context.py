@@ -37,7 +37,12 @@ from .normal_history_catalog import load_history_for_period
 from .text_results_v2 import TextResultV2Error
 
 RECORD_TYPE = "HISTORICAL_TEXT_METADATA_SCOPE"
-SUPPORTED_METRICS = ("D02",)
+SUPPORTED_METRICS = ("C02", "D02")
+# Which forms each metric's roles are chosen from. The frozen module keys the
+# same set off the metric id; restating it here rather than importing it would
+# be a second copy of a rule that decides which filings exist at all.
+_FORMS = {"C02": {"10-K", "10-K/A", "DEF 14A", "DEF 14A/A"},
+          "D02": {"10-K", "10-K/A"}}
 HISTORY_RULE = "EVERY_DECLARED_SHARD_REACHING_THE_PINNED_PERIOD_IS_READ_AND_ADMITTED"
 METADATA_ROLES = ("sec_submissions_inventory", "sec_submissions_history")
 _IDENTITY = ("form", "reportDate", "filingDate", "accessionNumber", "primaryDocument")
@@ -99,7 +104,7 @@ def historical_metadata_context(*, repo_root: Path, company_id: str, prepared,
           + ",".join(history["unloaded_history_reaching_period"]), "SOURCE_UNAVAILABLE")
     _need(history["window_proven"], "HISTORICAL_TEXT_METADATA_WINDOW_NOT_PROVEN",
           "SOURCE_UNAVAILABLE")
-    rows = [row for row in history["all_rows"] if row["form"] in {"10-K", "10-K/A"}]
+    rows = [row for row in history["all_rows"] if row["form"] in _FORMS[metric_id]]
     ordinary = [row for row in rows
                 if row["form"] == "10-K" and row["reportDate"] == period["period_end"]]
     _need(len(ordinary) == 1, "HISTORICAL_TEXT_METADATA_ANNUAL_NOT_UNIQUE")
@@ -107,11 +112,30 @@ def historical_metadata_context(*, repo_root: Path, company_id: str, prepared,
           "HISTORICAL_TEXT_METADATA_ANNUAL_SELECTION_CHANGED")
     amendments = _order([row for row in rows if row["form"] == "10-K/A"
                          and row["reportDate"] == period["period_end"]])
-    # D02 reads neither proxy role. They are present because the frozen source
-    # plan's shape has them, and empty because this module does not resolve
-    # them; C02 is refused above rather than served an empty proxy set.
+    # The proxy roles. The frozen module keeps every DEF 14A filed on or after
+    # the period end and takes the first of a NEWEST-FIRST ordering, which is
+    # the newest of them. For the latest period only one proxy has been filed
+    # since its end, so the two readings pick the same filing; for an earlier
+    # pinned period they do not, and the newest would answer 2023 with the
+    # annual meeting held in 2026. The earliest one at or after the pinned end
+    # is the meeting that reports on that year, so that is the one taken. D02
+    # reads neither role and gets neither.
+    proxies = _order([row for row in rows if row["form"] == "DEF 14A"
+                      and row["filingDate"] >= period["period_end"]])
+    proxy = proxies[-1] if proxies and metric_id == "C02" else None
+    # The frozen amendment rule, restated against the pinned proxy rather than
+    # against the newest one. For an earlier period this can reach a LATER
+    # year's proxy amendment, and the plan then refuses with
+    # TEXT_INPUT_GOVERNANCE_PROXY_AMENDMENT_REPLAY_REQUIRED. That is a named
+    # implementation gap, not a wrong value, and narrowing the window to "before
+    # the next proxy" would be a rule this corpus cannot check: it holds no
+    # DEF 14A/A at all.
+    proxy_amendments = _order(
+        [row for row in rows if row["form"] == "DEF 14A/A"
+         and row["filingDate"] >= (proxy["filingDate"] if proxy else period["period_end"])]
+    ) if metric_id == "C02" else []
     selection = {"ordinary": ordinary[0], "amendments": amendments,
-                 "latest_def14a": None, "def14a_amendments": []}
+                 "latest_def14a": proxy, "def14a_amendments": proxy_amendments}
     scope = {"record_type": RECORD_TYPE, "company_id": prepared["company_id"],
              "cik": prepared["entity"], "metric_id": metric_id,
              "pinned_period_end": period["period_end"],
@@ -123,6 +147,9 @@ def historical_metadata_context(*, repo_root: Path, company_id: str, prepared,
              "selected_filing_inventory": ordinary[0]["metadata_origin"]["inventory_name"],
              "amendment_inventories": sorted({row["metadata_origin"]["inventory_name"]
                                               for row in amendments}),
+             "governance_inventories": sorted({row["metadata_origin"]["inventory_name"]
+                                               for row in ([proxy] if proxy else [])
+                                               + list(proxy_amendments)}),
              "history_rule": HISTORY_RULE, "selection": selection}
     return {"prepared_annual_input": prepared, "selection": selection,
             "loaded_inventories": history["loaded_inventories"],

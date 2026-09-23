@@ -651,3 +651,17 @@ Issue #47 内容验收三处进展，其中两处是**我自己的读取器错�
 (3) **这次改动我又犯了已经记过的那个错，并被量出来**：第一版直接`continue`跳过该块，而**同一个循环同时在建D03的监管候选集**，于是Macy's的D03由42降到40——丢的是1566/1573两块"Settlement(189)(123)— —"，养老金附注里重复出现的表格行，带`ACTION_LANGUAGE_PRESENT`。**Macy's的D02一条都没动**，所以从正在处理的那个指标上完全看不见。现在跳过只加在D02那一支；十一份实测D03全部未变。顺带量出一件关于这条判据本身的事：**它会把重复的表格行看成页眉**，本语料里没有D02 scope含这种行所以无代价，但这就是它不能无限外推的理由。四次注错三次被抓（不扩覆盖面→Ford那条挂；让跳过也作用于D03→两条挂；把页眉写回scope对象→同两条挂，因为写回去就等于让跳过作用于D03）。**第四次`RECOMPUTE_EVERY_SCOPE_INCLUDING_THE_SUB_NOTE`没被抓**：子附注scope按父附注范围计重复，与按自身范围计在原理上不同，但四份实测（含Pfizer这唯一有子附注scope的）两种算法结果完全一致——**本语料区分不了**，守卫保留是因为它维持各scope被测量时的语义，如实记为"无例检验"。
 
 **还有一处顺序上的提醒**：页眉改动写进scope对象时，Macy's的candidate不再与冻结实现逐字节相同（三个哈希变了，可见内容一个字没变），而那条比对用例正是为此存在。**一个只移动一份申报里8个块的改动，就该只改一份申报的字节**；现在页眉表放在scope旁边而不是写进去，代价是这些scope的记录不再自报把什么当成了页眉（caption scope会自报），如实记下。
+
+Issue #47 CI红的真正原因是**它测的不是我这棵树**：`test_historical_requirement_snapshot`在CI报`minted snapshot differs from disk: baseline_manifest.json, transfer_manifest.json`，而本地仓库树、运行树、以及一个干净clone逐一`--check`都通过。定位靠的是"哪两个文件"：`transfer_manifest.json`除常量外只装父代closure与pending decision，所以差的必然是父代派生的东西。GitHub Actions的`pull_request`事件检出的是`refs/pull/52/merge`，即**我的head与当前base分支的合并结果**；base分支（另一个agent维护的PR43）把`scripts/vnext/continuous_call_ledger.py`重记进了`issue_28_v13`的execution authority，父代closure由`047e4d40…`变`1711224d…`，我pin住它的后继快照当然对不上。**后继pin父代就是这么坏的，这是设计不是缺陷**；修法是把base合进来重mint，实测合并干净、重mint后正好只有那两个文件变化。顺带排除掉的几个假设都写下来，因为它们看起来都很像：PYTHONHASHSEED（六个种子全过）、Python版本（3.10/3.11/3.12/3.13父代closure完全相同）、本地未跟踪文件（干净clone同样通过）。**教训是"本地全绿"这句话要问清楚是哪棵树全绿**——这和本文件早先记的"重mint去了另一棵树"是同一族，只不过这次那棵不是我的。
+
+B12已读并接受：路线从accession事实集解析，这次读申报主文件自己的inline XBRL——`us-gaap:RevenueRemainingPerformanceObligation`在2026-01-31瞬时、无维度，申报写的是scale 9的"72.4"，即72,400,000,000，与发布值相同。同一概念另外两个事实都正确地没被取：2025-01-31那个是上一期，2.2B那个带`crm:InformaticaInc.Member`维度（已批branch要求无维度总额，取它等于取一个分部，加它等于重复计）。另核对了公共行不会把它读成别的东西——投影的notes模板就是"RPO != ARR; cRPO != ARR"，而这正是已批定义坚持的那一句。接受登记128条。
+
+Issue #47 C02历史路线已接通（改`historical_metadata_context.py`、`historical_text_input.py`、`historical_results.py`，覆盖表wired 28→29）：**先撤回我自己在本会话里写的一句话**——"卡在模型额度的有B13/C02/D01/D03/D04五条"里C02是错的。C02走的是和D02同一套确定性摘录机制（`text_results_v2`的`METHODS`把两者并列），零模型调用；它当时被归错类是因为我读了`source_mode: ai_text`就没有再往下读实际跑的是哪条链。**没有调查就没有发言权，这次错在把配置字段当成了实现**。
+
+**先量后写，量出来又是级联**：十家公司实测，九家走`CURRENT_SAME_CIK_DEF14A`（当期代理），Paramount走`SAME_PERIOD_PART_III_ANNUAL_AMENDMENT`——它的治理信息在补Part III的10-K/A里而不在代理里，还要一份Part III原件证明。只接第一级会让它拿到"代理未保存"的来源缺口，而那对这家公司不成立。两级一起接，和B06/C03同一条纪律。
+
+**只换一条规则：哪一份DEF 14A属于这一年**。冻结规则取"申报日≥期末的全部代理、按新到旧排序取第一个"，也就是**最新的那份**；当期只有一次股东会在期末之后开过，所以最新与最早是同一份，冻结路线是对的、不是缺陷。pinned到更早期间就不同了：Marriott的2023年会把2024/2025/2026三份都纳入，最新是2026那份。报告某一年的股东会是该年结束之后开的那一次，所以后继取**期末之后最早的**。实测FY2024点名2025-03-27那份、FY2023点名2024-03-27那份，两者都以`SAVED_SOURCE_MISSING`加具体URL停下——**来源缺口是答案，不是路线缺口**；82份代理里只存了10份且全部2026年申报。
+
+**差分又抓到一处真实差异**：历史路线只要该期间带修订就置`PREPARED_ORIGINAL_WITH_AMENDMENTS`，而冻结路线**只对D02**这么做。C02第二级的修订件本身就是来源，说成"原件加修订"等于把同一份文档描述两次。Paramount是十家里唯一能区分这两条规则的公司，而差分断言的是状态不只是值，所以它挂在了那一条上。修后九家逐项相同（计划级别、全部准入申报的accession、选中的块号），JPMorgan仍停在期间选择的`SAVED_HISTORY_INCOHERENT`——每条历史路线共有、已在获取计划内，不是本路线的。
+
+端到端两级各跑一次：Marriott FY2025 FROZEN→公共行（29条证据、19,562字、`row_hash sha256:6f7bccf2…`）→独立进程冷读同run_id；Paramount FY2025 走Part III级同样FROZEN→公共行（12条证据），两者零新增调用。**六次注错五次被抓**；`WIDEN_THE_FORMS_FOR_EVERY_METRIC`没被抓，因为表单集合与角色赋值守的是同一件事、去掉任一半另一半仍然答对，**成对才承重**——`GIVE_D02_THE_PROXY_ROLES_TOO`同时去掉两半立刻被抓，如实记为"单独一半无例可检"。**未做**：更早期间（要那些代理，属获取计划A类）；代理修订分支（本仓库一份`DEF 14A/A`都没有，规则携带但未被任何例子行使，对更早期间可能够到后一年的代理修订并以具名实现缺口拒绝）；29条摘录的内容验收。材料见`docs/evidence/issue47_history/c02-board-composition/`。

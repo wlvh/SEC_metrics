@@ -603,26 +603,34 @@ class HistoricalCompanyfactsResultTest(unittest.TestCase):
         self.assertNotEqual(current[0], prior[0])
         self.assertTrue(current[0] and prior[0])
 
-    def test_the_proxy_backed_text_metric_is_refused_with_its_real_reason(self):
-        """C02 is held out by missing proxies, not by missing code.
+    def test_the_proxy_backed_text_metric_names_the_document_not_the_route(self):
+        """What C02 says about an earlier period, now that it is wired.
 
-        Of the 82 DEF 14A filings the saved submissions indexes list, ten have
-        their accession material saved and all ten were filed in 2026. Wiring
-        C02 would resolve the most recent period and name a source gap for every
-        earlier one, so the refusal names the metric rather than pretending the
-        route is impossible.
+        It used to raise HISTORICAL_TEXT_INPUT_METRIC_NOT_WIRED, which was
+        honest while no route existed and is the wrong sentence now: the code
+        resolves this period, and what it cannot reach is one document. Of the
+        82 DEF 14A filings the saved submissions indexes list, ten have their
+        accession material saved and all ten were filed in 2026.
+
+        The distinction is the point of this case rather than the refusal
+        itself: an implementation gap is work in this repository and a source
+        gap is a document that has to be fetched, and reporting the second as
+        the first is how a settled question reads as an open one.
         """
         from vnext.historical_text_input import prepare_historical_business_text_input
-        from vnext.normal_text_input_v2 import _need  # noqa: F401 - error type source
         with original_sources_only():
             selection = resolve_period_selection(repo_root=ROOT, company_id=MARRIOTT,
                                                  report_end=FY2024_END)
-            with self.assertRaises(ValueError) as refused:
-                prepare_historical_business_text_input(
-                    repo_root=ROOT, company_id=MARRIOTT, metric_id="C02",
-                    period_selection=selection)
-        self.assertEqual("HISTORICAL_TEXT_INPUT_METRIC_NOT_WIRED:C02", str(refused.exception))
-        self.assertEqual("IMPLEMENTATION_GAP", refused.exception.category)
+            prepared = prepare_historical_business_text_input(
+                repo_root=ROOT, company_id=MARRIOTT, metric_id="C02",
+                period_selection=selection)
+        self.assertEqual("BLOCKED", prepared["input_status"])
+        limitations = prepared["input_binding"]["limitations"]
+        self.assertEqual(1, len(limitations))
+        self.assertEqual("SOURCE_UNAVAILABLE", limitations[0]["category"])
+        self.assertNotIn("NOT_WIRED", limitations[0]["reason"])
+        self.assertTrue(limitations[0]["reason"].startswith("SAVED_SOURCE_MISSING:"),
+                        limitations[0]["reason"])
 
     def test_a_restated_comparative_does_not_reach_the_earlier_period(self):
         """A real restatement in the repository's own saved Company Facts.

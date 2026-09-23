@@ -125,6 +125,7 @@ SOURCE_TESTS += ("tests.vnext.test_native_assessment_replay",)
 SOURCE_TESTS += ("tests.vnext.test_normal_history_catalog",)
 SOURCE_TESTS += ("tests.vnext.test_historical_period_results",)
 SOURCE_TESTS += ("tests.vnext.test_historical_coverage",)
+SOURCE_TESTS += ("tests.vnext.test_historical_governance_text",)
 # Issue #47's acquisition chain installs the saved corpus and drives real
 # attempt and checkpoint primitives over recorded responses, so it reads
 # saved sources; it opens no socket, asserted by counting connects.

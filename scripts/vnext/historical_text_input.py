@@ -17,12 +17,18 @@ It exists as a successor file because ``scripts/vnext/ordinary_text_input.py`` i
 byte-bound by the ``issue_28_v13`` rule set; changing it would stop every
 existing ordinary Run from loading its own Requirement.
 
-Only D02 is wired. C02 is refused, and not for want of code: its source plan
-needs the annual meeting's DEF 14A, and of the 82 proxies this repository's
+C02 is wired too, and its shape is a two-level cascade rather than one route.
+Measured on the ordinary chain before writing this: nine of the ten companies
+resolve through CURRENT_SAME_CIK_DEF14A, and Paramount through
+SAME_PERIOD_PART_III_ANNUAL_AMENDMENT with a Part III raw proof, because its
+governance information is in the 10-K/A that adds Part III rather than in a
+proxy. Wiring only the first level would give that company the first level's
+answer - a source gap that is not true of it.
+
+What C02 cannot reach is an earlier period: of the 82 proxies this repository's
 saved submissions indexes list, ten have their accession material saved and all
-ten were filed in 2026. A historical C02 would resolve the most recent period
-and name a source gap for every earlier one, so the missing proxies are the ask
-rather than the route.
+ten were filed in 2026. So a pinned earlier period names the proxy it needs and
+stops there, which is a source gap rather than a route gap.
 """
 from pathlib import Path
 
@@ -34,11 +40,12 @@ from .historical_metadata_context import (check_historical_metadata_scope,
                                           historical_metadata_context)
 from .normal_governance_input import _Sources
 from .normal_text_input_v2 import _need, _source_plan
+from .ordinary_text_input import _part_iii_proof
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .text_results_v2 import SCOPES
 
 RECORD_TYPE = "HISTORICAL_BUSINESS_TEXT_INPUT_BINDING"
-SUPPORTED_METRICS = ("D02",)
+SUPPORTED_METRICS = ("C02", "D02")
 
 
 def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, metric_id: str,
@@ -74,6 +81,7 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
               "period_start": period["period_start"], "period_end": period["period_end"],
               "scope": scope, "scope_key": content_hash(value=scope)}
     plan, text_sources, filings, limitations = None, [], {}, []
+    part_iii = None
     try:
         plan = _source_plan(governance_binding=metadata, metric_id=metric_id)
         check_historical_metadata_scope(
@@ -82,6 +90,22 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
                         if record["record_type"] == "SOURCE_REFERENCE"])
         text_sources = [annual["source_reference"]]
         filings[text_sources[0]["source_reference_id"]] = ordinary
+        if metric_id == "C02":
+            # The plan's second filing is whichever level answered: the proxy
+            # at level one, the Part III annual amendment at level two. Both
+            # are read the same way; only the Part III case additionally has
+            # to prove from the raw bytes that the amendment really carries
+            # Part III, which is the frozen proof and is imported rather than
+            # restated.
+            governance = plan["text_filings"][1]
+            selected = reader.primary(governance)
+            text_sources.append(selected["source_reference"])
+            filings[text_sources[-1]["source_reference_id"]] = governance
+            if plan["requires_part_iii_proof"]:
+                part_iii = _part_iii_proof(
+                    source=selected["source_reference"], blob=selected["raw_blob"],
+                    raw=selected["raw_bytes"], filing=governance, company_id=company_id,
+                    cik=cik, period_end=period["period_end"])
     except ValueError as error:
         limitations.append({"metric_id": metric_id,
                             "category": getattr(error, "category", None)
@@ -106,8 +130,14 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
         "raw_bytes_by_id": raw, "source_filings": filings}
     _need(sha256_file(path=root / "evidence/requests_log.csv") == ledger_sha,
           "HISTORICAL_TEXT_INPUT_LEDGER_CHANGED_DURING_PREPARATION")
+    # The amendment flag is D02's only, as the frozen route has it. For C02 an
+    # annual amendment is not context around the source - at the Part III level
+    # it IS the source - so saying "original with amendments" would describe the
+    # same document twice. Found by comparing statuses with the ordinary chain:
+    # Paramount is the one company where the two rules differ.
     status = ("BLOCKED" if limitations
-              else "PREPARED_ORIGINAL_WITH_AMENDMENTS" if prepared["amendments"] else "PREPARED")
+              else "PREPARED_ORIGINAL_WITH_AMENDMENTS"
+              if metric_id == "D02" and prepared["amendments"] else "PREPARED")
     body = {"record_type": RECORD_TYPE, "metric_id": metric_id, "company_id": company_id,
             "period_selection": period_selection, "prepared_input": prepared,
             "current_metadata_scope": metadata["scope"],
@@ -117,7 +147,7 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
             "text_source_reference_ids": ([] if text_args is None
                                           else [s["source_reference_id"] for s in text_sources]),
             "source_filings": {} if text_args is None else filings, "target": target,
-            "source_plan": plan, "part_iii_source_proof": None, "input_status": status,
+            "source_plan": plan, "part_iii_source_proof": part_iii, "input_status": status,
             "limitations": limitations,
             "failed_source_attempts": list(reader.failed_attempts.values()),
             "current_latest_verified": False, "latest_restated_values_used": False,

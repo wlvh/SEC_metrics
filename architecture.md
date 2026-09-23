@@ -1041,6 +1041,18 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 不共享的那一次才是独立检查：`run_store.load_frozen_run` 不在任何作用域内，新进程冷读重新从原始证据解析，返回相同 status/quality/条目数（实测 28.1 秒）。反例覆盖身份隔离（同字节改称另一期间/另一主体仍被拒）、对象隔离（调用方改动拿到的对象不污染下一次）、作用域泄漏（块外不复用）与键的字节敏感性。
 
+**C02 的 pinned 路线**。`historical_metadata_context` 原本把行过滤到 `{10-K, 10-K/A}` 并把两个代理角色置空，`historical_text_input` 则按名拒绝 C02。现在表单集合按指标取（C02 另含 `DEF 14A` 与 `DEF 14A/A`），代理角色按同一条冻结规则解析，`historical_text_input` 在计划给出第二份申报时读它的主文件并在计划要求时构造 Part III 原件证明——该证明是冻结函数，导入而不是重写。
+
+**只有一条规则被替换：哪一份代理属于这一年。** 冻结规则保留"申报日 ≥ 期末"的全部代理、按新到旧排序取第一个，即最新的那份；当期只有一次股东会在期末之后开过，两种读法选同一份，所以冻结路线对当期是正确的。pinned 到更早期间时两者分开：报告某一年的股东会是该年结束后开的那一次，后继取期末之后**最早**的一份。代理修订沿用冻结形状（申报日 ≥ 选中代理的申报日），对更早期间可能够到后一年的代理修订并由计划以 `TEXT_INPUT_GOVERNANCE_PROXY_AMENDMENT_REPLAY_REQUIRED` 拒绝——具名实现缺口而不是错值；把窗口收窄到"下一份代理之前"是本语料检验不了的规则，它一份 `DEF 14A/A` 都没有。
+
+**差分找到的那处差异值得单列**：`PREPARED_ORIGINAL_WITH_AMENDMENTS` 在冻结路线里**只给 D02**。C02 第二级的年度修订件本身就是来源，说成"原件加修订"等于把同一份文档描述两次。历史路线第一版对两个指标都置了这个状态，Paramount 是十家里唯一能区分的公司。
+
+**页眉判据的覆盖面**。`_page_furniture` 早就存在并在跑：块在自己 scope 内重复、且前一块或后一块也重复，就是 running header。它只被挂在本世代自己构造的两种 scope 上（`INCORPORATED_CAPTION` 与 `LOCATED_LETTERED_SUB_NOTE`），`ITEM_3` 与整取附注没有——代码注释当时就写着"整取附注保留继承行为，它已经带着 Ford 的 running header"。读四份摘录集才把代价读出来：Ford 的 Note 24 三个分页各贡献注册人名、"NOTES TO THE FINANCIAL STATEMENTS" 与 "NOTE 24 …(Continued)"，共 8 块进了结果。现在每个 scope 都用这条判据。十一份实测：Ford 53→45、丢的正是那 8 块，其余十份的 D02 候选集、`proposal_id` 与 `coverage_hash` 逐字节不变。
+
+两处实现选择各有其理由，都是量出来的：(1) **跳过只加在 D02 那一支**，因为同一个循环同时建 D03 的监管候选集，第一版的 `continue` 让 Macy's 的 D03 由 42 降到 40（1566/1573 是养老金附注里重复出现的表格行，带 `ACTION_LANGUAGE_PRESENT`），而 Macy's 的 D02 一条没动——从正在处理的指标上完全看不见。(2) **页眉表放在 scope 旁边而不是写进 scope**，因为 `checked_ranges` 进记录：写进去会让 Macy's 的 candidate 不再与冻结实现逐字节相同（三个哈希变了、可见内容一字未变），而一个只移动一份申报里 8 个块的改动就该只改一份申报的字节。代价是这些 scope 的记录不自报把什么当成了页眉，caption scope 会自报。
+
+判据够不到的那一类如实登记而不是扩写判据：Enphase 把页脚写成一个带页码的块（"Enphase Energy, Inc. | 2025 Form 10-K | 46"），任何两次出现都不是同一串文本，重复判据无从比较。本语料只有这一个例子，所以它是缺陷登记条目而不是第二条判据。同一次测量还说明这条判据**会把重复的表格行看成页眉**（Macy's 那两块就是），本语料里没有 D02 scope 含这种行所以无代价，但这是它不能继续外推的理由。
+
 **文本路线的章节边界修复**：`scripts/vnext/historical_text_results.py` 是该世代第 14 个规则文件。冻结的 `text_coverage.build_text_document` 把编号项的终点定在下一个编号标题，`_SUCCESSOR["3"] = {"4", "5"}` 又特意允许跳号（有些公司整项省略 Item 4）；Form 10-K 另外允许把高管信息作为**不编号项**放在 Part I 内。两者相遇时编号项越过不编号项，把高管章节当成自己的披露。九家已保存年报的实测：八家 Item 3 结束于 `Item 4. Mine Safety Disclosures`，只有 Pfizer 不报 Item 4、结束于 Item 5，因而吞掉中间 26 个高管块；五家带该不编号标题，Marriott 与 Southwest 只差两块和四块。所以这是表单要素撞上一处有意放宽，不是某家公司的排版。
 
 修复不能放在应该放的位置：`text_coverage.py` 的字节被 `issue_28_v11` 的规则集点名，其引擎在数据根与代码根双向校验，而 `issue_47_v1` 经父链加载它，改这个文件会让 v11 及其后所有 Requirement 无法加载（实测 `Normal candidate rule bytes differ: scripts/vnext/text_coverage.py`）。后继模块因此只收窄历史路线的已定位区间：`_derive_candidate`、`build_text_review_unit`、`legal_risk_candidates` 的扫描与记录形状校验全部原样复用，另有三个函数因为在冻结模块内以模块全局互相查找而必须复制，由"未收窄时逐字节等于冻结模块"的子集断言约束。普通路线保留原行为，直到某个能重记该文件的世代携带同一规则——这是明确限制，不是已关闭项。
