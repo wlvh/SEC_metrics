@@ -6,4 +6,4 @@
 
 `server-authorization-check.json` 证明 GitHub 服务器转录与当前执行绑定一致；`offline-wiring-summary.json` 和 `offline-paramount-113-summary.json` 分别证明当前版本的首组工厂、模拟传输、接受控制、冷读账本，以及原 113 无损同摘要路径。两者禁网且真实调用均为零。`fast.json` 为当前 Python 3.13.5、tokenizers 0.22.2 环境的 127/127 快速测试。`recorded-complete-enphase-summary.json` 是前一字节绑定的六组录制 Run 和**同进程机械重读**，用于复用未改的公司级路径，不称为当前补丁的跨进程独立冷读。`b13-170-source-audit/offline-wiring.json` 是最终接线收据，按当前执行权限文件哈希检查。
 
-这份材料不代表真实 D04 或 B13 公司结果。新增批次差异仍需限定独审；完成后才能在原账本安装授权，第一条真实请求直接执行 Enphase D04 第 0 组，不能作余额探针。各公司必须完成全部组、原生 Result/Run、公开行与必要冷读后才计完整候选。D03、账户操作、生产采纳、Ready、合并和 active 切换均不在本授权内。
+这份材料不代表真实 D04 或 B13 公司结果。`independent-review/conclusion.md` 对 `c92c7698` 首轮 33 组受限申领差异未发现阻断，29 项指定测试通过；它不覆盖未来尚未实现的修后第二次申领。原账本安装授权后，第一条真实请求直接执行 Enphase D04 第 0 组，不能作余额探针。各公司必须完成全部组、原生 Result/Run、公开行与必要冷读后才计完整候选。D03、账户操作、生产采纳、Ready、合并和 active 切换均不在本授权内。
