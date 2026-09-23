@@ -2698,6 +2698,62 @@
    "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D02_MACYS_2026",
+   "accepted_value": "sha256:40f09f210f6cf31d7fd00090a7855488da287891d5781f55e9e0fde0634e2012",
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+   "method": "every excerpt in the set read whole, and every block the selector skipped inside the note range read with it, judged against the approved source definition. The other direction - whether a contingencies note was missed - is the unreached-note scan in docs/evidence/issue47_history/d02-content-read/unreached-notes.json. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D02",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "chars": 1183,
+    "excerpts": 3
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set is the set the approved source definition asks for in this filing, read in both directions. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D02_MARRIOTT_2023",
+   "accepted_value": "sha256:456ff18436fac1257c2bfde95ba13f7f25427c6f3d466238c656ba32fa7db15b",
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+   "method": "every excerpt in the set read whole, and every block the selector skipped inside the note range read with it, judged against the approved source definition. The other direction - whether a contingencies note was missed - is the unreached-note scan in docs/evidence/issue47_history/d02-content-read/unreached-notes.json. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D02",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "chars": 4997,
+    "excerpts": 8
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set is the set the approved source definition asks for in this filing, read in both directions. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D02_MARRIOTT_2024",
+   "accepted_value": "sha256:1087196ed11e912f2d7c2ca5baa3cb3ed96dda826c9b2334e1128bd2365e70f7",
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+   "method": "every excerpt in the set read whole, and every block the selector skipped inside the note range read with it, judged against the approved source definition. The other direction - whether a contingencies note was missed - is the unreached-note scan in docs/evidence/issue47_history/d02-content-read/unreached-notes.json. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D02",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "chars": 5774,
+    "excerpts": 10
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set is the set the approved source definition asks for in this filing, read in both directions. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D02_MARRIOTT_2025",
+   "accepted_value": "sha256:1effad2d6c6b26c502c2ca2a091e2d7a9eabac547a9bb33b94e7ef02321f6530",
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+   "method": "every excerpt in the set read whole, and every block the selector skipped inside the note range read with it, judged against the approved source definition. The other direction - whether a contingencies note was missed - is the unreached-note scan in docs/evidence/issue47_history/d02-content-read/unreached-notes.json. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "chars": 5098,
+    "excerpts": 11
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set is the set the approved source definition asks for in this filing, read in both directions. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_E01_ENPHASE_2025",
    "accepted_value": "0",
    "company_id": "enphase_energy",
@@ -4954,13 +5010,15 @@
   "docs/evidence/issue47_history/content-acceptance/cross-source-read.json",
   "docs/evidence/issue47_history/content-acceptance/lodging-table-read.json",
   "docs/evidence/issue47_history/content-acceptance/event-count-read.json",
-  "docs/evidence/issue47_history/content-acceptance/governance-read.json"
+  "docs/evidence/issue47_history/content-acceptance/governance-read.json",
+  "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json"
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "not_here_and_why": {
   "B06": "the three delivered positions all reproduce from their filings' own facts, but two of them were fitted - solved backwards from the published value - and the rule cannot be stated from the filing alone: Salesforce carries the inputs of two approved debt models that give different answers, and which applies is decided by the note structure the cascade reads. See docs/evidence/issue47_history/content-acceptance/b06-not-independently-readable.json.",
   "C03 for four companies": "no saved proxy reports an ecd PEO total for the target period; ten proxies are saved of the eighty-five the submissions indexes list.",
   "C04 for five": "the previous year's 10-K is not saved, and 'the auditor did not change' cannot be read from one year's filing alone.",
+  "D02 for the seven larger sets": "Pfizer's 96 excerpts, Ford's 53, Lumen's 41, Paramount's 28, Southwest's 25, Enphase's 18 and Salesforce's 15 are not read whole. Pfizer's was, earlier in this issue, and it found two wrong blocks - which is why the others are not accepted on the strength of the four that were read.",
   "E01 where the window holds an 8.01 filing": "E01 is the only route with a keyword branch, and reading it means reproducing the route's text scoping. A scan over every document in the accession matches 'transaction' in almost any exhibit. Six of seven windows hold an 8.01 filing, so E01 is accepted only for the one that does not.",
   "everything else": "no reading has been made.",
   "ford B07 and lumen B07": "operating income is negative, the definition says NOT_MEANINGFUL, and the reading agrees by producing a negative ratio where the route published none. There is no value to accept.",

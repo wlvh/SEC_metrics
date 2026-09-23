@@ -36,6 +36,7 @@ implemented and never run; a Run can be FROZEN and PASSED and hold another
 item's text. Nothing here turns a missing implementation into "the issuer did
 not disclose", and nothing here promotes EXACT into business acceptance.
 """
+import hashlib
 import re
 from pathlib import Path
 
@@ -209,15 +210,24 @@ def _acceptance_covers(*, acceptance, company_id, metric_id, report_end, result)
     """Whether this acceptance is about this position's current value.
 
     Both halves matter. The coordinate has to match, and so does the value:
-    an acceptance is a statement that one number was read against the filing,
-    so a position now carrying a different number is not covered by it.
+    an acceptance is a statement that one thing was read against the filing,
+    so a position now carrying something different is not covered by it.
+
+    A text metric's value is its whole payload - five thousand characters for
+    one of these - so an acceptance may name it by digest instead. The binding
+    is the same either way: the digest is of the value, and a different value
+    has a different digest.
     """
     if result is None:
         return False
+    value = str(result.get("value"))
+    accepted = acceptance["accepted_value"]
+    if accepted.startswith("sha256:"):
+        value = "sha256:" + hashlib.sha256(value.encode("utf-8")).hexdigest()
     return (acceptance["company_id"] == company_id
             and acceptance["metric_id"] == metric_id
             and acceptance["period_end"] == report_end
-            and str(result.get("value")) == acceptance["accepted_value"])
+            and value == accepted)
 
 
 def _release_covers(*, defect, result, receipt):

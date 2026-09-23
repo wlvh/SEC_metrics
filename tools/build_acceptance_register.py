@@ -14,6 +14,7 @@ CROSS = EVIDENCE + "cross-source-read.json"
 LODGING = EVIDENCE + "lodging-table-read.json"
 EVENTS = EVIDENCE + "event-count-read.json"
 GOVERNANCE = EVIDENCE + "governance-read.json"
+TEXT = EVIDENCE + "d02-both-directions-read.json"
 PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
            "marriott-2023": "2023-12-31", "ford-2025": "2025-12-31",
            "pfizer-2025": "2025-12-31", "lumen-2025": "2025-12-31",
@@ -152,6 +153,28 @@ for label, case in sorted(governance.items()):
             "method": GOVERNANCE_METHOD[metric],
             "what_this_does_not_establish": GOVERNANCE_LIMIT[metric]})
 
+TEXT_METHOD = (
+ "every excerpt in the set read whole, and every block the selector skipped "
+ "inside the note range read with it, judged against the approved source "
+ "definition. The other direction - whether a contingencies note was missed - "
+ "is the unreached-note scan in docs/evidence/issue47_history/"
+ "d02-content-read/unreached-notes.json. The value is named by digest because "
+ "it is the whole text payload.")
+TEXT_LIMIT = (
+ "what is established is that this excerpt set is the set the approved source "
+ "definition asks for in this filing, read in both directions. It does not "
+ "establish " + COMMON)
+
+textual = json.loads((REPO / TEXT).read_text())["per_position"]
+for label, case in sorted(textual.items()):
+    entries.append({
+        "acceptance_id": "CONTENT_D02_" + label.upper().replace("-", "_"),
+        "company_id": case["company_id"], "metric_id": "D02",
+        "period_end": case["period_end"], "accepted_value": case["value_sha256"],
+        "evidence": TEXT,
+        "read_from": {"excerpts": case["excerpts"], "chars": case["chars"]},
+        "method": TEXT_METHOD, "what_this_does_not_establish": TEXT_LIMIT})
+
 register = {
  "record_type": "INDEPENDENT_CONTENT_ACCEPTANCE_REGISTER", "schema_version": 1,
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
@@ -164,7 +187,7 @@ register = {
                     "Run computing something else has not been checked. A "
                     "result a defect withdraws is never accepted, whatever is "
                     "written here.",
- "generated_from": [CROSS, LODGING, EVENTS, GOVERNANCE],
+ "generated_from": [CROSS, LODGING, EVENTS, GOVERNANCE, TEXT],
  "not_here_and_why": {
   "salesforce B03": "the accession's facts carry "
                     "DepreciationDepletionAndAmortization, first in the "
@@ -198,6 +221,11 @@ register = {
          "note structure the cascade reads. See "
          "docs/evidence/issue47_history/content-acceptance/"
          "b06-not-independently-readable.json.",
+  "D02 for the seven larger sets": "Pfizer's 96 excerpts, Ford's 53, Lumen's "
+    "41, Paramount's 28, Southwest's 25, Enphase's 18 and Salesforce's 15 are "
+    "not read whole. Pfizer's was, earlier in this issue, and it found two "
+    "wrong blocks - which is why the others are not accepted on the strength "
+    "of the four that were read.",
   "everything else": "no reading has been made."},
  "acceptances": sorted(entries, key=lambda e: e["acceptance_id"]),
 }

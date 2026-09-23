@@ -1460,6 +1460,30 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
             acceptance=self._entry("B04", "2601000000"), company_id=self.COMPANY,
             metric_id="B04", report_end="2024-12-31", result={"value": "2601000000"}))
 
+    def test_a_long_value_may_be_named_by_digest_and_is_still_value_bound(self):
+        """A text payload is named by sha256; the binding is unchanged.
+
+        An implementation that compared the digest string to the raw value
+        would accept nothing, and one that only checked the prefix would
+        accept anything, so both directions are asserted.
+        """
+        import hashlib
+        from vnext.historical_coverage import _acceptance_covers
+        payload = "See the information under the caption\nand one more line"
+        digest = "sha256:" + hashlib.sha256(payload.encode("utf-8")).hexdigest()
+        entry = {**self._entry("D02", digest)}
+        self.assertTrue(_acceptance_covers(acceptance=entry, company_id=self.COMPANY,
+                                           metric_id="D02", report_end=self.PERIOD,
+                                           result={"value": payload}))
+        self.assertFalse(_acceptance_covers(acceptance=entry, company_id=self.COMPANY,
+                                            metric_id="D02", report_end=self.PERIOD,
+                                            result={"value": payload + " "}))
+        # And a plain value is still compared plainly.
+        plain = self._entry("B04", "2601000000")
+        self.assertTrue(_acceptance_covers(acceptance=plain, company_id=self.COMPANY,
+                                           metric_id="B04", report_end=self.PERIOD,
+                                           result={"value": "2601000000"}))
+
     def test_a_withdrawn_result_is_not_accepted(self):
         """When the two registers disagree the withdrawal wins."""
         from vnext.historical_coverage import _delivery

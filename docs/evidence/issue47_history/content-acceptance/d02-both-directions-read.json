@@ -1,0 +1,53 @@
+{
+ "a_text_value_is_accepted_by_digest": "D02's value is its whole payload, up to 5,774 characters here, so the register names it by sha256. The binding is the same: a different payload has a different digest and the acceptance stops applying.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "macys_2026": {
+  "the_thin_set_is_the_filing": "this registrant incorporates no note by name and has no Commitments and Contingencies note; its '14. Commitments' note is merchandise purchase obligations. Three excerpts is what the filing carries.",
+  "what_was_read": "all 3 excerpts. Item 3's single paragraph, which says the registrant's proceedings are incidental and not expected to be material, and two Item 8 blocks - the interchange fee litigation settlement it recorded a $328 million gain on, and the self-insurance accrual for workers compensation and general liability claims."
+ },
+ "marriott_2023_2024_and_2025": {
+  "a_block_that_starts_mid_sentence": "2025's excerpt at 1316 begins '31, 2025, we have recorded an accrual' and 2023's at 1253 begins 'penalties or other resolution'. Those are the document's own block boundaries across a page break, not a selection error.",
+  "what_was_read": "all 8, 10 and 11 excerpts, plus every block the selector skipped inside the note range.",
+  "why_the_set_is_right": "the filing's own Item 3 incorporates 'the information under the “Litigation, Claims, and Government Investigations” caption in Note 7', and the excerpt set is exactly that caption's blocks plus Item 3. The blocks skipped inside the note are the ones outside the named caption - 'Description of Event' and its paragraph, 'Insurance Recoveries' and its paragraph - and the page number and Table of Contents lines between them. Taking the whole note instead was measured earlier in this issue and judged wrong for exactly those blocks."
+ },
+ "per_position": {
+  "macys-2026": {
+   "chars": 1183,
+   "company_id": "macys",
+   "excerpts": 3,
+   "period_end": "2026-01-31",
+   "value_sha256": "sha256:40f09f210f6cf31d7fd00090a7855488da287891d5781f55e9e0fde0634e2012"
+  },
+  "marriott-2023": {
+   "chars": 4997,
+   "company_id": "marriott_international",
+   "excerpts": 8,
+   "period_end": "2023-12-31",
+   "value_sha256": "sha256:456ff18436fac1257c2bfde95ba13f7f25427c6f3d466238c656ba32fa7db15b"
+  },
+  "marriott-2024": {
+   "chars": 5774,
+   "company_id": "marriott_international",
+   "excerpts": 10,
+   "period_end": "2024-12-31",
+   "value_sha256": "sha256:1087196ed11e912f2d7c2ca5baa3cb3ed96dda826c9b2334e1128bd2365e70f7"
+  },
+  "marriott-2025": {
+   "chars": 5098,
+   "company_id": "marriott_international",
+   "excerpts": 11,
+   "period_end": "2025-12-31",
+   "value_sha256": "sha256:1effad2d6c6b26c502c2ca2a091e2d7a9eabac547a9bb33b94e7ef02321f6530"
+  }
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_D02_BOTH_DIRECTIONS_READ",
+ "the_other_direction": "docs/evidence/issue47_history/d02-content-read/unreached-notes.json - no contingencies note in any of these filings goes unreached.",
+ "what_this_is": "the four D02 positions whose excerpt sets are small enough to read whole, judged in both directions: every excerpt taken, and - through the unreached-note scan - whether any contingencies note was missed.",
+ "why_only_four": "Pfizer's 96, Ford's 53, Lumen's 41, Paramount's 28, Southwest's 25, Enphase's 18 and Salesforce's 15 are not read whole here. Pfizer's was, in an earlier round, and it found two wrong blocks - which is why the remaining ones are not accepted on the strength of the four that were."
+}
