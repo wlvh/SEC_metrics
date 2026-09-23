@@ -156,7 +156,8 @@ for label, case in sorted(governance.items()):
 
 TEXT_METHOD = (
  "every excerpt in the set read whole, and every block the selector skipped "
- "inside the note range read with it, judged against the approved source "
+ "inside the narrow scopes - Item 3 and any named note range - read with it, "
+ "judged against the approved source "
  "definition. The other direction - whether a contingencies note was missed - "
  "is the unreached-note scan in docs/evidence/issue47_history/"
  "d02-content-read/unreached-notes.json. The value is named by digest because "
@@ -239,11 +240,11 @@ register = {
          "note structure the cascade reads. See "
          "docs/evidence/issue47_history/content-acceptance/"
          "b06-not-independently-readable.json.",
-  "D02 for the seven larger sets": "Pfizer's 96 excerpts, Ford's 53, Lumen's "
-    "41, Paramount's 28, Southwest's 25, Enphase's 18 and Salesforce's 15 are "
-    "not read whole. Pfizer's was, earlier in this issue, and it found two "
-    "wrong blocks - which is why the others are not accepted on the strength "
-    "of the four that were read.",
+  "D02 for four of the eleven": "Pfizer's 96 excerpts, Lumen's 41, Paramount's "
+    "28 and Enphase's 18 were read whole and found wrong - two, one, two and "
+    "one blocks respectively - so each is a registered defect rather than an "
+    "unread set. The other seven have been read in both directions and are "
+    "accepted.",
   "everything else": "no reading has been made."},
  "acceptances": sorted(entries, key=lambda e: e["acceptance_id"]),
 }

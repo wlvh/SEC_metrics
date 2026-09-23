@@ -545,6 +545,49 @@ def referenced_note_candidates(*, document, raw_bytes):
             if not any(r["section_id"] == scope["section_id"]
                        and r["start_block"] == scope["start_block"] for r in ranges):
                 ranges.append(scope)
+    # The furniture criterion was attached only to the scopes this successor
+    # builds, so Item 3 and a wholesale note went without it. Reading four
+    # excerpt sets against their filings found the consequence: Ford's result
+    # carries its running header three times over - registrant name, "Notes to
+    # the Financial Statements", "NOTE 24 ... (Continued)" - because its Item 3
+    # names no caption and the whole note is taken. A running header is not a
+    # disclosure in any scope, so every scope gets the same criterion.
+    #
+    # Filled in rather than recomputed: a sub-note scope counts repeats over
+    # its parent note's range, which is a different question from counting them
+    # over the sub-note, and recomputing would silently answer the second one
+    # for Pfizer. Measured over all eleven filings that have a D02 excerpt set:
+    # eight blocks leave, all of them Ford's running header, and no other
+    # filing moves. Enphase's footer is not among them - it carries the page
+    # number, so no two instances are the same text and repetition cannot see
+    # it. That one stays a registered defect rather than motivating a second
+    # criterion invented from a single filing.
+    #
+    # Held beside the scopes rather than written into them. The first version
+    # assigned the list onto each scope, and `checked_ranges` is part of the
+    # record: Macy's candidate stopped being byte-identical to the frozen
+    # implementation's although not one of its three excerpts moved. A change
+    # that moves eight blocks in one filing should change one filing's bytes.
+    # The cost is that the record stays silent about what these scopes treated
+    # as furniture, where a caption scope says so.
+    #
+    # Added to D02's branch only, and the reason is the same one already written
+    # down for the audit-report rule: the loop below builds D03's regulatory set
+    # out of the same blocks, and a `continue` here would take these out of it
+    # too. D03 has its own approved source and nothing in this reading measured
+    # it. Removing the guard and letting the skip apply to both drops two of
+    # Macy's forty-two regulatory candidates, in a filing whose D02 set does not
+    # move at all - so the cost of getting this wrong is invisible in the metric
+    # being worked on.
+    d02_furniture = {}
+    for scope in ranges:
+        if "repeated_furniture_blocks" in scope:
+            continue
+        start, stop = scope["start_block"], scope["end_block_exclusive"]
+        repeated = Counter(_normalized(document["blocks"][index]["text"])
+                           for index in range(start, stop))
+        d02_furniture[id(scope)] = set(_page_furniture(
+            blocks=document["blocks"], start=start, stop=stop, repeated=repeated))
     owner = {}
     for scope in ranges:
         for index in range(scope["start_block"], scope["end_block_exclusive"]):
@@ -558,6 +601,7 @@ def referenced_note_candidates(*, document, raw_bytes):
     for scope in ranges:
         section = scope["section_id"]
         furniture = set(scope.get("repeated_furniture_blocks", ()))
+        running_header = d02_furniture.get(id(scope), frozenset())
         for index in range(scope["start_block"], scope["end_block_exclusive"]):
             if owner[index] is not scope or index in furniture:
                 continue
@@ -570,7 +614,7 @@ def referenced_note_candidates(*, document, raw_bytes):
                 # an alternative to _substantive up here would widen D03's
                 # regulatory set on every filing at the same time, which is the
                 # mistake the audit-report rule already made once.
-                elif (index not in audited
+                elif (index not in audited and index not in running_header
                       and _hyperlinked_sentence(document=document, block=block)
                       and _d02_section(section, block["text"])):
                     legal.append(_excerpt(
@@ -579,7 +623,7 @@ def referenced_note_candidates(*, document, raw_bytes):
                          else "LEGAL_OR_CONTINGENCY_LANGUAGE_IN_NOTES"]))
                 continue
             text = block["text"]
-            if _d02_section(section, text):
+            if _d02_section(section, text) and index not in running_header:
                 # Only D02's branch. The first version skipped the whole block,
                 # which silently took the same blocks out of D03's regulatory
                 # set as well - a different metric with its own approved source,

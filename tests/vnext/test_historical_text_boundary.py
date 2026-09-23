@@ -7,7 +7,9 @@ output. The corpus supplies both directions - Pfizer files no Item 4 and carries
 the unnumbered item inside Item 3, and Macy's and Paramount carry blocks naming
 a chief executive officer inside Item 8 that must not close anything.
 """
+import collections
 import copy
+import json
 import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
@@ -30,6 +32,7 @@ PARAMOUNT = "paramount_skydance_paramount_global"
 SALESFORCE = "salesforce"
 ENPHASE = "enphase_energy"
 SOUTHWEST = "southwest_airlines"
+FORD = "ford_motor_company"
 CAPTION = "information about our executive officers"
 
 
@@ -584,6 +587,123 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         self.assertIs(fixed, module)
         parent, _ = fixed.text_api("C02")
         self.assertIs(frozen, parent)
+
+
+def _selected(company_id, report_end="2025-12-31"):
+    """The excerpt set's block indices, and the document they came out of."""
+    spec, prepared = _text_arguments(company_id, report_end)
+    arguments = {"compiled_spec": spec, **prepared["text_arguments"]}
+    with original_sources_only():
+        candidate = fixed.create_deterministic_text_candidate(**arguments)
+        sources = fixed.prepare_business_text_sources(
+            metric_id="D02", **prepared["text_arguments"])
+    reference_id = next(iter(sources["documents"]))
+    return ({claim["block_index"] for claim in candidate["selected"].values()},
+            sources["documents"][reference_id],
+            sources["coverages"][reference_id]["ranges"])
+
+
+def _running_headers(document, ranges):
+    """Blocks that repeat inside their scope next to another repeating block.
+
+    Recomputed here from the document rather than read off the scope, so the
+    expectation does not come from the field the rule under test writes.
+    """
+    found = set()
+    for scope in ranges:
+        start, stop = scope["start_block"], scope["end_block_exclusive"]
+        counts = collections.Counter(
+            " ".join(document["blocks"][index]["text"].split()).strip(" .:;,\u2014-").casefold()
+            for index in range(start, stop))
+        repeats = {index for index in range(start, stop)
+                   if counts[" ".join(document["blocks"][index]["text"].split())
+                             .strip(" .:;,\u2014-").casefold()] > 1}
+        found |= {index for index in repeats
+                  if (index - 1) in repeats or (index + 1) in repeats}
+    return found
+
+
+class PageFurnitureInEveryScopeTest(unittest.TestCase):
+    """A running header is not a disclosure, in any scope.
+
+    The criterion existed and ran, but only on the scopes this successor
+    builds. Item 3 and a wholesale note went without it, and reading Ford's
+    excerpt set against the filing found the consequence: three page breaks
+    inside Note 24, each contributing the registrant name, "NOTES TO THE
+    FINANCIAL STATEMENTS" and "NOTE 24 ... (Continued)". Its Item 3 names no
+    caption, so the whole note is taken and nothing dropped them.
+    """
+
+    def test_fords_result_holds_no_running_header(self):
+        """The header is identified by the document's own repetition."""
+        selected, document, ranges = _selected(FORD)
+        headers = _running_headers(document, ranges)
+        note = [index for index in headers if 3955 <= index < 3992]
+        self.assertEqual(8, len(note), sorted(note))
+        self.assertEqual(set(), selected & headers)
+        self.assertEqual(45, len(selected))
+
+    def test_no_other_filing_loses_an_excerpt_to_it(self):
+        """Dropping more than furniture would show up as a smaller set.
+
+        These five counts are facts about the filings, measured before the
+        criterion was widened and unchanged by it. A criterion that took a
+        heading for a header would move one of them.
+        """
+        for company_id, report_end, excerpts in ((PFIZER, "2025-12-31", 96),
+                                                 (LUMEN, "2025-12-31", 41),
+                                                 (SALESFORCE, "2026-01-31", 15),
+                                                 (SOUTHWEST, "2025-12-31", 25),
+                                                 (ENPHASE, "2025-12-31", 18)):
+            with self.subTest(company_id):
+                selected, document, ranges = _selected(company_id, report_end)
+                self.assertEqual(excerpts, len(selected))
+                self.assertEqual(set(), selected & _running_headers(document, ranges))
+
+    def test_d03_keeps_the_repeated_table_rows_this_criterion_would_take(self):
+        """The skip is D02's, because the same loop builds D03's set.
+
+        Macy's pension note states "Settlement(189)(123)— —" twice, a few
+        blocks apart and among other repeating rows, so the criterion sees a
+        run of repeats and calls it a header. Both are D03 candidates carrying
+        ACTION_LANGUAGE_PRESENT. Letting the skip apply to both metrics drops
+        them - measured, 42 regulatory candidates to 40 - in a filing whose D02
+        set does not move at all, which is why the cost of getting this wrong
+        is invisible from the metric being worked on. It is also the reason
+        this criterion is not obviously safe to widen: it can see a repeated
+        table row as furniture.
+        """
+        spec, prepared = _text_arguments(MACYS, "2026-01-31")
+        with original_sources_only():
+            sources = fixed.prepare_business_text_sources(
+                metric_id="D02", **prepared["text_arguments"])
+        reference_id = next(iter(sources["documents"]))
+        proposal = sources["proposals"][reference_id]
+        blocks = {candidate["block_index"] for candidate in proposal["D03"]["candidates"]}
+        self.assertEqual(42, len(proposal["D03"]["candidates"]))
+        self.assertEqual(set(), {1566, 1573} - blocks)
+        document = sources["documents"][reference_id]
+        headers = _running_headers(document, sources["coverages"][reference_id]["ranges"])
+        self.assertEqual({1566, 1573}, {1566, 1573} & headers)
+
+    def test_enphases_footer_survives_and_this_records_why(self):
+        """The one page-furniture block this criterion cannot see.
+
+        Enphase writes its footer as one block carrying the page number, so no
+        two instances share a text and repetition finds nothing to compare.
+        It is a registered content defect rather than a reason to invent a
+        second criterion from one filing; this asserts both halves, so a later
+        fix fails here and sends whoever wrote it to the defect register.
+        """
+        selected, document, ranges = _selected(ENPHASE)
+        footer = [index for index in selected
+                  if document["blocks"][index]["text"].startswith("Enphase Energy, Inc. |")]
+        self.assertEqual(1, len(footer), footer)
+        self.assertNotIn(footer[0], _running_headers(document, ranges))
+        register = json.loads(
+            (ROOT / "docs/evidence/issue47_history/known_result_defects.json").read_text())
+        self.assertIn("D02_ENPHASE_2025_PAGE_FOOTER_CARRIES_ITS_PAGE_NUMBER",
+                      {entry["defect_id"] for entry in register["defects"]})
 
 
 def _proposal(company_id, report_end="2025-12-31"):

@@ -1,4 +1,24 @@
 {
+ "a_fourth_thing_the_reading_got_wrong": {
+  "and_the_check_that_it_only_added": "re-run over all ten companies: zero positions that previously matched moved, exactly two became MATCH, and only Pfizer used the reconstruction. A change that moved an existing reading would be a change to the reading's rule, not an extension of its reach.",
+  "the_branch_no_filing_in_this_set_exercises": "the CostsAndExpenses cross-check. It is implemented because the definition requires it, and no filing here both omits OperatingIncomeLoss and tags CostsAndExpenses, so nothing in this set would notice if it were wrong.",
+  "what": "Pfizer's B03 and B07 read as NOT_READ, and the reason was in the reading, not the filing.",
+  "what_it_reads_now": {
+   "B03": "0.3329551446971028619824541779",
+   "B07": "5.332834144515162860351928117"
+  },
+  "what_the_filing_states": {
+   "CostsAndExpenses": "not tagged, so the cross-check does not apply here",
+   "DepreciationDepletionAndAmortization": "6592000000",
+   "IncomeLossFromContinuingOperationsBeforeIncomeTaxes...NoncontrollingInterest": "7520000000",
+   "InterestExpense": "2671000000",
+   "NonoperatingIncomeExpense": "not tagged",
+   "OtherNonoperatingIncomeExpense": "-6724000000",
+   "Revenues": "62579000000",
+   "reconstructed_operating_income": "14244000000"
+  },
+  "why": "both depend on operating income and Pfizer tags no OperatingIncomeLoss at all - zero occurrences in a 5.2 MB primary document. The reading stopped at the first candidate; the approved definition does not. It allows pretax continuing income less an AGGREGATE nonoperating bridge, and requires Revenues - CostsAndExpenses to cross-check the reconstruction where the filer tags CostsAndExpenses."
+ },
  "calls": {
   "paid": 0,
   "provider": 0,
@@ -29,6 +49,47 @@
    ]
   }
  },
+ "fault_injections_on_the_operating_income_reconstruction": {
+  "results": {
+   "ADD_THE_BRIDGE_INSTEAD_OF_SUBTRACTING_IT": {
+    "caught": true,
+    "operating_income_route": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest - OtherNonoperatingIncomeExpense",
+    "pfizer_reads": {
+     "B03": "0.1180587737100305214209239521",
+     "B07": "0.2980157244477723698989142643"
+    },
+    "pfizer_verdicts": {
+     "B03": "DIFFERS",
+     "B07": "DIFFERS"
+    }
+   },
+   "BUILD_THE_BRIDGE_FROM_A_FRAGMENT": {
+    "caught": true,
+    "operating_income_route": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest - InterestExpense",
+    "pfizer_reads": {
+     "B03": "0.1828249093146263123412007223",
+     "B07": "1.815424934481467615125421191"
+    },
+    "pfizer_verdicts": {
+     "B03": "DIFFERS",
+     "B07": "DIFFERS"
+    }
+   },
+   "TAKE_PRETAX_AS_OPERATING_INCOME": {
+    "caught": true,
+    "operating_income_route": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest - OtherNonoperatingIncomeExpense",
+    "pfizer_reads": {
+     "B03": "0.2255069592035666917016890650",
+     "B07": "2.815424934481467615125421191"
+    },
+    "pfizer_verdicts": {
+     "B03": "DIFFERS",
+     "B07": "DIFFERS"
+    }
+   }
+  },
+  "why_here": "this is the one place the reading computes a number the filing does not state, so it is the one place a wrong rule answers confidently."
+ },
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "per_position": {
   "enphase-2025": {
@@ -39,6 +100,8 @@
     "d_and_a_parts": null,
     "interest": "InterestExpenseNonoperating",
     "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
     "prior_revenue_context": [
      "2024-01-01",
      "2024-12-31",
@@ -107,6 +170,8 @@
     "d_and_a_parts": null,
     "interest": "InterestExpenseNonoperating",
     "net_income": "ProfitLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
     "prior_revenue_context": [
      "2024-01-01",
      "2024-12-31",
@@ -175,6 +240,8 @@
     "d_and_a_parts": null,
     "interest": "InterestExpense",
     "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
     "prior_revenue_context": [
      "2024-01-01",
      "2024-12-31",
@@ -243,6 +310,8 @@
     "d_and_a_parts": null,
     "interest": "InterestExpense",
     "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
     "prior_revenue_context": [
      "2024-02-04",
      "2025-02-01",
@@ -311,6 +380,8 @@
     "d_and_a_parts": null,
     "interest": "InterestExpense",
     "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
     "prior_revenue_context": [
      "2022-01-01",
      "2022-12-31",
@@ -382,6 +453,8 @@
     ],
     "interest": "InterestExpenseNonoperating",
     "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
     "prior_revenue_context": [
      "2023-01-01",
      "2023-12-31",
@@ -453,6 +526,8 @@
     ],
     "interest": "InterestExpenseNonoperating",
     "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
     "prior_revenue_context": [
      "2024-01-01",
      "2024-12-31",
@@ -521,6 +596,8 @@
     "d_and_a_parts": null,
     "interest": "InterestExpense",
     "net_income": "NetIncomeLoss",
+    "operating_income": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest - OtherNonoperatingIncomeExpense",
+    "operating_income_crosscheck": null,
     "prior_revenue_context": [
      "2024-01-01",
      "2024-12-31",
@@ -543,11 +620,10 @@
      "verdict": "MATCH"
     },
     "B03": {
-     "earlier_candidate_in_the_accession": null,
-     "exact_string_match": false,
+     "exact_string_match": true,
      "published": "0.3329551446971028619824541779",
-     "read": null,
-     "verdict": "NOT_READ"
+     "read": "0.3329551446971028619824541779",
+     "verdict": "MATCH"
     },
     "B04": {
      "exact_string_match": true,
@@ -562,11 +638,10 @@
      "verdict": "MATCH"
     },
     "B07": {
-     "earlier_candidate_in_the_accession": null,
-     "exact_string_match": false,
+     "exact_string_match": true,
      "published": "5.332834144515162860351928117",
-     "read": null,
-     "verdict": "NOT_READ"
+     "read": "5.332834144515162860351928117",
+     "verdict": "MATCH"
     },
     "B08": {
      "exact_string_match": true,
@@ -591,6 +666,8 @@
     "d_and_a_parts": null,
     "interest": "InterestExpenseDebt",
     "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
     "prior_revenue_context": [
      "2024-02-01",
      "2025-01-31",
@@ -662,6 +739,8 @@
     "d_and_a_parts": null,
     "interest": "InterestExpenseNonoperating",
     "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
     "prior_revenue_context": [
      "2024-01-01",
      "2024-12-31",
@@ -728,9 +807,9 @@
  "result": {
   "chain_candidate_not_in_primary_document": 1,
   "differs": 0,
-  "match": 73,
+  "match": 75,
   "no_published_value": 4,
-  "not_read": 2,
+  "not_read": 0,
   "positions_compared": 80
  },
  "the_one_apparent_defect_that_was_not": {
