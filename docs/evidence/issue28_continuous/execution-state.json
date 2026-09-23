@@ -39,13 +39,12 @@
     "First authorized Enphase D04 group0 claim172 received provider HTTP402 Insufficient Balance, no assistant output or usage/cost; original172 failed terminal retained and PROVIDER stopped. No complete company added.",
     "Existing eight complete D04 candidates, B06/C04/update/390 offline responsibilities and historical failures remain separate.",
     "Batch33 SEC0 boundary narrowed offline so independent Issue28 SEC acquisition remains under original SEC guard after first D04 claim; no SEC request sent, incremental review pending.",
-    "Scoped agent found P2 in saved SEC-prefix cold read: a second SEC claim after an unresolved SEC stop was accepted by history validator though real ledger rejects it. New negative test reproduced, local fix and 31 directed/127 fast passed; independent recheck pending. No SEC/model call."
+    "Scoped agent found P2 in saved SEC-prefix cold read: a second SEC claim after an unresolved SEC stop was accepted by history validator though real ledger rejects it. New negative test reproduced, local fix and 31 directed/127 fast passed; independent recheck pending. No SEC/model call.",
+    "Incremental independent recheck at 4a5d4bb4 closed the SEC stopped-channel cold-read P2; 31 directed tests and separate recorded pending/HTTP402 SEC controls passed. No new real call."
   ],
   "next": [
     "Keep PROVIDER stopped after new172 HTTP402; do not send another model request, probe account, switch keys or treat this as a repair retry. Ask owner for a new bounded recovery decision after service availability is checked.",
     "Continue only useful provider-independent B06, Paramount C04, normal update, 390 and old-entry preparation; preserve previous valid evidence.",
-    "Complete scoped review of the separate-SEC-channel delta; do not mistake this compatibility repair for permission to fetch #47 sources or send D03 calls.",
-    "Obtain only the incremental scoped recheck for the stopped-SEC cold-read fix; preserve the prior P2 finding and c92 provider review.",
     "If separately authorized and service available, bind new172 recovery to its exact failed no-output request and one fresh claim in the original ledger; still obey batch33 group identity, old history and total caps.",
     "D03 remains no-call pending separate review/resources; formal release and production decisions remain separate."
   ],
@@ -984,6 +983,23 @@
       "tool_calls": 62,
       "result_path": "docs/evidence/issue28_continuous/batch33-authorization/independent-review/conclusion.md",
       "verdict": "DONE_SCOPED_P2_SEC_STOP_COLD_READ_GAP"
+    },
+    {
+      "task_name": "review_batch33_cold_4a5d4bb",
+      "requested_label": "review-batch33_cold-4a5d4bb",
+      "purpose": "review",
+      "module": "batch33_sec_cold_read_repair",
+      "scope_paths": [
+        "scripts/vnext/continuous_batch33.py",
+        "tests/vnext/test_continuous_batch33.py",
+        "requirements/issue_28_v14/baseline_manifest.json"
+      ],
+      "patch_sha": "4a5d4bb487406825dd2c60a3d05b6fd408e4436c",
+      "spawned_at": "2026-09-23T10:14:28Z",
+      "ended_at": "2026-09-23T10:20:00Z",
+      "tool_calls": 14,
+      "result_path": "docs/evidence/issue28_continuous/batch33-authorization/independent-review/sec-cold-read-repair.md",
+      "verdict": "DONE_SCOPED_P2_COLD_READ_REPAIR_PASS"
     }
   ],
   "ci_capacity_20260922": {
@@ -1393,11 +1409,12 @@
     "new_recovery_for_172_authorized": false,
     "new_complete_company_results": 0,
     "separate_sec_scope": "ORIGINAL_ISSUE28_ACQUISITION_GUARD_RETAINS_INDEPENDENT_SEC_CHANNEL_AFTER_FIRST_D04_CLAIM; BATCH_NEW_SEC_ZERO",
-    "separate_sec_scope_review": "P2_FOUND_AT_1C6BB186_STOPPED_SEC_COLD_READ_REPAIR_LOCALLY_TESTED_INDEPENDENT_RECHECK_PENDING",
+    "separate_sec_scope_review": "PASS_SCOPED_SEC_COLD_READ_REPAIR_4A5D4BB4",
     "separate_sec_scope_directed_tests": "31_PASS_POST_REPAIR",
     "separate_sec_scope_fast": "127_OF_127_PASS_POST_REPAIR",
     "current_offline_wiring": "PASS_CURRENT_CLOSURE_POST_REPAIR",
-    "new_sec_calls_after_172": 0
+    "new_sec_calls_after_172": 0,
+    "separate_sec_scope_review_result": "batch33-authorization/independent-review/sec-cold-read-repair.md"
   },
   "historical_provider_http402_171": {
     "ordinal": 171,
