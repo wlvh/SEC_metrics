@@ -241,11 +241,17 @@ register = {
    "A scan over every document in the accession matches 'transaction' in "
    "almost any exhibit. Six of seven windows hold an 8.01 filing, so E01 is "
    "accepted only for the one that does not.",
-  "C03 for four companies": "no saved proxy reports an ecd PEO total for the "
-                            "target period; ten proxies are saved of the "
-                            "eighty-five the submissions indexes list.",
-  "C04 for five": "the previous year's 10-K is not saved, and 'the auditor did "
-                  "not change' cannot be read from one year's filing alone.",
+  "C03": "all nine are read. The four that previously read as 'no saved proxy "
+         "reports the target period' were a defect in the reading, not a gap "
+         "in the material: it globbed *def14a*.htm, and only one of the ten "
+         "companies names its proxy that way. Earlier periods remain unread "
+         "and that IS a source gap - each registrant declares 16 to 33 DEF "
+         "14A filings and exactly one is on disk.",
+  "C04 for five": "the reading reports the previous year's 10-K as not "
+                  "readable. That is this reading's path, not the route's - "
+                  "the route reads each accession's index and the AuditorName "
+                  "concept. Recorded as untriaged rather than as a material "
+                  "gap, because the C03 verdict above turned out the same way.",
   "B06": "the three delivered positions all reproduce from their filings' own "
          "facts, but two of them were fitted - solved backwards from the "
          "published value - and the rule cannot be stated from the filing "
@@ -262,8 +268,25 @@ register = {
   "everything else": "no reading has been made."},
  "acceptances": sorted(entries, key=lambda e: e["acceptance_id"]),
 }
+import collections
+
+# A reading that contributes nothing is broken, not informative. This round a
+# reading reported four positions as missing material when the filings were on
+# disk the whole time, and two replacement attempts each found zero documents
+# for every company and said so as if it were a fact. What it does NOT catch:
+# a reading that still contributes something while losing part of its set -
+# the governance reading kept its one C04 acceptance through both failures.
+# Catching that needs a ratchet against the committed register, and a ratchet
+# needs an override for the times acceptances legitimately fall, so it is not
+# built here; this guard is the part that is free of a hand-kept list.
+contributed = collections.Counter(entry["evidence"] for entry in entries)
+silent = sorted(source for source in
+                (CROSS, LODGING, EVENTS, GOVERNANCE, TEXT, RPO, COMPENSATION)
+                if not contributed[source])
+if silent:
+    raise SystemExit("A_READING_CONTRIBUTED_NO_ACCEPTANCES:" + ", ".join(silent))
+
 (REPO / "docs/evidence/issue47_history/accepted_result_content.json").write_text(
     json.dumps(register, indent=1, sort_keys=True, ensure_ascii=False) + "\n")
-import collections
 print("acceptances:", len(entries))
 print(collections.Counter(e["metric_id"] for e in entries))

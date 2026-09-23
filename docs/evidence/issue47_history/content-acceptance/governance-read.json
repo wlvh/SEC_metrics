@@ -1,280 +1,396 @@
 {
- "and_one_judgement_that_was_too_strict": {
-  "what": "a PEO total tagged in a context naming the officer was treated as ambiguous and skipped.",
-  "why_that_was_wrong": "it is still one number when there is only one of it. Marriott and Southwest each report exactly one PEO total for the target period, per officer, and both equal the published value. Ambiguity is several, not a dimension."
- },
- "calls": {
-  "paid": 0,
-  "provider": 0,
-  "sec": 0
- },
- "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
- "per_position": {
-  "enphase-2025": {
-   "C03": {
-    "proxies_reporting_the_target_period": [],
-    "published": "9601958",
-    "read": null,
-    "verdict": "NOT_READ",
-    "why_not_read": "NO_SAVED_PROXY_REPORTS_THE_TARGET_PERIOD"
-   },
-   "C04": {
-    "auditor_named_in_the_previous_years_filing": [],
-    "auditor_named_in_the_target_filing": [
-     "DELOITTE &amp; TOUCHE LLP"
-    ],
-    "eight_k_item_4_01_in_window": [],
-    "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
-    "published": "0",
-    "read": null,
-    "verdict": "NOT_READ",
-    "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
-   },
-   "company_id": "enphase_energy",
-   "period": [
-    "2025-01-01",
-    "2025-12-31"
-   ]
+  "and_one_judgement_that_was_too_strict": {
+    "what": "a PEO total tagged in a context naming the officer was treated as ambiguous and skipped.",
+    "why_that_was_wrong": "it is still one number when there is only one of it. Marriott and Southwest each report exactly one PEO total for the target period, per officer, and both equal the published value. Ambiguity is several, not a dimension."
   },
-  "ford-2025": {
-   "C03": {
-    "proxies_reporting_the_target_period": [
-     {
-      "per_officer_tagged": false,
-      "proxy": "evidence/accession_materials/ford_motor_company_37996_000155278126000164/e26003_f-def14a.htm",
-      "values": [
-       27519558
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+  "per_position": {
+    "enphase-2025": {
+      "C03": {
+        "def14a_declared": 16,
+        "def14a_documents_saved": 1,
+        "proxies_reporting_the_target_period": [
+          {
+            "per_officer_tagged": false,
+            "proxy": "evidence/accession_materials/enphase_energy_1463101_000146310126000026/enph-20260401.htm",
+            "values": [
+              9601958
+            ]
+          }
+        ],
+        "published": "9601958",
+        "read": "9601958",
+        "verdict": "MATCH",
+        "why_not_read": null
+      },
+      "C04": {
+        "auditor_named_in_the_previous_years_filing": [],
+        "auditor_named_in_the_target_filing": [
+          "DELOITTE &amp; TOUCHE LLP"
+        ],
+        "eight_k_item_4_01_in_window": [],
+        "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "published": "0",
+        "read": null,
+        "verdict": "NOT_READ",
+        "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
+      },
+      "company_id": "enphase_energy",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
       ]
-     }
-    ],
-    "published": "27519558",
-    "read": "27519558",
-    "verdict": "MATCH",
-    "why_not_read": null
-   },
-   "C04": {
-    "auditor_named_in_the_previous_years_filing": [],
-    "auditor_named_in_the_target_filing": [
-     "PricewaterhouseCoopers LLP"
-    ],
-    "eight_k_item_4_01_in_window": [],
-    "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
-    "published": "0",
-    "read": null,
-    "verdict": "NOT_READ",
-    "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
-   },
-   "company_id": "ford_motor_company",
-   "period": [
-    "2025-01-01",
-    "2025-12-31"
-   ]
-  },
-  "lumen-2025": {
-   "C03": {
-    "proxies_reporting_the_target_period": [],
-    "published": "24936641",
-    "read": null,
-    "verdict": "NOT_READ",
-    "why_not_read": "NO_SAVED_PROXY_REPORTS_THE_TARGET_PERIOD"
-   },
-   "C04": {
-    "auditor_named_in_the_previous_years_filing": [],
-    "auditor_named_in_the_target_filing": [
-     "KPMG LLP"
-    ],
-    "eight_k_item_4_01_in_window": [],
-    "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm",
-    "published": "0",
-    "read": null,
-    "verdict": "NOT_READ",
-    "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
-   },
-   "company_id": "lumen_technologies",
-   "period": [
-    "2025-01-01",
-    "2025-12-31"
-   ]
-  },
-  "macys-2026": {
-   "C03": {
-    "proxies_reporting_the_target_period": [
-     {
-      "per_officer_tagged": false,
-      "proxy": "evidence/accession_materials/macy_s_794367_000110465926037752/m-20260515xdef14a.htm",
-      "values": [
-       14104067
+    },
+    "ford-2025": {
+      "C03": {
+        "def14a_declared": 33,
+        "def14a_documents_saved": 1,
+        "proxies_reporting_the_target_period": [
+          {
+            "per_officer_tagged": false,
+            "proxy": "evidence/accession_materials/ford_motor_company_37996_000155278126000164/e26003_f-def14a.htm",
+            "values": [
+              27519558
+            ]
+          }
+        ],
+        "published": "27519558",
+        "read": "27519558",
+        "verdict": "MATCH",
+        "why_not_read": null
+      },
+      "C04": {
+        "auditor_named_in_the_previous_years_filing": [],
+        "auditor_named_in_the_target_filing": [
+          "PricewaterhouseCoopers LLP"
+        ],
+        "eight_k_item_4_01_in_window": [],
+        "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+        "published": "0",
+        "read": null,
+        "verdict": "NOT_READ",
+        "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
+      },
+      "company_id": "ford_motor_company",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
       ]
-     }
-    ],
-    "published": "14104067",
-    "read": "14104067",
-    "verdict": "MATCH",
-    "why_not_read": null
-   },
-   "C04": {
-    "auditor_named_in_the_previous_years_filing": [],
-    "auditor_named_in_the_target_filing": [
-     "KPMG LLP"
-    ],
-    "eight_k_item_4_01_in_window": [],
-    "previous_year_note": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_REPORT_END_NOT_IN_SAVED_SUBMISSIONS",
-    "published": "0",
-    "read": null,
-    "verdict": "NOT_READ",
-    "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
-   },
-   "company_id": "macys",
-   "period": [
-    "2025-02-02",
-    "2026-01-31"
-   ]
-  },
-  "marriott-2025": {
-   "C03": {
-    "proxies_reporting_the_target_period": [
-     {
-      "per_officer_tagged": true,
-      "proxy": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
-      "values": [
-       22970926
+    },
+    "lumen-2025": {
+      "C03": {
+        "def14a_declared": 33,
+        "def14a_documents_saved": 1,
+        "proxies_reporting_the_target_period": [
+          {
+            "per_officer_tagged": true,
+            "proxy": "evidence/accession_materials/lumen_technologies_18926_000001892626000024/lumn-20260401.htm",
+            "values": [
+              24936641
+            ]
+          }
+        ],
+        "published": "24936641",
+        "read": "24936641",
+        "verdict": "MATCH",
+        "why_not_read": null
+      },
+      "C04": {
+        "auditor_named_in_the_previous_years_filing": [],
+        "auditor_named_in_the_target_filing": [
+          "KPMG LLP"
+        ],
+        "eight_k_item_4_01_in_window": [],
+        "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm",
+        "published": "0",
+        "read": null,
+        "verdict": "NOT_READ",
+        "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
+      },
+      "company_id": "lumen_technologies",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
       ]
-     }
-    ],
-    "published": "22970926",
-    "read": "22970926",
-    "verdict": "MATCH",
-    "why_not_read": null
-   },
-   "C04": {
-    "auditor_named_in_the_previous_years_filing": [
-     "Ernst&#160;&amp; Young LLP"
-    ],
-    "auditor_named_in_the_target_filing": [
-     "Ernst&#160;&amp; Young LLP"
-    ],
-    "eight_k_item_4_01_in_window": [],
-    "previous_year_note": null,
-    "published": "0",
-    "read": "0",
-    "verdict": "MATCH",
-    "why_not_read": null
-   },
-   "company_id": "marriott_international",
-   "period": [
-    "2025-01-01",
-    "2025-12-31"
-   ]
-  },
-  "pfizer-2025": {
-   "C03": {
-    "proxies_reporting_the_target_period": [],
-    "published": "27585301",
-    "read": null,
-    "verdict": "NOT_READ",
-    "why_not_read": "NO_SAVED_PROXY_REPORTS_THE_TARGET_PERIOD"
-   },
-   "C04": {
-    "auditor_named_in_the_previous_years_filing": [],
-    "auditor_named_in_the_target_filing": [
-     "KPMG LLP"
-    ],
-    "eight_k_item_4_01_in_window": [],
-    "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231.htm",
-    "published": "0",
-    "read": null,
-    "verdict": "NOT_READ",
-    "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
-   },
-   "company_id": "pfizer",
-   "period": [
-    "2025-01-01",
-    "2025-12-31"
-   ]
-  },
-  "salesforce-2026": {
-   "C03": {
-    "proxies_reporting_the_target_period": [],
-    "published": "49379252",
-    "read": null,
-    "verdict": "NOT_READ",
-    "why_not_read": "NO_SAVED_PROXY_REPORTS_THE_TARGET_PERIOD"
-   },
-   "C04": {
-    "auditor_named_in_the_previous_years_filing": [],
-    "auditor_named_in_the_target_filing": [
-     "Ernst &amp; Young LLP"
-    ],
-    "eight_k_item_4_01_in_window": [],
-    "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
-    "published": null,
-    "read": null,
-    "verdict": "NO_PUBLISHED_VALUE",
-    "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
-   },
-   "company_id": "salesforce",
-   "period": [
-    "2025-02-01",
-    "2026-01-31"
-   ]
-  },
-  "southwest-2025": {
-   "C03": {
-    "proxies_reporting_the_target_period": [
-     {
-      "per_officer_tagged": true,
-      "proxy": "evidence/accession_materials/southwest_airlines_92380_000119312526127237/d121727ddef14a.htm",
-      "values": [
-       16587882
+    },
+    "macys-2026": {
+      "C03": {
+        "def14a_declared": 32,
+        "def14a_documents_saved": 1,
+        "proxies_reporting_the_target_period": [
+          {
+            "per_officer_tagged": false,
+            "proxy": "evidence/accession_materials/macy_s_794367_000110465926037752/m-20260515xdef14a.htm",
+            "values": [
+              14104067
+            ]
+          }
+        ],
+        "published": "14104067",
+        "read": "14104067",
+        "verdict": "MATCH",
+        "why_not_read": null
+      },
+      "C04": {
+        "auditor_named_in_the_previous_years_filing": [],
+        "auditor_named_in_the_target_filing": [
+          "KPMG LLP"
+        ],
+        "eight_k_item_4_01_in_window": [],
+        "previous_year_note": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_REPORT_END_NOT_IN_SAVED_SUBMISSIONS",
+        "published": "0",
+        "read": null,
+        "verdict": "NOT_READ",
+        "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
+      },
+      "company_id": "macys",
+      "period": [
+        "2025-02-02",
+        "2026-01-31"
       ]
-     }
+    },
+    "marriott-2025": {
+      "C03": {
+        "def14a_declared": 29,
+        "def14a_documents_saved": 1,
+        "proxies_reporting_the_target_period": [
+          {
+            "per_officer_tagged": true,
+            "proxy": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
+            "values": [
+              22970926
+            ]
+          }
+        ],
+        "published": "22970926",
+        "read": "22970926",
+        "verdict": "MATCH",
+        "why_not_read": null
+      },
+      "C04": {
+        "auditor_named_in_the_previous_years_filing": [
+          "Ernst&#160;&amp; Young LLP"
+        ],
+        "auditor_named_in_the_target_filing": [
+          "Ernst&#160;&amp; Young LLP"
+        ],
+        "eight_k_item_4_01_in_window": [],
+        "previous_year_note": null,
+        "published": "0",
+        "read": "0",
+        "verdict": "MATCH",
+        "why_not_read": null
+      },
+      "company_id": "marriott_international",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ]
+    },
+    "pfizer-2025": {
+      "C03": {
+        "def14a_declared": 32,
+        "def14a_documents_saved": 1,
+        "proxies_reporting_the_target_period": [
+          {
+            "per_officer_tagged": false,
+            "proxy": "evidence/accession_materials/pfizer_78003_000007800326000033/pfe-20260312.htm",
+            "values": [
+              27585301
+            ]
+          }
+        ],
+        "published": "27585301",
+        "read": "27585301",
+        "verdict": "MATCH",
+        "why_not_read": null
+      },
+      "C04": {
+        "auditor_named_in_the_previous_years_filing": [],
+        "auditor_named_in_the_target_filing": [
+          "KPMG LLP"
+        ],
+        "eight_k_item_4_01_in_window": [],
+        "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231.htm",
+        "published": "0",
+        "read": null,
+        "verdict": "NOT_READ",
+        "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
+      },
+      "company_id": "pfizer",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ]
+    },
+    "salesforce-2026": {
+      "C03": {
+        "def14a_declared": 23,
+        "def14a_documents_saved": 1,
+        "proxies_reporting_the_target_period": [
+          {
+            "per_officer_tagged": false,
+            "proxy": "evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+            "values": [
+              49379252
+            ]
+          }
+        ],
+        "published": "49379252",
+        "read": "49379252",
+        "verdict": "MATCH",
+        "why_not_read": null
+      },
+      "C04": {
+        "auditor_named_in_the_previous_years_filing": [],
+        "auditor_named_in_the_target_filing": [
+          "Ernst &amp; Young LLP"
+        ],
+        "eight_k_item_4_01_in_window": [],
+        "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+        "published": null,
+        "read": null,
+        "verdict": "NO_PUBLISHED_VALUE",
+        "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
+      },
+      "company_id": "salesforce",
+      "period": [
+        "2025-02-01",
+        "2026-01-31"
+      ]
+    },
+    "southwest-2025": {
+      "C03": {
+        "def14a_declared": 31,
+        "def14a_documents_saved": 1,
+        "proxies_reporting_the_target_period": [
+          {
+            "per_officer_tagged": true,
+            "proxy": "evidence/accession_materials/southwest_airlines_92380_000119312526127237/d121727ddef14a.htm",
+            "values": [
+              16587882
+            ]
+          }
+        ],
+        "published": "16587882",
+        "read": "16587882",
+        "verdict": "MATCH",
+        "why_not_read": null
+      },
+      "C04": {
+        "auditor_named_in_the_previous_years_filing": [],
+        "auditor_named_in_the_target_filing": [
+          "Ernst &amp; Young LLP"
+        ],
+        "eight_k_item_4_01_in_window": [],
+        "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm",
+        "published": null,
+        "read": null,
+        "verdict": "NO_PUBLISHED_VALUE",
+        "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
+      },
+      "company_id": "southwest_airlines",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ]
+    }
+  },
+  "production_authorized": false,
+  "record_type": "ISSUE_47_GOVERNANCE_READ",
+  "result": {
+    "c03": {
+      "differs": 0,
+      "match": 4,
+      "not_read": 4
+    },
+    "c04": {
+      "differs": 0,
+      "match": 1,
+      "no_published_value": 2,
+      "not_read": 5
+    }
+  },
+  "two_more_defects_in_the_reading_and_neither_announced_itself": {
+    "the_attribute_order": "the next version required id to be the first attribute, and Marriott's proxy writes an xmlns attribute before it. Same empty map, same silence. Six of eight C03 positions were NOT_READ for these two reasons and for nothing about the filings.",
+    "the_namespace_prefix": "the context parser matched xbrli-prefixed context elements only. Every 10-K here uses that prefix; the proxies do not always, so it returned an empty context map - which reads exactly like a document with no facts."
+  },
+  "what_is_still_not_read": {
+    "C03": "Paramount, whose C03 comes from the annual report's own compensation table rather than a proxy - the cascade's other level, already accepted by that reading.",
+    "C04": "five positions report PREVIOUS_YEARS_FILING_NOT_READABLE. That is this reading's path, not the route's: the route reads each accession's index and the AuditorName concept, while this one reads the previous year's primary HTML. Given what the C03 defect turned out to be, this verdict is recorded as untriaged rather than as a material gap.",
+    "earlier_periods": "not attempted - one saved proxy per registrant, all filed in 2026."
+  },
+  "what_this_is": "CEO pay and the auditor-change flag, read from the source documents rather than through the route: the ecd pay-versus-performance fact in the pinned proxy for C03, and for C04 the auditor named in this year's and last year's 10-K together with any 8-K carrying item 4.01 in the window.",
+  "an_eighth_defect_in_this_reading_and_it_read_as_missing_material": {
+    "what_it_said": "four of eight C03 positions - Enphase, Lumen, Pfizer, Salesforce - reported NO_SAVED_PROXY_REPORTS_THE_TARGET_PERIOD, which reads as a material gap",
+    "what_was_true": "all four proxies were saved and readable, carrying 76, 89, 138 and 82 ecd facts. The reading globbed *def14a*.htm inside each registrant's accession material directories, and exactly one of the ten companies names its proxy that way - Ford's e26003_f-def14a.htm. The rest use <ticker>-<date>.htm, so the glob could only ever find the ones that happened to be named for it.",
+    "the_fix": "proxies are identified by form, from the saved submissions block, and the reading now separates three answers it used to collapse into one: the registrant declares no DEF 14A, the declared proxy is not saved, and the saved proxy does not report this period.",
+    "two_more_attempts_that_failed_the_same_way": [
+      "the first replacement read each accession directory's index.json for the form - those directories hold only the document and its response headers, so it found nothing for anybody and would have reported the same absence it was written to correct",
+      "the diagnosis of that attempt was run against the output of a process started before the patch, so a stale file was read as the new code's result"
     ],
-    "published": "16587882",
-    "read": "16587882",
-    "verdict": "MATCH",
-    "why_not_read": null
-   },
-   "C04": {
-    "auditor_named_in_the_previous_years_filing": [],
-    "auditor_named_in_the_target_filing": [
-     "Ernst &amp; Young LLP"
-    ],
-    "eight_k_item_4_01_in_window": [],
-    "previous_year_note": "NormalAnnualInputError: SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm",
-    "published": null,
-    "read": null,
-    "verdict": "NO_PUBLISHED_VALUE",
-    "why_not_read": "PREVIOUS_YEARS_FILING_NOT_READABLE"
-   },
-   "company_id": "southwest_airlines",
-   "period": [
-    "2025-01-01",
-    "2025-12-31"
-   ]
+    "verdicts_before": {
+      "enphase-2025": "NOT_READ",
+      "ford-2025": "MATCH",
+      "lumen-2025": "NOT_READ",
+      "macys-2026": "MATCH",
+      "marriott-2025": "MATCH",
+      "pfizer-2025": "NOT_READ",
+      "salesforce-2026": "NOT_READ",
+      "southwest-2025": "MATCH"
+    },
+    "verdicts_after": {
+      "enphase-2025": "MATCH",
+      "ford-2025": "MATCH",
+      "lumen-2025": "MATCH",
+      "macys-2026": "MATCH",
+      "marriott-2025": "MATCH",
+      "pfizer-2025": "MATCH",
+      "salesforce-2026": "MATCH",
+      "southwest-2025": "MATCH"
+    },
+    "the_shape": "a lookup that comes back empty reads exactly like a document with nothing in it. Before reporting an absence, the finder has to be shown finding something."
+  },
+  "how_many_proxies_exist_and_how_many_are_saved": {
+    "measured": {
+      "enphase-2025": {
+        "declared": 16,
+        "saved": 1
+      },
+      "ford-2025": {
+        "declared": 33,
+        "saved": 1
+      },
+      "lumen-2025": {
+        "declared": 33,
+        "saved": 1
+      },
+      "macys-2026": {
+        "declared": 32,
+        "saved": 1
+      },
+      "marriott-2025": {
+        "declared": 29,
+        "saved": 1
+      },
+      "pfizer-2025": {
+        "declared": 32,
+        "saved": 1
+      },
+      "salesforce-2026": {
+        "declared": 23,
+        "saved": 1
+      },
+      "southwest-2025": {
+        "declared": 31,
+        "saved": 1
+      }
+    },
+    "reading": "each registrant declares 16 to 33 DEF 14A filings and exactly one is on disk. That is why every earlier period names a proxy it cannot read, and it is a source gap, not a reader defect - the distinction this round had to be forced to make."
   }
- },
- "production_authorized": false,
- "record_type": "ISSUE_47_GOVERNANCE_READ",
- "result": {
-  "c03": {
-   "differs": 0,
-   "match": 4,
-   "not_read": 4
-  },
-  "c04": {
-   "differs": 0,
-   "match": 1,
-   "no_published_value": 2,
-   "not_read": 5
-  }
- },
- "two_more_defects_in_the_reading_and_neither_announced_itself": {
-  "the_attribute_order": "the next version required id to be the first attribute, and Marriott's proxy writes an xmlns attribute before it. Same empty map, same silence. Six of eight C03 positions were NOT_READ for these two reasons and for nothing about the filings.",
-  "the_namespace_prefix": "the context parser matched xbrli-prefixed context elements only. Every 10-K here uses that prefix; the proxies do not always, so it returned an empty context map - which reads exactly like a document with no facts."
- },
- "what_is_still_not_read": {
-  "c03 for four companies": "no saved proxy reports an ecd PEO total for the target period. Ten proxies are saved of the eighty-five the submissions indexes list.",
-  "c04 for five": "the previous year's 10-K is not saved, and 'the auditor did not change' cannot be read from one year's filing alone. Marriott is the one company with two saved years."
- },
- "what_this_is": "CEO pay and the auditor-change flag, read from the source documents rather than through the route: the ecd pay-versus-performance fact in the pinned proxy for C03, and for C04 the auditor named in this year's and last year's 10-K together with any 8-K carrying item 4.01 in the window."
 }
