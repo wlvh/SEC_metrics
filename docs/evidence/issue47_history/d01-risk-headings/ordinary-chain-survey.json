@@ -210,5 +210,117 @@
     "provider": 0,
     "paid": 0,
     "sec": 0
+  },
+  "does_d01_hit_the_bound_that_stopped_pfizers_d02": {
+    "why_this_was_measured_before_wiring": "D01's candidate builder enforces max_items exactly as D02's does, and that bound is what stopped Pfizer's D02 at 92 excerpts. A route that reports a Spec bound and a route that delivers a value are different things to put in the frame, and which one it is cannot be read off the code.",
+    "spec": {
+      "path": "catalog/r6/D01_risk_factor_headings.md",
+      "max_items": 64,
+      "max_text_chars": 64000,
+      "deterministic_text_method": "RISK_FACTOR_HEADINGS_V1"
+    },
+    "measured": {
+      "enphase_energy": {
+        "headings": 60,
+        "chars": 10561,
+        "status": "SOURCE_HEADINGS_READY",
+        "reasons": [],
+        "error": null
+      },
+      "ford_motor_company": {
+        "headings": 30,
+        "chars": 5849,
+        "status": "SOURCE_HEADINGS_READY",
+        "reasons": [],
+        "error": null
+      },
+      "jpmorgan_chase": {
+        "headings": 57,
+        "chars": 6366,
+        "status": "SOURCE_HEADINGS_READY",
+        "reasons": [],
+        "error": null
+      },
+      "lumen_technologies": {
+        "headings": 50,
+        "chars": 4132,
+        "status": "SOURCE_HEADINGS_READY",
+        "reasons": [],
+        "error": null
+      },
+      "macys": {
+        "headings": 36,
+        "chars": 3992,
+        "status": "SOURCE_HEADINGS_READY",
+        "reasons": [],
+        "error": null
+      },
+      "marriott_international": {
+        "headings": 34,
+        "chars": 4741,
+        "status": "SOURCE_HEADINGS_READY",
+        "reasons": [],
+        "error": null
+      },
+      "paramount_skydance_paramount_global": {
+        "headings": 38,
+        "chars": 6035,
+        "status": "SOURCE_HEADINGS_READY",
+        "reasons": [],
+        "error": null
+      },
+      "pfizer": {
+        "headings": 28,
+        "chars": 970,
+        "status": "SOURCE_HEADINGS_READY",
+        "reasons": [],
+        "error": null
+      },
+      "salesforce": {
+        "headings": 43,
+        "chars": 7470,
+        "status": "SOURCE_HEADINGS_READY",
+        "reasons": [],
+        "error": null
+      },
+      "southwest_airlines": {
+        "headings": 34,
+        "chars": 8023,
+        "status": "SOURCE_HEADINGS_READY",
+        "reasons": [],
+        "error": null
+      }
+    },
+    "answer": "no. Every company is under the bound: 28 to 60 headings, and the largest text is 10561 characters against 64000.",
+    "but_the_headroom_is_not_comfortable_and_that_is_worth_saying": {
+      "closest": [
+        {
+          "company_id": "lumen_technologies",
+          "headings": 50,
+          "headroom": 14
+        },
+        {
+          "company_id": "jpmorgan_chase",
+          "headings": 57,
+          "headroom": 7
+        },
+        {
+          "company_id": "enphase_energy",
+          "headings": 60,
+          "headroom": 4
+        }
+      ],
+      "why_it_matters": "the D02 lesson applies here unchanged - the item count depends on how the filer breaks up the section, not on how much is disclosed. Enphase is four headings from the bound with 10561 characters, a sixth of the character budget. A filer that splits its risk factors more finely would exceed max_items while using a fraction of max_text_chars, which is the same asymmetry D02 hit.",
+      "not_done": "nothing is changed about the bound. This records where the route stands against it, not a proposal to move it."
+    },
+    "one_company_is_blocked_for_another_reason": {
+      "jpmorgan_chase": "57 headings read here, but this probe goes through the ordinary current-source path. Historical period selection still refuses this company with SAVED_HISTORY_INCOHERENT, so a wired historical D01 would not reach the extractor for it. Counting it among the ten that 'fit' would overstate what a historical route delivers."
+    },
+    "what_this_still_does_not_establish": "that a pinned historical D01 reproduces these sets. The differential against the ordinary chain, field for field, is owed before the route is called wired - the same as every other route in this Issue.",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
   }
 }
