@@ -1097,7 +1097,7 @@ D04活动延续增量按动作及对象核对招聘、用户和融资渠道语�
 
 `scripts/vnext/historical_text_input.py` 同时补进规则集：D02 Run 每次都执行它，而原先规则集与继承授权都没点名。它之所以漏掉，是因为 `historical_run` 与 `historical_results` 都在函数内导入它，而 `tools/vnext_authority_closure.py` 只走模块级导入闭包。该工具现在多一类判断：本世代自有规则文件**直接导入**（一跳，不是传递闭包——13 个规则文件经父代码传递可达 215 个模块中的 206 个）却未被授权点名的模块，是缺陷而不是信息。
 
-**（历史记录）原生 Run：范围被缩小，但依然没有接通**。此前这里记的是「注册新 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内，因此阻塞」；上一版改成「已测量，不是架构决定」，那又走过了头。`tools/vnext_requirement_seam.py` 实际证明的范围只有这些：
+**（历史记录）原生 Run：范围被缩小，但依然没有接通**。**这个标题只对它写下的那一刻成立，保留原文是为了显示结论如何移动**：原生历史 Run 此后已真实接通并成批冻结（见本文件后续的批次记录与 `docs/evidence/issue47_history/`）。下面这段说的始终是 `tools/vnext_requirement_seam.py` 这个探针的证明范围，而它到今天仍然不创建任何 Run——所以段末那句 `native_run_created` / `native_run_wired` 为 `False` 是**关于该探针输出字段**的陈述，不是关于系统的。此前这里记的是「注册新 Requirement 世代要改 `scripts/vnext/requirement_profile.py`，而它在 `issue_28_v13` 的 360 个执行授权文件内，因此阻塞」；上一版改成「已测量，不是架构决定」，那又走过了头。`tools/vnext_requirement_seam.py` 实际证明的范围只有这些：
 
 一份 Requirement 绑定字节有两处，生效位置不同。`new_rule_files` 在 `load_profile_requirement_snapshot` 内对数据根与安装代码根双向校验，改坏它安装本身就失败；`execution_authority.files` 只在 `load_run_requirement_snapshot` 里由 `validate_execution_authority` 校验，改坏它只影响装载或创建 Run。`requirement_profile.py` 与 `run_store.py` 对 `issue_28_v13`、`issue_28_v14` 都**只在执行授权内、不在任何规则集内**。
 
