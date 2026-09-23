@@ -1,0 +1,38 @@
+{
+  "status": "PASS_RECORDED_BATCH33_ENPHASE_D04_COMPLETE_RUN_AND_COLD_READ",
+  "requirement_closure_hash": "sha256:81b157c598771e5ed36ede048ec0dbecd6155c97b7991f60c52bbcc027a30d24",
+  "recorded_groups": 6,
+  "recorded_terminal_ids": [
+    "sha256:d28bcb4ed4ae84cadec05d170d16a3803cabb28fe6bf550b45b1bc412a409444",
+    "sha256:403f92689ec3e938aa8f832052f865fceef064eddd787c99bf66ecc0ebca9f1b",
+    "sha256:46808f22da152340394a14050b5a328a43a728d2e31791ad680f1bf5a39f5892",
+    "sha256:52cb0de80037d9c86c52f8bc44fee292dc532605b8556ea63285a221f3602729",
+    "sha256:990974d36ac7f17b7cfb9cf592ef6fe5b4e7e7012c5b98860d6f9144810aaeec",
+    "sha256:0be66ab7516a8f831aa1e7d457bf330c365c2ad40fa1ef264613af8ec04d2415"
+  ],
+  "old_same_digest_failed_ordinal": 1,
+  "old_http402_stopped_ordinal": 2,
+  "recovered_batch_failed_ordinals": [
+    1
+  ],
+  "native_input_id": "sha256:88bc159fb323951e22b6c295c1fba4bbb3ca20ba550a58dcfd0f666dea0c0298",
+  "run_id": "run:ordinary-integrated:82c1d6102670003f9a31e8fb838ce765f4d01ae7fe64319dbc89a2d0c57f9abd",
+  "result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+  "public_row_status": "TEXT_QUAL",
+  "public_row_value": "",
+  "cold_read": "PASS_IN_PROCESS_MECHANICAL_REPLAY",
+  "test_ledger_counts": [
+    8,
+    8,
+    0
+  ],
+  "test_ledger_stopped_channels": [],
+  "network_disabled": true,
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "real_company_result_credit": false,
+  "production_authorized": false
+}

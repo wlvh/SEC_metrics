@@ -26,6 +26,8 @@ PR-B 当前另有未激活的`requirements/issue_28_v2/`与保留的V3 engine，
 PR-B必须交付可供未来PR-C调用、但当前未授权的生产接缝，不能把补Python推迟到发布PR。审核时运行`TESTING.md`的dormant R4集成与portable gate：12个recorded scoped execution、3个native structured Run、4类zero-call和失败前缀/usage/UNKNOWN/tamper。`tools/vnext_r4_qualification.py`的`plan`/`execute`只属于未来明确授权的PR-C；当前只可运行`draft`和隔离recorded测试，不得请求或签发live grant。新head/closure须独立审核后激活，保持PR30 Draft。
 <!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
 
+PR43当前Issue28的受限批次另见`docs/evidence/issue28_continuous/batch33-authorization/`。先核对服务器评论5791560371、旧171/113/114等终态和33组固定manifest；再完成`TESTING.md`所列新账本正反例、限定独审和当前执行闭包的禁网接线。只有这些门槛通过后，`tools/vnext_batch33.py`才能在原账本逐次执行获准组：D04 Enphase6→Paramount10，之后B13 Enphase6→Ford11；每次申领都保存真实终态，遇新402/UNKNOWN等立即停止受影响通道。公司完成以完整原生Run、公开行及冷读为准，录制链或单条请求成功不计入正式完成；D03、生产active和旧入口退出仍另验。
+
 下面是已完成的PR-A transition流程，不是重新打开Issue #15/#24或重做历史snapshot的指令。
 
 | 步骤 | 动作 | 权威引用 | 验收 |

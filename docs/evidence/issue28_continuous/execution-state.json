@@ -140,11 +140,11 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "71126ff4b7c072ce9fddbcba5f90b6b21f442437",
-    "run_id": 35833501889,
-    "status": "QUEUED",
-    "conclusion": null,
-    "scope": "Single observation after prior push; this authorization-prep commit has no CI outcome yet."
+    "head": "15aed51f3d645374273757a1cdf09a757da46a97",
+    "run_id": 35837041768,
+    "status": "COMPLETED",
+    "conclusion": "SUCCESS",
+    "scope": "One read after the authorization-preparation push; implementation diff is not yet pushed. Reference-table CI 35837041785 also succeeded."
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -157,7 +157,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:170e0a3a3577772605c1bdb0e05054baaf52d80535a3228018eaa451c29a5e0d",
+  "current_v15_development_closure": "sha256:1316baa9731b1c068f9c710ec3a696da72b5786b083916a71fcccb886c7c8aff",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -1303,7 +1303,7 @@
     ]
   },
   "batch33_authorization": {
-    "status": "USER_CONVERSATION_AUTHORIZED_SERVER_TRANSCRIPTION_PENDING_NO_LIVE_PERMISSION_INSTALLED",
+    "status": "SERVER_TRANSCRIPTION_VERIFIED_IMPLEMENTATION_TESTED_SCOPED_INDEPENDENT_REVIEW_PENDING_NO_LIVE_PERMISSION_INSTALLED",
     "source_text": "batch33-authorization/authorization-original-user-text.md",
     "group_manifest": "batch33-authorization/initial-group-set.json",
     "group_manifest_sha256": "8ac1a63d25962113f79324fb2e28423bc6d77b05679cfdd5a422f65e8610fe58",
@@ -1328,6 +1328,16 @@
       0,
       0
     ],
-    "production_authorized": false
+    "production_authorized": false,
+    "comment_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5791560371",
+    "transcription_commit": "15aed51f3d645374273757a1cdf09a757da46a97",
+    "server_authorization_verified": true,
+    "recorded_factory_controller": "PASS_CURRENT_BINDING",
+    "lossless_113_recorded": "PASS_CURRENT_BINDING",
+    "fast_suite": "127_OF_127_PASS_CURRENT_BINDING",
+    "full_enphase_recorded_run": "PASS_REUSED_PRIOR_BINDING_IN_PROCESS_MECHANICAL_REPLAY",
+    "live_grant_installed": false,
+    "first_real_claim_created": false,
+    "repair_execution_mechanism": "FAIL_CLOSED_UNTIL_NEW_FAILURE_PATCH_TEST_SCOPED_REVIEW_PROOF"
   }
 }

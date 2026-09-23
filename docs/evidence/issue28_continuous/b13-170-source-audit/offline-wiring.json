@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:170e0a3a3577772605c1bdb0e05054baaf52d80535a3228018eaa451c29a5e0d",
-  "execution_authority_hash": "sha256:aa832c167d6220491136b1778e434558173c3402e1266502102956d46b3b19b4",
+  "requirement_closure_hash": "sha256:1316baa9731b1c068f9c710ec3a696da72b5786b083916a71fcccb886c7c8aff",
+  "execution_authority_hash": "sha256:b80f98cba3010e35f9f2a0280d4bc2362a699640ad1a11b87ef92932c5bbe466",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -14,13 +14,14 @@
   "real_request_factory_to_controller_verified": true,
   "count_control_tests_passed": true,
   "evidence": {
-    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/role-short-wiring-summary.json": "c5d76fa30081187caf32526093a5c5adbf3b2e402208cfa74f63a095309d0721",
-    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/role-short-wiring.log": "6ad9ba001735b919e729eff3d318c7d2d048c691ac61d3188ff3ac38422a659b",
-    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/offline-candidate-summary.json": "e69d30438c49ed8e99e1d1d7c18fe731f6da00626bcb6db1a94ccb6da744c8aa",
-    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/offline-candidate.log": "4a4c4402ccb0bf34fc28380c410b7d6e08e638edbde1cc1ef32a0f9c5530e360",
-    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/directed-tests.log": "203c95a0512b2262cd9a729c6b738fbe487309a0272bee956ac818fd2664383c",
-    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/fast.json": "58a00c7b13f890910e6fb0960358c86e93d977de70032048c620e06f64121db3"
+    "docs/evidence/issue28_continuous/batch33-authorization/server-authorization-check.json": "1725c0cc645034a3929aa297e524fa514d1e038ba4a0a752ea3ac7319619f399",
+    "docs/evidence/issue28_continuous/batch33-authorization/offline-wiring-summary.json": "f917ca444d543c65967d4e5cb4886cb96789daef98f88fe4d3545f6665a63237",
+    "docs/evidence/issue28_continuous/batch33-authorization/offline-paramount-113-summary.json": "ace91412cb20593a0f53373dd9abece8c6142ad3bb6e1f38b16baace7a760a3c",
+    "docs/evidence/issue28_continuous/batch33-authorization/recorded-complete-enphase-summary.json": "bb47425339fdebe02f90d4f8a0732f628299f1008ca9e54351d86e7db22eb1e9",
+    "docs/evidence/issue28_continuous/batch33-authorization/directed-tests.log": "1f2ff221759f2d47ea502e5573a5e2b04ffd960e701235292ea7ab9c023d26c1",
+    "docs/evidence/issue28_continuous/batch33-authorization/fast.json": "41afa8d869d1d2b304cf35009a7dcadbe3cfe072b1abb7125e4306ac6b5fd841",
+    "docs/evidence/issue28_continuous/batch33-authorization/initial-group-set.json": "8ac1a63d25962113f79324fb2e28423bc6d77b05679cfdd5a422f65e8610fe58"
   },
-  "scope": "Recorded B13 role-V3 candidate bridge plus default original111 rejection. V3 live execution is explicitly forbidden before claim; provider stopped171, no real recovery or resampling authority.",
-  "independent_review": "Two ec311e2d P2 errors closed by user-provided external limited review; new V3 diff remains review-pending."
+  "scope": "Current batch33 server binding and final D04 factory/controller recorded first-group and lossless Paramount113 paths. Previous complete six-group recorded Enphase Run is reused at its original code binding; independent review and original-ledger install remain pending.",
+  "independent_review": "V3 scoped review passed; new batch33 code diff remains independently review-pending."
 }

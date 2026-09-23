@@ -95,8 +95,13 @@ def collect_native_assessments(*, prepared_requests, ledger):
     need(len(by_id) == len(prepared_requests), 'B13_COMPLETE_REQUEST_SET_CHANGED')
     completed, failures = {}, []
     recovered_failures = []
+    batch_history = None
+    recovered_batch_failed_ordinals = []
     with ledger.locked():
         state = ledger.snapshot()
+        if (ledger.root/'batch33-authorization.json').exists():
+            from .continuous_batch33 import history_for_current
+            batch_history = history_for_current(ledger=ledger)
         for row in state['rows']:
             if row['channel'] != 'PROVIDER':
                 continue
@@ -110,7 +115,35 @@ def collect_native_assessments(*, prepared_requests, ledger):
             if identity not in by_id:
                 continue
             prepared = by_id[identity]
-            need(saved == strict_json_loads(text=prepared.request_bytes.decode()), 'B13_SAVED_REQUEST_CHANGED')
+            current = strict_json_loads(text=prepared.request_bytes.decode())
+            if saved != current:
+                # A failed same-digest original may have different wire bytes
+                # after the lossless-source repair (original113). Keep that
+                # failure visible without replaying or fixing it in place.
+                # Only the exact, separately granted group's new request may
+                # later replace its failure as current assessment input.
+                allowed = False
+                if batch_history is not None and row['status'] == 'FAILED_TERMINAL':
+                    from .continuous_call_policy import configured_transport_policy
+                    from .continuous_semantic_calls import request_digest
+                    from .continuous_batch33 import groups_for
+                    auth = batch_history['authorization']
+                    old = batch_history['original_same_digest_failures'].get(str(row['ordinal']))
+                    if old is not None:
+                        policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
+                        digest = request_digest(current, policy)
+                        groups = [group for group in groups_for(auth)
+                                  if group['historical_ordinal'] == row['ordinal']
+                                  and group['initial_request_digest'] == digest
+                                  and group['metric_id'] == current['metric_id']
+                                  and group['company_id'] == current['company_id']
+                                  and group['source_id'] == current['source_id']]
+                        allowed = (len(groups) == 1
+                            and old['intent']['intent_id'] == strict_json_file(path=path/'intent.json')['intent_id']
+                            and old['terminal']['terminal_id'] == strict_json_file(path=path/'terminal.json')['terminal_id']
+                            and saved['request_id'] == current['request_id']
+                            and digest == old['intent']['request_digest'])
+                need(allowed, 'B13_SAVED_REQUEST_CHANGED')
             need(identity not in completed, 'B13_DUPLICATE_NATIVE_ASSESSMENT')
             if row['status'] != 'SUCCEEDED':
                 failures.append({'request_id': identity, 'ordinal': row['ordinal'], 'status': row['status']})
@@ -119,13 +152,25 @@ def collect_native_assessments(*, prepared_requests, ledger):
             success = replay['success']; acceptance = success['acceptance_receipt']
             terminal = strict_json_file(path=path / 'terminal.json')
             intent = (strict_json_file(path=path / 'intent.json')
-                      if (ledger.root / 'recovery-110.json').exists() else {})
+                      if (ledger.root / 'recovery-110.json').exists() or batch_history is not None else {})
             if 'recovery_authorization_id' in intent:
                 from .continuous_recovery_110 import history_for_success
                 history = history_for_success(ledger=ledger, intent=intent, terminal=terminal)
                 recovered_failures.append(history)
                 failures = [failure for failure in failures
                             if failure['ordinal'] != history['authorization']['original_ordinal']]
+            if 'batch_authorization_id' in intent:
+                from .continuous_batch33 import group_id, groups_for
+                authorized = batch_history['authorization']
+                group = next(x for x in groups_for(authorized)
+                             if group_id(x) == intent['batch_group_id'])
+                if group['historical_ordinal'] in authorized['same_digest_original_ordinals']:
+                    original_ordinal = group['historical_ordinal']
+                    need(any(failure['ordinal'] == original_ordinal for failure in failures),
+                         'BATCH33_ORIGINAL_FAILED_REQUEST_NOT_RETAINED')
+                    failures = [failure for failure in failures
+                                if failure['ordinal'] != original_ordinal]
+                    recovered_batch_failed_ordinals.append(original_ordinal)
             completed[identity] = {'request_id': identity, 'ordinal': row['ordinal'],
                 'terminal_id': terminal['terminal_id'], 'acceptance_receipt_id': success['acceptance_receipt_id'],
                 'candidate': acceptance['candidate_record'], 'evidence': acceptance['evidence_record'],
@@ -160,4 +205,7 @@ def collect_native_assessments(*, prepared_requests, ledger):
         body['native_request_variants'] = variants
     if recovered_failures:
         body['recovered_http402_failures'] = recovered_failures
+    if batch_history is not None:
+        body['batch_history'] = batch_history
+        body['recovered_batch_failed_ordinals'] = sorted(recovered_batch_failed_ordinals)
     return {**body, 'assessment_set_id': content_hash(value=body)}

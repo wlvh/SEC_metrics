@@ -795,6 +795,8 @@ B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物�
 
 `tests.vnext.test_continuous_recovery_110`与旧账本测试覆盖无授权停止、指定一次申领、原始文件/计数不变、重启/并发及申领中断、新停止保留、错误终态/摘要/模式/审批来源拒绝。`recovery-110-20260922/offline_wiring.py`用当前Enphase原业务工厂禁网验证402、受限新claim、原生成功及原成功复用，业务摘要必须与真实110相同；只计录制接线，不计真实结果。
 
+`PYTHONPATH=scripts:. python3 -m unittest -q tests.vnext.test_continuous_batch33 tests.vnext.test_continuous_call_ledger tests.vnext.test_continuous_recovery_110`验证新用户授权的服务器评论/原文/组集合绑定、原171停止只在D04首组申领时受限解除、113/114式相同摘要新执行、跨进程单次消费、中断/新402保留停止、旧110兼容及批次前缀冷读。`batch33-authorization/`另保存原件禁网分组、当前工厂/模拟opener/controller、113损字旧失败对照及录制Enphase六组普通Run机械重读；这些都不产生真实公司或生产信用。真实调用前仍须当前执行文件绑定、必要限定独审和最终禁网接线收据通过；新的真实失败不得由测试模式或本地批准布尔值重发。
+
 `tests.vnext.test_capacity_reference_contract`验证后继显式引用：未知/错类型/重复/歧义/跨单元引用、漏答、重签合同、旧109同类错误拒绝，以及原生Evidence和请求集合重建。`b13-strict-references-20260922/offline_material.py`禁网检验Enphase六组完整原生链及Ford十一组计划、代表性controller与漏单元失败；记录响应不计真实语义成功，耗时/结果以对应日志为准。
 
 2026-09-22：B13 native及program-role两个CI作业总时限均为30分钟，保留原步骤与断言。program-role单次本地完整计时604.545秒通过（隔离Python3.13.5、tokenizers0.22.2）；CI仍使用Python3.14，实际终态单独登记。证据见`docs/evidence/issue28_continuous/ci-capacity-timeouts-20260922/`。该调整不改变真实请求120秒限制。

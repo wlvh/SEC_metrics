@@ -398,6 +398,10 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
     successful = {}
     with ledger.locked():
         state = ledger.snapshot()
+        batch = None
+        if ledger.live and (ledger.root/'batch33-authorization.json').exists():
+            from .continuous_batch33 import read_authorization
+            batch = read_authorization(ledger)
         for row in state['rows']:
             if row['channel'] != 'PROVIDER' or row['status'] != 'SUCCEEDED':
                 continue
@@ -420,6 +424,15 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
                 continue
             i,version = match
             need(i not in successful, 'NATIVE_VARIANT_MULTIPLE_SUCCESSFUL_VERSIONS')
+            if batch is not None and semantic_role_labels and row['ordinal'] == 111:
+                from .continuous_batch33 import historical_successor_allowed
+                candidate = variant_requests[i][ROLE_VERSION]
+                policy = configured_transport_policy(requirement=prepared_requests[i].requirement, repo_root=ROOT)
+                if historical_successor_allowed(authorization=batch, ledger=ledger,
+                        ordinal=row['ordinal'], saved_request=saved,
+                        replacement_request=candidate,
+                        replacement_digest=request_digest(candidate, policy)):
+                    continue
             request = variant_requests[i][version]
             need(saved == request, 'NATIVE_VARIANT_SAVED_REQUEST_CHANGED')
             prepared = prepared_requests[i]
@@ -666,7 +679,9 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
     if request_fields.get('metric_id') == 'B13':
         from .capacity_reference_contract import ROLE_VERSION
-        need(not (ledger.live and request_fields.get('source_reference_contract', {}).get('version') == ROLE_VERSION),
+        need(not (ledger.live and request_fields.get('source_reference_contract', {}).get('version') == ROLE_VERSION
+                  and not (getattr(ledger, 'root', None) is not None
+                           and (ledger.root/'batch33-authorization.json').exists())),
              'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED')
     need(not prepared.replay_only, 'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
     if prepared.source_ledger is not None:
@@ -687,6 +702,12 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     elif request_fields['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST':
         from .d04_native_assessment import validate_response
     policy,plan = build_plan(prepared)
+    digest = request_digest(request_fields, policy)
+    batch_group_id = None
+    if not ledger.live and (ledger.root/'batch33-authorization.json').exists():
+        from .continuous_batch33 import read_authorization as read_batch_authorization, group_for_request
+        batch_group_id = group_for_request(authorization=read_batch_authorization(ledger),
+                                           request=request_fields, request_digest=digest)
     def response_validator(**kwargs):
         if native_assessment:
             try:
@@ -715,6 +736,13 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
             need(request_fields.get('metric_id') in {'B13', 'D04'}, 'RECOVERY110_FOLLOWING_METRIC_FORBIDDEN')
             need(read_authorization(ledger) == authorization(ledger=ledger, online=True),
                  'RECOVERY110_LIVE_AUTHORIZATION_CHANGED')
+        from .continuous_batch33 import (authorization as batch_authorization,
+            read_authorization as read_batch_authorization, group_for_request)
+        batch = read_batch_authorization(ledger)
+        need(batch is not None and batch == batch_authorization(ledger=ledger, online=True),
+             'BATCH33_LIVE_AUTHORIZATION_REQUIRED')
+        batch_group_id = group_for_request(authorization=batch, request=request_fields,
+                                           request_digest=digest)
         from .ai_adapter import api_key_environment_name
         import os
         need(bool(os.environ.get(api_key_environment_name(policy=policy),'').strip()),
@@ -724,9 +752,9 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
         from .continuous_call_wiring import validate_wiring_receipt
         validate_wiring_receipt(requirement=prepared.requirement)
     with ledger.locked():
-        path,intent = ledger.claim(channel='PROVIDER',request_digest=request_digest(
-            strict_json_loads(text=prepared.request_bytes.decode()),policy),
-            requirement=prepared.requirement,plan_id=plan['ai_invocation_plan_id'],purpose='remaining_development_feasibility')
+        path,intent = ledger.claim(channel='PROVIDER',request_digest=digest,
+            requirement=prepared.requirement,plan_id=plan['ai_invocation_plan_id'],
+            purpose='remaining_development_feasibility',batch_group_id=batch_group_id)
         control._exclusive_write_bytes(path=path/'source.json',content=prepared.source_bytes)
         control._exclusive_write_bytes(path=path/'semantic-request.json',content=prepared.request_bytes)
         preserve_execution_rules(prepared,path)
