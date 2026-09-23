@@ -2,128 +2,1887 @@
  "acceptance_rule": "An acceptance covers a position only while the value it names is the value that position still carries. A later Run computing something else has not been checked. A result a defect withdraws is never accepted, whatever is written here.",
  "acceptances": [
   {
-   "acceptance_id": "CONTENT_B01_MARRIOTT_2025",
-   "accepted_value": "26186000000",
-   "company_id": "marriott_international",
-   "definition": "financial-year revenue",
-   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "acceptance_id": "CONTENT_B01_ENPHASE_2025",
+   "accepted_value": "1472985000",
+   "company_id": "enphase_energy",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
    "metric_id": "B01",
    "period_end": "2025-12-31",
    "read_from": {
-    "accession": "0001048286-26-000007",
-    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
-    "what_was_read": "us-gaap:Revenues = 26,186,000,000 in the consolidated FY2025 duration context"
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
    },
-   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B02_ENPHASE_2025",
+   "accepted_value": "0.1071886817555546034487812908",
+   "company_id": "enphase_energy",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B03_ENPHASE_2025",
+   "accepted_value": "0.1616927531509146393208349033",
+   "company_id": "enphase_energy",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B03",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B04_ENPHASE_2025",
+   "accepted_value": "172133000",
+   "company_id": "enphase_energy",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B04",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B05_ENPHASE_2025",
+   "accepted_value": "95901000",
+   "company_id": "enphase_energy",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B05",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B07_ENPHASE_2025",
+   "accepted_value": "34.84317628843176288431762884",
+   "company_id": "enphase_energy",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B07",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B08_ENPHASE_2025",
+   "accepted_value": "2.065412193479380422295289783",
+   "company_id": "enphase_energy",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B08",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B09_ENPHASE_2025",
+   "accepted_value": "474318000",
+   "company_id": "enphase_energy",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B09",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B01_FORD_2025",
+   "accepted_value": "187267000000",
+   "company_id": "ford_motor_company",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "ProfitLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B02_FORD_2025",
+   "accepted_value": "0.01229782909531222971804186127",
+   "company_id": "ford_motor_company",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "ProfitLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B03_FORD_2025",
+   "accepted_value": "0.0363384899635280108080975292",
+   "company_id": "ford_motor_company",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B03",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "ProfitLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B04_FORD_2025",
+   "accepted_value": "-8162000000",
+   "company_id": "ford_motor_company",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B04",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "ProfitLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B05_FORD_2025",
+   "accepted_value": "12467000000",
+   "company_id": "ford_motor_company",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B05",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "ProfitLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B08_FORD_2025",
+   "accepted_value": "1.074828096440073113412829663",
+   "company_id": "ford_motor_company",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B08",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "ProfitLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B09_FORD_2025",
+   "accepted_value": "23356000000",
+   "company_id": "ford_motor_company",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B09",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "ProfitLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B01_LUMEN_2025",
+   "accepted_value": "11331000000",
+   "company_id": "lumen_technologies",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B02_LUMEN_2025",
+   "accepted_value": "-0.06579272817214939401434578283",
+   "company_id": "lumen_technologies",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B03_LUMEN_2025",
+   "accepted_value": "0.1709469596681669755537904863",
+   "company_id": "lumen_technologies",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B03",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B04_LUMEN_2025",
+   "accepted_value": "-1739000000",
+   "company_id": "lumen_technologies",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B04",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B05_LUMEN_2025",
+   "accepted_value": "371000000",
+   "company_id": "lumen_technologies",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B05",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B08_LUMEN_2025",
+   "accepted_value": "1.801594533029612756264236902",
+   "company_id": "lumen_technologies",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B08",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B09_LUMEN_2025",
+   "accepted_value": "1003000000",
+   "company_id": "lumen_technologies",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B09",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B01_MACYS_2026",
+   "accepted_value": "21764000000",
+   "company_id": "macys",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B01",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-04",
+      "2025-02-01",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B02_MACYS_2026",
+   "accepted_value": "-0.02372942179159377383035033419",
+   "company_id": "macys",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B02",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-04",
+      "2025-02-01",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B03_MACYS_2026",
+   "accepted_value": "0.08840286712001470317956258041",
+   "company_id": "macys",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B03",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-04",
+      "2025-02-01",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B04_MACYS_2026",
+   "accepted_value": "642000000",
+   "company_id": "macys",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B04",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-04",
+      "2025-02-01",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B05_MACYS_2026",
+   "accepted_value": "1057000000",
+   "company_id": "macys",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B05",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-04",
+      "2025-02-01",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B07_MACYS_2026",
+   "accepted_value": "7.410071942446043165467625899",
+   "company_id": "macys",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B07",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-04",
+      "2025-02-01",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B08_MACYS_2026",
+   "accepted_value": "1.485199198753616737146672602",
+   "company_id": "macys",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B08",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-04",
+      "2025-02-01",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B09_MACYS_2026",
+   "accepted_value": "1246000000",
+   "company_id": "macys",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B09",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-04",
+      "2025-02-01",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B01_MARRIOTT_2023",
+   "accepted_value": "23713000000",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B01",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": null,
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2022-01-01",
+      "2022-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B04_MARRIOTT_2023",
+   "accepted_value": "3083000000",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B04",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": null,
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2022-01-01",
+      "2022-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B05_MARRIOTT_2023",
+   "accepted_value": "2718000000",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B05",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": null,
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2022-01-01",
+      "2022-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B07_MARRIOTT_2023",
+   "accepted_value": "6.838938053097345132743362832",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B07",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": null,
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2022-01-01",
+      "2022-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B08_MARRIOTT_2023",
+   "accepted_value": "0.4265653182169543931976294769",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B08",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": null,
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2022-01-01",
+      "2022-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B09_MARRIOTT_2023",
+   "accepted_value": "338000000",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B09",
+   "period_end": "2023-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": null,
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2022-01-01",
+      "2022-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B01_MARRIOTT_2024",
+   "accepted_value": "25100000000",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B01",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "128000000",
+      "255000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2023-01-01",
+      "2023-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B02_MARRIOTT_2024",
+   "accepted_value": "0.05849112301269345928393708093",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B02",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "128000000",
+      "255000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2023-01-01",
+      "2023-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B03_MARRIOTT_2024",
+   "accepted_value": "0.1653386454183266932270916335",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B03",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "128000000",
+      "255000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2023-01-01",
+      "2023-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B04_MARRIOTT_2024",
+   "accepted_value": "2375000000",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B04",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "128000000",
+      "255000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2023-01-01",
+      "2023-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B05_MARRIOTT_2024",
+   "accepted_value": "1999000000",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B05",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "128000000",
+      "255000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2023-01-01",
+      "2023-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B07_MARRIOTT_2024",
+   "accepted_value": "5.420143884892086330935251799",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B07",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "128000000",
+      "255000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2023-01-01",
+      "2023-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B08_MARRIOTT_2024",
+   "accepted_value": "0.4029367556942999190657879524",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B08",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "128000000",
+      "255000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2023-01-01",
+      "2023-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B09_MARRIOTT_2024",
+   "accepted_value": "396000000",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B09",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "128000000",
+      "255000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2023-01-01",
+      "2023-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B01_MARRIOTT_2025",
+   "accepted_value": "26186000000",
+   "company_id": "marriott_international",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "145000000",
+      "313000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_B02_MARRIOTT_2025",
    "accepted_value": "0.04326693227091633466135458167",
    "company_id": "marriott_international",
-   "definition": "(Revenue_t - Revenue_t-1) / Revenue_t-1",
-   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
    "metric_id": "B02",
    "period_end": "2025-12-31",
    "read_from": {
-    "accession": "0001048286-26-000007",
-    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
-    "what_was_read": "us-gaap:Revenues 26,186,000,000 for FY2025 and 25,100,000,000 for FY2024, both consolidated, both in this filing"
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "145000000",
+      "313000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
    },
-   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_B03_MARRIOTT_2025",
    "accepted_value": "0.1756281982738868097456656229",
    "company_id": "marriott_international",
-   "definition": "(operating income + D&A) / revenue",
-   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
    "metric_id": "B03",
    "period_end": "2025-12-31",
    "read_from": {
-    "accession": "0001048286-26-000007",
-    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
-    "what_was_read": "us-gaap:OperatingIncomeLoss 4,141,000,000 plus us-gaap:Depreciation 145,000,000 and us-gaap:AmortizationOfIntangibleAssets 313,000,000, over Revenues. The combined D&A chain has no consolidated FY2025 fact in this filing, which is the stated condition for the composition fallback; the company-specific mar:DepreciationAmortizationAndOther 599,000,000 is present and correctly not used, the chain naming us-gaap concepts."
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "145000000",
+      "313000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
    },
-   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_B04_MARRIOTT_2025",
    "accepted_value": "2601000000",
    "company_id": "marriott_international",
-   "definition": "net income",
-   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
    "metric_id": "B04",
    "period_end": "2025-12-31",
    "read_from": {
-    "accession": "0001048286-26-000007",
-    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
-    "what_was_read": "us-gaap:NetIncomeLoss = 2,601,000,000; ProfitLoss has no consolidated FY2025 fact, so the first chain entry answers and the non-controlling-interest note does not arise"
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "145000000",
+      "313000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
    },
-   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_B05_MARRIOTT_2025",
    "accepted_value": "2608000000",
    "company_id": "marriott_international",
-   "definition": "operating cash flow - capital expenditures",
-   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
    "metric_id": "B05",
    "period_end": "2025-12-31",
    "read_from": {
-    "accession": "0001048286-26-000007",
-    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
-    "what_was_read": "us-gaap:NetCashProvidedByUsedInOperatingActivities 3,212,000,000 less us-gaap:PaymentsToAcquireProductiveAssets 604,000,000. PaymentsToAcquirePropertyPlantAndEquipment has no consolidated FY2025 fact, so the second capex candidate answers, which the definition allows by name."
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "145000000",
+      "313000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
    },
-   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_B07_MARRIOTT_2025",
    "accepted_value": "5.118665018541409147095179234",
    "company_id": "marriott_international",
-   "definition": "operating income / interest expense",
-   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
    "metric_id": "B07",
    "period_end": "2025-12-31",
    "read_from": {
-    "accession": "0001048286-26-000007",
-    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
-    "what_was_read": "us-gaap:OperatingIncomeLoss 4,141,000,000 over us-gaap:InterestExpenseNonoperating 809,000,000. InterestExpense has no consolidated FY2025 fact, so the second chain entry answers."
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "145000000",
+      "313000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
    },
-   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_B08_MARRIOTT_2025",
    "accepted_value": "0.4267682781614670159561800429",
    "company_id": "marriott_international",
-   "definition": "current assets / current liabilities",
-   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
    "metric_id": "B08",
    "period_end": "2025-12-31",
    "read_from": {
-    "accession": "0001048286-26-000007",
-    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
-    "what_was_read": "us-gaap:AssetsCurrent 3,584,000,000 over us-gaap:LiabilitiesCurrent 8,398,000,000 at 2025-12-31"
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "145000000",
+      "313000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
    },
-   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_B09_MARRIOTT_2025",
    "accepted_value": "358000000",
    "company_id": "marriott_international",
-   "definition": "cash and cash equivalents",
-   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
    "metric_id": "B09",
    "period_end": "2025-12-31",
    "read_from": {
-    "accession": "0001048286-26-000007",
-    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
-    "what_was_read": "us-gaap:CashAndCashEquivalentsAtCarryingValue = 358,000,000 at 2025-12-31"
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+     "d_and_a_parts": [
+      "145000000",
+      "313000000"
+     ],
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
    },
-   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B01_PFIZER_2025",
+   "accepted_value": "62579000000",
+   "company_id": "pfizer",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B02_PFIZER_2025",
+   "accepted_value": "-0.01647099501783833906989171264",
+   "company_id": "pfizer",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B04_PFIZER_2025",
+   "accepted_value": "7771000000",
+   "company_id": "pfizer",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B04",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B05_PFIZER_2025",
+   "accepted_value": "9075000000",
+   "company_id": "pfizer",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B05",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B08_PFIZER_2025",
+   "accepted_value": "1.159906986805104910231451438",
+   "company_id": "pfizer",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B08",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B09_PFIZER_2025",
+   "accepted_value": "1142000000",
+   "company_id": "pfizer",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B09",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "Revenues"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B01_SALESFORCE_2026",
+   "accepted_value": "41525000000",
+   "company_id": "salesforce",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B01",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseDebt",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-01",
+      "2025-01-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B02_SALESFORCE_2026",
+   "accepted_value": "0.09579100145137880986937590711",
+   "company_id": "salesforce",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B02",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseDebt",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-01",
+      "2025-01-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B04_SALESFORCE_2026",
+   "accepted_value": "7457000000",
+   "company_id": "salesforce",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B04",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseDebt",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-01",
+      "2025-01-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B05_SALESFORCE_2026",
+   "accepted_value": "14402000000",
+   "company_id": "salesforce",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B05",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseDebt",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-01",
+      "2025-01-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B07_SALESFORCE_2026",
+   "accepted_value": "25.71296296296296296296296296",
+   "company_id": "salesforce",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B07",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseDebt",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-01",
+      "2025-01-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B08_SALESFORCE_2026",
+   "accepted_value": "0.7603319144350449916482569104",
+   "company_id": "salesforce",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B08",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseDebt",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-01",
+      "2025-01-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B09_SALESFORCE_2026",
+   "accepted_value": "7327000000",
+   "company_id": "salesforce",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B09",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseDebt",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-02-01",
+      "2025-01-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B01_SOUTHWEST_2025",
+   "accepted_value": "28063000000",
+   "company_id": "southwest_airlines",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B02_SOUTHWEST_2025",
+   "accepted_value": "0.02110395517228832369100898737",
+   "company_id": "southwest_airlines",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B03_SOUTHWEST_2025",
+   "accepted_value": "0.07084060863058119231728610626",
+   "company_id": "southwest_airlines",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B03",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B04_SOUTHWEST_2025",
+   "accepted_value": "441000000",
+   "company_id": "southwest_airlines",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B04",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B05_SOUTHWEST_2025",
+   "accepted_value": "-831000000",
+   "company_id": "southwest_airlines",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B05",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B07_SOUTHWEST_2025",
+   "accepted_value": "2.562874251497005988023952096",
+   "company_id": "southwest_airlines",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B07",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B08_SOUTHWEST_2025",
+   "accepted_value": "0.5168940573207581723285413424",
+   "company_id": "southwest_airlines",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B08",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B09_SOUTHWEST_2025",
+   "accepted_value": "3231000000",
+   "company_id": "southwest_airlines",
+   "method": "the filing's own primary document, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. The route resolves these from the Company Facts API instead, so this is a different source for the same facts, not a second call to the same one.",
+   "metric_id": "B09",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquireProductiveAssets",
+     "d_and_a": "DepreciationAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpenseNonoperating",
+     "net_income": "NetIncomeLoss",
+     "prior_revenue_context": [
+      "2024-01-01",
+      "2024-12-31",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "/home/user/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing is right. What is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   }
  ],
- "evidence": "docs/evidence/issue47_history/content-acceptance/marriott-2025-statements.json",
+ "generated_from": "docs/evidence/issue47_history/content-acceptance/cross-source-read.json - every position that reading matched, and only those.",
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "not_here_and_why": {
+  "ford B07 and lumen B07": "NO_PUBLISHED_VALUE. Operating income is negative for both, the definition says NOT_MEANINGFUL, and the reading agrees by producing a negative ratio where the route published none. Agreement in substance, but there is no value to accept.",
+  "marriott 2023 B02 and B03": "NO_PUBLISHED_VALUE - that period's source gaps.",
+  "pfizer B03 and B07": "NOT_READ. The primary document tags no consolidated OperatingIncomeLoss, which both need, and the accession's facts carry none either - so the route reconstructed it, which this reading does not do.",
+  "salesforce B03": "CHAIN_CANDIDATE_NOT_IN_PRIMARY_DOCUMENT. The accession's facts carry DepreciationDepletionAndAmortization, first in the approved chain; the primary document does not tag it, so this reading followed the chain to DepreciationAndAmortization and landed elsewhere. The route is right and the reading cannot confirm it."
+ },
  "purpose": "The third delivery layer. A frozen Run with a public row says the route computed something and the bytes are bound; it does not say the number is right. This is where a reading that did not come from the route says so, for one value at a time.",
  "record_type": "INDEPENDENT_CONTENT_ACCEPTANCE_REGISTER",
  "schema_version": 1

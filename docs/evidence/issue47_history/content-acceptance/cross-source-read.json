@@ -1,0 +1,753 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "fault_injections": {
+  "LET_AN_ACCEPTANCE_OVERRIDE_A_WITHDRAWAL": {
+   "cases_that_failed": [
+    "test_a_withdrawn_result_is_not_accepted"
+   ],
+   "caught": true,
+   "exit_code": 1
+  },
+  "MATCH_THE_COORDINATE_AND_IGNORE_THE_VALUE": {
+   "cases_that_failed": [
+    "test_an_acceptance_does_not_survive_the_value_changing"
+   ],
+   "caught": true,
+   "exit_code": 1
+  },
+  "_whole_suite": {
+   "exit_code": 0,
+   "tail": [
+    "----------------------------------------------------------------------",
+    "Ran 52 tests in 142.915s",
+    "",
+    "OK"
+   ]
+  }
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "per_position": {
+  "enphase-2025": {
+   "company_id": "enphase_energy",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpenseNonoperating",
+    "net_income": "NetIncomeLoss",
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "/home/user/SEC_metrics/evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+   "metrics": {
+    "B01": {
+     "exact_string_match": true,
+     "published": "1472985000",
+     "read": "1472985000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": true,
+     "published": "0.1071886817555546034487812908",
+     "read": "0.1071886817555546034487812908",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "exact_string_match": true,
+     "published": "0.1616927531509146393208349033",
+     "read": "0.1616927531509146393208349033",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "exact_string_match": true,
+     "published": "172133000",
+     "read": "172133000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "exact_string_match": true,
+     "published": "95901000",
+     "read": "95901000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": true,
+     "published": "34.84317628843176288431762884",
+     "read": "34.84317628843176288431762884",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "exact_string_match": true,
+     "published": "2.065412193479380422295289783",
+     "read": "2.065412193479380422295289783",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "exact_string_match": true,
+     "published": "474318000",
+     "read": "474318000",
+     "verdict": "MATCH"
+    }
+   },
+   "period_end": "2025-12-31"
+  },
+  "ford-2025": {
+   "company_id": "ford_motor_company",
+   "concepts_used": {
+    "capex": "PaymentsToAcquireProductiveAssets",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpenseNonoperating",
+    "net_income": "ProfitLoss",
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "/home/user/SEC_metrics/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+   "metrics": {
+    "B01": {
+     "exact_string_match": true,
+     "published": "187267000000",
+     "read": "187267000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": true,
+     "published": "0.01229782909531222971804186127",
+     "read": "0.01229782909531222971804186127",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "exact_string_match": false,
+     "published": "0.0363384899635280108080975292",
+     "read": "0.03633848996352801080809752920",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "exact_string_match": true,
+     "published": "-8162000000",
+     "read": "-8162000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "exact_string_match": true,
+     "published": "12467000000",
+     "read": "12467000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "-7.311802232854864433811802233",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B08": {
+     "exact_string_match": true,
+     "published": "1.074828096440073113412829663",
+     "read": "1.074828096440073113412829663",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "exact_string_match": true,
+     "published": "23356000000",
+     "read": "23356000000",
+     "verdict": "MATCH"
+    }
+   },
+   "period_end": "2025-12-31"
+  },
+  "lumen-2025": {
+   "company_id": "lumen_technologies",
+   "concepts_used": {
+    "capex": "PaymentsToAcquireProductiveAssets",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpense",
+    "net_income": "NetIncomeLoss",
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "/home/user/SEC_metrics/evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+   "metrics": {
+    "B01": {
+     "exact_string_match": true,
+     "published": "11331000000",
+     "read": "11331000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": true,
+     "published": "-0.06579272817214939401434578283",
+     "read": "-0.06579272817214939401434578283",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "exact_string_match": true,
+     "published": "0.1709469596681669755537904863",
+     "read": "0.1709469596681669755537904863",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "exact_string_match": true,
+     "published": "-1739000000",
+     "read": "-1739000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "exact_string_match": true,
+     "published": "371000000",
+     "read": "371000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "-0.6323987538940809968847352025",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B08": {
+     "exact_string_match": true,
+     "published": "1.801594533029612756264236902",
+     "read": "1.801594533029612756264236902",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "exact_string_match": true,
+     "published": "1003000000",
+     "read": "1003000000",
+     "verdict": "MATCH"
+    }
+   },
+   "period_end": "2025-12-31"
+  },
+  "macys-2026": {
+   "company_id": "macys",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpense",
+    "net_income": "NetIncomeLoss",
+    "prior_revenue_context": [
+     "2024-02-04",
+     "2025-02-01",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "/home/user/SEC_metrics/evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+   "metrics": {
+    "B01": {
+     "exact_string_match": true,
+     "published": "21764000000",
+     "read": "21764000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": true,
+     "published": "-0.02372942179159377383035033419",
+     "read": "-0.02372942179159377383035033419",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "exact_string_match": true,
+     "published": "0.08840286712001470317956258041",
+     "read": "0.08840286712001470317956258041",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "exact_string_match": true,
+     "published": "642000000",
+     "read": "642000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "exact_string_match": true,
+     "published": "1057000000",
+     "read": "1057000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": true,
+     "published": "7.410071942446043165467625899",
+     "read": "7.410071942446043165467625899",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "exact_string_match": true,
+     "published": "1.485199198753616737146672602",
+     "read": "1.485199198753616737146672602",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "exact_string_match": true,
+     "published": "1246000000",
+     "read": "1246000000",
+     "verdict": "MATCH"
+    }
+   },
+   "period_end": "2026-01-31"
+  },
+  "marriott-2023": {
+   "company_id": "marriott_international",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": null,
+    "d_and_a_parts": null,
+    "interest": "InterestExpense",
+    "net_income": "NetIncomeLoss",
+    "prior_revenue_context": [
+     "2022-01-01",
+     "2022-12-31",
+     false
+    ],
+    "revenue": "Revenues"
+   },
+   "document": "/home/user/SEC_metrics/evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+   "metrics": {
+    "B01": {
+     "exact_string_match": true,
+     "published": "23713000000",
+     "read": "23713000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "0.1415298705049824291147162182",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B03": {
+     "exact_string_match": false,
+     "published": null,
+     "read": null,
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B04": {
+     "exact_string_match": true,
+     "published": "3083000000",
+     "read": "3083000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "exact_string_match": true,
+     "published": "2718000000",
+     "read": "2718000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": true,
+     "published": "6.838938053097345132743362832",
+     "read": "6.838938053097345132743362832",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "exact_string_match": true,
+     "published": "0.4265653182169543931976294769",
+     "read": "0.4265653182169543931976294769",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "exact_string_match": true,
+     "published": "338000000",
+     "read": "338000000",
+     "verdict": "MATCH"
+    }
+   },
+   "period_end": "2023-12-31"
+  },
+  "marriott-2024": {
+   "company_id": "marriott_international",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+    "d_and_a_parts": [
+     "128000000",
+     "255000000"
+    ],
+    "interest": "InterestExpenseNonoperating",
+    "net_income": "NetIncomeLoss",
+    "prior_revenue_context": [
+     "2023-01-01",
+     "2023-12-31",
+     false
+    ],
+    "revenue": "Revenues"
+   },
+   "document": "/home/user/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+   "metrics": {
+    "B01": {
+     "exact_string_match": true,
+     "published": "25100000000",
+     "read": "25100000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": true,
+     "published": "0.05849112301269345928393708093",
+     "read": "0.05849112301269345928393708093",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "exact_string_match": true,
+     "published": "0.1653386454183266932270916335",
+     "read": "0.1653386454183266932270916335",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "exact_string_match": true,
+     "published": "2375000000",
+     "read": "2375000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "exact_string_match": true,
+     "published": "1999000000",
+     "read": "1999000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": true,
+     "published": "5.420143884892086330935251799",
+     "read": "5.420143884892086330935251799",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "exact_string_match": true,
+     "published": "0.4029367556942999190657879524",
+     "read": "0.4029367556942999190657879524",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "exact_string_match": true,
+     "published": "396000000",
+     "read": "396000000",
+     "verdict": "MATCH"
+    }
+   },
+   "period_end": "2024-12-31"
+  },
+  "marriott-2025": {
+   "company_id": "marriott_international",
+   "concepts_used": {
+    "capex": "PaymentsToAcquireProductiveAssets",
+    "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+    "d_and_a_parts": [
+     "145000000",
+     "313000000"
+    ],
+    "interest": "InterestExpenseNonoperating",
+    "net_income": "NetIncomeLoss",
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "Revenues"
+   },
+   "document": "/home/user/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+   "metrics": {
+    "B01": {
+     "exact_string_match": true,
+     "published": "26186000000",
+     "read": "26186000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": true,
+     "published": "0.04326693227091633466135458167",
+     "read": "0.04326693227091633466135458167",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "exact_string_match": true,
+     "published": "0.1756281982738868097456656229",
+     "read": "0.1756281982738868097456656229",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "exact_string_match": true,
+     "published": "2601000000",
+     "read": "2601000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "exact_string_match": true,
+     "published": "2608000000",
+     "read": "2608000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": true,
+     "published": "5.118665018541409147095179234",
+     "read": "5.118665018541409147095179234",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "exact_string_match": true,
+     "published": "0.4267682781614670159561800429",
+     "read": "0.4267682781614670159561800429",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "exact_string_match": true,
+     "published": "358000000",
+     "read": "358000000",
+     "verdict": "MATCH"
+    }
+   },
+   "period_end": "2025-12-31"
+  },
+  "pfizer-2025": {
+   "company_id": "pfizer",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpense",
+    "net_income": "NetIncomeLoss",
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "Revenues"
+   },
+   "document": "/home/user/SEC_metrics/evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+   "metrics": {
+    "B01": {
+     "exact_string_match": true,
+     "published": "62579000000",
+     "read": "62579000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": true,
+     "published": "-0.01647099501783833906989171264",
+     "read": "-0.01647099501783833906989171264",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "earlier_candidate_in_the_accession": null,
+     "exact_string_match": false,
+     "published": "0.3329551446971028619824541779",
+     "read": null,
+     "verdict": "NOT_READ"
+    },
+    "B04": {
+     "exact_string_match": true,
+     "published": "7771000000",
+     "read": "7771000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "exact_string_match": true,
+     "published": "9075000000",
+     "read": "9075000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "earlier_candidate_in_the_accession": null,
+     "exact_string_match": false,
+     "published": "5.332834144515162860351928117",
+     "read": null,
+     "verdict": "NOT_READ"
+    },
+    "B08": {
+     "exact_string_match": true,
+     "published": "1.159906986805104910231451438",
+     "read": "1.159906986805104910231451438",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "exact_string_match": true,
+     "published": "1142000000",
+     "read": "1142000000",
+     "verdict": "MATCH"
+    }
+   },
+   "period_end": "2025-12-31"
+  },
+  "salesforce-2026": {
+   "company_id": "salesforce",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "DepreciationAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpenseDebt",
+    "net_income": "NetIncomeLoss",
+    "prior_revenue_context": [
+     "2024-02-01",
+     "2025-01-31",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "/home/user/SEC_metrics/evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+   "metrics": {
+    "B01": {
+     "exact_string_match": true,
+     "published": "41525000000",
+     "read": "41525000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": true,
+     "published": "0.09579100145137880986937590711",
+     "read": "0.09579100145137880986937590711",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "earlier_candidate_in_the_accession": [
+      "DepreciationDepletionAndAmortization=1200000000"
+     ],
+     "exact_string_match": false,
+     "published": "0.2295243829018663455749548465",
+     "read": "0.2880674292594822396146899458",
+     "verdict": "CHAIN_CANDIDATE_NOT_IN_PRIMARY_DOCUMENT"
+    },
+    "B04": {
+     "exact_string_match": true,
+     "published": "7457000000",
+     "read": "7457000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "exact_string_match": true,
+     "published": "14402000000",
+     "read": "14402000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": true,
+     "published": "25.71296296296296296296296296",
+     "read": "25.71296296296296296296296296",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "exact_string_match": true,
+     "published": "0.7603319144350449916482569104",
+     "read": "0.7603319144350449916482569104",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "exact_string_match": true,
+     "published": "7327000000",
+     "read": "7327000000",
+     "verdict": "MATCH"
+    }
+   },
+   "period_end": "2026-01-31"
+  },
+  "southwest-2025": {
+   "company_id": "southwest_airlines",
+   "concepts_used": {
+    "capex": "PaymentsToAcquireProductiveAssets",
+    "d_and_a": "DepreciationAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpenseNonoperating",
+    "net_income": "NetIncomeLoss",
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "/home/user/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm",
+   "metrics": {
+    "B01": {
+     "exact_string_match": true,
+     "published": "28063000000",
+     "read": "28063000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": true,
+     "published": "0.02110395517228832369100898737",
+     "read": "0.02110395517228832369100898737",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "exact_string_match": true,
+     "published": "0.07084060863058119231728610626",
+     "read": "0.07084060863058119231728610626",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "exact_string_match": true,
+     "published": "441000000",
+     "read": "441000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "exact_string_match": true,
+     "published": "-831000000",
+     "read": "-831000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": true,
+     "published": "2.562874251497005988023952096",
+     "read": "2.562874251497005988023952096",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "exact_string_match": true,
+     "published": "0.5168940573207581723285413424",
+     "read": "0.5168940573207581723285413424",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "exact_string_match": true,
+     "published": "3231000000",
+     "read": "3231000000",
+     "verdict": "MATCH"
+    }
+   },
+   "period_end": "2025-12-31"
+  }
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_CROSS_SOURCE_CONTENT_READ",
+ "result": {
+  "chain_candidate_not_in_primary_document": 1,
+  "differs": 0,
+  "match": 73,
+  "no_published_value": 4,
+  "not_read": 2,
+  "positions_compared": 80
+ },
+ "the_one_apparent_defect_that_was_not": {
+  "and_it_put_a_claim_of_mine_in_question": "the first acceptance entry for Marriott's B03 said the combined D&A chain has no fact 'in this filing', which was measured over the primary document only. Checked against the accession's facts: Marriott reports neither DepreciationDepletionAndAmortization nor DepreciationAmortizationAndAccretionNet nor DepreciationAndAmortization, only Depreciation 145,000,000 and AmortizationOfIntangibleAssets 313,000,000. So the composition fallback is right and the entry stands - but it stood on the wrong universe until this was run.",
+  "position": "salesforce 2026-01-31 B03",
+  "what_changed_because_of_it": "the reading now checks, before reporting a difference, whether an earlier chain candidate exists in the accession at all. A limit of the reading and a defect in the route are different findings and only one of them is about the repository.",
+  "what_it_looked_like": "the reading gave 0.2880674292594822396146899458 and the route published 0.2295243829018663455749548465.",
+  "what_it_was": "the primary document's inline XBRL is a subset of the accession's facts. It tags DepreciationAndAmortization (3,631,000,000) and not DepreciationDepletionAndAmortization, which is first in the approved chain; the accession's own facts carry that one at 1,200,000,000, and that is what the route used. The route followed the definition and the reading could not."
+ },
+ "two_things_my_own_reading_got_wrong_first": {
+  "and_a_third_that_was_only_a_comparison": "Ford's B03 first read as DIFFERS because Decimal kept a trailing zero and I compared strings. Numbers are compared as numbers now.",
+  "the_document_path": "built from company_id, which is 'macys' while the saved directory is 'macy_s'. Nine of ten worked and the tenth was reported as an unsaved filing. The path now comes from the input's own source_repo_relative_path.",
+  "the_instant_key": "an instant context has no start date, so its facts are stored under a key with None there. Looking them up under (end, end, True) found nothing - for every company - and B08 and B09 read as NOT_READ everywhere. A reading that finds nothing looks exactly like a filing that says nothing."
+ },
+ "what_the_injections_check": {
+  "LET_AN_ACCEPTANCE_OVERRIDE_A_WITHDRAWAL": "when the two registers disagree about a result, the withdrawal is the safer of the two. Caught by its own case.",
+  "MATCH_THE_COORDINATE_AND_IGNORE_THE_VALUE": "the natural way to write this layer, and the way that lets a later Run inherit a reading nobody did. Caught by the case that changes one digit."
+ },
+ "what_this_is": "eight statement metrics read out of each company's own 10-K, and compared to what the route published. The route resolves them from the Company Facts API; this walks the filing's primary document. Two sources for the same facts, so agreement is a cross-source check."
+}

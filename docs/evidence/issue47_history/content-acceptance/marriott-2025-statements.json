@@ -21,31 +21,6 @@
   "B08": "0.4267682781614670159561800429",
   "B09": "358000000"
  },
- "fault_injections": {
-  "LET_AN_ACCEPTANCE_OVERRIDE_A_WITHDRAWAL": {
-   "cases_that_failed": [
-    "test_a_withdrawn_result_is_not_accepted"
-   ],
-   "caught": true,
-   "exit_code": 1
-  },
-  "MATCH_THE_COORDINATE_AND_IGNORE_THE_VALUE": {
-   "cases_that_failed": [
-    "test_an_acceptance_does_not_survive_the_value_changing"
-   ],
-   "caught": true,
-   "exit_code": 1
-  },
-  "_whole_suite": {
-   "exit_code": 0,
-   "tail": [
-    "----------------------------------------------------------------------",
-    "Ran 52 tests in 142.915s",
-    "",
-    "OK"
-   ]
-  }
- },
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "method": {
   "how": "the filing's own inline XBRL, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign attributes; consolidated facts only (any explicit member excludes a fact); the arithmetic in Decimal at the calculator's own 28-digit precision.",
@@ -69,14 +44,14 @@
  },
  "record_type": "ISSUE_47_CONTENT_ACCEPTANCE_READING",
  "result": "all eight match the Runs' own METRIC_RESULT records exactly.",
+ "superseded_by": {
+  "file": "docs/evidence/issue47_history/content-acceptance/cross-source-read.json",
+  "why": "the same reading was extended to all ten company-periods, and two defects in the reading itself turned up that this file's numbers were produced before: an instant-context key that made B08 and B09 unreadable everywhere, and a document path built from company_id. Neither changed any value here - this company's eight still match - but the file's claim that the combined D&A chain has no fact 'in this filing' was measured over the primary document only, and the successor file states the universe it should have."
+ },
  "three_places_the_definition_named_a_fallback_and_the_filing_forced_it": {
   "B03": "the combined D&A chain has no consolidated FY2025 fact, so the composition fallback Depreciation + AmortizationOfIntangibleAssets answers: 145 + 313 = 458. The company-specific mar:DepreciationAmortizationAndOther of 599,000,000 is present in the same context and correctly not used, the chain naming us-gaap concepts. Operating income was direct, so EXACT rather than OK_APPROX is what the definition asks for.",
   "B05": "PaymentsToAcquirePropertyPlantAndEquipment has no consolidated FY2025 fact, so the second capex candidate answers - which the definition allows by name.",
   "B07": "InterestExpense has no consolidated FY2025 fact, so InterestExpenseNonoperating answers."
- },
- "what_the_injections_check": {
-  "LET_AN_ACCEPTANCE_OVERRIDE_A_WITHDRAWAL": "when the two registers disagree about a result, the withdrawal is the safer of the two. Caught by its own case.",
-  "MATCH_THE_COORDINATE_AND_IGNORE_THE_VALUE": "the natural way to write this layer, and the way that lets a later Run inherit a reading nobody did. Caught by the case that changes one digit."
  },
  "what_this_does_not_establish": [
   "that the approved definition is the right definition for the business question. It establishes that the concept the definition names carries this value in this filing for this period, and that the stated arithmetic produces the published number from it.",
