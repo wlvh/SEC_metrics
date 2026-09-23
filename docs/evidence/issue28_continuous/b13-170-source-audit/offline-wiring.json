@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:ebdbfcdf514509c9c7531d09800ac78badb19e2534064176a0ff43626d6e4a33",
-  "execution_authority_hash": "sha256:4cf47befad8c4e149f9210fa0189237a48ac7606ad2923effa6e44535c7fb4eb",
+  "requirement_closure_hash": "sha256:16835f229d2b66ea85ed3c5f53f2bc0f253649d3c2ba8b2531ab83662a5757e1",
+  "execution_authority_hash": "sha256:9444fb3ec25f8956ce7efb1de8e9ed529c1f06ce12aedf15c784d97254719b2c",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -15,16 +15,17 @@
   "count_control_tests_passed": true,
   "evidence": {
     "docs/evidence/issue28_continuous/batch33-authorization/server-authorization-check.json": "1725c0cc645034a3929aa297e524fa514d1e038ba4a0a752ea3ac7319619f399",
-    "docs/evidence/issue28_continuous/batch33-authorization/offline-wiring-summary.json": "4cf9a9cf8a44f9ebc6eeefb96b805563e366d38b35808d545bdfc7e5fd4ae58b",
+    "docs/evidence/issue28_continuous/batch33-authorization/offline-wiring-summary.json": "12be0c8715e264c88314642aa2bcd1d5985b157899d87bea03bd0da7d1389e7c",
     "docs/evidence/issue28_continuous/batch33-authorization/offline-paramount-113-summary.json": "ace91412cb20593a0f53373dd9abece8c6142ad3bb6e1f38b16baace7a760a3c",
     "docs/evidence/issue28_continuous/batch33-authorization/recorded-complete-enphase-summary.json": "bb47425339fdebe02f90d4f8a0732f628299f1008ca9e54351d86e7db22eb1e9",
     "docs/evidence/issue28_continuous/batch33-authorization/directed-tests.log": "1f2ff221759f2d47ea502e5573a5e2b04ffd960e701235292ea7ab9c023d26c1",
     "docs/evidence/issue28_continuous/batch33-authorization/fast.json": "41afa8d869d1d2b304cf35009a7dcadbe3cfe072b1abb7125e4306ac6b5fd841",
     "docs/evidence/issue28_continuous/batch33-authorization/initial-group-set.json": "8ac1a63d25962113f79324fb2e28423bc6d77b05679cfdd5a422f65e8610fe58",
-    "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-server-check.json": "25008d8edce33fc12ff4aa851f1b16ecaa7ee98c0c25668d0b2ef934f5b7401b",
+    "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-server-check.json": "475d8d859e6241224143c7481ee4006d42d1af772f03cad86b080993ebc42f07",
     "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-directed.log": "6e0d15c18e267967ee2a442994523a3123c28b5793111e1c70fde40e3cf629ea",
-    "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-fast.json": "72ae2e0377327775ee1396c225d9a1e3dd83ad54f951ca9e0b24a228c651c07b"
+    "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-fast.json": "c8539e2115c92ac0d2c5c8639b610c1805bc0e8bc766529e53bbad1b01ae4558",
+    "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-post-review-directed.log": "d45c5048977d097e7c289ad2af9bbe3d8cd07efd704bdfbc43e7bc10c00d902f"
   },
-  "scope": "Current batch33 D04 first-group recorded factory/controller and independent original-SEC-channel interleaving tests under current V14 binding; prior Paramount113 lossless and complete six-group recorded Run evidence retained at its original closure. No new real call from this check; real172 remains HTTP402 stopped.",
-  "independent_review": "First 33 provider claims reviewed at c92c7698; new separate-SEC-scope delta independently review-pending; genuine-repair second claim not implemented"
+  "scope": "Current batch33 D04 first-group recorded factory/controller plus independent SEC channel and stopped-SEC cold-read checks under current V14 binding. Prior Paramount113 and six-group recorded Run evidence retained at their original closures. No new real call from these checks; real172 remains HTTP402 stopped.",
+  "independent_review": "First 33 provider claims reviewed c92c7698; SEC-scope review found one cold-read P2 at 1c6bb186; repair tested, limited review pending. Genuine-repair second provider claim not implemented."
 }

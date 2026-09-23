@@ -21,3 +21,11 @@
 - 当前源码重跑禁网录制 Enphase D04 六组到 Run、公开行与同进程机械重读：通过，真实调用 `0/0/0`。为遵守审阅目录边界，仅在内存中略去测试脚本末尾写回原证据摘要的一行，业务执行和检查代码未改。
 
 测试范围外：未验证真实 provider 响应内容；未执行新批次的真实计费请求；未完成两家公司 D04 或 Enphase/Ford B13 的真实公司结果；未验证真实结果的跨进程冷读；条件性修后补验尚未实现。仓库原有 `execution-state.json` 工作区改动未触碰。
+
+## 1c6bb186 的 SEC 范围收窄增量复核
+
+本节只比较 `71c4958a3fa7c550b1ea94d97eae36fa5ac9b336..1c6bb186514284e07ebccfdfe237d5d2233e0930` 中的 `continuous_batch33.py`、`continuous_call_ledger.py`、对应单测及 V14 字节绑定；上面的 c92c7698 结论仍保持其当时范围与含义。
+
+**发现一项冷读阻断（P2）：** `scripts/vnext/continuous_batch33.py:495-510` 的 SEC 分支在已有 SEC 停止记录后，仍允许另一条 SEC 申领进入保存的批次前缀。它会把无终态的 SEC 申领加入 `stops`，但下一条 SEC 只检查首次 D04 已恢复、标记和摘要重复，没有检查 SEC 通道是否已停止。独立复现中，原账本 `CallLedger.claim` 对第一条未完成 SEC 之后的第二条 SEC 正确报 `CONTINUOUS_CHANNEL_STOPPED:SEC`；在相同前缀后追加一个自洽哈希的第二条 SEC 记录，`validate_history` 却返回 `True`。因此不能把包含交织 SEC 的已保存批次历史称为完整独立冷读通过。这个缺口不会放宽真实账本的申领门，但应在使用这条新的 SEC 交织结果路径前修复，并加入“SEC 已停止后再申领”的反例测试。
+
+真实账本层面的范围隔离本次核对通过：批次安装后、第一个 D04 申领前拒绝 SEC；首次 D04 后的独立 SEC 申领不消耗批次 provider 机会，SEC 未完成时仍可处理无依赖 provider 组；新 provider HTTP402 只停 provider，不误停 SEC。原171停止只能由首个获批 D04 申领移除，SEC 无法先行解除它。指定命令运行31项测试，全部通过；上述冷读反例说明现有正向测试尚未覆盖停止后的第二条 SEC。未发真实 SEC 或 provider 请求，未修改账本、代码或 `execution-state.json`。

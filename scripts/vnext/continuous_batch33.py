@@ -496,6 +496,8 @@ def validate_history(*, history, mode, native_rows, request_digests, recovered_f
             need(progress['resumed'] and not any(key.startswith('batch_') for key in intent)
                  and ('SEC', intent['request_digest']) not in requests,
                  'BATCH33_HISTORY_SEPARATE_SEC_SCOPE_CHANGED')
+            need(not any(stop[0] == 'SEC' for stop in stops),
+                 'BATCH33_HISTORY_SEPARATE_SEC_CHANNEL_STOPPED')
             requests.add(('SEC', intent['request_digest']))
             if terminal is not None:
                 need(terminal['intent_id'] == intent['intent_id']

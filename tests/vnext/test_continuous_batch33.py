@@ -147,6 +147,19 @@ class Batch33LedgerTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_history(history=altered,mode='RECORDED_TEST_ONLY',
                 native_rows=rows,request_digests=digests,recovered_failed_ordinals=[])
+        stopped=deepcopy(history)
+        second_sec=deepcopy(sec_intent)
+        second_sec['ordinal']=5
+        second_sec['previous_intent_id']=second_intent['intent_id']
+        second_sec['request_digest']=content_hash(value='another independent SEC request')
+        second_sec['intent_id']=content_hash(value={k:v for k,v in second_sec.items()
+            if k!='intent_id'})
+        stopped['claims'].append({'intent':second_sec,'terminal':None})
+        stopped['history_id']=content_hash(value={k:v for k,v in stopped.items()
+            if k!='history_id'})
+        with self.assertRaisesRegex(ValueError,'BATCH33_HISTORY_SEPARATE_SEC_CHANNEL_STOPPED'):
+            validate_history(history=stopped,mode='RECORDED_TEST_ONLY',
+                native_rows=rows,request_digests=digests,recovered_failed_ordinals=[])
 
     def test_new_provider_402_does_not_stop_separate_sec_channel(self):
         self.stopped()
