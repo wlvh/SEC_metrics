@@ -41,7 +41,8 @@
     "Batch33 SEC0 boundary narrowed offline so independent Issue28 SEC acquisition remains under original SEC guard after first D04 claim; no SEC request sent, incremental review pending.",
     "Scoped agent found P2 in saved SEC-prefix cold read: a second SEC claim after an unresolved SEC stop was accepted by history validator though real ledger rejects it. New negative test reproduced, local fix and 31 directed/127 fast passed; independent recheck pending. No SEC/model call.",
     "Incremental independent recheck at 4a5d4bb4 closed the SEC stopped-channel cold-read P2; 31 directed tests and separate recorded pending/HTTP402 SEC controls passed. No new real call.",
-    "After real172 HTTP402, user reports recharge. A fail-closed exact172 recovery path and recorded same-request native collection are implemented; 36 directed/127 fast tests pass. No live recovery permission installed or new call."
+    "After real172 HTTP402, user reports recharge. A fail-closed exact172 recovery path and recorded same-request native collection are implemented; 36 directed/127 fast tests pass. No live recovery permission installed or new call.",
+    "Scoped independent review of fail-closed 172 recovery patch2598ce82 passed with 36 tests and no network. Exact user permission and server transcription still absent; 172 stop remains."
   ],
   "next": [
     "Await an explicit one-time authorization for the new172 HTTP402; user recharge report alone does not install permission. Then bind the exact server transcription, review final diff and execute only authorized Enphase D04 group0 once.",
@@ -1002,6 +1003,27 @@
       "tool_calls": 14,
       "result_path": "docs/evidence/issue28_continuous/batch33-authorization/independent-review/sec-cold-read-repair.md",
       "verdict": "DONE_SCOPED_P2_COLD_READ_REPAIR_PASS"
+    },
+    {
+      "task_name": "review_recovery172_2598ce8",
+      "requested_label": "review-recovery172-2598ce8",
+      "purpose": "review",
+      "module": "recovery172",
+      "scope_paths": [
+        "scripts/vnext/continuous_recovery_172.py",
+        "scripts/vnext/continuous_batch33.py",
+        "scripts/vnext/continuous_call_ledger.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/capacity_assessment_input.py",
+        "config/issue28_recovery_172_v1.json",
+        "tests/vnext/test_continuous_batch33.py"
+      ],
+      "patch_sha": "2598ce82f0e36f0197f10396913b8ed5ade04c78",
+      "spawned_at": "2026-09-23T11:10:58Z",
+      "ended_at": "2026-09-23T11:16:59Z",
+      "tool_calls": 16,
+      "result_path": "docs/evidence/issue28_continuous/batch33-authorization/recovery172-independent/conclusion.md",
+      "verdict": "DONE_SCOPED_FAIL_CLOSED_RECOVERY172_NO_BLOCKING_FINDINGS"
     }
   ],
   "ci_capacity_20260922": {
@@ -1449,6 +1471,7 @@
     "new_live_recovery_record_installed": false,
     "user_reports_recharge": true,
     "explicit_recovery_permission_received": false,
-    "subagent_review": "PENDING_PATCH_SHA"
+    "subagent_review": "PASS_SCOPED_PENDING_POLICY_PATCH_2598CE82",
+    "review_result": "batch33-authorization/recovery172-independent/conclusion.md"
   }
 }

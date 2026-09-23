@@ -31,5 +31,5 @@
     "docs/evidence/issue28_continuous/batch33-authorization/recovery172-pending-live-check.json": "6882ceb6872edc07ee30b08a6762a288010c1df9d97f98cc6f8ae5c648ac4235"
   },
   "scope": "Current batch33 original-ledger binding, first-group factory/controller and recorded one-time recovery172 source/request/native collection. Recovery172 remains explicitly unapproved and cannot install or egress; current real ledger remains stopped at172.",
-  "independent_review": "c92c7698 first-claim review PASS; 4a5d4bb4 SEC cold-read repair review PASS; recovery172 pending-policy code independently review-pending, no live permission"
+  "independent_review": "Batch33 first claims c92c7698 and SEC cold-read repair 4a5d4bb4 PASS; recovery172 pending-policy code2598ce82 scoped review PASS, LIVE recovery approval absent"
 }
