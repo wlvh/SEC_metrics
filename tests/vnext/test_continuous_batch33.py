@@ -69,7 +69,7 @@ class Batch33LedgerTest(unittest.TestCase):
         with self.ledger.locked():
             auth=recorded_authorization(ledger=self.ledger,groups=groups,original_stop_ordinal=1)
             self.assertEqual(self.ledger.snapshot()['stopped_channels'],['PROVIDER'])
-            with self.assertRaisesRegex(ValueError,'BATCH33_NEW_SEC_NOT_AUTHORIZED'):
+            with self.assertRaisesRegex(ValueError,'BATCH33_FIRST_D04_CLAIM_REQUIRED'):
                 self.ledger.claim(channel='SEC',request_digest=content_hash(value='unapproved SEC'),
                     requirement=REQ,plan_id=content_hash(value='SEC plan'),
                     purpose='remaining_development_feasibility')
@@ -114,6 +114,55 @@ class Batch33LedgerTest(unittest.TestCase):
                 self.claim('paramount0',batch_group=group_id(groups[1]))
         with recorded_ledger(root=self.root).locked() as reopened:
             self.assertEqual(reopened.snapshot()['stopped_channels'],[])
+
+    def test_separate_original_sec_claim_after_first_d04_does_not_spend_batch_slot(self):
+        self.stopped()
+        groups=[group('D04','enphase_energy',0,content_hash(value='enphase0')),
+                group('D04','enphase_energy',1,content_hash(value='enphase1'))]
+        with self.ledger.locked():
+            auth=recorded_authorization(ledger=self.ledger,groups=groups,original_stop_ordinal=1)
+            first,intent=self.claim('enphase0',batch_group=group_id(groups[0]))
+            first_terminal=self.finish(first,intent)
+            sec_path,sec_intent=self.ledger.claim(channel='SEC',
+                request_digest=content_hash(value='separate C04 original-source fetch'),
+                requirement=REQ,plan_id=content_hash(value='separate SEC plan'),
+                purpose='remaining_development_feasibility')
+            self.assertNotIn('batch_authorization_id',sec_intent)
+            self.assertEqual(sec_path.name,'0003')
+            self.assertEqual(self.ledger.snapshot()['stopped_channels'],['SEC'])
+            second,second_intent=self.claim('enphase1',batch_group=group_id(groups[1]))
+            second_terminal=self.finish(second,second_intent)
+            self.assertEqual(second_intent['batch_attempt_index'],0)
+            self.assertEqual(self.ledger.snapshot()['counts'],[3,3,1])
+            history=history_for_current(ledger=self.ledger)
+        rows=[{'ordinal':2,'intent':intent,'terminal':first_terminal},
+              {'ordinal':4,'intent':second_intent,'terminal':second_terminal}]
+        digests={row['ordinal']:row['intent']['request_digest'] for row in rows}
+        self.assertTrue(validate_history(history=history,mode='RECORDED_TEST_ONLY',
+            native_rows=rows,request_digests=digests,recovered_failed_ordinals=[]))
+        self.assertEqual(history['authorization']['authorization_id'],auth['authorization_id'])
+        altered=deepcopy(history)
+        altered['claims'][1]['intent']['batch_authorization_id']=auth['authorization_id']
+        altered['history_id']=content_hash(value={k:v for k,v in altered.items() if k!='history_id'})
+        with self.assertRaises(ValueError):
+            validate_history(history=altered,mode='RECORDED_TEST_ONLY',
+                native_rows=rows,request_digests=digests,recovered_failed_ordinals=[])
+
+    def test_new_provider_402_does_not_stop_separate_sec_channel(self):
+        self.stopped()
+        groups=[group('D04','enphase_energy',0,content_hash(value='enphase0'))]
+        with self.ledger.locked():
+            recorded_authorization(ledger=self.ledger,groups=groups,original_stop_ordinal=1)
+            first,intent=self.claim('enphase0',batch_group=group_id(groups[0]))
+            self.finish(first,intent,status='FAILED_TERMINAL',error='HTTP_402')
+            self.assertEqual(self.ledger.snapshot()['stopped_channels'],['PROVIDER'])
+            sec,sec_intent=self.ledger.claim(channel='SEC',
+                request_digest=content_hash(value='independent source request'),
+                requirement=REQ,plan_id=content_hash(value='independent source plan'),
+                purpose='remaining_development_feasibility')
+            self.assertEqual(sec.name,'0003')
+            self.assertNotIn('batch_authorization_id',sec_intent)
+            self.assertEqual(self.ledger.snapshot()['counts'],[2,2,1])
 
     def test_new_402_and_interrupted_claim_remain_stopped(self):
         for kind in ('HTTP_402','INTERRUPTED'):
@@ -220,7 +269,7 @@ class Batch33ServerAuthorityTest(unittest.TestCase):
             root=Path(temporary);(root/'batch33-authorization.json').write_text('{}')
             approved={'authorization_id':content_hash(value='approved exact batch')}
             ledger=SimpleNamespace(root=root,locked=nullcontext,
-                snapshot=lambda:{'counts':[123,123,49],'rows':[None]*172,
+                snapshot=lambda:{'counts':[123,123,50],'rows':[None]*173,
                                  'stopped_channels':[]})
             with patch('vnext.continuous_batch33._BOUND_PATHS',()), \
                  patch('vnext.continuous_batch33._config',return_value={'record_path':'batch33-authorization.json'}), \

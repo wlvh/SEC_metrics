@@ -202,7 +202,9 @@ def install_live_authorization(*, ledger, requirement):
         path = ledger.root / config['record_path']
         if path.exists():
             need(read_authorization(ledger) == approved, 'BATCH33_AUTHORIZATION_ALREADY_DIFFERENT')
-            need(state['counts'][2] == 49, 'BATCH33_NEW_SEC_NOT_AUTHORIZED')
+            # The batch grants no SEC calls of its own. Separate Issue28 SEC
+            # acquisition remains governed by the original allowance.
+            need(state['counts'][2] >= 49, 'BATCH33_PRIOR_SEC_COUNT_CHANGED')
         else:
             need(state['counts'] == [122, 122, 49] and len(state['rows']) == 171
                  and state['stopped_channels'] == ['PROVIDER'], 'BATCH33_INSTALL_LEDGER_DRIFT')
@@ -314,8 +316,8 @@ def observe_claim(*, authorization, progress, intent, stops, requests):
     """Independently revalidate each marked claim during every cold ledger read."""
     if 'batch_authorization_id' not in intent:
         need(not (intent['channel'] == 'SEC' and
-                  intent['ordinal'] > authorization['original_stop_ordinal']),
-             'BATCH33_NEW_SEC_NOT_AUTHORIZED')
+                  intent['ordinal'] > authorization['original_stop_ordinal']
+                  and not progress['resumed']), 'BATCH33_FIRST_D04_CLAIM_REQUIRED')
         need(not (intent['channel'] == 'PROVIDER' and
                   intent['ordinal'] > authorization['original_stop_ordinal']),
              'BATCH33_UNMARKED_PROVIDER_CLAIM')
@@ -328,7 +330,8 @@ def observe_claim(*, authorization, progress, intent, stops, requests):
          'BATCH33_CLAIM_MARKER_CHANGED')
     expected, duplicate = claim_fields(authorization=authorization,
         progress=progress, group=intent['batch_group_id'],
-        request_digest=intent['request_digest'], stops=stops, requests=requests,
+        request_digest=intent['request_digest'],
+        stops={stop for stop in stops if stop[0] == 'PROVIDER'}, requests=requests,
         next_ordinal=intent['ordinal'])
     need(all(intent.get(key) == value for key, value in expected.items()),
          'BATCH33_CLAIM_MARKER_CHANGED')
@@ -479,7 +482,9 @@ def validate_history(*, history, mode, native_rows, request_digests, recovered_f
     requests.update(('PROVIDER', item['intent']['request_digest']) for item in related.values())
     previous = old_intent['intent_id']
     indexed = {}
-    need(type(history['claims']) is list and len(history['claims']) <= auth['maximum_new_provider_calls'],
+    need(type(history['claims']) is list and
+         sum(claim['intent']['channel'] == 'PROVIDER' for claim in history['claims'])
+         <= auth['maximum_new_provider_calls'],
          'BATCH33_HISTORY_CLAIM_COUNT_CHANGED')
     for position, claim in enumerate(history['claims'], start=1):
         intent, terminal = claim['intent'], claim['terminal']
@@ -487,6 +492,23 @@ def validate_history(*, history, mode, native_rows, request_digests, recovered_f
              and intent['previous_intent_id'] == previous
              and intent['intent_id'] == content_hash(value={k: v for k, v in intent.items()
                  if k != 'intent_id'}), 'BATCH33_HISTORY_CHAIN_CHANGED')
+        if intent['channel'] == 'SEC':
+            need(progress['resumed'] and not any(key.startswith('batch_') for key in intent)
+                 and ('SEC', intent['request_digest']) not in requests,
+                 'BATCH33_HISTORY_SEPARATE_SEC_SCOPE_CHANGED')
+            requests.add(('SEC', intent['request_digest']))
+            if terminal is not None:
+                need(terminal['intent_id'] == intent['intent_id']
+                     and terminal['counts'] == [0, 0, 1]
+                     and terminal['terminal_id'] == content_hash(value={k: v for k, v in terminal.items()
+                         if k != 'terminal_id'}), 'BATCH33_HISTORY_SEPARATE_SEC_TERMINAL_CHANGED')
+                if terminal['stop_reason'] in _STOP:
+                    stops.add(('SEC', intent['ordinal']))
+            else:
+                stops.add(('SEC', intent['ordinal']))
+            previous = intent['intent_id']
+            continue
+        need(intent['channel'] == 'PROVIDER', 'BATCH33_HISTORY_CHANNEL_CHANGED')
         duplicate = observe_claim(authorization=auth, progress=progress,
             intent=intent, stops=stops, requests=requests)
         need(('PROVIDER', intent['request_digest']) not in requests or duplicate,

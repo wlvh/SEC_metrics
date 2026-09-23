@@ -4,6 +4,8 @@
 
 当前执行补丁仅允许精确组身份、既定顺序及初次机会；首次申领消费恢复标记并只移除旧 171 的停止。113、114 各一次同摘要例外绑定原失败；111、170、171 仅允许对应 V3 后继组，旧原件不升级。新 402、未知远端结果、来源真实性或用量异常保持停止。修后补验入口在发生实际新失败且补丁、测试及限定独审证明接通前保持拒绝，不能因本地文件或不同摘要自动重抽。
 
+后继小差异收窄了“本批SEC0”的解释：它禁止把SEC请求记到33/66批次内，**不撤销**原总委托下独立的Issue28 SEC来源获取准入。批次首次D04业务申领后，独立SEC claim仍由原权限、余额和SEC通道停止守卫判断，不带批次授权标记；账本及原生输入的冷读保留它与provider claim的确切前驱顺序。第172次新HTTP402仍关闭PROVIDER，不能据此清除或重发；本项代码修正本身没有发SEC请求。
+
 `server-authorization-check.json` 证明 GitHub 服务器转录与当前执行绑定一致；`offline-wiring-summary.json` 和 `offline-paramount-113-summary.json` 分别证明当前版本的首组工厂、模拟传输、接受控制、冷读账本，以及原 113 无损同摘要路径。两者禁网且真实调用均为零。`fast.json` 为当前 Python 3.13.5、tokenizers 0.22.2 环境的 127/127 快速测试。`recorded-complete-enphase-summary.json` 是前一字节绑定的六组录制 Run 和**同进程机械重读**，用于复用未改的公司级路径，不称为当前补丁的跨进程独立冷读。`b13-170-source-audit/offline-wiring.json` 是最终接线收据，按当前执行权限文件哈希检查。
 
 `independent-review/conclusion.md` 对 `c92c7698` 首轮 33 组受限申领差异未发现阻断，29 项指定测试通过；它不覆盖未来尚未实现的修后第二次申领。原账本随后安装授权，第一条真实请求直接执行 Enphase D04 第 0 组，没有作余额探针。`live-0172-summary.json` 绑定第172次原始终态：服务端返回 `HTTP_402 / Insufficient Balance`，无可用模型输出和 usage/cost 数值；该次已按规则计入一次 provider/paid，PROVIDER 因新停止再次封闭。本批开发错误补验授权不覆盖账户402，新172的同摘要重发也尚未获批准，因此不继续发模型请求。

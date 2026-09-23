@@ -175,11 +175,13 @@ class CallLedger:
             need(type(batch_group_id) is str, 'BATCH33_GROUP_REQUIRED')
             from .continuous_batch33 import claim_fields
             batch_fields, batch_duplicate = claim_fields(authorization=batch, progress=progress,
-                group=batch_group_id, request_digest=request_digest, stops=stops,
+                group=batch_group_id, request_digest=request_digest,
+                stops={stop for stop in stops if stop[0] == 'PROVIDER'},
                 requests=state['requests'], next_ordinal=len(state['rows'])+1,
                 repair_receipt=batch_repair_receipt)
         else:
-            need(batch is None or channel != 'SEC', 'BATCH33_NEW_SEC_NOT_AUTHORIZED')
+            need(batch is None or channel != 'SEC' or progress['resumed'],
+                 'BATCH33_FIRST_D04_CLAIM_REQUIRED')
             need(batch_group_id is None and batch_repair_receipt is None,
                  'BATCH33_AUTHORIZATION_MISSING')
         need(channel not in state['stopped_channels'] or recovering or batch_fields.get('batch_resume_171'),
