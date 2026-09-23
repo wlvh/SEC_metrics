@@ -1168,6 +1168,14 @@ inclusive 语法要求当期列带接续标签（`CURRENT_SUCCESSOR_COLUMN_UNPRO
 那个"一份申报够用"的前提：主体政策是本级联有答案的两种之一，且未授权跨主体合并。其他四条
 历史路线的接续拒绝在普通链路里各自都有对应，B06 是唯一一处多出来的。
 
+**第三层交付有了能非零的办法**。`historical_coverage` 的 `content_acceptance`
+此前对每个坐标恒为 `NOT_PROVEN`，因为没有任何机制表达"这个数被独立读过"。现在由
+`docs/evidence/issue47_history/accepted_result_content.json` 表达，并与缺陷登记
+**方向相反**：缺陷一直撤回到被显式释放为止，而接受**只在它点名的那个值仍是该坐标
+当前的值时成立**——接受说的是"一个数被对着申报读过"，另一个数没有被读过，按坐标
+继承正是这一层开始报告没人读过的数字的方式。两者冲突时撤回胜出。该模块不是规则
+文件，登记文件也不是，所以这一层不移动 Requirement closure。
+
 **Issue #47 自己的获取准入**。`historical_source_acquisition.py` 与
 `tools/vnext_historical_sec.py` 用 `plan_historical_sources` 的去重声明做准入判断，
 因为原获取 CLI 的当期依赖发现实测只回溯一年。它不是规则文件（只做计划与准入、不执行

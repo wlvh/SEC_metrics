@@ -53,6 +53,7 @@ from .sources import resolve_repository_file
 _SHA = re.compile(r"sha256:[0-9a-f]{64}\Z")
 POLICY_PATH = "config/issue28_normal_results_v2.json"
 DEFECT_REGISTER_PATH = "docs/evidence/issue47_history/known_result_defects.json"
+ACCEPTANCE_REGISTER_PATH = ("docs/evidence/issue47_history/accepted_result_content.json")
 RECORD_TYPE = "HISTORICAL_COVERAGE_MATRIX"
 # The historical routes that exist today. Everything else is an explicit gap.
 WIRED_COMPANYFACTS_METRICS = ("A05", "A06", "A07", "A08", "A10",
@@ -165,6 +166,52 @@ def known_result_defects(*, repo_root: Path):
         _need(defect.get("result_id") is None,
               "COVERAGE_DEFECT_RELEASE_ON_RESULT_SCOPED_ENTRY")
     return register["defects"]
+
+
+def independent_content_acceptances(*, repo_root: Path):
+    """Results whose content was checked against the filing by another reading.
+
+    The asymmetry with the defect register is deliberate and is the whole
+    design. A defect withdraws until something explicitly releases it, because
+    a known-bad result stays bad while nobody repairs it. An acceptance holds
+    only while the value is unchanged, because it is a statement about one
+    value and not about the coordinate: a later Run that computes something
+    else has not been checked, and inheriting the acceptance is exactly how a
+    third layer would start reporting numbers nobody read.
+    """
+    path = repo_root / ACCEPTANCE_REGISTER_PATH
+    if not path.is_file():
+        return []
+    register = strict_json_file(path=path)
+    _need(register["record_type"] == "INDEPENDENT_CONTENT_ACCEPTANCE_REGISTER",
+          "COVERAGE_ACCEPTANCE_REGISTER_TYPE_INVALID")
+    for acceptance in register["acceptances"]:
+        for field in ("acceptance_id", "company_id", "metric_id", "period_end",
+                      "accepted_value", "method", "what_this_does_not_establish"):
+            _need(isinstance(acceptance.get(field), str) and acceptance[field],
+                  "COVERAGE_ACCEPTANCE_FIELD_MISSING:" + field + ":"
+                  + str(acceptance.get("acceptance_id")))
+        # A reading that does not say where it read is not a reading.
+        read = acceptance.get("read_from")
+        _need(isinstance(read, dict) and read,
+              "COVERAGE_ACCEPTANCE_FIELD_MISSING:read_from:"
+              + acceptance["acceptance_id"])
+    return register["acceptances"]
+
+
+def _acceptance_covers(*, acceptance, company_id, metric_id, report_end, result):
+    """Whether this acceptance is about this position's current value.
+
+    Both halves matter. The coordinate has to match, and so does the value:
+    an acceptance is a statement that one number was read against the filing,
+    so a position now carrying a different number is not covered by it.
+    """
+    if result is None:
+        return False
+    return (acceptance["company_id"] == company_id
+            and acceptance["metric_id"] == metric_id
+            and acceptance["period_end"] == report_end
+            and str(result.get("value")) == acceptance["accepted_value"])
 
 
 def _release_covers(*, defect, result, receipt):
@@ -388,7 +435,8 @@ def _row_evidence(*, candidates, selection_id):
 NOT_PROVEN = "NOT_PROVEN"
 
 
-def _delivery(*, receipt, result, status, defect, defects, row=None, row_ambiguity=None):
+def _delivery(*, receipt, result, status, defect, defects, acceptance=None,
+              row=None, row_ambiguity=None):
     """The three layers a delivered position has, each proved or not.
 
     verified_outcome answers one question - did an unambiguous, frozen,
@@ -403,10 +451,14 @@ def _delivery(*, receipt, result, status, defect, defects, row=None, row_ambigui
     * ``content_acceptance`` - whether the value or excerpt range was checked
       against the filing by something other than the code that produced it.
 
-    The third is NOT_PROVEN for every position in this repository today and
-    says so rather than being left out. A defect register entry is a recorded
-    finding, not an acceptance: it can withdraw a result and it can release a
-    named repaired one, and neither is a statement that the content is right.
+    The third is proven only by an entry in the acceptance register, which
+    names the value that was read and the reading that read it; a position
+    without one says NOT_PROVEN rather than being left out. A defect register
+    entry is a recorded finding, not an acceptance: it can withdraw a result
+    and it can release a named repaired one, and neither is a statement that
+    the content is right. A withdrawn result is never accepted, whatever the
+    acceptance register says, because the two would then disagree about the
+    same result and the withdrawal is the safer of the two.
     """
     layers = {}
     if result is None:
@@ -465,9 +517,16 @@ def _delivery(*, receipt, result, status, defect, defects, row=None, row_ambigui
     # identity here let one entry appear as both withdrawn_by and released.
     released = [entry["defect_id"] for entry in defects
                 if _release_covers(defect=entry, result=result, receipt=receipt)]
+    accepted = acceptance is not None and defect is None
     layers["content_acceptance"] = {
-        "proven": False,
-        "reason": NOT_PROVEN + ":NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_ISSUE",
+        "proven": accepted,
+        "reason": None if accepted else (
+            NOT_PROVEN + ":WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT" if defect
+            else NOT_PROVEN + ":NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE"),
+        "accepted_by": acceptance["acceptance_id"] if accepted else None,
+        "accepted_value": acceptance["accepted_value"] if accepted else None,
+        "what_the_acceptance_does_not_establish":
+            acceptance["what_this_does_not_establish"] if accepted else None,
         "withdrawn_by": defect["defect_id"] if defect else None,
         "released_defect_ids": sorted(released)}
     return layers
@@ -475,7 +534,7 @@ def _delivery(*, receipt, result, status, defect, defects, row=None, row_ambigui
 
 def _position(*, company_id, report_end, ordinal, metric_id, established,
               original_saved, implemented, found, defects, candidate, closure=None,
-              selection_id=None, attempt=None):
+              selection_id=None, attempt=None, acceptances=()):
     """One target position, with its four states kept apart.
 
     A route can exist without a Run, and a Run can record a result whose
@@ -550,6 +609,10 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
                                                "reason_code", "period_start", "period_end")}
     defect = _matching_defect(defects=defects, company_id=company_id, metric_id=metric_id,
                               report_end=report_end, result=result, receipt=receipt)
+    acceptance = next((entry for entry in acceptances
+                       if _acceptance_covers(acceptance=entry, company_id=company_id,
+                                             metric_id=metric_id, report_end=report_end,
+                                             result=result)), None)
     ran = result is not None
     return {"company_id": company_id, "report_end": report_end,
             "target_ordinal": ordinal, "fiscal_year": fiscal_year, "metric_id": metric_id,
@@ -577,8 +640,10 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
             "period_selection_id": selection_id,
             "known_content_defect": defect["defect_id"] if defect else None,
             # A recorded result is not a checked one. Content acceptance is a
-            # separate state that no field of a Run receipt can supply.
-            "business_content_accepted": False,
+            # separate state that no field of a Run receipt can supply: it comes
+            # from the acceptance register, and only while the value it names is
+            # the value this position still carries.
+            "business_content_accepted": acceptance is not None and defect is None,
             "run_receipt_hashes_verified": bool(receipt
                                                 and receipt["manifest_file_hashes_verified"]),
             # An outcome counts as verified only when a single unambiguous
@@ -592,6 +657,7 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
             # not a delivery rate.
             "delivery": _delivery(receipt=receipt, result=result, status=status,
                                   defect=defect, defects=defects,
+                                  acceptance=acceptance,
                                   row=selection["row"],
                                   row_ambiguity=selection["row_ambiguity"]),
             "verified_outcome": (ran and defect is None
@@ -636,6 +702,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
           and set(selected) <= set(configured), "COVERAGE_COMPANY_SET_INVALID")
     wired = set(WIRED_HISTORICAL_METRICS)
     defects = known_result_defects(repo_root=repo_root)
+    acceptances = independent_content_acceptances(repo_root=repo_root)
     collected = ({"receipts": [], "unreadable": []} if runs_root is None
                  else collect_run_receipts(runs_root=runs_root))
     attempts = ({"records": {}, "unreadable": [], "rejected": []} if attempts_root is None
@@ -679,7 +746,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                                      defects=defects, candidate=candidate,
                                      closure=requirement_closure_hash,
                                      selection_id=entry["selection_id"],
-                                     attempt=attempt)
+                                     attempt=attempt, acceptances=acceptances)
                 if position["fiscal_year"] is not None and entry["fiscal_year"] is None:
                     entry["fiscal_year"] = position["fiscal_year"]
                 positions.append(position)

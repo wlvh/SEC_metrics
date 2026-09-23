@@ -1,0 +1,130 @@
+{
+ "acceptance_rule": "An acceptance covers a position only while the value it names is the value that position still carries. A later Run computing something else has not been checked. A result a defect withdraws is never accepted, whatever is written here.",
+ "acceptances": [
+  {
+   "acceptance_id": "CONTENT_B01_MARRIOTT_2025",
+   "accepted_value": "26186000000",
+   "company_id": "marriott_international",
+   "definition": "financial-year revenue",
+   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "metric_id": "B01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001048286-26-000007",
+    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+    "what_was_read": "us-gaap:Revenues = 26,186,000,000 in the consolidated FY2025 duration context"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B02_MARRIOTT_2025",
+   "accepted_value": "0.04326693227091633466135458167",
+   "company_id": "marriott_international",
+   "definition": "(Revenue_t - Revenue_t-1) / Revenue_t-1",
+   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "metric_id": "B02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001048286-26-000007",
+    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+    "what_was_read": "us-gaap:Revenues 26,186,000,000 for FY2025 and 25,100,000,000 for FY2024, both consolidated, both in this filing"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B03_MARRIOTT_2025",
+   "accepted_value": "0.1756281982738868097456656229",
+   "company_id": "marriott_international",
+   "definition": "(operating income + D&A) / revenue",
+   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "metric_id": "B03",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001048286-26-000007",
+    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+    "what_was_read": "us-gaap:OperatingIncomeLoss 4,141,000,000 plus us-gaap:Depreciation 145,000,000 and us-gaap:AmortizationOfIntangibleAssets 313,000,000, over Revenues. The combined D&A chain has no consolidated FY2025 fact in this filing, which is the stated condition for the composition fallback; the company-specific mar:DepreciationAmortizationAndOther 599,000,000 is present and correctly not used, the chain naming us-gaap concepts."
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B04_MARRIOTT_2025",
+   "accepted_value": "2601000000",
+   "company_id": "marriott_international",
+   "definition": "net income",
+   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "metric_id": "B04",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001048286-26-000007",
+    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+    "what_was_read": "us-gaap:NetIncomeLoss = 2,601,000,000; ProfitLoss has no consolidated FY2025 fact, so the first chain entry answers and the non-controlling-interest note does not arise"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B05_MARRIOTT_2025",
+   "accepted_value": "2608000000",
+   "company_id": "marriott_international",
+   "definition": "operating cash flow - capital expenditures",
+   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "metric_id": "B05",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001048286-26-000007",
+    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+    "what_was_read": "us-gaap:NetCashProvidedByUsedInOperatingActivities 3,212,000,000 less us-gaap:PaymentsToAcquireProductiveAssets 604,000,000. PaymentsToAcquirePropertyPlantAndEquipment has no consolidated FY2025 fact, so the second capex candidate answers, which the definition allows by name."
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B07_MARRIOTT_2025",
+   "accepted_value": "5.118665018541409147095179234",
+   "company_id": "marriott_international",
+   "definition": "operating income / interest expense",
+   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "metric_id": "B07",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001048286-26-000007",
+    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+    "what_was_read": "us-gaap:OperatingIncomeLoss 4,141,000,000 over us-gaap:InterestExpenseNonoperating 809,000,000. InterestExpense has no consolidated FY2025 fact, so the second chain entry answers."
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B08_MARRIOTT_2025",
+   "accepted_value": "0.4267682781614670159561800429",
+   "company_id": "marriott_international",
+   "definition": "current assets / current liabilities",
+   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "metric_id": "B08",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001048286-26-000007",
+    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+    "what_was_read": "us-gaap:AssetsCurrent 3,584,000,000 over us-gaap:LiabilitiesCurrent 8,398,000,000 at 2025-12-31"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B09_MARRIOTT_2025",
+   "accepted_value": "358000000",
+   "company_id": "marriott_international",
+   "definition": "cash and cash equivalents",
+   "method": "the filing's own inline XBRL, walked directly: contexts parsed for period and dimensions, ix:nonFraction facts read with their scale and sign, consolidated facts only, and the arithmetic done in Decimal at the calculator's own precision. It does not call the route, its selector, its Spec or its calculator.",
+   "metric_id": "B09",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001048286-26-000007",
+    "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+    "what_was_read": "us-gaap:CashAndCashEquivalentsAtCarryingValue = 358,000,000 at 2025-12-31"
+   },
+   "what_this_does_not_establish": "that the approved definition is the right definition for the business question, or that the filing itself is right. What is established is that the concept the definition names carries this value in this filing for this period, and that the arithmetic the definition states produces the published number from it. It is also not an independent party: the same person wrote the reading and read the result."
+  }
+ ],
+ "evidence": "docs/evidence/issue47_history/content-acceptance/marriott-2025-statements.json",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "purpose": "The third delivery layer. A frozen Run with a public row says the route computed something and the bytes are bound; it does not say the number is right. This is where a reading that did not come from the route says so, for one value at a time.",
+ "record_type": "INDEPENDENT_CONTENT_ACCEPTANCE_REGISTER",
+ "schema_version": 1
+}

@@ -1395,6 +1395,140 @@ class LumenContentDefectIsRegisteredTest(unittest.TestCase):
         self.assertEqual(41, confirmed["items"])
 
 
+class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
+    """The third delivery layer, and the one asymmetry that makes it safe.
+
+    A defect withdraws until something releases it; an acceptance holds only
+    while the value it names is the value the position still carries. The
+    reason is the whole point of the layer: an acceptance says one number was
+    read against the filing, so a later Run computing a different number has
+    not been checked. Inheriting acceptance by coordinate is exactly how a
+    third layer starts reporting figures nobody read.
+
+    These run against constructed results rather than a batch, because the
+    predicate is what is being checked and a case that needs this machine's
+    scratch directory would skip everywhere else. The integration case below
+    is separate and says so when it cannot run.
+    """
+
+    COMPANY = "marriott_international"
+    PERIOD = "2025-12-31"
+
+    def _entry(self, metric, value):
+        return {"acceptance_id": "TEST_" + metric, "company_id": self.COMPANY,
+                "metric_id": metric, "period_end": self.PERIOD,
+                "accepted_value": value, "method": "test",
+                "what_this_does_not_establish": "test",
+                "read_from": {"document": "test"}}
+
+    def _covers(self, *, accepted, actual):
+        from vnext.historical_coverage import _acceptance_covers
+        return _acceptance_covers(acceptance=self._entry("B04", accepted),
+                                  company_id=self.COMPANY, metric_id="B04",
+                                  report_end=self.PERIOD, result={"value": actual})
+
+    def test_the_registered_acceptances_cover_real_positions(self):
+        """The register is about this repository, not about a fixture."""
+        from vnext.historical_coverage import independent_content_acceptances
+        entries = independent_content_acceptances(repo_root=ROOT)
+        self.assertTrue(entries, "the register is empty, so nothing below is exercised")
+        for entry in entries:
+            with self.subTest(entry["acceptance_id"]):
+                for field in ("accepted_value", "method", "what_this_does_not_establish"):
+                    self.assertTrue(entry[field])
+                self.assertTrue(entry["read_from"].get("document"))
+
+    def test_an_acceptance_does_not_survive_the_value_changing(self):
+        """The load-bearing case. Same coordinate, one digit different.
+
+        An implementation matching on the coordinate alone passes every other
+        case here and fails this one.
+        """
+        self.assertTrue(self._covers(accepted="2601000000", actual="2601000000"))
+        self.assertFalse(self._covers(accepted="2601000000", actual="2601000001"))
+        # And the coordinate still has to match, so it is not value-only either.
+        from vnext.historical_coverage import _acceptance_covers
+        self.assertFalse(_acceptance_covers(
+            acceptance=self._entry("B04", "2601000000"), company_id=self.COMPANY,
+            metric_id="B05", report_end=self.PERIOD, result={"value": "2601000000"}))
+        self.assertFalse(_acceptance_covers(
+            acceptance=self._entry("B04", "2601000000"), company_id=self.COMPANY,
+            metric_id="B04", report_end="2024-12-31", result={"value": "2601000000"}))
+
+    def test_a_withdrawn_result_is_not_accepted(self):
+        """When the two registers disagree the withdrawal wins."""
+        from vnext.historical_coverage import _delivery
+        receipt = {"run_status": "FROZEN", "validation_status": "PASSED",
+                   "manifest_file_hashes_verified": True, "target_period": {},
+                   "run_id": "run:historical-period:" + "0" * 64,
+                   "requirement_closure_hash": "sha256:" + "1" * 64}
+        result = {"value": "2601000000", "result_id": "sha256:" + "0" * 64}
+        defect = {"defect_id": "TEST_DEFECT"}
+        accepted = _delivery(receipt=receipt, result=result, status="VALUE_EXACT",
+                             defect=None, defects=[],
+                             acceptance=self._entry("B04", "2601000000"))
+        withdrawn = _delivery(receipt=receipt, result=result, status="VALUE_EXACT",
+                              defect=defect, defects=[defect],
+                              acceptance=self._entry("B04", "2601000000"))
+        self.assertTrue(accepted["content_acceptance"]["proven"])
+        self.assertFalse(withdrawn["content_acceptance"]["proven"])
+        self.assertEqual("TEST_DEFECT", withdrawn["content_acceptance"]["withdrawn_by"])
+        self.assertIn("WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+                      withdrawn["content_acceptance"]["reason"])
+
+    def test_a_position_with_no_result_is_not_accepted(self):
+        """There is nothing to have read, so there is nothing to accept."""
+        from vnext.historical_coverage import _acceptance_covers, _delivery
+        self.assertFalse(_acceptance_covers(acceptance=self._entry("B04", "2601000000"),
+                                            company_id=self.COMPANY, metric_id="B04",
+                                            report_end=self.PERIOD, result=None))
+        layers = _delivery(receipt=None, result=None, status="ROUTE_IMPLEMENTED_NOT_RUN",
+                           defect=None, defects=[], acceptance=None)
+        self.assertFalse(layers["content_acceptance"]["proven"])
+
+    def test_a_register_missing_a_field_is_refused_by_name(self):
+        """An acceptance that does not say how it read is not a reading."""
+        from vnext.historical_coverage import (ACCEPTANCE_REGISTER_PATH, CoverageError,
+                                               independent_content_acceptances)
+        entry = self._entry("B04", "2601000000")
+        for missing in ("method", "what_this_does_not_establish", "read_from"):
+            with self.subTest(missing), TemporaryDirectory() as directory:
+                root = Path(directory)
+                (root / Path(ACCEPTANCE_REGISTER_PATH).parent).mkdir(parents=True)
+                broken = {k: v for k, v in entry.items() if k != missing}
+                (root / ACCEPTANCE_REGISTER_PATH).write_text(json.dumps({
+                    "record_type": "INDEPENDENT_CONTENT_ACCEPTANCE_REGISTER",
+                    "acceptances": [broken]}))
+                with self.assertRaises(CoverageError) as raised:
+                    independent_content_acceptances(repo_root=root)
+                self.assertIn(missing, str(raised.exception))
+
+    def test_the_register_reaches_the_matrix_where_runs_exist(self):
+        """The predicate being right is not the wiring being right.
+
+        Three defects this issue recorded were green in a component and
+        refused where the component was actually used, so the layer is also
+        checked through build_coverage_matrix - against real Runs when a root
+        is supplied, and skipped with a reason when there is none.
+        """
+        import os
+        runs = os.environ.get("HISTORICAL_RUNS_ROOT")
+        if not runs or not Path(runs).is_dir():
+            self.skipTest("set HISTORICAL_RUNS_ROOT to a directory of frozen Runs")
+        from vnext.historical_coverage import build_coverage_matrix
+        with original_sources_only():
+            matrix = build_coverage_matrix(repo_root=ROOT, company_ids=[self.COMPANY],
+                                           years=1, runs_root=Path(runs))
+        rows = {p["metric_id"]: p for p in matrix["positions"]
+                if p["report_end"] == self.PERIOD}
+        accepted = {k for k, p in rows.items() if p["business_content_accepted"]}
+        self.assertTrue(accepted, "no position was accepted through the matrix")
+        for metric in sorted(accepted):
+            self.assertTrue(rows[metric]["delivery"]["content_acceptance"]["accepted_by"])
+        self.assertEqual(len(accepted),
+                         matrix["dimension_counts"]["business_content_accepted"])
+
+
 # Names a business evaluation goes through. Counted at every binding rather
 # than at the defining module: the callers do `from .calculator import ...` at
 # import time, so patching the definition after they loaded leaves them holding
