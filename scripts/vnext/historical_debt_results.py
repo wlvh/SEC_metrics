@@ -712,6 +712,11 @@ def _integrated_case(*, repo_root: Path, company_id: str, prepared, old):
 
 RECORD_TYPE = "HISTORICAL_DEBT_COMPONENT"
 SUPPORTED_METRICS = ("B06",)
+# The subject policies this cascade has an answer for. `_subject_policy`
+# produces exactly these two and refuses anything else upstream, so naming
+# them here is what makes a third mode stop at this route instead of flowing
+# through it unexamined.
+SUBJECT_MODES = ("CONTINUOUS_PRIMARY", "SUCCESSOR_REGISTRANT_ONLY")
 # The Spec a withheld Result is filed under when no stage was reached. It is
 # the route's own B06 Spec - the one the last stage and the first stage's
 # refusal both use - because a period whose material is missing has not chosen
@@ -802,8 +807,21 @@ def resolve_historical_debt_metric(*, repo_root: Path, company_id: str, metric_i
     _need(metric_id in SUPPORTED_METRICS, "METRIC_NOT_WIRED:" + metric_id)
     prepared = prepare_historical_annual_input(repo_root=repo_root, company_id=company_id,
                                                period_selection=period_selection)
-    _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY",
-          "SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
+    # B06 reads one filing: the pinned one. The ordinary chain therefore has
+    # no blanket successor refusal for it, and the obligations a successor
+    # subject adds are discharged where they can be seen - the frozen bind
+    # requires a published Result's calculation target to be this registrant's
+    # own entity and accession, and the inclusive grammar proves its current
+    # column carries the successor label. Refusing the whole cascade here was
+    # stricter than the chain this route copies, on a position that chain
+    # answers with a value. What is checked instead is the premise that single
+    # reading rests on: a subject policy this cascade has an answer for, and
+    # no authorization to combine entities.
+    subject = prepared["subject_policy"]
+    _need(subject["mode"] in SUBJECT_MODES,
+          "SUBJECT_POLICY_MODE_NOT_IMPLEMENTED:" + str(subject["mode"]))
+    _need(subject["cross_entity_combination_authorized"] is False,
+          "CROSS_ENTITY_COMBINATION_NOT_IMPLEMENTED")
     # Two ordinary anchors, not one. The source walk and the amendment scopes
     # read the original input; the fiscal-year label the Run is filed under
     # comes from the relabelled one. Substituting a single pinned input for

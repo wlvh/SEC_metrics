@@ -26,18 +26,21 @@ from vnext.normal_annual_input_v2 import prepare_saved_annual_input
 import vnext.normal_bond_debt_results as bond
 import vnext.normal_inclusive_debt_results as inclusive
 
-# Five companies whose current filings reach five different stages. Measured
-# over all ten, not chosen: Marriott's equity is nonpositive so the guard
+# Five companies whose current filings reach five different stages. Asked of
+# all ten rather than chosen - though two of the ten did not answer, which is
+# what the note below is about: Marriott's equity is nonpositive so the guard
 # answers, Ford is an industrial-dimension filer so the special scope does,
 # Enphase matches the note-carrying grammar, Macy's matches the bond grammar,
 # and Southwest matches none so the last stage answers. Two of the five share
 # a Spec, so the stage is what distinguishes them.
 #
-# The sixth stage - the inclusive grammar - is reached by no current filing in
-# this repository, and the seventh - a current input whose amendment changed
-# debt or equity - by none either. Both are implemented and neither is
-# exercised here by real material; the frozen-equivalence case below is what
-# stands behind the inclusive one.
+# The sixth stage - the inclusive grammar - is reached by the one company not
+# in this table: Paramount, whose subject policy this route used to refuse
+# outright, which is how it came to be recorded as reached by nobody. It is
+# exercised by real material in SuccessorSubjectTest below. The seventh - a
+# current input whose amendment changed debt or equity - is still reached by
+# no filing here, and the frozen-equivalence case below is what stands behind
+# the shared implementation either way.
 STAGES = {"marriott_international": "DENOMINATOR_GUARD",
           "ford_motor_company": "SPECIAL_SCOPE",
           "enphase_energy": "NOTE_CARRYING",
@@ -279,6 +282,127 @@ class HistoricalDebtCascadeTest(unittest.TestCase):
         self.assertEqual("B06", prepared["primary_metric_id"])
         self.assertEqual("DENOMINATOR_GUARD", prepared["component"]["cascade_stage"])
         self.assertEqual(prepared["results"]["B06"], prepared["component"]["result"])
+
+
+# The one successor registrant in this repository, and the period its own
+# 10-K covers. Every other company here is a continuous primary, which is why
+# a blanket refusal on the subject policy went unnoticed: it changed nothing
+# for nine of ten.
+SUCCESSOR_COMPANY = "paramount_skydance_paramount_global"
+SUCCESSOR_END = "2025-12-31"
+
+
+class SuccessorSubjectTest(unittest.TestCase):
+    """B06 for a successor registrant, which the ordinary chain already answers.
+
+    This route used to refuse the whole cascade whenever the subject policy
+    was not CONTINUOUS_PRIMARY. The ordinary chain has no such refusal for
+    B06: it reads one filing, and the obligations a successor adds are
+    discharged inside the stages that can see them. So the refusal was
+    stricter than the chain being copied, on a position that chain answers
+    with a value - and the differential below is what says so rather than an
+    argument about it.
+    """
+
+    def test_the_successor_gets_what_the_ordinary_chain_gives_it(self):
+        """The load-bearing case, and the same one the continuous companies get.
+
+        A route that invented an answer for the successor - a different stage,
+        a different Spec, a wider column, a coordinate from somewhere else -
+        passes every other case in this class and fails here.
+        """
+        from vnext.normal_run_v3 import prepare_case
+        with original_sources_only():
+            ordinary = prepare_case(data_root=ROOT, company_id=SUCCESSOR_COMPANY,
+                                    metric_id="B06")
+        historical = _resolve(SUCCESSOR_COMPANY, SUCCESSOR_END)
+        self.assertEqual({k: ordinary["results"]["B06"].get(k) for k in _RESULT_FIELDS},
+                         {k: historical["result"].get(k) for k in _RESULT_FIELDS})
+        self.assertEqual(ordinary["spec_paths"]["B06"], historical["spec_path"])
+        self.assertEqual(ordinary["target_period"], historical["target_period"])
+        # And it is a value, not an agreed refusal: two chains agreeing that
+        # they cannot answer would satisfy the comparison above.
+        self.assertEqual("PUBLISHED", historical["result"]["publication"])
+        self.assertEqual("EXACT", historical["result"]["quality"])
+        self.assertTrue(historical["result"]["value"])
+
+    def test_the_stage_it_reaches_was_the_one_recorded_as_unreached(self):
+        """The inclusive grammar is exercised by real material after all.
+
+        It was recorded as implemented but reached by no filing here. That was
+        measured over the companies this route could answer, and the one
+        company it refused is the one whose filing matches it - which is how
+        an absence gets recorded for something that was never looked at.
+        """
+        historical = _resolve(SUCCESSOR_COMPANY, SUCCESSOR_END)
+        self.assertEqual("INCLUSIVE", historical["cascade_stage"])
+        self.assertNotIn(historical["cascade_stage"], set(STAGES.values()))
+
+    def test_the_grammar_is_told_the_real_subject_policy(self):
+        """Passing the policy through is what lets a stage do its own checking.
+
+        The inclusive grammar asks the current column to carry the successor
+        label, and can only ask when it is told the subject is a successor. A
+        route that relabelled the subject to get past its own refusal would
+        deliver the same value on this filing - measured, not assumed, because
+        the column the selector picks here is the successor column either way
+        - so what is asserted is that the grammar was told, not that the
+        outcome moved.
+        """
+        import vnext.b06_inclusive_table as table
+        seen = []
+        frozen = table._current_column
+
+        def spy(*args, **kwargs):
+            bound = inspect.signature(frozen).bind(*args, **kwargs).arguments
+            seen.append(bound["prepared"]["subject_policy"]["mode"])
+            return frozen(*args, **kwargs)
+
+        table._current_column = spy
+        try:
+            _resolve(SUCCESSOR_COMPANY, SUCCESSOR_END)
+        finally:
+            table._current_column = frozen
+        self.assertTrue(seen)
+        self.assertEqual({"SUCCESSOR_REGISTRANT_ONLY"}, set(seen))
+
+    def test_a_subject_policy_this_cascade_has_no_answer_for_stops_here(self):
+        """A third mode must stop, not flow through unexamined.
+
+        `_subject_policy` produces two modes today and refuses anything else
+        upstream. If a third is ever added, this route has not been shown to
+        answer for it, and naming the two is what makes that visible instead
+        of silent.
+        """
+        from vnext.historical_annual_input import prepare_historical_annual_input
+        import vnext.historical_debt_results as module
+        self.assertEqual(("CONTINUOUS_PRIMARY", "SUCCESSOR_REGISTRANT_ONLY"),
+                         module.SUBJECT_MODES)
+        for broken, expected in (
+                ({"mode": "SOME_FUTURE_MODE"}, "SUBJECT_POLICY_MODE_NOT_IMPLEMENTED"),
+                ({"cross_entity_combination_authorized": True},
+                 "CROSS_ENTITY_COMBINATION_NOT_IMPLEMENTED")):
+            with self.subTest(broken=sorted(broken)):
+                with original_sources_only():
+                    selection = resolve_period_selection(repo_root=ROOT,
+                                                         company_id=SUCCESSOR_COMPANY,
+                                                         report_end=SUCCESSOR_END)
+                    real = prepare_historical_annual_input(repo_root=ROOT,
+                                                           company_id=SUCCESSOR_COMPANY,
+                                                           period_selection=selection)
+                    edited = {**real,
+                              "subject_policy": {**real["subject_policy"], **broken}}
+                    patched = lambda **kwargs: edited        # noqa: E731 - one call
+                    was = module.prepare_historical_annual_input
+                    module.prepare_historical_annual_input = patched
+                    try:
+                        with self.assertRaises(HistoricalDebtError) as raised:
+                            module.resolve_historical_debt_metric(
+                                repo_root=ROOT, company_id=SUCCESSOR_COMPANY,
+                                metric_id="B06", period_selection=selection)
+                    finally:
+                        module.prepare_historical_annual_input = was
+                self.assertIn(expected, str(raised.exception))
 
 
 if __name__ == "__main__":

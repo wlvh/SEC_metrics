@@ -1160,6 +1160,14 @@ else 分支包成 case 并统一经 `bind_current_debt_input` 绑定当期输入
 `HistoricalDebtSourceError` 边界内变成 WITHHELD Result 并点名缺的文件；已安装政策或
 权威不符仍用基类抛出，不被降级成 Result。
 
+**接续注册人不在这条路线上被拒**。B06 只读一份申报，所以普通链路没有笼统的接续拒绝：
+主体义务由看得见它的那一级各自履行——冻结的 `bind_current_debt_input` 要求已发布结果的
+计算对象就是这位注册人自己的 entity 与 accession（`RESULT_CURRENT_REGISTRANT_SCOPE_UNPROVEN`），
+inclusive 语法要求当期列带接续标签（`CURRENT_SUCCESSOR_COLUMN_UNPROVEN`）。历史路线原先
+在级联之前整体拒绝，比它所复制的链路更严，挡住的是普通链路给得出数值的坐标；现在只检查
+那个"一份申报够用"的前提：主体政策是本级联有答案的两种之一，且未授权跨主体合并。其他四条
+历史路线的接续拒绝在普通链路里各自都有对应，B06 是唯一一处多出来的。
+
 **Issue #47 自己的获取准入**。`historical_source_acquisition.py` 与
 `tools/vnext_historical_sec.py` 用 `plan_historical_sources` 的去重声明做准入判断，
 因为原获取 CLI 的当期依赖发现实测只回溯一年。它不是规则文件（只做计划与准入、不执行
