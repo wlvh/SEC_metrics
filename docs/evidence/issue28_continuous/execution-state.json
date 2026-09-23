@@ -40,9 +40,11 @@
     "Existing eight complete D04 candidates, B06/C04/update/390 offline responsibilities and historical failures remain separate.",
     "Batch33 SEC0 boundary narrowed offline so independent Issue28 SEC acquisition remains under original SEC guard after first D04 claim; no SEC request sent, incremental review pending.",
     "Scoped agent found P2 in saved SEC-prefix cold read: a second SEC claim after an unresolved SEC stop was accepted by history validator though real ledger rejects it. New negative test reproduced, local fix and 31 directed/127 fast passed; independent recheck pending. No SEC/model call.",
-    "Incremental independent recheck at 4a5d4bb4 closed the SEC stopped-channel cold-read P2; 31 directed tests and separate recorded pending/HTTP402 SEC controls passed. No new real call."
+    "Incremental independent recheck at 4a5d4bb4 closed the SEC stopped-channel cold-read P2; 31 directed tests and separate recorded pending/HTTP402 SEC controls passed. No new real call.",
+    "After real172 HTTP402, user reports recharge. A fail-closed exact172 recovery path and recorded same-request native collection are implemented; 36 directed/127 fast tests pass. No live recovery permission installed or new call."
   ],
   "next": [
+    "Await an explicit one-time authorization for the new172 HTTP402; user recharge report alone does not install permission. Then bind the exact server transcription, review final diff and execute only authorized Enphase D04 group0 once.",
     "Keep PROVIDER stopped after new172 HTTP402; do not send another model request, probe account, switch keys or treat this as a repair retry. Ask owner for a new bounded recovery decision after service availability is checked.",
     "Continue only useful provider-independent B06, Paramount C04, normal update, 390 and old-entry preparation; preserve previous valid evidence.",
     "If separately authorized and service available, bind new172 recovery to its exact failed no-output request and one fresh claim in the original ledger; still obey batch33 group identity, old history and total caps.",
@@ -160,7 +162,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:16835f229d2b66ea85ed3c5f53f2bc0f253649d3c2ba8b2531ab83662a5757e1",
+  "current_v15_development_closure": "sha256:cac7cd6e57f46919721a61ca4754117ba5032d1e7b4ef46bc82052a84d5d8789",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -1056,7 +1058,9 @@
     "account_inspected_or_operated": false,
     "external_decision_required": "New172 service/account handling and explicit bounded recovery decision before any affected call; batch33 genuine-engineering-repair slot does not cover402",
     "usage_and_cost": "Unknown/null preserved",
-    "material": "batch33-authorization/live-0172-summary.json"
+    "material": "batch33-authorization/live-0172-summary.json",
+    "user_reports_recharge_after_172": true,
+    "provider_service_availability_independently_verified": false
   },
   "historical_checkpoint_fields_before_recovery110": {
     "ledger_implementation_status": "108_SEALED_SLOTS; PROVIDER59_PAID59_SEC49; ALL_PRIOR_FAILURES_RETAINED",
@@ -1426,5 +1430,25 @@
     "external_decision_required": "External service/account handling and explicit recovery decision before any affected call; no reuse of110 exception",
     "usage_and_cost": "Unknown for171; null preserved",
     "material": "failures-112-114-repair/real-171/"
+  },
+  "recovery_172_preparation": {
+    "status": "PENDING_EXPLICIT_USER_DECISION_FAIL_CLOSED_NO_LIVE_GRANT",
+    "policy": "config/issue28_recovery_172_v1.json",
+    "module": "scripts/vnext/continuous_recovery_172.py",
+    "original_failure": "batch33-authorization/live-0172-summary.json",
+    "same_group": "D04:enphase_energy:0",
+    "original_request_digest": "ee745e6451a39ff894296419201a5dba115f431e79625cab6b87b04f20bf2aac",
+    "recorded_factory_controller": "batch33-authorization/recovery172-offline-summary.json",
+    "directed_tests": "36_PASS",
+    "fast_suite": "127_OF_127_PASS",
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "new_live_recovery_record_installed": false,
+    "user_reports_recharge": true,
+    "explicit_recovery_permission_received": false,
+    "subagent_review": "PENDING_PATCH_SHA"
   }
 }

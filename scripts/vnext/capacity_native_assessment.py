@@ -97,6 +97,7 @@ def collect_native_assessments(*, prepared_requests, ledger):
     recovered_failures = []
     batch_history = None
     recovered_batch_failed_ordinals = []
+    recovered_batch_http402_ordinals = []
     with ledger.locked():
         state = ledger.snapshot()
         if (ledger.root/'batch33-authorization.json').exists():
@@ -171,6 +172,17 @@ def collect_native_assessments(*, prepared_requests, ledger):
                     failures = [failure for failure in failures
                                 if failure['ordinal'] != original_ordinal]
                     recovered_batch_failed_ordinals.append(original_ordinal)
+                if 'batch_recovery_172_id' in intent:
+                    recovery172 = batch_history.get('recovery_172')
+                    need(recovery172 is not None
+                         and intent['batch_recovery_172_id'] == recovery172['authorization_id']
+                         and intent['batch_group_id'] == recovery172['batch_group_id']
+                         and any(failure['ordinal'] == recovery172['original_ordinal']
+                                 for failure in failures),
+                         'BATCH33_HTTP402_ORIGINAL_NOT_RETAINED')
+                    failures = [failure for failure in failures
+                                if failure['ordinal'] != recovery172['original_ordinal']]
+                    recovered_batch_http402_ordinals.append(recovery172['original_ordinal'])
             completed[identity] = {'request_id': identity, 'ordinal': row['ordinal'],
                 'terminal_id': terminal['terminal_id'], 'acceptance_receipt_id': success['acceptance_receipt_id'],
                 'candidate': acceptance['candidate_record'], 'evidence': acceptance['evidence_record'],
@@ -208,4 +220,6 @@ def collect_native_assessments(*, prepared_requests, ledger):
     if batch_history is not None:
         body['batch_history'] = batch_history
         body['recovered_batch_failed_ordinals'] = sorted(recovered_batch_failed_ordinals)
+        if recovered_batch_http402_ordinals:
+            body['recovered_batch_http402_ordinals'] = sorted(recovered_batch_http402_ordinals)
     return {**body, 'assessment_set_id': content_hash(value=body)}

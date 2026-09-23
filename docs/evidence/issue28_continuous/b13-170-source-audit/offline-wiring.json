@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:16835f229d2b66ea85ed3c5f53f2bc0f253649d3c2ba8b2531ab83662a5757e1",
-  "execution_authority_hash": "sha256:9444fb3ec25f8956ce7efb1de8e9ed529c1f06ce12aedf15c784d97254719b2c",
+  "requirement_closure_hash": "sha256:cac7cd6e57f46919721a61ca4754117ba5032d1e7b4ef46bc82052a84d5d8789",
+  "execution_authority_hash": "sha256:cc58c1dc3a57550631e79325da9813ade71e9c79535278e71b47245bbe4abc8e",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -24,8 +24,12 @@
     "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-server-check.json": "475d8d859e6241224143c7481ee4006d42d1af772f03cad86b080993ebc42f07",
     "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-directed.log": "6e0d15c18e267967ee2a442994523a3123c28b5793111e1c70fde40e3cf629ea",
     "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-fast.json": "c8539e2115c92ac0d2c5c8639b610c1805bc0e8bc766529e53bbad1b01ae4558",
-    "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-post-review-directed.log": "d45c5048977d097e7c289ad2af9bbe3d8cd07efd704bdfbc43e7bc10c00d902f"
+    "docs/evidence/issue28_continuous/batch33-authorization/sec-scope-post-review-directed.log": "d45c5048977d097e7c289ad2af9bbe3d8cd07efd704bdfbc43e7bc10c00d902f",
+    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-offline-summary.json": "53ae0272f002d28cda85d5ad63f54fb48c2ba998585cfde08cc5e258130dcf2a",
+    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-directed.log": "411c25824760056813091d78353138989990834e087521abe1359c21e6031a9d",
+    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-fast.json": "e776e5fbbe52f801b119344825ab150dfd43f4ac062a70d51728573df19e58bd",
+    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-pending-live-check.json": "6882ceb6872edc07ee30b08a6762a288010c1df9d97f98cc6f8ae5c648ac4235"
   },
-  "scope": "Current batch33 D04 first-group recorded factory/controller plus independent SEC channel and stopped-SEC cold-read checks under current V14 binding. Prior Paramount113 and six-group recorded Run evidence retained at their original closures. No new real call from these checks; real172 remains HTTP402 stopped.",
-  "independent_review": "First 33 provider claims scoped review PASS c92c7698; independent SEC separation P2 found at 1c6bb186 and fixed/reviewed PASS 4a5d4bb4; genuine-repair second provider claim not implemented"
+  "scope": "Current batch33 original-ledger binding, first-group factory/controller and recorded one-time recovery172 source/request/native collection. Recovery172 remains explicitly unapproved and cannot install or egress; current real ledger remains stopped at172.",
+  "independent_review": "c92c7698 first-claim review PASS; 4a5d4bb4 SEC cold-read repair review PASS; recovery172 pending-policy code independently review-pending, no live permission"
 }

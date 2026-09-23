@@ -241,7 +241,8 @@ def recorded_authorization(*, ledger, groups, original_stop_ordinal):
 
 
 def empty_progress():
-    return {'attempts': {}, 'total': 0, 'resumed': False}
+    return {'attempts': {}, 'total': 0, 'resumed': False,
+            'recovery172_consumed': False}
 
 
 def _stage(row):
@@ -272,7 +273,7 @@ def _base_order_allowed(*, groups, attempts, target):
 
 
 def claim_fields(*, authorization, progress, group, request_digest, stops, requests,
-                 next_ordinal, repair_receipt=None):
+                 next_ordinal, repair_receipt=None, recovery172=None):
     """Return the exact marker for one allowed claim; never write the ledger."""
     groups = groups_for(authorization)
     by_id = {group_id(row): row for row in groups}
@@ -285,34 +286,53 @@ def claim_fields(*, authorization, progress, group, request_digest, stops, reque
     need(first == (group == authorization['first_group_id'] and next_ordinal ==
                   authorization['original_stop_ordinal'] + 1),
          'BATCH33_FIRST_CLAIM_CHANGED')
+    recovering172 = (recovery172 is not None and not progress['recovery172_consumed']
+                     and group == recovery172['batch_group_id']
+                     and group == authorization['first_group_id']
+                     and recovery172['batch_authorization_id'] == authorization['authorization_id']
+                     and request_digest == recovery172['request_digest']
+                     and len(prior) == 1
+                     and prior[0] == {'ordinal': recovery172['original_ordinal'],
+                                     'status': 'FAILED_TERMINAL', 'stop_reason': 'HTTP_402'}
+                     and repair_receipt is None)
     if first:
         need(stops == {('PROVIDER', authorization['original_stop_ordinal'])},
              'BATCH33_ORIGINAL_STOP_NOT_ISOLATED')
     else:
-        need(not stops and progress['resumed'], 'BATCH33_NEW_STOP_REMAINS')
+        need(progress['resumed'] and (not stops or
+             (recovering172 and stops == {('PROVIDER', recovery172['original_ordinal'])})),
+             'BATCH33_NEW_STOP_REMAINS')
     if not prior:
         need(repair_receipt is None and request_digest == row['initial_request_digest']
              and _base_order_allowed(groups=groups, attempts=progress['attempts'], target=group),
              'BATCH33_BASE_GROUP_OR_ORDER_CHANGED')
         attempt = 0
     else:
-        need(len(prior) == 1 and prior[0]['status'] == 'FAILED_TERMINAL'
-             and not prior[0]['stop_reason'] and repair_receipt is not None,
-             'BATCH33_REPAIR_NOT_ELIGIBLE')
-        # A specific failed group may acquire a repair record only after its
-        # actual diagnosis, code patch, regressions and scoped review exist.
-        # The initial authorization alone never grants a second draw.
-        need(False, 'BATCH33_REPAIR_PROOF_NOT_YET_IMPLEMENTED')
+        if recovering172:
+            attempt = 1
+        else:
+            need(len(prior) == 1 and prior[0]['status'] == 'FAILED_TERMINAL'
+                 and not prior[0]['stop_reason'] and repair_receipt is not None,
+                 'BATCH33_REPAIR_NOT_ELIGIBLE')
+            # A specific failed group may acquire a repair record only after
+            # its actual diagnosis, patch, regressions and scoped review.
+            need(False, 'BATCH33_REPAIR_PROOF_NOT_YET_IMPLEMENTED')
     historical = row['historical_ordinal']
     duplicate = ('PROVIDER', request_digest) in requests
-    need(not duplicate or (attempt == 0 and historical in authorization['same_digest_original_ordinals']),
+    need(not duplicate or (attempt == 0 and historical in authorization['same_digest_original_ordinals'])
+         or (recovering172 and request_digest == recovery172['request_digest']),
          'BATCH33_UNAPPROVED_DUPLICATE_REQUEST')
-    return {'batch_authorization_id': authorization['authorization_id'],
-            'batch_group_id': group, 'batch_attempt_index': attempt,
-            'batch_resume_171': first}, duplicate
+    fields = {'batch_authorization_id': authorization['authorization_id'],
+              'batch_group_id': group, 'batch_attempt_index': attempt,
+              'batch_resume_171': first}
+    if recovering172:
+        fields['batch_recovery_172_id'] = recovery172['authorization_id']
+        fields['batch_resume_172'] = True
+    return fields, duplicate
 
 
-def observe_claim(*, authorization, progress, intent, stops, requests):
+def observe_claim(*, authorization, progress, intent, stops, requests,
+                  recovery172=None):
     """Independently revalidate each marked claim during every cold ledger read."""
     if 'batch_authorization_id' not in intent:
         need(not (intent['channel'] == 'SEC' and
@@ -332,15 +352,21 @@ def observe_claim(*, authorization, progress, intent, stops, requests):
         progress=progress, group=intent['batch_group_id'],
         request_digest=intent['request_digest'],
         stops={stop for stop in stops if stop[0] == 'PROVIDER'}, requests=requests,
-        next_ordinal=intent['ordinal'])
+        next_ordinal=intent['ordinal'], recovery172=recovery172)
     need(all(intent.get(key) == value for key, value in expected.items()),
          'BATCH33_CLAIM_MARKER_CHANGED')
+    need(('batch_recovery_172_id' in intent) == ('batch_recovery_172_id' in expected)
+         and ('batch_resume_172' in intent) == ('batch_resume_172' in expected),
+         'BATCH33_RECOVERY172_MARKER_CHANGED')
     progress['attempts'].setdefault(intent['batch_group_id'], []).append({
         'ordinal': intent['ordinal'], 'status': 'PENDING', 'stop_reason': ''})
     progress['total'] += 1
     if expected['batch_resume_171']:
         stops.remove(('PROVIDER', authorization['original_stop_ordinal']))
         progress['resumed'] = True
+    if expected.get('batch_resume_172'):
+        stops.remove(('PROVIDER', recovery172['original_ordinal']))
+        progress['recovery172_consumed'] = True
     return duplicate
 
 
@@ -405,10 +431,17 @@ def history_for_current(*, ledger):
             'original_same_digest_failures': related,
             'claims': prefix,
             'new_call_authority': False}
+    if (ledger.root/'recovery-172.json').exists():
+        from .continuous_recovery_172 import read_authorization as read_recovery172
+        recovery172 = read_recovery172(ledger)
+        body['recovery_172'] = recovery172
+        body['recovery_172_original_wire'] = strict_json_file(
+            path=ledger.root/'calls'/('%04d' % recovery172['original_ordinal'])/'wire/journal.json')
     return {**body, 'history_id': content_hash(value=body)}
 
 
-def validate_history(*, history, mode, native_rows, request_digests, recovered_failed_ordinals):
+def validate_history(*, history, mode, native_rows, request_digests,
+                     recovered_failed_ordinals, recovered_402_ordinals=()):
     """Replay grant, once-only claims and original stop from installed bytes."""
     from .continuous_call_ledger import _STOP
     need(mode in {'LIVE', 'RECORDED_TEST_ONLY'}
@@ -440,6 +473,28 @@ def validate_history(*, history, mode, native_rows, request_digests, recovered_f
              and auth['first_group_id'] == 'D04:enphase_energy:0'
              and auth['maximum_new_provider_calls'] == 66,
              'BATCH33_HISTORY_APPROVAL_CHANGED')
+    recovery172 = history.get('recovery_172')
+    need((recovery172 is None) == ('recovery_172_original_wire' not in history),
+         'BATCH33_HISTORY_RECOVERY172_FIELDS_CHANGED')
+    if recovery172 is not None:
+        need(recovery172['authorization_id'] == content_hash(value={k: v for k, v in recovery172.items()
+             if k != 'authorization_id'})
+             and recovery172['execution_mode'] == mode
+             and recovery172['original_ordinal'] == auth['original_stop_ordinal'] + 1
+             and recovery172['batch_authorization_id'] == auth['authorization_id']
+             and recovery172['batch_group_id'] == auth['first_group_id']
+             and recovery172['maximum_new_executions'] == 1
+             and recovery172['request_digest'] == groups_for(auth)[0]['initial_request_digest']
+             and history['recovery_172_original_wire']['error_class'] == 'HTTP_402',
+             'BATCH33_HISTORY_RECOVERY172_AUTH_CHANGED')
+        if mode == 'LIVE':
+            from types import SimpleNamespace
+            from .continuous_recovery_172 import authorization as recovery_authorization
+            view = SimpleNamespace(root=Path(recovery172['budget_root']), live=True,
+                                   binding={'binding_id': recovery172['binding_id'],
+                                            'limits': [240, 240, 80]})
+            need(recovery172 == recovery_authorization(ledger=view, check_ledger=False),
+                 'BATCH33_HISTORY_RECOVERY172_APPROVAL_CHANGED')
     stop = history['original_stop']
     old_intent, old_terminal, old_wire = stop['intent'], stop['terminal'], stop['wire']
     need(old_intent['ordinal'] == auth['original_stop_ordinal']
@@ -492,6 +547,24 @@ def validate_history(*, history, mode, native_rows, request_digests, recovered_f
              and intent['previous_intent_id'] == previous
              and intent['intent_id'] == content_hash(value={k: v for k, v in intent.items()
                  if k != 'intent_id'}), 'BATCH33_HISTORY_CHAIN_CHANGED')
+        if recovery172 is not None and intent['ordinal'] == recovery172['original_ordinal']:
+            old_wire = history['recovery_172_original_wire']
+            need(intent['intent_id'] == recovery172['original_intent_id']
+                 and intent['request_digest'] == recovery172['request_digest']
+                 and intent['batch_group_id'] == recovery172['batch_group_id']
+                 and intent['batch_authorization_id'] == recovery172['batch_authorization_id']
+                 and intent['batch_attempt_index'] == 0
+                 and terminal is not None
+                 and terminal['terminal_id'] == recovery172['original_terminal_id']
+                 and terminal['status'] == 'FAILED_TERMINAL'
+                 and terminal['stop_reason'] == old_wire['error_class'] == 'HTTP_402'
+                 and terminal['counts'] == [1, 1, 0]
+                 and terminal['evidence']['wire/journal.json'] == sha256_bytes(
+                     content=canonical_json_bytes(value=old_wire))
+                 and terminal['evidence']['semantic-request.json'] == recovery172['request_sha256']
+                 and terminal['evidence']['source.json'] == recovery172['source_sha256']
+                 and 'wire/assistant-output.bin' not in terminal['evidence'],
+                 'BATCH33_HISTORY_RECOVERY172_ORIGINAL_CHANGED')
         if intent['channel'] == 'SEC':
             need(progress['resumed'] and not any(key.startswith('batch_') for key in intent)
                  and ('SEC', intent['request_digest']) not in requests,
@@ -512,7 +585,8 @@ def validate_history(*, history, mode, native_rows, request_digests, recovered_f
             continue
         need(intent['channel'] == 'PROVIDER', 'BATCH33_HISTORY_CHANNEL_CHANGED')
         duplicate = observe_claim(authorization=auth, progress=progress,
-            intent=intent, stops=stops, requests=requests)
+            intent=intent, stops=stops, requests=requests,
+            recovery172=recovery172)
         need(('PROVIDER', intent['request_digest']) not in requests or duplicate,
              'BATCH33_HISTORY_DUPLICATE_CHANGED')
         requests.add(('PROVIDER', intent['request_digest']))
@@ -548,4 +622,10 @@ def validate_history(*, history, mode, native_rows, request_digests, recovered_f
         and any(native['intent']['batch_group_id'] == group_id(row) for native in native_rows)}
     need(set(recovered_failed_ordinals) == expected_recovered,
          'BATCH33_HISTORY_FAILED_LINK_CHANGED')
+    expected_recovered_402 = ({recovery172['original_ordinal']}
+        if recovery172 is not None and any(
+            native['intent'].get('batch_recovery_172_id') == recovery172['authorization_id']
+            for native in native_rows) else set())
+    need(set(recovered_402_ordinals) == expected_recovered_402,
+         'BATCH33_HISTORY_HTTP402_LINK_CHANGED')
     return True

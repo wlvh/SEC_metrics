@@ -164,10 +164,12 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
                    for row, request in zip(value['native_requests'], expected)}
         need(validate_history(history=batch_history, mode=value['mode'],
              native_rows=value['native_requests'], request_digests=digests,
-             recovered_failed_ordinals=value['assessment'].get('recovered_batch_failed_ordinals', [])),
+             recovered_failed_ordinals=value['assessment'].get('recovered_batch_failed_ordinals', []),
+             recovered_402_ordinals=value['assessment'].get('recovered_batch_http402_ordinals', [])),
              'BATCH33_REGISTERED_HISTORY_CHANGED')
     else:
         need('recovered_batch_failed_ordinals' not in value['assessment']
+             and 'recovered_batch_http402_ordinals' not in value['assessment']
              and all('batch_authorization_id' not in row['intent'] for row in value['native_requests']),
              'BATCH33_REGISTERED_HISTORY_MISSING')
     used_histories = []

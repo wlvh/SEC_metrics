@@ -15,8 +15,11 @@ from vnext.continuous_batch33 import (authorization, group_id,
     historical_successor_allowed, history_for_current, install_live_authorization,
     recorded_authorization,
     validate_history)
+from vnext.continuous_recovery_172 import (recorded_authorization as recorded_recovery172,
+    install_live_authorization as install_recovery172,
+    authorization as recovery172_authorization)
 from vnext.continuous_call_ledger import recorded_ledger
-from vnext.invocation_control import _exclusive_write_json
+from vnext.invocation_control import _exclusive_write_json, _exclusive_write_bytes
 
 from tests.vnext.test_continuous_call_ledger import REQ
 
@@ -60,6 +63,118 @@ class Batch33LedgerTest(unittest.TestCase):
             path,intent=self.claim(name)
             terminal=self.finish(path,intent,status='FAILED_TERMINAL',error='HTTP_402')
         return path,intent,terminal
+
+    def stopped_batch_first_group(self):
+        self.stopped()
+        groups=[group('D04','enphase_energy',0,content_hash(value='enphase0'))]
+        with self.ledger.locked():
+            recorded_authorization(ledger=self.ledger,groups=groups,original_stop_ordinal=1)
+            path,intent=self.claim('enphase0',batch_group=group_id(groups[0]))
+            _exclusive_write_bytes(path=path/'source.json',content=b'{"source":"enphase"}\n')
+            _exclusive_write_bytes(path=path/'semantic-request.json',
+                                   content=b'{"request":"enphase0"}\n')
+            terminal=self.finish(path,intent,status='FAILED_TERMINAL',error='HTTP_402')
+        return groups[0],path,intent,terminal
+
+    def test_second_no_output_402_needs_a_separate_one_shot_recovery(self):
+        row,path,old_intent,old_terminal=self.stopped_batch_first_group()
+        old_bytes={p.relative_to(path):p.read_bytes() for p in path.rglob('*') if p.is_file()}
+        with self.ledger.locked():
+            with self.assertRaisesRegex(ValueError,'BATCH33_NEW_STOP_REMAINS'):
+                self.claim('enphase0',batch_group=group_id(row))
+            recovery=recorded_recovery172(ledger=self.ledger,original_ordinal=2)
+            with self.assertRaisesRegex(ValueError,'BATCH33_NEW_STOP_REMAINS'):
+                self.claim('changed request digest',batch_group=group_id(row))
+            successor,new_intent=self.claim('enphase0',batch_group=group_id(row))
+            self.assertEqual(new_intent['batch_attempt_index'],1)
+            self.assertEqual(new_intent['batch_recovery_172_id'],recovery['authorization_id'])
+            self.assertTrue(new_intent['batch_resume_172'])
+            self.assertFalse(new_intent['batch_resume_171'])
+            terminal=self.finish(successor,new_intent)
+            with self.assertRaisesRegex(ValueError,'BATCH33_SUBCAP_EXHAUSTED'):
+                self.claim('enphase0',batch_group=group_id(row))
+            self.assertEqual(self.ledger.snapshot()['counts'],[3,3,0])
+            self.assertEqual(self.ledger.snapshot()['stopped_channels'],[])
+            history=history_for_current(ledger=self.ledger)
+        self.assertEqual(old_bytes,{p.relative_to(path):p.read_bytes() for p in path.rglob('*') if p.is_file()})
+        self.assertTrue(validate_history(history=history,mode='RECORDED_TEST_ONLY',
+            native_rows=[{'ordinal':3,'intent':new_intent,'terminal':terminal}],
+            request_digests={3:new_intent['request_digest']},recovered_failed_ordinals=[],
+            recovered_402_ordinals=[2]))
+        with self.assertRaisesRegex(ValueError,'BATCH33_HISTORY_HTTP402_LINK_CHANGED'):
+            validate_history(history=history,mode='RECORDED_TEST_ONLY',
+                native_rows=[{'ordinal':3,'intent':new_intent,'terminal':terminal}],
+                request_digests={3:new_intent['request_digest']},recovered_failed_ordinals=[])
+        self.assertEqual(history['claims'][0]['terminal'],old_terminal)
+        with recorded_ledger(root=self.root).locked() as reopened:
+            self.assertEqual(reopened.snapshot()['counts'],[3,3,0])
+        (self.root/'recovery-172.json').unlink()
+        with recorded_ledger(root=self.root).locked() as reopened, \
+             self.assertRaises(ValueError):
+            reopened.snapshot()
+
+    def test_recovery172_new_402_still_stops_provider(self):
+        row,_,_,_=self.stopped_batch_first_group()
+        with self.ledger.locked():
+            recorded_recovery172(ledger=self.ledger,original_ordinal=2)
+            successor,intent=self.claim('enphase0',batch_group=group_id(row))
+            self.finish(successor,intent,status='FAILED_TERMINAL',error='HTTP_402')
+            self.assertEqual(self.ledger.snapshot()['stopped_channels'],['PROVIDER'])
+            with self.assertRaises(ValueError):
+                self.claim('enphase0',batch_group=group_id(row))
+
+    def test_recovery172_preserves_independent_sec_interleaving(self):
+        row,_,_,_=self.stopped_batch_first_group()
+        with self.ledger.locked():
+            sec,sec_intent=self.ledger.claim(channel='SEC',
+                request_digest=content_hash(value='independent C04 source'),
+                requirement=REQ,plan_id=content_hash(value='independent SEC plan'),
+                purpose='remaining_development_feasibility')
+            self.assertEqual(sec.name,'0003')
+            self.assertNotIn('batch_authorization_id',sec_intent)
+            recorded_recovery172(ledger=self.ledger,original_ordinal=2)
+            successor,intent=self.claim('enphase0',batch_group=group_id(row))
+            terminal=self.finish(successor,intent)
+            self.assertEqual(intent['ordinal'],4)
+            self.assertEqual(self.ledger.snapshot()['counts'],[3,3,1])
+            self.assertEqual(self.ledger.snapshot()['stopped_channels'],['SEC'])
+            history=history_for_current(ledger=self.ledger)
+        self.assertTrue(validate_history(history=history,mode='RECORDED_TEST_ONLY',
+            native_rows=[{'ordinal':4,'intent':intent,'terminal':terminal}],
+            request_digests={4:intent['request_digest']},recovered_failed_ordinals=[],
+            recovered_402_ordinals=[2]))
+
+    def test_concurrent_recovery172_claim_is_consumed_once(self):
+        row,_,_,_=self.stopped_batch_first_group()
+        with self.ledger.locked():
+            recorded_recovery172(ledger=self.ledger,original_ordinal=2)
+        script='''import sys
+from pathlib import Path
+from vnext.continuous_call_ledger import recorded_ledger
+from vnext.canonical import content_hash
+from tests.vnext.test_continuous_call_ledger import REQ
+with recorded_ledger(root=Path(sys.argv[1])).locked() as ledger:
+ try:
+  ledger.claim(channel='PROVIDER',request_digest=content_hash(value='enphase0'),
+   requirement=REQ,plan_id=content_hash(value='recovery plan'),
+   purpose='remaining_development_feasibility',batch_group_id='D04:enphase_energy:0')
+  print('CLAIMED')
+ except ValueError:
+  print('BLOCKED')
+'''
+        env={**os.environ,'PYTHONPATH':'scripts:.','PYTHONDONTWRITEBYTECODE':'1'}
+        processes=[subprocess.Popen([sys.executable,'-c',script,str(self.root)],
+                    stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,env=env)
+                   for _ in range(2)]
+        outputs=[]
+        for process in processes:
+            stdout,stderr=process.communicate(timeout=15)
+            self.assertEqual(process.returncode,0,stderr)
+            outputs.append(stdout.strip())
+        self.assertEqual(sorted(outputs),['BLOCKED','CLAIMED'])
+        with self.ledger.locked():
+            self.assertEqual(self.ledger.snapshot()['counts'],[3,3,0])
+            self.assertEqual(self.ledger.snapshot()['stopped_channels'],['PROVIDER'])
 
     def test_exact_first_group_resumes_only_original_stop_and_restarts_cleanly(self):
         old,intent,terminal=self.stopped()
@@ -276,6 +391,16 @@ with recorded_ledger(root=Path(sys.argv[1])).locked() as ledger:
 
 
 class Batch33ServerAuthorityTest(unittest.TestCase):
+    def test_recovery172_pending_policy_installs_nothing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            ledger=SimpleNamespace(root=Path(temporary))
+            with self.assertRaisesRegex(ValueError,'RECOVERY172_EXPLICIT_APPROVAL_PENDING'):
+                recovery172_authorization(ledger=ledger)
+            self.assertIsNone(install_recovery172(ledger=ledger,requirement={}))
+            (ledger.root/'recovery-172.json').write_text('{}')
+            with self.assertRaisesRegex(ValueError,'RECOVERY172_UNAPPROVED_RECORD_PRESENT'):
+                install_recovery172(ledger=ledger,requirement={})
+
     def test_existing_approved_install_survives_the_first_counted_call(self):
         from contextlib import nullcontext
         with tempfile.TemporaryDirectory() as temporary:

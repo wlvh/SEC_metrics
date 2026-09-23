@@ -90,6 +90,11 @@ class CallLedger:
             from .continuous_batch33 import read_authorization, empty_progress
             batch = read_authorization(self)
             batch_progress = empty_progress()
+        recovery172 = None
+        if (self.root/'recovery-172.json').exists():
+            from .continuous_recovery_172 import read_authorization as read_recovery172
+            recovery172 = read_recovery172(self)
+            need(batch is not None, 'RECOVERY172_BATCH_AUTHORIZATION_MISSING')
         total = [0,0,0]; stopped = set(); requests = set(); rows = []
         first_requests = {}; recovery_consumed = False; original_verified = False
         previous = None
@@ -119,7 +124,8 @@ class CallLedger:
                 if batch is not None:
                     from .continuous_batch33 import observe_claim
                     batch_duplicate = observe_claim(authorization=batch, progress=batch_progress,
-                        intent=intent, stops=stopped, requests=requests)
+                        intent=intent, stops=stopped, requests=requests,
+                        recovery172=recovery172)
                 need(key not in requests or batch_duplicate,
                      'CONTINUOUS_LEDGER_DUPLICATE_REQUEST')
             requests.add(key)
@@ -158,6 +164,7 @@ class CallLedger:
         need(recovery is None or original_verified, 'CONTINUOUS_RECOVERY_ORIGINAL_MISSING')
         self._recovery_observation = (recovery, recovery_consumed, stopped)
         self._batch_observation = (batch, batch_progress)
+        self._recovery172_observation = recovery172
         return {'counts':total,'stopped_channels':sorted({channel for channel, _ in stopped}),'requests':requests,
                 'previous_intent_id':previous,'rows':rows}
 
@@ -167,6 +174,7 @@ class CallLedger:
         need(channel in {'PROVIDER','SEC'}, 'CONTINUOUS_CHANNEL_INVALID')
         recovery, consumed, stops = self._recovery_observation
         batch, progress = self._batch_observation
+        recovery172 = self._recovery172_observation
         recovering = (recovery is not None and not consumed and channel == 'PROVIDER'
                       and request_digest == recovery['request_digest']
                       and stops == {('PROVIDER', recovery['original_ordinal'])})
@@ -178,13 +186,14 @@ class CallLedger:
                 group=batch_group_id, request_digest=request_digest,
                 stops={stop for stop in stops if stop[0] == 'PROVIDER'},
                 requests=state['requests'], next_ordinal=len(state['rows'])+1,
-                repair_receipt=batch_repair_receipt)
+                repair_receipt=batch_repair_receipt, recovery172=recovery172)
         else:
             need(batch is None or channel != 'SEC' or progress['resumed'],
                  'BATCH33_FIRST_D04_CLAIM_REQUIRED')
             need(batch_group_id is None and batch_repair_receipt is None,
                  'BATCH33_AUTHORIZATION_MISSING')
-        need(channel not in state['stopped_channels'] or recovering or batch_fields.get('batch_resume_171'),
+        need(channel not in state['stopped_channels'] or recovering
+             or batch_fields.get('batch_resume_171') or batch_fields.get('batch_resume_172'),
              'CONTINUOUS_CHANNEL_STOPPED:' + channel)
         need((channel,request_digest) not in state['requests'] or recovering or batch_duplicate,
              'CONTINUOUS_UNCHANGED_REQUEST_REDRAW_FORBIDDEN')
@@ -287,6 +296,8 @@ def live_ledger(*, requirement):
         install_live_authorization(ledger=ledger, requirement=requirement)
     from .continuous_batch33 import install_live_authorization as install_batch33
     install_batch33(ledger=ledger, requirement=requirement)
+    from .continuous_recovery_172 import install_live_authorization as install_recovery172
+    install_recovery172(ledger=ledger, requirement=requirement)
     return ledger
 
 

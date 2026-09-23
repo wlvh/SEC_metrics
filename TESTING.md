@@ -797,6 +797,8 @@ B13定向反例另覆盖伪概念命名空间、伪货币命名空间、实物�
 
 `PYTHONPATH=scripts:. python3 -m unittest -q tests.vnext.test_continuous_batch33 tests.vnext.test_continuous_call_ledger tests.vnext.test_continuous_recovery_110`验证新用户授权的服务器评论/原文/组集合绑定、原171停止只在D04首组申领时受限解除、113/114式相同摘要新执行、跨进程单次消费、中断/新402保留停止、旧110兼容及批次前缀冷读。另检查批次首组之前SEC不能插队，之后原总委托SEC请求不带批次标记、与批次provider claim穿插时冷读前驱仍完整；provider新402不误停独立SEC通道。本测试不批准新的SEC费用或请求。`batch33-authorization/`另保存原件禁网分组、当前工厂/模拟opener/controller、113损字旧失败对照及录制Enphase六组普通Run机械重读；这些都不产生真实公司或生产信用。真实调用前仍须当前执行文件绑定、必要限定独审和最终禁网接线收据通过；新的真实失败不得由测试模式或本地批准布尔值重发。
 
+第172次新HTTP402的默认关闭接线同在`tests.vnext.test_continuous_batch33`：无新授权拒绝同摘要再次申领；录制专用的独立恢复记录绑定旧402、请求/来源字节与批次组，申领一次即消费，并发、删除授权、新402和冷读失配均拒绝。`batch33-authorization/recovery172_offline_wiring.py`将当前Enphase真实保存来源经过禁网工厂、模拟传输与原生收集，旧114失败、模拟172式402及新成功各保留独立身份；只有新成功取得当前输入信用。录制链和用户充值说明都不授权真实第173次；正式决定、服务器记录、最终执行绑定、限定独审与原账本核验另行要求。
+
 `tests.vnext.test_capacity_reference_contract`验证后继显式引用：未知/错类型/重复/歧义/跨单元引用、漏答、重签合同、旧109同类错误拒绝，以及原生Evidence和请求集合重建。`b13-strict-references-20260922/offline_material.py`禁网检验Enphase六组完整原生链及Ford十一组计划、代表性controller与漏单元失败；记录响应不计真实语义成功，耗时/结果以对应日志为准。
 
 2026-09-22：B13 native及program-role两个CI作业总时限均为30分钟，保留原步骤与断言。program-role单次本地完整计时604.545秒通过（隔离Python3.13.5、tokenizers0.22.2）；CI仍使用Python3.14，实际终态单独登记。证据见`docs/evidence/issue28_continuous/ci-capacity-timeouts-20260922/`。该调整不改变真实请求120秒限制。
