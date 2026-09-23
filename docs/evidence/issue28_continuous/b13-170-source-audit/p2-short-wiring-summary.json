@@ -1,0 +1,34 @@
+{
+  "status": "PASS_CURRENT_B13_FACTORY_OPENER_CONTROLLER_POSITIVE_AND_SOURCE_ROLE_REJECTION",
+  "requirement_closure_hash": "sha256:2de397bb715db8e4a76fdbb5c7fb1533ebf80372a52865d919bd8e50e61786e6",
+  "prior_receipt_error": "CONTINUOUS_OFFLINE_WIRING_MISSING_OR_CHANGED",
+  "mock_opener_calls": [
+    "valid_empty_group",
+    "original111_current_semantic_rejection"
+  ],
+  "results": [
+    {
+      "name": "valid_empty_group",
+      "status": "SUCCEEDED",
+      "native_candidate_evidence_created": true
+    },
+    {
+      "name": "original111_current_semantic_rejection",
+      "status": "FAILED_TERMINAL",
+      "native_candidate_evidence_created": false
+    }
+  ],
+  "original111_request_identity_unchanged": true,
+  "original111_current_reuse_credit": false,
+  "old111_terminal_changed": false,
+  "complete_company_result": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "network_disabled": true,
+  "legacy_default_forbidden": true,
+  "real_request_factory_to_controller_verified": true,
+  "seconds": 35.949
+}

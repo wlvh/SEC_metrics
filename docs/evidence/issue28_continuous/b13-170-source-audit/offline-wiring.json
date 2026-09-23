@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:cd18e0c80283ef70bf3b51a9367a620badb0478c6f017398eb9f56673160bb03",
-  "execution_authority_hash": "sha256:6b7aed95698908e396900f59a063daffbf87d815407513e8ba05d6185c022481",
+  "requirement_closure_hash": "sha256:2de397bb715db8e4a76fdbb5c7fb1533ebf80372a52865d919bd8e50e61786e6",
+  "execution_authority_hash": "sha256:6a68cfc50fa857323480dad3d0e19e86b286363629f527490311d1196005dda5",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -14,12 +14,12 @@
   "real_request_factory_to_controller_verified": true,
   "count_control_tests_passed": true,
   "evidence": {
-    "docs/evidence/issue28_continuous/b13-170-source-audit/short-wiring-summary.json": "d1849cf425e3cb3c00060c97f3c2e7b47319ae05b7458c8d3d73f07ddaab5d58",
-    "docs/evidence/issue28_continuous/b13-170-source-audit/p2-complete-response-tests.log": "d7a8177baf4abf11a3d4f60e4269a87086174f90c1179636fe86671686e53d1a",
-    "docs/evidence/issue28_continuous/b13-170-source-audit/fast.json": "9fc538427af37b56aca0f9d7f4ee7fc2b8916937339272278d55e951bb602e11",
+    "docs/evidence/issue28_continuous/b13-170-source-audit/p2-short-wiring-summary.json": "91883c1c2998a502c4643218dc4993cc44067e442250237e37ac931ec9c0aa1a",
+    "docs/evidence/issue28_continuous/b13-170-source-audit/p2-complete-response-fix-tests.log": "dab52b4b5c2cf6017c73e45b3e62138c4b9079c2c7d28efd75103044b1364844",
+    "docs/evidence/issue28_continuous/b13-170-source-audit/fast-p2.json": "b108377305d8102d1fe252d6f9157e11fd799805ece450c1ecd4d1c0ed4204c8",
     "docs/evidence/issue28_continuous/b13-170-source-audit/diagnostic-summary.json": "3cdadc65cd8acf1af2a63125b58722a31df64121c71f9707d5d755ba369130ef",
     "docs/evidence/issue28_continuous/b13-170-source-audit/final-invariants.json": "b88c34f28236010e9509fdfe008e90b0ed30029d3cf1f526c4ffbed09c26d3ae"
   },
-  "scope": "Current B13 visible-source role positive/negative recorded bridge. D04/Unicode/publication implementation unchanged. PROVIDER remains stopped171; no recovery or resampling authority.",
-  "independent_review": "ccd7 review foundP2; parent repair tested, incremental independent closure PENDING"
+  "scope": "P2 cancellation-negation repair; current B13 recorded factory/controller positive and original111 rejection. D04/Unicode/publication unchanged; provider stopped171.",
+  "independent_review": "ccd7 review found earlierP2; parent repairs tested, scoped independent closure PENDING"
 }

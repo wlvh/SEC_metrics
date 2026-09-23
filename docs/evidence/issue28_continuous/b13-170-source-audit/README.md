@@ -21,3 +21,13 @@
 provider-free-dependencies.json新增Ford187条权益事实的范围清单及Paramount九处原文锚点核对；不生成工业B06或C04数值、不修改业务定义。current-390-delta.json保留旧390类别及八家D04候选，仅更新111当前复验阻断。共享更新/发布/旧入口实现字节与26d9d947相同，历史长演练复用，不宣称完整390或正式退休。
 
 本轮0/0/0，账本122/122/49、余118/118/31，PROVIDER仍在171停止。旧44缺口以111可复用为前提；若在现有分组下需新增111验证，则基础163对118，条件缺口45。此计量不授增额、恢复或同摘要重发；预算与服务、语义及审阅依赖分别保留。
+
+## 2026-09-23取消计划否定误拦截回修
+
+新增P2函数级反例：`We plan to expand our manufacturing capacity and have not abandoned the plan.`旧实现将`abandoned the plan`当作肯定取消；`have never cancelled the expansion`同样误拦。`capacity_quantity_roles.py`现在把取消动作及紧邻的`not/never`置于同一局部断言，后文真实取消仍阻断。完整响应级回归同时覆盖原“没有债务”误拦、实际取消、否定取消后又真正取消、直接否定与条件性计划；23定向测试与126项fast通过，见`p2-complete-response-fix-tests.log`和`fast-p2.json`。这只是有限必要来源角色检查，不是完整B13语义正确性证明。
+
+未冻结V14执行绑定仅更新该源码的哈希与大小，V15开发闭包变为`sha256:2de397bb715db8e4a76fdbb5c7fb1533ebf80372a52865d919bd8e50e61786e6`。`p2_short_wiring.py`在禁网条件下沿当前请求factory、录制opener和controller跑空必评组成功对照及原111失败对照，耗时35.949s；旧收据先被拒，更新后执行权限和实际接线收据通过，见`p2-short-wiring-summary.json`、`p2-final-wiring-validation.json`。没有真实调用。
+
+`p2-111-downstream-boundary.json`只读核对原111终态与单请求assessment、当前390索引、三份正常更新摘要及Enphase录制原生更新记录。111的原生完整Result为false；当前390中Enphase B13是`VALIDATION_OR_IMPLEMENTATION_PENDING`且无值，所查更新摘要未消费111，Enphase录制更新是D04。旧成功原件不改，也不宣称无差别核对全部历史产物。
+
+a03f9af6的主CI35775898391已SUCCESS，见`ci-a03f-success-summary.json`（用户终态更新及本轮一次CLI读取的摘要，非原始作业日志）；它没有覆盖本次新补丁。此前限定独审发现的P2与本次修补均待修后限定独立闭环，原审阅代理达到68工具/3消息上限，不复用或为凑通过重复spawn。原170、171、113/114以及原111历史终态和账本不变；新增完整公司结果0，D04仍8/10。

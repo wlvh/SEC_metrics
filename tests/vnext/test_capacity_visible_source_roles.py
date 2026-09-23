@@ -20,6 +20,8 @@ class VisibleSourceRoleTest(unittest.TestCase):
                           ('Normal utilization of our manufacturing facility determines cost allocation.','CAPACITY_QUALITATIVE'),
                           ('We plan to expand our manufacturing capacity.','PLANNED_CAPACITY'),
                           ('We plan to expand our manufacturing capacity and have no debt.','PLANNED_CAPACITY'),
+                          ('We plan to expand our manufacturing capacity and have not abandoned the plan.','PLANNED_CAPACITY'),
+                          ('We plan to expand our manufacturing capacity and have never cancelled the expansion.','PLANNED_CAPACITY'),
                           ('We have no debt and plan to expand our manufacturing capacity.','PLANNED_CAPACITY'),
                           ('The battery has a storage capacity of5 kWh.','PRODUCT_STORAGE_OR_INSTALLED_CAPACITY'),
                           ('Shares are available for issuance. The battery has capacity of 5 kWh.','PRODUCT_STORAGE_OR_INSTALLED_CAPACITY')]:
@@ -41,8 +43,13 @@ class VisibleSourceRoleTest(unittest.TestCase):
         from vnext.capacity_semantic_review import requests_from_source,validate_response
         from vnext.r6_semantic_source import _bytes
         for statement,expected in [('We plan to expand our manufacturing capacity and have no debt.',False),
+                                   ('We plan to expand our manufacturing capacity and abandoned the plan.',True),
+                                   ('We plan to expand our manufacturing capacity and have not abandoned the plan.',False),
+                                   ('We plan to expand our manufacturing capacity and have never cancelled the expansion.',False),
+                                   ('We plan to expand our manufacturing capacity and have not abandoned the plan but later abandoned it.',True),
                                    ('We do not plan to expand our manufacturing capacity.',True),
-                                   ('We scrapped plans to expand our manufacturing capacity.',True)]:
+                                   ('We scrapped plans to expand our manufacturing capacity.',True),
+                                   ('If demand improves, we could expand production capacity.',True)]:
             source,_=quantity_source('<p>'+statement+'</p>');source=program_source(source)
             request=requests_from_source(source)[0];unit=source['units'][0]
             index=next(b['block_index'] for b in unit['payload']['blocks'] if b['text']==statement)

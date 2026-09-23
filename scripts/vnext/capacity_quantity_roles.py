@@ -239,6 +239,18 @@ def validate_visible_source_label_roles(*, findings):
                 r'(?:expand|increase|reduce|add)\s+' + qualifiers + r'(?:manufacturing|production)\s+capacity\b|'
                 r'\b(?:planned|proposed|future|expected)\s+' + qualifiers + r'(?:manufacturing|production)\s+capacity\b')
     uncertain = r'\b(?:not|never|no|hypothetical|illustrative|abandoned|scrapped|dropped|rejected|cancelled|canceled|if|unless|would|could|might)\b'
+    cancellation = (r'\b(?:scrapped|cancelled|canceled|abandoned|dropped|rejected)\s+'
+                    r'(?:(?:the|our|these|those)\s+)?(?:plans?|expansion|it|them)\b')
+
+    def affirmative_cancellation(suffix):
+        for action in re.finditer(cancellation, suffix, re.I):
+            # Bind not/never to this cancellation, not to the earlier plan or
+            # another coordinated assertion (such as "have no debt").
+            clause = re.split(r';|\b(?:and|but)\b', suffix[:action.start()], flags=re.I)[-1]
+            if re.search(r'\b(?:(?:have|has|had|did|was|were)\s+)?(?:not|never)\s+$', clause, re.I) is None:
+                return True
+        return False
+
     unresolved = []
     for finding in findings:
         kind = finding['kind']
@@ -261,8 +273,7 @@ def validate_visible_source_label_roles(*, findings):
                         local_prefix = re.split(r';|\b(?:and|but)\b', prefix, flags=re.I)[-1]
                         local_suffix = re.split(r';|\b(?:and|but)\b', suffix, flags=re.I)[0]
                         conditional = re.search(r'\b(?:if|unless|hypothetical|illustrative)\b', prefix, re.I)
-                        cancelled_later = re.search(r'\b(?:scrapped|cancelled|canceled|abandoned|dropped|rejected)\s+'
-                            r'(?:(?:the|our|these|those)\s+)?(?:plans?|expansion|it|them)\b', suffix, re.I)
+                        cancelled_later = affirmative_cancellation(suffix)
                         supported |= (has_physical and not conditional and not cancelled_later
                                       and re.search(uncertain, local_prefix + ' ' + local_suffix, re.I) is None)
                 else:
