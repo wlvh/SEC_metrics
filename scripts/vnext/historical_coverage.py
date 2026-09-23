@@ -187,15 +187,21 @@ def independent_content_acceptances(*, repo_root: Path):
           "COVERAGE_ACCEPTANCE_REGISTER_TYPE_INVALID")
     for acceptance in register["acceptances"]:
         for field in ("acceptance_id", "company_id", "metric_id", "period_end",
-                      "accepted_value", "method", "what_this_does_not_establish"):
+                      "accepted_value", "method", "what_this_does_not_establish",
+                      "evidence"):
             _need(isinstance(acceptance.get(field), str) and acceptance[field],
                   "COVERAGE_ACCEPTANCE_FIELD_MISSING:" + field + ":"
                   + str(acceptance.get("acceptance_id")))
-        # A reading that does not say where it read is not a reading.
+        # A reading that does not say where it read is not a reading. The
+        # locator's shape differs by what was read - a document, a table row, a
+        # window of filings - so what is required uniformly is the artifact
+        # holding the full reading, which is what a reader needs to redo it.
         read = acceptance.get("read_from")
         _need(isinstance(read, dict) and read,
               "COVERAGE_ACCEPTANCE_FIELD_MISSING:read_from:"
               + acceptance["acceptance_id"])
+        _need((repo_root / acceptance["evidence"]).is_file(),
+              "COVERAGE_ACCEPTANCE_EVIDENCE_MISSING:" + acceptance["evidence"])
     return register["acceptances"]
 
 

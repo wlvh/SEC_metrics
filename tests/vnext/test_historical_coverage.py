@@ -1419,6 +1419,7 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
                 "metric_id": metric, "period_end": self.PERIOD,
                 "accepted_value": value, "method": "test",
                 "what_this_does_not_establish": "test",
+                "evidence": "docs/evidence/issue47_history/known_result_defects.json",
                 "read_from": {"document": "test"}}
 
     def _covers(self, *, accepted, actual):
@@ -1436,7 +1437,11 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
             with self.subTest(entry["acceptance_id"]):
                 for field in ("accepted_value", "method", "what_this_does_not_establish"):
                     self.assertTrue(entry[field])
-                self.assertTrue(entry["read_from"].get("document"))
+                # The locator's shape differs by what was read, so what is
+                # asserted is that there is one and that the artifact holding
+                # the full reading exists and is named.
+                self.assertTrue(entry["read_from"])
+                self.assertTrue((ROOT / entry["evidence"]).is_file())
 
     def test_an_acceptance_does_not_survive_the_value_changing(self):
         """The load-bearing case. Same coordinate, one digit different.
@@ -1491,7 +1496,8 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
         from vnext.historical_coverage import (ACCEPTANCE_REGISTER_PATH, CoverageError,
                                                independent_content_acceptances)
         entry = self._entry("B04", "2601000000")
-        for missing in ("method", "what_this_does_not_establish", "read_from"):
+        for missing in ("method", "what_this_does_not_establish", "read_from",
+                        "evidence"):
             with self.subTest(missing), TemporaryDirectory() as directory:
                 root = Path(directory)
                 (root / Path(ACCEPTANCE_REGISTER_PATH).parent).mkdir(parents=True)

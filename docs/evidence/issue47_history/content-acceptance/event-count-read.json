@@ -1,0 +1,1977 @@
+{
+ "a_question_this_raises_and_does_not_answer": {
+  "what": "the 8-K/A amends the same January event the original 8-K reported - same report date - so C01 counts one leadership change twice.",
+  "what_it_is": "a question about whether the definition answers the metric's own name. That is a correctness standard, not an implementation choice, and the acceptance register says explicitly that it does not establish it.",
+  "why_it_is_not_a_defect_here": "the approved definition for C01 is '来源：8-K Item 5.02。输出事件清单：date、accession、item code、brief', which specifies an event list keyed by accession. One entry per filing carrying the item is what it asks for."
+ },
+ "both_window_bases": "every accepted count is the same under the filing date and the report date, so it does not depend on which reading of the window is taken.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "e01_is_the_one_route_this_cannot_read": {
+  "measured": {
+   "enphase-2025": {
+    "eight_o_one_filings": 0,
+    "published": "0",
+    "read": 0
+   },
+   "ford-2025": {
+    "eight_o_one_filings": 5,
+    "published": "2",
+    "read": 2
+   },
+   "lumen-2025": {
+    "eight_o_one_filings": 8,
+    "published": "7",
+    "read": 8
+   },
+   "macys-2026": {
+    "eight_o_one_filings": 4,
+    "published": "2",
+    "read": 3
+   },
+   "marriott-2025": {
+    "eight_o_one_filings": 2,
+    "published": "0",
+    "read": 2
+   },
+   "pfizer-2025": {
+    "eight_o_one_filings": 3,
+    "published": "0",
+    "read": 1
+   },
+   "southwest-2025": {
+    "eight_o_one_filings": 1,
+    "published": "2",
+    "read": 2
+   }
+  },
+  "why": "it is the only route with a keyword branch, and reading it means reproducing the route's text scoping. brief_source_priority puts the item code first and a primary-document heading second; a scan over every document in the accession matches 'transaction' in almost any exhibit, which over-counts. Six of the seven windows hold an 8.01 filing, so E01 is accepted only for the one that does not."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "per_position": {
+  "enphase-2025": {
+   "company_id": "enphase_energy",
+   "e01_keyword_rule_note": "8.01 filings are admitted for E01 only when the filing's own document carries one of the declared aliases under the declared normalisation",
+   "eight_ks_in_window": {
+    "filing_date": 6,
+    "report_date": 6
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001463101-25-000111",
+      "filingDate": "2025-10-28",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001463101-25-000099",
+      "filingDate": "2025-07-22",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001463101-25-000090",
+      "filingDate": "2025-06-30",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001463101-25-000075",
+      "filingDate": "2025-05-20",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001463101-25-000054",
+      "filingDate": "2025-04-22",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001463101-25-000014",
+      "filingDate": "2025-02-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001463101-25-000111",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-10-28"
+     },
+     {
+      "accession": "0001463101-25-000099",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-07-22"
+     },
+     {
+      "accession": "0001463101-25-000090",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-06-30"
+     },
+     {
+      "accession": "0001463101-25-000075",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ],
+      "reportDate": "2025-05-14"
+     },
+     {
+      "accession": "0001463101-25-000054",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-04-22"
+     },
+     {
+      "accession": "0001463101-25-000014",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-02-04"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 1,
+     "by_report_date": 1,
+     "published": "1",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 1,
+     "by_report_date": 1,
+     "published": "1",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  },
+  "ford-2025": {
+   "company_id": "ford_motor_company",
+   "e01_keyword_rule_note": "8.01 filings are admitted for E01 only when the filing's own document carries one of the declared aliases under the declared normalisation",
+   "eight_ks_in_window": {
+    "filing_date": 17,
+    "report_date": 17
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000037996-25-000238",
+      "filingDate": "2025-12-15",
+      "items": [
+       "2.06",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000236",
+      "filingDate": "2025-12-12",
+      "items": [
+       "5.02",
+       "5.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000210",
+      "filingDate": "2025-11-21",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000185",
+      "filingDate": "2025-10-23",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000175",
+      "filingDate": "2025-10-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000146",
+      "filingDate": "2025-07-30",
+      "items": [
+       "2.02",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000143",
+      "filingDate": "2025-07-28",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000141",
+      "filingDate": "2025-07-16",
+      "items": [
+       "7.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000139",
+      "filingDate": "2025-07-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000074",
+      "filingDate": "2025-05-13",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000071",
+      "filingDate": "2025-05-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000067",
+      "filingDate": "2025-04-17",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000065",
+      "filingDate": "2025-04-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000011",
+      "filingDate": "2025-02-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000009",
+      "filingDate": "2025-02-05",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000006",
+      "filingDate": "2025-01-23",
+      "items": [
+       "7.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000002",
+      "filingDate": "2025-01-03",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000037996-25-000238",
+      "items": [
+       "2.06",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-09"
+     },
+     {
+      "accession": "0000037996-25-000236",
+      "items": [
+       "5.02",
+       "5.03",
+       "9.01"
+      ],
+      "reportDate": "2025-12-11"
+     },
+     {
+      "accession": "0000037996-25-000210",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-11-21"
+     },
+     {
+      "accession": "0000037996-25-000185",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-10-23"
+     },
+     {
+      "accession": "0000037996-25-000175",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-10-01"
+     },
+     {
+      "accession": "0000037996-25-000146",
+      "items": [
+       "2.02",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-30"
+     },
+     {
+      "accession": "0000037996-25-000143",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "reportDate": "2025-07-28"
+     },
+     {
+      "accession": "0000037996-25-000141",
+      "items": [
+       "7.01"
+      ],
+      "reportDate": "2025-07-16"
+     },
+     {
+      "accession": "0000037996-25-000139",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-01"
+     },
+     {
+      "accession": "0000037996-25-000074",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ],
+      "reportDate": "2025-05-07"
+     },
+     {
+      "accession": "0000037996-25-000071",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-05-05"
+     },
+     {
+      "accession": "0000037996-25-000067",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "reportDate": "2025-04-17"
+     },
+     {
+      "accession": "0000037996-25-000065",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-04-01"
+     },
+     {
+      "accession": "0000037996-25-000011",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-02-05"
+     },
+     {
+      "accession": "0000037996-25-000009",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-05"
+     },
+     {
+      "accession": "0000037996-25-000006",
+      "items": [
+       "7.01"
+      ],
+      "reportDate": "2025-01-23"
+     },
+     {
+      "accession": "0000037996-25-000002",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-01-03"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 3,
+     "by_report_date": 3,
+     "published": "3",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 3,
+     "by_report_date": 3,
+     "published": "3",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  },
+  "lumen-2025": {
+   "company_id": "lumen_technologies",
+   "e01_keyword_rule_note": "8.01 filings are admitted for E01 only when the filing's own document carries one of the declared aliases under the declared normalisation",
+   "eight_ks_in_window": {
+    "filing_date": 19,
+    "report_date": 19
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001193125-25-330850",
+      "filingDate": "2025-12-23",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-327637",
+      "filingDate": "2025-12-22",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-311581",
+      "filingDate": "2025-12-09",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-308717",
+      "filingDate": "2025-12-05",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000110",
+      "filingDate": "2025-10-30",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-223206",
+      "filingDate": "2025-09-29",
+      "items": [
+       "1.01",
+       "2.03",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-203545",
+      "filingDate": "2025-09-15",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0001193125-25-198334",
+      "filingDate": "2025-09-08",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-196061",
+      "filingDate": "2025-09-04",
+      "items": [
+       "7.01",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-182730",
+      "filingDate": "2025-08-18",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-172843",
+      "filingDate": "2025-08-05",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000092",
+      "filingDate": "2025-07-31",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-152683",
+      "filingDate": "2025-06-30",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-141702",
+      "filingDate": "2025-06-17",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-124002",
+      "filingDate": "2025-05-21",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000059",
+      "filingDate": "2025-05-15",
+      "items": [
+       "5.07",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000047",
+      "filingDate": "2025-05-01",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000039",
+      "filingDate": "2025-04-02",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000004",
+      "filingDate": "2025-02-04",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001193125-25-330850",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-23"
+     },
+     {
+      "accession": "0001193125-25-327637",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-22"
+     },
+     {
+      "accession": "0001193125-25-311581",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-08"
+     },
+     {
+      "accession": "0001193125-25-308717",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-12-01"
+     },
+     {
+      "accession": "0000018926-25-000110",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-10-30"
+     },
+     {
+      "accession": "0001193125-25-223206",
+      "items": [
+       "1.01",
+       "2.03",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-09-29"
+     },
+     {
+      "accession": "0001193125-25-203545",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-09-09"
+     },
+     {
+      "accession": "0001193125-25-198334",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "reportDate": "2025-09-08"
+     },
+     {
+      "accession": "0001193125-25-196061",
+      "items": [
+       "7.01",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-09-04"
+     },
+     {
+      "accession": "0001193125-25-182730",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-08-18"
+     },
+     {
+      "accession": "0001193125-25-172843",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-08-04"
+     },
+     {
+      "accession": "0000018926-25-000092",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-31"
+     },
+     {
+      "accession": "0001193125-25-152683",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-06-30"
+     },
+     {
+      "accession": "0001193125-25-141702",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-06-16"
+     },
+     {
+      "accession": "0001193125-25-124002",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-05-21"
+     },
+     {
+      "accession": "0000018926-25-000059",
+      "items": [
+       "5.07",
+       "9.01"
+      ],
+      "reportDate": "2025-05-13"
+     },
+     {
+      "accession": "0000018926-25-000047",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-05-01"
+     },
+     {
+      "accession": "0000018926-25-000039",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "reportDate": "2025-03-27"
+     },
+     {
+      "accession": "0000018926-25-000004",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-04"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 8,
+     "by_report_date": 8,
+     "published": "7",
+     "verdict": "DIFFERS"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 7,
+     "by_report_date": 7,
+     "published": "7",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  },
+  "macys-2026": {
+   "company_id": "macys",
+   "e01_keyword_rule_note": "8.01 filings are admitted for E01 only when the filing's own document carries one of the declared aliases under the declared normalisation",
+   "eight_ks_in_window": {
+    "filing_date": 13,
+    "report_date": 13
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000794367-25-000169",
+      "filingDate": "2025-12-12",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000165",
+      "filingDate": "2025-12-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-054900",
+      "filingDate": "2025-12-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000139",
+      "filingDate": "2025-09-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000137",
+      "filingDate": "2025-07-29",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000132",
+      "filingDate": "2025-07-14",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000128",
+      "filingDate": "2025-07-14",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-028040",
+      "filingDate": "2025-05-28",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000092",
+      "filingDate": "2025-05-20",
+      "items": [
+       "5.07"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000087",
+      "filingDate": "2025-04-09",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000054",
+      "filingDate": "2025-04-01",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-010767",
+      "filingDate": "2025-03-06",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000010",
+      "filingDate": "2025-02-28",
+      "items": [
+       "8.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000794367-25-000169",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-12-08"
+     },
+     {
+      "accession": "0000794367-25-000165",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-12-03"
+     },
+     {
+      "accession": "0001628280-25-054900",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-12-03"
+     },
+     {
+      "accession": "0000794367-25-000139",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-09-03"
+     },
+     {
+      "accession": "0000794367-25-000137",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-28"
+     },
+     {
+      "accession": "0000794367-25-000132",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-14"
+     },
+     {
+      "accession": "0000794367-25-000128",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-14"
+     },
+     {
+      "accession": "0001628280-25-028040",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-05-28"
+     },
+     {
+      "accession": "0000794367-25-000092",
+      "items": [
+       "5.07"
+      ],
+      "reportDate": "2025-05-16"
+     },
+     {
+      "accession": "0000794367-25-000087",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "reportDate": "2025-04-09"
+     },
+     {
+      "accession": "0000794367-25-000054",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-04-01"
+     },
+     {
+      "accession": "0001628280-25-010767",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-03-06"
+     },
+     {
+      "accession": "0000794367-25-000010",
+      "items": [
+       "8.01"
+      ],
+      "reportDate": "2025-02-28"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 3,
+     "by_report_date": 3,
+     "published": "2",
+     "verdict": "DIFFERS"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "window": [
+    "2025-02-02",
+    "2026-01-31"
+   ]
+  },
+  "marriott-2025": {
+   "company_id": "marriott_international",
+   "e01_keyword_rule_note": "8.01 filings are admitted for E01 only when the filing's own document carries one of the declared aliases under the declared normalisation",
+   "eight_ks_in_window": {
+    "filing_date": 10,
+    "report_date": 10
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001048286-25-000011",
+      "filingDate": "2025-11-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-184082",
+      "filingDate": "2025-08-20",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-037592",
+      "filingDate": "2025-08-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-158742",
+      "filingDate": "2025-07-14",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-118861",
+      "filingDate": "2025-05-13",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0001193125-25-118853",
+      "filingDate": "2025-05-13",
+      "items": [
+       "5.07"
+      ]
+     },
+     {
+      "accession": "0001628280-25-022390",
+      "filingDate": "2025-05-06",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-036732",
+      "filingDate": "2025-02-26",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-004772",
+      "filingDate": "2025-02-11",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-009110",
+      "filingDate": "2025-01-21",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001048286-25-000011",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-11-04"
+     },
+     {
+      "accession": "0001193125-25-184082",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-08-18"
+     },
+     {
+      "accession": "0001628280-25-037592",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-08-05"
+     },
+     {
+      "accession": "0001193125-25-158742",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-11"
+     },
+     {
+      "accession": "0001193125-25-118861",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-01-17"
+     },
+     {
+      "accession": "0001193125-25-118853",
+      "items": [
+       "5.07"
+      ],
+      "reportDate": "2025-05-09"
+     },
+     {
+      "accession": "0001628280-25-022390",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-05-06"
+     },
+     {
+      "accession": "0001193125-25-036732",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-24"
+     },
+     {
+      "accession": "0001628280-25-004772",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-02-11"
+     },
+     {
+      "accession": "0001193125-25-009110",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-01-17"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 3,
+     "by_report_date": 3,
+     "published": "3",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "published": "0",
+     "verdict": "DIFFERS"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 3,
+     "by_report_date": 3,
+     "published": "3",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  },
+  "pfizer-2025": {
+   "company_id": "pfizer",
+   "e01_keyword_rule_note": "8.01 filings are admitted for E01 only when the filing's own document carries one of the declared aliases under the declared normalisation",
+   "eight_ks_in_window": {
+    "filing_date": 9,
+    "report_date": 9
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000078003-25-000167",
+      "filingDate": "2025-12-16",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-291406",
+      "filingDate": "2025-11-21",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000159",
+      "filingDate": "2025-11-13",
+      "items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000149",
+      "filingDate": "2025-11-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000136",
+      "filingDate": "2025-08-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-122480",
+      "filingDate": "2025-05-19",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000111",
+      "filingDate": "2025-04-29",
+      "items": [
+       "2.02",
+       "2.05",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000109",
+      "filingDate": "2025-04-28",
+      "items": [
+       "5.07"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000017",
+      "filingDate": "2025-02-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000078003-25-000167",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-16"
+     },
+     {
+      "accession": "0001193125-25-291406",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-11-18"
+     },
+     {
+      "accession": "0000078003-25-000159",
+      "items": [
+       "8.01"
+      ],
+      "reportDate": "2025-11-13"
+     },
+     {
+      "accession": "0000078003-25-000149",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-11-04"
+     },
+     {
+      "accession": "0000078003-25-000136",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-08-05"
+     },
+     {
+      "accession": "0001193125-25-122480",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-05-14"
+     },
+     {
+      "accession": "0000078003-25-000111",
+      "items": [
+       "2.02",
+       "2.05",
+       "9.01"
+      ],
+      "reportDate": "2025-04-29"
+     },
+     {
+      "accession": "0000078003-25-000109",
+      "items": [
+       "5.07"
+      ],
+      "reportDate": "2025-04-24"
+     },
+     {
+      "accession": "0000078003-25-000017",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-02-04"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 1,
+     "by_report_date": 1,
+     "published": "0",
+     "verdict": "DIFFERS"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  },
+  "southwest-2025": {
+   "company_id": "southwest_airlines",
+   "e01_keyword_rule_note": "8.01 filings are admitted for E01 only when the filing's own document carries one of the declared aliases under the declared normalisation",
+   "eight_ks_in_window": {
+    "filing_date": 17,
+    "report_date": 17
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000092380-25-000144",
+      "filingDate": "2025-12-05",
+      "items": [
+       "7.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-262544",
+      "filingDate": "2025-11-03",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000138",
+      "filingDate": "2025-10-22",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000131",
+      "filingDate": "2025-07-23",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000119",
+      "filingDate": "2025-05-19",
+      "items": [
+       "3.03",
+       "5.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000117",
+      "filingDate": "2025-05-19",
+      "items": [
+       "5.07"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000079",
+      "filingDate": "2025-04-23",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000075",
+      "filingDate": "2025-03-31",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000059",
+      "filingDate": "2025-03-11",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-029062",
+      "filingDate": "2025-02-19",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-028035",
+      "filingDate": "2025-02-18",
+      "items": [
+       "2.05",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-023650",
+      "filingDate": "2025-02-10",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000025",
+      "filingDate": "2025-02-07",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000007",
+      "filingDate": "2025-01-30",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-013376",
+      "filingDate": "2025-01-27",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-004026",
+      "filingDate": "2025-01-10",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000003",
+      "filingDate": "2025-01-07",
+      "items": [
+       "7.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000092380-25-000144",
+      "items": [
+       "7.01"
+      ],
+      "reportDate": "2025-12-05"
+     },
+     {
+      "accession": "0001193125-25-262544",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-11-03"
+     },
+     {
+      "accession": "0000092380-25-000138",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-10-22"
+     },
+     {
+      "accession": "0000092380-25-000131",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-23"
+     },
+     {
+      "accession": "0000092380-25-000119",
+      "items": [
+       "3.03",
+       "5.03",
+       "9.01"
+      ],
+      "reportDate": "2025-05-16"
+     },
+     {
+      "accession": "0000092380-25-000117",
+      "items": [
+       "5.07"
+      ],
+      "reportDate": "2025-05-14"
+     },
+     {
+      "accession": "0000092380-25-000079",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-04-23"
+     },
+     {
+      "accession": "0000092380-25-000075",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-03-28"
+     },
+     {
+      "accession": "0000092380-25-000059",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-03-11"
+     },
+     {
+      "accession": "0001193125-25-029062",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-18"
+     },
+     {
+      "accession": "0001193125-25-028035",
+      "items": [
+       "2.05",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-17"
+     },
+     {
+      "accession": "0001193125-25-023650",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-04"
+     },
+     {
+      "accession": "0000092380-25-000025",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-02-04"
+     },
+     {
+      "accession": "0000092380-25-000007",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-01-30"
+     },
+     {
+      "accession": "0001193125-25-013376",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-01-27"
+     },
+     {
+      "accession": "0001193125-25-004026",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-01-07"
+     },
+     {
+      "accession": "0000092380-25-000003",
+      "items": [
+       "7.01"
+      ],
+      "reportDate": "2025-01-07"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 4,
+     "by_report_date": 4,
+     "published": "4",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 4,
+     "by_report_date": 4,
+     "published": "4",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  }
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_EVENT_COUNT_READ",
+ "result": {
+  "differs": 0,
+  "e01_not_readable_by_this_method": 4,
+  "match_under_both_window_bases": 38,
+  "positions_compared": 42
+ },
+ "the_defect_this_found_was_mine_again": {
+  "what_it_looked_like": "Marriott's C01 and E03 read 2 against a published 3, on a window where every header was saved and two independent copies of the submissions index agree on the filing set.",
+  "what_it_was": "the reading filtered on form == '8-K' and Marriott's 2025 window holds one 8-K/A carrying item 5.02, amending the January filing. Including it gives exactly 3.",
+  "why_it_is_worth_writing_down": "this is the third time in this block that a reading written to check the route was the thing that was wrong. A quickly written second implementation is less reliable than the route it checks, so every difference gets run to ground before it is called a defect."
+ },
+ "what_this_is": "the six 8-K event metrics counted from the filings' own SEC headers, for the seven company-periods that deliver them."
+}
