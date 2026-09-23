@@ -1627,6 +1627,45 @@ class TheUnionIsOneDeclarationNotTwo(unittest.TestCase):
                    in _frame(company)["requirements"]}
         self.assertEqual([], sorted(emitted - set(default)))
 
+    def test_the_governance_class_is_declared_and_its_period_decides_it(self):
+        """C02's second source reaches the gate, and the right one per period.
+
+        The planner declares five classes and no governance class at all, so
+        every proxy the route reads was refused as undeclared. This asserts
+        that the frame now emits the class, that each row names the period
+        that consumes it, and that two periods do not share a document - a
+        declaration built from "the newest proxy" would name one saved filing
+        for every year and the earlier periods would read as needing nothing.
+        """
+        from vnext.historical_governance_sources import DEPENDENCY_CLASS
+        frame = _frame(self.COMPANY)
+        rows = [row for row in frame["requirements"]
+                if row["dependency_class"] == DEPENDENCY_CLASS]
+        self.assertTrue(rows)
+        self.assertEqual(len(rows), len({row["source_url"] for row in rows}))
+        for row in rows:
+            self.assertTrue(all(str(consumer).startswith("period:")
+                                and str(consumer).endswith(":C02")
+                                for consumer in row["consumers"]), row["consumers"])
+            self.assertEqual("historical_governance_sources", row["declared_by"])
+            self.assertIn("acquisition_kind", row)
+        self.assertEqual(len(rows), len({row["consumers"][0] for row in rows}))
+
+    def test_a_period_whose_primary_is_missing_is_a_governance_limitation(self):
+        """Not every period can declare one, and the frame says which.
+
+        The document that names the proxy is the year's own annual primary, so
+        a year without it declares nothing. Reporting that as an empty set
+        would make an unreachable period look satisfied.
+        """
+        frame = _frame(self.COMPANY)
+        limitations = frame["governance_declaration_limitations"]
+        self.assertTrue(limitations)
+        for item in limitations:
+            self.assertEqual("C02", item["metric_id"])
+            self.assertIn("report_end", item)
+            self.assertTrue(item["reason"])
+
     def test_a_url_both_sides_declare_keeps_both_sets_of_roles(self):
         # The submissions index is declared by the planner for the frame and by
         # the event declaration for the enumeration; merging must not drop
@@ -1697,8 +1736,17 @@ class ARefreshIsFinishedWhenThePlanStopsAskingForIt(unittest.TestCase):
 
     @classmethod
     def _state(cls, root):
-        rows = declared_frame(repo_root=root, company_id=cls.COMPANY)["requirements"]
+        frame = declared_frame(repo_root=root, company_id=cls.COMPANY)
+        rows = frame["requirements"]
         return {"rows": len(rows),
+                # By URL, because counting answers neither "did anything go
+                # missing" nor "what arrived" - a chain that dropped one row
+                # and added another keeps the count.
+                "urls": sorted(r["source_url"] for r in rows),
+                "by_url": {r["source_url"]: r for r in rows},
+                "governance_blocked": sorted(
+                    item["report_end"]
+                    for item in frame["governance_declaration_limitations"]),
                 "refresh": sorted(r["document_name"] for r in rows
                                   if r.get("acquisition_kind") == "SNAPSHOT_REFRESH"),
                 "conflicting": sorted(
@@ -1780,8 +1828,68 @@ class ARefreshIsFinishedWhenThePlanStopsAskingForIt(unittest.TestCase):
         chain = self.chain()
         self.assertEqual([], chain["after"]["refresh"])
         self.assertEqual([], chain["after"]["conflicting"])
-        self.assertEqual(chain["before"]["rows"], chain["after"]["rows"],
-                         "a refresh must not change what the frame declares")
+
+    def test_the_refresh_drops_nothing_it_was_declaring(self):
+        """What the row count was really guarding, said directly.
+
+        This case used to read ``before["rows"] == after["rows"]``. Equality
+        forbids two different things at once and only one of them is a fault:
+        a chain that "cleared" the conflict by making the conflicting rows
+        disappear, and a declaration that names more once a period stops being
+        blocked. Equality also lets a swap through - drop one row, add
+        another, the count holds - so it was both too strict and too loose.
+        Set difference by URL answers the question it was asked.
+        """
+        chain = self.chain()
+        dropped = sorted(set(chain["before"]["urls"]) - set(chain["after"]["urls"]))
+        self.assertEqual([], dropped,
+                         "a refresh repairs metadata; it must not stop declaring a "
+                         "dependency, least of all the ones that carried the conflict")
+        still_there = set(chain["after"]["by_url"])
+        for name in chain["before"]["conflicting"]:
+            with self.subTest(name):
+                self.assertIn(name, [chain["after"]["by_url"][url]["document_name"]
+                                     for url in still_there],
+                              "the conflicting shards are still declared, they are "
+                              "simply no longer in conflict")
+
+    def test_anything_the_refresh_adds_is_a_period_it_unblocked(self):
+        """Growth is allowed only where the refresh explains it.
+
+        The governance declaration asks the route itself which document each
+        pinned period's C02 would read, so a period whose selection cannot
+        resolve declares nothing and records why. Repairing the metadata makes
+        one of those periods resolvable, and the dependency it names becomes
+        derivable for the first time - a lower bound that grows as blockers
+        clear, which is the same shape the event declaration already carries.
+
+        Measured here: exactly one row arrives, JPMorgan's FY2025 proxy, and
+        the governance limitation for that period is the one that goes away.
+        The FY2024 limitation stays, because its shards were never saved and
+        a derived index does not invent them - so the refresh clears the
+        conflict without hiding the separate missing-material problem.
+
+        Deliberately not asserted: that an added row needs no fetch. This one
+        is already saved, but a period that unblocks may name a proxy that is
+        not, and that would be correct.
+        """
+        chain = self.chain()
+        added = sorted(set(chain["after"]["urls"]) - set(chain["before"]["urls"]))
+        unblocked = (set(chain["before"]["governance_blocked"])
+                     - set(chain["after"]["governance_blocked"]))
+        self.assertTrue(added, "this chain is only a proof if something did unblock")
+        self.assertTrue(unblocked)
+        for url in added:
+            row = chain["after"]["by_url"][url]
+            with self.subTest(row["document_name"]):
+                periods = {str(c).split(":")[1] for c in row["consumers"]
+                           if str(c).startswith("period:")}
+                self.assertTrue(periods & unblocked,
+                                "an added row must serve a period the refresh "
+                                "unblocked, not appear out of nowhere")
+        self.assertTrue(set(chain["after"]["governance_blocked"]),
+                        "the period whose shards were never saved is still blocked, "
+                        "so the refresh did not paper over the missing material")
 
     def test_the_refreshed_index_describes_the_bodies_rather_than_replacing_them(self):
         chain = self.chain()

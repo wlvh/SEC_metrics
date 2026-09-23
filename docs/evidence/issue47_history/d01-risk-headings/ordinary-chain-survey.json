@@ -1,0 +1,214 @@
+{
+  "record_type": "ISSUE47_D01_ORDINARY_CHAIN_SURVEY",
+  "schema_version": 1,
+  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+  "purpose": "Ask the ordinary chain the same question before wiring the historical route. B06, C03 and C02 each turned out to be a cascade, and reading source_mode selected the wrong level every time.",
+  "what_source_mode_says": {
+    "D01": "ai_text, reader_family_id risk_legal_text",
+    "why_that_is_not_the_answer": "C02 carries the same source_mode and runs a deterministic extraction with zero model calls. The registry field describes the metric family, not which code answers it - this is the third time in this Issue that reading it as an implementation was wrong."
+  },
+  "what_the_code_actually_does": {
+    "dispatch": "normal_run_v3 -> ordinary_remaining_cases (the else branch) -> its own D01 branch",
+    "sources": "ordinary_text_input.current_text_sources",
+    "extraction": "risk_signals.risk_factor_headings - pure regex over leading emphasis inside a located Item 1A; the module imports only re, typing, canonical and text_coverage",
+    "result_api": "text_results (v1) with text_review.build_text_review_unit, not text_results_v2",
+    "model_calls": 0,
+    "so": "D01 needs no model allowance. The earlier note in AGENTS.md that grouped it with B13/D03/D04 as 'blocked on model allowance' was wrong."
+  },
+  "measured_ten_for_ten": {
+    "enphase_energy": {
+      "stage": "PROPOSAL_ERROR",
+      "form": "10-K",
+      "accession": "0001463101-26-000013",
+      "report_date": "2025-12-31",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "source_roles": [
+        "companyfacts",
+        "submissions",
+        "target_primary"
+      ],
+      "n_references": 3,
+      "n_raw_blobs": 3
+    },
+    "ford_motor_company": {
+      "stage": "PROPOSAL_ERROR",
+      "form": "10-K",
+      "accession": "0000037996-26-000015",
+      "report_date": "2025-12-31",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "source_roles": [
+        "companyfacts",
+        "submissions",
+        "target_primary"
+      ],
+      "n_references": 3,
+      "n_raw_blobs": 3
+    },
+    "jpmorgan_chase": {
+      "stage": "PROPOSAL_ERROR",
+      "form": "10-K",
+      "accession": "0001628280-26-008131",
+      "report_date": "2025-12-31",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "source_roles": [
+        "companyfacts",
+        "submissions",
+        "target_primary"
+      ],
+      "n_references": 3,
+      "n_raw_blobs": 3
+    },
+    "lumen_technologies": {
+      "stage": "PROPOSAL_ERROR",
+      "form": "10-K",
+      "accession": "0000018926-26-000014",
+      "report_date": "2025-12-31",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "source_roles": [
+        "companyfacts",
+        "submissions",
+        "target_primary"
+      ],
+      "n_references": 3,
+      "n_raw_blobs": 3
+    },
+    "macys": {
+      "stage": "PROPOSAL_ERROR",
+      "form": "10-K",
+      "accession": "0001628280-26-021721",
+      "report_date": "2026-01-31",
+      "period": [
+        "2025-02-02",
+        "2026-01-31"
+      ],
+      "source_roles": [
+        "companyfacts",
+        "submissions",
+        "target_primary"
+      ],
+      "n_references": 3,
+      "n_raw_blobs": 3
+    },
+    "marriott_international": {
+      "stage": "PROPOSAL_ERROR",
+      "form": "10-K",
+      "accession": "0001048286-26-000007",
+      "report_date": "2025-12-31",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "source_roles": [
+        "companyfacts",
+        "submissions",
+        "target_primary"
+      ],
+      "n_references": 3,
+      "n_raw_blobs": 3
+    },
+    "paramount_skydance_paramount_global": {
+      "stage": "PROPOSAL_ERROR",
+      "form": "10-K",
+      "accession": "0002041610-26-000011",
+      "report_date": "2025-12-31",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "source_roles": [
+        "companyfacts",
+        "submissions",
+        "target_primary"
+      ],
+      "n_references": 3,
+      "n_raw_blobs": 3
+    },
+    "pfizer": {
+      "stage": "PROPOSAL_ERROR",
+      "form": "10-K",
+      "accession": "0000078003-26-000026",
+      "report_date": "2025-12-31",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "source_roles": [
+        "companyfacts",
+        "submissions",
+        "target_primary"
+      ],
+      "n_references": 3,
+      "n_raw_blobs": 3
+    },
+    "salesforce": {
+      "stage": "PROPOSAL_ERROR",
+      "form": "10-K",
+      "accession": "0001108524-26-000060",
+      "report_date": "2026-01-31",
+      "period": [
+        "2025-02-01",
+        "2026-01-31"
+      ],
+      "source_roles": [
+        "companyfacts",
+        "submissions",
+        "target_primary"
+      ],
+      "n_references": 3,
+      "n_raw_blobs": 3
+    },
+    "southwest_airlines": {
+      "stage": "PROPOSAL_ERROR",
+      "form": "10-K",
+      "accession": "0000092380-26-000004",
+      "report_date": "2025-12-31",
+      "period": [
+        "2025-01-01",
+        "2025-12-31"
+      ],
+      "source_roles": [
+        "companyfacts",
+        "submissions",
+        "target_primary"
+      ],
+      "n_references": 3,
+      "n_raw_blobs": 3
+    }
+  },
+  "what_is_uniform": {
+    "source_roles": [
+      "companyfacts",
+      "submissions",
+      "target_primary"
+    ],
+    "n_references": [
+      3
+    ],
+    "form": [
+      "10-K"
+    ],
+    "reading": "one level, one shape, ten for ten - including the successor registrant, because D01 reads only its own target primary and never a prior period or a second filing. That is what makes it unlike B06 (seven levels, four Specs) and C02/C03 (two levels)."
+  },
+  "what_this_does_not_establish": [
+    "what the ordinary chain ANSWERS for D01. This measured input preparation only; a route can prepare an input for every company and still resolve to RISK_HEADING_STRUCTURE_NOT_IMPLEMENTED for some of them.",
+    "that a pinned historical D01 reproduces those answers. The differential - ordinary versus historical, field for field - is owed before the route is called wired, the same as every other route in this Issue."
+  ],
+  "a_defect_in_this_probe_worth_recording": "its optional second stage imported resolve_repository_file from vnext.records and raised ImportError for every company, which is why every row reads PROPOSAL_ERROR. The failure is the probe's, not the route's - the input layer above it succeeded. A reader who took the stage name at face value would have concluded the opposite of what was measured.",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

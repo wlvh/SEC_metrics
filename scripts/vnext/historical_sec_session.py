@@ -651,6 +651,11 @@ REQUIRED_WIRING_EVIDENCE = (
     # belong here: a declaration the gate admits from must be pinned by the
     # same receipt as the gate.
     "scripts/vnext/historical_event_sources.py",
+    # The governance declaration, here for the same reason: C02's second source
+    # is a proxy or a Part III amendment, the planner declares neither, and a
+    # declaration the gate admits from has to be pinned by the same receipt as
+    # the gate.
+    "scripts/vnext/historical_governance_sources.py",
     "tests/vnext/test_historical_sec_session.py",
     "tools/vnext_historical_sec.py",
     "tools/vnext_historical_wiring.py",
@@ -845,6 +850,7 @@ def recorded_historical_session(*, root, response, status=200, limits=(0, 0, 80)
                                 dependency_classes=("ACCESSION_INSTANCE_DISCOVERY",
                                                     "ANNUAL_PERIOD_IDENTITY",
                                                     "COMPANYFACTS", "FISCAL_EVENT_FILING",
+                                                    "GOVERNANCE_DISCLOSURE_FILING",
                                                     "SUBMISSIONS_HISTORY",
                                                     "SUBMISSIONS_INDEX"),
                                 earliest_report_end="2000-01-01",

@@ -143,9 +143,20 @@ def declared_frame(*, repo_root: Path, company_id: str, years: int = 5):
     events = declare_event_sources(repo_root=Path(repo_root), company_id=company_id,
                                    count=years)
     requirements = _union(planned=plan["requirements"], added=events["requirements"])
+    # The same hole, for the same reason, one metric later: C02's second source
+    # is the annual meeting's proxy, or the amendment that adds Part III where
+    # a company puts its governance information there, and the planner declares
+    # neither. Ten of the 82 proxies the saved indexes list have accession
+    # material and all ten were filed in 2026, so every earlier period names a
+    # document the gate would refuse as undeclared.
+    from .historical_governance_sources import governance_dependencies
+    governance = governance_dependencies(repo_root=Path(repo_root), company_id=company_id,
+                                         report_ends=targets)
+    requirements = _union(planned=requirements, added=governance["requirements"])
     return {"requirements": requirements, "target_report_dates": targets,
             "company_id": company_id, "plan_id": plan["plan_id"],
-            "event_declaration_limitations": events["limitations"]}
+            "event_declaration_limitations": events["limitations"],
+            "governance_declaration_limitations": governance["limitations"]}
 
 
 def _union(*, planned, added):

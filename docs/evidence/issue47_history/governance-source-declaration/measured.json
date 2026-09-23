@@ -1,0 +1,80 @@
+{
+  "record_type": "ISSUE47_GOVERNANCE_SOURCE_DECLARATION_MEASUREMENT",
+  "schema_version": 1,
+  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+  "purpose": "C02's second source had no declaration, so the acquisition gate refused every proxy by name. This records what the new declaration produces, and the refresh invariant it moved.",
+  "why_a_separate_module": {
+    "the_planner_declares": ["submissions index", "its history shards",
+                             "Company Facts", "each annual accession's primary and index"],
+    "it_does_not_declare": "the annual meeting proxy, or the Part III amendment where a company puts its governance information there",
+    "consequence_before": "HISTORICAL_URL_IS_NOT_A_DECLARED_DEPENDENCY for every C02 proxy, so no allowance could unblock those positions",
+    "why_not_extend_the_planner": "plan_historical_sources is a NEW_RULE_FILE of issue_47_v1; editing it moves the closure the last 374 frozen Runs were produced under",
+    "how_the_rows_are_derived": "by asking prepare_historical_business_text_input which filing that period's C02 would read, not by writing the proxy rule a second time - the same discipline the event declaration uses with _event_sources"
+  },
+  "marriott_measured": {
+    "declared_proxies": 3,
+    "saved": ["2026-03-27"],
+    "not_saved": ["2024-03-27", "2025-03-27"],
+    "limitations": "periods whose own annual primary is not saved declare nothing and carry a named limitation, rather than declaring zero"
+  },
+  "the_builder_refused": {
+    "tool": "tools/vnext_historical_wiring.py",
+    "status": "REFUSED",
+    "reason": "ISSUE_47_WIRING_FIRST_PHASE_DID_NOT_PASS",
+    "artifact_released": false,
+    "what_it_means": "the two-phase design working: the candidate was never installed, so nothing named itself valid on bytes that had not passed",
+    "failing_case": "ARefreshIsFinishedWhenThePlanStopsAskingForIt.test_after_the_refresh_the_plan_asks_for_nothing",
+    "assertion": "115 != 116 : a refresh must not change what the frame declares"
+  },
+  "what_the_growth_actually_was": {
+    "method": "set difference by source_url over the chain's real before and after states",
+    "added": 1,
+    "removed": 0,
+    "added_row": {
+      "document_name": "jpm-20260402.htm",
+      "accession": "0000019617-26-000096",
+      "consumers": ["period:2025-12-31:C02"],
+      "saved_status": "VERIFIED_SAVED_SOURCE",
+      "new_acquisition_required": false
+    },
+    "governance_limitations_before": ["2024-12-31", "2025-12-31"],
+    "governance_limitations_after": ["2024-12-31"],
+    "reading": "the refresh unblocked JPMorgan's FY2025 period selection, so the declaration could name that period's proxy for the first time. FY2024 stays blocked because its shards were never saved and a derived index does not invent them.",
+    "so_the_declaration_is": "a lower bound that grows as blockers clear - the same shape already recorded for the event declaration"
+  },
+  "why_the_equality_was_replaced": {
+    "too_strict": "it forbade explained growth together with the real fault",
+    "too_loose": "a swap - one row out, one row in - leaves the count untouched",
+    "replacement": [
+      "test_the_refresh_drops_nothing_it_was_declaring: set difference must be empty, and the rows that carried the conflict must still be declared",
+      "test_anything_the_refresh_adds_is_a_period_it_unblocked: every added row must serve a period present in before's governance limitations and absent from after's, and some period must still be blocked"
+    ],
+    "deliberately_not_asserted": "that an added row needs no fetch. This one is already saved, but a period that unblocks may name a proxy that is not, and that would be correct."
+  },
+  "fault_injections": [
+    {"injection": "A_dropped_the_conflicting_shards",
+     "what_it_simulates": "a chain that 'clears' the conflict by no longer declaring the shards that carried it - the fault the count equality was written against",
+     "rows_after": 105, "caught_by": "test_the_refresh_drops_nothing_it_was_declaring", "caught": true},
+    {"injection": "C_added_row_serves_a_still_blocked_period",
+     "what_it_simulates": "a row that appears with nothing about the refresh accounting for it",
+     "caught_by": "test_anything_the_refresh_adds_is_a_period_it_unblocked", "caught": true},
+    {"injection": "D_nothing_unblocked_but_a_row_arrived",
+     "what_it_simulates": "the chain proving nothing, which the case must say rather than pass vacuously",
+     "caught_by": "test_anything_the_refresh_adds_is_a_period_it_unblocked", "caught": true},
+    {"injection": "B_swap_that_keeps_the_count",
+     "first_version_was_broken": "it dropped one and added one on top of a chain that already goes 115 -> 116, so the count equality would have failed anyway - for the wrong reason. An injection that cannot reach the point under test is not evidence.",
+     "second_version": "drop two, add one, so the count lands exactly on before",
+     "before_rows": 115, "after_rows": 115,
+     "a_count_equality_would_have_seen_it": false,
+     "dropped_urls": ["https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+                      "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json"],
+     "caught_by": "test_the_refresh_drops_nothing_it_was_declaring", "caught": true}
+  ],
+  "a_second_shape_named_here": {
+    "what": "C02's source gap surfaces as a failed position, not a WITHHELD Run",
+    "measured": "Marriott 2023 C02 -> HISTORICAL_TEXT_RUN_INPUT_BLOCKED:[{'category': 'SOURCE_UNAVAILABLE', 'reason': 'SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000114036124015465/ny20015439x1_def14a.htm'}]",
+    "why": "C02's second source is needed to prepare the Run's input. C04's missing index is needed to resolve the metric, so its Run exists and the result is WITHHELD. Manufacturing a Run here would mean declaring an input that does not exist.",
+    "what_is_owed": "the frame must read this as a source gap, not as an unexplained attempt failure"
+  },
+  "calls": {"provider": 0, "paid": 0, "sec": 0}
+}
