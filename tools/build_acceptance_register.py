@@ -131,8 +131,16 @@ GOVERNANCE_LIMIT = {
         "period. It does not establish that PEO total compensation is the "
         "right signal, nor " + COMMON,
  "C04": "what is established is that the auditor named in both years is the "
-        "same and no 8-K in the window reported a change. It does not "
-        "establish " + COMMON}
+        "same and no 8-K in the window reported a change. Two limits belong "
+        "with that. Naming the same firm across a punctuation difference - "
+        "Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation "
+        "the route uses, so a route too loose at that layer would not be "
+        "caught here; the rule compares letter sequences, so KPMG and KPMG "
+        "Advisory are not equal under it, and both exact strings are recorded. "
+        "And the reading takes every dei:AuditorName fact in the document "
+        "without filtering by context, entity or dimension, which is looser "
+        "than the route; each document here carries exactly one name. It does "
+        "not establish " + COMMON}
 
 governance = json.loads((REPO / GOVERNANCE).read_text())["per_position"]
 for label, case in sorted(governance.items()):
@@ -247,11 +255,14 @@ register = {
          "companies names its proxy that way. Earlier periods remain unread "
          "and that IS a source gap - each registrant declares 16 to 33 DEF "
          "14A filings and exactly one is on disk.",
-  "C04 for five": "the reading reports the previous year's 10-K as not "
-                  "readable. That is this reading's path, not the route's - "
-                  "the route reads each accession's index and the AuditorName "
-                  "concept. Recorded as untriaged rather than as a material "
-                  "gap, because the C03 verdict above turned out the same way.",
+  "C04": "all six positions that carry a value are read. The five that "
+         "previously reported the previous year's 10-K as not readable were "
+         "three defects in the reading: it demanded the prior primary HTML "
+         "where the route reads any document of that accession carrying dei "
+         "facts, it parsed the accession out of an error string it had itself "
+         "truncated, and it computed the prior period end by replacing the "
+         "year - which for a 52/53-week filer names a date the calendar never "
+         "had. Southwest and Salesforce have no published C04 value at all.",
   "B06": "the three delivered positions all reproduce from their filings' own "
          "facts, but two of them were fitted - solved backwards from the "
          "published value - and the rule cannot be stated from the filing "

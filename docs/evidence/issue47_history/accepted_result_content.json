@@ -3006,6 +3006,82 @@
    "what_this_does_not_establish": "what is established is that the proxy reports this PEO total for this period. It does not establish that PEO total compensation is the right signal, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C04_ENPHASE_2025",
+   "accepted_value": "0",
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/governance-read.json",
+   "method": "the auditor named by dei:AuditorName in this year's 10-K and in the previous year's, plus any 8-K in the window carrying item 4.01. Zero means the same auditor in both years and no such filing.",
+   "metric_id": "C04",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "auditor_last_year": [
+     "DELOITTE & TOUCHE LLP"
+    ],
+    "auditor_this_year": [
+     "DELOITTE & TOUCHE LLP"
+    ],
+    "eight_k_item_4_01_in_window": []
+   },
+   "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C04_FORD_2025",
+   "accepted_value": "0",
+   "company_id": "ford_motor_company",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/governance-read.json",
+   "method": "the auditor named by dei:AuditorName in this year's 10-K and in the previous year's, plus any 8-K in the window carrying item 4.01. Zero means the same auditor in both years and no such filing.",
+   "metric_id": "C04",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "auditor_last_year": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_this_year": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "eight_k_item_4_01_in_window": []
+   },
+   "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C04_LUMEN_2025",
+   "accepted_value": "0",
+   "company_id": "lumen_technologies",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/governance-read.json",
+   "method": "the auditor named by dei:AuditorName in this year's 10-K and in the previous year's, plus any 8-K in the window carrying item 4.01. Zero means the same auditor in both years and no such filing.",
+   "metric_id": "C04",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "auditor_last_year": [
+     "KPMG LLP"
+    ],
+    "auditor_this_year": [
+     "KPMG LLP"
+    ],
+    "eight_k_item_4_01_in_window": []
+   },
+   "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C04_MACYS_2026",
+   "accepted_value": "0",
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/governance-read.json",
+   "method": "the auditor named by dei:AuditorName in this year's 10-K and in the previous year's, plus any 8-K in the window carrying item 4.01. Zero means the same auditor in both years and no such filing.",
+   "metric_id": "C04",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "auditor_last_year": [
+     "KPMG, LLP"
+    ],
+    "auditor_this_year": [
+     "KPMG LLP"
+    ],
+    "eight_k_item_4_01_in_window": []
+   },
+   "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C04_MARRIOTT_2025",
    "accepted_value": "0",
    "company_id": "marriott_international",
@@ -3015,14 +3091,33 @@
    "period_end": "2025-12-31",
    "read_from": {
     "auditor_last_year": [
-     "Ernst&#160;&amp; Young LLP"
+     "Ernst & Young LLP"
     ],
     "auditor_this_year": [
-     "Ernst&#160;&amp; Young LLP"
+     "Ernst & Young LLP"
     ],
     "eight_k_item_4_01_in_window": []
    },
-   "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+   "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C04_PFIZER_2025",
+   "accepted_value": "0",
+   "company_id": "pfizer",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/governance-read.json",
+   "method": "the auditor named by dei:AuditorName in this year's 10-K and in the previous year's, plus any 8-K in the window carrying item 4.01. Zero means the same auditor in both years and no such filing.",
+   "metric_id": "C04",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "auditor_last_year": [
+     "KPMG LLP"
+    ],
+    "auditor_this_year": [
+     "KPMG LLP"
+    ],
+    "eight_k_item_4_01_in_window": []
+   },
+   "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_D02_MACYS_2026",
@@ -5346,7 +5441,7 @@
  "not_here_and_why": {
   "B06": "the three delivered positions all reproduce from their filings' own facts, but two of them were fitted - solved backwards from the published value - and the rule cannot be stated from the filing alone: Salesforce carries the inputs of two approved debt models that give different answers, and which applies is decided by the note structure the cascade reads. See docs/evidence/issue47_history/content-acceptance/b06-not-independently-readable.json.",
   "C03": "all nine are read. The four that previously read as 'no saved proxy reports the target period' were a defect in the reading, not a gap in the material: it globbed *def14a*.htm, and only one of the ten companies names its proxy that way. Earlier periods remain unread and that IS a source gap - each registrant declares 16 to 33 DEF 14A filings and exactly one is on disk.",
-  "C04 for five": "the reading reports the previous year's 10-K as not readable. That is this reading's path, not the route's - the route reads each accession's index and the AuditorName concept. Recorded as untriaged rather than as a material gap, because the C03 verdict above turned out the same way.",
+  "C04": "all six positions that carry a value are read. The five that previously reported the previous year's 10-K as not readable were three defects in the reading: it demanded the prior primary HTML where the route reads any document of that accession carrying dei facts, it parsed the accession out of an error string it had itself truncated, and it computed the prior period end by replacing the year - which for a 52/53-week filer names a date the calendar never had. Southwest and Salesforce have no published C04 value at all.",
   "D02 for four of the eleven": "Pfizer's 96 excerpts, Lumen's 41, Paramount's 28 and Enphase's 18 were read whole and found wrong - two, one, two and one blocks respectively - so each is a registered defect rather than an unread set. The other seven have been read in both directions and are accepted.",
   "E01 where the window holds an 8.01 filing": "E01 is the only route with a keyword branch, and reading it means reproducing the route's text scoping. A scan over every document in the accession matches 'transaction' in almost any exhibit. Six of seven windows hold an 8.01 filing, so E01 is accepted only for the one that does not.",
   "everything else": "no reading has been made.",
