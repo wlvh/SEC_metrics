@@ -284,6 +284,41 @@
    "severity": "set composition, not lost substance: Note 16A is taken in full, so the disclosure the sentence points at was already present.",
    "summary": "Pfizer's whole Item 3 is one 77-character hyperlinked sentence and _substantive drops any linked block under 120 characters, so the first source the approved definition names contributed nothing. Lumen's Item 3 is the same kind of sentence, 226 characters and unlinked, and is taken - the two filings answered the same content differently on the anchor alone.",
    "what_stays_open": "a hyperlink of twelve characters or more that is not a navigation header and repeats inside a note scope would be admitted once per occurrence. No filing here holds one, so this is recorded rather than guarded."
+  },
+  {
+   "company_id": "paramount_skydance_paramount_global",
+   "confirmed_in": {
+    "how": "read out of the batch Run's own records, not inferred from a census: the observations at blocks 2108 and 2257 are present with the text above. The same sweep judged block 1900 correctly admitted.",
+    "items": 28,
+    "reported_quality": "EXACT",
+    "requirement_closure_hash": "sha256:6a75dcb423e5a4bcfc51bb084098c3eb6b520dd68362fa50a35040f045a8fcfe",
+    "result_id": "sha256:81289af7736204e48130369e42c1996d2965098934f0cf7ef06f709039b33db6",
+    "run_id": "run:historical-period:a14974e6b78d7d9a3e16676c95b94bf95b7907090333b626685850086f32039b"
+   },
+   "defect_id": "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/keyword-proxy-all-eleven.json"
+   ],
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "result_id": null,
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "scope_note": "This withdraws the coordinate's result from current delivery. The other 26 items include block 1900, which the census judged correctly admitted; withdrawing the set is not a claim that they are wrong.",
+   "shared_root_cause": "scripts/vnext/text_business_candidates._LEGAL standing in for 'is this a legal-proceedings disclosure' on Item 8 blocks the filing does not incorporate by name. Across all eleven saved periods the proxy admits 24 Item 8 blocks, 19 of them correctly. Narrowing it would risk the nineteen to remove the five, and the enumeration criterion that looked like it would separate them is falsified by Macy's block 1065.",
+   "summary": "Two of the 28 excerpts are not legal-proceedings disclosures. Block 2108 is transaction-related cost composition and block 2257 is a credit-facility leverage covenant; each is admitted because a keyword appears inside an enumeration about something else. A 28-item set with two wrong members is not the right set.",
+   "the_blocks": {
+    "2108": {
+     "why_out_of_scope": "the subject is what transaction costs consist of - 'banking, legal, advisory, and other professional fees'. It does carry one litigation-related amount, a $156 million 2023 benefit from stockholder litigation, so it is not empty of legal content; it is not a legal-proceedings or contingencies disclosure, which is what the approved source names."
+    },
+    "2257": {
+     "why_out_of_scope": "a leverage-ratio covenant. The keyword is in the definition of an EBITDA add-back: 'restructuring or other business optimization programs, litigation and environmental reserves'."
+    }
+   },
+   "why_it_was_missing": "the first census read six filings at one period each and this issuer was not among them. Its D02 result was counted as delivered in two batches."
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

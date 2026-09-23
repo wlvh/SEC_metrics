@@ -1,0 +1,132 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "how": "the Item 8 excerpts were read out of the eleven frozen D02 Runs' own records rather than recomputed, so what is judged is what the route actually produced. An Item 8 block can only enter D02 through the _LEGAL keyword, so the section id identifies the proxy's admissions.",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "item_8_admissions_by_period": {
+  "enphase@2025-12-31": [
+   1446,
+   2015
+  ],
+  "ford@2025-12-31": [],
+  "lumen@2025-12-31": [
+   1670,
+   3382,
+   3383
+  ],
+  "macys@2026-01-31": [
+   1011,
+   1065
+  ],
+  "marriott@2023-12-31": [
+   1084
+  ],
+  "marriott@2024-12-31": [
+   1113
+  ],
+  "marriott@2025-12-31": [
+   1113,
+   1321,
+   1322
+  ],
+  "paramount@2025-12-31": [
+   1900,
+   2108,
+   2257
+  ],
+  "pfizer@2025-12-31": [
+   2175,
+   2240,
+   2302,
+   2351
+  ],
+  "salesforce@2026-01-31": [],
+  "southwest@2025-12-31": [
+   1428,
+   1580,
+   1581,
+   1584,
+   1585
+  ]
+ },
+ "newly_read": {
+  "macys@2026-01-31": {
+   "1011": {
+    "verdict": "IN_SCOPE",
+    "why": "the registrant settled interchange-fee litigation it was a plaintiff in and recorded a $328 million gain. A legal proceeding disclosure about the registrant, with an amount."
+   },
+   "1065": {
+    "verdict": "IN_SCOPE",
+    "why": "self-insurance accruals for workers compensation and general liability claims, ending on what the registrant will ultimately disburse. A loss contingency about the registrant, and the same shape as Marriott's accrual policy block which the first census judged in scope.",
+    "why_it_matters": "this is the counterexample - see below."
+   }
+  },
+  "marriott_international@2023-12-31": {
+   "1084": {
+    "verdict": "IN_SCOPE",
+    "why": "the same block at a different index. Three periods of one issuer give the same admission and the same judgement, which is the across-periods half of what was asked."
+   }
+  },
+  "marriott_international@2024-12-31": {
+   "1113": {
+    "verdict": "IN_SCOPE",
+    "why": "the legal-contingency accrual policy, byte-identical to the 2025 block the first census judged in scope."
+   }
+  },
+  "paramount_skydance_paramount_global@2025-12-31": {
+   "1900": {
+    "verdict": "IN_SCOPE",
+    "why": "the acquisition-date fair value of contingent liabilities, principally the defense and settlement of asbestos suits and environmental claims. A contingency the registrant now carries on its own balance sheet."
+   },
+   "2108": {
+    "verdict": "OUT_OF_SCOPE",
+    "why": "the subject is transaction-related cost composition. The keyword sits in 'banking, legal, advisory, and other professional fees'. It does carry one litigation-related amount - a $156 million 2023 benefit from stockholder litigation - so calling it a pure over-take would be too strong; it is not a legal-proceedings or contingencies disclosure, which is what D02's approved source names."
+   },
+   "2257": {
+    "verdict": "OUT_OF_SCOPE",
+    "why": "a credit-facility leverage covenant. The keyword is inside the definition of an EBITDA add-back: 'restructuring or other business optimization programs, litigation and environmental reserves'. Same shape as Pfizer 2175."
+   }
+  },
+  "salesforce@2026-01-31": {
+   "blocks": 0,
+   "note": "the proxy admits nothing on this filing, like Ford's."
+  }
+ },
+ "not_done": "no narrowing is implemented. The asymmetry the first census named holds and is now larger: removing five would risk nineteen.",
+ "production_authorized": false,
+ "record_type": "ISSUE_47_D02_ITEM_8_KEYWORD_PROXY_FULL_CENSUS",
+ "the_candidate_predicate_is_falsified_as_a_partition": {
+  "it_said": "every in-scope block predicates something of the registrant; every out-of-scope block has the keyword inside a comma-separated enumeration whose head noun is something else.",
+  "the_counterexample": "macys@2026-01-31 block 1065. It predicates of the registrant ('The Company ... is self-insured') AND has the keyword inside an enumeration ('losses, settlements, litigation costs and other factors'). Both halves fire, so the two do not partition.",
+  "what_is_still_not_settled": "a criterion that separates 19 from 5 across eleven periods. Eleven is more than six and still one period for nine of the issuers.",
+  "what_that_means": "a narrowing built on the enumeration half would drop a contingency disclosure about the registrant. Declining to write that rule from six filings was right, and this is the filing that shows why rather than an argument that it might be."
+ },
+ "the_proxy_across_eleven_periods": {
+  "blocks_admitted": 24,
+  "in_scope": 19,
+  "newly_read": {
+   "blocks": 7,
+   "filings": 5,
+   "in_scope": 5,
+   "out_of_scope": 2
+  },
+  "out_of_scope": 5,
+  "previously_read": {
+   "blocks": 17,
+   "filings": 6,
+   "in_scope": 14,
+   "out_of_scope": 3
+  }
+ },
+ "two_new_instances_of_the_registered_defect": {
+  "blocks": [
+   "paramount_skydance_paramount_global@2025-12-31 2108 and 2257"
+  ],
+  "effect": "that coordinate's D02 result is withdrawn from verified_outcome, the same way Lumen's was. Finding an error and withdrawing it are two acts and only the second moves a number.",
+  "registered_as": "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES"
+ },
+ "why_this_exists": "keyword-proxy-scope.json read six filings at one period each and said what would settle its candidate predicate: the same reading on other issuers and other periods. Five saved originals were never read - three other issuers and two earlier periods of one that was - and they cost no acquisition. This reads them."
+}
