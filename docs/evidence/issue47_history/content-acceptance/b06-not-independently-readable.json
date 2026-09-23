@@ -1,0 +1,37 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "production_authorized": false,
+ "record_type": "ISSUE_47_B06_CONTENT_READ_ATTEMPT",
+ "what_the_numbers_do": {
+  "enphase_energy@2025-12-31": {
+   "from_the_filing": "LongTermDebtCurrent 632,183,000 + LongTermDebtNoncurrent 572,194,000 over StockholdersEquity 1,087,023,000",
+   "model": "BORROWING_CURRENT_NONCURRENT_NO_FINANCE_LEASE",
+   "published": "1.107959077222837051285943352",
+   "reproduces": true
+  },
+  "macys@2026-01-31": {
+   "from_the_filing": "LongTermDebtAndCapitalLeaseObligations 2,432,000,000 + FinanceLeaseLiability 13,000,000 over StockholdersEquity 4,860,000,000",
+   "model": "a long-term debt total plus the separately presented finance lease liability",
+   "published": "0.5030864197530864197530864198",
+   "reproduces": true
+  },
+  "salesforce@2026-01-31": {
+   "from_the_filing": "LongTermDebt 14,439,000,000 + FinanceLeaseLiability 535,000,000 over StockholdersEquity 59,142,000,000",
+   "model": "BORROWING_PLUS_SEPARATE_FINANCE_LEASE",
+   "published": "0.2531872442595786412363464205",
+   "reproduces": true
+  }
+ },
+ "what_was_tried": "reading debt and equity for the three delivered B06 positions out of each filing's own inline XBRL, the way the eight statement metrics were read.",
+ "what_would_make_it_readable": "a reading of the debt note itself - which totals the filing presents and how they compose - rather than of the tagged facts. That is the same kind of work the D02 content read is, and it is not done here.",
+ "why_none_of_them_is_accepted": {
+  "and_the_rule_cannot_be_stated_from_the_filing_alone": "the approved models in config/r5_b06_debt_sets_v3.json are explicit, so 'apply the model whose inputs the filing carries' looks like a rule - but it does not decide. Salesforce's filing carries the inputs of two of them: BORROWING_PLUS_SEPARATE_FINANCE_LEASE gives 14,974,000,000 and BORROWING_CURRENT_NONCURRENT_NO_FINANCE_LEASE gives 4,000,000,000 + 10,439,000,000 = 14,439,000,000, and they are different answers. Which model applies is decided by the note structure the cascade reads, which is the thing a second reading would have to reimplement.",
+  "the_first_two_were_fitted_not_checked": "for Macy's and Salesforce the composition was found by solving backwards from the published value for what the debt must have been, then looking for concepts that add to it. That is fitting. A check states the rule first.",
+  "what_that_means": "B06's content is not independently readable by this method. Reading the model choice off the Run and then verifying its arithmetic would check the numbers given the stage and say nothing about the stage, which is where B06's difficulty is."
+ }
+}

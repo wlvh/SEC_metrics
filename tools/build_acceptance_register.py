@@ -190,6 +190,14 @@ register = {
                             "eighty-five the submissions indexes list.",
   "C04 for five": "the previous year's 10-K is not saved, and 'the auditor did "
                   "not change' cannot be read from one year's filing alone.",
+  "B06": "the three delivered positions all reproduce from their filings' own "
+         "facts, but two of them were fitted - solved backwards from the "
+         "published value - and the rule cannot be stated from the filing "
+         "alone: Salesforce carries the inputs of two approved debt models "
+         "that give different answers, and which applies is decided by the "
+         "note structure the cascade reads. See "
+         "docs/evidence/issue47_history/content-acceptance/"
+         "b06-not-independently-readable.json.",
   "everything else": "no reading has been made."},
  "acceptances": sorted(entries, key=lambda e: e["acceptance_id"]),
 }
