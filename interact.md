@@ -547,7 +547,12 @@ D04的条件、例证或过去原因只影响其实际限定的断言；明确�
 * `delivery_layer_counts` 是交付三层：`native_run`（哪个版本产出什么、是否冻结
   并验证）、`public_row`（Run 旁是否有点名该结果的 `row_receipt.json`）、
   `content_acceptance`。**未证明的一层在 `delivery_layer_unproven_reasons` 里
-  写明理由**，不省略。`content_acceptance` 目前处处为 0。
+  写明理由**，不省略。`content_acceptance` 由
+  `docs/evidence/issue47_history/accepted_result_content.json` 决定，**方向与缺陷登记
+  相反**：缺陷一直撤回到被显式释放为止，接受**只在它点名的那个值仍是该坐标当前的值
+  时成立**——接受说的是"这一个数被对着申报读过"，换成另一个数就没人读过。两者冲突
+  时撤回胜出。**它曾经处处为 0，那句话已不成立**，不要按旧值读；当前数目由该登记与当
+  前结果共同决定，报告自己会给出。
   `verified_outcome` 只回答第一层，不能当交付率读。
 * `delivery_by_outcome` 把这三层与坐标自己说的话交叉：`VALUE`（实际数值）、
   `STRUCTURALLY_NOT_APPLICABLE`（结构不适用）、`RAN_WITHOUT_A_VALUE`（跑过但没有值，
