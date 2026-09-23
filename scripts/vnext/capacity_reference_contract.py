@@ -10,6 +10,18 @@ from .canonical import canonical_json_bytes, content_hash, strict_json_loads, st
 
 VERSION = 'B13_SOURCE_REFERENCES_V1'
 COMPACT_VERSION = 'B13_TYPED_COMPACT_REFERENCES_V2'
+ROLE_VERSION = 'B13_MEANINGFUL_ROLE_REFERENCES_V3'
+ROLE_LABELS = {
+    'physical_capacity_context': 'CAPACITY_QUALITATIVE',
+    'sales_or_shipments': 'SALES_OR_SHIPMENTS',
+    'product_or_installed_capacity': 'PRODUCT_STORAGE_OR_INSTALLED_CAPACITY',
+    'planned_physical_capacity': 'PLANNED_CAPACITY',
+    'monetary_credit_capacity': 'MONETARY_CREDIT_CAPACITY',
+    'other_entity': 'OTHER_ENTITY',
+    'historical_statement': 'HISTORICAL_STATEMENT',
+    'conditional_statement': 'CONDITIONAL_OR_BOILERPLATE',
+    'other_context': 'OTHER_CONTEXT',
+}
 
 
 def need(condition, reason):
@@ -35,7 +47,7 @@ def _owners(base):
     return owners
 
 
-def upgrade_request(base, *, compact=False):
+def upgrade_request(base, *, compact=False, role_labels=False):
     from .capacity_semantic_review import review_policy_path
     from .normal_source_authority import ROOT
     need(base.get('record_type') == 'B13_INTERPRETATION_REQUEST'
@@ -80,10 +92,12 @@ def upgrade_request(base, *, compact=False):
         'All evidence in one finding must belong to the same source unit. '
         'units contains exactly one review status per supplied unit, addressed by its zero-based unit_index. '
         'Every source unit, including empty units, must be reviewed. Unknown or ambiguous references are rejected.')
-    need(type(compact) is bool, 'B13_COMPACT_SELECTION_INVALID')
+    need(type(compact) is bool and type(role_labels) is bool and (not role_labels or compact),
+         'B13_COMPACT_SELECTION_INVALID')
     if compact:
-        _compact_protocol(protocol, base)
-    body['source_reference_contract'] = {'version': COMPACT_VERSION if compact else VERSION, 'base_request_id': base['request_id']}
+        _compact_protocol(protocol, base, role_labels=role_labels)
+    version = ROLE_VERSION if role_labels else COMPACT_VERSION if compact else VERSION
+    body['source_reference_contract'] = {'version': version, 'base_request_id': base['request_id']}
     return {**body, 'request_id': content_hash(value=body)}
 
 
@@ -94,11 +108,13 @@ def restore_base_request(request):
          'B13_REFERENCE_REQUEST_CHANGED')
     meta = request.get('source_reference_contract')
     need(type(meta) is dict and set(meta) == {'version', 'base_request_id'}
-         and meta['version'] in {VERSION, COMPACT_VERSION}, 'B13_REFERENCE_CONTRACT_CHANGED')
+         and meta['version'] in {VERSION, COMPACT_VERSION, ROLE_VERSION}, 'B13_REFERENCE_CONTRACT_CHANGED')
     body = {k: deepcopy(v) for k, v in request.items() if k not in {'request_id', 'source_reference_contract'}}
     body['response_protocol'] = strict_json_file(path=ROOT / review_policy_path(request))['response_protocol']
     base = {**body, 'request_id': content_hash(value=body)}
-    need(base['request_id'] == meta['base_request_id'] and upgrade_request(base, compact=meta['version'] == COMPACT_VERSION) == request,
+    need(base['request_id'] == meta['base_request_id'] and upgrade_request(base,
+         compact=meta['version'] in {COMPACT_VERSION, ROLE_VERSION},
+         role_labels=meta['version'] == ROLE_VERSION) == request,
          'B13_REFERENCE_MAPPING_CHANGED')
     return base
 
@@ -108,7 +124,7 @@ def restore_response(*, request, raw_response):
     owners = _owners(base)
     original = strict_json_loads(text=raw_response.decode('utf-8'))
     wire_original = deepcopy(original)
-    if request['source_reference_contract']['version'] == COMPACT_VERSION:
+    if request['source_reference_contract']['version'] in {COMPACT_VERSION, ROLE_VERSION}:
         original = _expand_compact_response(original, request)
     need(type(original) is dict and set(original) == {'units', 'findings'}
          and type(original['units']) is list and type(original['findings']) is list
@@ -154,7 +170,7 @@ def restore_response(*, request, raw_response):
     return base, canonical_json_bytes(value=normalized), wire_original
 
 
-def _compact_protocol(protocol, base):
+def _compact_protocol(protocol, base, *, role_labels=False):
     """Short typed references and enum codes; identical required source census."""
     finding = protocol['json_schema']['properties']['findings']['items']
     books = {key: deepcopy(finding['properties'][key]['enum']) for key in ('kind','subject','timing')}
@@ -173,6 +189,26 @@ def _compact_protocol(protocol, base):
         'Give a concise source-specific reason of at most96 characters; the original semantic definitions apply. '
         'Do not merge findings across source units or replace an unresolved fact with an exclusion.')
     fields = [{'type':'integer','minimum':0,'maximum':len(books[key])-1} for key in ('kind','subject','timing')]
+    if role_labels:
+        need(set(ROLE_LABELS.values()) == set(books['kind']), 'B13_ROLE_LABEL_BOOK_CHANGED')
+        protocol['role_labels'] = dict(ROLE_LABELS)
+        protocol['classification_codebooks'] = {key: books[key] for key in ('subject', 'timing')}
+        protocol['compact_finding_fields'] = ['role_label','subject_code','timing_code','source_refs','reason']
+        protocol['finding_fields'] = protocol['compact_finding_fields']
+        protocol['compact_instructions'] = (
+            'Findings are five-element arrays: [role_label,subject_code,timing_code,source_refs,reason]. '
+            'Use an exact role_labels key, mapped to the unchanged category definitions; subject_code and timing_code '
+            'remain zero-based indices in classification_codebooks. A plan for shares, debt, tax, governance or '
+            'restructuring is not planned_physical_capacity. Manufacturing facility utilization used for inventory '
+            'cost allocation is not product_or_installed_capacity. Do not classify a source from a shared word alone. '
+            'Review every supplied unit and account for every required candidate; an irrelevant required candidate '
+            'can be other_context, while an uncertain relation must remain unresolved. Unrelated nonrequired blocks '
+            'need no finding. Emit each distinct finding once; never repeat it to fill the response. '
+            'Typed references are B for exact visible block, F for exact native fact, S for unit_index:local_object_index. '
+            'Check the reference_inventory and never guess a type or owner or merge findings across units. '
+            'Preserve all source units and required '
+            'assessments; reasons remain source-specific and at most96 characters.')
+        fields[0] = {'type':'string','enum':list(ROLE_LABELS)}
     fields += [{'type':'array','minItems':1,'items':{'type':'string','pattern':r'^(B[0-9]+|F[0-9]+|S[0-9]+:[0-9]+)$'}},
                {'type':'string','minLength':1,'maxLength':96}]
     protocol['json_schema']['properties']['findings']['items'] = {'type':'array','prefixItems':fields,'minItems':5,'maxItems':5,'items':False}
@@ -197,10 +233,16 @@ def _expand_compact_response(value, request):
     need(type(value) is dict and set(value)=={'units','findings'} and type(value['findings']) is list,
          'B13_COMPACT_RESPONSE_FIELDS_CHANGED')
     result=deepcopy(value);findings=[];books=request['response_protocol']['classification_codebooks']
+    roles=request['response_protocol'].get('role_labels')
     for row in value['findings']:
         need(type(row) is list and len(row)==5,'B13_COMPACT_FINDING_ARITY')
         finding={}
+        if roles is not None:
+            need(type(row[0]) is str and row[0] in roles, 'B13_ROLE_LABEL_INVALID')
+            finding['kind'] = roles[row[0]]
         for position,key in enumerate(('kind','subject','timing')):
+            if position == 0 and roles is not None:
+                continue
             code=row[position]
             need(type(code) is int and 0<=code<len(books[key]),'B13_COMPACT_CLASSIFICATION_CODE')
             finding[key]=books[key][code]

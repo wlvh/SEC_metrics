@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:2de397bb715db8e4a76fdbb5c7fb1533ebf80372a52865d919bd8e50e61786e6",
-  "execution_authority_hash": "sha256:6a68cfc50fa857323480dad3d0e19e86b286363629f527490311d1196005dda5",
+  "requirement_closure_hash": "sha256:170e0a3a3577772605c1bdb0e05054baaf52d80535a3228018eaa451c29a5e0d",
+  "execution_authority_hash": "sha256:aa832c167d6220491136b1778e434558173c3402e1266502102956d46b3b19b4",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -14,12 +14,13 @@
   "real_request_factory_to_controller_verified": true,
   "count_control_tests_passed": true,
   "evidence": {
-    "docs/evidence/issue28_continuous/b13-170-source-audit/p2-short-wiring-summary.json": "91883c1c2998a502c4643218dc4993cc44067e442250237e37ac931ec9c0aa1a",
-    "docs/evidence/issue28_continuous/b13-170-source-audit/p2-complete-response-fix-tests.log": "dab52b4b5c2cf6017c73e45b3e62138c4b9079c2c7d28efd75103044b1364844",
-    "docs/evidence/issue28_continuous/b13-170-source-audit/fast-p2.json": "b108377305d8102d1fe252d6f9157e11fd799805ece450c1ecd4d1c0ed4204c8",
-    "docs/evidence/issue28_continuous/b13-170-source-audit/diagnostic-summary.json": "3cdadc65cd8acf1af2a63125b58722a31df64121c71f9707d5d755ba369130ef",
-    "docs/evidence/issue28_continuous/b13-170-source-audit/final-invariants.json": "b88c34f28236010e9509fdfe008e90b0ed30029d3cf1f526c4ffbed09c26d3ae"
+    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/role-short-wiring-summary.json": "c5d76fa30081187caf32526093a5c5adbf3b2e402208cfa74f63a095309d0721",
+    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/role-short-wiring.log": "6ad9ba001735b919e729eff3d318c7d2d048c691ac61d3188ff3ac38422a659b",
+    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/offline-candidate-summary.json": "e69d30438c49ed8e99e1d1d7c18fe731f6da00626bcb6db1a94ccb6da744c8aa",
+    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/offline-candidate.log": "4a4c4402ccb0bf34fc28380c410b7d6e08e638edbde1cc1ef32a0f9c5530e360",
+    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/directed-tests.log": "203c95a0512b2262cd9a729c6b738fbe487309a0272bee956ac818fd2664383c",
+    "docs/evidence/issue28_continuous/b13-meaningful-role-v3/fast.json": "58a00c7b13f890910e6fb0960358c86e93d977de70032048c620e06f64121db3"
   },
-  "scope": "P2 cancellation-negation repair; current B13 recorded factory/controller positive and original111 rejection. D04/Unicode/publication unchanged; provider stopped171.",
-  "independent_review": "ccd7 review found earlierP2; parent repairs tested, scoped independent closure PENDING"
+  "scope": "Recorded B13 role-V3 candidate bridge plus default original111 rejection. V3 live execution is explicitly forbidden before claim; provider stopped171, no real recovery or resampling authority.",
+  "independent_review": "Two ec311e2d P2 errors closed by user-provided external limited review; new V3 diff remains review-pending."
 }

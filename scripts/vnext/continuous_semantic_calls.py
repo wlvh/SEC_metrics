@@ -348,10 +348,13 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
         _json(request['response_protocol']),requirement,authority,data_root,source_ledger) for request in source_requests(source)]
 
 
-def select_native_request_variants(*, prepared_requests, ledger, source_references=False, compact_references=False):
+def select_native_request_variants(*, prepared_requests, ledger, source_references=False,
+                                   compact_references=False, semantic_role_labels=False):
     """Keep exact successful receipts; use indexed output for other groups.
 
     Selection is read-only and covers the existing complete source partition.
+    Semantic role labels are opt-in for offline preparation; they never turn a
+    failed or currently invalid historical response into fresh-call authority.
     A success that fails current replay stops selection rather than buying a
     replacement. Failed original requests retain their original terminal.
     """
@@ -370,19 +373,25 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
          'NATIVE_VARIANT_BASE_PARTITION_REQUIRED')
     need(type(compact_references) is bool and (not compact_references or source_references),
          'NATIVE_COMPACT_REFERENCE_SELECTION_INVALID')
+    need(type(semantic_role_labels) is bool and (not semantic_role_labels or
+         (source_references and compact_references and source['metric_id']=='B13')),
+         'NATIVE_ROLE_LABEL_SELECTION_INVALID')
     need(type(source_references) is bool and (not source_references or source['metric_id']=='B13'),
          'NATIVE_REFERENCE_SELECTION_INVALID')
     alternatives = [upgrade_request(r) for r in originals]
     variant_requests = [{BASE:r, VERSION:a} for r,a in zip(originals,alternatives)]
     selected_version = VERSION
     if source_references and source.get('program_quantity_role_contract_version'):
-        from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, upgrade_request as reference_request
+        from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, ROLE_VERSION, upgrade_request as reference_request
         for versions, original in zip(variant_requests,originals):
             versions[REFERENCE_VERSION] = reference_request(original)
             if compact_references:
                 versions[COMPACT_VERSION] = reference_request(original, compact=True)
+                if semantic_role_labels:
+                    versions[ROLE_VERSION] = reference_request(original, compact=True, role_labels=True)
         if source_references:
-            selected_version = COMPACT_VERSION if compact_references else REFERENCE_VERSION
+            selected_version = (ROLE_VERSION if semantic_role_labels else
+                                COMPACT_VERSION if compact_references else REFERENCE_VERSION)
     need(not source_references or selected_version != VERSION, 'NATIVE_REFERENCE_PROGRAM_SOURCE_REQUIRED')
     candidates = {r['request_id']:(i,version) for i,versions in enumerate(variant_requests)
                   for version,r in versions.items()}
@@ -655,6 +664,10 @@ def execute_d04_assessment(*, prepared, ledger, recorded_wire=None):
 def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
+    if request_fields.get('metric_id') == 'B13':
+        from .capacity_reference_contract import ROLE_VERSION
+        need(not (ledger.live and request_fields.get('source_reference_contract', {}).get('version') == ROLE_VERSION),
+             'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED')
     need(not prepared.replay_only, 'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
     if prepared.source_ledger is not None:
         need(prepared.source_ledger.live==ledger.live and prepared.source_ledger.root==ledger.root,

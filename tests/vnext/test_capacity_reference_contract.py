@@ -61,6 +61,46 @@ class CapacityReferenceContractTest(unittest.TestCase):
         bad=deepcopy(response);bad['units'].pop()
         with self.assertRaises(ValueError):restore_response(request=request,raw_response=canonical_json_bytes(value=bad))
 
+    def test_meaningful_role_variant_preserves_source_and_rejects_wrong_role(self):
+        from vnext.capacity_reference_contract import ROLE_VERSION
+        from vnext.native_unit_index import reconstruct_requests,validate_request_partition
+        request=upgrade_request(self.base,compact=True,role_labels=True)
+        self.assertEqual(request['source_reference_contract']['version'],ROLE_VERSION)
+        self.assertNotIn('kind',request['response_protocol']['classification_codebooks'])
+        self.assertEqual(restore_base_request(request),self.base)
+        self.assertEqual(request['units'],self.base['units'])
+        self.assertEqual(request['required_candidate_assessments'],self.base['required_candidate_assessments'])
+        self.assertEqual(validate_request_partition(self.source,[request]),[ROLE_VERSION])
+        self.assertEqual(reconstruct_requests(self.source,[ROLE_VERSION]),[request])
+        books=request['response_protocol']['classification_codebooks'];finding=self.response['findings'][0]
+        index=finding['evidence'][0]['source_index']
+        row=['physical_capacity_context',books['subject'].index(finding['subject']),
+             books['timing'].index(finding['timing']),['B'+str(index)],finding['reason']]
+        response={**deepcopy(self.response),'findings':[row]}
+        checked=validate_response(request=request,raw_response=canonical_json_bytes(value=response),source=self.source)
+        self.assertEqual(checked['unresolved'],[])
+        self.assertEqual(checked['findings'][0]['kind'],'CAPACITY_QUALITATIVE')
+        for wrong_role in (0,'planned_physical_capacity','product_or_installed_capacity','made_up_role'):
+            bad=deepcopy(response);bad['findings'][0][0]=wrong_role
+            with self.subTest(role=wrong_role):
+                if wrong_role in ('planned_physical_capacity','product_or_installed_capacity'):
+                    self.assertTrue(validate_response(request=request,
+                        raw_response=canonical_json_bytes(value=bad),source=self.source)['unresolved'])
+                else:
+                    with self.assertRaises(ValueError):
+                        restore_response(request=request,raw_response=canonical_json_bytes(value=bad))
+        repeated=deepcopy(response);repeated['findings'].append(deepcopy(row))
+        with self.assertRaisesRegex(ValueError,'B13_REFERENCE_DUPLICATE_FINDING'):
+            restore_response(request=request,raw_response=canonical_json_bytes(value=repeated))
+
+    def test_meaningful_role_candidate_cannot_claim_live_without_new_authority(self):
+        from types import SimpleNamespace
+        from vnext.continuous_semantic_calls import execute_capacity_assessment
+        request=upgrade_request(self.base,compact=True,role_labels=True)
+        prepared=SimpleNamespace(request_bytes=canonical_json_bytes(value=request))
+        with self.assertRaisesRegex(ValueError,'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED'):
+            execute_capacity_assessment(prepared=prepared,ledger=SimpleNamespace(live=True))
+
     def test_flat_identity_roundtrip_preserves_prompt_source_and_semantics(self):
         before = deepcopy(self.base)
         base, raw, original = self.decode()
