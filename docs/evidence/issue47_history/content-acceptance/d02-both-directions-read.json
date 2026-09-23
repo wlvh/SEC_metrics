@@ -1,9 +1,14 @@
 {
- "a_text_value_is_accepted_by_digest": "D02's value is its whole payload, up to 5,774 characters here, so the register names it by sha256. The binding is the same: a different payload has a different digest and the acceptance stops applying.",
+ "a_text_value_is_accepted_by_digest": "D02's value is its whole payload, up to 34,905 characters here, so the register names it by sha256. The binding is the same: a different payload has a different digest and the acceptance stops applying.",
  "calls": {
   "paid": 0,
   "provider": 0,
   "sec": 0
+ },
+ "ford_2025": {
+  "what_this_reading_changed": "eight running-header blocks left the set. They were there because the furniture criterion was attached only to the scopes this successor builds; see d02-content-read/page-furniture-by-scope.json.",
+  "what_was_read": "all 45 excerpts after the page-furniture fix, plus every block skipped inside Item 3 and Note 24.",
+  "why_the_whole_note": "its Item 3 names no caption - it says 'See Note 24 of the Notes to the Financial Statements for a discussion of loss contingencies' - so the reference is to the note's subject, and all three of its parts (guarantees and indemnifications, litigation and claims, warranty and field service actions) are loss contingencies. Marriott's is the contrast and the reason this is a judgement rather than a default: it names a caption inside its note, so its scope stops there and its guarantee table stays out."
  },
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "macys_2026": {
@@ -16,6 +21,13 @@
   "why_the_set_is_right": "the filing's own Item 3 incorporates 'the information under the “Litigation, Claims, and Government Investigations” caption in Note 7', and the excerpt set is exactly that caption's blocks plus Item 3. The blocks skipped inside the note are the ones outside the named caption - 'Description of Event' and its paragraph, 'Insurance Recoveries' and its paragraph - and the page number and Table of Contents lines between them. Taking the whole note instead was measured earlier in this issue and judged wrong for exactly those blocks."
  },
  "per_position": {
+  "ford-2025": {
+   "chars": 17765,
+   "company_id": "ford_motor_company",
+   "excerpts": 45,
+   "period_end": "2025-12-31",
+   "value_sha256": "sha256:ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9"
+  },
   "macys-2026": {
    "chars": 1183,
    "company_id": "macys",
@@ -43,11 +55,40 @@
    "excerpts": 11,
    "period_end": "2025-12-31",
    "value_sha256": "sha256:1effad2d6c6b26c502c2ca2a091e2d7a9eabac547a9bb33b94e7ef02321f6530"
+  },
+  "salesforce-2026": {
+   "chars": 15336,
+   "company_id": "salesforce",
+   "excerpts": 15,
+   "period_end": "2026-01-31",
+   "value_sha256": "sha256:cee68e9d6ec21a730d529e7369a7579093080da6d02cb788ae400659d01eeb9c"
+  },
+  "southwest-2025": {
+   "chars": 35545,
+   "company_id": "southwest_airlines",
+   "excerpts": 25,
+   "period_end": "2025-12-31",
+   "value_sha256": "sha256:e5110762400912415b37bad369553ae1b816129a3789f30ca580a09a16d0349a"
   }
  },
  "production_authorized": false,
  "record_type": "ISSUE_47_D02_BOTH_DIRECTIONS_READ",
+ "salesforce_2026": {
+  "and_it_is_the_positive_control": "its Item 3 quotes the note's own title, so the note gets a caption scope, and a caption scope already carried the furniture criterion. Its three page breaks were dropped before this round changed anything.",
+  "what_was_read": "all 15 excerpts and the six blocks skipped inside Note 14.",
+  "why_the_set_is_right": "Item 3's two paragraphs and the sentence incorporating Note 14, then Note 14 whole - the ordinary-course paragraph, the provisioning policy, the Slack securities litigation and the Backpage actions. The skipped six are three bare page numbers and three Table of Contents links."
+ },
+ "southwest_2025": {
+  "the_one_worth_naming": "block 1428 is admitted by the keyword proxy inside Item 8 and is correct: it is this registrant's own exposure to DOT fines and penalties after the December 2022 disruption, and it carries the $107 million accrual and the $11 million waiver.",
+  "what_was_read": "all 25 excerpts and the twelve blocks skipped inside Item 3.",
+  "why_the_set_is_right": "twenty Item 3 blocks covering the DOJ civil investigative demand and the capacity antitrust actions, the USERRA military-leave class action and its settlement, the California wage-and-hour class action, the 2020 derivative action, the MAX contract-of-carriage action, the December 2022 disruption securities and derivative matters and the Special Litigation Committee, the 2025 retirement-plan ERISA action and the bag-fee demand letter; and five Item 8 blocks stating the same matters in the notes. The skipped twelve are six page numbers and six Table of Contents links."
+ },
  "the_other_direction": "docs/evidence/issue47_history/d02-content-read/unreached-notes.json - no contingencies note in any of these filings goes unreached.",
- "what_this_is": "the four D02 positions whose excerpt sets are small enough to read whole, judged in both directions: every excerpt taken, and - through the unreached-note scan - whether any contingencies note was missed.",
- "why_only_four": "Pfizer's 96, Ford's 53, Lumen's 41, Paramount's 28, Southwest's 25, Enphase's 18 and Salesforce's 15 are not read whole here. Pfizer's was, in an earlier round, and it found two wrong blocks - which is why the remaining ones are not accepted on the strength of the four that were."
+ "what_this_is": "the D02 positions whose excerpt sets have been read whole in both directions: every excerpt taken, every block the selector skipped inside the narrow scopes, and - through the unreached-note scan - whether any contingencies note was missed.",
+ "which_are_not_here_and_why": {
+  "enphase 2025": "seventeen of eighteen excerpts are disclosure; the eighteenth is the page footer, which repetition cannot see because it carries the page number. Registered defect.",
+  "lumen 2025": "one block, the outside-counsel fee policy, same cause. Registered defect.",
+  "paramount 2025": "two blocks, transaction-cost composition and a leverage covenant, same cause. Registered defect.",
+  "pfizer 2025": "read whole in both directions and found wrong: two of its 96 excerpts are admitted by the _LEGAL keyword proxy and are not legal-proceedings disclosure. Registered defect."
+ }
 }

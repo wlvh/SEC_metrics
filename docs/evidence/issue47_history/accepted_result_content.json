@@ -3120,6 +3120,20 @@
    "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D02_FORD_2025",
+   "accepted_value": "sha256:ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9",
+   "company_id": "ford_motor_company",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+   "method": "every excerpt in the set read whole, and every block the selector skipped inside the narrow scopes - Item 3 and any named note range - read with it, judged against the approved source definition. The other direction - whether a contingencies note was missed - is the unreached-note scan in docs/evidence/issue47_history/d02-content-read/unreached-notes.json. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "chars": 17765,
+    "excerpts": 45
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set is the set the approved source definition asks for in this filing, read in both directions. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D02_MACYS_2026",
    "accepted_value": "sha256:40f09f210f6cf31d7fd00090a7855488da287891d5781f55e9e0fde0634e2012",
    "company_id": "macys",
@@ -3172,6 +3186,34 @@
    "read_from": {
     "chars": 5098,
     "excerpts": 11
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set is the set the approved source definition asks for in this filing, read in both directions. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D02_SALESFORCE_2026",
+   "accepted_value": "sha256:cee68e9d6ec21a730d529e7369a7579093080da6d02cb788ae400659d01eeb9c",
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+   "method": "every excerpt in the set read whole, and every block the selector skipped inside the narrow scopes - Item 3 and any named note range - read with it, judged against the approved source definition. The other direction - whether a contingencies note was missed - is the unreached-note scan in docs/evidence/issue47_history/d02-content-read/unreached-notes.json. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D02",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "chars": 15336,
+    "excerpts": 15
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set is the set the approved source definition asks for in this filing, read in both directions. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D02_SOUTHWEST_2025",
+   "accepted_value": "sha256:e5110762400912415b37bad369553ae1b816129a3789f30ca580a09a16d0349a",
+   "company_id": "southwest_airlines",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+   "method": "every excerpt in the set read whole, and every block the selector skipped inside the narrow scopes - Item 3 and any named note range - read with it, judged against the approved source definition. The other direction - whether a contingencies note was missed - is the unreached-note scan in docs/evidence/issue47_history/d02-content-read/unreached-notes.json. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "chars": 35545,
+    "excerpts": 25
    },
    "what_this_does_not_establish": "what is established is that this excerpt set is the set the approved source definition asks for in this filing, read in both directions. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
