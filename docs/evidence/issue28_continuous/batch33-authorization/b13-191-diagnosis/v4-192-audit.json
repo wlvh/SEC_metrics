@@ -1,0 +1,47 @@
+{
+  "record_type": "ISSUE28_B13_192_V4_REPAIR_OUTCOME_AUDIT",
+  "ordinal": 192,
+  "group": "B13:enphase_energy:1",
+  "attempt_index": 1,
+  "v4_record_id": "sha256:29a91010d23ce705c09fec3be7ef119fb90bedecd2d66eae7f4c06a04b4a0dc4",
+  "repair_record_id": "sha256:29a91010d23ce705c09fec3be7ef119fb90bedecd2d66eae7f4c06a04b4a0dc4",
+  "request_digest": "a0b5b56dda6fc6f74f541b3d7da6d669d471b99f526f05eb0c71a3422bbc9b85",
+  "request_sha256": "835d62594e5b25ba5e9038089d2d06e8c3c0f195dd71d8c1b84fe92d8dea4eb1",
+  "source_sha256": "4e0dde89514a0722f92804849148d75115a14b65a3c5a1b29d38afeda8d6e597",
+  "raw_response_sha256": "1e6aca90c4dd37c047bff909183c15175d3d9d8a6ec40c5337b0e68114bfd1a8",
+  "terminal_id": "sha256:129356a7d4a8952823e9ee8388c43f567edcde481c209563c8caa689e3fb49e3",
+  "terminal_status": "FAILED_TERMINAL",
+  "stop_reason": "",
+  "provider_finish_reason": "length",
+  "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2304,
+    "cache_miss_input_tokens": 154667,
+    "input_tokens": 156971,
+    "output_tokens": 4096
+  },
+  "source_unit_count": 4,
+  "required_candidate_count": 0,
+  "complete_prefix_finding_count": 156,
+  "complete_prefix_unique_finding_count": 156,
+  "complete_prefix_role_counts": {
+    "physical_capacity_context": 1,
+    "other_context": 155
+  },
+  "nonrequired_other_context_count": 155,
+  "reasons_over_128_count": 1,
+  "response_complete_json": false,
+  "native_candidate_created": false,
+  "group1_repair_slot_consumed": true,
+  "real_calls_already_charged": [
+    1,
+    1,
+    0
+  ],
+  "new_calls_from_this_audit": [
+    0,
+    0,
+    0
+  ],
+  "model_semantics_fully_reviewed": false
+}
