@@ -295,6 +295,13 @@ def claim_fields(*, authorization, progress, group, request_digest, stops, reque
                      and prior[0] == {'ordinal': recovery172['original_ordinal'],
                                      'status': 'FAILED_TERMINAL', 'stop_reason': 'HTTP_402'}
                      and repair_receipt is None)
+    repairing189 = (repair_receipt is not None
+                    and repair_receipt['batch_authorization_id'] == authorization['authorization_id']
+                    and repair_receipt['group_id'] == group == 'B13:enphase_energy:0'
+                    and repair_receipt['repaired_request_digest'] == request_digest
+                    and len(prior) == 1
+                    and prior[0] == {'ordinal': repair_receipt['failed_ordinal'],
+                                    'status':'FAILED_TERMINAL', 'stop_reason':''})
     if first:
         need(stops == {('PROVIDER', authorization['original_stop_ordinal'])},
              'BATCH33_ORIGINAL_STOP_NOT_ISOLATED')
@@ -310,12 +317,13 @@ def claim_fields(*, authorization, progress, group, request_digest, stops, reque
     else:
         if recovering172:
             attempt = 1
+        elif repairing189:
+            attempt = 1
         else:
             need(len(prior) == 1 and prior[0]['status'] == 'FAILED_TERMINAL'
                  and not prior[0]['stop_reason'] and repair_receipt is not None,
                  'BATCH33_REPAIR_NOT_ELIGIBLE')
-            # A specific failed group may acquire a repair record only after
-            # its actual diagnosis, patch, regressions and scoped review.
+            # No other group can convert a disappointing answer into a redraw.
             need(False, 'BATCH33_REPAIR_PROOF_NOT_YET_IMPLEMENTED')
     historical = row['historical_ordinal']
     duplicate = ('PROVIDER', request_digest) in requests
@@ -328,11 +336,13 @@ def claim_fields(*, authorization, progress, group, request_digest, stops, reque
     if recovering172:
         fields['batch_recovery_172_id'] = recovery172['authorization_id']
         fields['batch_resume_172'] = True
+    if repairing189:
+        fields['batch_repair_189_id'] = repair_receipt['authorization_id']
     return fields, duplicate
 
 
 def observe_claim(*, authorization, progress, intent, stops, requests,
-                  recovery172=None):
+                  recovery172=None, repair189=None):
     """Independently revalidate each marked claim during every cold ledger read."""
     if 'batch_authorization_id' not in intent:
         need(not (intent['channel'] == 'SEC' and
@@ -352,12 +362,15 @@ def observe_claim(*, authorization, progress, intent, stops, requests,
         progress=progress, group=intent['batch_group_id'],
         request_digest=intent['request_digest'],
         stops={stop for stop in stops if stop[0] == 'PROVIDER'}, requests=requests,
-        next_ordinal=intent['ordinal'], recovery172=recovery172)
+        next_ordinal=intent['ordinal'], recovery172=recovery172,
+        repair_receipt=repair189 if 'batch_repair_189_id' in intent else None)
     need(all(intent.get(key) == value for key, value in expected.items()),
          'BATCH33_CLAIM_MARKER_CHANGED')
     need(('batch_recovery_172_id' in intent) == ('batch_recovery_172_id' in expected)
          and ('batch_resume_172' in intent) == ('batch_resume_172' in expected),
          'BATCH33_RECOVERY172_MARKER_CHANGED')
+    need(('batch_repair_189_id' in intent) == ('batch_repair_189_id' in expected),
+         'BATCH33_REPAIR189_MARKER_CHANGED')
     progress['attempts'].setdefault(intent['batch_group_id'], []).append({
         'ordinal': intent['ordinal'], 'status': 'PENDING', 'stop_reason': ''})
     progress['total'] += 1
@@ -378,9 +391,19 @@ def observe_terminal(*, progress, intent, status, stop_reason):
         row.update(status=status, stop_reason=stop_reason)
 
 
-def group_for_request(*, authorization, request, request_digest):
+def group_for_request(*, authorization, request, request_digest, repair189=None):
     matches = [row for row in groups_for(authorization)
                if row['initial_request_digest'] == request_digest]
+    if not matches and repair189 is not None and \
+            repair189['repaired_request_digest'] == request_digest:
+        from .capacity_reference_contract import RELEVANCE_VERSION
+        need(request.get('source_reference_contract', {}).get('version') == RELEVANCE_VERSION
+             and repair189['group_id'] == 'B13:enphase_energy:0'
+             and request['source_id'] == repair189['source_id']
+             and request['metric_id'] == 'B13'
+             and request['company_id'] == 'enphase_energy',
+             'BATCH33_REPAIR189_REQUEST_CHANGED')
+        return repair189['group_id']
     need(len(matches) == 1 and matches[0]['metric_id'] == request['metric_id']
          and matches[0]['company_id'] == request['company_id']
          and matches[0]['source_id'] == request['source_id'],
@@ -437,11 +460,18 @@ def history_for_current(*, ledger):
         body['recovery_172'] = recovery172
         body['recovery_172_original_wire'] = strict_json_file(
             path=ledger.root/'calls'/('%04d' % recovery172['original_ordinal'])/'wire/journal.json')
+    if (ledger.root/'batch33-repair-189.json').exists():
+        from .continuous_batch33_repair189 import read_authorization as read_repair189
+        repair189 = read_repair189(ledger)
+        body['repair_189'] = repair189
+        body['repair_189_original_wire'] = strict_json_file(
+            path=ledger.root/'calls'/('%04d' % repair189['failed_ordinal'])/'wire/journal.json')
     return {**body, 'history_id': content_hash(value=body)}
 
 
 def validate_history(*, history, mode, native_rows, request_digests,
-                     recovered_failed_ordinals, recovered_402_ordinals=()):
+                     recovered_failed_ordinals, recovered_402_ordinals=(),
+                     recovered_engineering_ordinals=()):
     """Replay grant, once-only claims and original stop from installed bytes."""
     from .continuous_call_ledger import _STOP
     need(mode in {'LIVE', 'RECORDED_TEST_ONLY'}
@@ -495,6 +525,31 @@ def validate_history(*, history, mode, native_rows, request_digests,
                                             'limits': [240, 240, 80]})
             need(recovery172 == recovery_authorization(ledger=view, check_ledger=False),
                  'BATCH33_HISTORY_RECOVERY172_APPROVAL_CHANGED')
+    repair189 = history.get('repair_189')
+    need((repair189 is None) == ('repair_189_original_wire' not in history),
+         'BATCH33_HISTORY_REPAIR189_FIELDS_CHANGED')
+    if repair189 is not None:
+        repair_groups = [row for row in groups_for(auth)
+                         if group_id(row) == repair189['group_id']]
+        need(repair189['authorization_id'] == content_hash(value={k:v for k,v in repair189.items()
+             if k != 'authorization_id'})
+             and repair189['execution_mode'] == mode
+             and repair189['batch_authorization_id'] == auth['authorization_id']
+             and repair189['group_id'] == 'B13:enphase_energy:0'
+             and (mode != 'LIVE' or repair189['failed_ordinal'] == 189)
+             and repair189['maximum_new_executions'] == 1
+             and len(repair_groups) == 1
+             and repair189['failed_request_digest'] == repair_groups[0]['initial_request_digest']
+             and history['repair_189_original_wire']['error_class'] == 'DEEPSEEK_RESPONSE_INVALID',
+             'BATCH33_HISTORY_REPAIR189_AUTH_CHANGED')
+        if mode == 'LIVE':
+            from types import SimpleNamespace
+            from .continuous_batch33_repair189 import authorization as repair_authorization
+            view = SimpleNamespace(root=Path(repair189['budget_root']), live=True,
+                                   binding={'binding_id':repair189['binding_id'],
+                                            'limits':[240,240,80]})
+            need(repair189 == repair_authorization(ledger=view, check_ledger=False),
+                 'BATCH33_HISTORY_REPAIR189_PROOF_CHANGED')
     stop = history['original_stop']
     old_intent, old_terminal, old_wire = stop['intent'], stop['terminal'], stop['wire']
     need(old_intent['ordinal'] == auth['original_stop_ordinal']
@@ -565,6 +620,24 @@ def validate_history(*, history, mode, native_rows, request_digests,
                  and terminal['evidence']['source.json'] == recovery172['source_sha256']
                  and 'wire/assistant-output.bin' not in terminal['evidence'],
                  'BATCH33_HISTORY_RECOVERY172_ORIGINAL_CHANGED')
+        if repair189 is not None and intent['ordinal'] == repair189['failed_ordinal']:
+            old_wire = history['repair_189_original_wire']
+            need(intent['intent_id'] == repair189['failed_intent_id']
+                 and intent['request_digest'] == repair189['failed_request_digest']
+                 and intent['batch_group_id'] == repair189['group_id']
+                 and intent['batch_authorization_id'] == repair189['batch_authorization_id']
+                 and intent['batch_attempt_index'] == 0
+                 and terminal is not None
+                 and terminal['terminal_id'] == repair189['failed_terminal_id']
+                 and terminal['status'] == 'FAILED_TERMINAL'
+                 and not terminal['stop_reason']
+                 and terminal['counts'] == [1,1,0]
+                 and terminal['evidence']['wire/journal.json'] == sha256_bytes(
+                     content=canonical_json_bytes(value=old_wire))
+                 and terminal['evidence']['wire/raw-response.bin'] ==
+                     repair189['failed_raw_response_sha256']
+                 and old_wire['usage']['output_tokens'] == 4096,
+                 'BATCH33_HISTORY_REPAIR189_ORIGINAL_CHANGED')
         if intent['channel'] == 'SEC':
             need(progress['resumed'] and not any(key.startswith('batch_') for key in intent)
                  and ('SEC', intent['request_digest']) not in requests,
@@ -586,7 +659,7 @@ def validate_history(*, history, mode, native_rows, request_digests,
         need(intent['channel'] == 'PROVIDER', 'BATCH33_HISTORY_CHANNEL_CHANGED')
         duplicate = observe_claim(authorization=auth, progress=progress,
             intent=intent, stops=stops, requests=requests,
-            recovery172=recovery172)
+            recovery172=recovery172, repair189=repair189)
         need(('PROVIDER', intent['request_digest']) not in requests or duplicate,
              'BATCH33_HISTORY_DUPLICATE_CHANGED')
         requests.add(('PROVIDER', intent['request_digest']))
@@ -628,4 +701,10 @@ def validate_history(*, history, mode, native_rows, request_digests,
             for native in native_rows) else set())
     need(set(recovered_402_ordinals) == expected_recovered_402,
          'BATCH33_HISTORY_HTTP402_LINK_CHANGED')
+    expected_recovered_engineering = ({repair189['failed_ordinal']}
+        if repair189 is not None and any(
+            native['intent'].get('batch_repair_189_id') == repair189['authorization_id']
+            for native in native_rows) else set())
+    need(set(recovered_engineering_ordinals) == expected_recovered_engineering,
+         'BATCH33_HISTORY_ENGINEERING_LINK_CHANGED')
     return True

@@ -93,6 +93,49 @@ class CapacityReferenceContractTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'B13_REFERENCE_DUPLICATE_FINDING'):
             restore_response(request=request,raw_response=canonical_json_bytes(value=repeated))
 
+    def test_relevance_variant_limits_only_optional_negative_background(self):
+        from vnext.capacity_reference_contract import RELEVANCE_VERSION
+        from vnext.native_unit_index import reconstruct_requests,validate_request_partition
+        request=upgrade_request(self.base,compact=True,role_labels=True,relevance_scope=True)
+        self.assertEqual(request['source_reference_contract']['version'],RELEVANCE_VERSION)
+        self.assertEqual(restore_base_request(request),self.base)
+        self.assertEqual(request['units'],self.base['units'])
+        self.assertEqual(request['required_candidate_assessments'],self.base['required_candidate_assessments'])
+        self.assertEqual(validate_request_partition(self.source,[request]),[RELEVANCE_VERSION])
+        self.assertEqual(reconstruct_requests(self.source,[RELEVANCE_VERSION]),[request])
+        self.assertNotIn('required_only_exclusion_kinds',
+            upgrade_request(self.base,compact=True,role_labels=True)['response_protocol'])
+        books=request['response_protocol']['classification_codebooks']
+        positive=self.response['findings'][0]
+        index=positive['evidence'][0]['source_index']
+        long_reason=('Relevant current manufacturing capacity, without a comparable '
+                     'output pair. Source describes operations.')
+        self.assertTrue(96<len(long_reason)<=128)
+        row=['physical_capacity_context',books['subject'].index('TARGET_REGISTRANT'),
+             books['timing'].index('CURRENT_REPORT'),['B'+str(index)],long_reason]
+        response={**deepcopy(self.response),'findings':[row]}
+        self.assertEqual(validate_response(request=request,
+            raw_response=canonical_json_bytes(value=response),source=self.source)['unresolved'],[])
+        for label in ('monetary_credit_capacity','product_or_installed_capacity',
+                      'sales_or_shipments','other_context'):
+            bad=deepcopy(response);bad['findings'][0][0]=label
+            with self.subTest(label=label),self.assertRaisesRegex(ValueError,
+                    'B13_V4_NONREQUIRED_BACKGROUND_FINDING'):
+                restore_response(request=request,raw_response=canonical_json_bytes(value=bad))
+        too_long=deepcopy(response);too_long['findings'][0][4]='x'*129
+        with self.assertRaisesRegex(ValueError,'B13_COMPACT_REFERENCE_OR_REASON'):
+            restore_response(request=request,raw_response=canonical_json_bytes(value=too_long))
+
+        required_base=deepcopy(self.base)
+        required_base['required_candidate_assessments']=[{'unit_id':self.source['units'][self.owner]['unit_id'],
+            'kind':'VISIBLE_BLOCK','source_index':index,'signals':['CAPACITY_LANGUAGE']}]
+        required_base['request_id']=content_hash(value={k:v for k,v in required_base.items() if k!='request_id'})
+        required_request=upgrade_request(required_base,compact=True,role_labels=True,relevance_scope=True)
+        required_response=deepcopy(response)
+        required_response['findings'][0][0]='product_or_installed_capacity'
+        restore_response(request=required_request,
+            raw_response=canonical_json_bytes(value=required_response))
+
     def test_meaningful_role_candidate_cannot_claim_live_without_new_authority(self):
         from types import SimpleNamespace
         from vnext.continuous_semantic_calls import execute_capacity_assessment

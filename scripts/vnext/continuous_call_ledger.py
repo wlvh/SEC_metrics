@@ -95,6 +95,11 @@ class CallLedger:
             from .continuous_recovery_172 import read_authorization as read_recovery172
             recovery172 = read_recovery172(self)
             need(batch is not None, 'RECOVERY172_BATCH_AUTHORIZATION_MISSING')
+        repair189 = None
+        if (self.root/'batch33-repair-189.json').exists():
+            from .continuous_batch33_repair189 import read_authorization as read_repair189
+            repair189 = read_repair189(self)
+            need(batch is not None, 'BATCH33_REPAIR189_BATCH_AUTHORIZATION_MISSING')
         total = [0,0,0]; stopped = set(); requests = set(); rows = []
         first_requests = {}; recovery_consumed = False; original_verified = False
         previous = None
@@ -125,7 +130,7 @@ class CallLedger:
                     from .continuous_batch33 import observe_claim
                     batch_duplicate = observe_claim(authorization=batch, progress=batch_progress,
                         intent=intent, stops=stopped, requests=requests,
-                        recovery172=recovery172)
+                        recovery172=recovery172, repair189=repair189)
                 need(key not in requests or batch_duplicate,
                      'CONTINUOUS_LEDGER_DUPLICATE_REQUEST')
             requests.add(key)
@@ -165,6 +170,7 @@ class CallLedger:
         self._recovery_observation = (recovery, recovery_consumed, stopped)
         self._batch_observation = (batch, batch_progress)
         self._recovery172_observation = recovery172
+        self._repair189_observation = repair189
         return {'counts':total,'stopped_channels':sorted({channel for channel, _ in stopped}),'requests':requests,
                 'previous_intent_id':previous,'rows':rows}
 
@@ -175,12 +181,16 @@ class CallLedger:
         recovery, consumed, stops = self._recovery_observation
         batch, progress = self._batch_observation
         recovery172 = self._recovery172_observation
+        repair189 = self._repair189_observation
         recovering = (recovery is not None and not consumed and channel == 'PROVIDER'
                       and request_digest == recovery['request_digest']
                       and stops == {('PROVIDER', recovery['original_ordinal'])})
         batch_fields = {}; batch_duplicate = False
         if batch is not None and channel == 'PROVIDER':
             need(type(batch_group_id) is str, 'BATCH33_GROUP_REQUIRED')
+            need(batch_repair_receipt is None or
+                 (repair189 is not None and batch_repair_receipt == repair189),
+                 'BATCH33_REPAIR189_NOT_INSTALLED')
             from .continuous_batch33 import claim_fields
             batch_fields, batch_duplicate = claim_fields(authorization=batch, progress=progress,
                 group=batch_group_id, request_digest=request_digest,
@@ -298,6 +308,8 @@ def live_ledger(*, requirement):
     install_batch33(ledger=ledger, requirement=requirement)
     from .continuous_recovery_172 import install_live_authorization as install_recovery172
     install_recovery172(ledger=ledger, requirement=requirement)
+    from .continuous_batch33_repair189 import install_live_authorization as install_repair189
+    install_repair189(ledger=ledger, requirement=requirement)
     return ledger
 
 

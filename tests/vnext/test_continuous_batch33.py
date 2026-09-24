@@ -18,6 +18,8 @@ from vnext.continuous_batch33 import (authorization, group_id,
 from vnext.continuous_recovery_172 import (recorded_authorization as recorded_recovery172,
     install_live_authorization as install_recovery172,
     authorization as recovery172_authorization)
+from vnext.continuous_batch33_repair189 import (recorded_authorization as recorded_repair189,
+    install_live_authorization as install_repair189)
 from vnext.continuous_call_ledger import recorded_ledger
 from vnext.invocation_control import _exclusive_write_json, _exclusive_write_bytes
 
@@ -42,7 +44,7 @@ class Batch33LedgerTest(unittest.TestCase):
             requirement=REQ, plan_id=content_hash(value=['plan',name]),
             purpose='remaining_development_feasibility', batch_group_id=batch_group)
 
-    def finish(self, path, intent, *, status='SUCCEEDED', error=''):
+    def finish(self, path, intent, *, status='SUCCEEDED', error='', output_tokens=1):
         def seal(body, key):
             return {**body,key:content_hash(value=body)}
         identity=content_hash(value=['execution',intent['ordinal']]);name=identity.split(':')[1]
@@ -51,7 +53,7 @@ class Batch33LedgerTest(unittest.TestCase):
                         'paid_model_provider_call_count':0}},'execution_receipt_id')
         marker=seal({'ai_invocation_plan_id':intent['plan_id'],'execution_id':identity,
             'attempt_ordinal':1,'transport_kind':'MOCK'},'egress_marker_id')
-        wire={'error_class':error,'usage':{'input_tokens':10,'output_tokens':1}}
+        wire={'error_class':error,'usage':{'input_tokens':10,'output_tokens':output_tokens}}
         for relative,value in [('invocation_control/executions/'+name+'.json',execution),
                                ('invocation_control/egress/'+name+'/01.json',marker),
                                ('wire/journal.json',wire)]:
@@ -143,6 +145,57 @@ class Batch33LedgerTest(unittest.TestCase):
             native_rows=[{'ordinal':4,'intent':intent,'terminal':terminal}],
             request_digests={4:intent['request_digest']},recovered_failed_ordinals=[],
             recovered_402_ordinals=[2]))
+
+    def test_one_engineering_repair_of_failed_b13_group_is_not_a_redraw(self):
+        self.stopped()
+        groups=[group('D04','enphase_energy',0,content_hash(value='d04-enphase0')),
+                group('B13','enphase_energy',0,content_hash(value='old-v3-b13'))]
+        new_digest=content_hash(value='new-v4-b13-substantive-contract')
+        with self.ledger.locked():
+            recorded_authorization(ledger=self.ledger,groups=groups,original_stop_ordinal=1)
+            first,first_intent=self.claim('d04-enphase0',batch_group=group_id(groups[0]))
+            self.finish(first,first_intent)
+            failed,failed_intent=self.claim('old-v3-b13',batch_group=group_id(groups[1]))
+            _exclusive_write_bytes(path=failed/'wire/raw-response.bin',
+                                   content=b'{"choices":[{"finish_reason":"length"}]}')
+            failed_terminal=self.finish(failed,failed_intent,status='FAILED_TERMINAL',
+                                        error='DEEPSEEK_RESPONSE_INVALID',output_tokens=4096)
+            self.assertEqual(failed_terminal['stop_reason'],'')
+            with self.assertRaisesRegex(ValueError,'BATCH33_REPAIR_NOT_ELIGIBLE'):
+                self.claim('old-v3-b13',batch_group=group_id(groups[1]))
+            proof=recorded_repair189(ledger=self.ledger,failed_ordinal=3,
+                                     repaired_digest=new_digest)
+            with self.assertRaisesRegex(ValueError,'BATCH33_REPAIR189_NOT_INSTALLED'):
+                self.ledger.claim(channel='PROVIDER',request_digest=new_digest,
+                    requirement=REQ,plan_id=content_hash(value='fake repair plan'),
+                    purpose='remaining_development_feasibility',
+                    batch_group_id=group_id(groups[1]),batch_repair_receipt={'fake':True})
+            success,intent=self.ledger.claim(channel='PROVIDER',request_digest=new_digest,
+                requirement=REQ,plan_id=content_hash(value='real repair plan'),
+                purpose='remaining_development_feasibility',
+                batch_group_id=group_id(groups[1]),batch_repair_receipt=proof)
+            self.assertEqual(intent['batch_attempt_index'],1)
+            self.assertEqual(intent['batch_repair_189_id'],proof['authorization_id'])
+            terminal=self.finish(success,intent)
+            self.assertEqual(self.ledger.snapshot()['counts'],[4,4,0])
+            with self.assertRaisesRegex(ValueError,'BATCH33_REPAIR_NOT_ELIGIBLE'):
+                self.ledger.claim(channel='PROVIDER',request_digest=new_digest,
+                    requirement=REQ,plan_id=content_hash(value='third plan'),
+                    purpose='remaining_development_feasibility',
+                    batch_group_id=group_id(groups[1]),batch_repair_receipt=proof)
+            history=history_for_current(ledger=self.ledger)
+        self.assertTrue(validate_history(history=history,mode='RECORDED_TEST_ONLY',
+            native_rows=[{'ordinal':4,'intent':intent,'terminal':terminal}],
+            request_digests={4:new_digest},recovered_failed_ordinals=[],
+            recovered_engineering_ordinals=[3]))
+        with self.assertRaisesRegex(ValueError,'BATCH33_HISTORY_ENGINEERING_LINK_CHANGED'):
+            validate_history(history=history,mode='RECORDED_TEST_ONLY',
+                native_rows=[{'ordinal':4,'intent':intent,'terminal':terminal}],
+                request_digests={4:new_digest},recovered_failed_ordinals=[])
+        (self.root/'batch33-repair-189.json').unlink()
+        with recorded_ledger(root=self.root).locked() as reopened, \
+             self.assertRaises(ValueError):
+            reopened.snapshot()
 
     def test_concurrent_recovery172_claim_is_consumed_once(self):
         row,_,_,_=self.stopped_batch_first_group()
@@ -326,7 +379,7 @@ with recorded_ledger(root=Path(sys.argv[1])).locked() as ledger:
                 self.claim('enphase1',batch_group=group_id(groups[1]))
             with self.assertRaisesRegex(ValueError,'BATCH33_REPAIR_NOT_ELIGIBLE'):
                 self.claim('enphase0',batch_group=group_id(groups[0]))
-            with self.assertRaisesRegex(ValueError,'BATCH33_REPAIR_PROOF_NOT_YET_IMPLEMENTED'):
+            with self.assertRaisesRegex(ValueError,'BATCH33_REPAIR189_NOT_INSTALLED'):
                 self.ledger.claim(channel='PROVIDER',request_digest=content_hash(value='enphase0'),
                     requirement=REQ,plan_id=content_hash(value='repair plan'),
                     purpose='verification_after_engineering_repair',
@@ -391,6 +444,14 @@ with recorded_ledger(root=Path(sys.argv[1])).locked() as ledger:
 
 
 class Batch33ServerAuthorityTest(unittest.TestCase):
+    def test_repair189_pending_policy_installs_nothing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            ledger=SimpleNamespace(root=Path(temporary))
+            self.assertIsNone(install_repair189(ledger=ledger,requirement={}))
+            (ledger.root/'batch33-repair-189.json').write_text('{}')
+            with self.assertRaisesRegex(ValueError,'BATCH33_REPAIR189_UNAPPROVED_RECORD_PRESENT'):
+                install_repair189(ledger=ledger,requirement={})
+
     def test_recovery172_pending_policy_installs_nothing(self):
         with tempfile.TemporaryDirectory() as temporary:
             ledger=SimpleNamespace(root=Path(temporary))

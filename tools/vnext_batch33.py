@@ -21,11 +21,15 @@ def main(argv=None):
     parser.add_argument('--metric', choices=('D04', 'B13'), required=True)
     parser.add_argument('--company', required=True)
     parser.add_argument('--group-index', type=int, required=True)
+    parser.add_argument('--relevance-repair-group-index', type=int)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args(argv)
     output = args.output.resolve()
     if output == ROOT or ROOT in output.parents or output.exists():
         parser.error('Output must be a new file outside the source checkout')
+    if args.relevance_repair_group_index is not None and (
+            args.metric != 'B13' or args.relevance_repair_group_index != args.group_index):
+        parser.error('Relevance repair must target this B13 group only')
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v14')
     ledger = live_ledger(requirement=requirement)
     with request_construction_session(requirement):
@@ -36,7 +40,8 @@ def main(argv=None):
         selected, report = select_native_request_variants(prepared_requests=prepared,
             ledger=ledger, source_references=args.metric=='B13',
             compact_references=args.metric=='B13',
-            semantic_role_labels=args.metric=='B13')
+            semantic_role_labels=args.metric=='B13',
+            relevance_repair_group_index=args.relevance_repair_group_index)
     if not 0 <= args.group_index < len(selected):
         parser.error('Group index is outside the complete source partition')
     authorization = read_authorization(ledger)
@@ -49,8 +54,12 @@ def main(argv=None):
     request = strict_json_loads(text=prepared_group.request_bytes.decode())
     policy, plan = build_plan(prepared_group)
     digest = request_digest(request, policy)
+    repair189 = None
+    if (ledger.root/'batch33-repair-189.json').exists():
+        from vnext.continuous_batch33_repair189 import read_authorization as read_repair189
+        repair189 = read_repair189(ledger)
     if group_for_request(authorization=authorization, request=request,
-                         request_digest=digest) != group_id(expected[0]):
+                         request_digest=digest, repair189=repair189) != group_id(expected[0]):
         parser.error('Current request differs from the approved business group')
     execute = execute_d04_assessment if args.metric == 'D04' else execute_capacity_assessment
     path, outcome = execute(prepared=prepared_group, ledger=ledger)
@@ -62,6 +71,7 @@ def main(argv=None):
         'call_path':str(path),'batch_authorization_id':intent['batch_authorization_id'],
         'batch_group_id':intent['batch_group_id'],
         'batch_attempt_index':intent['batch_attempt_index'],
+        'batch_repair_189_id':intent.get('batch_repair_189_id'),
         'terminal_status':outcome['terminal']['status'],
         'stop_reason':outcome['terminal']['stop_reason'],
         'counts':outcome['terminal']['counts'],

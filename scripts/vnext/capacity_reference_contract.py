@@ -11,6 +11,7 @@ from .canonical import canonical_json_bytes, content_hash, strict_json_loads, st
 VERSION = 'B13_SOURCE_REFERENCES_V1'
 COMPACT_VERSION = 'B13_TYPED_COMPACT_REFERENCES_V2'
 ROLE_VERSION = 'B13_MEANINGFUL_ROLE_REFERENCES_V3'
+RELEVANCE_VERSION = 'B13_REQUIRED_FIRST_RELEVANCE_V4'
 ROLE_LABELS = {
     'physical_capacity_context': 'CAPACITY_QUALITATIVE',
     'sales_or_shipments': 'SALES_OR_SHIPMENTS',
@@ -47,7 +48,7 @@ def _owners(base):
     return owners
 
 
-def upgrade_request(base, *, compact=False, role_labels=False):
+def upgrade_request(base, *, compact=False, role_labels=False, relevance_scope=False):
     from .capacity_semantic_review import review_policy_path
     from .normal_source_authority import ROOT
     need(base.get('record_type') == 'B13_INTERPRETATION_REQUEST'
@@ -92,11 +93,15 @@ def upgrade_request(base, *, compact=False, role_labels=False):
         'All evidence in one finding must belong to the same source unit. '
         'units contains exactly one review status per supplied unit, addressed by its zero-based unit_index. '
         'Every source unit, including empty units, must be reviewed. Unknown or ambiguous references are rejected.')
-    need(type(compact) is bool and type(role_labels) is bool and (not role_labels or compact),
+    need(type(compact) is bool and type(role_labels) is bool and (not role_labels or compact)
+         and type(relevance_scope) is bool and (not relevance_scope or (compact and role_labels)),
          'B13_COMPACT_SELECTION_INVALID')
     if compact:
         _compact_protocol(protocol, base, role_labels=role_labels)
-    version = ROLE_VERSION if role_labels else COMPACT_VERSION if compact else VERSION
+    if relevance_scope:
+        _relevance_protocol(protocol)
+    version = (RELEVANCE_VERSION if relevance_scope else ROLE_VERSION if role_labels
+               else COMPACT_VERSION if compact else VERSION)
     body['source_reference_contract'] = {'version': version, 'base_request_id': base['request_id']}
     return {**body, 'request_id': content_hash(value=body)}
 
@@ -108,13 +113,15 @@ def restore_base_request(request):
          'B13_REFERENCE_REQUEST_CHANGED')
     meta = request.get('source_reference_contract')
     need(type(meta) is dict and set(meta) == {'version', 'base_request_id'}
-         and meta['version'] in {VERSION, COMPACT_VERSION, ROLE_VERSION}, 'B13_REFERENCE_CONTRACT_CHANGED')
+         and meta['version'] in {VERSION, COMPACT_VERSION, ROLE_VERSION, RELEVANCE_VERSION},
+         'B13_REFERENCE_CONTRACT_CHANGED')
     body = {k: deepcopy(v) for k, v in request.items() if k not in {'request_id', 'source_reference_contract'}}
     body['response_protocol'] = strict_json_file(path=ROOT / review_policy_path(request))['response_protocol']
     base = {**body, 'request_id': content_hash(value=body)}
     need(base['request_id'] == meta['base_request_id'] and upgrade_request(base,
-         compact=meta['version'] in {COMPACT_VERSION, ROLE_VERSION},
-         role_labels=meta['version'] == ROLE_VERSION) == request,
+         compact=meta['version'] in {COMPACT_VERSION, ROLE_VERSION, RELEVANCE_VERSION},
+         role_labels=meta['version'] in {ROLE_VERSION, RELEVANCE_VERSION},
+         relevance_scope=meta['version'] == RELEVANCE_VERSION) == request,
          'B13_REFERENCE_MAPPING_CHANGED')
     return base
 
@@ -124,7 +131,7 @@ def restore_response(*, request, raw_response):
     owners = _owners(base)
     original = strict_json_loads(text=raw_response.decode('utf-8'))
     wire_original = deepcopy(original)
-    if request['source_reference_contract']['version'] in {COMPACT_VERSION, ROLE_VERSION}:
+    if request['source_reference_contract']['version'] in {COMPACT_VERSION, ROLE_VERSION, RELEVANCE_VERSION}:
         original = _expand_compact_response(original, request)
     need(type(original) is dict and set(original) == {'units', 'findings'}
          and type(original['units']) is list and type(original['findings']) is list
@@ -138,6 +145,12 @@ def restore_response(*, request, raw_response):
         rows[index] = {k: deepcopy(v) for k, v in row.items() if k != 'unit_index'}
         rows[index].update(unit_id=base['units'][index]['unit_id'], findings=[])
     seen = set()
+    required_keys = set()
+    if request['source_reference_contract']['version'] == RELEVANCE_VERSION:
+        unit_indices = {unit['unit_id']: index for index, unit in enumerate(base['units'])}
+        for required in base['required_candidate_assessments']:
+            kind, source_index = required['kind'], required['source_index']
+            required_keys.add((kind, unit_indices[required['unit_id']], source_index))
     for finding in original['findings']:
         need(type(finding) is dict and set(finding) == set(base['response_protocol']['finding_fields'])
              and type(finding['evidence']) is list and finding['evidence'], 'B13_REFERENCE_FINDING_FIELDS_CHANGED')
@@ -159,6 +172,10 @@ def restore_response(*, request, raw_response):
         need(len(set(references)) == len(references), 'B13_REFERENCE_DUPLICATE_EVIDENCE')
         indices = {owners[key] for key in references}
         need(len(indices) == 1, 'B13_REFERENCE_CROSS_UNIT_FINDING')
+        if request['source_reference_contract']['version'] == RELEVANCE_VERSION and \
+                finding['kind'] in request['response_protocol']['required_only_exclusion_kinds']:
+            need(any((key[0], owners[key], key[-1]) in required_keys for key in references),
+                 'B13_V4_NONREQUIRED_BACKGROUND_FINDING')
         identity = content_hash(value=finding)
         need(identity not in seen, 'B13_REFERENCE_DUPLICATE_FINDING')
         seen.add(identity)
@@ -227,6 +244,28 @@ def _compact_protocol(protocol, base, *, role_labels=False):
     protocol['reference_inventory']=inventory
 
 
+def _relevance_protocol(protocol):
+    """Bound optional background without losing a unit or required candidate."""
+    protocol['required_only_exclusion_kinds'] = [
+        'MONETARY_CREDIT_CAPACITY', 'PRODUCT_STORAGE_OR_INSTALLED_CAPACITY',
+        'SALES_OR_SHIPMENTS', 'OTHER_CONTEXT']
+    protocol['max_compact_reason_characters'] = 128
+    protocol['json_schema']['properties']['findings']['items']['prefixItems'][4]['maxLength'] = 128
+    need(protocol['compact_instructions'].count('at most96 characters.') == 1,
+         'B13_V4_REASON_BASE_CHANGED')
+    protocol['compact_instructions'] = protocol['compact_instructions'].replace(
+        'at most96 characters.', 'at most128 characters.')
+    protocol['compact_instructions'] += (
+        ' V4 response order: finish every required candidate not already proved by the program before optional findings. '
+        'The program-owned roles need no duplicate model row. Keep one reviewed entry for every supplied unit. '
+        'Optional findings may report physical manufacturing capacity, production, expansion plans or operational '
+        'constraints; do not enumerate ordinary monetary credit, product storage/installed capacity, sales/shipment '
+        'or other background as findings unless its exact reference is a required candidate. '
+        'For a first-person registrant statement using we or our, use TARGET_REGISTRANT subject; reserve '
+        'UNRESOLVED for a genuinely unidentified subject, not a known registrant accounting policy. '
+        'Source content and required candidates remain unchanged; do not infer absence from an omitted background row.')
+
+
 def _expand_compact_response(value, request):
     """Decode only explicit typed codes; the V1 owner/semantic checks still run."""
     import re
@@ -246,7 +285,8 @@ def _expand_compact_response(value, request):
             code=row[position]
             need(type(code) is int and 0<=code<len(books[key]),'B13_COMPACT_CLASSIFICATION_CODE')
             finding[key]=books[key][code]
-        need(type(row[3]) is list and row[3] and type(row[4]) is str and 0<len(row[4])<=96,
+        maximum = request['response_protocol']['max_compact_reason_characters']
+        need(type(row[3]) is list and row[3] and type(row[4]) is str and 0<len(row[4])<=maximum,
              'B13_COMPACT_REFERENCE_OR_REASON')
         refs=[]
         for token in row[3]:

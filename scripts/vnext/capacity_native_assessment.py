@@ -98,6 +98,7 @@ def collect_native_assessments(*, prepared_requests, ledger):
     batch_history = None
     recovered_batch_failed_ordinals = []
     recovered_batch_http402_ordinals = []
+    recovered_batch_engineering_ordinals = []
     with ledger.locked():
         state = ledger.snapshot()
         if (ledger.root/'batch33-authorization.json').exists():
@@ -183,6 +184,17 @@ def collect_native_assessments(*, prepared_requests, ledger):
                     failures = [failure for failure in failures
                                 if failure['ordinal'] != recovery172['original_ordinal']]
                     recovered_batch_http402_ordinals.append(recovery172['original_ordinal'])
+                if 'batch_repair_189_id' in intent:
+                    repair189 = batch_history.get('repair_189')
+                    need(repair189 is not None
+                         and intent['batch_repair_189_id'] == repair189['authorization_id']
+                         and intent['batch_group_id'] == repair189['group_id']
+                         and any(claim['intent']['ordinal'] == repair189['failed_ordinal']
+                                 and claim['terminal'] is not None
+                                 and claim['terminal']['status'] == 'FAILED_TERMINAL'
+                                 for claim in batch_history['claims']),
+                         'BATCH33_ENGINEERING_FAILED_ORIGINAL_NOT_RETAINED')
+                    recovered_batch_engineering_ordinals.append(repair189['failed_ordinal'])
             completed[identity] = {'request_id': identity, 'ordinal': row['ordinal'],
                 'terminal_id': terminal['terminal_id'], 'acceptance_receipt_id': success['acceptance_receipt_id'],
                 'candidate': acceptance['candidate_record'], 'evidence': acceptance['evidence_record'],
@@ -222,4 +234,6 @@ def collect_native_assessments(*, prepared_requests, ledger):
         body['recovered_batch_failed_ordinals'] = sorted(recovered_batch_failed_ordinals)
         if recovered_batch_http402_ordinals:
             body['recovered_batch_http402_ordinals'] = sorted(recovered_batch_http402_ordinals)
+        if recovered_batch_engineering_ordinals:
+            body['recovered_batch_engineering_ordinals'] = sorted(recovered_batch_engineering_ordinals)
     return {**body, 'assessment_set_id': content_hash(value=body)}

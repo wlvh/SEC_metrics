@@ -349,7 +349,8 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
 
 
 def select_native_request_variants(*, prepared_requests, ledger, source_references=False,
-                                   compact_references=False, semantic_role_labels=False):
+                                   compact_references=False, semantic_role_labels=False,
+                                   relevance_repair_group_index=None):
     """Keep exact successful receipts; use indexed output for other groups.
 
     Selection is read-only and covers the existing complete source partition.
@@ -378,17 +379,26 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
          'NATIVE_ROLE_LABEL_SELECTION_INVALID')
     need(type(source_references) is bool and (not source_references or source['metric_id']=='B13'),
          'NATIVE_REFERENCE_SELECTION_INVALID')
+    need(relevance_repair_group_index is None or
+         (type(relevance_repair_group_index) is int and
+          0 <= relevance_repair_group_index < len(originals) and
+          source_references and compact_references and semantic_role_labels and
+          source['metric_id'] == 'B13'),
+         'B13_RELEVANCE_REPAIR_SELECTION_INVALID')
     alternatives = [upgrade_request(r) for r in originals]
     variant_requests = [{BASE:r, VERSION:a} for r,a in zip(originals,alternatives)]
     selected_version = VERSION
     if source_references and source.get('program_quantity_role_contract_version'):
-        from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, ROLE_VERSION, upgrade_request as reference_request
-        for versions, original in zip(variant_requests,originals):
+        from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, ROLE_VERSION, RELEVANCE_VERSION, upgrade_request as reference_request
+        for index, (versions, original) in enumerate(zip(variant_requests,originals)):
             versions[REFERENCE_VERSION] = reference_request(original)
             if compact_references:
                 versions[COMPACT_VERSION] = reference_request(original, compact=True)
                 if semantic_role_labels:
                     versions[ROLE_VERSION] = reference_request(original, compact=True, role_labels=True)
+                    if index == relevance_repair_group_index:
+                        versions[RELEVANCE_VERSION] = reference_request(original, compact=True,
+                            role_labels=True, relevance_scope=True)
         if source_references:
             selected_version = (ROLE_VERSION if semantic_role_labels else
                                 COMPACT_VERSION if compact_references else REFERENCE_VERSION)
@@ -448,12 +458,13 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
         if i in successful:
             item, entry = successful[i]
         else:
-            request = variant_requests[i][selected_version]
+            version = (RELEVANCE_VERSION if i == relevance_repair_group_index else selected_version)
+            request = variant_requests[i][version]
             policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
             item = replace(prepared, request_bytes=_source_json(request),
                 provider_request_body_bytes=request_body(request,policy),
                 output_schema_bytes=_json(request['response_protocol']))
-            entry = {'request_id':request['request_id'], 'variant':selected_version, 'original_ordinal':None}
+            entry = {'request_id':request['request_id'], 'variant':version, 'original_ordinal':None}
         selected.append(item); report.append(entry)
     return selected, report
 
@@ -678,8 +689,9 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
     if request_fields.get('metric_id') == 'B13':
-        from .capacity_reference_contract import ROLE_VERSION
-        need(not (ledger.live and request_fields.get('source_reference_contract', {}).get('version') == ROLE_VERSION
+        from .capacity_reference_contract import ROLE_VERSION, RELEVANCE_VERSION
+        need(not (ledger.live and request_fields.get('source_reference_contract', {}).get('version')
+                  in {ROLE_VERSION, RELEVANCE_VERSION}
                   and not (getattr(ledger, 'root', None) is not None
                            and (ledger.root/'batch33-authorization.json').exists())),
              'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED')
@@ -704,10 +716,15 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     policy,plan = build_plan(prepared)
     digest = request_digest(request_fields, policy)
     batch_group_id = None
+    repair189 = None
     if not ledger.live and (ledger.root/'batch33-authorization.json').exists():
         from .continuous_batch33 import read_authorization as read_batch_authorization, group_for_request
+        if (ledger.root/'batch33-repair-189.json').exists():
+            from .continuous_batch33_repair189 import read_authorization as read_repair189
+            repair189 = read_repair189(ledger)
         batch_group_id = group_for_request(authorization=read_batch_authorization(ledger),
-                                           request=request_fields, request_digest=digest)
+                                           request=request_fields, request_digest=digest,
+                                           repair189=repair189)
     def response_validator(**kwargs):
         if native_assessment:
             try:
@@ -741,8 +758,11 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
         batch = read_batch_authorization(ledger)
         need(batch is not None and batch == batch_authorization(ledger=ledger, online=True),
              'BATCH33_LIVE_AUTHORIZATION_REQUIRED')
+        if (ledger.root/'batch33-repair-189.json').exists():
+            from .continuous_batch33_repair189 import read_authorization as read_repair189
+            repair189 = read_repair189(ledger)
         batch_group_id = group_for_request(authorization=batch, request=request_fields,
-                                           request_digest=digest)
+                                           request_digest=digest, repair189=repair189)
         from .ai_adapter import api_key_environment_name
         import os
         need(bool(os.environ.get(api_key_environment_name(policy=policy),'').strip()),
@@ -754,7 +774,9 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     with ledger.locked():
         path,intent = ledger.claim(channel='PROVIDER',request_digest=digest,
             requirement=prepared.requirement,plan_id=plan['ai_invocation_plan_id'],
-            purpose='remaining_development_feasibility',batch_group_id=batch_group_id)
+            purpose='remaining_development_feasibility',batch_group_id=batch_group_id,
+            batch_repair_receipt=(repair189 if repair189 is not None and
+                digest == repair189['repaired_request_digest'] else None))
         control._exclusive_write_bytes(path=path/'source.json',content=prepared.source_bytes)
         control._exclusive_write_bytes(path=path/'semantic-request.json',content=prepared.request_bytes)
         preserve_execution_rules(prepared,path)
