@@ -336,6 +336,74 @@
   },
   "verdict": "Every emphasized block the selector refused was refused correctly: Pfizer's twenty are ten pages of a running head (registrant name plus page number) and Salesforce's two are bullet glyphs. No spurious heading was found in any of the nine readable filings."
  },
+ "direction_three_are_the_headings_taken_headings": {
+  "clean": [
+   "enphase_energy",
+   "ford_motor_company",
+   "lumen_technologies",
+   "macys",
+   "pfizer",
+   "salesforce",
+   "southwest_airlines"
+  ],
+  "method": "The heading list each filing returns, read against the filing. Direction one asks whether the refusals are right and direction two whether anything visually marked was left; neither can see a heading that was taken and is not one.",
+  "one_defect_found": {
+   "company": "paramount_skydance_paramount_global",
+   "delivered": "Failures to comply with or changes in U",
+   "measured_across_the_corpus": {
+    "enphase_energy": {
+     "emphasis_resumes_after_the_gap": 0,
+     "headings": 60,
+     "prefix_shorter_than_its_block": 1
+    },
+    "ford_motor_company": {
+     "emphasis_resumes_after_the_gap": 0,
+     "headings": 30,
+     "prefix_shorter_than_its_block": 26
+    },
+    "lumen_technologies": {
+     "emphasis_resumes_after_the_gap": 0,
+     "headings": 50,
+     "prefix_shorter_than_its_block": 5
+    },
+    "macys": {
+     "emphasis_resumes_after_the_gap": 0,
+     "headings": 36,
+     "prefix_shorter_than_its_block": 0
+    },
+    "marriott_international": {
+     "emphasis_resumes_after_the_gap": 0,
+     "headings": 34,
+     "prefix_shorter_than_its_block": 32
+    },
+    "paramount_skydance_paramount_global": {
+     "emphasis_resumes_after_the_gap": 1,
+     "headings": 38,
+     "prefix_shorter_than_its_block": 1
+    },
+    "pfizer": {
+     "emphasis_resumes_after_the_gap": 0,
+     "headings": 28,
+     "prefix_shorter_than_its_block": 0
+    },
+    "salesforce": {
+     "emphasis_resumes_after_the_gap": 0,
+     "headings": 43,
+     "prefix_shorter_than_its_block": 0
+    },
+    "southwest_airlines": {
+     "emphasis_resumes_after_the_gap": 0,
+     "headings": 34,
+     "prefix_shorter_than_its_block": 0
+    }
+   },
+   "not_repaired": "One instance in nine filings. 'An unemphasised gap of punctuation only does not end the run' has exactly one example behind it, and a rule written from one example is the kind that fails on the next filing. Registered as D01_PARAMOUNT_2025_HEADING_TRUNCATED_AT_AN_UNBOLDED_PERIOD.",
+   "the_filing_says": "Failures to comply with or changes in U.S. or foreign laws or regulations could have an adverse effect on our business, financial condition or results of operations.",
+   "why": "The filer marks the periods in 'U.S.' with font-weight:400 between bold letters. leading_emphasis is the leading contiguous run of emphasised parts, so it ends at the first unbolded part.",
+   "why_the_common_case_is_not_a_defect": "Twenty-six of Ford's thirty and thirty-two of Marriott's thirty-four headings also have a prefix shorter than their block, and in every one the emphasis does not resume: that is the deliberate case the frozen docstring names, a bold lead sentence kept apart from its paragraph. Only Paramount's resumes."
+  },
+  "what_they_contain": "Risk-category headings plus individual risk-factor headings - what the approved definition asks for ('heading-level summary or topic list'). No page furniture, no lead-in sentences, no audit-report text. Ford, Macy's, Enphase, Lumen, Salesforce, Southwest and Paramount all carry their category headings because they bold them; Marriott's are the underlined ones this file is about."
+ },
  "direction_two_what_was_left": {
   "corroborated_elsewhere_in_this_repository": "The D02 incorporated-scope work recorded Marriott's heading style as underline plus indentation, measured for another purpose on other sections. Two independent readings landing on the same filer's style is stronger than either alone.",
   "marriott_by_year": {

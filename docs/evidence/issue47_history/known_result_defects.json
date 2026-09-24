@@ -401,6 +401,22 @@
    "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
    "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
    "summary": "33 of 37 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'Governance Risk' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only."
+  },
+  {
+   "block_index": 292,
+   "company_id": "paramount_skydance_paramount_global",
+   "defect_id": "D01_PARAMOUNT_2025_HEADING_TRUNCATED_AT_AN_UNBOLDED_PERIOD",
+   "evidence": [
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json"
+   ],
+   "metric_id": "D01",
+   "not_repaired_because": "A rule written from one example is the kind that fails on the next filing. What the corpus supports is the finding, not yet a repair: 'an unemphasised gap of punctuation only does not end the run' has one instance behind it.",
+   "period_end": "2025-12-31",
+   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "reported_quality": "EXACT",
+   "root_cause": "text_coverage._Blocks._flush builds leading_emphasis from the leading run of emphasised parts and stops at the first unemphasised one. That is deliberate - a bold lead sentence is kept apart from its following paragraph - and this is the case where the run resumes after the gap.",
+   "scope_measured": "One instance in nine readable filings. Twenty-six of Ford's thirty headings and thirty-two of Marriott's thirty-four also have a prefix shorter than their block, and in every one of those the emphasis does not resume - they are the deliberate lead-sentence case. Only Paramount's resumes, and the gap is a single period.",
+   "summary": "One of the thirty-eight headings is delivered as 'Failures to comply with or changes in U'. The filer marks the periods in 'U.S.' with font-weight:400 between bold letters, and D01 delivers the leading contiguous emphasised run, which ends at the first unbolded part. The block's own text carries the whole sentence: 'Failures to comply with or changes in U.S. or foreign laws or regulations could have an adverse effect on our business, financial condition or results of operations.'"
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
