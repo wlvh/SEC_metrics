@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:568ab1eb52f4f44721e94a871efe78caf389862213a9c9278201c31b7e67c8d2",
-  "execution_authority_hash": "sha256:e1899bdc61f1961d291b70d6a247009a746073e853c8ce6563c997c219650eb0",
+  "requirement_closure_hash": "sha256:fe581d02cd8f3980da91929065d09bf34550c5ad25cf7e2ebc1cd3518d26fe3d",
+  "execution_authority_hash": "sha256:10dd01fcec1a3dac92059f3fb63cfef561b3f0b5f7c1e3acf4ff869147b24536",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -31,8 +31,12 @@
     "docs/evidence/issue28_continuous/batch33-authorization/recovery172-pending-live-check.json": "6882ceb6872edc07ee30b08a6762a288010c1df9d97f98cc6f8ae5c648ac4235",
     "docs/evidence/issue28_continuous/batch33-authorization/recovery172-server-authorization-check.json": "f4f5997ae204212d8550ba1aa8c73e9d99bd42c28033f771772730c4c37c20bf",
     "docs/evidence/issue28_continuous/batch33-authorization/recovery172-final-directed.log": "daad8847e937412cc1db46585e495d9e199e309a64db331afc3ced296622bdbe",
-    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-final-fast.json": "7d1e63acf8a4c18852a963bfa43aa31520d5ef8663ce80405f925c2a7e42f27c"
+    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-final-fast.json": "7d1e63acf8a4c18852a963bfa43aa31520d5ef8663ce80405f925c2a7e42f27c",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/v4-preflight-summary.json": "605afae1a5870aca7e2e2104a0fbb32201199139f95fab80c71636fc3f69bf4a",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/v4-recorded-wiring-summary.json": "7b5e05058983897b43aed91bc1e422fcaf62e04c7cdd5b95aec037d1fed5df2c",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/v4-targeted-final.log": "ee50550219d3bfb16646d0b15500d4edfa4c07ae3bcafb5c06f50909e7a24ea2",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/independent-review/conclusion.md": "cd92d2d7d9f255c4080d817a1ea987e34b6ee199b279021841837b8208f11db0"
   },
-  "scope": "Exact 172 user approval transcribed and authenticated on Issue28 server, V14 code/config/comment/source bytes bound. Previously passed recorded one-shot Enphase native chain reused; current 37 directed and127 fast tests passed. Recovery record not installed; final authorization-diff review pending; no new real call.",
-  "independent_review": "Recovery172 pending implementation 2598ce82 and final server binding fd31d639 both scoped independent PASS; batch/SEC prior scoped reviews retained. No real173 yet."
+  "scope": "Current V14 execution bytes bound after D04 Enphase and Paramount 10/10 native candidates. B13 ordinal189 remains failed; V4 group0 repair is independently reviewed, proof-bound, and recorded factory/controller plus native acceptance is network-disabled. This receipt does not show a real V4 model result or a complete B13 company.",
+  "independent_review": "B13 V4 repair patch 0181c8bf has PASS_SCOPED_REPAIR189; earlier batch and recovery172 scoped reviews retained. Live repair slot not yet claimed."
 }

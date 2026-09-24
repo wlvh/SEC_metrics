@@ -1051,6 +1051,34 @@
       "tool_calls": 32,
       "result_path": "docs/evidence/issue28_continuous/batch33-authorization/recovery172-independent/final-authorization-review.md",
       "verdict": "DONE_SCOPED_FINAL_AUTHORIZATION_BINDING_NO_BLOCKING_FINDINGS"
+    },
+    {
+      "task_name": "review_b13_repair189_0181c8b",
+      "requested_label": "review-b13_repair189-0181c8b",
+      "purpose": "review",
+      "module": "b13_repair189",
+      "scope_paths": [
+        "scripts/vnext/capacity_reference_contract.py",
+        "scripts/vnext/continuous_batch33_repair189.py",
+        "scripts/vnext/continuous_batch33.py",
+        "scripts/vnext/continuous_call_ledger.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/capacity_assessment_input.py",
+        "scripts/vnext/native_unit_index.py",
+        "tools/vnext_batch33.py",
+        "config/issue28_b13_repair_189_v1.json",
+        "tests/vnext/test_capacity_reference_contract.py",
+        "tests/vnext/test_continuous_batch33.py"
+      ],
+      "patch_sha": "0181c8bf9c6809600eb77ee2da6b3d6b7ee1a08a",
+      "spawned_at": "2026-09-24T10:47:47.912411+00:00",
+      "ended_at": "2026-09-24T10:53:06.286477+00:00",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/independent-review/conclusion.md",
+      "verdict": "DONE_PASS_SCOPED_REPAIR189",
+      "status": "DONE",
+      "tool_calls_note": "agent did not report exact tool count; no claim of a measured count"
     }
   ],
   "ci_capacity_20260922": {
@@ -1581,5 +1609,27 @@
     "no_candidate_or_company_result": true,
     "diagnosis": "batch33-authorization/b13-189-diagnosis/README.md",
     "repair_retry_used": false
+  },
+  "b13_189_repair_ready": {
+    "patch_sha": "0181c8bf9c6809600eb77ee2da6b3d6b7ee1a08a",
+    "state": "SUBSTANTIVE_PATCH_TESTS_SCOPED_REVIEW_BOUND",
+    "group": "B13:enphase_energy:0",
+    "failed_ordinal": 189,
+    "failed_terminal_retained": true,
+    "v4_request_digest": "fe553da0c6b7028692fa018a78e506befa3aa83416323b49036e32e757aec0e3",
+    "source_units_preserved": 5,
+    "required_assessments_preserved": 5,
+    "targeted_tests": "44_PASS",
+    "fast_selectors": "127_OF_127_PASS",
+    "recorded_factory_controller": "batch33-authorization/b13-189-diagnosis/v4-recorded-wiring-summary.json",
+    "independent_review": "batch33-authorization/b13-189-diagnosis/independent-review/conclusion.md",
+    "independent_verdict": "PASS_SCOPED_REPAIR189",
+    "final_wiring_receipt": "b13-170-source-audit/offline-wiring.json",
+    "new_live_calls": [
+      0,
+      0,
+      0
+    ],
+    "repair_slot_consumed": false
   }
 }

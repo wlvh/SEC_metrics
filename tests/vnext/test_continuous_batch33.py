@@ -447,10 +447,13 @@ class Batch33ServerAuthorityTest(unittest.TestCase):
     def test_repair189_pending_policy_installs_nothing(self):
         with tempfile.TemporaryDirectory() as temporary:
             ledger=SimpleNamespace(root=Path(temporary))
-            self.assertIsNone(install_repair189(ledger=ledger,requirement={}))
-            (ledger.root/'batch33-repair-189.json').write_text('{}')
-            with self.assertRaisesRegex(ValueError,'BATCH33_REPAIR189_UNAPPROVED_RECORD_PRESENT'):
-                install_repair189(ledger=ledger,requirement={})
+            from vnext.continuous_batch33_repair189 import _config
+            pending={**_config(), 'state':'PENDING_PATCH_TEST_AND_SCOPED_REVIEW'}
+            with patch('vnext.continuous_batch33_repair189._config',return_value=pending):
+                self.assertIsNone(install_repair189(ledger=ledger,requirement={}))
+                (ledger.root/'batch33-repair-189.json').write_text('{}')
+                with self.assertRaisesRegex(ValueError,'BATCH33_REPAIR189_UNAPPROVED_RECORD_PRESENT'):
+                    install_repair189(ledger=ledger,requirement={})
 
     def test_recovery172_pending_policy_installs_nothing(self):
         with tempfile.TemporaryDirectory() as temporary:
