@@ -317,7 +317,7 @@
    "text": "Blum",
    "what_it_is": "An underlined-italic case-name caption sitting between two class-action paragraphs in the legal-proceedings note, so admitting underline would correctly add it. It is recorded because the trade is five for one, not five for nothing."
   },
-  "what_this_decides": "The repair is scoped to D01, not to the shared parser. Which is the opposite of what 'it is one line in text_coverage' would have produced, and it was decided by measurement rather than by argument."
+  "what_this_decides": "SUPERSEDED - see the_hazard_was_the_span_rule_not_the_emphasis_rule below. The sentence this field held ('the repair is scoped to D01, not to the shared parser') was true of the widening alone and stopped one measurement too early."
  },
  "calls": {
   "paid": 0,
@@ -520,5 +520,74 @@
  "registered_as": [
   "D01_MARRIOTT_UNDERLINE_GROUP_HEADINGS_DROPPED"
  ],
+ "the_hazard_was_the_span_rule_not_the_emphasis_rule": {
+  "correction": "The previous conclusion - repair D01 alone because widening the shared parser costs five confirmed D02 blocks - is withdrawn. The five were not lost to the emphasis rule; they were lost to audit_report_spans opening on a block that a widened parser makes emphasized. Asking what distinguishes that block answers it in one property.",
+  "measured_cost": {
+   "lines": {
+    "d02_side": "smaller - historical_text_results already duplicates its chain for exactly this reason and would point at the successor preparation",
+    "document_successor": "about 60",
+    "prepare_text_sources_successor": 37,
+    "total": "about 200, against 155 for the text-protocol successor",
+    "v1_candidate_chain_for_D01": "27 + 6 + 4 + 67 = 104 - _derive_deterministic_candidate, create_deterministic_text_candidate, verify_deterministic_text_candidate and build_text_evidence, which look each other up as module globals"
+   },
+   "not_paid_in_this_round": "A batch is running on the current closure and is the evidence for it, so no rule file moves until it has been reported on its own closure.",
+   "where_each_half_lives": {
+    "the_emphasis": "scripts/vnext/text_coverage._Blocks.handle_starttag, whose bytes issue_28_v11 names and which is checked on both roots, so it needs a successor.",
+    "the_link_guard": "scripts/vnext/historical_text_results.audit_report_spans, already a rule file of this generation - a one-line change."
+   },
+   "why_a_successor_can_be_small": "Section boundaries do not depend on emphasis - _heading reads `linked` and text only - and the measurement confirms the block sequence is identical on both sides. So a successor can run the frozen build_text_document for all of its identity validation and sections, re-run a _Blocks subclass whose only override adds underline, require the block texts and offsets to be identical, and replace the two emphasis fields. That requirement is the guarantee: it makes the successor provably a one-field change rather than a second parser."
+  },
+  "measured_three_ways": {
+   "everything_else": "Unchanged. Twenty-four of the twenty-seven company-metric pairs return the frozen answer exactly, including Southwest's D02, which goes 25 -> 20 -> 25.",
+   "method": "frozen; underline admitted; underline admitted plus the requirement that an opening block not be a link. Three metrics, ten companies, nine readable. Both patches in one probe process; nothing on disk changed.",
+   "moves_against_frozen": {
+    "lumen_technologies": {
+     "D02": {
+      "added": [
+       3400
+      ],
+      "counts": {
+       "frozen": 41,
+       "underline": 42,
+       "underline_plus_link_guard": 42
+      },
+      "removed": []
+     }
+    },
+    "marriott_international": {
+     "D01": {
+      "added": [
+       "Development and Financing Risks",
+       "General Risk Factors",
+       "Operational Risks",
+       "Technology, Information Protection, and Privacy Risks"
+      ],
+      "counts": {
+       "frozen": 34,
+       "underline": 38,
+       "underline_plus_link_guard": 38
+      },
+      "removed": []
+     }
+    }
+   }
+  },
+  "so_the_repair_is": "Admit underline as emphasis, and require an audit-report opening not to be a link. Together they move three things and all three are corrections: Marriott's four D01 headings and Lumen's case-name caption in D02.",
+  "what_distinguishes_the_index_line": {
+   "block_1421": {
+    "colour": "#0000ff",
+    "linked": true,
+    "style": "font-weight:400;text-decoration:underline",
+    "text": "Report of Independent Registered Public Accounting Firm"
+   },
+   "blocks_2250_and_2275": {
+    "linked": false,
+    "style": "font-size:11pt;font-weight:700",
+    "text": "Report of Independent Registered Public Accounting Firm"
+   },
+   "why_this_is_not_an_invented_criterion": "`not linked` is the check _note_heading makes in the same module, three hundred lines above, for the same reason: a hyperlinked copy of a heading is an index entry, not the heading. audit_report_spans keys on leading_emphasis alone and never asked."
+  },
+  "what_is_still_open": "Whether underline-without-bold marks something other than a heading in a filing this repository does not hold. Nine filings, one period each, and one filer that uses the style - so the rule rests on an in-document control rather than on a population."
+ },
  "what_this_is": "Both directions over D01's Item 1A selection: what the selector took, and what it left. Every D01 check before this one could only ask whether the headings returned are headings; a selector can judge each block it takes correctly and still drop a disclosure, which is the shape the D02 reading found twice."
 }
