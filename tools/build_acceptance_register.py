@@ -5,10 +5,19 @@ window of filings - so what every entry must carry is not one field name but
 the artifact that holds the full reading. That is what a reader needs to redo
 it, and it is uniform across the three.
 """
+import collections
+import hashlib
 import json
+import os
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
+# The results the readings were made against. An acceptance says "this fact was
+# read from the filing", and a fact is a value under a measured window, a scope
+# and a unit - so the register has to carry those, and it can only get them
+# from the results themselves.
+RUNS_ROOT = Path(os.environ.get("ISSUE47_RUNS_ROOT",
+                                "/tmp/claude-0/native/par9/flat"))
 EVIDENCE = "docs/evidence/issue47_history/content-acceptance/"
 CROSS = EVIDENCE + "cross-source-read.json"
 LODGING = EVIDENCE + "lodging-table-read.json"
@@ -22,6 +31,59 @@ PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
            "pfizer-2025": "2025-12-31", "lumen-2025": "2025-12-31",
            "enphase-2025": "2025-12-31", "southwest-2025": "2025-12-31",
            "salesforce-2026": "2026-01-31", "macys-2026": "2026-01-31"}
+
+def _results_by_coordinate(root):
+    """Every frozen Run's METRIC_RESULT, keyed by company, metric and period.
+
+    Raises rather than returning an empty map: a register built against no
+    results would pin nothing and every acceptance would fall back to the
+    loose match this is here to remove.
+    """
+    found = {}
+    for records in sorted(Path(root).glob("run-*/records.jsonl")):
+        for line in records.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            if record.get("record_type") != "METRIC_RESULT":
+                continue
+            key = (record["company_id"], record["metric_id"], record["period_end"])
+            found.setdefault(key, record)
+    if not found:
+        raise SystemExit("NO_RESULTS_UNDER:" + str(root)
+                         + " - set ISSUE47_RUNS_ROOT to the batch this register "
+                           "describes; pinning cannot be invented.")
+    return found
+
+
+RESULTS = _results_by_coordinate(RUNS_ROOT)
+# Pinned from the result the reading was made against. The reading establishes
+# the company, the metric, the measured period and the value; the unit and the
+# scope key come from that result and are carried here so that a later result
+# cannot inherit this acceptance by carrying the same number under a different
+# scope, unit or window. They are a binding, not a second reading.
+IDENTITY_FIELDS = ("period_start", "period_end", "unit", "scope_key")
+
+
+def _identity(*, company_id, metric_id, period_end, reading_period=None):
+    """The business fact this acceptance is about, or a refusal."""
+    result = RESULTS.get((company_id, metric_id, period_end))
+    if result is None:
+        raise SystemExit("NO_RESULT_TO_PIN:" + "/".join(
+            (company_id, metric_id, period_end)))
+    missing = [field for field in IDENTITY_FIELDS if not result.get(field)]
+    if missing:
+        raise SystemExit("RESULT_CANNOT_BE_PINNED:" + "/".join(
+            (company_id, metric_id, period_end)) + ":" + ",".join(missing))
+    # Where a reading records the window it read, it has to be the window the
+    # result measured. A disagreement here is not a pin to paper over.
+    if reading_period and list(reading_period) != [result["period_start"],
+                                                   result["period_end"]]:
+        raise SystemExit("READING_AND_RESULT_DISAGREE_ON_THE_WINDOW:" + "/".join(
+            (company_id, metric_id, period_end)) + ":" + str(list(reading_period))
+            + " vs " + str([result["period_start"], result["period_end"]]))
+    return {field: result[field] for field in IDENTITY_FIELDS}
+
 
 STATEMENT_METHOD = (
  "the filing's own primary document, walked directly: xbrli:context parsed for "
@@ -215,6 +277,56 @@ if table["verdict"] == "MATCH":
             "that the Summary Compensation Table total is the right pay signal, "
             "nor " + COMMON})
 
+# Pinned in one place rather than at each of the seven append sites, so an
+# acceptance cannot be added without its binding.
+for entry in entries:
+    entry["result_identity"] = _identity(company_id=entry["company_id"],
+                                         metric_id=entry["metric_id"],
+                                         period_end=entry["period_end"])
+
+# Where a reading records the window it read, that window has to be the one the
+# result measured; a disagreement is reported rather than pinned over.
+for source in (GOVERNANCE, CROSS, LODGING, EVENTS):
+    reading = json.loads((REPO / source).read_text())
+    for case in (reading.get("per_position") or {}).values():
+        if not isinstance(case, dict) or not case.get("period"):
+            continue
+        for metric in [k for k in case if len(k) == 3 and k[0].isalpha()]:
+            row = case[metric]
+            if not isinstance(row, dict) or row.get("verdict") != "MATCH":
+                continue
+            if (case["company_id"], metric, case["period"][1]) in RESULTS:
+                _identity(company_id=case["company_id"], metric_id=metric,
+                          period_end=case["period"][1],
+                          reading_period=case["period"])
+
+# What each reading examined and what it concluded. The guard that used to sit
+# here required every reading to contribute at least one acceptance, which is
+# indistinguishable from the case it was written for: a reading that runs to
+# completion and finds every value inconsistent contributes none, and the guard
+# then exited BEFORE writing - leaving the previous register installed and
+# still granting exactly what the new reading had just contradicted. Measured:
+# with every governance verdict turned to DIFFERS the generator exited 1 and
+# all six C04 acceptances remained. A legitimate fall in acceptances is a
+# result this register has to be able to carry.
+readings = {}
+for source in (CROSS, LODGING, EVENTS, GOVERNANCE, TEXT, RPO, COMPENSATION):
+    raw = (REPO / source).read_bytes()
+    body = json.loads(raw)
+    positions = body.get("per_position")
+    # Reported, not gated. The count is only derivable for the readings that
+    # carry a per_position map; the others are a flat map of labels or a single
+    # coordinate, and a rule written to see those shapes stops seeing the next
+    # one. A zero or a fall here is for a reader to notice, not something to
+    # exit on - the guard that did exit is what this replaces.
+    readings[source] = {
+        "content_sha256": "sha256:" + hashlib.sha256(raw).hexdigest(),
+        "positions_examined": len(positions) if isinstance(positions, dict) else None,
+        "positions_examined_is_null_because":
+            None if isinstance(positions, dict)
+            else "this reading's shape carries no per_position map",
+        "acceptances_contributed": sum(1 for e in entries if e["evidence"] == source)}
+
 register = {
  "record_type": "INDEPENDENT_CONTENT_ACCEPTANCE_REGISTER", "schema_version": 1,
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
@@ -277,26 +389,23 @@ register = {
     "unread set. The other seven have been read in both directions and are "
     "accepted.",
   "everything else": "no reading has been made."},
+ "readings": readings,
+ "what_binds_an_acceptance": (
+     "company, metric, period end, value, and the result_identity block - the "
+     "measured window, the scope key and the unit. Without all of them an "
+     "acceptance is inherited by any later result that happens to carry the "
+     "same number, which for a flag whose value is 0 is most of them. The "
+     "reading establishes the company, the metric, the measured window and the "
+     "value; the scope key and unit are pinned from the result the reading was "
+     "made against, so that a change in either stops the inheritance. They are "
+     "a binding, not a second reading."),
+ "when_an_acceptance_stops_applying": (
+     "the value moves, any pinned identity field moves, a registered defect "
+     "withdraws the result, or the reading artifact it names no longer hashes "
+     "to content_sha256 above - a reading that was re-run and now concludes "
+     "something else must not leave the previous grant standing."),
  "acceptances": sorted(entries, key=lambda e: e["acceptance_id"]),
 }
-import collections
-
-# A reading that contributes nothing is broken, not informative. This round a
-# reading reported four positions as missing material when the filings were on
-# disk the whole time, and two replacement attempts each found zero documents
-# for every company and said so as if it were a fact. What it does NOT catch:
-# a reading that still contributes something while losing part of its set -
-# the governance reading kept its one C04 acceptance through both failures.
-# Catching that needs a ratchet against the committed register, and a ratchet
-# needs an override for the times acceptances legitimately fall, so it is not
-# built here; this guard is the part that is free of a hand-kept list.
-contributed = collections.Counter(entry["evidence"] for entry in entries)
-silent = sorted(source for source in
-                (CROSS, LODGING, EVENTS, GOVERNANCE, TEXT, RPO, COMPENSATION)
-                if not contributed[source])
-if silent:
-    raise SystemExit("A_READING_CONTRIBUTED_NO_ACCEPTANCES:" + ", ".join(silent))
-
 (REPO / "docs/evidence/issue47_history/accepted_result_content.json").write_text(
     json.dumps(register, indent=1, sort_keys=True, ensure_ascii=False) + "\n")
 print("acceptances:", len(entries))

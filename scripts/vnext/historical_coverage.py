@@ -55,6 +55,9 @@ _SHA = re.compile(r"sha256:[0-9a-f]{64}\Z")
 POLICY_PATH = "config/issue28_normal_results_v2.json"
 DEFECT_REGISTER_PATH = "docs/evidence/issue47_history/known_result_defects.json"
 ACCEPTANCE_REGISTER_PATH = ("docs/evidence/issue47_history/accepted_result_content.json")
+# The fields an acceptance pins, so a later result cannot inherit it by
+# carrying the same number under a different measurement.
+ACCEPTANCE_IDENTITY_FIELDS = ("period_start", "period_end", "unit", "scope_key")
 RECORD_TYPE = "HISTORICAL_COVERAGE_MATRIX"
 # The historical routes that exist today. Everything else is an explicit gap.
 WIRED_COMPANYFACTS_METRICS = ("A05", "A06", "A07", "A08", "A10",
@@ -206,15 +209,42 @@ def independent_content_acceptances(*, repo_root: Path):
               + acceptance["acceptance_id"])
         _need((repo_root / acceptance["evidence"]).is_file(),
               "COVERAGE_ACCEPTANCE_EVIDENCE_MISSING:" + acceptance["evidence"])
+        # The business fact this acceptance is about. Without it the match
+        # below falls back to company, metric, period end and value, and any
+        # later result carrying the same number under a different window,
+        # scope or unit inherits the grant - which for a flag whose value is
+        # 0 is most of them. An entry that does not carry it grants nothing.
+        identity = acceptance.get("result_identity")
+        _need(isinstance(identity, dict)
+              and all(isinstance(identity.get(field), str) and identity[field]
+                      for field in ACCEPTANCE_IDENTITY_FIELDS),
+              "COVERAGE_ACCEPTANCE_IDENTITY_MISSING:"
+              + acceptance["acceptance_id"])
+    # An acceptance is a statement that a reading concluded something. If that
+    # reading has been re-run and now says something else, the old grant must
+    # not stand: the register is regenerated from the readings, so a reading
+    # whose bytes no longer match what the register was built from means the
+    # register is behind its own evidence. Checking the file exists never saw
+    # this - the artifact keeps existing while its conclusions change.
+    stale = sorted(source for source, reading in (register.get("readings") or {}).items()
+                   if reading.get("content_sha256")
+                   != "sha256:" + hashlib.sha256(
+                       (repo_root / source).read_bytes()).hexdigest())
+    _need(not stale, "COVERAGE_ACCEPTANCE_READING_CHANGED_SINCE_THE_REGISTER:"
+          + ", ".join(stale))
     return register["acceptances"]
 
 
 def _acceptance_covers(*, acceptance, company_id, metric_id, report_end, result):
     """Whether this acceptance is about this position's current value.
 
-    Both halves matter. The coordinate has to match, and so does the value:
-    an acceptance is a statement that one thing was read against the filing,
-    so a position now carrying something different is not covered by it.
+    The coordinate and the value are not enough, and binding on only those was
+    a real hole: measured, a C04 acceptance whose value is 0 was inherited by
+    the same coordinate with its measured window moved a year, with a different
+    unit and with a different scope key, because none of those took part in the
+    match. An acceptance is a statement that one business fact was read against
+    the filing - a value under a window, a scope and a unit - so all of it has
+    to match, and an entry that does not carry that binding grants nothing.
 
     A text metric's value is its whole payload - five thousand characters for
     one of these - so an acceptance may name it by digest instead. The binding
@@ -227,10 +257,15 @@ def _acceptance_covers(*, acceptance, company_id, metric_id, report_end, result)
     accepted = acceptance["accepted_value"]
     if accepted.startswith("sha256:"):
         value = "sha256:" + hashlib.sha256(value.encode("utf-8")).hexdigest()
+    identity = acceptance.get("result_identity") or {}
+    if not identity:
+        return False
     return (acceptance["company_id"] == company_id
             and acceptance["metric_id"] == metric_id
             and acceptance["period_end"] == report_end
-            and value == accepted)
+            and value == accepted
+            and all(result.get(field) == identity[field]
+                    for field in ACCEPTANCE_IDENTITY_FIELDS))
 
 
 def _release_covers(*, defect, result, receipt):

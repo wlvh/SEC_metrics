@@ -1414,19 +1414,26 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
     COMPANY = "marriott_international"
     PERIOD = "2025-12-31"
 
-    def _entry(self, metric, value):
+    IDENTITY = {"period_start": "2025-01-01", "period_end": "2025-12-31",
+                "unit": "USD", "scope_key": "sha256:" + "a" * 64}
+
+    def _entry(self, metric, value, **identity):
         return {"acceptance_id": "TEST_" + metric, "company_id": self.COMPANY,
                 "metric_id": metric, "period_end": self.PERIOD,
                 "accepted_value": value, "method": "test",
                 "what_this_does_not_establish": "test",
                 "evidence": "docs/evidence/issue47_history/known_result_defects.json",
-                "read_from": {"document": "test"}}
+                "read_from": {"document": "test"},
+                "result_identity": {**self.IDENTITY, **identity}}
+
+    def _result(self, value, **identity):
+        return {"value": value, **self.IDENTITY, **identity}
 
     def _covers(self, *, accepted, actual):
         from vnext.historical_coverage import _acceptance_covers
         return _acceptance_covers(acceptance=self._entry("B04", accepted),
                                   company_id=self.COMPANY, metric_id="B04",
-                                  report_end=self.PERIOD, result={"value": actual})
+                                  report_end=self.PERIOD, result=self._result(actual))
 
     def test_the_registered_acceptances_cover_real_positions(self):
         """The register is about this repository, not about a fixture."""
@@ -1455,10 +1462,10 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
         from vnext.historical_coverage import _acceptance_covers
         self.assertFalse(_acceptance_covers(
             acceptance=self._entry("B04", "2601000000"), company_id=self.COMPANY,
-            metric_id="B05", report_end=self.PERIOD, result={"value": "2601000000"}))
+            metric_id="B05", report_end=self.PERIOD, result=self._result("2601000000")))
         self.assertFalse(_acceptance_covers(
             acceptance=self._entry("B04", "2601000000"), company_id=self.COMPANY,
-            metric_id="B04", report_end="2024-12-31", result={"value": "2601000000"}))
+            metric_id="B04", report_end="2024-12-31", result=self._result("2601000000")))
 
     def test_a_long_value_may_be_named_by_digest_and_is_still_value_bound(self):
         """A text payload is named by sha256; the binding is unchanged.
@@ -1474,15 +1481,85 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
         entry = {**self._entry("D02", digest)}
         self.assertTrue(_acceptance_covers(acceptance=entry, company_id=self.COMPANY,
                                            metric_id="D02", report_end=self.PERIOD,
-                                           result={"value": payload}))
+                                           result=self._result(payload)))
         self.assertFalse(_acceptance_covers(acceptance=entry, company_id=self.COMPANY,
                                             metric_id="D02", report_end=self.PERIOD,
-                                            result={"value": payload + " "}))
+                                            result=self._result(payload + " ")))
         # And a plain value is still compared plainly.
         plain = self._entry("B04", "2601000000")
         self.assertTrue(_acceptance_covers(acceptance=plain, company_id=self.COMPANY,
                                            metric_id="B04", report_end=self.PERIOD,
-                                           result={"value": "2601000000"}))
+                                           result=self._result("2601000000")))
+
+    def test_the_same_number_under_a_different_measurement_is_not_covered(self):
+        """The hole this class did not see: value alone is not the fact.
+
+        Measured against the previous implementation, a C04 acceptance whose
+        value is 0 was inherited by the same coordinate with its measured
+        window moved a year, with a different unit and with a different scope
+        key - none of them took part in the match, and for a flag whose value
+        is 0 that is most results. Each field is moved on its own, because an
+        implementation that checked only one of them would pass a case that
+        moved them together.
+        """
+        from vnext.historical_coverage import _acceptance_covers
+        entry = self._entry("B04", "2601000000")
+        self.assertTrue(_acceptance_covers(
+            acceptance=entry, company_id=self.COMPANY, metric_id="B04",
+            report_end=self.PERIOD, result=self._result("2601000000")),
+            "the control has to hold or the moves below say nothing")
+        for field, moved in (("period_start", "2024-01-01"),
+                             ("unit", "shares"),
+                             ("scope_key", "sha256:" + "b" * 64)):
+            with self.subTest(field):
+                self.assertFalse(_acceptance_covers(
+                    acceptance=entry, company_id=self.COMPANY, metric_id="B04",
+                    report_end=self.PERIOD,
+                    result=self._result("2601000000", **{field: moved})))
+
+    def test_an_acceptance_without_the_binding_grants_nothing(self):
+        """Fail closed, so an entry written before the binding cannot coast.
+
+        An older entry carries the coordinate and the value and nothing else.
+        Treating that as covered is the previous behaviour, which is what is
+        being removed, so it has to grant nothing rather than fall back.
+        """
+        from vnext.historical_coverage import _acceptance_covers
+        entry = self._entry("B04", "2601000000")
+        entry.pop("result_identity")
+        self.assertFalse(_acceptance_covers(
+            acceptance=entry, company_id=self.COMPANY, metric_id="B04",
+            report_end=self.PERIOD, result=self._result("2601000000")))
+
+    def test_a_reading_that_changed_takes_its_grants_with_it(self):
+        """An acceptance is a reading's conclusion, not a permanent label.
+
+        Checking the evidence file exists never saw a re-read that concluded
+        something else: the artifact keeps existing while its conclusions
+        change. The register records what each reading hashed to when it was
+        built, so a reading that has moved since means the register is behind
+        its own evidence and grants nothing until it is rebuilt.
+        """
+        import json
+        from vnext.historical_coverage import (CoverageError,
+                                               independent_content_acceptances)
+        register = json.loads(
+            (ROOT / "docs/evidence/issue47_history/"
+                    "accepted_result_content.json").read_text(encoding="utf-8"))
+        readings = register.get("readings") or {}
+        self.assertTrue(readings, "the register records no reading hashes")
+        source = sorted(readings)[0]
+        path = ROOT / source
+        original = path.read_bytes()
+        try:
+            path.write_bytes(original + b"\n")
+            with self.assertRaises(CoverageError) as raised:
+                independent_content_acceptances(repo_root=ROOT)
+            self.assertIn("READING_CHANGED_SINCE_THE_REGISTER", str(raised.exception))
+        finally:
+            path.write_bytes(original)
+        self.assertTrue(independent_content_acceptances(repo_root=ROOT),
+                        "restoring the reading has to restore the register")
 
     def test_a_withdrawn_result_is_not_accepted(self):
         """When the two registers disagree the withdrawal wins."""
@@ -1491,7 +1568,8 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
                    "manifest_file_hashes_verified": True, "target_period": {},
                    "run_id": "run:historical-period:" + "0" * 64,
                    "requirement_closure_hash": "sha256:" + "1" * 64}
-        result = {"value": "2601000000", "result_id": "sha256:" + "0" * 64}
+        result = self._result("2601000000", )
+        result["result_id"] = "sha256:" + "0" * 64
         defect = {"defect_id": "TEST_DEFECT"}
         accepted = _delivery(receipt=receipt, result=result, status="VALUE_EXACT",
                              defect=None, defects=[],
