@@ -553,10 +553,13 @@ class Batch33ServerAuthorityTest(unittest.TestCase):
     def test_enphase_v4_pending_policy_installs_nothing(self):
         with tempfile.TemporaryDirectory() as temporary:
             ledger=SimpleNamespace(root=Path(temporary))
-            self.assertIsNone(install_b13_v4(ledger=ledger, requirement={}))
-            (ledger.root/'batch33-b13-v4-enphase.json').write_text('{}')
-            with self.assertRaisesRegex(ValueError,'B13_V4_ENPHASE_UNAPPROVED_RECORD_PRESENT'):
-                install_b13_v4(ledger=ledger, requirement={})
+            from vnext.continuous_b13_v4_enphase import _config
+            pending={**_config(), 'state':'PENDING_PATCH_TEST_AND_SCOPED_REVIEW'}
+            with patch('vnext.continuous_b13_v4_enphase._config',return_value=pending):
+                self.assertIsNone(install_b13_v4(ledger=ledger, requirement={}))
+                (ledger.root/'batch33-b13-v4-enphase.json').write_text('{}')
+                with self.assertRaisesRegex(ValueError,'B13_V4_ENPHASE_UNAPPROVED_RECORD_PRESENT'):
+                    install_b13_v4(ledger=ledger, requirement={})
 
     def test_repair189_pending_policy_installs_nothing(self):
         with tempfile.TemporaryDirectory() as temporary:

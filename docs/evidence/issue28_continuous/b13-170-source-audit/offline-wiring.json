@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:5741a633e3e2c2b377ef62ad61eb09aeeb0471561e5cbae14abc963ff5e55c70",
-  "execution_authority_hash": "sha256:bfad8e386a15719701a9fd9395930c73ca8972bc61682f92b2986e840fc3decc",
+  "requirement_closure_hash": "sha256:c26a3552fc5682896d4f4f7afb55a2d8a25edb8ab187b5f0be719c528f5e72be",
+  "execution_authority_hash": "sha256:71926d964c60925cf9dffb5799ecd7a101d66366fdb1dd5cabdf26cfe96dae84",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -37,8 +37,13 @@
     "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/v4-targeted-final.log": "ee50550219d3bfb16646d0b15500d4edfa4c07ae3bcafb5c06f50909e7a24ea2",
     "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/independent-review/conclusion.md": "cd92d2d7d9f255c4080d817a1ea987e34b6ee199b279021841837b8208f11db0",
     "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/summary.json": "90e1eb750ccc3c42dde96c394b1036c1908daf30484fb68970dfa6e0422d34c3",
-    "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/preflight-summary.json": "7ed36e965ea077f54c4b9496cd2bbac0b6d9852ff62dc130d56f5d1b1637563a"
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/preflight-summary.json": "7ed36e965ea077f54c4b9496cd2bbac0b6d9852ff62dc130d56f5d1b1637563a",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/recorded-factory-summary.json": "b079481b20e22d56c9cb7fb5c1be453da21feaa10f286edcf21d0413c093b206",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/rollout-targeted-final.log": "b476731aa38a676e7a72e2ce1fa7af0d46e25d8caf8cabe2c67d67fef6b914ec",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/rollout-fast.log": "69fbf5797ff38480d56e96173491b5fcb046b20ebf1bc44a80d000cff5d0a8b2",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/independent-review/conclusion.md": "6db038497cf62debb23bd9a9d8e3fdf3a3a08669e2fd543f56ac9c6e0dd426f8",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/recorded-factory-final.log": "974415729c5a870237e0872ea228fa07dcf42a19b3bb065f9f1df318721b88c5"
   },
-  "scope": "Current V14 bytes include a pending, fail-closed Enphase B13 V4 continuation policy after real group1 failure191. Existing 189 repair190 remains successful. No new V4 group1-5 live opportunity is installed by this pending policy; all new evidence is offline.",
-  "independent_review": "Prior group0 V4 repair0181c8bf scoped review retained. New Enphase group1-5 policy is pending its own patch, regression and scoped review."
+  "scope": "Final V14 bytes bind the reviewed Enphase B13 V4 continuation: real189/191 failures retained, 190 real group0 success retained, group1 one repair plus unopened groups2-5 one base claim each. Network-disabled recorded factory/controller and native acceptance have passed; this receipt does not claim any real V4 group1-5 result or complete B13 company.",
+  "independent_review": "B13 repair189 patch0181c8bf and Enphase V4 continuation patch dcddfa83 have separate scoped PASS reviews; no full PR, production or future model-response approval."
 }
