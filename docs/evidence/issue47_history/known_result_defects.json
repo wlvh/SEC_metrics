@@ -341,6 +341,66 @@
     }
    },
    "why_it_is_not_repaired": "Catching it needs a second criterion - repetition after the digits are removed, or something like it - and this corpus offers exactly one example of it. A rule written from one filing is the rule that fails on the seventh, which is the mistake this Issue has already made and recorded. It is registered so the coordinate stops counting as verified, and a positive case is what would justify writing the rule."
+  },
+  {
+   "company_id": "marriott_international",
+   "defect_id": "D01_MARRIOTT_2025_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED",
+   "evidence": [
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json"
+   ],
+   "metric_id": "D01",
+   "missed_headings": [
+    "Operational Risks",
+    "Development and Financing Risks",
+    "Technology, Information Protection, and Privacy Risks",
+    "General Risk Factors"
+   ],
+   "period_end": "2025-12-31",
+   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "reported_quality": "EXACT",
+   "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
+   "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
+   "summary": "34 of 38 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'General Risk Factors' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only."
+  },
+  {
+   "company_id": "marriott_international",
+   "defect_id": "D01_MARRIOTT_2024_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED",
+   "evidence": [
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json"
+   ],
+   "metric_id": "D01",
+   "missed_headings": [
+    "Operational Risks",
+    "Development and Financing Risks",
+    "Technology, Information Protection, and Privacy Risks",
+    "General Risk Factors"
+   ],
+   "period_end": "2024-12-31",
+   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "reported_quality": "EXACT",
+   "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
+   "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
+   "summary": "35 of 39 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'General Risk Factors' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only."
+  },
+  {
+   "company_id": "marriott_international",
+   "defect_id": "D01_MARRIOTT_2023_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED",
+   "evidence": [
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json"
+   ],
+   "metric_id": "D01",
+   "missed_headings": [
+    "Operational Risks",
+    "Development and Financing Risks",
+    "Technology, Information Protection, and Privacy Risks",
+    "Governance Risk"
+   ],
+   "period_end": "2023-12-31",
+   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "reported_quality": "EXACT",
+   "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
+   "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
+   "summary": "33 of 37 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'Governance Risk' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only."
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
