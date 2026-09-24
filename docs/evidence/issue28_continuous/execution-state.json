@@ -1559,10 +1559,10 @@
     "old_172_failure_retained": true
   },
   "batch33_real_progress": {
-    "through_ordinal": 189,
+    "through_ordinal": 191,
     "new_call_counts": [
-      18,
-      18,
+      20,
+      20,
       0
     ],
     "successful_new_d04_groups": 16,
@@ -1584,9 +1584,13 @@
     "paramount_cold": "batch33-authorization/d04-paramount-real/cold-summary.json",
     "D04_complete_company_count": 10,
     "failed_new_b13_groups": [
-      189
+      189,
+      191
     ],
-    "B13_189_diagnosis": "batch33-authorization/b13-189-diagnosis/summary.json"
+    "B13_189_diagnosis": "batch33-authorization/b13-189-diagnosis/summary.json",
+    "successful_new_b13_groups": [
+      190
+    ]
   },
   "b13_189_current_failure": {
     "ordinal": 189,
@@ -1608,7 +1612,7 @@
     ],
     "no_candidate_or_company_result": true,
     "diagnosis": "batch33-authorization/b13-189-diagnosis/README.md",
-    "repair_retry_used": false
+    "repair_retry_used": true
   },
   "b13_189_repair_ready": {
     "patch_sha": "0181c8bf9c6809600eb77ee2da6b3d6b7ee1a08a",
@@ -1626,10 +1630,61 @@
     "independent_verdict": "PASS_SCOPED_REPAIR189",
     "final_wiring_receipt": "b13-170-source-audit/offline-wiring.json",
     "new_live_calls": [
+      1,
+      1,
+      0
+    ],
+    "repair_slot_consumed": true,
+    "new_live_ordinal": 190,
+    "new_live_terminal_status": "SUCCEEDED",
+    "new_live_summary": "batch33-authorization/b13-189-diagnosis/v4-live-190-summary.json",
+    "complete_company_result": false
+  },
+  "b13_191_current_failure": {
+    "ordinal": 191,
+    "status": "FAILED_TERMINAL",
+    "group": "B13:enphase_energy:1",
+    "provider_finish_reason": "length",
+    "output_tokens": 4096,
+    "source_count": 4,
+    "required_count": 0,
+    "complete_prefix_findings": 162,
+    "nonrequired_other_context_findings": 162,
+    "terminal_stop_reason": "",
+    "charged_calls": [
+      1,
+      1,
+      0
+    ],
+    "provider_stopped": false,
+    "old_failure_retained": true,
+    "diagnosis": "batch33-authorization/b13-191-diagnosis/summary.json",
+    "v4_repair_pending": true,
+    "live_summary": "batch33-authorization/b13-191-diagnosis/live-191-summary.json"
+  },
+  "b13_191_v4_rollout_pending": {
+    "state": "PENDING_PATCH_TEST_AND_SCOPED_REVIEW",
+    "failed_ordinal": 191,
+    "repair_group": "B13:enphase_energy:1",
+    "unopened_base_groups": [
+      "B13:enphase_energy:2",
+      "B13:enphase_energy:3",
+      "B13:enphase_energy:4",
+      "B13:enphase_energy:5"
+    ],
+    "new_call_allowance_increment": 0,
+    "record_path": "batch33-b13-v4-enphase.json",
+    "record_installed": false,
+    "new_live_calls": [
       0,
       0,
       0
     ],
-    "repair_slot_consumed": false
+    "source_preflight": "batch33-authorization/b13-191-diagnosis/preflight-summary.json",
+    "recorded_factory": "batch33-authorization/b13-191-diagnosis/recorded-factory-summary.json",
+    "targeted_tests": "46_PASS",
+    "fast_selectors": "127_OF_127_PASS",
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "production_authorized": false
   }
 }

@@ -717,14 +717,18 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     digest = request_digest(request_fields, policy)
     batch_group_id = None
     repair189 = None
+    v4_enphase = None
     if not ledger.live and (ledger.root/'batch33-authorization.json').exists():
         from .continuous_batch33 import read_authorization as read_batch_authorization, group_for_request
         if (ledger.root/'batch33-repair-189.json').exists():
             from .continuous_batch33_repair189 import read_authorization as read_repair189
             repair189 = read_repair189(ledger)
+        if (ledger.root/'batch33-b13-v4-enphase.json').exists():
+            from .continuous_b13_v4_enphase import read_authorization as read_v4
+            v4_enphase = read_v4(ledger)
         batch_group_id = group_for_request(authorization=read_batch_authorization(ledger),
                                            request=request_fields, request_digest=digest,
-                                           repair189=repair189)
+                                           repair189=repair189, v4_enphase=v4_enphase)
     def response_validator(**kwargs):
         if native_assessment:
             try:
@@ -761,8 +765,12 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
         if (ledger.root/'batch33-repair-189.json').exists():
             from .continuous_batch33_repair189 import read_authorization as read_repair189
             repair189 = read_repair189(ledger)
+        if (ledger.root/'batch33-b13-v4-enphase.json').exists():
+            from .continuous_b13_v4_enphase import read_authorization as read_v4
+            v4_enphase = read_v4(ledger)
         batch_group_id = group_for_request(authorization=batch, request=request_fields,
-                                           request_digest=digest, repair189=repair189)
+                                           request_digest=digest, repair189=repair189,
+                                           v4_enphase=v4_enphase)
         from .ai_adapter import api_key_environment_name
         import os
         need(bool(os.environ.get(api_key_environment_name(policy=policy),'').strip()),
@@ -776,7 +784,10 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
             requirement=prepared.requirement,plan_id=plan['ai_invocation_plan_id'],
             purpose='remaining_development_feasibility',batch_group_id=batch_group_id,
             batch_repair_receipt=(repair189 if repair189 is not None and
-                digest == repair189['repaired_request_digest'] else None))
+                digest == repair189['repaired_request_digest'] else None),
+            batch_b13_v4_receipt=(v4_enphase if v4_enphase is not None and
+                any(row['v4_digest'] == digest for row in v4_enphase['successor_groups'])
+                else None))
         control._exclusive_write_bytes(path=path/'source.json',content=prepared.source_bytes)
         control._exclusive_write_bytes(path=path/'semantic-request.json',content=prepared.request_bytes)
         preserve_execution_rules(prepared,path)

@@ -100,6 +100,12 @@ class CallLedger:
             from .continuous_batch33_repair189 import read_authorization as read_repair189
             repair189 = read_repair189(self)
             need(batch is not None, 'BATCH33_REPAIR189_BATCH_AUTHORIZATION_MISSING')
+        v4_enphase = None
+        if (self.root/'batch33-b13-v4-enphase.json').exists():
+            from .continuous_b13_v4_enphase import read_authorization as read_v4
+            v4_enphase = read_v4(self)
+            need(batch is not None and repair189 is not None,
+                 'B13_V4_ENPHASE_PREDECESSORS_MISSING')
         total = [0,0,0]; stopped = set(); requests = set(); rows = []
         first_requests = {}; recovery_consumed = False; original_verified = False
         previous = None
@@ -130,7 +136,8 @@ class CallLedger:
                     from .continuous_batch33 import observe_claim
                     batch_duplicate = observe_claim(authorization=batch, progress=batch_progress,
                         intent=intent, stops=stopped, requests=requests,
-                        recovery172=recovery172, repair189=repair189)
+                        recovery172=recovery172, repair189=repair189,
+                        v4_enphase=v4_enphase)
                 need(key not in requests or batch_duplicate,
                      'CONTINUOUS_LEDGER_DUPLICATE_REQUEST')
             requests.add(key)
@@ -171,17 +178,20 @@ class CallLedger:
         self._batch_observation = (batch, batch_progress)
         self._recovery172_observation = recovery172
         self._repair189_observation = repair189
+        self._b13_v4_enphase_observation = v4_enphase
         return {'counts':total,'stopped_channels':sorted({channel for channel, _ in stopped}),'requests':requests,
                 'previous_intent_id':previous,'rows':rows}
 
     def claim(self, *, channel, request_digest, requirement, plan_id, purpose,
-              batch_group_id=None, batch_repair_receipt=None):
+              batch_group_id=None, batch_repair_receipt=None,
+              batch_b13_v4_receipt=None):
         state = self.snapshot()
         need(channel in {'PROVIDER','SEC'}, 'CONTINUOUS_CHANNEL_INVALID')
         recovery, consumed, stops = self._recovery_observation
         batch, progress = self._batch_observation
         recovery172 = self._recovery172_observation
         repair189 = self._repair189_observation
+        v4_enphase = self._b13_v4_enphase_observation
         recovering = (recovery is not None and not consumed and channel == 'PROVIDER'
                       and request_digest == recovery['request_digest']
                       and stops == {('PROVIDER', recovery['original_ordinal'])})
@@ -191,16 +201,24 @@ class CallLedger:
             need(batch_repair_receipt is None or
                  (repair189 is not None and batch_repair_receipt == repair189),
                  'BATCH33_REPAIR189_NOT_INSTALLED')
+            need(batch_b13_v4_receipt is None or
+                 (v4_enphase is not None and batch_b13_v4_receipt == v4_enphase),
+                 'B13_V4_ENPHASE_NOT_INSTALLED')
             from .continuous_batch33 import claim_fields
             batch_fields, batch_duplicate = claim_fields(authorization=batch, progress=progress,
                 group=batch_group_id, request_digest=request_digest,
                 stops={stop for stop in stops if stop[0] == 'PROVIDER'},
                 requests=state['requests'], next_ordinal=len(state['rows'])+1,
-                repair_receipt=batch_repair_receipt, recovery172=recovery172)
+                repair_receipt=batch_repair_receipt, recovery172=recovery172,
+                v4_enphase=v4_enphase)
+            need('batch_b13_v4_id' not in batch_fields or
+                 batch_b13_v4_receipt == v4_enphase,
+                 'B13_V4_ENPHASE_RECEIPT_REQUIRED')
         else:
             need(batch is None or channel != 'SEC' or progress['resumed'],
                  'BATCH33_FIRST_D04_CLAIM_REQUIRED')
-            need(batch_group_id is None and batch_repair_receipt is None,
+            need(batch_group_id is None and batch_repair_receipt is None
+                 and batch_b13_v4_receipt is None,
                  'BATCH33_AUTHORIZATION_MISSING')
         need(channel not in state['stopped_channels'] or recovering
              or batch_fields.get('batch_resume_171') or batch_fields.get('batch_resume_172'),
@@ -310,6 +328,8 @@ def live_ledger(*, requirement):
     install_recovery172(ledger=ledger, requirement=requirement)
     from .continuous_batch33_repair189 import install_live_authorization as install_repair189
     install_repair189(ledger=ledger, requirement=requirement)
+    from .continuous_b13_v4_enphase import install_live_authorization as install_b13_v4
+    install_b13_v4(ledger=ledger, requirement=requirement)
     return ledger
 
 

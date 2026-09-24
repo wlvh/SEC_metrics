@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:fe581d02cd8f3980da91929065d09bf34550c5ad25cf7e2ebc1cd3518d26fe3d",
-  "execution_authority_hash": "sha256:10dd01fcec1a3dac92059f3fb63cfef561b3f0b5f7c1e3acf4ff869147b24536",
+  "requirement_closure_hash": "sha256:5741a633e3e2c2b377ef62ad61eb09aeeb0471561e5cbae14abc963ff5e55c70",
+  "execution_authority_hash": "sha256:bfad8e386a15719701a9fd9395930c73ca8972bc61682f92b2986e840fc3decc",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -35,8 +35,10 @@
     "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/v4-preflight-summary.json": "605afae1a5870aca7e2e2104a0fbb32201199139f95fab80c71636fc3f69bf4a",
     "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/v4-recorded-wiring-summary.json": "7b5e05058983897b43aed91bc1e422fcaf62e04c7cdd5b95aec037d1fed5df2c",
     "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/v4-targeted-final.log": "ee50550219d3bfb16646d0b15500d4edfa4c07ae3bcafb5c06f50909e7a24ea2",
-    "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/independent-review/conclusion.md": "cd92d2d7d9f255c4080d817a1ea987e34b6ee199b279021841837b8208f11db0"
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-189-diagnosis/independent-review/conclusion.md": "cd92d2d7d9f255c4080d817a1ea987e34b6ee199b279021841837b8208f11db0",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/summary.json": "90e1eb750ccc3c42dde96c394b1036c1908daf30484fb68970dfa6e0422d34c3",
+    "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/preflight-summary.json": "7ed36e965ea077f54c4b9496cd2bbac0b6d9852ff62dc130d56f5d1b1637563a"
   },
-  "scope": "Current V14 execution bytes bound after D04 Enphase and Paramount 10/10 native candidates. B13 ordinal189 remains failed; V4 group0 repair is independently reviewed, proof-bound, and recorded factory/controller plus native acceptance is network-disabled. This receipt does not show a real V4 model result or a complete B13 company.",
-  "independent_review": "B13 V4 repair patch 0181c8bf has PASS_SCOPED_REPAIR189; earlier batch and recovery172 scoped reviews retained. Live repair slot not yet claimed."
+  "scope": "Current V14 bytes include a pending, fail-closed Enphase B13 V4 continuation policy after real group1 failure191. Existing 189 repair190 remains successful. No new V4 group1-5 live opportunity is installed by this pending policy; all new evidence is offline.",
+  "independent_review": "Prior group0 V4 repair0181c8bf scoped review retained. New Enphase group1-5 policy is pending its own patch, regression and scoped review."
 }

@@ -195,6 +195,17 @@ def collect_native_assessments(*, prepared_requests, ledger):
                                  for claim in batch_history['claims']),
                          'BATCH33_ENGINEERING_FAILED_ORIGINAL_NOT_RETAINED')
                     recovered_batch_engineering_ordinals.append(repair189['failed_ordinal'])
+                if 'batch_repair_191_id' in intent:
+                    v4_enphase = batch_history.get('b13_v4_enphase')
+                    need(v4_enphase is not None
+                         and intent['batch_repair_191_id'] == v4_enphase['authorization_id']
+                         and intent['batch_group_id'] == v4_enphase['failed_group_id']
+                         and any(claim['intent']['ordinal'] == v4_enphase['failed_ordinal']
+                                 and claim['terminal'] is not None
+                                 and claim['terminal']['status'] == 'FAILED_TERMINAL'
+                                 for claim in batch_history['claims']),
+                         'B13_V4_ENPHASE_FAILED_ORIGINAL_NOT_RETAINED')
+                    recovered_batch_engineering_ordinals.append(v4_enphase['failed_ordinal'])
             completed[identity] = {'request_id': identity, 'ordinal': row['ordinal'],
                 'terminal_id': terminal['terminal_id'], 'acceptance_receipt_id': success['acceptance_receipt_id'],
                 'candidate': acceptance['candidate_record'], 'evidence': acceptance['evidence_record'],

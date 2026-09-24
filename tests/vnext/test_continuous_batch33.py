@@ -10,7 +10,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from vnext.canonical import content_hash
+from vnext.canonical import content_hash, sha256_file
 from vnext.continuous_batch33 import (authorization, group_id,
     historical_successor_allowed, history_for_current, install_live_authorization,
     recorded_authorization,
@@ -20,6 +20,7 @@ from vnext.continuous_recovery_172 import (recorded_authorization as recorded_re
     authorization as recovery172_authorization)
 from vnext.continuous_batch33_repair189 import (recorded_authorization as recorded_repair189,
     install_live_authorization as install_repair189)
+from vnext.continuous_b13_v4_enphase import install_live_authorization as install_b13_v4
 from vnext.continuous_call_ledger import recorded_ledger
 from vnext.invocation_control import _exclusive_write_json, _exclusive_write_bytes
 
@@ -193,6 +194,111 @@ class Batch33LedgerTest(unittest.TestCase):
                 native_rows=[{'ordinal':4,'intent':intent,'terminal':terminal}],
                 request_digests={4:new_digest},recovered_failed_ordinals=[])
         (self.root/'batch33-repair-189.json').unlink()
+        with recorded_ledger(root=self.root).locked() as reopened, \
+             self.assertRaises(ValueError):
+            reopened.snapshot()
+
+    def test_enphase_v4_one_repair_and_unopened_base_groups_keep_old_failures(self):
+        self.stopped()
+        groups = [group('D04', 'enphase_energy', 0, content_hash(value='d04-first'))]
+        groups.extend(group('B13', 'enphase_energy', index,
+                            content_hash(value='b13-v3-' + str(index)))
+                      for index in range(6))
+        repaired0 = content_hash(value='b13-v4-0')
+        successor = [{
+            'group_index': index,
+            'group_id': group_id(groups[index + 1]),
+            'source_id': groups[index + 1]['source_id'],
+            'v3_digest': groups[index + 1]['initial_request_digest'],
+            'v4_digest': content_hash(value='b13-v4-' + str(index))}
+            for index in range(1, 6)]
+        with self.ledger.locked():
+            batch = recorded_authorization(ledger=self.ledger, groups=groups,
+                                           original_stop_ordinal=1)
+            first, intent = self.claim('d04-first', batch_group=group_id(groups[0]))
+            self.finish(first, intent)
+            failed0, intent0 = self.claim('b13-v3-0', batch_group=group_id(groups[1]))
+            _exclusive_write_bytes(path=failed0/'wire/raw-response.bin',
+                                   content=b'{"choices":[{"finish_reason":"length"}]}')
+            self.finish(failed0, intent0, status='FAILED_TERMINAL',
+                        error='DEEPSEEK_RESPONSE_INVALID', output_tokens=4096)
+            repair0 = recorded_repair189(ledger=self.ledger, failed_ordinal=3,
+                                         repaired_digest=repaired0)
+            success0, intent0_new = self.ledger.claim(channel='PROVIDER',
+                request_digest=repaired0, requirement=REQ,
+                plan_id=content_hash(value='plan repaired0'),
+                purpose='remaining_development_feasibility',
+                batch_group_id=group_id(groups[1]), batch_repair_receipt=repair0)
+            terminal0 = self.finish(success0, intent0_new)
+            failed1, intent1 = self.claim('b13-v3-1', batch_group=group_id(groups[2]))
+            _exclusive_write_bytes(path=failed1/'wire/raw-response.bin',
+                                   content=b'{"choices":[{"finish_reason":"length"}]}')
+            terminal1 = self.finish(failed1, intent1, status='FAILED_TERMINAL',
+                                    error='DEEPSEEK_RESPONSE_INVALID', output_tokens=4096)
+            body = {'record_type':'CONTINUOUS_BATCH33_B13_ENPHASE_V4_AUTHORIZATION',
+                    'execution_mode':'RECORDED_TEST_ONLY', 'budget_root':str(self.ledger.root),
+                    'binding_id':self.ledger.binding['binding_id'],
+                    'batch_authorization_id':batch['authorization_id'],
+                    'prior_repair_189_id':repair0['authorization_id'],
+                    'prior_success_190_intent_id':intent0_new['intent_id'],
+                    'prior_success_190_terminal_id':terminal0['terminal_id'],
+                    'failed_group_id':group_id(groups[2]), 'failed_ordinal':5,
+                    'failed_intent_id':intent1['intent_id'],
+                    'failed_terminal_id':terminal1['terminal_id'],
+                    'failed_v3_digest':intent1['request_digest'],
+                    'failed_raw_response_sha256':sha256_file(path=failed1/'wire/raw-response.bin'),
+                    'successor_groups':successor,
+                    'base_groups_without_prior_attempt':[2,3,4,5],
+                    'maximum_repair_executions_for_group1':1,
+                    'maximum_new_executions':5}
+            cohort={**body,'authorization_id':content_hash(value=body)}
+            _exclusive_write_json(path=self.root/'batch33-b13-v4-enphase.json',
+                                  value=cohort)
+            with self.assertRaisesRegex(ValueError,'BATCH33_BASE_GROUP_OR_ORDER_CHANGED'):
+                self.claim('b13-v3-2', batch_group=group_id(groups[3]))
+            with self.assertRaisesRegex(ValueError,'B13_V4_ENPHASE_RECEIPT_REQUIRED'):
+                self.ledger.claim(channel='PROVIDER',
+                    request_digest=successor[0]['v4_digest'], requirement=REQ,
+                    plan_id=content_hash(value='missing receipt'),
+                    purpose='remaining_development_feasibility',
+                    batch_group_id=group_id(groups[2]))
+            success1, intent1_new = self.ledger.claim(channel='PROVIDER',
+                request_digest=successor[0]['v4_digest'], requirement=REQ,
+                plan_id=content_hash(value='plan repaired1'),
+                purpose='remaining_development_feasibility',
+                batch_group_id=group_id(groups[2]), batch_b13_v4_receipt=cohort)
+            terminal1_new = self.finish(success1, intent1_new)
+            self.assertEqual(intent1_new['batch_attempt_index'], 1)
+            self.assertEqual(intent1_new['batch_repair_191_id'], cohort['authorization_id'])
+            with self.assertRaisesRegex(ValueError,'BATCH33_REPAIR_NOT_ELIGIBLE'):
+                self.ledger.claim(channel='PROVIDER',
+                    request_digest=successor[0]['v4_digest'], requirement=REQ,
+                    plan_id=content_hash(value='forbidden third group1 claim'),
+                    purpose='remaining_development_feasibility',
+                    batch_group_id=group_id(groups[2]), batch_b13_v4_receipt=cohort)
+            success2, intent2 = self.ledger.claim(channel='PROVIDER',
+                request_digest=successor[1]['v4_digest'], requirement=REQ,
+                plan_id=content_hash(value='plan base2'),
+                purpose='remaining_development_feasibility',
+                batch_group_id=group_id(groups[3]), batch_b13_v4_receipt=cohort)
+            terminal2 = self.finish(success2, intent2)
+            self.assertEqual(intent2['batch_attempt_index'], 0)
+            self.assertEqual(intent2['batch_b13_v4_id'], cohort['authorization_id'])
+            self.assertNotIn('batch_repair_191_id', intent2)
+            self.assertEqual(self.ledger.snapshot()['counts'], [7, 7, 0])
+            history = history_for_current(ledger=self.ledger)
+        native = [{'ordinal':number,'intent':intent,'terminal':terminal}
+                  for number,intent,terminal in (
+                      (4,intent0_new,terminal0),
+                      (6,intent1_new,terminal1_new),
+                      (7,intent2,terminal2))]
+        self.assertTrue(validate_history(history=history, mode='RECORDED_TEST_ONLY',
+            native_rows=native,
+            request_digests={row['ordinal']:row['intent']['request_digest'] for row in native},
+            recovered_failed_ordinals=[], recovered_engineering_ordinals=[3,5]))
+        with recorded_ledger(root=self.root).locked() as reopened:
+            self.assertEqual(reopened.snapshot()['counts'], [7, 7, 0])
+        (self.root/'batch33-b13-v4-enphase.json').unlink()
         with recorded_ledger(root=self.root).locked() as reopened, \
              self.assertRaises(ValueError):
             reopened.snapshot()
@@ -444,6 +550,14 @@ with recorded_ledger(root=Path(sys.argv[1])).locked() as ledger:
 
 
 class Batch33ServerAuthorityTest(unittest.TestCase):
+    def test_enphase_v4_pending_policy_installs_nothing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            ledger=SimpleNamespace(root=Path(temporary))
+            self.assertIsNone(install_b13_v4(ledger=ledger, requirement={}))
+            (ledger.root/'batch33-b13-v4-enphase.json').write_text('{}')
+            with self.assertRaisesRegex(ValueError,'B13_V4_ENPHASE_UNAPPROVED_RECORD_PRESENT'):
+                install_b13_v4(ledger=ledger, requirement={})
+
     def test_repair189_pending_policy_installs_nothing(self):
         with tempfile.TemporaryDirectory() as temporary:
             ledger=SimpleNamespace(root=Path(temporary))

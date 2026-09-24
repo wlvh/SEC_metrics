@@ -58,8 +58,13 @@ def main(argv=None):
     if (ledger.root/'batch33-repair-189.json').exists():
         from vnext.continuous_batch33_repair189 import read_authorization as read_repair189
         repair189 = read_repair189(ledger)
+    v4_enphase = None
+    if (ledger.root/'batch33-b13-v4-enphase.json').exists():
+        from vnext.continuous_b13_v4_enphase import read_authorization as read_v4
+        v4_enphase = read_v4(ledger)
     if group_for_request(authorization=authorization, request=request,
-                         request_digest=digest, repair189=repair189) != group_id(expected[0]):
+                         request_digest=digest, repair189=repair189,
+                         v4_enphase=v4_enphase) != group_id(expected[0]):
         parser.error('Current request differs from the approved business group')
     execute = execute_d04_assessment if args.metric == 'D04' else execute_capacity_assessment
     path, outcome = execute(prepared=prepared_group, ledger=ledger)
