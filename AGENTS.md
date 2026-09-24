@@ -731,3 +731,11 @@ Issue #47 D01 内容核查（两个方向，按已批定义读原文）：以前
 **取到的方向干净**：九份可读申报里被拒绝的加粗块全部拒对了（Pfizer 二十个是十页的"注册人名＋页码"页眉、Salesforce 两个是项目符号），零条虚假标题。**没取到的方向查出缺陷**：`text_coverage` 的 `leading_emphasis` **只认加粗**（`<b>`/`<strong>`/`<h1>`–`<h6>`/`font-weight>=600`）。**Marriott 的二级风险分类标题用下划线**（`font-weight:400;text-decoration:underline`），而它的两个一级分类用 `font-weight:700`，**在同一份文档、同一个 `<div style="margin-top:9pt;text-indent:22.5pt">` 包装、同一个 10pt Times 字面里**。于是结果带走了一种写法、丢掉了另一种：三年各丢四条（2025/2024 为 `Operational Risks`/`Development and Financing Risks`/`Technology, Information Protection, and Privacy Risks`/`General Risk Factors`；2023 第四条是 `Governance Risk`——**逐年不同，所以这是从各自字节读出来的、不是假设**）。**文档内对照让它不必靠我判断"什么看起来像标题"**；而且本仓库 D02 整取附注那轮为别的目的量过 Marriott 的标题样式，记的就是"下划线加缩进"，**两条独立推导落在同一个 filer 的同一种样式上**。
 
 **修法不是"把斜体也加上"，这也是量出来的**：Ford 有十四个斜体 running head（`Item 1A. Risk Factors (Continued)`），Pfizer 与 Salesforce 各有一句斜体引言，放开斜体会把这十七块取进来。**量出来的规则是下划线**，而且 Marriott 是九份里唯一一家 Item 1A 带"下划线、非加粗、非页眉"块的公司，那些块每一条都是风险分类标题。**没修，两个理由**：(1) `leading_emphasis` 住在 `text_coverage.py`，字节被 `issue_28_v11` 点名并双根校验，修它要新增后继规则文件、**移动 closure**，而批次正跑在当前 closure 上并且是它的证据——在报告底下换掉 closure 会让报告描述一个没跑过的版本（本 Issue 已在 C04 那轮记过一次）；(2) 该函数被每条用 `text_coverage` 的路线读（D02、C02 在内），在那里放宽比 D01 本身宽得多，改共享解析器还是只给 D01 重算强调，哪一种对**还没量**。三个坐标已按 `ROOT_CAUSE_MEASURED_NOT_REPAIRED` 登记，材料见`docs/evidence/issue47_history/d01-risk-headings/content-read.json`。
+
+Issue #47 那个下划线修法的影响面已经量了，**答案与"在 `text_coverage` 里加一行"相反**：把 `text-decoration:underline` 并入 `leading_emphasis`（在一个探针进程里打补丁，磁盘不动；分块不依赖强调，所以两侧块序列完全相同，比的是各选择器选了什么），**D01 只有 Marriott 移动、正好是那四条**，**C02 一家不动**，而 **D02 有两家动、净值明显为负**：Lumen **+1**（块3400 `Blum`，两段集体诉讼之间的下划线斜体案件名小标题，加得对），**Southwest −5**（1428/1580/1581/1584/1585）——**正是本仓库关键词代理普查读过原文并判定该留的那五块**（1428 是基础列报附注里的暴风雪后或有事项，其余四块是军假与2019客服代理集体诉讼）。
+
+**机制不是黑箱**：`audit_report_spans` 对任何 `leading_emphasis` 命中审计报告标题的块开一段排除，并在其后最近的 `/s/` 签名或任期句处闭合。Southwest 的**目录索引行**用下划线而非加粗，所以一旦承认下划线，索引行就变成标题：第三段排除从块 1421 开到 2270——**真报告的签名，849 块之后**——中间全被吞掉。**这正是我自己为该规则写下的"无界排除可能静默丢掉真实披露"那句话的具体形态**，只不过当时只防了"未闭合"，没防"开错地方却在很远处闭合"。
+
+**它今天是不是已经在发生，也量了**：冻结（只认加粗）解析下，九份申报各开一到两段、长度 7–31 块（就是一份审计报告的体量），Pfizer 有一个未闭合开口且按设计什么都不排除。**所以这是被探针照出来的潜在失效模式，不是现行缺陷**——一个把索引行加粗的申报会触发它，本语料没有。
+
+**这决定了 D01 修法的范围：只改 D01，不改共享解析器。**而这正好与"这不就是 `text_coverage` 里的一行吗"相反，且是量出来的不是论证出来的。材料并入`docs/evidence/issue47_history/d01-risk-headings/content-read.json`。

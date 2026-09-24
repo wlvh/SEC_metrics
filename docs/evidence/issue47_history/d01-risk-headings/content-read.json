@@ -1,4 +1,324 @@
 {
+ "blast_radius_measured": {
+  "is_the_span_rule_already_failing_anywhere": {
+   "measured": {
+    "enphase_energy": {
+     "blocks_in_document": 2709,
+     "spans": [
+      26,
+      12
+     ],
+     "unclosed_openings": []
+    },
+    "ford_motor_company": {
+     "blocks_in_document": 4176,
+     "spans": [
+      31
+     ],
+     "unclosed_openings": []
+    },
+    "lumen_technologies": {
+     "blocks_in_document": 4488,
+     "spans": [
+      26,
+      12
+     ],
+     "unclosed_openings": []
+    },
+    "macys": {
+     "blocks_in_document": 2165,
+     "spans": [
+      23
+     ],
+     "unclosed_openings": []
+    },
+    "marriott_international": {
+     "blocks_in_document": 1965,
+     "spans": [
+      13,
+      27
+     ],
+     "unclosed_openings": []
+    },
+    "paramount_skydance_paramount_global": {
+     "blocks_in_document": 3592,
+     "spans": [
+      28,
+      17
+     ],
+     "unclosed_openings": []
+    },
+    "pfizer": {
+     "blocks_in_document": 4507,
+     "spans": [
+      29,
+      7
+     ],
+     "unclosed_openings": [
+      4191
+     ]
+    },
+    "salesforce": {
+     "blocks_in_document": 2392,
+     "spans": [
+      27,
+      14
+     ],
+     "unclosed_openings": []
+    },
+    "southwest_airlines": {
+     "blocks_in_document": 2535,
+     "spans": [
+      20,
+      15
+     ],
+     "unclosed_openings": []
+    }
+   },
+   "verdict": "No. Under the frozen bold-only parser every filing opens one or two spans of 7 to 31 blocks, which is the size of an audit report, and Pfizer's single unclosed opening excludes nothing by design. So this is a latent failure mode the underline probe made visible, not a live defect - a filer who bolds an index line for that report would trigger it, and none here does."
+  },
+  "per_company": {
+   "enphase_energy": {
+    "C02": {
+     "after": 34,
+     "before": 34,
+     "changed": false
+    },
+    "D01": {
+     "after": 60,
+     "before": 60,
+     "changed": false
+    },
+    "D02": {
+     "after": 18,
+     "before": 18,
+     "changed": false
+    }
+   },
+   "ford_motor_company": {
+    "C02": {
+     "after": 23,
+     "before": 23,
+     "changed": false
+    },
+    "D01": {
+     "after": 30,
+     "before": 30,
+     "changed": false
+    },
+    "D02": {
+     "after": 45,
+     "before": 45,
+     "changed": false
+    }
+   },
+   "jpmorgan_chase": {
+    "C02": {
+     "error": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT"
+    },
+    "D01": {
+     "error": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT"
+    },
+    "D02": {
+     "error": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT"
+    }
+   },
+   "lumen_technologies": {
+    "C02": {
+     "after": 17,
+     "before": 17,
+     "changed": false
+    },
+    "D01": {
+     "after": 50,
+     "before": 50,
+     "changed": false
+    },
+    "D02": {
+     "added_blocks": [
+      3400
+     ],
+     "after": 42,
+     "before": 41,
+     "changed": true,
+     "removed_blocks": []
+    }
+   },
+   "macys": {
+    "C02": {
+     "after": 13,
+     "before": 13,
+     "changed": false
+    },
+    "D01": {
+     "after": 36,
+     "before": 36,
+     "changed": false
+    },
+    "D02": {
+     "after": 3,
+     "before": 3,
+     "changed": false
+    }
+   },
+   "marriott_international": {
+    "C02": {
+     "after": 29,
+     "before": 29,
+     "changed": false
+    },
+    "D01": {
+     "added": [
+      "Operational Risks",
+      "Development and Financing Risks",
+      "Technology, Information Protection, and Privacy Risks",
+      "General Risk Factors"
+     ],
+     "after": 38,
+     "before": 34,
+     "changed": true,
+     "removed": []
+    },
+    "D02": {
+     "after": 11,
+     "before": 11,
+     "changed": false
+    }
+   },
+   "paramount_skydance_paramount_global": {
+    "C02": {
+     "after": 12,
+     "before": 12,
+     "changed": false
+    },
+    "D01": {
+     "after": 38,
+     "before": 38,
+     "changed": false
+    },
+    "D02": {
+     "after": 28,
+     "before": 28,
+     "changed": false
+    }
+   },
+   "pfizer": {
+    "C02": {
+     "after": 24,
+     "before": 24,
+     "changed": false
+    },
+    "D01": {
+     "after": 28,
+     "before": 28,
+     "changed": false
+    },
+    "D02": {
+     "after": 96,
+     "before": 96,
+     "changed": false
+    }
+   },
+   "salesforce": {
+    "C02": {
+     "after": 30,
+     "before": 30,
+     "changed": false
+    },
+    "D01": {
+     "after": 43,
+     "before": 43,
+     "changed": false
+    },
+    "D02": {
+     "after": 15,
+     "before": 15,
+     "changed": false
+    }
+   },
+   "southwest_airlines": {
+    "C02": {
+     "after": 28,
+     "before": 28,
+     "changed": false
+    },
+    "D01": {
+     "after": 34,
+     "before": 34,
+     "changed": false
+    },
+    "D02": {
+     "added_blocks": [],
+     "after": 20,
+     "before": 25,
+     "changed": true,
+     "removed_blocks": [
+      1428,
+      1580,
+      1581,
+      1584,
+      1585
+     ]
+    }
+   }
+  },
+  "question": "The previous section left this open: widen leading_emphasis in a successor of text_coverage, which every route reading that parser inherits, or recompute emphasis for D01 alone. The parser was patched in one probe process - nothing on disk changed - and D01, D02 and C02 were re-derived for every company. Block splitting does not depend on emphasis, so the block sequence is identical on both sides and the diff is over what each selector chose.",
+  "result": {
+   "C02": "No company moves.",
+   "D01": "Only Marriott moves, by exactly the four headings. The other eight are byte-identical.",
+   "D02": "Two companies move, and the net is clearly negative."
+  },
+  "the_five_blocks_it_would_lose": {
+   "blocks": [
+    1428,
+    1580,
+    1581,
+    1584,
+    1585
+   ],
+   "company": "southwest_airlines",
+   "mechanism": "Not a black box. audit_report_spans opens an exclusion at any block whose leading_emphasis matches the audit-report title and closes it at the next signature or tenure sentence. Southwest's index line for that report is underlined rather than bold, so admitting underline turns the index line into a title: a third span opens at block 1421 and closes at block 2270 - the real report's signature, 849 blocks later - swallowing everything between.",
+   "spans_before_and_after": {
+    "frozen": [
+     {
+      "closed_by": "SIGNATURE",
+      "end_block_exclusive": 2270,
+      "start_block": 2250
+     },
+     {
+      "closed_by": "SIGNATURE",
+      "end_block_exclusive": 2290,
+      "start_block": 2275
+     }
+    ],
+    "underline_admitted": [
+     {
+      "closed_by": "SIGNATURE",
+      "end_block_exclusive": 2270,
+      "start_block": 1421
+     },
+     {
+      "closed_by": "SIGNATURE",
+      "end_block_exclusive": 2270,
+      "start_block": 2250
+     },
+     {
+      "closed_by": "SIGNATURE",
+      "end_block_exclusive": 2290,
+      "start_block": 2275
+     }
+    ]
+   },
+   "why_they_matter": "These are the same five this repository's keyword-proxy census read against the filing and judged correct: 1428 is the post-storm contingency in the basis-of-presentation note, and 1580/1581/1584/1585 are the military-leave and 2019 customer-agent class actions. So the shared widening would trade five confirmed disclosures for one."
+  },
+  "the_one_block_it_would_gain": {
+   "block": 3400,
+   "company": "lumen_technologies",
+   "text": "Blum",
+   "what_it_is": "An underlined-italic case-name caption sitting between two class-action paragraphs in the legal-proceedings note, so admitting underline would correctly add it. It is recorded because the trade is five for one, not five for nothing."
+  },
+  "what_this_decides": "The repair is scoped to D01, not to the shared parser. Which is the opposite of what 'it is one line in text_coverage' would have produced, and it was decided by measurement rather than by argument."
+ },
  "calls": {
   "paid": 0,
   "provider": 0,
@@ -192,7 +512,7 @@
  },
  "method": "For every block inside the located ITEM_1A scope, the properties the frozen selector keys on (leading_emphasis, linked, the item/part label test, the registrant-name test) plus the enclosing <span>'s style read from the filing's own bytes - not from the parse, because the parse is what is under suspicion.",
  "not_repaired_and_why_not_yet": {
-  "blast_radius_to_decide_first": "leading_emphasis is read by every route that uses text_coverage, D02 and C02 included, so widening it there is wider than D01. Narrowing the change to D01's own selector means recomputing emphasis for that metric rather than changing the shared parser, and which of the two is right has not been measured.",
+  "blast_radius_to_decide_first": "Measured - see blast_radius_measured. Widening the shared parser removes five confirmed D02 disclosures on Southwest to gain one on Lumen, so the repair belongs to D01 alone.",
   "where_the_rule_lives": "leading_emphasis is computed in scripts/vnext/text_coverage.py, whose bytes issue_28_v11 names and which is checked on both roots. A repair needs a successor rule file in this generation, as D02's section boundary and item capacity did, and that moves the Requirement closure.",
   "why_not_in_this_round": "A batch is running on the current closure and is the evidence for it. Changing the closure underneath a report makes the report describe a version that was never run - which this Issue has already recorded once, on a C04 end-to-end run."
  },
