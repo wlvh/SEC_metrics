@@ -893,9 +893,21 @@ def replay_text_result(*, compiled_spec, target, company_traits, candidate, evid
 
 
 def text_api(metric_id):
-    """Route the metrics this successor corrects here and the rest to the parent."""
+    """Route the metrics this generation corrects here and the rest to the parent.
+
+    Two successors, not one. D02's corrections live in this module and run on
+    the v2 result API; D01's live in ``historical_risk_results`` and run on the
+    frozen v1 one, with its own review builder. Routing D01 here instead would
+    hand it D02's raised renderer capacity and its section-boundary narrowing,
+    neither of which anything in D01's own Spec asks for.
+    """
     if metric_id in SUPPORTED_METRICS:
         from . import historical_text_results
         return historical_text_results, build_text_review_unit
+    from .historical_risk_results import SUPPORTED_METRICS as RISK_METRICS
+    if metric_id in RISK_METRICS:
+        from . import historical_risk_results
+        from .text_review import build_text_review_unit as build_v1_review_unit
+        return historical_risk_results, build_v1_review_unit
     from .normal_run_v3 import text_api as parent_api
     return parent_api(metric_id)

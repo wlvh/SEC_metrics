@@ -184,7 +184,10 @@ SOURCE_TESTS += ("tests.vnext.test_historical_lodging_results",)
 # ordinary chain's for two companies at opposite ends of the heading range, and
 # one answers Marriott for three years and requires three different candidates,
 # so a route reading the newest filing satisfies everything else in the file
-# and fails there. 56 seconds measured.
+# and fails there. Two further classes hold the underline successor to the
+# frozen parser it restates - identical blocks with underline switched off,
+# and never a cleared emphasis with it on. 187 seconds measured, which is why
+# it carries an override rather than the 240 default.
 SOURCE_TESTS += ("tests.vnext.test_historical_risk_headings",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
@@ -237,6 +240,11 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # default is the same margin that was judged too thin above, so this keeps
     # an override, at the size the current cases actually need.
     "tests.vnext.test_historical_coverage": 480,
+    # Fourteen cases over nine filings' full 10-K bytes, three of which parse
+    # the same document twice to hold the successor parser to the frozen one.
+    # Measured at 187 seconds, too close to the 240 default to survive a
+    # slower runner.
+    "tests.vnext.test_historical_risk_headings": 600,
     # 91 cases at 379 seconds measured together. The refresh chain runs a whole acquisition - install, capture,
     # checkpoint, installation, and three plans of a company with sixty-nine
     # declared shards - once for its class and once more for the case that

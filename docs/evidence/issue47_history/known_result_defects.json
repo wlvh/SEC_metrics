@@ -346,7 +346,8 @@
    "company_id": "marriott_international",
    "defect_id": "D01_MARRIOTT_2025_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED",
    "evidence": [
-    "docs/evidence/issue47_history/d01-risk-headings/content-read.json"
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json",
+    "docs/evidence/issue47_history/d01-risk-headings/underline-repair.json"
    ],
    "metric_id": "D01",
    "missed_headings": [
@@ -356,7 +357,8 @@
     "General Risk Factors"
    ],
    "period_end": "2025-12-31",
-   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "repair": "scripts/vnext/historical_text_emphasis.py admits underline beside bold and scripts/vnext/historical_risk_results.py carries it for D01; proven end to end on all three years, 34/35/33 headings becoming 38/39/37",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
    "reported_quality": "EXACT",
    "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
    "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
@@ -366,7 +368,8 @@
    "company_id": "marriott_international",
    "defect_id": "D01_MARRIOTT_2024_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED",
    "evidence": [
-    "docs/evidence/issue47_history/d01-risk-headings/content-read.json"
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json",
+    "docs/evidence/issue47_history/d01-risk-headings/underline-repair.json"
    ],
    "metric_id": "D01",
    "missed_headings": [
@@ -376,7 +379,8 @@
     "General Risk Factors"
    ],
    "period_end": "2024-12-31",
-   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "repair": "scripts/vnext/historical_text_emphasis.py admits underline beside bold and scripts/vnext/historical_risk_results.py carries it for D01; proven end to end on all three years, 34/35/33 headings becoming 38/39/37",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
    "reported_quality": "EXACT",
    "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
    "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
@@ -386,7 +390,8 @@
    "company_id": "marriott_international",
    "defect_id": "D01_MARRIOTT_2023_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED",
    "evidence": [
-    "docs/evidence/issue47_history/d01-risk-headings/content-read.json"
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json",
+    "docs/evidence/issue47_history/d01-risk-headings/underline-repair.json"
    ],
    "metric_id": "D01",
    "missed_headings": [
@@ -396,7 +401,8 @@
     "Governance Risk"
    ],
    "period_end": "2023-12-31",
-   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "repair": "scripts/vnext/historical_text_emphasis.py admits underline beside bold and scripts/vnext/historical_risk_results.py carries it for D01; proven end to end on all three years, 34/35/33 headings becoming 38/39/37",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
    "reported_quality": "EXACT",
    "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
    "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",

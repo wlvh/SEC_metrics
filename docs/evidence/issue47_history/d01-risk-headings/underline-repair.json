@@ -1,0 +1,518 @@
+{
+ "a_recorded_claim_this_round_corrected": {
+  "and_it_changed_the_test": "Salesforce is now in the differential's unchanged set, because it is the one filing that tells the two rules apart. Without it the ADMIT_ITALIC injection passed every case.",
+  "measured": {
+   "enphase_energy": {
+    "added": [],
+    "underline_only": 60,
+    "with_italic": 60
+   },
+   "ford_motor_company": {
+    "added": [],
+    "underline_only": 30,
+    "with_italic": 30
+   },
+   "marriott_international": {
+    "added": [],
+    "underline_only": 38,
+    "with_italic": 38
+   },
+   "pfizer": {
+    "added": [],
+    "underline_only": 28,
+    "with_italic": 28
+   },
+   "salesforce": {
+    "added": [
+     "In evaluating our business, you should carefully consider the following discussi"
+    ],
+    "underline_only": 43,
+    "with_italic": 44
+   },
+   "southwest_airlines": {
+    "added": [],
+    "underline_only": 34,
+    "with_italic": 34
+   }
+  },
+  "what_is_true": "One block, on Salesforce. Ford's fourteen italic running heads are already refused by the frozen item-label rule, which the earlier note did not ask about - a census of blocks the selector left is not a measurement of what it would do with them. Italic is still not admitted, because the one block it adds is a sentence rather than a heading and the measured heading mark here is underline; but the cost of getting that wrong is one block, not seventeen.",
+  "what_was_written": "'Admitting italic would take Ford's fourteen running heads and two filers' lead-in sentences' - seventeen blocks."
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "end_to_end": {
+  "before_and_after": {
+   "2023-12-31": [
+    33,
+    37
+   ],
+   "2024-12-31": [
+    35,
+    39
+   ],
+   "2025-12-31": [
+    34,
+    38
+   ]
+  },
+  "method": "install -> create_historical_run(freeze=True) -> render_historical_run(persist=True) -> load_frozen_run in a separate process, under patched socket.connect and getaddrinfo.",
+  "positions": [
+   {
+    "cold_read_in_a_separate_process": {
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "records": 48,
+     "run_id_matches": true,
+     "value_chars": 4696
+    },
+    "evidence_count": 37,
+    "headings": 37,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "pinned_period_end": "2023-12-31",
+    "public_row_hash": "sha256:3762c327a8cd4645a77309ef1df596ffa628d38fc0a44cbb0bd608f6918cca01",
+    "public_row_status": "TEXT_QUAL",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:6d8788ab5f8621e37fa6ac8504cc2084fc41ddd7019af1c04db23c88fe32496a",
+    "run_status": "FROZEN",
+    "value_chars": 4696
+   },
+   {
+    "cold_read_in_a_separate_process": {
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "records": 50,
+     "run_id_matches": true,
+     "value_chars": 4886
+    },
+    "evidence_count": 39,
+    "headings": 39,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "pinned_period_end": "2024-12-31",
+    "public_row_hash": "sha256:25835b2e108a56959628e9c5e6765d5e07240810334c8c4bbc82d49304dee5f4",
+    "public_row_status": "TEXT_QUAL",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:deee5ce3c941e33791683cd30fd22e048d6081019f01b8b2e83a9bdac7d91192",
+    "run_status": "FROZEN",
+    "value_chars": 4886
+   },
+   {
+    "cold_read_in_a_separate_process": {
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "records": 49,
+     "run_id_matches": true,
+     "value_chars": 4899
+    },
+    "evidence_count": 38,
+    "headings": 38,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "pinned_period_end": "2025-12-31",
+    "public_row_hash": "sha256:e77f60f4c47e0f2986d5cadf33e1e236a68358dcbd4211628a1d32a7dd245d37",
+    "public_row_status": "TEXT_QUAL",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:d11137bf87796a21b6edd6fc24b4ec703e33a17af03348be96e028ba64ab867e",
+    "run_status": "FROZEN",
+    "value_chars": 4899
+   }
+  ]
+ },
+ "fault_injections": {
+  "each_one_caught_by": {
+   "ADMIT_ITALIC_TOO": [
+    "test_nothing_but_the_document_identity_moves_where_no_heading_does"
+   ],
+   "DRIFT_WITH_THE_GUARD_REMOVED": [
+    "test_marriott_gains_exactly_the_headings_it_underlines",
+    "test_nothing_but_the_document_identity_moves_where_no_heading_does",
+    "test_the_document_builder_changes_only_the_emphasis_fields",
+    "test_the_route_actually_reaches_the_successor",
+    "test_with_underline_off_it_produces_the_frozen_parsers_blocks"
+   ],
+   "ONE_FLAG_INSTEAD_OF_TWO_STACKS": [
+    "test_a_none_under_a_bold_does_not_clear_the_bold",
+    "test_with_underline_on_it_only_adds"
+   ],
+   "ROUTE_D01_BACK_TO_THE_FROZEN_CHAIN": [
+    "test_the_route_actually_reaches_the_successor"
+   ],
+   "USE_THE_FROZEN_PARSER": [
+    "test_marriott_gains_exactly_the_headings_it_underlines",
+    "test_nothing_but_the_document_identity_moves_where_no_heading_does",
+    "test_the_route_actually_reaches_the_successor"
+   ]
+  },
+  "two_of_them_were_wrong_first": "ADMIT_ITALIC_TOO only widened a regex, which could not reach the `underline in token` test - an injection that does not reach its target says nothing about the suite. And ROUTE_D01_TO_D02S_SUCCESSOR does not do that: making the branch unreachable falls through to the frozen v1 chain, which is the more dangerous outcome and which every name comparison misses. That hole was real and is now closed by a case that asks the routed API for Marriott's candidate."
+ },
+ "not_yet_reflected_in_a_batch": "The three Marriott D01 coordinates stay registered as defects with repair_state RULE_FIXED_RESULT_NOT_YET_RECOMPUTED. The committed batch ran on the previous closure and is the evidence for that one; releasing a defect requires naming the repaired result's id and the closure that produced it, and those come from a batch on this closure.",
+ "record_type": "ISSUE_47_D01_UNDERLINE_REPAIR",
+ "scoped_to_d01": {
+  "the_link_guard_is_not_installed": "`not linked` on an audit-report opening - the check the sibling rule in the same module already makes - would make the shared widening safe. It is not added, because with the successor parser on D01's route alone it moves nothing today and a change that moves nothing is not exercised by anything. Measured and recorded in content-read.json rather than built.",
+  "what_this_leaves_unrepaired": "Lumen's D02 case-name caption 'Blum', which the same shared widening would have added. It stays registered.",
+  "why": "D02 and C02 keep the frozen parser, so nothing they select moves and audit_report_spans never sees an underline-marked block. Admitting underline on the shared route was measured and is not safe: it opens an audit-report exclusion on Southwest's hyperlinked index line that runs 849 blocks and takes five confirmed legal-contingency ones with it."
+ },
+ "the_parser": {
+  "held_to_the_frozen_rule": "With underline off the successor must produce the frozen parser's blocks. Measured over every saved filing above 400 KB: identical everywhere, and with underline on, zero leading emphases cleared and zero shortened.",
+  "per_document": {
+   "crm-20260131.htm": {
+    "added": 182,
+    "blocks": 2392,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "crm-20260416.htm": {
+    "added": 0,
+    "blocks": 6617,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "d121727ddef14a.htm": {
+    "added": 0,
+    "blocks": 3545,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "d886907d10ka.htm": {
+    "added": 2,
+    "blocks": 1833,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "e26003_f-def14a.htm": {
+    "added": 50,
+    "blocks": 2581,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "ef20071103_10ka.htm": {
+    "added": 0,
+    "blocks": 1596,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "enph-20251231.htm": {
+    "added": 3,
+    "blocks": 2709,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "enph-20260401.htm": {
+    "added": 0,
+    "blocks": 2784,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "exhibit991earningspressrel.htm": {
+    "added": 14,
+    "blocks": 476,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "f-20251231.htm": {
+    "added": 109,
+    "blocks": 4176,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "h-20251231.htm": {
+    "added": 330,
+    "blocks": 3863,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "hlt-20241231.htm": {
+    "added": 98,
+    "blocks": 2685,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "jpm-20251231.htm": {
+    "added": 144,
+    "blocks": 11146,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "jpm-20260402.htm": {
+    "added": 113,
+    "blocks": 4106,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "lumn-20251231.htm": {
+    "added": 416,
+    "blocks": 4488,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "lumn-20260401.htm": {
+    "added": 1,
+    "blocks": 7233,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "luv-20251231.htm": {
+    "added": 274,
+    "blocks": 2535,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "m-20260131.htm": {
+    "added": 207,
+    "blocks": 2165,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "m-20260515xdef14a.htm": {
+    "added": 0,
+    "blocks": 5693,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "mar-20231231.htm": {
+    "added": 273,
+    "blocks": 1834,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "mar-20241231.htm": {
+    "added": 274,
+    "blocks": 1917,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "mar-20251231.htm": {
+    "added": 251,
+    "blocks": 1965,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "ny20047871x1_def14a.htm": {
+    "added": 0,
+    "blocks": 4211,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "ny20062722x771_def14a.htm": {
+    "added": 0,
+    "blocks": 4536,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "para-20241231.htm": {
+    "added": 63,
+    "blocks": 3216,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "pfe-20251231.htm": {
+    "added": 263,
+    "blocks": 4507,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "pfe-20260312.htm": {
+    "added": 0,
+    "blocks": 4394,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "psky-20251231.htm": {
+    "added": 65,
+    "blocks": 3592,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "q42024earningsrelease.htm": {
+    "added": 15,
+    "blocks": 597,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   },
+   "q42025earningsrelease.htm": {
+    "added": 14,
+    "blocks": 678,
+    "cleared": 0,
+    "identical_with_underline_off": true,
+    "shrunk": 0
+   }
+  },
+  "two_stacks_not_one_flag": "A bold stack and an underline stack beside the frozen emphasis flag, so inheritance is read from the bold component and `text-decoration:none` cancels an underline and nothing else. The one-flag rule was measured first and clears 1,599 bold leading emphases in one saved document."
+ },
+ "what_moves_and_what_does_not": {
+  "method": "The successor chain against the frozen one on every readable filing. 'Identical' is not what can be required: the document hash covers every block's emphasis fields, including blocks no heading selects, so the document identity moves on all nine - 3 to 416 additional leading emphases per filing. So the requirement is that nothing else moves.",
+  "per_position": {
+   "enphase-2025": {
+    "company_id": "enphase_energy",
+    "document_id_changed": true,
+    "emphasis_fields_added": 3,
+    "emphasis_fields_lost": 0,
+    "fields_still_differing": [
+     "document_bindings"
+    ],
+    "frozen_items": 60,
+    "identical_once_document_identity_is_scrubbed": false,
+    "period_end": "2025-12-31",
+    "successor_items": 60
+   },
+   "ford-2025": {
+    "company_id": "ford_motor_company",
+    "document_id_changed": true,
+    "emphasis_fields_added": 109,
+    "emphasis_fields_lost": 0,
+    "fields_still_differing": [
+     "document_bindings"
+    ],
+    "frozen_items": 30,
+    "identical_once_document_identity_is_scrubbed": false,
+    "period_end": "2025-12-31",
+    "successor_items": 30
+   },
+   "jpmorgan-2025": {
+    "error": "PeriodSelectionError: ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT"
+   },
+   "lumen-2025": {
+    "company_id": "lumen_technologies",
+    "document_id_changed": true,
+    "emphasis_fields_added": 416,
+    "emphasis_fields_lost": 0,
+    "fields_still_differing": [
+     "document_bindings"
+    ],
+    "frozen_items": 50,
+    "identical_once_document_identity_is_scrubbed": false,
+    "period_end": "2025-12-31",
+    "successor_items": 50
+   },
+   "macys-2026": {
+    "company_id": "macys",
+    "document_id_changed": true,
+    "emphasis_fields_added": 207,
+    "emphasis_fields_lost": 0,
+    "fields_still_differing": [
+     "document_bindings"
+    ],
+    "frozen_items": 36,
+    "identical_once_document_identity_is_scrubbed": false,
+    "period_end": "2026-01-31",
+    "successor_items": 36
+   },
+   "marriott-2025": {
+    "company_id": "marriott_international",
+    "document_id_changed": true,
+    "emphasis_fields_added": 251,
+    "emphasis_fields_lost": 0,
+    "fields_still_differing": [
+     "document_bindings",
+     "selected"
+    ],
+    "frozen_items": 34,
+    "identical_once_document_identity_is_scrubbed": false,
+    "period_end": "2025-12-31",
+    "successor_items": 38
+   },
+   "paramount-2025": {
+    "company_id": "paramount_skydance_paramount_global",
+    "document_id_changed": true,
+    "emphasis_fields_added": 65,
+    "emphasis_fields_lost": 0,
+    "fields_still_differing": [
+     "document_bindings"
+    ],
+    "frozen_items": 38,
+    "identical_once_document_identity_is_scrubbed": false,
+    "period_end": "2025-12-31",
+    "successor_items": 38
+   },
+   "pfizer-2025": {
+    "company_id": "pfizer",
+    "document_id_changed": true,
+    "emphasis_fields_added": 263,
+    "emphasis_fields_lost": 0,
+    "fields_still_differing": [
+     "document_bindings"
+    ],
+    "frozen_items": 28,
+    "identical_once_document_identity_is_scrubbed": false,
+    "period_end": "2025-12-31",
+    "successor_items": 28
+   },
+   "salesforce-2026": {
+    "company_id": "salesforce",
+    "document_id_changed": true,
+    "emphasis_fields_added": 182,
+    "emphasis_fields_lost": 0,
+    "fields_still_differing": [
+     "document_bindings"
+    ],
+    "frozen_items": 43,
+    "identical_once_document_identity_is_scrubbed": false,
+    "period_end": "2026-01-31",
+    "successor_items": 43
+   },
+   "southwest-2025": {
+    "company_id": "southwest_airlines",
+    "document_id_changed": true,
+    "emphasis_fields_added": 274,
+    "emphasis_fields_lost": 0,
+    "fields_still_differing": [
+     "document_bindings"
+    ],
+    "frozen_items": 34,
+    "identical_once_document_identity_is_scrubbed": false,
+    "period_end": "2025-12-31",
+    "successor_items": 34
+   }
+  },
+  "result": "With document_id, proposal_id, coverage_hash and candidate_hash scrubbed, the candidate is equal on the eight filings where no heading changes; on Marriott it differs in `selected` alone."
+ },
+ "what_this_is": "The repair for D01's dropped underline headings, installed: a successor block parser that admits underline beside bold, a successor document builder that changes only the two emphasis fields, and the v1 chain that carries them for D01 alone."
+}

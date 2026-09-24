@@ -75,6 +75,12 @@ NEW_RULE_FILES = (
     # scans only filings.recent; this decides which filing an earlier period
     # means, so both roots check it.
     "scripts/vnext/historical_metadata_context.py",
+    # Underline as a heading mark, and the D01 chain that carries it. Their
+    # bytes decide which headings a D01 Result holds - Marriott's second-level
+    # risk groups are marked with underline and the frozen parser's emphasis
+    # is bold only - so both roots check them.
+    "scripts/vnext/historical_text_emphasis.py",
+    "scripts/vnext/historical_risk_results.py",
     # Which metrics a company's traits put outside their own gate. Its bytes
     # decide whether a position gets a structural non-applicability or an
     # implementation gap, so both roots check it.

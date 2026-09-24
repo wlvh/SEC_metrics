@@ -769,3 +769,13 @@ Issue #47 30指标×11期间批次（同一只读运行时树、closure `sha256:
 **一次差点又读错运行的经过**：改判据的补丁脚本在最后一处 docstring 替换上 `AssertionError`，于是**一个字节都没写**，而我紧接着跑的阅读用的还是旧脚本、输出仍是三家 STALE。这次没被带偏，只因为补丁脚本把 `AssertionError` 打在了输出开头；**这与"读了打补丁之前那次运行的输出"是同一个形状**，本文件已记过一次。
 
 **`interact.md` 里那个会漂移的数字已改掉**：原文写"Marriott 2023 实测：29个坐标到达公共行，其中7个带数值…"，本批次是35/10/14/11——**一个随每次接线移动的数字写进用户可见文档，早晚会描述一个不存在的状态**。改成只讲性质（行数分不出四种 outcome），当前分布指向该批次自己的证据。材料见`docs/evidence/issue47_history/native-run-batch-30-metrics/`。
+
+Issue #47 D01下划线修法已安装（`historical_text_emphasis.py`第25、`historical_risk_results.py`第26个规则文件），**只给D01**：后继块解析器在冻结标志旁另记bold与underline两个栈，后继文档构建器**跑一遍冻结的`build_text_document`**拿全部身份校验、期间检查与章节边界（章节不依赖强调——`_heading`只读`linked`与文本），再只替换两个强调字段并**要求其余每个逐块字段完全相同**；那条要求就是担保，它让后继在机械意义上是"只动一个字段"而不是第二个解析器。链路那一半复制了冻结v1的五个函数（准备、候选、Evidence、观察、重放），**但没有复制任何决定标题的东西**——`_derive_deterministic_candidate`按参数收`documents`/`coverages`，所以冻结的那个原样调用，连同冻结的`risk_factor_headings`、两条界检查与整个记录形状；不同的只是交给它的字节。
+
+**差分要求的比"逐字节相同"窄，而这个收窄是量出来的**：文档哈希覆盖每个块的强调字段、包括没有任何标题选中的块，所以九份申报的文档身份**全部**移动（每份新增3到416个leading emphasis、**零个丢失**）。所以要求变成"除此之外什么都不许动"：把`document_id`/`proposal_id`/`coverage_hash`/`candidate_hash`抹掉后，八份申报的候选完全相等，Marriott只在`selected`上差、正好差它用下划线标的那四条。端到端三年实测：34→**38**、35→**39**、33→**37**，全部FROZEN→公共行→独立进程冷读同值、零调用。
+
+**五次注错全部被抓，其中两次第一版是坏的**。`ADMIT_ITALIC_TOO`第一版只放宽正则，够不到`"underline" in token`那一步——**够不到目标的注错什么都不说明**。`ROUTE_D01_TO_D02S_SUCCESSOR`更糟：把D01分支设为不可达并**不会**路由到D02后继，而是落回冻结v1链——**这是更危险的结果，而且所有按名字比较的断言全都看不见它**；那个洞是真的，现已由一条"问被路由到的API要Marriott的候选、要求里面有`Operational Risks`且共38条"的用例关上。
+
+**顺带纠正我自己上一条记录**：我写过"放开斜体会把Ford十四个running head与两家的引言句共十七块取进来"。**实测是一块**——Salesforce那句引言；Ford那十四块早已被冻结的item标签规则按名拒绝，而我当时没问选择器拿到它们会怎么做。**一份"被留下且带视觉标记"的普查不是对效果的测量**。斜体仍然不采纳（它加进来的那一块是句子不是标题，而本语料量到的标题标记是下划线），但代价是一块不是十七块。这也改了测试：Salesforce进入差分的"不变集合"，因为它是唯一能把两条规则分开的申报——没有它，`ADMIT_ITALIC_TOO`通过每一条。
+
+**明确没做的**：(1) 共享路线的下划线放宽仍不安全（Southwest目录里那个超链接审计报告标题会开出849块的排除），所以Lumen的D02案件名小标题`Blum`保持登记；(2) `audit_report_spans`的`not linked`守卫**不装**——它能让共享放宽安全，但在后继解析器只走D01这条路线时它今天移动零个坐标，**一个什么都不移动的改动没有任何东西行使它**；(3) 三个Marriott D01坐标仍登记为缺陷、`repair_state`改为`RULE_FIXED_RESULT_NOT_YET_RECOMPUTED`——已提交的批次跑在上一个closure上并且是它的证据，而释放一条缺陷要点名被修复结果的`result_id`与产生它的closure，那要等这个closure上的批次。材料见`docs/evidence/issue47_history/d01-risk-headings/underline-repair.json`。
