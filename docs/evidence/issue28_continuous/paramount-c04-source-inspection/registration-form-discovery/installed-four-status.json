@@ -1,0 +1,55 @@
+{
+  "record_type": "ISSUE28_PARAMOUNT_C04_INSTALLED_FOUR_SOURCE_AUDIT",
+  "discovery_id": "sha256:884c804e01a90bc95ad77d31b480a478620288cdf62e1431c3bed6cc15ebabc3",
+  "four_exact_urls": [
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161025000029/psky-20250807.htm",
+      "form": "8-K12B/A",
+      "role": "registration_event_primary",
+      "baseline_status": "MISSING_SAVED_SOURCE",
+      "installed_status": "VERIFIED_SAVED_SOURCE",
+      "request_attempt_id": "request:attempt:270dbad7c2b7ae25c91f85c8111d65c5996c6cba383989601486a6f491be8356",
+      "source_reference_id": "sha256:4315130da021802e56a397861d9e27a883c52533984bae484119e13f9e096684"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161025000029/0002041610-25-000029.hdr.sgml",
+      "form": "8-K12B/A",
+      "role": "registration_event_header",
+      "baseline_status": "MISSING_SAVED_SOURCE",
+      "installed_status": "VERIFIED_SAVED_SOURCE",
+      "request_attempt_id": "request:attempt:2b315e289b484a5f3fc892483d1cd07ba5d6affb1c66a2132d5b2b402330ef43",
+      "source_reference_id": "sha256:3140758101b5e2916054c668241f1db0d15909667df4211abf45e042e7cdb670"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2041610/000119312525175046/d841914d8k12b.htm",
+      "form": "8-K12B",
+      "role": "registration_event_primary",
+      "baseline_status": "MISSING_SAVED_SOURCE",
+      "installed_status": "VERIFIED_SAVED_SOURCE",
+      "request_attempt_id": "request:attempt:7b07b1c84a61266fdc417314b2d78dddeab7cf2ce7d1e7ba2d49a1d96c61ed42",
+      "source_reference_id": "sha256:d1185bb9a39214fb0771819c9e414b1a4ac66c095dca772b104840030d5e20d3"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/2041610/000119312525175046/0001193125-25-175046.hdr.sgml",
+      "form": "8-K12B",
+      "role": "registration_event_header",
+      "baseline_status": "MISSING_SAVED_SOURCE",
+      "installed_status": "VERIFIED_SAVED_SOURCE",
+      "request_attempt_id": "request:attempt:482d3a1e1bfbcf29b3d58ab0d510533f5f46b53000419f3cfded9906c9b03edb",
+      "source_reference_id": "sha256:9cc4450d4b4dc2f4f6182791d2708bcd8541841ab5013e0e1b37e0e621eacc99"
+    }
+  ],
+  "verified_count": 4,
+  "missing_count": 0,
+  "ledger_counts_unchanged": [
+    143,
+    143,
+    49
+  ],
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "C04_result_created": false
+}

@@ -1,6 +1,12 @@
 # 8-K12B 注册人变体：仅来源发现小补丁
 
-补丁 `/tmp/sec_metrics_issue28_continuous/registration-event-discovery.patch` 尚未应用；主运行文件、旧Spec/Run和固定总账均未改。确切patch/hash见report.json。没有SEC/provider外发或新增真实坐标。
+## 2026-09-24 安装源复核：四份其实已在原账本
+
+下文是当时**仓库基线**的缺失快照，不代表今日原账本安装源仍缺文件。当前`source-inputs`经原SEC槽105—108已保存并验证两份8-K12B/8-K12B/A的primary与header四个URL；`audit_installed_four.py`以当前发现入口逐一核对角色、原请求尝试和来源引用，4/4为`VERIFIED_SAVED_SOURCE`。对第一份URL调用现有捕获入口只返回`EXISTING_VERIFIED_SOURCE_REUSED`，账本仍为143/143/49；本次没有新增SEC/provider调用，也不重复购买相同原件。见`installed-four-status.json`与`sec-current-bridge-summary.json`。初次尝试的完整旧测试在后段普通Run的复制根执行版本校验失败；`sec-current-nonnetwork.log`保留该限制，不能说成完整原生Run已重新通过。受影响的SEC请求工厂、录制持久化和零重试HTTP路径已用更短的当前禁网接线验证。
+
+`audit_installed_content.py`还从原槽105—108的保存字节和请求证明读取原文。可见正文中没有找到`Item 4.01`标题；8-K12B/A的Ernst & Young文字明确限定于**Skydance Media, LLC**审计材料，8-K12B里的PricewaterhouseCoopers命中属于一名董事的过往履历。两者均不是本注册人前后期审计师比较事实。文本检索不等于整个C04的否定验收：当前注册人仍没有同CIK前期10-K，旧C04 v2的支持形式和否定条件也没有变。下一步不再把“四URL待获取”列为阻断；真正剩余的是版本化事件形式接受与新注册人无同CIK前期时可否依据原件明确否定陈述给出结论的业务规则决定。C04当前仍未完成。
+
+以下记录的是当时未应用的`/tmp/sec_metrics_issue28_continuous/registration-event-discovery.patch`候选及零调用测试；现行分支的来源发现代码已包含对应变体发现，旧C04 Spec/Run与固定总账仍未因此改写。`report.json`里的`runtime_patch_applied=false`只解释当时快照，不应再当作当前分支状态。确切当时patch/hash见该报告。
 
 ## 机制
 
