@@ -558,10 +558,13 @@ D04的条件、例证或过去原因只影响其实际限定的断言；明确�
   `STRUCTURALLY_NOT_APPLICABLE`（结构不适用）、`RAN_WITHOUT_A_VALUE`（跑过但没有值，
   含显式 WITHHELD 与发布了但无值两种，桶内各自计数）、`NO_RESULT`。
   **只看 `public_row` 的数分不出它们**——WITHHELD 的结果同样渲染
-  出一行，结构不适用也是。Marriott 2023 实测：29 个坐标到达公共行，其中 7 个
-  带数值、14 个结构不适用、8 个是冻结拒绝。把 29 当交付，就是把「机器跑通了」
-  读成「数在那里」。该交叉表是对整帧的划分，每层各 outcome 之和等于
-  `delivery_layer_counts` 的同名项。
+  出一行，结构不适用也是。把行数当交付，就是把「机器跑通了」读成「数在那里」。
+  该交叉表是对整帧的划分，每层各 outcome 之和等于 `delivery_layer_counts` 的
+  同名项。**这里不写当前数字**：它随每次接线移动，写进来就会过期，而一份
+  过期的数字比没有数字更容易让人得出错误结论；每次批次的实测分布由该批次
+  自己的证据给出（最近一次见
+  `docs/evidence/issue47_history/native-run-batch-30-metrics/measured.json`
+  的 `delivery_by_outcome`）。
 * `unreadable_run_directories` 列出 runs 根目录下 manifest 与自身文件对不上的
   目录，按名字和理由报告而不是抛出——批次还在写时读该目录必然遇到一个。记录
   区分两种：OPEN 是正在被写，FROZEN 是这个目录不是它声称的那个 Run。

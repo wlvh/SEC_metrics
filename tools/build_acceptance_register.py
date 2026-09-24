@@ -26,6 +26,7 @@ GOVERNANCE = EVIDENCE + "governance-read.json"
 TEXT = EVIDENCE + "d02-both-directions-read.json"
 RPO = EVIDENCE + "rpo-read.json"
 COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
+HEADINGS = EVIDENCE + "d01-headings-read.json"
 PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
            "marriott-2023": "2023-12-31", "ford-2025": "2025-12-31",
            "pfizer-2025": "2025-12-31", "lumen-2025": "2025-12-31",
@@ -248,6 +249,35 @@ for label, case in sorted(textual.items()):
         "read_from": {"excerpts": case["excerpts"], "chars": case["chars"]},
         "method": TEXT_METHOD, "what_this_does_not_establish": TEXT_LIMIT})
 
+HEADINGS_METHOD = (
+ "both directions over the located Item 1A, plus the heading list itself. "
+ "Every emphasised block the selector refused is recomputed with the rule "
+ "that refused it, so an unexplained refusal fails the reading; every "
+ "non-furniture block the filing marks visually and the selector left is "
+ "reported, so a dropped heading fails it; and the judged list must equal "
+ "both what the selector returns today and the published value's own lines. "
+ "The value is named by digest because it is the whole text payload.")
+HEADINGS_LIMIT = (
+ "what is established is that this heading set is the set the approved source "
+ "definition asks for in this filing, read in both directions and item by "
+ "item. It does not establish " + COMMON)
+
+headings = json.loads((REPO / HEADINGS).read_text())["per_position"]
+for label, case in sorted(headings.items()):
+    # A reading that found a defect is not an acceptance, and neither is a
+    # coordinate that produced no value. Both are carried in the reading so
+    # that "not read" and "read and rejected" stay distinguishable there.
+    if case["verdict"] != "MATCH":
+        continue
+    entries.append({
+        "acceptance_id": "CONTENT_D01_" + label.upper().replace("-", "_"),
+        "company_id": case["company_id"], "metric_id": "D01",
+        "period_end": case["period_end"], "accepted_value": case["value_sha256"],
+        "evidence": HEADINGS,
+        "read_from": {"headings": case["headings"],
+                      "accession": case["accession"]},
+        "method": HEADINGS_METHOD, "what_this_does_not_establish": HEADINGS_LIMIT})
+
 rpo = json.loads((REPO / RPO).read_text())
 if rpo["verdict"] == "MATCH":
     entries.append({
@@ -310,7 +340,7 @@ for source in (GOVERNANCE, CROSS, LODGING, EVENTS):
 # all six C04 acceptances remained. A legitimate fall in acceptances is a
 # result this register has to be able to carry.
 readings = {}
-for source in (CROSS, LODGING, EVENTS, GOVERNANCE, TEXT, RPO, COMPENSATION):
+for source in (CROSS, LODGING, EVENTS, GOVERNANCE, TEXT, HEADINGS, RPO, COMPENSATION):
     raw = (REPO / source).read_bytes()
     body = json.loads(raw)
     positions = body.get("per_position")

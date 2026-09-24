@@ -3744,6 +3744,146 @@
    "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D01_ENPHASE_2025",
+   "accepted_value": "sha256:616b39a80a967e6223e9b8b913970bc38f53dc44c0f67b6501bf55bac8f4639c",
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-headings-read.json",
+   "method": "both directions over the located Item 1A, plus the heading list itself. Every emphasised block the selector refused is recomputed with the rule that refused it, so an unexplained refusal fails the reading; every non-furniture block the filing marks visually and the selector left is reported, so a dropped heading fails it; and the judged list must equal both what the selector returns today and the published value's own lines. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0001463101-26-000013",
+    "headings": 60
+   },
+   "result_identity": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "unit": "text"
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_FORD_2025",
+   "accepted_value": "sha256:11323cf2c56ce7d7568a190385b4b4699062cb2030d9a4a1d65590160cecf90e",
+   "company_id": "ford_motor_company",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-headings-read.json",
+   "method": "both directions over the located Item 1A, plus the heading list itself. Every emphasised block the selector refused is recomputed with the rule that refused it, so an unexplained refusal fails the reading; every non-furniture block the filing marks visually and the selector left is reported, so a dropped heading fails it; and the judged list must equal both what the selector returns today and the published value's own lines. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0000037996-26-000015",
+    "headings": 30
+   },
+   "result_identity": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "unit": "text"
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_LUMEN_2025",
+   "accepted_value": "sha256:7d61d3f83b7f312984af82b4218ecf4fbb29b63f1c92f068e1421375f76147cc",
+   "company_id": "lumen_technologies",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-headings-read.json",
+   "method": "both directions over the located Item 1A, plus the heading list itself. Every emphasised block the selector refused is recomputed with the rule that refused it, so an unexplained refusal fails the reading; every non-furniture block the filing marks visually and the selector left is reported, so a dropped heading fails it; and the judged list must equal both what the selector returns today and the published value's own lines. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0000018926-26-000014",
+    "headings": 50
+   },
+   "result_identity": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "unit": "text"
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_MACYS_2026",
+   "accepted_value": "sha256:dece7dd5cc2d9c881900f70859cf7e75fbb3fb1669145eddbfad62e4974e01ac",
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-headings-read.json",
+   "method": "both directions over the located Item 1A, plus the heading list itself. Every emphasised block the selector refused is recomputed with the rule that refused it, so an unexplained refusal fails the reading; every non-furniture block the filing marks visually and the selector left is reported, so a dropped heading fails it; and the judged list must equal both what the selector returns today and the published value's own lines. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D01",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "accession": "0001628280-26-021721",
+    "headings": 36
+   },
+   "result_identity": {
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-02",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "unit": "text"
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_PFIZER_2025",
+   "accepted_value": "sha256:6da31a109c5618bcac5e811e2f11eeaf79e0b9c9484e8b4d907102c8e351f24c",
+   "company_id": "pfizer",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-headings-read.json",
+   "method": "both directions over the located Item 1A, plus the heading list itself. Every emphasised block the selector refused is recomputed with the rule that refused it, so an unexplained refusal fails the reading; every non-furniture block the filing marks visually and the selector left is reported, so a dropped heading fails it; and the judged list must equal both what the selector returns today and the published value's own lines. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0000078003-26-000026",
+    "headings": 28
+   },
+   "result_identity": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "unit": "text"
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_SALESFORCE_2026",
+   "accepted_value": "sha256:0e12c5cc20986f05377efdb5f0a510c8fa0449adea0bd133be62bb8b10f080cf",
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-headings-read.json",
+   "method": "both directions over the located Item 1A, plus the heading list itself. Every emphasised block the selector refused is recomputed with the rule that refused it, so an unexplained refusal fails the reading; every non-furniture block the filing marks visually and the selector left is reported, so a dropped heading fails it; and the judged list must equal both what the selector returns today and the published value's own lines. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D01",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "accession": "0001108524-26-000060",
+    "headings": 43
+   },
+   "result_identity": {
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "unit": "text"
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_SOUTHWEST_2025",
+   "accepted_value": "sha256:c1ab06b4248b405c0a7e5f74ae91775bfe7b045df0f2804e018a733faf4038d4",
+   "company_id": "southwest_airlines",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-headings-read.json",
+   "method": "both directions over the located Item 1A, plus the heading list itself. Every emphasised block the selector refused is recomputed with the rule that refused it, so an unexplained refusal fails the reading; every non-furniture block the filing marks visually and the selector left is reported, so a dropped heading fails it; and the judged list must equal both what the selector returns today and the published value's own lines. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0000092380-26-000004",
+    "headings": 34
+   },
+   "result_identity": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "unit": "text"
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D02_FORD_2025",
    "accepted_value": "sha256:ecf514f0deb6acefc935a41ecee27842190cee64b3da306e303e96a4a9adafe9",
    "company_id": "ford_motor_company",
@@ -6340,6 +6480,12 @@
    "positions_examined": 10,
    "positions_examined_is_null_because": null
   },
+  "docs/evidence/issue47_history/content-acceptance/d01-headings-read.json": {
+   "acceptances_contributed": 7,
+   "content_sha256": "sha256:1ac1832934b22a59ef5a934ebda3329ec05029d99c319cc7d4d19055f4facdb1",
+   "positions_examined": 12,
+   "positions_examined_is_null_because": null
+  },
   "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json": {
    "acceptances_contributed": 7,
    "content_sha256": "sha256:4241bcea517b385d73856d8f3e818efb21c78ac8c63f9ff4c8c6e0075a043420",
@@ -6354,7 +6500,7 @@
   },
   "docs/evidence/issue47_history/content-acceptance/governance-read.json": {
    "acceptances_contributed": 14,
-   "content_sha256": "sha256:1af8b724e3cf77ff5568853ae9383ae7f8f597a42d1cef747159e662b2e27874",
+   "content_sha256": "sha256:2fe9cf447ede47485a5371c01ddde878fdafefaf6153623c1aa13fecb3d00ecc",
    "positions_examined": 8,
    "positions_examined_is_null_because": null
   },
