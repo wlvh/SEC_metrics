@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:cac7cd6e57f46919721a61ca4754117ba5032d1e7b4ef46bc82052a84d5d8789",
-  "execution_authority_hash": "sha256:cc58c1dc3a57550631e79325da9813ade71e9c79535278e71b47245bbe4abc8e",
+  "requirement_closure_hash": "sha256:d24d5b94ffc4c0bac7eb902c3be943f3d2690be59e9530e08fa7a66f016b79c8",
+  "execution_authority_hash": "sha256:244e385dc481c9575a30de711b1cb563c4ebc1ad9b0cc17c3aa3f6232899ec27",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -30,6 +30,6 @@
     "docs/evidence/issue28_continuous/batch33-authorization/recovery172-fast.json": "e776e5fbbe52f801b119344825ab150dfd43f4ac062a70d51728573df19e58bd",
     "docs/evidence/issue28_continuous/batch33-authorization/recovery172-pending-live-check.json": "6882ceb6872edc07ee30b08a6762a288010c1df9d97f98cc6f8ae5c648ac4235"
   },
-  "scope": "Current batch33 original-ledger binding, first-group factory/controller and recorded one-time recovery172 source/request/native collection. Recovery172 remains explicitly unapproved and cannot install or egress; current real ledger remains stopped at172.",
+  "scope": "Prepared exact user approval text is bound, but recovery172 policy remains PENDING and no Issue comment is yet installed. Prior recorded recovery, current ledger stop and tests retained; no real call in this check.",
   "independent_review": "Batch33 first claims c92c7698 and SEC cold-read repair 4a5d4bb4 PASS; recovery172 pending-policy code2598ce82 scoped review PASS, LIVE recovery approval absent"
 }

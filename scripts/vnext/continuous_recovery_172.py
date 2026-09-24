@@ -66,7 +66,18 @@ def authorization(*, ledger, online=False, check_ledger=True):
                                    repo_relative_path=config['delegation_record_path']))
     body = validate_comment(comment, repository=config['repository'],
                             url=config['delegation_url'])
+    source_path = resolve_repository_file(repo_root=ROOT,
+                                          repo_relative_path=config['source_text_path'])
+    source_text = source_path.read_text()
     need(sha256_bytes(content=comment['body'].encode()) == config['delegation_body_sha256']
+         and sha256_bytes(content=source_text.encode()) == config['source_text_sha256']
+         and body['original_user_instruction'] == source_text == '批准172一次受限恢复'
+         and body['prior_user_recharge_statement'] == '已经充值'
+         and body['delegation_source'] == {
+             'kind': 'EXPLICIT_USER_CONVERSATION_APPROVAL',
+             'user_instruction_date': '2026-09-24',
+             'transcription_commit': config['transcription_commit'],
+             'original_text_sha256': config['source_text_sha256']}
          and body['record_type'] == 'ISSUE28_HTTP402_RECOVERY_172_DELEGATION'
          and body['approval_kind'] == 'USER_DELEGATED_SINGLE_172_RECOVERY_ONLY'
          and body['registered_by'] == 'CODEX_ON_EXPLICIT_USER_INSTRUCTION'
@@ -82,6 +93,8 @@ def authorization(*, ledger, online=False, check_ledger=True):
          and body['batch_authorization_id'] == config['batch_authorization_id']
          and body['eligible_original_failure'] == 'HTTP_402_WITHOUT_USABLE_MODEL_OUTPUT'
          and body['maximum_new_executions_of_original_request'] == config['maximum_new_executions'] == 1
+         and body['maximum_attempts_for_this_batch_group_including_172'] == 2
+         and body['new_execution_counts_within_existing_batch66_subcap'] is True
          and body['consume_on'] == 'NEW_CLAIM_APPEND_NOT_SUCCESS'
          and body['maximum_cumulative_provider_paid_sec_calls'] == [240, 240, 80]
          and body['automatic_retry_count'] == 0
@@ -89,7 +102,8 @@ def authorization(*, ledger, online=False, check_ledger=True):
          and all(body[field] is False for field in (
              'other_failed_requests_may_repeat', 'original_ledger_history_may_change',
              'request_digest_or_source_may_change', 'new_budget_granted',
-             'account_operations_authorized', 'production_authorized')),
+             'account_operations_authorized', 'production_authorized',
+             'D03_calls_authorized', 'sec_calls_authorized_by_this_recovery')),
          'RECOVERY172_APPROVAL_SCOPE_CHANGED')
     need(ledger.live and str(ledger.root) == config['budget_root'] == body['budget_root']
          and ledger.binding['binding_id'] == config['binding_id'] == body['binding_id']
@@ -148,7 +162,7 @@ def install_live_authorization(*, ledger, requirement):
     need(config['authorization_state'] == 'EXPLICIT_USER_DECISION_SERVER_VERIFIED',
          'RECOVERY172_POLICY_STATE_CHANGED')
     for relative in (POLICY_PATH, 'scripts/vnext/continuous_recovery_172.py',
-                     config['delegation_record_path']):
+                     config['delegation_record_path'], config['source_text_path']):
         path = resolve_repository_file(repo_root=ROOT, repo_relative_path=relative)
         need(requirement['execution_authority']['files'].get(relative) ==
              {'sha256': sha256_file(path=path), 'size': path.stat().st_size},

@@ -42,10 +42,11 @@
     "Scoped agent found P2 in saved SEC-prefix cold read: a second SEC claim after an unresolved SEC stop was accepted by history validator though real ledger rejects it. New negative test reproduced, local fix and 31 directed/127 fast passed; independent recheck pending. No SEC/model call.",
     "Incremental independent recheck at 4a5d4bb4 closed the SEC stopped-channel cold-read P2; 31 directed tests and separate recorded pending/HTTP402 SEC controls passed. No new real call.",
     "After real172 HTTP402, user reports recharge. A fail-closed exact172 recovery path and recorded same-request native collection are implemented; 36 directed/127 fast tests pass. No live recovery permission installed or new call.",
-    "Scoped independent review of fail-closed 172 recovery patch2598ce82 passed with 36 tests and no network. Exact user permission and server transcription still absent; 172 stop remains."
+    "Scoped independent review of fail-closed 172 recovery patch2598ce82 passed with 36 tests and no network. Exact user permission and server transcription still absent; 172 stop remains.",
+    "User explicitly approved one bounded recovery for real172; exact text saved and bound. Server transcription/comment and final exact-byte review still pending; no new call."
   ],
   "next": [
-    "Await an explicit one-time authorization for the new172 HTTP402; user recharge report alone does not install permission. Then bind the exact server transcription, review final diff and execute only authorized Enphase D04 group0 once.",
+    "Transcribe the exact 172 approval as executor into Issue28, verify server original, bind final comment and current V14 execution bytes; then scoped diff review, final no-network wiring and one real Enphase D04 group0 claim.",
     "Keep PROVIDER stopped after new172 HTTP402; do not send another model request, probe account, switch keys or treat this as a repair retry. Ask owner for a new bounded recovery decision after service availability is checked.",
     "Continue only useful provider-independent B06, Paramount C04, normal update, 390 and old-entry preparation; preserve previous valid evidence.",
     "If separately authorized and service available, bind new172 recovery to its exact failed no-output request and one fresh claim in the original ledger; still obey batch33 group identity, old history and total caps.",
@@ -163,7 +164,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:cac7cd6e57f46919721a61ca4754117ba5032d1e7b4ef46bc82052a84d5d8789",
+  "current_v15_development_closure": "sha256:d24d5b94ffc4c0bac7eb902c3be943f3d2690be59e9530e08fa7a66f016b79c8",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -1082,7 +1083,8 @@
     "usage_and_cost": "Unknown/null preserved",
     "material": "batch33-authorization/live-0172-summary.json",
     "user_reports_recharge_after_172": true,
-    "provider_service_availability_independently_verified": false
+    "provider_service_availability_independently_verified": false,
+    "user_approved_single_172_recovery": true
   },
   "historical_checkpoint_fields_before_recovery110": {
     "ledger_implementation_status": "108_SEALED_SLOTS; PROVIDER59_PAID59_SEC49; ALL_PRIOR_FAILURES_RETAINED",
@@ -1454,7 +1456,7 @@
     "material": "failures-112-114-repair/real-171/"
   },
   "recovery_172_preparation": {
-    "status": "PENDING_EXPLICIT_USER_DECISION_FAIL_CLOSED_NO_LIVE_GRANT",
+    "status": "USER_EXPLICITLY_APPROVED_SERVER_TRANSCRIPTION_PENDING_NO_LIVE_GRANT",
     "policy": "config/issue28_recovery_172_v1.json",
     "module": "scripts/vnext/continuous_recovery_172.py",
     "original_failure": "batch33-authorization/live-0172-summary.json",
@@ -1470,8 +1472,11 @@
     ],
     "new_live_recovery_record_installed": false,
     "user_reports_recharge": true,
-    "explicit_recovery_permission_received": false,
+    "explicit_recovery_permission_received": true,
     "subagent_review": "PASS_SCOPED_PENDING_POLICY_PATCH_2598CE82",
-    "review_result": "batch33-authorization/recovery172-independent/conclusion.md"
+    "review_result": "batch33-authorization/recovery172-independent/conclusion.md",
+    "exact_user_instruction": "批准172一次受限恢复",
+    "exact_user_instruction_path": "batch33-authorization/recovery172-user-approval.txt",
+    "transcription_comment_url": null
   }
 }
