@@ -394,12 +394,41 @@ class Batch33ServerAuthorityTest(unittest.TestCase):
     def test_recovery172_pending_policy_installs_nothing(self):
         with tempfile.TemporaryDirectory() as temporary:
             ledger=SimpleNamespace(root=Path(temporary))
-            with self.assertRaisesRegex(ValueError,'RECOVERY172_EXPLICIT_APPROVAL_PENDING'):
-                recovery172_authorization(ledger=ledger)
-            self.assertIsNone(install_recovery172(ledger=ledger,requirement={}))
-            (ledger.root/'recovery-172.json').write_text('{}')
-            with self.assertRaisesRegex(ValueError,'RECOVERY172_UNAPPROVED_RECORD_PRESENT'):
-                install_recovery172(ledger=ledger,requirement={})
+            from vnext.continuous_recovery_172 import _config
+            pending={**_config(),'authorization_state':'PENDING_EXPLICIT_USER_DECISION'}
+            with patch('vnext.continuous_recovery_172._config',return_value=pending):
+                with self.assertRaisesRegex(ValueError,'RECOVERY172_EXPLICIT_APPROVAL_PENDING'):
+                    recovery172_authorization(ledger=ledger)
+                self.assertIsNone(install_recovery172(ledger=ledger,requirement={}))
+                (ledger.root/'recovery-172.json').write_text('{}')
+                with self.assertRaisesRegex(ValueError,'RECOVERY172_UNAPPROVED_RECORD_PRESENT'):
+                    install_recovery172(ledger=ledger,requirement={})
+
+    def test_recovery172_requires_exact_server_transcription(self):
+        from vnext.continuous_recovery_172 import _config
+        from vnext.normal_source_authority import ROOT
+        config=_config()
+        comment=json.loads((ROOT/config['delegation_record_path']).read_text())
+        ledger=SimpleNamespace(root=Path(config['budget_root']),live=True,
+            binding={'binding_id':config['binding_id'],'limits':[240,240,80]})
+        offline=recovery172_authorization(ledger=ledger,check_ledger=False)
+        with patch('vnext.annual_candidate._github',return_value=comment):
+            self.assertEqual(recovery172_authorization(ledger=ledger,online=True,
+                check_ledger=False),offline)
+        for altered in ('author','body','updated_at'):
+            changed=deepcopy(comment)
+            if altered=='author':changed['user']['login']='other-user'
+            elif altered=='body':changed['body']=changed['body'].replace('172','173',1)
+            else:changed['updated_at']='2026-09-25T00:00:00Z'
+            with self.subTest(altered=altered), \
+                 patch('vnext.annual_candidate._github',return_value=changed), \
+                 self.assertRaises(ValueError):
+                recovery172_authorization(ledger=ledger,online=True,
+                    check_ledger=False)
+        with patch('vnext.continuous_recovery_172._config',return_value={
+                **config,'source_text_sha256':'0'*64}), \
+             self.assertRaisesRegex(ValueError,'RECOVERY172_APPROVAL_SCOPE_CHANGED'):
+            recovery172_authorization(ledger=ledger,check_ledger=False)
 
     def test_existing_approved_install_survives_the_first_counted_call(self):
         from contextlib import nullcontext

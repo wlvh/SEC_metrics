@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:d24d5b94ffc4c0bac7eb902c3be943f3d2690be59e9530e08fa7a66f016b79c8",
-  "execution_authority_hash": "sha256:244e385dc481c9575a30de711b1cb563c4ebc1ad9b0cc17c3aa3f6232899ec27",
+  "requirement_closure_hash": "sha256:568ab1eb52f4f44721e94a871efe78caf389862213a9c9278201c31b7e67c8d2",
+  "execution_authority_hash": "sha256:e1899bdc61f1961d291b70d6a247009a746073e853c8ce6563c997c219650eb0",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -28,8 +28,11 @@
     "docs/evidence/issue28_continuous/batch33-authorization/recovery172-offline-summary.json": "53ae0272f002d28cda85d5ad63f54fb48c2ba998585cfde08cc5e258130dcf2a",
     "docs/evidence/issue28_continuous/batch33-authorization/recovery172-directed.log": "411c25824760056813091d78353138989990834e087521abe1359c21e6031a9d",
     "docs/evidence/issue28_continuous/batch33-authorization/recovery172-fast.json": "e776e5fbbe52f801b119344825ab150dfd43f4ac062a70d51728573df19e58bd",
-    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-pending-live-check.json": "6882ceb6872edc07ee30b08a6762a288010c1df9d97f98cc6f8ae5c648ac4235"
+    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-pending-live-check.json": "6882ceb6872edc07ee30b08a6762a288010c1df9d97f98cc6f8ae5c648ac4235",
+    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-server-authorization-check.json": "f4f5997ae204212d8550ba1aa8c73e9d99bd42c28033f771772730c4c37c20bf",
+    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-final-directed.log": "daad8847e937412cc1db46585e495d9e199e309a64db331afc3ced296622bdbe",
+    "docs/evidence/issue28_continuous/batch33-authorization/recovery172-final-fast.json": "7d1e63acf8a4c18852a963bfa43aa31520d5ef8663ce80405f925c2a7e42f27c"
   },
-  "scope": "Prepared exact user approval text is bound, but recovery172 policy remains PENDING and no Issue comment is yet installed. Prior recorded recovery, current ledger stop and tests retained; no real call in this check.",
-  "independent_review": "Batch33 first claims c92c7698 and SEC cold-read repair 4a5d4bb4 PASS; recovery172 pending-policy code2598ce82 scoped review PASS, LIVE recovery approval absent"
+  "scope": "Exact 172 user approval transcribed and authenticated on Issue28 server, V14 code/config/comment/source bytes bound. Previously passed recorded one-shot Enphase native chain reused; current 37 directed and127 fast tests passed. Recovery record not installed; final authorization-diff review pending; no new real call.",
+  "independent_review": "2598ce82 pending-policy recovery implementation scoped PASS; final server-comment/config authorization diff independently review-pending; prior batch/SEC reviews retained"
 }

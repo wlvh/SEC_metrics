@@ -10,6 +10,6 @@
 
 `independent-review/conclusion.md` 对 `c92c7698` 首轮 33 组受限申领差异未发现阻断，29 项指定测试通过；它不覆盖未来尚未实现的修后第二次申领。原账本随后安装授权，第一条真实请求直接执行 Enphase D04 第 0 组，没有作余额探针。`live-0172-summary.json` 绑定第172次原始终态：服务端返回 `HTTP_402 / Insufficient Balance`，无可用模型输出和 usage/cost 数值；该次已按规则计入一次 provider/paid，PROVIDER 因新停止再次封闭。本批开发错误补验授权不覆盖账户402，新172的同摘要重发也尚未获批准，因此不继续发模型请求。
 
-用户随后报告已充值，并于2026-09-24明确回复“批准172一次受限恢复”。这项确切指令保存为`recovery172-user-approval.txt`；充值和批准都不会自行改写原172失败。`continuous_recovery_172.py`与`config/issue28_recovery_172_v1.json`已准备一次性路径：Issue服务器转录及最终字节绑定未完成时，不安装`recovery-172.json`、不产生第173次申领。`recovery172-offline-summary.json`用当前Enphase保存来源验证旧失败、模拟新402、独立测试授权与同摘要成功的原生收集；失败均保留在前缀，只有新成功替代当前信用。36项定向与127项快速测试通过，真实调用新增0。`recovery172-independent/conclusion.md`对待批准实现完成限定独审，未发现阻断；最终权限评论字节仍须做限定增量复核。录制结果不计真实公司完成。
+用户随后报告已充值，并于2026-09-24明确回复“批准172一次受限恢复”。确切指令保存为`recovery172-user-approval.txt`，执行者转录至[Issue #28评论5811139877](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5811139877)；`recovery172-server-comment.json`为真实服务器返回，作者、正文和更新时间已核验。充值和批准都不会自行改写原172失败。`continuous_recovery_172.py`与`config/issue28_recovery_172_v1.json`已准备一次性路径；恢复记录尚未安装，新申领尚未发生。`recovery172-offline-summary.json`用当前Enphase保存来源验证旧失败、模拟新402、独立测试授权与同摘要成功的原生收集；失败均保留在前缀，只有新成功替代当前信用。最终评论/配置绑定下37项定向与127项快速测试通过，真实调用新增0。`recovery172-independent/conclusion.md`对早一版待批准实现完成限定独审，未发现阻断；最终权限评论字节仍须做限定增量复核。录制结果不计真实公司完成。
 
 这份材料仍不代表新增完整 D04 或 B13 公司结果。各公司必须完成全部组、原生 Result/Run、公开行与必要冷读后才计完整候选。D03、账户操作、生产采纳、Ready、合并和 active 切换均不在本授权内。
