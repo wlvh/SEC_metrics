@@ -179,6 +179,13 @@ SOURCE_TESTS += ("tests.vnext.test_historical_debt_results",)
 # different values in each metric - a route that read the newest filing would
 # satisfy everything else in that file.
 SOURCE_TESTS += ("tests.vnext.test_historical_lodging_results",)
+# D01 through the pinned route. Two cases carry it: one compares the whole
+# candidate record - each heading's exact text and raw byte span - against the
+# ordinary chain's for two companies at opposite ends of the heading range, and
+# one answers Marriott for three years and requires three different candidates,
+# so a route reading the newest filing satisfies everything else in the file
+# and fails there. 56 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_risk_headings",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

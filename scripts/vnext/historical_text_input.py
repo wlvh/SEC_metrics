@@ -45,7 +45,22 @@ from .ordinary_source_authority import verify_ordinary_source_proofs
 from .text_results_v2 import SCOPES
 
 RECORD_TYPE = "HISTORICAL_BUSINESS_TEXT_INPUT_BINDING"
-SUPPORTED_METRICS = ("C02", "D02")
+SUPPORTED_METRICS = ("C02", "D01", "D02")
+# D01's scope, which text_results_v2's SCOPES does not carry because D01 is not
+# one of its metrics: it runs on the frozen v1 result API, whose target scope
+# for this metric is the registrant.
+D01_SCOPE = {"entity_scope": "registrant"}
+# The metrics whose only text source is the pinned annual filing, so a same
+# period 10-K/A is context around that source. C02 is not one of them: at its
+# second level the amendment IS the source, and calling that "original with
+# amendments" would describe one document twice.
+#
+# The frozen rule keys on D02 because D02 and C02 are the only metrics it
+# serves. Measured before widening it: of the ten companies, Paramount and
+# Southwest carry an annual amendment in the pinned period, and there D02
+# reports PREPARED_ORIGINAL_WITH_AMENDMENTS while D01 reported PREPARED for the
+# same filing and the same amendment.
+ANNUAL_ONLY_TEXT_METRICS = ("D01", "D02")
 
 
 def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, metric_id: str,
@@ -75,7 +90,7 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
     reader.read(companyfacts_url(cik=int(cik)), accession=ordinary["accessionNumber"],
                 role="companyfacts", media_type="application/json")
     period = prepared["table_input"]["target_period"]
-    scope = dict(SCOPES[metric_id])
+    scope = dict(D01_SCOPE if metric_id == "D01" else SCOPES[metric_id])
     target = {"company_id": company_id, "entity": cik,
               "accession": ordinary["accessionNumber"],
               "period_start": period["period_start"], "period_end": period["period_end"],
@@ -83,7 +98,17 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
     plan, text_sources, filings, limitations = None, [], {}, []
     part_iii = None
     try:
-        plan = _source_plan(governance_binding=metadata, metric_id=metric_id)
+        # D01 and D02 read the same source structure - the pinned annual
+        # filing, one text role, no Part III proof - so D02's frozen plan is
+        # reused rather than a second one written for D01. The assertion is
+        # what keeps that reuse honest: if D02's plan ever gains a second
+        # filing or a proof, this stops instead of quietly giving D01 one.
+        plan = _source_plan(governance_binding=metadata,
+                            metric_id="D02" if metric_id == "D01" else metric_id)
+        if metric_id == "D01":
+            _need(len(plan["text_filings"]) == 1
+                  and not plan["requires_part_iii_proof"],
+                  "HISTORICAL_TEXT_D01_PLAN_SHAPE_CHANGED")
         check_historical_metadata_scope(
             plan=plan, context=metadata,
             references=[record for record in reader.records.values()
@@ -125,19 +150,23 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
     references = [r for r in records if r["record_type"] == "SOURCE_REFERENCE"]
     blobs = {r["raw_asset_id"]: r for r in records if r["record_type"] == "RAW_BLOB"}
     raw = {v["raw_blob"]["raw_asset_id"]: v["raw_bytes"] for v in reader.cache.values()}
+    # The v1 result API that answers D01 takes four arguments and rejects a
+    # shape it does not know, so source_filings - which the v2 metrics carry -
+    # is not added for it.
     text_args = None if limitations else {
         "target": target, "source_references": text_sources, "raw_blobs": blobs,
-        "raw_bytes_by_id": raw, "source_filings": filings}
+        "raw_bytes_by_id": raw,
+        **({} if metric_id == "D01" else {"source_filings": filings})}
     _need(sha256_file(path=root / "evidence/requests_log.csv") == ledger_sha,
           "HISTORICAL_TEXT_INPUT_LEDGER_CHANGED_DURING_PREPARATION")
-    # The amendment flag is D02's only, as the frozen route has it. For C02 an
-    # annual amendment is not context around the source - at the Part III level
-    # it IS the source - so saying "original with amendments" would describe the
-    # same document twice. Found by comparing statuses with the ordinary chain:
-    # Paramount is the one company where the two rules differ.
+    # The amendment flag belongs to the annual-only text metrics, not to D02
+    # alone as the frozen route spells it - there D02 simply is "the one that
+    # is not C02". Found by comparing statuses with the ordinary chain:
+    # Paramount is the one company where the C02 rule and the D02 rule differ.
     status = ("BLOCKED" if limitations
               else "PREPARED_ORIGINAL_WITH_AMENDMENTS"
-              if metric_id == "D02" and prepared["amendments"] else "PREPARED")
+              if metric_id in ANNUAL_ONLY_TEXT_METRICS and prepared["amendments"]
+              else "PREPARED")
     body = {"record_type": RECORD_TYPE, "metric_id": metric_id, "company_id": company_id,
             "period_selection": period_selection, "prepared_input": prepared,
             "current_metadata_scope": metadata["scope"],

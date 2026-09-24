@@ -69,13 +69,18 @@ WIRED_ACCESSION_METRICS = ("A01", "A02", "B12")
 # reads the latest filing. They share historical_zero_ai_results with the
 # revenue route exactly as they share normal_zero_ai_results in the current one.
 WIRED_EVENT_METRICS = ("C01", "E01", "E02", "E03", "E04", "E05")
-# The two text routes. They share one adapter and one deterministic selector;
+# The three text routes. They share one adapter and one deterministic selector;
 # what C02 needed was its second source - the annual meeting's DEF 14A, or the
 # 10-K/A that adds Part III where a company puts its governance information
 # there. It delivers at the newest period and names the proxy an earlier one
 # means: of the 82 proxies the saved submissions indexes list, ten have
 # accession material and all ten were filed in 2026.
-WIRED_TEXT_METRICS = ("C02", "D02")
+# D01 is the opposite shape and the cheapest in this frame: one filing, one
+# text role, no prior accession and no second source, so it delivers wherever
+# the target year's own primary is saved. Its Spec declares the frozen item
+# bound and its Item 1A carries 28 to 60 headings against it, so it is not
+# waiting on the capacity work D02 needed.
+WIRED_TEXT_METRICS = ("C02", "D01", "D02")
 # Auditor changes. Its two inputs already had historical routes - the pinned
 # annual chain and the fiscal window's 8-K item index - so what it needed was
 # the selection between them, not a new reader. It delivers where the

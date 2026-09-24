@@ -279,14 +279,18 @@ def verify_historical_companyfacts_metrics(*, candidate, repo_root: Path, compan
 # factory holds. So this assembles the identity and the sources, and
 # create_historical_run computes the text result from them, exactly as the
 # current route splits the same work between normal_run_v2 and normal_run_v3.
-TEXT_METRICS = ("C02", "D02")
+TEXT_METRICS = ("C02", "D01", "D02")
 # v2 declares max_items 192 where v1 declares 64. 64 was two bounds wearing one
 # number: what a Spec may declare, which historical_spec_revision raises without
 # touching the frozen compiler, and what ORDERED_NEWLINE_V1 will render, which
 # historical_text_protocol carries for this generation. Both are wired, so the
 # route can declare the capacity the runtime actually honours. v1 keeps its
 # bytes and its identity, because the Runs frozen under it declare it.
+# D01 keeps v1's bound. Measured across the ten companies its Item 1A carries
+# 28 to 60 headings against max_items 64, so nothing here is waiting on the
+# capacity work D02 needed - though Enphase is four headings away from it.
 TEXT_SPEC_PATHS = {"C02": "catalog/r6/C02_board_disclosures_v1.md",
+                   "D01": "catalog/r6/D01_risk_factor_headings.md",
                    "D02": "catalog/r6/D02_legal_disclosures_v2.md"}
 
 

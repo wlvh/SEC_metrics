@@ -711,3 +711,17 @@ Issue #47 内容验收层两处缺陷（外部审阅对`ab91b1dd`点名，**两�
 **(3) 证据可以在授予仍然生效时被改掉**：此前只检查证据文件**存在**——而文件会一直存在，变的是它的结论。现在登记记录每份阅读构建时的`content_sha256`，覆盖表加载时重算，不符即`COVERAGE_ACCEPTANCE_READING_CHANGED_SINCE_THE_REGISTER`并使整份登记暂不授予。实测：给任一份阅读追加一个换行，全部接受立即失效；还原字节即恢复。
 
 三次注错全部被抓（去掉身份比较→3条挂；让无绑定条目回退→1条挂；只检查文件存在→1条挂）；`test_historical_coverage` 56项OK。**顺带纠正本文件自己的一处标注**：这一批是**29个已接线指标加6个仅结构适用指标、覆盖11个期间**，即 (29+6)×11=385；写成"29指标×11期间批次"读起来是29×11、凑不到385，证据里写对了而标题没有。材料见`docs/evidence/issue47_history/acceptance-binding/measured.json`。
+
+Issue #47 D01 历史路线已接通（改`historical_metadata_context.py`/`historical_text_input.py`/`historical_results.py`，覆盖表 wired 29→30）：**先撤回我自己写在本文件里的一句**——"卡在模型额度的有四条：D01是`ai_text`，B13/D03/D04走语义审阅路径"。D01 不卡额度，**零模型调用**。错在只读了 `source_strategy_registry` 的 `source_mode` 字段，没往下读实际跑哪条链：D01 的 Spec 里 `quality_rule.deterministic_text_method` 写的是 `RISK_FACTOR_HEADINGS_V1`，`normal_run_v2.text_api` 把它送到冻结的 v1 确定性选择器。**同一个字段第三次把我带偏**（C02 记成 `ai_text`、B06 记成"一条结构路线"、现在 D01），所以那个字段说的是指标家族、不是实现。
+
+**它是本帧最便宜的形状**：一份申报、一个文本角色、不读上一期 accession、没有第二来源，所以**目标年自己的正文存着就能交付**——不像 C04 和 B02/B03 还要上一期 accession 的材料。三年实测（Marriott 是唯一存了多份年报正文的公司）：FY2025/2024/2023 全部 FROZEN→公共行→**独立进程冷读同 run_id**，34/35/33 条标题、4774/4761/4576 字、三个不同 accession、三个不同 candidate、零新增调用。三个都不同这一点是承重的：一条够到了 pinned 选择却没够到 pinned 字节的路线，会把同一个 candidate 返回三次。
+
+**先量后写**：差分拿 `ordinary_remaining_cases.prepare_current_source_case` 与本路线的准备喂给同一个冻结 `create_deterministic_text_candidate`，比的是**candidate 记录**——每条标题的原文与原始字节区间——不是条数。九家逐字节相同（28 到 60 条），JPMorgan 仍停在 `SAVED_HISTORY_INCOHERENT`（每条历史路线共有，在获取计划里）。条目上限也是量的而不是推的：D01 声明冻结的 `max_items: 64`，十家实测 28–60，所以 D02 那轮的容量工作不在这条路上——但 Enphase 只差四条，一份把标题拆得更细的申报会以同样方式停下。
+
+**差分抓到一处我自己引入的记录缺陷**：冻结路线把同期 10-K/A 标成 `PREPARED_ORIGINAL_WITH_AMENDMENTS` 只对 D02，不对 C02——因为 C02 第二级的修订件**是来源**而不是上下文。照搬过来 D01 就拿了 C02 的答案：带修订件的期间报 `PREPARED`。实测十家里 Paramount 与 Southwest 的 pinned 期间各有一份 10-K/A，那里 D02 报"原件加修订"而 D01 报"原件"，**同一份申报被两个指标描述成两件事**。改为 `ANNUAL_ONLY_TEXT_METRICS = ("D01","D02")`——冻结模块里的 `D02` 其实只是"不是 C02 的那个"。**没有任何值因此移动**（下游只消费 `BLOCKED`），移动的是记录；本 Issue 的记录是要被读的，所以它算缺陷。承重用例在 Paramount 上同时问三个指标并要求两个不同答案（D01=D02，C02 不同）：只按 D02 键的规则挂在前半，按"有修订件"键的规则挂在后半。
+
+**六次注错六次被抓**（取最新申报、把 D01 路由到 D02 的 Spec、给每个文本指标都加 `source_filings`、去掉复用计划的形状守卫、把修订件标志退回只给 D02、把代理角色也给 D01）。**两个半边各自不被抓**：只放宽表单集合、或只放宽角色赋值，都通不过对方那一半——与 C02 记录同形，**成对才承重**；这次是量出来的，不是从 C02 抄过来的（D01 的对照断言的是 scope 记录，C02 的断言的是 plan）。**未做**：内容验收（冻结 Run 加公共行只说选择器选出了东西、字节已绑定，没说这 34 条就是 Item 1A 的标题）；其余九家的更早年份是来源缺口（获取计划 A 类），不是路线缺口。材料见`docs/evidence/issue47_history/d01-risk-headings/measured.json`。
+
+**顺带修了一个 HEAD 上就红的测试，成因是我上一次接 C02 时没跑它**：`test_historical_metadata_context` 的 `test_only_the_metric_whose_roles_are_resolved_is_served` 断言 C02 被这个视图按名拒绝，而 C02 那轮正确地让它不再拒绝；已用 `git stash` 在 `eb47b927` 确认该失败先于本轮。这是同一条教训第二次发作——上一次是接 C03 时没跑 `test_historical_coverage`——而且两次都被 CI 的 `cancelled` 盖住。**点名某个指标的用例，会在那个指标被接线的那一刻过期**，所以改写成从 `SUPPORTED_METRICS` 之外取一个未服务的指标，并补一条"每个已服务指标都有自己的表单集合"——否则未服务的指标可能落到某个默认值上拿到别人的角色，而拒绝才是该停下它的那一步。
+
+**39 个指标现在的形状**：30 条有历史路线、6 条只有结构适用性（`financial` 门，其唯一开门公司 JPMorgan 无可达期间）、3 条未接线——**B13/D03/D04，全部是语义审阅路线，全部卡在模型额度上**。也就是说，今天没有"不需要额度就能接的指标路线"了；剩下不被外部阻塞的工作是内容验收、已登记缺陷（如 D02 的 `_LEGAL` 关键词代理）与 JPMorgan 那侧的来源。

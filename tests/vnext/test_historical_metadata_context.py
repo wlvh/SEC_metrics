@@ -15,7 +15,9 @@ from pathlib import Path
 from tests.vnext.common import REPO_ROOT as ROOT
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
 from sec_urls import submissions_url
-from vnext.historical_metadata_context import (HistoricalMetadataError,
+from vnext.historical_metadata_context import (_FORMS as FORMS,
+                                               SUPPORTED_METRICS,
+                                               HistoricalMetadataError,
                                                check_historical_metadata_scope,
                                                historical_metadata_context)
 from vnext.normal_governance_input import _Sources
@@ -155,17 +157,30 @@ class PinnedPeriodsReadTheBlocksThatHoldThemTest(unittest.TestCase):
                          str(refused.exception))
 
     def test_only_the_metric_whose_roles_are_resolved_is_served(self):
-        """C02 needs the proxy roles, which this does not resolve."""
+        """A metric this view does not resolve roles for is refused by name.
+
+        This asked for C02 until C02's proxy roles were wired, and then for
+        D01; naming a metric makes the case expire the moment that metric is
+        served, and both expirations were found by a later suite run rather
+        than by the change that caused them. So the metric asked for is now
+        derived - one outside SUPPORTED_METRICS - and the second assertion is
+        what makes the refusal the thing that stops it: every served metric has
+        a form set, so an unserved one cannot get some other metric's roles by
+        landing on a default.
+        """
+        unserved = "D03"
+        self.assertNotIn(unserved, SUPPORTED_METRICS)
         prepared, inventory, reader, _ = _from_catalog(*IN_THE_RECENT_BLOCK[0])
         with original_sources_only():
             with self.assertRaises(HistoricalMetadataError) as refused:
                 historical_metadata_context(repo_root=ROOT,
                                             company_id=IN_THE_RECENT_BLOCK[0][0],
                                             prepared=prepared, inventory=inventory,
-                                            reader=reader, metric_id="C02")
-        self.assertEqual("HISTORICAL_TEXT_METADATA_METRIC_NOT_WIRED:C02",
+                                            reader=reader, metric_id=unserved)
+        self.assertEqual("HISTORICAL_TEXT_METADATA_METRIC_NOT_WIRED:" + unserved,
                          str(refused.exception))
         self.assertEqual("IMPLEMENTATION_GAP", refused.exception.category)
+        self.assertEqual(set(SUPPORTED_METRICS), set(FORMS))
 
 
 class AdmittedBlocksAreTheBlocksThatWereReadTest(unittest.TestCase):

@@ -37,11 +37,15 @@ from .normal_history_catalog import load_history_for_period
 from .text_results_v2 import TextResultV2Error
 
 RECORD_TYPE = "HISTORICAL_TEXT_METADATA_SCOPE"
-SUPPORTED_METRICS = ("C02", "D02")
+SUPPORTED_METRICS = ("C02", "D01", "D02")
 # Which forms each metric's roles are chosen from. The frozen module keys the
 # same set off the metric id; restating it here rather than importing it would
 # be a second copy of a rule that decides which filings exist at all.
+# D01 reads the annual filing and nothing else, so its forms are D02's. It is
+# listed rather than defaulted: a metric that reaches here without an entry
+# should stop, not silently inherit whichever set happens to be first.
 _FORMS = {"C02": {"10-K", "10-K/A", "DEF 14A", "DEF 14A/A"},
+          "D01": {"10-K", "10-K/A"},
           "D02": {"10-K", "10-K/A"}}
 HISTORY_RULE = "EVERY_DECLARED_SHARD_REACHING_THE_PINNED_PERIOD_IS_READ_AND_ADMITTED"
 METADATA_ROLES = ("sec_submissions_inventory", "sec_submissions_history")
