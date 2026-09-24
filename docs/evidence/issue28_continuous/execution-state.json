@@ -28,8 +28,8 @@
     "long_running_schedule": false
   },
   "actual_new_calls": {
-    "provider": 123,
-    "paid": 123,
+    "provider": 139,
+    "paid": 139,
     "sec": 49,
     "unknown": 0
   },
@@ -45,9 +45,11 @@
     "Scoped independent review of fail-closed 172 recovery patch2598ce82 passed with 36 tests and no network. Exact user permission and server transcription still absent; 172 stop remains.",
     "User explicitly approved one bounded recovery for real172; exact text saved and bound. Server transcription/comment and final exact-byte review still pending; no new call.",
     "Exact user approval for172 transcribed to Issue28 comment5811139877 and authenticated against server bytes; final V14 binding and 37 directed/127 fast pass. No recovery record or new provider claim yet; final authorization diff review pending.",
-    "Final server-comment/config diff fd31d639 scoped independent review passed; 37 tests and current wiring remain valid. No live recovery record installed or new claim at review completion."
+    "Final server-comment/config diff fd31d639 scoped independent review passed; 37 tests and current wiring remain valid. No live recovery record installed or new claim at review completion.",
+    "Enphase D04 six real groups173-178 formed native OPEN Run/public row and 681-file persisted independent cold read PASS: defined-scope no doubt disclosure FY2025, no production credit. Paramount D04 groups179-188 all native SUCCEEDED, full Run/cold pending."
   ],
   "next": [
+    "Finish Paramount D04 ten-group native Result/Run, public row, persisted independent cold read with zero new calls; then proceed to authorized B13 Enphase V3 groups under current batch limits.",
     "Under final bound requirement, revalidate server approval and wiring, install recovery-172.json once in the original ledger, then execute exactly one Enphase D04 group0 same-digest business call; preserve all old failures and stop on any new402/UNKNOWN/source/usage issue.",
     "Keep PROVIDER stopped after new172 HTTP402; do not send another model request, probe account, switch keys or treat this as a repair retry. Ask owner for a new bounded recovery decision after service availability is checked.",
     "Continue only useful provider-independent B06, Paramount C04, normal update, 390 and old-entry preparation; preserve previous valid evidence.",
@@ -59,7 +61,7 @@
   "historical_state_snapshot": "review-5207290213/historical-before-through104-state/execution-state.json",
   "historical_continuation_snapshot": "review-5207290213/historical-before-through104-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
-  "ledger_implementation_status": "172_SEALED_SLOTS_PROVIDER123_PAID123_SEC49; BATCH33_AUTH_INSTALLED; PROVIDER_STOPPED_AT172_HTTP402;110RECOVERY_CONSUMED111;ALL_FAILURES_RETAINED",
+  "ledger_implementation_status": "188_SEALED_SLOTS_PROVIDER139_PAID139_SEC49;172_HTTP402_RETAINED_RECOVERY_CONSUMED173;PROVIDER_OPEN;BATCH33_D04_16_NEW_SUCCESSES;ALL_OLD_FAILURES_RETAINED",
   "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
   "full_acceptance": false,
   "external_dependencies": [
@@ -757,13 +759,13 @@
     "provider_and_sec_wiring": "Current B13 positive/negative recorded bridge and actual receipt validationPASS; current111 rejects. Provider remains stopped171. D04/Unicode and release runtime unchanged."
   },
   "current_observed_call_totals": {
-    "through_ordinal": 172,
-    "provider": 123,
-    "paid": 123,
+    "through_ordinal": 188,
+    "provider": 139,
+    "paid": 139,
     "SEC": 49,
     "remaining": {
-      "provider": 117,
-      "paid": 117,
+      "provider": 101,
+      "paid": 101,
       "SEC": 31
     },
     "original_caps": [
@@ -771,7 +773,7 @@
       240,
       80
     ],
-    "last_call": "172 Enphase D04 group0 HTTP402 Insufficient Balance; no assistant output; PROVIDER stopped; no complete company added"
+    "last_call": "188 Paramount D04 group9 SUCCEEDED; Enphase complete native result and independent cold read PASS; Paramount ten group successes pending complete Run"
   },
   "pending_increment_request": {
     "status": "DEFERRED_BY_USER_NO_INCREASE_GRANTED",
@@ -1096,17 +1098,19 @@
   },
   "provider_http402_stop": {
     "ordinal": 172,
-    "status": "PROVIDER_STOPPED_HTTP402",
+    "status": "ORIGINAL172_FAILURE_RETAINED_RECOVERY_CONSUMED_AT173",
     "error": "Insufficient Balance",
     "previous_171_stop_cleared_only_by_authorized_172_claim": true,
-    "new_recovery_authorization": false,
+    "new_recovery_authorization": true,
     "account_inspected_or_operated": false,
     "external_decision_required": "New172 service/account handling and explicit bounded recovery decision before any affected call; batch33 genuine-engineering-repair slot does not cover402",
     "usage_and_cost": "Unknown/null preserved",
     "material": "batch33-authorization/live-0172-summary.json",
     "user_reports_recharge_after_172": true,
     "provider_service_availability_independently_verified": false,
-    "user_approved_single_172_recovery": true
+    "user_approved_single_172_recovery": true,
+    "current_provider_stopped": false,
+    "recovery_success_ordinal": 173
   },
   "historical_checkpoint_fields_before_recovery110": {
     "ledger_implementation_status": "108_SEALED_SLOTS; PROVIDER59_PAID59_SEC49; ALL_PRIOR_FAILURES_RETAINED",
@@ -1188,7 +1192,7 @@
     "following_B13_failure": "112 finish_reason=length,4096output; prefix also contains wrong-kind source449; no retry",
     "invariants": "recovery-110-20260922/after-recovery-invariants.json"
   },
-  "call_count_snapshot_scope": "Cumulative through172: provider123/paid123/SEC49; group0 Enphase D04 claim172 consumed and failed HTTP402; usage/cost null, PROVIDER stopped; no company result.",
+  "call_count_snapshot_scope": "Cumulative through188: provider139/paid139/SEC49; 172 original HTTP402 retained, 173 authorized same-digest success, 174-188 other D04 groups success; no UNKNOWN; PROVIDER open.",
   "source_unit_preflight_guard": {
     "status": "SCOPED_REVIEW_AND_LOSSLESS_POSITIVE_CHAIN_COLD_READ_PASS",
     "reason": "113 Greek question mark normalized by source serialization; check before paying, not repair of old113",
@@ -1414,7 +1418,7 @@
     ]
   },
   "batch33_authorization": {
-    "status": "LIVE_AUTH_INSTALLED_FIRST_GROUP172_HTTP402_PROVIDER_STOPPED",
+    "status": "D04_16_NEW_SUCCESSFUL_GROUPS_ENPHASE_COMPLETE_PARAMOUNT_LOCAL_FINISH_PENDING",
     "source_text": "batch33-authorization/authorization-original-user-text.md",
     "group_manifest": "batch33-authorization/initial-group-set.json",
     "group_manifest_sha256": "8ac1a63d25962113f79324fb2e28423bc6d77b05679cfdd5a422f65e8610fe58",
@@ -1435,8 +1439,8 @@
     "old_111_170_171_v3_successor_once_each": true,
     "old_failures_and_counts_unchanged": true,
     "new_calls": [
-      1,
-      1,
+      17,
+      17,
       0
     ],
     "production_authorized": false,
@@ -1457,14 +1461,18 @@
     "first_stop_reason": "HTTP_402",
     "first_evidence": "batch33-authorization/live-0172-summary.json",
     "new_recovery_for_172_authorized": false,
-    "new_complete_company_results": 0,
+    "new_complete_company_results": 1,
     "separate_sec_scope": "ORIGINAL_ISSUE28_ACQUISITION_GUARD_RETAINS_INDEPENDENT_SEC_CHANNEL_AFTER_FIRST_D04_CLAIM; BATCH_NEW_SEC_ZERO",
     "separate_sec_scope_review": "PASS_SCOPED_SEC_COLD_READ_REPAIR_4A5D4BB4",
     "separate_sec_scope_directed_tests": "31_PASS_POST_REPAIR",
     "separate_sec_scope_fast": "127_OF_127_PASS_POST_REPAIR",
     "current_offline_wiring": "PASS_CURRENT_CLOSURE_POST_REPAIR",
     "new_sec_calls_after_172": 0,
-    "separate_sec_scope_review_result": "batch33-authorization/independent-review/sec-cold-read-repair.md"
+    "separate_sec_scope_review_result": "batch33-authorization/independent-review/sec-cold-read-repair.md",
+    "recovery_172_success_ordinal": 173,
+    "enphase_d04_complete": true,
+    "paramount_d04_ten_groups_succeeded": true,
+    "paramount_d04_complete": false
   },
   "historical_provider_http402_171": {
     "ordinal": 171,
@@ -1478,7 +1486,7 @@
     "material": "failures-112-114-repair/real-171/"
   },
   "recovery_172_preparation": {
-    "status": "SERVER_AUTHENTICATED_FINAL_REVIEW_PASS_READY_TO_INSTALL_ON_ORIGINAL_LEDGER",
+    "status": "LIVE_ONE_SHOT_CONSUMED_AT173_SUCCEEDED",
     "policy": "config/issue28_recovery_172_v1.json",
     "module": "scripts/vnext/continuous_recovery_172.py",
     "original_failure": "batch33-authorization/live-0172-summary.json",
@@ -1492,7 +1500,7 @@
       0,
       0
     ],
-    "new_live_recovery_record_installed": false,
+    "new_live_recovery_record_installed": true,
     "user_reports_recharge": true,
     "explicit_recovery_permission_received": true,
     "subagent_review": "PASS_SCOPED_PENDING_POLICY_PATCH_2598CE82",
@@ -1507,6 +1515,36 @@
     "final_fast_suite": "127_OF_127_PASS",
     "final_server_authentication": "PASS",
     "final_diff_independent_review": "PASS_SCOPED_FD31D639",
-    "final_review_result": "batch33-authorization/recovery172-independent/final-authorization-review.md"
+    "final_review_result": "batch33-authorization/recovery172-independent/final-authorization-review.md",
+    "new_live_ordinal": 173,
+    "new_live_terminal_status": "SUCCEEDED",
+    "new_live_calls": [
+      1,
+      1,
+      0
+    ],
+    "old_172_failure_retained": true
+  },
+  "batch33_real_progress": {
+    "through_ordinal": 188,
+    "new_call_counts": [
+      17,
+      17,
+      0
+    ],
+    "successful_new_d04_groups": 16,
+    "failed_new_d04_groups": [
+      172
+    ],
+    "complete_new_company_results": [
+      "enphase_energy:D04:FY2025"
+    ],
+    "enphase_run": "batch33-authorization/d04-enphase-real/finish-summary.json",
+    "enphase_cold": "batch33-authorization/d04-enphase-real/cold-summary.json",
+    "paramount_groups": "179-188 all SUCCEEDED; complete Run/cold pending",
+    "B13_complete_company_results": 0,
+    "D03_calls": 0,
+    "provider_stopped": false,
+    "production_authorized": false
   }
 }
