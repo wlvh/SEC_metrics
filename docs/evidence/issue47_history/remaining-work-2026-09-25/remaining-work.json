@@ -95,9 +95,12 @@
    "state": "6 of 50 target periods have their 10-K row only in a history block; four pinned routes discover only in the main document's recent block"
   },
   {
-   "evidence": "docs/evidence/issue47_history/c02-board-read/README.md",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/README.md",
+    "docs/evidence/issue47_history/c02-board-read/deterministic-narrowing.json"
+   ],
    "item": "C02 selector",
-   "next": "a successor selector validated against the 246 judgements; the middle categories wait on owner decision 6",
+   "next": "waits on owner decision 6: measured against the 246 judgements, keyword rules remove at best 39 of the 94 and lose 2 composition facts, so the repair depends on the reading - option 1 wants a successor that selects composition facts directly, options 2 and 3 a per-excerpt review",
    "state": "all ten values withdrawn; 94 of 246 excerpts are outside board composition under every reading"
   },
   {
