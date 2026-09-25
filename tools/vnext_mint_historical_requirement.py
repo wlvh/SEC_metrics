@@ -115,6 +115,10 @@ NEW_RULE_FILES = (
     # it may consume, so both roots check them.
     "scripts/vnext/historical_semantic_source.py",
     "scripts/vnext/historical_semantic_results.py",
+    # The six financial metrics where the gate is open: the ordinary resolver
+    # with the annual preparation handed in. These bytes decide which filing a
+    # pinned bank period is read from, so both roots check them.
+    "scripts/vnext/historical_financial_results.py",
 )
 
 # One module the parent's authority does not name although its own named code
@@ -167,6 +171,12 @@ AUTHORITY_ADDITIONS = (
     # it yet. Named because a module this generation's own rule files import
     # is named, whether or not a Run has reached it.
     "scripts/vnext/capacity_quantity_scope.py",
+    # Read by the A03 inspector, measured the same way over all six financial
+    # metrics: the R4 task catalog names this policy evidence and checks its
+    # body against a digest the catalog itself carries. The catalog is bound,
+    # so the body already was in effect; the file is named because a Run of
+    # this generation opens it, and the list is what a Run opens.
+    "docs/evidence/issue_28_prb_policy_revision.json",
 )
 
 # Three files the parent already binds, whose bytes a historical Run needs to be

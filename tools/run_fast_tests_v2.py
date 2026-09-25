@@ -257,6 +257,12 @@ SOURCE_TESTS += ("tests.vnext.test_historical_semantic_routes",)
 # no longer describes the selection refused. Prepares ten text inputs; 70
 # seconds measured under a running batch.
 SOURCE_TESTS += ("tests.vnext.test_c02_board_reading",)
+# The six financial metrics' open side: the ordinary resolver and the restated
+# one handed the same preparation, every returned field equal on the bank's
+# real latest filing; an earlier year's and an amended period's pinned
+# preparations through the restated reader; and the gate answered once. Parses
+# the bank's 10-K once per metric; 130 seconds measured under a running batch.
+SOURCE_TESTS += ("tests.vnext.test_historical_financial_results",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
@@ -333,6 +339,9 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Seven cases over four filings' full 10-K bytes; 162 seconds measured while
     # a batch held three of four cores.
     "tests.vnext.test_historical_d02_marks": 480,
+    # Nine cases, six parses of the bank's full 10-K; 130 seconds measured
+    # while a batch held three of four cores.
+    "tests.vnext.test_historical_financial_results": 480,
 }
 
 

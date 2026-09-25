@@ -495,6 +495,8 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
                                              resolve_historical_lodging_metric)
     from .historical_capacity_results import (SUPPORTED_METRICS as CAPACITY_METRICS,
                                               resolve_historical_capacity_metric)
+    from .historical_financial_results import (SUPPORTED_METRICS as FINANCIAL_METRICS,
+                                               resolve_historical_financial_metric)
     if metric_id in TEXT_METRICS:
         return _historical_text_run_input(repo_root=repo_root, company_id=company_id,
                                           metric_id=metric_id,
@@ -533,6 +535,15 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
             repo_root=repo_root, company_id=company_id, metric_id=metric_id,
             period_selection=period_selection,
             resolve=resolve_historical_lodging_metric)
+    # The six financial metrics, where the gate is open. Same placement and the
+    # same reason as the lodging pair: the structural route keeps the closed
+    # side, and a bank's liquidity coverage ratio is not that route's to answer.
+    if metric_id in FINANCIAL_METRICS and not structurally_not_applicable(
+            repo_root=repo_root, company_id=company_id, metric_id=metric_id):
+        return _historical_component_run_input(
+            repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+            period_selection=period_selection,
+            resolve=resolve_historical_financial_metric)
     # B13 answers where the approved definition leaves the company out; for
     # Ford and Enphase the component refuses by name, because what is missing
     # there is the semantic review, not an answer. Its Spec is not in the

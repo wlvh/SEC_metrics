@@ -131,16 +131,20 @@ WIRED_DEBT_METRICS = ("B06",)
 # model-call allowance and no provider egress path today, so every D04 position
 # stops there (historical_model_session).
 WIRED_SEMANTIC_METRICS = ("D04",)
+# The six financial metrics where the `financial` gate is open. The one company
+# that opens it has no reachable period - its saved catalog is incoherent - so
+# no position reaches this route today; it is checked against the ordinary one
+# on that company's latest saved filing instead (historical_financial_results).
+WIRED_FINANCIAL_METRICS = ("A03", "A04", "A09", "A11", "A12", "A13")
 WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS
                                         + WIRED_ACCESSION_METRICS + WIRED_EVENT_METRICS
                                         + WIRED_TEXT_METRICS + WIRED_GOVERNANCE_METRICS
                                         + WIRED_DEBT_METRICS + WIRED_LODGING_METRICS
-                                        + WIRED_SEMANTIC_METRICS))
+                                        + WIRED_SEMANTIC_METRICS + WIRED_FINANCIAL_METRICS))
 # The metrics whose *only* route is the closed side of a trait gate: the answer
 # is that the metric does not apply to this issuer, and there is no open side to
-# reach. Six are gated on `financial`, and the one company whose traits open
-# that gate has no reachable period, so there is nothing to write an open side
-# against yet.
+# reach. It is empty now: the six financial metrics were here until their open
+# side was wired, as B10 and B11 were before them.
 #
 # Derived by subtraction rather than listed, because B10 and B11 were here until
 # their open side was wired and the two sets have to stay disjoint: they are

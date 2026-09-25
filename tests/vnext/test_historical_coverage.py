@@ -228,9 +228,12 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual({"ROUTE_IMPLEMENTED_NOT_RUN"}, {p["status"] for p in wired})
         # The eight trait-gated metrics also have a route at a retailer, and it
         # is the structural one, so they read as implemented-and-not-run too.
-        structural = [p for p in resolved
-                      if p["metric_id"] in STRUCTURAL_APPLICABILITY_METRICS]
-        self.assertEqual(len(STRUCTURAL_APPLICABILITY_METRICS), len(structural))
+        # Selected by the gate rather than by the structural-only list: that
+        # list empties as open sides are wired (it is empty now), and a check
+        # over an empty selection passes whatever the statuses are.
+        from vnext.historical_structural_results import SPEC_PATHS as GATED
+        structural = [p for p in resolved if p["metric_id"] in GATED]
+        self.assertEqual(len(GATED), len(structural))
         self.assertEqual({"ROUTE_IMPLEMENTED_NOT_RUN"}, {p["status"] for p in structural})
         scope = [p for p in resolved if p["metric_id"] in SCOPE_ANSWERED_METRICS]
         self.assertEqual({"ROUTE_IMPLEMENTED_NOT_RUN"}, {p["status"] for p in scope})

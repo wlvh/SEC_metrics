@@ -125,7 +125,14 @@ class OnlyWhereTheTraitsSayItDoesNotApplyTest(unittest.TestCase):
     def test_the_coverage_frame_counts_a_route_per_position_not_per_metric(self):
         from vnext.historical_coverage import (STRUCTURAL_APPLICABILITY_METRICS,
                                                WIRED_HISTORICAL_METRICS)
-        self.assertEqual(sorted(SPEC_PATHS), sorted(STRUCTURAL_APPLICABILITY_METRICS))
+        # The structural-only set is what is left of this route's metrics once
+        # their open sides are wired. It was asserted equal to all eight, which
+        # stopped being true when B10 and B11 gained their open side and went
+        # unnoticed because this tier's CI runs never reached a green end; with
+        # the six financial metrics wired it is empty. Stated as the rule, so
+        # the next open side does not need this line edited.
+        self.assertEqual(sorted(set(SPEC_PATHS) - set(WIRED_HISTORICAL_METRICS)),
+                         sorted(STRUCTURAL_APPLICABILITY_METRICS))
         # None of these is in the per-metric wired list, because none of them
         # has a route at the company the metric is actually for.
         self.assertFalse(set(STRUCTURAL_APPLICABILITY_METRICS)
