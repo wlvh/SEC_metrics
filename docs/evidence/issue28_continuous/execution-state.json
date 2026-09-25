@@ -1306,6 +1306,22 @@
       "tool_calls": 38,
       "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-clause/conclusion.md",
       "verdict": "NEEDS_FIX_P2_SAME_CLAUSE_SECOND_ASSERTION_FALSE_ACCEPTANCE_AND_SUPPLIER_FALSE_REJECTION"
+    },
+    {
+      "task_name": "review_d03anchor_225842f",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/regulatory_fact_review.py",
+        "tests/vnext/test_regulatory_fact_review.py",
+        "tools/run_fast_tests_v2.py",
+        "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/anchor-successor-directed.log"
+      ],
+      "patch_sha": "225842f06bcf73300917d643a4a51f5a8ff93958",
+      "spawned_at": "2026-09-25T19:13:24Z",
+      "ended_at": "2026-09-25T19:23:59Z",
+      "tool_calls": 65,
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor/conclusion.md",
+      "verdict": "NEEDS_FIX_TWO_P2_CANDIDATE_CONFLICT_AND_SOURCE_BINDING"
     }
   ],
   "ci_capacity_20260922": {
@@ -2253,7 +2269,7 @@
     "current_source_fact_sha256": "3dda5cded82a471f1d5559654f44f50701439942f833f18526986409594057b2",
     "local_repair_tests": "HISTORICAL_EXPERIMENTS_ONLY_NOT_CURRENT_ACCEPTANCE",
     "successor_offline_candidate": {
-      "status": "MECHANICAL_SOURCE_ANCHORS_ONLY_NOT_EXECUTION_BOUND",
+      "status": "OFFLINE_CANDIDATE_SCOPED_REVIEW_NEEDS_FIX_NOT_EXECUTION_BOUND",
       "module": "scripts/vnext/regulatory_fact_review.py",
       "test": "tests/vnext/test_regulatory_fact_review.py",
       "evidence_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/anchor-successor-directed.log",
@@ -2267,7 +2283,9 @@
         0
       ],
       "native_result_created": false,
-      "independent_review": "PENDING_EXACT_SHA_INCREMENT"
+      "independent_review": "NEEDS_FIX_TWO_P2_CANDIDATE_CONFLICT_AND_SOURCE_BINDING",
+      "independent_review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor/conclusion.md",
+      "next_required_design": "EXACT_SOURCE_RECONSTRUCTION_AND_PER_CANDIDATE_RESPONSE_BINDING"
     }
   },
   "ci_36116965890": {
