@@ -53,7 +53,7 @@
   "D03": "no historical route (Issue #28's semantic route, not ported)"
  },
  "one_failed_request_holds_seven_positions": {
-  "is_it_the_only_blocker": "For the event walk's own material, measured file by file (bank-event-material.json): 20 8-K filings in the window across 7 blocks, all 20 primaries saved, 19 of 20 headers usable, and this one header the only unusable document. What comes after the walk is reached only once this file is usable, so it is not measured; C04 also reads the prior year's auditor filing, which is not measured here either. A first blocking reason is not the only one, and this says how far that was checked.",
+  "is_it_the_only_blocker": "For the event walk's own material, measured file by file (bank-event-material.json): 20 8-K filings in the window across 7 blocks, all 20 primaries saved, 19 of 20 headers usable, and this one header the only unusable document. C04's other reads - the auditor facts of the target and the prior-year accession - were then checked through the route's own reader: both accessions' index.json and XBRL instance (jpm-20251231_htm.xml, jpm-20241231_htm.xml) are saved. What comes after the walk is reached only once this header is usable and is not measured. A first blocking reason is not the only one, and this says how far that was checked.",
   "measured_per_metric": {
    "C01": "LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
    "C04": "LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
