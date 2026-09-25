@@ -1337,6 +1337,21 @@
       "tool_calls": 30,
       "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor-repair/conclusion.md",
       "verdict": "NEEDS_FIX_P2_MULTI_CANDIDATE_SAME_SENTENCE_CONFLICT_AND_RAW_PROVIDER_RESPONSE_NOT_PRESERVED"
+    },
+    {
+      "task_name": "review_d03block_5e0b815",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/regulatory_fact_review.py",
+        "tests/vnext/test_regulatory_fact_review.py",
+        "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/anchor-repair-followup-test.log"
+      ],
+      "patch_sha": "5e0b815e2df928b323c2bf3814bb6556dc5e740c",
+      "spawned_at": "2026-09-25T19:54:13Z",
+      "ended_at": "2026-09-25T19:58:01Z",
+      "tool_calls": 24,
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-block-followup/conclusion.md",
+      "verdict": "PASS_LIMITED_D03_MULTI_CANDIDATE_UNRESOLVED_AND_RESPONSE_IDENTITY"
     }
   ],
   "ci_capacity_20260922": {
@@ -2322,7 +2337,7 @@
       "independent_review": "NEEDS_FIX_SCOPED_REVIEW_937849F",
       "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor-repair/conclusion.md",
       "followup_repair": {
-        "status": "OFFLINE_CODE_AND_DIRECTED_TEST_PASS_SCOPED_REVIEW_PENDING",
+        "status": "LIMITED_INDEPENDENT_REVIEW_PASS_OFFLINE_ONLY",
         "scope_paths": [
           "scripts/vnext/regulatory_fact_review.py",
           "tests/vnext/test_regulatory_fact_review.py"
@@ -2337,7 +2352,9 @@
           0
         ],
         "live_bound": false,
-        "native_result_created": false
+        "native_result_created": false,
+        "review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-block-followup/conclusion.md",
+        "review_patch_sha": "5e0b815e2df928b323c2bf3814bb6556dc5e740c"
       }
     }
   },
@@ -2357,5 +2374,17 @@
     "conclusion": "success",
     "updated_at_utc": "2026-09-25T11:03:16Z",
     "scope": "previous_head_only_not_new_two_stage_native_increment"
+  },
+  "ci_36179574745": {
+    "head": "bb0b8b5bdd80e9001ee1adcd09602a115d9962aa",
+    "observed_at_utc": "2026-09-25T19:58:01Z",
+    "status": "in_progress",
+    "conclusion": null,
+    "jobs_success": 12,
+    "jobs_in_progress": [
+      "vNext remaining source Runs (jpmorgan_chase)"
+    ],
+    "scope": "B13 recorded native chain, bounded semantic checker changes and first D03 offline candidate; later D03 repair commits not included",
+    "rerun_triggered": false
   }
 }
