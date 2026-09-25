@@ -2251,7 +2251,24 @@
       }
     ],
     "current_source_fact_sha256": "3dda5cded82a471f1d5559654f44f50701439942f833f18526986409594057b2",
-    "local_repair_tests": "HISTORICAL_EXPERIMENTS_ONLY_NOT_CURRENT_ACCEPTANCE"
+    "local_repair_tests": "HISTORICAL_EXPERIMENTS_ONLY_NOT_CURRENT_ACCEPTANCE",
+    "successor_offline_candidate": {
+      "status": "MECHANICAL_SOURCE_ANCHORS_ONLY_NOT_EXECUTION_BOUND",
+      "module": "scripts/vnext/regulatory_fact_review.py",
+      "test": "tests/vnext/test_regulatory_fact_review.py",
+      "evidence_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/anchor-successor-directed.log",
+      "saved_jpm_material_test": "1_PASS_23_SECONDS",
+      "old_source_statement_fact_rule_modified": false,
+      "current_request_factory_modified": false,
+      "semantic_status_proven_by_program": false,
+      "new_provider_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "native_result_created": false,
+      "independent_review": "PENDING_EXACT_SHA_INCREMENT"
+    }
   },
   "ci_36116965890": {
     "head": "b276b1e7d90ae2bfbe1c62cd9d8c82e748865355",
