@@ -123,10 +123,19 @@ WIRED_LODGING_METRICS = ("B10", "B11")
 # All seven are wired or none: a period that reaches a later stage would
 # otherwise get an earlier stage's answer, confidently and wrongly.
 WIRED_DEBT_METRICS = ("B06",)
+# Going concern. The route is the ordinary native one pointed at the pinned
+# period, and its input includes a model's review of every unit of the source.
+# That review is a registered input, like a saved filing: where none is
+# registered the attempt stops by name (MODEL_REVIEW_NOT_EXECUTED), which is an
+# absent input rather than an absent route or an absent disclosure. #47 has no
+# model-call allowance and no provider egress path today, so every D04 position
+# stops there (historical_model_session).
+WIRED_SEMANTIC_METRICS = ("D04",)
 WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVENUE_METRICS
                                         + WIRED_ACCESSION_METRICS + WIRED_EVENT_METRICS
                                         + WIRED_TEXT_METRICS + WIRED_GOVERNANCE_METRICS
-                                        + WIRED_DEBT_METRICS + WIRED_LODGING_METRICS))
+                                        + WIRED_DEBT_METRICS + WIRED_LODGING_METRICS
+                                        + WIRED_SEMANTIC_METRICS))
 # The metrics whose *only* route is the closed side of a trait gate: the answer
 # is that the metric does not apply to this issuer, and there is no open side to
 # reach. Six are gated on `financial`, and the one company whose traits open

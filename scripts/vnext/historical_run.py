@@ -62,13 +62,18 @@ def _requirement(repo_root):
 
 
 def install_historical_run_inputs(*, data_root, company_id, metric_id, period_selection,
-                                  source_root=None):
+                                  source_root=None, assessment_mode=None):
     """Install one pinned period's inputs under the historical Requirement.
 
     Identical in shape to the ordinary installer and reusing it: the same
     immutable copy, the same source admission, the same rebuild-and-compare.
     The Requirement it installs is the historical one, so the data root ends up
     carrying the historical modules' own bytes as execution authority.
+
+    D04's input includes its registered assessment, which is installed as the
+    ordinary route installs its own, as an extra input file; the rebuild from
+    the data root then reads that copy, and its mode is the Run's from there on.
+    ``assessment_mode`` selects it at the source root and defaults to LIVE.
     """
     data_root = _external(Path(data_root))
     source_root = ROOT if source_root is None else _external(Path(source_root))
@@ -76,11 +81,16 @@ def install_historical_run_inputs(*, data_root, company_id, metric_id, period_se
           and data_root not in source_root.parents, "HISTORICAL_RUN_SOURCE_AND_OUTPUT_OVERLAP")
     prepared = prepare_historical_run_input(repo_root=source_root, company_id=company_id,
                                             metric_id=metric_id,
-                                            period_selection=period_selection)
+                                            period_selection=period_selection,
+                                            assessment_mode=assessment_mode)
     requirement = _requirement(source_root)
     case = {"source_proofs": prepared["source_proofs"], "primary_metric_id": metric_id}
+    extra = None
+    if prepared.get("registered_assessment") is not None:
+        from .historical_semantic_results import EXPORT_PATHS, registered_export_bytes
+        extra = {EXPORT_PATHS[metric_id]: registered_export_bytes(prepared["registered_assessment"])}
     _install_case_inputs(data_root=data_root, source_root=source_root, company_id=company_id,
-                         case=case, requirement=requirement)
+                         case=case, requirement=requirement, extra_input_bytes=extra)
     rebuilt = prepare_historical_run_input(repo_root=data_root, company_id=company_id,
                                            metric_id=metric_id,
                                            period_selection=period_selection)
@@ -99,6 +109,28 @@ def _binding(prepared, requirement):
     return historical_binding(prepared=prepared, requirement=requirement)
 
 
+def _rebuilt_text_input(*, data_root, company_id, metric_id, period_selection):
+    """A text case's input binding and arguments, re-prepared from the data root.
+
+    Two preparers, one shape. The document-text routes (C02, D01, D02) select
+    excerpts from the filing themselves; D04 takes its excerpts from a
+    registered review of every source unit, which the data root carries as an
+    installed input and whose mode that copy decides.
+    """
+    from .historical_semantic_results import (SUPPORTED_METRICS as SEMANTIC_METRICS,
+                                              prepare_historical_semantic_case)
+    if metric_id in SEMANTIC_METRICS:
+        case = prepare_historical_semantic_case(repo_root=data_root, company_id=company_id,
+                                                metric_id=metric_id,
+                                                period_selection=period_selection)
+        return case["component"], case["text_arguments"]
+    from .historical_text_input import prepare_historical_business_text_input
+    rebuilt = prepare_historical_business_text_input(
+        repo_root=data_root, company_id=company_id, metric_id=metric_id,
+        period_selection=period_selection)
+    return rebuilt["input_binding"], rebuilt["text_arguments"]
+
+
 def _text_execution(*, data_root, company_id, metric_id, prepared, requirement=None,
                     traits=None, derivation_only=False):
     """Compute one text metric's result from the installed sources.
@@ -110,19 +142,17 @@ def _text_execution(*, data_root, company_id, metric_id, prepared, requirement=N
     """
     from datetime import datetime, timezone
 
-    from .historical_text_input import prepare_historical_business_text_input
     from .historical_text_results import shared_source_preparation, text_api
     from .review import create_system_review_decision
 
-    rebuilt = prepare_historical_business_text_input(
-        repo_root=data_root, company_id=company_id, metric_id=metric_id,
+    binding, text_arguments = _rebuilt_text_input(
+        data_root=data_root, company_id=company_id, metric_id=metric_id,
         period_selection=prepared["period_selection"])
-    _need(rebuilt["input_binding"]["input_binding_id"]
-          == prepared["component"]["input_binding_id"],
+    _need(binding["input_binding_id"] == prepared["component"]["input_binding_id"],
           "HISTORICAL_TEXT_RUN_INPUT_BINDING_CHANGED")
     api, review_builder = text_api(metric_id)
     spec = prepared["compiled_specs"][metric_id]
-    arguments = {"compiled_spec": spec, **rebuilt["text_arguments"]}
+    arguments = {"compiled_spec": spec, **text_arguments}
     # The candidate is derived three times here - once directly, once inside
     # build_text_evidence and once inside replay_text_result - and each
     # derivation parsed the same immutable bytes again. The derivations stay;
@@ -336,13 +366,12 @@ def prepare_text_contexts(*, repo_root, manifest, records, compiled_specs, **unu
     spec = next(iter(compiled_specs.values()))
     case = replay_case(data_root=repo_root, manifest=manifest)
     _need(case["kind"] == "TEXT", "HISTORICAL_RUN_TEXT_ROUTE_REQUIRED")
-    from .historical_text_input import prepare_historical_business_text_input
     from .historical_text_results import text_api
     metric_id = spec["compiled"]["metric_id"]
-    rebuilt = prepare_historical_business_text_input(
-        repo_root=repo_root, company_id=case["input"]["company_id"], metric_id=metric_id,
+    _, text_arguments = _rebuilt_text_input(
+        data_root=repo_root, company_id=case["input"]["company_id"], metric_id=metric_id,
         period_selection=case["period_selection"])
-    arguments = {"compiled_spec": spec, **rebuilt["text_arguments"]}
+    arguments = {"compiled_spec": spec, **text_arguments}
     api, _ = text_api(metric_id)
     expected = api.create_deterministic_text_candidate(**arguments)
     _need(candidates[0] == expected, "HISTORICAL_RUN_TEXT_CANDIDATE_CHANGED")

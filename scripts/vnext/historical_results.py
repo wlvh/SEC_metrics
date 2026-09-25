@@ -331,6 +331,38 @@ def _historical_text_run_input(*, repo_root, company_id, metric_id, period_selec
     return {**body, "input_id": content_hash(value=body)}
 
 
+def _historical_semantic_run_input(*, repo_root, company_id, metric_id, period_selection,
+                                   assessment_mode):
+    """Assemble D04's text case from its registered assessment, without raw bytes.
+
+    The same shape as the text route's, and for the same reason: the text
+    arguments hold the filing's bytes, so the binding records the admitted
+    sources and the registered assessment's identity, and the Run factory
+    re-prepares the case from the data root. The registered record itself is
+    carried whole, because the installer has to place it in the data root and
+    the binding has to cover it.
+    """
+    from .historical_semantic_results import prepare_historical_semantic_case
+    case = prepare_historical_semantic_case(repo_root=repo_root, company_id=company_id,
+                                            metric_id=metric_id, period_selection=period_selection,
+                                            assessment_mode=assessment_mode)
+    body = {"record_type": RUN_INPUT_RECORD_TYPE, "company_id": company_id,
+            "primary_metric_id": metric_id, "period_selection": period_selection,
+            "requested_metric_ids": [metric_id], "required_metric_ids": [metric_id],
+            "spec_paths": {metric_id: case["spec_path"]},
+            "compiled_specs": {metric_id: case["compiled_spec"]},
+            "records": case["records"], "source_records": case["records"],
+            "source_references": case["source_references"],
+            "source_proofs": case["source_proofs"], "source_admission": case["admission"],
+            "primary_result": None, "results": {}, "traces": {},
+            "target_period": case["target_period"], "component": case["component"],
+            "registered_assessment": case["registered"], "kind": "TEXT",
+            "calls": {"provider": 0, "paid": 0, "sec": 0},
+            "native_run_status": "NOT_CREATED", "production_authorized": False}
+    body = exact_json_value(body)
+    return {**body, "input_id": content_hash(value=body)}
+
+
 def _run_coordinate(*, pinned, primary):
     """The Run's fiscal coordinate, which is not always the result's window.
 
@@ -431,12 +463,20 @@ def _historical_component_run_input(*, repo_root, company_id, metric_id, period_
 
 
 def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id: str,
-                                 period_selection):
+                                 period_selection, assessment_mode=None):
     """Assemble one metric's complete historical graph for a Run factory.
 
     The installed Spec set, dependency closure and record-collision rules are
     the frozen current ones. Only the period is explicit.
+
+    ``assessment_mode`` concerns D04 alone, whose input includes a registered
+    model assessment: None means the installed copy's mode in a data root and
+    LIVE otherwise, so a batch never consumes a recorded test registration. It
+    is refused for every other metric, which has nothing it could select.
     """
+    from .historical_semantic_results import SUPPORTED_METRICS as SEMANTIC_METRICS
+    _need(assessment_mode is None or metric_id in SEMANTIC_METRICS,
+          "HISTORICAL_RUN_ASSESSMENT_MODE_WITHOUT_ASSESSMENT")
     from .historical_accession_results import resolve_historical_accession_metrics
     # Revenue and the 8-K event windows share one adapter, as they do in the
     # current route, so this follows that module's own supported set.
@@ -459,6 +499,14 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
         return _historical_text_run_input(repo_root=repo_root, company_id=company_id,
                                           metric_id=metric_id,
                                           period_selection=period_selection)
+    # D04 is read by a model, and its Run consumes the registered review of
+    # every unit of the pinned source. Its Spec is not in the ordinary set, so
+    # this answers before that set is consulted.
+    if metric_id in SEMANTIC_METRICS:
+        return _historical_semantic_run_input(repo_root=repo_root, company_id=company_id,
+                                              metric_id=metric_id,
+                                              period_selection=period_selection,
+                                              assessment_mode=assessment_mode)
     # C04's Spec is not in the ordinary twenty-two, so like the text and
     # structural routes this answers before that set is consulted. The
     # component owns the comparison; this owns only the Run's shape.

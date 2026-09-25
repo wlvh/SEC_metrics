@@ -109,6 +109,12 @@ NEW_RULE_FILES = (
     "catalog/r5/B13_capacity_disclosures_v1.md",
     "02_指标定义_SEC_10公司单年指标.md",
     "scripts/vnext/requirement_profile_v16.py",
+    # D04: the pinned-period complete semantic source, and the route that
+    # turns a registered review of every unit of it into a text Result. These
+    # bytes decide which filing a D04 Result reads and which registered review
+    # it may consume, so both roots check them.
+    "scripts/vnext/historical_semantic_source.py",
+    "scripts/vnext/historical_semantic_results.py",
 )
 
 # One module the parent's authority does not name although its own named code
@@ -123,7 +129,45 @@ NEW_RULE_FILES = (
 #
 # issue_28_v13's own manifest is not touched. A Requirement names the code its
 # own Runs execute, and this one does.
-AUTHORITY_ADDITIONS = ("scripts/vnext/requirement_profile_v11.py",)
+AUTHORITY_ADDITIONS = (
+    "scripts/vnext/requirement_profile_v11.py",
+    # What a D04 Run executes beyond the parent's authority, measured rather
+    # than read off imports: a fresh process ran the D04 case, its candidate,
+    # Evidence and review unit, and every module it loaded and every rule file
+    # it opened is listed here (docs/evidence/issue47_history/
+    # semantic-route-wiring/). They are Issue #28's native semantic route - the
+    # source serialiser, the per-request acceptance, the request constructor
+    # and its measured grouping, whose tokenizer decides where one request ends
+    # - and none is the parent's, because issue_28_v13 has no semantic route.
+    # The consequence is stated: a change #28 makes to any of them moves this
+    # generation's closure, as a parent change does.
+    "scripts/vnext/capacity_native_assessment.py",
+    "scripts/vnext/capacity_semantic_review.py",
+    "scripts/vnext/capacity_semantic_source.py",
+    "scripts/vnext/capacity_text_results.py",
+    "scripts/vnext/capacity_utilization_source.py",
+    "scripts/vnext/continuous_request_context.py",
+    "scripts/vnext/continuous_semantic_calls.py",
+    "scripts/vnext/d04_native_assessment.py",
+    "scripts/vnext/going_concern_source.py",
+    "scripts/vnext/native_request_construction.py",
+    "scripts/vnext/native_unit_index.py",
+    "scripts/vnext/r6_semantic_review.py",
+    "scripts/vnext/r6_semantic_source.py",
+    "scripts/vnext/regulatory_investigation_candidates.py",
+    "catalog/r6/D04_going_concern_assessment_v1.md",
+    "catalog/r6/going_concern_source_rules_v1.json",
+    "catalog/r6/regulatory_investigation_candidates_v1.json",
+    "catalog/r6/semantic_review_v1.json",
+    "catalog/r6/semantic_review_v5.json",
+    "catalog/r6/semantic_source_v1.json",
+    "config/tokenizers/deepseek_v41/tokenizer.json.gz",
+    # Imported by the B13 source builder in historical_semantic_source, which
+    # is prepared and held to the frozen builder but not wired: no Run executes
+    # it yet. Named because a module this generation's own rule files import
+    # is named, whether or not a Run has reached it.
+    "scripts/vnext/capacity_quantity_scope.py",
+)
 
 # Three files the parent already binds, whose bytes a historical Run needs to be
 # the registered ones rather than the pre-registration ones: the engine registry,

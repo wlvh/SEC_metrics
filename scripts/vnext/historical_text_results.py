@@ -960,6 +960,13 @@ def text_api(metric_id):
     if metric_id in SUPPORTED_METRICS:
         from . import historical_text_results
         return historical_text_results, build_text_review_unit
+    # D04's builders are the ordinary native route's, unchanged: they take the
+    # source and its registered assessment as arguments, and the pinned period
+    # is decided before they are called (historical_semantic_results).
+    from .historical_semantic_results import SUPPORTED_METRICS as SEMANTIC_METRICS
+    if metric_id in SEMANTIC_METRICS:
+        from . import capacity_text_results
+        return capacity_text_results, capacity_text_results.build_text_review_unit
     from .historical_risk_results import SUPPORTED_METRICS as RISK_METRICS
     if metric_id in RISK_METRICS:
         from . import historical_risk_results

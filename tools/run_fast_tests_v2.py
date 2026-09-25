@@ -239,6 +239,13 @@ SOURCE_TESTS += ("tests.vnext.test_governance_reading",)
 # filings: the scope section's Worldwide row rather than the first one, the
 # two RPO facts not taken, and a compensation row that must sum to its total.
 SOURCE_TESTS += ("tests.vnext.test_single_readings",)
+# D04 at a pinned period: the pinned complete source held byte for byte to the
+# frozen builders with the same inputs (an earlier year, a predecessor year
+# with its Part III amendment, B13 in scope), a recorded registration carried
+# through the loader and the case to the frozen text builders, and the live
+# session refused by name. Builds five complete semantic sources; 204 seconds
+# measured under a running batch.
+SOURCE_TESTS += ("tests.vnext.test_historical_semantic_routes",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
@@ -309,6 +316,9 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # deep-copied to the cases that read it. This module is the one whose
     # timeout would read as "the acquisition chain broke".
     "tests.vnext.test_historical_sec_session": 900,
+    # 21 cases, five complete semantic sources; 204 seconds measured while a
+    # batch held three of four cores, which is too close to the default.
+    "tests.vnext.test_historical_semantic_routes": 600,
 }
 
 
