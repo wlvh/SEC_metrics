@@ -523,17 +523,52 @@ class TheRecordedPathOpensNoSocket(unittest.TestCase):
 class TheInstallerCarriesTheRuleInputsItClaims(unittest.TestCase):
     """The installed root must hold the configuration the manifest records."""
 
+    @classmethod
+    def setUpClass(cls):
+        # One installation for every case: it copies the whole baseline corpus,
+        # and the cases ask different questions of the same result.
+        cls.scratch = Path(tempfile.mkdtemp(prefix="issue47-install-"))
+        atexit.register(shutil.rmtree, cls.scratch, ignore_errors=True)
+        cls.installed = cls.scratch / "source-inputs"
+        install_historical_source_inputs(root=cls.installed)
+
     def test_the_presentation_path_under_config_is_excluded(self):
         # It is installed from current bound code in the candidate runtime, and
         # it is under config/, so "copy the data directories" is not a
         # substitute for reading the parent's exclusion.
-        root = Path(tempfile.mkdtemp(prefix="issue47-install-"))
-        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
-        install_historical_source_inputs(root=root / "source-inputs")
-        self.assertTrue((root / "source-inputs/config/company_registry.csv").is_file())
+        self.assertTrue((self.installed / "config/company_registry.csv").is_file())
         self.assertFalse(
-            (root / "source-inputs/config/ordinary_public_projection_v1.json").is_file(),
+            (self.installed / "config/ordinary_public_projection_v1.json").is_file(),
             "the parent's presentation path must not be installed as a source input")
+
+    def test_the_installed_root_answers_b13s_scope_question(self):
+        # The measured failure. B13's scope is read from the approved
+        # definition, which sits at the repository root, and the route reads it
+        # from the data root. The installer copied config/ and catalog/ only -
+        # the two directories the parent's installer knew - so a recorded run
+        # over an installed root stopped with "No such file" at the definition.
+        from vnext.historical_capacity_results import approved_scope
+        self.assertEqual(approved_scope(repo_root=self.installed),
+                         approved_scope(repo_root=ROOT))
+
+    def test_every_rule_input_is_installed_and_no_code_is(self):
+        # Both directions, because the rule can fail either way. Short, and a
+        # route stops on a file a Run of this generation opens from the data
+        # root. Long, and code sits in the data root where nothing is supposed
+        # to import it from. A directory list is what was short; the rule is
+        # the kind of file, not where it happens to live.
+        from vnext.historical_sec_session import _presentation_paths
+        presentation, manifest = _presentation_paths()
+        authority = manifest["execution_authority"]["files"]
+        expected = {p for p in authority if p not in presentation and not p.endswith(".py")}
+        installed = {p for p in authority if (self.installed / p).is_file()}
+        self.assertEqual(installed - expected, set(),
+                         "code or presentation installed as a source input")
+        self.assertEqual(expected - installed, set(), "rule inputs the installer missed")
+        for relative in sorted(expected):
+            raw = (self.installed / relative).read_bytes()
+            self.assertEqual({"sha256": hashlib.sha256(raw).hexdigest(), "size": len(raw)},
+                             authority[relative], relative)
 
     def test_an_unowned_existing_root_is_refused(self):
         root = Path(tempfile.mkdtemp(prefix="issue47-unowned-"))

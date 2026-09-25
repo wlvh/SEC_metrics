@@ -185,9 +185,18 @@ def install_historical_source_inputs(*, root: Path):
     # would also skip the hash comparison below.
     _exclusive_write_bytes(path=root / fiscal_policy,
                            content=(ROOT / fiscal_policy).read_bytes())
+    # Every rule input, chosen by the kind of file rather than by where it
+    # lives. The parent's installer copies config/ and catalog/, and this one
+    # did the same until a recorded bank run over an installed root stopped
+    # with "No such file" at 02_指标定义_SEC_10公司单年指标.md: B13's scope is
+    # read from the approved definition, the definition sits at the repository
+    # root, and the route reads it from the data root. A directory list is a
+    # proxy for "rule input", and the proxy was short. Code is the one kind
+    # left out, because it runs from the bound code tree and nothing imports
+    # it from here; presentation is left out as before.
     presentation, manifest = _presentation_paths()
     for relative, binding in manifest["execution_authority"]["files"].items():
-        if relative in presentation or not relative.startswith(("config/", "catalog/")):
+        if relative in presentation or relative.endswith(".py"):
             continue
         raw = resolve_repository_file(repo_root=ROOT,
                                       repo_relative_path=relative).read_bytes()

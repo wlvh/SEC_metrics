@@ -162,6 +162,38 @@
    ],
    "why_it_matters": "a chain over several documents exists to make them disagree; handing one document's bytes to another's request removes the disagreement and looks like a pass",
    "why_they_could_not": "the refresh chain needs one document, so its map has one entry and the fallback is never reached. A case for a guard has to be written where the guard bites, not where the feature happens to be used"
+  },
+  {
+   "id": "COPY_ONLY_THE_DIRECTORIES_THE_PARENT_KNEW",
+   "round": "installer-rule-inputs",
+   "edit": "install_historical_source_inputs copies execution-authority files under config/ and catalog/ only - the previous rule, restored",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_installed_root_answers_b13s_scope_question",
+    "TheInstallerCarriesTheRuleInputsItClaims.test_every_rule_input_is_installed_and_no_code_is"
+   ],
+   "suite_result": "FAILED (failures=1, errors=1) of 4",
+   "why_it_matters": "this is the measured failure, not a hypothetical: a recorded bank run over an installed root stopped at the approved definition with 'No such file', because B13 reads its scope from the data root and the definition sits at the repository root",
+   "which_cases_could_not_tell": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_presentation_path_under_config_is_excluded"
+   ],
+   "why_they_could_not": "it asks the exclusion question, and the directory rule excludes presentation just as well"
+  },
+  {
+   "id": "INSTALL_CODE_AS_A_SOURCE_INPUT_TOO",
+   "round": "installer-rule-inputs",
+   "edit": "the '.py' exclusion removed, so every non-presentation execution-authority file is installed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_every_rule_input_is_installed_and_no_code_is"
+   ],
+   "suite_result": "FAILED (failures=1) of 4",
+   "why_it_matters": "the fix could overshoot: code in the data root is code nothing is meant to import from there, and a rule that is only ever checked for being long enough never learns it is too long",
+   "which_cases_could_not_tell": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_installed_root_answers_b13s_scope_question",
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_presentation_path_under_config_is_excluded"
+   ],
+   "why_they_could_not": "both ask whether something needed is present or something excluded is absent; extra code is neither"
   }
  ],
  "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py, scripts/vnext/historical_event_sources.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",
