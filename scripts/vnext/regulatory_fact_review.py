@@ -6,7 +6,8 @@ request authority must bind this successor before any real call is possible.
 """
 from copy import deepcopy
 
-from .canonical import canonical_json_bytes, content_hash, strict_json_file, strict_json_loads
+from .canonical import (canonical_json_bytes, content_hash, sha256_bytes,
+                        strict_json_file, strict_json_loads)
 from .normal_source_authority import ROOT
 
 VERSION = 'D03_SOURCE_ANCHOR_REVIEW_V1'
@@ -106,6 +107,32 @@ def candidate_request(original, *, source, repo_root=ROOT):
     return {**body, 'request_id': content_hash(value=body)}
 
 
+def _candidate_uncertainty(*, anchors, reviews, units):
+    """Never resolve two candidate statements from one undivided block."""
+    counts = {}
+    for anchor in anchors:
+        key = (anchor['unit_id'], anchor['block_index'])
+        counts[key] = counts.get(key, 0) + 1
+    uncertain = []
+    for anchor in anchors:
+        key = (anchor['unit_id'], anchor['block_index'])
+        review = reviews[anchor['candidate_id']]
+        row = units[anchor['unit_id']]
+        matching = [row['findings'][index] for index in review['finding_indices']]
+        if counts[key] > 1:
+            reason = 'MULTIPLE_CANDIDATES_SAME_BLOCK_REQUIRES_SEMANTIC_REVIEW'
+        elif len(matching) != 1 or not all(
+                finding['kind'] == 'CURRENT_REGULATORY_ACTION'
+                and finding['reported_status'] == 'ONGOING_AS_REPORTED'
+                and finding['subject'] == 'TARGET_REGISTRANT'
+                for finding in matching):
+            reason = 'SUBJECT_TIME_OR_RESOLUTION_REQUIRES_SEMANTIC_REVIEW'
+        else:
+            continue
+        uncertain.append({'candidate_id': anchor['candidate_id'], 'reason': reason})
+    return uncertain
+
+
 def validate_candidate_response(*, original_request, source, request, raw_response,
                                 repo_root=ROOT):
     """Keep citations strict; unresolved semantics never become a proven fact."""
@@ -172,20 +199,13 @@ def validate_candidate_response(*, original_request, source, request, raw_respon
     checked = validate_response(request=request, raw_response=canonical_json_bytes(
         value={key: value for key, value in response.items()
                if key != 'candidate_reviews'}))
-    uncertain = []
-    for anchor in request['source_fact_candidates']:
-        review = reviews[anchor['candidate_id']]
-        row = units[anchor['unit_id']]
-        matching = [row['findings'][index] for index in review['finding_indices']]
-        if len(matching) != 1 or not all(
-                finding['kind'] == 'CURRENT_REGULATORY_ACTION'
-                and finding['reported_status'] == 'ONGOING_AS_REPORTED'
-                and finding['subject'] == 'TARGET_REGISTRANT'
-                for finding in matching):
-            uncertain.append({'candidate_id': anchor['candidate_id'],
-                              'reason': 'SUBJECT_TIME_OR_RESOLUTION_REQUIRES_SEMANTIC_REVIEW'})
+    uncertain = _candidate_uncertainty(anchors=request['source_fact_candidates'],
+                                       reviews=reviews, units=units)
     return {**checked, 'unresolved': [*checked['unresolved'], *uncertain],
             'source_fact_candidate_review': uncertain,
             'candidate_reviews': response['candidate_reviews'],
+            'provider_response': response,
+            'provider_response_raw_sha256': sha256_bytes(content=raw_response),
+            'raw_provider_response_preserved_separately': False,
             'source_fact_current_status_proven_by_program': False,
             'native_result_created': False}

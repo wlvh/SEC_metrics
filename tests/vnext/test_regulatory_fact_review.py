@@ -4,9 +4,10 @@ import unittest
 from unittest.mock import patch
 
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
-from vnext.canonical import canonical_json_bytes, content_hash
+from vnext.canonical import canonical_json_bytes, content_hash, sha256_bytes
 from vnext.normal_source_authority import ROOT
-from vnext.regulatory_fact_review import candidate_request, validate_candidate_response
+from vnext.regulatory_fact_review import (_candidate_uncertainty,
+    candidate_request, validate_candidate_response)
 from vnext.r6_regulatory_semantics import (
     prepare_regulatory_semantic_source, requests_from_source,
     validate_response)
@@ -58,10 +59,15 @@ class RegulatoryFactReviewTest(unittest.TestCase):
                 raw_response=canonical_json_bytes(value={
                     'request_id': original['request_id'], 'units': response['units']}))
         response['request_id'] = successor['request_id']
+        raw = canonical_json_bytes(value=response)
         checked = validate_candidate_response(original_request=original, source=source,
-            request=successor, raw_response=canonical_json_bytes(value=response))
+            request=successor, raw_response=raw)
         self.assertFalse(checked['source_fact_current_status_proven_by_program'])
         self.assertFalse(checked['native_result_created'])
+        self.assertFalse(checked['raw_provider_response_preserved_separately'])
+        self.assertEqual(checked['provider_response'], response)
+        self.assertEqual(checked['provider_response_raw_sha256'],
+                         sha256_bytes(content=raw))
         self.assertEqual(len(checked['source_fact_candidate_review']), 1)
         self.assertTrue(checked['unresolved'])
         other = deepcopy(response)
@@ -108,3 +114,20 @@ class RegulatoryFactReviewTest(unittest.TestCase):
         auth.stop()
         with self.assertRaisesRegex(ValueError, 'D03_ANCHOR_AUTHENTIC_ORIGINAL_REQUIRED'):
             candidate_request(forged, source=source)
+
+    def test_same_block_candidates_cannot_split_conflict_into_false_resolution(self):
+        anchors = [{'candidate_id': 'first', 'unit_id': 'unit', 'block_index': 7},
+                   {'candidate_id': 'second', 'unit_id': 'unit', 'block_index': 7}]
+        reviews = {'first': {'finding_indices': [0]},
+                   'second': {'finding_indices': [1]}}
+        units = {'unit': {'findings': [
+            {'kind': 'CURRENT_REGULATORY_ACTION',
+             'reported_status': 'ONGOING_AS_REPORTED', 'subject': 'TARGET_REGISTRANT'},
+            {'kind': 'OTHER_ENTITY', 'reported_status': 'NOT_STATED',
+             'subject': 'OTHER_ENTITY'}]}}
+        unresolved = _candidate_uncertainty(anchors=anchors,
+            reviews=reviews, units=units)
+        self.assertEqual({row['candidate_id'] for row in unresolved},
+                         {'first', 'second'})
+        self.assertEqual({row['reason'] for row in unresolved},
+                         {'MULTIPLE_CANDIDATES_SAME_BLOCK_REQUIRES_SEMANTIC_REVIEW'})

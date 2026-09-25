@@ -1322,6 +1322,21 @@
       "tool_calls": 65,
       "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor/conclusion.md",
       "verdict": "NEEDS_FIX_TWO_P2_CANDIDATE_CONFLICT_AND_SOURCE_BINDING"
+    },
+    {
+      "task_name": "review_d03anchor_937849f",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/regulatory_fact_review.py",
+        "tests/vnext/test_regulatory_fact_review.py",
+        "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/anchor-repair-test-final.log"
+      ],
+      "patch_sha": "937849fb6a519cb3f00316ec6efe465cb5a56199",
+      "spawned_at": "2026-09-25T19:44:44Z",
+      "ended_at": "2026-09-25T19:50:44Z",
+      "tool_calls": 30,
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor-repair/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_MULTI_CANDIDATE_SAME_SENTENCE_CONFLICT_AND_RAW_PROVIDER_RESPONSE_NOT_PRESERVED"
     }
   ],
   "ci_capacity_20260922": {
@@ -2304,7 +2319,26 @@
       ],
       "d03_live_bound": false,
       "native_result_created": false,
-      "independent_review": "PENDING_NEW_PATCH_SHA"
+      "independent_review": "NEEDS_FIX_SCOPED_REVIEW_937849F",
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor-repair/conclusion.md",
+      "followup_repair": {
+        "status": "OFFLINE_CODE_AND_DIRECTED_TEST_PASS_SCOPED_REVIEW_PENDING",
+        "scope_paths": [
+          "scripts/vnext/regulatory_fact_review.py",
+          "tests/vnext/test_regulatory_fact_review.py"
+        ],
+        "precursor_review": "937849FB_NEEDS_FIX_MULTI_CANDIDATE_CONFLICT_AND_PROVIDER_RESPONSE_BOUNDARY",
+        "conservative_same_block_rule": "ALL_SAME_BLOCK_MULTIPLE_CANDIDATES_REMAIN_UNRESOLVED_WITHOUT_ASSERTION_SPAN_ATTRIBUTION",
+        "provider_response": "FULL_RECEIVED_PARSED_OBJECT_AND_RAW_SHA256; SEPARATE_RAW_PERSISTENCE_NOT_CLAIMED",
+        "directed_test": "JPM_SAVED_SOURCE_AND_SYNTHETIC_MULTI_CANDIDATE_2_PASS_60.087_SECONDS",
+        "new_calls": [
+          0,
+          0,
+          0
+        ],
+        "live_bound": false,
+        "native_result_created": false
+      }
     }
   },
   "ci_36116965890": {
