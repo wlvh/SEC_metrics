@@ -11,6 +11,7 @@ from vnext.normal_source_authority import ROOT
 from vnext.continuous_semantic_calls import usage_observation,usage_error
 from vnext.requirements import load_requirement_snapshot
 from vnext import requirement_profile_v15
+from vnext import continuous_call_wiring
 
 
 class ContinuousCallPolicyTest(unittest.TestCase):
@@ -67,6 +68,19 @@ class ContinuousCallPolicyTest(unittest.TestCase):
         with patch.object(requirement_profile_v15,'strict_json_file',side_effect=old_transfer):
             with self.assertRaisesRegex(ValueError,'transfer parent identity differs'):
                 load_requirement_snapshot(snapshot_dir=snapshot)
+
+    def test_current_wiring_rejects_stale_declared_requirement_closure(self):
+        requirement=load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v14')
+        original=continuous_call_wiring.strict_json_file
+        def stale_receipt(*,path):
+            value=original(path=path)
+            if Path(path).name=='offline-wiring.json':
+                return {**value,'requirement_closure_hash':
+                    'sha256:c26a3552fc5682896d4f4f7afb55a2d8a25edb8ab187b5f0be719c528f5e72be'}
+            return value
+        with patch.object(continuous_call_wiring,'strict_json_file',side_effect=stale_receipt):
+            with self.assertRaisesRegex(ValueError,'CONTINUOUS_OFFLINE_WIRING_MISSING_OR_CHANGED'):
+                continuous_call_wiring.validate_wiring_receipt(requirement=requirement)
 
 
 if __name__=='__main__':unittest.main()

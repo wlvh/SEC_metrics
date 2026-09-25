@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:c26a3552fc5682896d4f4f7afb55a2d8a25edb8ab187b5f0be719c528f5e72be",
-  "execution_authority_hash": "sha256:a4bba74b911d049441074ab09bf37ce24aadbb2157385e68487e44c0ae4558df",
+  "requirement_closure_hash": "sha256:b482d46b2ba4a4e34e394974df5b62d3f8a5419fced4aae17630a9172840de8e",
+  "execution_authority_hash": "sha256:20abc70647c32974d749a0daad9a5cc0d902f55b4cbf7f7d2a70bf3f32789dac",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -44,8 +44,10 @@
     "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/independent-review/conclusion.md": "6db038497cf62debb23bd9a9d8e3fdf3a3a08669e2fd543f56ac9c6e0dd426f8",
     "docs/evidence/issue28_continuous/batch33-authorization/b13-191-diagnosis/recorded-factory-final.log": "974415729c5a870237e0872ea228fa07dcf42a19b3bb065f9f1df318721b88c5",
     "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/provider-current-wiring.log": "6638a935d76d2bcfec4bc05b078c755b80e588e14e321d244f6757c6bdc23e58",
-    "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/no-call-reuse-190.json": "52f53a905876fee4eaa479a8583cb4a56a565023a9a3a3ab0e763f94585247d0"
+    "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/no-call-reuse-190.json": "e7dbe581c2d584a7c0855415566c7b736703e9eb39a52a54614c11496503d055",
+    "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/wiring-post-finding.log": "2b3224f31cd4fb193f64f6b9f97ebb5f19002857b0d4a6f6e55bb256d60dceea",
+    "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/no-call-reuse-190-post-finding.log": "46149fec77b09505ea03d568152f9c5f77332752e38580eabe77f66625aa16ee"
   },
-  "scope": "Current V15 closure after ordinary V14 parent binding repair: 22 focused no-network provider factory/controller and batch claim tests pass; original B13 success190 read-only revalidation succeeds without a call. Earlier complete recorded source chains remain at original bytes. No real model result from this check.",
-  "independent_review": "B13 repair189 patch0181c8bf and Enphase V4 continuation patch dcddfa83 have separate scoped PASS reviews; no full PR, production or future model-response approval."
+  "scope": "Current V15 closure and execution files both checked after ordinary V14 parent repair and P2 receipt fix. Focused 31-test no-network factory/controller and bad-closure rejection pass. Original B13 success190 remains read-only reusable; no new model response, complete company or production credit.",
+  "independent_review": "Original B13 V4 scoped reviews retained. Ordinary-binding patch5c307e5 first review found the stale receipt closure; exact follow-up difference review is pending, and that prior finding remains recorded."
 }
