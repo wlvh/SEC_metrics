@@ -30,9 +30,9 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
-from acceptance_readings import (COMPENSATION, CROSS, D01_READINGS, EVENTS,  # noqa: E402
-                                 GOVERNANCE, LODGING, READINGS, RPO, TEXT, load,
-                                 positions)
+from acceptance_readings import (COMPENSATION, CROSS, D01_READINGS,  # noqa: E402
+                                 E01_EIGHT_O_ONES, EVENTS, GOVERNANCE, LODGING,
+                                 READINGS, RPO, TEXT, load, positions)
 
 REGISTER = "docs/evidence/issue47_history/accepted_result_content.json"
 
@@ -42,13 +42,16 @@ class RegisterError(ValueError):
 
 
 STATEMENT_METHOD = (
- "the filing's own primary document, walked directly: xbrli:context parsed for "
- "period, instant and dimensional members; ix:nonFraction facts read with "
- "their scale and sign; consolidated facts only; the approved candidate chain "
- "from 02_指标定义_SEC_10公司单年指标.md followed over what that document "
- "tags; the arithmetic in Decimal at the calculator's own precision. The route "
- "resolves these from the Company Facts API instead, so this is a different "
- "source for the same facts.")
+ "the filing's own primary document, walked directly by "
+ "tools/read_statement_facts.py: xbrli:context parsed for period, instant and "
+ "dimensional members; ix:nonFraction facts read as decimals with their scale "
+ "and sign, the fixed-zero dash as zero, and duplicates kept as one fact only "
+ "where they round to each other; consolidated facts only; the approved "
+ "candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what "
+ "that document tags; the arithmetic in Decimal at the calculator's own "
+ "precision. B03 is not accepted where two names for total D&A carry "
+ "different values. The route resolves these from the Company Facts API "
+ "instead, so this is a different source for the same facts.")
 LODGING_METHOD = (
  "the filing's lodging statistics table, read without the production grid "
  "builder the route uses: the document split on <table>, the one naming the "
@@ -79,6 +82,23 @@ EVENT_LIMIT = ("what is established is that this many filings in the window "
                "same event is its own entry - Marriott's 2025 window has one. "
                "Whether counting filings answers the metric's name is a "
                "question about the definition. It does not establish " + COMMON)
+E01_METHOD = (
+ "the window's 1.01 and 2.01 items from each filing's own SEC header, as for "
+ "the other event metrics, and every item 8.01 in the window read off the "
+ "saved primary document: the item located by its own heading and ended at "
+ "Item 9.01 or the signatures, the catalog's aliases matched under its own "
+ "normalisation, and a recorded judgement per filing of whether the item "
+ "reports a merger, acquisition or business combination the registrant is "
+ "party to. Counted in the route's unit, one per matched item, under three "
+ "readings of the confirmation - alias in the item, alias anywhere in the "
+ "document, alias in the item that reports a transaction - and accepted only "
+ "where all three give the published count.")
+E01_LIMIT = (
+ "what is established is that this count does not depend on which reading of "
+ "'8.01 需正文关键词确认' is chosen: no 8.01 in the window changes it under "
+ "any of the three. It does not establish that counting every 1.01 answers "
+ "the metric's name - in these windows eleven of thirteen 1.01 items are debt "
+ "agreements - nor " + COMMON)
 
 GOVERNANCE_METHOD = {
  "C03": "the ecd:PeoTotalCompAmt fact for the target period in the pinned "
@@ -138,6 +158,14 @@ def _read_from(position):
                 "eight_k_filings_in_window": case["eight_ks_in_window"]["filing_date"],
                 "item_codes": [f["items"] for f in case["filings"]["filing_date"]],
                 "counted_under": ["filing_date", "report_date"]}
+    if path == E01_EIGHT_O_ONES:
+        return {"window": case["window"],
+                "direct_item_claims": case["direct_item_claims"],
+                "eight_o_ones": [{key: entry[key] for key in (
+                    "accession", "heading", "aliases_in_the_8_01_item",
+                    "aliases_anywhere_in_the_primary_document", "decision")}
+                    for entry in case["eight_o_ones"]],
+                "counts_under_each_reading": case["counts"]}
     if path == GOVERNANCE:
         if position["metric_id"] == "C03":
             return {"proxies": row["proxies_reporting_the_target_period"]}
@@ -165,6 +193,8 @@ def _method_and_limit(position):
         return LODGING_METHOD, LODGING_LIMIT
     if path == EVENTS:
         return EVENT_METHOD, EVENT_LIMIT
+    if path == E01_EIGHT_O_ONES:
+        return E01_METHOD, E01_LIMIT
     if path == GOVERNANCE:
         return GOVERNANCE_METHOD[metric], GOVERNANCE_LIMIT[metric]
     if path == TEXT:
@@ -208,16 +238,15 @@ def _accepted(position):
     """Whether this reading's conclusion at this position is an acceptance.
 
     A reading that found a defect is not one, and neither is a comparison the
-    reading could not complete. E01 is accepted only where the window holds no
-    8.01 filing, because that is the one branch this reading cannot redo.
+    reading could not complete. E01 is never accepted from the header count:
+    whether an 8.01 counts depends on its text, which that reading does not
+    open. The 8.01 reading accepts it only where the published count holds
+    under every reading of the confirmation, so no acceptance rests on the
+    reading still to be decided.
     """
     path, verdict = position["reading"], position["verdict"]
     if path == EVENTS:
-        if verdict != "MATCH_BOTH_BASES":
-            return False
-        eights = sum(1 for f in position["case"]["filings"]["filing_date"]
-                     if "8.01" in f["items"])
-        return not (position["metric_id"] == "E01" and eights)
+        return verdict == "MATCH_BOTH_BASES" and position["metric_id"] != "E01"
     return verdict == "MATCH"
 
 
@@ -285,11 +314,16 @@ def build_register(*, repo_root: Path):
                         "whatever is written here.",
      "generated_from": list(READINGS),
  "not_here_and_why": {
-  "salesforce B03": "the accession's facts carry "
-                    "DepreciationDepletionAndAmortization, first in the "
-                    "approved chain; the primary document does not tag it, so "
-                    "the reading followed the chain past it. The route is "
-                    "right and the reading cannot confirm it.",
+  "salesforce B03": "read, and wrong: the D&A the chain takes is "
+                    "DepreciationDepletionAndAmortization $1.2 billion, which "
+                    "the filing tags on 'Depreciation and amortization of "
+                    "fixed assets' - a subtotal that leaves out $1,687 million "
+                    "of acquired-intangible amortization. This entry used to "
+                    "say the primary document does not tag that concept and "
+                    "that the route was right; the document tags it, and the "
+                    "earlier reading did not find it. Registered as "
+                    "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_"
+                    "AS_TOTAL; see b03-depreciation-scope/finding.json.",
   "pfizer B03 and B07": "neither the primary document nor the accession's "
                         "facts carry a consolidated OperatingIncomeLoss, which "
                         "both need, so the route reconstructed it and this "
@@ -299,11 +333,13 @@ def build_register(*, repo_root: Path):
                             "producing a negative ratio where the route "
                             "published none. There is no value to accept.",
   "marriott 2023 B02 and B03": "that period's source gaps.",
-  "E01 where the window holds an 8.01 filing": "E01 is the only route with a "
-   "keyword branch, and reading it means reproducing the route's text scoping. "
-   "A scan over every document in the accession matches 'transaction' in "
-   "almost any exhibit. Six of seven windows hold an 8.01 filing, so E01 is "
-   "accepted only for the one that does not.",
+  "E01 for Lumen, Macy's, Marriott and Pfizer": "every 8.01 in the seven "
+   "windows is read (content-acceptance/e01-eight-o-one-read.json). Lumen's, "
+   "Macy's and Marriott's counts hold under some readings of the definition's "
+   "keyword confirmation and not others - the decision is in "
+   "e01-keyword-branch/decision.json. Pfizer's is wrong under every reading: "
+   "its Metsera acquisition was reported under item 8.01 and the route's 8.01 "
+   "branch never reads the item. That is a registered defect.",
   "C03": "all nine are read. The four that previously read as 'no saved proxy "
          "reports the target period' were a defect in the reading, not a gap "
          "in the material: it globbed *def14a*.htm, and only one of the ten "

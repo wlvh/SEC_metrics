@@ -1,0 +1,240 @@
+{
+ "acceptance_consequence": {
+  "accepted_because_no_reading_moves_them": [
+   "enphase-2025",
+   "ford-2025",
+   "southwest-2025"
+  ],
+  "held_until_the_decision": {
+   "lumen-2025": "7 under A, B and C; 11 under D",
+   "macys-2026": "2 under A and C; 3 under B; 4 under D",
+   "marriott-2025": "0 under A and C; 2 under B and D"
+  },
+  "registered_defect": {
+   "pfizer-2025": "0 under A only; 1 under B, C and D - wrong under every reading of the current definition's 8.01 clause"
+  }
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "counts": {
+  "enphase-2025": {
+   "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 0,
+   "LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT": 0,
+   "LITERAL_IN_THE_8_01_ITEM": 0,
+   "published": "0",
+   "route_as_built": 0,
+   "verdict": "MATCH"
+  },
+  "ford-2025": {
+   "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 2,
+   "LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT": 2,
+   "LITERAL_IN_THE_8_01_ITEM": 2,
+   "published": "2",
+   "route_as_built": 2,
+   "verdict": "MATCH"
+  },
+  "lumen-2025": {
+   "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 7,
+   "LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT": 11,
+   "LITERAL_IN_THE_8_01_ITEM": 7,
+   "published": "7",
+   "route_as_built": 7,
+   "verdict": "DEPENDS_ON_THE_CONFIRMATION_READING"
+  },
+  "macys-2026": {
+   "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 2,
+   "LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT": 4,
+   "LITERAL_IN_THE_8_01_ITEM": 3,
+   "published": "2",
+   "route_as_built": 2,
+   "verdict": "DEPENDS_ON_THE_CONFIRMATION_READING"
+  },
+  "marriott-2025": {
+   "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 0,
+   "LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT": 2,
+   "LITERAL_IN_THE_8_01_ITEM": 2,
+   "published": "0",
+   "route_as_built": 0,
+   "verdict": "DEPENDS_ON_THE_CONFIRMATION_READING"
+  },
+  "pfizer-2025": {
+   "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 1,
+   "LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT": 1,
+   "LITERAL_IN_THE_8_01_ITEM": 1,
+   "published": "0",
+   "route_as_built": 0,
+   "verdict": "DIFFERS"
+  },
+  "southwest-2025": {
+   "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 2,
+   "LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT": 2,
+   "LITERAL_IN_THE_8_01_ITEM": 2,
+   "published": "2",
+   "route_as_built": 2,
+   "verdict": "MATCH"
+  }
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "options": [
+  {
+   "cost": "Pfizer's Metsera acquisition - the one acquisition any registrant here reported under 8.01 - does not count, and the approved definition has to be revised to say so.",
+   "meaning": "8.01 never counts; the definition's 8.01 clause is revised away and E01 is the count of 1.01 and 2.01 items.",
+   "moves": {},
+   "option": "A_KEEP_AS_BUILT"
+  },
+  {
+   "cost": "three of the four 8.01 items it admits are financing: Marriott's two use-of-proceeds sentences and Macy's tender offer. It implements the definition's text as written and contradicts its name.",
+   "meaning": "the approved substring match, applied to the item's own text instead of the constant brief.",
+   "moves": {
+    "macys-2026": "2 -> 3",
+    "marriott-2025": "0 -> 2",
+    "pfizer-2025": "0 -> 1"
+   },
+   "option": "B_LITERAL_ALIAS_IN_THE_8_01_ITEM"
+  },
+  {
+   "cost": "a new match mode, so a revision of catalog/event_routes.json's approved rule through the existing revision mechanism, carried in #47's own successor rule file. Its positive side rests on one real instance, the negative side on seven (the three in-item financing hits and the four out-of-item ones); it has to record, not drop, any alias hit it declines, so a miss is visible.",
+   "meaning": "the alias must name a merger, acquisition or business combination the registrant or a subsidiary is party to - announced, agreed or completed - in the 8.01 item's own text. Implemented deterministically: the alias as the head of a reference to a named counterparty or agreement ('acquisition of <Name>', 'Agreement and Plan of Merger', 'merger with <Name>', 'business combination with <Name>'), not a plural in a list, not an adjective.",
+   "moves": {
+    "pfizer-2025": "0 -> 1"
+   },
+   "option": "C_ALIAS_IN_THE_ITEM_REFERRING_TO_A_TRANSACTION"
+  },
+  {
+   "cost": "eight of the nine 8.01 items it admits are financing; listed because it is a literal reading of '正文', not recommended.",
+   "meaning": "the substring match over the whole primary document, so another item's text confirms the 8.01.",
+   "moves": {
+    "lumen-2025": "7 -> 11",
+    "macys-2026": "2 -> 4",
+    "marriott-2025": "0 -> 2",
+    "pfizer-2025": "0 -> 1"
+   },
+   "option": "D_LITERAL_ALIAS_ANYWHERE_IN_THE_PRIMARY_DOCUMENT"
+  }
+ ],
+ "production_authorized": false,
+ "raised_and_not_decided_here": {
+  "one_o_ones": [
+   {
+    "accession": "0000037996-25-000143",
+    "kind": "DEBT",
+    "label": "ford-2025",
+    "what": "Term Loan Credit Agreement with JPMorgan Chase Bank as administrative agent"
+   },
+   {
+    "accession": "0000037996-25-000067",
+    "kind": "DEBT",
+    "label": "ford-2025",
+    "what": "Twenty-Second Amendment to the 2006 Credit Agreement"
+   },
+   {
+    "accession": "0000018926-25-000039",
+    "kind": "DEBT",
+    "label": "lumen-2025",
+    "what": "Level 3 Financing refinances its term B-1/B-2 loan facilities (First Amendment Agreement)"
+   },
+   {
+    "accession": "0001193125-25-124002",
+    "kind": "MERGER_OR_ACQUISITION",
+    "label": "lumen-2025",
+    "what": "definitive Purchase Agreement with a subsidiary of AT&T - the sale of Lumen's Mass Markets fiber business"
+   },
+   {
+    "accession": "0001193125-25-152683",
+    "kind": "DEBT",
+    "label": "lumen-2025",
+    "what": "indenture for $2.0 billion of first lien notes"
+   },
+   {
+    "accession": "0001193125-25-182730",
+    "kind": "DEBT",
+    "label": "lumen-2025",
+    "what": "indenture for $2.0 billion of first lien notes"
+   },
+   {
+    "accession": "0001193125-25-198334",
+    "kind": "DEBT",
+    "label": "lumen-2025",
+    "what": "additional $425 million of first lien notes"
+   },
+   {
+    "accession": "0001193125-25-223206",
+    "kind": "DEBT",
+    "label": "lumen-2025",
+    "what": "Level 3 Financing refinances its term B-3 loan facilities"
+   },
+   {
+    "accession": "0001193125-25-330850",
+    "kind": "DEBT",
+    "label": "lumen-2025",
+    "what": "indenture for $1.25 billion of senior notes"
+   },
+   {
+    "accession": "0000794367-25-000087",
+    "kind": "DEBT",
+    "label": "macys-2026",
+    "what": "refinancing and extension of the asset-based credit facility"
+   },
+   {
+    "accession": "0000794367-25-000137",
+    "kind": "DEBT",
+    "label": "macys-2026",
+    "what": "indenture for $500 million of 7.375% senior notes due 2033"
+   },
+   {
+    "accession": "0001193125-25-029062",
+    "kind": "OTHER",
+    "label": "southwest-2025",
+    "what": "Amendment to Cooperation Agreement with Elliott Investment Management"
+   },
+   {
+    "accession": "0001193125-25-262544",
+    "kind": "DEBT",
+    "label": "southwest-2025",
+    "what": "$1.5 billion notes offering under an underwriting agreement"
+   }
+  ],
+  "question": "E01 counts every 1.01 without confirmation, as the approved definition specifies. In these seven windows eleven of the thirteen 1.01 items are debt agreements, one is Southwest's cooperation agreement with Elliott and one is Lumen's sale of its fiber business to AT&T.",
+  "status": "RECORDED_NOT_PROPOSED",
+  "why_it_is_separate": "it is a question about the definition, not about the 8.01 branch: the route does exactly what the definition says for 1.01. E05 is the 1.01 count. If the owner wanted E01 restricted to M&A for 1.01 too, Ford would read 0, Lumen 1, Macy's 0 and Southwest 0."
+ },
+ "recommendation": {
+  "option": "C_ALIAS_IN_THE_ITEM_REFERRING_TO_A_TRANSACTION",
+  "what_it_would_not_change": "the frozen router and the ordinary route: #47 would carry the rule in its own generation, as it did for the D01 underline repair, and the two routes would differ on E01 until an issue_28-compatible generation carries the same rule.",
+  "why": "it is the only reading under which every count here is what the filings report: the one acquisition counts and the financing does not. B keeps the approved mechanism and applies it where the definition says, but the definition's own mechanism is what produces three false announcements out of four; A is honest about the route but deletes a clause the owner approved. C's weakness is its evidence base - one positive - and the plan answers it by recording every declined alias hit."
+ },
+ "record_type": "ISSUE_47_E01_CONFIRMATION_READING_DECISION",
+ "status": "AWAITING_OWNER_DECISION",
+ "the_missing_meaning_judgement": "Does an item 8.01 whose text uses one of the aliases only in a financing context - a use-of-proceeds list ('may include ... acquisitions'), a tender offer's 'combined aggregate purchase price' - confirm an M&A announcement? The approved match mode, a substring anywhere in the text, says yes; the metric's name says no. In this corpus the two disagree on three of the four 8.01 items that carry an alias. A second, smaller question rides with it: whether another item's text in the same filing (Item 1.01 covenants, Item 7.01) can confirm the 8.01.",
+ "what_the_definition_says": {
+  "route": "catalog/event_routes.json routes.E01: direct_item_codes 1.01, 2.01; keyword_item_rules 8.01 with aliases merger, acquisition, combine, transaction; match_mode SUBSTRING_ANY; text_normalization NFKC casefold collapse whitespace.",
+  "row": "| E01 | M&A announcements | 1.01 / 2.01 / 8.01 + 关键词 | 8.01 需正文关键词确认 |",
+  "where": "02_指标定义_SEC_10公司单年指标.md, section E"
+ },
+ "what_the_route_does": "deterministic_router.adapt_8k_item_index sets each claim's brief to '8-K item <code> parsed from hdr.sgml' whenever hdr.sgml carries item codes, and match_event_claims tests the aliases against that brief. Every filing in the seven windows has hdr item codes, so no 8.01 is ever admitted and the published E01 is the count of 1.01 and 2.01 items. The router is frozen by the issue_28 generations and shared with the ordinary route, which behaves the same way.",
+ "what_was_read": {
+  "eight_o_one_filings": 23,
+  "eight_o_ones_that_report_a_transaction_the_registrant_is_party_to": [
+   "0000078003-25-000159 (Pfizer completes its acquisition of Metsera)"
+  ],
+  "eight_o_ones_with_an_alias_inside_the_item": {
+   "0000078003-25-000159": "Pfizer - 'completed the previously announced acquisition of Metsera, Inc. ... pursuant to the Agreement and Plan of Merger'",
+   "0000794367-25-000128": "Macy's - tender offer 'subject to a maximum tender offer amount representing a combined aggregate purchase price of up to $175 million'",
+   "0001193125-25-036732": "Marriott - use of proceeds: 'general corporate purposes, which may include working capital, capital expenditures, acquisitions, stock repurchases or repayment of outstanding indebtedness'",
+   "0001193125-25-184082": "Marriott - the same use-of-proceeds sentence"
+  },
+  "eight_o_ones_with_an_alias_only_in_another_item": {
+   "0000794367-25-000137": "Macy's - Item 1.01 indenture covenants ('sale and lease-back transactions', 'engage in a merger or consolidation')",
+   "0001193125-25-152683": "Lumen - Item 1.01 covenant text ('certain other corporate transactions')",
+   "0001193125-25-182730": "Lumen - Item 1.01 covenant text and 'the above-described transactions' (the notes offering)",
+   "0001193125-25-196061": "Lumen - Item 7.01, 'in connection with a repricing transaction' of a credit agreement",
+   "0001193125-25-330850": "Lumen - Item 1.01 covenant text"
+  },
+  "judgements": "docs/evidence/issue47_history/e01-keyword-branch/eight-o-one-judgements.json",
+  "reading": "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json",
+  "windows": 7
+ }
+}

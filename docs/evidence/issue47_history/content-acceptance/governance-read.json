@@ -1,864 +1,926 @@
 {
-  "and_one_judgement_that_was_too_strict": {
-    "what": "a PEO total tagged in a context naming the officer was treated as ambiguous and skipped.",
-    "why_that_was_wrong": "it is still one number when there is only one of it. Marriott and Southwest each report exactly one PEO total for the target period, per officer, and both equal the published value. Ambiguity is several, not a dimension."
+ "an_eighth_defect_in_this_reading_and_it_read_as_missing_material": {
+  "the_fix": "proxies are identified by form, from the saved submissions block, and the reading now separates three answers it used to collapse into one: the registrant declares no DEF 14A, the declared proxy is not saved, and the saved proxy does not report this period.",
+  "the_shape": "a lookup that comes back empty reads exactly like a document with nothing in it. Before reporting an absence, the finder has to be shown finding something.",
+  "two_more_attempts_that_failed_the_same_way": [
+   "the first replacement read each accession directory's index.json for the form - those directories hold only the document and its response headers, so it found nothing for anybody and would have reported the same absence it was written to correct",
+   "the diagnosis of that attempt was run against the output of a process started before the patch, so a stale file was read as the new code's result"
+  ],
+  "verdicts_after": {
+   "enphase-2025": "MATCH",
+   "ford-2025": "MATCH",
+   "lumen-2025": "MATCH",
+   "macys-2026": "MATCH",
+   "marriott-2025": "MATCH",
+   "pfizer-2025": "MATCH",
+   "salesforce-2026": "MATCH",
+   "southwest-2025": "MATCH"
   },
-  "calls": {
-    "provider": 0,
-    "paid": 0,
-    "sec": 0
+  "verdicts_before": {
+   "enphase-2025": "NOT_READ",
+   "ford-2025": "MATCH",
+   "lumen-2025": "NOT_READ",
+   "macys-2026": "MATCH",
+   "marriott-2025": "MATCH",
+   "pfizer-2025": "NOT_READ",
+   "salesforce-2026": "NOT_READ",
+   "southwest-2025": "MATCH"
   },
-  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
-  "per_position": {
-    "enphase-2025": {
-      "C03": {
-        "def14a_declared": 16,
-        "def14a_documents_saved": 1,
-        "proxies_reporting_the_target_period": [
-          {
-            "per_officer_tagged": false,
-            "proxy": "evidence/accession_materials/enphase_energy_1463101_000146310126000026/enph-20260401.htm",
-            "values": [
-              9601958
-            ]
-          }
-        ],
-        "published": "9601958",
-        "read": "9601958",
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "USD",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
-          "filings": [
-            "0001463101-26-000026"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:318474612f2c48fdcc8febcc6687c0b46b260232fdab1d2e1f1d3a3d73399fdf",
-            "result_id": "sha256:8da2152b36f5b6a2cf482f65d6f397985579163d4e214d17ce2fe640a9862187"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "C04": {
-        "auditor_named_in_the_previous_years_filing": [
-          "DELOITTE & TOUCHE LLP"
-        ],
-        "auditor_named_in_the_target_filing": [
-          "DELOITTE & TOUCHE LLP"
-        ],
-        "eight_k_item_4_01_in_window": [],
-        "previous_year_note": null,
-        "previous_year_read_from": "evidence/accession_materials/enphase_energy_1463101_000146310125000024/enph-20241231_htm.xml",
-        "published": "0",
-        "read": "0",
-        "the_two_filings_spell_the_firm_differently": false,
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "flag",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
-          "filings": [
-            "0001463101-25-000014",
-            "0001463101-25-000024",
-            "0001463101-25-000054",
-            "0001463101-25-000075",
-            "0001463101-25-000090",
-            "0001463101-25-000099",
-            "0001463101-25-000111",
-            "0001463101-26-000013"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:b3fed913d280422efe81667cabfdb439c340d61ba4869c1032b62ba01e59b399",
-            "result_id": "sha256:dc39cddaf98acc8cc9c39b7525d0acc3ad9d8ef7241c9113a89c7626f1fad408"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "company_id": "enphase_energy",
-      "period": [
-        "2025-01-01",
-        "2025-12-31"
-      ]
-    },
-    "ford-2025": {
-      "C03": {
-        "def14a_declared": 33,
-        "def14a_documents_saved": 1,
-        "proxies_reporting_the_target_period": [
-          {
-            "per_officer_tagged": false,
-            "proxy": "evidence/accession_materials/ford_motor_company_37996_000155278126000164/e26003_f-def14a.htm",
-            "values": [
-              27519558
-            ]
-          }
-        ],
-        "published": "27519558",
-        "read": "27519558",
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "USD",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
-          "filings": [
-            "0001552781-26-000164"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:72456a8120f0af2aca40a8103bec4954fc4ba7df1c8510742a321bf5068b91a1",
-            "result_id": "sha256:12d4387c28331e371b91d4d358483fd5d799573d1d287107106db3f50769584e"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "C04": {
-        "auditor_named_in_the_previous_years_filing": [
-          "PricewaterhouseCoopers LLP"
-        ],
-        "auditor_named_in_the_target_filing": [
-          "PricewaterhouseCoopers LLP"
-        ],
-        "eight_k_item_4_01_in_window": [],
-        "previous_year_note": null,
-        "previous_year_read_from": "evidence/accession_materials/ford_motor_company_37996_000003799625000013/f-20241231_htm.xml",
-        "published": "0",
-        "read": "0",
-        "the_two_filings_spell_the_firm_differently": false,
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "flag",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
-          "filings": [
-            "0000037996-25-000002",
-            "0000037996-25-000006",
-            "0000037996-25-000009",
-            "0000037996-25-000011",
-            "0000037996-25-000013",
-            "0000037996-25-000065",
-            "0000037996-25-000067",
-            "0000037996-25-000071",
-            "0000037996-25-000074",
-            "0000037996-25-000139",
-            "0000037996-25-000141",
-            "0000037996-25-000143",
-            "0000037996-25-000146",
-            "0000037996-25-000175",
-            "0000037996-25-000185",
-            "0000037996-25-000210",
-            "0000037996-25-000236",
-            "0000037996-25-000238",
-            "0000037996-26-000015"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:a6153d808deb09a2ce19eed04b714b7a15c3a810d894e93a93626034c3ed1ac0",
-            "result_id": "sha256:204287910b1533af0784a367442167a2cefbff164e77288e258e825414efba17"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "company_id": "ford_motor_company",
-      "period": [
-        "2025-01-01",
-        "2025-12-31"
-      ]
-    },
-    "lumen-2025": {
-      "C03": {
-        "def14a_declared": 33,
-        "def14a_documents_saved": 1,
-        "proxies_reporting_the_target_period": [
-          {
-            "per_officer_tagged": true,
-            "proxy": "evidence/accession_materials/lumen_technologies_18926_000001892626000024/lumn-20260401.htm",
-            "values": [
-              24936641
-            ]
-          }
-        ],
-        "published": "24936641",
-        "read": "24936641",
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "USD",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
-          "filings": [
-            "0000018926-26-000024"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:7851ccbd47253dc5e4817f0713343f5ddd0b255ebb6eb87c5d7772005aefce96",
-            "result_id": "sha256:3fc4086f85f22108b13b6a652cc52242602a54cd1b44b08de1b19717e4c53903"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "C04": {
-        "auditor_named_in_the_previous_years_filing": [
-          "KPMG LLP"
-        ],
-        "auditor_named_in_the_target_filing": [
-          "KPMG LLP"
-        ],
-        "eight_k_item_4_01_in_window": [],
-        "previous_year_note": null,
-        "previous_year_read_from": "evidence/accession_materials/lumen_technologies_18926_000001892625000010/lumn-20241231_htm.xml",
-        "published": "0",
-        "read": "0",
-        "the_two_filings_spell_the_firm_differently": false,
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "flag",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
-          "filings": [
-            "0000018926-25-000004",
-            "0000018926-25-000010",
-            "0000018926-25-000039",
-            "0000018926-25-000047",
-            "0000018926-25-000059",
-            "0000018926-25-000092",
-            "0000018926-25-000110",
-            "0000018926-26-000014",
-            "0001193125-25-124002",
-            "0001193125-25-141702",
-            "0001193125-25-152683",
-            "0001193125-25-172843",
-            "0001193125-25-182730",
-            "0001193125-25-196061",
-            "0001193125-25-198334",
-            "0001193125-25-203545",
-            "0001193125-25-223206",
-            "0001193125-25-308717",
-            "0001193125-25-311581",
-            "0001193125-25-327637",
-            "0001193125-25-330850"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:171ea9fc6fce4019d3053dccd65a5d199c62b1ed3da855b5f59853502d5f34ed",
-            "result_id": "sha256:7c5431068f5f8d2ed191b9eebf0e261ce4957adb01f9248d202e231bea423c30"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "company_id": "lumen_technologies",
-      "period": [
-        "2025-01-01",
-        "2025-12-31"
-      ]
-    },
-    "macys-2026": {
-      "C03": {
-        "def14a_declared": 32,
-        "def14a_documents_saved": 1,
-        "proxies_reporting_the_target_period": [
-          {
-            "per_officer_tagged": false,
-            "proxy": "evidence/accession_materials/macy_s_794367_000110465926037752/m-20260515xdef14a.htm",
-            "values": [
-              14104067
-            ]
-          }
-        ],
-        "published": "14104067",
-        "read": "14104067",
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-02-02",
-          "period_end": "2026-01-31",
-          "unit": "USD",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
-          "filings": [
-            "0001104659-26-037752"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:b63f1711bfa26f91999ad902110b83d92a4efe7ab1b2a385ee232bd750469972",
-            "result_id": "sha256:04fdb8c7b0b0c2933fa2848d5c9d2c07cae8b674b84df3bf1daaa92a8b4ece7d"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "C04": {
-        "auditor_named_in_the_previous_years_filing": [
-          "KPMG, LLP"
-        ],
-        "auditor_named_in_the_target_filing": [
-          "KPMG LLP"
-        ],
-        "eight_k_item_4_01_in_window": [],
-        "previous_year_note": null,
-        "previous_year_read_from": "evidence/accession_materials/macy_s_794367_000162828025014315/m-20250201_htm.xml",
-        "published": "0",
-        "read": "0",
-        "the_two_filings_spell_the_firm_differently": true,
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-02-02",
-          "period_end": "2026-01-31",
-          "unit": "flag",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
-          "filings": [
-            "0000794367-25-000010",
-            "0000794367-25-000054",
-            "0000794367-25-000087",
-            "0000794367-25-000092",
-            "0000794367-25-000128",
-            "0000794367-25-000132",
-            "0000794367-25-000137",
-            "0000794367-25-000139",
-            "0000794367-25-000165",
-            "0000794367-25-000169",
-            "0001628280-25-010767",
-            "0001628280-25-014315",
-            "0001628280-25-028040",
-            "0001628280-25-054900",
-            "0001628280-26-021721"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:dfd3fdee50e30081b408e8c377f2fe4cd0ac8372e2454723b74721e8ee2da8b0",
-            "result_id": "sha256:55b0c0614545a26c813e6f88e0902c19c7527ed53117d7f90d1a87a02a92f306"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "company_id": "macys",
-      "period": [
-        "2025-02-02",
-        "2026-01-31"
-      ]
-    },
-    "marriott-2025": {
-      "C03": {
-        "def14a_declared": 29,
-        "def14a_documents_saved": 1,
-        "proxies_reporting_the_target_period": [
-          {
-            "per_officer_tagged": true,
-            "proxy": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
-            "values": [
-              22970926
-            ]
-          }
-        ],
-        "published": "22970926",
-        "read": "22970926",
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "USD",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
-          "filings": [
-            "0001140361-26-011590"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:e2b6138937c17f89d58d3bd3ae2bc9ccefc3b9b83ed0e8a61f8ddf6fa8f7d7c8",
-            "result_id": "sha256:36f15c51f12ac59297989b1bd8b201397765bce8232871633f8668d5aaf7b16e"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "C04": {
-        "auditor_named_in_the_previous_years_filing": [
-          "Ernst & Young LLP"
-        ],
-        "auditor_named_in_the_target_filing": [
-          "Ernst & Young LLP"
-        ],
-        "eight_k_item_4_01_in_window": [],
-        "previous_year_note": null,
-        "previous_year_read_from": "evidence/accession_materials/marriott_international_1048286_000162828025004818/mar-20241231.htm",
-        "published": "0",
-        "read": "0",
-        "the_two_filings_spell_the_firm_differently": false,
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "flag",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
-          "filings": [
-            "0001048286-25-000011",
-            "0001048286-26-000007",
-            "0001193125-25-009110",
-            "0001193125-25-036732",
-            "0001193125-25-118853",
-            "0001193125-25-118861",
-            "0001193125-25-158742",
-            "0001193125-25-184082",
-            "0001628280-25-004772",
-            "0001628280-25-004818",
-            "0001628280-25-022390",
-            "0001628280-25-037592"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:12c8e806232c461c3a9958446620dceb24235117fee1598187c3f50e87c6d73a",
-            "result_id": "sha256:77dc141eaf548783ca940471db8e3ce15cbab1a2431ebf06722df6d35d3d01c8"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "company_id": "marriott_international",
-      "period": [
-        "2025-01-01",
-        "2025-12-31"
-      ]
-    },
-    "pfizer-2025": {
-      "C03": {
-        "def14a_declared": 32,
-        "def14a_documents_saved": 1,
-        "proxies_reporting_the_target_period": [
-          {
-            "per_officer_tagged": false,
-            "proxy": "evidence/accession_materials/pfizer_78003_000007800326000033/pfe-20260312.htm",
-            "values": [
-              27585301
-            ]
-          }
-        ],
-        "published": "27585301",
-        "read": "27585301",
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "USD",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
-          "filings": [
-            "0000078003-26-000033"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:7f25e958d39624dab68c4c932cee01dcdc532fff7ba73a2c7b8d6800ec0f3ca5",
-            "result_id": "sha256:2d294ea4ea7b7a883dfd1c3105b66b84472859dc3d91b02e973b1df683d60544"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "C04": {
-        "auditor_named_in_the_previous_years_filing": [
-          "KPMG LLP"
-        ],
-        "auditor_named_in_the_target_filing": [
-          "KPMG LLP"
-        ],
-        "eight_k_item_4_01_in_window": [],
-        "previous_year_note": null,
-        "previous_year_read_from": "evidence/accession_materials/pfizer_78003_000007800325000054/pfe-20241231_htm.xml",
-        "published": "0",
-        "read": "0",
-        "the_two_filings_spell_the_firm_differently": false,
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "flag",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
-          "filings": [
-            "0000078003-25-000017",
-            "0000078003-25-000054",
-            "0000078003-25-000109",
-            "0000078003-25-000111",
-            "0000078003-25-000136",
-            "0000078003-25-000149",
-            "0000078003-25-000159",
-            "0000078003-25-000167",
-            "0000078003-26-000026",
-            "0001193125-25-122480",
-            "0001193125-25-291406"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:8c33594bd325b00cb0cd3436bd1f22e03c54671eb8a98cf813e10a472cc80d85",
-            "result_id": "sha256:0f583d42abefdaebea6ca3ee7dad30277c8b18a75cf6130b7e56d4645f08ef0d"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "company_id": "pfizer",
-      "period": [
-        "2025-01-01",
-        "2025-12-31"
-      ]
-    },
-    "salesforce-2026": {
-      "C03": {
-        "def14a_declared": 23,
-        "def14a_documents_saved": 1,
-        "proxies_reporting_the_target_period": [
-          {
-            "per_officer_tagged": false,
-            "proxy": "evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
-            "values": [
-              49379252
-            ]
-          }
-        ],
-        "published": "49379252",
-        "read": "49379252",
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-02-01",
-          "period_end": "2026-01-31",
-          "unit": "USD",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
-          "filings": [
-            "0001108524-26-000085"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:a954e3fde6c29fc8aeaf59c6e902ffd29451d597123240c3133cc86bbf72e5c5",
-            "result_id": "sha256:965d6f4719b70e609e4c507bb25eab026e6c4c1e5ab9d56e0e0884025f9cbad9"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "C04": {
-        "auditor_named_in_the_previous_years_filing": [
-          "Ernst & Young LLP"
-        ],
-        "auditor_named_in_the_target_filing": [
-          "Ernst & Young LLP"
-        ],
-        "eight_k_item_4_01_in_window": [],
-        "previous_year_note": null,
-        "previous_year_read_from": "evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml",
-        "published": null,
-        "read": "0",
-        "the_two_filings_spell_the_firm_differently": false,
-        "verdict": "NO_PUBLISHED_VALUE",
-        "why_not_read": null
-      },
-      "company_id": "salesforce",
-      "period": [
-        "2025-02-01",
-        "2026-01-31"
-      ]
-    },
-    "southwest-2025": {
-      "C03": {
-        "def14a_declared": 31,
-        "def14a_documents_saved": 1,
-        "proxies_reporting_the_target_period": [
-          {
-            "per_officer_tagged": true,
-            "proxy": "evidence/accession_materials/southwest_airlines_92380_000119312526127237/d121727ddef14a.htm",
-            "values": [
-              16587882
-            ]
-          }
-        ],
-        "published": "16587882",
-        "read": "16587882",
-        "verdict": "MATCH",
-        "why_not_read": null,
-        "checked_identity": {
-          "period_start": "2025-01-01",
-          "period_end": "2025-12-31",
-          "unit": "USD",
-          "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
-          "value_kind": null,
-          "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
-          "filings": [
-            "0001193125-26-127237"
-          ],
-          "entities": [],
-          "established_by": "BOUND_AFTER_THE_READING",
-          "bound_from": {
-            "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
-            "run_id": "run:historical-period:439be9367165536425fc6aba95ea83571e215945f2679ae2e256fe2e6b71c066",
-            "result_id": "sha256:dd4ec66fa3482fdb3086c3c5d04fd3186d048862fdff2023699ff74e3cc587d5"
-          },
-          "checked_against_the_reading": [
-            "value",
-            "filings_contain_the_filing_the_reading_opened",
-            "window"
-          ],
-          "not_named_by_the_reading": []
-        }
-      },
-      "C04": {
-        "auditor_named_in_the_previous_years_filing": [
-          "Ernst & Young LLP"
-        ],
-        "auditor_named_in_the_target_filing": [
-          "Ernst & Young LLP"
-        ],
-        "eight_k_item_4_01_in_window": [],
-        "previous_year_note": null,
-        "previous_year_read_from": "evidence/accession_materials/southwest_airlines_92380_000009238025000024/luv-20241231_htm.xml",
-        "published": null,
-        "read": "0",
-        "the_two_filings_spell_the_firm_differently": false,
-        "verdict": "NO_PUBLISHED_VALUE",
-        "why_not_read": null
-      },
-      "company_id": "southwest_airlines",
-      "period": [
-        "2025-01-01",
-        "2025-12-31"
-      ]
-    }
+  "what_it_said": "four of eight C03 positions - Enphase, Lumen, Pfizer, Salesforce - reported NO_SAVED_PROXY_REPORTS_THE_TARGET_PERIOD, which reads as a material gap",
+  "what_was_true": "all four proxies were saved and readable, carrying 76, 89, 138 and 82 ecd facts. The reading globbed *def14a*.htm inside each registrant's accession material directories, and exactly one of the ten companies names its proxy that way - Ford's e26003_f-def14a.htm. The rest use <ticker>-<date>.htm, so the glob could only ever find the ones that happened to be named for it."
+ },
+ "and_one_judgement_that_was_too_strict": {
+  "what": "a PEO total tagged in a context naming the officer was treated as ambiguous and skipped.",
+  "why_that_was_wrong": "it is still one number when there is only one of it. Marriott and Southwest each report exactly one PEO total for the target period, per officer, and both equal the published value. Ambiguity is several, not a dimension."
+ },
+ "c04_was_recorded_as_untriaged_and_this_closes_it": {
+  "a_fourth_defect_stopped_before_it_shipped": {
+   "how_it_was_caught": "the finder was asked for a document already known to contain the fact before its empty answers were believed: instance -> ['DELOITTE & TOUCHE LLP'].",
+   "side_effect": "both sides now unescape HTML entities, so the recorded string moves from 'DELOITTE &amp; TOUCHE LLP' to 'DELOITTE & TOUCHE LLP'. The comparison is unchanged because both sides move together.",
+   "what": "text_fact matched only <ix:nonNumeric>. An XBRL instance writes the fact as a plain element and has no ix:nonNumeric at all, so reading one returned an empty set - indistinguishable from a filing that names no auditor."
   },
-  "production_authorized": false,
-  "record_type": "ISSUE_47_GOVERNANCE_READ",
-  "result": {
-    "c03": {
-      "differs": 0,
-      "match": 4,
-      "not_read": 4
+  "macys_is_an_observation_not_a_defect": {
+   "measured": "the target filing writes KPMG LLP and the prior one writes KPMG, LLP",
+   "the_judgement": "a difference of punctuation and case is the same firm. Comparing the strings as filed would report a change of auditor that no reader of the two filings would agree with. Both exact strings are recorded beside the verdict so the judgement is visible rather than folded away.",
+   "what_it_borrows": "this is the same normalisation the route uses, so if the route were too loose at this layer this reading would be too. Measured against that: the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it."
+  },
+  "one_more_limitation_worth_naming": "text_fact takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route. Each document here carries exactly one name, so there is no divergence to see in this corpus.",
+  "result": "C04 MATCH 1 -> 6. Southwest and Salesforce have no published C04 value at all (withheld), so NO_PUBLISHED_VALUE is the right answer for them.",
+  "the_fix_for_the_last_two_is_one_sentence": "do not recompute it - the period selection already carries prior_report_end and prior_filing, with the accession and the primary document name.",
+  "three_defects_in_this_reading": [
+   "it demanded the prior year's primary HTML. The route's _auditor_filing reads any document of that accession carrying dei facts, and Enphase's prior accession holds enph-20241231_htm.xml and index.json and no primary HTML at all.",
+   "the prior accession was parsed out of an error string this reading had itself truncated to 140 characters - the URL breaks mid-accession, so the pattern could never match. The information was destroyed before it was read.",
+   "the prior period end was produced by replacing the year in the target's. Macy's 2026-01-31 became 2025-01-31; its 52/53-week prior period ended 2025-02-01, a date its calendar never had."
+  ],
+  "what_it_said": "five positions reported PREVIOUS_YEARS_FILING_NOT_READABLE, which reads as missing material while the route produced a value for each of them"
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "how_many_proxies_exist_and_how_many_are_saved": {
+  "measured": {
+   "enphase-2025": {
+    "declared": 16,
+    "saved": 1
+   },
+   "ford-2025": {
+    "declared": 33,
+    "saved": 1
+   },
+   "lumen-2025": {
+    "declared": 33,
+    "saved": 1
+   },
+   "macys-2026": {
+    "declared": 32,
+    "saved": 1
+   },
+   "marriott-2025": {
+    "declared": 29,
+    "saved": 1
+   },
+   "pfizer-2025": {
+    "declared": 32,
+    "saved": 1
+   },
+   "salesforce-2026": {
+    "declared": 23,
+    "saved": 1
+   },
+   "southwest-2025": {
+    "declared": 31,
+    "saved": 1
+   }
+  },
+  "reading": "each registrant declares 16 to 33 DEF 14A filings and exactly one is on disk. That is why every earlier period names a proxy it cannot read, and it is a source gap, not a reader defect - the distinction this round had to be forced to make."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "needed_facts_not_read": [],
+ "per_position": {
+  "enphase-2025": {
+   "C03": {
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:8da2152b36f5b6a2cf482f65d6f397985579163d4e214d17ce2fe640a9862187",
+      "run_id": "run:historical-period:318474612f2c48fdcc8febcc6687c0b46b260232fdab1d2e1f1d3a3d73399fdf"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001463101-26-000026"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+     "unit": "USD",
+     "value_kind": null
     },
-    "c04": {
-      "differs": 0,
-      "match": 1,
-      "no_published_value": 2,
-      "not_read": 5
-    }
-  },
-  "two_more_defects_in_the_reading_and_neither_announced_itself": {
-    "the_attribute_order": "the next version required id to be the first attribute, and Marriott's proxy writes an xmlns attribute before it. Same empty map, same silence. Six of eight C03 positions were NOT_READ for these two reasons and for nothing about the filings.",
-    "the_namespace_prefix": "the context parser matched xbrli-prefixed context elements only. Every 10-K here uses that prefix; the proxies do not always, so it returned an empty context map - which reads exactly like a document with no facts."
-  },
-  "what_is_still_not_read": {
-    "C03": "Paramount, whose C03 comes from the annual report's own compensation table rather than a proxy - the cascade's other level, already accepted by that reading.",
-    "C04": "nothing among the positions that have a value. Earlier periods are not attempted - the comparison needs the prior accession's materials, which are the acquisition plan's class A.",
-    "earlier_periods": "not attempted - one saved proxy per registrant, all filed in 2026."
-  },
-  "what_this_is": "CEO pay and the auditor-change flag, read from the source documents rather than through the route: the ecd pay-versus-performance fact in the pinned proxy for C03, and for C04 the auditor named in this year's and last year's 10-K together with any 8-K carrying item 4.01 in the window.",
-  "an_eighth_defect_in_this_reading_and_it_read_as_missing_material": {
-    "what_it_said": "four of eight C03 positions - Enphase, Lumen, Pfizer, Salesforce - reported NO_SAVED_PROXY_REPORTS_THE_TARGET_PERIOD, which reads as a material gap",
-    "what_was_true": "all four proxies were saved and readable, carrying 76, 89, 138 and 82 ecd facts. The reading globbed *def14a*.htm inside each registrant's accession material directories, and exactly one of the ten companies names its proxy that way - Ford's e26003_f-def14a.htm. The rest use <ticker>-<date>.htm, so the glob could only ever find the ones that happened to be named for it.",
-    "the_fix": "proxies are identified by form, from the saved submissions block, and the reading now separates three answers it used to collapse into one: the registrant declares no DEF 14A, the declared proxy is not saved, and the saved proxy does not report this period.",
-    "two_more_attempts_that_failed_the_same_way": [
-      "the first replacement read each accession directory's index.json for the form - those directories hold only the document and its response headers, so it found nothing for anybody and would have reported the same absence it was written to correct",
-      "the diagnosis of that attempt was run against the output of a process started before the patch, so a stale file was read as the new code's result"
+    "def14a_declared": 16,
+    "def14a_documents_saved": 1,
+    "proxies_reporting_the_target_period": [
+     {
+      "per_officer_tagged": false,
+      "proxy": "evidence/accession_materials/enphase_energy_1463101_000146310126000026/enph-20260401.htm",
+      "values": [
+       9601958
+      ]
+     }
     ],
-    "verdicts_before": {
-      "enphase-2025": "NOT_READ",
-      "ford-2025": "MATCH",
-      "lumen-2025": "NOT_READ",
-      "macys-2026": "MATCH",
-      "marriott-2025": "MATCH",
-      "pfizer-2025": "NOT_READ",
-      "salesforce-2026": "NOT_READ",
-      "southwest-2025": "MATCH"
-    },
-    "verdicts_after": {
-      "enphase-2025": "MATCH",
-      "ford-2025": "MATCH",
-      "lumen-2025": "MATCH",
-      "macys-2026": "MATCH",
-      "marriott-2025": "MATCH",
-      "pfizer-2025": "MATCH",
-      "salesforce-2026": "MATCH",
-      "southwest-2025": "MATCH"
-    },
-    "the_shape": "a lookup that comes back empty reads exactly like a document with nothing in it. Before reporting an absence, the finder has to be shown finding something."
-  },
-  "how_many_proxies_exist_and_how_many_are_saved": {
-    "measured": {
-      "enphase-2025": {
-        "declared": 16,
-        "saved": 1
-      },
-      "ford-2025": {
-        "declared": 33,
-        "saved": 1
-      },
-      "lumen-2025": {
-        "declared": 33,
-        "saved": 1
-      },
-      "macys-2026": {
-        "declared": 32,
-        "saved": 1
-      },
-      "marriott-2025": {
-        "declared": 29,
-        "saved": 1
-      },
-      "pfizer-2025": {
-        "declared": 32,
-        "saved": 1
-      },
-      "salesforce-2026": {
-        "declared": 23,
-        "saved": 1
-      },
-      "southwest-2025": {
-        "declared": 31,
-        "saved": 1
-      }
-    },
-    "reading": "each registrant declares 16 to 33 DEF 14A filings and exactly one is on disk. That is why every earlier period names a proxy it cannot read, and it is a source gap, not a reader defect - the distinction this round had to be forced to make."
-  },
-  "c04_was_recorded_as_untriaged_and_this_closes_it": {
-    "what_it_said": "five positions reported PREVIOUS_YEARS_FILING_NOT_READABLE, which reads as missing material while the route produced a value for each of them",
-    "three_defects_in_this_reading": [
-      "it demanded the prior year's primary HTML. The route's _auditor_filing reads any document of that accession carrying dei facts, and Enphase's prior accession holds enph-20241231_htm.xml and index.json and no primary HTML at all.",
-      "the prior accession was parsed out of an error string this reading had itself truncated to 140 characters - the URL breaks mid-accession, so the pattern could never match. The information was destroyed before it was read.",
-      "the prior period end was produced by replacing the year in the target's. Macy's 2026-01-31 became 2025-01-31; its 52/53-week prior period ended 2025-02-01, a date its calendar never had."
+    "published": "9601958",
+    "read": "9601958",
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "DELOITTE & TOUCHE LLP"
     ],
-    "the_fix_for_the_last_two_is_one_sentence": "do not recompute it - the period selection already carries prior_report_end and prior_filing, with the accession and the primary document name.",
-    "a_fourth_defect_stopped_before_it_shipped": {
-      "what": "text_fact matched only <ix:nonNumeric>. An XBRL instance writes the fact as a plain element and has no ix:nonNumeric at all, so reading one returned an empty set - indistinguishable from a filing that names no auditor.",
-      "how_it_was_caught": "the finder was asked for a document already known to contain the fact before its empty answers were believed: instance -> ['DELOITTE & TOUCHE LLP'].",
-      "side_effect": "both sides now unescape HTML entities, so the recorded string moves from 'DELOITTE &amp; TOUCHE LLP' to 'DELOITTE & TOUCHE LLP'. The comparison is unchanged because both sides move together."
+    "auditor_named_in_the_target_filing": [
+     "DELOITTE & TOUCHE LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:dc39cddaf98acc8cc9c39b7525d0acc3ad9d8ef7241c9113a89c7626f1fad408",
+      "run_id": "run:historical-period:b3fed913d280422efe81667cabfdb439c340d61ba4869c1032b62ba01e59b399"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001463101-25-000014",
+      "0001463101-25-000024",
+      "0001463101-25-000054",
+      "0001463101-25-000075",
+      "0001463101-25-000090",
+      "0001463101-25-000099",
+      "0001463101-25-000111",
+      "0001463101-26-000013"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
     },
-    "macys_is_an_observation_not_a_defect": {
-      "measured": "the target filing writes KPMG LLP and the prior one writes KPMG, LLP",
-      "the_judgement": "a difference of punctuation and case is the same firm. Comparing the strings as filed would report a change of auditor that no reader of the two filings would agree with. Both exact strings are recorded beside the verdict so the judgement is visible rather than folded away.",
-      "what_it_borrows": "this is the same normalisation the route uses, so if the route were too loose at this layer this reading would be too. Measured against that: the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it."
-    },
-    "one_more_limitation_worth_naming": "text_fact takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route. Each document here carries exactly one name, so there is no divergence to see in this corpus.",
-    "result": "C04 MATCH 1 -> 6. Southwest and Salesforce have no published C04 value at all (withheld), so NO_PUBLISHED_VALUE is the right answer for them."
+    "eight_k_item_4_01_in_window": [],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/enphase_energy_1463101_000146310125000024/enph-20241231_htm.xml",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1463101",
+   "company_id": "enphase_energy",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001463101-25-000024",
+    "primaryDocument": "enph-20241231.htm"
+   },
+   "target_document": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm"
   },
-  "read_against_batch": "/tmp/claude-0/native/par10"
+  "ford-2025": {
+   "C03": {
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:12d4387c28331e371b91d4d358483fd5d799573d1d287107106db3f50769584e",
+      "run_id": "run:historical-period:72456a8120f0af2aca40a8103bec4954fc4ba7df1c8510742a321bf5068b91a1"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001552781-26-000164"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+     "unit": "USD",
+     "value_kind": null
+    },
+    "def14a_declared": 33,
+    "def14a_documents_saved": 1,
+    "proxies_reporting_the_target_period": [
+     {
+      "per_officer_tagged": false,
+      "proxy": "evidence/accession_materials/ford_motor_company_37996_000155278126000164/e26003_f-def14a.htm",
+      "values": [
+       27519558
+      ]
+     }
+    ],
+    "published": "27519558",
+    "read": "27519558",
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "PricewaterhouseCoopers LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:204287910b1533af0784a367442167a2cefbff164e77288e258e825414efba17",
+      "run_id": "run:historical-period:a6153d808deb09a2ce19eed04b714b7a15c3a810d894e93a93626034c3ed1ac0"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000037996-25-000002",
+      "0000037996-25-000006",
+      "0000037996-25-000009",
+      "0000037996-25-000011",
+      "0000037996-25-000013",
+      "0000037996-25-000065",
+      "0000037996-25-000067",
+      "0000037996-25-000071",
+      "0000037996-25-000074",
+      "0000037996-25-000139",
+      "0000037996-25-000141",
+      "0000037996-25-000143",
+      "0000037996-25-000146",
+      "0000037996-25-000175",
+      "0000037996-25-000185",
+      "0000037996-25-000210",
+      "0000037996-25-000236",
+      "0000037996-25-000238",
+      "0000037996-26-000015"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/ford_motor_company_37996_000003799625000013/f-20241231_htm.xml",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "37996",
+   "company_id": "ford_motor_company",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000037996-25-000013",
+    "primaryDocument": "f-20241231.htm"
+   },
+   "target_document": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm"
+  },
+  "lumen-2025": {
+   "C03": {
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:3fc4086f85f22108b13b6a652cc52242602a54cd1b44b08de1b19717e4c53903",
+      "run_id": "run:historical-period:7851ccbd47253dc5e4817f0713343f5ddd0b255ebb6eb87c5d7772005aefce96"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000018926-26-000024"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+     "unit": "USD",
+     "value_kind": null
+    },
+    "def14a_declared": 33,
+    "def14a_documents_saved": 1,
+    "proxies_reporting_the_target_period": [
+     {
+      "per_officer_tagged": true,
+      "proxy": "evidence/accession_materials/lumen_technologies_18926_000001892626000024/lumn-20260401.htm",
+      "values": [
+       24936641
+      ]
+     }
+    ],
+    "published": "24936641",
+    "read": "24936641",
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:7c5431068f5f8d2ed191b9eebf0e261ce4957adb01f9248d202e231bea423c30",
+      "run_id": "run:historical-period:171ea9fc6fce4019d3053dccd65a5d199c62b1ed3da855b5f59853502d5f34ed"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000018926-25-000004",
+      "0000018926-25-000010",
+      "0000018926-25-000039",
+      "0000018926-25-000047",
+      "0000018926-25-000059",
+      "0000018926-25-000092",
+      "0000018926-25-000110",
+      "0000018926-26-000014",
+      "0001193125-25-124002",
+      "0001193125-25-141702",
+      "0001193125-25-152683",
+      "0001193125-25-172843",
+      "0001193125-25-182730",
+      "0001193125-25-196061",
+      "0001193125-25-198334",
+      "0001193125-25-203545",
+      "0001193125-25-223206",
+      "0001193125-25-308717",
+      "0001193125-25-311581",
+      "0001193125-25-327637",
+      "0001193125-25-330850"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/lumen_technologies_18926_000001892625000010/lumn-20241231_htm.xml",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "18926",
+   "company_id": "lumen_technologies",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000018926-25-000010",
+    "primaryDocument": "lumn-20241231.htm"
+   },
+   "target_document": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm"
+  },
+  "macys-2026": {
+   "C03": {
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:04fdb8c7b0b0c2933fa2848d5c9d2c07cae8b674b84df3bf1daaa92a8b4ece7d",
+      "run_id": "run:historical-period:b63f1711bfa26f91999ad902110b83d92a4efe7ab1b2a385ee232bd750469972"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001104659-26-037752"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-02",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+     "unit": "USD",
+     "value_kind": null
+    },
+    "def14a_declared": 32,
+    "def14a_documents_saved": 1,
+    "proxies_reporting_the_target_period": [
+     {
+      "per_officer_tagged": false,
+      "proxy": "evidence/accession_materials/macy_s_794367_000110465926037752/m-20260515xdef14a.htm",
+      "values": [
+       14104067
+      ]
+     }
+    ],
+    "published": "14104067",
+    "read": "14104067",
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG, LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:55b0c0614545a26c813e6f88e0902c19c7527ed53117d7f90d1a87a02a92f306",
+      "run_id": "run:historical-period:dfd3fdee50e30081b408e8c377f2fe4cd0ac8372e2454723b74721e8ee2da8b0"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000794367-25-000010",
+      "0000794367-25-000054",
+      "0000794367-25-000087",
+      "0000794367-25-000092",
+      "0000794367-25-000128",
+      "0000794367-25-000132",
+      "0000794367-25-000137",
+      "0000794367-25-000139",
+      "0000794367-25-000165",
+      "0000794367-25-000169",
+      "0001628280-25-010767",
+      "0001628280-25-014315",
+      "0001628280-25-028040",
+      "0001628280-25-054900",
+      "0001628280-26-021721"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-02",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/macy_s_794367_000162828025014315/m-20250201_htm.xml",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": true,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "794367",
+   "company_id": "macys",
+   "period": [
+    "2025-02-02",
+    "2026-01-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001628280-25-014315",
+    "primaryDocument": "m-20250201.htm"
+   },
+   "target_document": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm"
+  },
+  "marriott-2025": {
+   "C03": {
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:36f15c51f12ac59297989b1bd8b201397765bce8232871633f8668d5aaf7b16e",
+      "run_id": "run:historical-period:e2b6138937c17f89d58d3bd3ae2bc9ccefc3b9b83ed0e8a61f8ddf6fa8f7d7c8"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001140361-26-011590"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+     "unit": "USD",
+     "value_kind": null
+    },
+    "def14a_declared": 29,
+    "def14a_documents_saved": 1,
+    "proxies_reporting_the_target_period": [
+     {
+      "per_officer_tagged": true,
+      "proxy": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
+      "values": [
+       22970926
+      ]
+     }
+    ],
+    "published": "22970926",
+    "read": "22970926",
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:77dc141eaf548783ca940471db8e3ce15cbab1a2431ebf06722df6d35d3d01c8",
+      "run_id": "run:historical-period:12c8e806232c461c3a9958446620dceb24235117fee1598187c3f50e87c6d73a"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001048286-25-000011",
+      "0001048286-26-000007",
+      "0001193125-25-009110",
+      "0001193125-25-036732",
+      "0001193125-25-118853",
+      "0001193125-25-118861",
+      "0001193125-25-158742",
+      "0001193125-25-184082",
+      "0001628280-25-004772",
+      "0001628280-25-004818",
+      "0001628280-25-022390",
+      "0001628280-25-037592"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/marriott_international_1048286_000162828025004818/mar-20241231.htm",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "1048286",
+   "company_id": "marriott_international",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001628280-25-004818",
+    "primaryDocument": "mar-20241231.htm"
+   },
+   "target_document": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
+  },
+  "pfizer-2025": {
+   "C03": {
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:2d294ea4ea7b7a883dfd1c3105b66b84472859dc3d91b02e973b1df683d60544",
+      "run_id": "run:historical-period:7f25e958d39624dab68c4c932cee01dcdc532fff7ba73a2c7b8d6800ec0f3ca5"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000078003-26-000033"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+     "unit": "USD",
+     "value_kind": null
+    },
+    "def14a_declared": 32,
+    "def14a_documents_saved": 1,
+    "proxies_reporting_the_target_period": [
+     {
+      "per_officer_tagged": false,
+      "proxy": "evidence/accession_materials/pfizer_78003_000007800326000033/pfe-20260312.htm",
+      "values": [
+       27585301
+      ]
+     }
+    ],
+    "published": "27585301",
+    "read": "27585301",
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "KPMG LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "KPMG LLP"
+    ],
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:0f583d42abefdaebea6ca3ee7dad30277c8b18a75cf6130b7e56d4645f08ef0d",
+      "run_id": "run:historical-period:8c33594bd325b00cb0cd3436bd1f22e03c54671eb8a98cf813e10a472cc80d85"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0000078003-25-000017",
+      "0000078003-25-000054",
+      "0000078003-25-000109",
+      "0000078003-25-000111",
+      "0000078003-25-000136",
+      "0000078003-25-000149",
+      "0000078003-25-000159",
+      "0000078003-25-000167",
+      "0000078003-26-000026",
+      "0001193125-25-122480",
+      "0001193125-25-291406"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+     "unit": "flag",
+     "value_kind": null
+    },
+    "eight_k_item_4_01_in_window": [],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/pfizer_78003_000007800325000054/pfe-20241231_htm.xml",
+    "published": "0",
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "cik": "78003",
+   "company_id": "pfizer",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000078003-25-000054",
+    "primaryDocument": "pfe-20241231.htm"
+   },
+   "target_document": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm"
+  },
+  "salesforce-2026": {
+   "C03": {
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:965d6f4719b70e609e4c507bb25eab026e6c4c1e5ab9d56e0e0884025f9cbad9",
+      "run_id": "run:historical-period:a954e3fde6c29fc8aeaf59c6e902ffd29451d597123240c3133cc86bbf72e5c5"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001108524-26-000085"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+     "unit": "USD",
+     "value_kind": null
+    },
+    "def14a_declared": 23,
+    "def14a_documents_saved": 1,
+    "proxies_reporting_the_target_period": [
+     {
+      "per_officer_tagged": false,
+      "proxy": "evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+      "values": [
+       49379252
+      ]
+     }
+    ],
+    "published": "49379252",
+    "read": "49379252",
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "eight_k_item_4_01_in_window": [],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml",
+    "published": null,
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": null
+   },
+   "cik": "1108524",
+   "company_id": "salesforce",
+   "period": [
+    "2025-02-01",
+    "2026-01-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0001108524-25-000006",
+    "primaryDocument": "crm-20250131.htm"
+   },
+   "target_document": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm"
+  },
+  "southwest-2025": {
+   "C03": {
+    "checked_identity": {
+     "bound_from": {
+      "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+      "result_id": "sha256:dd4ec66fa3482fdb3086c3c5d04fd3186d048862fdff2023699ff74e3cc587d5",
+      "run_id": "run:historical-period:439be9367165536425fc6aba95ea83571e215945f2679ae2e256fe2e6b71c066"
+     },
+     "checked_against_the_reading": [
+      "value",
+      "filings_contain_the_filing_the_reading_opened",
+      "window"
+     ],
+     "entities": [],
+     "established_by": "RECORDED_AT_READING_TIME",
+     "filings": [
+      "0001193125-26-127237"
+     ],
+     "not_named_by_the_reading": [],
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+     "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+     "unit": "USD",
+     "value_kind": null
+    },
+    "def14a_declared": 31,
+    "def14a_documents_saved": 1,
+    "proxies_reporting_the_target_period": [
+     {
+      "per_officer_tagged": true,
+      "placeholders_set_aside": [
+       {
+        "members": [
+         "luv:GaryC.KellyMember"
+        ],
+        "same_person_paid_as_peo_in": [
+         "2021",
+         "2022"
+        ],
+        "shown": "—"
+       }
+      ],
+      "proxy": "evidence/accession_materials/southwest_airlines_92380_000119312526127237/d121727ddef14a.htm",
+      "values": [
+       16587882
+      ]
+     }
+    ],
+    "published": "16587882",
+    "read": "16587882",
+    "verdict": "MATCH",
+    "why_not_read": null
+   },
+   "C04": {
+    "auditor_named_in_the_previous_years_filing": [
+     "Ernst & Young LLP"
+    ],
+    "auditor_named_in_the_target_filing": [
+     "Ernst & Young LLP"
+    ],
+    "eight_k_item_4_01_in_window": [],
+    "previous_year_note": null,
+    "previous_year_read_from": "evidence/accession_materials/southwest_airlines_92380_000009238025000024/luv-20241231_htm.xml",
+    "published": null,
+    "read": "0",
+    "the_two_filings_spell_the_firm_differently": false,
+    "verdict": "NO_PUBLISHED_VALUE",
+    "why_not_read": null
+   },
+   "cik": "92380",
+   "company_id": "southwest_airlines",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "prior_filing": {
+    "accessionNumber": "0000092380-25-000024",
+    "primaryDocument": "luv-20241231.htm"
+   },
+   "target_document": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm"
+  }
+ },
+ "production_authorized": false,
+ "reader": "tools/read_governance_facts.py",
+ "record_type": "ISSUE_47_GOVERNANCE_READ",
+ "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+ "result": {
+  "c03": {
+   "differs": 0,
+   "match": 4,
+   "not_read": 4
+  },
+  "c04": {
+   "differs": 0,
+   "match": 1,
+   "no_published_value": 2,
+   "not_read": 5
+  }
+ },
+ "two_more_defects_in_the_reading_and_neither_announced_itself": {
+  "the_attribute_order": "the next version required id to be the first attribute, and Marriott's proxy writes an xmlns attribute before it. Same empty map, same silence. Six of eight C03 positions were NOT_READ for these two reasons and for nothing about the filings.",
+  "the_namespace_prefix": "the context parser matched xbrli-prefixed context elements only. Every 10-K here uses that prefix; the proxies do not always, so it returned an empty context map - which reads exactly like a document with no facts."
+ },
+ "what_is_still_not_read": {
+  "C03": "Paramount, whose C03 comes from the annual report's own compensation table rather than a proxy - the cascade's other level, already accepted by that reading.",
+  "C04": "nothing among the positions that have a value. Earlier periods are not attempted - the comparison needs the prior accession's materials, which are the acquisition plan's class A.",
+  "earlier_periods": "not attempted - one saved proxy per registrant, all filed in 2026."
+ },
+ "what_this_is": "CEO pay and the auditor-change flag, read from the source documents rather than through the route: the ecd pay-versus-performance fact in the pinned proxy for C03, and for C04 the auditor named in this year's and last year's 10-K together with any 8-K carrying item 4.01 in the window."
 }

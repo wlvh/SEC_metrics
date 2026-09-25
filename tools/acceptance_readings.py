@@ -1,9 +1,10 @@
 """Where each content reading keeps its per-position conclusions.
 
-Seven shapes: a statement read keyed by label with one row per metric, a
-lodging table keyed by label, an event window with its filing list, governance
-rows beside a period, a D02 text reading, the D01 heading readings (one shape,
-three files), and two single-coordinate readings. The acceptance register and the identity binder both have to walk
+Eight shapes: a statement read keyed by label with one row per metric, a
+lodging table keyed by label, an event window with its filing list, E01's
+item 8.01 reading over the same windows, governance rows beside a period, a D02
+text reading, the D01 heading readings (one shape, three files), and two
+single-coordinate readings. The acceptance register and the identity binder both have to walk
 them, and walking them twice with two sets of rules is how the two would come
 to disagree about which positions exist. So the walk is here, once.
 
@@ -27,6 +28,10 @@ EVIDENCE = "docs/evidence/issue47_history/content-acceptance/"
 CROSS = EVIDENCE + "cross-source-read.json"
 LODGING = EVIDENCE + "lodging-table-read.json"
 EVENTS = EVIDENCE + "event-count-read.json"
+# E01 counts an 8.01 only once a keyword in its text confirms it, which a count
+# of header item codes cannot check. Every 8.01 in the E01 windows is read here
+# by tools/read_e01_eight_o_ones.py, under each reading of that confirmation.
+E01_EIGHT_O_ONES = EVIDENCE + "e01-eight-o-one-read.json"
 GOVERNANCE = EVIDENCE + "governance-read.json"
 TEXT = EVIDENCE + "d02-both-directions-read.json"
 # D01 is read off each filing's bytes by tools/read_d01_headings.py, which
@@ -42,7 +47,8 @@ HEADINGS_PARAMOUNT_REPAIRED = EVIDENCE + "d01-paramount-repaired-read.json"
 D01_READINGS = (HEADINGS, HEADINGS_FROM_BYTES, HEADINGS_PARAMOUNT_REPAIRED)
 RPO = EVIDENCE + "rpo-read.json"
 COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
-READINGS = (CROSS, LODGING, EVENTS, GOVERNANCE, TEXT, *D01_READINGS, RPO, COMPENSATION)
+READINGS = (CROSS, LODGING, EVENTS, E01_EIGHT_O_ONES, GOVERNANCE, TEXT, *D01_READINGS, RPO,
+            COMPENSATION)
 # The readings key some positions by a label only. The label is what the
 # reading recorded, and this is the period each label names.
 PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
@@ -179,6 +185,14 @@ def positions(*, repo_root: Path, path: str, body):
                     published=row["published"], verdict=row["verdict"],
                     filings=listed, window=case["window"],
                     filings_are_the_whole_set=True, case=case))
+    elif path == E01_EIGHT_O_ONES:
+        for label, case in sorted(body["per_position"].items()):
+            found.append(_position(
+                reading=path, label=label, slot=case, company_id=case["company_id"],
+                metric_id="E01", period_end=case["period_end"],
+                published=case["published"], verdict=case["verdict"],
+                filings=case["filings_in_window"], window=case["window"],
+                filings_are_the_whole_set=True))
     elif path == GOVERNANCE:
         for label, case in sorted(body["per_position"].items()):
             for metric in ("C03", "C04"):

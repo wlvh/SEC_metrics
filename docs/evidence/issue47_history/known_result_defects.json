@@ -687,6 +687,43 @@
      "what_it_does_not_assert": "that the result is delivered or its content accepted: D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY still withdraws it, and no reading of the whole 42-item set is recorded."
     }
    ]
+  },
+  {
+   "defect_id": "E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM",
+   "company_id": "pfizer",
+   "metric_id": "E01",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Published 0. Pfizer's 8-K of 2025-11-13 (0000078003-25-000159) carries only item 8.01, headed 'Results of Other Events', and reports that Pfizer 'completed the previously announced acquisition of Metsera, Inc. ... pursuant to the Agreement and Plan of Merger'. The approved definition counts an 8.01 once a keyword in its text confirms it ('8.01 需正文关键词确认'); 'acquisition' and 'merger' are both in the item. Under every reading of that confirmation - literal in the item, literal anywhere in the document, or the item reporting a transaction - the count is 1.",
+   "root_cause": "deterministic_router.match_event_claims tests the aliases against the claim's 'brief'. adapt_8k_item_index sets that brief to '8-K item <code> parsed from hdr.sgml' whenever the filing's hdr.sgml carries item codes, and the primary-document heading only when it does not; catalog/event_routes.json puts HDR_SGML_ITEM_CODE first. Every filing in the seven windows has hdr item codes, so the 8.01 branch compares the aliases with a constant string that contains none of them and admits nothing. The heading text is computed (primary_heading_brief) and never matched. The router's bytes are frozen by the issue_28 generations and shared with the ordinary route, which carries the same behaviour.",
+   "scope_measured": "Twenty-three item 8.01 filings in the seven windows that deliver E01, each read whole (content-acceptance/e01-eight-o-one-read.json). One reports a transaction the registrant is party to - this one. Four carry an alias inside the item and only this one of them reports a transaction; the other three are Marriott's use of proceeds ('may include ... acquisitions', twice) and Macy's tender offer ('a combined aggregate purchase price'). Four more carry one only in another item (Item 1.01 covenant text, Item 7.01 'repricing transaction').",
+   "found_by": "the E01 8.01 reading, which reads each item off the saved primary document instead of reproducing the route's text scoping. The first extraction missed this very filing: it looked for the heading 'Other Events' and Pfizer's reads 'Results of Other Events', so the item read as empty and carried no alias - the same shape as the route's miss, one layer up.",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_AWAITS_THE_CONFIRMATION_READING",
+   "why_not_repaired_yet": "Pfizer's count is 1 under every reading, but any repair has to pick one, and the choice moves other positions: the literal reading in the item adds Marriott's two use-of-proceeds filings and Macy's tender offer, which are not M&A announcements. Which reading the definition means is the decision in e01-keyword-branch/decision.json.",
+   "evidence": [
+    "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json",
+    "docs/evidence/issue47_history/e01-keyword-branch/eight-o-one-judgements.json",
+    "docs/evidence/issue47_history/e01-keyword-branch/decision.json"
+   ]
+  },
+  {
+   "defect_id": "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL",
+   "company_id": "salesforce",
+   "metric_id": "B03",
+   "period_end": "2026-01-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Published 0.2295243829018663455749548465. The D&A it adds is DepreciationDepletionAndAmortization 1,200,000,000, which the filing tags in one sentence of its property and equipment note: 'Depreciation and amortization of fixed assets totaled $1.2 billion'. The filing's statement total, DepreciationAndAmortization 3,631,000,000, includes amortization of acquired intangibles - $692 million in cost of revenues and $995 million in sales and marketing - which the taken fact leaves out.",
+   "root_cause": "calculator._select_structured_fact takes the first approved concept that carries a candidate and never compares it with the later ones; B03's direct chain lists DepreciationDepletionAndAmortization first. A concept name is a clue, not proof of what a number covers, and here the filer uses the concept for a narrower quantity than the chain assumes.",
+   "scope_measured": "all nine B03 filings in this frame (b03-depreciation-scope/finding.json). This is the only one whose direct D&A candidates disagree; Lumen tags two direct concepts and they agree.",
+   "found_by": "the D&A-family census over each filing's own inline XBRL, run while re-reading the one B03 value the earlier cross-source reading had written up as 'the route is right and the reading cannot confirm it'. That record said the primary document does not tag DepreciationDepletionAndAmortization; it does.",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_AWAITS_A_DECISION",
+   "why_not_repaired_yet": "the statement total cannot simply replace the subtotal: it also carries amortization and impairment of right-of-use assets, the definition says impairment is not added back, and the year's amount is not tagged separately. The recommended repair - withhold when direct D&A candidates disagree - changes the approved selection rule, so it goes through the revision mechanism. See b03-depreciation-scope/finding.json.",
+   "evidence": [
+    "docs/evidence/issue47_history/b03-depreciation-scope/finding.json",
+    "docs/evidence/issue47_history/b03-depreciation-scope/da_census.py"
+   ]
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

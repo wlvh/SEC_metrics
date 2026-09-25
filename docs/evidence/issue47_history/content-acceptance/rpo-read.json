@@ -12,15 +12,15 @@
    "run_id": "run:historical-period:6b72f4058457b351aa3bb3b0d5dc0f0bb956a0349d74d8c68e3b99cfa688af37"
   },
   "checked_against_the_reading": [
-   "value"
+   "value",
+   "filings_contain_the_filing_the_reading_opened"
   ],
   "entities": [],
-  "established_by": "BOUND_AFTER_THE_READING",
+  "established_by": "RECORDED_AT_READING_TIME",
   "filings": [
    "0001108524-26-000060"
   ],
   "not_named_by_the_reading": [
-   "filings",
    "window"
   ],
   "period_end": "2026-01-31",
@@ -31,6 +31,20 @@
   "value_kind": null
  },
  "company_id": "salesforce",
+ "facts_not_taken": [
+  {
+   "instant": "2025-01-31",
+   "members": [],
+   "value": "63400000000.0"
+  },
+  {
+   "instant": "2026-01-31",
+   "members": [
+    "crm:InformaticaInc.Member"
+   ],
+   "value": "2200000000.0"
+  }
+ ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "metric_id": "B12",
  "period_end": "2026-01-31",
@@ -47,6 +61,7 @@
    "63.4 billion at 2025-01-31": "the prior period, which this metric's current_instant role does not ask for"
   }
  },
+ "reader": "tools/read_single_facts.py",
  "record_type": "ISSUE_47_RPO_READ",
  "verdict": "MATCH",
  "what_this_does_not_establish": "that RPO is a good substitute for ARR, which is a product question the approved definition already answers by naming it a substitute. It establishes that the published figure is the registrant's own reported remaining performance obligation at the period end.",

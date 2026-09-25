@@ -1,0 +1,49 @@
+{
+ "record_type": "ISSUE_47_STATEMENT_READER_FAULT_INJECTIONS",
+ "suite": "tests.vnext.test_statement_fact_reading",
+ "baseline": "11 tests, OK",
+ "injections": [
+  {
+   "name": "INT_PARSE_SKIPS_DECIMALS",
+   "what": "the defect of the uncommitted reading this replaces: a value int() cannot parse is skipped",
+   "caught_by": [
+    "test_a_value_with_a_decimal_point_is_read",
+    "test_two_names_for_total_d_and_a_that_disagree_accept_neither",
+    "test_an_unparseable_needed_value_is_listed_not_dropped",
+    "test_every_position_and_metric[salesforce-2026]"
+   ]
+  },
+  {
+   "name": "NO_FIXED_ZERO",
+   "what": "the SEC's fixed-zero dash left unparsed",
+   "caught_by": [
+    "test_the_fixed_zero_dash_is_zero"
+   ],
+   "note": "no needed fact in these ten filings is a fixed-zero dash in an undimensioned fiscal-year context, so only the built case sees it"
+  },
+  {
+   "name": "FIRST_DUPLICATE_WINS",
+   "what": "duplicates resolved by taking the first",
+   "caught_by": [
+    "test_duplicates_that_do_not_round_to_each_other_have_no_value"
+   ],
+   "note": "every duplicate of a needed fact in these filings has the same value and precision, so only the built case sees it"
+  },
+  {
+   "name": "NO_DISAGREEMENT_CHECK",
+   "what": "B03 accepted when two names for total D&A disagree",
+   "caught_by": [
+    "test_two_names_for_total_d_and_a_that_disagree_accept_neither",
+    "test_every_position_and_metric[salesforce-2026]"
+   ]
+  },
+  {
+   "name": "DROP_UNREAD_LIST",
+   "what": "an unparseable needed value dropped silently",
+   "caught_by": [
+    "test_an_unparseable_needed_value_is_listed_not_dropped"
+   ]
+  }
+ ],
+ "restored": "the reader compared byte for byte with its copy after the last injection"
+}

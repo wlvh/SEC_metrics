@@ -211,6 +211,32 @@ SOURCE_TESTS += ("tests.vnext.test_historical_capacity_results",)
 # reads admitted as an input. It reads both registrants' catalogs and two
 # years of annual reports; 75 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_predecessor_periods",)
+# E01's item 8.01 reading, which the route's constant brief never reaches:
+# each step checked on the filing it exists for, the verdict held to every
+# reading of the confirmation, and every committed item re-derived from the
+# saved bytes. It reads 22 small 8-K documents; 1.5 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_e01_eight_o_one_reading",)
+# B03's D&A census: the chain's first concept found where Salesforce tags it on
+# fixed-asset depreciation only, and the nine filings' direct candidates
+# disagreeing at that one filing and no other. Reads nine 10-K documents.
+SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope",)
+# The statement reading behind 75 acceptances, committed in place of one that
+# was not and that skipped every value int() could not parse. Each rule on
+# the filing that needs it, and the committed reading re-derived from the
+# ten saved 10-Ks. Parses about 30 MB; under a second measured.
+SOURCE_TESTS += ("tests.vnext.test_statement_fact_reading",)
+# The event-count reading behind C01 and E02-E05: every window's filings and
+# counts re-derived from the saved index and headers, the index being the
+# ledger's latest successful copy, and an 8-K/A counted as its own entry.
+SOURCE_TESTS += ("tests.vnext.test_event_count_reading",)
+# The governance reading behind C03 and C04: the pay table's placeholder dash
+# for a year a person was not PEO, read from the table itself, and every
+# position re-derived from the saved proxies and annual reports.
+SOURCE_TESTS += ("tests.vnext.test_governance_reading",)
+# The lodging, RPO and compensation readings re-derived from the saved
+# filings: the scope section's Worldwide row rather than the first one, the
+# two RPO facts not taken, and a compensation row that must sum to its total.
+SOURCE_TESTS += ("tests.vnext.test_single_readings",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

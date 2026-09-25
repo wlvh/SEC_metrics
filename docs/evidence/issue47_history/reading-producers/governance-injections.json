@@ -1,0 +1,35 @@
+{
+ "record_type": "ISSUE_47_GOVERNANCE_READER_FAULT_INJECTIONS",
+ "suite": "tests.vnext.test_governance_reading",
+ "baseline": "6 tests, OK",
+ "injections": [
+  {
+   "name": "NO_PLACEHOLDER_RULE",
+   "what": "every PEO total counted, the fixed-zero dash included",
+   "caught_by": [
+    "test_every_position[southwest-2025]",
+    "test_a_dash_for_a_person_paid_as_peo_in_other_years_is_set_aside"
+   ]
+  },
+  {
+   "name": "SET_ASIDE_EVERY_DASH",
+   "what": "any fixed-zero dash set aside, whether or not the table pays that person elsewhere",
+   "caught_by": [
+    "test_a_dash_for_a_person_the_table_never_pays_still_counts"
+   ],
+   "note": "built case: no proxy here has a dash for a person it never pays"
+  },
+  {
+   "name": "SKIP_THE_DASH_AS_THE_OLD_CODE_DID",
+   "what": "the uncommitted reading's behaviour - a value int() could not parse skipped - which reached the right answer for Southwest by accident",
+   "caught_by": [
+    "test_every_position[southwest-2025]",
+    "test_a_dash_for_a_person_paid_as_peo_in_other_years_is_set_aside",
+    "test_a_dash_for_a_person_the_table_never_pays_still_counts",
+    "test_the_dash_is_zero_and_it_is_there"
+   ]
+  }
+ ],
+ "what_the_first_version_of_this_commit_got_wrong": "it parsed the dash as zero and counted it, so Southwest's 2025 row read as two PEO totals and C03 was refused. The table carries Gary C. Kelly's column for every year and pays him only in 2021 and 2022, so the 2025 dash is the table's placeholder. The rule set aside is stated from the table itself, not from the route's rule, which keys on the typed PEO-name contexts instead.",
+ "restored": "the reader compared byte for byte with its copy after the last injection"
+}

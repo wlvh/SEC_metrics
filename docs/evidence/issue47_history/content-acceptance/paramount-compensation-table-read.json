@@ -16,7 +16,7 @@
    "filings_contain_the_filing_the_reading_opened"
   ],
   "entities": [],
-  "established_by": "BOUND_AFTER_THE_READING",
+  "established_by": "RECORDED_AT_READING_TIME",
   "filings": [
    "0001140361-26-016758"
   ],
@@ -38,11 +38,13 @@
   "salary": "1408046",
   "stock_awards": "58700000"
  },
+ "components_sum_to_the_total": true,
  "document": "evidence/accession_materials/paramount_skydance_paramount_global_2041610_000114036126016758/ef20071103_10ka.htm",
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "period_end": "2025-12-31",
  "production_authorized": false,
  "published": "63211569",
+ "reader": "tools/read_single_facts.py",
  "record_type": "ISSUE_47_COMPENSATION_TABLE_READ",
  "total_read": "63211569",
  "verdict": "MATCH",

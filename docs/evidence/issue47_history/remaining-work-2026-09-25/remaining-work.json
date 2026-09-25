@@ -1,0 +1,134 @@
+{
+ "baseline": {
+  "blocked_on_sources": {
+   "SOURCE_MISSING_TARGET_ORIGINAL": 1287,
+   "TARGET_PERIOD_METADATA_BLOCKED": 78,
+   "TARGET_PERIOD_NOT_DISCOVERED": 117
+  },
+  "frame_positions": 1950,
+  "reachable_by_company": {
+   "enphase_energy": 1,
+   "ford_motor_company": 1,
+   "jpmorgan_chase": 0,
+   "lumen_technologies": 1,
+   "macys": 1,
+   "marriott_international": 3,
+   "paramount_skydance_paramount_global": 2,
+   "pfizer": 1,
+   "salesforce": 1,
+   "southwest_airlines": 1
+  },
+  "reachable_periods": 12,
+  "reachable_positions": 468,
+  "routes": {
+   "not_wired": [
+    "D03",
+    "D04"
+   ],
+   "scope_answer_only": [
+    "B13"
+   ],
+   "structural_only": [
+    "A03",
+    "A04",
+    "A09",
+    "A11",
+    "A12",
+    "A13"
+   ],
+   "wired": 30
+  }
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "content": {
+  "acceptances": 154,
+  "defects_registered": 14,
+  "defects_withdrawing_current_results": [
+   "D02_PFIZER_2025_SCOPE_CONTENT_READ",
+   "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+   "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES",
+   "E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM",
+   "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL"
+  ],
+  "not_yet_read": [
+   "Paramount FY2024 C02, D01, D02",
+   "C02 for nine companies",
+   "B06 for three positions, two of which reproduce only by solving backwards"
+  ],
+  "reading_producers": "docs/evidence/issue47_history/reading-producers/README.md"
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "offline_implementation": [
+  {
+   "evidence": "docs/evidence/issue47_history/semantic-route-need/measured.json",
+   "item": "semantic routes B13 (in scope: Ford, Enphase), D03, D04",
+   "next": "#47's own model-call session (recorded mode for tests, live refusing without an allowance), historical wiring, recorded-response tests",
+   "state": "input preparation measured ready; #28's responses not reusable"
+  },
+  {
+   "item": "financial metrics' applicable branch (A03, A04, A09, A11, A12, A13)",
+   "next": "sequenced after JPMorgan's shards (acquisition class A); porting now ships a branch no position can exercise",
+   "state": "a small port - the ordinary route's only period dependency is prepare_saved_annual_input - but the frame's only financial registrant, JPMorgan, fails selection for every target period"
+  },
+  {
+   "evidence": "docs/evidence/issue47_history/d02-content-read/keyword-proxy-scope.json",
+   "item": "D02 keyword proxy",
+   "next": "a criterion with more than one example behind it",
+   "state": "five blocks wrongly taken across Pfizer, Lumen and Paramount are registered and withdrawn; the candidate criterion was falsified by Macy's block 1065"
+  },
+  {
+   "item": "C02 proxy-amendment branch",
+   "next": "material",
+   "state": "carried, exercised by nothing in this repository (no DEF 14A/A)"
+  }
+ ],
+ "owner_decisions": [
+  {
+   "decision": "E01 8.01 keyword confirmation",
+   "evidence": "docs/evidence/issue47_history/e01-keyword-branch/decision.json",
+   "recommendation": "C_ALIAS_IN_THE_ITEM_REFERRING_TO_A_TRANSACTION"
+  },
+  {
+   "decision": "B03 when two names for total D&A disagree",
+   "evidence": "docs/evidence/issue47_history/b03-depreciation-scope/finding.json",
+   "recommendation": "C_WITHHELD_WHEN_DIRECT_CANDIDATES_DISAGREE"
+  },
+  {
+   "decision": "Part III amendment and statement-class inputs",
+   "evidence": "docs/evidence/issue47_history/part-iii-statement-review/finding.json"
+  },
+  {
+   "decision": "Part III amendment wording outside the approved pattern (predecessor FY2024)",
+   "evidence": "docs/evidence/issue47_history/part-iii-statement-review/second-instance.json",
+   "positions": 14
+  },
+  {
+   "cap": 1352,
+   "decision": "Issue #47 SEC acquisition allowance",
+   "evidence": [
+    "docs/evidence/issue47_history/acquisition-plan.json",
+    "docs/evidence/issue47_history/acquisition-wiring/proposed-allowance.json"
+   ]
+  },
+  {
+   "decision": "Issue #47 model-call allowance for B13, D03, D04",
+   "evidence": "docs/evidence/issue47_history/semantic-route-need/measured.json"
+  }
+ ],
+ "record_type": "ISSUE_47_REMAINING_WORK",
+ "recorded_not_proposed": [
+  {
+   "evidence": "docs/evidence/issue47_history/e01-keyword-branch/decision.json",
+   "what": "E01 counts every 1.01 without confirmation; 11 of the 13 in these windows are debt agreements"
+  },
+  {
+   "evidence": "docs/evidence/issue47_history/content-acceptance/cross-source-read.json (later_chain_concepts_the_filing_also_tags)",
+   "what": "B01 takes contract revenue before total revenues; Lumen's and Macy's contract revenue are 8.6% and 3.8% below the total revenues they also tag"
+  }
+ ],
+ "supersedes": "docs/evidence/issue47_history/remaining-implementation.json, which counted unwired metrics and chose C04 as the next route; C04, C02, C03, B06, B10, B11, D01 and B13's out-of-scope branch have been wired since"
+}
