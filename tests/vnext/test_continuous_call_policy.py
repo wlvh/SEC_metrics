@@ -2,11 +2,15 @@
 from copy import deepcopy
 import json
 import unittest
+from pathlib import Path
+from unittest.mock import patch
 
 from vnext.canonical import sha256_bytes,strict_json_file
 from vnext.continuous_call_policy import POLICY_PATH,delegation_fields
 from vnext.normal_source_authority import ROOT
 from vnext.continuous_semantic_calls import usage_observation,usage_error
+from vnext.requirements import load_requirement_snapshot
+from vnext import requirement_profile_v15
 
 
 class ContinuousCallPolicyTest(unittest.TestCase):
@@ -47,6 +51,22 @@ class ContinuousCallPolicyTest(unittest.TestCase):
         self.assertEqual(usage_observation(b'{"usage":{"prompt_tokens":0,"completion_tokens":0}}')['input_tokens'],0)
         self.assertEqual(usage_error(b'{"usage":{"prompt_tokens":10,"completion_tokens":2,"total_tokens":13}}'),'USAGE_UNKNOWN')
         self.assertEqual(usage_error(b'{"usage":{"prompt_tokens":10,"completion_tokens":2,"total_tokens":12}}'),'')
+
+    def test_current_transfer_names_actual_parent_not_old_historical_closure(self):
+        snapshot=ROOT/'requirements/issue_28_v14'
+        current=load_requirement_snapshot(snapshot_dir=snapshot)
+        self.assertEqual(current['transfer']['parent_requirement_closure_hash'],
+                         current['parent_requirement_closure_hash'])
+        original=requirement_profile_v15.strict_json_file
+        def old_transfer(*,path):
+            value=original(path=path)
+            if Path(path)==snapshot/'transfer_manifest.json':
+                return {**value,'parent_requirement_closure_hash':
+                    'sha256:047e4d4061740281e125ae8fde7ddf3277e0d00bf250b574c040c48bcf8f1bf8'}
+            return value
+        with patch.object(requirement_profile_v15,'strict_json_file',side_effect=old_transfer):
+            with self.assertRaisesRegex(ValueError,'transfer parent identity differs'):
+                load_requirement_snapshot(snapshot_dir=snapshot)
 
 
 if __name__=='__main__':unittest.main()

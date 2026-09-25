@@ -7,14 +7,14 @@
   "contract_revision": "continuous-calls-and-b13-v1",
   "parent": {
     "requirement_id": "issue_28_v13",
-    "requirement_closure_hash": "sha256:1711224d7715d81b066e304f5ba14f7b1501a96ec7b47095c25b5dedf76108f1",
+    "requirement_closure_hash": "sha256:ecaef2291efd6eae67f5c1625ee794514c5d05988a4f9348208219ae4601ea01",
     "snapshot_files": {
       "decision_register.json": {
         "sha256": "15b7023fd433c5bef7633e067b361ca1f26b5b94bf9642df752a47cd32fa77c5",
         "size": 7829
       },
       "baseline_manifest.json": {
-        "sha256": "a220ae4b6d57ca369178370ab8cc7e2828b09a7aea3d6be6160f4a364c6051c8",
+        "sha256": "5e182a0e36097486553138e1d38706d1a25aab10a1150a8265a72e868dd1cacf",
         "size": 71473
       },
       "invariant_profile.json": {
@@ -36,8 +36,8 @@
   },
   "validator": {
     "path": "scripts/vnext/requirement_profile_v15.py",
-    "sha256": "794923cf5838664dfe0a7dafc91bab4d022ce59edebc6545535857ff2d4e8b4a",
-    "size": 7027,
+    "sha256": "5adb695ef9edc46dcc1aa592feaaf5c011b58e78e872c54d4cb6835ee39199af",
+    "size": 7259,
     "dependencies": [
       "scripts/vnext/continuous_call_policy.py",
       "scripts/vnext/requirement_profile_v1.py",
@@ -190,8 +190,8 @@
       "size": 3010
     },
     "scripts/vnext/requirement_profile_v15.py": {
-      "sha256": "794923cf5838664dfe0a7dafc91bab4d022ce59edebc6545535857ff2d4e8b4a",
-      "size": 7027
+      "sha256": "5adb695ef9edc46dcc1aa592feaaf5c011b58e78e872c54d4cb6835ee39199af",
+      "size": 7259
     },
     "docs/evidence/issue28_continuous/resume-2026-09-13/approval-comment.json": {
       "sha256": "66c4d53e6374030458c2beb89d84f5211ac5676ab2b74589c8a48a053ee7cfe7",
@@ -1645,8 +1645,8 @@
         "size": 5714
       },
       "scripts/vnext/requirement_profile_v15.py": {
-        "sha256": "794923cf5838664dfe0a7dafc91bab4d022ce59edebc6545535857ff2d4e8b4a",
-        "size": 7027
+        "sha256": "5adb695ef9edc46dcc1aa592feaaf5c011b58e78e872c54d4cb6835ee39199af",
+        "size": 7259
       },
       "scripts/vnext/requirement_profile_v2.py": {
         "sha256": "a814bdddf0a54e239b0322e07df342a05bd12c907e1e79edbeba5500986bb2dc",

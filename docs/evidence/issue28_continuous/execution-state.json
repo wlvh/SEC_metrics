@@ -37,9 +37,11 @@
     "D04 all ten companies have complete real native candidates; Enphase173-178 and Paramount179-188 passed full Run/public row and independent cold read. No production adoption.",
     "B13 Enphase group0 V3 failed189 and one reviewed V4 engineering repair SUCCEEDED190; old189 retained. Group1 V3 failed191 and its sole V4 repair failed192, both length4096 and counted. No complete B13 company.",
     "After real192 V4 again enumerated155 nonrequired other_context findings and truncated. Pause Enphase groups2-5 and Ford same-scheme paid execution; their base opportunities remain unclaimed. Provider channel is open, but a common correctness risk remains.",
-    "Paramount C04 four 8-K12B variant primary/header dependencies are VERIFIED in original installed source via prior SEC ordinals105-108; current discovery and exact source bytes checked with zero new SEC calls. EY belongs to Skydance Media LLC; PwC hit in original 8-K12B is biography, not registrant auditor continuity. C04 still unresolved; B06, normal update, complete390 and old-entry retirement remain. D03 no calls. No production authority."
+    "Paramount C04 four 8-K12B variant primary/header dependencies are VERIFIED in original installed source via prior SEC ordinals105-108; current discovery and exact source bytes checked with zero new SEC calls. EY belongs to Skydance Media LLC; PwC hit in original 8-K12B is biography, not registrant auditor continuity. C04 still unresolved; B06, normal update, complete390 and old-entry retirement remain. D03 no calls. No production authority.",
+    "Working-tree-only ordinary V14 binding repair: v13 ledger execution bytes and v14 parent/transfer closure synchronized; loader rejects stale transfer parent. Enphase B06 positive Run, two update materials, 15 ordinary Run cases, current B13/SEC wiring and 127 fast selectors pass locally. Exact patch SHA and current-head CI still pending; no new calls."
   ],
   "next": [
+    "Review exact ordinary-binding patch SHA, verify committed bytes equal tested working tree, push append-only, then classify each affected current-head CI job; source-material 35-minute cancellation is separate from the confirmed v13 ledger binding mismatch.",
     "Preserve original189/191/192 failures and190 success. Do not resample Enphase group1: both its base and one repair opportunity are consumed. Do not purchase further same V4 groups while shared truncation mechanism remains.",
     "Keep B13 same-scheme calls paused. For Paramount C04, stop treating four 8-K12B sources as missing: installed-source and source-content evidence exists; versioned form acceptance and the new-registrant/no-prior-same-CIK negative rule remain separate business/implementation decisions. Continue B06/update/390 work without borrowing an auditor from another entity.",
     "For B13 continuation, present observed V3/V4 limits and concrete alternative with source/required coverage, expected call impact and exact authorization boundary; do not manufacture a digest or silently enlarge4096.",
@@ -1763,5 +1765,68 @@
     "production_authorized": false,
     "sec_offline_wiring": "ordinary-refresh-cycle/sec-wiring.json",
     "sec_current_recorded_bridge": "paramount-c04-source-inspection/registration-form-discovery/sec-current-bridge-summary.json"
+  },
+  "ordinary_v14_binding_repair_20260925": {
+    "status": "LOCAL_UNCOMMITTED_TESTED_SCOPED_REVIEW_PENDING",
+    "before_git_head": "2c2aa8de5d070c598141237f45de82ee92b998a3",
+    "source_code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "v13_closure_after": "sha256:ecaef2291efd6eae67f5c1625ee794514c5d05988a4f9348208219ae4601ea01",
+    "v14_closure_after": "sha256:1f110dbc1f68506673772a991e18a5d3c5bcbe996360d8c5fb36687ce48bc504",
+    "execution_ledger_old_binding": {
+      "sha256": "735accb3497190165e8b64f44f9819a4cfd4cd8c7fbf085c4a4f5d87a386691b",
+      "size": 16070
+    },
+    "execution_ledger_current_binding": {
+      "sha256": "50ff87a44129798805ecdcf203cefaabb3e8876997fa84f3e5a3c7bfd5170750",
+      "size": 21018
+    },
+    "v14_transfer_parent_history": "Matched baseline at 8346c326; baseline changed at 7804842e but transfer remained stale until this fix",
+    "shared_with_47": {
+      "scope_paths": [
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json",
+        "scripts/vnext/requirement_profile_v15.py"
+      ],
+      "functions": [
+        "requirement_profile_v15.load_profile_requirement_snapshot"
+      ],
+      "default_binding_function_changed": false,
+      "records_or_return_types_changed": false,
+      "other_branch_modified": false
+    },
+    "directed_tests": "8_PASS",
+    "representative_positive": "enphase_energy:B06:2025-12-31 OPEN EXACT 1.107959077222837051285943352",
+    "ordinary_native_material": "15_OF_15_POSITIVE_AND_NEGATIVE_CASES_PASS",
+    "update_history": "PASS_359.613s",
+    "update_independent": "PASS_367.714s",
+    "b13_190_current_reuse": "PASS_READ_ONLY_NO_NEW_CALL",
+    "provider_wiring": "22_PASS_CURRENT_CLOSURE",
+    "sec_recorded_native_cold": "PASS_90.211s_CURRENT_CLOSURE",
+    "fast_suite": "127_OF_127_PASS",
+    "fixed_review_snapshot": "REVIEW_SNAPSHOT_CORRESPONDENCE_VERIFIED_NOT_PRODUCT_ACCEPTANCE",
+    "old_source_material_ci": "CANCELLED_AT_35_MINUTE_JOB_LIMIT_NO_TEST_TERMINAL",
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "patch_sha": null,
+    "scoped_review": null,
+    "new_head_ci": null,
+    "production_authorized": false,
+    "evidence": "ordinary-v14-binding-repair-20260925/"
+  },
+  "ci_36016700987": {
+    "head": "2c2aa8de5d070c598141237f45de82ee92b998a3",
+    "overall": "FAILURE",
+    "jobs_total": 14,
+    "jobs_success": 5,
+    "jobs_failure": 8,
+    "jobs_cancelled": 1,
+    "confirmed_common_setup_root": "issue_28_v13 execution authority stale continuous_call_ledger.py in recorded source/remaining source/ordinary positive Run paths",
+    "update_jobs": "failed status assertions; locally rerun and passed after binding fix",
+    "source_material": "cancelled at 35-minute job limit, no material test verdict",
+    "new_head_not_yet_observed": true
   }
 }
