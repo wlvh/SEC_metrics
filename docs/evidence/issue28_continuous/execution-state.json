@@ -2286,6 +2286,25 @@
       "independent_review": "NEEDS_FIX_TWO_P2_CANDIDATE_CONFLICT_AND_SOURCE_BINDING",
       "independent_review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor/conclusion.md",
       "next_required_design": "EXACT_SOURCE_RECONSTRUCTION_AND_PER_CANDIDATE_RESPONSE_BINDING"
+    },
+    "anchor_successor_repair": {
+      "status": "OFFLINE_CODE_AND_DIRECTED_TEST_PASS_SCOPED_INDEPENDENT_REVIEW_PENDING",
+      "scope_paths": [
+        "scripts/vnext/regulatory_fact_review.py",
+        "tests/vnext/test_regulatory_fact_review.py"
+      ],
+      "source_boundary": "REPREPARE_SAVED_SOURCE_AND_EXACTLY_MATCH_ORIGINAL_REQUEST_FROM_INSTALLED_ROOT",
+      "candidate_boundary": "EXPLICIT_CANDIDATE_ID_TO_DISTINCT_FINDING_INDICES; CONFLICT_RETAINS_UNRESOLVED",
+      "no_network_test": "JPM_SAVED_SOURCE_1_PASS_61.944_SECONDS_CURRENT_TEST_SOURCE",
+      "prior_full_reprepare_test": "JPM_SAVED_SOURCE_1_PASS_185.804_SECONDS_BEFORE_TEST_MATRIX_OPTIMIZATION",
+      "real_new_calls": [
+        0,
+        0,
+        0
+      ],
+      "d03_live_bound": false,
+      "native_result_created": false,
+      "independent_review": "PENDING_NEW_PATCH_SHA"
     }
   },
   "ci_36116965890": {
