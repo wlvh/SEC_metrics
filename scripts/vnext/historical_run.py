@@ -83,7 +83,12 @@ def install_historical_run_inputs(*, data_root, company_id, metric_id, period_se
                                             metric_id=metric_id,
                                             period_selection=period_selection,
                                             assessment_mode=assessment_mode)
-    requirement = _requirement(source_root)
+    # The Requirement is the runtime's, as in the ordinary installer: a source
+    # root is data, and the authority files are copied from ROOT below. Reading
+    # it from the source root made every external root - the kind an
+    # acquisition session produces - refuse with "Requirement JSON is missing",
+    # and no caller had ever passed one, so nothing had seen it.
+    requirement = _requirement(ROOT)
     case = {"source_proofs": prepared["source_proofs"], "primary_metric_id": metric_id}
     extra = None
     if prepared.get("registered_assessment") is not None:

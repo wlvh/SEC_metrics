@@ -87,6 +87,17 @@ def prepare_original_historical_input(*, repo_root: Path, company_id: str, perio
         names = registrant["primary_catalog"]["loaded_inventories"]
         primary_catalog = [read(submissions_url(cik=_cik(company["primary_cik"])))] + [
             read(submissions_file_url(file_name=name)) for name in names[1:]]
+    # The reporting registrant's own history blocks, for the same reason. The
+    # selection names every block it loaded, the main document first, and
+    # re-deriving it in an installed root loads them again. A period whose
+    # prior year sits in a block (Salesforce FY2024, Pfizer FY2021) or whose
+    # own row does (Salesforce FY2023) needs them carried; without them the
+    # rebuild in the data root stops on its own selection. A period the main
+    # document covers alone loads none, so no reachable period's proofs change.
+    loaded = period_selection["loaded_inventories"]
+    _need(bool(loaded) and loaded[0] == inventory["proof"]["document_name"],
+          "HISTORICAL_SELECTION_INVENTORY_ORDER_CHANGED", "IMPLEMENTATION_GAP")
+    own_catalog = [read(submissions_file_url(file_name=name)) for name in loaded[1:]]
     filing = selection["filing"]
     accession = filing["accessionNumber"]
     primary = read(accession_document_url(cik=cik, accession=accession,
@@ -123,7 +134,8 @@ def prepare_original_historical_input(*, repo_root: Path, company_id: str, perio
             "table_input": {**arguments(primary), "source_media_type": "text/html",
                             "source_role": "target_primary"},
             "source_proofs": [s["proof"] for s in (inventory, primary, facts,
-                                                   *amendment_sources, *primary_catalog)],
+                                                   *amendment_sources, *primary_catalog,
+                                                   *own_catalog)],
             "selection_rule": SELECTION_RULE,
             "period_selection": period_selection,
             "source_evidence": "LEDGER_BOUND_SAVED_BYTES",

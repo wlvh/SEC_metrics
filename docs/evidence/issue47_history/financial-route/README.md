@@ -31,6 +31,19 @@ A03/A04/A09/A11/A12/A13 按 `financial` 特征门控。此前历史路线只答�
 - JPMorgan 每个目标期间的期间选择都以 `ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT` 停下（保存的目录与分片不一致），所以没有 JPMorgan 位置到达本路线。本轮移动的是"路线存在"这一层（30 个位置），不是任何交付值。
 - **来源集发现只读主 submissions 文档的 recent 块**（普通路线、钉定的 accession 路线、Company Facts 与零 AI 报表路线的 `_exact_set` 都如此）。`measure_target_row_blocks.py` 实测（`target-row-blocks.json`）：JPMorgan 主文档只列 2025-08-15 到 2026-08-17 的申报，FY2024 的 10-K 行在历史块 004；Salesforce 的 FY2023、FY2022 两行也不在主文档。加上 JPMorgan 三个尚未发现的期间（其 10-K 必然早于 2025-08-15），**50 个目标期间里有 6 个**的目标行只在历史块里。这些期间的原件与目录即便全部取得，上述路线仍会在来源集发现处以 `Source-set references differ from submissions discovery` 停下——**这是实现缺口，不是披露缺失，也不是获取能解决的**。今天没有任何一个"原件已存且行在历史块"的期间，所以没有真实正例可测；修法（按目标行所在的块作为来源集的清单，冻结路由器本就接受历史块）已知，待有正例或在获取之前做。
 
+## 端到端：唯一一个能跑通银行期间的根（`recorded_bank_run.py`）
+
+本仓库保存的 JPMorgan 目录里，历史块正文都落在索引声明的区间之外，所以每个期间都停在期间选择。刷新链（`tests/vnext/test_historical_sec_session.py` 的 `ARefreshIsFinishedWhenThePlanStopsAskingForIt`）造了一个记录根：索引按已存的六个历史块自身正文重新推出区间，其余全部是本仓库已存的字节。在这个根上 FY2025 能选出来，而且它的选择**读了六个历史块**（上一年 10-K 在块 004 里）——这是本仓库唯一一个"原件已存、且选择读历史块"的期间，所以它是下面两个缺陷唯一的真实字节正例。它是 `RECORDED_TEST_ONLY`，证明的是机制，不是交付。
+
+跑这条链（选择→装入新数据根→issue_47_v1 下原生 Run→冻结→公共行→另一进程冷读）**先后撞上两个从未被任何可达期间碰到的缺陷**：
+
+1. **安装器从来源根读 Requirement**（普通路线的安装器从运行树读）。任何外部来源根——获取会话产出的正是这种根——都在复制任何东西之前停在 `Requirement JSON is missing or unsafe`。从没有调用方传过来源根，所以没人见过。修在 `historical_run.install_historical_run_inputs`：读运行树的 Requirement。
+2. **钉定输入不带选择读过的本注册人历史块**。修 1 之后，安装在新数据根里重建时重推自己的期间选择，停在 `Request-ledger locator evidence is invalid`——前身年份当初补带前身目录块之前撞的就是这一个（`recorded-bank-run/before-own-blocks.log`）。修在 `historical_annual_input.prepare_original_historical_input`：选择记录的 `loaded_inventories` 除主文档外每一块的证明都随输入携带。**对所有可达期间零变化**：12 个可达期间的选择都只读主文档，实测证明数不变（用例断言 Marriott FY2023 仍是 3 份）。受影响的是实测会读块的期间：Pfizer FY2021、Salesforce FY2022–FY2024（上一年或本年那一行在块里），以及 JPMorgan。
+
+修后三个指标跑通，逐项与普通路线在同一份申报上的值相同：A04 0.025（年度）、A03 1.11（季度平均窗口 2025-10-01..2025-12-31，Run 坐标走结果窗口）、A09 0.0066（瞬时）；三份结果在 `recorded-bank-run/`。A04：Run `FROZEN`、公共行 `MDA_OK`、1 条证据、另一进程冷读同 run_id 同 result_id、零新增调用。
+
+仍未解决、也没有真实正例：**目标行本身在历史块里**（JPMorgan FY2021–FY2024、Salesforce FY2022–FY2023）时，四条钉定路线的来源集发现仍只看主文档的 recent 块。修 2 只保证这些块随输入携带；发现本身还要改用目标行所在的块作清单。
+
 ## 不主张
 
 任何 JPMorgan 往年的值；来源集跨块发现已实现；普通路线本身的内容正确性（本轮只证明移植与普通路线等价）。

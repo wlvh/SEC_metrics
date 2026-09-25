@@ -263,6 +263,12 @@ SOURCE_TESTS += ("tests.vnext.test_c02_board_reading",)
 # preparations through the restated reader; and the gate answered once. Parses
 # the bank's 10-K once per metric; 130 seconds measured under a running batch.
 SOURCE_TESTS += ("tests.vnext.test_historical_financial_results",)
+# A pinned period whose selection reads history blocks: every loaded block's
+# proof carried with the input, a main-document period's proofs unchanged, and
+# the installer reading the runtime's Requirement rather than the source root's.
+# Builds the recorded root with the re-derived bank index (480 MB copied);
+# 42 seconds measured under a running batch.
+SOURCE_TESTS += ("tests.vnext.test_historical_block_inputs",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
@@ -342,6 +348,9 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Nine cases, six parses of the bank's full 10-K; 130 seconds measured
     # while a batch held three of four cores.
     "tests.vnext.test_historical_financial_results": 480,
+    # Copies a 480 MB recorded root before its first case; 42 seconds measured
+    # with a warm page cache, which a fresh runner will not have.
+    "tests.vnext.test_historical_block_inputs": 480,
 }
 
 
