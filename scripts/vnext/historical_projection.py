@@ -156,7 +156,15 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
                          "reported_unit": spec["compiled"]["reported_unit"],
                          "legacy_projection": projection}}
     baseline = {key: "" for key in publication.METRIC_FIELDS}
-    baseline.update(company=company["display_name"], cik=company["primary_cik"],
+    # The CIK of the registrant that filed this period: the primary's for its
+    # own years, a registered predecessor's for a year that registrant filed.
+    # The shared projector writes company["primary_cik"] into every published
+    # row and evidence row, so it is handed the period's registrant under that
+    # key. Setting only the baseline left a published predecessor-year row
+    # naming the successor's CIK beside the predecessor's accession, while the
+    # withheld rows of the same year named the predecessor.
+    company = {**company, "primary_cik": annual["entity"]}
+    baseline.update(company=company["display_name"], cik=annual["entity"],
                     metric_id=metric, metric_name=view["compiled"]["name"],
                     unit=projection["unit"], status=result["quality"],
                     source_class=projection["source_class"],

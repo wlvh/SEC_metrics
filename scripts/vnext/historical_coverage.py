@@ -943,6 +943,12 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
         for candidate in plan["target_candidates"]:
             report_end = candidate["report_date"]
             entry = {"report_end": report_end, "target_ordinal": candidate["target_ordinal"],
+                     # A registered predecessor's year names the registrant that
+                     # filed it (Issue #47 section 7.3); the primary's years carry
+                     # no new field.
+                     **({"reporting_cik": candidate["reporting_cik"],
+                         "registrant_role": candidate["registrant_role"]}
+                        if "reporting_cik" in candidate else {}),
                      "fiscal_year": None, "selection_id": None,
                      "period_status": "METADATA_BLOCKED"
                      if candidate["metadata_status"] != "METADATA_CANDIDATE_READY"

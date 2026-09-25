@@ -78,6 +78,19 @@ def _derive(*, repo_root, company_id, report_end, requested_fiscal_year):
     _need(not history["unloaded_history_reaching_period"],
           "ORDINARY_PERIOD_SELECTION_RELEVANT_HISTORY_NOT_LOADED", "SOURCE_UNAVAILABLE")
     index = next((i for i, item in enumerate(periods) if item["report_date"] == report_end), None)
+    registrant = None
+    if index is None:
+        found = _predecessor_period(repo_root=repo_root, company=company,
+                                    report_end=report_end, primary_periods=periods,
+                                    primary_history=history)
+        if found is not None:
+            history, periods, index, registrant = found
+            cik = registrant["reporting_cik"]
+            subject_policy = registrant.pop("period_subject_policy")
+            _need(not history["limitations"],
+                  "ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT", "SOURCE_UNAVAILABLE")
+            _need(not history["unloaded_history_reaching_period"],
+                  "ORDINARY_PERIOD_SELECTION_RELEVANT_HISTORY_NOT_LOADED", "SOURCE_UNAVAILABLE")
     _need(index is not None, "ORDINARY_PERIOD_SELECTION_REPORT_END_NOT_IN_SAVED_SUBMISSIONS",
           "SOURCE_UNAVAILABLE")
     target = periods[index]
@@ -115,7 +128,76 @@ def _derive(*, repo_root, company_id, report_end, requested_fiscal_year):
             "latest_restated_values_used": False,
             "caller_supplied_selection_trusted": False,
             "production_authorized": False}
+    # Present only when the period was filed by a registered predecessor, so a
+    # selection of the primary's own period is exactly what it was before.
+    if registrant is not None:
+        body["period_registrant"] = registrant
     return {**body, "selection_id": content_hash(value=body)}
+
+
+def _predecessor_period(*, repo_root, company, report_end, primary_periods,
+                        primary_history=None):
+    """A period a registered predecessor filed, where the successor filed none.
+
+    Issue #47 section 7.3: a predecessor's years are read from that year's own
+    filings, with the registrant that filed them; today's successor-only status
+    is not applied backward. So a predecessor's period is looked up only when
+    the primary's complete catalog has no annual report there and the report
+    end falls before the primary's oldest annual report - the successor's own
+    periods are never answered from the predecessor - and exactly one
+    registered predecessor must have filed it.
+
+    The period's subject policy is that registrant's own: one CIK, with its
+    prior found in the same catalog. That is what every route reads as a
+    continuous primary, and it is true of these years - the registrant was the
+    filer then - while nothing here combines two registrants: the prior of a
+    predecessor period is never the successor's, and the prior of the
+    successor's first period is never the predecessor's.
+
+    Returns ``(history, periods, index, registrant)`` or None.
+    """
+    subject = _subject_policy(company)
+    predecessors = subject.get("related_predecessor_ciks", ())
+    oldest = primary_periods[-1]["report_date"] if primary_periods else None
+    if not predecessors or (oldest is not None and report_end >= oldest):
+        return None
+    matches = []
+    for predecessor in predecessors:
+        try:
+            history = load_history_for_period(repo_root=repo_root,
+                                              company_id=company["company_id"],
+                                              report_end=report_end, cik=predecessor)
+            periods = annual_periods(history=history)
+        except HistoryCatalogError as error:
+            raise PeriodSelectionError(str(error), error.category) from error
+        index = next((i for i, item in enumerate(periods) if item["report_date"] == report_end),
+                     None)
+        if index is not None:
+            matches.append((history, periods, index, predecessor))
+    if not matches:
+        return None
+    _need(len(matches) == 1, "ORDINARY_PERIOD_SELECTION_PREDECESSOR_PERIOD_AMBIGUOUS")
+    history, periods, index, predecessor = matches[0]
+    reporting = str(_cik(predecessor))
+    registrant = {"role": "PREDECESSOR", "reporting_cik": reporting,
+                  "successor_cik": str(_cik(company["primary_cik"])),
+                  "company_subject_policy": subject,
+                  "successor_oldest_annual_report_end": oldest,
+                  # What of the primary's own catalog was read to show it has
+                  # nothing here. The prepared input admits these blocks too:
+                  # re-deriving this record reads them, so an installed data
+                  # root that lacked them could not replay it.
+                  "primary_catalog": (None if primary_history is None else {
+                      "catalog_id": catalog_identity(history=primary_history)["catalog_id"],
+                      "loaded_inventories": primary_history["loaded_inventories"]}),
+                  "basis": ("the registry names this CIK a predecessor of the company, the "
+                            "primary's complete saved catalog has no annual report at this "
+                            "report end and none older, and this registrant's own saved "
+                            "catalog has the period"),
+                  "cross_entity_combination_authorized": False,
+                  "period_subject_policy": {"mode": "CONTINUOUS_PRIMARY", "selected_cik": reporting,
+                                            "cross_entity_combination_authorized": False}}
+    return history, periods, index, registrant
 
 
 def resolve_period_selection(*, repo_root: Path, company_id: str, report_end=None,
@@ -147,9 +229,29 @@ def resolve_period_selection(*, repo_root: Path, company_id: str, report_end=Non
     # An issuer label never precedes its own period start year and never follows
     # its period end year, so only these report ends can carry it. Each one is
     # then read; none is chosen by arithmetic on the date.
-    candidates = [period for period in annual_periods(history=history)
+    primary_periods = annual_periods(history=history)
+    candidates = [period for period in primary_periods
                   if period["original"] is not None
                   and int(period["report_date"][:4]) in {fiscal_year, fiscal_year + 1}]
+    # A registered predecessor's periods are candidates on the same terms as in
+    # _derive: only older than the primary's oldest annual report, and read
+    # from that registrant's own catalog. _derive then re-proves the choice.
+    companies = [c for c in _registry_rows(repo_root=repo_root) if c["company_id"] == company_id]
+    _need(len(companies) == 1, "ORDINARY_PERIOD_SELECTION_COMPANY_NOT_UNIQUE", "IMPLEMENTATION_GAP")
+    oldest = primary_periods[-1]["report_date"] if primary_periods else None
+    for predecessor in _subject_policy(companies[0]).get("related_predecessor_ciks", ()):
+        try:
+            earlier = load_history_for_period(repo_root=repo_root, company_id=company_id,
+                                              report_end=str(fiscal_year) + "-01-01",
+                                              cik=predecessor)
+        except HistoryCatalogError as error:
+            raise PeriodSelectionError(str(error), error.category) from error
+        _need(not earlier["limitations"], "ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT",
+              "SOURCE_UNAVAILABLE")
+        candidates.extend(period for period in annual_periods(history=earlier)
+                          if period["original"] is not None
+                          and (oldest is None or period["report_date"] < oldest)
+                          and int(period["report_date"][:4]) in {fiscal_year, fiscal_year + 1})
     _need(bool(candidates), "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
           "SOURCE_UNAVAILABLE")
     matched, unreadable = [], []
@@ -228,8 +330,15 @@ def selected_historical_filing(*, repo_root: Path, company, submissions, period_
           "ORDINARY_PERIOD_SELECTION_RECORD_REQUIRED", "IMPLEMENTATION_GAP")
     _need(period_selection.get("company_id") == company["company_id"],
           "ORDINARY_PERIOD_SELECTION_COMPANY_CONFLICT")
-    _need(_cik(submissions["cik"]) == _cik(company["primary_cik"])
-          == _cik(period_selection["reporting_cik"]), "SUBMISSIONS_ENTITY_CONFLICT")
+    # The submissions read are the reporting registrant's: the primary's, or a
+    # registered predecessor's for a period that registrant filed. Which one it
+    # is is proven by the re-derivation below, not taken from the record.
+    reporting = period_selection.get("reporting_cik")
+    _need(reporting is not None and _cik(submissions["cik"]) == _cik(reporting)
+          and (_cik(reporting) == _cik(company["primary_cik"])
+               or str(_cik(reporting)) in _subject_policy(company).get(
+                   "related_predecessor_ciks", ())),
+          "SUBMISSIONS_ENTITY_CONFLICT")
     rebuilt = _derive(repo_root=repo_root, company_id=company["company_id"],
                       report_end=_report_end(period_selection.get("target_report_end")),
                       requested_fiscal_year=period_selection.get("requested_fiscal_year"))

@@ -41,7 +41,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Mapping, Sequence
 
-from .annual_amendment_scope import POLICY, inspect_annual_amendment_scope
+from .annual_amendment_scope import POLICY, AmendmentScopeError, inspect_annual_amendment_scope
+from .canonical import content_hash
 
 # Which input class each metric family needs left unchanged. Statement values
 # are what a Company Facts or reported-figure metric reads; the event window is
@@ -49,6 +50,12 @@ from .annual_amendment_scope import POLICY, inspect_annual_amendment_scope
 STATEMENT_INPUT_CLASS = POLICY["original_statement_input_class"]
 EVENT_INPUT_CLASS = POLICY["event_input_class"]
 NOT_COVERED_METRIC_IDS = frozenset(POLICY["not_covered_metric_ids"])
+# The classifier's refusals that say the amendment's declared scope could not be
+# mapped to an approved class - as opposed to an identity, period, byte-stream
+# or installed-policy conflict, which is an integrity failure and still raises.
+UNCLASSIFIED_SCOPE_REASONS = frozenset({"AMENDMENT_EXPLANATORY_NOTE_NOT_UNIQUE",
+                                        "AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED",
+                                        "AMENDMENT_DECLARED_LIMITED_SCOPE_NOT_PROVEN"})
 
 
 class AmendmentAdmissionError(ValueError):
@@ -129,7 +136,10 @@ def amendment_admission(*, repo_root: Path, company_id: str, metric_ids: Sequenc
     if blocked:
         raise AmendmentAdmissionError(
             "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED:" + required + ":"
-            + ",".join(sorted({scope["classification"] for scope in blocked})))
+            + ",".join(sorted({scope["classification"]
+                               + ("(" + ";".join(scope["issues"]) + ")"
+                                  if scope["classification"] == "UNCLASSIFIED" else "")
+                               for scope in blocked})))
     return record
 
 
@@ -157,6 +167,21 @@ def _scope(*, repo_root: Path, company_id: str, prepared, amendment):
             request_attempt_id=proof["request_attempt_id"])
         return {"raw": saved["raw"], "blob": blob, "reference": reference, "filing": filing}
 
-    return inspect_annual_amendment_scope(original=read(prepared["filing"]),
-                                          amendment=read(amendment),
-                                          company_id=company_id, cik=prepared["entity"])
+    original, source = read(prepared["filing"]), read(amendment)
+    try:
+        return inspect_annual_amendment_scope(original=original, amendment=source,
+                                              company_id=company_id, cik=prepared["entity"])
+    except AmendmentScopeError as error:
+        if str(error) not in UNCLASSIFIED_SCOPE_REASONS:
+            raise
+        # The approved classifier could not classify this amendment at all -
+        # measured on Paramount Global's FY2024 10-K/A, whose Part III sentence
+        # continues past "such Items" where the approved pattern ends. The
+        # policy clears only what it classifies, so an amendment it cannot
+        # classify clears nothing. That is the policy's own fail-closed answer
+        # and is reported under it, by name, rather than as an unhandled error:
+        # extending the approved wording would be a revision of the policy,
+        # not a repair of this route.
+        return {"amendment": {"filing": amendment}, "classification": "UNCLASSIFIED",
+                "issues": [str(error)], "unchanged_input_classes": [], "scope_id": None,
+                "policy_hash": content_hash(value=POLICY)}

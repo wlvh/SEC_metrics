@@ -205,6 +205,12 @@ SOURCE_TESTS += ("tests.vnext.test_historical_d02_marks",)
 # read the scope from different places, and this is where they would disagree.
 # It prepares five periods' annual inputs; 24 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_capacity_results",)
+# Registered predecessor years (Issue #47 section 7.3): the window crossing to
+# the predecessor only where the successor filed nothing, each year read from
+# its own registrant's filing, and every submissions block the re-derivation
+# reads admitted as an input. It reads both registrants' catalogs and two
+# years of annual reports; 75 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_predecessor_periods",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

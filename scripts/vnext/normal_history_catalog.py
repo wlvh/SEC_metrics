@@ -20,7 +20,7 @@ from pathlib import Path
 from sec_urls import submissions_file_url, submissions_url
 
 from .canonical import content_hash, sha256_file, strict_json_loads
-from .normal_annual_input import _registry_rows, _subject_policy
+from .normal_annual_input import _cik, _registry_rows, _subject_policy
 from .normal_governance_input import (_Sources, _filings, _history_index,
                                       history_body_alignment, NormalGovernanceInputError)
 from .normal_source_authority import ROOT
@@ -56,11 +56,35 @@ def _company(repo_root, company_id):
     return companies[0]
 
 
+def _reading_cik(company, cik):
+    """Which registrant's own saved catalog to read: the primary or a predecessor.
+
+    A registered predecessor's periods are that registrant's own filings, read
+    from its own saved submissions - never merged into the successor's catalog,
+    and never read for a company whose registry row does not name it. The
+    primary keeps the registry's exact value, so a primary catalog reads and
+    hashes exactly as it did before predecessors could be read at all.
+    """
+    if cik is None or _cik(cik) == _cik(company["primary_cik"]):
+        return company["primary_cik"], "PRIMARY"
+    policy = _subject_policy(company)
+    _need(str(_cik(cik)) in policy.get("related_predecessor_ciks", ()),
+          "HISTORY_CIK_NOT_REGISTERED_FOR_COMPANY", "IMPLEMENTATION_GAP")
+    return str(_cik(cik)), "PREDECESSOR"
+
+
+def registered_predecessor_ciks(*, repo_root: Path, company_id: str):
+    """The predecessor CIKs the registry records for this company, in its order."""
+    return list(_subject_policy(_company(repo_root, company_id)).get(
+        "related_predecessor_ciks", ()))
+
+
 def _annual_ends(rows):
     return sorted({row["reportDate"] for row in rows if row["form"] == "10-K"}, reverse=True)
 
 
-def load_annual_history(*, repo_root: Path, company_id: str, reader=None, required_annual_count=6):
+def load_annual_history(*, repo_root: Path, company_id: str, reader=None, required_annual_count=6,
+                        cik=None):
     """Load exactly the saved submissions blocks a bounded window can need.
 
     Shards are loaded newest first and only while the window is not yet proven:
@@ -77,7 +101,7 @@ def load_annual_history(*, repo_root: Path, company_id: str, reader=None, requir
           "HISTORY_REQUIRED_ANNUAL_COUNT_INVALID", "IMPLEMENTATION_GAP")
     company = _company(repo_root, company_id)
     _subject_policy(company)
-    cik = company["primary_cik"]
+    cik, role = _reading_cik(company, cik)
     reader = reader if reader is not None else _Sources(repo_root, company_id, cik)
     inventory = reader.read(submissions_url(cik=int(cik)),
                             role="sec_submissions_inventory", media_type="application/json")
@@ -128,7 +152,8 @@ def load_annual_history(*, repo_root: Path, company_id: str, reader=None, requir
     annual = sorted((row for row in rows if row["form"] in ANNUAL_FORMS),
                     key=lambda row: (row["reportDate"], row["filingDate"], row["accessionNumber"]))
     boundary = window_end()
-    return {"company_id": company_id, "primary_cik": cik, "reader": reader,
+    return {"company_id": company_id, "primary_cik": company["primary_cik"],
+            "reporting_cik": cik, "registrant_role": role, "reader": reader,
             "inventory": inventory, "declared_shards": shards, "loaded_inventories": names,
             "considered_shards": considered, "required_annual_count": required_annual_count,
             "window_oldest_report_end": boundary,
@@ -136,7 +161,8 @@ def load_annual_history(*, repo_root: Path, company_id: str, reader=None, requir
             "annual_rows": annual, "all_rows": rows, "limitations": limitations}
 
 
-def load_history_for_period(*, repo_root: Path, company_id: str, report_end: str, reader=None):
+def load_history_for_period(*, repo_root: Path, company_id: str, report_end: str, reader=None,
+                            cik=None):
     """Load exactly the blocks one target period and its prior year can need.
 
     Loading is newest first and stops as soon as three facts hold, so the set of
@@ -154,7 +180,7 @@ def load_history_for_period(*, repo_root: Path, company_id: str, report_end: str
     """
     company = _company(repo_root, company_id)
     _subject_policy(company)
-    cik = company["primary_cik"]
+    cik, role = _reading_cik(company, cik)
     reader = reader if reader is not None else _Sources(repo_root, company_id, cik)
     inventory = reader.read(submissions_url(cik=int(cik)),
                             role="sec_submissions_inventory", media_type="application/json")
@@ -207,7 +233,8 @@ def load_history_for_period(*, repo_root: Path, company_id: str, report_end: str
                     key=lambda row: (row["reportDate"], row["filingDate"], row["accessionNumber"]))
     unloaded = sorted(shard["name"] for shard in shards
                       if shard["name"] not in names and shard["filingTo"] >= report_end)
-    return {"company_id": company_id, "primary_cik": cik, "reader": reader,
+    return {"company_id": company_id, "primary_cik": company["primary_cik"],
+            "reporting_cik": cik, "registrant_role": role, "reader": reader,
             "inventory": inventory, "declared_shards": shards, "loaded_inventories": names,
             "considered_shards": considered, "required_annual_count": None,
             "target_report_end": report_end, "prior_report_end": cutoff(),
@@ -262,34 +289,111 @@ def target_period_candidates(*, repo_root: Path, company_id: str, count=5, histo
     history = history if history is not None else load_annual_history(
         repo_root=repo_root, company_id=company_id, required_annual_count=count + 1)
     periods = annual_periods(history=history)
-    selected = periods[:count]
-    candidates = []
-    for index, period in enumerate(selected):
-        following = periods[index + 1] if index + 1 < len(periods) else None
-        blocking = _unsaved_shard_reaches(history, period["report_date"])
-        reasons = []
-        if period["original_status"] != "SINGLE_ORIGINAL_ANNUAL":
-            reasons.append(period["original_status"])
-        if blocking:
-            reasons.append("RELEVANT_HISTORY_NOT_LOADED")
-        if any(item["kind"] == "HISTORY_SHARD_SNAPSHOT_CONFLICT"
-               for item in history["limitations"]):
-            reasons.append("HISTORY_SNAPSHOT_CONFLICT")
-        candidates.append({
-            "company_id": company_id, "primary_cik": history["primary_cik"],
-            "report_date": period["report_date"], "target_ordinal": index + 1,
-            "current_filing": period["original"], "current_amendments": period["amendments"],
-            "prior_report_date": following["report_date"] if following else None,
-            "prior_filing": following["original"] if following else None,
-            "prior_amendments": following["amendments"] if following else [],
-            "prior_status": ("SAME_CIK_PRIOR_DISCOVERED" if following and following["original"]
-                             else "NO_SAME_CIK_PRIOR_IN_SAVED_SUBMISSIONS"),
-            "unloaded_history_reaching_period": blocking,
-            "metadata_status": "METADATA_CANDIDATE_READY" if not reasons else "METADATA_BLOCKED",
-            "metadata_blocking_reasons": sorted(set(reasons)),
-            "fiscal_year": None,
-            "fiscal_label_status": "ISSUER_LABEL_REQUIRES_ORIGINAL_DOCUMENT"})
-    return candidates
+    return [_candidate(company_id=company_id, history=history, periods=periods, index=index,
+                       ordinal=index + 1)
+            for index in range(min(count, len(periods)))]
+
+
+def _candidate(*, company_id, history, periods, index, ordinal):
+    """One target candidate; its prior is the next period in the same catalog."""
+    period = periods[index]
+    following = periods[index + 1] if index + 1 < len(periods) else None
+    blocking = _unsaved_shard_reaches(history, period["report_date"])
+    reasons = []
+    if period["original_status"] != "SINGLE_ORIGINAL_ANNUAL":
+        reasons.append(period["original_status"])
+    if blocking:
+        reasons.append("RELEVANT_HISTORY_NOT_LOADED")
+    if any(item["kind"] == "HISTORY_SHARD_SNAPSHOT_CONFLICT"
+           for item in history["limitations"]):
+        reasons.append("HISTORY_SNAPSHOT_CONFLICT")
+    candidate = {
+        "company_id": company_id, "primary_cik": history["primary_cik"],
+        "report_date": period["report_date"], "target_ordinal": ordinal,
+        "current_filing": period["original"], "current_amendments": period["amendments"],
+        "prior_report_date": following["report_date"] if following else None,
+        "prior_filing": following["original"] if following else None,
+        "prior_amendments": following["amendments"] if following else [],
+        "prior_status": ("SAME_CIK_PRIOR_DISCOVERED" if following and following["original"]
+                         else "NO_SAME_CIK_PRIOR_IN_SAVED_SUBMISSIONS"),
+        "unloaded_history_reaching_period": blocking,
+        "metadata_status": "METADATA_CANDIDATE_READY" if not reasons else "METADATA_BLOCKED",
+        "metadata_blocking_reasons": sorted(set(reasons)),
+        "fiscal_year": None,
+        "fiscal_label_status": "ISSUER_LABEL_REQUIRES_ORIGINAL_DOCUMENT"}
+    if history.get("registrant_role", "PRIMARY") != "PRIMARY":
+        candidate.update(reporting_cik=history["reporting_cik"],
+                         registrant_role=history["registrant_role"])
+    return candidate
+
+
+def predecessor_period_candidates(*, repo_root: Path, company_id: str, count, before,
+                                  first_ordinal):
+    """Target candidates a registered predecessor filed, older than ``before``.
+
+    ``before`` is the oldest annual report end in the primary's own catalog, or
+    None when the primary has none: a predecessor's period is taken only where
+    the successor reports no annual period of its own, so the two registrants'
+    periods never overlap and no period the successor reports is answered from
+    the predecessor. Each candidate's prior is the next period in that same
+    predecessor's catalog - a prior is never taken across the registrant
+    boundary. Returns ``(candidates, histories)``; the histories are the
+    predecessors' catalogs the candidates came from.
+
+    More than one predecessor contributing periods would need an order between
+    them that the registry does not record, so that case stops by name rather
+    than guessing one.
+    """
+    _need(type(count) is int and count >= 0, "HISTORY_TARGET_COUNT_INVALID",
+          "IMPLEMENTATION_GAP")
+    candidates, histories = [], []
+    if count == 0:
+        return candidates, histories
+    for cik in registered_predecessor_ciks(repo_root=repo_root, company_id=company_id):
+        skipped, history, periods = 0, None, []
+        for _attempt in range(2):
+            history = load_annual_history(repo_root=repo_root, company_id=company_id,
+                                          required_annual_count=count + 1 + skipped, cik=cik)
+            periods = annual_periods(history=history)
+            newer = sum(1 for period in periods
+                        if before is not None and period["report_date"] >= before)
+            if newer == skipped:
+                break
+            skipped = newer
+        offset = skipped
+        kept = [_candidate(company_id=company_id, history=history, periods=periods,
+                           index=offset + index, ordinal=first_ordinal + index)
+                for index in range(min(count, len(periods) - offset))]
+        if kept:
+            _need(not candidates, "HISTORY_MULTIPLE_PREDECESSOR_CATALOGS_NOT_IMPLEMENTED",
+                  "IMPLEMENTATION_GAP")
+            candidates.extend(kept)
+            histories.append(history)
+    return candidates, histories
+
+
+def frame_period_candidates(*, repo_root: Path, company_id: str, count=5, history=None):
+    """The window's target candidates: the primary's, then a predecessor's.
+
+    A registered predecessor's years join only where the primary's complete
+    catalog runs out, and only from a complete primary catalog - an incomplete
+    one cannot show that the successor filed nothing older. Returns
+    ``(candidates, history, predecessor_histories)`` so a caller declaring
+    dependencies can name each registrant's own catalog.
+    """
+    history = history if history is not None else load_annual_history(
+        repo_root=repo_root, company_id=company_id, required_annual_count=count + 1)
+    candidates = target_period_candidates(repo_root=repo_root, company_id=company_id,
+                                          count=count, history=history)
+    predecessor_histories = []
+    if len(candidates) < count and not history["limitations"]:
+        periods = annual_periods(history=history)
+        earlier, predecessor_histories = predecessor_period_candidates(
+            repo_root=repo_root, company_id=company_id, count=count - len(candidates),
+            before=periods[-1]["report_date"] if periods else None,
+            first_ordinal=len(candidates) + 1)
+        candidates = candidates + earlier
+    return candidates, history, predecessor_histories
 
 
 def _check_report_end(value):
@@ -312,6 +416,11 @@ def catalog_identity(*, history):
             "inventory_source_reference_id":
                 history["inventory"]["source_reference"]["source_reference_id"],
             "catalog_module_sha256": sha256_file(path=Path(__file__))}
+    # Named only for a predecessor's catalog, so a primary catalog's identity is
+    # exactly what it was before a predecessor's could be read.
+    if history.get("registrant_role", "PRIMARY") != "PRIMARY":
+        body.update(reporting_cik=history["reporting_cik"],
+                    registrant_role=history["registrant_role"])
     return {**body, "catalog_id": content_hash(value=body)}
 
 

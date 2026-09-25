@@ -35,7 +35,7 @@ from sec_urls import (accession_document_url, hdr_sgml_url, submissions_file_url
 from .canonical import strict_json_loads
 from .historical_source_acquisition import HistoricalAcquisitionError
 from .normal_governance_input import _Sources, _filings, _history_index
-from .normal_history_catalog import load_annual_history, target_period_candidates
+from .normal_history_catalog import frame_period_candidates
 from .normal_history_plan import _saved_state
 
 # The six the zero-AI event route answers. Named rather than derived, because
@@ -94,18 +94,25 @@ def _pinned_period(*, repo_root, cik, candidate):
 
 
 def _window(*, repo_root, company_id, candidate, subject_policy):
+    """The window and registrants one period's event enumeration reads.
+
+    A registered predecessor's period is that registrant's own year: the route
+    reads it under the period's subject policy - one CIK, its own fiscal-year
+    window - not the company's successor-only policy, so this does the same.
+    """
     from .historical_zero_ai_results import event_measurement_window
-    pinned, reason = _pinned_period(repo_root=repo_root,
-                                    cik=candidate["primary_cik"], candidate=candidate)
+    registrant = candidate.get("reporting_cik", candidate["primary_cik"])
+    pinned, reason = _pinned_period(repo_root=repo_root, cik=registrant, candidate=candidate)
     if pinned is None:
         return None, None, reason
-    registered = subject_policy["mode"] == "SUCCESSOR_REGISTRANT_ONLY"
+    registered = (subject_policy["mode"] == "SUCCESSOR_REGISTRANT_ONLY"
+                  and candidate.get("registrant_role", "PRIMARY") == "PRIMARY")
     window, scope = event_measurement_window(repo_root=repo_root, company_id=company_id,
                                              pinned=pinned, registered_event=registered)
     if registered:
         ciks = list(scope["registered_ciks"])
     else:
-        ciks = [str(candidate["primary_cik"])]
+        ciks = [str(registrant)]
     return window, ciks, None
 
 
@@ -199,10 +206,9 @@ def declare_event_sources(*, repo_root: Path, company_id: str, count: int = 5,
     row = _registry_row(repo_root=repo_root, company_id=company_id)
     from .normal_annual_input import _subject_policy
     subject_policy = _subject_policy(row)
-    history = history if history is not None else load_annual_history(
-        repo_root=repo_root, company_id=company_id, required_annual_count=count + 1)
-    candidates = target_period_candidates(repo_root=repo_root, company_id=company_id,
-                                          count=count, history=history)
+    candidates, history, _ = frame_period_candidates(repo_root=repo_root,
+                                                     company_id=company_id, count=count,
+                                                     history=history)
     declared, limitations, readers = {}, [], {}
 
     def declare(entry):

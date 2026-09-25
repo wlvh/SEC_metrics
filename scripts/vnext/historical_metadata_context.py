@@ -90,9 +90,12 @@ def historical_metadata_context(*, repo_root: Path, company_id: str, prepared,
     _need(metric_id in SUPPORTED_METRICS,
           "HISTORICAL_TEXT_METADATA_METRIC_NOT_WIRED:" + str(metric_id), "IMPLEMENTATION_GAP")
     period = prepared["table_input"]["target_period"]
+    # The catalog of the registrant that filed this period - a registered
+    # predecessor's own for a year it filed - which the prepared input proved.
     history = load_history_for_period(repo_root=Path(repo_root), company_id=company_id,
-                                      report_end=period["period_end"], reader=reader)
-    _need(str(history["primary_cik"]) == str(prepared["entity"]),
+                                      report_end=period["period_end"], reader=reader,
+                                      cik=prepared["entity"])
+    _need(str(history["reporting_cik"]) == str(prepared["entity"]),
           "HISTORICAL_TEXT_METADATA_ENTITY_CHANGED")
     # A shard that is missing, misaligned or unreadable is not "no filing".
     # Naming the kinds keeps an unsaved block and a body that contradicts its

@@ -1,0 +1,81 @@
+{
+ "bearing_on_the_pending_decisions": {
+  "event_window_wording": "Whether a Part III purpose sentence that continues with a subordinate clause, in a note the markup splits into more blocks, is the approved class. Accepting it is a revision of the approved wording, so it is set out here and not made in code.",
+  "statement_values": "The conditional rule finding.json recommends (a no-new-financial-statements declaration present and no native facts outside the governance taxonomy) holds on this amendment too. That is a second positive; there is still no negative example in this corpus, so the objection recorded there is narrowed, not answered."
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "consequence_today": "The classifier cannot classify it, and the policy clears only what it classifies. So at FY2024 the event window is not cleared either - the six event metrics are refused by name (HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED:FISCAL_EVENT_WINDOW:UNCLASSIFIED(...)) where the successor's amendment clears them. Statement values would not have been cleared under either wording, so that part of the cost is the pending statement decision, not this.",
+ "how_it_came_up": "Reading the predecessor's FY2024 into the historical frame (Issue #47 section 7.3) put a second Part III amendment in front of the approved classifier. finding.json beside this file reviewed the first and recorded, as the case against its own recommendation, that the recommended condition had been checked on one positive and no negative.",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "measured_against_the_approved_part_iii_class": {
+  "predecessor FY2024": {
+   "explanatory_note_blocks": 13,
+   "items": [
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15"
+   ],
+   "no_financial_statement_declarations": [
+    "No financial statements or supplemental data are filed with this Amendment. See Index to Financial Statements and Supple"
+   ],
+   "non_dei_facts_all_governance_taxonomy": true,
+   "non_dei_native_facts": 4,
+   "note_bound_error": "AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED",
+   "part_iii_purpose_pattern_matches": false,
+   "parts": [
+    "PART III",
+    "PART IV"
+   ]
+  },
+  "successor FY2025": {
+   "explanatory_note_blocks": 4,
+   "items": [
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15"
+   ],
+   "no_financial_statement_declarations": [
+    "No financial statements or supplemental data are filed with this Amendment. See Index to Financial Statements and Supple"
+   ],
+   "non_dei_facts_all_governance_taxonomy": true,
+   "non_dei_native_facts": 7,
+   "note_bound_error": null,
+   "part_iii_purpose_pattern_matches": true,
+   "parts": [
+    "PART III",
+    "PART IV"
+   ]
+  }
+ },
+ "not_done": [
+  "widening the approved pattern or the block bound",
+  "reading the amendment as a source of values",
+  "treating the refusal as a disclosure fact"
+ ],
+ "production_authorized": false,
+ "record_type": "ISSUE_47_PART_III_SECOND_INSTANCE",
+ "status": "EVIDENCE_FOR_A_DECISION_NOT_TAKEN",
+ "the_amendment": {
+  "accession": "0001193125-25-096776",
+  "amends": "0000813828-25-000005 (para-20241231.htm, FY2024)",
+  "cik": "813828",
+  "company_id": "paramount_skydance_paramount_global",
+  "document_name": "d886907d10ka.htm",
+  "registrant": "Paramount Global (the registered predecessor)"
+ },
+ "what_it_fails": [
+  "the explanatory note spans 13 blocks against the classifier's bound of 8 - the filer's markup puts '10-K/A', '10-K' and similar words in their own div, so one short note becomes many blocks. The bound is in code, not in the approved policy file.",
+  "the purpose sentence continues past 'such Items' with ', rather than incorporate such information into Part III by reference to a proxy statement.' - the approved pattern ends at 'such Items\\.', so the approved wording does not cover it."
+ ],
+ "what_it_satisfies": "Every structural condition the approved classifier uses for PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS: headings Part III and Part IV only, Items 10-15, exactly one 'No financial statements or supplemental data are filed with this Amendment.' declaration, and its non-DEI native facts (4) are all in the governance (ecd) taxonomy."
+}

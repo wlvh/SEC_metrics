@@ -19,8 +19,7 @@ from sec_urls import (accession_directory_url, accession_document_url,
 
 from .canonical import content_hash, sha256_file
 from .normal_annual_input import _registry_rows
-from .normal_history_catalog import (HistoryCatalogError, _need, load_annual_history,
-                                     target_period_candidates)
+from .normal_history_catalog import HistoryCatalogError, _need, frame_period_candidates
 from .sources import resolve_repository_file
 
 
@@ -43,6 +42,19 @@ def _document_requirements(*, cik, filing, roles, consumer):
          "source_roles": [role + "_accession_index" for role in roles],
          "consumers": list(consumer)},
     ]
+
+
+def _named(registrant, primary):
+    """A predecessor's rows name the registrant whose URL they are.
+
+    A primary's rows carry no new field, so a plan for a company without a
+    predecessor reads exactly as it did before predecessors could be planned.
+    """
+    return {} if int(registrant) == int(primary) else {"reporting_cik": str(int(registrant))}
+
+
+def _registrant_rows(rows, registrant, primary):
+    return [{**row, **_named(registrant, primary)} for row in rows]
 
 
 def _native_instance_alternative(reader, repo_root, filing, cik):
@@ -118,12 +130,12 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
     total is estimated: what index discovery has not yet revealed is reported
     as not yet known, not as a count.
     """
-    history = load_annual_history(repo_root=repo_root, company_id=company_id,
-                                  required_annual_count=count + 1)
+    # Issue #47 section 7.3: a registered predecessor's years are part of the
+    # window, read from its own catalog, where the successor filed nothing.
+    candidates, history, predecessor_histories = frame_period_candidates(
+        repo_root=repo_root, company_id=company_id, count=count)
     reader = history["reader"]
     cik = history["primary_cik"]
-    candidates = target_period_candidates(repo_root=repo_root, company_id=company_id,
-                                          count=count, history=history)
     declared = {}
 
     def declare(entries):
@@ -139,46 +151,58 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
                 if consumer not in existing["consumers"]:
                     existing["consumers"].append(consumer)
 
-    declare([{"source_url": submissions_url(cik=int(cik)), "media_type": "application/json",
-              "accession": "", "document_name": "CIK%010d.json" % int(cik),
-              "dependency_class": "SUBMISSIONS_INDEX",
-              "source_roles": ["sec_submissions_inventory"], "consumers": ["historical_catalog"]}])
-    for name in history["loaded_inventories"][1:]:
-        declare([{"source_url": submissions_file_url(file_name=name),
-                  "media_type": "application/json", "accession": "", "document_name": name,
-                  "dependency_class": "SUBMISSIONS_HISTORY",
-                  "source_roles": ["sec_submissions_history"], "consumers": ["historical_catalog"]}])
-    for item in history["limitations"]:
-        if item["kind"] in {"HISTORY_SHARD_NOT_SAVED", "HISTORY_SHARD_METADATA_REJECTED"}:
-            declare([{"source_url": item["source_url"], "media_type": "application/json",
-                      "accession": "", "document_name": item["history_name"],
+    for catalog in (history, *predecessor_histories):
+        # A predecessor's catalog is declared under its own CIK, beside the
+        # primary's; each row names the registrant whose URL it is.
+        registrant = catalog.get("reporting_cik", cik)
+        declare([{"source_url": submissions_url(cik=int(registrant)),
+                  "media_type": "application/json",
+                  "accession": "", "document_name": "CIK%010d.json" % int(registrant),
+                  "dependency_class": "SUBMISSIONS_INDEX",
+                  "source_roles": ["sec_submissions_inventory"],
+                  "consumers": ["historical_catalog"], **_named(registrant, cik)}])
+        for name in catalog["loaded_inventories"][1:]:
+            declare([{"source_url": submissions_file_url(file_name=name),
+                      "media_type": "application/json", "accession": "", "document_name": name,
                       "dependency_class": "SUBMISSIONS_HISTORY",
                       "source_roles": ["sec_submissions_history"],
-                      "consumers": ["historical_catalog"]}])
-    declare([{"source_url": companyfacts_url(cik=int(cik)), "media_type": "application/json",
-              "accession": "", "document_name": "CIK%010d.json" % int(cik),
-              "dependency_class": "COMPANYFACTS",
-              "source_roles": ["companyfacts"],
-              "consumers": ["B02", "B04", "B05", "A05", "A06", "A07", "A08", "A10", "B07", "B08", "B09"]}])
+                      "consumers": ["historical_catalog"], **_named(registrant, cik)}])
+        for item in catalog["limitations"]:
+            if item["kind"] in {"HISTORY_SHARD_NOT_SAVED", "HISTORY_SHARD_METADATA_REJECTED"}:
+                declare([{"source_url": item["source_url"], "media_type": "application/json",
+                          "accession": "", "document_name": item["history_name"],
+                          "dependency_class": "SUBMISSIONS_HISTORY",
+                          "source_roles": ["sec_submissions_history"],
+                          "consumers": ["historical_catalog"], **_named(registrant, cik)}])
+        declare([{"source_url": companyfacts_url(cik=int(registrant)),
+                  "media_type": "application/json",
+                  "accession": "", "document_name": "CIK%010d.json" % int(registrant),
+                  "dependency_class": "COMPANYFACTS",
+                  "source_roles": ["companyfacts"],
+                  "consumers": ["B02", "B04", "B05", "A05", "A06", "A07", "A08", "A10", "B07",
+                                "B08", "B09"], **_named(registrant, cik)}])
     filings_by_accession = {}
     for candidate in candidates:
         label = candidate["report_date"]
+        registrant = candidate.get("reporting_cik", cik)
         for filing, roles in ((candidate["current_filing"], ["target_primary"]),
                               *[(a, ["target_amendment_primary"]) for a in candidate["current_amendments"]]):
             if filing is not None:
-                filings_by_accession[filing["accessionNumber"]] = filing
-                declare(_document_requirements(cik=cik, filing=filing, roles=roles,
-                                               consumer=["period:" + label]))
+                filings_by_accession[filing["accessionNumber"]] = (filing, registrant)
+                declare(_registrant_rows(_document_requirements(
+                    cik=registrant, filing=filing, roles=roles,
+                    consumer=["period:" + label]), registrant, cik))
         if candidate["prior_filing"] is not None:
-            filings_by_accession[candidate["prior_filing"]["accessionNumber"]] = candidate["prior_filing"]
-            declare(_document_requirements(cik=cik, filing=candidate["prior_filing"],
-                                           roles=["prior_annual_primary"],
-                                           consumer=["period:" + label + ":B02"]))
+            filings_by_accession[candidate["prior_filing"]["accessionNumber"]] = (
+                candidate["prior_filing"], registrant)
+            declare(_registrant_rows(_document_requirements(
+                cik=registrant, filing=candidate["prior_filing"], roles=["prior_annual_primary"],
+                consumer=["period:" + label + ":B02"]), registrant, cik))
         for amendment in candidate["prior_amendments"]:
-            filings_by_accession[amendment["accessionNumber"]] = amendment
-            declare(_document_requirements(cik=cik, filing=amendment,
-                                           roles=["prior_amendment_primary"],
-                                           consumer=["period:" + label + ":B02"]))
+            filings_by_accession[amendment["accessionNumber"]] = (amendment, registrant)
+            declare(_registrant_rows(_document_requirements(
+                cik=registrant, filing=amendment, roles=["prior_amendment_primary"],
+                consumer=["period:" + label + ":B02"]), registrant, cik))
     requirements = []
     for url in sorted(declared):
         item = declared[url]
@@ -199,8 +223,8 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
             item["acquisition_kind"] = "REPLACEMENT_ACQUISITION"
         if (item["dependency_class"] == "ANNUAL_PERIOD_IDENTITY"
                 and item["saved_status"] == "MISSING_SAVED_SOURCE"):
-            alternative = _native_instance_alternative(
-                reader, repo_root, filings_by_accession[item["accession"]], cik)
+            filing, registrant = filings_by_accession[item["accession"]]
+            alternative = _native_instance_alternative(reader, repo_root, filing, registrant)
             item["alternative_dependency"] = alternative
             # The alternative closes only the prior-annual role, so a document
             # this plan also needs as a target primary still has to be acquired.
@@ -254,7 +278,8 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
         if item["acquisition_kind"]:
             by_kind[item["acquisition_kind"]] = by_kind.get(item["acquisition_kind"], 0) + 1
     identity_ready = [candidate for candidate in candidates
-                      if _identity_ready(candidate, requirements, cik)]
+                      if _identity_ready(candidate, requirements,
+                                         candidate.get("reporting_cik", cik))]
     body = {"record_type": PLAN_RECORD_TYPE, "schema_version": 1,
             "company_id": company_id, "primary_cik": cik,
             "requested_target_count": count,
@@ -262,6 +287,11 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
             "declared_shards": history["declared_shards"],
             "loaded_inventories": history["loaded_inventories"],
             "catalog_limitations": history["limitations"],
+            **({"predecessor_catalogs": [
+                {"reporting_cik": item["reporting_cik"],
+                 "loaded_inventories": item["loaded_inventories"],
+                 "limitations": item["limitations"]} for item in predecessor_histories]}
+               if predecessor_histories else {}),
             "requirements": requirements,
             "deduplicated_known_get_count": len(requirements),
             "requirements_by_dependency_class": by_class,
@@ -275,6 +305,8 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
             "accession_indexes_not_yet_discovered": sorted(item["accession"] for item in pending_index),
             "further_requests_pending_index_discovery": bool(pending_index),
             "complete_plan_proven": (not history["limitations"] and not pending_index
+                                     and not any(item["limitations"]
+                                                 for item in predecessor_histories)
                                      and all(c["metadata_status"] == "METADATA_CANDIDATE_READY"
                                              for c in candidates)),
             "plan_status": "PLAN_READY",

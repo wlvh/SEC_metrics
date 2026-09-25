@@ -909,6 +909,8 @@ Spec 修订机制本身：`PYTHONPATH=scripts python3 -m unittest tests.vnext.te
 
 承重的是 `test_the_two_companies_do_not_get_the_same_answer`：**一条无视分类、对任何修订都放行的路线，会通过其余全部用例，只挂在这一条上。**
 
+已登记前身的年份（Issue #47 §7.3）：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_predecessor_periods`（saved-source 层，23 个用例实测约 75 秒，读 Paramount 两个注册人各自的 submissions、FY2024 与 FY2025 的年报与 10-K/A）。每个用例守一条边界，都在申报实际所在的地方检查：窗口先取后继自己的年份、再接前身四年，前期只在同一注册人内取（后继首年没有前期、前身每年的前期是它自己的上一年）；后继自己的年份永远不由前身回答（`_predecessor_period` 对不早于后继最早年报的期末不查前身）；注册表没为该公司点名的 CIK 一律不读；把今天的 successor-only 政策塞回前身年份、或把 reporting_cik 改成别的公司，重签后仍被重推拒绝；前身年份的钉期输入读它自己的 10-K（FY2023 原件未存则按名报来源缺口）；**重新推导期间选择时读到的每一个 submissions 块都必须在钉期输入的已准入来源里**——第一次跑这些年份时每个指标都以 "Request-ledger locator evidence is invalid" 失败，正是因为前身期间的推导先读后继目录、而后继目录没随输入安装。前身 FY2024 的 10-K/A 措辞不在已批 Part III 模式之内：事件窗口按政策失败闭合、具名拒绝，而身份/期间类完整性错误照旧抛出；后继那份仍按 Part III 分类；B06 对这份修订走"输入未决"而不是异常。同一个已批拒绝在零 AI 路线上也以扣留结果（同理由码与类别）承载而不是让尝试失败，且扣留的 B03 带着同样扣留的 B01——否则 Run 以依赖集不完整失败。九次注错全部被抓，见 `docs/evidence/issue47_history/paramount-predecessor-years/fault-injections.json`。
+
 **后继协议的接线**（与上一条不同，这条测的是"有没有接上"而不是"实现对不对"）：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_protocol_wiring`。条目上限在三个文件、五处生效，模块本身正确不等于 Run 走得通，所以这三个用例直接调生产入口——`records.validate_record`、`constraints.verify_trace_observation_values`、`projector._projection_value`——each 喂一个 92 条的 payload（Pfizer D02 的真实条数）。
 
 它和 `test_historical_run_material` 一样需要注册补丁，**未打补丁时 skip，skip 不算 PASS**，所以同样不登记进 `tools/run_fast_tests_v2.py` 的任何层。跳过条件是从补丁**实际改到的三个模块源码**里数 `historical_text_protocol` 出现三次读出来的，不是去读补丁文件——补丁只打了一半时应当 skip 而不是报 PASS。

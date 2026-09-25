@@ -15,7 +15,8 @@ This module selects nothing by itself. It consumes a verified
 """
 from pathlib import Path
 
-from sec_urls import accession_document_url, companyfacts_url, submissions_url
+from sec_urls import (accession_document_url, companyfacts_url, submissions_file_url,
+                      submissions_url)
 
 from . import fiscal_year_labels
 from .annual_update import saved_source
@@ -50,8 +51,15 @@ def prepare_original_historical_input(*, repo_root: Path, company_id: str, perio
     companies = [c for c in _registry_rows(repo_root=repo_root) if c["company_id"] == company_id]
     _need(len(companies) == 1, "COMPANY_NOT_UNIQUE", "IMPLEMENTATION_GAP")
     company = companies[0]
-    subject_policy = _subject_policy(company)
-    cik = int(company["primary_cik"])
+    _subject_policy(company)
+    # The registrant that filed this period: the primary, or a registered
+    # predecessor for a year it filed (Issue #47 section 7.3). Read from the
+    # record here only to know whose submissions to open; which one it is gets
+    # proven by selected_historical_filing, which re-derives the whole record
+    # from those saved submissions and refuses any difference.
+    _need(type(period_selection) is dict and period_selection.get("reporting_cik") is not None,
+          "ORDINARY_PERIOD_SELECTION_RECORD_REQUIRED", "IMPLEMENTATION_GAP")
+    cik = _cik(period_selection["reporting_cik"])
 
     def read(url, accession=""):
         item = saved_source(repo_root=repo_root, url=url, accession=accession)
@@ -63,6 +71,22 @@ def prepare_original_historical_input(*, repo_root: Path, company_id: str, perio
     selection = selected_historical_filing(repo_root=repo_root, company=company,
                                            submissions=payload,
                                            period_selection=period_selection)
+    # Re-derived and equal, so the record's subject policy is the period's own:
+    # the registry's for the primary's periods, the filing registrant's own for
+    # a predecessor's.
+    subject_policy = period_selection["subject_policy"]
+    # A predecessor's period is selected only after the primary's own catalog is
+    # read and found to hold nothing there; re-deriving the record reads those
+    # blocks again. They are admitted inputs of this preparation, so they travel
+    # with it - without them an installed data root cannot replay the selection,
+    # which the first batch over these years found as "Request-ledger locator
+    # evidence is invalid" on every metric.
+    registrant = period_selection.get("period_registrant")
+    primary_catalog = []
+    if registrant is not None:
+        names = registrant["primary_catalog"]["loaded_inventories"]
+        primary_catalog = [read(submissions_url(cik=_cik(company["primary_cik"])))] + [
+            read(submissions_file_url(file_name=name)) for name in names[1:]]
     filing = selection["filing"]
     accession = filing["accessionNumber"]
     primary = read(accession_document_url(cik=cik, accession=accession,
@@ -99,7 +123,7 @@ def prepare_original_historical_input(*, repo_root: Path, company_id: str, perio
             "table_input": {**arguments(primary), "source_media_type": "text/html",
                             "source_role": "target_primary"},
             "source_proofs": [s["proof"] for s in (inventory, primary, facts,
-                                                   *amendment_sources)],
+                                                   *amendment_sources, *primary_catalog)],
             "selection_rule": SELECTION_RULE,
             "period_selection": period_selection,
             "source_evidence": "LEDGER_BOUND_SAVED_BYTES",

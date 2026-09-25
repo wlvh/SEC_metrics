@@ -101,11 +101,11 @@ def governance_dependencies(*, repo_root: Path, company_id: str, report_ends=Non
         HistoricalGovernanceSourceError: When the company is not configured.
     """
     from .historical_text_input import prepare_historical_business_text_input
-    from .normal_history_catalog import target_period_candidates
+    from .normal_history_catalog import frame_period_candidates
     from .normal_period_selection import resolve_period_selection
     root = Path(repo_root)
     if report_ends is None:
-        candidates = target_period_candidates(repo_root=root, company_id=company_id)
+        candidates, _, _ = frame_period_candidates(repo_root=root, company_id=company_id)
         report_ends = [str(candidate["report_date"]) for candidate in candidates
                        if candidate.get("report_date")]
     requirements, limitations, readers = [], [], {}

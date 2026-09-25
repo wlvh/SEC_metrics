@@ -26,7 +26,8 @@ from pathlib import Path
 
 from .annual_amendment_scope import (POLICY as AMENDMENT_POLICY,
                                      POLICY_PATH as AMENDMENT_POLICY_PATH,
-                                     inspect_annual_amendment_scope)
+                                     AmendmentScopeError, inspect_annual_amendment_scope)
+from .historical_amendment_admission import UNCLASSIFIED_SCOPE_REASONS
 from .b06_current_input import (POLICY as CURRENT_INPUT_POLICY,
                                 POLICY_PATH as CURRENT_INPUT_POLICY_PATH,
                                 inspect_current_debt_amendment)
@@ -151,14 +152,60 @@ def historical_amendment_scopes(*, repo_root: Path, company_id: str, prepared):
         records.extend([blob, reference])
         sources.append({"raw": saved["raw"], "blob": blob, "reference": reference, "filing": filing})
     proofs = list({content_hash(value=p): p for p in proofs}.values())
-    scopes = [inspect_annual_amendment_scope(original=sources[0], amendment=s,
-                                             company_id=company_id, cik=prepared["entity"])
+    scopes = [_scope_or_unclassified(original=sources[0], amendment=s, company_id=company_id,
+                                     cik=prepared["entity"])
               for s in sources[1:]]
     return {"prepared_input": prepared, "source_proofs": proofs,
             "source_admission": verify_ordinary_source_proofs(data_root=repo_root, proofs=proofs),
             "scopes": scopes, "source_records": records,
             "policy_sha256": sha256_file(path=policy_path),
             "calls": {"provider": 0, "paid": 0, "sec": 0}, "production_authorized": False}
+
+
+def _scope_or_unclassified(*, original, amendment, company_id, cik):
+    """The frozen classification, or a record that there is none.
+
+    An amendment whose declared scope the approved classifier cannot map to an
+    approved class - Paramount Global's FY2024 10-K/A, whose Part III sentence
+    continues past where the approved pattern ends - has no scope to read. The
+    B06 answer for an amendment whose effect is unproven already exists: the
+    frozen check withholds the input. This carries that case to it instead of
+    letting the classifier's refusal escape as an unhandled error. Identity,
+    period and byte-stream conflicts are not this, and still raise.
+    """
+    try:
+        return inspect_annual_amendment_scope(original=original, amendment=amendment,
+                                              company_id=company_id, cik=cik)
+    except AmendmentScopeError as error:
+        if str(error) not in UNCLASSIFIED_SCOPE_REASONS:
+            raise
+        return {"classification": "UNCLASSIFIED", "issues": [str(error)], "scope_id": None,
+                "unchanged_input_classes": [],
+                "original": {"source_reference": original["reference"],
+                             "filing": original["filing"]},
+                "amendment": {"source_reference": amendment["reference"],
+                              "filing": amendment["filing"]}}
+
+
+def _unclassified_effect(*, scope, original, amendment):
+    """`inspect_current_debt_amendment`'s WITHHELD record for an unclassified scope.
+
+    The frozen check reads the classification before its own try block, so an
+    amendment with none raises there instead of reaching the WITHHELD branch it
+    would otherwise take. This is that branch's record, field for field, with
+    the classifier's reason as the issue.
+    """
+    body = exact_json_value({
+        "record_type": "B06_CURRENT_AMENDMENT_EFFECT", "input_class": CURRENT_INPUT_POLICY["input_class"],
+        "metric_ids": ["B06"], "decision": "WITHHELD", "scope_id": None, "details": {},
+        "issues": [{"reason": "AMENDMENT_SCOPE_UNRESOLVED:" + ";".join(scope["issues"]),
+                    "error_type": "AmendmentScopeError"}],
+        "policy_sha256": sha256_file(path=ROOT / CURRENT_INPUT_POLICY_PATH),
+        "original_accession": original["filing"]["accessionNumber"],
+        "amendment_accession": amendment["filing"]["accessionNumber"],
+        "source_acquisition_credit": False, "annual_continuity_proven": False,
+        "debt_completeness_proven": False, "production_authorized": False})
+    return {**body, "effect_id": content_hash(value=body)}
 
 
 def prepare_historical_current_debt_input(*, repo_root: Path, company_id: str, packet):
@@ -187,6 +234,9 @@ def prepare_historical_current_debt_input(*, repo_root: Path, company_id: str, p
                     repo_relative_path=blob["storage_uri"]).read_bytes(),
                 "blob": blob, "reference": source["source_reference"],
                 "filing": source["filing"]}
+        if scope.get("classification") == "UNCLASSIFIED":
+            checks.append(_unclassified_effect(scope=scope, **args))
+            continue
         checks.append(inspect_current_debt_amendment(
             **args, company_id=company_id, cik=packet["prepared_input"]["entity"]))
     body = exact_json_value({

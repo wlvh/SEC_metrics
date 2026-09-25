@@ -51,6 +51,10 @@ _SOURCE_ERRORS = (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateErr
                   BatchWorkflowError, SourceError)
 
 
+class _AmendmentRefused(Exception):
+    """Control flow only: the approved amendment policy refused this input class."""
+
+
 class _EventRouteResolved(Exception):
     """Control flow only: the event branch finished and skips the facts branch.
 
@@ -160,6 +164,7 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     # Asked after the income input, because that input is the narrower proof
     # for exactly this case and the ordinary route uses it in place of the
     # family question. Every other shape still asks the family question first.
+    amendment_refusal = None
     if prepared["amendments"] and income_input is None:
         from .historical_amendment_admission import (AmendmentAdmissionError,
                                                      amendment_admission)
@@ -168,7 +173,12 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                                 metric_ids=[metric_id], prepared=prepared,
                                 event_metric_ids=EVENT_METRICS)
         except AmendmentAdmissionError as error:
-            _need(False, str(error), "SOURCE_SCOPE_NOT_CLEARED")
+            # A decided answer, carried as this metric's withheld result with
+            # its own reason code and category - the way the Company Facts
+            # route carries the same refusal. Failing the attempt instead left
+            # no public row for a question the policy had already answered,
+            # beside withheld rows for the same refusal in the same year.
+            amendment_refusal = str(error)
     period, registered_scope = event_measurement_window(
         repo_root=repo_root, company_id=company_id, pinned=pinned,
         registered_event=registered_event)
@@ -218,6 +228,8 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     filings = [prepared["filing"]]
     selection = {}
     try:
+        if amendment_refusal is not None:
+            raise _AmendmentRefused
         if metric_id in EVENT_METRICS:
             if registered_event:
                 # The predecessor's filings are read through the same reader,
@@ -291,6 +303,14 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                      "reason_code": result["reason_code"]}
     except _EventRouteResolved:
         pass
+    except _AmendmentRefused:
+        result, trace = withheld_metric_result(
+            compiled_spec=spec, target=target,
+            reason_code="HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED")
+        observations = []
+        selection = {"reason_code": result["reason_code"], "reason": amendment_refusal,
+                     "category": "APPROVED_AMENDMENT_POLICY_REFUSAL",
+                     "amendment_policy_decision": amendment_refusal}
     except _SOURCE_ERRORS as error:
         reason = str(error)
         result, trace = withheld_metric_result(compiled_spec=spec, target=target,
@@ -298,6 +318,18 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
         observations = []
         selection = {"reason_code": result["reason_code"], "reason": reason,
                      "category": getattr(error, "category", "SOURCE_INTEGRITY_ERROR")}
+    # A withheld result still arrives with its dependencies' results: the Run
+    # requires B03 to carry B01's result and trace, and a B03 withheld before
+    # B01 was computed left the Run's dependency set incomplete - the attempt
+    # failed instead of withholding. The dependency was not computed for the
+    # same reason, so it is withheld with the same reason code.
+    if (result["publication"] == "WITHHELD" and dependency_specs
+            and not any(record["record_type"] == "METRIC_RESULT"
+                        for record in dependency_records)):
+        for dependency in dependency_specs.values():
+            dependency_result, dependency_trace = withheld_metric_result(
+                compiled_spec=dependency, target=target, reason_code=result["reason_code"])
+            dependency_records.extend([dependency_trace, dependency_result])
     if income_input is not None and observations:
         # The same check the ordinary route runs: the observations must be the
         # ones the income proof is about, so an admitted proof cannot stand

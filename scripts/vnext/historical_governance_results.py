@@ -313,7 +313,13 @@ def resolve_historical_governance_metric(*, repo_root: Path, company_id: str,
     company = next(row for row in _registry_rows(repo_root=root)
                    if row["company_id"] == company_id)
     cik = prepared["entity"]
-    _need(cik == company["primary_cik"], "HISTORICAL_GOVERNANCE_SUBJECT_POLICY_CONFLICT")
+    # The period's own registrant: the primary, or a registered predecessor for
+    # a year it filed. The prepared input re-derived the selection that says so.
+    _need(int(cik) == int(prepared["period_selection"]["reporting_cik"])
+          and (int(cik) == int(company["primary_cik"])
+               or prepared["period_selection"].get("period_registrant", {}).get("role")
+               == "PREDECESSOR"),
+          "HISTORICAL_GOVERNANCE_SUBJECT_POLICY_CONFLICT")
     reader = _Sources(root, company_id, cik)
     current = reader.read(submissions_url(cik=int(cik)), role="sec_submissions_inventory",
                           media_type="application/json")
