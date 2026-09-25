@@ -269,6 +269,12 @@ SOURCE_TESTS += ("tests.vnext.test_historical_financial_results",)
 # Builds the recorded root with the re-derived bank index (480 MB copied);
 # 42 seconds measured under a running batch.
 SOURCE_TESTS += ("tests.vnext.test_historical_block_inputs",)
+# A pinned filing whose submissions row sits in a history block: the lookup that
+# answers with the main index when recent lists the row and with the loaded block
+# otherwise, and the four routes that prove their target against it answering
+# exactly as on the repository root. Builds a recorded root with Marriott's rows
+# up to 2024-06-30 moved into a new block; 52 seconds measured beside a sweep.
+SOURCE_TESTS += ("tests.vnext.test_historical_filing_inventory",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
@@ -351,6 +357,9 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Copies a 480 MB recorded root before its first case; 42 seconds measured
     # with a warm page cache, which a fresh runner will not have.
     "tests.vnext.test_historical_block_inputs": 480,
+    # Copies the baseline corpus into a recorded root, then resolves three route
+    # families on both roots; 52 seconds measured beside a running sweep.
+    "tests.vnext.test_historical_filing_inventory": 480,
 }
 
 

@@ -69,6 +69,7 @@ from .financial_results import (RESOLVER, SPEC_PATHS, _ROLES, FinancialResultErr
                                 _actual_period, _fact, _failure_classification,
                                 _installed_rule, _need)
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_filing_inventory import filing_inventory
 from .normal_annual_input_v2 import exact_json_value
 from .normal_source_authority import ROOT, NormalSourceAuthorityError
 from .observations import scope_key, structured_observation
@@ -82,11 +83,46 @@ SUPPORTED_METRICS = tuple(sorted(SPEC_PATHS))
 _READ_ROLES = ("sec_submissions_inventory", "target_primary", "companyfacts")
 
 
-def _read_proofs(*, prepared):
-    """The three proofs the inspectors read, found by what they are."""
+class _ProofReader:
+    """The preparation's own request-proved documents, served by URL.
+
+    The inspectors read proofs rather than a reader, so the question of which
+    submissions document lists the filing is asked of the same proofs they
+    will read - admitted by ``_pinned_sources`` before a byte is used.
+    """
+
+    def __init__(self, *, repo_root, prepared):
+        self.repo_root, self.proofs = Path(repo_root), prepared["source_proofs"]
+
+    def read(self, url, *, role, media_type, accession=""):
+        matches = [proof for proof in self.proofs if proof["source_url"] == url]
+        _need(len(matches) == 1, "NORMAL_FINANCIAL_SOURCE_SET_INCOMPLETE")
+        raw = resolve_repository_file(
+            repo_root=self.repo_root,
+            repo_relative_path=matches[0]["request_repo_relative_path"]).read_bytes()
+        return {"raw_bytes": raw, "proof": matches[0],
+                "source_reference": {"document_name": matches[0]["document_name"],
+                                     "source_role": role}}
+
+
+def _read_proofs(*, repo_root, prepared, period_selection=None):
+    """The three proofs the inspectors read, found by what they are.
+
+    The submissions proof is the document that lists the filing: the main
+    index when its recent block does, else the history block the pinned
+    selection loaded that does. Without a selection - the ordinary
+    preparation handed in by the regression - only the main index is asked,
+    which is what the ordinary route reads.
+    """
     cik = int(prepared["entity"])
     filing = prepared["filing"]
-    wanted = (submissions_url(cik=cik),
+    reader = _ProofReader(repo_root=repo_root, prepared=prepared)
+    main = reader.read(submissions_url(cik=cik), role="sec_submissions_inventory",
+                       media_type="application/json")
+    selection = period_selection or {"loaded_inventories": [main["proof"]["document_name"]]}
+    listed_in = filing_inventory(reader=reader, inventory=main, period_selection=selection,
+                                 cik=prepared["entity"], accession=filing["accessionNumber"])
+    wanted = (listed_in["proof"]["source_url"],
               accession_document_url(cik=cik, accession=filing["accessionNumber"],
                                      document_name=filing["primaryDocument"]),
               companyfacts_url(cik=cik))
@@ -98,9 +134,10 @@ def _read_proofs(*, prepared):
     return found
 
 
-def _pinned_sources(*, repo_root, company_id, prepared):
+def _pinned_sources(*, repo_root, company_id, prepared, period_selection=None):
     """``ordinary_financial_results._ordinary_sources`` with the preparation handed in."""
-    read = _read_proofs(prepared=prepared)
+    read = _read_proofs(repo_root=repo_root, prepared=prepared,
+                        period_selection=period_selection)
     try:
         admission = verify_ordinary_source_proofs(data_root=repo_root,
                                                   proofs=prepared["source_proofs"])
@@ -145,7 +182,7 @@ def _pinned_sources(*, repo_root, company_id, prepared):
 
 
 def resolve_prepared_financial_metric(*, repo_root: Path, company_id: str, metric_id: str,
-                                      prepared) -> dict:
+                                      prepared, period_selection=None) -> dict:
     """``resolve_current_financial_metric`` with the annual preparation handed in.
 
     The body is the ordinary one line for line; the regression hands both the
@@ -153,7 +190,8 @@ def resolve_prepared_financial_metric(*, repo_root: Path, company_id: str, metri
     """
     path, spec, trait_hashes = _installed_rule(repo_root=repo_root, metric_id=metric_id)
     admission, source_records, references, bundle = _pinned_sources(
-        repo_root=repo_root, company_id=company_id, prepared=prepared)
+        repo_root=repo_root, company_id=company_id, prepared=prepared,
+        period_selection=period_selection)
     traits = repository_company_traits(repo_root=ROOT, company_id=company_id)
     applicable = metric_is_applicable(applicability=spec["compiled"]["applicability"],
                                       traits=traits)
@@ -264,7 +302,8 @@ def resolve_historical_financial_metric(*, repo_root: Path, company_id: str, met
                                                period_selection=period_selection)
     resolution = resolve_prepared_financial_metric(repo_root=root, company_id=company_id,
                                                    metric_id=metric_id,
-                                                   prepared=prepared["original_input"])
+                                                   prepared=prepared["original_input"],
+                                                   period_selection=period_selection)
     _need(sha256_file(path=root / "evidence/requests_log.csv") == ledger,
           "HISTORICAL_FINANCIAL_LEDGER_CHANGED_DURING_PREPARATION")
     body = {"record_type": RECORD_TYPE, "schema_version": 1, "company_id": company_id,

@@ -1,0 +1,1106 @@
+{
+ "b06": {
+  "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+  "route_detail": "special bank-funding scope: BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED - the ordinary route's own named limit for this bank, not a missing source"
+ },
+ "b13_first_attempt_and_rerun": {
+  "cause": "install_historical_source_inputs copied config/ and catalog/ only; B13 reads the approved definition, which sits at the repository root, from the data root",
+  "first_attempt": {
+   "error": "[Errno 2] No such file or directory: '/tmp/claude-0/native/bank-before/ledger/source-inputs/02_指标定义_SEC_10公司单年指标.md'",
+   "error_type": "FileNotFoundError",
+   "metric_id": "B13",
+   "stage": "FAILED",
+   "value": null
+  },
+  "fixed_in": "scripts/vnext/historical_sec_session.py - every non-code execution-authority input is installed",
+  "rerun_after_installing_the_missing_rule_inputs_into_the_same_root": {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 9,
+   "metric_id": "B13",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:f9b1b9983a7984713170ee7e8c5e14ab6f764fe81ff5ef125670db21478ac76a",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  }
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "d04": "HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE - no registered model review exists for this period; refused by name, no call made",
+ "not_attempted": {
+  "D03": "no historical route (Issue #28's semantic route, not ported)"
+ },
+ "one_failed_request_holds_seven_positions": {
+  "is_it_the_only_blocker": "For the event walk's own material, measured file by file (bank-event-material.json): 20 8-K filings in the window across 7 blocks, all 20 primaries saved, 19 of 20 headers usable, and this one header the only unusable document. What comes after the walk is reached only once this file is usable, so it is not measured; C04 also reads the prior year's auditor filing, which is not measured here either. A first blocking reason is not the only one, and this says how far that was checked.",
+  "measured_per_metric": {
+   "C01": "LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+   "C04": "LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+   "E01": "LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+   "E02": "LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+   "E03": "LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+   "E04": "LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+   "E05": "LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml"
+  },
+  "metrics": [
+   "C01",
+   "C04",
+   "E01",
+   "E02",
+   "E03",
+   "E04",
+   "E05"
+  ],
+  "reason": "LATEST_SOURCE_REQUEST_FAILED: https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+  "what_it_is": "the repository ledger's latest GET of this 8-K header returned no response (status 0, 2026-07-09T08:55:56Z); three earlier GETs of the same URL returned 200. saved_source refuses a URL whose latest attempt failed, by design, so an earlier success does not stand in for it. The same shape as Salesforce's six events and C04."
+ },
+ "positions": [
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 1,
+   "installed_proofs": 9,
+   "metric_id": "A01",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "DIM_XBRL_OK",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "EXACT",
+    "run_id": "run:historical-period:2e5fe645d3dfbf0f353e58b2f6e52eef88d970ea7793bc3c653b8749ba3d017b",
+    "status": "FROZEN",
+    "value": "0.155"
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31"
+   },
+   "value": "0.155"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 1,
+   "installed_proofs": 9,
+   "metric_id": "A02",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "DIM_XBRL_OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31"
+   },
+   "value": "0.146"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 1,
+   "installed_proofs": 9,
+   "metric_id": "A03",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "MDA_OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-10-01"
+   },
+   "value": "1.11"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 1,
+   "installed_proofs": 9,
+   "metric_id": "A04",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "MDA_OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": "0.025"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 3,
+   "installed_proofs": 12,
+   "metric_id": "A05",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": "0.01353819078340816975991354239"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 3,
+   "installed_proofs": 12,
+   "metric_id": "A06",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": "0.1613357541615054383791763528"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 2,
+   "installed_proofs": 12,
+   "metric_id": "A07",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": "-1423000000"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 2,
+   "installed_proofs": 12,
+   "metric_id": "A08",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": "0.9115807340506899405928145595"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 1,
+   "installed_proofs": 9,
+   "metric_id": "A09",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "MDA_OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31"
+   },
+   "value": "0.0066"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 2,
+   "installed_proofs": 12,
+   "metric_id": "A10",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31"
+   },
+   "value": "0.01828725144704575539159843992"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 1,
+   "installed_proofs": 9,
+   "metric_id": "A11",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "MDA_OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31"
+   },
+   "value": "4791000000000"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 1,
+   "installed_proofs": 9,
+   "metric_id": "A12",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "MDA_OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": "40000000"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 1,
+   "installed_proofs": 9,
+   "metric_id": "A13",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "XBRL_OK",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": "42758000000"
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 9,
+   "metric_id": "B01",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:5e08691ca3fcbe387a178f8d85a331a80961e44c74b2126a494baddf85b891a7",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 12,
+   "metric_id": "B02",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 9,
+   "metric_id": "B03",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 12,
+   "metric_id": "B04",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 12,
+   "metric_id": "B05",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 0,
+   "installed_proofs": 11,
+   "metric_id": "B06",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+   "row_status": "WITHHELD",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:2039792a0bddf5d36853d862618d0a2e64566872c21bcd346e8e3968f70dc791",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 12,
+   "metric_id": "B07",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 12,
+   "metric_id": "B08",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:ccc2ca0a5d94aa084d4a51e37038558e0b9872deed66fc26dac3eb5f08e34256",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 12,
+   "metric_id": "B09",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:380173ec2ef3212fa306cb187bd11de7433fb86791266f7683076166393cd109",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 9,
+   "metric_id": "B10",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:1f3848fc9e83139668a268bb0fdf58da703671ace5ad3a7321c15f9419d5174f",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 9,
+   "metric_id": "B11",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 9,
+   "metric_id": "B12",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31"
+   },
+   "value": null
+  },
+  {
+   "applicability": "N_A_STRUCTURAL",
+   "evidence_count": 0,
+   "installed_proofs": 9,
+   "metric_id": "B13",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "NONE",
+   "reason_code": "TRAIT_NOT_APPLICABLE",
+   "row_status": "N_A_STRUCTURAL",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:f9b1b9983a7984713170ee7e8c5e14ab6f764fe81ff5ef125670db21478ac76a",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 0,
+   "installed_proofs": 32,
+   "metric_id": "C01",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "row_status": "WITHHELD",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:030ad85f8c368bd4d49585c10c07f48b623b88889896aa5a4d5d9396c000a2c9",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 39,
+   "installed_proofs": 10,
+   "metric_id": "C02",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "TEXT_QUAL",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "EXACT",
+    "run_id": "run:historical-period:7b0ae5495a04b95be31516944be92d8d014d8cc621a0b411a798c106771d724d",
+    "status": "FROZEN",
+    "value": "We are proud of the Board’s strong culture—one that values independence, constructive interaction with management, and diversity of thought. Our independent directors meet separately at every regular Board meeting, allowing for candid discussion and effective oversight. Our directors bring a wide range of qualifications, backgrounds, perspectives, and tenure, and we regularly review and refresh committee assignments to best leverage these strengths. Earlier this year, we made several committee changes based on these factors: Ginni Rometty now serves as Chair of the Corporate Governance & Nominating Committee (\"CGNC\"), Alex Gorsky and Michele Buck have joined CGNC, and Brad Smith and Alicia Boler Davis have joined the Public Responsibility Committee.\nThe Board of Directors has nominated the 11 individuals listed below. All are independent other than our CEO. If elected at the annual meeting, all nominees are expected to serve until next year’s annual meeting.\n2Principal standing committees\nOur Board of Directors has nominated 11 directors, who, if elected by shareholders at our annual meeting, will be expected to serve until next year’s annual meeting.\n•A significant portion of Board oversight responsibilities of key issues is carried out by the principal standing committees, which consist solely of independent Board members\nDirectors are expected to attend our annual meetings. All 12 directors serving on our Board at the time of the 2025 annual meeting attended last year's meeting.\n•Public Company Governance: Broad governance expertise through public company board service and as former Chair of the Business Roundtable’s Corporate Governance Committee\n•Worldwide Chairman of the Surgical Care Group and the Medical Devices and Diagnostics Group and member of the Executive Committee (2009)\n•Former Member and Chair of the Corporate Governance Committee, Business Roundtable\nTo be considered independent, a director must have no disqualifying relationships, as defined by the NYSE, and the Board must have affirmatively determined that he or she has no material relationships with JPMorganChase, either directly or as a partner, shareholder or officer of another organization that has a relationship with the Firm.\nIn assessing the materiality of relationships with the Firm, the Board considers relevant facts and circumstances. Given the nature and broad scope of the products and services provided by the Firm, there are from time to time ordinary course of business transactions between the Firm and a director, his or her immediate family members, or principal business affiliations. These may include, among other relationships: extensions of credit; provision of other financial and financial advisory products and services; business transactions for property or services; and charitable contributions made by the JPMorgan Chase Foundation or the Firm to a nonprofit organization of which a director is an officer. The Board reviews these relationships to assess their materiality and determine if any such relationship would impair the independence and judgment of the relevant director. The Board considered:\nThe Board, having reviewed the relevant relationships between the Firm and each non-management director, determined, in accordance with the NYSE’s listing standards and the Firm’s independence standards, that each non-management director (Linda B. Bammann, Michele G. Buck, Stephen B. Burke, Alicia Boler Davis, Alex Gorsky, Mellody Hobson, Phebe N. Novakovic, Virginia M. Rometty, Brad D. Smith, and Mark A. Weinberger) had only immaterial relationships with JPMorganChase and accordingly is independent. Todd A. Combs, who resigned from the Board in December 2025, had only immaterial relationships with JPMorganChase while a member of the Board and accordingly, was an independent director during the term of his service. In 2026, Mr. Combs was hired by the Firm and additional information is provided on page 35.\nAll directors who served on the Audit and Compensation & Management Development Committees of the Board were also determined to meet the additional independence and qualitative criteria of the NYSE listing standards applicable to directors serving on those committees. For more information about the committees of the Board, see pages 23-26.\nThe Governance Committee oversees the ongoing evaluation of candidates for Board membership and the candidate nomination process.\nThe potential nominee meets with the Governance Committee, Lead Independent Director, Chair of the Board, other members of the Board and senior management, as appropriate.\nThe Governance Committee is engaged in an ongoing recruitment process designed to build a strong pipeline of prospective directors for the near and long term. This includes candidates who are not available for board membership immediately but may become available in the future, such as candidates whose current professional commitments preclude board service and emerging leaders who require more experience. Often the Board works to develop a relationship with prospective candidates, becoming familiar with their skills and effectiveness, before the candidate is formally considered. The Board looks to recruit those who will contribute individually, and it seeks to balance skills, experience, personal attributes and tenure. All candidates recommended to the Governance Committee are evaluated based on the same standards outlined above.\nThe Board’s leadership structure is designed to promote Board effectiveness and to appropriately allocate authority and responsibility between the Board and management. Based on consideration of the factors described on page 22, our Board has determined that combining the roles of Chair and CEO is the most effective leadership structure for the Board at this time. The Board believes the present structure provides the Firm and the Board with strong leadership, appropriate independent oversight of management, continuity of experience that complements ongoing Board refreshment, and the ability to clearly communicate the Firm’s business and strategy to shareholders, clients, employees, regulators and the public.\nIn March 2026, the independent directors conducted their annual review of the Board’s leadership structure. This review was conducted first by the Governance Committee, which considered the factors on page 22, the Firm’s governance practices, which include executive sessions of independent directors as part of each regularly scheduled Board meeting and the directors’ frequent and open interactions with senior management, and the effectiveness of the Lead Independent Director role. Following its review, the Governance Committee recommended that the Board continue its current leadership structure and that Stephen B. Burke be re-appointed as Lead Independent Director. The independent directors of the Board then conducted their own review, again taking into account the factors on page 22, the Governance Committee’s recommendation and Mr. Burke’s strong performance in the Lead Independent Director role over the course of the prior year, and determined to maintain the current leadership structure with Mr. Burke serving as Lead Independent Director.\nstanding committees\nA significant portion of our Board’s oversight responsibilities is carried out through its five independent, principal standing committees: Audit Committee, CMDC, Governance Committee, Public Responsibility Committee (“PRC”) and Risk Committee. Allocating responsibilities among committees allows more in-depth attention devoted to the Board’s oversight of the business and affairs of the Firm.\nThe Board has determined each member of the Audit Committee (Michele G. Buck, Alex Gorsky, Phebe N. Novakovic and Mark A. Weinberger) to be an audit committee financial expert in accordance with the definition established by the SEC, and that Ms. Bammann, the chair of the Risk Committee, has experience in identifying, assessing and managing risk exposures of large, complex financial firms in accordance with rules issued by the Board of Governors of the Federal Reserve System (“Federal Reserve”).\nKey oversight responsibilities of the principal standing committees of the Board\nOther standing committees\nThe Board has two additional standing committees:\nThe Board may establish additional standing committees as needed.\nAudit and Risk Committee chair retainer30,000\nThe Board may periodically ask directors to serve on one or more specific purpose committees or other committees that are not one of the Board’s principal standing committees or to serve on the board of directors of a subsidiary of the Firm. Any compensation for such service is included in the “2025 Director compensation table” on the next page.\nAs stated in the Governance Principles, each director retains all shares of the Firm’s common stock he or she purchased on the open market or received pursuant to his or her service as a Board member for as long as he or she serves on our Board absent any exceptions discussed by the Governance Committee. In addition, shares held personally by a director may not be held in margin accounts or otherwise pledged as collateral, nor may the economic risk of such shares be hedged. Further information on the Firm’s “Anti-hedging/anti-pledging provisions” can be found on page 50.\nAfter becoming aware of any transaction which may be subject to the Related Persons Policy, the director or executive officer involved in such transaction is required to report all relevant facts with respect to the transaction to the General Counsel of the Firm. Upon determination by the General Counsel that a transaction requires review under the Related Persons Policy, the material facts of the transaction and the related person’s interest in the transaction are provided to the Governance Committee. The transaction is then reviewed by the disinterested members of the Governance Committee, who determine whether approval or ratification of the transaction shall be granted. In reviewing a transaction, the Governance Committee considers facts and circumstances that it deems relevant to its determination, such as management’s assessment of the commercial reasonableness of the transaction; the materiality of the related person’s direct or indirect interest in the transaction; whether the transaction may involve an actual, or the appearance of, a conflict of interest; and, if the transaction involves a director, the impact of the transaction on the director’s independence.\nThe members of the CMDC are listed on page 25. No member of the CMDC is or ever was a JPMorganChase officer or employee, other than Linda B. Bammann, who previously served as an officer of JPMorganChase 15 years before joining the CMDC and 8 years before joining the Board. No JPMorganChase executive officer is, or was during 2025, a member of the board of directors or compensation committee (or other committee serving an equivalent function) of another company that has, or had during 2025, an executive officer serving as a member of our Board or the CMDC. All of the members of the CMDC, and/or some of their immediate family members and affiliated entities, were customers of, or had transactions with or involving, JPMorganChase or our banking or other subsidiaries in the ordinary course of business during 2025. Additional transactions may be expected to take place in the future. Any outstanding loans to the directors serving on the CMDC and their immediate family members and affiliated entities, and any transactions involving other financial products and services provided by the Firm to such persons and entities, were made in accordance with the standards stated above for transactions with directors, executive officers and 5% shareholders.\nIn determining Mr. Dimon’s compensation, independent members of the Board considered his exemplary leadership and achievements across the Firm’s four broad performance dimensions.\nThe members of the Audit Committee and the Board believe that continued retention of PwC as the Firm’s independent external auditor is in the best interests of JPMorganChase and its shareholders. PwC and its predecessors have acted as our independent registered public accounting firm since 1965. The Board believes the Firm receives significant benefits from the extensive history PwC has with the Firm. These benefits include:\nIn accordance with SEC rules and PwC policies, audit engagement partners are subject to rotation requirements to limit the number of consecutive years of service an individual partner may provide audit services to the Firm. The lead audit engagement partner may provide services to our Firm for a maximum of five consecutive years. As a result of these rotation requirements, a new lead audit engagement partner was selected commencing with the 2026 audit engagement and is expected to serve in this capacity through the end of the 2030 audit. Management considered feedback from the Audit Committee Chair in selecting the new lead audit engagement partner.\nPre-approved services to be performed by PwC with estimated costs in excess of a set threshold are approved by the Chair of the Audit Committee and other pre-approved services are delegated to the Firmwide Controller’s office.\nThe Audit Committee of the Board of Directors of JPMorganChase is comprised of four non-management directors. The Board has determined that each member of our committee has no material relationship with the Firm under the Board’s director independence standards and that each member is independent under the listing standards of the NYSE, where the Firm’s securities are listed, and under the SEC’s standards relating to the independence of audit committees. The Board has also determined that each member is financially literate and is an audit committee financial expert as defined by the SEC.\nManagement is responsible for the Firm’s internal control over financial reporting, the financial reporting process and JPMorganChase’s Consolidated Financial Statements. PwC is responsible for performing an independent audit of JPMorganChase’s Consolidated Financial Statements and of the effectiveness of internal control over financial reporting in accordance with auditing standards promulgated by the PCAOB. The Firm’s Internal Audit function, under the direction of the General Auditor, is independent of the Firm’s businesses and the Independent Risk Management function. Internal Audit reports directly to the Audit Committee (and administratively to the Firm’s CEO) and is responsible for preparing an annual audit plan and conducting internal audits intended to independently test and evaluate the Firm’s governance, risk management and internal controls. The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee’s responsibility is to monitor and oversee these processes.\nThe Audit Committee regularly meets and holds discussions with the Firm’s management, internal auditors and with PwC, and also holds private sessions with the General Auditor and with PwC, without members of management present. These discussions include issues encountered during the audit, the Firm’s quarterly earnings materials, and Quarterly and Annual Reports on Form 10-Q and Form 10-K, respectively, prior to filing with the SEC; as well as actions the Audit Committee has taken during the prior year.\nThe Governance Principles, Code of Conduct, Code of Ethics for Finance Professionals, Business Principles, the Political Engagement and Public Policy Statement, Sustainability Report, the By-laws and the charters of our principal standing committees are posted on our website at jpmorganchase.com. These documents will also be made available to any shareholder who requests them by writing to the Secretary at corporate.secretary@jpmchase.com, or Office of the Secretary, JPMorgan Chase & Co., 270 Park Avenue, New York, New York 10017.\nThe Firm’s By-laws provide for a right of proxy access. This By-law enables shareholders, under specified conditions, to include their nominees for election as directors in the Firm’s proxy statement. Under By-law Section 1.10, a shareholder (or group of up to 20 shareholders) who has continuously owned at least 3% of the Firm’s outstanding shares for at least three consecutive years may nominate up to 20% of the Board (but in any event at least two directors) and have such nominee(s) included in the Firm’s proxy statement, if the shareholder(s) and the nominee(s) satisfy the applicable requirements set forth in the Firm’s By-laws."
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": {
+    "text_characters": 16629,
+    "text_prefix": "We are proud of the Board’s strong culture—one that values independence, constru"
+   }
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 1,
+   "installed_proofs": 10,
+   "metric_id": "C03",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "XBRL_OK",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "EXACT",
+    "run_id": "run:historical-period:50b70d54c0c19073ff50957a8139e21944f98897a1359b710158e4aeec2460a7",
+    "status": "FROZEN",
+    "value": "40632724"
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": "40632724"
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 0,
+   "installed_proofs": 36,
+   "metric_id": "C04",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+   "row_status": "WITHHELD",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 57,
+   "installed_proofs": 9,
+   "metric_id": "D01",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "TEXT_QUAL",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "EXACT",
+    "run_id": "run:historical-period:72a41928ab0b5f67ac34d1b67888482d29d307cc2aa546d6dc802391f48a5713",
+    "status": "FROZEN",
+    "value": "Summary\nLegal and Regulatory\nJPMorganChase’s businesses are highly regulated and are significantly affected by applicable law and supervisory expectations.\nDifferences in the supervision and regulation of financial services firms could require JPMorganChase to modify its operations and incur higher operational and compliance costs.\nJPMorganChase faces significant legal risks from civil and governmental proceedings, including litigation, investigations and enforcement actions.\nResolving an investigation by a governmental authority could subject JPMorganChase to significant penalties and other repercussions.\nJPMorganChase’s compliance risk and operating costs could be higher in jurisdictions with less predictable legal, regulatory and judicial frameworks.\nJPMorganChase's business and operations could be negatively affected by governmental policies that discourage or penalize doing business with certain industries or that require specific business practices.\nChanges in the requirements for the regulatory evaluation of JPMorganChase’s resolution plan could increase its funding or operational costs or require restructuring or curtailment of its businesses.\nHolders of JPMorgan Chase & Co.’s debt and equity securities will absorb losses if it were to enter into a resolution.\nPolitical\nJPMorganChase’s businesses could be negatively affected by economic uncertainty resulting from political and geopolitical developments.\nMarket\nAdverse economic and market events and conditions could negatively affect JPMorganChase’s results of operations and investment and market-making positions.\nJPMorganChase’s consumer businesses could be negatively affected by adverse economic conditions and adverse impacts of governmental policies.\nUnfavorable market and economic conditions could adversely affect JPMorganChase’s wholesale businesses.\nChanges in interest rates and credit spreads could adversely affect JPMorganChase’s earnings or its liquidity and capital levels.\nJPMorganChase’s results could be materially affected by market fluctuations and significant changes in the valuation of financial instruments.\nCredit\nJPMorganChase could be negatively affected by adverse changes in the financial condition of clients, counterparties, CCPs and other market participants.\nJPMorganChase could suffer losses if the value of collateral declines.\nJPMorganChase could incur significant losses arising from concentrations of credit and market risk.\nLiquidity\nJPMorganChase’s ability to operate its businesses could be impaired if its liquidity is constrained.\nJPMorgan Chase & Co. is a holding company and depends on its subsidiaries for funding to make payments on its outstanding securities.\nJPMorganChase’s liquidity and cost of funding could be adversely affected by downgrades in its credit ratings.\nCapital\nJPMorganChase’s ability to distribute capital to shareholders, and to support its business activities could be limited if it does not satisfy applicable regulatory capital requirements.\nOperational\nJPMorganChase’s businesses could be adversely affected by the failure or disruption of operational systems on which they depend.\nJPMorganChase’s interconnectedness with clients, customers and other external parties could be a source of significant operational risk.\nA successful cyber attack could cause significant harm to JPMorganChase and its clients and customers.\nJPMorganChase’s businesses could be adversely affected if it fails to identify and address operational risks associated with the introduction of or changes to products, services, delivery platforms or technologies.\nJPMorganChase’s business and operations rely on appropriate staffing and on the competence, trustworthiness, health and safety of employees.\nJPMorganChase faces substantial legal and operational risks related to the processing and safeguarding of personal information.\nJPMorganChase’s operations, results and reputation could be harmed by occurrences of extraordinary events beyond its control.\nAny failure to maintain adequate data management processes could adversely affect JPMorganChase’s ability to effectively manage its businesses, comply with applicable law or make informed business decisions.\nEnhanced regulatory and other standards for the oversight of JPMorganChase’s vendors and other service providers could result in higher costs and other potential exposures.\nJPMorganChase could incur losses arising from any significant inadequacy or lapse in its risk management framework and control environment.\nJPMorganChase could recognize unexpected losses, its capital levels could be reduced and it could face greater regulatory scrutiny if its models, estimations or judgments, including those used in its financial statements, are inadequate or incorrect.\nA significant inadequacy in disclosure or financial reporting controls could negatively affect JPMorganChase’s business, operations and reputation.\nStrategic\nJPMorganChase’s results or competitive standing could suffer if its management fails to develop and execute effective business strategies and to anticipate changes affecting those strategies.\nCompetition in the financial services industry could lead to negative effects on JPMorganChase’s results of operations.\nJPMorganChase’s operations, results, and competitive standing could be adversely affected by the development of advanced technologies such as AI.\nThe effects of climate change could adversely affect JPMorganChase’s business and operations, both directly and as a result of impacts on its clients and customers.\nConduct\nConduct failure by JPMorganChase employees could trigger litigation and regulatory actions and harm JPMorganChase’s reputation.\nReputation\nDamage to JPMorganChase’s reputation could negatively affect its business, results and prospects.\nFailure to effectively manage potential conflicts of interest or to satisfy fiduciary obligations could result in litigation and enforcement actions and cause reputational harm.\nCountry\nAn outbreak or escalation of hostilities between countries or within a country or region could have a material adverse effect on the global economy and on JPMorganChase’s businesses within the affected region or globally.\nJPMorganChase’s business and operations in certain countries could be adversely affected by local economic, political, regulatory and social factors.\nPeople\nVarious factors could impact JPMorganChase’s workforce.\nParts I and II"
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": {
+    "text_characters": 6422,
+    "text_prefix": "Summary\nLegal and Regulatory\nJPMorganChase’s businesses are highly regulated and"
+   }
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 34,
+   "installed_proofs": 9,
+   "metric_id": "D02",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "row_status": "TEXT_QUAL",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "EXACT",
+    "run_id": "run:historical-period:77d9eabe5acacc760941084631bdd32bc1a0a9546f64063630bc44a1b048ed64",
+    "status": "FROZEN",
+    "value": "Refer to Note 30 for a description of the Firm’s material legal proceedings.\nNote 30 – Litigation\nContingencies\nAs of December 31, 2025, the Firm and its subsidiaries and affiliates are defendants or respondents in numerous evolving legal proceedings, including private proceedings, public proceedings, government investigations, regulatory enforcement matters, and the matters described below. These range from individual actions involving a single plaintiff to class action lawsuits with potentially millions of class members. Investigations and regulatory enforcement matters involve both formal and informal proceedings, by both governmental agencies and self-regulatory organizations. These legal proceedings are at varying stages of adjudication, arbitration or investigation, and involve each of the Firm’s lines of business in several geographies and varied claims (including common law tort and contract claims and statutory antitrust, securities and consumer protection claims), some of which present novel legal theories.\nThe Firm estimates the aggregate range of reasonably possible losses, in excess of reserves established, for its legal proceedings is from $0 to approximately $1.2 billion at December 31, 2025. This estimated aggregate range of reasonably possible losses was based upon information available as of that date for those proceedings in which the Firm believes that an estimate of reasonably possible loss can be made. For certain matters, the Firm does not believe that such an estimate can be made, as of that date. The Firm’s estimate of the aggregate range of reasonably possible losses involves significant judgment, given:\n•the number, variety and varying stages of the proceedings, including the fact that many are in preliminary stages,\n•the existence in many such proceedings of multiple defendants, including the Firm, whose share of liability (if any) has yet to be determined,\n•the numerous yet-unresolved issues in many of the proceedings, including issues regarding class certification and the scope of many of the claims, and\n•the uncertainty of the various potential outcomes of such proceedings, including where the Firm has made assumptions concerning future rulings by the court or other adjudicator, or about the behavior or incentives of adverse parties or regulatory authorities, and those assumptions later prove to be incorrect.\nIn addition, the outcome of a particular proceeding may be a result that the Firm did not take into account in its estimate because the Firm had deemed the likelihood of that outcome to be remote. Accordingly, the Firm’s estimate of the aggregate range of\nreasonably possible losses will change from time to time, and actual losses may vary significantly.\nSet forth below are descriptions of the Firm’s material legal proceedings.\nAmrapali. India’s Enforcement Directorate (“ED”) is investigating J.P. Morgan India Private Limited in connection with investments made in 2010 and 2012 by two offshore funds formerly managed by JPMorganChase entities into residential housing projects developed by the Amrapali Group (“Amrapali”) relating to delays in delivering or failure to deliver residential units. In July 2019, the Supreme Court of India issued an order making preliminary findings that Amrapali and other parties, including unspecified JPMorganChase entities, violated certain criminal currency control and money laundering provisions, and ordered the ED to conduct a further inquiry. The Firm is cooperating with the inquiry. In addition, in August 2021, the ED issued an order fining J.P. Morgan India Private Limited approximately $31.5 million, which the Firm is appealing.\nFair Access to Banking. In August 2025, the President of the United States issued an Executive Order entitled “Guaranteeing Fair Banking for All Americans” that addressed access to financial services and directed several actions by certain federal agencies, including a review and revision of their internal policies and manuals. JPMorganChase is responding to requests from government authorities and other external parties regarding, among other things, the Firm’s policies and processes and the provision of services to customers and potential customers. Certain of these matters are at various stages, including reviews, investigations, and legal proceedings, including a civil lawsuit filed in January 2026 in Florida state court by President Donald J. Trump, in his personal capacity, and several affiliated corporate entities, against JPMorgan Chase Bank, N.A. and its CEO.\nForeign Exchange Investigations and Litigation. The Firm previously reported settlements with certain government authorities relating to its foreign exchange (“FX”) sales and trading activities and controls related to those activities. Among those resolutions, in May 2015, the Firm pleaded guilty to a single violation of federal antitrust law. The Department of Labor (\"DOL\") granted the Firm exemptions that permit the Firm and its affiliates to continue to rely on the Qualified Professional Asset Manager exemption under the Employee Retirement Income Security Act (“ERISA”) through the ten-year disqualification period, which began in January 2017. The only remaining FX-related governmental inquiry is a South Africa Competition Commission matter which\nJPMorgan Chase & Co./2025 Form 10-K\nis currently pending before the South Africa Competition Tribunal.\nWith respect to civil litigation matters, some FX-related individual and putative class actions filed outside the U.S., including in the U.K., Israel, the Netherlands and Brazil remain. In December 2025, the U.K. Supreme Court confirmed the initial decision of the Competition Appeal Tribunal, which denied a request for class certification on an opt-out basis. In Israel, a settlement in principle has been reached on the putative class action, which remains subject to court approval.\nInterchange Litigation. Groups of merchants and retail associations filed a series of class action complaints alleging that Visa and Mastercard, as well as certain banks, conspired to set the price of credit and debit card interchange fees and enacted related rules in violation of antitrust laws.\nIn September 2018, the parties settled the class action seeking monetary relief. A separate class action seeking injunctive relief continues. In June 2024, the District Court for the Eastern District of New York denied preliminary approval of a settlement of the injunctive class action in which Visa and Mastercard agreed to certain changes to their respective network rules and system-wide reductions in interchange rates for U.S.-based merchants. In November 2025, the parties to that settlement reached a superseding and amended class settlement and submitted the agreement to the District Court for its approval.\nOf the merchants who opted out of the damages class settlement, certain merchants filed individual actions raising similar allegations against Visa and Mastercard, as well as against the Firm and other banks. The defendants have reached settlements with the merchants who opted out representing over 90% of the combined Mastercard-branded and Visa-branded payment card sales volume. The remaining opt out actions are pending. A number of these actions are pending in the United States District Court for the Southern District of New York, and that court has scheduled a trial of the claims brought by several merchants to begin in April 2026.\nLIBOR and Other Benchmark Rate Investigations and Litigation. JPMorganChase has responded to inquiries from various governmental agencies and entities around the world relating primarily to the British Bankers Association’s (“BBA”) London Interbank Offered Rate (“LIBOR”) for various currencies and the European Banking Federation’s Euro Interbank Offered Rate (“EURIBOR”). The Firm appealed a December 2016 decision by the European Commission against the Firm and other banks finding an infringement of European antitrust rules relating to EURIBOR. In December 2023, the European General Court annulled the fine imposed by the European\nCommission, but exercised its discretion to re-impose a fine in an identical amount. In March 2024, the Firm filed an appeal of this decision with the Court of Justice of the European Union, which held a hearing in January 2026 and reserved judgment.\nIn addition, the Firm was named as a defendant along with other banks in various individual and putative class actions related to benchmark rates, including U.S. dollar LIBOR. In September 2025, the United States District Court for the Southern District of New York granted summary judgment in favor of the defendants on all remaining claims related to U.S. dollar LIBOR, decertified the class, and dismissed all claims in their entirety with prejudice to refiling. Plaintiffs have filed an appeal.\nRussian Litigation. The Firm is obligated to comply with international sanctions laws, which mandate the blocking of certain assets. These laws apply when assets associated with individuals, companies, products or services are within the scope of the sanctions. The Firm has faced actual and threatened litigation in Russia seeking payments that the Firm cannot make under, and is contractually excused from paying as a result of, relevant sanctions laws. In claims involving the Firm and claims filed against other financial institutions, Russian courts have disregarded the parties’ contractual agreements concerning forum selection and did not recognize foreign sanctions laws as a basis for not making payment. Russian courts have entered judgment against the Firm in a number of claims. This includes one claim for $439 million, for which the courts have stayed the enforcement of the judgment against the Firm's unprotected assets in Russia pending the outcome of an appeal, and a judgment for another claim has been executed against assets held onshore by the Firm in Russia. The total amount of the judgments exceeds the total amount of available assets that the Firm holds in Russia. Russian courts have allowed plaintiffs to withhold dividends due to the Firm’s clients for the purpose of satisfying judgments, which the Firm is opposing as unlawful. The Firm continues to appeal the Russian courts' decisions, but certain judgments are now enforceable against Firm assets in Russia. Russian courts have also ordered interim freezes of Firm assets in Russia (including, among other things, funds in bank accounts, securities, shares in authorized capital, and certain trademarks, of the named defendants) pending a determination of certain underlying claims against the Firm. The Firm has challenged claims being pursued in the Russian courts and related freeze orders in other jurisdictions provided for by the parties’ contractual forum selections. If further claims are enforced despite the actions taken by the Firm to challenge the claims and orders and to seek the proper application of law, the Firm’s assets in Russia could be seized in full, and certain client assets could\nJPMorgan Chase & Co./2025 Form 10-K\nNotes to consolidated financial statements\nalso be seized, or the Firm could be prevented from complying with its obligations.\nShareholder Litigation. A shareholder derivative action purporting to act on behalf of the Firm is pending in the United States District Court for the Eastern District of New York against the Firm, its Board of Directors and certain of its current and former officers relating to historical trading practices by former employees in the precious metals and U.S. treasuries markets and related conduct which were the subject of the Firm’s resolutions with the DOJ, CFTC and SEC in September 2020. Defendants have moved to dismiss the complaint.\nIn addition to the various legal proceedings discussed above, JPMorganChase and its subsidiaries are named as defendants or are otherwise involved in a substantial number of other legal proceedings. The Firm believes it has meritorious defenses to the claims asserted against it in its currently outstanding legal proceedings and it intends to defend itself vigorously. Additional legal proceedings may be initiated from time to time in the future.\nThe Firm has established reserves for several hundred of its currently outstanding legal proceedings. Under U.S. GAAP for contingencies, the Firm accrues for a litigation-related liability when it is probable that such a liability has been incurred and the amount of the loss can be reasonably estimated. The Firm evaluates its outstanding legal proceedings each quarter to assess its litigation reserves, and makes adjustments in such reserves, upward or downward, as appropriate, based on management’s best judgment after consultation with counsel. The Firm’s legal expense was $361 million, $740 million and $1.4 billion for the years ended December 31, 2025, 2024 and 2023, respectively. There is no assurance that the Firm’s litigation reserves will not need to be adjusted in the future.\nIn view of the inherent difficulty of predicting the outcome of legal proceedings, particularly where the claimants seek very large or indeterminate damages, or where the matters present novel legal theories, involve a large number of parties or are in early stages of discovery, the Firm cannot state with confidence what will be the eventual outcomes of the currently pending matters, the timing of their ultimate resolution or the eventual losses, fines, penalties or consequences related to those matters. JPMorganChase believes, based upon its current knowledge and after consultation with counsel, consideration of the material legal proceedings described above and after taking into account its current litigation reserves and its estimated aggregate range of possible losses, that the other legal proceedings currently pending against it should not\nhave a material adverse effect on the Firm’s consolidated financial condition. The Firm notes, however, that in light of the uncertainties involved in such proceedings, there is no assurance that the ultimate resolution of these matters will not significantly exceed the reserves it has currently accrued or that a matter will not have material reputational consequences. As a result, the outcome of a particular matter may be material to JPMorganChase’s operating results for a particular period, depending on, among other factors, the size of the loss or liability imposed and the level of JPMorganChase’s income for that period.\nJPMorgan Chase & Co./2025 Form 10-K"
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": {
+    "text_characters": 14509,
+    "text_prefix": "Refer to Note 30 for a description of the Firm’s material legal proceedings.\nNot"
+   }
+  },
+  {
+   "error": "HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE",
+   "error_type": "HistoricalSemanticError",
+   "metric_id": "D04",
+   "stage": "FAILED",
+   "value": null
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 0,
+   "installed_proofs": 32,
+   "metric_id": "E01",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "row_status": "WITHHELD",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:1fa545a819224dd775b5ddca1553afd4ed181d09561810333c9561ce86e908a6",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 0,
+   "installed_proofs": 32,
+   "metric_id": "E02",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "row_status": "WITHHELD",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:c826ddc761edc4da59853bdb46194c61c3eca5481af6f39f075061564153e95e",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 0,
+   "installed_proofs": 32,
+   "metric_id": "E03",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "row_status": "WITHHELD",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "quality": "NONE",
+    "run_id": "run:historical-period:e4e7c6fdcb1a4227b013bc2f077d289a695f78c783de4324330b0d462d1128c9",
+    "status": "FROZEN",
+    "value": null
+   },
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 0,
+   "installed_proofs": 32,
+   "metric_id": "E04",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "row_status": "WITHHELD",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  },
+  {
+   "applicability": "APPLICABLE",
+   "evidence_count": 0,
+   "installed_proofs": 32,
+   "metric_id": "E05",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "row_status": "WITHHELD",
+   "run_status": "FROZEN",
+   "stage": "PUBLIC_ROW",
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "value": null
+  }
+ ],
+ "positions_attempted": 38,
+ "production_authorized": false,
+ "record_type": "ISSUE_47_RECORDED_BANK_SWEEP_SUMMARY",
+ "requirement_closure_hash": "sha256:cb95b4ada223835e8a81f3b9e7da0dcd8823253ed4a08ae8eb7525dad9fc8430",
+ "requirement_id": "issue_47_v1",
+ "runtime_tree_content": "2f130249 with the registration patch",
+ "selection_loaded_inventories": [
+  "CIK0000019617.json",
+  "CIK0000019617-submissions-001.json",
+  "CIK0000019617-submissions-002.json",
+  "CIK0000019617-submissions-003.json",
+  "CIK0000019617-submissions-004.json",
+  "CIK0000019617-submissions-005.json",
+  "CIK0000019617-submissions-006.json"
+ ],
+ "stages": {
+  "FAILED": 1,
+  "PUBLIC_ROW": 37
+ },
+ "structurally_not_applicable": {
+  "count": 12,
+  "metrics": [
+   "B01",
+   "B02",
+   "B03",
+   "B04",
+   "B05",
+   "B07",
+   "B08",
+   "B09",
+   "B10",
+   "B11",
+   "B12",
+   "B13"
+  ]
+ },
+ "values": {
+  "count": 17,
+  "metrics": [
+   "A01",
+   "A02",
+   "A03",
+   "A04",
+   "A05",
+   "A06",
+   "A07",
+   "A08",
+   "A09",
+   "A10",
+   "A11",
+   "A12",
+   "A13",
+   "C02",
+   "C03",
+   "D01",
+   "D02"
+  ]
+ },
+ "what_this_is": "every routed metric for JPMorgan FY2025 on the recorded root with the re-derived index - the only root where a bank period selects - installed from that root, run natively under issue_47_v1, frozen, rendered, one Run per route family read back in a separate process. RECORDED_TEST_ONLY: a test of the mechanism on real material, not a delivery.",
+ "withheld_with_a_named_reason": [
+  "B06",
+  "C01",
+  "C04",
+  "E01",
+  "E02",
+  "E03",
+  "E04",
+  "E05"
+ ]
+}

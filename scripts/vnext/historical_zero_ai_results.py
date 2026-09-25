@@ -30,6 +30,7 @@ from .calculator import (calculate_metric, calculate_observation_metric,
                          withheld_metric_result)
 from .canonical import content_hash, sha256_file, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_filing_inventory import filing_inventory
 from .normal_annual_input_v2 import exact_json_value
 from .normal_governance_input import _Sources, NormalGovernanceInputError
 from .normal_zero_ai_results import (B01_SPEC_PATH, B03_SPEC_PATH, EVENT_METRICS,
@@ -272,7 +273,14 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                          "source_event_accessions": sorted({f["accessionNumber"]
                                                             for f in events})}
             raise _EventRouteResolved
-        manifest = _exact_set(prepared, inventory, facts_source, "companyfacts")
+        # The statement source set is proved against the document that lists
+        # the filing; the event branch above keeps the main index, because its
+        # own walk reads the history blocks from it.
+        listed_in = filing_inventory(reader=reader, inventory=inventory,
+                                     period_selection=period_selection,
+                                     cik=prepared["entity"],
+                                     accession=prepared["filing"]["accessionNumber"])
+        manifest = _exact_set(prepared, listed_in, facts_source, "companyfacts")
         source_sets = [manifest]
         approved = sorted(set(_structured_concepts(compiled_spec=spec)) | {
             concept for dependency in dependency_specs.values()

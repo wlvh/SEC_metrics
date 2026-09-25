@@ -49,6 +49,7 @@ def _route_error_classes():
     """
     from .historical_amendment_admission import AmendmentAdmissionError
     from .historical_debt_results import HistoricalDebtError
+    from .historical_filing_inventory import HistoricalFilingInventoryError
     from .historical_governance_input import HistoricalGovernanceError
     from .historical_metadata_context import HistoricalMetadataError
     from .historical_run import HistoricalRunError
@@ -56,9 +57,10 @@ def _route_error_classes():
     from .normal_companyfacts_results import NormalCompanyfactsError
     from .normal_zero_ai_results import NormalZeroAiError
     from .normal_period_selection import PeriodSelectionError
-    return (AmendmentAdmissionError, HistoricalDebtError, HistoricalGovernanceError,
-            HistoricalMetadataError, HistoricalRunError, HistoricalStructuralError,
-            NormalCompanyfactsError, NormalZeroAiError, PeriodSelectionError)
+    return (AmendmentAdmissionError, HistoricalDebtError, HistoricalFilingInventoryError,
+            HistoricalGovernanceError, HistoricalMetadataError, HistoricalRunError,
+            HistoricalStructuralError, NormalCompanyfactsError, NormalZeroAiError,
+            PeriodSelectionError)
 
 
 def execution_identity(*, repo_root: Path) -> dict:

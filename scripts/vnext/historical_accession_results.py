@@ -18,6 +18,7 @@ from sec_urls import companyfacts_url, submissions_url
 from .calculator import metric_is_applicable, withheld_metric_result, calculate_observation_metric
 from .canonical import content_hash, sha256_file, strict_json_file
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_filing_inventory import filing_inventory
 from .normal_accession_results import (POLICY_PATH, _AUTHORITY, NormalAccessionError,
                                        inspect_ordinary_accession_facts)
 from .normal_annual_input_v2 import exact_json_value
@@ -77,6 +78,11 @@ def resolve_historical_accession_metrics(*, repo_root: Path, company_id: str, pe
     reader.read(companyfacts_url(cik=int(prepared["entity"])),
                 accession=prepared["filing"]["accessionNumber"], role="companyfacts",
                 media_type="application/json")
+    # Proved against the document that lists the filing, which is the main
+    # index unless the row sits in a history block the selection loaded.
+    inventory = filing_inventory(reader=reader, inventory=inventory,
+                                 period_selection=period_selection, cik=prepared["entity"],
+                                 accession=prepared["filing"]["accessionNumber"])
     manifest = _exact_filing_source_set(company_id=company_id,
                                         source_role="target_accession_instance",
                                         reference=source["source_reference"],

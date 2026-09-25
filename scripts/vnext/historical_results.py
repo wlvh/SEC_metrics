@@ -25,6 +25,7 @@ from sec_urls import submissions_url
 from .calculator import metric_is_applicable, withheld_metric_result
 from .canonical import content_hash, sha256_file
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_filing_inventory import filing_inventory
 from .normal_annual_input import annual_period, _registry_rows
 from .normal_companyfacts_results import (CATALOG_PATH, NormalCompanyfactsError,
                                           _SOURCE_ERRORS, _authority, _filing_source,
@@ -113,8 +114,15 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
     concepts = sorted({concept for route in routes.values() for branch in route["branches"]
                        for component in branch["components"] for concept in component["approved_concepts"]})
     sources, claims_by_role = [], {}
+    # The target filing is proved against the document that lists it: the
+    # main index when its recent block does, else the loaded history block
+    # that does. The prior walk below already works this way, and keeps the
+    # main index because the history index it walks is in that document.
+    listed_in = filing_inventory(reader=reader, inventory=inventory,
+                                 period_selection=period_selection, cik=prepared["entity"],
+                                 accession=prepared["filing"]["accessionNumber"])
     source, claims_by_role["current"] = _filing_source(reader, prepared, prepared["filing"],
-                                                       inventory, concepts)
+                                                       listed_in, concepts)
     sources.append({**source, "accession_role": "current"})
     periods = {"current": period, "prior": None}
     filings = {"current": prepared["filing"], "prior": None}

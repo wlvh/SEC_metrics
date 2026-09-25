@@ -119,6 +119,11 @@ NEW_RULE_FILES = (
     # with the annual preparation handed in. These bytes decide which filing a
     # pinned bank period is read from, so both roots check them.
     "scripts/vnext/historical_financial_results.py",
+    # Which submissions document a pinned filing is proved against: the main
+    # index when its recent block lists the row, else the loaded history block
+    # that does. It decides the source set four routes build, so both roots
+    # check it.
+    "scripts/vnext/historical_filing_inventory.py",
 )
 
 # One module the parent's authority does not name although its own named code
