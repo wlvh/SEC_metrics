@@ -1156,6 +1156,22 @@
       "tool_calls": 43,
       "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review/conclusion.md",
       "verdict": "BLOCKED_SCOPED_TWO_STAGE_BOUNDARIES_TWO_P2"
+    },
+    {
+      "task_name": "review_b13two_c44bb04",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/README.md",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/measure_saved_sources.py"
+      ],
+      "patch_sha": "c44bb047481476b6736de0d17d277af05775f640",
+      "spawned_at": "2026-09-25T09:03:26.668013+00:00",
+      "ended_at": "2026-09-25T09:09:36.082367+00:00",
+      "tool_calls": 28,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-followup/conclusion.md",
+      "verdict": "PASS_SCOPED_TWO_STAGE_P2_INCREMENT"
     }
   ],
   "ci_capacity_20260922": {
@@ -1925,7 +1941,7 @@
       "candidate_refs_per_group_cap": 64,
       "all_synthetic_64_ref_stage_inputs_fit_existing_context_and_4096_reserve": true
     },
-    "review": "INITIAL_A48D282_BLOCKED_TWO_P2; FOLLOWUP_PATCH_UNCOMMITTED_PENDING_SCOPED_REVIEW",
+    "review": "INITIAL_A48D282_TWO_P2_RETAINED; C44BB047_SCOPED_P2_INCREMENT_PASS",
     "real_new_calls": [
       0,
       0,
@@ -1936,7 +1952,8 @@
     "new_live_call_authority": false,
     "old_191_192_third_opportunity": false,
     "initial_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review/conclusion.md",
-    "post_p2_tests": "21_DIRECTED_PASS; 128_FAST_SELECTORS_PASS; SAVED_MEASUREMENT_BYTE_EQUAL"
+    "post_p2_tests": "21_DIRECTED_PASS; 128_FAST_SELECTORS_PASS; SAVED_MEASUREMENT_BYTE_EQUAL",
+    "followup_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-followup/conclusion.md"
   },
   "ci_36112753619": {
     "head": "50c341c26d745ddfc19b9b5bde69d479a1464716",
