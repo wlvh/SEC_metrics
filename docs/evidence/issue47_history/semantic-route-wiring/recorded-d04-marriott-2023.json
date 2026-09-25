@@ -7,6 +7,11 @@
  "cold_read_matches": true,
  "company_id": "marriott_international",
  "default_installation": "REFUSED:HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE",
+ "earlier_run_before_the_authority_additions": {
+  "note": "the same chain before capacity_run and capacity_assessment_input were named in the authority; this file's run is at the committed closure",
+  "requirement_closure_hash": "sha256:2032fd3a82d8f09768e870d32f53d7595b9a6fb976630976b5fb0a0cbc5f355e",
+  "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5"
+ },
  "first_attempt": {
   "cause": "the historical renderer assumed every text result has a payload; D04's defined-scope absence has none, and the ordinary renderer's arm for it (capacity_run.project_defined_absence) had not been ported. The same renderer also lacked the ordinary one's note and receipt field marking a row built on recorded test responses.",
   "error": "TypeError: 'NoneType' object is not subscriptable at historical_projection.render_historical_run: len(result[\"text_payload\"][\"items\"])",
@@ -41,10 +46,10 @@
   "publication": "WITHHELD",
   "quality": "NONE",
   "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
-  "requirement_closure_hash": "sha256:2032fd3a82d8f09768e870d32f53d7595b9a6fb976630976b5fb0a0cbc5f355e",
+  "requirement_closure_hash": "sha256:576a862e095f97100c97d8a2844ea3bef7ff5a884cad2450f627d734ed7e15d7",
   "requirement_id": "issue_47_v1",
   "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5",
-  "run_id": "run:historical-period:a8b3b3ef9311db5d535a85c3f94c5f10b31254e9366f9462ea0c618d01d0e425",
+  "run_id": "run:historical-period:dc5192bac4f7b02a095f9190fbc13cb4c5003bfcfbff699123e630a121461de0",
   "status": "FROZEN",
   "target_period": {
    "fiscal_year": 2023,
@@ -59,10 +64,10 @@
   "quality": "NONE",
   "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
   "records": 11,
-  "requirement_closure_hash": "sha256:2032fd3a82d8f09768e870d32f53d7595b9a6fb976630976b5fb0a0cbc5f355e",
+  "requirement_closure_hash": "sha256:576a862e095f97100c97d8a2844ea3bef7ff5a884cad2450f627d734ed7e15d7",
   "requirement_id": "issue_47_v1",
   "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5",
-  "run_id": "run:historical-period:a8b3b3ef9311db5d535a85c3f94c5f10b31254e9366f9462ea0c618d01d0e425",
+  "run_id": "run:historical-period:dc5192bac4f7b02a095f9190fbc13cb4c5003bfcfbff699123e630a121461de0",
   "status": "FROZEN",
   "value": null
  }
