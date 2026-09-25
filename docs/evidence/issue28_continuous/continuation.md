@@ -28,4 +28,6 @@ B13随后从保存的Enphase190及Ford171完整来源比较了更小单阶段请
 
 B06的Ford合并权益不能代替工业分母。Paramount C04旧包EY/PwC提及不能当本注册人审计师变更；进一步只读核对发现两份8-K12B家族申报的primary/header四个URL在原账本安装源中**早已由SEC第105—108次取得并验证**，仓库基线“四份缺失”不是今日安装源状态。EY原文明确是Skydance Media LLC的审计师，8-K12B中的PwC命中仅是董事履历；没有同CIK前期年报，现有C04 v2否定条件仍不成立。本次尝试一份URL只返回已验证来源复用，新增SEC0；见`paramount-c04-source-inspection/registration-form-discovery/`。正常更新、完整390和旧入口退出仍有责任，不以来源缺口或安全拒绝冒充能力完成。用户授权批次SEC0不撤销原Issue28独立SEC来源获取的原守卫，但本轮未新增SEC调用，也不处理#47来源。旧111历史SUCCEEDED但当前错误类别无复用信用；V3限定独审、两项P2外部限定结案及批次/恢复限定独审按原证据复用，不重新审未变字节。
 
+后续`paramount-c04-form-acceptance-20260925/`用原安装源的6份本注册人8-K/8-K12B家族申报和12份primary/header来源引用，实际经通用来源集合及Item适配器形成22个Item简述，0个4.01；遗漏一份申报、以旧两形式清单冒充六份均被拒。header形式与当前保存submissions原文一致，固定总账仍143/143/49。这个结果只证明**通用适配器在显式四形式输入下可处理原件**；普通C04 v2默认选源及Spec未扩大，尚无原生C04 Run，0个4.01也不能代替缺失的同CIK前期审计师比较或业务规则决定。
+
 旧失败、原账本与历次评论均保留。`batch33-authorization/`记录授权、录制与真实调用前缀；历史完整D04八家公司材料见`d04-remaining-20260922/`及其冷读。当前执行状态见`execution-state.json`。
