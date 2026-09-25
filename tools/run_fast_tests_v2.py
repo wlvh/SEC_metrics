@@ -246,6 +246,11 @@ SOURCE_TESTS += ("tests.vnext.test_single_readings",)
 # session refused by name. Builds five complete semantic sources; 204 seconds
 # measured under a running batch.
 SOURCE_TESTS += ("tests.vnext.test_historical_semantic_routes",)
+# The C02 judgements held to the route's own selection from the saved proxies:
+# the committed reading re-derived for ten values, and a judgement file that
+# no longer describes the selection refused. Prepares ten text inputs; 70
+# seconds measured under a running batch.
+SOURCE_TESTS += ("tests.vnext.test_c02_board_reading",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

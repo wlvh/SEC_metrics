@@ -724,6 +724,204 @@
     "docs/evidence/issue47_history/b03-depreciation-scope/finding.json",
     "docs/evidence/issue47_history/b03-depreciation-scope/da_census.py"
    ]
+  },
+  {
+   "defect_id": "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "enphase_energy",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "10 of the value's 34 excerpts are outside board composition under every reading of the definition (294: shareholder outreach; 578: communicating with directors; 583: director compensation policy; 590: director compensation label: audit chair retainer). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 4, \"COMPOSITION_FACT\": 13, \"COMPOSITION_POLICY_OR_PROCESS\": 7, \"NOT_BOARD_COMPOSITION\": 10}.",
+   "root_cause": "text_business_candidates.board_composition_candidates labels a block 'committee information' when it names any committee anywhere and contains any of the committee_structure words anywhere ('chair of', 'members of', 'committee chair', 'serves as', 'member of', ...). The two are not required to relate, nor to describe this board: a director-compensation line ('Audit Committee Chair Retainer'), an equity plan's administrator clause, a biography's other-company committee and the audit committee's auditor pre-approval all qualify. Across the ten judged values 87 of the 94 excerpts outside board composition carry the committee label. The selector's bytes are frozen by the issue_28 generations and shared with the ordinary route, which carries the same behaviour.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_FORD_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "ford_motor_company",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "5 of the value's 23 excerpts are outside board composition under every reading of the definition (759: related person transactions policy; 914: nominee biography: another organisation's audit committee; 950: executive biography; 1150: director compensation line: audit chair fee). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 2, \"COMPOSITION_FACT\": 12, \"COMPOSITION_POLICY_OR_PROCESS\": 4, \"NOT_BOARD_COMPOSITION\": 5}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_LUMEN_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "lumen_technologies",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "12 of the value's 17 excerpts are outside board composition under every reading of the definition (620: nominee biography: another company's committees; 621: nominee biography: another company's committees; 1085: meeting attendance; 1089: heading/label without content). Categories: {\"COMPOSITION_FACT\": 4, \"COMPOSITION_POLICY_OR_PROCESS\": 1, \"NOT_BOARD_COMPOSITION\": 12}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MACYS_2026_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "macys",
+   "metric_id": "C02",
+   "period_end": "2026-01-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "5 of the value's 13 excerpts are outside board composition under every reading of the definition (624: nominee biography: committee roles on another company's board; 841: nominee biography: another organisation's committee; 876: nominee biography: another company's audit committee; 1031: AI governance structure). Categories: {\"COMPOSITION_FACT\": 5, \"COMPOSITION_POLICY_OR_PROCESS\": 3, \"NOT_BOARD_COMPOSITION\": 5}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MARRIOTT_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "marriott_international",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "9 of the value's 29 excerpts are outside board composition under every reading of the definition (402: executive pay and performance; 1024: nominee biography; 1438: CEO performance review; 1511: communicating with directors). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 1, \"COMPOSITION_FACT\": 10, \"COMPOSITION_POLICY_OR_PROCESS\": 9, \"NOT_BOARD_COMPOSITION\": 9}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PARAMOUNT_2024_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "C02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "13 of the value's 36 excerpts are outside board composition under every reading of the definition (768: beneficial ownership footnote; 782: related-party review recusal; 802: nominee biography: other organisations' committees; 817: director biography). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 5, \"COMPOSITION_FACT\": 11, \"COMPOSITION_POLICY_OR_PROCESS\": 7, \"NOT_BOARD_COMPOSITION\": 13}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PARAMOUNT_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "3 of the value's 12 excerpts are outside board composition under every reading of the definition (110: director biography; 435: compensation consultants retained; 667: signature label of the compensation committee report). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 1, \"COMPOSITION_FACT\": 6, \"COMPOSITION_POLICY_OR_PROCESS\": 2, \"NOT_BOARD_COMPOSITION\": 3}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PFIZER_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "pfizer",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "12 of the value's 24 excerpts are outside board composition under every reading of the definition (219: say-on-pay shareholder engagement; 1195: shareholder engagement; 1239: shareholder proposal engagement; 1262: investor feedback to the governance committee). Categories: {\"COMPOSITION_FACT\": 4, \"COMPOSITION_POLICY_OR_PROCESS\": 8, \"NOT_BOARD_COMPOSITION\": 12}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_SALESFORCE_2026_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "salesforce",
+   "metric_id": "C02",
+   "period_end": "2026-01-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "19 of the value's 30 excerpts are outside board composition under every reading of the definition (693: annual meeting attendance; 861: enterprise risk surveys; 919: director equity awards; 933: director compensation table). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 2, \"COMPOSITION_FACT\": 7, \"COMPOSITION_POLICY_OR_PROCESS\": 2, \"NOT_BOARD_COMPOSITION\": 19}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_SOUTHWEST_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "southwest_airlines",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "6 of the value's 28 excerpts are outside board composition under every reading of the definition (988: nominee biography: another company's audit committee; 1402: related-party questionnaire; 3247: director fees; 3285: director compensation market data). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 4, \"COMPOSITION_FACT\": 10, \"COMPOSITION_POLICY_OR_PROCESS\": 8, \"NOT_BOARD_COMPOSITION\": 6}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
