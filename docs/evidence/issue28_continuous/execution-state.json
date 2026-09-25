@@ -48,7 +48,7 @@
     "D03 remains no-call pending separate review/resources; production publication and active switch remain separately unapproved."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
-  "remaining_review_dependency": "6e5 D03 source-fact independent report not found; existing ChatGPT review task dispatch returned Too many requests with no new task message. No retry, rename, model change or reset.",
+  "remaining_review_dependency": "D03 source-fact 6e5a85b limited independent review found a post-action modifier P2; original failure retained. Narrow corrective patch is tested and awaits exact-SHA limited independent review. Current r6_regulatory_semantics integration remains separately unreviewed; D03 no real calls.",
   "historical_state_snapshot": "review-5207290213/historical-before-through104-state/execution-state.json",
   "historical_continuation_snapshot": "review-5207290213/historical-before-through104-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
@@ -400,7 +400,7 @@
     "old_response_rewritten": false,
     "sample_role": "REGRESSION_AFTER_PRIOR_REPAIR",
     "native_result_created": false,
-    "independent_module_review": "PENDING_USER_FORWARDED_REVIEW",
+    "independent_module_review": "ORIGINAL_6E5A85B_FAILED_POSTMODIFIER_P2; CORRECTIVE_PATCH_PENDING_EXACT_SHA_REVIEW",
     "real_model_validation": "NOT_RUN_PENDING_MODULE_REVIEW"
   },
   "b13_native_development": {
@@ -1172,6 +1172,21 @@
       "tool_calls": 28,
       "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-followup/conclusion.md",
       "verdict": "PASS_SCOPED_TWO_STAGE_P2_INCREMENT"
+    },
+    {
+      "task_name": "review_d03fact_6e5a85b",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "scope_paths": [
+        "scripts/vnext/regulatory_statement_facts.py",
+        "tests/vnext/test_regulatory_statement_facts.py",
+        "docs/evidence/issue28_continuous/resume-2026-09-14/d03-source-fact-final.json"
+      ],
+      "patch_sha": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
+      "spawned_at": "2026-09-25T09:22:50.493035+00:00",
+      "ended_at": "2026-09-25T09:29:34.152333+00:00",
+      "tool_calls": 57,
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review/conclusion.md",
+      "verdict": "BLOCKED_SCOPED_D03_SOURCE_FACT_POSTMODIFIER_P2"
     }
   ],
   "ci_capacity_20260922": {
@@ -2000,5 +2015,45 @@
       143,
       49
     ]
+  },
+  "d03_source_fact_repair_20260925": {
+    "status": "LOCAL_REPAIR_TESTED_PENDING_SCOPED_INDEPENDENT_REVIEW",
+    "evidence_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/",
+    "original_patch_sha": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
+    "original_review": "BLOCKED_SCOPED_D03_SOURCE_FACT_POSTMODIFIER_P2",
+    "repair": "POST_ACTION_NONTRIVIAL_MODIFIERS_REQUIRE_SEMANTIC_REVIEW",
+    "jpm_existing_positive_fact_id_unchanged": true,
+    "directed_tests": "7_PASS",
+    "jpm_real_source_material": "1_PASS_21.941_SECONDS",
+    "offline_d03_controller_tests": "6_PASS",
+    "fast_suite": "128_OF_128_PASS",
+    "current_v15_closure": "sha256:fb36222f3f7645b1d8ed76d9b7c83f8284646816011f6d2f6aaf3129158d373e",
+    "current_execution_authority_hash": "sha256:4aa798280b8e1e431587a5cd49ed759751a1323b566c950582d4483a8bd3db3c",
+    "provider_sec_wiring": "PASS_CURRENT_BINDING_NO_NETWORK",
+    "b13_190_reuse": "PASS_READ_ONLY_CURRENT_BINDING",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "d03_live_authorized": false,
+    "d03_native_result_created": false,
+    "scoped_repair_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/regulatory_statement_facts.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json",
+        "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json"
+      ],
+      "functions": [
+        "regulatory_statement_facts.aggregate_involvement_facts"
+      ],
+      "default_normal_run_binding_changed": false,
+      "record_or_return_shapes_changed": false,
+      "v15_requirement_closure_changed": true,
+      "other_branch_modified": false,
+      "downstream_note": "Stacked #47 integrator must account for changed PR43 V15 closure; no #47 branch or snapshot touched."
+    }
   }
 }

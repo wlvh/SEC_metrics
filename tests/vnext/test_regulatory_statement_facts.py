@@ -62,6 +62,25 @@ class RegulatoryStatementFactsTest(unittest.TestCase):
                 self.assertEqual(len(rows), 1)
                 self.assertEqual(rows[0]['status'], 'SEMANTIC_REVIEW_REQUIRED')
 
+    def test_action_postmodifier_cannot_prove_current_involvement(self):
+        stem = 'We are involved in various legal matters, including investigations by governmental authorities'
+        positive = aggregate_involvement_facts(text=stem + '.', aliases=self.aliases)
+        self.assertEqual(len(positive), 1)
+        self.assertEqual(positive[0]['status'], 'SOURCE_REPORTED_FACT')
+        for ending in (', all of which were completed in 2020',
+                       ', all of which have concluded',
+                       ' that can arise in the future',
+                       ' that are hypothetical',
+                       ', none of which involve us',
+                       ' that are ongoing but concern another company'):
+            with self.subTest(ending=ending):
+                facts = aggregate_involvement_facts(text=stem + ending + '.', aliases=self.aliases)
+                self.assertEqual(len(facts), 1)
+                self.assertEqual(facts[0]['status'], 'SEMANTIC_REVIEW_REQUIRED')
+                self.assertIn('ACTION_SCOPE_REQUIRES_INTERPRETATION', facts[0]['reason_codes'])
+                self.assertEqual(check_aggregate_classification(facts=facts,
+                    kind='HISTORICAL_STATEMENT', reported_status='UNRESOLVED'), [])
+
     def test_fact_conflict_rejects_erasure_without_rewriting_proposal(self):
         facts = aggregate_involvement_facts(text=self.sentence, aliases=self.aliases)
         before = deepcopy(facts)

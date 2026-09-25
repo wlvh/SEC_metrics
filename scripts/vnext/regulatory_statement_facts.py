@@ -9,6 +9,12 @@ import re
 from .canonical import content_hash
 from .regulatory_investigation_candidates import _PATTERNS, _sentences, _self_aliases
 
+# Only a plain list of proceeding types may follow the governmental-action
+# phrase in this deliberately narrow fact rule. A relative clause or another
+# assertion can change whose action it is, whether it happened, or when.
+_LEGAL_TYPE = r'(?:(?:criminal|civil|administrative|regulatory|governmental|enforcement|other)\s+)*(?:proceedings|actions|matters|investigations)'
+_ACTION_TAIL = re.compile(r'(?:,\s*including\s+' + _LEGAL_TYPE + r')?\s*', re.I)
+
 
 def aggregate_involvement_facts(*, text, aliases, quoted=False, context=()):
     """Recognize an explicit present aggregate governmental-action relation.
@@ -62,6 +68,8 @@ def aggregate_involvement_facts(*, text, aliases, quoted=False, context=()):
         if re.match(r'\s+(?:conducted\s+)?by\s+(?:private|internal|customers|our\s+own)\b',
                     match.group('inclusions')[action.end():], re.I):
             reasons.append('ACTION_ACTOR_CONFLICT')
+        if _ACTION_TAIL.fullmatch(match.group('inclusions')[action.end():]) is None:
+            reasons.append('ACTION_SCOPE_REQUIRES_INTERPRETATION')
         if _PATTERNS['resolution'].search(sentence) or any(
                 _PATTERNS['linked_resolution'].search(c)
                 and _PATTERNS['resolution'].search(c)
