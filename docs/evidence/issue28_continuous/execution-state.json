@@ -1290,6 +1290,22 @@
       "tool_calls": 41,
       "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-local/conclusion.md",
       "verdict": "NEEDS_FIX_P2_CROSS_CLAUSE_OTHER_ENTITY_FALSE_REJECTION"
+    },
+    {
+      "task_name": "review_b13clause_f6be093",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/stage3-clause-repair.log"
+      ],
+      "patch_sha": "f6be0934d8c2fc73cb3fbb3bdcb113a462135837",
+      "spawned_at": "2026-09-25T19:04:27Z",
+      "ended_at": "2026-09-25T19:10:42Z",
+      "tool_calls": 38,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-clause/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_SAME_CLAUSE_SECOND_ASSERTION_FALSE_ACCEPTANCE_AND_SUPPLIER_FALSE_REJECTION"
     }
   ],
   "ci_capacity_20260922": {
@@ -2047,7 +2063,7 @@
   },
   "b13_two_stage_offline_20260925": {
     "base_head": "50c341c26d745ddfc19b9b5bde69d479a1464716",
-    "status": "RECORDED_NATIVE_CHAIN_AND_INSTALLED_COLD_PASS_NEW_LIVE_TRIAL_NOT_AUTHORIZED",
+    "status": "RECORDED_NATIVE_CHAIN_PASS_SEMANTIC_ACCEPTANCE_BLOCKED_AFTER_BOUNDED_REVIEWS",
     "selected_route": "FULL_SOURCE_SCAN_THEN_FULL_SOURCE_INTERPRETATION",
     "evidence_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/",
     "saved_source_measurement": {
@@ -2081,7 +2097,7 @@
     "followup_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-followup/conclusion.md",
     "requirement_closure_hash": "sha256:5a28b5906fcb312ec69a9fbdec4e9f2118e999ddf0c437ea70cc05a2c4878ac6",
     "execution_authority_hash": "sha256:87fae05b931045f34309395265457ebc2b9b51342867f114a518c6971f49f91a",
-    "current_scope_review": "79FE67B_LIMITED_REVIEW_NEEDS_FIX_CROSS_CLAUSE; CLAUSE_REPAIR_STAGE3_REPLAY_PASS_NEW_SHA_REVIEW_PENDING",
+    "current_scope_review": "F6BE093_LIMITED_REVIEW_NEEDS_FIX_P2_ASSERTION_SCOPE; STOP_LEXICAL_PATCH_ROUTE",
     "recorded_mixed_v4_v5_group_count": 6,
     "recorded_stage_claims": [
       7,
@@ -2108,7 +2124,7 @@
       "v15_requirement_closure_changed": true,
       "other_branch_modified": false
     },
-    "current_scope_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-local/conclusion.md",
+    "current_scope_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-clause/conclusion.md",
     "repair_recorded_chain": "PASS_AT_SHA256_ACD297_CLOSURE; CURRENT_LOCAL_REPAIR_STAGE3_ONLY_NOT_FULL_COLD",
     "repair_evidence_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/repair-native-replay-summary.json",
     "repair_directed_tests": "30_PASS",
@@ -2117,7 +2133,10 @@
     "local_repair_full_company_cold_status": "PRIOR_CLOSURE_RECORDING_REUSED; NOT_RERUN_AT_CURRENT_CLOSURE",
     "clause_repair_directed_tests": "31_PASS",
     "clause_repair_stage3_read_only_replay": "PASS_CURRENT_CLOSURE_NO_NEW_CLAIMS",
-    "clause_repair_full_company_cold_status": "PRIOR_CLOSURE_RECORDING_REUSED; NOT_RERUN_AT_CURRENT_CLOSURE"
+    "clause_repair_full_company_cold_status": "PRIOR_CLOSURE_RECORDING_REUSED; NOT_RERUN_AT_CURRENT_CLOSURE",
+    "live_validation_admission": "CLOSED_NO_NEW_B13_TWO_STAGE_CALL_AUTHORITY",
+    "next_required_engineering_choice": "ASSERTION_SPAN_BOUND_EXCLUSION_OR_EXPLICIT_UNRESOLVED_CONTRACT",
+    "complete_real_company_result_created": false
   },
   "ci_36112753619": {
     "head": "50c341c26d745ddfc19b9b5bde69d479a1464716",
