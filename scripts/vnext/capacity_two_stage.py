@@ -85,22 +85,28 @@ def _direct_current_target_capacity(text, fiscal_year):
         r'\b(?:if|unless|would|could|might|hypothetical|illustrative)\b', re.I)
     present = re.compile(r'\b(?:have|has|is|are|operate|maintain|possess|plan|expect)\b', re.I)
     for _, _, statement in _sentences(text):
-        if not direct.search(statement):
-            continue
-        years = {int(year) for year in re.findall(r'\b(?:19|20)\d{2}\b', statement)}
-        contrast = re.search(r'\b(?:unlike|compared\s+(?:with|to)|versus|in\s+contrast\s+to)\b',
-                             statement, re.I)
-        if years and years != {fiscal_year} and not contrast:
-            continue
-        for relation in physical.finditer(statement):
-            # Earlier historical comparisons do not negate a later present
-            # assertion. A genuinely past "used to have" relation belongs to
-            # its own local clause and is not promoted to current capacity.
-            clause = re.split(r';|\b(?:but|whereas)\b',
-                              statement[:relation.start()], flags=re.I)[-1]
-            if (present.search(clause) and not excluded_context.search(clause)
+        clauses = re.split(r';|\b(?:but|whereas)\b', statement, flags=re.I)
+        for index, clause in enumerate(clauses):
+            relation = physical.search(clause)
+            if relation is None:
+                continue
+            # Do not borrow a target-company noun from another entity's
+            # clause. A leading "they" may carry the immediately preceding
+            # expressly identified contract-manufacturer subject.
+            target = direct.search(clause) or (index > 0
+                and re.match(r'^\s*they\s+(?:have|has|are|operate|maintain)\b', clause, re.I)
+                and re.search(r'\bour\s+contract\s+manufacturers?\b', clauses[index - 1], re.I))
+            if not target:
+                continue
+            years = {int(year) for year in re.findall(r'\b(?:19|20)\d{2}\b', clause)}
+            contrast = re.search(r'\b(?:unlike|compared\s+(?:with|to)|versus|in\s+contrast\s+to)\b',
+                                 clause, re.I)
+            if years and years != {fiscal_year} and not contrast:
+                continue
+            prefix = clause[:relation.start()]
+            if (present.search(prefix) and not excluded_context.search(prefix)
                     and not re.search(r'\bused\s+to\s+(?:have|operate|maintain|possess)\s+'
-                                      r'(?:[A-Za-z-]+\s+){0,4}$', clause, re.I)):
+                                      r'(?:[A-Za-z-]+\s+){0,4}$', prefix, re.I)):
                 return True
     return False
 

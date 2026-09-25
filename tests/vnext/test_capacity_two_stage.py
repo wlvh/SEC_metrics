@@ -141,6 +141,9 @@ class CapacityTwoStageTest(unittest.TestCase):
         cases = (
             ('<p>A supplier has manufacturing capacity for its own products.</p>',
              'other_entity', 'OTHER_ENTITY', 'CURRENT_REPORT'),
+            ('<p>Our contract manufacturers previously had limited output; '
+             'a supplier has manufacturing capacity for its own products.</p>',
+             'other_entity', 'OTHER_ENTITY', 'CURRENT_REPORT'),
             ('<p>In fiscal 2023, our contract manufacturers had production '
              'capacity for anticipated demand.</p>',
              'historical_statement', 'TARGET_REGISTRANT', 'HISTORICAL'),

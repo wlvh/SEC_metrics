@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:8a87eb53dc613a0a542265444a59e70ee6b1b01eac2a9145a49af01c4eb0b8c7",
-  "execution_authority_hash": "sha256:7312a2a8a9f0fe9c1ccf65400e065336906cf8bc67aab5b9dd90caa16068a096",
+  "requirement_closure_hash": "sha256:5a28b5906fcb312ec69a9fbdec4e9f2118e999ddf0c437ea70cc05a2c4878ac6",
+  "execution_authority_hash": "sha256:87fae05b931045f34309395265457ebc2b9b51342867f114a518c6971f49f91a",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -59,7 +59,9 @@
     "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/read-only-190-repair.log": "77bc684d8df200f6a1b0a1ae3e08eddebd73f248a777102b4b9199b0641bd2c6",
     "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/repair-targeted.log": "fb9e23a694fdf76ef02b4313d71a80339c20fd4cab0c29e46a5b39496c3ddafc",
     "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/stage3-local-repair.log": "1081c339395934ac4eae1de7c0e64c46dd334ad72a4ed4b111089348a108f449",
-    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/local-repair-targeted.log": "38bbf14f2621f81977b900cbf71e41cb5bd5fb3be12e70dbb309b47419391f2b"
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/local-repair-targeted.log": "38bbf14f2621f81977b900cbf71e41cb5bd5fb3be12e70dbb309b47419391f2b",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/stage3-clause-repair.log": "b10525b877b71eaf93761dd78ae105b4394db084abb0123856ebfa9fb7a77238",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/clause-repair-targeted.log": "400a8abe286ecb7591cad9a24008cf70d3b2f87d21d485e10d19c7189a122a95"
   },
   "scope": "Current V15 closure and execution files both checked after ordinary V14 parent repair and P2 receipt fix. Focused 31-test no-network factory/controller and bad-closure rejection pass. Original B13 success190 remains read-only reusable; no new model response, complete company or production credit.",
   "independent_review": "Original B13 V4 scoped reviews retained. Ordinary-binding patch5c307e5 first review found the stale receipt closure; exact follow-up difference review is pending, and that prior finding remains recorded."
