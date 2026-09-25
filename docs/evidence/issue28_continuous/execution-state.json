@@ -142,11 +142,14 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "7c55e655",
-    "run_id": null,
-    "status": "NOT_YET_LISTED_ON_SINGLE_POST_PUSH_READ",
-    "conclusion": null,
-    "scope": "Single immediate gh run list read after push; no workflow listed at that instant. No repeat trigger or poll."
+    "head": "50c341c26d745ddfc19b9b5bde69d479a1464716",
+    "run_id": 36112753619,
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_success": 13,
+    "jobs_failed": 0,
+    "jobs_cancelled": 0,
+    "scope": "Observed terminal after local B13 work; applies to 50c341c2, not later unpushed candidate changes."
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -1137,6 +1140,22 @@
       "status": "DONE",
       "tool_calls_top_level": 10,
       "tool_calls_note": "agent reported exact 10 top-level and 15 nested tool calls"
+    },
+    {
+      "task_name": "review_b13two_a48d282",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "tools/run_fast_tests_v2.py",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/"
+      ],
+      "patch_sha": "a48d282ed719c210001aab4dbfef67b892631900",
+      "spawned_at": "2026-09-25T08:48:41.792457+00:00",
+      "ended_at": "2026-09-25T08:56:20.711566+00:00",
+      "tool_calls": 43,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review/conclusion.md",
+      "verdict": "BLOCKED_SCOPED_TWO_STAGE_BOUNDARIES_TWO_P2"
     }
   ],
   "ci_capacity_20260922": {
@@ -1812,7 +1831,7 @@
     "sec_current_recorded_bridge": "paramount-c04-source-inspection/registration-form-discovery/sec-current-bridge-summary.json"
   },
   "ordinary_v14_binding_repair_20260925": {
-    "status": "SCOPED_P2_REVIEW_PASS_PENDING_PUSH_AND_CI",
+    "status": "SCOPED_REVIEW_PASS_AND_HEAD_50C341C_CI_13_OF_13_SUCCESS",
     "before_git_head": "2c2aa8de5d070c598141237f45de82ee92b998a3",
     "source_code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
     "v13_closure_after": "sha256:ecaef2291efd6eae67f5c1625ee794514c5d05988a4f9348208219ae4601ea01",
@@ -1876,7 +1895,9 @@
     "followup_patch_sha": "e0158f89bb5831161dabf961c1de5c8f81eac098",
     "followup_review": "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/independent-review-followup/conclusion.md",
     "followup_review_verdict": "PASS_SCOPED_V14_WIRING_P2",
-    "followup_committed_equivalence": "ordinary-v14-binding-repair-20260925/followup-committed-equivalence.json"
+    "followup_committed_equivalence": "ordinary-v14-binding-repair-20260925/followup-committed-equivalence.json",
+    "new_ci_run_id": 36112753619,
+    "new_ci_terminal": "SUCCESS_13_OF_13"
   },
   "ci_36016700987": {
     "head": "2c2aa8de5d070c598141237f45de82ee92b998a3",
@@ -1904,7 +1925,7 @@
       "candidate_refs_per_group_cap": 64,
       "all_synthetic_64_ref_stage_inputs_fit_existing_context_and_4096_reserve": true
     },
-    "review": "PENDING_EXACT_PATCH_SHA",
+    "review": "INITIAL_A48D282_BLOCKED_TWO_P2; FOLLOWUP_PATCH_UNCOMMITTED_PENDING_SCOPED_REVIEW",
     "real_new_calls": [
       0,
       0,
@@ -1913,6 +1934,24 @@
     "model_accuracy_or_absence_proven": false,
     "mixed_native_assessment_replay_proven": false,
     "new_live_call_authority": false,
-    "old_191_192_third_opportunity": false
+    "old_191_192_third_opportunity": false,
+    "initial_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review/conclusion.md",
+    "post_p2_tests": "21_DIRECTED_PASS; 128_FAST_SELECTORS_PASS; SAVED_MEASUREMENT_BYTE_EQUAL"
+  },
+  "ci_36112753619": {
+    "head": "50c341c26d745ddfc19b9b5bde69d479a1464716",
+    "status": "completed",
+    "conclusion": "success",
+    "job_count": 13,
+    "success": 13,
+    "previous_failure_jobs_now_success": [
+      "vNext recorded source update Runs",
+      "vNext ordinary native Runs",
+      "vNext ordinary update history",
+      "vNext independent metric updates",
+      "vNext current-instant native Runs",
+      "vNext debt native Runs"
+    ],
+    "saved_source_material": "success_current_run_old_36016700987_cancelled_history_unchanged"
   }
 }

@@ -51,10 +51,11 @@ def run(ledger_root):
                 if ref not in required][:MAX_CANDIDATE_REFS-len(required)]
             response = {'units_reviewed': list(range(len(v4['units']))),
                         'candidate_refs': candidates, 'unresolved_refs': []}
+            scan_raw = canonical_json_bytes(value=response)
             scan_result = validate_scan(request=v4, scan_request_value=scan,
-                raw_response=canonical_json_bytes(value=response))
+                raw_response=scan_raw)
             assessment = interpretation_request(request=v4,
-                                                scan_result=scan_result)
+                scan_result=scan_result, scan_raw_response=scan_raw)
             row.update(option_b_scan_input=measure(scan),
                        option_b_assessment_input_at_64_refs=measure(assessment),
                        option_b_synthetic_ref_count=len(candidates),

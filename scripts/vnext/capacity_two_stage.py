@@ -115,7 +115,8 @@ def validate_scan(*, request, scan_request_value, raw_response):
     _need(type(response) is dict and set(response) == set(SCAN_PROTOCOL['root_fields']),
           'B13_SCAN_RESPONSE_FIELDS_CHANGED')
     units = response['units_reviewed']
-    _need(type(units) is list and units == list(range(len(request['units']))),
+    _need(type(units) is list and all(type(index) is int for index in units)
+          and units == list(range(len(request['units']))),
           'B13_SCAN_UNIT_CENSUS_INCOMPLETE')
     inventory = _reference_inventory(request)
     for field in ('candidate_refs', 'unresolved_refs'):
@@ -142,16 +143,12 @@ def validate_scan(*, request, scan_request_value, raw_response):
     return {**body, 'scan_result_id': content_hash(value=body)}
 
 
-def interpretation_request(*, request, scan_result):
+def interpretation_request(*, request, scan_result, scan_raw_response):
     """Carry the full original source and the exact validated scan proposal."""
     _base(request)
-    _need(scan_result.get('scan_request_id') == scan_request(request)['request_id']
-          and scan_result.get('interpretation_request_id') == request['request_id']
-          and scan_result.get('source_id') == request['source_id']
-          and scan_result.get('scan_result_id') == content_hash(value={
-              key: value for key, value in scan_result.items() if key != 'scan_result_id'})
-          and scan_result.get('native_credit') is False
-          and scan_result.get('model_relevance_proven') is False,
+    _need(type(scan_result) is dict and type(scan_raw_response) is bytes
+          and scan_result == validate_scan(request=request,
+              scan_request_value=scan_request(request), raw_response=scan_raw_response),
           'B13_SCAN_RESULT_NOT_BOUND')
     body = {key: deepcopy(value) for key, value in request.items() if key != 'request_id'}
     body.update(system_prompt=body['system_prompt'] + ASSESS_SUFFIX,
@@ -161,14 +158,16 @@ def interpretation_request(*, request, scan_result):
     return {**body, 'request_id': content_hash(value=body)}
 
 
-def validate_interpretation(*, request, scan_result, interpretation,
-                            raw_response, source):
+def validate_interpretation(*, request, scan_result, scan_raw_response,
+                            interpretation, raw_response, source):
     """Use existing V4 semantics after checking stage linkage and references.
 
     This is an offline check; it does not create Candidate/Evidence or replay a
     provider receipt. A missed relevant source item remains a model risk.
     """
-    _need(interpretation == interpretation_request(request=request, scan_result=scan_result),
+    _need(interpretation == interpretation_request(
+              request=request, scan_result=scan_result,
+              scan_raw_response=scan_raw_response),
           'B13_TWO_STAGE_INTERPRETATION_CHANGED')
     _need(type(raw_response) is bytes, 'B13_TWO_STAGE_RESPONSE_BYTES_REQUIRED')
     value = strict_json_loads(text=raw_response.decode('utf-8'))
