@@ -82,18 +82,26 @@ def _direct_current_target_capacity(text, fiscal_year):
         r'(?:manufacturing|production)\s+(?:capacity|capabilities)\b|'
         r'\bour\s+(?:contract\s+)?manufacturers?\b', re.I)
     excluded_context = re.compile(
-        r'\b(?:if|unless|would|could|might|hypothetical|illustrative|'
-        r'previously|formerly|historically|prior\s+years?|last\s+years?|'
-        r'used\s+to|no\s+longer)\b', re.I)
+        r'\b(?:if|unless|would|could|might|hypothetical|illustrative)\b', re.I)
     present = re.compile(r'\b(?:have|has|is|are|operate|maintain|possess|plan|expect)\b', re.I)
     for _, _, statement in _sentences(text):
-        if not (physical.search(statement) and direct.search(statement)
-                and present.search(statement)) or excluded_context.search(statement):
+        if not direct.search(statement):
             continue
         years = {int(year) for year in re.findall(r'\b(?:19|20)\d{2}\b', statement)}
-        if years and years != {fiscal_year}:
+        contrast = re.search(r'\b(?:unlike|compared\s+(?:with|to)|versus|in\s+contrast\s+to)\b',
+                             statement, re.I)
+        if years and years != {fiscal_year} and not contrast:
             continue
-        return True
+        for relation in physical.finditer(statement):
+            # Earlier historical comparisons do not negate a later present
+            # assertion. A genuinely past "used to have" relation belongs to
+            # its own local clause and is not promoted to current capacity.
+            clause = re.split(r';|\b(?:but|whereas)\b',
+                              statement[:relation.start()], flags=re.I)[-1]
+            if (present.search(clause) and not excluded_context.search(clause)
+                    and not re.search(r'\bused\s+to\s+(?:have|operate|maintain|possess)\s+'
+                                      r'(?:[A-Za-z-]+\s+){0,4}$', clause, re.I)):
+                return True
     return False
 
 
