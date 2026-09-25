@@ -194,6 +194,11 @@ SOURCE_TESTS += ("tests.vnext.test_historical_risk_headings",)
 # value's digest from the filing alone. It reads seven full 10-Ks; 5 seconds
 # measured.
 SOURCE_TESTS += ("tests.vnext.test_d01_byte_reading",)
+# Two D02 marks the frozen parse cannot see - Enphase's page-numbered footer and
+# Lumen's underlined case label - each on its filing against a control with the
+# rule off, with D03 required not to move, plus the constructed edges the
+# filings do not reach. It reads two full 10-Ks; 55 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_d02_marks",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

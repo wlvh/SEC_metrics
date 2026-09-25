@@ -35,6 +35,21 @@ emphasis fields, requiring every other per-block field to be identical. That
 requirement is what makes this provably a one-field change rather than a second
 parser.
 
+One further change, also D01's alone. The frozen flush ends a block's leading
+emphasis at the first unemphasised part, which keeps a bold lead sentence apart
+from its paragraph. Paramount sets the two periods of "U.S." at weight 400
+between bold letters, so its heading "Failures to comply with or changes in
+U.S. or foreign laws..." was delivered as "Failures to comply with or changes
+in U". An unemphasised part of one or two punctuation characters is therefore
+bridged when the next visible part is emphasised again - and only then, so the
+ordinary lead sentence, whose unemphasised part is the paragraph, still ends
+where it did. Measured on all eleven D01 positions before writing it: this
+line is the only heading that moves; 26 of Ford's 30 and 32 of Marriott's
+headings are lead sentences and none of them resumes after its gap.
+Elsewhere in the same documents it joins a bold caption to its bold
+continuation across an unbolded separator - "Note 7A, 7B", "Item 7. Management's
+Discussion..." - none of which is in Item 1A.
+
 It is D01's alone. D02 and C02 keep the frozen parser, so nothing they select
 moves and ``audit_report_spans`` never sees an underline-marked block. That
 boundary is deliberate: admitting underline on the shared route was measured
@@ -55,6 +70,9 @@ _WEIGHT = re.compile(r"(?:^|;)\s*font-weight\s*:\s*([^;]+)", re.I)
 _DECORATION = re.compile(r"(?:^|;)\s*text-decoration[^:]*:\s*([^;]+)", re.I)
 _BOLD_TAGS = {"b", "strong", "h1", "h2", "h3", "h4", "h5", "h6"}
 _CANCELS_UNDERLINE = {"none", "initial", "unset"}
+# An unemphasised part the leading emphasis may cross, when emphasis resumes
+# right after it: one or two characters, none a letter, digit or space.
+_BRIDGE = re.compile(r"[^\w\s]{1,2}")
 # Every per-block field the successor must leave exactly as the frozen parser
 # produced it. The two emphasis fields are the only ones it may change.
 UNCHANGED_BLOCK_FIELDS = ("block_index", "text", "linked", "raw_start_byte",
@@ -70,9 +88,10 @@ def _need(condition, reason):
 class UnderlineBlocks(_Blocks):
     """The frozen block parser with an underline stack beside its flag."""
 
-    def __init__(self, text, *, admit_underline=True):
+    def __init__(self, text, *, admit_underline=True, bridge_punctuation=True):
         super().__init__(text)
         self.admit_underline = admit_underline
+        self.bridge_punctuation = bridge_punctuation
         # Index i + 1 corresponds to self.stack[i]; index 0 is the root.
         self._bold = [False]
         self._underline = [False]
@@ -119,6 +138,46 @@ class UnderlineBlocks(_Blocks):
             frame = self.stack[-1]
             self.stack[-1] = (frame[0], frame[1], frame[2],
                               bold or (underline and self.admit_underline))
+
+    def _bridges(self, index):
+        """Whether the unemphasised part at ``index`` sits inside a heading."""
+        if not (self.bridge_punctuation and _BRIDGE.fullmatch(self.parts[index][2].strip())):
+            return False
+        following = next((part for part in self.parts[index + 1:] if part[2].strip()), None)
+        return following is not None and bool(following[4])
+
+    def _flush(self):
+        """The frozen flush, with the punctuation bridge as its one change.
+
+        Restated rather than wrapped, because the prefix is built inside the
+        loop. With ``bridge_punctuation`` off it has to produce the frozen
+        parser's blocks - the same guarantee the copied font-weight rule is
+        held to.
+        """
+        if self.parts:
+            value = " ".join("".join(p[2] for p in self.parts).split())
+            if value:
+                prefix = []
+                for index, part in enumerate(self.parts):
+                    if not part[2].strip() and not prefix:
+                        continue
+                    if not part[4] and part[2].strip():
+                        if prefix and self._bridges(index):
+                            prefix.append(part)
+                            continue
+                        break
+                    prefix.append(part)
+                prefix_text = " ".join("".join(p[2] for p in prefix).split())
+                self.blocks.append({"text": value, "start": self.parts[0][0],
+                                    "end": self.parts[-1][1],
+                                    "linked": any(p[3] for p in self.parts),
+                                    "emphasized": all(p[4] for p in self.parts
+                                                      if p[2].strip()),
+                                    "leading_emphasis": ({"text": prefix_text,
+                                                          "start": prefix[0][0],
+                                                          "end": prefix[-1][1]}
+                                                         if prefix_text else None)})
+            self.parts = []
 
     def handle_endtag(self, tag):
         super().handle_endtag(tag)

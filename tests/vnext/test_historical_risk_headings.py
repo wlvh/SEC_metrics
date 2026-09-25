@@ -291,9 +291,13 @@ class TheUnderlineParserIsTheFrozenOnePlusUnderlineTest(unittest.TestCase):
             with self.subTest(company_id):
                 raw = self.documents[company_id][0]
                 text = raw.decode("utf-8-sig", errors="strict")
+                # Both switches off: the restated flush has to be the frozen
+                # one too, not only the copied font-weight rule. With only
+                # underline off these three filings would pass anyway - none of
+                # them holds a bridged gap - which is why both are named.
                 self.assertEqual(self._blocks(text, _Blocks(text)),
-                                 self._blocks(text, UnderlineBlocks(text,
-                                                                    admit_underline=False)))
+                                 self._blocks(text, UnderlineBlocks(
+                                     text, admit_underline=False, bridge_punctuation=False)))
 
     def test_with_underline_on_it_only_adds(self):
         """No leading emphasis may be cleared or shortened anywhere.
@@ -331,6 +335,37 @@ class TheUnderlineParserIsTheFrozenOnePlusUnderlineTest(unittest.TestCase):
         blocks = self._blocks(markup, UnderlineBlocks(markup))
         self.assertEqual(1, len(blocks))
         self.assertEqual("Bold still bold", blocks[0]["leading_emphasis"]["text"])
+
+    def test_emphasis_crosses_punctuation_only_when_it_resumes(self):
+        """Paramount's "U.S." with its periods unbolded, and the cases around it.
+
+        Constructed because the boundaries have to be pinned exactly: a bold
+        lead sentence followed by its paragraph must still end at the
+        paragraph, and an unbolded word between bold runs is not bridged -
+        only punctuation was measured, so only punctuation is admitted.
+        """
+        cases = (
+            ('<b>changes in U</b>.<b>S</b>.<b> or foreign laws</b>',
+             "changes in U.S. or foreign laws"),
+            ('<b>Our industry is competitive</b>. Guests choose among many brands.',
+             "Our industry is competitive"),
+            # The period as its own part and the paragraph as the next one: the
+            # gap is punctuation, and what follows is not emphasised, so the
+            # lead sentence still ends before it. Without the resumption check
+            # this reads "Our industry is competitive." - the case that makes
+            # the check necessary rather than decorative.
+            ('<b>Our industry is competitive</b><span>.</span><span> Guests choose.</span>',
+             "Our industry is competitive"),
+            ('<b>Risks</b> in <b>Detail</b>', "Risks"),
+            ('<b>Note 7A</b>, <b>7B</b>', "Note 7A, 7B"))
+        for inner, expected in cases:
+            with self.subTest(expected):
+                markup = "<html><body><div>" + inner + "</div></body></html>"
+                blocks = self._blocks(markup, UnderlineBlocks(markup))
+                self.assertEqual(expected, blocks[0]["leading_emphasis"]["text"])
+        markup = "<html><body><div>" + cases[0][0] + "</div></body></html>"
+        off = self._blocks(markup, UnderlineBlocks(markup, bridge_punctuation=False))
+        self.assertEqual("changes in U", off[0]["leading_emphasis"]["text"])
 
     def test_the_document_builder_changes_only_the_emphasis_fields(self):
         """Sections and every other per-block field come from the frozen build.
@@ -425,6 +460,19 @@ class TheSuccessorChainMovesOnlyWhatTheHeadingsMoveTest(unittest.TestCase):
         texts = [claim["text"] for claim in candidate["selected"].values()]
         self.assertIn("Operational Risks", texts)
         self.assertIn("General Risk Factors", texts)
+        self.assertEqual(38, len(texts))
+
+    def test_paramount_s_heading_is_delivered_whole(self):
+        """The registered truncation, on the filing itself, through the route."""
+        api, _ = text_api("D01")
+        arguments = _pinned(PARAMOUNT, "2025-12-31")["text_arguments"]
+        candidate = api.create_deterministic_text_candidate(compiled_spec=_spec(),
+                                                            **arguments)
+        texts = [claim["text"] for claim in candidate["selected"].values()]
+        self.assertIn("Failures to comply with or changes in U.S. or foreign laws or "
+                      "regulations could have an adverse effect on our business, financial "
+                      "condition or results of operations.", texts)
+        self.assertNotIn("Failures to comply with or changes in U", texts)
         self.assertEqual(38, len(texts))
 
     def test_marriott_gains_exactly_the_headings_it_underlines(self):

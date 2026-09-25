@@ -201,7 +201,7 @@ def _top_level_letter(document, block):
     return None if match is None else match.group(1)
 
 
-def _note_heading(document, section, block):
+def _note_heading(document, section, block, raw_bytes=None):
     """A short emphasized heading inside a note the filing itself pointed at.
 
     The inherited `_substantive` needs twelve characters, which is right for
@@ -230,7 +230,16 @@ def _note_heading(document, section, block):
     # too rather than let back in through the side the bound was guarding.
     names = {re.sub(r"\W", "", name).casefold()
              for name in document.get("registrant_names", [])}
-    return bool(text and block.get("emphasized") and not block.get("linked")
+    # Emphasis here is the frozen parser's, which is bold only. Lumen sets the
+    # name of each case in its legal note underlined and italic - "Blum",
+    # between two class-action paragraphs - so the label went with nothing to
+    # say which matter the next paragraph is. The block's own span is read
+    # from the filing's bytes, as caption_style already does for captions;
+    # the parsed document is not replaced, so nothing else in it moves.
+    # Measured over the eleven filings: that block is the only one it adds.
+    underlined = bool(raw_bytes is not None and "underline" in (
+        caption_style(raw_bytes=raw_bytes, block=block) or ""))
+    return bool(text and (block.get("emphasized") or underlined) and not block.get("linked")
                 and re.search(r"[A-Za-z]", text) and len(text) < 12
                 and re.sub(r"\W", "", text).casefold() not in names)
 
@@ -307,8 +316,54 @@ def _page_furniture(*, blocks, start, stop, repeated):
     """
     repeats = {index for index in range(start, stop)
                if repeated[_normalized(blocks[index]["text"])] > 1}
-    return [index for index in sorted(repeats)
-            if (index - 1 in repeats) or (index + 1 in repeats)]
+    found = {index for index in sorted(repeats)
+             if (index - 1 in repeats) or (index + 1 in repeats)}
+    return sorted(found | _numbered_page_footers(blocks=blocks, start=start, stop=stop))
+
+
+# A page footer that carries its page number: some text, a separator, digits.
+_PAGE_NUMBERED = re.compile(r"^(?P<stem>.*?[A-Za-z].*?)[\s|\-\u2013\u2014]+(?P<page>\d{1,4})$")
+
+
+def _numbered_page_footers(*, blocks, start, stop):
+    """Footers the repetition rule cannot see, because each carries its page.
+
+    "Enphase Energy, Inc. | 2025 Form 10-K | 46" is a different string on
+    every page, and inside Item 3 it occurs once, so neither counting repeats
+    in the scope nor comparing texts can find it; the reading found it in the
+    excerpt set. What identifies it is the document: the same text before the
+    number recurs with at least three different page numbers, and the block
+    beside it recurs as well - here the "Table of Contents" that follows every
+    footer. Both counts are over the whole document, because a footer's
+    repetition is a property of the pages, not of the scope it falls in.
+
+    Measured over all eleven filings with a D02 set before writing it: one
+    block leaves, Enphase's, and no other excerpt moves; D03's candidates are
+    unchanged in every filing.
+    """
+    stems, texts = {}, Counter()
+    for block in blocks:
+        text = " ".join(block["text"].split())
+        texts[_normalized(text)] += 1
+        numbered = _PAGE_NUMBERED.match(text)
+        if numbered:
+            stems.setdefault(_normalized(numbered["stem"]), set()).add(numbered["page"])
+
+    def recurring(index):
+        if not 0 <= index < len(blocks):
+            return False
+        text = " ".join(blocks[index]["text"].split())
+        numbered = _PAGE_NUMBERED.match(text)
+        return ((numbered is not None and len(stems[_normalized(numbered["stem"])]) >= 3)
+                or texts[_normalized(text)] >= 3)
+
+    footers = set()
+    for index in range(start, stop):
+        numbered = _PAGE_NUMBERED.match(" ".join(blocks[index]["text"].split()))
+        if (numbered and len(stems[_normalized(numbered["stem"])]) >= 3
+                and (recurring(index - 1) or recurring(index + 1))):
+            footers.add(index)
+    return footers
 
 
 def _lettered_sub_note_scopes(*, document, note, blocks, start, stop, repeated):
@@ -560,8 +615,8 @@ def referenced_note_candidates(*, document, raw_bytes):
     # eight blocks leave, all of them Ford's running header, and no other
     # filing moves. Enphase's footer is not among them - it carries the page
     # number, so no two instances are the same text and repetition cannot see
-    # it. That one stays a registered defect rather than motivating a second
-    # criterion invented from a single filing.
+    # it. _numbered_page_footers is the second criterion that finds it, held
+    # to what it takes: one block across the eleven filings.
     #
     # Held beside the scopes rather than written into them. The first version
     # assigned the list onto each scope, and `checked_ranges` is part of the
@@ -606,7 +661,8 @@ def referenced_note_candidates(*, document, raw_bytes):
             if owner[index] is not scope or index in furniture:
                 continue
             block = document["blocks"][index]
-            if not _substantive(document, block) and not _note_heading(document, section, block):
+            if not _substantive(document, block) and not _note_heading(
+                    document, section, block, raw_bytes=raw_bytes):
                 if section == "ITEM_3" and block["text"].strip().casefold() in {"none", "none."}:
                     legal.append(_excerpt(document, block, section,
                                           ["EXPLICIT_NONE_IN_THIS_SECTION_ONLY"]))

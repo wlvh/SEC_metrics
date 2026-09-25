@@ -648,13 +648,17 @@ class PageFurnitureInEveryScopeTest(unittest.TestCase):
 
         These five counts are facts about the filings, measured before the
         criterion was widened and unchanged by it. A criterion that took a
-        heading for a header would move one of them.
+        heading for a header would move one of them. Two moved later, each for
+        a named repair and by exactly one block: Lumen gains the underlined
+        case label "Blum" (41 to 42) and Enphase loses its page-numbered
+        footer (18 to 17) - see test_historical_d02_marks, which asserts that
+        each is the only block its rule moves.
         """
         for company_id, report_end, excerpts in ((PFIZER, "2025-12-31", 96),
-                                                 (LUMEN, "2025-12-31", 41),
+                                                 (LUMEN, "2025-12-31", 42),
                                                  (SALESFORCE, "2026-01-31", 15),
                                                  (SOUTHWEST, "2025-12-31", 25),
-                                                 (ENPHASE, "2025-12-31", 18)):
+                                                 (ENPHASE, "2025-12-31", 17)):
             with self.subTest(company_id):
                 selected, document, ranges = _selected(company_id, report_end)
                 self.assertEqual(excerpts, len(selected))
@@ -686,24 +690,32 @@ class PageFurnitureInEveryScopeTest(unittest.TestCase):
         headers = _running_headers(document, sources["coverages"][reference_id]["ranges"])
         self.assertEqual({1566, 1573}, {1566, 1573} & headers)
 
-    def test_enphases_footer_survives_and_this_records_why(self):
-        """The one page-furniture block this criterion cannot see.
+    def test_enphases_footer_is_furniture_by_its_page_numbers(self):
+        """The footer repetition cannot see, found by what it repeats across.
 
         Enphase writes its footer as one block carrying the page number, so no
-        two instances share a text and repetition finds nothing to compare.
-        It is a registered content defect rather than a reason to invent a
-        second criterion from one filing; this asserts both halves, so a later
-        fix fails here and sends whoever wrote it to the defect register.
+        two instances share a text and the repetition criterion still finds
+        nothing - asserted here, recomputed from the document. What identifies
+        it is the text before the number recurring on many pages beside a
+        recurring "Table of Contents"; that is recomputed here too rather than
+        read from the rule under test, and the excerpt set no longer holds it.
         """
         selected, document, ranges = _selected(ENPHASE)
-        footer = [index for index in selected
-                  if document["blocks"][index]["text"].startswith("Enphase Energy, Inc. |")]
-        self.assertEqual(1, len(footer), footer)
-        self.assertNotIn(footer[0], _running_headers(document, ranges))
-        register = json.loads(
-            (ROOT / "docs/evidence/issue47_history/known_result_defects.json").read_text())
-        self.assertIn("D02_ENPHASE_2025_PAGE_FOOTER_CARRIES_ITS_PAGE_NUMBER",
-                      {entry["defect_id"] for entry in register["defects"]})
+        blocks = document["blocks"]
+        footers = [block["block_index"] for block in blocks
+                   if block["text"].startswith("Enphase Energy, Inc. |")]
+        in_scope = [index for index in footers
+                    if any(scope["start_block"] <= index < scope["end_block_exclusive"]
+                           for scope in ranges)]
+        self.assertTrue(in_scope, "no footer falls inside a scanned range")
+        self.assertEqual(set(), set(in_scope) & _running_headers(document, ranges))
+        pages = {block["text"].rsplit("|", 1)[1].strip() for block in blocks
+                 if block["block_index"] in set(footers)}
+        self.assertGreaterEqual(len(pages), 3)
+        for index in in_scope:
+            neighbours = {blocks[index - 1]["text"].strip(), blocks[index + 1]["text"].strip()}
+            self.assertIn("Table of Contents", neighbours)
+        self.assertEqual(set(), set(in_scope) & selected)
 
 
 def _proposal(company_id, report_end="2025-12-31"):

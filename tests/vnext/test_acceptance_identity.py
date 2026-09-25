@@ -429,5 +429,44 @@ class EveryCitedReadingIsHashedTest(unittest.TestCase):
         self.assertEqual(["unit"], findings[0]["fields_that_differ"])
 
 
+class ReleasesNameEachVersionTest(unittest.TestCase):
+    """One repaired result, produced again under a later version, released per version."""
+
+    RESULT = "sha256:" + "1" * 64
+
+    def _defect(self, released):
+        return {"defect_id": "TEST", "result_id": None, "released": released}
+
+    def test_a_list_releases_each_named_version_and_no_other(self):
+        from vnext.historical_coverage import _release_covers
+        defect = self._defect([{"result_id": self.RESULT, "requirement_closure_hash": CLOSURE},
+                               {"result_id": self.RESULT,
+                                "requirement_closure_hash": OTHER_CLOSURE}])
+        result = {"result_id": self.RESULT}
+        for closure, expected in ((CLOSURE, True), (OTHER_CLOSURE, True),
+                                  ("sha256:" + "7" * 64, False)):
+            with self.subTest(closure):
+                self.assertEqual(expected, _release_covers(
+                    defect=defect, result=result,
+                    receipt={"requirement_closure_hash": closure}))
+        self.assertFalse(_release_covers(defect=defect, result={"result_id": "sha256:" + "2" * 64},
+                                         receipt={"requirement_closure_hash": CLOSURE}))
+
+    def test_a_list_entry_without_a_version_is_refused_at_load(self):
+        from vnext.historical_coverage import (DEFECT_REGISTER_PATH, CoverageError,
+                                               known_result_defects)
+        for released in ([{"result_id": self.RESULT}],
+                         [{"result_id": self.RESULT, "requirement_closure_hash": CLOSURE},
+                          {"result_id": self.RESULT, "requirement_closure_hash": None}], []):
+            with self.subTest(released=released), TemporaryDirectory() as directory:
+                root = Path(directory)
+                (root / DEFECT_REGISTER_PATH).parent.mkdir(parents=True)
+                (root / DEFECT_REGISTER_PATH).write_text(json.dumps(
+                    {"record_type": "KNOWN_RESULT_DEFECT_REGISTER",
+                     "defects": [self._defect(released)]}))
+                with self.assertRaises(CoverageError):
+                    known_result_defects(repo_root=root)
+
+
 if __name__ == "__main__":
     unittest.main()

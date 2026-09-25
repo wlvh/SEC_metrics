@@ -182,23 +182,39 @@ def known_result_defects(*, repo_root: Path):
     _need(register["record_type"] == "KNOWN_RESULT_DEFECT_REGISTER",
           "COVERAGE_DEFECT_REGISTER_TYPE_INVALID")
     for defect in register["defects"]:
-        release = defect.get("released")
-        if release is None:
+        if defect.get("released") is None:
             continue
-        # A release that names nothing releases nothing, and an entry that
-        # already names one bad result has nothing to release: it withdraws
-        # that result, not the coordinate.
-        _need(isinstance(release, dict) and isinstance(release.get("result_id"), str)
-              and bool(_SHA.match(release["result_id"])),
-              "COVERAGE_DEFECT_RELEASE_NAMES_NO_RESULT")
-        # A release that does not name the version it was produced under is
-        # refused at load rather than silently widened to every version.
-        _need(isinstance(release.get("requirement_closure_hash"), str)
-              and bool(_SHA.match(release["requirement_closure_hash"])),
-              "COVERAGE_DEFECT_RELEASE_NAMES_NO_VERSION")
+        releases = _releases(defect)
+        _need(bool(releases), "COVERAGE_DEFECT_RELEASE_NAMES_NO_RESULT")
+        for release in releases:
+            # A release that names nothing releases nothing, and an entry that
+            # already names one bad result has nothing to release: it
+            # withdraws that result, not the coordinate.
+            _need(isinstance(release, dict) and isinstance(release.get("result_id"), str)
+                  and bool(_SHA.match(release["result_id"])),
+                  "COVERAGE_DEFECT_RELEASE_NAMES_NO_RESULT")
+            # A release that does not name the version it was produced under is
+            # refused at load rather than silently widened to every version.
+            _need(isinstance(release.get("requirement_closure_hash"), str)
+                  and bool(_SHA.match(release["requirement_closure_hash"])),
+                  "COVERAGE_DEFECT_RELEASE_NAMES_NO_VERSION")
         _need(defect.get("result_id") is None,
               "COVERAGE_DEFECT_RELEASE_ON_RESULT_SCOPED_ENTRY")
     return register["defects"]
+
+
+def _releases(defect):
+    """The (result, version) pairs an entry releases.
+
+    One repaired result can be produced again under a later version with the
+    same result_id - the repair did not move it, something unrelated moved the
+    closure. Each version is still named on its own, so a list of releases is
+    allowed; what is never allowed is a release that names no version.
+    """
+    release = defect.get("released")
+    if release is None:
+        return []
+    return list(release) if isinstance(release, list) else [release]
 
 
 def _checked_identity_problem(identity):
@@ -412,21 +428,23 @@ def _release_covers(*, defect, result, receipt):
     was produced under. Any other result at that coordinate, including the one
     the defect was raised against, stays withdrawn.
     """
-    release = defect.get("released")
-    if not isinstance(release, dict):
-        return False
     result_id = (result or {}).get("result_id")
-    if result_id is None or release.get("result_id") != result_id:
+    if result_id is None:
         return False
-    # Both fields are required. The first version read the version as
-    # optional - "closure is None or it matches" - so an entry that simply
-    # omitted it, or wrote null, released the coordinate under every version.
-    # The case name said the version must be named and the code only checked
-    # it when it happened to be there.
-    closure = release.get("requirement_closure_hash")
-    if not isinstance(closure, str) or not _SHA.match(closure):
-        return False
-    return (receipt or {}).get("requirement_closure_hash") == closure
+    for release in _releases(defect):
+        if not isinstance(release, dict) or release.get("result_id") != result_id:
+            continue
+        # Both fields are required. The first version read the version as
+        # optional - "closure is None or it matches" - so an entry that simply
+        # omitted it, or wrote null, released the coordinate under every
+        # version. The case name said the version must be named and the code
+        # only checked it when it happened to be there.
+        closure = release.get("requirement_closure_hash")
+        if not isinstance(closure, str) or not _SHA.match(closure):
+            continue
+        if (receipt or {}).get("requirement_closure_hash") == closure:
+            return True
+    return False
 
 
 def _matching_defect(*, defects, company_id, metric_id, report_end, result, receipt):
