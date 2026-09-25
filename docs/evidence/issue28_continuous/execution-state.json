@@ -1889,5 +1889,30 @@
     "update_jobs": "failed status assertions; locally rerun and passed after binding fix",
     "source_material": "cancelled at 35-minute job limit, no material test verdict",
     "new_head_not_yet_observed": true
+  },
+  "b13_two_stage_offline_20260925": {
+    "base_head": "50c341c26d745ddfc19b9b5bde69d479a1464716",
+    "status": "SELECTED_OFFLINE_CANDIDATE_PENDING_SCOPED_REVIEW_AND_NATIVE_INTEGRATION",
+    "selected_route": "FULL_SOURCE_SCAN_THEN_FULL_SOURCE_INTERPRETATION",
+    "evidence_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/",
+    "saved_source_measurement": {
+      "enphase_original_groups": 6,
+      "ford_original_groups": 11,
+      "enphase_group0_190_exact_old_request_kept": true,
+      "option_a_illustrative_new_calls": 60,
+      "option_b_max_new_calls": 32,
+      "candidate_refs_per_group_cap": 64,
+      "all_synthetic_64_ref_stage_inputs_fit_existing_context_and_4096_reserve": true
+    },
+    "review": "PENDING_EXACT_PATCH_SHA",
+    "real_new_calls": [
+      0,
+      0,
+      0
+    ],
+    "model_accuracy_or_absence_proven": false,
+    "mixed_native_assessment_replay_proven": false,
+    "new_live_call_authority": false,
+    "old_191_192_third_opportunity": false
   }
 }
