@@ -48,7 +48,7 @@
     "D03 remains no-call pending separate review/resources; production publication and active switch remain separately unapproved."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
-  "remaining_review_dependency": "D03 source-fact original6e5 and first repair463c limited reviews failed on distinct scope bugs; second structural repair locally tested, exact-SHA scoped review pending. Current r6_regulatory_semantics integration remains separately unreviewed; D03 no real calls.",
+  "remaining_review_dependency": "D03 source-fact original6e5 and first two repairs463c/452c limited reviews failed on distinct scope bugs; third bounded correction locally tested and pending exact-SHA independent review. If still blocked, stop deterministic source-fact route instead of expanding grammar. D03 no real calls.",
   "historical_state_snapshot": "review-5207290213/historical-before-through104-state/execution-state.json",
   "historical_continuation_snapshot": "review-5207290213/historical-before-through104-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
@@ -400,7 +400,7 @@
     "old_response_rewritten": false,
     "sample_role": "REGRESSION_AFTER_PRIOR_REPAIR",
     "native_result_created": false,
-    "independent_module_review": "ORIGINAL_6E5A85B_FAILED_POSTMODIFIER_P2; FIRST_463C91F_FAILED_SAME_BLOCK_P2; SECOND_PATCH_PENDING_EXACT_SHA_REVIEW",
+    "independent_module_review": "ORIGINAL_AND_FIRST_TWO_SCOPED_REPAIRS_FAILED; THIRD_PATCH_PENDING_EXACT_SHA_REVIEW",
     "real_model_validation": "NOT_RUN_PENDING_MODULE_REVIEW"
   },
   "b13_native_development": {
@@ -1203,6 +1203,22 @@
       "tool_calls": 47,
       "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-followup/conclusion.md",
       "verdict": "BLOCKED_SCOPED_D03_SAME_BLOCK_LINKED_RESOLUTION_P2"
+    },
+    {
+      "task_name": "review_d03fact_452c828",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/regulatory_statement_facts.py",
+        "tests/vnext/test_regulatory_statement_facts.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/"
+      ],
+      "patch_sha": "452c828793a89fd84ca84860b770480b768ae99e",
+      "spawned_at": "2026-09-25T10:00:11.928684+00:00",
+      "ended_at": "2026-09-25T10:08:30.334220+00:00",
+      "tool_calls": 50,
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-v2/conclusion.md",
+      "verdict": "BLOCKED_SCOPED_D03_INTERVENING_TOPIC_P2"
     }
   ],
   "ci_capacity_20260922": {
@@ -2033,20 +2049,20 @@
     ]
   },
   "d03_source_fact_repair_20260925": {
-    "status": "SECOND_STRUCTURAL_REPAIR_TESTED_PENDING_SCOPED_INDEPENDENT_REVIEW",
+    "status": "THIRD_BOUNDED_LOCAL_REPAIR_TESTED_PENDING_SCOPED_REVIEW",
     "evidence_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/",
     "original_patch_sha": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
     "original_review": "BLOCKED_SCOPED_D03_SOURCE_FACT_POSTMODIFIER_P2",
-    "repair": "POST_ACTION_MODIFIERS_AND_SAME_BLOCK_LINKED_RESOLUTION_REQUIRE_SEMANTIC_REVIEW",
+    "repair": "POST_ACTION_SCOPE_AND_NEAREST_UNINTERRUPTED_LINKED_RESOLUTION",
     "jpm_existing_positive_fact_id_unchanged": true,
-    "directed_tests": "8_PASS",
-    "jpm_real_source_material": "1_PASS_21.018_SECONDS_AT_SECOND_REPAIR",
+    "directed_tests": "9_PASS",
+    "jpm_real_source_material": "1_PASS_AT_THIRD_REPAIR",
     "offline_d03_controller_tests": "6_PASS",
     "fast_suite": "128_OF_128_PASS",
-    "current_v15_closure": "sha256:7a0ea3732e9a99ec8241a573636a4af55b9613cd320718d4d0f7034407b6f952",
-    "current_execution_authority_hash": "sha256:26096bc0f48cb562c990ccb16893088d1dc2c5ba4c3c227f2e1617ff5dab341d",
-    "provider_sec_wiring": "PASS_SECOND_REPAIR_CURRENT_BINDING_NO_NETWORK",
-    "b13_190_reuse": "PASS_READ_ONLY_SECOND_REPAIR_CURRENT_BINDING",
+    "current_v15_closure": "sha256:c63c7d6a53d296db456b5188399590304fb1e1812d11d7401d5554a3d741d92d",
+    "current_execution_authority_hash": "sha256:0e3696a15a9bedb21a51fc970a4232d5aae53b14a2df21a7bdb17e686e060314",
+    "provider_sec_wiring": "PASS_THIRD_REPAIR_CURRENT_BINDING_NO_NETWORK",
+    "b13_190_reuse": "NOT_REPLAYED_AT_THIRD_REPAIR_CLOSURE; SECOND_REPAIR_CLOSURE_PASS_ONLY",
     "new_calls": [
       0,
       0,
@@ -2054,7 +2070,7 @@
     ],
     "d03_live_authorized": false,
     "d03_native_result_created": false,
-    "scoped_repair_review": "FIRST_463C91F_FAILED_SAME_BLOCK_P2; SECOND_PATCH_PENDING_EXACT_SHA_REVIEW",
+    "scoped_repair_review": "6E5A85B_FAIL; 463C91F_FAIL; 452C828_FAIL_INTERVENING_TOPIC; THIRD_PATCH_PENDING_EXACT_SHA_REVIEW",
     "shared_with_47": {
       "scope_paths": [
         "scripts/vnext/regulatory_statement_facts.py",
@@ -2063,7 +2079,8 @@
         "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json"
       ],
       "functions": [
-        "regulatory_statement_facts.aggregate_involvement_facts"
+        "regulatory_statement_facts.aggregate_involvement_facts",
+        "regulatory_statement_facts.aggregate_facts_from_source"
       ],
       "default_normal_run_binding_changed": false,
       "record_or_return_shapes_changed": false,
@@ -2071,7 +2088,8 @@
       "other_branch_modified": false,
       "downstream_note": "Stacked #47 integrator must account for changed PR43 V15 closure; no #47 branch or snapshot touched."
     },
-    "first_repair_review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-followup/conclusion.md"
+    "first_repair_review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-followup/conclusion.md",
+    "second_repair_review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-v2/conclusion.md"
   },
   "ci_36116965890": {
     "head": "b276b1e7d90ae2bfbe1c62cd9d8c82e748865355",

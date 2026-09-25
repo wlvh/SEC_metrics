@@ -1,0 +1,51 @@
+{
+  "record_type": "ISSUE28_D03_POST_ACTION_SCOPE_REPAIR_CHECK",
+  "jpm_existing_positive_fact_id": "sha256:69b4af995d78bd8353a873c568d51d690ed477b28432c09196f46fa12a9ee972",
+  "jpm_positive_identity_unchanged": true,
+  "negative_post_action_cases": [
+    {
+      "ending": ", all of which were completed in 2020",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason_codes": [
+        "ACTION_SCOPE_REQUIRES_INTERPRETATION"
+      ]
+    },
+    {
+      "ending": ", all of which have concluded",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason_codes": [
+        "ACTION_SCOPE_REQUIRES_INTERPRETATION"
+      ]
+    },
+    {
+      "ending": " that can arise in the future",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason_codes": [
+        "ACTION_SCOPE_REQUIRES_INTERPRETATION"
+      ]
+    },
+    {
+      "ending": " that are hypothetical",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason_codes": [
+        "ACTION_SCOPE_REQUIRES_INTERPRETATION"
+      ]
+    },
+    {
+      "ending": ", none of which involve us",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason_codes": [
+        "ACTION_SCOPE_REQUIRES_INTERPRETATION"
+      ]
+    }
+  ],
+  "same_block_linked_closure_rejected": true,
+  "adjacent_block_linked_closure_rejected": true,
+  "intervening_other_action_topics_preserve_original_current_fact": true,
+  "model_or_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "source_fact_is_not_native_result": true
+}

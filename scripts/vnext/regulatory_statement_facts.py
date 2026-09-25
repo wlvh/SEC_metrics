@@ -14,9 +14,27 @@ from .regulatory_investigation_candidates import _PATTERNS, _sentences, _self_al
 # assertion can change whose action it is, whether it happened, or when.
 _LEGAL_TYPE = r'(?:(?:criminal|civil|administrative|regulatory|governmental|enforcement|other)\s+)*(?:proceedings|actions|matters|investigations)'
 _ACTION_TAIL = re.compile(r'(?:,\s*including\s+' + _LEGAL_TYPE + r')?\s*', re.I)
+_NEW_ACTION_TOPIC = re.compile(r'\b(?:investigat\w*|inquiri(?:es|y)|probes?|proceedings?|enforcement\s+actions?)\b', re.I)
+_SEPARATE_TOPIC = re.compile(r'\b(?:separate|different|unrelated)\s+(?:matter|case|proceeding|investigation|inquiry)\b', re.I)
 
 
-def aggregate_involvement_facts(*, text, aliases, quoted=False, context=()):
+def _linked_closure_in_following(fragments):
+    """Only a closure before the next action topic can qualify this assertion."""
+    for fragment in fragments:
+        for _, _, sentence in _sentences(fragment):
+            linked = _PATTERNS['linked_resolution'].search(sentence)
+            if (_PATTERNS['explicit_unrelated'].search(sentence)
+                    or _SEPARATE_TOPIC.search(sentence)):
+                return False
+            if linked and _PATTERNS['resolution'].search(sentence):
+                return True
+            if _NEW_ACTION_TOPIC.search(sentence) and not linked:
+                return False
+    return False
+
+
+def aggregate_involvement_facts(*, text, aliases, quoted=False, context=(),
+                                following_context=None):
     """Recognize an explicit present aggregate governmental-action relation.
 
     ``aliases`` must come from the existing complete source identity parser.
@@ -74,11 +92,10 @@ def aggregate_involvement_facts(*, text, aliases, quoted=False, context=()):
         # Adjacent blocks are supplied by the caller. A following sentence in
         # this same block can also close the just-mentioned investigations;
         # _sentences alone must not hide it from the existing linkage check.
-        linked_context = [*context, *(part for _, _, part in sentences[position + 1:])]
-        if _PATTERNS['resolution'].search(sentence) or any(
-                _PATTERNS['linked_resolution'].search(c)
-                and _PATTERNS['resolution'].search(c)
-                and not _PATTERNS['explicit_unrelated'].search(c) for c in linked_context):
+        following = [part for _, _, part in sentences[position + 1:]]
+        following.extend(context if following_context is None else following_context)
+        if (_PATTERNS['resolution'].search(sentence)
+                or _linked_closure_in_following(following)):
             reasons.append('LINKED_RESOLUTION_REQUIRES_INTERPRETATION')
         body = {'rule_id': 'AFFIRMATIVE_AGGREGATE_GOVERNMENT_INVOLVEMENT_V1',
                 'statement_text': sentence,
@@ -125,8 +142,10 @@ def aggregate_facts_from_source(source):
             # resolution evidence without treating unrelated future risks as
             # a denial of this sentence's present-tense statement.
             neighbors = [b['text'] for b in blocks[max(0, index - 1):index + 3] if b is not block]
+            following = [b['text'] for b in blocks[index + 1:index + 3]]
             for fact in aggregate_involvement_facts(text=block['text'], aliases=aliases,
-                    quoted=block['html_quotation_context'], context=neighbors):
+                    quoted=block['html_quotation_context'], context=neighbors,
+                    following_context=following):
                 body = {**fact, 'document_id': document['document_id'],
                         'source_reference_id': identity['source_reference_id'],
                         'block_index': block['block_index'],

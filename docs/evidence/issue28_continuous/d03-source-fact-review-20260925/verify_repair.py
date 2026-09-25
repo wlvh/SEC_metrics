@@ -34,11 +34,30 @@ adjacent = aggregate_involvement_facts(text=base+'.', aliases=aliases,
 assert len(same_block) == len(adjacent) == 1
 assert same_block[0]['status'] == adjacent[0]['status'] == 'SEMANTIC_REVIEW_REQUIRED'
 assert 'LINKED_RESOLUTION_REQUIRES_INTERPRETATION' in same_block[0]['reason_codes']
+separate_topics = [
+    ['In a separate matter, Acme was investigated by governmental authorities.',
+     'That investigation was closed.'],
+    ['Our vendor may face investigations in the future.',
+     'Those investigations may be resolved.'],
+]
+for fragments in separate_topics:
+    for fact_input in ({'text':base+'. '+' '.join(fragments)},
+                       {'text':base+'.','context':fragments}):
+        facts = aggregate_involvement_facts(aliases=aliases,**fact_input)
+        assert len(facts)==1 and facts[0]['status']=='SOURCE_REPORTED_FACT'
+        try:
+            check_aggregate_classification(facts=facts,
+                kind='HISTORICAL_STATEMENT',reported_status='UNRESOLVED')
+        except ValueError as error:
+            assert str(error)=='D03_AFFIRMATIVE_AGGREGATE_FACT_CLASSIFICATION_CONFLICT'
+        else:
+            raise AssertionError('D03_FIRST_INVESTIGATION_GUARD_LOST')
 summary = {'record_type':'ISSUE28_D03_POST_ACTION_SCOPE_REPAIR_CHECK',
     'jpm_existing_positive_fact_id':saved['fact_id'],
     'jpm_positive_identity_unchanged':True, 'negative_post_action_cases':rows,
     'same_block_linked_closure_rejected':True,
     'adjacent_block_linked_closure_rejected':True,
+    'intervening_other_action_topics_preserve_original_current_fact':True,
     'model_or_sec_calls':[0,0,0], 'source_fact_is_not_native_result':True}
 parser = argparse.ArgumentParser()
 parser.add_argument('--output', type=Path,

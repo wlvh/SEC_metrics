@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:7a0ea3732e9a99ec8241a573636a4af55b9613cd320718d4d0f7034407b6f952",
-  "execution_authority_hash": "sha256:26096bc0f48cb562c990ccb16893088d1dc2c5ba4c3c227f2e1617ff5dab341d",
+  "requirement_closure_hash": "sha256:c63c7d6a53d296db456b5188399590304fb1e1812d11d7401d5554a3d741d92d",
+  "execution_authority_hash": "sha256:0e3696a15a9bedb21a51fc970a4232d5aae53b14a2df21a7bdb17e686e060314",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -48,7 +48,8 @@
     "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/wiring-post-finding.log": "2b3224f31cd4fb193f64f6b9f97ebb5f19002857b0d4a6f6e55bb256d60dceea",
     "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/no-call-reuse-190-post-finding.log": "46149fec77b09505ea03d568152f9c5f77332752e38580eabe77f66625aa16ee",
     "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/repair-wiring.log": "deffffcd0e93dc1a75560372fa7c0c2253a0f9689ac6af8f19e62c4f57a63e15",
-    "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/repair-v2-wiring.log": "c32abc9cfc5fc7f9b859f0d912111eb72f3f8139f2ecb4b39c5a299e92964a30"
+    "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/repair-v2-wiring.log": "c32abc9cfc5fc7f9b859f0d912111eb72f3f8139f2ecb4b39c5a299e92964a30",
+    "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/repair-v3-wiring.log": "14549cf5213f5e577f9caee3851959924dd7c7d70bb2e5f7b151774c950d81db"
   },
   "scope": "Current V15 closure and execution files both checked after ordinary V14 parent repair and P2 receipt fix. Focused 31-test no-network factory/controller and bad-closure rejection pass. Original B13 success190 remains read-only reusable; no new model response, complete company or production credit.",
   "independent_review": "Original B13 V4 scoped reviews retained. Ordinary-binding patch5c307e5 first review found the stale receipt closure; exact follow-up difference review is pending, and that prior finding remains recorded."
