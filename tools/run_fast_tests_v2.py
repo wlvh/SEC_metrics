@@ -199,6 +199,12 @@ SOURCE_TESTS += ("tests.vnext.test_d01_byte_reading",)
 # rule off, with D03 required not to move, plus the constructed edges the
 # filings do not reach. It reads two full 10-Ks; 55 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_d02_marks",)
+# B13 where the approved definition leaves the company out. Its load-bearing
+# case holds this route's answer to the ordinary route's, field for field and
+# down to the result identifier, for three companies of three shapes - the two
+# read the scope from different places, and this is where they would disagree.
+# It prepares five periods' annual inputs; 24 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_capacity_results",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

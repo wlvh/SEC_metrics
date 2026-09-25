@@ -107,7 +107,17 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
                if r["record_type"] == "METRIC_RESULT" and r["metric_id"] == metric]
     _need(len(results) == 1, "HISTORICAL_PROJECTION_PRIMARY_RESULT_NOT_UNIQUE")
     result = results[0]
-    _need((result.get("value_kind") == "TEXT_V1") == text_route,
+    # B13 outside the company scope its approved definition names. The route is
+    # STRUCTURED - it reads no filing - but the result is built under B13's text
+    # Spec, so it is TEXT_V1 with no payload. It is the one such case, named by
+    # its component rather than inferred from the result's shape, and it renders
+    # as the ordinary route renders it: no evidence row and no value.
+    scope_answer = (case["kind"] == "STRUCTURED"
+                    and prepared.get("component", {}).get("record_type")
+                    == "HISTORICAL_CAPACITY_SCOPE_RESULT"
+                    and result["applicability"] == "N_A_STRUCTURAL"
+                    and result["value"] is None and result.get("text_payload") is None)
+    _need((result.get("value_kind") == "TEXT_V1") == (text_route or scope_answer),
           "HISTORICAL_PROJECTION_VALUE_KIND_DISAGREES_WITH_ROUTE")
     spec = case["compiled_specs"][metric]
     policy = strict_json_file(path=ROOT / POLICY_PATH)
@@ -119,8 +129,9 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
     projection = {**item["projection"],
                   **item["spec_overrides"].get(prepared["spec_paths"][metric], {})}
     # A text metric has no canonical numeric unit for the projection to agree with.
-    same_unit = text_route or (projection["unit"] == spec["compiled"].get("canonical_unit")
-                               and projection["value_multiplier"] == "1")
+    same_unit = text_route or scope_answer or (
+        projection["unit"] == spec["compiled"].get("canonical_unit")
+        and projection["value_multiplier"] == "1")
     percent_unit = (spec["compiled"]["canonical_unit"] == "ratio"
                     and projection["unit"] == "percent"
                     and projection["value_multiplier"] == "100"
@@ -168,6 +179,12 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
         # assert is ordinary_projection's - every published item reaches the row.
         _need(len(evidence) == len(result["text_payload"]["items"]),
               "HISTORICAL_TEXT_EVIDENCE_SET_CHANGED")
+    elif scope_answer:
+        # The ordinary renderer's B13 structural arm, with its assertion: the
+        # shared projector made no evidence row out of a result with no value.
+        _need(not evidence, "HISTORICAL_B13_SCOPE_ANSWER_HAS_EVIDENCE")
+        row["notes"] = ("Outside the company scope the approved B13 definition names. "
+                        "No disclosure-absence or utilization claim is made.")
     else:
         evidence = []
         claims = _claims(prepared)

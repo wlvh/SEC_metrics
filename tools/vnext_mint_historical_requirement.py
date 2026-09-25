@@ -101,6 +101,13 @@ NEW_RULE_FILES = (
     # decide which filing's table a pinned period is read from, so both roots
     # check them.
     "scripts/vnext/historical_lodging_results.py",
+    # B13 where the approved definition leaves the company out. The scope is
+    # read from the definition's own heading, and the result is built under
+    # the text Spec the ordinary out-of-scope case uses, so all three decide
+    # the answer and both roots check them.
+    "scripts/vnext/historical_capacity_results.py",
+    "catalog/r5/B13_capacity_disclosures_v1.md",
+    "02_指标定义_SEC_10公司单年指标.md",
     "scripts/vnext/requirement_profile_v16.py",
 )
 

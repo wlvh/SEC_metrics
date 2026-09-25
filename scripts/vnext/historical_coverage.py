@@ -48,6 +48,7 @@ from .historical_attempt_records import attempt_for_position, collect_attempt_re
 from .historical_run_receipts import classify_result, collect_run_receipts, index_receipts
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
+from . import historical_capacity_results as capacity
 from . import historical_structural_results as structural
 from .sources import SourceError, resolve_repository_file
 
@@ -143,6 +144,12 @@ WIRED_HISTORICAL_METRICS = tuple(sorted(WIRED_COMPANYFACTS_METRICS + WIRED_REVEN
 # route.
 STRUCTURAL_APPLICABILITY_METRICS = tuple(sorted(set(structural.SPEC_PATHS)
                                                 - set(WIRED_HISTORICAL_METRICS)))
+# B13 has a route only where the approved definition's own heading leaves the
+# company out - every company but Ford and Enphase. Like the trait gates above
+# it is a fact about the company-metric pair, so it is counted per position;
+# unlike them its open side is not a missing Spec but a missing model review,
+# so B13 is neither wired nor structural and is listed on its own.
+SCOPE_ANSWERED_METRICS = capacity.SUPPORTED_METRICS
 
 
 class CoverageError(ValueError):
@@ -949,8 +956,10 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             for metric_id in metrics:
                 established = entry["period_status"] != "METADATA_BLOCKED"
                 original_saved = entry["period_status"] == "PERIOD_ESTABLISHED"
-                implemented = metric_id in wired or structural.structurally_not_applicable(
+                implemented = (metric_id in wired or structural.structurally_not_applicable(
                     repo_root=repo_root, company_id=company_id, metric_id=metric_id)
+                    or capacity.out_of_scope(repo_root=repo_root, company_id=company_id,
+                                             metric_id=metric_id))
                 found = receipts.get((company_id, metric_id, report_end), [])
                 attempt = attempt_for_position(
                     records=attempts["records"], company_id=company_id,
@@ -1064,6 +1073,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             "enumerated_positions": len(positions),
             "wired_historical_metric_ids": list(WIRED_HISTORICAL_METRICS),
             "structural_applicability_metric_ids": list(STRUCTURAL_APPLICABILITY_METRICS),
+            "scope_answered_metric_ids": list(SCOPE_ANSWERED_METRICS),
             "a_route_can_be_company_specific": (
                 "historical_route_implemented is per position, not per metric: eight "
                 "metrics have a route only where the company's traits put them outside "

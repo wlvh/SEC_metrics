@@ -453,6 +453,8 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
                                           resolve_historical_debt_metric)
     from .historical_lodging_results import (SUPPORTED_METRICS as LODGING_METRICS,
                                              resolve_historical_lodging_metric)
+    from .historical_capacity_results import (SUPPORTED_METRICS as CAPACITY_METRICS,
+                                              resolve_historical_capacity_metric)
     if metric_id in TEXT_METRICS:
         return _historical_text_run_input(repo_root=repo_root, company_id=company_id,
                                           metric_id=metric_id,
@@ -483,6 +485,15 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
             repo_root=repo_root, company_id=company_id, metric_id=metric_id,
             period_selection=period_selection,
             resolve=resolve_historical_lodging_metric)
+    # B13 answers where the approved definition leaves the company out; for
+    # Ford and Enphase the component refuses by name, because what is missing
+    # there is the semantic review, not an answer. Its Spec is not in the
+    # ordinary set either, so this also sits above it.
+    if metric_id in CAPACITY_METRICS:
+        return _historical_component_run_input(
+            repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+            period_selection=period_selection,
+            resolve=resolve_historical_capacity_metric)
     # A metric the company's traits put outside its own gate. Checked before
     # the Spec set below, because these Specs are not in it: a liquidity
     # coverage ratio has no ordinary route to be in.

@@ -85,7 +85,7 @@ index 5420bc6..da06192 100644
  _LOADING_PATHS = ContextVar("requirement_loading_paths", default=())
  
 diff --git a/scripts/vnext/run_store.py b/scripts/vnext/run_store.py
-index 29e7cc3..1acbdef 100644
+index 29e7cc3..9351d36 100644
 --- a/scripts/vnext/run_store.py
 +++ b/scripts/vnext/run_store.py
 @@ -352,7 +352,7 @@ def create_run(
@@ -164,7 +164,15 @@ index 29e7cc3..1acbdef 100644
      if manifest.get("requirement_id") == "issue_28_v12":
          from .normal_run_v2 import replay_case
          expected = replay_case(data_root=repo_root, manifest=manifest, spec=compiled_spec)
-@@ -2154,6 +2200,13 @@ def _validate_record_graph(
+@@ -2140,6 +2186,7 @@ def _validate_record_graph(
+     """
+     ordinary_case = None
+     capacity_case = None
++    historical_capacity_case = None
+     if manifest.get("requirement_id") == "issue_28_v14" and any(
+             record.get('record_type') == 'METRIC_RESULT' and (record.get('metric_id') == 'B13' and record.get('value_kind') != 'TEXT_V1'
+                 or record.get('applicability') == 'N_A_STRUCTURAL')
+@@ -2154,6 +2201,21 @@ def _validate_record_graph(
          from .normal_run_v3 import validate_normal_run_authority
          ordinary_case = validate_normal_run_authority(repo_root=repo_root,manifest=manifest,
              records=records,compiled_specs=compiled_specs)
@@ -175,10 +183,18 @@ index 29e7cc3..1acbdef 100644
 +                records=records, compiled_specs=compiled_specs)
 +        except ValueError as error:
 +            raise RunStoreError(str(error)) from error
++        # B13 where the approved definition's own heading leaves the company
++        # out: the historical counterpart of capacity_case, rebuilt from this
++        # data root above, and trusted for exactly what capacity_case is.
++        component = (ordinary_case.get("input_binding") or {}).get("component") or {}
++        if (component.get("record_type") == "HISTORICAL_CAPACITY_SCOPE_RESULT"
++                and component.get("selection", {}).get("category")
++                == "APPROVED_DEFINITION_COMPANY_SCOPE"):
++            historical_capacity_case = ordinary_case
      elif manifest.get("requirement_id") == "issue_28_v12":
          from .normal_run_v2 import validate_normal_run_authority
          validate_normal_run_authority(repo_root=repo_root, manifest=manifest,
-@@ -2341,7 +2394,9 @@ def _validate_record_graph(
+@@ -2341,7 +2403,9 @@ def _validate_record_graph(
          str(wrapper["spec_semantic_hash"]): wrapper
          for wrapper in compiled_specs.values()
      }
@@ -189,7 +205,7 @@ index 29e7cc3..1acbdef 100644
          from .capacity_run import prepare_text_contexts as prepare_text_run_contexts
      elif manifest.get("requirement_id") == "issue_28_v13":
          from .normal_run_v3 import prepare_text_contexts as prepare_text_run_contexts
-@@ -2349,7 +2404,12 @@ def _validate_record_graph(
+@@ -2349,7 +2413,12 @@ def _validate_record_graph(
          from .normal_run_v2 import prepare_text_contexts as prepare_text_run_contexts
      else:
          from .text_run_validation import prepare_text_run_contexts
@@ -203,7 +219,7 @@ index 29e7cc3..1acbdef 100644
      try:
          text_contexts = prepare_text_run_contexts(
              repo_root=repo_root, manifest=manifest, records=records,
-@@ -2361,6 +2421,9 @@ def _validate_record_graph(
+@@ -2361,6 +2430,9 @@ def _validate_record_graph(
  
      def text_handlers(candidate):
          arguments = text_contexts[candidate["candidate_hash"]]
@@ -213,3 +229,49 @@ index 29e7cc3..1acbdef 100644
          if manifest.get("requirement_id") == "issue_28_v14":
              from . import capacity_text_results
              return capacity_text_results, capacity_text_results.build_text_review_unit
+@@ -2591,14 +2663,21 @@ def _validate_record_graph(
+             # selection and period. They do not substitute a review identity.
+             deterministic_resolver = (observation_spec["compiled"]["quality_rule"].get("resolver")
+                                       if observation_spec is not None else None)
+-            ordinary_lodging = (manifest.get("requirement_id") == "issue_28_v13"
++            # The pinned route reads the same table under the same Spec and
++            # rebuilds its own case, so it earns the same exemption on the same
++            # four conditions. Named by generation rather than widened: a Run
++            # from any other one still needs the approval effect.
++            ordinary_lodging = (manifest.get("requirement_id") in {"issue_28_v13", "issue_47_v1"}
+                 and ordinary_case is not None and observation["metric_id"] in {"B10", "B11"}
+                 and deterministic_resolver == "ordinary_lodging_table_v1")
+             if (observation_spec is None or observation_spec["compiled"]["source_mode"] != "structured"
+                     or (deterministic_resolver != "reported_compensation_table_v2" and not ordinary_lodging)):
+                 raise RunStoreError("Reviewed observation lacks an approval effect")
+             if normal_table_observations is None:
+-                if manifest.get("requirement_id") == "issue_28_v13":
++                if manifest.get("requirement_id") in {"issue_28_v13", "issue_47_v1"}:
++                    # Both rebuilt their whole case from this data root above,
++                    # so the observation is compared against that rebuild rather
++                    # than against a second, differently-derived one.
+                     rebuilt = ordinary_case["observations"]
+                 elif manifest.get("requirement_id") == "issue_28_v12":
+                     from .normal_run_v2 import replay_case
+@@ -2744,6 +2823,10 @@ def _validate_record_graph(
+         expected_result = capacity_case['results']['B13']
+         result_expectations.append({'metric_id': 'B13', 'scope_key': expected_result['scope_key'],
+             'result': expected_result, 'trace': capacity_case['traces']['B13']})
++    if historical_capacity_case is not None:
++        expected_result = historical_capacity_case['results']['B13']
++        result_expectations.append({'metric_id': 'B13', 'scope_key': expected_result['scope_key'],
++            'result': expected_result, 'trace': historical_capacity_case['traces']['B13']})
+     supporting_observation_ids = set()
+     for effect_hash in effective_decisions:
+         # A HUMAN decision covers one complete role and output set. Rebinding
+@@ -3026,6 +3109,10 @@ def _validate_record_graph(
+                 # The successor's exact owner-approved company set is checked
+                 # from policy and registry above. It does not infer absence.
+                 expected_applicability = 'N_A_STRUCTURAL'
++            # The pinned route's counterpart, on the case rebuilt above.
++            if (historical_capacity_case is not None
++                    and record in historical_capacity_case["expected_records"]):
++                expected_applicability = 'N_A_STRUCTURAL'
+             if record["applicability"] != expected_applicability:
+                 raise RunStoreError(
+                     "MetricResult applicability differs from Spec/traits"

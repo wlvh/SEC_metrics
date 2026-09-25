@@ -27,7 +27,8 @@ from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
-from vnext.historical_coverage import (STRUCTURAL_APPLICABILITY_METRICS,
+from vnext.historical_coverage import (SCOPE_ANSWERED_METRICS,
+                                       STRUCTURAL_APPLICABILITY_METRICS,
                                        WIRED_ACCESSION_METRICS, WIRED_HISTORICAL_METRICS,
                                        CoverageError, build_coverage_matrix,
                                        declared_metric_ids, known_result_defects)
@@ -197,7 +198,13 @@ class HistoricalCoverageTest(unittest.TestCase):
         # its structural one would silently inflate the denominator.
         self.assertEqual(set(), set(WIRED_HISTORICAL_METRICS)
                          & set(STRUCTURAL_APPLICABILITY_METRICS))
-        routed = len(WIRED_HISTORICAL_METRICS) + len(STRUCTURAL_APPLICABILITY_METRICS)
+        # B13 is the third family: routed where the approved definition leaves
+        # the company out, which a retailer is. At Ford or Enphase it would not
+        # be routed, so like the trait gates it is counted per position.
+        self.assertEqual(set(), set(SCOPE_ANSWERED_METRICS)
+                         & (set(WIRED_HISTORICAL_METRICS) | set(STRUCTURAL_APPLICABILITY_METRICS)))
+        routed = (len(WIRED_HISTORICAL_METRICS) + len(STRUCTURAL_APPLICABILITY_METRICS)
+                  + len(SCOPE_ANSWERED_METRICS))
         self.assertEqual((39 - routed) * 4, len(also_unwired))
         # And the constant lists agree with what the matrix itself marks. This
         # was a literal - it went stale the first time a route was wired
@@ -225,9 +232,12 @@ class HistoricalCoverageTest(unittest.TestCase):
                       if p["metric_id"] in STRUCTURAL_APPLICABILITY_METRICS]
         self.assertEqual(len(STRUCTURAL_APPLICABILITY_METRICS), len(structural))
         self.assertEqual({"ROUTE_IMPLEMENTED_NOT_RUN"}, {p["status"] for p in structural})
+        scope = [p for p in resolved if p["metric_id"] in SCOPE_ANSWERED_METRICS]
+        self.assertEqual({"ROUTE_IMPLEMENTED_NOT_RUN"}, {p["status"] for p in scope})
         unwired = [p for p in resolved
                    if p["metric_id"] not in WIRED_HISTORICAL_METRICS
-                   and p["metric_id"] not in STRUCTURAL_APPLICABILITY_METRICS]
+                   and p["metric_id"] not in STRUCTURAL_APPLICABILITY_METRICS
+                   and p["metric_id"] not in SCOPE_ANSWERED_METRICS]
         self.assertEqual(39 - routed, len(unwired))
         self.assertEqual({"HISTORICAL_ROUTE_NOT_WIRED"}, {p["status"] for p in unwired})
 

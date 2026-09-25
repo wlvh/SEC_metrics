@@ -3,6 +3,10 @@
  "contract_revision": "historical-pinned-period-v1",
  "execution_authority": {
   "files": {
+   "02_指标定义_SEC_10公司单年指标.md": {
+    "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99",
+    "size": 22457
+   },
    "catalog/company_traits.yaml": {
     "sha256": "1d91efe5b5b1d5886953b095f82f641f7cfe8fccc60af5d9b16c8541b22db31b",
     "size": 649
@@ -230,6 +234,10 @@
    "catalog/r5/B06_structured.md": {
     "sha256": "3aabaac36204b03276a2f5c1c557ca4c7cd4bdb19a115a753f5abc0df6895421",
     "size": 8857
+   },
+   "catalog/r5/B13_capacity_disclosures_v1.md": {
+    "sha256": "b3d8e9eebf46d49a6807120658b193ab371986c4ac6fcba6eee136eadc930629",
+    "size": 3010
    },
    "catalog/r5/C03_peo_total_compensation.md": {
     "sha256": "47050c897e8b1d73aa14c54e7f79efddbb1d6944af99df11810c3e932eb3be36",
@@ -807,6 +815,10 @@
     "sha256": "cc5877fe5149879056436064dc856205560ae8dd7eba64cda6f612aacc33f27d",
     "size": 8791
    },
+   "scripts/vnext/historical_capacity_results.py": {
+    "sha256": "576afdfcc78871b1a0ac4cdedae1486f43bbdb8a2e5db322c08579014a0cadc7",
+    "size": 9159
+   },
    "scripts/vnext/historical_debt_results.py": {
     "sha256": "772f7feb7b799413087813e03dc2925bf87e26d60fd64bc32a5766dc618e71d2",
     "size": 53528
@@ -832,12 +844,12 @@
     "size": 8839
    },
    "scripts/vnext/historical_projection.py": {
-    "sha256": "46e71ff285d46528274e1e10d844002c91b6c18b3cf0aa243f8c450db840ba7a",
-    "size": 17258
+    "sha256": "1dbed9172a897b9e00409a0b5b2c8e56969f2897aab8d5edcfa50fe4ea41c600",
+    "size": 18425
    },
    "scripts/vnext/historical_results.py": {
-    "sha256": "c8e320dc2f35a4141bbe256974f9b66ca2261fcbb18e97eea8ae6c13f99cb253",
-    "size": 35954
+    "sha256": "2d621c95db14845f05e6a9e376a91f4b11a64f49b2594b7460805a71cf9ba561",
+    "size": 36670
    },
    "scripts/vnext/historical_risk_results.py": {
     "sha256": "5f298545389ba183341577b43c32676fc7b74b39ff48c844dd0b1700024c98cb",
@@ -1555,6 +1567,14 @@
   "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
  },
  "new_rule_files": {
+  "02_指标定义_SEC_10公司单年指标.md": {
+   "sha256": "921225e15e1a2ad364fc8a80ef53df31525a45635e9e1f20519118b7b3dcdc99",
+   "size": 22457
+  },
+  "catalog/r5/B13_capacity_disclosures_v1.md": {
+   "sha256": "b3d8e9eebf46d49a6807120658b193ab371986c4ac6fcba6eee136eadc930629",
+   "size": 3010
+  },
   "catalog/r6/D02_legal_disclosures_v2.md": {
    "sha256": "e38edb44d2f4887a97d849f5b532b796a09df03c75d85f743c883346c5738c3a",
    "size": 5944
@@ -1574,6 +1594,10 @@
   "scripts/vnext/historical_annual_input.py": {
    "sha256": "cc5877fe5149879056436064dc856205560ae8dd7eba64cda6f612aacc33f27d",
    "size": 8791
+  },
+  "scripts/vnext/historical_capacity_results.py": {
+   "sha256": "576afdfcc78871b1a0ac4cdedae1486f43bbdb8a2e5db322c08579014a0cadc7",
+   "size": 9159
   },
   "scripts/vnext/historical_debt_results.py": {
    "sha256": "772f7feb7b799413087813e03dc2925bf87e26d60fd64bc32a5766dc618e71d2",
@@ -1600,12 +1624,12 @@
    "size": 8839
   },
   "scripts/vnext/historical_projection.py": {
-   "sha256": "46e71ff285d46528274e1e10d844002c91b6c18b3cf0aa243f8c450db840ba7a",
-   "size": 17258
+   "sha256": "1dbed9172a897b9e00409a0b5b2c8e56969f2897aab8d5edcfa50fe4ea41c600",
+   "size": 18425
   },
   "scripts/vnext/historical_results.py": {
-   "sha256": "c8e320dc2f35a4141bbe256974f9b66ca2261fcbb18e97eea8ae6c13f99cb253",
-   "size": 35954
+   "sha256": "2d621c95db14845f05e6a9e376a91f4b11a64f49b2594b7460805a71cf9ba561",
+   "size": 36670
   },
   "scripts/vnext/historical_risk_results.py": {
    "sha256": "5f298545389ba183341577b43c32676fc7b74b39ff48c844dd0b1700024c98cb",
