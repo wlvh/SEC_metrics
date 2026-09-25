@@ -34,6 +34,7 @@
   "target_rows_only_in_history_blocks": {
    "count": 6,
    "evidence": "docs/evidence/issue47_history/financial-route/target-row-blocks.json",
+   "handled": "since 514b41a3 the four routes that proved the target against the main index ask which loaded block lists it; on a recorded root with Marriott's rows up to 2024-06-30 moved into a new block, all thirty-nine answers agree with the repository root in all three periods. These six periods no longer stop at discovery once their originals exist; that says nothing about their other needs.",
    "inferred_from_filing_dates": [
     "jpmorgan_chase FY2021-FY2023 (undiscovered; their 10-Ks predate the main document's 2025-08-15 start)"
    ],
@@ -56,10 +57,31 @@
   "C02 values read and withdrawn (c02-board-read/)",
   "B06 values read and accepted (content-acceptance/debt-to-equity-read.json)",
   "D02 italic matter labels",
-  "Paramount predecessor FY2024 read"
+  "Paramount predecessor FY2024 read",
+  "twelve-period batch under closure aa0eff7e (native-run-batch-12-periods/)",
+  "installer carries every non-code rule input; B13 on an external source root (acquisition-wiring/, financial-route/recorded-bank-sweep.json)",
+  "pinned target proved against the submissions block that lists it (block-resident-filings/)",
+  "JPMorgan FY2025 whole-period sweep on the recorded root (financial-route/recorded-bank-sweep.json)",
+  "targeted round under closure 30a7934b: Paramount D02 x2, D04 x12, block-resident chain x4 (targeted-round-30a7934b/)"
  ],
  "content": {
   "acceptances": 159,
+  "batch": {
+   "accepted": 159,
+   "attempted": 442,
+   "closure": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+   "evidence": "docs/evidence/issue47_history/native-run-batch-12-periods/measured.json",
+   "failures": 2,
+   "public_rows": 440,
+   "ran_without_a_value": {
+    "answers": 7,
+    "decided_policy_refusals": 20,
+    "gaps": 40
+   },
+   "unread": 3,
+   "values": 178,
+   "withdrawn": 16
+  },
   "defects_registered": 25,
   "defects_released": 8,
   "defects_withdrawing_current_results": [
@@ -83,17 +105,37 @@
   "defects_withdrawing_only_a_replaced_result": [
    "D02_PFIZER_2025_OFFICER_SECTION"
   ],
-  "not_yet_read": "recounted after the running full-frame batch",
+  "not_yet_read": "3 of 178 batch values: E01 for Marriott, Lumen and Macy's, waiting on the E01 decision; 159 read and accepted, 16 withdrawn by open defects",
   "reading_producers": "docs/evidence/issue47_history/reading-producers/README.md"
  },
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
- "offline_implementation": [
-  {
-   "evidence": "docs/evidence/issue47_history/financial-route/README.md",
-   "item": "block-aware source-set discovery",
-   "next": "use the block holding the target row as the inventory, leaving every recent-block answer unchanged; do it before or with acquisition",
-   "state": "6 of 50 target periods have their 10-K row only in a history block; four pinned routes discover only in the main document's recent block"
+ "jpmorgan_fy2025_recorded_root": {
+  "evidence": "docs/evidence/issue47_history/financial-route/recorded-bank-sweep.json",
+  "first_blocker_of_seven": {
+   "metrics": [
+    "C01",
+    "C04",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+   ],
+   "state": "latest request failed (status 0); three earlier GETs returned 200",
+   "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+   "walk_material": "20 8-K filings in the window: 20 primaries saved, 19 of 20 headers usable - this header is the only unusable document (bank-event-material.json); steps after the walk are not measured"
   },
+  "is": "RECORDED_TEST_ONLY",
+  "positions": 38,
+  "public_rows": 37,
+  "stopped_by_name": {
+   "D04": "HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE"
+  },
+  "structurally_not_applicable": 12,
+  "values": 17,
+  "withheld_with_a_named_reason": 8
+ },
+ "offline_implementation": [
   {
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/README.md",
@@ -154,12 +196,14 @@
    "recommendation": "COMPOSITION_FACTS_ONLY"
   },
   {
+   "block_resident_discovery": "fixed (block-resident-filings/); the six periods no longer stop at discovery once their originals exist",
    "cap": 1352,
    "decision": "Issue #47 SEC acquisition allowance",
    "evidence": [
     "docs/evidence/issue47_history/acquisition-plan.json",
     "docs/evidence/issue47_history/acquisition-wiring/proposed-allowance.json"
    ],
+   "not_in_the_cap": "JPMorgan event windows; on the recorded root the FY2025 walk lacks exactly one usable document",
    "note": "without block-aware source-set discovery, the six history-block target periods would still not deliver after acquisition"
   },
   {
