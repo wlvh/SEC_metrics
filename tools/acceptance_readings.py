@@ -1,9 +1,9 @@
 """Where each content reading keeps its per-position conclusions.
 
-Eight readings, eight shapes: a statement read keyed by label with one row per
-metric, a lodging table keyed by label, an event window with its filing list,
-governance rows beside a period, two text readings, and two single-coordinate
-readings. The acceptance register and the identity binder both have to walk
+Seven shapes: a statement read keyed by label with one row per metric, a
+lodging table keyed by label, an event window with its filing list, governance
+rows beside a period, a D02 text reading, the D01 heading readings (one shape,
+three files), and two single-coordinate readings. The acceptance register and the identity binder both have to walk
 them, and walking them twice with two sets of rules is how the two would come
 to disagree about which positions exist. So the walk is here, once.
 
@@ -31,16 +31,18 @@ GOVERNANCE = EVIDENCE + "governance-read.json"
 TEXT = EVIDENCE + "d02-both-directions-read.json"
 # D01 is read off each filing's bytes by tools/read_d01_headings.py, which
 # imports none of the route's text modules: one reading for the 30-metric
-# batch's results and one for the three results the underline repair produced.
-# The earlier d01-headings-read.json stays as a record of what it found, and is
-# not a source of acceptances: its "judged" list was the selector's own output,
-# so it could not have told a repaired selector from an unrepaired one.
+# batch's results, one for the three results the underline repair produced and
+# one for Paramount's result after the short-gap repair. The earlier
+# d01-headings-read.json stays as a record of what it found, and is not a
+# source of acceptances: its "judged" list was the selector's own output, so it
+# could not have told a repaired selector from an unrepaired one.
 HEADINGS = EVIDENCE + "d01-headings-read-from-bytes.json"
 HEADINGS_FROM_BYTES = EVIDENCE + "d01-marriott-repaired-read.json"
+HEADINGS_PARAMOUNT_REPAIRED = EVIDENCE + "d01-paramount-repaired-read.json"
+D01_READINGS = (HEADINGS, HEADINGS_FROM_BYTES, HEADINGS_PARAMOUNT_REPAIRED)
 RPO = EVIDENCE + "rpo-read.json"
 COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
-READINGS = (CROSS, LODGING, EVENTS, GOVERNANCE, TEXT, HEADINGS, HEADINGS_FROM_BYTES,
-            RPO, COMPENSATION)
+READINGS = (CROSS, LODGING, EVENTS, GOVERNANCE, TEXT, *D01_READINGS, RPO, COMPENSATION)
 # The readings key some positions by a label only. The label is what the
 # reading recorded, and this is the period each label names.
 PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
@@ -205,7 +207,7 @@ def positions(*, repo_root: Path, path: str, body):
                 reading=path, label=label, slot=case, company_id=case["company_id"],
                 metric_id="D02", period_end=case["period_end"],
                 published=case["value_sha256"], verdict="MATCH"))
-    elif path in (HEADINGS, HEADINGS_FROM_BYTES):
+    elif path in D01_READINGS:
         for label, case in sorted(body["per_position"].items()):
             if not case.get("value_sha256"):
                 continue

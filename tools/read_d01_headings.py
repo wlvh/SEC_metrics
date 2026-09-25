@@ -173,6 +173,60 @@ def _marked_prefix(runs, *, marks):
     return joined or None
 
 
+def _marked_across_short_gaps(runs, *, marks):
+    """The marked prefix, continued over unmarked gaps of two characters or fewer.
+
+    Computed only for a line _resumes_after_a_gap flags, so that the recorded
+    judgement has the filing's own text for both readings to choose between.
+    The reading applies no rule here: which of the two is the heading is the
+    judgement, and a flagged line with none fails the reading.
+    """
+    kept, gap = [], []
+    for text, bold, underline, italic, linked in runs:
+        carried = {"bold": bold, "underline": underline, "italic": italic}
+        marked = any(carried[mark] for mark in marks) and not linked
+        if not text.strip():
+            if kept:
+                (gap if gap else kept).append(text)
+            continue
+        if marked:
+            kept.extend(gap)
+            gap = []
+            kept.append(text)
+        elif not kept:
+            break
+        else:
+            gap.append(text)
+            if len("".join(gap).strip()) > 2:
+                break
+    joined = re.sub(r"\s+", " ", "".join(kept)).strip()
+    return joined or None
+
+
+SHORT_GAP_DECISIONS = ("ONE_HEADING_ACROSS_THE_GAP", "HEADING_ENDS_AT_THE_GAP")
+
+
+def judged_lines(*, headings, shapes, short_gap_lines):
+    """The heading lines after each flagged line's recorded judgement.
+
+    ``short_gap_lines`` maps a flagged line's prefix to one of
+    SHORT_GAP_DECISIONS. Returns ``(lines, unjudged, not_found)``: a flagged
+    line with no judgement, and a judgement naming a line the filing does not
+    flag, each fail the reading - the second because a judgement about a line
+    this filing does not have describes some other filing.
+    """
+    lines, flagged = [], set()
+    for text, shape in zip(headings, shapes):
+        if shape["emphasis_resumes_after_a_short_gap"]:
+            flagged.add(text)
+            if short_gap_lines.get(text) == "ONE_HEADING_ACROSS_THE_GAP":
+                text = shape["across_short_gaps"]
+        lines.append(text)
+    unjudged = sorted(line for line in flagged if short_gap_lines.get(line)
+                      not in SHORT_GAP_DECISIONS)
+    return lines, unjudged, sorted(set(short_gap_lines) - flagged)
+
+
 def as_published(headings):
     """The heading lines in the shape the route publishes them.
 
@@ -241,11 +295,13 @@ def headings_and_other_marks(*, raw_bytes, registrant_names=()):
             first = next(run for run in runs if run[0].strip())
             body = len(text) - len(heading)
             headings.append(heading)
+            resumes = _resumes_after_a_gap(runs, marks=("bold", "underline"))
             shapes.append({"mark": "BOLD" if first[1] else "UNDERLINE",
                            "shape": "STANDALONE" if body <= 1 else "LEADS_INTO_ITS_BODY",
                            "body_chars": max(body, 0),
-                           "emphasis_resumes_after_a_short_gap": _resumes_after_a_gap(
-                               runs, marks=("bold", "underline"))})
+                           "emphasis_resumes_after_a_short_gap": resumes,
+                           **({"across_short_gaps": _marked_across_short_gaps(
+                               runs, marks=("bold", "underline"))} if resumes else {})})
             continue
         italic = _marked_prefix(runs, marks=("italic",))
         if italic:
@@ -294,8 +350,12 @@ def read_position(*, index, closure, company_id, period_end, judgements):
         raw.decode("utf-8", "replace"))))
     headings, shapes, others = headings_and_other_marks(
         raw_bytes=raw, registrant_names=registrant_names)
+    short_gap_lines = {entry["line"]: entry["decision"]
+                       for entry in judgements.get("short_gap_lines", ())}
+    lines, gap_unjudged, gap_not_found = judged_lines(
+        headings=headings, shapes=shapes, short_gap_lines=short_gap_lines)
     published = str(result["value"]).split("\n")
-    distinct = as_published(headings)
+    distinct = as_published(lines)
     judged = {entry["block_in_item_1a"]: entry["judgement"]
               for entry in judgements.get("other_marks", ())}
     found = {entry["block_in_item_1a"] for entry in others}
@@ -305,13 +365,19 @@ def read_position(*, index, closure, company_id, period_end, judgements):
         "document": storage, "fiscal_year_end_on_the_cover": cover_end,
         "registrant_names_tagged_in_the_filing": registrant_names,
         "headings_read": distinct,
-        "repeated_heading_occurrences_grouped": len(headings) - len(distinct),
+        "repeated_heading_occurrences_grouped": len(lines) - len(distinct),
         "heading_shapes": dict(collections.Counter(
             shape["mark"] + ":" + shape["shape"] for shape in shapes)),
         "heading_lines": [{"text": text, **shape} for text, shape in zip(headings, shapes)],
         "lines_where_emphasis_resumes_after_a_short_gap": [
             text for text, shape in zip(headings, shapes)
             if shape["emphasis_resumes_after_a_short_gap"]],
+        # Which reading of each flagged line is the heading: recorded, not
+        # decided here. The row carries the decisions so the reading can be
+        # reproduced from the filing and this row alone.
+        "short_gap_judgements": short_gap_lines,
+        "short_gap_lines_with_no_judgement": gap_unjudged,
+        "short_gap_judgements_not_found_in_the_filing": gap_not_found,
         # The part a program cannot supply: whether each line is a heading in
         # the approved definition's sense. Recorded per filing; the reading
         # fails without it, and fails when it names a line as wrong.
@@ -332,6 +398,7 @@ def read_position(*, index, closure, company_id, period_end, judgements):
                            and not position["lines_judged_wrong"]
                            and not position["other_marked_blocks_with_no_judgement"]
                            and not position["recorded_judgements_not_found_in_the_filing"]
+                           and not gap_unjudged and not gap_not_found
                            else "DIFFERS")
     identity, refusal = identity_for(
         position={"company_id": company_id, "metric_id": "D01", "period_end": period_end,

@@ -14,6 +14,9 @@ from tools import read_d01_headings as reader
 
 READING = "docs/evidence/issue47_history/content-acceptance/d01-headings-read-from-bytes.json"
 REPAIRED = "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json"
+PARAMOUNT_REPAIRED = "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json"
+READINGS = (READING, REPAIRED, PARAMOUNT_REPAIRED)
+CUT = "Failures to comply with or changes in U"
 
 
 def _document(path, label):
@@ -81,10 +84,68 @@ class EachFilingSpecificStepTest(unittest.TestCase):
         headings, shapes, _ = _read(READING, "paramount-2025")
         flagged = [text for text, shape in zip(headings, shapes)
                    if shape["emphasis_resumes_after_a_short_gap"]]
-        self.assertEqual(["Failures to comply with or changes in U"], flagged)
+        self.assertEqual([CUT], flagged)
         control, control_shapes, _ = _read(REPAIRED, "marriott-2025")
         self.assertFalse(any(shape["emphasis_resumes_after_a_short_gap"]
                              for shape in control_shapes))
+
+
+class AFlaggedLineIsReadOnlyThroughItsJudgementTest(unittest.TestCase):
+    """The reading offers both readings of a flagged line and applies neither.
+
+    The route bridges a gap of two characters or fewer; if the reading did the
+    same, a wrong bridging rule would be wrong on both sides and the reading
+    would pass it. So the reading computes the prefix and the extent across the
+    gap from its own runs, and only a recorded judgement picks one.
+    """
+
+    def setUp(self):
+        self.headings, self.shapes, _ = _read(READING, "paramount-2025")
+
+    def test_both_readings_are_the_filing_s_own_text(self):
+        shape = self.shapes[self.headings.index(CUT)]
+        self.assertEqual("Failures to comply with or changes in U.S. or foreign laws or "
+                         "regulations could have an adverse effect on our business, financial "
+                         "condition or results of operations.", shape["across_short_gaps"])
+        # Only flagged lines carry the second reading.
+        self.assertEqual(1, sum("across_short_gaps" in shape for shape in self.shapes))
+
+    def test_no_judgement_fails_and_each_decision_gives_its_own_line(self):
+        lines, unjudged, not_found = reader.judged_lines(
+            headings=self.headings, shapes=self.shapes, short_gap_lines={})
+        self.assertEqual(([CUT], []), (unjudged, not_found))
+        self.assertIn(CUT, lines)
+        across, unjudged, _ = reader.judged_lines(
+            headings=self.headings, shapes=self.shapes,
+            short_gap_lines={CUT: "ONE_HEADING_ACROSS_THE_GAP"})
+        self.assertEqual([], unjudged)
+        self.assertNotIn(CUT, across)
+        self.assertEqual(len(lines), len(across))
+        ends, unjudged, _ = reader.judged_lines(
+            headings=self.headings, shapes=self.shapes,
+            short_gap_lines={CUT: "HEADING_ENDS_AT_THE_GAP"})
+        self.assertEqual(([], lines), (unjudged, ends))
+
+    def test_a_judgement_about_a_line_the_filing_does_not_flag_fails(self):
+        other = next(text for text, shape in zip(self.headings, self.shapes)
+                     if not shape["emphasis_resumes_after_a_short_gap"])
+        _, _, not_found = reader.judged_lines(
+            headings=self.headings, shapes=self.shapes,
+            short_gap_lines={CUT: "ONE_HEADING_ACROSS_THE_GAP",
+                             other: "ONE_HEADING_ACROSS_THE_GAP"})
+        self.assertEqual([other], not_found)
+
+    def test_an_unknown_decision_is_no_judgement(self):
+        _, unjudged, _ = reader.judged_lines(
+            headings=self.headings, shapes=self.shapes, short_gap_lines={CUT: "PROBABLY"})
+        self.assertEqual([CUT], unjudged)
+
+    def test_the_committed_reading_records_the_decision_it_applied(self):
+        row = json.loads((ROOT / PARAMOUNT_REPAIRED).read_text(encoding="utf-8"))[
+            "per_position"]["paramount-2025"]
+        self.assertEqual({CUT: "ONE_HEADING_ACROSS_THE_GAP"}, row["short_gap_judgements"])
+        self.assertEqual("MATCH", row["verdict"])
+        self.assertEqual([CUT], row["lines_where_emphasis_resumes_after_a_short_gap"])
 
 
 class TheReaderReproducesThePublishedValueTest(unittest.TestCase):
@@ -98,16 +159,20 @@ class TheReaderReproducesThePublishedValueTest(unittest.TestCase):
 
     def test_every_accepted_position(self):
         import hashlib
-        for path in (READING, REPAIRED):
+        for path in READINGS:
             rows = json.loads((ROOT / path).read_text(encoding="utf-8"))["per_position"]
             for label, row in rows.items():
                 if row["verdict"] != "MATCH":
                     continue
                 with self.subTest(path=path, label=label):
                     raw = (ROOT / row["document"]).read_bytes()
-                    headings, _, _ = reader.headings_and_other_marks(
+                    headings, shapes, _ = reader.headings_and_other_marks(
                         raw_bytes=raw, registrant_names=row["registrant_names_tagged_in_the_filing"])
-                    joined = "\n".join(reader.as_published(headings))
+                    lines, unjudged, not_found = reader.judged_lines(
+                        headings=headings, shapes=shapes,
+                        short_gap_lines=row.get("short_gap_judgements", {}))
+                    self.assertEqual(([], []), (unjudged, not_found))
+                    joined = "\n".join(reader.as_published(lines))
                     self.assertEqual(row["value_sha256"],
                                      "sha256:" + hashlib.sha256(joined.encode("utf-8")).hexdigest())
 
@@ -125,7 +190,7 @@ class TheCommittedReadingsSayWhatTheyShouldTest(unittest.TestCase):
                          {label for label, verdict in verdicts.items() if verdict != "MATCH"})
 
     def test_every_recorded_identity_was_recorded_when_the_reading_was_made(self):
-        for path in (READING, REPAIRED):
+        for path in READINGS:
             for label, row in json.loads(
                     (ROOT / path).read_text(encoding="utf-8"))["per_position"].items():
                 with self.subTest(path=path, label=label):

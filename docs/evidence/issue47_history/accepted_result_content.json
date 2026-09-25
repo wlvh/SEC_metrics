@@ -6243,6 +6243,52 @@
    "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D01_PARAMOUNT_2025",
+   "accepted_value": "sha256:b8020d7fdfe4377d9b509366af52b4351b45ba948f8c2dc05643538cce76733f",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "result_id": "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+     "run_id": "run:historical-period:873f3f3f42fad6a41c0248c25642ea748764a8cccfcbc87d44d83a68d7c17d38"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "2041610"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0002041610-26-000011"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "accession": "0002041610-26-000011",
+    "document": "evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm",
+    "heading_shapes": {
+     "BOLD:LEADS_INTO_ITS_BODY": 1,
+     "BOLD:STANDALONE": 37
+    },
+    "headings": 38
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D01_PFIZER_2025",
    "accepted_value": "sha256:6da31a109c5618bcac5e811e2f11eeaf79e0b9c9484e8b4d907102c8e351f24c",
    "checked_identity": {
@@ -6376,6 +6422,47 @@
     "headings": 34
    },
    "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D02_ENPHASE_2025",
+   "accepted_value": "sha256:0a9b43dbe3d6d01adc7f6abe277b1e393fac50e0c6a04c858c6247e3ceeb9214",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "result_id": "sha256:6350fa46c5e8329a0d3f7b4e119e30ea40e80ef0e90c63007a622356deb3718e",
+     "run_id": "run:historical-period:954bc13e3b575c21ccfbd3278bdeadf3425a31205f658feac15bb9d49165fb96"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-26-000013"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+   "method": "every excerpt in the set read whole, and every block the selector skipped inside the narrow scopes - Item 3 and any named note range - read with it, judged against the approved source definition. The other direction - whether a contingencies note was missed - is the unreached-note scan in docs/evidence/issue47_history/d02-content-read/unreached-notes.json. The value is named by digest because it is the whole text payload.",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "chars": 9884,
+    "excerpts": 17
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set is the set the approved source definition asks for in this filing, read in both directions. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
    "acceptance_id": "CONTENT_D02_FORD_2025",
@@ -9962,6 +10049,7 @@
   "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
   "docs/evidence/issue47_history/content-acceptance/d01-headings-read-from-bytes.json",
   "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+  "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json",
   "docs/evidence/issue47_history/content-acceptance/rpo-read.json",
   "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json"
  ],
@@ -9998,10 +10086,16 @@
    "positions_examined": 3,
    "positions_examined_is_null_because": null
   },
+  "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:a2fe13c634e9616b172014a0dcced1be94db4886e8f123499af554b194629d1b",
+   "positions_examined": 1,
+   "positions_examined_is_null_because": null
+  },
   "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json": {
-   "acceptances_contributed": 7,
-   "content_sha256": "sha256:57c3caa4e57095f14ee6bcaaeae3bde7418f8ed4901a7b19d73771bfb5c42e24",
-   "positions_examined": 7,
+   "acceptances_contributed": 8,
+   "content_sha256": "sha256:1990f2d6e988f338b2ec9a20e640dedefc2d205d7479662329b6a303248c92c2",
+   "positions_examined": 8,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/event-count-read.json": {

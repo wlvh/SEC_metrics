@@ -30,9 +30,9 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
-from acceptance_readings import (COMPENSATION, CROSS, EVENTS, GOVERNANCE,  # noqa: E402
-                                 HEADINGS, HEADINGS_FROM_BYTES, LODGING, READINGS, RPO,
-                                 TEXT, load, positions)
+from acceptance_readings import (COMPENSATION, CROSS, D01_READINGS, EVENTS,  # noqa: E402
+                                 GOVERNANCE, LODGING, READINGS, RPO, TEXT, load,
+                                 positions)
 
 REGISTER = "docs/evidence/issue47_history/accepted_result_content.json"
 
@@ -146,7 +146,7 @@ def _read_from(position):
                 "eight_k_item_4_01_in_window": row["eight_k_item_4_01_in_window"]}
     if path == TEXT:
         return {"excerpts": case["excerpts"], "chars": case["chars"]}
-    if path in (HEADINGS, HEADINGS_FROM_BYTES):
+    if path in D01_READINGS:
         return {"headings": len(case["headings_read"]), "accession": case["accession"],
                 "document": case["document"], "heading_shapes": case["heading_shapes"]}
     if path == RPO:
@@ -169,7 +169,7 @@ def _method_and_limit(position):
         return GOVERNANCE_METHOD[metric], GOVERNANCE_LIMIT[metric]
     if path == TEXT:
         return TEXT_METHOD, TEXT_LIMIT
-    if path in (HEADINGS, HEADINGS_FROM_BYTES):
+    if path in D01_READINGS:
         return HEADINGS_FROM_BYTES_METHOD, HEADINGS_LIMIT
     if path == RPO:
         return (RPO_METHOD, position["case"]["what_this_does_not_establish"])

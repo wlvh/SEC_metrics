@@ -5,6 +5,19 @@
   "provider": 0,
   "sec": 0
  },
+ "enphase_2025": {
+  "result": {
+   "earlier_result_id": "sha256:c65f0cb421bc759f0668384361c7352ac012b045296139b223f0c52727e7fca0",
+   "lines_added": [],
+   "lines_removed": [
+    "Enphase Energy, Inc. | 2025 Form 10-K | 46"
+   ],
+   "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+   "result_id": "sha256:6350fa46c5e8329a0d3f7b4e119e30ea40e80ef0e90c63007a622356deb3718e"
+  },
+  "what_this_reading_changed": "the footer left the set and nothing else moved. Checked line by line against the earlier result: the repaired value is exactly the earlier value with that one line removed, in the same order, so each of its seventeen lines is one the reading judged, and the one block now untaken beside 756 is the footer at 755. The rule that removed it is historical_text_results._numbered_page_footers; measured over all eleven saved periods it removes this block and nothing else, and leaves every D03 set unchanged (targeted-round-c7a49b98/probe-before-the-repair.json).",
+  "what_was_read": "all 18 excerpts of the earlier result, in both directions, in d02-content-read/four-sets-both-directions.json: seventeen are legal-proceedings disclosure - thirteen Item 3 blocks and two headings covering the securities class actions (Hayes, Local 464A) and the shareholder derivative suits (Ibarra, Isaac, Hirani, Hanowski), and two contingency blocks in Item 8 - and block 755 is the page footer 'Enphase Energy, Inc. | 2025 Form 10-K | 46'. The only untaken block in the narrow scopes was the 'Table of Contents' link at 756, the other half of the same page break."
+ },
  "ford_2025": {
   "what_this_reading_changed": "eight running-header blocks left the set. They were there because the furniture criterion was attached only to the scopes this successor builds; see d02-content-read/page-furniture-by-scope.json.",
   "what_was_read": "all 45 excerpts after the page-furniture fix, plus every block skipped inside Item 3 and Note 24.",
@@ -21,6 +34,40 @@
   "why_the_set_is_right": "the filing's own Item 3 incorporates 'the information under the “Litigation, Claims, and Government Investigations” caption in Note 7', and the excerpt set is exactly that caption's blocks plus Item 3. The blocks skipped inside the note are the ones outside the named caption - 'Description of Event' and its paragraph, 'Insurance Recoveries' and its paragraph - and the page number and Table of Contents lines between them. Taking the whole note instead was measured earlier in this issue and judged wrong for exactly those blocks."
  },
  "per_position": {
+  "enphase-2025": {
+   "chars": 9884,
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "result_id": "sha256:6350fa46c5e8329a0d3f7b4e119e30ea40e80ef0e90c63007a622356deb3718e",
+     "run_id": "run:historical-period:954bc13e3b575c21ccfbd3278bdeadf3425a31205f658feac15bb9d49165fb96"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-26-000013"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:ccb765e51ba503e0bd709301dfab8bee2a0351e21083d18786fba3e18f1b5ddf",
+    "spec_closure_hash": "sha256:941903407f15d18439c21bb01739dd3d31b23efb3ae8405d1e3b4014d7f3cd52",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "enphase_energy",
+   "excerpts": 17,
+   "period_end": "2025-12-31",
+   "value_sha256": "sha256:0a9b43dbe3d6d01adc7f6abe277b1e393fac50e0c6a04c858c6247e3ceeb9214"
+  },
   "ford-2025": {
    "chars": 17765,
    "checked_identity": {
