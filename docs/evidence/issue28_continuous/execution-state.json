@@ -48,7 +48,7 @@
     "D03 remains no-call pending separate review/resources; production publication and active switch remain separately unapproved."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
-  "remaining_review_dependency": "D03 source-fact original6e5 and first two repairs463c/452c limited reviews failed on distinct scope bugs; third bounded correction locally tested and pending exact-SHA independent review. If still blocked, stop deterministic source-fact route instead of expanding grammar. D03 no real calls.",
+  "remaining_review_dependency": "D03 source-fact original6e5 and three bounded repairs all failed exact-SHA limited review; rule route suspended, code/binding restored to b897. Real D03 remains uncalled pending a different defensible validation path, separate integration review and resource decision.",
   "historical_state_snapshot": "review-5207290213/historical-before-through104-state/execution-state.json",
   "historical_continuation_snapshot": "review-5207290213/historical-before-through104-state/continuation.md",
   "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
@@ -400,7 +400,7 @@
     "old_response_rewritten": false,
     "sample_role": "REGRESSION_AFTER_PRIOR_REPAIR",
     "native_result_created": false,
-    "independent_module_review": "ORIGINAL_AND_FIRST_TWO_SCOPED_REPAIRS_FAILED; THIRD_PATCH_PENDING_EXACT_SHA_REVIEW",
+    "independent_module_review": "FAILED_FOUR_EXACT_SHA_LIMITED_REVIEWS; SOURCE_FACT_CREDIT_SUSPENDED",
     "real_model_validation": "NOT_RUN_PENDING_MODULE_REVIEW"
   },
   "b13_native_development": {
@@ -1219,6 +1219,22 @@
       "tool_calls": 50,
       "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-v2/conclusion.md",
       "verdict": "BLOCKED_SCOPED_D03_INTERVENING_TOPIC_P2"
+    },
+    {
+      "task_name": "review_d03fact_3384bee",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/regulatory_statement_facts.py",
+        "tests/vnext/test_regulatory_statement_facts.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/"
+      ],
+      "patch_sha": "3384bee8d9a58d6b629edbcd39a47b9b793ee517",
+      "spawned_at": "2026-09-25T10:17:00.411744+00:00",
+      "ended_at": "2026-09-25T10:24:26.989441+00:00",
+      "tool_calls": 57,
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-v3/conclusion.md",
+      "verdict": "BLOCKED_SCOPED_D03_CROSS_SUBJECT_ANAPHORA_P2"
     }
   ],
   "ci_capacity_20260922": {
@@ -2049,7 +2065,7 @@
     ]
   },
   "d03_source_fact_repair_20260925": {
-    "status": "THIRD_BOUNDED_LOCAL_REPAIR_TESTED_PENDING_SCOPED_REVIEW",
+    "status": "SUSPENDED_AFTER_BOUNDED_FAILED_REVIEWS; CURRENT_CODE_AND_BINDING_RESTORED_TO_B897",
     "evidence_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/",
     "original_patch_sha": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
     "original_review": "BLOCKED_SCOPED_D03_SOURCE_FACT_POSTMODIFIER_P2",
@@ -2059,10 +2075,10 @@
     "jpm_real_source_material": "1_PASS_AT_THIRD_REPAIR",
     "offline_d03_controller_tests": "6_PASS",
     "fast_suite": "128_OF_128_PASS",
-    "current_v15_closure": "sha256:c63c7d6a53d296db456b5188399590304fb1e1812d11d7401d5554a3d741d92d",
-    "current_execution_authority_hash": "sha256:0e3696a15a9bedb21a51fc970a4232d5aae53b14a2df21a7bdb17e686e060314",
-    "provider_sec_wiring": "PASS_THIRD_REPAIR_CURRENT_BINDING_NO_NETWORK",
-    "b13_190_reuse": "NOT_REPLAYED_AT_THIRD_REPAIR_CLOSURE; SECOND_REPAIR_CLOSURE_PASS_ONLY",
+    "current_v15_closure": "sha256:b482d46b2ba4a4e34e394974df5b62d3f8a5419fced4aae17630a9172840de8e",
+    "current_execution_authority_hash": "sha256:20abc70647c32974d749a0daad9a5cc0d902f55b4cbf7f7d2a70bf3f32789dac",
+    "provider_sec_wiring": "PREEXISTING_B897_CURRENT_RECEIPTS_RESTORED_AND_VALIDATED",
+    "b13_190_reuse": "PREEXISTING_B482_CLOSURE_READ_ONLY_REPLAY_PASS; D03_EXPERIMENTAL_CLOSURES_NOT_CURRENT",
     "new_calls": [
       0,
       0,
@@ -2070,7 +2086,7 @@
     ],
     "d03_live_authorized": false,
     "d03_native_result_created": false,
-    "scoped_repair_review": "6E5A85B_FAIL; 463C91F_FAIL; 452C828_FAIL_INTERVENING_TOPIC; THIRD_PATCH_PENDING_EXACT_SHA_REVIEW",
+    "scoped_repair_review": "ALL_FOUR_EXACT_SHA_REVIEWS_FAILED; NO_CURRENT_SOURCE_FACT_CREDIT",
     "shared_with_47": {
       "scope_paths": [
         "scripts/vnext/regulatory_statement_facts.py",
@@ -2086,10 +2102,36 @@
       "record_or_return_shapes_changed": false,
       "v15_requirement_closure_changed": true,
       "other_branch_modified": false,
-      "downstream_note": "Stacked #47 integrator must account for changed PR43 V15 closure; no #47 branch or snapshot touched."
+      "downstream_note": "Stacked #47 integrator must account for changed PR43 V15 closure; no #47 branch or snapshot touched.",
+      "net_current_code_or_binding_change_after_restoration": false,
+      "restored_baseline": "b897a174359b36ad0bc865315d0fe4b8dc884684"
     },
     "first_repair_review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-followup/conclusion.md",
-    "second_repair_review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-v2/conclusion.md"
+    "second_repair_review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-v2/conclusion.md",
+    "experimental_attempts": [
+      {
+        "patch_sha": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
+        "review": "FAILED_POST_ACTION_MODIFIER",
+        "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review/conclusion.md"
+      },
+      {
+        "patch_sha": "463c91f19b04f20597268df0c767a6c1d92bdf22",
+        "review": "FAILED_SAME_BLOCK_LINKED_RESOLUTION",
+        "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-followup/conclusion.md"
+      },
+      {
+        "patch_sha": "452c828793a89fd84ca84860b770480b768ae99e",
+        "review": "FAILED_INTERVENING_OTHER_TOPIC",
+        "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-v2/conclusion.md"
+      },
+      {
+        "patch_sha": "3384bee8d9a58d6b629edbcd39a47b9b793ee517",
+        "review": "FAILED_CROSS_SUBJECT_ANAPHORA",
+        "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-v3/conclusion.md"
+      }
+    ],
+    "current_source_fact_sha256": "3dda5cded82a471f1d5559654f44f50701439942f833f18526986409594057b2",
+    "local_repair_tests": "HISTORICAL_EXPERIMENTS_ONLY_NOT_CURRENT_ACCEPTANCE"
   },
   "ci_36116965890": {
     "head": "b276b1e7d90ae2bfbe1c62cd9d8c82e748865355",

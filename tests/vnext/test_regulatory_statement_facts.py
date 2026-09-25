@@ -62,65 +62,6 @@ class RegulatoryStatementFactsTest(unittest.TestCase):
                 self.assertEqual(len(rows), 1)
                 self.assertEqual(rows[0]['status'], 'SEMANTIC_REVIEW_REQUIRED')
 
-    def test_action_postmodifier_cannot_prove_current_involvement(self):
-        stem = 'We are involved in various legal matters, including investigations by governmental authorities'
-        positive = aggregate_involvement_facts(text=stem + '.', aliases=self.aliases)
-        self.assertEqual(len(positive), 1)
-        self.assertEqual(positive[0]['status'], 'SOURCE_REPORTED_FACT')
-        for ending in (', all of which were completed in 2020',
-                       ', all of which have concluded',
-                       ' that can arise in the future',
-                       ' that are hypothetical',
-                       ', none of which involve us',
-                       ' that are ongoing but concern another company'):
-            with self.subTest(ending=ending):
-                facts = aggregate_involvement_facts(text=stem + ending + '.', aliases=self.aliases)
-                self.assertEqual(len(facts), 1)
-                self.assertEqual(facts[0]['status'], 'SEMANTIC_REVIEW_REQUIRED')
-                self.assertIn('ACTION_SCOPE_REQUIRES_INTERPRETATION', facts[0]['reason_codes'])
-                self.assertEqual(check_aggregate_classification(facts=facts,
-                    kind='HISTORICAL_STATEMENT', reported_status='UNRESOLVED'), [])
-
-    def test_same_block_linked_resolution_matches_adjacent_block_boundary(self):
-        present = ('We are involved in various legal matters, including '
-                   'investigations by governmental authorities.')
-        closure = 'These investigations have been closed.'
-        for arguments in ({'text': present + ' ' + closure},
-                          {'text': present, 'context': [closure]}):
-            with self.subTest(arguments=arguments):
-                facts = aggregate_involvement_facts(aliases=self.aliases, **arguments)
-                self.assertEqual(len(facts), 1)
-                self.assertEqual(facts[0]['status'], 'SEMANTIC_REVIEW_REQUIRED')
-                self.assertIn('LINKED_RESOLUTION_REQUIRES_INTERPRETATION',
-                              facts[0]['reason_codes'])
-                self.assertEqual(check_aggregate_classification(facts=facts,
-                    kind='HISTORICAL_STATEMENT', reported_status='UNRESOLVED'), [])
-        unrelated = present + ' An explicitly unrelated private dispute was resolved.'
-        facts = aggregate_involvement_facts(text=unrelated, aliases=self.aliases)
-        self.assertEqual(len(facts), 1)
-        self.assertEqual(facts[0]['status'], 'SOURCE_REPORTED_FACT')
-
-    def test_intervening_new_topic_does_not_close_the_first_investigation(self):
-        present = ('We are involved in various legal matters, including '
-                   'investigations by governmental authorities.')
-        other_topics = [
-            ['In a separate matter, Acme was investigated by governmental authorities.',
-             'That investigation was closed.'],
-            ['Our vendor may face investigations in the future.',
-             'Those investigations may be resolved.'],
-        ]
-        for parts in other_topics:
-            for arguments in ({'text': present + ' ' + ' '.join(parts)},
-                              {'text': present, 'context': parts}):
-                with self.subTest(parts=parts, arguments=arguments):
-                    facts = aggregate_involvement_facts(aliases=self.aliases, **arguments)
-                    self.assertEqual(len(facts), 1)
-                    self.assertEqual(facts[0]['status'], 'SOURCE_REPORTED_FACT')
-                    with self.assertRaisesRegex(ValueError,
-                                                'AGGREGATE_FACT_CLASSIFICATION_CONFLICT'):
-                        check_aggregate_classification(facts=facts,
-                            kind='HISTORICAL_STATEMENT', reported_status='UNRESOLVED')
-
     def test_fact_conflict_rejects_erasure_without_rewriting_proposal(self):
         facts = aggregate_involvement_facts(text=self.sentence, aliases=self.aliases)
         before = deepcopy(facts)
