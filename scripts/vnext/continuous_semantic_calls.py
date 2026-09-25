@@ -349,7 +349,8 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
 
 
 def select_native_request_variants(*, prepared_requests, ledger, source_references=False,
-                                   compact_references=False, semantic_role_labels=False):
+                                   compact_references=False, semantic_role_labels=False,
+                                   relevance_repair_group_index=None):
     """Keep exact successful receipts; use indexed output for other groups.
 
     Selection is read-only and covers the existing complete source partition.
@@ -378,17 +379,26 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
          'NATIVE_ROLE_LABEL_SELECTION_INVALID')
     need(type(source_references) is bool and (not source_references or source['metric_id']=='B13'),
          'NATIVE_REFERENCE_SELECTION_INVALID')
+    need(relevance_repair_group_index is None or
+         (type(relevance_repair_group_index) is int and
+          0 <= relevance_repair_group_index < len(originals) and
+          source_references and compact_references and semantic_role_labels and
+          source['metric_id'] == 'B13'),
+         'B13_RELEVANCE_REPAIR_SELECTION_INVALID')
     alternatives = [upgrade_request(r) for r in originals]
     variant_requests = [{BASE:r, VERSION:a} for r,a in zip(originals,alternatives)]
     selected_version = VERSION
     if source_references and source.get('program_quantity_role_contract_version'):
-        from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, ROLE_VERSION, upgrade_request as reference_request
-        for versions, original in zip(variant_requests,originals):
+        from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, ROLE_VERSION, RELEVANCE_VERSION, upgrade_request as reference_request
+        for index, (versions, original) in enumerate(zip(variant_requests,originals)):
             versions[REFERENCE_VERSION] = reference_request(original)
             if compact_references:
                 versions[COMPACT_VERSION] = reference_request(original, compact=True)
                 if semantic_role_labels:
                     versions[ROLE_VERSION] = reference_request(original, compact=True, role_labels=True)
+                    if index == relevance_repair_group_index:
+                        versions[RELEVANCE_VERSION] = reference_request(original, compact=True,
+                            role_labels=True, relevance_scope=True)
         if source_references:
             selected_version = (ROLE_VERSION if semantic_role_labels else
                                 COMPACT_VERSION if compact_references else REFERENCE_VERSION)
@@ -398,6 +408,10 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
     successful = {}
     with ledger.locked():
         state = ledger.snapshot()
+        batch = None
+        if ledger.live and (ledger.root/'batch33-authorization.json').exists():
+            from .continuous_batch33 import read_authorization
+            batch = read_authorization(ledger)
         for row in state['rows']:
             if row['channel'] != 'PROVIDER' or row['status'] != 'SUCCEEDED':
                 continue
@@ -420,6 +434,15 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
                 continue
             i,version = match
             need(i not in successful, 'NATIVE_VARIANT_MULTIPLE_SUCCESSFUL_VERSIONS')
+            if batch is not None and semantic_role_labels and row['ordinal'] == 111:
+                from .continuous_batch33 import historical_successor_allowed
+                candidate = variant_requests[i][ROLE_VERSION]
+                policy = configured_transport_policy(requirement=prepared_requests[i].requirement, repo_root=ROOT)
+                if historical_successor_allowed(authorization=batch, ledger=ledger,
+                        ordinal=row['ordinal'], saved_request=saved,
+                        replacement_request=candidate,
+                        replacement_digest=request_digest(candidate, policy)):
+                    continue
             request = variant_requests[i][version]
             need(saved == request, 'NATIVE_VARIANT_SAVED_REQUEST_CHANGED')
             prepared = prepared_requests[i]
@@ -435,12 +458,13 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
         if i in successful:
             item, entry = successful[i]
         else:
-            request = variant_requests[i][selected_version]
+            version = (RELEVANCE_VERSION if i == relevance_repair_group_index else selected_version)
+            request = variant_requests[i][version]
             policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
             item = replace(prepared, request_bytes=_source_json(request),
                 provider_request_body_bytes=request_body(request,policy),
                 output_schema_bytes=_json(request['response_protocol']))
-            entry = {'request_id':request['request_id'], 'variant':selected_version, 'original_ordinal':None}
+            entry = {'request_id':request['request_id'], 'variant':version, 'original_ordinal':None}
         selected.append(item); report.append(entry)
     return selected, report
 
@@ -665,8 +689,11 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
     if request_fields.get('metric_id') == 'B13':
-        from .capacity_reference_contract import ROLE_VERSION
-        need(not (ledger.live and request_fields.get('source_reference_contract', {}).get('version') == ROLE_VERSION),
+        from .capacity_reference_contract import ROLE_VERSION, RELEVANCE_VERSION
+        need(not (ledger.live and request_fields.get('source_reference_contract', {}).get('version')
+                  in {ROLE_VERSION, RELEVANCE_VERSION}
+                  and not (getattr(ledger, 'root', None) is not None
+                           and (ledger.root/'batch33-authorization.json').exists())),
              'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED')
     need(not prepared.replay_only, 'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
     if prepared.source_ledger is not None:
@@ -687,6 +714,21 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
     elif request_fields['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST':
         from .d04_native_assessment import validate_response
     policy,plan = build_plan(prepared)
+    digest = request_digest(request_fields, policy)
+    batch_group_id = None
+    repair189 = None
+    v4_enphase = None
+    if not ledger.live and (ledger.root/'batch33-authorization.json').exists():
+        from .continuous_batch33 import read_authorization as read_batch_authorization, group_for_request
+        if (ledger.root/'batch33-repair-189.json').exists():
+            from .continuous_batch33_repair189 import read_authorization as read_repair189
+            repair189 = read_repair189(ledger)
+        if (ledger.root/'batch33-b13-v4-enphase.json').exists():
+            from .continuous_b13_v4_enphase import read_authorization as read_v4
+            v4_enphase = read_v4(ledger)
+        batch_group_id = group_for_request(authorization=read_batch_authorization(ledger),
+                                           request=request_fields, request_digest=digest,
+                                           repair189=repair189, v4_enphase=v4_enphase)
     def response_validator(**kwargs):
         if native_assessment:
             try:
@@ -715,6 +757,20 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
             need(request_fields.get('metric_id') in {'B13', 'D04'}, 'RECOVERY110_FOLLOWING_METRIC_FORBIDDEN')
             need(read_authorization(ledger) == authorization(ledger=ledger, online=True),
                  'RECOVERY110_LIVE_AUTHORIZATION_CHANGED')
+        from .continuous_batch33 import (authorization as batch_authorization,
+            read_authorization as read_batch_authorization, group_for_request)
+        batch = read_batch_authorization(ledger)
+        need(batch is not None and batch == batch_authorization(ledger=ledger, online=True),
+             'BATCH33_LIVE_AUTHORIZATION_REQUIRED')
+        if (ledger.root/'batch33-repair-189.json').exists():
+            from .continuous_batch33_repair189 import read_authorization as read_repair189
+            repair189 = read_repair189(ledger)
+        if (ledger.root/'batch33-b13-v4-enphase.json').exists():
+            from .continuous_b13_v4_enphase import read_authorization as read_v4
+            v4_enphase = read_v4(ledger)
+        batch_group_id = group_for_request(authorization=batch, request=request_fields,
+                                           request_digest=digest, repair189=repair189,
+                                           v4_enphase=v4_enphase)
         from .ai_adapter import api_key_environment_name
         import os
         need(bool(os.environ.get(api_key_environment_name(policy=policy),'').strip()),
@@ -724,9 +780,14 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
         from .continuous_call_wiring import validate_wiring_receipt
         validate_wiring_receipt(requirement=prepared.requirement)
     with ledger.locked():
-        path,intent = ledger.claim(channel='PROVIDER',request_digest=request_digest(
-            strict_json_loads(text=prepared.request_bytes.decode()),policy),
-            requirement=prepared.requirement,plan_id=plan['ai_invocation_plan_id'],purpose='remaining_development_feasibility')
+        path,intent = ledger.claim(channel='PROVIDER',request_digest=digest,
+            requirement=prepared.requirement,plan_id=plan['ai_invocation_plan_id'],
+            purpose='remaining_development_feasibility',batch_group_id=batch_group_id,
+            batch_repair_receipt=(repair189 if repair189 is not None and
+                digest == repair189['repaired_request_digest'] else None),
+            batch_b13_v4_receipt=(v4_enphase if v4_enphase is not None and
+                any(row['v4_digest'] == digest for row in v4_enphase['successor_groups'])
+                else None))
         control._exclusive_write_bytes(path=path/'source.json',content=prepared.source_bytes)
         control._exclusive_write_bytes(path=path/'semantic-request.json',content=prepared.request_bytes)
         preserve_execution_rules(prepared,path)

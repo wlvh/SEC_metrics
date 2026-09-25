@@ -1,0 +1,70 @@
+{
+  "record_type": "ISSUE28_B13_191_ENPHASE_V4_NO_CALL_PREFLIGHT",
+  "status": "PASS_GROUPS_1_TO_5_SOURCE_REQUIRED_AND_CONTEXT_PRESERVED",
+  "requirement_closure_hash": "sha256:fe581d02cd8f3980da91929065d09bf34550c5ad25cf7e2ebc1cd3518d26fe3d",
+  "groups": [
+    {
+      "group_index": 1,
+      "group_id": "B13:enphase_energy:1",
+      "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c",
+      "v3_digest": "d8851c12ca1ac33fc2745bf1cc67a31b1c70fd06f83e695cfb617b9529979660",
+      "v4_digest": "a0b5b56dda6fc6f74f541b3d7da6d669d471b99f526f05eb0c71a3422bbc9b85",
+      "source_unit_count": 4,
+      "required_candidate_count": 0,
+      "input_tokens": 156971,
+      "output_reserve_tokens": 4096
+    },
+    {
+      "group_index": 2,
+      "group_id": "B13:enphase_energy:2",
+      "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c",
+      "v3_digest": "d4eb89d60f980521682d61ddecf66652fd331b9d3e91beb288348edf888f5c0a",
+      "v4_digest": "010ac7ef7c0e4aad07f2930428cb835622271b1c3179f7c2c64eb7867a5e42f9",
+      "source_unit_count": 4,
+      "required_candidate_count": 0,
+      "input_tokens": 187724,
+      "output_reserve_tokens": 4096
+    },
+    {
+      "group_index": 3,
+      "group_id": "B13:enphase_energy:3",
+      "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c",
+      "v3_digest": "f292d38903700607314888cb563ea9df518736ff8bd7e094baf38ba800565b95",
+      "v4_digest": "8d25b175e93d70134a44798449a6517263dd092bd80f65b8cc87b24e14ed835b",
+      "source_unit_count": 4,
+      "required_candidate_count": 0,
+      "input_tokens": 172360,
+      "output_reserve_tokens": 4096
+    },
+    {
+      "group_index": 4,
+      "group_id": "B13:enphase_energy:4",
+      "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c",
+      "v3_digest": "73963329c15fb79d633d2a2f30a0f4b4cab8b0a496bbc845714542c58fda98db",
+      "v4_digest": "21cfb7a14a798f09e19001cff2babd433deee57baea9eaf17bfff4d6dcfa4e7b",
+      "source_unit_count": 7,
+      "required_candidate_count": 0,
+      "input_tokens": 186726,
+      "output_reserve_tokens": 4096
+    },
+    {
+      "group_index": 5,
+      "group_id": "B13:enphase_energy:5",
+      "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c",
+      "v3_digest": "65a5933926efb48376f755bc1d740a8f4d0dd7c73e2245d8ae634365e98ba2d9",
+      "v4_digest": "cf9ce6ef0a0d3ac7dfb42fc9823d681183554e278fb0da7bd39681d7f4ec121a",
+      "source_unit_count": 5,
+      "required_candidate_count": 0,
+      "input_tokens": 124185,
+      "output_reserve_tokens": 4096
+    }
+  ],
+  "network_disabled_during_preflight": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "original_191_upgraded": false,
+  "future_model_accuracy_proven": false
+}

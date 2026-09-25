@@ -1,0 +1,6 @@
+{"status": "OFFLINE_WIRING_PASS", "requirement_id": "issue_28_v14", "closure": "sha256:fe581d02cd8f3980da91929065d09bf34550c5ad25cf7e2ebc1cd3518d26fe3d", "request_bytes": 36920, "estimated_context_tokens": 15335, "source_request_count": 29, "selected_request_count": 1, "source_unit_coverage_preserved": true, "model": "deepseek-flash", "maximum_context_tokens": 200000, "retry_count": 0, "real_request_factory_to_controller_verified": true, "mocked_official_opener_invocations": 1, "network_disabled": true, "legacy_default_forbidden": true, "calls": {"provider": 0, "paid": 0, "sec": 0}, "semantic_correctness_verified": false, "native_result_created": false, "production_authorized": false, "native_mock_path": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpeb2moi8a/recorded-ledger/calls/0001"}
+----------------------------------------------------------------------
+Ran 44 tests in 27.629s
+
+OK
+{'status': 'OFFLINE_NATIVE_REQUEST_ACCEPTANCE_PASS', 'network_disabled': True, 'actual_factory_and_opener_verified': True, 'required_native_evidence_verified': True, 'missing_unit_rejected': True, 'request_count': 27, 'selected_request_bytes': 72041, 'estimated_context_tokens': 31518, 'closure': 'sha256:fe581d02cd8f3980da91929065d09bf34550c5ad25cf7e2ebc1cd3518d26fe3d', 'real_calls': [0, 0, 0], 'complete_b13_result': False}

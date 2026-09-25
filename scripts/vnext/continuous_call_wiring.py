@@ -9,6 +9,7 @@ def validate_wiring_receipt(*, requirement):
         repo_relative_path=requirement['policy']['offline_wiring_receipt_path']))
     need(value['record_type']=='CONTINUOUS_OFFLINE_WIRING_RECEIPT'
          and value['requirement_id']==requirement['requirement_id']
+         and value['requirement_closure_hash']==requirement['requirement_closure_hash']
          and value['execution_authority_hash']==content_hash(value=requirement['execution_authority'])
          and value['delegation_url']==requirement['policy']['delegation_url']
          and value['calls']=={'provider':0,'paid':0,'sec':0}

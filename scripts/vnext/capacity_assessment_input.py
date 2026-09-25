@@ -142,7 +142,7 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
         need(strict_json_file(path=resolve_repository_file(repo_root=data_root, repo_relative_path=export_path)) == value,
              'B13_IMPORTED_ASSESSMENT_CHANGED')
     from .native_unit_index import reconstruct_requests
-    from .continuous_semantic_calls import request_body
+    from .continuous_semantic_calls import request_body, request_digest
     from .continuous_call_policy import configured_transport_policy
     from . import invocation_control as control
     from types import SimpleNamespace
@@ -157,6 +157,23 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
     from .canonical import sha256_bytes
     histories = value['assessment'].get('recovered_http402_failures', [])
     need(type(histories) is list and all(type(h) is dict for h in histories), 'RECOVERY110_REGISTERED_HISTORY_INVALID')
+    batch_history = value['assessment'].get('batch_history')
+    if batch_history is not None:
+        from .continuous_batch33 import validate_history
+        digests = {row['ordinal']: request_digest(request, policy)
+                   for row, request in zip(value['native_requests'], expected)}
+        need(validate_history(history=batch_history, mode=value['mode'],
+             native_rows=value['native_requests'], request_digests=digests,
+             recovered_failed_ordinals=value['assessment'].get('recovered_batch_failed_ordinals', []),
+             recovered_402_ordinals=value['assessment'].get('recovered_batch_http402_ordinals', []),
+             recovered_engineering_ordinals=value['assessment'].get('recovered_batch_engineering_ordinals', [])),
+             'BATCH33_REGISTERED_HISTORY_CHANGED')
+    else:
+        need('recovered_batch_failed_ordinals' not in value['assessment']
+             and 'recovered_batch_http402_ordinals' not in value['assessment']
+             and 'recovered_batch_engineering_ordinals' not in value['assessment']
+             and all('batch_authorization_id' not in row['intent'] for row in value['native_requests']),
+             'BATCH33_REGISTERED_HISTORY_MISSING')
     used_histories = []
     for row, request, summary in zip(value['native_requests'], expected, value['assessment']['completed']):
         need(row['semantic_request'] == request and row['request_id'] == summary['request_id']

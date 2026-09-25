@@ -39,6 +39,10 @@ def load_profile_requirement_snapshot(*, snapshot_dir, parent_loader):
              'Continuous parent bytes differ: ' + name)
     need(set(baseline['parent']['snapshot_files']) == v1.PROFILE_SNAPSHOT_FILES,
          'Continuous parent snapshot set differs')
+    transfer = strict_json_file(path=snapshot_dir/'transfer_manifest.json')
+    need(transfer['parent_requirement_id'] == PARENT_ID
+         and transfer['parent_requirement_closure_hash'] == parent['requirement_closure_hash'],
+         'Continuous transfer parent identity differs')
     validator = baseline['validator'];relative = 'scripts/vnext/requirement_profile_v15.py'
     need(validator['path'] == relative and sha256_file(path=root/relative)
          == validator['sha256'] == sha256_file(path=installed/relative), 'Continuous validator differs')
@@ -88,6 +92,6 @@ def load_profile_requirement_snapshot(*, snapshot_dir, parent_loader):
             **{k:[*parent['decision_chains'].get(k,[]),v] for k,v in decisions['successor_decisions'].items()}},
         'pending_decision_ids':parent['pending_decision_ids'],'resolved_decision_fields':decisions['field_resolutions'],
         'parent_snapshot':parent,'parent_requirement_id':PARENT_ID,'parent_requirement_closure_hash':parent['requirement_closure_hash'],
-        'transfer':strict_json_file(path=snapshot_dir/'transfer_manifest.json'),
+        'transfer':transfer,
         'evaluated_invariants':strict_json_file(path=snapshot_dir/'invariant_profile.json'),
         'issue_contract_revision':'continuous-calls-and-b13-v1','policy':policy}
