@@ -22,21 +22,27 @@
   "reachable_positions": 468,
   "routes": {
    "not_wired": [
-    "D03",
-    "D04"
+    "D03"
    ],
+   "note": "D04 is wired and stops by name without a registered model review; the six financial metrics' open side is wired and no position reaches it (JPMorgan's period selection stops on its incoherent saved catalog)",
    "scope_answer_only": [
     "B13"
    ],
-   "structural_only": [
-    "A03",
-    "A04",
-    "A09",
-    "A11",
-    "A12",
-    "A13"
+   "structural_only": [],
+   "wired": 37
+  },
+  "target_rows_only_in_history_blocks": {
+   "count": 6,
+   "evidence": "docs/evidence/issue47_history/financial-route/target-row-blocks.json",
+   "inferred_from_filing_dates": [
+    "jpmorgan_chase FY2021-FY2023 (undiscovered; their 10-Ks predate the main document's 2025-08-15 start)"
    ],
-   "wired": 30
+   "measured": [
+    "jpmorgan_chase:2024-12-31",
+    "salesforce:2023-01-31",
+    "salesforce:2022-01-31"
+   ],
+   "of_target_periods": 50
   }
  },
  "calls": {
@@ -44,46 +50,77 @@
   "provider": 0,
   "sec": 0
  },
+ "completed_since_first_version": [
+  "six financial metrics' open side (financial-route/)",
+  "D04 historical wiring (semantic-route-wiring/)",
+  "C02 values read and withdrawn (c02-board-read/)",
+  "B06 values read and accepted (content-acceptance/debt-to-equity-read.json)",
+  "D02 italic matter labels",
+  "Paramount predecessor FY2024 read"
+ ],
  "content": {
-  "acceptances": 154,
-  "defects_registered": 14,
+  "acceptances": 159,
+  "defects_registered": 25,
+  "defects_released": 8,
   "defects_withdrawing_current_results": [
+   "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "C02_FORD_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "C02_LUMEN_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "C02_MACYS_2026_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "C02_MARRIOTT_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "C02_PARAMOUNT_2024_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "C02_PARAMOUNT_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "C02_PFIZER_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "C02_SALESFORCE_2026_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "C02_SOUTHWEST_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
    "D02_PFIZER_2025_SCOPE_CONTENT_READ",
    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
    "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES",
+   "D02_PARAMOUNT_2024_KEYWORD_PROXY_ADMITS_TRANSACTION_COST_NOTE",
    "E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM",
    "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL"
   ],
-  "not_yet_read": [
-   "Paramount FY2024 C02, D01, D02",
-   "C02 for nine companies",
-   "B06 for three positions, two of which reproduce only by solving backwards"
+  "defects_withdrawing_only_a_replaced_result": [
+   "D02_PFIZER_2025_OFFICER_SECTION"
   ],
+  "not_yet_read": "recounted after the running full-frame batch",
   "reading_producers": "docs/evidence/issue47_history/reading-producers/README.md"
  },
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "offline_implementation": [
   {
-   "evidence": "docs/evidence/issue47_history/semantic-route-need/measured.json",
-   "item": "semantic routes B13 (in scope: Ford, Enphase), D03, D04",
-   "next": "#47's own model-call session (recorded mode for tests, live refusing without an allowance), historical wiring, recorded-response tests",
-   "state": "input preparation measured ready; #28's responses not reusable"
-  },
-  {
-   "item": "financial metrics' applicable branch (A03, A04, A09, A11, A12, A13)",
-   "next": "sequenced after JPMorgan's shards (acquisition class A); porting now ships a branch no position can exercise",
-   "state": "a small port - the ordinary route's only period dependency is prepare_saved_annual_input - but the frame's only financial registrant, JPMorgan, fails selection for every target period"
+   "evidence": "docs/evidence/issue47_history/financial-route/README.md",
+   "item": "block-aware source-set discovery",
+   "next": "use the block holding the target row as the inventory, leaving every recent-block answer unchanged; do it before or with acquisition",
+   "state": "6 of 50 target periods have their 10-K row only in a history block; four pinned routes discover only in the main document's recent block"
   },
   {
    "evidence": "docs/evidence/issue47_history/d02-content-read/keyword-proxy-scope.json",
    "item": "D02 keyword proxy",
    "next": "a criterion with more than one example behind it",
-   "state": "five blocks wrongly taken across Pfizer, Lumen and Paramount are registered and withdrawn; the candidate criterion was falsified by Macy's block 1065"
+   "state": "six blocks wrongly taken, four coordinates withdrawn; the candidate criterion was falsified by Macy's block 1065"
+  },
+  {
+   "evidence": "docs/evidence/issue47_history/c02-board-read/README.md",
+   "item": "C02 selector",
+   "next": "a successor selector validated against the 246 judgements; the middle categories wait on owner decision 5",
+   "state": "all ten values withdrawn; 94 of 246 excerpts are outside board composition under every reading"
   },
   {
    "item": "C02 proxy-amendment branch",
    "next": "material",
    "state": "carried, exercised by nothing in this repository (no DEF 14A/A)"
+  },
+  {
+   "evidence": "docs/evidence/issue47_history/semantic-route-wiring/README.md",
+   "item": "B13 applicable branch (Ford, Enphase)",
+   "next": "port once #28 accepts the contract",
+   "state": "pinned source held byte for byte to the frozen builder; the ordinary request contract is still under revision in #28"
+  },
+  {
+   "item": "D03",
+   "next": "#28's to build; #47 does not invent it ahead of the Issue that owns it",
+   "state": "the ordinary chain has no native D03 Run route to port"
   }
  ],
  "owner_decisions": [
@@ -107,14 +144,22 @@
    "positions": 14
   },
   {
+   "decision": "C02 committee-information meaning",
+   "evidence": "docs/evidence/issue47_history/c02-board-read/README.md",
+   "positions": 10,
+   "recommendation": "COMPOSITION_FACTS_ONLY"
+  },
+  {
    "cap": 1352,
    "decision": "Issue #47 SEC acquisition allowance",
    "evidence": [
     "docs/evidence/issue47_history/acquisition-plan.json",
     "docs/evidence/issue47_history/acquisition-wiring/proposed-allowance.json"
-   ]
+   ],
+   "note": "without block-aware source-set discovery, the six history-block target periods would still not deliver after acquisition"
   },
   {
+   "also_required": "WB-3 invocation controller and provider-egress exact-set registration for issue_47_v1 - a security-boundary change needing its own review; an allowance alone does not make a call possible",
    "decision": "Issue #47 model-call allowance for B13, D03, D04",
    "evidence": "docs/evidence/issue47_history/semantic-route-need/measured.json"
   }
@@ -128,6 +173,10 @@
   {
    "evidence": "docs/evidence/issue47_history/content-acceptance/cross-source-read.json (later_chain_concepts_the_filing_also_tags)",
    "what": "B01 takes contract revenue before total revenues; Lumen's and Macy's contract revenue are 8.6% and 3.8% below the total revenues they also tag"
+  },
+  {
+   "evidence": "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
+   "what": "B06's divisor is the parent's stockholders' equity (Paramount 11,693 rather than 12,887 including noncontrolling interests)"
   }
  ],
  "supersedes": "docs/evidence/issue47_history/remaining-implementation.json, which counted unwired metrics and chose C04 as the next route; C04, C02, C03, B06, B10, B11, D01 and B13's out-of-scope branch have been wired since"
