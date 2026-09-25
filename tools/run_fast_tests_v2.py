@@ -189,6 +189,11 @@ SOURCE_TESTS += ("tests.vnext.test_historical_lodging_results",)
 # and never a cleared emphasis with it on. 187 seconds measured, which is why
 # it carries an override rather than the 240 default.
 SOURCE_TESTS += ("tests.vnext.test_historical_risk_headings",)
+# The D01 reading that grants acceptances, run on the filings each of its steps
+# exists for, plus the reader's own lines reproducing every accepted published
+# value's digest from the filing alone. It reads seven full 10-Ks; 5 seconds
+# measured.
+SOURCE_TESTS += ("tests.vnext.test_d01_byte_reading",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
@@ -217,6 +222,12 @@ FAST_TESTS += ("tests.vnext.test_historical_protocol_wiring",)
 # case or ran one twice would still look green, so the exactness, the balance
 # and the determinism are checked here. No source material; 0.004 seconds.
 FAST_TESTS += ("tests.vnext.test_source_tier_shard",)
+# What an acceptance binds and where it gets it. The generator reads no Run -
+# asserted by replacing every binding of the receipt readers - and an unchanged
+# reading regenerated beside a batch whose result moved unit, scope, filing or
+# meaning must build the committed register byte for byte. It reads the
+# committed readings and a few saved attempt headers; 0.2 seconds measured.
+FAST_TESTS += ("tests.vnext.test_acceptance_identity",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

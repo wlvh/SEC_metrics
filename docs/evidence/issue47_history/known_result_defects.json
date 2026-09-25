@@ -7,12 +7,22 @@
    "metric_id": "D02",
    "period_end": "2025-12-31",
    "repair": "scripts/vnext/historical_text_results.py closes a numbered item at the form's unnumbered Part I item",
-   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
    "reported_quality": "EXACT",
    "requirement_closure_hash": "sha256:a82225adf77f04414e7dfa7b46b48975f24b83ef24b467f2cb044fe59249098a",
    "result_id": "sha256:ab1bfcb4f1673b07580b64eab4b219744802bcac55ef04cb7c09f20c631fcd4a",
    "run_id": "run:historical-period:fad2a7b37dfa0cdfc74e5b110f0b076a19d512b7059674719e611549930cc732",
-   "summary": "26 of 58 excerpts are executive-officer biography from the Form 10-K unnumbered Part I item, labelled EXPLICIT_LEGAL_SECTION_TEXT because ITEM_3 ran past that item to ITEM 5."
+   "summary": "26 of 58 excerpts are executive-officer biography from the Form 10-K unnumbered Part I item, labelled EXPLICIT_LEGAL_SECTION_TEXT because ITEM_3 ran past that item to ITEM 5.",
+   "recomputed": {
+    "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+    "present_in": {
+     "28-metric batch": "sha256:ecacd7f240045e7dba7ef61c4ec3637015d49a9fdfbccc4b3876f7fd59b745a1",
+     "29-metric batch": "sha256:d4c4a7abdb78ed8594f06e3dc12e5ef16cfff8eb81b4bbd6f89b776e36e15cdc",
+     "30-metric batch": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084"
+    },
+    "measured": "the recomputed payload holds none of 'Executive Officers', 'has served as', 'Chief Executive Officer', 'Chief Financial Officer', 'was appointed' or 'Executive Vice President'; the officer section no longer reaches it",
+    "why_no_release": "this entry names the result it was raised against and withdraws only that one, so there is nothing at the coordinate for it to release; the recomputed result is answered for by the coordinate-level entries"
+   }
   },
   {
    "closed_decision": {
@@ -279,11 +289,26 @@
    "metric_id": "D02",
    "period_end": "2025-12-31",
    "repair": "scripts/vnext/historical_text_results._hyperlinked_sentence asks the frozen rule again with the anchor taken off, and _d02_section is now one expression both paths ask. Thirteen of the fourteen blocks the clause could otherwise let into D02 are 'Table of Contents' and the frozen navigation-header pattern already rejects them, so no second discriminator was added.",
-   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
    "result_id": null,
    "severity": "set composition, not lost substance: Note 16A is taken in full, so the disclosure the sentence points at was already present.",
    "summary": "Pfizer's whole Item 3 is one 77-character hyperlinked sentence and _substantive drops any linked block under 120 characters, so the first source the approved definition names contributed nothing. Lumen's Item 3 is the same kind of sentence, 226 characters and unlinked, and is taken - the two filings answered the same content differently on the anchor alone.",
-   "what_stays_open": "a hyperlink of twelve characters or more that is not a navigation header and repeats inside a note scope would be admitted once per occurrence. No filing here holds one, so this is recorded rather than guarded."
+   "what_stays_open": "a hyperlink of twelve characters or more that is not a navigation header and repeats inside a note scope would be admitted once per occurrence. No filing here holds one, so this is recorded rather than guarded.",
+   "recomputed": {
+    "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+    "present_in": {
+     "28-metric batch": "sha256:ecacd7f240045e7dba7ef61c4ec3637015d49a9fdfbccc4b3876f7fd59b745a1",
+     "29-metric batch": "sha256:d4c4a7abdb78ed8594f06e3dc12e5ef16cfff8eb81b4bbd6f89b776e36e15cdc",
+     "30-metric batch": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084"
+    },
+    "measured": "the recomputed payload carries 'Certain legal proceedings in which we are involved are discussed in Note 16A.' as its own line; 96 lines against 95 before"
+   },
+   "released": {
+    "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+    "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+    "what_this_releases": "this entry, for this result under the version the 30-metric batch ran. The same result under the two earlier versions is not released by it, and D02_PFIZER_2025_SCOPE_CONTENT_READ still withdraws it everywhere: two keyword-admitted items remain.",
+    "what_it_does_not_assert": "that the 96 lines are the right 96."
+   }
   },
   {
    "company_id": "paramount_skydance_paramount_global",
@@ -358,11 +383,35 @@
    ],
    "period_end": "2025-12-31",
    "repair": "scripts/vnext/historical_text_emphasis.py admits underline beside bold and scripts/vnext/historical_risk_results.py carries it for D01; proven end to end on all three years, 34/35/33 headings becoming 38/39/37",
-   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
    "reported_quality": "EXACT",
    "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
    "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
-   "summary": "34 of 38 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'General Risk Factors' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only."
+   "summary": "34 of 38 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'General Risk Factors' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only.",
+   "recomputed": {
+    "run_id": "run:historical-period:d11137bf87796a21b6edd6fc24b4ec703e33a17af03348be96e028ba64ab867e",
+    "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+    "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+    "run_status": "FROZEN",
+    "validation_status": "PASSED",
+    "public_row_hash": "sha256:e77f60f4c47e0f2986d5cadf33e1e236a68358dcbd4211628a1d32a7dd245d37",
+    "headings": 38,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "execution_bytes": "the run's recorded baseline_manifest hash is the runtime tree's current one, all 26 rule files hash to it in both trees, and the trees differ only in the six registration-patch entries; see d01-risk-headings/repaired-results.json",
+    "evidence": "docs/evidence/issue47_history/d01-risk-headings/repaired-results.json"
+   },
+   "released": {
+    "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+    "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+    "run_id": "run:historical-period:d11137bf87796a21b6edd6fc24b4ec703e33a17af03348be96e028ba64ab867e",
+    "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+    "what_this_releases": "This result and no other. Any other result at this coordinate - including the one the defect was raised against, which the 30-metric batch still holds - stays withdrawn.",
+    "what_it_does_not_assert": "that any batch has re-run under this version. The 30-metric batch ran under the previous closure and is not re-signed; this release applies only where this exact result is what a position carries."
+   }
   },
   {
    "company_id": "marriott_international",
@@ -380,11 +429,35 @@
    ],
    "period_end": "2024-12-31",
    "repair": "scripts/vnext/historical_text_emphasis.py admits underline beside bold and scripts/vnext/historical_risk_results.py carries it for D01; proven end to end on all three years, 34/35/33 headings becoming 38/39/37",
-   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
    "reported_quality": "EXACT",
    "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
    "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
-   "summary": "35 of 39 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'General Risk Factors' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only."
+   "summary": "35 of 39 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'General Risk Factors' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only.",
+   "recomputed": {
+    "run_id": "run:historical-period:deee5ce3c941e33791683cd30fd22e048d6081019f01b8b2e83a9bdac7d91192",
+    "result_id": "sha256:2058162f1b9d6e1c48a98e2186bf92d52a3ca03abce74f4302ac7ef9809a2904",
+    "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+    "run_status": "FROZEN",
+    "validation_status": "PASSED",
+    "public_row_hash": "sha256:25835b2e108a56959628e9c5e6765d5e07240810334c8c4bbc82d49304dee5f4",
+    "headings": 39,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "execution_bytes": "the run's recorded baseline_manifest hash is the runtime tree's current one, all 26 rule files hash to it in both trees, and the trees differ only in the six registration-patch entries; see d01-risk-headings/repaired-results.json",
+    "evidence": "docs/evidence/issue47_history/d01-risk-headings/repaired-results.json"
+   },
+   "released": {
+    "result_id": "sha256:2058162f1b9d6e1c48a98e2186bf92d52a3ca03abce74f4302ac7ef9809a2904",
+    "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+    "run_id": "run:historical-period:deee5ce3c941e33791683cd30fd22e048d6081019f01b8b2e83a9bdac7d91192",
+    "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+    "what_this_releases": "This result and no other. Any other result at this coordinate - including the one the defect was raised against, which the 30-metric batch still holds - stays withdrawn.",
+    "what_it_does_not_assert": "that any batch has re-run under this version. The 30-metric batch ran under the previous closure and is not re-signed; this release applies only where this exact result is what a position carries."
+   }
   },
   {
    "company_id": "marriott_international",
@@ -402,11 +475,35 @@
    ],
    "period_end": "2023-12-31",
    "repair": "scripts/vnext/historical_text_emphasis.py admits underline beside bold and scripts/vnext/historical_risk_results.py carries it for D01; proven end to end on all three years, 34/35/33 headings becoming 38/39/37",
-   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
    "reported_quality": "EXACT",
    "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
    "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
-   "summary": "33 of 37 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'Governance Risk' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only."
+   "summary": "33 of 37 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'Governance Risk' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only.",
+   "recomputed": {
+    "run_id": "run:historical-period:6d8788ab5f8621e37fa6ac8504cc2084fc41ddd7019af1c04db23c88fe32496a",
+    "result_id": "sha256:178bc9625bc39e3de5abd36027f310ef57070547d87ddb39cd390a364c2fa754",
+    "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+    "run_status": "FROZEN",
+    "validation_status": "PASSED",
+    "public_row_hash": "sha256:3762c327a8cd4645a77309ef1df596ffa628d38fc0a44cbb0bd608f6918cca01",
+    "headings": 37,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "execution_bytes": "the run's recorded baseline_manifest hash is the runtime tree's current one, all 26 rule files hash to it in both trees, and the trees differ only in the six registration-patch entries; see d01-risk-headings/repaired-results.json",
+    "evidence": "docs/evidence/issue47_history/d01-risk-headings/repaired-results.json"
+   },
+   "released": {
+    "result_id": "sha256:178bc9625bc39e3de5abd36027f310ef57070547d87ddb39cd390a364c2fa754",
+    "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+    "run_id": "run:historical-period:6d8788ab5f8621e37fa6ac8504cc2084fc41ddd7019af1c04db23c88fe32496a",
+    "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+    "what_this_releases": "This result and no other. Any other result at this coordinate - including the one the defect was raised against, which the 30-metric batch still holds - stays withdrawn.",
+    "what_it_does_not_assert": "that any batch has re-run under this version. The 30-metric batch ran under the previous closure and is not re-signed; this release applies only where this exact result is what a position carries."
+   }
   },
   {
    "block_index": 292,

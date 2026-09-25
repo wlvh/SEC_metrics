@@ -1136,9 +1136,14 @@ class HistoricalCoverageTest(unittest.TestCase):
         entries = index[("macys", "B01", MACYS_PERIOD)]
         self.assertEqual(2, len(entries))
         for entry in entries:
+            # The unit, the filings, the entity and the metric's meaning were
+            # added when acceptances came to bind them: an acceptance compares
+            # against these fields, so a duplicate that disagreed on one of them
+            # has to be caught here rather than merged.
             self.assertEqual({"pinned_fiscal_year", "pinned_period_end",
                               "measured_period_start", "measured_period_end",
-                              "scope_key", "value_kind", "requirement_closure_hash",
+                              "scope_key", "value_kind", "unit", "spec_closure_hash",
+                              "filings", "entities", "requirement_closure_hash",
                               "run_id"}, set(entry["identity"]))
             self.assertEqual(2025, entry["identity"]["pinned_fiscal_year"])
         self.assertEqual({"run:test:full", "run:test:stub"},
@@ -1415,7 +1420,10 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
     PERIOD = "2025-12-31"
 
     IDENTITY = {"period_start": "2025-01-01", "period_end": "2025-12-31",
-                "unit": "USD", "scope_key": "sha256:" + "a" * 64}
+                "unit": "USD", "scope_key": "sha256:" + "a" * 64, "value_kind": None,
+                "spec_closure_hash": "sha256:" + "c" * 64,
+                "filings": ["0001048286-26-000007"], "entities": ["1048286"]}
+    ORIGIN = {"established_by": "BOUND_AFTER_THE_READING"}
 
     def _entry(self, metric, value, **identity):
         return {"acceptance_id": "TEST_" + metric, "company_id": self.COMPANY,
@@ -1424,7 +1432,7 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
                 "what_this_does_not_establish": "test",
                 "evidence": "docs/evidence/issue47_history/known_result_defects.json",
                 "read_from": {"document": "test"},
-                "result_identity": {**self.IDENTITY, **identity}}
+                "checked_identity": {**self.IDENTITY, **self.ORIGIN, **identity}}
 
     def _result(self, value, **identity):
         return {"value": value, **self.IDENTITY, **identity}
@@ -1508,9 +1516,20 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
             acceptance=entry, company_id=self.COMPANY, metric_id="B04",
             report_end=self.PERIOD, result=self._result("2601000000")),
             "the control has to hold or the moves below say nothing")
+        # The filing, the entity and the meaning were added after the reviewer
+        # showed the first four were not the whole fact: a C04 flag of 0 read
+        # from one pair of 10-Ks says nothing about a 0 computed from another,
+        # and a value measured under a revised Spec is not the value that was
+        # read against the old one.
         for field, moved in (("period_start", "2024-01-01"),
                              ("unit", "shares"),
-                             ("scope_key", "sha256:" + "b" * 64)):
+                             ("scope_key", "sha256:" + "b" * 64),
+                             ("value_kind", "text"),
+                             ("spec_closure_hash", "sha256:" + "d" * 64),
+                             ("filings", ["0001048286-25-000011"]),
+                             ("filings", ["0001048286-25-000011", "0001048286-26-000007"]),
+                             ("entities", ["813828"]),
+                             ("entities", [])):
             with self.subTest(field):
                 self.assertFalse(_acceptance_covers(
                     acceptance=entry, company_id=self.COMPANY, metric_id="B04",
@@ -1526,7 +1545,14 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
         """
         from vnext.historical_coverage import _acceptance_covers
         entry = self._entry("B04", "2601000000")
-        entry.pop("result_identity")
+        entry.pop("checked_identity")
+        self.assertFalse(_acceptance_covers(
+            acceptance=entry, company_id=self.COMPANY, metric_id="B04",
+            report_end=self.PERIOD, result=self._result("2601000000")))
+        # An identity that does not say how it came to be in the reading is the
+        # same case: it could have been copied from any result.
+        entry = self._entry("B04", "2601000000")
+        entry["checked_identity"].pop("established_by")
         self.assertFalse(_acceptance_covers(
             acceptance=entry, company_id=self.COMPANY, metric_id="B04",
             report_end=self.PERIOD, result=self._result("2601000000")))
@@ -1541,7 +1567,7 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
         its own evidence and grants nothing until it is rebuilt.
         """
         import json
-        from vnext.historical_coverage import (CoverageError,
+        from vnext.historical_coverage import (READING_CHANGED, READING_GRANTING,
                                                independent_content_acceptances)
         register = json.loads(
             (ROOT / "docs/evidence/issue47_history/"
@@ -1553,13 +1579,21 @@ class ContentAcceptanceIsBoundToTheValueTest(unittest.TestCase):
         original = path.read_bytes()
         try:
             path.write_bytes(original + b"\n")
-            with self.assertRaises(CoverageError) as raised:
-                independent_content_acceptances(repo_root=ROOT)
-            self.assertIn("READING_CHANGED_SINCE_THE_REGISTER", str(raised.exception))
+            states = {entry["acceptance_id"]: entry["grant_state"]
+                      for entry in independent_content_acceptances(repo_root=ROOT)}
         finally:
             path.write_bytes(original)
-        self.assertTrue(independent_content_acceptances(repo_root=ROOT),
-                        "restoring the reading has to restore the register")
+        cited = {entry["acceptance_id"] for entry in register["acceptances"]
+                 if entry["evidence"] == source}
+        self.assertTrue(cited, "the changed reading has to be one something cites")
+        # Only the changed reading's grants go; the others were not re-read.
+        for acceptance_id, state in states.items():
+            with self.subTest(acceptance_id):
+                self.assertEqual(READING_CHANGED if acceptance_id in cited
+                                 else READING_GRANTING, state)
+        self.assertEqual({READING_GRANTING}, {
+            entry["grant_state"] for entry in independent_content_acceptances(repo_root=ROOT)},
+            "restoring the reading has to restore the register")
 
     def test_a_withdrawn_result_is_not_accepted(self):
         """When the two registers disagree the withdrawal wins."""

@@ -36,6 +36,7 @@ implemented and never run; a Run can be FROZEN and PASSED and hold another
 item's text. Nothing here turns a missing implementation into "the issuer did
 not disclose", and nothing here promotes EXACT into business acceptance.
 """
+import collections
 import hashlib
 import re
 from pathlib import Path
@@ -48,7 +49,7 @@ from .historical_run_receipts import classify_result, collect_run_receipts, inde
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
 from . import historical_structural_results as structural
-from .sources import resolve_repository_file
+from .sources import SourceError, resolve_repository_file
 
 
 _SHA = re.compile(r"sha256:[0-9a-f]{64}\Z")
@@ -56,8 +57,28 @@ POLICY_PATH = "config/issue28_normal_results_v2.json"
 DEFECT_REGISTER_PATH = "docs/evidence/issue47_history/known_result_defects.json"
 ACCEPTANCE_REGISTER_PATH = ("docs/evidence/issue47_history/accepted_result_content.json")
 # The fields an acceptance pins, so a later result cannot inherit it by
-# carrying the same number under a different measurement.
-ACCEPTANCE_IDENTITY_FIELDS = ("period_start", "period_end", "unit", "scope_key")
+# carrying the same number under a different measurement. They are the filing
+# (``filings``), the period, the entity (``entities`` and the scope key), the
+# unit and the metric's meaning (``spec_closure_hash``). None of them moves with
+# unrelated repository bytes: the Requirement closure and result_id do, and
+# binding either would make a pure refactor demand that every filing be read
+# again.
+ACCEPTANCE_IDENTITY_FIELDS = ("period_start", "period_end", "unit", "scope_key",
+                              "value_kind", "spec_closure_hash", "filings", "entities")
+# How an acceptance's identity came to be in its reading. Recorded at reading
+# time is the ordinary case; bound after the reading is the one-time binding of
+# readings made before readings recorded it, cross-checked against what the
+# reading itself names (see tools/bind_acceptance_readings.py).
+ACCEPTANCE_IDENTITY_ORIGINS = ("RECORDED_AT_READING_TIME", "BOUND_AFTER_THE_READING")
+# What a reading's hash says about the acceptances citing it. Kept apart because
+# they are different failures: a reading the register never hashed cannot be
+# checked for staleness at all, one that cannot be read is gone, and one that
+# changed has concluded something the register has not caught up with.
+READING_GRANTING = "GRANTING"
+READING_NOT_HASHED = "READING_NOT_HASHED_BY_THE_REGISTER"
+READING_UNREADABLE = "READING_UNREADABLE"
+READING_CHANGED = "READING_CHANGED_SINCE_THE_REGISTER"
+_ACCESSION = re.compile(r"\d{10}-\d{2}-\d{6}\Z")
 RECORD_TYPE = "HISTORICAL_COVERAGE_MATRIX"
 # The historical routes that exist today. Everything else is an explicit gap.
 WIRED_COMPANYFACTS_METRICS = ("A05", "A06", "A07", "A08", "A10",
@@ -180,6 +201,67 @@ def known_result_defects(*, repo_root: Path):
     return register["defects"]
 
 
+def _checked_identity_problem(identity):
+    """Why this identity cannot bind an acceptance, or None when it can."""
+    if not isinstance(identity, dict):
+        return "absent"
+    for field in ("period_start", "period_end", "unit", "scope_key"):
+        if not (isinstance(identity.get(field), str) and identity[field]):
+            return field
+    if not (isinstance(identity.get("spec_closure_hash"), str)
+            and _SHA.match(identity["spec_closure_hash"])):
+        return "spec_closure_hash"
+    if not (identity.get("value_kind") is None or isinstance(identity["value_kind"], str)):
+        return "value_kind"
+    filings = identity.get("filings")
+    # A reading of no filing is not a reading. The list is compared as a whole,
+    # so it has to be the canonical form - sorted and unique - or two readings
+    # of one filing set would compare unequal by the order they were written in.
+    if not (isinstance(filings, list) and filings
+            and all(isinstance(item, str) and _ACCESSION.match(item) for item in filings)
+            and filings == sorted(set(filings))):
+        return "filings"
+    entities = identity.get("entities")
+    if not (isinstance(entities, list)
+            and all(isinstance(item, str) and item for item in entities)
+            and entities == sorted(set(entities))):
+        return "entities"
+    if identity.get("established_by") not in ACCEPTANCE_IDENTITY_ORIGINS:
+        return "established_by"
+    return None
+
+
+def _reading_states(*, register, repo_root: Path):
+    """What each cited reading's bytes say about the acceptances citing it.
+
+    The staleness check can only run on a reading the register hashed. A
+    missing or empty table, or a table that leaves out a reading an acceptance
+    cites, used to skip that check silently - the loop ran over the table, so
+    an absent entry was never looked at. Here every cited reading gets a state,
+    and only GRANTING grants.
+    """
+    table = register.get("readings")
+    table = table if isinstance(table, dict) else {}
+    states = {}
+    for acceptance in register["acceptances"]:
+        source = acceptance["evidence"]
+        if source in states:
+            continue
+        recorded = (table.get(source) or {}).get("content_sha256") \
+            if isinstance(table.get(source), dict) else None
+        if not (isinstance(recorded, str) and _SHA.match(recorded)):
+            states[source] = READING_NOT_HASHED
+            continue
+        try:
+            path = resolve_repository_file(repo_root=repo_root, repo_relative_path=source)
+            actual = "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
+        except (OSError, SourceError):
+            states[source] = READING_UNREADABLE
+            continue
+        states[source] = READING_GRANTING if actual == recorded else READING_CHANGED
+    return states
+
+
 def independent_content_acceptances(*, repo_root: Path):
     """Results whose content was checked against the filing by another reading.
 
@@ -190,6 +272,11 @@ def independent_content_acceptances(*, repo_root: Path):
     value and not about the coordinate: a later Run that computes something
     else has not been checked, and inheriting the acceptance is exactly how a
     third layer would start reporting numbers nobody read.
+
+    Returns every acceptance with ``grant_state`` beside it. A malformed
+    register is refused; a reading that is unhashed, unreadable or changed
+    leaves its acceptances in the list, named and not granting, so the report
+    can say which of the three it was instead of stopping.
     """
     path = repo_root / ACCEPTANCE_REGISTER_PATH
     if not path.is_file():
@@ -212,65 +299,102 @@ def independent_content_acceptances(*, repo_root: Path):
         _need(isinstance(read, dict) and read,
               "COVERAGE_ACCEPTANCE_FIELD_MISSING:read_from:"
               + acceptance["acceptance_id"])
-        _need((repo_root / acceptance["evidence"]).is_file(),
-              "COVERAGE_ACCEPTANCE_EVIDENCE_MISSING:" + acceptance["evidence"])
-        # The business fact this acceptance is about. Without it the match
-        # below falls back to company, metric, period end and value, and any
-        # later result carrying the same number under a different window,
-        # scope or unit inherits the grant - which for a flag whose value is
-        # 0 is most of them. An entry that does not carry it grants nothing.
-        identity = acceptance.get("result_identity")
-        _need(isinstance(identity, dict)
-              and all(isinstance(identity.get(field), str) and identity[field]
-                      for field in ACCEPTANCE_IDENTITY_FIELDS),
-              "COVERAGE_ACCEPTANCE_IDENTITY_MISSING:"
-              + acceptance["acceptance_id"])
-    # An acceptance is a statement that a reading concluded something. If that
-    # reading has been re-run and now says something else, the old grant must
-    # not stand: the register is regenerated from the readings, so a reading
-    # whose bytes no longer match what the register was built from means the
-    # register is behind its own evidence. Checking the file exists never saw
-    # this - the artifact keeps existing while its conclusions change.
-    stale = sorted(source for source, reading in (register.get("readings") or {}).items()
-                   if reading.get("content_sha256")
-                   != "sha256:" + hashlib.sha256(
-                       (repo_root / source).read_bytes()).hexdigest())
-    _need(not stale, "COVERAGE_ACCEPTANCE_READING_CHANGED_SINCE_THE_REGISTER:"
-          + ", ".join(stale))
-    return register["acceptances"]
+        # The business fact this acceptance is about, as the reading recorded
+        # it - not as a later result says it. Without it the match below falls
+        # back to company, metric, period end and value, and any later result
+        # carrying the same number under a different filing, window, scope,
+        # unit or meaning inherits the grant. An entry without it grants nothing.
+        problem = _checked_identity_problem(acceptance.get("checked_identity"))
+        _need(problem is None, "COVERAGE_ACCEPTANCE_IDENTITY_MISSING:" + str(problem)
+              + ":" + acceptance["acceptance_id"])
+    states = _reading_states(register=register, repo_root=repo_root)
+    return [{**acceptance, "grant_state": states[acceptance["evidence"]]}
+            for acceptance in register["acceptances"]]
 
 
-def _acceptance_covers(*, acceptance, company_id, metric_id, report_end, result):
-    """Whether this acceptance is about this position's current value.
+def acceptance_mismatch(*, acceptance, company_id, metric_id, report_end, result):
+    """The fields on which this acceptance is not about this result, or [].
 
     The coordinate and the value are not enough, and binding on only those was
     a real hole: measured, a C04 acceptance whose value is 0 was inherited by
     the same coordinate with its measured window moved a year, with a different
-    unit and with a different scope key, because none of those took part in the
-    match. An acceptance is a statement that one business fact was read against
-    the filing - a value under a window, a scope and a unit - so all of it has
-    to match, and an entry that does not carry that binding grants nothing.
+    unit and with a different scope key. An acceptance is a statement that one
+    business fact was read against a filing - a value from these filings, under
+    a window, an entity, a unit and a meaning - so all of it has to match.
 
     A text metric's value is its whole payload - five thousand characters for
     one of these - so an acceptance may name it by digest instead. The binding
     is the same either way: the digest is of the value, and a different value
     has a different digest.
+
+    Returned rather than collapsed into a boolean, because an acceptance that
+    exists and does not match is a disagreement between a reading and a result,
+    and that is a different finding from "nobody read this".
     """
     if result is None:
-        return False
+        return ["result"]
+    mismatched = [field for field, expected in (("company_id", company_id),
+                                                ("metric_id", metric_id),
+                                                ("period_end", report_end))
+                  if acceptance[field] != expected]
     value = str(result.get("value"))
     accepted = acceptance["accepted_value"]
     if accepted.startswith("sha256:"):
         value = "sha256:" + hashlib.sha256(value.encode("utf-8")).hexdigest()
-    identity = acceptance.get("result_identity") or {}
-    if not identity:
-        return False
-    return (acceptance["company_id"] == company_id
-            and acceptance["metric_id"] == metric_id
-            and acceptance["period_end"] == report_end
-            and value == accepted
-            and all(result.get(field) == identity[field]
-                    for field in ACCEPTANCE_IDENTITY_FIELDS))
+    if value != accepted:
+        mismatched.append("value")
+    identity = acceptance.get("checked_identity")
+    if _checked_identity_problem(identity) is not None:
+        return mismatched + ["checked_identity"]
+    for field in ACCEPTANCE_IDENTITY_FIELDS:
+        actual = result.get(field)
+        if field in ("filings", "entities"):
+            actual = sorted(set(actual or ()))
+        if actual != identity[field]:
+            mismatched.append(field)
+    return mismatched
+
+
+def _acceptance_covers(*, acceptance, company_id, metric_id, report_end, result):
+    """Whether this acceptance is about this position's current value."""
+    return not acceptance_mismatch(acceptance=acceptance, company_id=company_id,
+                                   metric_id=metric_id, report_end=report_end,
+                                   result=result)
+
+
+def _acceptance_for_position(*, acceptances, company_id, metric_id, report_end, result):
+    """The acceptance that covers this result, or why none does.
+
+    Three different answers, kept apart: nobody read this coordinate; a reading
+    exists but its evidence is not in a state that can grant; a reading exists
+    and is about something else - another value, filing, window, entity, unit
+    or meaning. The last is a business disagreement and is the one a reader
+    most needs to see, so it is named with the fields that differ.
+    """
+    if result is None:
+        return None, NOT_PROVEN + ":NO_RESULT", []
+    considered = [entry for entry in acceptances
+                  if (entry["company_id"], entry["metric_id"], entry["period_end"])
+                  == (company_id, metric_id, report_end)]
+    if not considered:
+        return None, NOT_PROVEN + ":NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE", []
+    findings = []
+    for entry in considered:
+        mismatch = acceptance_mismatch(acceptance=entry, company_id=company_id,
+                                       metric_id=metric_id, report_end=report_end,
+                                       result=result)
+        state = entry.get("grant_state", READING_GRANTING)
+        if not mismatch and state == READING_GRANTING:
+            return entry, None, []
+        findings.append({"acceptance_id": entry["acceptance_id"],
+                         "reading_state": state, "fields_that_differ": mismatch})
+    if any(finding["fields_that_differ"] for finding in findings):
+        differ = sorted({field for finding in findings
+                         for field in finding["fields_that_differ"]})
+        return None, (NOT_PROVEN + ":ACCEPTANCE_DOES_NOT_MATCH_THIS_RESULT:"
+                      + ",".join(differ)), findings
+    states = sorted({finding["reading_state"] for finding in findings})
+    return None, NOT_PROVEN + ":ACCEPTANCE_NOT_GRANTING:" + ",".join(states), findings
 
 
 def _release_covers(*, defect, result, receipt):
@@ -423,6 +547,16 @@ def _select_receipt(*, found, closure, selection_id=None):
             "identity": ranked[0]["identity"]}
 
 
+def select_receipt(*, found, closure, selection_id=None):
+    """The version selection this frame uses, for callers outside it.
+
+    Anything that has to say which recorded result a coordinate means - the
+    acceptance binder is one - asks this rather than keeping its own rule, so
+    the two cannot come to disagree about which Run a position reports.
+    """
+    return _select_receipt(found=found, closure=closure, selection_id=selection_id)
+
+
 def _row_evidence(*, candidates, selection_id):
     """Which of these runs rendered the row, which is not the same question.
 
@@ -495,7 +629,8 @@ NOT_PROVEN = "NOT_PROVEN"
 
 
 def _delivery(*, receipt, result, status, defect, defects, acceptance=None,
-              row=None, row_ambiguity=None):
+              row=None, row_ambiguity=None, acceptance_reason=None,
+              acceptance_findings=()):
     """The three layers a delivered position has, each proved or not.
 
     verified_outcome answers one question - did an unambiguous, frozen,
@@ -581,7 +716,12 @@ def _delivery(*, receipt, result, status, defect, defects, acceptance=None,
         "proven": accepted,
         "reason": None if accepted else (
             NOT_PROVEN + ":WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT" if defect
-            else NOT_PROVEN + ":NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE"),
+            else acceptance_reason
+            or NOT_PROVEN + ":NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE"),
+        # An acceptance that exists and was not applied, and why: its reading
+        # was not in a state to grant, or it is about another value, filing,
+        # window, entity, unit or meaning. Empty when nobody read this.
+        "acceptances_not_applied": list(acceptance_findings),
         "accepted_by": acceptance["acceptance_id"] if accepted else None,
         "accepted_value": acceptance["accepted_value"] if accepted else None,
         "what_the_acceptance_does_not_establish":
@@ -668,10 +808,9 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
                                                "reason_code", "period_start", "period_end")}
     defect = _matching_defect(defects=defects, company_id=company_id, metric_id=metric_id,
                               report_end=report_end, result=result, receipt=receipt)
-    acceptance = next((entry for entry in acceptances
-                       if _acceptance_covers(acceptance=entry, company_id=company_id,
-                                             metric_id=metric_id, report_end=report_end,
-                                             result=result)), None)
+    acceptance, acceptance_reason, acceptance_findings = _acceptance_for_position(
+        acceptances=acceptances, company_id=company_id, metric_id=metric_id,
+        report_end=report_end, result=result)
     ran = result is not None
     return {"company_id": company_id, "report_end": report_end,
             "target_ordinal": ordinal, "fiscal_year": fiscal_year, "metric_id": metric_id,
@@ -717,6 +856,8 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
             "delivery": _delivery(receipt=receipt, result=result, status=status,
                                   defect=defect, defects=defects,
                                   acceptance=acceptance,
+                                  acceptance_reason=acceptance_reason,
+                                  acceptance_findings=acceptance_findings,
                                   row=selection["row"],
                                   row_ambiguity=selection["row_ambiguity"]),
             "verified_outcome": (ran and defect is None
@@ -913,6 +1054,12 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             "dimension_counts": dimensions,
             "delivery_layer_counts": delivery,
             "delivery_layer_unproven_reasons": unproven,
+            # What each cited reading's bytes said when this frame was built.
+            # A reading the register did not hash, cannot be read, or has moved
+            # since leaves its acceptances listed and not granting; these are
+            # counted by acceptance so the three stay apart.
+            "acceptance_reading_states": dict(sorted(collections.Counter(
+                entry["grant_state"] for entry in acceptances).items())),
             "delivery_layers_are_not_one_number": (
                 "a frozen validated Run, a rendered public row and an independent "
                 "content check are three separate facts. Reporting the first as a "

@@ -1,0 +1,291 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "content_reading": {
+  "control_on_the_results_before_the_repair": {
+   "marriott-2023": {
+    "published_not_read": [],
+    "read_not_published": [
+     "Operational Risks",
+     "Development and Financing Risks",
+     "Technology, Information Protection, and Privacy Risks",
+     "Governance Risk"
+    ],
+    "verdict": "DIFFERS"
+   },
+   "marriott-2024": {
+    "published_not_read": [],
+    "read_not_published": [
+     "Operational Risks",
+     "Development and Financing Risks",
+     "Technology, Information Protection, and Privacy Risks",
+     "General Risk Factors"
+    ],
+    "verdict": "DIFFERS"
+   },
+   "marriott-2025": {
+    "published_not_read": [],
+    "read_not_published": [
+     "Operational Risks",
+     "Development and Financing Risks",
+     "Technology, Information Protection, and Privacy Risks",
+     "General Risk Factors"
+    ],
+    "verdict": "DIFFERS"
+   },
+   "reading": "docs/evidence/issue47_history/content-acceptance/d01-headings-read-from-bytes.json"
+  },
+  "reading": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+  "shapes": {
+   "marriott-2023": {
+    "BOLD:LEADS_INTO_ITS_BODY": 31,
+    "BOLD:STANDALONE": 2,
+    "UNDERLINE:STANDALONE": 4
+   },
+   "marriott-2024": {
+    "BOLD:LEADS_INTO_ITS_BODY": 33,
+    "BOLD:STANDALONE": 2,
+    "UNDERLINE:STANDALONE": 4
+   },
+   "marriott-2025": {
+    "BOLD:LEADS_INTO_ITS_BODY": 32,
+    "BOLD:STANDALONE": 2,
+    "UNDERLINE:STANDALONE": 4
+   }
+  },
+  "tool": "tools/read_d01_headings.py",
+  "verdicts": {
+   "marriott-2023": "MATCH",
+   "marriott-2024": "MATCH",
+   "marriott-2025": "MATCH"
+  },
+  "why_the_control_matters": "the previous D01 reading recorded the selector's own output as its judged list, so it could not have told a repaired selector from an unrepaired one. This one imports none of the route's text modules, and run against the results before the repair it reports exactly the four underlined categories in each year and nothing else."
+ },
+ "execution_bytes": {
+  "answer": "yes. Each Run recorded the runtime tree's current baseline, every rule file hashes to that record in both trees, and the only differences are the registration-patch entries.",
+  "execution_authority_entries_that_differ_between_the_trees": [
+   "scripts/vnext/calculator.py",
+   "scripts/vnext/constraints.py",
+   "scripts/vnext/projector.py",
+   "scripts/vnext/records.py",
+   "scripts/vnext/requirement_profile.py",
+   "scripts/vnext/run_store.py"
+  ],
+  "mint_check": {
+   "repository": "issue_47_v1 snapshot matches the current tree",
+   "runtime": "issue_47_v1 snapshot matches the current tree"
+  },
+  "other_snapshot_files_equal_in_both_trees": true,
+  "question": "were these Runs produced by the rule bytes committed now, or by an earlier edit of them?",
+  "recorded_by_every_run": [
+   "4b5c3f4049db573138c67bcdb36906a989bec43a8db207f4a43a81cac50c1e24"
+  ],
+  "repository_tree_baseline_sha256": "d353d39cd6c9af0f4aac3329bc177d2139c3538c2c9164fca0cedd05dcd261ec",
+  "rule_files": 26,
+  "rule_files_on_disk_match_the_record": {
+   "repository": true,
+   "runtime": true
+  },
+  "rule_files_recorded_equal_in_both_trees": true,
+  "runtime_tree_baseline_sha256": "4b5c3f4049db573138c67bcdb36906a989bec43a8db207f4a43a81cac50c1e24",
+  "why_they_differ": "the six registration-patch files the runtime tree carries and the repository does not; the same six in every batch of this issue, not something this repair introduced"
+ },
+ "frame_over_the_three_runs": {
+  "positions": [
+   {
+    "accepted_by": "CONTENT_D01_MARRIOTT_2025",
+    "content_acceptance": true,
+    "native_run": true,
+    "public_row": true,
+    "released_defect_ids": [
+     "D01_MARRIOTT_2025_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED"
+    ],
+    "report_end": "2025-12-31",
+    "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+    "status": "VALUE_EXACT",
+    "verified_outcome": true,
+    "withdrawn_by": null
+   },
+   {
+    "accepted_by": "CONTENT_D01_MARRIOTT_2024",
+    "content_acceptance": true,
+    "native_run": true,
+    "public_row": true,
+    "released_defect_ids": [
+     "D01_MARRIOTT_2024_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED"
+    ],
+    "report_end": "2024-12-31",
+    "result_id": "sha256:2058162f1b9d6e1c48a98e2186bf92d52a3ca03abce74f4302ac7ef9809a2904",
+    "status": "VALUE_EXACT",
+    "verified_outcome": true,
+    "withdrawn_by": null
+   },
+   {
+    "accepted_by": "CONTENT_D01_MARRIOTT_2023",
+    "content_acceptance": true,
+    "native_run": true,
+    "public_row": true,
+    "released_defect_ids": [
+     "D01_MARRIOTT_2023_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED"
+    ],
+    "report_end": "2023-12-31",
+    "result_id": "sha256:178bc9625bc39e3de5abd36027f310ef57070547d87ddb39cd390a364c2fa754",
+    "status": "VALUE_EXACT",
+    "verified_outcome": true,
+    "withdrawn_by": null
+   },
+   {
+    "accepted_by": null,
+    "content_acceptance": false,
+    "native_run": false,
+    "public_row": false,
+    "released_defect_ids": [],
+    "report_end": "2022-12-31",
+    "result_id": null,
+    "status": "SOURCE_MISSING_TARGET_ORIGINAL",
+    "verified_outcome": false,
+    "withdrawn_by": null
+   },
+   {
+    "accepted_by": null,
+    "content_acceptance": false,
+    "native_run": false,
+    "public_row": false,
+    "released_defect_ids": [],
+    "report_end": "2021-12-31",
+    "result_id": null,
+    "status": "SOURCE_MISSING_TARGET_ORIGINAL",
+    "verified_outcome": false,
+    "withdrawn_by": null
+   }
+  ],
+  "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+  "the_same_coordinates_in_the_30_metric_batch": "still withdrawn: that batch holds the results from before the repair, the defect withdraws them, and the new acceptance is listed against them as not applied because the value differs. Nothing in that batch's evidence was edited."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "record_type": "ISSUE_47_D01_MARRIOTT_REPAIRED_RESULTS",
+ "runs": {
+  "2023-12-31": {
+   "filings": [
+    "0001628280-24-004372"
+   ],
+   "headings": 37,
+   "manifest_file_hashes_verified": true,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "public_row": {
+    "accepted": true,
+    "evidence_count": 37,
+    "row_hash": "sha256:3762c327a8cd4645a77309ef1df596ffa628d38fc0a44cbb0bd608f6918cca01"
+   },
+   "recorded_baseline_sha256": "4b5c3f4049db573138c67bcdb36906a989bec43a8db207f4a43a81cac50c1e24",
+   "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+   "result_id": "sha256:178bc9625bc39e3de5abd36027f310ef57070547d87ddb39cd390a364c2fa754",
+   "run_id": "run:historical-period:6d8788ab5f8621e37fa6ac8504cc2084fc41ddd7019af1c04db23c88fe32496a",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "records": 48,
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:6d8788ab5f8621e37fa6ac8504cc2084fc41ddd7019af1c04db23c88fe32496a",
+    "status": "FROZEN",
+    "target_period": {
+     "fiscal_year": 2023,
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01"
+    },
+    "value_chars": 4696,
+    "value_sha256": "9c2c2595c34cab3ce3e6cea6d59e691b33e56cf85d6f816f2ef5445b072c279e"
+   },
+   "spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+   "validation_status": "PASSED"
+  },
+  "2024-12-31": {
+   "filings": [
+    "0001628280-25-004818"
+   ],
+   "headings": 39,
+   "manifest_file_hashes_verified": true,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "public_row": {
+    "accepted": true,
+    "evidence_count": 39,
+    "row_hash": "sha256:25835b2e108a56959628e9c5e6765d5e07240810334c8c4bbc82d49304dee5f4"
+   },
+   "recorded_baseline_sha256": "4b5c3f4049db573138c67bcdb36906a989bec43a8db207f4a43a81cac50c1e24",
+   "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+   "result_id": "sha256:2058162f1b9d6e1c48a98e2186bf92d52a3ca03abce74f4302ac7ef9809a2904",
+   "run_id": "run:historical-period:deee5ce3c941e33791683cd30fd22e048d6081019f01b8b2e83a9bdac7d91192",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "records": 50,
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:deee5ce3c941e33791683cd30fd22e048d6081019f01b8b2e83a9bdac7d91192",
+    "status": "FROZEN",
+    "target_period": {
+     "fiscal_year": 2024,
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01"
+    },
+    "value_chars": 4886,
+    "value_sha256": "abf9d8f659dfd52e75a9cc00c5464a11f8d6ab35d38d8f5694e62b854b9eb53b"
+   },
+   "spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+   "validation_status": "PASSED"
+  },
+  "2025-12-31": {
+   "filings": [
+    "0001048286-26-000007"
+   ],
+   "headings": 38,
+   "manifest_file_hashes_verified": true,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "public_row": {
+    "accepted": true,
+    "evidence_count": 38,
+    "row_hash": "sha256:e77f60f4c47e0f2986d5cadf33e1e236a68358dcbd4211628a1d32a7dd245d37"
+   },
+   "recorded_baseline_sha256": "4b5c3f4049db573138c67bcdb36906a989bec43a8db207f4a43a81cac50c1e24",
+   "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+   "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+   "run_id": "run:historical-period:d11137bf87796a21b6edd6fc24b4ec703e33a17af03348be96e028ba64ab867e",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "records": 49,
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:d11137bf87796a21b6edd6fc24b4ec703e33a17af03348be96e028ba64ab867e",
+    "status": "FROZEN",
+    "target_period": {
+     "fiscal_year": 2025,
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01"
+    },
+    "value_chars": 4899,
+    "value_sha256": "f4446a72c30119297c080db082fc7c1a84e82bc698df5d079c934ee6142cc17c"
+   },
+   "spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+   "validation_status": "PASSED"
+  }
+ },
+ "what_this_does_not_establish": "that any batch has run under this closure. The 30-metric batch ran under the previous one and is not re-signed, and no other position was re-run; these three results are delivered under their own identity, not as a sample of a new full-frame version.",
+ "what_this_is": "The three Marriott D01 results the underline repair produced, read from their own Runs, checked against the rule bytes that are committed now, and read for content against the filings. The defect register releases exactly these three results on this evidence."
+}

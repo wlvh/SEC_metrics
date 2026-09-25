@@ -37,6 +37,76 @@ class RunReceiptError(ValueError):
     """A run directory does not hold the Run its own manifest describes."""
 
 
+_ACCESSION = re.compile(r"\d{10}-\d{2}-\d{6}\Z")
+# Where an observation's binding names the source references it was read from.
+# Each is a list or a single id; the claim lists name verified claims, whose own
+# source reference is the filing.
+_BINDING_REFERENCE_KEYS = ("source_reference_id",)
+_BINDING_REFERENCE_LIST_KEYS = ("source_reference_ids", "ordered_source_reference_ids")
+_BINDING_CLAIM_LIST_KEYS = ("matched_verified_claim_ids", "matched_item_4_01_claim_ids")
+_BINDING_ACCESSION_KEYS = ("accession", "current_accession", "prior_accession")
+
+
+def _result_bindings(records):
+    """The filings and registrant entities each recorded result was computed from.
+
+    A result's coordinate and value do not say which filing produced it, and an
+    acceptance that says "this filing reports this value" has to be able to
+    tell whether the result in front of it came from that filing. The Run
+    records the answer already: the trace names its input observations, each
+    observation's binding names accessions and source references, and each
+    source reference names its accession. This follows those links and nothing
+    else - no filing is opened.
+
+    Submissions inventories are keyed by a pseudo-accession, not a filing, and
+    are left out: they say which filings exist, not which one was read.
+
+    Returns:
+        ``{result_id: {"filings": [...], "entities": [...]}}`` with both lists
+        sorted and unique. A result without a trace in this Run binds nothing.
+    """
+    references = {r["source_reference_id"]: r for r in records
+                  if r.get("record_type") == "SOURCE_REFERENCE"}
+    claims = {r["verified_claim_id"]: r for r in records
+              if r.get("record_type") == "DETERMINISTIC_VERIFIED_CLAIM"}
+    observations = {r["observation_id"]: r for r in records
+                    if r.get("record_type") == "VERIFIED_OBSERVATION"}
+    traces = {r["trace_id"]: r for r in records
+              if r.get("record_type") == "EXECUTION_TRACE"}
+    bound = {}
+    for record in records:
+        if record.get("record_type") != "METRIC_RESULT":
+            continue
+        filings, entities = set(), set()
+        trace = traces.get(record.get("trace_id"))
+        if trace is not None:
+            target = trace.get("calculation_target") or {}
+            if _ACCESSION.match(str(target.get("accession") or "")):
+                filings.add(target["accession"])
+            if target.get("entity"):
+                entities.add(str(target["entity"]))
+            for observation_id in trace.get("input_observation_ids") or ():
+                binding = (observations.get(observation_id) or {}).get("source_binding") or {}
+                for key in _BINDING_ACCESSION_KEYS:
+                    if _ACCESSION.match(str(binding.get(key) or "")):
+                        filings.add(binding[key])
+                if binding.get("entity"):
+                    entities.add(str(binding["entity"]))
+                named = [binding[key] for key in _BINDING_REFERENCE_KEYS if binding.get(key)]
+                for key in _BINDING_REFERENCE_LIST_KEYS:
+                    named.extend(binding.get(key) or ())
+                for key in _BINDING_CLAIM_LIST_KEYS:
+                    named.extend(claims[claim]["source_reference_id"]
+                                 for claim in binding.get(key) or () if claim in claims)
+                for reference_id in named:
+                    accession = str((references.get(reference_id) or {}).get("accession") or "")
+                    if _ACCESSION.match(accession):
+                        filings.add(accession)
+        bound[record.get("result_id")] = {"filings": sorted(filings),
+                                          "entities": sorted(entities)}
+    return bound
+
+
 def _need(condition, reason):
     if not condition:
         raise RunReceiptError(reason)
@@ -90,20 +160,29 @@ def read_run_receipt(*, run_dir: Path):
         _need(sha256_file(path=path) == recorded,
               "RUN_RECEIPT_FILE_CHANGED:" + name)
         verified.append(name)
+    records = [json.loads(line) for line in
+               (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines()
+               if line.strip()]
+    bindings = _result_bindings(records)
     results = []
-    for line in (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        record = json.loads(line)
+    for record in records:
         if record.get("record_type") != "METRIC_RESULT":
             continue
-        results.append({key: record.get(key) for key in (
+        results.append({**{key: record.get(key) for key in (
             "metric_id", "result_id", "value", "unit", "quality", "publication",
             "reason_code", "applicability", "period_start", "period_end",
             # Two results can share company, metric and period end and still be
             # different measurements. The scope and the value kind are what say
             # so, and a coordinate key does not carry either.
-            "scope_key", "value_kind")})
+            "scope_key", "value_kind",
+            # What the metric means, as the Run recorded it: the compiled Spec's
+            # semantics, its dependencies' closures and the declared runtime
+            # semantic versions. It does not move with unrelated repository
+            # bytes, which is what makes it bindable where the Requirement
+            # closure is not.
+            "spec_closure_hash")},
+            **bindings.get(record.get("result_id"),
+                           {"filings": [], "entities": []})})
     validation = None
     if (run_dir / "validation.json").is_file():
         validation = strict_json_file(path=run_dir / "validation.json").get("status")
@@ -313,6 +392,10 @@ def result_identity(*, receipt, result):
             "measured_period_end": result.get("period_end"),
             "scope_key": result.get("scope_key"),
             "value_kind": result.get("value_kind"),
+            "unit": result.get("unit"),
+            "spec_closure_hash": result.get("spec_closure_hash"),
+            "filings": list(result.get("filings") or ()),
+            "entities": list(result.get("entities") or ()),
             "requirement_closure_hash": receipt["requirement_closure_hash"],
             "run_id": receipt["run_id"]}
 

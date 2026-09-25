@@ -5,6 +5,31 @@
   "provider": 0,
   "sec": 0
  },
+ "checked_identity": {
+  "bound_from": {
+   "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+   "result_id": "sha256:4b0d136ff319d3a1b2b9d6bcfc322542af8fe843174bffd843ea77f7c892e364",
+   "run_id": "run:historical-period:6b72f4058457b351aa3bb3b0d5dc0f0bb956a0349d74d8c68e3b99cfa688af37"
+  },
+  "checked_against_the_reading": [
+   "value"
+  ],
+  "entities": [],
+  "established_by": "BOUND_AFTER_THE_READING",
+  "filings": [
+   "0001108524-26-000060"
+  ],
+  "not_named_by_the_reading": [
+   "filings",
+   "window"
+  ],
+  "period_end": "2026-01-31",
+  "period_start": "2026-01-31",
+  "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+  "spec_closure_hash": "sha256:267b9c81c20295935d3e400903dc41bf2e3e52f87de37cd8ec9d193245320267",
+  "unit": "USD",
+  "value_kind": null
+ },
  "company_id": "salesforce",
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "metric_id": "B12",

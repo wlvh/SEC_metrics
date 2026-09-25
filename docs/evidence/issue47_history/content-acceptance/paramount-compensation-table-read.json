@@ -5,6 +5,31 @@
   "provider": 0,
   "sec": 0
  },
+ "checked_identity": {
+  "bound_from": {
+   "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+   "result_id": "sha256:a3a5fa1b790731fd5382472a3ae307b5e1ba55b9a38d2bbd91e781b6cd7695e3",
+   "run_id": "run:historical-period:5dbb2b828cf190386abff3cbd7a753a8ca9eade76fb0dc47d41cc351661e506a"
+  },
+  "checked_against_the_reading": [
+   "value",
+   "filings_contain_the_filing_the_reading_opened"
+  ],
+  "entities": [],
+  "established_by": "BOUND_AFTER_THE_READING",
+  "filings": [
+   "0001140361-26-016758"
+  ],
+  "not_named_by_the_reading": [
+   "window"
+  ],
+  "period_end": "2025-12-31",
+  "period_start": "2025-08-07",
+  "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+  "spec_closure_hash": "sha256:0f5527096806bae71d6677a0d68a8c159f76c8b035d7ae50d175747af155dc76",
+  "unit": "USD",
+  "value_kind": null
+ },
  "company_id": "paramount_skydance_paramount_global",
  "components": {
   "all_other_compensation": "1693523",
