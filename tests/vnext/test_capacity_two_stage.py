@@ -114,14 +114,77 @@ class CapacityTwoStageTest(unittest.TestCase):
     def test_scanned_physical_capacity_cannot_be_discarded_as_other_context(self):
         second = interpretation_request(request=self.request,
             scan_result=self.scan_result, scan_raw_response=self.scan_raw)
-        answer = deepcopy(self.interpretation_response)
-        answer['findings'][0][0] = 'other_context'
-        with self.assertRaisesRegex(ValueError,
-                                    'B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW'):
-            validate_interpretation(request=self.request,
-                scan_result=self.scan_result, scan_raw_response=self.scan_raw,
-                interpretation=second,
-                raw_response=canonical_json_bytes(value=answer), source=self.source)
+        books = second['response_protocol']['classification_codebooks']
+        for kind, subject, timing in (
+            ('other_context', 'TARGET_REGISTRANT', 'CURRENT_REPORT'),
+            ('other_context', 'OTHER_ENTITY', 'CURRENT_REPORT'),
+            ('other_entity', 'OTHER_ENTITY', 'CURRENT_REPORT'),
+            ('other_context', 'TARGET_REGISTRANT', 'HISTORICAL'),
+        ):
+            answer = deepcopy(self.interpretation_response)
+            answer['findings'][0][0] = kind
+            answer['findings'][0][1] = books['subject'].index(subject)
+            answer['findings'][0][2] = books['timing'].index(timing)
+            with self.subTest(kind=kind, subject=subject, timing=timing), \
+                 self.assertRaisesRegex(ValueError,
+                     'B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW'):
+                validate_interpretation(request=self.request,
+                    scan_result=self.scan_result, scan_raw_response=self.scan_raw,
+                    interpretation=second,
+                    raw_response=canonical_json_bytes(value=answer), source=self.source)
+
+    def test_genuine_other_entity_and_historical_capacity_not_newly_rejected(self):
+        from tests.vnext.test_capacity_utilization_source import quantity_source
+        from vnext.capacity_program_roles import program_source
+        from vnext.capacity_semantic_review import requests_from_source
+        from vnext.capacity_two_stage import _direct_current_target_capacity
+        cases = (
+            ('<p>A supplier has manufacturing capacity for its own products.</p>',
+             'other_entity', 'OTHER_ENTITY', 'CURRENT_REPORT'),
+            ('<p>In fiscal 2023, our contract manufacturers had production '
+             'capacity for anticipated demand.</p>',
+             'historical_statement', 'TARGET_REGISTRANT', 'HISTORICAL'),
+        )
+        for html, kind, subject, timing in cases:
+            with self.subTest(kind=kind):
+                source, _ = quantity_source(html)
+                source = program_source(source)
+                base = requests_from_source(source)[0]
+                prior = upgrade_request(base, compact=True, role_labels=True,
+                                        relevance_scope=True)
+                ref = 'B' + str(source['units'][0]['payload']['blocks'][0]['block_index'])
+                scan = scan_request(prior)
+                raw_scan = canonical_json_bytes(value={
+                    'units_reviewed': list(range(len(prior['units']))),
+                    'candidate_refs': [ref], 'unresolved_refs': []})
+                result = validate_scan(request=prior, scan_request_value=scan,
+                                       raw_response=raw_scan)
+                second = interpretation_request(request=prior,
+                    scan_result=result, scan_raw_response=raw_scan)
+                books = second['response_protocol']['classification_codebooks']
+                response = {'units': [{'unit_index': index, 'reviewed': True,
+                    'unresolved': [], 'calculation_limits': []}
+                    for index in range(len(prior['units']))],
+                    'findings': [[kind, books['subject'].index(subject),
+                        books['timing'].index(timing), [ref],
+                        'The source states this capacity with the stated subject and period.']]}
+                if kind == 'historical_statement':
+                    self.assertFalse(_direct_current_target_capacity(
+                        source['units'][0]['payload']['blocks'][0]['text'], 2025))
+                    # The old source validator may independently retain an
+                    # unresolved historical relation; the new guard must not
+                    # turn it into a current-capacity assertion.
+                    with self.assertRaisesRegex(ValueError, 'B13_TWO_STAGE_UNRESOLVED'):
+                        validate_interpretation(request=prior,
+                            scan_result=result, scan_raw_response=raw_scan,
+                            interpretation=second,
+                            raw_response=canonical_json_bytes(value=response), source=source)
+                else:
+                    checked = validate_interpretation(request=prior,
+                        scan_result=result, scan_raw_response=raw_scan,
+                        interpretation=second,
+                        raw_response=canonical_json_bytes(value=response), source=source)
+                    self.assertEqual(checked['original_validator_result']['unresolved'], [])
 
     def test_scanned_uncertainty_cannot_be_silently_promoted(self):
         scan_response = {**self.scan_response, 'unresolved_refs': [self.ref]}

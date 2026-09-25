@@ -66,6 +66,37 @@ def _need(ok, reason):
         raise ValueError(reason)
 
 
+def _direct_current_target_capacity(text, fiscal_year):
+    """Only clear present-tense registrant/contract-manufacturer assertions.
+
+    This necessary guard does not decide historical, conditional or other
+    entities' capacity from a navigation hit alone.
+    """
+    from .regulatory_investigation_candidates import _sentences
+    physical = re.compile(r'\b(?:manufacturing|production)\s+(?:capacity|capabilities)\b', re.I)
+    direct = re.compile(
+        r'\bour\s+(?:(?:total|annual|existing|global|domestic|current)\s+)*'
+        r'(?:manufacturing|production)\s+(?:capacity|capabilities)\b|'
+        r'\bwe\s+(?:have|operate|maintain|possess)\s+'
+        r'(?:(?:our|the|existing|current)\s+)*'
+        r'(?:manufacturing|production)\s+(?:capacity|capabilities)\b|'
+        r'\bour\s+(?:contract\s+)?manufacturers?\b', re.I)
+    excluded_context = re.compile(
+        r'\b(?:if|unless|would|could|might|hypothetical|illustrative|'
+        r'previously|formerly|historically|prior\s+years?|last\s+years?|'
+        r'used\s+to|no\s+longer)\b', re.I)
+    present = re.compile(r'\b(?:have|has|is|are|operate|maintain|possess|plan|expect)\b', re.I)
+    for _, _, statement in _sentences(text):
+        if not (physical.search(statement) and direct.search(statement)
+                and present.search(statement)) or excluded_context.search(statement):
+            continue
+        years = {int(year) for year in re.findall(r'\b(?:19|20)\d{2}\b', statement)}
+        if years and years != {fiscal_year}:
+            continue
+        return True
+    return False
+
+
 def _base(request):
     _need(request.get('source_reference_contract', {}).get('version') == RELEVANCE_VERSION,
           'B13_TWO_STAGE_V4_SOURCE_REQUIRED')
@@ -499,20 +530,20 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
     from .capacity_semantic_review import validate_response
     checked = validate_response(request=interpretation, raw_response=raw_response,
                                 source=source)
-    # A scan can legitimately overselect sales or finance. It must not turn a
-    # direct, current physical-capacity assertion into ordinary background.
-    # This finite source check is a necessary guard, not a general proof that
-    # every other exclusion is semantically correct.
-    background = {'OTHER_CONTEXT', 'MONETARY_CREDIT_CAPACITY',
-                  'SALES_OR_SHIPMENTS', 'PRODUCT_STORAGE_OR_INSTALLED_CAPACITY'}
-    physical = re.compile(r'\b(?:manufacturing|production)\s+(?:capacity|capabilities)\b', re.I)
+    # A scan can legitimately overselect sales or another entity's capacity.
+    # A directly bound present-tense registrant assertion cannot be discarded
+    # by swapping the category, subject or time label. This bounded relation
+    # is necessary, never a general proof of semantic accuracy.
+    relevant = {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY',
+                'CAPACITY_QUALITATIVE', 'PLANNED_CAPACITY'}
+    fiscal_year = request['target_period']['fiscal_year']
     for finding in checked['findings']:
-        if (finding['kind'] in background
-                and finding['subject'] == 'TARGET_REGISTRANT'
-                and finding['timing'] == 'CURRENT_REPORT'
-                and any(evidence['kind'] == 'VISIBLE_BLOCK'
-                        and physical.search(evidence['text'])
-                        for evidence in finding['resolved_evidence'])):
+        if ((finding['kind'] not in relevant
+             or finding['subject'] != 'TARGET_REGISTRANT'
+             or finding['timing'] != 'CURRENT_REPORT')
+            and any(evidence['kind'] == 'VISIBLE_BLOCK'
+                    and _direct_current_target_capacity(evidence['text'], fiscal_year)
+                    for evidence in finding['resolved_evidence'])):
             raise ValueError('B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW')
     _need(not checked['unresolved'], 'B13_TWO_STAGE_UNRESOLVED')
     return {'scan_result_id': scan_result['scan_result_id'],

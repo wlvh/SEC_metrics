@@ -1235,6 +1235,29 @@
       "tool_calls": 57,
       "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-v3/conclusion.md",
       "verdict": "BLOCKED_SCOPED_D03_CROSS_SUBJECT_ANAPHORA_P2"
+    },
+    {
+      "task_name": "review_b13native_7cde5ae",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "scripts/vnext/capacity_reference_contract.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "scripts/vnext/native_unit_index.py",
+        "scripts/vnext/capacity_assessment_input.py",
+        "scripts/vnext/capacity_run.py",
+        "scripts/vnext/capacity_text_results.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage_material.py"
+      ],
+      "patch_sha": "7cde5ae02b176d768fc6ea078f5f310211d2923e",
+      "spawned_at": "2026-09-25T17:40:33Z",
+      "ended_at": "2026-09-25T17:47:34Z",
+      "tool_calls": 58,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-native/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_WRONG_SUBJECT_OR_TIMING_BYPASS"
     }
   ],
   "ci_capacity_20260922": {
@@ -1378,7 +1401,7 @@
     "following_B13_failure": "112 finish_reason=length,4096output; prefix also contains wrong-kind source449; no retry",
     "invariants": "recovery-110-20260922/after-recovery-invariants.json"
   },
-  "call_count_snapshot_scope": "Cumulative through192: provider143/paid143/SEC49. D04 all ten complete real candidates; B13 Enphase group0 success190, group1 failures191/192 retained, no complete B13 company. Conditional old-grouping base gap at least49, but group1 retry authorization exhausted.",
+  "call_count_snapshot_scope": "Cumulative through192: provider143/paid143/SEC49. D04 all ten complete real candidates; B13 Enphase group0 success190, group1 failures191/192 retained, no complete B13 company. Old-grouping base gap at least49; if B13 uses 32 new scan/interpretation requests and D03 first round stays130, conditional base gap is at least65 against remaining97. Neither is final budget or new-call authority.",
   "source_unit_preflight_guard": {
     "status": "SCOPED_REVIEW_AND_LOSSLESS_POSITIVE_CHAIN_COLD_READ_PASS",
     "reason": "113 Greek question mark normalized by source serialization; check before paying, not repair of old113",
@@ -2008,7 +2031,8 @@
       "tightest_group_index": 9,
       "tightest_stage": "assessment",
       "tightest_remaining_tokens": 352,
-      "all_max_unresolved_stage_inputs_fit_existing_context_and_4096_reserve": true
+      "all_max_unresolved_stage_inputs_fit_existing_context_and_4096_reserve": true,
+      "conditional_new_route_base_gap_at_least_if_d03_130_unchanged": 65
     },
     "review": "INITIAL_A48D282_TWO_P2_RETAINED; C44BB047_SCOPED_P2_INCREMENT_PASS",
     "real_new_calls": [
@@ -2023,9 +2047,9 @@
     "initial_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review/conclusion.md",
     "post_p2_tests": "21_DIRECTED_PASS; 128_FAST_SELECTORS_PASS; SAVED_MEASUREMENT_BYTE_EQUAL",
     "followup_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-followup/conclusion.md",
-    "requirement_closure_hash": "sha256:4c6d30f9f23ca196cd1269991e441ea415f5041b5c641ab066fcbe571a99fb19",
-    "execution_authority_hash": "sha256:c061bc7d2bec796c45502cd226669462673f36e57af66fb4dbc7493483021568",
-    "current_scope_review": "PENDING_NEW_EXACT_SHA_LIMITED_REVIEW",
+    "requirement_closure_hash": "sha256:acd297a07773ccd3d181c74d46a3a76f53aa23f3b33726e442f9503d52173637",
+    "execution_authority_hash": "sha256:20145c51e726ae02d0ffc7503de17fd0ee6ed06048755c29891e7b8843d0ba0b",
+    "current_scope_review": "7CDE5AE_LIMITED_REVIEW_NEEDS_FIX_P2_REPAIR_TESTED_PENDING_NEW_SHA_REVIEW",
     "recorded_mixed_v4_v5_group_count": 6,
     "recorded_stage_claims": [
       7,
@@ -2036,7 +2060,7 @@
     "current_binding_replay_without_new_recorded_claims": true,
     "real_190_exact_request_and_source_read_only_replay_proven": true,
     "actual_live_190_plus_new_live_stages_company_result_proven": false,
-    "source_role_false_exclusion_guard": "DIRECT_CURRENT_MANUFACTURING_OR_PRODUCTION_CAPACITY_CANNOT_BE_ORDINARY_BACKGROUND",
+    "source_role_false_exclusion_guard": "DIRECT_CURRENT_TARGET_AND_CONTRACT_MANUFACTURER_CAPACITY_CHECKS_KIND_SUBJECT_AND_TIME",
     "fast_local_status": "PINNED_126_OF_128_PASS_TWO_30_SECOND_PARALLEL_TIMEOUTS; BOTH_FAILED_SELECTORS_PASS_IN_ISOLATION",
     "provider_wiring_receipt": "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json",
     "sec_wiring_receipt": "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json",
@@ -2051,7 +2075,11 @@
       "default_behavior": "No V5 variant means no added text_arguments key; old request, return and record shapes retained",
       "v15_requirement_closure_changed": true,
       "other_branch_modified": false
-    }
+    },
+    "current_scope_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-native/conclusion.md",
+    "repair_recorded_chain": "PASS_REUSE_7_RECORDED_EXECUTIONS_NEW_CLAIMS_0_OPEN_RUN_PUBLIC_ROWS_AND_INDEPENDENT_COLD",
+    "repair_evidence_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/repair-native-replay-summary.json",
+    "repair_directed_tests": "30_PASS"
   },
   "ci_36112753619": {
     "head": "50c341c26d745ddfc19b9b5bde69d479a1464716",

@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:4c6d30f9f23ca196cd1269991e441ea415f5041b5c641ab066fcbe571a99fb19",
-  "execution_authority_hash": "sha256:c061bc7d2bec796c45502cd226669462673f36e57af66fb4dbc7493483021568",
+  "requirement_closure_hash": "sha256:acd297a07773ccd3d181c74d46a3a76f53aa23f3b33726e442f9503d52173637",
+  "execution_authority_hash": "sha256:20145c51e726ae02d0ffc7503de17fd0ee6ed06048755c29891e7b8843d0ba0b",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -53,7 +53,11 @@
     "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/read-only-190-final.log": "8bf2b1b91ccb708c232a82beb163d0c21a82c0d0469febf145c14552f6473822",
     "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/measurement-max-unresolved.log": "c66dfeda0ce969f13838785e1187fd51102ad78c9cac046eaaff25fc4be9662a",
     "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/targeted-current.log": "0153edc3f641f1f8c620364919d0467da4faa4688bcde20a487a28cc73df7f15",
-    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/ledger-count-control.log": "09b65d551af60ee41c2345824d6076b7600c636e4a57d9572e33c26e9da58200"
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/ledger-count-control.log": "09b65d551af60ee41c2345824d6076b7600c636e4a57d9572e33c26e9da58200",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/repair-native-replay.log": "e333625460d9bc5201558b3969d75cb3774d3a902ab78d757cf0845e9b5e2b68",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/repair-native-cold.log": "f7993a7db01ed8de8d9d494bda2d6f3461f61963bc893ff27ea631d6fa35c027",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/read-only-190-repair.log": "77bc684d8df200f6a1b0a1ae3e08eddebd73f248a777102b4b9199b0641bd2c6",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/repair-targeted.log": "fb9e23a694fdf76ef02b4313d71a80339c20fd4cab0c29e46a5b39496c3ddafc"
   },
   "scope": "Current V15 closure and execution files both checked after ordinary V14 parent repair and P2 receipt fix. Focused 31-test no-network factory/controller and bad-closure rejection pass. Original B13 success190 remains read-only reusable; no new model response, complete company or production credit.",
   "independent_review": "Original B13 V4 scoped reviews retained. Ordinary-binding patch5c307e5 first review found the stale receipt closure; exact follow-up difference review is pending, and that prior finding remains recorded."

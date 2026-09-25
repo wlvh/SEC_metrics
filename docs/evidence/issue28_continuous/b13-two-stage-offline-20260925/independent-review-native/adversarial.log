@@ -1,0 +1,9 @@
+source_text: Our contract manufacturers have sufficient production capacity for anticipated demand.
+OTHER_ENTITY_definition: Only another entity is the subject; do not apply this to the registrant's expressly identified contract manufacturing arrangements.
+subject_codes: ['TARGET_REGISTRANT', 'OTHER_ENTITY', 'UNRESOLVED']
+timing_codes: ['CURRENT_REPORT', 'HISTORICAL', 'CONDITIONAL', 'UNRESOLVED']
+correct_current_physical REJECTED ValueError B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+wrong_other_subject ACCEPTED [('OTHER_CONTEXT', 'OTHER_ENTITY', 'CURRENT_REPORT')]
+wrong_other_entity_kind REJECTED SemanticReviewError D04_CATEGORY_SCOPE_CONFLICT
+wrong_other_entity_kind_and_subject ACCEPTED [('OTHER_ENTITY', 'OTHER_ENTITY')]
+wrong_historical_timing ACCEPTED [('OTHER_CONTEXT', 'TARGET_REGISTRANT', 'HISTORICAL')]
