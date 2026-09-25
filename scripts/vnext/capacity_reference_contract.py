@@ -12,6 +12,7 @@ VERSION = 'B13_SOURCE_REFERENCES_V1'
 COMPACT_VERSION = 'B13_TYPED_COMPACT_REFERENCES_V2'
 ROLE_VERSION = 'B13_MEANINGFUL_ROLE_REFERENCES_V3'
 RELEVANCE_VERSION = 'B13_REQUIRED_FIRST_RELEVANCE_V4'
+SCANNED_VERSION = 'B13_SCANNED_INTERPRETATION_V5'
 ROLE_LABELS = {
     'physical_capacity_context': 'CAPACITY_QUALITATIVE',
     'sales_or_shipments': 'SALES_OR_SHIPMENTS',
@@ -112,6 +113,9 @@ def restore_base_request(request):
     need(request.get('request_id') == content_hash(value={k: v for k, v in request.items() if k != 'request_id'}),
          'B13_REFERENCE_REQUEST_CHANGED')
     meta = request.get('source_reference_contract')
+    if type(meta) is dict and meta.get('version') == SCANNED_VERSION:
+        from .capacity_two_stage import restore_prior_interpretation_request
+        return restore_base_request(restore_prior_interpretation_request(request))
     need(type(meta) is dict and set(meta) == {'version', 'base_request_id'}
          and meta['version'] in {VERSION, COMPACT_VERSION, ROLE_VERSION, RELEVANCE_VERSION},
          'B13_REFERENCE_CONTRACT_CHANGED')
@@ -129,9 +133,16 @@ def restore_base_request(request):
 def restore_response(*, request, raw_response):
     base = restore_base_request(request)
     owners = _owners(base)
+    version = request['source_reference_contract']['version']
+    scanned_exclusion_refs = (frozenset(request['two_stage_scan']['response']['candidate_refs'])
+                              if version == SCANNED_VERSION else frozenset())
+    def typed_ref(key):
+        return ('B' + str(key[-1]) if key[0] == 'VISIBLE_BLOCK' else
+                'F' + str(key[-1]) if key[0] == 'NATIVE_FACT' else
+                'S' + str(key[1]) + ':' + str(key[2]))
     original = strict_json_loads(text=raw_response.decode('utf-8'))
     wire_original = deepcopy(original)
-    if request['source_reference_contract']['version'] in {COMPACT_VERSION, ROLE_VERSION, RELEVANCE_VERSION}:
+    if version in {COMPACT_VERSION, ROLE_VERSION, RELEVANCE_VERSION, SCANNED_VERSION}:
         original = _expand_compact_response(original, request)
     need(type(original) is dict and set(original) == {'units', 'findings'}
          and type(original['units']) is list and type(original['findings']) is list
@@ -146,7 +157,7 @@ def restore_response(*, request, raw_response):
         rows[index].update(unit_id=base['units'][index]['unit_id'], findings=[])
     seen = set()
     required_keys = set()
-    if request['source_reference_contract']['version'] == RELEVANCE_VERSION:
+    if version in {RELEVANCE_VERSION, SCANNED_VERSION}:
         unit_indices = {unit['unit_id']: index for index, unit in enumerate(base['units'])}
         for required in base['required_candidate_assessments']:
             kind, source_index = required['kind'], required['source_index']
@@ -170,11 +181,17 @@ def restore_response(*, request, raw_response):
             need(key in owners, 'B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE')
             references.append(key)
         need(len(set(references)) == len(references), 'B13_REFERENCE_DUPLICATE_EVIDENCE')
+        if version == SCANNED_VERSION:
+            need(all(typed_ref(key) in scanned_exclusion_refs for key in references),
+                 'B13_TWO_STAGE_FINDING_OUTSIDE_SCAN')
         indices = {owners[key] for key in references}
         need(len(indices) == 1, 'B13_REFERENCE_CROSS_UNIT_FINDING')
-        if request['source_reference_contract']['version'] == RELEVANCE_VERSION and \
+        if version in {RELEVANCE_VERSION, SCANNED_VERSION} and \
                 finding['kind'] in request['response_protocol']['required_only_exclusion_kinds']:
-            need(any((key[0], owners[key], key[-1]) in required_keys for key in references),
+            need(any((key[0], owners[key], key[-1]) in required_keys
+                     or (version == SCANNED_VERSION
+                         and typed_ref(key) in scanned_exclusion_refs)
+                     for key in references),
                  'B13_V4_NONREQUIRED_BACKGROUND_FINDING')
         identity = content_hash(value=finding)
         need(identity not in seen, 'B13_REFERENCE_DUPLICATE_FINDING')

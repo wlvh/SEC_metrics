@@ -1992,7 +1992,7 @@
   },
   "b13_two_stage_offline_20260925": {
     "base_head": "50c341c26d745ddfc19b9b5bde69d479a1464716",
-    "status": "SELECTED_OFFLINE_CANDIDATE_PENDING_SCOPED_REVIEW_AND_NATIVE_INTEGRATION",
+    "status": "RECORDED_NATIVE_CHAIN_AND_INSTALLED_COLD_PASS_NEW_LIVE_TRIAL_NOT_AUTHORIZED",
     "selected_route": "FULL_SOURCE_SCAN_THEN_FULL_SOURCE_INTERPRETATION",
     "evidence_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/",
     "saved_source_measurement": {
@@ -2002,7 +2002,13 @@
       "option_a_illustrative_new_calls": 60,
       "option_b_max_new_calls": 32,
       "candidate_refs_per_group_cap": 64,
-      "all_synthetic_64_ref_stage_inputs_fit_existing_context_and_4096_reserve": true
+      "all_synthetic_64_ref_stage_inputs_fit_existing_context_and_4096_reserve": true,
+      "current_max_unresolved_context_tokens": 199648,
+      "tightest_company": "ford_motor_company",
+      "tightest_group_index": 9,
+      "tightest_stage": "assessment",
+      "tightest_remaining_tokens": 352,
+      "all_max_unresolved_stage_inputs_fit_existing_context_and_4096_reserve": true
     },
     "review": "INITIAL_A48D282_TWO_P2_RETAINED; C44BB047_SCOPED_P2_INCREMENT_PASS",
     "real_new_calls": [
@@ -2016,7 +2022,36 @@
     "old_191_192_third_opportunity": false,
     "initial_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review/conclusion.md",
     "post_p2_tests": "21_DIRECTED_PASS; 128_FAST_SELECTORS_PASS; SAVED_MEASUREMENT_BYTE_EQUAL",
-    "followup_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-followup/conclusion.md"
+    "followup_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-followup/conclusion.md",
+    "requirement_closure_hash": "sha256:4c6d30f9f23ca196cd1269991e441ea415f5041b5c641ab066fcbe571a99fb19",
+    "execution_authority_hash": "sha256:c061bc7d2bec796c45502cd226669462673f36e57af66fb4dbc7493483021568",
+    "current_scope_review": "PENDING_NEW_EXACT_SHA_LIMITED_REVIEW",
+    "recorded_mixed_v4_v5_group_count": 6,
+    "recorded_stage_claims": [
+      7,
+      7,
+      0
+    ],
+    "recorded_native_run_and_public_rows_cold_read_proven": true,
+    "current_binding_replay_without_new_recorded_claims": true,
+    "real_190_exact_request_and_source_read_only_replay_proven": true,
+    "actual_live_190_plus_new_live_stages_company_result_proven": false,
+    "source_role_false_exclusion_guard": "DIRECT_CURRENT_MANUFACTURING_OR_PRODUCTION_CAPACITY_CANNOT_BE_ORDINARY_BACKGROUND",
+    "fast_local_status": "PINNED_126_OF_128_PASS_TWO_30_SECOND_PARALLEL_TIMEOUTS; BOTH_FAILED_SELECTORS_PASS_IN_ISOLATION",
+    "provider_wiring_receipt": "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json",
+    "sec_wiring_receipt": "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json",
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/capacity_run.py"
+      ],
+      "functions": [
+        "capacity_run.prepare_case"
+      ],
+      "new_behavior": "V5 registered input passes explicit actual_requests into native text/program validation",
+      "default_behavior": "No V5 variant means no added text_arguments key; old request, return and record shapes retained",
+      "v15_requirement_closure_changed": true,
+      "other_branch_modified": false
+    }
   },
   "ci_36112753619": {
     "head": "50c341c26d745ddfc19b9b5bde69d479a1464716",
@@ -2142,5 +2177,12 @@
     "cancelled": 0,
     "source_material": "success",
     "not_covered": "Later local C04 evidence and D03 source-fact repair"
+  },
+  "ci_36124099928": {
+    "head": "1e05850b85bb9b4905c5cd7aef9c6af68ccfb019",
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at_utc": "2026-09-25T11:03:16Z",
+    "scope": "previous_head_only_not_new_two_stage_native_increment"
   }
 }

@@ -75,6 +75,9 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
     registered = load_registered_input(data_root=data_root, source=source, requirement=requirement,
                                        mode=assessment_mode, input_record_id=assessment_input_id,check_export=not current_runtime)
     assessment = registered['assessment']
+    from .capacity_reference_contract import SCANNED_VERSION
+    actual_requests = ([row['semantic_request'] for row in registered['native_requests']]
+        if SCANNED_VERSION in assessment.get('native_request_variants', []) else None)
     numeric = metric_id == 'B13' and assessment['proposed_branch'] == 'COMPARABLE_QUANTITY_PAIR_ASSESSMENT_REQUIRED'
     if numeric:
         spec_path = rules['numeric_spec']
@@ -107,7 +110,8 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
         records.extend([blob, ref]); references.append(ref); represented.add(key)
     if source.get('program_quantity_role_contract_version'):
         from .capacity_program_roles import verify_original_program_assessment
-        verify_original_program_assessment(source=source,assessment=assessment,raw_bytes_by_id=raw)
+        verify_original_program_assessment(source=source,assessment=assessment,
+            raw_bytes_by_id=raw,actual_requests=actual_requests)
     admission = verify_ordinary_source_proofs(data_root=data_root, proofs=source['source_proofs'])
     records = list({content_hash(value=record): record for record in records}.values())
     binding = {'company_id': company_id, 'source_id': source['semantic_source_id'],
@@ -126,6 +130,8 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
                                 'DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW' else 'TEXT_QUAL'),
                       'reason_code': 'COMPLETE_NATIVE_CAPACITY_ASSESSMENT',
                       'assessment_mode': registered['mode'], 'numeric_utilization_inferred': False}}
+    if actual_requests is not None:
+        case['text_arguments']['actual_requests'] = actual_requests
     if numeric:
         from .capacity_utilization_source import calculate_source_comparable_pair
         calculated = calculate_source_comparable_pair(source=source, raw_bytes_by_id=raw)

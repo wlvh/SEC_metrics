@@ -253,7 +253,8 @@ def validate_response(*, request, raw_response, source=None):
         from .capacity_reference_contract import restore_response
         need(type(raw_response) is bytes and len(raw_response) <= strict_json_file(path=ROOT / review_policy_path(request))['max_response_bytes'],
              'B13_RESPONSE_TOO_LARGE')
-        base, normalized, original = restore_response(request=request, raw_response=raw_response)
+        base, normalized, original = restore_response(
+            request=request, raw_response=raw_response)
         checked = validate_response(request=base, raw_response=normalized, source=source)
         checked.update(request_id=request['request_id'], response=original)
         return checked

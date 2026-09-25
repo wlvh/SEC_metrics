@@ -8,10 +8,12 @@ from types import SimpleNamespace
 from vnext.capacity_reference_contract import upgrade_request
 from vnext.capacity_semantic_review import requests_from_source
 from vnext.capacity_two_stage import (
-    MAX_CANDIDATE_REFS, _reference_inventory, _required_references,
+    MAX_CANDIDATE_REFS, _program_owned_references, _reference_inventory,
+    _required_references,
     interpretation_request, scan_request, validate_scan,
 )
-from vnext.canonical import canonical_json_bytes, strict_json_file
+from vnext.canonical import (canonical_json_bytes, content_hash, sha256_bytes,
+                             strict_json_file)
 from vnext.continuous_request_context import measure_request
 from vnext.continuous_semantic_calls import request_body
 
@@ -47,15 +49,29 @@ def run(ledger_root):
             scan = scan_request(v4)
             inventory = _reference_inventory(v4)
             required = _required_references(v4, inventory)
-            candidates = list(sorted(required)) + [ref for ref in inventory
-                if ref not in required][:MAX_CANDIDATE_REFS-len(required)]
+            program_owned = _program_owned_references(v4, inventory)
+            remaining_required = required - program_owned
+            candidates = list(sorted(remaining_required)) + [ref for ref in inventory
+                if ref not in required and ref not in program_owned][
+                    :MAX_CANDIDATE_REFS-len(remaining_required)]
             response = {'units_reviewed': list(range(len(v4['units']))),
-                        'candidate_refs': candidates, 'unresolved_refs': []}
+                        'candidate_refs': candidates,
+                        'unresolved_refs': candidates}
             scan_raw = canonical_json_bytes(value=response)
             scan_result = validate_scan(request=v4, scan_request_value=scan,
                 raw_response=scan_raw)
+            proof_body = {'record_type': 'B13_SCAN_STAGE_EXECUTION_PROOF',
+                          'scan_ordinal': 240,
+                          'scan_request_id': scan['request_id'],
+                          'scan_result_id': scan_result['scan_result_id'],
+                          'scan_terminal_id': content_hash(value='synthetic terminal for sizing'),
+                          'scan_acceptance_receipt_id': content_hash(value='synthetic acceptance for sizing'),
+                          'scan_output_sha256': sha256_bytes(content=scan_raw),
+                          'source_id': v4['source_id']}
             assessment = interpretation_request(request=v4,
-                scan_result=scan_result, scan_raw_response=scan_raw)
+                scan_result=scan_result, scan_raw_response=scan_raw,
+                scan_execution_proof={**proof_body,
+                    'proof_id': content_hash(value=proof_body)})
             row.update(option_b_scan_input=measure(scan),
                        option_b_assessment_input_at_64_refs=measure(assessment),
                        option_b_synthetic_ref_count=len(candidates),

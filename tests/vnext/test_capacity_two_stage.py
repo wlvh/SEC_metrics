@@ -3,12 +3,15 @@ from copy import deepcopy
 import json
 import unittest
 from unittest.mock import patch
+from types import SimpleNamespace
 
 from tests.vnext.test_capacity_reference_contract import fixture
 from vnext.canonical import canonical_json_bytes, content_hash
-from vnext.capacity_reference_contract import upgrade_request
+from vnext.capacity_reference_contract import (SCANNED_VERSION,
+    restore_base_request, upgrade_request)
+from vnext.capacity_semantic_review import validate_response
 from vnext.capacity_two_stage import (
-    interpretation_request, scan_request,
+    build_scan_acceptance, interpretation_request, scan_request,
     validate_interpretation, validate_scan,
 )
 
@@ -42,6 +45,12 @@ class CapacityTwoStageTest(unittest.TestCase):
     def test_nonempty_two_stage_uses_complete_original_source_and_semantics(self):
         second = interpretation_request(request=self.request,
             scan_result=self.scan_result, scan_raw_response=self.scan_raw)
+        from vnext.capacity_two_stage import restore_prior_interpretation_request
+        self.assertEqual(second['source_reference_contract']['version'], SCANNED_VERSION)
+        self.assertEqual(restore_prior_interpretation_request(second), self.request)
+        self.assertEqual(restore_base_request(second), restore_base_request(self.request))
+        from vnext.native_unit_index import validate_request_partition
+        self.assertEqual(validate_request_partition(self.source, [second]), [SCANNED_VERSION])
         self.assertEqual(self.scan['units'], self.request['units'])
         self.assertEqual(second['units'], self.request['units'])
         self.assertEqual(second['source_id'], self.request['source_id'])
@@ -55,8 +64,101 @@ class CapacityTwoStageTest(unittest.TestCase):
         self.assertFalse(result['native_credit'])
         self.assertFalse(result['model_accuracy_proven'])
         self.assertEqual(result['original_validator_result']['unresolved'], [])
+        self.assertEqual(result['original_validator_result']['request_id'], second['request_id'])
         self.assertEqual(result['original_validator_result']['findings'][0]['kind'],
                          'CAPACITY_QUALITATIVE')
+
+    def test_scanned_nonrequired_sales_can_be_correctly_excluded(self):
+        sales = next(block for unit in self.source['units']
+                     for block in unit['payload']['blocks'] if 'sold worldwide' in block['text'])
+        ref = 'B' + str(sales['block_index'])
+        scan_response = {**self.scan_response, 'candidate_refs': [ref]}
+        scan_raw = canonical_json_bytes(value=scan_response)
+        scan_result = validate_scan(request=self.request,
+            scan_request_value=self.scan, raw_response=scan_raw)
+        second = interpretation_request(request=self.request,
+            scan_result=scan_result, scan_raw_response=scan_raw)
+        response = deepcopy(self.interpretation_response)
+        response['findings'] = [['sales_or_shipments', 0, 0, [ref],
+                                 'Products sold are not actual factory output.']]
+        raw = canonical_json_bytes(value=response)
+        with self.assertRaisesRegex(ValueError, 'B13_V4_NONREQUIRED_BACKGROUND_FINDING'):
+            validate_response(request=self.request, raw_response=raw, source=self.source)
+        result = validate_interpretation(request=self.request,
+            scan_result=scan_result, scan_raw_response=scan_raw,
+            interpretation=second, raw_response=raw, source=self.source)
+        self.assertEqual(result['original_validator_result']['unresolved'], [])
+        self.assertEqual(result['original_validator_result']['request_id'], second['request_id'])
+        self.assertEqual(result['original_validator_result']['findings'][0]['kind'],
+                         'SALES_OR_SHIPMENTS')
+        from vnext.capacity_native_assessment import build_acceptance
+        with self.assertRaisesRegex(ValueError, 'SCAN_EXECUTION_PROOF_REQUIRED'):
+            build_acceptance(prepared=SimpleNamespace(request_bytes=canonical_json_bytes(value=second)),
+                             plan={}, response_body=raw)
+        from vnext.continuous_semantic_calls import (
+            execute_capacity_assessment, execute_capacity_interpretation,
+            execute_capacity_scan)
+        with self.assertRaisesRegex(ValueError, 'TWO_STAGE_EXECUTION_PROOF_REQUIRED'):
+            execute_capacity_assessment(prepared=SimpleNamespace(
+                request_bytes=canonical_json_bytes(value=second)),
+                ledger=SimpleNamespace(live=True))
+        with self.assertRaisesRegex(ValueError, 'TWO_STAGE_LIVE_EXECUTION_NOT_AUTHORIZED'):
+            execute_capacity_interpretation(prepared=SimpleNamespace(
+                request_bytes=canonical_json_bytes(value=second)),
+                ledger=SimpleNamespace(live=True))
+        with self.assertRaisesRegex(ValueError, 'TWO_STAGE_LIVE_EXECUTION_NOT_AUTHORIZED'):
+            execute_capacity_scan(prepared=SimpleNamespace(
+                request_bytes=canonical_json_bytes(value=self.scan)),
+                ledger=SimpleNamespace(live=True))
+
+    def test_scanned_physical_capacity_cannot_be_discarded_as_other_context(self):
+        second = interpretation_request(request=self.request,
+            scan_result=self.scan_result, scan_raw_response=self.scan_raw)
+        answer = deepcopy(self.interpretation_response)
+        answer['findings'][0][0] = 'other_context'
+        with self.assertRaisesRegex(ValueError,
+                                    'B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW'):
+            validate_interpretation(request=self.request,
+                scan_result=self.scan_result, scan_raw_response=self.scan_raw,
+                interpretation=second,
+                raw_response=canonical_json_bytes(value=answer), source=self.source)
+
+    def test_scanned_uncertainty_cannot_be_silently_promoted(self):
+        scan_response = {**self.scan_response, 'unresolved_refs': [self.ref]}
+        scan_raw = canonical_json_bytes(value=scan_response)
+        scan_result = validate_scan(request=self.request,
+            scan_request_value=self.scan, raw_response=scan_raw)
+        second = interpretation_request(request=self.request,
+            scan_result=scan_result, scan_raw_response=scan_raw)
+        with self.assertRaisesRegex(ValueError, 'SCAN_UNRESOLVED_LOST'):
+            validate_interpretation(request=self.request, scan_result=scan_result,
+                scan_raw_response=scan_raw, interpretation=second,
+                raw_response=canonical_json_bytes(value=self.interpretation_response),
+                source=self.source)
+
+    def test_program_proved_physical_quantity_cannot_be_scanned_as_background(self):
+        from tests.vnext.test_capacity_utilization_source import quantity_source
+        from vnext.capacity_program_roles import program_source
+        from vnext.capacity_semantic_review import requests_from_source
+        source, _ = quantity_source(
+            '<p>For fiscal year 2025, we produced 80 widgets worldwide.</p>')
+        source = program_source(source)
+        base = requests_from_source(source)[0]
+        request = upgrade_request(base, compact=True, role_labels=True,
+                                  relevance_scope=True)
+        owned = request['program_quantity_contract']['verified_quantity_roles']
+        self.assertEqual(len(owned), 1)
+        ref = 'B' + str(owned[0]['source_index'])
+        scan = scan_request(request)
+        self.assertIn(ref, scan['scan_contract']['program_accounted_refs'])
+        empty = {'units_reviewed': list(range(len(request['units']))),
+                 'candidate_refs': [], 'unresolved_refs': []}
+        validate_scan(request=request, scan_request_value=scan,
+            raw_response=canonical_json_bytes(value=empty))
+        with self.assertRaisesRegex(ValueError, 'PROGRAM_OWNED_DUPLICATED'):
+            validate_scan(request=request, scan_request_value=scan,
+                raw_response=canonical_json_bytes(value={**empty,
+                    'candidate_refs': [ref]}))
 
     def test_scan_rejects_omitted_units_wrong_refs_and_candidate_overflow(self):
         changes = [
@@ -111,6 +213,32 @@ class CapacityTwoStageTest(unittest.TestCase):
         self.assertFalse(result['model_relevance_proven'])
         self.assertFalse(result['absence_established'])
         self.assertFalse(result['native_credit'])
+        empty_raw = canonical_json_bytes(value={**self.scan_response,
+            'candidate_refs': []})
+        second = interpretation_request(request=self.request, scan_result=result,
+            scan_raw_response=empty_raw)
+        missed = deepcopy(self.interpretation_response)
+        missed['findings'] = []
+        missed['units'][self.owner]['unresolved'] = ['SCAN_OMISSION:' + self.ref]
+        with self.assertRaisesRegex(ValueError, 'B13_TWO_STAGE_UNRESOLVED'):
+            validate_interpretation(request=self.request, scan_result=result,
+                scan_raw_response=empty_raw, interpretation=second,
+                raw_response=canonical_json_bytes(value=missed), source=self.source)
+
+    def test_scan_stage_receipt_has_no_metric_result_credit(self):
+        plan = {key: content_hash(value=key) for key in
+            ('selected_representation_hash', 'ai_invocation_plan_id',
+             'source_identity_hash', 'task_contract_hash')}
+        draft = build_scan_acceptance(prepared=SimpleNamespace(
+            source_bytes=canonical_json_bytes(value=self.source),
+            request_bytes=canonical_json_bytes(value=self.scan)),
+            plan=plan, response_body=self.scan_raw)
+        scan = draft['candidate_record']['selected']['source_scan']
+        self.assertFalse(scan['native_credit'])
+        self.assertFalse(scan['absence_established'])
+        self.assertFalse(scan['model_relevance_proven'])
+        self.assertEqual(draft['evidence_status'], 'PASS')
+        self.assertNotIn('result', draft['candidate_record']['selected'])
 
     def test_second_stage_rejects_unscanned_findings_and_missing_candidate(self):
         second = interpretation_request(request=self.request,
@@ -129,6 +257,13 @@ class CapacityTwoStageTest(unittest.TestCase):
                 scan_raw_response=self.scan_raw,
                 interpretation=second, raw_response=canonical_json_bytes(value=outside),
                 source=self.source)
+        from vnext.capacity_two_stage import _reference_inventory
+        other_ref = next(ref for ref in _reference_inventory(self.request)
+                         if ref != self.ref)
+        outside['findings'][0][3] = [other_ref]
+        with self.assertRaisesRegex(ValueError, 'FINDING_OUTSIDE_SCAN'):
+            validate_response(request=second,
+                raw_response=canonical_json_bytes(value=outside), source=self.source)
 
     def test_no_rebinding_or_unverified_scan_result(self):
         changed = deepcopy(self.scan)
@@ -156,6 +291,7 @@ class CapacityTwoStageTest(unittest.TestCase):
                 interpretation_request(request=self.request, scan_result=changed,
                     scan_raw_response=canonical_json_bytes(value={**self.scan_response,
                         'candidate_refs': first_two}))
+
 
 
 if __name__ == '__main__':

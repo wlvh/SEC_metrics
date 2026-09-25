@@ -152,19 +152,29 @@ def original_program_records(*,source,raw_bytes_by_id):
     return quantity_contract(units=source['units'],period=source['prepared_annual_input']['table_input']['target_period'],scope=scope)
 
 
-def verify_original_program_assessment(*,source,assessment,raw_bytes_by_id):
+def verify_original_program_assessment(*,source,assessment,raw_bytes_by_id,actual_requests=None):
     """The same original-source proof check serves text and numeric Runs."""
     from .native_unit_index import reconstruct_requests,restore_base_request
     from .capacity_semantic_review import _restore_units
     original=original_program_records(source=source,raw_bytes_by_id=raw_bytes_by_id)
     need(not original['implementation_unresolved'],'B13_PROGRAM_ORIGINAL_SOURCE_IMPLEMENTATION_UNRESOLVED')
-    requests=reconstruct_requests(source,assessment.get('native_request_variants'))
+    if actual_requests is None:
+        requests=reconstruct_requests(source,assessment.get('native_request_variants'))
+    else:
+        from .native_unit_index import validate_request_partition
+        requests=actual_requests
+        need(validate_request_partition(source, requests)==assessment.get('native_request_variants'),
+             'B13_PROGRAM_ORIGINAL_REQUEST_PARTITION_CHANGED')
     need([r['request_id'] for r in requests]==assessment['required_request_ids']
          and [r['request_id'] for r in requests]==[r['request_id'] for r in assessment['completed']],
          'B13_PROGRAM_ORIGINAL_REQUEST_SET_CHANGED')
     proofs=[];native=[]
     for request,row in zip(requests,assessment['completed']):
         base=restore_base_request(request) if 'indexed_unit_contract' in request else request
+        from .capacity_reference_contract import SCANNED_VERSION
+        if base.get('source_reference_contract', {}).get('version') == SCANNED_VERSION:
+            from .capacity_two_stage import restore_prior_interpretation_request
+            base=restore_prior_interpretation_request(base)
         contract,program=request_contract(units=_restore_units(base['units'],base['shared_source_dictionaries']),
             period=base['target_period'],scope=base.get('quantity_scope_context'),complete=original)
         need(base['program_quantity_contract']==contract,'B13_PROGRAM_REQUEST_ORIGINAL_PROOFS_CHANGED')

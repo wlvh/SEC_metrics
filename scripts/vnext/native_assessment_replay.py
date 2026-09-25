@@ -17,7 +17,19 @@ from .normal_source_authority import ROOT
 from .sources import resolve_repository_file
 
 
-def _acceptor(request):
+def _acceptor(request, path):
+    if request.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST':
+        from .capacity_two_stage import build_scan_acceptance
+        return build_scan_acceptance
+    from .capacity_reference_contract import SCANNED_VERSION
+    if request.get('source_reference_contract', {}).get('version') == SCANNED_VERSION:
+        from .capacity_two_stage import build_interpretation_acceptance
+        proof = request['two_stage_contract']['scan_execution_proof']
+        ordinal = proof['scan_ordinal']
+        need(type(ordinal) is int and 0 < ordinal < int(path.name),
+             'B13_TWO_STAGE_SCAN_ORDER_INVALID')
+        return lambda **kwargs: build_interpretation_acceptance(
+            scan_path=path.parent / ('%04d' % ordinal), **kwargs)
     if request['metric_id'] == 'B13':
         from .capacity_native_assessment import build_acceptance
     else:
@@ -149,7 +161,8 @@ def replay_native_response(*, prepared, path):
             # validation-only original view, not from a new invocation plan.
             with control._successor_plan_context(repo_root=ROOT, authority=prepared.authority):
                 success = control.load_successful_response(workspace_dir=path, plan=plan, _historical_view=view)
-    expected = _acceptor(request)(prepared=prepared, plan=plan, response_body=success['response_body'])
+    expected = _acceptor(request, path)(prepared=prepared, plan=plan,
+                                       response_body=success['response_body'])
     revalidation = revalidation_receipt(prepared=prepared, plan=plan,
         original=success['acceptance_receipt'], expected=expected)
     return {'plan': plan, 'success': success, 'revalidation': revalidation}

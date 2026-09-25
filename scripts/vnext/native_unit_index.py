@@ -134,14 +134,20 @@ def validate_request_partition(source, actual_requests):
         if actual==original:
             variants.append(BASE)
         elif 'source_reference_contract' in actual:
-            from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, ROLE_VERSION, RELEVANCE_VERSION, upgrade_request as reference_request
+            from .capacity_reference_contract import VERSION as REFERENCE_VERSION, COMPACT_VERSION, ROLE_VERSION, RELEVANCE_VERSION, SCANNED_VERSION, upgrade_request as reference_request
             version=actual['source_reference_contract'].get('version')
-            need(version in {REFERENCE_VERSION,COMPACT_VERSION,ROLE_VERSION,RELEVANCE_VERSION} and
-                 actual==reference_request(original,
-                    compact=version in {COMPACT_VERSION,ROLE_VERSION,RELEVANCE_VERSION},
-                    role_labels=version in {ROLE_VERSION,RELEVANCE_VERSION},
-                    relevance_scope=version==RELEVANCE_VERSION),
-                 'NATIVE_REQUEST_VARIANT_NOT_SOURCE_BOUND')
+            if version == SCANNED_VERSION:
+                from .capacity_two_stage import restore_prior_interpretation_request
+                need(restore_prior_interpretation_request(actual) == reference_request(original,
+                     compact=True, role_labels=True, relevance_scope=True),
+                     'NATIVE_REQUEST_VARIANT_NOT_SOURCE_BOUND')
+            else:
+                need(version in {REFERENCE_VERSION,COMPACT_VERSION,ROLE_VERSION,RELEVANCE_VERSION} and
+                     actual==reference_request(original,
+                        compact=version in {COMPACT_VERSION,ROLE_VERSION,RELEVANCE_VERSION},
+                        role_labels=version in {ROLE_VERSION,RELEVANCE_VERSION},
+                        relevance_scope=version==RELEVANCE_VERSION),
+                     'NATIVE_REQUEST_VARIANT_NOT_SOURCE_BOUND')
             variants.append(version)
         else:
             need(actual==upgrade_request(original), 'NATIVE_REQUEST_VARIANT_NOT_SOURCE_BOUND')
