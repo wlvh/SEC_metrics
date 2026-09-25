@@ -101,8 +101,16 @@ def main():
         report["public_row"] = {"status": rendered["row"]["status"],
                                 "value": rendered["row"]["value"],
                                 "period_end": rendered["row"]["period_end"],
+                                "notes": rendered["row"]["notes"],
                                 "evidence_count": len(rendered["evidence"]),
-                                "row_hash": rendered["receipt"]["row_hash"]}
+                                "row_hash": rendered["receipt"]["row_hash"],
+                                "semantic_assessment_mode":
+                                    rendered["receipt"].get("semantic_assessment_mode")}
+        # A row built on synthetic outputs has to say so on the row and in its
+        # receipt; one that did not would read like a model's review.
+        report["recorded_mode_marked"] = (
+            "recorded test responses" in rendered["row"]["notes"]
+            and rendered["receipt"].get("semantic_assessment_mode") == "RECORDED_TEST_ONLY")
     # The journal entry is removed before the cold read: a recorded Run must
     # replay from what its data root carries, not from the checkout that made it.
     session.discard()
@@ -116,11 +124,12 @@ def main():
     report["cold_read_matches"] = (
         "error" not in cold and cold["run_id"] == report["run"]["run_id"]
         and cold["result_id"] == report["run"]["result_id"] and cold["status"] == "FROZEN")
+    ok = report["cold_read_matches"] and report["recorded_mode_marked"]
     text = json.dumps(report, indent=1, sort_keys=True, ensure_ascii=False)
     print(text)
     if output is not None:
         output.write_text(text + "\n", encoding="utf-8")
-    return 0 if report["cold_read_matches"] else 1
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

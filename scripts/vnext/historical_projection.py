@@ -47,6 +47,10 @@ def _claims(prepared):
 
 
 ROW_BUNDLE_NAME = "row_receipt.json"
+# The two reason codes the ordinary renderer renders as a defined-scope absence
+# (ordinary_projection); only D04 reaches a historical text route today.
+DEFINED_ABSENCE_REASONS = frozenset({"B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE",
+                                     "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE"})
 ROW_BUNDLE_RECORD_TYPE = "HISTORICAL_PERIOD_ROW_BUNDLE"
 
 
@@ -180,11 +184,40 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
             result=result, trace=trace, company=company, spec=view, baseline_row=baseline,
             indexes=indexes, fiscal_year=str(period["fiscal_year"]),
             metric_fields=publication.METRIC_FIELDS)
-    if text_route:
+    # Only a Run input that carries a registered assessment has a review mode;
+    # a document-text component's fields are not asked.
+    semantic_mode = (prepared["component"]["mode"]
+                     if prepared.get("registered_assessment") is not None else None)
+    if text_route and result["reason_code"] in DEFINED_ABSENCE_REASONS:
+        # D04's "no going-concern doubt disclosed" carries no text payload, so the
+        # item-count invariant below has nothing to count. The ordinary renderer
+        # has an arm for exactly this, and it is reused rather than restated:
+        # project_defined_absence re-derives the candidate from the complete
+        # source, refuses to state an absence unless it selects nothing, and
+        # emits one evidence row per reviewed document. It reads three fields
+        # of the ordinary case; the historical case holds the same objects, so
+        # they are handed over under the ordinary names. Found by the first
+        # end-to-end D04 Run, which froze and then could not render.
+        from .capacity_run import project_defined_absence
+        from .historical_semantic_results import prepare_historical_semantic_case
+        semantic = prepare_historical_semantic_case(
+            repo_root=data_root, company_id=manifest["company_id"], metric_id=metric,
+            period_selection=case["period_selection"])
+        # The ordinary case's status for D04 is TEXT_QUAL on both branches
+        # (capacity_run: NOT_AVAILABLE_SEC only for B13's absence).
+        row, evidence = project_defined_absence(
+            case={"registered_input": semantic["registered"],
+                  "selection": {"status": "TEXT_QUAL"},
+                  "text_arguments": {"compiled_spec": spec, **semantic["text_arguments"]}},
+            result=result, row=row, company=company)
+        _need(len(evidence) == len(semantic["text_arguments"]["source"]["documents"]),
+              "HISTORICAL_DEFINED_ABSENCE_EVIDENCE_SET_CHANGED")
+    elif text_route:
         # The row and its evidence come from the shared projector, exactly as on
         # the current route: a disclosed item is its own evidence row, so there
         # is no claim to look up and no source cell to quote. The invariant to
         # assert is ordinary_projection's - every published item reaches the row.
+        _need(result["text_payload"] is not None, "HISTORICAL_NULL_TEXT_PROJECTION_UNSUPPORTED")
         _need(len(evidence) == len(result["text_payload"]["items"]),
               "HISTORICAL_TEXT_EVIDENCE_SET_CHANGED")
     elif scope_answer:
@@ -259,6 +292,12 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
     if annual["fiscal_year_label_resolution"]["metadata_conflict_retained"]:
         row["notes"] += (" Fiscal label follows the explicit issuer definition; original "
                          "DEI/Company Facts labels remain in the source binding.")
+    # A row built on a recorded (test) review must say so, as the ordinary
+    # renderer's does; without it a synthetic assessment's row would read like
+    # one a model produced.
+    if semantic_mode == "RECORDED_TEST_ONLY":
+        row["notes"] += (" Source classifications use recorded test responses; no real model "
+                         "execution credit.")
     admission = prepared["source_admission"]
     recorded = admission["source_credit"] == "RECORDED_TEST_ONLY"
     # Same two arms the ordinary renderer has. Only the first was ported, which
@@ -289,6 +328,8 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
                "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
                "calls": {"provider": 0, "paid": 0, "sec": 0},
                "production_authorized": False}
+    if semantic_mode is not None:
+        receipt["semantic_assessment_mode"] = semantic_mode
     # And the receipt carries the acquisition identity for the same reason the
     # ordinary one does: a row that cost requests must be readable as such.
     if recorded:

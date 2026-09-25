@@ -177,6 +177,13 @@ AUTHORITY_ADDITIONS = (
     # so the body already was in effect; the file is named because a Run of
     # this generation opens it, and the list is what a Run opens.
     "docs/evidence/issue_28_prb_policy_revision.json",
+    # Rendering a D04 "no doubt disclosed" row reuses the ordinary renderer's
+    # defined-absence arm, capacity_run.project_defined_absence. Measured by
+    # rendering a frozen D04 Run in a fresh process: these two modules load and
+    # nothing else unbound does (capacity_run imports capacity_assessment_input
+    # at module scope; its other imports sit in functions this path skips).
+    "scripts/vnext/capacity_run.py",
+    "scripts/vnext/capacity_assessment_input.py",
 )
 
 # Three files the parent already binds, whose bytes a historical Run needs to be

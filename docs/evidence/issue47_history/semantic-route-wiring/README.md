@@ -34,7 +34,7 @@ live 会话按名拒绝，理由有两条且都写出来：
 ## 验证
 
 - 仓库树：`tests/vnext/test_historical_semantic_routes.py` 21 个用例（来源逐字节差分、登记/加载/拒绝、Run 输入形状、live 按名拒绝）；覆盖表与期间结果回归 80 个用例通过。
-- 运行树端到端（登记→安装→原生 Run→冻结→独立进程冷读→公共行）：`recorded_d04_run.py`，待正在跑的批次结束后在固定运行候选里实测，结果写入本目录。
+- 运行树端到端（登记→安装→原生 Run→冻结→公共行→独立进程冷读）：`recorded_d04_run.py`，Marriott FY2023 实测见 `recorded-d04-marriott-2023.json`。**第一次跑在渲染公共行处失败**：Run 已冻结，但历史渲染器假设每个文本结果都有 payload，而 D04 的"定义范围内无疑虑披露"没有；普通渲染器为此有一个分支（`capacity_run.project_defined_absence`，它先重推候选、候选为空才陈述缺失，并按审阅过的每份文档出一条证据行），历史渲染器没有移植。同一处还缺普通渲染器的另一件事：**用记录测试响应得出的行必须在行上和收据里写明**，否则合成评估的行读起来像模型给的。两处都已补上（`historical_projection`）。修后：默认 LIVE 安装按名拒绝（`HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE`），RECORDED 登记 4 个请求、提议分支为定义范围内缺失，Run `FROZEN`（`WITHHELD` / `D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE`），公共行 `TEXT_QUAL`、1 条范围检查证据、注明记录测试响应，收据 `semantic_assessment_mode: RECORDED_TEST_ONLY`，另一进程冷读同 run_id 同 result_id，零调用。脚本现在把"行与收据标明记录模式"作为通过条件之一。
 
 ## 不主张
 
