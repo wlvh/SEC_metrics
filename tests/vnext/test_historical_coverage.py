@@ -325,6 +325,40 @@ class HistoricalCoverageTest(unittest.TestCase):
         self.assertEqual(2, matrix["dimension_counts"]["native_run_receipt"])
         self.assertEqual(1, matrix["dimension_counts"]["verified_outcome"])
 
+    def test_a_coordinate_entry_withdraws_nothing_where_nothing_was_produced(self):
+        """A coordinate-level defect attaches to a result, not to a position.
+
+        The register's C02 entries are coordinate-level, and the first frame
+        read after they were committed counted one at Macy's in a matrix that
+        held no Run at all - what is known about a route reported as a
+        withdrawn value. The same entry still withdraws the result once a Run
+        at that coordinate exists, so the two halves are asserted together.
+        """
+        register = [{"defect_id": "COORDINATE", "company_id": "macys", "metric_id": "B02",
+                     "period_end": MACYS_PERIOD, "result_id": None,
+                     "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED"}]
+        with original_sources_only(), \
+                patch("vnext.historical_coverage.known_result_defects",
+                      return_value=register):
+            empty = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"], years=5)
+        row = next(p for p in empty["positions"]
+                   if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B02")
+        self.assertIsNone(row["known_content_defect"])
+        self.assertEqual(0, empty["dimension_counts"]["known_content_defect"])
+        with TemporaryDirectory(prefix="coverage-coordinate-entry-") as temporary:
+            root = Path(temporary)
+            _write_run(root / "run-B02", company_id="macys", metric_id="B02",
+                       period_end=MACYS_PERIOD, result_id="sha256:" + "b" * 64)
+            with original_sources_only(), \
+                    patch("vnext.historical_coverage.known_result_defects",
+                          return_value=register):
+                ran = build_coverage_matrix(repo_root=ROOT, company_ids=["macys"],
+                                            years=5, runs_root=root)
+        row = next(p for p in ran["positions"]
+                   if p["report_end"] == MACYS_PERIOD and p["metric_id"] == "B02")
+        self.assertEqual("COORDINATE", row["known_content_defect"])
+        self.assertFalse(row["verified_outcome"])
+
     def test_a_missing_identity_hash_is_not_a_passed_check(self):
         """"Found no conflict" and "was not asked to check" are different answers.
 

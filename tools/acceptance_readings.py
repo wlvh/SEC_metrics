@@ -44,11 +44,18 @@ TEXT = EVIDENCE + "d02-both-directions-read.json"
 HEADINGS = EVIDENCE + "d01-headings-read-from-bytes.json"
 HEADINGS_FROM_BYTES = EVIDENCE + "d01-marriott-repaired-read.json"
 HEADINGS_PARAMOUNT_REPAIRED = EVIDENCE + "d01-paramount-repaired-read.json"
-D01_READINGS = (HEADINGS, HEADINGS_FROM_BYTES, HEADINGS_PARAMOUNT_REPAIRED)
+# Paramount's predecessor year, read off the predecessor's own 10-K (CIK 813828)
+# against the result of the twelve-period batch.
+HEADINGS_PARAMOUNT_PREDECESSOR = EVIDENCE + "d01-paramount-predecessor-2024-read.json"
+D01_READINGS = (HEADINGS, HEADINGS_FROM_BYTES, HEADINGS_PARAMOUNT_REPAIRED,
+                HEADINGS_PARAMOUNT_PREDECESSOR)
 RPO = EVIDENCE + "rpo-read.json"
 COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
+# B06 read off each filing's balance sheet and lease note by
+# tools/read_debt_to_equity.py, which imports none of the debt cascade.
+DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
 READINGS = (CROSS, LODGING, EVENTS, E01_EIGHT_O_ONES, GOVERNANCE, TEXT, *D01_READINGS, RPO,
-            COMPENSATION)
+            COMPENSATION, DEBT_TO_EQUITY)
 # The readings key some positions by a label only. The label is what the
 # reading recorded, and this is the period each label names.
 PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
@@ -230,6 +237,15 @@ def positions(*, repo_root: Path, path: str, body):
                 metric_id="D01", period_end=case["period_end"],
                 published=case["value_sha256"], verdict=case["verdict"],
                 filings=[case["accession"]] if case.get("accession") else []))
+    elif path == DEBT_TO_EQUITY:
+        for label, case in sorted(body["per_position"].items()):
+            if case.get("published") is None:
+                continue
+            accession, _ = accession_of_document(repo_root=repo_root, document=case["document"])
+            found.append(_position(
+                reading=path, label=label, slot=case, company_id=case["company_id"],
+                metric_id="B06", period_end=case["period_end"], published=case["published"],
+                verdict=case["verdict"], filings=[accession]))
     elif path == RPO:
         found.append(_position(
             reading=path, label="salesforce-2026", slot=body,

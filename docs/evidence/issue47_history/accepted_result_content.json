@@ -2568,6 +2568,262 @@
    "what_this_does_not_establish": "what is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_B06_ENPHASE_2025",
+   "accepted_value": "1.107959077222837051285943352",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:2983956c0931dd39384f3e2ebeb6fff4cef9f770a6d12b5d9acc0c0e4b85d26c",
+     "run_id": "run:historical-period:cacb2f5baf30b5b36a0b1b70dd6e152a580a0d55a88ad6e1dc2361164486d510"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-26-000013"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:c094c3cfbb647d922ab7b2d64d3a5b548a56f12de5a92117ee5d4777f8f3e957",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
+   "method": "the filing's own balance sheet and lease note, read by tools/read_debt_to_equity.py, which imports none of the debt cascade and reads the published value only to compare: every balance sheet row whose caption names debt, borrowings or commercial paper and not a lease, each by its inline XBRL fact at the period end; finance leases added only where the filing classifies them under captions other than debt (Macy's accounts payable and long-term lease liabilities, Salesforce's accrued and other noncurrent liabilities), not where its debt table lists them (Paramount) or it states it has none (Enphase); over the parent's total stockholders' equity.",
+   "metric_id": "B06",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "debt_rows": [
+     {
+      "caption": "Debt, current",
+      "concept": "us-gaap:LongTermDebtCurrent",
+      "value": "632183000"
+     },
+     {
+      "caption": "Debt, non-current",
+      "concept": "us-gaap:LongTermDebtNoncurrent",
+      "value": "572194000"
+     }
+    ],
+    "document": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+    "equity_row": {
+     "caption": "Total stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "1087023000"
+    },
+    "finance_leases": {
+     "add": "0",
+     "evidence": "does not have any finance leases",
+     "treatment": "NONE"
+    }
+   },
+   "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B06_MACYS_2026",
+   "accepted_value": "0.5030864197530864197530864198",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:990fb4fc163a01a5e8d2b78484671a96cf2d1b2380630d8d40d3920fd6a1b5bc",
+     "run_id": "run:historical-period:d14bdc9356e119e929d505aa2c6f1dc03e9af29d434623725f724a8f10280d70"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-26-021721"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2026-01-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:79ca5c03e6b51ccf3e4adbccf422a171e3fdfab2a0cadcea8750d5ac1799140d",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
+   "method": "the filing's own balance sheet and lease note, read by tools/read_debt_to_equity.py, which imports none of the debt cascade and reads the published value only to compare: every balance sheet row whose caption names debt, borrowings or commercial paper and not a lease, each by its inline XBRL fact at the period end; finance leases added only where the filing classifies them under captions other than debt (Macy's accounts payable and long-term lease liabilities, Salesforce's accrued and other noncurrent liabilities), not where its debt table lists them (Paramount) or it states it has none (Enphase); over the parent's total stockholders' equity.",
+   "metric_id": "B06",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "debt_rows": [
+     {
+      "caption": "Short-term debt",
+      "concept": "us-gaap:DebtCurrent",
+      "value": "0"
+     },
+     {
+      "caption": "Long-Term Debt",
+      "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+      "value": "2432000000"
+     }
+    ],
+    "document": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+    "equity_row": {
+     "caption": "Total Shareholders' Equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "4860000000"
+    },
+    "finance_leases": {
+     "add": "13000000",
+     "concept": "us-gaap:FinanceLeaseLiability",
+     "evidence": [
+      "Accounts payable and accrued liabilities",
+      "Long-Term Lease Liabilities"
+     ],
+     "treatment": "OUTSIDE_THE_DEBT_ROWS"
+    }
+   },
+   "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B06_PARAMOUNT_2025",
+   "accepted_value": "1.168049260241169930727785855",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:d2453e8b020075cc7165ade36c17448e387e0e0b25ca484dcdd5286e5265d17e",
+     "run_id": "run:historical-period:cae5b5322046f52fab641ebdb28361c217eaa453bb069a0214431f63600e4f79"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "2041610"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0002041610-26-000011"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:4ad7f5e5ab1925de7d4113eb28f1a3a5fdd3f4219c95cc0604c6e454eb3db744",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
+   "method": "the filing's own balance sheet and lease note, read by tools/read_debt_to_equity.py, which imports none of the debt cascade and reads the published value only to compare: every balance sheet row whose caption names debt, borrowings or commercial paper and not a lease, each by its inline XBRL fact at the period end; finance leases added only where the filing classifies them under captions other than debt (Macy's accounts payable and long-term lease liabilities, Salesforce's accrued and other noncurrent liabilities), not where its debt table lists them (Paramount) or it states it has none (Enphase); over the parent's total stockholders' equity.",
+   "metric_id": "B06",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "debt_rows": [
+     {
+      "caption": "Debt",
+      "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+      "value": "433000000"
+     },
+     {
+      "caption": "Long-term debt",
+      "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+      "value": "13225000000"
+     }
+    ],
+    "document": "evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm",
+    "equity_row": {
+     "caption": "Total Parent stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "11693000000"
+    },
+    "finance_leases": {
+     "add": "0",
+     "evidence": "Obligations under finance leases 3 —",
+     "treatment": "INSIDE_THE_DEBT_ROWS"
+    }
+   },
+   "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B06_SALESFORCE_2026",
+   "accepted_value": "0.2531872442595786412363464205",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:c2e619af76783a5329cdfecd9245df3107f4482540857a88b9b2ec0e71d71696",
+     "run_id": "run:historical-period:03a764e307468c825eee84adfe126f335d8bf4875aa99e5b7f34b84797be09ab"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1108524"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-26-000060"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2026-01-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
+   "method": "the filing's own balance sheet and lease note, read by tools/read_debt_to_equity.py, which imports none of the debt cascade and reads the published value only to compare: every balance sheet row whose caption names debt, borrowings or commercial paper and not a lease, each by its inline XBRL fact at the period end; finance leases added only where the filing classifies them under captions other than debt (Macy's accounts payable and long-term lease liabilities, Salesforce's accrued and other noncurrent liabilities), not where its debt table lists them (Paramount) or it states it has none (Enphase); over the parent's total stockholders' equity.",
+   "metric_id": "B06",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "debt_rows": [
+     {
+      "caption": "Debt, current",
+      "concept": "us-gaap:ConvertibleDebtCurrent",
+      "value": "4000000000"
+     },
+     {
+      "caption": "Noncurrent debt",
+      "concept": "us-gaap:LongTermDebtNoncurrent",
+      "value": "10439000000"
+     }
+    ],
+    "document": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+    "equity_row": {
+     "caption": "Total stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "59142000000"
+    },
+    "finance_leases": {
+     "add": "535000000",
+     "concept": "us-gaap:FinanceLeaseLiability",
+     "evidence": [
+      "Accrued expenses and other liabilities",
+      "Other noncurrent liabilities"
+     ],
+     "treatment": "OUTSIDE_THE_DEBT_ROWS"
+    }
+   },
+   "what_this_does_not_establish": "that the balance sheet's debt rows are every borrowing the definition means - a borrowing presented under another caption would be missed by both this reading and the arithmetic it checks - nor that the parent's equity rather than total equity is the right divisor where noncontrolling interests exist (Paramount), which is the approved definition's 'shareholders' equity' as read here, nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_B07_ENPHASE_2025",
    "accepted_value": "34.84317628843176288431762884",
    "checked_identity": {
@@ -6251,6 +6507,52 @@
      "UNDERLINE:STANDALONE": 4
     },
     "headings": 38
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_D01_PARAMOUNT_2024",
+   "accepted_value": "sha256:a9f74b62f75070dad9c568917027b1dd48c2d8ce0b679196511c836682a50e42",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+     "result_id": "sha256:fb7156e0f3b5386673b33f283e5c89711f76c0c45365085c0bf2f09640cd7ac8",
+     "run_id": "run:historical-period:f8a3b455b2c35cf072e2c5594481c08458dfed3fb1135d420580a1d25a1f7d15"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "813828"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000813828-25-000005"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-paramount-predecessor-2024-read.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "accession": "0000813828-25-000005",
+    "document": "evidence/request_attempts/5e/5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a/para-20241231.htm",
+    "heading_shapes": {
+     "BOLD:LEADS_INTO_ITS_BODY": 1,
+     "BOLD:STANDALONE": 58
+    },
+    "headings": 51
    },
    "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
@@ -10226,12 +10528,14 @@
   "docs/evidence/issue47_history/content-acceptance/d01-headings-read-from-bytes.json",
   "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
   "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json",
+  "docs/evidence/issue47_history/content-acceptance/d01-paramount-predecessor-2024-read.json",
   "docs/evidence/issue47_history/content-acceptance/rpo-read.json",
-  "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json"
+  "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json",
+  "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json"
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "not_here_and_why": {
-  "B06": "the three delivered positions all reproduce from their filings' own facts, but two of them were fitted - solved backwards from the published value - and the rule cannot be stated from the filing alone: Salesforce carries the inputs of two approved debt models that give different answers, and which applies is decided by the note structure the cascade reads. See docs/evidence/issue47_history/content-acceptance/b06-not-independently-readable.json.",
+  "B06": "all four delivered values are read off their filings' balance sheets and lease notes and accepted (content-acceptance/debt-to-equity-read.json). This entry used to say two of them had been solved backwards from the published value and that Salesforce carried the inputs of two debt models with different answers; the reading now decides finance leases from where the filing itself classifies them, before it looks at the published value, and Salesforce's lease note puts them under accrued and other noncurrent liabilities - outside debt - so the definition's 'finance leases included' answers which model applies. Lumen and Marriott 2024/2025 are NOT_MEANINGFUL with no value to accept.",
   "C03": "all nine are read. The four that previously read as 'no saved proxy reports the target period' were a defect in the reading, not a gap in the material: it globbed *def14a*.htm, and only one of the ten companies names its proxy that way. Earlier periods remain unread and that IS a source gap - each registrant declares 16 to 33 DEF 14A filings and exactly one is on disk.",
   "C04": "all six positions that carry a value are read. The five that previously reported the previous year's 10-K as not readable were three defects in the reading: it demanded the prior primary HTML where the route reads any document of that accession carrying dei facts, it parsed the accession out of an error string it had itself truncated, and it computed the prior period end by replacing the year - which for a 52/53-week filer names a date the calendar never had. Southwest and Salesforce have no published C04 value at all.",
   "D02 for four of the eleven": "Pfizer's 96 excerpts, Lumen's 41, Paramount's 28 and Enphase's 18 were read whole and found wrong - two, one, two and one blocks respectively - so each is a registered defect rather than an unread set. The other seven have been read in both directions and are accepted.",
@@ -10239,7 +10543,6 @@
   "everything else": "no reading has been made.",
   "ford B07 and lumen B07": "operating income is negative, the definition says NOT_MEANINGFUL, and the reading agrees by producing a negative ratio where the route published none. There is no value to accept.",
   "marriott 2023 B02 and B03": "that period's source gaps.",
-  "pfizer B03 and B07": "neither the primary document nor the accession's facts carry a consolidated OperatingIncomeLoss, which both need, so the route reconstructed it and this reading does not.",
   "salesforce B03": "read, and wrong: the D&A the chain takes is DepreciationDepletionAndAmortization $1.2 billion, which the filing tags on 'Depreciation and amortization of fixed assets' - a subtotal that leaves out $1,687 million of acquired-intangible amortization. This entry used to say the primary document does not tag that concept and that the route was right; the document tags it, and the earlier reading did not find it. Registered as B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL; see b03-depreciation-scope/finding.json."
  },
  "purpose": "The third delivery layer. A frozen Run with a public row says the route computed something and the bytes are bound; it does not say the number is right. This is where a reading that did not come from the route says so, for one value at a time.",
@@ -10262,6 +10565,12 @@
    "positions_examined": 3,
    "positions_examined_is_null_because": null
   },
+  "docs/evidence/issue47_history/content-acceptance/d01-paramount-predecessor-2024-read.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:b1f1068da81370ef3baec5064a56619950aa9a0a362e15a5e1c585c3a3526f63",
+   "positions_examined": 1,
+   "positions_examined_is_null_because": null
+  },
   "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json": {
    "acceptances_contributed": 1,
    "content_sha256": "sha256:a2fe13c634e9616b172014a0dcced1be94db4886e8f123499af554b194629d1b",
@@ -10272,6 +10581,12 @@
    "acceptances_contributed": 8,
    "content_sha256": "sha256:1990f2d6e988f338b2ec9a20e640dedefc2d205d7479662329b6a303248c92c2",
    "positions_examined": 8,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json": {
+   "acceptances_contributed": 4,
+   "content_sha256": "sha256:fc4a5ee13386b627fcce4764cdbc8289cefc94f080f13c6441c6fc6f5a5cb45b",
+   "positions_examined": 4,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json": {

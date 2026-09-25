@@ -372,7 +372,8 @@
      "why_out_of_scope": "a leverage-ratio covenant. The keyword is in the definition of an EBITDA add-back: 'restructuring or other business optimization programs, litigation and environmental reserves'."
     }
    },
-   "why_it_was_missing": "the first census read six filings at one period each and this issuer was not among them. Its D02 result was counted as delivered in two batches."
+   "why_it_was_missing": "the first census read six filings at one period each and this issuer was not among them. Its D02 result was counted as delivered in two batches.",
+   "other_direction_found_later": "The italic matter label 'Asbestos' (block 3249) inside the incorporated note was dropped as well; the italic-label repair admits it (d02-content-read/italic-note-labels.json). The keyword-proxy blocks still withdraw this coordinate."
   },
   {
    "company_id": "enphase_energy",
@@ -921,6 +922,25 @@
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "D02_PARAMOUNT_2024_KEYWORD_PROXY_ADMITS_TRANSACTION_COST_NOTE",
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "D02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES"
+   ],
+   "summary": "Read in both directions against the predecessor's own 10-K (CIK 813828). Of the sixteen excerpts, fifteen are the Item 3 incorporation and the incorporated 'Legal Matters' caption of Note 19 (the transaction litigation, the Section 220 demands, the asbestos and environmental claims). Block 2010 is the 'Transaction-Related Items' paragraph of the corporate-matters note: what the transaction costs were, including the stockholder-litigation settlement amounts of 2022 and 2023. It is admitted because 'litigation' appears in it; it is not the legal-proceedings or contingencies disclosure the approved source names - the same judgement as the successor year's block 2108. The other direction found the italic matter labels 'Asbestos' (2877) and 'Other' (2885) dropped; that half is repaired (d02-content-read/italic-note-labels.json).",
+   "root_cause": "Same as D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES: the _LEGAL keyword standing in for 'is this a legal-proceedings disclosure' on Item 8 blocks outside the incorporated note.",
+   "scope_measured": "All sixteen excerpts and every untaken block inside Item 3 and the incorporated caption (d02-content-read/italic-note-labels.json census).",
+   "found_by": "a both-directions reading of the FY2024 set, derived from the saved filing through the route's own text input",
+   "repair_state": "LABEL_HALF_REPAIRED_KEYWORD_PROXY_HALF_AWAITS_ITS_DECISION",
+   "why_not_repaired_yet": "The keyword proxy is the registered decision in d02-content-read/keyword-proxy-decision.json; this filing adds a sixth instance and no new criterion.",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/italic-note-labels.json"
    ]
   }
  ],

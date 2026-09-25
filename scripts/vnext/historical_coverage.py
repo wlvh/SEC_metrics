@@ -482,6 +482,13 @@ def _matching_defect(*, defects, company_id, metric_id, report_end, result, rece
             if result_id is not None and named == result_id:
                 return defect
             continue
+        # The same rule for a coordinate entry: it withdraws what the coordinate
+        # produced, so a position that produced nothing has nothing withdrawn.
+        # Without this, registering C02 at a coordinate marked that coordinate
+        # defective in a frame that holds no Run for it - a count of what is
+        # known about a route reported as a count of withdrawn values.
+        if result is None:
+            continue
         if _release_covers(defect=defect, result=result, receipt=receipt):
             continue
         if (defect.get("company_id") == company_id

@@ -196,10 +196,11 @@ SOURCE_TESTS += ("tests.vnext.test_historical_risk_headings",)
 # value's digest from the filing alone. It reads seven full 10-Ks; 5 seconds
 # measured.
 SOURCE_TESTS += ("tests.vnext.test_d01_byte_reading",)
-# Two D02 marks the frozen parse cannot see - Enphase's page-numbered footer and
-# Lumen's underlined case label - each on its filing against a control with the
-# rule off, with D03 required not to move, plus the constructed edges the
-# filings do not reach. It reads two full 10-Ks; 55 seconds measured.
+# Three D02 marks the frozen parse cannot see - Enphase's page-numbered footer,
+# Lumen's underlined case label and Paramount's italic matter labels - each on
+# its filing against a control with the rule off, with D03 required not to
+# move, plus the constructed edges the filings do not reach. It reads four
+# full 10-Ks; 162 seconds measured under a running batch.
 SOURCE_TESTS += ("tests.vnext.test_historical_d02_marks",)
 # B13 where the approved definition leaves the company out. Its load-bearing
 # case holds this route's answer to the ordinary route's, field for field and
@@ -239,6 +240,11 @@ SOURCE_TESTS += ("tests.vnext.test_governance_reading",)
 # filings: the scope section's Worldwide row rather than the first one, the
 # two RPO facts not taken, and a compensation row that must sum to its total.
 SOURCE_TESTS += ("tests.vnext.test_single_readings",)
+# The B06 reading behind four acceptances: each position re-derived from its
+# filing's balance sheet and lease note, each finance-lease branch on the filing
+# it exists for, and a lease note rewritten to classify leases under debt shown
+# not to add them twice. Reads four 10-Ks; under a second measured.
+SOURCE_TESTS += ("tests.vnext.test_debt_to_equity_reading",)
 # D04 at a pinned period: the pinned complete source held byte for byte to the
 # frozen builders with the same inputs (an earlier year, a predecessor year
 # with its Part III amendment, B13 in scope), a recorded registration carried
@@ -324,6 +330,9 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # 21 cases, five complete semantic sources; 204 seconds measured while a
     # batch held three of four cores, which is too close to the default.
     "tests.vnext.test_historical_semantic_routes": 600,
+    # Seven cases over four filings' full 10-K bytes; 162 seconds measured while
+    # a batch held three of four cores.
+    "tests.vnext.test_historical_d02_marks": 480,
 }
 
 

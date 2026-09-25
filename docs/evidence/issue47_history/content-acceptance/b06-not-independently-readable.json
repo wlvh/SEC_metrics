@@ -7,6 +7,7 @@
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "production_authorized": false,
  "record_type": "ISSUE_47_B06_CONTENT_READ_ATTEMPT",
+ "superseded_by": "content-acceptance/debt-to-equity-read.json (tools/read_debt_to_equity.py). What this record found unreadable was the reading order: components were found by solving backwards from the published value. The new reading decides finance leases from where each filing classifies them before it looks at the published value, and all four values match. This record is kept as it was written.",
  "what_the_numbers_do": {
   "enphase_energy@2025-12-31": {
    "from_the_filing": "LongTermDebtCurrent 632,183,000 + LongTermDebtNoncurrent 572,194,000 over StockholdersEquity 1,087,023,000",

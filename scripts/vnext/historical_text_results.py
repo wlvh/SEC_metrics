@@ -237,9 +237,21 @@ def _note_heading(document, section, block, raw_bytes=None):
     # from the filing's bytes, as caption_style already does for captions;
     # the parsed document is not replaced, so nothing else in it moves.
     # Measured over the eleven filings: that block is the only one it adds.
-    underlined = bool(raw_bytes is not None and "underline" in (
-        caption_style(raw_bytes=raw_bytes, block=block) or ""))
-    return bool(text and (block.get("emphasized") or underlined) and not block.get("linked")
+    #
+    # Paramount sets the matter labels of its legal note in italic alone -
+    # "Asbestos", and "Other" over the environmental and toxic-tort paragraph -
+    # with the category captions above them in bold italic, so the bold rule
+    # took the categories and dropped the labels under them. Italic is read
+    # the same way underline is. Measured over the twelve filings a D02 reads
+    # (the eleven newest-and-Marriott periods and Paramount's predecessor
+    # FY2024), the untaken blocks inside Item 3 and the incorporated notes are
+    # page numbers, contents links, running heads, one footer - and exactly
+    # three italic labels, all Paramount's: 2025's "Asbestos" and FY2024's
+    # "Asbestos" and "Other". Those three are what this adds
+    # (d02-content-read/italic-note-labels.json).
+    style = (caption_style(raw_bytes=raw_bytes, block=block) or "") if raw_bytes is not None else ""
+    marked = "underline" in style or "italic" in style
+    return bool(text and (block.get("emphasized") or marked) and not block.get("linked")
                 and re.search(r"[A-Za-z]", text) and len(text) < 12
                 and re.sub(r"\W", "", text).casefold() not in names)
 

@@ -333,10 +333,15 @@ def read_position(*, index, closure, company_id, period_end, judgements):
     # The cover's own statement of the period. The first "fiscal year ended"
     # in a filing is often a reference to an earlier report, so the cover's
     # "For the fiscal year ended" is asked for by that phrase; tag stripping
-    # can leave a space before the comma, which the pattern allows.
+    # can leave a space before the comma, which the pattern allows. The article
+    # is optional: Paramount's predecessor writes "For fiscal year ended", and
+    # requiring "the" skipped its cover and matched an exhibit list's reference
+    # to the 2021 report instead - a miss that returned a wrong year rather
+    # than nothing.
     flat = re.sub(r"\s+", " ", re.sub(r"<[^>]+>|&#160;|&nbsp;", " ",
                                       raw.decode("utf-8", "replace")))
-    cover = re.search(r"for the fiscal year ended ([A-Za-z]+) (\d{1,2}) ?, ?(\d{4})", flat, re.I)
+    cover = re.search(r"for (?:the )?fiscal year ended ([A-Za-z]+) (\d{1,2}) ?, ?(\d{4})",
+                      flat, re.I)
     cover_end = None
     if cover:
         import datetime

@@ -31,8 +31,8 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
 from acceptance_readings import (COMPENSATION, CROSS, D01_READINGS,  # noqa: E402
-                                 E01_EIGHT_O_ONES, EVENTS, GOVERNANCE, LODGING,
-                                 READINGS, RPO, TEXT, load, positions)
+                                 DEBT_TO_EQUITY, E01_EIGHT_O_ONES, EVENTS, GOVERNANCE,
+                                 LODGING, READINGS, RPO, TEXT, load, positions)
 
 REGISTER = "docs/evidence/issue47_history/accepted_result_content.json"
 
@@ -147,6 +147,11 @@ HEADINGS_LIMIT = (
 def _read_from(position):
     """The reading-specific locator an entry quotes."""
     path, case, row = position["reading"], position["case"], position["slot"]
+    if path == DEBT_TO_EQUITY:
+        return {"document": case["document"],
+                "debt_rows": case["balance_sheet"]["debt_rows"],
+                "equity_row": case["balance_sheet"]["equity_row"],
+                "finance_leases": case["finance_leases"]}
     if path == CROSS:
         return {"document": case["document"], "concepts_that_answered": case["concepts_used"]}
     if path == LODGING:
@@ -187,6 +192,8 @@ def _read_from(position):
 
 def _method_and_limit(position):
     path, metric = position["reading"], position["metric_id"]
+    if path == DEBT_TO_EQUITY:
+        return DEBT_TO_EQUITY_METHOD, DEBT_TO_EQUITY_LIMIT
     if path == CROSS:
         return STATEMENT_METHOD, STATEMENT_LIMIT
     if path == LODGING:
@@ -223,6 +230,21 @@ HEADINGS_FROM_BYTES_METHOD = (
  "before the underline repair it reports exactly the four underlined "
  "categories as read and not published in each year, and on Paramount it "
  "flags the line cut at an unbolded period.")
+DEBT_TO_EQUITY_METHOD = (
+ "the filing's own balance sheet and lease note, read by tools/read_debt_to_equity.py, "
+ "which imports none of the debt cascade and reads the published value only to compare: "
+ "every balance sheet row whose caption names debt, borrowings or commercial paper and "
+ "not a lease, each by its inline XBRL fact at the period end; finance leases added only "
+ "where the filing classifies them under captions other than debt (Macy's accounts "
+ "payable and long-term lease liabilities, Salesforce's accrued and other noncurrent "
+ "liabilities), not where its debt table lists them (Paramount) or it states it has none "
+ "(Enphase); over the parent's total stockholders' equity.")
+DEBT_TO_EQUITY_LIMIT = (
+ "that the balance sheet's debt rows are every borrowing the definition means - a "
+ "borrowing presented under another caption would be missed by both this reading and "
+ "the arithmetic it checks - nor " + "that the parent's equity rather than total equity "
+ "is the right divisor where noncontrolling interests exist (Paramount), which is the "
+ "approved definition's 'shareholders' equity' as read here, nor " + COMMON)
 RPO_METHOD = ("the filing's own inline XBRL fact for remaining performance "
               "obligation at the period end, undimensioned, against the "
               "accession-instance value the route published.")
@@ -324,10 +346,6 @@ def build_register(*, repo_root: Path):
                     "earlier reading did not find it. Registered as "
                     "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_"
                     "AS_TOTAL; see b03-depreciation-scope/finding.json.",
-  "pfizer B03 and B07": "neither the primary document nor the accession's "
-                        "facts carry a consolidated OperatingIncomeLoss, which "
-                        "both need, so the route reconstructed it and this "
-                        "reading does not.",
   "ford B07 and lumen B07": "operating income is negative, the definition says "
                             "NOT_MEANINGFUL, and the reading agrees by "
                             "producing a negative ratio where the route "
@@ -354,14 +372,16 @@ def build_register(*, repo_root: Path):
          "truncated, and it computed the prior period end by replacing the "
          "year - which for a 52/53-week filer names a date the calendar never "
          "had. Southwest and Salesforce have no published C04 value at all.",
-  "B06": "the three delivered positions all reproduce from their filings' own "
-         "facts, but two of them were fitted - solved backwards from the "
-         "published value - and the rule cannot be stated from the filing "
-         "alone: Salesforce carries the inputs of two approved debt models "
-         "that give different answers, and which applies is decided by the "
-         "note structure the cascade reads. See "
-         "docs/evidence/issue47_history/content-acceptance/"
-         "b06-not-independently-readable.json.",
+  "B06": "all four delivered values are read off their filings' balance sheets "
+         "and lease notes and accepted (content-acceptance/debt-to-equity-read.json). "
+         "This entry used to say two of them had been solved backwards from the "
+         "published value and that Salesforce carried the inputs of two debt models "
+         "with different answers; the reading now decides finance leases from where "
+         "the filing itself classifies them, before it looks at the published value, "
+         "and Salesforce's lease note puts them under accrued and other noncurrent "
+         "liabilities - outside debt - so the definition's 'finance leases included' "
+         "answers which model applies. Lumen and Marriott 2024/2025 are NOT_MEANINGFUL "
+         "with no value to accept.",
   "D02 for four of the eleven": "Pfizer's 96 excerpts, Lumen's 41, Paramount's "
     "28 and Enphase's 18 were read whole and found wrong - two, one, two and "
     "one blocks respectively - so each is a registered defect rather than an "

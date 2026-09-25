@@ -3,9 +3,10 @@
 Enphase's footer carries its page number, so no two instances are the same
 text and repetition in a scope never finds it; Lumen names each case in its
 legal note with an underlined, italic label the bold-only parse does not
-count as emphasis. Each rule is checked on its filing, against a control with
-the rule off, and on constructed blocks at the edges the filings do not reach.
-D03 is built in the same loop and is required not to move.
+count as emphasis; Paramount labels the matters in its legal note in italic
+alone. Each rule is checked on its filing, against a control with the rule
+off, and on constructed blocks at the edges the filings do not reach. D03 is
+built in the same loop and is required not to move.
 """
 import unittest
 from unittest.mock import patch
@@ -118,6 +119,53 @@ class TheUnderlinedCaseLabelTest(unittest.TestCase):
         self.assertTrue(route._note_heading(document, section, block, raw_bytes=raw))
         self.assertFalse(route._note_heading(document, section, block))
         self.assertFalse(route._note_heading(document, "ITEM_8", block, raw_bytes=raw))
+
+
+
+class TheItalicMatterLabelTest(unittest.TestCase):
+    """Paramount's italic labels, in both years its legal note carries them.
+
+    The control is the rule reading underline only, which is what it read
+    before italic was added; the difference has to be exactly the labels the
+    census found, and D03 built in the same loop must not move.
+    """
+
+    @staticmethod
+    def _underline_only(frozen):
+        """The rule as it read before: the span's style counts only if underlined.
+
+        Handing the rule no bytes leaves it the parsed emphasis alone, so the
+        bytes are handed over exactly when the span is underlined.
+        """
+        def rule(document, section, block, raw_bytes=None):
+            underlined = raw_bytes is not None and "underline" in (
+                route.caption_style(raw_bytes=raw_bytes, block=block) or "")
+            return frozen(document, section, block,
+                          raw_bytes=raw_bytes if underlined else None)
+        return rule
+
+    def _moved(self, company_id, report_end):
+        document, raw = _document(company_id, report_end)
+        after, d03_after = _sets(route.referenced_note_candidates(document=document,
+                                                                  raw_bytes=raw))
+        with patch.object(route, "_note_heading", self._underline_only(route._note_heading)):
+            before, d03_before = _sets(route.referenced_note_candidates(document=document,
+                                                                        raw_bytes=raw))
+        self.assertEqual(set(), set(before) - set(after))
+        self.assertEqual(d03_before, d03_after)
+        return {index: after[index] for index in set(after) - set(before)}
+
+    def test_the_predecessor_year_gains_its_two_labels(self):
+        self.assertEqual({2877: "Asbestos", 2885: "Other"},
+                         self._moved("paramount_skydance_paramount_global", "2024-12-31"))
+
+    def test_the_successor_year_gains_its_one(self):
+        self.assertEqual({3249: "Asbestos"},
+                         self._moved("paramount_skydance_paramount_global", "2025-12-31"))
+
+    def test_a_filing_without_italic_labels_does_not_move(self):
+        """Lumen's italic Blum is underlined too, so it was already a heading."""
+        self.assertEqual({}, self._moved("lumen_technologies", "2025-12-31"))
 
 
 if __name__ == "__main__":

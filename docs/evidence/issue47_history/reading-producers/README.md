@@ -16,7 +16,8 @@
 | `governance-read.json` | `tools/read_governance_facts.py` | `test_governance_reading` | 14 |
 | `lodging-table-read.json` | `tools/read_lodging_table.py` | `test_single_readings` | 6 |
 | `rpo-read.json`、`paramount-compensation-table-read.json` | `tools/read_single_facts.py` | `test_single_readings` | 2 |
-| D01 三份 | `tools/read_d01_headings.py` | `test_d01_byte_reading` | 11 |
+| D01 四份（含 Paramount 前身 FY2024） | `tools/read_d01_headings.py` | `test_d01_byte_reading` | 12 |
+| `debt-to-equity-read.json` | `tools/read_debt_to_equity.py` | `test_debt_to_equity_reading` | 4 |
 | `d02-both-directions-read.json` | 逐块人工判断的记录 | — | 8 |
 
 每个工具都：不导入路线的计算模块（用例按导入树断言）；已发布值从点名的运行根与 Requirement 版本经收据读取；身份在阅读当时记录（`RECORDED_AT_READING_TIME`）；已提交阅读的每个位置都能从已保存字节重算（用例逐项比对）。重新产出后登记仍是 154 条，身份字段除 `established_by` 外逐项不变。

@@ -1,0 +1,269 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "definition": "period-end carrying debt, finance leases included, over the parent's stockholders' equity (02_指标定义 B06; catalog/r5/B06_*_v4..v6 keep it)",
+ "per_position": {
+  "enphase-2025": {
+   "balance_sheet": {
+    "debt_rows": [
+     {
+      "caption": "Debt, current",
+      "concept": "us-gaap:LongTermDebtCurrent",
+      "value": "632183000"
+     },
+     {
+      "caption": "Debt, non-current",
+      "concept": "us-gaap:LongTermDebtNoncurrent",
+      "value": "572194000"
+     }
+    ],
+    "equity_row": {
+     "caption": "Total stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "1087023000"
+    }
+   },
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:2983956c0931dd39384f3e2ebeb6fff4cef9f770a6d12b5d9acc0c0e4b85d26c",
+     "run_id": "run:historical-period:cacb2f5baf30b5b36a0b1b70dd6e152a580a0d55a88ad6e1dc2361164486d510"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-26-000013"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:c094c3cfbb647d922ab7b2d64d3a5b548a56f12de5a92117ee5d4777f8f3e957",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "enphase_energy",
+   "document": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+   "equity": "1087023000",
+   "finance_leases": {
+    "add": "0",
+    "evidence": "does not have any finance leases",
+    "treatment": "NONE"
+   },
+   "period_end": "2025-12-31",
+   "published": "1.107959077222837051285943352",
+   "read": "1.107959077222837051285943352",
+   "total_debt": "1204377000",
+   "verdict": "MATCH",
+   "why": null
+  },
+  "macys-2026": {
+   "balance_sheet": {
+    "debt_rows": [
+     {
+      "caption": "Short-term debt",
+      "concept": "us-gaap:DebtCurrent",
+      "value": "0"
+     },
+     {
+      "caption": "Long-Term Debt",
+      "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+      "value": "2432000000"
+     }
+    ],
+    "equity_row": {
+     "caption": "Total Shareholders' Equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "4860000000"
+    }
+   },
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:990fb4fc163a01a5e8d2b78484671a96cf2d1b2380630d8d40d3920fd6a1b5bc",
+     "run_id": "run:historical-period:d14bdc9356e119e929d505aa2c6f1dc03e9af29d434623725f724a8f10280d70"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-26-021721"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2026-01-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:79ca5c03e6b51ccf3e4adbccf422a171e3fdfab2a0cadcea8750d5ac1799140d",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "macys",
+   "document": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+   "equity": "4860000000",
+   "finance_leases": {
+    "add": "13000000",
+    "concept": "us-gaap:FinanceLeaseLiability",
+    "evidence": [
+     "Accounts payable and accrued liabilities",
+     "Long-Term Lease Liabilities"
+    ],
+    "treatment": "OUTSIDE_THE_DEBT_ROWS"
+   },
+   "period_end": "2026-01-31",
+   "published": "0.5030864197530864197530864198",
+   "read": "0.5030864197530864197530864198",
+   "total_debt": "2445000000",
+   "verdict": "MATCH",
+   "why": null
+  },
+  "paramount-2025": {
+   "balance_sheet": {
+    "debt_rows": [
+     {
+      "caption": "Debt",
+      "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+      "value": "433000000"
+     },
+     {
+      "caption": "Long-term debt",
+      "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+      "value": "13225000000"
+     }
+    ],
+    "equity_row": {
+     "caption": "Total Parent stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "11693000000"
+    }
+   },
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:d2453e8b020075cc7165ade36c17448e387e0e0b25ca484dcdd5286e5265d17e",
+     "run_id": "run:historical-period:cae5b5322046f52fab641ebdb28361c217eaa453bb069a0214431f63600e4f79"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "2041610"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0002041610-26-000011"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-12-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:4ad7f5e5ab1925de7d4113eb28f1a3a5fdd3f4219c95cc0604c6e454eb3db744",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "document": "evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm",
+   "equity": "11693000000",
+   "finance_leases": {
+    "add": "0",
+    "evidence": "Obligations under finance leases 3 —",
+    "treatment": "INSIDE_THE_DEBT_ROWS"
+   },
+   "period_end": "2025-12-31",
+   "published": "1.168049260241169930727785855",
+   "read": "1.168049260241169930727785855",
+   "total_debt": "13658000000",
+   "verdict": "MATCH",
+   "why": null
+  },
+  "salesforce-2026": {
+   "balance_sheet": {
+    "debt_rows": [
+     {
+      "caption": "Debt, current",
+      "concept": "us-gaap:ConvertibleDebtCurrent",
+      "value": "4000000000"
+     },
+     {
+      "caption": "Noncurrent debt",
+      "concept": "us-gaap:LongTermDebtNoncurrent",
+      "value": "10439000000"
+     }
+    ],
+    "equity_row": {
+     "caption": "Total stockholders’ equity",
+     "concept": "us-gaap:StockholdersEquity",
+     "value": "59142000000"
+    }
+   },
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "result_id": "sha256:c2e619af76783a5329cdfecd9245df3107f4482540857a88b9b2ec0e71d71696",
+     "run_id": "run:historical-period:03a764e307468c825eee84adfe126f335d8bf4875aa99e5b7f34b84797be09ab"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1108524"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-26-000060"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2026-01-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "document": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+   "equity": "59142000000",
+   "finance_leases": {
+    "add": "535000000",
+    "concept": "us-gaap:FinanceLeaseLiability",
+    "evidence": [
+     "Accrued expenses and other liabilities",
+     "Other noncurrent liabilities"
+    ],
+    "treatment": "OUTSIDE_THE_DEBT_ROWS"
+   },
+   "period_end": "2026-01-31",
+   "published": "0.2531872442595786412363464205",
+   "read": "0.2531872442595786412363464205",
+   "total_debt": "14974000000",
+   "verdict": "MATCH",
+   "why": null
+  }
+ },
+ "reader": "tools/read_debt_to_equity.py",
+ "record_type": "ISSUE_47_B06_BALANCE_SHEET_READING",
+ "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084"
+}
