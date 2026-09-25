@@ -38,10 +38,10 @@
     "B13 Enphase group0 V3 failed189 and one reviewed V4 engineering repair SUCCEEDED190; old189 retained. Group1 V3 failed191 and its sole V4 repair failed192, both length4096 and counted. No complete B13 company.",
     "After real192 V4 again enumerated155 nonrequired other_context findings and truncated. Pause Enphase groups2-5 and Ford same-scheme paid execution; their base opportunities remain unclaimed. Provider channel is open, but a common correctness risk remains.",
     "Paramount C04 four 8-K12B variant primary/header dependencies are VERIFIED in original installed source via prior SEC ordinals105-108; current discovery and exact source bytes checked with zero new SEC calls. EY belongs to Skydance Media LLC; PwC hit in original 8-K12B is biography, not registrant auditor continuity. C04 still unresolved; B06, normal update, complete390 and old-entry retirement remain. D03 no calls. No production authority.",
-    "Working-tree ordinary V14 binding repair passed representative positive/update/native material tests and fast127. First scoped review found P2 stale V15 closure in provider wiring receipt; minimal validator/receipt fix now passes 31 directed no-network tests and no-call190 reuse. New incremental patch SHA/review and current-head CI pending; no new calls."
+    "Ordinary v13/V14 execution binding and transfer parent repaired at5c307e5; initial independent review found stale B13 receipt closure P2. Exact e0158f89 followup made validator reject old closure and updated receipts; incremental independent review PASS, 31 directed tests and fast127 PASS, 190 still read-only reusable. Current branch pushes/CI pending; no new calls."
   ],
   "next": [
-    "Commit only the scoped stale-wiring-closure repair, review its exact incremental SHA without rewriting first failed review, verify current committed input bytes, push append-only, then classify each affected current-head CI job; source-material 35-minute cancellation is separate.",
+    "Push append-only reviewed ordinary binding commits, then read new-head CI once and at a later natural checkpoint inspect its final terminal. Preserve the first blocked review and scoped followup PASS; do not rerun long material with unchanged test bytes.",
     "Preserve original189/191/192 failures and190 success. Do not resample Enphase group1: both its base and one repair opportunity are consumed. Do not purchase further same V4 groups while shared truncation mechanism remains.",
     "Keep B13 same-scheme calls paused. For Paramount C04, stop treating four 8-K12B sources as missing: installed-source and source-content evidence exists; versioned form acceptance and the new-registrant/no-prior-same-CIK negative rule remain separate business/implementation decisions. Continue B06/update/390 work without borrowing an auditor from another entity.",
     "For B13 continuation, present observed V3/V4 limits and concrete alternative with source/required coverage, expected call impact and exact authorization boundary; do not manufacture a digest or silently enlarge4096.",
@@ -1115,6 +1115,28 @@
       "verdict": "BLOCKED_SCOPED_P2_STALE_WIRING_REQUIREMENT_CLOSURE",
       "status": "DONE",
       "tool_calls_note": "approximate count reported by agent"
+    },
+    {
+      "task_name": "review_v14_wiring_e0158f8",
+      "requested_label": "review-ordinary_v14_wiring-e0158f8",
+      "purpose": "review",
+      "module": "ordinary_v14_wiring_increment_20260925",
+      "scope_paths": [
+        "scripts/vnext/continuous_call_wiring.py",
+        "tests/vnext/test_continuous_call_policy.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json",
+        "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json"
+      ],
+      "patch_sha": "e0158f89bb5831161dabf961c1de5c8f81eac098",
+      "spawned_at": "2026-09-25T08:19:02.637000+00:00",
+      "ended_at": "2026-09-25T08:23:19.532439+00:00",
+      "tool_calls": 15,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/independent-review-followup/conclusion.md",
+      "verdict": "DONE_PASS_SCOPED_V14_WIRING_P2",
+      "status": "DONE",
+      "tool_calls_top_level": 10,
+      "tool_calls_note": "agent reported exact 10 top-level and 15 nested tool calls"
     }
   ],
   "ci_capacity_20260922": {
@@ -1790,7 +1812,7 @@
     "sec_current_recorded_bridge": "paramount-c04-source-inspection/registration-form-discovery/sec-current-bridge-summary.json"
   },
   "ordinary_v14_binding_repair_20260925": {
-    "status": "LOCAL_P2_RECEIPT_CLOSURE_FIXED_INCREMENT_REVIEW_PENDING",
+    "status": "SCOPED_P2_REVIEW_PASS_PENDING_PUSH_AND_CI",
     "before_git_head": "2c2aa8de5d070c598141237f45de82ee92b998a3",
     "source_code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
     "v13_closure_after": "sha256:ecaef2291efd6eae67f5c1625ee794514c5d05988a4f9348208219ae4601ea01",
@@ -1851,8 +1873,10 @@
     "followup_fix": "continuous_call_wiring.validate_wiring_receipt now compares declared requirement closure; B13 and SEC receipts rebound to current execution bytes",
     "followup_directed": "31_PASS_CURRENT_CLOSURE_AND_STALE_RECEIPT_NEGATIVE",
     "followup_no_call_190": "PASS_REUSED_190_CURRENT_CLOSURE_ZERO_CALL",
-    "followup_patch_sha": null,
-    "followup_review": null
+    "followup_patch_sha": "e0158f89bb5831161dabf961c1de5c8f81eac098",
+    "followup_review": "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/independent-review-followup/conclusion.md",
+    "followup_review_verdict": "PASS_SCOPED_V14_WIRING_P2",
+    "followup_committed_equivalence": "ordinary-v14-binding-repair-20260925/followup-committed-equivalence.json"
   },
   "ci_36016700987": {
     "head": "2c2aa8de5d070c598141237f45de82ee92b998a3",
