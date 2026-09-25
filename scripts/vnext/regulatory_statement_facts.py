@@ -42,7 +42,8 @@ def aggregate_involvement_facts(*, text, aliases, quoted=False, context=()):
         r'|investigations?\s+(?:and\s+enforcement\s+actions?\s+)?by\s+'
         r'(?:(?:U\.S\.|non-U\.S\.|and)\s+)*(?:government(?:al)?|regulatory)\s+authorities)\b', re.I)
     rows = []
-    for start, end, sentence in _sentences(text):
+    sentences = list(_sentences(text))
+    for position, (start, end, sentence) in enumerate(sentences):
         match = predicate.fullmatch(sentence.rstrip('.'))
         if match is None:
             continue
@@ -70,10 +71,14 @@ def aggregate_involvement_facts(*, text, aliases, quoted=False, context=()):
             reasons.append('ACTION_ACTOR_CONFLICT')
         if _ACTION_TAIL.fullmatch(match.group('inclusions')[action.end():]) is None:
             reasons.append('ACTION_SCOPE_REQUIRES_INTERPRETATION')
+        # Adjacent blocks are supplied by the caller. A following sentence in
+        # this same block can also close the just-mentioned investigations;
+        # _sentences alone must not hide it from the existing linkage check.
+        linked_context = [*context, *(part for _, _, part in sentences[position + 1:])]
         if _PATTERNS['resolution'].search(sentence) or any(
                 _PATTERNS['linked_resolution'].search(c)
                 and _PATTERNS['resolution'].search(c)
-                and not _PATTERNS['explicit_unrelated'].search(c) for c in context):
+                and not _PATTERNS['explicit_unrelated'].search(c) for c in linked_context):
             reasons.append('LINKED_RESOLUTION_REQUIRES_INTERPRETATION')
         body = {'rule_id': 'AFFIRMATIVE_AGGREGATE_GOVERNMENT_INVOLVEMENT_V1',
                 'statement_text': sentence,

@@ -1,4 +1,5 @@
 """Read-only old B13 success reuse after D03 changed the current V15 closure."""
+import argparse
 import json
 import socket
 from pathlib import Path
@@ -43,7 +44,10 @@ def run():
 
 
 if __name__ == '__main__':
-    output = Path(__file__).with_name('b13-190-post-binding.json')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--output', type=Path,
+                        default=Path(__file__).with_name('b13-190-post-binding.json'))
+    output = parser.parse_args().output
     result = run()
     output.write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n')
     print(json.dumps(result))

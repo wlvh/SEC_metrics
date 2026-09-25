@@ -1,4 +1,5 @@
 """Recheck the old positive identity and the scoped post-action negatives."""
+import argparse
 import json
 from pathlib import Path
 
@@ -26,11 +27,24 @@ for ending in endings:
         kind='HISTORICAL_STATEMENT', reported_status='UNRESOLVED') == []
     rows.append({'ending':ending,'status':facts[0]['status'],
                  'reason_codes':facts[0]['reason_codes']})
+same_block = aggregate_involvement_facts(text=base+'. These investigations have been closed.',
+                                         aliases=aliases)
+adjacent = aggregate_involvement_facts(text=base+'.', aliases=aliases,
+                                      context=['These investigations have been closed.'])
+assert len(same_block) == len(adjacent) == 1
+assert same_block[0]['status'] == adjacent[0]['status'] == 'SEMANTIC_REVIEW_REQUIRED'
+assert 'LINKED_RESOLUTION_REQUIRES_INTERPRETATION' in same_block[0]['reason_codes']
 summary = {'record_type':'ISSUE28_D03_POST_ACTION_SCOPE_REPAIR_CHECK',
     'jpm_existing_positive_fact_id':saved['fact_id'],
     'jpm_positive_identity_unchanged':True, 'negative_post_action_cases':rows,
+    'same_block_linked_closure_rejected':True,
+    'adjacent_block_linked_closure_rejected':True,
     'model_or_sec_calls':[0,0,0], 'source_fact_is_not_native_result':True}
-(Path(__file__).with_name('repair-boundary.json')).write_text(
+parser = argparse.ArgumentParser()
+parser.add_argument('--output', type=Path,
+                    default=Path(__file__).with_name('repair-boundary.json'))
+output = parser.parse_args().output
+output.write_text(
     json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps({'jpm_positive_identity_unchanged':True,
                   'negative_cases':len(rows),'new_calls':[0,0,0]}))
