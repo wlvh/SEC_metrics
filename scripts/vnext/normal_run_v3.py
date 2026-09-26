@@ -91,7 +91,10 @@ def _registered_update_kwargs(metric_id, options, company_id):
     return dict(options)
 
 
-def prepare_case(*, data_root, company_id, metric_id, registered_update_options=None, native_assessment_ledger=None):
+def prepare_case(*, data_root, company_id, metric_id, registered_update_options=None,
+                 native_assessment_ledger=None, c04_event_forms=None):
+    _need(c04_event_forms is None or metric_id == 'C04',
+          'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         from .capacity_run import prepare_case as prepare_capacity_case
         options=_registered_update_kwargs(metric_id, registered_update_options, company_id)
@@ -103,6 +106,13 @@ def prepare_case(*, data_root, company_id, metric_id, registered_update_options=
                 current_runtime=True,source_snapshot=selected['source'],assessment_input_id=selected['registered_input']['input_record_id'])
         return prepare_capacity_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
             **({'current_runtime':True} if registered_update_options is not None else {}))
+    if c04_event_forms is not None:
+        from .c04_registration_successor import prepare_c04_registration_case
+        case = prepare_c04_registration_case(repo_root=data_root,
+            company_id=company_id, event_forms=c04_event_forms)
+        _need(case['spec_paths']['C04'] in _policy(ROOT)['metric_spec_paths']['C04'],
+              'ORDINARY_C04_REGISTRATION_SPEC_NOT_ENABLED')
+        return case
     policy = _policy(data_root)
     _need(metric_id in policy["metric_ids"],"ORDINARY_INTEGRATED_METRIC_NOT_ENABLED")
     note_debt = None
@@ -156,7 +166,8 @@ def prepare_case(*, data_root, company_id, metric_id, registered_update_options=
             case["target_period"] = original["component"]["prepared_input"]["table_input"]["target_period"]
     else:
         from .ordinary_remaining_cases import prepare_current_source_case
-        old = prepare_current_source_case(data_root=data_root,company_id=company_id,metric_id=metric_id)
+        old = prepare_current_source_case(data_root=data_root,company_id=company_id,
+            metric_id=metric_id)
         annual = prepare_saved_annual_input(repo_root=data_root,company_id=company_id)
         year = annual["table_input"]["target_period"]["fiscal_year"]
         if year != old["target_period"]["fiscal_year"]:
@@ -197,7 +208,11 @@ def _binding(case, requirement):
         "production_authorized":False})
 
 
-def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None, registered_update_options=None, native_assessment_ledger=None):
+def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
+                          registered_update_options=None, native_assessment_ledger=None,
+                          c04_event_forms=None):
+    _need(c04_event_forms is None or metric_id == 'C04',
+          'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         from .capacity_run import install_inputs
         root=ROOT if source_root is None else source_root
@@ -214,10 +229,12 @@ def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None,
     source_root = ROOT if source_root is None else _external(source_root)
     _need(source_root != data_root and source_root not in data_root.parents and data_root not in source_root.parents,
           "ORDINARY_INTEGRATED_SOURCE_AND_OUTPUT_OVERLAP")
-    case = prepare_case(data_root=source_root,company_id=company_id,metric_id=metric_id)
+    case = prepare_case(data_root=source_root,company_id=company_id,metric_id=metric_id,
+        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/"requirements"/REQUIREMENT_ID)
     _install_case_inputs(data_root=data_root,source_root=source_root,company_id=company_id,case=case,requirement=requirement)
-    rebuilt = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id)
+    rebuilt = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
+        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
     _need(_binding(rebuilt,requirement) == _binding(case,requirement),"ORDINARY_INTEGRATED_IMPORTED_INPUT_CHANGED")
     return rebuilt
 
@@ -271,7 +288,10 @@ def text_api(metric_id):
     return select(metric_id)
 
 
-def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False):
+def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False,
+                      c04_event_forms=None):
+    _need(c04_event_forms is None or metric_id == 'C04',
+          'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
     if metric_id in {'B13', 'D04'}:
         _need(not freeze, 'ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED')
         from .capacity_run import create_run as create_capacity_run
@@ -279,7 +299,8 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
     data_root,run_dir = _external(data_root),_external(run_dir)
     _need(not run_dir.exists(),"ORDINARY_INTEGRATED_RUN_PATH_EXISTS")
     _need(not freeze or _policy(data_root)["freeze_enabled"],"ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED")
-    case = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id)
+    case = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
+        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)
@@ -354,7 +375,13 @@ def replay_case(*, data_root, manifest, spec=None):
     saved = strict_json_file(path=resolve_repository_file(repo_root=data_root,repo_relative_path=BINDING_DIRECTORY+"/"+key+".json"))
     metric_id = saved["primary_metric_id"]
     _need(metric_id in _policy(data_root)['metric_ids'], 'ORDINARY_INTEGRATED_METRIC_NOT_ENABLED')
-    case = prepare_case(data_root=data_root,company_id=manifest["company_id"],metric_id=metric_id)
+    c04_event_forms = saved.get('input_binding',{}).get(
+        'c04_registration_successor',{}).get('event_forms')
+    _need(c04_event_forms is None or metric_id == 'C04',
+          'ORDINARY_C04_EVENT_FORM_REPLAY_METRIC_CHANGED')
+    case = prepare_case(data_root=data_root,company_id=manifest["company_id"],
+        metric_id=metric_id,
+        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)

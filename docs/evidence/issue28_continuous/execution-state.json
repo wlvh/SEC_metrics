@@ -2378,13 +2378,104 @@
   "ci_36179574745": {
     "head": "bb0b8b5bdd80e9001ee1adcd09602a115d9962aa",
     "observed_at_utc": "2026-09-25T19:58:01Z",
-    "status": "in_progress",
-    "conclusion": null,
-    "jobs_success": 12,
-    "jobs_in_progress": [
-      "vNext remaining source Runs (jpmorgan_chase)"
-    ],
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_success": 13,
+    "jobs_in_progress": [],
     "scope": "B13 recorded native chain, bounded semantic checker changes and first D03 offline candidate; later D03 repair commits not included",
-    "rerun_triggered": false
+    "rerun_triggered": false,
+    "updated_at_utc": "2026-09-25T20:01:33Z"
+  },
+  "ci_36182994518": {
+    "head": "b4d21130d1945bd281dc88371adcd63daa900cdb",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_success": 13,
+    "jobs_failed": 0,
+    "jobs_cancelled": 0,
+    "updated_at_utc": "2026-09-25T20:32:42Z",
+    "scope": "prior pushed head; new C04 successor is still local/uncommitted and not covered"
+  },
+  "paramount_c04_native_four_forms_20260926": {
+    "status": "EXPLICIT_NATIVE_OPEN_RUN_AND_INSTALLED_COLD_READ_PASS_WITHHELD_NO_FALSE_ZERO",
+    "evidence_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "installed_root": "/private/tmp/issue28-c04-four-form-20260926-02/data",
+    "company_id": "paramount_skydance_paramount_global",
+    "source_cik": "2041610",
+    "form_types": [
+      "8-K",
+      "8-K/A",
+      "8-K12B",
+      "8-K12B/A"
+    ],
+    "event_count": 6,
+    "registration_event_count": 2,
+    "item_claim_count": 22,
+    "item_4_01_count": 0,
+    "run_id": "run:ordinary-integrated:88e7b237fc25b6df89294ae969045162c931c52fc4d5281235df51be5aababc7",
+    "result_id": "sha256:ccb7957bbbf6de55aaf2c03aa566ba64344810cc263eb5374315ff5e100c9cbc",
+    "result_value": null,
+    "reason_code": "C04_COMPARABLE_AUDITOR_FACTS_MISSING",
+    "public_row_sha256": {
+      "metrics_matrix.csv": "9ffac1d2c445e3f5d9cbc3d04655f961dd25fb457c423fa6f6c140c6da7eec00",
+      "metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8"
+    },
+    "cold_read": "PASS_INSTALLED_C04_FOUR_FORM_COLD_READ",
+    "data_ledger_counts_before_after": [
+      [
+        143,
+        143,
+        49
+      ],
+      [
+        143,
+        143,
+        49
+      ]
+    ],
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "ordinary_requirement_closure": "sha256:85a83df9416014a489b2e3e8ed69df48a658688050e13af5b1e938e3c8c1b356",
+    "continuous_requirement_closure": "sha256:4defd18b3a3eae907ab59aec2065d65621666861dfb251d29ba3fe0d6592ae95",
+    "execution_authority_hash": "sha256:a7ba90e29c99106a1035d90ebcc9731fec98b494c3c7e8f34973ac3bc59c133d",
+    "provider_sec_offline_wiring": "PASS_CURRENT_CLOSURE_SHORT_TESTS_AND_REUSED_VERIFIED_EVIDENCE",
+    "default_normal_c04_v2_behavior_changed": false,
+    "default_binding_function_body_changed": false,
+    "new_current_requirement_closure_changes_new_run_identity": true,
+    "frozen_parent_modules_modified": false,
+    "normal_automatic_update_complete": false,
+    "formal_publication_authorized": false,
+    "pending_business_rule": "NO_SAME_CIK_PRIOR_10K_NEGATIVE_PATH",
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/normal_run_v3.py",
+        "config/issue28_normal_results_v2.json",
+        "config/issue28_continuous_calls_v1.json",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v13/decision_register.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/decision_register.json",
+        "requirements/issue_28_v14/transfer_manifest.json",
+        "scripts/vnext/c04_registration_successor.py",
+        "catalog/r5/C04_auditor_changes_v3.md"
+      ],
+      "functions": [
+        "normal_run_v3.prepare_case",
+        "normal_run_v3.install_normal_inputs",
+        "normal_run_v3.create_normal_run",
+        "normal_run_v3.replay_case"
+      ],
+      "optional_parameter_default": "None preserves prior default C04 two-form route",
+      "binding_function_body_unchanged": true,
+      "return_and_record_types_default_unchanged": true,
+      "new_v13_v14_current_requirement_closure_changed": true,
+      "frozen_prior_snapshots_changed": false,
+      "other_branch_modified": false
+    }
   }
 }
