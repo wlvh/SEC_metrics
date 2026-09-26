@@ -3831,5 +3831,47 @@
       "only_unfrozen_v14_binding_changed": true,
       "issue47_branch_or_ledger_touched": false
     }
+  },
+  "b13_claim_context_v7_20260927": {
+    "status": "OFFLINE_CLAIM_CONTEXT_DIAGNOSTIC_ONLY_EXACT_SHA_REVIEW_PENDING",
+    "replaces": "NO_HISTORICAL_V6_CREDIT_OR_BYTES_REPLACED",
+    "known_failures_addressed_offline": [
+      "SHARED_SENTENCE_CONTEXT_DOES_NOT_MAKE_DISTINCT_CLAIMS_DUPLICATE",
+      "CURRENT_AND_HISTORICAL_CLAIMS_CANNOT_BE_HIDDEN_IN_ONE_FULL_SENTENCE_LABEL",
+      "WRONG_SUBJECT_OR_TIME_AND_UNCOVERED_PHYSICAL_CLAIM_REMAIN_UNRESOLVED"
+    ],
+    "new_request_version": "B13_CLAIM_CONTEXT_INTERPRETATION_V7",
+    "original_source_and_scan_binding_retained": true,
+    "native_credit": false,
+    "provider_and_native_entries_default_closed": true,
+    "old_v5_v6_request_bytes_equal_to_pushed_parent_on_pinned_fixture": true,
+    "old_v5_checked_result_equal_on_pinned_fixture": true,
+    "targeted_tests": "PASS_31_DIRECTED_SYNTHETIC_AND_SAVED_SOURCE_FIXTURE",
+    "full_enphase_ford_saved_source_measurement": "PENDING",
+    "full_native_two_stage_company_cold_read": "PENDING",
+    "real_model_result": "NONE",
+    "v14_closure": "sha256:94d32ea6d0d8eb55b99c1e64f3ad79b86190f83682c4db839f7da65669fbd709",
+    "execution_authority_hash": "sha256:d456fd2dca1e6e5264e1ca471159592c794752829348aa9927f62331b8278a47",
+    "v13_frozen_snapshot_modified": false,
+    "current_provider_sec_refresh_evidence_hashes_checked": [95, 50, 50],
+    "real_new_calls": [0, 0, 0],
+    "real_ledger_ordinal": 194,
+    "new_live_route_authorized": false,
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_47": {
+      "files_and_functions": [
+        "scripts/vnext/capacity_reference_contract.py:restore_base_request",
+        "scripts/vnext/capacity_two_stage.py:interpretation_request,restore_prior_interpretation_request,validate_interpretation",
+        "scripts/vnext/continuous_semantic_calls.py:execute_capacity_assessment,execute_capacity_interpretation",
+        "scripts/vnext/capacity_native_assessment.py:build_acceptance",
+        "scripts/vnext/native_assessment_replay.py:_acceptor",
+        "scripts/vnext/native_unit_index.py:validate_request_partition"
+      ],
+      "default_v5_v6_request_bytes_and_v5_checked_result_unchanged_on_pinned_fixture": true,
+      "new_v7_only_offline_and_fail_closed": true,
+      "issue47_branch_ledger_snapshot_run_root_or_pr_touched": false,
+      "downstream_integration_owned_by_other_executor": true
+    },
+    "evidence": "docs/evidence/issue28_continuous/b13-claim-context-v7-20260927/README.md"
   }
 }

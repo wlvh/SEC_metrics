@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:b9f758c266e3365a1e4501bd4b72321455457e1cef0494cc10947a71fc70f3d4",
-  "execution_authority_hash": "sha256:ff544ec5992c7406f8e57b50142d8602516381dd612ad62e0be9558e7d7a0086",
+  "requirement_closure_hash": "sha256:94d32ea6d0d8eb55b99c1e64f3ad79b86190f83682c4db839f7da65669fbd709",
+  "execution_authority_hash": "sha256:d456fd2dca1e6e5264e1ca471159592c794752829348aa9927f62331b8278a47",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -106,8 +106,11 @@
     "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/fast-bootstrap.log": "872635470ae8412ab14f1c0dbbf02634619338278c996d41119f3d4925d68d39",
     "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/binding-current.log": "fc0afd09cf3a8e012e75c5fd08239c46e2e376692bfc8d7261ed6cd840d032ae",
     "docs/evidence/issue28_continuous/c04-annual-resume-repair-20260927/fast-resume.log": "5bbb9ed27d17aa5129e3c0919df7e67f40aa3afbbd82febe7911d41d3c16ea53",
-    "docs/evidence/issue28_continuous/c04-annual-resume-repair-20260927/binding-current.log": "565f12078dfd99d8eea8600659b1b7c2880895a39e4c461509d4c146e514a148"
+    "docs/evidence/issue28_continuous/c04-annual-resume-repair-20260927/binding-current.log": "565f12078dfd99d8eea8600659b1b7c2880895a39e4c461509d4c146e514a148",
+    "docs/evidence/issue28_continuous/b13-claim-context-v7-20260927/legacy-identity.log": "bc2cd0270379347781a6609c98a765f3bd708386b868badb6ed38eb2ee2532d3",
+    "docs/evidence/issue28_continuous/b13-claim-context-v7-20260927/targeted-tests.log": "5e33abb8f25530bbc35aadc9fb0d74f3cf9d24e4ad102e8b32afc346311efd65"
   },
-  "scope": "Current V15 B13 V6 fail-closed binding. Mocked provider factory/controller rerun without network; recorded scan still saves only a scan receipt, while V6 judgment stops before a second claim and every native/registered acceptance entry rejects. Earlier evidence revalidated by exact bytes. C04 zero-provider refresh route is now bound and recorded-tested; B13 V6 remains suspended and no provider request is authorized by this receipt. Current C04 mixed-source route has recorded-only source capture, no provider request; provider execution code is unchanged and this receipt only rebinds the current unfrozen execution identity. Mixed C04 one-request continuation is recorded-only and preserves zero provider requests; provider factory/controller code is unchanged by this repair. C04-only continuation preserves the old positive provider limit input, which cannot invoke the provider for a C04-only metric set; mixed continuation remains zero-provider limited. The C04 missing-current-annual bootstrap is offline mocked source selection only; provider route and zero-call result credit are unchanged. C04 annual bootstrap resume still performs zero provider request; added test is a mocked capture and current provider code remains unchanged.",
-  "independent_review": "V6_SUSPENSION_INCREMENT_REVIEW_PENDING"
+  "scope": "Current V15 B13 V6 fail-closed binding. Mocked provider factory/controller rerun without network; recorded scan still saves only a scan receipt, while V6 judgment stops before a second claim and every native/registered acceptance entry rejects. Earlier evidence revalidated by exact bytes. C04 zero-provider refresh route is now bound and recorded-tested; B13 V6 remains suspended and no provider request is authorized by this receipt. Current C04 mixed-source route has recorded-only source capture, no provider request; provider execution code is unchanged and this receipt only rebinds the current unfrozen execution identity. Mixed C04 one-request continuation is recorded-only and preserves zero provider requests; provider factory/controller code is unchanged by this repair. C04-only continuation preserves the old positive provider limit input, which cannot invoke the provider for a C04-only metric set; mixed continuation remains zero-provider limited. The C04 missing-current-annual bootstrap is offline mocked source selection only; provider route and zero-call result credit are unchanged. C04 annual bootstrap resume still performs zero provider request; added test is a mocked capture and current provider code remains unchanged. V7 separates nonoverlapping claim spans from shared sentence context in offline diagnostics; its provider and native entrypoints are still default-closed. The short current-factory guards and V5/V6 byte-compatibility checks are recorded separately.",
+  "independent_review": "V6_SUSPENSION_INCREMENT_REVIEW_PENDING",
+  "claim_context_v7_review": "PENDING_EXACT_PATCH_REVIEW"
 }

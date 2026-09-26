@@ -68,6 +68,165 @@ class CapacityTwoStageTest(unittest.TestCase):
         self.assertEqual(result['original_validator_result']['findings'][0]['kind'],
                          'CAPACITY_QUALITATIVE')
 
+    def test_claim_context_successor_keeps_distinct_claims_and_shared_sentence(self):
+        from tests.vnext.test_capacity_utilization_source import quantity_source
+        from vnext.capacity_program_roles import program_source
+        from vnext.capacity_semantic_review import requests_from_source
+        from vnext.capacity_reference_contract import CLAIM_CONTEXT_VERSION
+        from vnext.capacity_two_stage import restore_prior_interpretation_request
+
+        statement = ('Our contract manufacturers have production capacity for current demand; '
+                     'they plan to add manufacturing capacity next year.')
+        source = program_source(quantity_source('<p>' + statement + '</p>')[0])
+        prior = upgrade_request(requests_from_source(source)[0],
+            compact=True, role_labels=True, relevance_scope=True)
+        block = source['units'][0]['payload']['blocks'][0]
+        ref = 'B' + str(block['block_index'])
+        scan_raw = canonical_json_bytes(value={'units_reviewed': list(range(len(prior['units']))),
+            'candidate_refs': [ref], 'unresolved_refs': []})
+        scan_result = validate_scan(request=prior,
+            scan_request_value=scan_request(prior), raw_response=scan_raw)
+        followup = interpretation_request(request=prior,
+            scan_result=scan_result, scan_raw_response=scan_raw,
+            claim_contexts=True)
+        self.assertEqual(CLAIM_CONTEXT_VERSION,
+            followup['source_reference_contract']['version'])
+        self.assertEqual(prior, restore_prior_interpretation_request(followup))
+        from vnext.native_unit_index import validate_request_partition
+        self.assertEqual([CLAIM_CONTEXT_VERSION],
+            validate_request_partition(source, [followup]))
+        from vnext.continuous_semantic_calls import (
+            execute_capacity_assessment, execute_capacity_interpretation)
+        from vnext.capacity_native_assessment import build_acceptance
+        prepared = SimpleNamespace(request_bytes=canonical_json_bytes(value=followup))
+        with self.assertRaisesRegex(ValueError, 'TWO_STAGE_EXECUTION_PROOF_REQUIRED'):
+            execute_capacity_assessment(prepared=prepared,
+                                        ledger=SimpleNamespace(live=True))
+        with self.assertRaisesRegex(ValueError, 'ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED'):
+            execute_capacity_interpretation(prepared=prepared,
+                                            ledger=SimpleNamespace(live=True))
+        with self.assertRaisesRegex(ValueError, 'TWO_STAGE_SCAN_EXECUTION_PROOF_REQUIRED'):
+            build_acceptance(prepared=prepared, plan={}, response_body=b'{}')
+        from pathlib import Path
+        from vnext.native_assessment_replay import _acceptor
+        with self.assertRaisesRegex(ValueError, 'ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED'):
+            _acceptor(followup, Path('/tmp/calls/0002'))
+        from vnext.capacity_two_stage import build_interpretation_acceptance
+        with self.assertRaisesRegex(ValueError, 'ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED'):
+            build_interpretation_acceptance(prepared=prepared, plan={},
+                response_body=b'{}', scan_path=Path('/tmp/calls/0001'))
+        books = followup['response_protocol']['classification_codebooks']
+        target = books['subject'].index('TARGET_REGISTRANT')
+        current = books['timing'].index('CURRENT_REPORT')
+        first = block['text'].index(';')
+        second = block['text'].index('they plan')
+        response = {'units': [{'unit_index': index, 'reviewed': True,
+            'unresolved': [], 'calculation_limits': []}
+            for index in range(len(prior['units']))],
+            'findings': [
+                ['physical_capacity_context', target, current, [ref],
+                 'Current capacity.', [[ref, 0, first, 0, len(block['text'])]]],
+                ['planned_physical_capacity', target, current, [ref],
+                 'Expansion plan.', [[ref, second, len(block['text']),
+                                      0, len(block['text'])]]]]}
+        def check(value):
+            return validate_interpretation(request=prior, scan_result=scan_result,
+                scan_raw_response=scan_raw, interpretation=followup,
+                raw_response=canonical_json_bytes(value=value), source=source)
+        checked = check(response)['original_validator_result']
+        self.assertEqual(['B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED'], checked['unresolved'])
+        self.assertEqual(2, len(checked['findings']))
+        wrong_subject = deepcopy(response)
+        wrong_subject['findings'][0][1] = books['subject'].index('OTHER_ENTITY')
+        self.assertIn('B13_CLAIM_SUBJECT_CONFLICT:' + ref,
+            check(wrong_subject)['original_validator_result']['unresolved'])
+        wrong_period = deepcopy(response)
+        wrong_period['findings'][1][2] = books['timing'].index('HISTORICAL')
+        self.assertIn('B13_CLAIM_CURRENT_MARKED_HISTORICAL:' + ref,
+            check(wrong_period)['original_validator_result']['unresolved'])
+        duplicate = deepcopy(response)
+        duplicate['findings'][1][5] = deepcopy(duplicate['findings'][0][5])
+        self.assertIn('B13_CLAIM_OVERLAPPING_RANGES:' + ref,
+            check(duplicate)['original_validator_result']['unresolved'])
+        omitted = deepcopy(response)
+        omitted['findings'].pop()
+        self.assertIn('B13_CLAIM_UNCOVERED_PHYSICAL_SOURCE:' + ref,
+            check(omitted)['original_validator_result']['unresolved'])
+        invalid = deepcopy(response)
+        invalid['findings'][1][5][0][1] = 0
+        with self.assertRaisesRegex(ValueError, 'CLAIM_NOT_COMPLETE_SEGMENT_OR_CONTEXT'):
+            check(invalid)
+        from vnext.capacity_two_stage import _claim_contradictions, _claim_segments
+        other = books['subject'].index('OTHER_ENTITY')
+        supplier = ['other_entity', other, current]
+        self.assertEqual([], _claim_contradictions(row=supplier,
+            claim='A supplier has manufacturing capacity for its products.',
+            antecedent='', books=books))
+        self.assertIn('B13_CLAIM_SUBJECT_CONFLICT', _claim_contradictions(
+            row=['physical_capacity_context', target, current],
+            claim='A supplier has manufacturing capacity for its products.',
+            antecedent='Our contract manufacturers also operate plants; ',
+            books=books))
+        self.assertIn('B13_CLAIM_CURRENT_MARKED_HISTORICAL',
+            _claim_contradictions(row=['historical_statement', target,
+                books['timing'].index('HISTORICAL')],
+                claim='currently have production capacity for current demand.',
+                antecedent='Our contract manufacturers had old capacity, but ',
+                books=books))
+        contrast = ('Our contract manufacturers had manufacturing capacity for old '
+                    'products, but currently have production capacity for current demand.')
+        self.assertEqual(2, len(_claim_segments(contrast)))
+        self.assertNotIn((0, len(contrast)), _claim_segments(contrast))
+
+    def test_claim_context_current_and_historical_can_share_antecedent(self):
+        from tests.vnext.test_capacity_utilization_source import quantity_source
+        from vnext.capacity_program_roles import program_source
+        from vnext.capacity_semantic_review import requests_from_source
+
+        statement = ('Our contract manufacturers had manufacturing capacity for old '
+                     'products, but currently have production capacity for current demand.')
+        source = program_source(quantity_source('<p>' + statement + '</p>')[0])
+        prior = upgrade_request(requests_from_source(source)[0], compact=True,
+                                role_labels=True, relevance_scope=True)
+        block = source['units'][0]['payload']['blocks'][0]
+        ref = 'B' + str(block['block_index'])
+        scan_raw = canonical_json_bytes(value={'units_reviewed': list(range(len(prior['units']))),
+            'candidate_refs': [ref], 'unresolved_refs': []})
+        scan_result = validate_scan(request=prior,
+            scan_request_value=scan_request(prior), raw_response=scan_raw)
+        request = interpretation_request(request=prior, scan_result=scan_result,
+            scan_raw_response=scan_raw, claim_contexts=True)
+        books = request['response_protocol']['classification_codebooks']
+        target = books['subject'].index('TARGET_REGISTRANT')
+        current = books['timing'].index('CURRENT_REPORT')
+        historical = books['timing'].index('HISTORICAL')
+        contrast = block['text'].index('but ')
+        now = block['text'].index('currently have')
+        response = {'units': [{'unit_index': index, 'reviewed': True,
+            'unresolved': [], 'calculation_limits': []}
+            for index in range(len(prior['units']))],
+            'findings': [
+                ['historical_statement', target, historical, [ref],
+                 'Old capacity.', [[ref, 0, contrast-2, 0, len(block['text'])]]],
+                ['physical_capacity_context', target, current, [ref],
+                 'Current capacity.', [[ref, now, len(block['text']),
+                                        0, len(block['text'])]]]]}
+        def check(value):
+            return validate_interpretation(request=prior, scan_result=scan_result,
+                scan_raw_response=scan_raw, interpretation=request,
+                raw_response=canonical_json_bytes(value=value), source=source)
+        checked = check(response)['original_validator_result']
+        self.assertEqual(['B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED'], checked['unresolved'])
+        omitted = deepcopy(response)
+        omitted['findings'].pop()
+        self.assertIn('B13_CLAIM_UNCOVERED_PHYSICAL_SOURCE:' + ref,
+            check(omitted)['original_validator_result']['unresolved'])
+        mislabeled = deepcopy(response)
+        mislabeled['findings'][1][0] = 'historical_statement'
+        mislabeled['findings'][1][2] = historical
+        self.assertIn('B13_CLAIM_CURRENT_MARKED_HISTORICAL:' + ref,
+            check(mislabeled)['original_validator_result']['unresolved'])
+
     def test_assertion_scoped_successor_preserves_source_and_bounds_exclusions(self):
         from tests.vnext.test_capacity_utilization_source import quantity_source
         from vnext.capacity_program_roles import program_source
