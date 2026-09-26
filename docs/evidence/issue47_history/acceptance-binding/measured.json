@@ -1,0 +1,77 @@
+{
+  "record_type": "ISSUE47_ACCEPTANCE_BINDING_REPAIR",
+  "schema_version": 1,
+  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+  "purpose": "Two defects in how the third delivery layer grants and loses acceptance, both reproduced against the live functions before being fixed.",
+  "defect_one_the_match_was_not_about_the_fact": {
+    "what_it_bound_on": [
+      "company_id",
+      "metric_id",
+      "period_end",
+      "value"
+    ],
+    "measured_against_the_previous_implementation": {
+      "control_unchanged": "covered (so the rows below mean something)",
+      "value_0_to_1": "not covered - correct",
+      "value_unchanged_period_start_moved_a_year": "STILL COVERED",
+      "value_unchanged_unit_moved": "STILL COVERED",
+      "value_unchanged_scope_key_moved": "STILL COVERED",
+      "period_end_moved": "not covered, but only because it doubles as the coordinate"
+    },
+    "why_it_matters_most_where_it_looks_harmless": "C04's value is a flag. An acceptance that says 'I read two filings for 2025 and the auditor did not change' was inherited by any result carrying 0 for another window, scope or unit.",
+    "the_fix": "each acceptance carries result_identity - period_start, period_end, unit, scope_key - and every field has to match. An entry without it grants nothing rather than falling back to the loose match.",
+    "what_is_deliberately_not_bound": "the requirement closure, the spec closure hash and the result id. Those move when unrelated code moves, and binding to them would make a pure refactor require re-reading every filing. The binding is the business fact, not the byte.",
+    "how_the_pin_is_obtained_and_what_that_does_not_claim": "the reading establishes the company, the metric, the measured window and the value; the unit and scope key are pinned from the result the reading was made against. They are a binding against later substitution, not a second reading. Where a reading records the window it read, the generator cross-checks it against the result and refuses on a disagreement rather than pinning over it.",
+    "effect_on_the_current_frame": "none. content_acceptance stays 140 and verified_outcome stays 329 - every current acceptance was already pinned to the result it was read against. The hole was real and nothing was standing in it."
+  },
+  "defect_two_a_reading_that_concluded_no_could_not_say_so": {
+    "the_guard_this_round_added": "every reading must contribute at least one acceptance, else exit before writing",
+    "why_it_was_wrong": "that is indistinguishable from the case it was written for. A reading that runs to completion and finds every value inconsistent contributes none, and the guard then exits BEFORE writing - so the previous register stays installed and keeps granting exactly what the new reading just contradicted.",
+    "measured": {
+      "every_governance_verdict_turned_to_DIFFERS": {
+        "generator_returncode": 1,
+        "reason": "A_READING_CONTRIBUTED_NO_ACCEPTANCES",
+        "register_rewritten": false,
+        "c04_acceptances_still_granted": "6 of 6"
+      },
+      "after_the_fix": {
+        "generator_returncode": 0,
+        "register_rewritten": true,
+        "acceptances": "140 -> 126",
+        "c04_acceptances_still_granted": "0 of 6"
+      }
+    },
+    "the_fix": "the count is reported, not gated. A legitimate fall in acceptances is a result the register has to be able to carry, so no monotonic rule replaces it.",
+    "why_the_count_is_null_for_some_readings": "only the readings carrying a per_position map expose one; the others are a flat label map or a single coordinate. A rule written to see those shapes stops seeing the next one, which is how the first version of this failed on the lodging reading."
+  },
+  "defect_three_evidence_could_change_under_a_standing_grant": {
+    "what_was_checked_before": "that the evidence file exists",
+    "why_that_is_not_enough": "the artifact keeps existing while its conclusions change",
+    "the_fix": "the register records each reading's content_sha256 at build time and the coverage loader refuses with COVERAGE_ACCEPTANCE_READING_CHANGED_SINCE_THE_REGISTER when a reading no longer hashes to it",
+    "measured": "appending one newline to a reading makes the whole register grant nothing until it is rebuilt; restoring the bytes restores it."
+  },
+  "fault_injections": [
+    {
+      "injection": "DROP_THE_IDENTITY_COMPARISON",
+      "caught": true,
+      "failures": 3
+    },
+    {
+      "injection": "LET_AN_UNBOUND_ACCEPTANCE_THROUGH",
+      "caught": true,
+      "failures": 1
+    },
+    {
+      "injection": "ONLY_CHECK_THE_EVIDENCE_FILE_EXISTS",
+      "caught": true,
+      "failures": 1
+    }
+  ],
+  "tests": "tests.vnext.test_historical_coverage: 56 tests, OK, 1 skipped",
+  "a_correction_to_how_this_batch_was_labelled": "the batch is 29 wired metrics plus 6 structural-applicability metrics over 11 periods, which is (29 + 6) x 11 = 385. Calling it a 29-metric batch reads as 29 x 11 and does not reach 385; the evidence said the right thing and the heading did not.",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

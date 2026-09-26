@@ -1,0 +1,86 @@
+{
+ "1_period_selection": {
+  "current_accession": "0001628280-25-004818",
+  "prior_accession": "0001628280-24-004372",
+  "requested_fiscal_year": null,
+  "selection_id": "sha256:9d092cd097918c71df121096c19c83f268e98fdc84cc84b2655d472373d7501f",
+  "target_report_end": "2024-12-31"
+ },
+ "2_input_install": {
+  "authority_files": 372,
+  "binding_id": "sha256:8d6e4ef1220bcc7517ade1023d6a6fd7a7c03600b5644501dd4826298fc6c091",
+  "calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "requirement_closure_hash": "sha256:d7a26e51467217372a16cf22d61bf3ef4a167474f4c9413e75cd392134215797",
+  "requirement_id": "issue_47_v1"
+ },
+ "3_native_run": {
+  "metric_id": "B04",
+  "new_calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "quality": "EXACT",
+  "record_type": "SUCCESSOR_RUN",
+  "requirement_id": "issue_47_v1",
+  "run_id": "run:historical-period:8d6e4ef1220bcc7517ade1023d6a6fd7a7c03600b5644501dd4826298fc6c091",
+  "status": "FROZEN",
+  "target_period": {
+   "fiscal_year": 2024,
+   "period_end": "2024-12-31",
+   "period_start": "2024-01-01"
+  },
+  "value": "2375000000"
+ },
+ "4_new_process_frozen_replay": {
+  "quality": "EXACT",
+  "record_count": 13,
+  "requirement_id": "issue_47_v1",
+  "run_id": "run:historical-period:8d6e4ef1220bcc7517ade1023d6a6fd7a7c03600b5644501dd4826298fc6c091",
+  "status": "FROZEN",
+  "target_period": {
+   "fiscal_year": 2024,
+   "period_end": "2024-12-31",
+   "period_start": "2024-01-01"
+  },
+  "value": "2375000000"
+ },
+ "5_public_row": {
+  "evidence_count": 1,
+  "receipt": {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "evidence_hash": "sha256:02aee9210f4537dacbd87a1bea04863d0aebaca1c673f19acba6d548f62a60c1",
+   "period_selection_id": "sha256:9d092cd097918c71df121096c19c83f268e98fdc84cc84b2655d472373d7501f",
+   "production_authorized": false,
+   "requirement_id": "issue_47_v1",
+   "row_hash": "sha256:c7327259bbae07a38531bcf1ea7a2731681567f03320bf59be7ca5501ac3a0df",
+   "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+   "status": "FROZEN_CANDIDATE"
+  },
+  "row": {
+   "accession": "0001628280-25-004818",
+   "cik": "1048286",
+   "company": "Marriott International",
+   "filed_date": "2025-02-11",
+   "fiscal_period": "ANNUAL",
+   "fiscal_year": "2024",
+   "form": "10-K",
+   "metric_id": "B04",
+   "metric_name": "Net income",
+   "period_end": "2024-12-31",
+   "period_start": "2024-01-01",
+   "source_class": "STD_XBRL",
+   "status": "OK",
+   "unit": "USD",
+   "value": "2375000000"
+  }
+ }
+}

@@ -1,0 +1,647 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "decision_this_makes_concrete": "The model-call need of #47 proper is the earlier years. Today it is measurable only for Marriott 2023/2024 (D04 8 + D03 10 = 18 requests); the other 39 frame periods need their originals first (acquisition plan class A), and are not estimated here. At the newest year the question is not a budget but whether #47 re-reviews what #28 already reviews or reads #28's results.",
+ "equal_to_issue_28_census": {
+  "count": 20,
+  "differing": [],
+  "issue_28_census_for_what_is_not_measurable_here": {
+   "jpmorgan_chase:2025-12-31:D03": 38,
+   "jpmorgan_chase:2025-12-31:D04": 27
+  },
+  "not_measurable_here": {
+   "jpmorgan_chase:2025-12-31:D04": "ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT"
+  },
+  "positions": [
+   "enphase_energy:2025-12-31:B13",
+   "enphase_energy:2025-12-31:D03",
+   "enphase_energy:2025-12-31:D04",
+   "ford_motor_company:2025-12-31:B13",
+   "ford_motor_company:2025-12-31:D03",
+   "ford_motor_company:2025-12-31:D04",
+   "lumen_technologies:2025-12-31:D03",
+   "lumen_technologies:2025-12-31:D04",
+   "macys:2026-01-31:D03",
+   "macys:2026-01-31:D04",
+   "marriott_international:2025-12-31:D03",
+   "marriott_international:2025-12-31:D04",
+   "paramount_skydance_paramount_global:2025-12-31:D03",
+   "paramount_skydance_paramount_global:2025-12-31:D04",
+   "pfizer:2025-12-31:D03",
+   "pfizer:2025-12-31:D04",
+   "salesforce:2026-01-31:D03",
+   "salesforce:2026-01-31:D04",
+   "southwest_airlines:2025-12-31:D03",
+   "southwest_airlines:2025-12-31:D04"
+  ]
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "method": "The three ordinary source builders share r6_semantic_source.prepare_d04_semantic_source, which reads 'the latest annual input' through two functions. semantic_need_probe.py points those two functions at the pinned period's input (historical_annual_input.prepare_original_historical_input / prepare_historical_annual_input) and runs #28's own request constructors unchanged, with the request-context format and complete-response contract #28 uses. Nothing is sent: the counts are the constructors' request census under the pinned reference token measurement. calls 0/0/0.",
+ "per_position": {
+  "enphase_energy:2025-12-31:B13": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001463101-26-000013"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 6,
+   "requests": 6,
+   "required_candidate_assessments": 5,
+   "seconds": 20.1,
+   "semantic_source_id": "sha256:99a7169bc8daf496e2f4ab07822679dd3b00f1085d102eea1140bfafc9e448a6",
+   "status": "MEASURED",
+   "units": 29,
+   "units_per_request": [
+    5,
+    4,
+    4,
+    4,
+    7,
+    5
+   ]
+  },
+  "enphase_energy:2025-12-31:D03": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001463101-26-000013"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 8,
+   "requests": 8,
+   "required_candidate_assessments": 6,
+   "seconds": 19.6,
+   "semantic_source_id": "sha256:1789a36b869ca31aa04f63b559249dd2d6fc080c5e5c6a3feb7cd96cf13216a0",
+   "status": "MEASURED",
+   "units": 29,
+   "units_per_request": [
+    4,
+    4,
+    3,
+    3,
+    4,
+    4,
+    4,
+    3
+   ]
+  },
+  "enphase_energy:2025-12-31:D04": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001463101-26-000013"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 6,
+   "requests": 6,
+   "required_candidate_assessments": 1,
+   "seconds": 19.3,
+   "semantic_source_id": "sha256:fd24f26515229c3615ac1991876b74526ba29cb61b9348e29edbd44fef1405ef",
+   "status": "MEASURED",
+   "units": 29,
+   "units_per_request": [
+    5,
+    4,
+    4,
+    4,
+    7,
+    5
+   ]
+  },
+  "ford_motor_company:2025-12-31:B13": {
+   "documents": 1,
+   "filing_accessions": [
+    "0000037996-26-000015"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 11,
+   "requests": 11,
+   "required_candidate_assessments": 35,
+   "seconds": 36.8,
+   "semantic_source_id": "sha256:2dd69409a62f02f93059b778d5e6fac6bfe8b88fcbd58c4af20bca769373ec93",
+   "status": "MEASURED",
+   "units": 52,
+   "units_per_request": [
+    5,
+    4,
+    4,
+    4,
+    4,
+    3,
+    4,
+    7,
+    8,
+    7,
+    2
+   ]
+  },
+  "ford_motor_company:2025-12-31:D03": {
+   "documents": 1,
+   "filing_accessions": [
+    "0000037996-26-000015"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 15,
+   "requests": 15,
+   "required_candidate_assessments": 18,
+   "seconds": 34.6,
+   "semantic_source_id": "sha256:449162390346e11ad0706d0c71accea5c0effbfa04c5e62bfd80d05ca9b3b7d5",
+   "status": "MEASURED",
+   "units": 52,
+   "units_per_request": [
+    4,
+    3,
+    4,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    5,
+    4,
+    3,
+    2
+   ]
+  },
+  "ford_motor_company:2025-12-31:D04": {
+   "documents": 1,
+   "filing_accessions": [
+    "0000037996-26-000015"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 11,
+   "requests": 11,
+   "required_candidate_assessments": 2,
+   "seconds": 34.9,
+   "semantic_source_id": "sha256:e281127fbed0726e9bfb6c8e3273903db04a26b1efcaea4cd8e85b90f1a9b3ce",
+   "status": "MEASURED",
+   "units": 52,
+   "units_per_request": [
+    5,
+    4,
+    4,
+    4,
+    4,
+    3,
+    4,
+    7,
+    8,
+    7,
+    2
+   ]
+  },
+  "jpmorgan_chase:2025-12-31:D04": {
+   "error": "ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT",
+   "error_type": "PeriodSelectionError",
+   "issue_28_grouped_census_requests_for_the_same_filing": 27,
+   "seconds": 0.5,
+   "status": "REFUSED"
+  },
+  "lumen_technologies:2025-12-31:D03": {
+   "documents": 1,
+   "filing_accessions": [
+    "0000018926-26-000014"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 11,
+   "requests": 11,
+   "required_candidate_assessments": 12,
+   "seconds": 26.1,
+   "semantic_source_id": "sha256:4cba4086e56863c9664173e57bd2b0aeba073fafa8ec21f82075e94de692ff33",
+   "status": "MEASURED",
+   "units": 39,
+   "units_per_request": [
+    4,
+    3,
+    4,
+    3,
+    3,
+    3,
+    3,
+    5,
+    4,
+    4,
+    3
+   ]
+  },
+  "lumen_technologies:2025-12-31:D04": {
+   "documents": 1,
+   "filing_accessions": [
+    "0000018926-26-000014"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 8,
+   "requests": 8,
+   "required_candidate_assessments": 0,
+   "seconds": 26.4,
+   "semantic_source_id": "sha256:a52d4154445aee865251591d70d9d6e579a9e4186bae4faee60a2ae65a199c8e",
+   "status": "MEASURED",
+   "units": 39,
+   "units_per_request": [
+    5,
+    5,
+    4,
+    3,
+    3,
+    4,
+    8,
+    7
+   ]
+  },
+  "macys:2026-01-31:D03": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001628280-26-021721"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 7,
+   "requests": 7,
+   "required_candidate_assessments": 7,
+   "seconds": 15.5,
+   "semantic_source_id": "sha256:4ffdc539b2dd24fa28fe40a50b5f823df3c25e817dc06bc552f96a3354b05f7b",
+   "status": "MEASURED",
+   "units": 22,
+   "units_per_request": [
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    2
+   ]
+  },
+  "macys:2026-01-31:D04": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001628280-26-021721"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 5,
+   "requests": 5,
+   "required_candidate_assessments": 0,
+   "seconds": 15.6,
+   "semantic_source_id": "sha256:7b8ae01d280ff7b49d5c2304a333f228baf4b119b00d7d86ef117f3cf4cd2a90",
+   "status": "MEASURED",
+   "units": 22,
+   "units_per_request": [
+    5,
+    4,
+    4,
+    7,
+    2
+   ]
+  },
+  "marriott_international:2023-12-31:D03": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001628280-24-004372"
+   ],
+   "requests": 5,
+   "required_candidate_assessments": 13,
+   "seconds": 12.3,
+   "semantic_source_id": "sha256:644f878eee67ee77b5eafd7e5a6633c04e03894e22efbc7480a629f9283cc3bc",
+   "status": "MEASURED",
+   "units": 16,
+   "units_per_request": [
+    3,
+    4,
+    4,
+    4,
+    1
+   ]
+  },
+  "marriott_international:2023-12-31:D04": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001628280-24-004372"
+   ],
+   "requests": 4,
+   "required_candidate_assessments": 0,
+   "seconds": 12.0,
+   "semantic_source_id": "sha256:533ce0ab86ba6121cd0bffcc92eb25cc17e9937557751ef1e1843e4ca0f1ca60",
+   "status": "MEASURED",
+   "units": 16,
+   "units_per_request": [
+    5,
+    4,
+    6,
+    1
+   ]
+  },
+  "marriott_international:2024-12-31:D03": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001628280-25-004818"
+   ],
+   "requests": 5,
+   "required_candidate_assessments": 15,
+   "seconds": 12.2,
+   "semantic_source_id": "sha256:2b9e9206219262c80818438fe705017b50f1d337c414ec7c218c4b11fce73c2c",
+   "status": "MEASURED",
+   "units": 18,
+   "units_per_request": [
+    3,
+    4,
+    3,
+    5,
+    3
+   ]
+  },
+  "marriott_international:2024-12-31:D04": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001628280-25-004818"
+   ],
+   "requests": 4,
+   "required_candidate_assessments": 0,
+   "seconds": 12.9,
+   "semantic_source_id": "sha256:8e608601779bd45dc217b7e4057ca8b3bc77b185ba4f828fcdc6d8526b249fc3",
+   "status": "MEASURED",
+   "units": 18,
+   "units_per_request": [
+    5,
+    4,
+    6,
+    3
+   ]
+  },
+  "marriott_international:2025-12-31:D03": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001048286-26-000007"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 5,
+   "requests": 5,
+   "required_candidate_assessments": 15,
+   "seconds": 12.7,
+   "semantic_source_id": "sha256:f73b527062c6b531d407e64ab3da8bcda5145850a2255e7c618e68e77b898bc5",
+   "status": "MEASURED",
+   "units": 17,
+   "units_per_request": [
+    3,
+    4,
+    3,
+    4,
+    3
+   ]
+  },
+  "marriott_international:2025-12-31:D04": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001048286-26-000007"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 4,
+   "requests": 4,
+   "required_candidate_assessments": 0,
+   "seconds": 12.7,
+   "semantic_source_id": "sha256:d7d06c794b8f8f3b66e18708d6c741949e6bde2dc2bf315b3f1b96ed4bd7c079",
+   "status": "MEASURED",
+   "units": 17,
+   "units_per_request": [
+    5,
+    4,
+    5,
+    3
+   ]
+  },
+  "paramount_skydance_paramount_global:2025-12-31:D03": {
+   "documents": 2,
+   "filing_accessions": [
+    "0002041610-26-000011",
+    "0001140361-26-016758"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 14,
+   "requests": 14,
+   "required_candidate_assessments": 10,
+   "seconds": 33.6,
+   "semantic_source_id": "sha256:de3b4e492d5859be4d4d4dfca9dd3e0af73c41de64064ed18dba14adf7446d92",
+   "status": "MEASURED",
+   "units": 51,
+   "units_per_request": [
+    4,
+    3,
+    4,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    4,
+    5,
+    1,
+    6
+   ]
+  },
+  "paramount_skydance_paramount_global:2025-12-31:D04": {
+   "documents": 2,
+   "filing_accessions": [
+    "0002041610-26-000011",
+    "0001140361-26-016758"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 10,
+   "requests": 10,
+   "required_candidate_assessments": 1,
+   "seconds": 35.3,
+   "semantic_source_id": "sha256:d3b198c5cd40a8d30ec65aaa4f9d7ee51b54cf2525903c3d979d81c68cbd31d7",
+   "status": "MEASURED",
+   "units": 51,
+   "units_per_request": [
+    5,
+    5,
+    4,
+    4,
+    4,
+    5,
+    6,
+    6,
+    6,
+    6
+   ]
+  },
+  "pfizer:2025-12-31:D03": {
+   "documents": 1,
+   "filing_accessions": [
+    "0000078003-26-000026"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 16,
+   "requests": 16,
+   "required_candidate_assessments": 40,
+   "seconds": 35.6,
+   "semantic_source_id": "sha256:1216279cef5ce16e0f9ae7e6246006d9db7c9993770c07267a9f69cf704e9a2a",
+   "status": "MEASURED",
+   "units": 54,
+   "units_per_request": [
+    4,
+    3,
+    4,
+    3,
+    3,
+    3,
+    3,
+    3,
+    3,
+    4,
+    5,
+    3,
+    4,
+    3,
+    4,
+    2
+   ]
+  },
+  "pfizer:2025-12-31:D04": {
+   "documents": 1,
+   "filing_accessions": [
+    "0000078003-26-000026"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 11,
+   "requests": 11,
+   "required_candidate_assessments": 1,
+   "seconds": 35.7,
+   "semantic_source_id": "sha256:e9a51108073c304fb88e07ff10cd6d72acfb792e2fada6ced43c0a29fe47e745",
+   "status": "MEASURED",
+   "units": 54,
+   "units_per_request": [
+    5,
+    4,
+    5,
+    4,
+    4,
+    4,
+    4,
+    7,
+    6,
+    6,
+    5
+   ]
+  },
+  "salesforce:2026-01-31:D03": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001108524-26-000060"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 7,
+   "requests": 7,
+   "required_candidate_assessments": 12,
+   "seconds": 16.9,
+   "semantic_source_id": "sha256:8ebb2c68c5ffaba82ef74e51b90b3be97ec477e277c3f6d54869f8d1dea93815",
+   "status": "MEASURED",
+   "units": 25,
+   "units_per_request": [
+    4,
+    3,
+    3,
+    3,
+    5,
+    4,
+    3
+   ]
+  },
+  "salesforce:2026-01-31:D04": {
+   "documents": 1,
+   "filing_accessions": [
+    "0001108524-26-000060"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 5,
+   "requests": 5,
+   "required_candidate_assessments": 0,
+   "seconds": 16.3,
+   "semantic_source_id": "sha256:1f3807cd041c8d9aed67b92340760aec85e4b884b5bd041ef39e58b7e2b98230",
+   "status": "MEASURED",
+   "units": 25,
+   "units_per_request": [
+    5,
+    4,
+    4,
+    7,
+    5
+   ]
+  },
+  "southwest_airlines:2025-12-31:D03": {
+   "documents": 2,
+   "filing_accessions": [
+    "0000092380-26-000004",
+    "0000092380-26-000006"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 9,
+   "requests": 9,
+   "required_candidate_assessments": 15,
+   "seconds": 19.6,
+   "semantic_source_id": "sha256:e1c54519c1c2248754388398126259d19b31492082c16269c835f9ab38f702c1",
+   "status": "MEASURED",
+   "units": 29,
+   "units_per_request": [
+    4,
+    3,
+    3,
+    3,
+    4,
+    4,
+    5,
+    1,
+    2
+   ]
+  },
+  "southwest_airlines:2025-12-31:D04": {
+   "documents": 2,
+   "filing_accessions": [
+    "0000092380-26-000004",
+    "0000092380-26-000006"
+   ],
+   "issue_28_grouped_census_requests_for_the_same_filing": 6,
+   "requests": 6,
+   "required_candidate_assessments": 0,
+   "seconds": 18.6,
+   "semantic_source_id": "sha256:15a834d592cf96e48353cdbf36b6be188a61ae07a3ea5e12ed95e41729cc9477",
+   "status": "MEASURED",
+   "units": 29,
+   "units_per_request": [
+    5,
+    4,
+    4,
+    6,
+    8,
+    2
+   ]
+  }
+ },
+ "positions_measured": "the eleven periods whose target original is saved (nine companies' newest periods and Marriott 2023/2024), for D04 and D03; B13 at Ford and Enphase, the two companies in the approved scope, whose newest periods are the only saved ones. JPMorgan is refused at period selection (ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT), the same shard conflict as every other route.",
+ "production_authorized": false,
+ "question": "B13 (for the two companies the approved definition names), D03 and D04 need model calls. What would they need at the frame's positions, and can any existing response be reused?",
+ "record_type": "ISSUE_47_SEMANTIC_ROUTE_REQUEST_NEED",
+ "request_identity": {
+  "consequence": "semantic_source_id and every request_id differ even where the census is equal, so a response registered for #28's request cannot be matched to a pinned request by identity. The same projection difference was measured before on lodging's source_component_id.",
+  "differences": "43 leaves, all in prepared_annual_input and documents[].filing, and the ids that hash them: the ordinary input carries the whole submissions row (11 SEC bookkeeping fields - acceptanceDateTime, act, core_type, fileNumber, filmNumber, isInlineXBRL, isXBRL, isXBRLNumeric, items, primaryDocDescription, size) and the pinned input its five-field projection; the pinned input also carries period_selection and its own selection_rule.",
+  "measured_on": "marriott_international 2025-12-31 D04 (identity_diff.py)",
+  "units_equal": true
+ },
+ "requests": {
+  "earlier_periods": {
+   "D03": 10,
+   "D04": 8
+  },
+  "newest_periods": {
+   "B13": 17,
+   "D03": 92,
+   "D04": 66
+  },
+  "sum_earlier": 18,
+  "sum_newest": 175,
+  "sum_total": 193,
+  "total": {
+   "B13": 17,
+   "D03": 102,
+   "D04": 74
+  }
+ },
+ "reuse_check": {
+  "conclusion": "Nothing here can be replayed: the responses are not in this checkout, would not match a pinned request by identity, and are keyed to another Issue's Requirement. Using them would put #28-authorized calls under #47 positions, which is a cross-Issue credit decision, not an engineering step - and they are results #28 itself has not accepted.",
+  "how_they_are_keyed": "input_key hashes (semantic_source_id, requirement_closure_hash): a registration is keyed to #28's requirement closure (issue_28_v14) and to a source id that embeds r6_semantic_source.py's own module hash, so any module change re-keys it by design.",
+  "what_they_would_carry": "#28's six D04 results are OPEN runs published WITHHELD with D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE, and #28 records real_new_version_semantic_acceptance false and an independent-review blocker (d04_current_development in #28's execution-state.json).",
+  "where_registered_responses_live": "capacity_assessment_input.load_registered_input reads ROOT/.git/ordinary-source-authority/{capacity,going-concern}-assessments/<mode>/<key>/ - a private directory inside the checkout that ran the calls. In this checkout that directory holds only two RECORDED_TEST_ONLY capacity entries written by tests; #28's LIVE D04/B13 registrations are on #28's host, as its evidence records (persistent_candidate_root under /Users/.../issue28-2026-09-13)."
+ },
+ "what_equal_census_means": "For every newest period both routes can reach, the pinned census equals #28's grouped census for the same filing, metric by metric - the model would review the same source units in the same grouping. At the six D04 companies #28 has already run, it also equals #28's actual call count (Marriott 4, Southwest 6, Salesforce 5, Lumen 8, Macy's 5; JPMorgan's 27 is not reachable here). So at the newest year a historical semantic route adds no review #28 is not already doing; the requests that are #47's own are the earlier years, and today only Marriott's two earlier years can be measured.",
+ "what_the_semantic_routes_still_need_offline": [
+  "Input preparation: measured ready. A pinned source is two function substitutions under the three builders; the census above is its output.",
+  "A #47 model-call session: registration (capacity_assessment_input.register_assessment_input) takes only #28's CallLedger factory, and the request plan takes #28's transport policy (continuous_call_policy, bound to issue_28_v14). A recorded-response Run under issue_47_v1 therefore needs #47's own call policy and ledger - the model-call counterpart of historical_sec_session, recorded mode for tests, live refusing without an allowance.",
+  "Historical wiring: a dispatch in historical_results for the assessed branch and the run_store handling for it under issue_47_v1, as #28 has for issue_28_v14.",
+  "Recorded-response tests: need the two items above; they prove the plumbing and never a filing's content."
+ ]
+}

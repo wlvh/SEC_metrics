@@ -1,0 +1,328 @@
+{
+ "record_type": "ISSUE_47_COLD_READ_BY_FAMILY",
+ "what_this_answers": "whether a frozen Run of each route kind can be read back from its own bytes by a process that did not create it",
+ "families_covered": [
+  "accession",
+  "companyfacts",
+  "debt",
+  "governance",
+  "lodging",
+  "structural",
+  "text",
+  "zero_ai_event",
+  "zero_ai_statement"
+ ],
+ "families_not_present_in_this_batch": [],
+ "all_passed": true,
+ "reads": [
+  {
+   "family": "accession",
+   "case": "enphase-2025",
+   "metric_id": "A01",
+   "carried_a_value": false,
+   "batch_value": null,
+   "batch_run_id": "run:historical-period:da8d66b187cd898c7ee120a793d22c9f5dad7354646758efe31ebe5b8480bc22",
+   "cold_read": {
+    "run_id": "run:historical-period:da8d66b187cd898c7ee120a793d22c9f5dad7354646758efe31ebe5b8480bc22",
+    "status": "FROZEN",
+    "records": 8,
+    "results_in_run": 1,
+    "value": null,
+    "quality": "NONE",
+    "reason_code": "TRAIT_NOT_APPLICABLE"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "structural",
+   "case": "enphase-2025",
+   "metric_id": "A03",
+   "carried_a_value": false,
+   "batch_value": null,
+   "batch_run_id": "run:historical-period:65b01ba7b45bbfe01ba1ac669f74ab145086133d0b2322581f198798752827c1",
+   "cold_read": {
+    "run_id": "run:historical-period:65b01ba7b45bbfe01ba1ac669f74ab145086133d0b2322581f198798752827c1",
+    "status": "FROZEN",
+    "records": 8,
+    "results_in_run": 1,
+    "value": null,
+    "quality": "NONE",
+    "reason_code": "TRAIT_NOT_APPLICABLE"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "companyfacts",
+   "case": "enphase-2025",
+   "metric_id": "A05",
+   "carried_a_value": false,
+   "batch_value": null,
+   "batch_run_id": "run:historical-period:69eb5469dce846208b49f6bff08e363d77ced00d6b5d47c92013d4560cb03dc4",
+   "cold_read": {
+    "run_id": "run:historical-period:69eb5469dce846208b49f6bff08e363d77ced00d6b5d47c92013d4560cb03dc4",
+    "status": "FROZEN",
+    "records": 13,
+    "results_in_run": 1,
+    "value": null,
+    "quality": "NONE",
+    "reason_code": "TRAIT_NOT_APPLICABLE"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "zero_ai_statement",
+   "case": "enphase-2025",
+   "metric_id": "B01",
+   "carried_a_value": true,
+   "batch_value": "1472985000",
+   "batch_run_id": "run:historical-period:00ed326bc01c88abac5b98b66efe523b2e3e19f51f7c57b5276239047e08afe6",
+   "cold_read": {
+    "run_id": "run:historical-period:00ed326bc01c88abac5b98b66efe523b2e3e19f51f7c57b5276239047e08afe6",
+    "status": "FROZEN",
+    "records": 12,
+    "results_in_run": 1,
+    "value": "1472985000",
+    "quality": "EXACT",
+    "reason_code": "PASS"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "companyfacts",
+   "case": "enphase-2025",
+   "metric_id": "B02",
+   "carried_a_value": true,
+   "batch_value": "0.1071886817555546034487812908",
+   "batch_run_id": "run:historical-period:2df143094ddbe81de43db8c54688505430b68cddfdbfb66a452cffe2d3ff1cb6",
+   "cold_read": {
+    "run_id": "run:historical-period:2df143094ddbe81de43db8c54688505430b68cddfdbfb66a452cffe2d3ff1cb6",
+    "status": "FROZEN",
+    "records": 16,
+    "results_in_run": 1,
+    "value": "0.1071886817555546034487812908",
+    "quality": "EXACT",
+    "reason_code": "PASS"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "debt",
+   "case": "enphase-2025",
+   "metric_id": "B06",
+   "carried_a_value": true,
+   "batch_value": "1.107959077222837051285943352",
+   "batch_run_id": "run:historical-period:31792b7c42a38e8cff890b725254ad9af36d9459fff74d79170f70df2ff64217",
+   "cold_read": {
+    "run_id": "run:historical-period:31792b7c42a38e8cff890b725254ad9af36d9459fff74d79170f70df2ff64217",
+    "status": "FROZEN",
+    "records": 16,
+    "results_in_run": 1,
+    "value": "1.107959077222837051285943352",
+    "quality": "EXACT",
+    "reason_code": "PASS"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "lodging",
+   "case": "enphase-2025",
+   "metric_id": "B10",
+   "carried_a_value": false,
+   "batch_value": null,
+   "batch_run_id": "run:historical-period:f5eca8c237530589327c4e9bc077d1fc44489ca4562234b463ea8f7bfb619c8c",
+   "cold_read": {
+    "run_id": "run:historical-period:f5eca8c237530589327c4e9bc077d1fc44489ca4562234b463ea8f7bfb619c8c",
+    "status": "FROZEN",
+    "records": 8,
+    "results_in_run": 1,
+    "value": null,
+    "quality": "NONE",
+    "reason_code": "TRAIT_NOT_APPLICABLE"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "zero_ai_event",
+   "case": "enphase-2025",
+   "metric_id": "C01",
+   "carried_a_value": true,
+   "batch_value": "1",
+   "batch_run_id": "run:historical-period:58406ec063779460fd34ee09bf4079ad74770cdff56988d82338af0382f390b0",
+   "cold_read": {
+    "run_id": "run:historical-period:58406ec063779460fd34ee09bf4079ad74770cdff56988d82338af0382f390b0",
+    "status": "FROZEN",
+    "records": 46,
+    "results_in_run": 1,
+    "value": "1",
+    "quality": "EXACT",
+    "reason_code": "PASS"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "governance",
+   "case": "enphase-2025",
+   "metric_id": "C03",
+   "carried_a_value": true,
+   "batch_value": "9601958",
+   "batch_run_id": "run:historical-period:3d80f16479d730d207cce3ae504869611f993a5d379103f30ce16b099c7dfe04",
+   "cold_read": {
+    "run_id": "run:historical-period:3d80f16479d730d207cce3ae504869611f993a5d379103f30ce16b099c7dfe04",
+    "status": "FROZEN",
+    "records": 9,
+    "results_in_run": 1,
+    "value": "9601958",
+    "quality": "EXACT",
+    "reason_code": "PASS"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "text",
+   "case": "enphase-2025",
+   "metric_id": "D02",
+   "carried_a_value": true,
+   "batch_value": "From time to time, we might be subject to various legal proceedings relating to claims arising out of our operations. The outcome of litigation is inherently uncertain. If one or more legal matters were resolved against us in a reporting period for amounts above management’s expectations, our business, results of operations, financial position and cash flows for that reporting period could be materially adversely affected. Except as described in this Item 3, we are not currently involved in any material legal proceedings, the ultimate disposition of which could have a material adverse effect on our operations, financial condition or cash flows.\nSecurities Class Action Lawsuits\nOn July 15, 2024, a putative class action complaint was filed against us, our chief executive officer and our chief financial officer (collectively, the “Initial Defendants”) in the United States District Court for the Northern District of California, captioned Hayes v. Enphase Energy, Inc., Case No. 3:24-cv-04249 (the “Securities Class Action”), purportedly on behalf of a class of individuals who purchased or otherwise acquired our common stock between December 12, 2022 and April 25, 2023. The Securities Class Action alleges that Initial Defendants made false and/or misleading statements in violation of Sections 10(b) and 20(a) of the Exchange Act and Rule 10b-5 promulgated thereunder. The complaint seeks unspecified monetary damages and other relief.\nOn or about July 29, 2024, six additional stockholders filed motions to be appointed lead plaintiff and have their selection of counsel appointed as lead counsel in the Securities Class Action. The Court held a hearing on the lead plaintiff motions on September 5, 2024, and appointed Lon D. Praytor as lead plaintiff on March 31, 2025. On April 17, 2025, movant Andrey Ponomarchuk filed a motion for reconsideration of the Court’s order appointing Praytor as lead plaintiff. Lead plaintiff Praytor filed an amended complaint on May 21, 2025, alleging violations of Sections 10(b) and 20(a) of the Exchange Act and Rule 10b-5 promulgated thereunder by Enphase and our chief executive officer, purported only on behalf of a class of individuals who purchased or otherwise acquired our common stock between February 7, 2023 and April 25, 2023 and removing our chief financial officer as a defendant (the remaining defendants referred hereto as “Defendants”). Defendants filed a motion to dismiss on July 2, 2025. Lead Plaintiff’s filed his opposition on August 15, 2025, and Defendants’ filed their reply on September 15, 2025. The Court has not yet issued a decision on Defendants’ motion to dismiss.\nOn December 13, 2024, another putative class action complaint was filed naming us, our chief executive officer and our chief products officer (collectively, “Defendants II”) in the United States District Court for the Northern District of California, captioned Trustees of the Welfare and Pension Funds of Local 464A v. Enphase Energy, Inc., Case No. 4:24-cv-09038 (the “Pension Fund Action”), purportedly on behalf of a class of individuals who purchased or otherwise acquired our common stock between April 25, 2023 and October 22, 2024. The Pension Fund Action alleges that Defendants II made false and/or misleading statements in violation of Sections 10(b) and 20(a) of the Exchange Act and Rule 10b-5 promulgated thereunder. The complaint seeks unspecified monetary damages and other relief.\nOn or about February 11, 2025, several additional stockholders moved to be appointed lead plaintiff in the Pension Fund Action and have their selection of counsel appointed as lead counsel. On August 20, 2025, the Court appointed HANSAINVEST Hanseatische Investment-GMBH as lead plaintiff. Lead plaintiff filed its amended complaint on October 20, 2025. Defendants’ filed their motion to dismiss on December 12, 2025. Lead plaintiff’s filed its opposition on February 10, 2026, and Defendants’ reply will be due March 27, 2026. A hearing is currently scheduled for May 7, 2026. We dispute the allegations in each of the above-referenced lawsuits and intend to defend the matters vigorously.\nShareholder Derivative Lawsuits\nOn July 16, 2024, a shareholder derivative lawsuit was filed purportedly on our behalf against the Initial Defendants, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Ibarra v. Kothandaraman, et al., Case No. 3:24-cv-04278 (the “Ibarra Action”). The Ibarra Action asserts claims for breaches of fiduciary duty, unjust enrichment, abuse of control, gross mismanagement, waste of corporate assets, and violations of Sections 14(a), 10(b) and 20(a) of the Exchange Act, and contribution under Sections 10(b) and 21D of the Exchange Act based on the purported dissemination of substantially the same allegedly false and misleading statements asserted in the Securities Class Action. The Ibarra Action is seeking unspecified damages and other relief, including reforms and improvements to our corporate governance and internal procedures.\nEnphase Energy, Inc. | 2025 Form 10-K | 46\nOn September 5, 2024, another shareholder derivative lawsuit was filed purportedly on our behalf against the Initial Defendants, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Isaac v. Kothandaraman, et al., Case No. 4:24-cv-06257 (the “Isaac Action”), containing substantially the same allegations as those in the Ibarra Action. On September 20, 2024, the Court consolidated the Isaac and Ibarra Actions for all purposes into one action under the title In re Enphase Energy, Inc. Stockholder Derivative Litigation (the “Derivative Action”).\nOn October 11, 2024, the Court granted the parties’ stipulation to stay the Derivative Action until all motions to dismiss the Securities Class Action are decided.\nOn December 31, 2024, a shareholder derivative lawsuit was filed purportedly on our behalf against Defendants II, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Hirani v. Kothandaraman, et al., Case No. 4:24-cv-09532 (the “Hirani Action”). The Hirani Action asserts claims for breaches of fiduciary duty, unjust enrichment, abuse of control, gross mismanagement, waste of corporate assets, and violations of Sections 14(a), 10(b) and 20(a) of the Exchange Act, and contribution under Sections 10(b) and 21D of the Exchange Act based on the purported dissemination of substantially the same allegedly false and misleading statements asserted in the Pension Fund Action. The Hirani Action is seeking unspecified damages and other relief, including reforms and improvements to our corporate governance and internal procedures.\nOn January 17, 2025, another shareholder derivative lawsuit was filed purportedly on our behalf against Defendants II, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Hanowski v. Kothandaraman, et al., Case No. 4:25-cv-000652 (the “Hanowski Action”). The Hanowski Action asserts claims substantially similar to those asserted in the Hirani Action, also based on the same allegedly false and misleading statements asserted in the Pension Fund Action. The Hanowski Action is seeking unspecified damages and other relief, including reforms and improvements to our corporate governance and internal procedures.\nOn January 31, 2025, the plaintiffs in the Hirani and Hanowski Actions filed a motion to relate their actions to the Pension Fund Action, which the Court approved on February 18, 2025. On March 7, 2025, the Court granted the parties’ stipulation to consolidate the Hirani and Hanowski Actions for all purposes into one action under the title In re Enphase Energy, Inc. 2025 Shareholder Derivative Litigation (the “Derivative II Action”). On May 8, 2025, the Court stayed the Derivative II Action pending resolution of all motion(s) to dismiss in the Pension Fund Action. On January 28, 2026, purported shareholder Ahmed Ibrahim filed a motion to intervene in the Derivative II Action.\nWe dispute the allegations in each of the above-referenced lawsuits and intend to defend the matters vigorously.\nThe pending lawsuits and any other related lawsuits are subject to inherent uncertainties, and the actual defense and disposition costs will depend upon many unknown factors. We could be forced to expend significant resources in the defense of the pending lawsuits and any additional lawsuits, and we may not prevail. In addition, we may incur substantial legal fees and costs in connection with such lawsuits.\nIn the normal course of business, the Company is subject to loss contingencies, such as legal proceedings and claims arising out of its business. An accrual for a loss contingency is recognized when it is probable and the amount of loss can be reasonably estimated.\nThe Company is subject to various legal proceedings and claims that have arisen in the ordinary course of business and that have not been fully resolved. An accrual for a loss contingency is recognized when it is probable and the amount of loss or recovery can be reasonably estimated. The outcome of litigation is inherently uncertain. If one or more legal matters were resolved against the Company in a reporting period for amounts above management’s expectations, the Company’s business, results of operations, financial position and cash flows for that reporting period could be materially adversely affected. As of December 31, 2025, in the opinion of management, there was not at least a reasonable possibility the Company may have incurred a material loss, or a material loss greater than a recorded accrual, concerning loss contingencies for asserted legal and other claims.",
+   "batch_run_id": "run:historical-period:e56d294ddc55c6d61901801d425fee351112372d89fbaaa5c00db23c627c88db",
+   "cold_read": {
+    "run_id": "run:historical-period:e56d294ddc55c6d61901801d425fee351112372d89fbaaa5c00db23c627c88db",
+    "status": "FROZEN",
+    "records": 29,
+    "results_in_run": 1,
+    "value": "From time to time, we might be subject to various legal proceedings relating to claims arising out of our operations. The outcome of litigation is inherently uncertain. If one or more legal matters were resolved against us in a reporting period for amounts above management’s expectations, our business, results of operations, financial position and cash flows for that reporting period could be materially adversely affected. Except as described in this Item 3, we are not currently involved in any material legal proceedings, the ultimate disposition of which could have a material adverse effect on our operations, financial condition or cash flows.\nSecurities Class Action Lawsuits\nOn July 15, 2024, a putative class action complaint was filed against us, our chief executive officer and our chief financial officer (collectively, the “Initial Defendants”) in the United States District Court for the Northern District of California, captioned Hayes v. Enphase Energy, Inc., Case No. 3:24-cv-04249 (the “Securities Class Action”), purportedly on behalf of a class of individuals who purchased or otherwise acquired our common stock between December 12, 2022 and April 25, 2023. The Securities Class Action alleges that Initial Defendants made false and/or misleading statements in violation of Sections 10(b) and 20(a) of the Exchange Act and Rule 10b-5 promulgated thereunder. The complaint seeks unspecified monetary damages and other relief.\nOn or about July 29, 2024, six additional stockholders filed motions to be appointed lead plaintiff and have their selection of counsel appointed as lead counsel in the Securities Class Action. The Court held a hearing on the lead plaintiff motions on September 5, 2024, and appointed Lon D. Praytor as lead plaintiff on March 31, 2025. On April 17, 2025, movant Andrey Ponomarchuk filed a motion for reconsideration of the Court’s order appointing Praytor as lead plaintiff. Lead plaintiff Praytor filed an amended complaint on May 21, 2025, alleging violations of Sections 10(b) and 20(a) of the Exchange Act and Rule 10b-5 promulgated thereunder by Enphase and our chief executive officer, purported only on behalf of a class of individuals who purchased or otherwise acquired our common stock between February 7, 2023 and April 25, 2023 and removing our chief financial officer as a defendant (the remaining defendants referred hereto as “Defendants”). Defendants filed a motion to dismiss on July 2, 2025. Lead Plaintiff’s filed his opposition on August 15, 2025, and Defendants’ filed their reply on September 15, 2025. The Court has not yet issued a decision on Defendants’ motion to dismiss.\nOn December 13, 2024, another putative class action complaint was filed naming us, our chief executive officer and our chief products officer (collectively, “Defendants II”) in the United States District Court for the Northern District of California, captioned Trustees of the Welfare and Pension Funds of Local 464A v. Enphase Energy, Inc., Case No. 4:24-cv-09038 (the “Pension Fund Action”), purportedly on behalf of a class of individuals who purchased or otherwise acquired our common stock between April 25, 2023 and October 22, 2024. The Pension Fund Action alleges that Defendants II made false and/or misleading statements in violation of Sections 10(b) and 20(a) of the Exchange Act and Rule 10b-5 promulgated thereunder. The complaint seeks unspecified monetary damages and other relief.\nOn or about February 11, 2025, several additional stockholders moved to be appointed lead plaintiff in the Pension Fund Action and have their selection of counsel appointed as lead counsel. On August 20, 2025, the Court appointed HANSAINVEST Hanseatische Investment-GMBH as lead plaintiff. Lead plaintiff filed its amended complaint on October 20, 2025. Defendants’ filed their motion to dismiss on December 12, 2025. Lead plaintiff’s filed its opposition on February 10, 2026, and Defendants’ reply will be due March 27, 2026. A hearing is currently scheduled for May 7, 2026. We dispute the allegations in each of the above-referenced lawsuits and intend to defend the matters vigorously.\nShareholder Derivative Lawsuits\nOn July 16, 2024, a shareholder derivative lawsuit was filed purportedly on our behalf against the Initial Defendants, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Ibarra v. Kothandaraman, et al., Case No. 3:24-cv-04278 (the “Ibarra Action”). The Ibarra Action asserts claims for breaches of fiduciary duty, unjust enrichment, abuse of control, gross mismanagement, waste of corporate assets, and violations of Sections 14(a), 10(b) and 20(a) of the Exchange Act, and contribution under Sections 10(b) and 21D of the Exchange Act based on the purported dissemination of substantially the same allegedly false and misleading statements asserted in the Securities Class Action. The Ibarra Action is seeking unspecified damages and other relief, including reforms and improvements to our corporate governance and internal procedures.\nEnphase Energy, Inc. | 2025 Form 10-K | 46\nOn September 5, 2024, another shareholder derivative lawsuit was filed purportedly on our behalf against the Initial Defendants, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Isaac v. Kothandaraman, et al., Case No. 4:24-cv-06257 (the “Isaac Action”), containing substantially the same allegations as those in the Ibarra Action. On September 20, 2024, the Court consolidated the Isaac and Ibarra Actions for all purposes into one action under the title In re Enphase Energy, Inc. Stockholder Derivative Litigation (the “Derivative Action”).\nOn October 11, 2024, the Court granted the parties’ stipulation to stay the Derivative Action until all motions to dismiss the Securities Class Action are decided.\nOn December 31, 2024, a shareholder derivative lawsuit was filed purportedly on our behalf against Defendants II, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Hirani v. Kothandaraman, et al., Case No. 4:24-cv-09532 (the “Hirani Action”). The Hirani Action asserts claims for breaches of fiduciary duty, unjust enrichment, abuse of control, gross mismanagement, waste of corporate assets, and violations of Sections 14(a), 10(b) and 20(a) of the Exchange Act, and contribution under Sections 10(b) and 21D of the Exchange Act based on the purported dissemination of substantially the same allegedly false and misleading statements asserted in the Pension Fund Action. The Hirani Action is seeking unspecified damages and other relief, including reforms and improvements to our corporate governance and internal procedures.\nOn January 17, 2025, another shareholder derivative lawsuit was filed purportedly on our behalf against Defendants II, our non-employee directors and us (as nominal defendant) in the United States District Court for the Northern District of California, captioned Hanowski v. Kothandaraman, et al., Case No. 4:25-cv-000652 (the “Hanowski Action”). The Hanowski Action asserts claims substantially similar to those asserted in the Hirani Action, also based on the same allegedly false and misleading statements asserted in the Pension Fund Action. The Hanowski Action is seeking unspecified damages and other relief, including reforms and improvements to our corporate governance and internal procedures.\nOn January 31, 2025, the plaintiffs in the Hirani and Hanowski Actions filed a motion to relate their actions to the Pension Fund Action, which the Court approved on February 18, 2025. On March 7, 2025, the Court granted the parties’ stipulation to consolidate the Hirani and Hanowski Actions for all purposes into one action under the title In re Enphase Energy, Inc. 2025 Shareholder Derivative Litigation (the “Derivative II Action”). On May 8, 2025, the Court stayed the Derivative II Action pending resolution of all motion(s) to dismiss in the Pension Fund Action. On January 28, 2026, purported shareholder Ahmed Ibrahim filed a motion to intervene in the Derivative II Action.\nWe dispute the allegations in each of the above-referenced lawsuits and intend to defend the matters vigorously.\nThe pending lawsuits and any other related lawsuits are subject to inherent uncertainties, and the actual defense and disposition costs will depend upon many unknown factors. We could be forced to expend significant resources in the defense of the pending lawsuits and any additional lawsuits, and we may not prevail. In addition, we may incur substantial legal fees and costs in connection with such lawsuits.\nIn the normal course of business, the Company is subject to loss contingencies, such as legal proceedings and claims arising out of its business. An accrual for a loss contingency is recognized when it is probable and the amount of loss can be reasonably estimated.\nThe Company is subject to various legal proceedings and claims that have arisen in the ordinary course of business and that have not been fully resolved. An accrual for a loss contingency is recognized when it is probable and the amount of loss or recovery can be reasonably estimated. The outcome of litigation is inherently uncertain. If one or more legal matters were resolved against the Company in a reporting period for amounts above management’s expectations, the Company’s business, results of operations, financial position and cash flows for that reporting period could be materially adversely affected. As of December 31, 2025, in the opinion of management, there was not at least a reasonable possibility the Company may have incurred a material loss, or a material loss greater than a recorded accrual, concerning loss contingencies for asserted legal and other claims.",
+    "quality": "EXACT",
+    "reason_code": "PASS"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "debt",
+   "case": "ford-2025",
+   "metric_id": "B06",
+   "carried_a_value": false,
+   "batch_value": null,
+   "batch_run_id": "run:historical-period:8b312512d8f284765484e47fc4869c235dec32c0a2996b2dc5393f1904a0a4da",
+   "cold_read": {
+    "run_id": "run:historical-period:8b312512d8f284765484e47fc4869c235dec32c0a2996b2dc5393f1904a0a4da",
+    "status": "FROZEN",
+    "records": 13,
+    "results_in_run": 1,
+    "value": null,
+    "quality": "NONE",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "zero_ai_statement",
+   "case": "marriott-2023",
+   "metric_id": "B03",
+   "carried_a_value": false,
+   "batch_value": null,
+   "batch_run_id": "run:historical-period:66b58f524a093acc8529cf1f1b7d02aa4bd04c14586a4f2890970c68a272f685",
+   "cold_read": {
+    "run_id": "run:historical-period:66b58f524a093acc8529cf1f1b7d02aa4bd04c14586a4f2890970c68a272f685",
+    "status": "FROZEN",
+    "records": 30,
+    "results_in_run": 2,
+    "value": null,
+    "quality": "NONE",
+    "reason_code": "ALL_BRANCHES_REJECTED"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "lodging",
+   "case": "marriott-2023",
+   "metric_id": "B10",
+   "carried_a_value": true,
+   "batch_value": "0.692",
+   "batch_run_id": "run:historical-period:98f22a455b5ba5227589876e54b5bbfcf2b5aff4f61ec08f7b27a646d81dcc3c",
+   "cold_read": {
+    "run_id": "run:historical-period:98f22a455b5ba5227589876e54b5bbfcf2b5aff4f61ec08f7b27a646d81dcc3c",
+    "status": "FROZEN",
+    "records": 10,
+    "results_in_run": 1,
+    "value": "0.692",
+    "quality": "EXACT",
+    "reason_code": "PASS"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "zero_ai_event",
+   "case": "marriott-2023",
+   "metric_id": "C01",
+   "carried_a_value": false,
+   "batch_value": null,
+   "batch_run_id": "run:historical-period:abd8c4a19fb7cd8717f766685e8694726a982afbc069cb943a120f0d184e3af1",
+   "cold_read": {
+    "run_id": "run:historical-period:abd8c4a19fb7cd8717f766685e8694726a982afbc069cb943a120f0d184e3af1",
+    "status": "FROZEN",
+    "records": 8,
+    "results_in_run": 1,
+    "value": null,
+    "quality": "NONE",
+    "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "governance",
+   "case": "marriott-2023",
+   "metric_id": "C03",
+   "carried_a_value": false,
+   "batch_value": null,
+   "batch_run_id": "run:historical-period:15fc57da2190851a4d2c5a6e352d4a9c9f7b5d97453526df22235970f890b9aa",
+   "cold_read": {
+    "run_id": "run:historical-period:15fc57da2190851a4d2c5a6e352d4a9c9f7b5d97453526df22235970f890b9aa",
+    "status": "FROZEN",
+    "records": 8,
+    "results_in_run": 1,
+    "value": null,
+    "quality": "NONE",
+    "reason_code": "C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND"
+   },
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "family": "accession",
+   "case": "salesforce-2026",
+   "metric_id": "B12",
+   "carried_a_value": true,
+   "batch_value": "72400000000",
+   "batch_run_id": "run:historical-period:516c23cb802e581724f5c2ba3fbf947acb3a5c0085a17f095c1a0cfc31248fca",
+   "cold_read": {
+    "run_id": "run:historical-period:516c23cb802e581724f5c2ba3fbf947acb3a5c0085a17f095c1a0cfc31248fca",
+    "status": "FROZEN",
+    "records": 10,
+    "results_in_run": 1,
+    "value": "72400000000",
+    "quality": "EXACT",
+    "reason_code": "PASS"
+   },
+   "same_run": true,
+   "same_value": true
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

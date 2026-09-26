@@ -1,0 +1,20 @@
+{
+ "record_type": "ISSUE_47_E01_READING_FAULT_INJECTIONS",
+ "suites": ["tests.vnext.test_e01_eight_o_one_reading", "tests.vnext.test_acceptance_identity"],
+ "baseline": "31 tests, OK",
+ "injections": [
+  {"name": "ONLY_OTHER_EVENTS_HEADING", "what": "the heading pattern requires 'Other Events' right after 'Item 8.01', which is what the first extraction did",
+   "caught_by": ["test_pfizer_heads_its_item_results_of_other_events", "test_each_item_re_derives_from_the_saved_bytes[pfizer-2025]"]},
+  {"name": "ALIASES_FROM_THE_WHOLE_DOCUMENT", "what": "aliases_in_the_8_01_item computed over the whole document",
+   "caught_by": ["test_an_alias_in_another_item_does_not_make_the_item_carry_it", "test_each_item_re_derives_from_the_saved_bytes[lumen-2025]", "test_each_item_re_derives_from_the_saved_bytes[macys-2026]"]},
+  {"name": "ANY_AGREEING_READING_IS_A_MATCH", "what": "a position is MATCH when one reading gives the published count, which would accept Lumen, Macy's and Marriott on the reading still to be decided",
+   "caught_by": ["test_match_only_when_every_reading_gives_the_published_count"]},
+  {"name": "HEADER_COUNT_ACCEPTS_E01_AGAIN", "what": "the register accepts E01 from event-count-read.json's header count again",
+   "caught_by": ["test_the_committed_register_is_what_the_readings_build", "test_the_register_is_built_with_every_run_reader_disabled", "test_a_result_that_moved_is_not_granted_by_regenerating (4 subtests)"],
+   "how": "bluntly: the two readings both grant Enphase, Ford and Southwest, and the builder refuses with ACCEPTANCE_ID_NOT_UNIQUE. Were the header reading to grant a position the 8.01 reading does not hold, only the committed-register comparison would see it."},
+  {"name": "JUDGED_READING_IGNORES_THE_ALIAS", "what": "the judged reading counts any item judged to report a transaction, alias or not",
+   "caught_by": ["test_the_judged_reading_needs_the_alias_as_well"],
+   "note": "no 8.01 in these windows reports a transaction without an alias, so no committed count moves under it; the case is built."}
+ ],
+ "restored": "both files compared byte for byte with their copies after the last injection"
+}

@@ -1,0 +1,2873 @@
+{
+ "a_fourth_thing_the_reading_got_wrong": {
+  "and_the_check_that_it_only_added": "re-run over all ten companies: zero positions that previously matched moved, exactly two became MATCH, and only Pfizer used the reconstruction. A change that moved an existing reading would be a change to the reading's rule, not an extension of its reach.",
+  "the_branch_no_filing_in_this_set_exercises": "the CostsAndExpenses cross-check. It is implemented because the definition requires it, and no filing here both omits OperatingIncomeLoss and tags CostsAndExpenses, so nothing in this set would notice if it were wrong.",
+  "what": "Pfizer's B03 and B07 read as NOT_READ, and the reason was in the reading, not the filing.",
+  "what_it_reads_now": {
+   "B03": "0.3329551446971028619824541779",
+   "B07": "5.332834144515162860351928117"
+  },
+  "what_the_filing_states": {
+   "CostsAndExpenses": "not tagged, so the cross-check does not apply here",
+   "DepreciationDepletionAndAmortization": "6592000000",
+   "IncomeLossFromContinuingOperationsBeforeIncomeTaxes...NoncontrollingInterest": "7520000000",
+   "InterestExpense": "2671000000",
+   "NonoperatingIncomeExpense": "not tagged",
+   "OtherNonoperatingIncomeExpense": "-6724000000",
+   "Revenues": "62579000000",
+   "reconstructed_operating_income": "14244000000"
+  },
+  "why": "both depend on operating income and Pfizer tags no OperatingIncomeLoss at all - zero occurrences in a 5.2 MB primary document. The reading stopped at the first candidate; the approved definition does not. It allows pretax continuing income less an AGGREGATE nonoperating bridge, and requires Revenues - CostsAndExpenses to cross-check the reconstruction where the filer tags CostsAndExpenses."
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "fault_injections": {
+  "LET_AN_ACCEPTANCE_OVERRIDE_A_WITHDRAWAL": {
+   "cases_that_failed": [
+    "test_a_withdrawn_result_is_not_accepted"
+   ],
+   "caught": true,
+   "exit_code": 1
+  },
+  "MATCH_THE_COORDINATE_AND_IGNORE_THE_VALUE": {
+   "cases_that_failed": [
+    "test_an_acceptance_does_not_survive_the_value_changing"
+   ],
+   "caught": true,
+   "exit_code": 1
+  },
+  "_whole_suite": {
+   "exit_code": 0,
+   "tail": [
+    "----------------------------------------------------------------------",
+    "Ran 52 tests in 142.915s",
+    "",
+    "OK"
+   ]
+  }
+ },
+ "fault_injections_on_the_operating_income_reconstruction": {
+  "results": {
+   "ADD_THE_BRIDGE_INSTEAD_OF_SUBTRACTING_IT": {
+    "caught": true,
+    "operating_income_route": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest - OtherNonoperatingIncomeExpense",
+    "pfizer_reads": {
+     "B03": "0.1180587737100305214209239521",
+     "B07": "0.2980157244477723698989142643"
+    },
+    "pfizer_verdicts": {
+     "B03": "DIFFERS",
+     "B07": "DIFFERS"
+    }
+   },
+   "BUILD_THE_BRIDGE_FROM_A_FRAGMENT": {
+    "caught": true,
+    "operating_income_route": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest - InterestExpense",
+    "pfizer_reads": {
+     "B03": "0.1828249093146263123412007223",
+     "B07": "1.815424934481467615125421191"
+    },
+    "pfizer_verdicts": {
+     "B03": "DIFFERS",
+     "B07": "DIFFERS"
+    }
+   },
+   "TAKE_PRETAX_AS_OPERATING_INCOME": {
+    "caught": true,
+    "operating_income_route": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest - OtherNonoperatingIncomeExpense",
+    "pfizer_reads": {
+     "B03": "0.2255069592035666917016890650",
+     "B07": "2.815424934481467615125421191"
+    },
+    "pfizer_verdicts": {
+     "B03": "DIFFERS",
+     "B07": "DIFFERS"
+    }
+   }
+  },
+  "why_here": "this is the one place the reading computes a number the filing does not state, so it is the one place a wrong rule answers confidently."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "per_position": {
+  "enphase-2025": {
+   "company_id": "enphase_energy",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpenseNonoperating",
+    "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+   "later_chain_concepts_the_filing_also_tags": {},
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:d061ef63cca5bfb1c243374adef3108e114e6aae4f0954883511c64d9867f5ba",
+       "run_id": "run:historical-period:b831204db66c841a07a900bb0533dcba6e11618d7ccc351d3478cfa55f287b90"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "1463101"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-26-000013"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "1472985000",
+     "read": "1472985000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:5bbc45e0480d7830120003e32b33fbe337edb1df1c282000debee72ca2b1c9e0",
+       "run_id": "run:historical-period:d1a57ce10ef06c968977882fe5e844827dc4c84759f1f0e98f6e205c870cf217"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-25-000024",
+       "0001463101-26-000013"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.1071886817555546034487812908",
+     "read": "0.1071886817555546034487812908",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:fdde35ac1d5f380e3ab3d2c474108fb24f736ba3972f057126a0d9912f60930e",
+       "run_id": "run:historical-period:b831204db66c841a07a900bb0533dcba6e11618d7ccc351d3478cfa55f287b90"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "1463101"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-26-000013"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.1616927531509146393208349033",
+     "read": "0.1616927531509146393208349033",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:c1fa7ca38cf3908865d26ea99265bbdb9ac7626fa2e1586d63541657a310f2cf",
+       "run_id": "run:historical-period:3a8a685493a691ebe80b05ca9b6a2ee42de86c10070c74803b5911ebe56d020b"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-26-000013"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "172133000",
+     "read": "172133000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:8f13217b1d545018a596f514d68d12c1c9926cddc62bde57db28b28fca006aaf",
+       "run_id": "run:historical-period:c4c5d72902543f209350fef0444a232be6317178d005d23a4689bcfcda25fc78"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-26-000013"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "95901000",
+     "read": "95901000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:0cf0ab44195a23e8e5758703f604fa3d8d6c00311fc34ae2a2202e0963d42aba",
+       "run_id": "run:historical-period:ffaa55f64f61407fb05545529a54b1bede10415be2b839d132326b9bc5df47d3"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-26-000013"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "34.84317628843176288431762884",
+     "read": "34.84317628843176288431762884",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:ae6a346765af6e6e68ca6aae505c9ae4681a12f80777d00cb90d14d62e8b613d",
+       "run_id": "run:historical-period:506722bd1bfcd628ec6d59e9ab15e36c79df65347754c60fff5eff118fe7a246"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-26-000013"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "2.065412193479380422295289783",
+     "read": "2.065412193479380422295289783",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:53e6428b31d18dfa9ce57ec64a15ecebf95e4148f6d934b782746476a48d0108",
+       "run_id": "run:historical-period:53713e35386d98cd1f3d893192ca132e187d0583aff0e2589b4549a06e4ce8d7"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-26-000013"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "474318000",
+     "read": "474318000",
+     "verdict": "MATCH"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "period_end": "2025-12-31"
+  },
+  "ford-2025": {
+   "company_id": "ford_motor_company",
+   "concepts_used": {
+    "capex": "PaymentsToAcquireProductiveAssets",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpenseNonoperating",
+    "net_income": "ProfitLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+   "later_chain_concepts_the_filing_also_tags": {
+    "net_income": {
+     "NetIncomeLossAvailableToCommonStockholdersBasic": "-8182000000"
+    }
+   },
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:3ad67e9da35dd8c6e55243d6fd324e377a65169f876b7521ea04996ceca3a5d4",
+       "run_id": "run:historical-period:7392772c25e5e24bfcb2a77c67687da497e3104d6ab34f5940fed6901ce12230"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "37996"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-26-000015"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "187267000000",
+     "read": "187267000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:98655c3bdd8b745eac7704960b88350e164bbb22c33e7d6b58aa811b7193af63",
+       "run_id": "run:historical-period:9efc3badcd2a133f2e6de9205b3a3f2fa80351847ec761a957f917ba13f5ac6b"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-25-000013",
+       "0000037996-26-000015"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.01229782909531222971804186127",
+     "read": "0.01229782909531222971804186127",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:1829d73dac66a195a590ab84ea1f1d1800a77fae60d828b6f37d5cbeec2abd30",
+       "run_id": "run:historical-period:baf5c7f0604fb4e4c93c36a546f4bd9468a6d5f8a35d91a4c709ace534b425ab"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "37996"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-26-000015"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": false,
+     "published": "0.0363384899635280108080975292",
+     "read": "0.03633848996352801080809752920",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:89f9cc9df7dc78e52fcd0a97eb580afa3d793c787e65cc6500529f8a2d4662e7",
+       "run_id": "run:historical-period:702436f017a2e0e5b04d5fe0e57324b5a0c9d7491732c5375b54f740a9956b4d"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-26-000015"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "-8162000000",
+     "read": "-8162000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:0c75dabf68763d976cba26db65151c415ac0a7b231df0605805da89b33ad467d",
+       "run_id": "run:historical-period:0e61f58953a7e515dd00984d542946bd05eb72bac4864ae8540340271defe2a3"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-26-000015"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "12467000000",
+     "read": "12467000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "-7.311802232854864433811802233",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B08": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:d8f49e8110ab17dc68120d55ba59be60b63daf052343079e842e382f980c5d63",
+       "run_id": "run:historical-period:8ffcb7b21e97cf5f80a75aea2166a44e3f622272e120789c8b337015e809fe04"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-26-000015"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "1.074828096440073113412829663",
+     "read": "1.074828096440073113412829663",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:21a92bb0ffad0222b7935d3cef11ba7da07c3f90b5396ee7600428b8edce5e5e",
+       "run_id": "run:historical-period:591432e55015cc2ca86d08052760edcb0fcae9c868f7f196579d786693aef207"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-26-000015"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "23356000000",
+     "read": "23356000000",
+     "verdict": "MATCH"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "period_end": "2025-12-31"
+  },
+  "lumen-2025": {
+   "company_id": "lumen_technologies",
+   "concepts_used": {
+    "capex": "PaymentsToAcquireProductiveAssets",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpense",
+    "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+   "later_chain_concepts_the_filing_also_tags": {
+    "interest": {
+     "InterestExpenseNonoperating": "1284000000"
+    },
+    "net_income": {
+     "NetIncomeLossAvailableToCommonStockholdersBasic": "-1739000000"
+    },
+    "revenue": {
+     "Revenues": "12402000000"
+    }
+   },
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:7fcf383616ec80d771c6918957b3bf1abda4722691abe0fd2cd0b57484069d9b",
+       "run_id": "run:historical-period:560ce9893cfb94a3ced285fdac661720421ab53c7e28b3d7e6f52e5f92daa986"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "18926"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-26-000014"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "11331000000",
+     "read": "11331000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:f0c9bed5e63186bdbda1d035d5125dfd514a43c3adbb56e58fb95050c43aac3a",
+       "run_id": "run:historical-period:44fa7e70bdbcb27aa5cf8f4bbbca4998d08df7b2b861ace2c223a35e70b64c67"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-25-000010",
+       "0000018926-26-000014"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "-0.06579272817214939401434578283",
+     "read": "-0.06579272817214939401434578283",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:1afee89f9ee092a0d0f273792907462b349a4f793aa82bd1a5119e775aae167e",
+       "run_id": "run:historical-period:560ce9893cfb94a3ced285fdac661720421ab53c7e28b3d7e6f52e5f92daa986"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "18926"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-26-000014"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.1709469596681669755537904863",
+     "read": "0.1709469596681669755537904863",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:97521a513592376d10040b034da3e961a9308df8343d3946c7f88a968061a8e8",
+       "run_id": "run:historical-period:592cf6b2ad9df6323cc1a7f87c601a349c05bd3042c34b81b55f6b8a1e63414a"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-26-000014"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "-1739000000",
+     "read": "-1739000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:80f7292700f913b0f8ae0e3537be4490a4e42b532beb662c3dc837833dde7d47",
+       "run_id": "run:historical-period:ed0fa1f9307b0cb6eccbe6135b83c38a3b2fb16aa71f28f7fa7c9cb152343741"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-26-000014"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "371000000",
+     "read": "371000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "-0.6323987538940809968847352025",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B08": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:f85566c11c81bb9c1346dec759bb44430afed6e30ba2c34a15b6c3118ffacdf9",
+       "run_id": "run:historical-period:adbe127829e9db03c05ca891906476f2d492a8912576359b909a18478ceed965"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-26-000014"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "1.801594533029612756264236902",
+     "read": "1.801594533029612756264236902",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:65c5aa65f941e3ebe88898693800d814e227a8115c6cd2d606c53bd9b5f2f2a6",
+       "run_id": "run:historical-period:d3cd24c231e09ddcd65b320fb15d3436b6f58c42ec7c0c4d34d2ea0f7d4b153d"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-26-000014"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "1003000000",
+     "read": "1003000000",
+     "verdict": "MATCH"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "period_end": "2025-12-31"
+  },
+  "macys-2026": {
+   "company_id": "macys",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpense",
+    "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2024-02-04",
+     "2025-02-01",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+   "later_chain_concepts_the_filing_also_tags": {
+    "interest": {
+     "InterestExpenseDebt": "160000000"
+    },
+    "net_income": {
+     "NetIncomeLossAvailableToCommonStockholdersBasic": "642000000",
+     "ProfitLoss": "642000000"
+    },
+    "revenue": {
+     "Revenues": "22621000000"
+    }
+   },
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:cdd9caf6aa5eb77bf233fa14446adbfeef5e16a606f8a264a8b14063cdf4b1b2",
+       "run_id": "run:historical-period:66b89b9b4dc40e1a78ed6261ac65649b3dae98e0816576a7011a698a0bfde641"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "794367"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-021721"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "21764000000",
+     "read": "21764000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:66d0234b888976f0da475d1fbabe7e90408ca3c0ad74fd47340f9646e81765e3",
+       "run_id": "run:historical-period:31d32685dbf93848dd8ba028f3b4b703ca08f73e19b898e90380973ce3d3c301"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-25-014315",
+       "0001628280-26-021721"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "-0.02372942179159377383035033419",
+     "read": "-0.02372942179159377383035033419",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:bcdc08b42abf6fc78d7c2ff9df8dbc99265b28e674b1ddd9c3cda930906c5899",
+       "run_id": "run:historical-period:bcc69b3b3312d03425e0eefd37774644460ac81a8d1f1aa747f99e171f65d5e4"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "794367"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-021721"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.08840286712001470317956258041",
+     "read": "0.08840286712001470317956258041",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:c880c8c8f8b91425b925884f18d7209ab6bd0cb3bb104019ceb3fddbee02cced",
+       "run_id": "run:historical-period:ef76edd15c3f571991af0dff3626f8d4106ce2a502ba9b1c42ddd6fb7a4da351"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-021721"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "642000000",
+     "read": "642000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:8b2b6c7f1b09964cd5c404ec852b96644bfc29b6c4bb27f2da0f4216ea05d02a",
+       "run_id": "run:historical-period:a9d23972690fd9fa6bb5f7da728feed725358cb1020ca9d7ac950b556d0b773d"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-021721"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "1057000000",
+     "read": "1057000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:cdfe53a2605122ed577b1cc7e12700693d9b7f4c4427feae9133043811823b20",
+       "run_id": "run:historical-period:caeee97ac1432fb0ac006efd20d4704dd87bfe230e62e0ae8f87783da0e8c413"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-021721"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "7.410071942446043165467625899",
+     "read": "7.410071942446043165467625899",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:58b983c78e08caef101d14bd2930fb966b340ce184f50f70ab426d445b061164",
+       "run_id": "run:historical-period:f99c1ba8a72940e3f8d4aa283851a49f0583b027dc24de0167a7b004bd1992ef"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-021721"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2026-01-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "1.485199198753616737146672602",
+     "read": "1.485199198753616737146672602",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:3bf61f92ddd2b0ab18a2041ed9c71bf364b6bb7449af1fa199c527f589198f38",
+       "run_id": "run:historical-period:bfb976613d3c44577d997012027fd359b0ce08f38c5134710769b1c416bf7b7e"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-021721"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2026-01-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "1246000000",
+     "read": "1246000000",
+     "verdict": "MATCH"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-02"
+   },
+   "period_end": "2026-01-31"
+  },
+  "marriott-2023": {
+   "company_id": "marriott_international",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": null,
+    "d_and_a_parts": null,
+    "interest": "InterestExpense",
+    "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2022-01-01",
+     "2022-12-31",
+     false
+    ],
+    "revenue": "Revenues"
+   },
+   "document": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+   "later_chain_concepts_the_filing_also_tags": {},
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:7d0aeb48394b6fde5e28865ffc7cd3b337e81f5f51d53ed9f93370afab8b4a96",
+       "run_id": "run:historical-period:0ba11e9f3b5ecd46630bd3b290b232899df9499134b7721a53406fec52ac378a"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "1048286"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-24-004372"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "23713000000",
+     "read": "23713000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "0.1415298705049824291147162182",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B03": {
+     "exact_string_match": false,
+     "published": null,
+     "read": null,
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:d23fda934dc9a703c2b877213dfee46949b1a233ce4838248cd64e5ba67fb206",
+       "run_id": "run:historical-period:ff4bd7b6bfc2b09e996babe27509c7ceef400a3602c9a517283e306c49a33649"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-24-004372"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "3083000000",
+     "read": "3083000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:45beef522248a1009944a74a3a49c950330ce62ce3d80162a034ef907e1d35be",
+       "run_id": "run:historical-period:8c0f838853aa840e1e396e07d95bae61a7d62ee386051c5fb36e079393dbb192"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-24-004372"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+      "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "2718000000",
+     "read": "2718000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:5228211c8444a4472d739cd6a0a18630b6a871f1174eef173dda2222a05fe994",
+       "run_id": "run:historical-period:28560e33c1a8b574bd26602ee539f08423519f8695185c47ef1cddb4cba1bb21"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-24-004372"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+      "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "6.838938053097345132743362832",
+     "read": "6.838938053097345132743362832",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:b809de15f01770b5f2d18fb6f840b1d88b371d1953cabbe9ff8431b8b6bfcfc5",
+       "run_id": "run:historical-period:bfb37963c56a79b76272fe70657bdfb7a9fbc35bf387450052b0901379acc12b"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-24-004372"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+      "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.4265653182169543931976294769",
+     "read": "0.4265653182169543931976294769",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:ef70b761e2e4550b5cddf19e02aed0b1ab063005249857d2708b1fb3874d0ec5",
+       "run_id": "run:historical-period:bf1681855231a262f8919645e137d851fe456db05f2f0b1396330ee371334c92"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-24-004372"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+      "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "338000000",
+     "read": "338000000",
+     "verdict": "MATCH"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01"
+   },
+   "period_end": "2023-12-31"
+  },
+  "marriott-2024": {
+   "company_id": "marriott_international",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+    "d_and_a_parts": [
+     "128000000",
+     "255000000"
+    ],
+    "interest": "InterestExpenseNonoperating",
+    "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2023-01-01",
+     "2023-12-31",
+     false
+    ],
+    "revenue": "Revenues"
+   },
+   "document": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+   "later_chain_concepts_the_filing_also_tags": {},
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+       "run_id": "run:historical-period:2cae02b34cf6cba614a63fff3eac9b34a349db22ec69d4c879d629d2e83afe14"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "1048286"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-25-004818"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "25100000000",
+     "read": "25100000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:0e7f01224cd6f8f8ed6419907f0392993fbc75cfdb393b5307de062d49b4d8ce",
+       "run_id": "run:historical-period:8207125859547a5d450abda7544c4f474153b8d84bb545def273ebcdbe314d66"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-24-004372",
+       "0001628280-25-004818"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.05849112301269345928393708093",
+     "read": "0.05849112301269345928393708093",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+       "run_id": "run:historical-period:2cae02b34cf6cba614a63fff3eac9b34a349db22ec69d4c879d629d2e83afe14"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "1048286"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-25-004818"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.1653386454183266932270916335",
+     "read": "0.1653386454183266932270916335",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:83a3540d9a20ab2b63c4a1cce59898f4483e5fc55704eddcb27007264a0a4afa",
+       "run_id": "run:historical-period:fb8aa39f83662da01e43fdc7610f2dd22a669bc04667898004b25164325c96ef"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-25-004818"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "2375000000",
+     "read": "2375000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:1b125bca8565fd568f6e8fb22244477613b4e877b283ca7b4de10b390ad9d68c",
+       "run_id": "run:historical-period:0eda3ebdab2e98de338eecf5f81d1b57d577cf297ffc85fc200af33d6ea06e15"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-25-004818"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+      "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "1999000000",
+     "read": "1999000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:3bcce4bbceec694e4bdccc70562c79327ae4443ed5f254baf3efeb0af2095292",
+       "run_id": "run:historical-period:8b6e3502bfaf649ca7598bd1e8181dbf0d31c827627d4dd642b3d7fdde21132a"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-25-004818"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+      "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "5.420143884892086330935251799",
+     "read": "5.420143884892086330935251799",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:207f79d8acc2f1e91976de526b7619b7ba8750b2e625a723631a4035348891d5",
+       "run_id": "run:historical-period:22f237bc0835a582afbdc20eabe0ab9c797aa6e3d4ca1e3085af47679759e3aa"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-25-004818"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+      "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.4029367556942999190657879524",
+     "read": "0.4029367556942999190657879524",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:3aa0481bc77ef5403606b41538a8795f10f0e715f87dcc992bbcc0c8fe52d4c9",
+       "run_id": "run:historical-period:ac23645134c32e455b1a7827bd64a7e5b44be89f489a8e773de823ab6a530fa7"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-25-004818"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+      "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "396000000",
+     "read": "396000000",
+     "verdict": "MATCH"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01"
+   },
+   "period_end": "2024-12-31"
+  },
+  "marriott-2025": {
+   "company_id": "marriott_international",
+   "concepts_used": {
+    "capex": "PaymentsToAcquireProductiveAssets",
+    "d_and_a": "Depreciation+AmortizationOfIntangibleAssets",
+    "d_and_a_parts": [
+     "145000000",
+     "313000000"
+    ],
+    "interest": "InterestExpenseNonoperating",
+    "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "Revenues"
+   },
+   "document": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+   "later_chain_concepts_the_filing_also_tags": {},
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+       "run_id": "run:historical-period:2e24e19de19659d3a2cd87e7d5bbe2eaef6c79709a2ebf35eb0799f64f9c3c4c"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "1048286"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-26-000007"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "26186000000",
+     "read": "26186000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159",
+       "run_id": "run:historical-period:3af0a71c85b3d74eabe04e687309af8a08eedaf6913fdfd31b99736d53d76ac8"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-26-000007",
+       "0001628280-25-004818"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.04326693227091633466135458167",
+     "read": "0.04326693227091633466135458167",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+       "run_id": "run:historical-period:2e24e19de19659d3a2cd87e7d5bbe2eaef6c79709a2ebf35eb0799f64f9c3c4c"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "1048286"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-26-000007"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.1756281982738868097456656229",
+     "read": "0.1756281982738868097456656229",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2",
+       "run_id": "run:historical-period:d2631b47a24fa7eb7ceaec296321f0dc2f6ed41c9a2be7d4cc04340a97f0b1b6"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-26-000007"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "2601000000",
+     "read": "2601000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:e2bffe807958df738353c6f337bd40562f5c71f79d5171b8c8c12f3cfa0656a1",
+       "run_id": "run:historical-period:abb0fb5a5f965c8c15114b2e52a3b69b4c327b37068eb78b5f98e57df8b9ee9f"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-26-000007"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "2608000000",
+     "read": "2608000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:b5199f67eb551da449705600f3763dfba9df83d981a4445e5120e48499bbe557",
+       "run_id": "run:historical-period:30fa548df59993b83aad7beb00520b79b9fa02e2038b5e788dc8cb3b6fe4d2c4"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-26-000007"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "5.118665018541409147095179234",
+     "read": "5.118665018541409147095179234",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:01b91bc5a28e83d72e93c22541865de0411d1daf1f247870d6a90b2f6bcea314",
+       "run_id": "run:historical-period:f1ebf85b87126be806ded94f6343f18bdd2fe3ae65a4579029f6ff67998daa65"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-26-000007"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.4267682781614670159561800429",
+     "read": "0.4267682781614670159561800429",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:4e215a7f2742c4e9891341a7d7a51281089b85b9cb9e53bd73177861e094411f",
+       "run_id": "run:historical-period:d66032fbe62ae67682c5223f18937b089447b244668d98cff241e6ecdc49b163"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-26-000007"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "358000000",
+     "read": "358000000",
+     "verdict": "MATCH"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "period_end": "2025-12-31"
+  },
+  "pfizer-2025": {
+   "company_id": "pfizer",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpense",
+    "net_income": "NetIncomeLoss",
+    "operating_income": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest - OtherNonoperatingIncomeExpense",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "Revenues"
+   },
+   "document": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+   "later_chain_concepts_the_filing_also_tags": {
+    "net_income": {
+     "NetIncomeLossAvailableToCommonStockholdersBasic": "7771000000",
+     "ProfitLoss": "7812000000"
+    }
+   },
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf",
+       "run_id": "run:historical-period:3d917aed83fa977452382129dee5e50f5146254f697f855348585efeb88a3632"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "78003"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-26-000026"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "62579000000",
+     "read": "62579000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:dd3ef27fccfd53902e901b4fca8b63f2e5dc1177ed5f3800b87053f0a6dec782",
+       "run_id": "run:historical-period:176b5665445138cf910d9f7c2e9a5c4f622ad6b1c3d9e758e45c8459e5ce34c5"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-25-000054",
+       "0000078003-26-000026"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "-0.01647099501783833906989171264",
+     "read": "-0.01647099501783833906989171264",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:b6d0e8c0f7decc22cbe4598de6ceff4f59820258b30bd6012af06e7c4cb0799b",
+       "run_id": "run:historical-period:68a25dbe12cd1832da56505027ea940dc07715d9289a93a3317e56f77725af17"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "78003"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-26-000026"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.3329551446971028619824541779",
+     "read": "0.3329551446971028619824541779",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:27c15b1ff55fd121e3bab4d8ee170125bafdfe4c651397c15c38b85ac6180d2e",
+       "run_id": "run:historical-period:a2aa95168eb740b6b40bb705d7a3f2dc25fab82cf5067713af3ea2f503a97fe6"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-26-000026"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "7771000000",
+     "read": "7771000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:ae93b771fc731d72c03cd242c6eb53f0533d8a72ecab9e1372f7cfe5ffd4e728",
+       "run_id": "run:historical-period:94309139845dcccd18b6a3336d3cd0781417515a00a6fa73d589053b9ef62e24"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-26-000026"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "9075000000",
+     "read": "9075000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:67a66a040e0c1111a9a1f1b589a3abfc1a9fc17e0c1d89cc977c48abb4ba1af6",
+       "run_id": "run:historical-period:881b4a0af466690b34374a175f17b00cd2b0f3afd3d149c7dc1df3507315fcd3"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-26-000026"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "5.332834144515162860351928117",
+     "read": "5.332834144515162860351928117",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:ec8e2ace97044b2c7da314c3d98abbd9dd38d0a8eea3fedba47c8d66538f99d9",
+       "run_id": "run:historical-period:b8af494ab40d052342c8da4ed4583eed356eb0ebde60909bf8adf881b86026c4"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-26-000026"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "1.159906986805104910231451438",
+     "read": "1.159906986805104910231451438",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:64a89e4079f824f8e53d4f14d8f516eed4c4f903435f236177a377dd15d83b6a",
+       "run_id": "run:historical-period:452286e518352fbc36d154770806031c09004a4da1b7ecf7db972c332cc2164c"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-26-000026"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "1142000000",
+     "read": "1142000000",
+     "verdict": "MATCH"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "period_end": "2025-12-31"
+  },
+  "salesforce-2026": {
+   "company_id": "salesforce",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpenseDebt",
+    "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2024-02-01",
+     "2025-01-31",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+   "later_chain_concepts_the_filing_also_tags": {},
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+       "run_id": "run:historical-period:5c517188c2b75be27ed8ccce04514b303684e5fea36a116016f77dad68653da2"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "1108524"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001108524-26-000060"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "41525000000",
+     "read": "41525000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:f8aa49b89c92a77c1a70ede5962016a0845c7578557f4db16a873d7360b11410",
+       "run_id": "run:historical-period:a8b1c6103ec3b8e0bee93dba2fdde2177533db638b8a7af15d492b21d13b7531"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001108524-25-000006",
+       "0001108524-26-000060"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-01",
+      "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.09579100145137880986937590711",
+     "read": "0.09579100145137880986937590711",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120",
+       "run_id": "run:historical-period:5c517188c2b75be27ed8ccce04514b303684e5fea36a116016f77dad68653da2"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "1108524"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001108524-26-000060"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "direct_d_and_a_candidates": {
+      "DepreciationAndAmortization": "3631000000",
+      "DepreciationDepletionAndAmortization": "1200000000.0"
+     },
+     "exact_string_match": true,
+     "published": "0.2295243829018663455749548465",
+     "read": "0.2295243829018663455749548465",
+     "verdict": "DIRECT_CANDIDATES_DISAGREE"
+    },
+    "B04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:c381836a0c8ec3c44aee90fa908157f059b66c481d90a585449d14b910367e78",
+       "run_id": "run:historical-period:9356f13dd3378635d61aa9e07aaad8c954cac04fea71f933927aa7627456f785"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001108524-26-000060"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-01",
+      "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "7457000000",
+     "read": "7457000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:5412d38f2346745fc30a452cc0502295d3ea3ed82a7e5a86da3d78b115221c27",
+       "run_id": "run:historical-period:c426e250d6215fbf47427eea2b3d533d417047f5318b7dc5e0bbf793cac297ac"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001108524-26-000060"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-01",
+      "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+      "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "14402000000",
+     "read": "14402000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:043c03088226133c318ea90f2301bfa9c283ae6c0a36957a46184e75b7ee8875",
+       "run_id": "run:historical-period:849515671bc0b0c201bce94de0affe5a0aaacf860fcdf55f3b95a5579faa80a1"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001108524-26-000060"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-01",
+      "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+      "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "25.71296296296296296296296296",
+     "read": "25.71296296296296296296296296",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:16f73f950cf724839deb1ee04536fdc2bcaf910cc8ded82d5cb13dd887618e06",
+       "run_id": "run:historical-period:2d885024299079171f2a16741179951262f0402bb42088e2058012b09a45889c"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001108524-26-000060"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2026-01-31",
+      "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+      "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.7603319144350449916482569104",
+     "read": "0.7603319144350449916482569104",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:52005a5b4b33dd1f0a460640a567364197e7da2345199b4fac180b796cc2dcc7",
+       "run_id": "run:historical-period:ad19af5ce0740a2f838cf1460d44d4ceeaef705aba6207cbfcc0346ad488eb7a"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001108524-26-000060"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2026-01-31",
+      "period_start": "2026-01-31",
+      "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+      "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "7327000000",
+     "read": "7327000000",
+     "verdict": "MATCH"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-01"
+   },
+   "period_end": "2026-01-31"
+  },
+  "southwest-2025": {
+   "company_id": "southwest_airlines",
+   "concepts_used": {
+    "capex": "PaymentsToAcquireProductiveAssets",
+    "d_and_a": "DepreciationAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpenseNonoperating",
+    "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2024-01-01",
+     "2024-12-31",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm",
+   "later_chain_concepts_the_filing_also_tags": {
+    "net_income": {
+     "NetIncomeLossAvailableToCommonStockholdersBasic": "442000000"
+    }
+   },
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:8197d3b73751dbbb4b2e354236111e95deef15a362db528292d7857af687bacc",
+       "run_id": "run:historical-period:4a45ce788bd65d5209d110ce16cbc5348bbec799a77d0cf9d9a0cb8c8fd358d4"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "92380"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-26-000004"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "28063000000",
+     "read": "28063000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:b761cc95b12b5cd3c30e1f78526ff134c171ff514dacbabbe85f6a9938072863",
+       "run_id": "run:historical-period:ead047b42dcd1b3a110d7df8bfc4fa204c2ad2682c32c2a7d0ee15eeb5d688a6"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-25-000024",
+       "0000092380-26-000004"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.02110395517228832369100898737",
+     "read": "0.02110395517228832369100898737",
+     "verdict": "MATCH"
+    },
+    "B03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:ada9703572318e4e183b5db1e9cb4ac103fde3487151180512254f22149216d8",
+       "run_id": "run:historical-period:4a45ce788bd65d5209d110ce16cbc5348bbec799a77d0cf9d9a0cb8c8fd358d4"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "92380"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-26-000004"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.07084060863058119231728610626",
+     "read": "0.07084060863058119231728610626",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:ebb94fd564b09ea4296d682a2447986605cb2bcf518cf834613acad072ee4789",
+       "run_id": "run:historical-period:4bf61ec1172e614afbb5e54948692e7c5839f0ba92132fd0e64e4689bbd84202"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-26-000004"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:22b0fe3ad2841f90450d503cd628fe65207ae1777968156abc13c4ee28ffb3e2",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "441000000",
+     "read": "441000000",
+     "verdict": "MATCH"
+    },
+    "B05": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:a6118af5bb1081995cb2d062263c5df433b92a531a27dca9bf1523432e7f063e",
+       "run_id": "run:historical-period:006847d004b922cddb1184e34d3f6bd6e5edceeb20c08354a0b8da3b9ba82cc6"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-26-000004"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:7fc421991b42d822b96675ac584b32e0af843a34923a90cb316cc13386debdae",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "-831000000",
+     "read": "-831000000",
+     "verdict": "MATCH"
+    },
+    "B07": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:1dc8424e3bff62883070fb113de44842f208b0c17ee4e5d792f2656d9490260c",
+       "run_id": "run:historical-period:51ac243d6db4e258925b14bd20cd6cda67a32fe0eb7ecc66cd87dd1abfd052f0"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-26-000004"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "2.562874251497005988023952096",
+     "read": "2.562874251497005988023952096",
+     "verdict": "MATCH"
+    },
+    "B08": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:c82c03262b3e42ab2306ad507fcfdd5e8bc9ed533740f055f83686aa2faa2042",
+       "run_id": "run:historical-period:e037faa1ce260e4636c3521efbd413d888b6173d6235fa4ebb8e4ad0830cd9a8"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-26-000004"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.5168940573207581723285413424",
+     "read": "0.5168940573207581723285413424",
+     "verdict": "MATCH"
+    },
+    "B09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:8b9ea9441163261f6cdb9b0f815947bdbe6b2e7a016d14d91fd425fe9b668b57",
+       "run_id": "run:historical-period:9444435d52d749083c80610976b409f8e16c5094586eebfc6a3a408c6bd97f06"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-26-000004"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+      "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "3231000000",
+     "read": "3231000000",
+     "verdict": "MATCH"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "period_end": "2025-12-31"
+  }
+ },
+ "production_authorized": false,
+ "reader": "tools/read_statement_facts.py",
+ "record_type": "ISSUE_47_CROSS_SOURCE_CONTENT_READ",
+ "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+ "result": {
+  "DIRECT_CANDIDATES_DISAGREE": 1,
+  "MATCH": 75,
+  "NO_PUBLISHED_VALUE": 4
+ },
+ "the_one_apparent_defect_that_was_not": {
+  "and_it_put_a_claim_of_mine_in_question": "the first acceptance entry for Marriott's B03 said the combined D&A chain has no fact 'in this filing', which was measured over the primary document only. Checked against the accession's facts: Marriott reports neither DepreciationDepletionAndAmortization nor DepreciationAmortizationAndAccretionNet nor DepreciationAndAmortization, only Depreciation 145,000,000 and AmortizationOfIntangibleAssets 313,000,000. So the composition fallback is right and the entry stands - but it stood on the wrong universe until this was run.",
+  "position": "salesforce 2026-01-31 B03",
+  "what_changed_because_of_it": "the reading now checks, before reporting a difference, whether an earlier chain candidate exists in the accession at all. A limit of the reading and a defect in the route are different findings and only one of them is about the repository.",
+  "what_it_looked_like": "the reading gave 0.2880674292594822396146899458 and the route published 0.2295243829018663455749548465.",
+  "what_it_was": "the primary document's inline XBRL is a subset of the accession's facts. It tags DepreciationAndAmortization (3,631,000,000) and not DepreciationDepletionAndAmortization, which is first in the approved chain; the accession's own facts carry that one at 1,200,000,000, and that is what the route used. The route followed the definition and the reading could not."
+ },
+ "two_things_my_own_reading_got_wrong_first": {
+  "and_a_third_that_was_only_a_comparison": "Ford's B03 first read as DIFFERS because Decimal kept a trailing zero and I compared strings. Numbers are compared as numbers now.",
+  "the_document_path": "built from company_id, which is 'macys' while the saved directory is 'macy_s'. Nine of ten worked and the tenth was reported as an unsaved filing. The path now comes from the input's own source_repo_relative_path.",
+  "the_instant_key": "an instant context has no start date, so its facts are stored under a key with None there. Looking them up under (end, end, True) found nothing - for every company - and B08 and B09 read as NOT_READ everywhere. A reading that finds nothing looks exactly like a filing that says nothing."
+ },
+ "what_the_injections_check": {
+  "LET_AN_ACCEPTANCE_OVERRIDE_A_WITHDRAWAL": "when the two registers disagree about a result, the withdrawal is the safer of the two. Caught by its own case.",
+  "MATCH_THE_COORDINATE_AND_IGNORE_THE_VALUE": "the natural way to write this layer, and the way that lets a later Run inherit a reading nobody did. Caught by the case that changes one digit."
+ },
+ "what_this_is": "eight statement metrics read out of each company's own 10-K by tools/read_statement_facts.py, and compared to what the route published. The route resolves them from the Company Facts API; this walks the filing's primary document."
+}

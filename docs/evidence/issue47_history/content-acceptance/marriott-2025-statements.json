@@ -1,0 +1,64 @@
+{
+ "a_difference_that_was_mine": {
+  "how_it_was_settled": "compared against the Run's METRIC_RESULT record instead, where it matches digit for digit.",
+  "what_happened": "B02 first read as DIFFERS. The published value I was comparing against came from a print statement of my own that truncated it to thirty characters.",
+  "why_it_is_here": "a content check that compares against a display string is checking the display."
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "marriott_international",
+ "document": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+ "eight_values_compared": {
+  "B01": "26186000000",
+  "B02": "0.04326693227091633466135458167",
+  "B03": "0.1756281982738868097456656229",
+  "B04": "2601000000",
+  "B05": "2608000000",
+  "B07": "5.118665018541409147095179234",
+  "B08": "0.4267682781614670159561800429",
+  "B09": "358000000"
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "method": {
+  "how": "the filing's own inline XBRL, walked directly: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read with their scale and sign attributes; consolidated facts only (any explicit member excludes a fact); the arithmetic in Decimal at the calculator's own 28-digit precision.",
+  "what_it_does_not_touch": "the route, its selector, its Spec, its calculator, and the Run records - except at the end, to compare."
+ },
+ "period_end": "2025-12-31",
+ "production_authorized": false,
+ "read_from_the_filing": {
+  "AmortizationOfIntangibleAssets": 313000000,
+  "AssetsCurrent": 3584000000,
+  "CashAndCashEquivalentsAtCarryingValue": 358000000,
+  "Depreciation": 145000000,
+  "InterestExpenseNonoperating": 809000000,
+  "LiabilitiesCurrent": 8398000000,
+  "NetCashProvidedByUsedInOperatingActivities": 3212000000,
+  "NetIncomeLoss": 2601000000,
+  "OperatingIncomeLoss": 4141000000,
+  "PaymentsToAcquireProductiveAssets": 604000000,
+  "Revenues FY2024": 25100000000,
+  "Revenues FY2025": 26186000000
+ },
+ "record_type": "ISSUE_47_CONTENT_ACCEPTANCE_READING",
+ "result": "all eight match the Runs' own METRIC_RESULT records exactly.",
+ "superseded_by": {
+  "file": "docs/evidence/issue47_history/content-acceptance/cross-source-read.json",
+  "why": "the same reading was extended to all ten company-periods, and two defects in the reading itself turned up that this file's numbers were produced before: an instant-context key that made B08 and B09 unreadable everywhere, and a document path built from company_id. Neither changed any value here - this company's eight still match - but the file's claim that the combined D&A chain has no fact 'in this filing' was measured over the primary document only, and the successor file states the universe it should have."
+ },
+ "three_places_the_definition_named_a_fallback_and_the_filing_forced_it": {
+  "B03": "the combined D&A chain has no consolidated FY2025 fact, so the composition fallback Depreciation + AmortizationOfIntangibleAssets answers: 145 + 313 = 458. The company-specific mar:DepreciationAmortizationAndOther of 599,000,000 is present in the same context and correctly not used, the chain naming us-gaap concepts. Operating income was direct, so EXACT rather than OK_APPROX is what the definition asks for.",
+  "B05": "PaymentsToAcquirePropertyPlantAndEquipment has no consolidated FY2025 fact, so the second capex candidate answers - which the definition allows by name.",
+  "B07": "InterestExpense has no consolidated FY2025 fact, so InterestExpenseNonoperating answers."
+ },
+ "what_this_does_not_establish": [
+  "that the approved definition is the right definition for the business question. It establishes that the concept the definition names carries this value in this filing for this period, and that the stated arithmetic produces the published number from it.",
+  "that the filing is right.",
+  "independence of party: the same person wrote the reading and read the result. It is independent of the code, not of the reader.",
+  "anything about the other three values this period delivers - B10 and B11 come from a table rather than the statements, and C03, C04, C01 and E01-E05 count filings. They are different readings and are not done here.",
+  "anything about any other company or period."
+ ],
+ "what_this_is": "the third delivery layer's first entries. Every batch this issue has run reported content_acceptance as zero with a stated reason - a frozen Run with a public row says the route computed something, not that the number is right. This is a reading of the filing that did not come from the route, for eight of one period's values."
+}

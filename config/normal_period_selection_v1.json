@@ -1,0 +1,20 @@
+{
+ "schema_version": 1,
+ "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION_POLICY",
+ "policy_id": "ordinary_period_selection_v1",
+ "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+ "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+ "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+ "request_forms": [
+  "REPORT_END",
+  "ISSUER_FISCAL_YEAR"
+ ],
+ "caller_supplied_accession_authorized": false,
+ "caller_supplied_period_dates_authorized": false,
+ "latest_restated_view_authorized": false,
+ "point_in_time_view_authorized": false,
+ "target_primary_document_roles": [
+  "target_primary"
+ ],
+ "production_authorized": false
+}

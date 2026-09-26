@@ -1,0 +1,86 @@
+{
+ "record_type": "ISSUE_47_SOURCE_NEED_QUANTIFIED",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "the_correction": "This session repeatedly reported '1,443 of 1,950 positions blocked on missing source material, needs a bounded acquisition authorisation'. That framing was wrong in the exact way historical_coverage's own docstring warns about: reading a position count as a work count is what makes a source budget look like the whole remaining cost. 39 metrics share one filing, so the positions collapse.",
+ "measured_over_the_full_frame": {
+  "frame": "10 companies x 39 declared metrics x 5 years = 1950 positions",
+  "statuses": {
+   "ROUTE_IMPLEMENTED_NOT_RUN": 253,
+   "HISTORICAL_ROUTE_NOT_WIRED": 176,
+   "SOURCE_MISSING_TARGET_ORIGINAL": 1170,
+   "TARGET_PERIOD_METADATA_BLOCKED": 78,
+   "TARGET_PERIOD_NOT_DISCOVERED": 273
+  },
+  "SOURCE_MISSING_TARGET_ORIGINAL": {
+   "positions": 1170,
+   "distinct_documents": 30,
+   "documents": [
+    "enphase_energy|0001463101-22-000016|enph-20211231.htm",
+    "enphase_energy|0001463101-23-000025|enph-20221231.htm",
+    "enphase_energy|0001463101-24-000024|enph-20231231.htm",
+    "enphase_energy|0001463101-25-000024|enph-20241231.htm",
+    "ford_motor_company|0000037996-22-000013|f-20211231.htm",
+    "ford_motor_company|0000037996-23-000012|f-20221231.htm",
+    "ford_motor_company|0000037996-24-000009|f-20231231.htm",
+    "ford_motor_company|0000037996-25-000013|f-20241231.htm",
+    "lumen_technologies|0000018926-22-000007|lumn-20211231.htm",
+    "lumen_technologies|0000018926-23-000013|lumn-20221231.htm",
+    "lumen_technologies|0000018926-24-000016|lumn-20231231.htm",
+    "lumen_technologies|0000018926-25-000010|lumn-20241231.htm",
+    "macys|0001564590-22-011726|m-10k_20220129.htm",
+    "macys|0001628280-23-009154|m-20230128.htm",
+    "macys|0001628280-24-012734|m-20240203.htm",
+    "macys|0001628280-25-014315|m-20250201.htm",
+    "marriott_international|0001628280-22-002666|mar-20211231.htm",
+    "marriott_international|0001628280-23-003485|mar-20221231.htm",
+    "pfizer|0000078003-22-000027|pfe-20211231.htm",
+    "pfizer|0000078003-23-000024|pfe-20221231.htm",
+    "pfizer|0000078003-24-000039|pfe-20231231.htm",
+    "pfizer|0000078003-25-000054|pfe-20241231.htm",
+    "salesforce|0001108524-22-000013|crm-20220131.htm",
+    "salesforce|0001108524-23-000011|crm-20230131.htm",
+    "salesforce|0001108524-24-000005|crm-20240131.htm",
+    "salesforce|0001108524-25-000006|crm-20250131.htm",
+    "southwest_airlines|0000092380-22-000007|luv-20211231.htm",
+    "southwest_airlines|0000092380-23-000010|luv-20221231.htm",
+    "southwest_airlines|0000092380-24-000027|luv-20231231.htm",
+    "southwest_airlines|0000092380-25-000024|luv-20241231.htm"
+   ],
+   "shape": "one 10-K primary document per company-year: seven companies need four prior years each and Marriott needs two, because its 2023 and 2024 originals are already saved. Counted from the manifest above, not by hand - the first version of this sentence said eight companies times four plus two, which is 34."
+  },
+  "TARGET_PERIOD_NOT_DISCOVERED": {
+   "positions": 273,
+   "company_periods": 7,
+   "note": "not quantified as fetches here, and not therefore zero. Measured since: JPMorgan's three unreachable ordinals are a source need - 57 of its 69 declared submissions shards are not saved - and Paramount's four are a successor-scope question about the predecessor CIK. See acquisition-plan.json classes 2 and 4."
+  },
+  "not_source_problems_at_all": {
+   "ROUTE_IMPLEMENTED_NOT_RUN": 253,
+   "HISTORICAL_ROUTE_NOT_WIRED": 176,
+   "TARGET_PERIOD_METADATA_BLOCKED_was_listed_here_and_should_not_have_been": "see the correction above"
+  },
+  "TARGET_PERIOD_METADATA_BLOCKED": {
+   "positions": 78,
+   "company_periods": 2,
+   "correction": "this was filed under 'not source problems at all'. That was wrong. Both are JPMorgan, both are HISTORY_SNAPSHOT_CONFLICT, and the cause is that eleven saved shards hold filings outside their currently declared ranges because SEC re-partitioned them. Resolving it needs a refreshed index and refetched shards, which is a source need."
+  }
+ },
+ "against_the_approved_budget": {
+  "status": "WITHDRAWN",
+  "what_was_written": "'30 document fetches against a cumulative SEC allowance of 80. The need fits inside the existing approved budget rather than requiring a new one.'",
+  "wrong_on_authority": "the [240, 240, 80] allowance is bound to requirement_id issue_28_v14 and to a 390-coordinate scope, and #47's own text forbids borrowing #28's remainder. The acquisition capability is reusable; its authorisation is not transferable.",
+  "wrong_on_size": "30 was the first blocking reason only. Measured since: 476 event 8-K bodies and up to 40 JPMorgan submissions shards are behind it. The envelope is in the high hundreds, not 30.",
+  "replaced_by": "docs/evidence/issue47_history/acquisition-plan.json"
+ },
+ "the_acquisition_path_exists": {
+  "entry": "tools/vnext_continuous_sec.py (plan | capture)",
+  "module": "scripts/vnext/continuous_sec_acquisition.live_sec_session",
+  "discovery": "scripts/vnext/normal_source_requirements.discover_saved_source_requirements",
+  "constraints_already_bound": "the existing SecHttpClient, zero automatic retry, immutable attempts, the same ledger"
+ },
+ "what_still_needs_the_owner": "Not an authorisation for 1,443 anything. Two things: confirmation of how much of the 80 SEC allowance remains, since only the host holds that ledger; and whether these 30 historical primary documents are inside the approved scope's stated purposes, which name the 390 current coordinates rather than the 1,950 historical ones.",
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

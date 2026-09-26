@@ -1,0 +1,206 @@
+{
+ "injections": [
+  {
+   "caught_by": [
+    "TheCountIsCumulativeAndCountsFailures.test_a_failed_request_consumes_its_call_and_admits_no_source"
+   ],
+   "edit": "snapshot() increments counts only when terminal.json exists and its status is SUCCEEDED",
+   "id": "COUNT_ONLY_SUCCESSFUL_SLOTS",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1) of 16",
+   "why_it_matters": "a ceiling that ignores failures is not a ceiling"
+  },
+  {
+   "caught_by": [
+    "TheCountIsCumulativeAndCountsFailures.test_a_claim_with_no_terminal_blocks_the_channel"
+   ],
+   "edit": "capture() no longer calls ledger.require_unblocked() before installing sources",
+   "id": "DROP_THE_EARLY_UNBLOCKED_CHECK",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (errors=1) of 16",
+   "why_it_matters": "the already-saved short circuit returns before the claim, so without the early check a session whose previous slot has no terminal still answers 'already saved, no call needed' against a ledger it cannot account for. This injection reproduces a real bug that writing the case had found."
+  },
+  {
+   "caught_by": [
+    "TheSessionActuallyRoutesThroughTheFrozenValidator.test_a_capture_calls_the_frozen_replay_once_on_what_it_enrolls",
+    "TheSessionActuallyRoutesThroughTheFrozenValidator.test_a_refused_replay_enrolls_nothing"
+   ],
+   "edit": "register_checkpoint() replaces the validate_acquisition_checkpoint call with pass",
+   "first_run": "OK, all 16 cases green - every case exercised the validator directly, so the suite proved the validator works and never that this session calls it",
+   "id": "SKIP_THE_FROZEN_VALIDATOR",
+   "outcome": "NOT_CAUGHT_UNTIL_TWO_CASES_WERE_ADDED",
+   "suite_result_after_the_cases_were_added": "FAILED (failures=2) of 18",
+   "why_it_matters": "this is the module's central claim - that the provenance guarantee rests on code this issue cannot edit"
+  },
+  {
+   "caught_by": [
+    "TheSessionActuallyRoutesThroughTheFrozenValidator.test_a_refused_replay_enrolls_nothing"
+   ],
+   "edit": "register_checkpoint() writes the journal entry before calling the validator",
+   "id": "ENROL_BEFORE_VALIDATING",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1) of 18",
+   "why_it_matters": "a checkpoint the replay would refuse must not already be enrolled when it refuses"
+  },
+  {
+   "caught_by": [
+    "TheSuiteIsReadNotListed.test_the_collector_agrees_with_an_independent_reading_of_the_file",
+    "TheSuiteIsReadNotListed.test_every_declared_case_lands_in_exactly_one_phase",
+    "TheSuiteIsReadNotListed.test_the_excluded_names_are_exactly_those_that_read_the_receipt",
+    "AFailedVerificationReleasesNothing.test_an_existing_receipt_is_restored_byte_for_byte",
+    "AFailedVerificationReleasesNothing.test_a_first_phase_failure_never_reaches_the_file"
+   ],
+   "edit": "declared_cases() returns only the first nine names it found, which is what a hand-maintained list looks like once the suite has moved past it",
+   "id": "LIST_THE_SUITE_INSTEAD_OF_READING_IT",
+   "note": "the last two fail because an excluded name fell outside the truncated set, so split_cases refused with ISSUE_47_WIRING_EXCLUSION_NAMES_NO_CASE before those cases reached their own assertion - a second guard firing, recorded as what it is rather than counted as a third independent case",
+   "outcome": "CAUGHT",
+   "round": "test-machinery-moved-out-of-the-business-module",
+   "suite_result": "FAILED (failures=4, errors=1) of 62",
+   "why_it_matters": "the defect this round replaced was exactly a stale list: a receipt attesting eight classes while the suite declared twenty-one, green and meaningless"
+  },
+  {
+   "caught_by": [
+    "AFailedVerificationReleasesNothing.test_an_existing_receipt_is_restored_byte_for_byte",
+    "AFailedVerificationReleasesNothing.test_where_there_was_none_none_is_left"
+   ],
+   "edit": "build_and_install() re-raises without putting back what was installed before the failed run",
+   "id": "RESTORE_NOTHING_ON_A_FAILED_SECOND_PHASE",
+   "outcome": "CAUGHT",
+   "round": "test-machinery-moved-out-of-the-business-module",
+   "suite_result": "FAILED (failures=2) of 62",
+   "why_it_matters": "the second phase has to read the installed file, so the install happens before it passes; the restore is the only thing that keeps a failed run from releasing an artifact, and a restore is exactly the code that is written once and never exercised"
+  },
+  {
+   "also_observed_live": "this is not hypothetical - the class was in phase one when it was first written, and the first real run of the builder failed in phase two because of it",
+   "caught_by": [
+    "TheSuiteIsReadNotListed.test_the_excluded_names_are_exactly_those_that_read_the_receipt"
+   ],
+   "edit": "RECEIPT_DEPENDENT drops TheBusinessModuleLoadsWhereNoTestPackageExists, so a class that verifies the installed receipt runs before it is installed",
+   "id": "PUT_A_RECEIPT_READER_BACK_IN_PHASE_ONE",
+   "outcome": "CAUGHT",
+   "round": "test-machinery-moved-out-of-the-business-module",
+   "suite_result": "FAILED (failures=1) of 62",
+   "why_it_matters": "phase one runs against whatever receipt is on disk, which after any edit describes the previous tree; a receipt reader left there makes the artifact unrebuildable, and the refusal would name a stale hash rather than the misplacement"
+  },
+  {
+   "caught_by": [
+    "TheSuiteIsReadNotListed.test_the_business_module_names_no_test_case_and_imports_no_harness"
+   ],
+   "edit": "scripts/vnext/historical_sec_session.py imports unittest again",
+   "id": "IMPORT_THE_TEST_HARNESS_IN_THE_BUSINESS_MODULE",
+   "outcome": "CAUGHT",
+   "round": "test-machinery-moved-out-of-the-business-module",
+   "suite_result": "FAILED (failures=1) of 62",
+   "why_it_matters": "unittest is in the standard library, so a delivery runtime would still load the module and the child-process case would still pass; the import is the thing that grows back, one convenience at a time, until the selector lists follow"
+  },
+  {
+   "builder_result": "REFUSED with ISSUE_47_WIRING_SECOND_PHASE_DID_NOT_PASS (failures=2 of 10), exit code 2, and the committed receipt was byte-identical to its pre-injection contents afterwards - the release-nothing property observed rather than asserted",
+   "caught_by": [
+    "AGrantMustBindToAWiringReceiptThatIsStillTrue.test_a_run_that_covered_only_part_of_the_suite_is_refused",
+    "AGrantMustBindToAWiringReceiptThatIsStillTrue.test_a_case_counted_as_both_run_and_excluded_is_refused"
+   ],
+   "edit": "_verify_case_accounting() keeps the pass/failure/error checks and drops the partition check, so a run that passed is accepted whatever it covered",
+   "how_it_was_run": "the catching cases are in phase two, so the whole builder was run against the injected tree rather than phase one alone",
+   "id": "LET_THE_VERIFIER_TRUST_THE_PASS_FLAG",
+   "outcome": "CAUGHT",
+   "round": "test-machinery-moved-out-of-the-business-module",
+   "why_it_matters": "this is the previous version's actual defect - a green run over a fraction of the suite - and it is the one the verifier now has to catch without naming the cases, because naming them is unavailable where there is no test package"
+  },
+  {
+   "caught_by": [
+    "AFailedVerificationReleasesNothing.test_the_second_phase_checks_the_candidate_while_the_old_one_is_installed"
+   ],
+   "edit": "build_and_install() writes the new receipt to the installed path, tells the second phase to check that path, and restores the previous bytes if it fails - the shape the previous round shipped",
+   "id": "INSTALL_FIRST_AND_RESTORE_AFTERWARDS",
+   "outcome": "CAUGHT",
+   "round": "verify-the-candidate-before-installing-it",
+   "suite_result": "FAILED (failures=1) of 63",
+   "which_cases_could_not_tell": [
+    "AFailedVerificationReleasesNothing.test_an_existing_receipt_is_never_written_over_before_the_check_passes",
+    "AFailedVerificationReleasesNothing.test_where_there_was_none_none_is_left",
+    "AFailedVerificationReleasesNothing.test_a_first_phase_failure_never_reaches_the_file"
+   ],
+   "why_it_matters": "an external review measured what that leaves open: while the second phase runs, the gate and --check accept a receipt that has not finished being checked, and a process killed in that window leaves the unchecked artifact installed, because the restore never runs. Failing safely is not the same as never having exposed the thing",
+   "why_they_could_not": "they observe the installed file after the run, and a restore puts it back, so the end state is identical. Only a case that looks at the installed file *while* the second phase is running separates the two orders - which is why the review's finding was invisible to the three cases written for it"
+  },
+  {
+   "caught_by": [
+    "TheEventDeclarationIsWhatTheRouteReads.test_the_declaration_for_a_period_is_exactly_what_the_route_reads",
+    "TheEventDeclarationIsWhatTheRouteReads.test_each_filing_is_declared_as_a_body_and_a_header",
+    "TheUnionIsOneDeclarationNotTwo.test_an_event_body_and_header_resolve_through_the_gate"
+   ],
+   "edit": "_filing_rows() emits only the primary document for each event filing, dropping the hdr.sgml row",
+   "id": "DECLARE_THE_BODY_BUT_NOT_THE_HEADER",
+   "outcome": "CAUGHT",
+   "round": "event-source-declaration",
+   "suite_result": "FAILED (failures=2, errors=1) of 72",
+   "why_it_matters": "the route reads two documents per accession, so a declaration naming one would halve the plan while looking complete, and every header would still be refused at the gate as undeclared"
+  },
+  {
+   "caught_by": [
+    "AnUnderivableWindowDeclaresNothingRatherThanNoFilings.test_a_period_without_its_primary_is_a_named_limitation",
+    "AnUnderivableWindowDeclaresNothingRatherThanNoFilings.test_the_limitation_names_the_file_that_would_unblock_it"
+   ],
+   "edit": "a period whose window cannot be derived is skipped without recording a limitation",
+   "id": "TREAT_AN_UNDERIVABLE_WINDOW_AS_AN_EMPTY_ONE",
+   "outcome": "CAUGHT",
+   "round": "event-source-declaration",
+   "suite_result": "FAILED (failures=1, errors=1) of 72",
+   "why_it_matters": "declaring zero filings for a period and declaring nothing for it look identical in a plan and mean opposite things. 31 of the frame's 50 periods are in this state, so a silent skip would read as 'these years need no event sources'"
+  },
+  {
+   "caught_by": [
+    "ARecordedBodyMustBeTheOneAskedFor.test_a_url_the_map_does_not_carry_is_refused_by_name"
+   ],
+   "edit": "_recorded_body() falls back to the first body in the map when the requested URL is not in it, instead of refusing",
+   "id": "ANSWER_ANY_URL_FROM_WHATEVER_THE_MAP_HOLDS",
+   "outcome": "CAUGHT",
+   "round": "metadata-refresh-chain",
+   "suite_result": "FAILED (failures=1) of 81",
+   "which_cases_could_not_tell": [
+    "ARefreshIsFinishedWhenThePlanStopsAskingForIt (all six)"
+   ],
+   "why_it_matters": "a chain over several documents exists to make them disagree; handing one document's bytes to another's request removes the disagreement and looks like a pass",
+   "why_they_could_not": "the refresh chain needs one document, so its map has one entry and the fallback is never reached. A case for a guard has to be written where the guard bites, not where the feature happens to be used"
+  },
+  {
+   "id": "COPY_ONLY_THE_DIRECTORIES_THE_PARENT_KNEW",
+   "round": "installer-rule-inputs",
+   "edit": "install_historical_source_inputs copies execution-authority files under config/ and catalog/ only - the previous rule, restored",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_installed_root_answers_b13s_scope_question",
+    "TheInstallerCarriesTheRuleInputsItClaims.test_every_rule_input_is_installed_and_no_code_is"
+   ],
+   "suite_result": "FAILED (failures=1, errors=1) of 4",
+   "why_it_matters": "this is the measured failure, not a hypothetical: a recorded bank run over an installed root stopped at the approved definition with 'No such file', because B13 reads its scope from the data root and the definition sits at the repository root",
+   "which_cases_could_not_tell": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_presentation_path_under_config_is_excluded"
+   ],
+   "why_they_could_not": "it asks the exclusion question, and the directory rule excludes presentation just as well"
+  },
+  {
+   "id": "INSTALL_CODE_AS_A_SOURCE_INPUT_TOO",
+   "round": "installer-rule-inputs",
+   "edit": "the '.py' exclusion removed, so every non-presentation execution-authority file is installed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_every_rule_input_is_installed_and_no_code_is"
+   ],
+   "suite_result": "FAILED (failures=1) of 4",
+   "why_it_matters": "the fix could overshoot: code in the data root is code nothing is meant to import from there, and a rule that is only ever checked for being long enough never learns it is too long",
+   "which_cases_could_not_tell": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_installed_root_answers_b13s_scope_question",
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_presentation_path_under_config_is_excluded"
+   ],
+   "why_they_could_not": "both ask whether something needed is present or something excluded is absent; extra code is neither"
+  }
+ ],
+ "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py, scripts/vnext/historical_event_sources.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",
+ "production_authorized": false,
+ "real_sec_credit": false,
+ "record_type": "ISSUE_47_ACQUISITION_FAULT_INJECTIONS",
+ "schema_version": 1,
+ "what_this_does_not_establish": "That the suite catches defects it has no case for. Of the thirteen injections, three were designed against cases that already existed and the third of the first round found that a case was missing and is recorded with its first, passing run. Nor does any of them establish that a builder corrupted and then re-run cannot produce a smaller receipt that is self-consistent: what the hashes establish is that the artifact on disk corresponds to this builder and this suite.",
+ "why_this_is_a_file_and_not_a_boolean": "A fault injection means editing the source and re-running the suite. The receipt builder runs in one process against one tree, so it cannot perform one, and a builder that writes fault_injections_caught: true regardless is asserting something it did not observe. This records what was actually run, so the claim can be checked rather than believed."
+}

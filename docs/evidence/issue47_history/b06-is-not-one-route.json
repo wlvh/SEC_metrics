@@ -1,0 +1,36 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "measured_stage_outcomes": {
+  "enphase_energy": "input proven, guard CONTINUE/DENOMINATOR_POSITIVE",
+  "ford_motor_company": "input proven, guard CONTINUE/EXISTING_SPECIAL_SCOPE_REQUIRED",
+  "marriott_international": "input proven, guard NOT_MEANINGFUL/DENOMINATOR_NONPOSITIVE",
+  "reading": "three different stages are reached across four companies, so no single grammar is the route.",
+  "southwest_airlines": "input proven, guard CONTINUE/DENOMINATOR_POSITIVE"
+ },
+ "record_type": "ISSUE_47_B06_IS_NOT_ONE_ROUTE",
+ "what_a_historical_b06_needs": "a pinned form of each stage that can be reached, not of one. The guard and the amendment input are gates whose answers are themselves results; the grammars are tried in order and the first that resolves wins. That is a larger piece of work than C04's single selector replacement, and calling them both 'unblocked deterministic' put them in the same bucket when they are not the same size.",
+ "what_the_ordinary_run_actually_does": {
+  "read_from": "scripts/vnext/normal_run_v3.py, the B06 branch",
+  "so": "the four Spec variants are the grammars of one cascade, not alternatives to choose between, and the one reached last is the fallback.",
+  "stages": [
+   "1. b06_current_input.prepare_current_debt_input - proves the period's amendments leave debt and equity inputs unchanged. Not proven means withheld_current_debt_case and nothing else runs.",
+   "2. ordinary_debt_guard.prepare_current_guarded_b06_result - the nonpositive-equity guard. NOT_MEANINGFUL is a final answer, not a refusal: a ratio over nonpositive equity is meaningless whatever the debt evidence says.",
+   "3. ordinary_special_debt_scope.prepare_special_debt_case, when the guard says EXISTING_SPECIAL_SCOPE_REQUIRED",
+   "4. normal_note_debt_results.prepare_note_debt_case",
+   "5. normal_bond_debt_results.prepare_bond_debt_case",
+   "6. normal_inclusive_debt_results.prepare_inclusive_debt_case",
+   "7. and only if all of those declined, the b06_disclosure_v2 grammar reached through ordinary_remaining_cases"
+  ]
+ },
+ "what_was_built_and_removed": {
+  "the_check_that_stopped_it": "asking the ordinary chain the same question before routing anything. It is the same cross-check the successor event window used: a port that quietly answers differently also runs.",
+  "what": "scripts/vnext/historical_debt_results.py, a pinned-period form of the fallback grammar. It worked and it reproduced the ordinary fallback exactly - Marriott 2025 gave byte-identical reason DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:DebtDisclosureTextBlock through both routes.",
+  "why_it_was_removed": "reproducing the fallback is not reproducing B06. Measured against the real chain, Marriott's ordinary answer is NOT_MEANINGFUL / DENOMINATOR_NONPOSITIVE from the equity guard - a real answer about the company. The fallback-only route reported B06_SOURCE_RELATIONSHIP_UNRESOLVED for the same company and period. Those are different statements, and wiring it would have put a wrong one in the historical frame where HISTORICAL_ROUTE_NOT_WIRED is at least true."
+ },
+ "what_was_withdrawn": "B06 was listed as one of the two unblocked deterministic routes, described as 'structured path first, more guards than any other metric, cheapest is not easiest'. That came from reading the Spec's source_mode and the four B06 Spec variants in catalog/r5, not from reading which entry point produces the ordinary B06 row."
+}

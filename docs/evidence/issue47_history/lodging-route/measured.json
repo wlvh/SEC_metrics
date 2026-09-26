@@ -1,0 +1,162 @@
+{
+ "record_type": "ISSUE_47_HISTORICAL_LODGING_ROUTE",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "what_was_wired": "B10 (occupancy) and B11 (RevPAR) for a pinned annual period",
+ "why_these_two_now": {
+  "they_were_the_only_pair_whose_open_side_was_reachable": "eight metrics have a trait gate and only the closed side was answered. Six are gated on `financial` and the one company whose traits open that gate has no reachable period, so there is nothing to write an open side against. B10 and B11 are gated on `lodging` and the one hotel in this repository holds three saved annual originals.",
+  "and_the_ordinary_route_is_deterministic": "`lodging_table_source` rebuilds the whole table set and matches the scope contract against the table's own headers and geometry. No model call, so wiring it needs no allowance."
+ },
+ "what_was_measured_before_writing_it": {
+  "method": "ask the ordinary chain the same question first",
+  "marriott_fy2025": {
+   "B10": "0.693 ratio EXACT PUBLISHED PASS",
+   "B11": "128.8 USD EXACT PUBLISHED PASS",
+   "table": "table_000011",
+   "ai_response_used": false
+  }
+ },
+ "the_one_rule_replaced": "`prepare_saved_lodging_source` calls `prepare_saved_annual_input`, which means the newest annual report. Everything downstream already takes the filing and the period as arguments - `inspect_lodging_table_source` re-derives the source's own annual period from its bytes and refuses if it disagrees - so pointing it at a pinned filing is a substitution, not a reimplementation.",
+ "differential_against_the_ordinary_route": [
+  {
+   "metric_id": "B10",
+   "period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+   },
+   "ordinary": {
+    "value": "0.693",
+    "unit": "ratio",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "applicability": "APPLICABLE"
+   },
+   "historical": {
+    "value": "0.693",
+    "unit": "ratio",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "applicability": "APPLICABLE"
+   },
+   "same_result_fields": true,
+   "ordinary_table": "table_000011",
+   "historical_table": "table_000011",
+   "same_source_component": false,
+   "same_spec_path": true,
+   "ai_response_used": false
+  },
+  {
+   "metric_id": "B11",
+   "period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+   },
+   "ordinary": {
+    "value": "128.8",
+    "unit": "USD",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "applicability": "APPLICABLE"
+   },
+   "historical": {
+    "value": "128.8",
+    "unit": "USD",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "applicability": "APPLICABLE"
+   },
+   "same_result_fields": true,
+   "ordinary_table": "table_000011",
+   "historical_table": "table_000011",
+   "same_source_component": false,
+   "same_spec_path": true,
+   "ai_response_used": false
+  }
+ ],
+ "earlier_periods_delivered": [
+  {
+   "period_end": "2024-12-31",
+   "B10": "0.698",
+   "B11": "128.23",
+   "quality": "EXACT",
+   "publication": "PUBLISHED",
+   "table": "table_000011"
+  },
+  {
+   "period_end": "2023-12-31",
+   "B10": "0.692",
+   "B11": "124.7",
+   "quality": "EXACT",
+   "publication": "PUBLISHED",
+   "table": "table_000011"
+  }
+ ],
+ "an_independent_corroboration": "the FY2023 figures agree with what the table-qualification work read out of the same filing by a different route and recorded in AGENTS.md - RevPAR 124.70 and Occupancy 69.2 - which was measured for a different purpose and is not this route's own output.",
+ "counting_changed_too": {
+  "what": "STRUCTURAL_APPLICABILITY_METRICS is now derived by subtracting the wired set rather than listed",
+  "why": "the two families are added to count the metrics that have a route, and B10 and B11 now have one on both sides of the gate. Leaving them in both would count them twice; subtraction also means the next metric to gain an open side leaves the tuple by itself.",
+  "dispatch_unchanged": "`historical_structural_results`'s own supported set still carries them, so a company that is not a hotel still gets the structural answer.",
+  "after": {
+   "wired": 28,
+   "structural_only": 6,
+   "routed": 34,
+   "unwired": 5,
+   "still_unwired": [
+    "B13",
+    "C02",
+    "D01",
+    "D03",
+    "D04"
+   ]
+  }
+ },
+ "what_this_does_not_do": {
+  "five_years": "B10 and B11 read only the target filing - no prior period, no accession index - so they are the cheapest historical metrics in the set, but a period whose primary document is not saved still produces a named source gap. Three of Marriott's five target years have their original; two do not.",
+  "other_companies": "none. Eight of the ten are not hotels and the ninth, JPMorgan, is a bank whose period selection refuses on incoherent saved history.",
+  "content_acceptance": "not claimed. The values agree with the ordinary route and with an independent reading of the FY2023 filing; neither is a business acceptance of the figures."
+ },
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ },
+ "production_authorized": false,
+ "fault_injections": {
+  "method": "each edit is applied to scripts/vnext/historical_lodging_results.py, the suite is run, the module is put back. The count of failures is the measurement; zero means the suite cannot tell the difference, which is recorded rather than hidden.",
+  "caught": [
+   {
+    "injection": "TAKE_THE_LATEST_FILING",
+    "edit": "prepare_historical_annual_input replaced by prepare_saved_annual_input",
+    "cases_failed": 4,
+    "why_it_matters": "this is the whole route. Three periods would return the newest year's value."
+   },
+   {
+    "injection": "COMPILE_THE_AI_SPEC",
+    "edit": "SPEC_PATHS points at catalog/metrics instead of catalog/ordinary_lodging",
+    "cases_failed": 4,
+    "why_it_matters": "the same table read under a different Spec identity"
+   },
+   {
+    "injection": "ANSWER_THE_CLOSED_GATE_TOO",
+    "edit": "the applicability refusal is removed",
+    "cases_failed": 2,
+    "why_it_matters": "two routes would answer the same company-metric pair"
+   }
+  ],
+  "not_caught_by_the_real_corpus": {
+   "injection": "DROP_THE_SCOPE_AND_PERIOD_CHECK",
+   "edit": "the _need on fact['scope'] and fact['period'] is removed",
+   "cases_failed_before": 0,
+   "why": "inspect_lodging_table_source already re-derives the source's own annual interval from its bytes and refuses a mismatch, and the scope comes from the same compiled Spec, so on every filing here the check is redundant.",
+   "what_was_done": "the check is kept - the ordinary route makes it, and a pinned route that checks less than the route it mirrors is a weakening - and a case was added that constructs the divergence it defends against by making the inspector return a fact about another period. The input is constructed and the case says so; what it asserts is that no value comes out.",
+   "case": "test_a_fact_about_another_period_is_refused_rather_than_used",
+   "cases_failed_after": 1,
+   "and_it_is_the_only_case_that_can_tell": "re-running the same edit against the eight-case suite fails exactly one case - the constructed one. The other seven still cannot tell the difference, which is the correct outcome: they read real filings, where the inspector's own period check makes this one redundant."
+  }
+ }
+}

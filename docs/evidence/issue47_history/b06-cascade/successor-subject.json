@@ -1,0 +1,213 @@
+{
+ "an_injection_that_was_defective_and_what_it_cost": {
+  "first_version": {
+   "cases_that_failed": [],
+   "caught": false,
+   "exit_code": 0,
+   "ran": [
+    "Ran 4 tests in 169.211s"
+   ]
+  },
+  "how_the_second_version_knows_it_reached_its_target": "a probe inside the injected tree spies on the grammar and prints what subject policy it was told. Without that line the run below is unreadable in either direction.",
+  "measured": "caught by exactly one case. On this filing the value does not move - the column the period selector picks is the successor column either way, measured not assumed - so the differential cannot tell the two implementations apart. What catches it is the case asserting the grammar was told the real policy, not one asserting the outcome changed.",
+  "redone": {
+   "cases_that_failed": [
+    "test_the_grammar_is_told_the_real_subject_policy"
+   ],
+   "caught": true,
+   "duration_seconds": 205.2,
+   "exit_code": 1,
+   "injection": "RELABEL_THE_SUBJECT_EVERYWHERE_THE_STAGES_READ_IT",
+   "injection_reaches_its_target": [
+    "GRAMMAR_SAW ['CONTINUOUS_PRIMARY']"
+   ],
+   "probe_exit_code": 0,
+   "probe_stderr_tail": "",
+   "ran": [
+    "Ran 4 tests in 167.209s"
+   ],
+   "record_type": "ISSUE_47_B06_RELABEL_INJECTION_REDONE",
+   "the_first_version_was_defective": "it relabelled prepared['subject_policy'] only. The stages read prepared['original_input'], which carries its own copy, so the field it changed was not read by anything and the suite's pass said nothing about the suite."
+  },
+  "what_happened": "it came back not caught, and I nearly recorded that as a gap in the suite. It was a gap in the injection: it relabelled prepared['subject_policy'] after the guard, and the stages read prepared['original_input'], which carries its own copy. The field it changed was read by nothing, so the suite's pass said nothing about the suite. An injection that does not reach the code it is aimed at is not evidence that nothing catches it."
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "end_to_end": {
+  "position": {
+   "applicability": "APPLICABLE",
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence_count": 2,
+   "fiscal_year": 2025,
+   "metric_id": "B06",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_id": "issue_47_v1",
+   "row_accession": "0002041610-26-000011",
+   "row_fiscal_year": "2025",
+   "row_hash": "sha256:4a026db27e71cbd8eec4726cd369227368f6a8e546f3d52acfb6ed0d1e1019dc",
+   "row_period_end": "2025-12-31",
+   "row_period_start": "2025-12-31",
+   "row_status": "OK",
+   "row_value": "1.168049260241169930727785855",
+   "run_id": "run:historical-period:cff2c500deb1af9ea4c27c888b5e17449facdc3f0044140f58d515f73e880625",
+   "run_status": "FROZEN",
+   "selected_report_end": "2025-12-31",
+   "selection_id": "sha256:94f833a9be9a9bbeca5196bdca178a368b7f2533c09c01ec12d2128c61a45e2f",
+   "separate_process_replay": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "records": 17,
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:cff2c500deb1af9ea4c27c888b5e17449facdc3f0044140f58d515f73e880625",
+    "status": "FROZEN",
+    "target_period": {
+     "fiscal_year": 2025,
+     "period_end": "2025-12-31",
+     "period_start": "2025-12-31"
+    },
+    "value": "1.168049260241169930727785855"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "1.168049260241169930727785855"
+  },
+  "the_stage_and_spec_are_not_here": "the Run manifest does not carry them; they are in the measurement above, read off the component.",
+  "what_it_proves": "a frozen Run, a public row, and a separate process reading the same run id and the same value back out of the Run's own bytes. Zero calls of any kind."
+ },
+ "fault_injections": {
+  "DROP_THE_CROSS_ENTITY_CHECK": {
+   "cases_that_failed": [
+    "test_a_subject_policy_this_cascade_has_no_answer_for_stops_here"
+   ],
+   "caught": true,
+   "exit_code": 1,
+   "ran": [
+    "Ran 4 tests in 199.478s"
+   ]
+  },
+  "DROP_THE_MODE_CHECK": {
+   "cases_that_failed": [
+    "test_a_subject_policy_this_cascade_has_no_answer_for_stops_here"
+   ],
+   "caught": true,
+   "exit_code": 1,
+   "ran": [
+    "Ran 4 tests in 200.126s"
+   ]
+  },
+  "RELABEL_THE_SUBJECT": {
+   "cases_that_failed": [],
+   "caught": false,
+   "exit_code": 0,
+   "ran": [
+    "Ran 4 tests in 169.211s"
+   ]
+  },
+  "RESTORE_THE_BLANKET_REFUSAL": {
+   "cases_that_failed": [
+    "test_a_subject_policy_this_cascade_has_no_answer_for_stops_here",
+    "test_the_grammar_is_told_the_real_subject_policy",
+    "test_the_stage_it_reaches_was_the_one_recorded_as_unreached",
+    "test_the_successor_gets_what_the_ordinary_chain_gives_it"
+   ],
+   "caught": true,
+   "exit_code": 1,
+   "ran": [
+    "Ran 4 tests in 73.493s"
+   ]
+  }
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "not_delivered": {
+  "content_acceptance": "a frozen Run with a public row says the cascade computed something and the bytes are bound. It does not say 1.168... is the right ratio for this registrant.",
+  "earlier_periods": "this company has one saved original, its own 2025 10-K. Wiring and delivery are two things; this is the first.",
+  "the_seventh_stage": "CURRENT_INPUT_UNRESOLVED - a pinned period whose amendment changed debt or equity - is still reached by no filing in this repository."
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_B06_SUCCESSOR_SUBJECT",
+ "two_claims_this_withdraws": {
+  "no_filing_here_matches_the_inclusive_grammar": {
+   "measured_now": {
+    "agree_field_for_field": true,
+    "calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "company_id": "paramount_skydance_paramount_global",
+    "historical_route": {
+     "cascade_stage": "INCLUSIVE",
+     "result": {
+      "metric_id": "B06",
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "status": null,
+      "unit": "ratio",
+      "value": "1.168049260241169930727785855"
+     },
+     "spec_path": "catalog/r5/B06_inclusive_table_v6.md",
+     "target_period": {
+      "fiscal_year": 2025,
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31"
+     }
+    },
+    "ordinary_chain": {
+     "result": {
+      "metric_id": "B06",
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "status": null,
+      "unit": "ratio",
+      "value": "1.168049260241169930727785855"
+     },
+     "spec_path": "catalog/r5/B06_inclusive_table_v6.md",
+     "target_period": {
+      "fiscal_year": 2025,
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31"
+     }
+    },
+    "record_type": "ISSUE_47_B06_SUCCESSOR_MEASUREMENT",
+    "report_end": "2025-12-31",
+    "subject_policy_the_grammar_was_told": [
+     "SUCCESSOR_REGISTRANT_ONLY"
+    ],
+    "times_the_grammar_asked_for_the_current_column": 2,
+    "what_that_says": "the proof runs and is told the real policy; on this filing it is not what picks the column, so an implementation that skipped it would deliver the same value. Recorded rather than claimed as safety.",
+    "with_the_successor_column_proof_skipped": {
+     "cascade_stage": "INCLUSIVE",
+     "quality": "EXACT",
+     "value": "1.168049260241169930727785855"
+    }
+   },
+   "why_it_was_wrong": "the survey behind it asked the copy before it asked the original, so the one company the copy refused never reached the original. The grammar is matched by that company's current filing.",
+   "written_in": "docs/evidence/issue47_history/b06-cascade/differential.json (stages_not_exercised_by_real_material.INCLUSIVE) and AGENTS.md"
+  },
+  "the_refusal_was_a_gap_every_historical_route_shares": {
+   "why_it_was_wrong": "git log -S puts it in ae12a83, this issue's own B06 wiring commit. The other four historical successor refusals each have a counterpart in the ordinary chain (normal_accession_results, lodging_table_source, normal_companyfacts_results, normal_zero_ai_results). B06's did not."
+  }
+ },
+ "what_discharges_the_subject_obligation_instead": {
+  "every_stage": "b06_current_input.bind_current_debt_input, frozen and shared by both chains, refuses a published Result whose calculation target is not this registrant's own entity and accession (RESULT_CURRENT_REGISTRANT_SCOPE_UNPROVEN).",
+  "the_stage_this_company_reaches": "b06_inclusive_table._current_column requires the current period column to carry the successor label (CURRENT_SUCCESSOR_COLUMN_UNPROVEN) when the subject policy says the subject is a successor.",
+  "what_this_route_now_checks": "that the subject policy is one of the two this cascade has an answer for, and that no cross-entity combination is authorized - the premise the single-filing reading rests on."
+ },
+ "what_this_is": "B06 for the one successor registrant in this repository. The historical route refused every subject policy that was not CONTINUOUS_PRIMARY. The ordinary chain it copies has no such refusal for B06 - it reads one filing - so the refusal was stricter than the original, on a position the original answers with a value."
+}

@@ -1,0 +1,360 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "classes": {
+  "A_annual_chain_and_metadata": {
+   "by_company": {
+    "enphase_energy": 9,
+    "ford_motor_company": 9,
+    "jpmorgan_chase": 70,
+    "lumen_technologies": 9,
+    "macys": 9,
+    "marriott_international": 9,
+    "paramount_skydance_paramount_global": 8,
+    "pfizer": 9,
+    "salesforce": 9,
+    "southwest_airlines": 9
+   },
+   "by_dependency_class": {
+    "ACCESSION_INSTANCE_DISCOVERY": 37,
+    "ANNUAL_PERIOD_IDENTITY": 44,
+    "SUBMISSIONS_HISTORY": 68,
+    "SUBMISSIONS_INDEX": 1
+   },
+   "certainty": "MEASURED_BY_THE_PRODUCTION_PLANNER",
+   "total": 150,
+   "what_the_classes_are": {
+    "ACCESSION_INSTANCE_DISCOVERY": "that accession's index.json",
+    "ANNUAL_PERIOD_IDENTITY": "the annual primary document for a pinned period, or the amendment primary where the chain names one",
+    "SUBMISSIONS_HISTORY": "a submissions history shard, all 68 of them JPMorgan's",
+    "SUBMISSIONS_INDEX": "one current submissions index refresh, JPMorgan's"
+   },
+   "why_jpmorgan_is_70_of_the_142": "JPMorgan files often enough that a shard holds under two months, and the saved shards were partitioned differently from the ones now declared. Its catalog therefore reaches two annual periods, so its other three periods are not in this count at all - they become measurable only after the shards land.",
+   "why_paramount_is_8": "the predecessor's four years are in the frame now: four annual primaries and their four accession indexes. FY2024's are saved; FY2021-FY2023's and the chain's prior year are not.",
+   "jpmorgan_unreached_periods_2026_09_26": "not in this count, because the saved catalog cannot declare them, but inside A_ANNUAL_CHAIN: once the shards land and the planner declares their annual chain the gate admits it and it draws on the one cumulative cap - 8 attempts by the planner's shape, not measured (revision_5)."
+  },
+  "B_event_windows_for_the_wired_event_metrics": {
+   "attempts": 1048,
+   "attempts_per_filing": 2,
+   "certainty": "MEASURED_OVER_SAVED_METADATA",
+   "filings": {
+    "eight_companies_measured": 476,
+    "paramount_predecessor_earlier_windows": {
+     "FY2021": 12,
+     "FY2022": 11,
+     "FY2023": 15,
+     "note": "FY2024's window holds 22 predecessor filings and all are saved; the nine 2025 filings already counted serve the successor's FY2025 window",
+     "total": 38
+    },
+    "paramount_predecessor_known": 9,
+    "total": 523
+   },
+   "metrics": [
+    "C01",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+   ],
+   "not_included": "JPMorgan's FY2021-FY2024 event windows: its catalog cannot enumerate them until class A's shards land, so they have no measured basis and are outside every grant. Its FY2025 window is enumerable, holds all twenty bodies and nineteen headers, and enters only through the one failed header above.",
+   "paramount_predecessor": {
+    "documents": [
+     "813828|0001193125-25-175027|d52142d8k.htm|2025-08-07",
+     "813828|0001193125-25-170521|d55470d8k.htm|2025-07-31",
+     "813828|0001193125-25-165497|d51931d8k.htm|2025-07-25",
+     "813828|0000813828-25-000019|para-20250702.htm|2025-07-08",
+     "813828|0000813828-25-000015|para-20250603.htm|2025-06-09",
+     "813828|0001193125-25-120877|d924390d8k.htm|2025-05-15",
+     "813828|0001193125-25-115947|d771259d8k.htm|2025-05-08",
+     "813828|0001193125-25-052917|d847459d8k.htm|2025-03-12",
+     "813828|0001193125-25-036747|d830953d8k.htm|2025-02-26"
+    ],
+    "moved_from": "class 4, determined only after discovery",
+    "moved_to": "here, as a known dependency",
+    "offline_wiring_verified": "tools/vnext_continuous_sec.py plan accepts both the body and the header of 0001193125-25-036747 as declared dependencies of paramount_skydance_paramount_global, returning OFFLINE_SOURCE_PLAN with calls [0, 0, 0]. The wiring for this class is proven, not assumed.",
+    "why": "the nine are named documents on a wired route for a pinned period that is already in scope, not a question about which periods belong to whom. docs/evidence/issue47_history/successor-event-gap/wired.json lists all nine; all nine were confirmed absent from evidence/accession_materials by an exhaustive scan, not by sampling."
+   },
+   "why_two": "scripts/vnext/normal_zero_ai_results.py:96 reads the accession's hdr.sgml alongside the document, so an event filing costs a body and a header. Measured against the store: of 186 saved accession directories, 151 hold both and none holds a header without a body.",
+   "known_failed_latest_attempts": {
+    "attempts": 2,
+    "what": "two event-window headers whose latest recorded GET failed, so saved_source refuses them as not saved: each blocks every event metric of its window, and C04 too for Salesforce. The ledger holds exactly three URLs whose latest GET failed; the third is a companyconcept URL no #47 route reads.",
+    "documents": [
+     {
+      "company_id": "jpmorgan_chase",
+      "window": "FY2025",
+      "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+      "failed": "2026-07-09T08:55:56Z, SSL UNEXPECTED_EOF_WHILE_READING",
+      "reachable_when": "class A's index refresh lets JPMorgan FY2025 be selected on the real data root; the recorded refreshed root already shows it blocks seven positions"
+     },
+     {
+      "company_id": "salesforce",
+      "window": "FY2026 (report end 2026-01-31)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml",
+      "failed": "2026-07-09T08:56:16Z, SSL UNEXPECTED_EOF_WHILE_READING",
+      "reachable_when": "now: the period selects, every other document of the window is saved"
+     }
+    ],
+    "found_by": "reading the declaration row by row (declared_frame marks both new_acquisition_required) and the ledger's latest GET per URL; the earlier count of this class came from saved metadata for the earlier years' windows and did not reach either."
+   },
+   "named_grants_2026_09_26": "B_JPMORGAN_FY2025_KNOWN_HEADER is named for the one row of that window that needs a fetch today, but a grant is company x class x target period: it admits whatever the declaration comes to require in JPMorgan's FY2025 event window, and today that is exactly the one failed header. G_JPMORGAN_FY2024_PROXY is the same shape for FY2024's proxy."
+  },
+  "C_reserve_for_what_the_originals_name": {
+   "certainty": "BOUNDED_BY_CONSTRUCTION",
+   "derivation": "at most one amendment per company-period across the frame is 50, their accession indexes another 50, and 20 of margin. Not a percentage: the planner already found an amendment in Marriott's chain that the hand count missed, so this is the measured shape of the risk rather than a cushion.",
+   "spending_rule": "each reserve attempt records which fetched original named the document and under which role. A reserve attempt may not open a new class.",
+   "total": 120
+  },
+  "G_governance_proxies_for_the_wired_c02_c03_routes": {
+   "attempts_per_filing": 1,
+   "by_company": {
+    "eight_companies_four_earlier_years": 32,
+    "jpmorgan_fy2024": 1,
+    "paramount_predecessor_fy2021_fy2023": 3
+   },
+   "certainty": "MEASURED_OVER_SAVED_METADATA",
+   "not_included": "Paramount FY2025, whose C02 reads the saved Part III amendment instead of a proxy",
+   "total": 36,
+   "what": "the proxy statement each earlier target period's C02 and C03 read - the first DEF 14A filed after the period end. Every saved proxy here was filed in 2026, so every earlier period names an unsaved one."
+  }
+ },
+ "counting_and_stopping": {
+  "at_the_cap": "stop, and write what remains by class against the cap. Do not continue, do not re-ask mid-run, do not start a tranche that cannot finish inside the remaining allowance.",
+  "counted": "every attempt, including failures. A 404, a 403, a transport failure and a redirect each cost one.",
+  "ledger_binding": {
+   "not_shared": "#28's [240, 240, 80] is bound to requirement_id issue_28_v14 and to its own 390-coordinate scope. #47 does not read it, does not draw on it, and does not ask the owner how much of it is left.",
+   "permission_record": "Issue #47's own budget root and cumulative counter, separate from Issue #28's. Each attempt is recorded against #47's counter with the class it was spent on and the requirement_id it was authorised under.",
+   "transport_record": "evidence/requests_log.csv and the immutable attempt store, unchanged and shared - the transport is the same, only the permission accounting is separate"
+  },
+  "retries": "zero automatic retries, the existing SecHttpClient policy. A failed document is recorded and the next document in the same class proceeds - one document's failure does not block the others.",
+  "unknown": "an attempt whose identity or count cannot be determined stops that class immediately and is counted as spent. Continuing past an UNKNOWN would make the running total unreliable, which is the one thing a cap cannot survive."
+ },
+ "cumulative_cap": {
+  "arithmetic": "150 + 1048 + 36 + 120",
+  "requested": 1354,
+  "this_is_the_number": "an execution stop-cap for Issue #47, not an estimate and not a guarantee of completion. The three are different things and the earlier revision conflated them by offering a class upper bound of 993 and a first tranche of 30 without ever naming a total.",
+  "what_it_does_not_cover": {
+   "consequence": "reaching the uncovered items needs a separate increment with its own measured basis",
+   "jpmorgan": "its FY2021-FY2024 event windows and its FY2021-FY2023 proxies: outside every grant, measurable only after class A's 68 shards land, and they need a measured increment. Its three unreached periods' annual chains are not in this list: A_ANNUAL_CHAIN admits them once they can be declared, from this cap (revision_5).",
+   "model_calls": "B13 (Ford, Enphase), D03 and D04 need provider calls under a separate allowance; see semantic-route-need/measured.json. This cap is SEC request attempts only.",
+   "jpmorgan_until_2026_09_26": "its FY2021-FY2024 event windows and the three periods the saved shards cannot reach; measurable only after class A's 68 shards land"
+  }
+ },
+ "execution_discipline_after_authorisation": "continuous, under the cap: plan the tranche, capture it, install, run, report against the cap, take the next tranche. No per-URL question and no per-company question. At the cap, stop and report what remains.",
+ "how_this_revision_was_measured": {
+  "authority": "scripts/vnext/normal_history_plan.plan_historical_sources, the production planner, run over all ten configured companies with count=5. It deduplicates across roles, so a year serving as both target_primary and the next year's prior_annual_primary is one requirement, not two.",
+  "not_by_hand": "the earlier count was assembled by reading a manifest. This one is the planner's own new_acquisition_required set, grouped by its own dependency_class.",
+  "zero_calls": [
+   0,
+   0,
+   0
+  ]
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "offline_wiring_verification": {
+  "consequence_for_sequencing": "the wiring goes first and costs nothing. A cap can be granted before or after it; what cannot happen is spending against the cap while class A has no path.",
+  "status": "PARTIALLY_VERIFIED_AND_ONE_GAP_FOUND",
+  "the_gap": {
+   "closed": {
+    "measured": "the salesforce FY2024 primary that the existing CLI refuses now returns OFFLINE_SOURCE_PLAN with calls [0, 0, 0]; a URL nothing declares is refused as HISTORICAL_URL_IS_NOT_A_DECLARED_DEPENDENCY. The regression asks the old gate and the new one the same question in one case, so a gate that accepted everything would fail there rather than in a fetch.",
+    "not_a_rule_file": "it plans and gates rather than executing a Run, so nothing about a Run's meaning depends on its bytes - the same reason historical_coverage.py is not one. The frozen tool and the current-period discovery are untouched, because both are named in issue_28_v14's baseline and in the approved call policy's rule_paths.",
+    "what": "scripts/vnext/historical_source_acquisition.py and tools/vnext_historical_sec.py read Issue #47's own declaration - the planner's deduplicated new_acquisition_required set - instead of the current-period discovery.",
+    "what_is_still_absent": "execution. continuous_sec_acquisition.live_sec_session hard-binds issue_28_v14 and its ledger reads that issue's delegation, budget root and limits, so reusing it would be drawing on Issue #28's allowance. The capture command refuses before any transport is constructed."
+   },
+   "measured_boundary": "salesforce crm-20250131.htm (one year back) is accepted; crm-20240131.htm (two years back) is refused with 'URL is not a declared dependency of this company'. The gate reaches one year, and the frame needs four.",
+   "what": "the acquisition CLI gates on normal_source_requirements.discover_saved_source_requirements, whose scope is the current annual period. It declares the current primary, one prior annual primary, the current fiscal-event window, the proxy, companyfacts and submissions.",
+   "what_it_is_not": "not a reason to widen the gate by hand or to pass URLs around it. The gate is what stops an arbitrary URL from being fetched, and the fix is to give it the historical declaration, not to remove it.",
+   "why_this_matters_to_the_ask": "it means class A is not merely waiting for permission. The declaration exists - plan_historical_sources produces it - and the acquisition entry point does not read it. Connecting the two is Issue #47's own offline work and needs no authorisation."
+  },
+  "verified": [
+   "class B, Paramount predecessor: tools/vnext_continuous_sec.py plan returns OFFLINE_SOURCE_PLAN with calls [0, 0, 0] for both the body and the header of 0001193125-25-036747",
+   "the annual chain is declared: plan_historical_sources names every class-A requirement with its URL, accession, role and saved state, deduplicated"
+  ]
+ },
+ "prior_revision": {
+  "why_30_was_wrong": [
+   "it counted one document per pinned period. The planner declares two - the primary document and that accession's index.json - and the index is what names the accession's other files.",
+   "it counted only the five target years. A five-year frame needs the year before the earliest target as well, because each target's prior-period comparison reads it: Salesforce needs crm-20210131.htm for the FY2022 target.",
+   "it recorded amendments_implied: 0, measured over the target periods only. The planner finds a prior_amendment_primary in Marriott's chain, so the measurement was over the wrong set rather than wrong in itself."
+  ],
+  "withdrawn_class_1_count": 30,
+  "withdrawn_conclusion": {
+   "not_asked_of_the_user": "how much of #28's 80 is already consumed. That ledger is #28's, its budget root is a host-local path this container does not carry, and #47 should not be reading it either way.",
+   "what_was_written": "'30 SEC fetches against a cumulative allowance of 80. The need fits inside the existing approved budget rather than requiring a new one.' - docs/evidence/issue47_history/source-need-quantified.json",
+   "why_it_was_also_wrong_on_size": "30 was the first blocking reason only. Counting the dependencies behind it puts the measured need at roughly seventeen times the whole #28 SEC allowance, so even if the authority question did not exist the arithmetic would not have held.",
+   "why_it_was_wrong_on_authority": "The [240, 240, 80] allowance in config/issue28_continuous_calls_v1.json is bound to requirement_id issue_28_v14 and to a scope of 10 companies x 39 metrics x 1 period = 390 coordinates. continuous_call_policy checks the delegation body, the scope, the budget root and that requirement_id. Issue #47's own text forbids borrowing #28's remainder. Finding that the acquisition tooling exists and is reusable is not the same as finding that its authorisation transfers - the capability may be reused, the permission may not.",
+   "withdrawn": true
+  }
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_ACQUISITION_PLAN",
+ "revision_3": {
+  "calls": [
+   0,
+   0,
+   0
+  ],
+  "cap_before": 1232,
+  "cap_now": 1352,
+  "measured_by": {
+   "class_a": "vnext.historical_source_acquisition.declared_frame over all ten companies, count=5 - the production planner plus the event and governance declarations, grouped by the planner's own dependency_class",
+   "class_b_addition": "the predecessor's 8-K and 8-K/A filings in its FY2021-FY2023 windows, counted over its saved submissions metadata",
+   "class_g": "for every target period of the ten companies' frames, the first DEF 14A filed after the period end - the proxy the pinned C02/C03 routes read - checked against saved sources"
+  },
+  "why": "three things the frame gained since schema 2 each add dependencies the cap did not count: Paramount's predecessor years entered the frame (Issue #47 section 7.3), and C02 and C03 were wired, so their earlier years' proxies became dependencies of routes that run."
+ },
+ "schema_version": 3,
+ "status": "SUBMITTED_FOR_AUTHORISATION_NOT_EXECUTED",
+ "supersedes": "schema_version 1 of this file, kept below as prior_revision. Its class-1 count of 30 is withdrawn for three measured reasons, all found by running the production planner instead of counting by hand.",
+ "what_a_call_is": "one SEC request attempt through scripts/sec_http.SecHttpClient, logged in evidence/requests_log.csv whether it returns 200, returns an error status, or fails in transport. Implicit redirects are forbidden by the client, so a redirect is a terminal attempt and counts.",
+ "what_class_a_buys": {
+  "evidence": "remaining-work-2026-09-25/README.md for the current frame; frame-ceiling-today.json keeps the earlier measurement this section first cited",
+  "in_positions": "12 x 39 = 468 of 1,950 frame positions can be attempted at all today, before any question of whether a route is wired for them. The other 1,482 wait on a source: 1,287 (33 periods) on a missing target original, and all 195 of JPMorgan's - 78 in the two periods its saved catalog reaches but refuses as incoherent, 117 in the three it does not reach.",
+  "measured": "12 of the frame's 50 target periods can be attempted today: Marriott three, Paramount two (the successor's FY2025 and the predecessor's FY2024), seven companies their latest year, JPMorgan none. JPMorgan's FY2025 original is saved; its saved catalog is what cannot select the period.",
+  "so": "class A's 150 measured acquisitions are what turn 12 attemptable periods into 47: the 33 missing originals of the nine other companies with their chains' prior years, and JPMorgan's 68 shards and index refresh, which bring its two reachable periods within reach of selection. JPMorgan's other three periods are not in the 150 - the saved catalog cannot declare them - but their annual chains are inside A_ANNUAL_CHAIN: once the shards land and the planner declares them they are admitted and draw on the same cap (revision_5). So up to 50 periods can be attempted within this grant; what JPMorgan's three still lack after that is their event windows and proxies, which are outside every grant. Under the current source rules no implementation moves these numbers: a batch over those periods produces SOURCE_MISSING_TARGET_ORIGINAL or a catalog refusal, not results. JPMorgan FY2025 does select on a recorded root whose index was derived from the saved shards' own bodies, but a derived index is not an SEC response and admits nothing.",
+  "superseded_2026_09_26": "this section said 11 periods, 429 positions and 142 class-A acquisitions turning 11 periods into 50. It was measured before Paramount's predecessor years entered the frame, and '50' left out that JPMorgan's catalog reaches only two of its five periods.",
+  "superseded_again_2026_09_26": "the first correction said class A makes 'at most 47 periods attemptable' and that JPMorgan's other three 'need an increment measured then'. That described a narrower grant than the object: A_ANNUAL_CHAIN admits their annual chains (revision_5). 47 is the measured coverage, not a limit.",
+  "first_correction_so": "class A's 150 acquisitions are what can turn 12 attemptable periods into 47: the 33 missing originals of the nine other companies with their chains' prior years, and JPMorgan's 68 shards and index refresh, which bring its two reachable periods within reach of selection. JPMorgan's other three periods are not in this count at all; they become measurable only after the shards land and need an increment measured then (cumulative_cap.what_it_does_not_cover). Under the current source rules no implementation moves these numbers: a batch over those periods produces SOURCE_MISSING_TARGET_ORIGINAL or a catalog refusal, not results. JPMorgan FY2025 does select on a recorded root whose index was derived from the saved shards' own bodies, but a derived index is not an SEC response and admits nothing."
+ },
+ "what_is_asked_of_the_owner": {
+  "a_second_allowance_this_plan_does_not_cover": {
+   "what": "three routes cannot produce a historical value without provider calls: B13's applicable branch (Ford and Enphase, the two companies the approved definition names), D03 and D04. D04 is wired and stops at HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED until assessments are registered; D03 has no native route in the ordinary chain to port; B13's applicable branch waits for #28 to accept its request contract.",
+   "measured": "semantic-route-need/measured.json: 193 requests over the eleven periods whose original was saved when it was measured (B13 17, D03 102, D04 74). At the newest year the pinned requests equal #28's own grouped census for the same filings, so #47's own need is the earlier years - measurable today only for Marriott 2023/2024, 18 requests.",
+   "not_estimated": "no number is offered for the other companies' earlier years: their periods have no original to build a request from until class A lands, and a figure produced now would be a guess dressed as a measurement.",
+   "why_it_is_named_here": "this plan's cap of 1354 is SEC request attempts and says nothing about provider calls. Presenting it as the cost of finishing the frame would understate it by a whole category, which is the same error as reporting a first blocking reason as the only one.",
+   "the_order": "the egress change goes to independent security review first (model-egress/); a call request follows, bounded by requests measured as above, under #47's own allowance and ledger - never #28's.",
+   "found_by": "reading each unwired metric's own Spec rather than counting them.",
+   "history": {
+    "until_2026_09_26": "this section named D01 among the model-bound routes (read from its source_mode: ai_text) and C04 as the next deterministic wiring, and cited the 1232 cap of an earlier revision. D01 and C04 were both wired without provider calls.",
+    "what": "four of the eight unwired metrics cannot produce a historical value without provider calls: D01 is source_mode ai_text, and B13, D03 and D04 resolve through the semantic review path.",
+    "the_honest_order": "wire a deterministic route first - C04 composes two historical routes that already exist - and let the semantic ones be costed when they have something to cost."
+   }
+  },
+  "not_asked": [
+   "a per-URL or per-company approval",
+   "a reading of Issue #28's private ledger",
+   "authorisation to execute before the permission exists",
+   "an increment for the three uncovered items above, which have no measured basis yet and should not be approved on a guess"
+  ],
+  "one_thing": "a cumulative cap of 1354 SEC request attempts for Issue #47, bound to #47's own requirement, grants and ledger at the proposed budget root.",
+  "the_shape_of_the_grant": {
+   "current_state": "the file does not exist, and tools/vnext_historical_sec.py capture refuses with exactly that path and field list.",
+   "fields": [
+    "requirement_id - must be issue_47_v1; a record carrying issue_28_v14 is refused rather than accepted as a fallback",
+    "repository and approver_login - must equal the trust anchor the code holds (wlvh/SEC_metrics and its owner), not values the file chooses for itself",
+    "delegation_url - the approving comment, which must be on this repository's Issue #47",
+    "delegation_body_sha256 and delegation_record_path - the digest of the comment's body and the saved copy it is checked against; on the live path the comment is fetched from GitHub and must match the saved copy byte for byte",
+    "budget_root - Issue #47's own cumulative counter, not Issue #28's",
+    "maximum_additional_provider_paid_sec_calls - the cap, as [0, 0, 1354]",
+    "scope - the companies, dependency classes, report-date window and per-class grants the gate admits",
+    "sec_wiring_receipt_path - the offline wiring receipt, which must still hold for the tree that executes"
+   ],
+   "path": "config/issue47_historical_calls_v1.json",
+   "why_this_is_here": "'a cap of 1354' is a number in a document. What the code would have to read is an object, and naming its fields makes the ask checkable rather than interpretable.",
+   "what_the_comment_must_restate": "maximum_additional_provider_paid_sec_calls, budget_root and scope, exactly; a policy granting more than its comment is refused (ISSUE_47_ALLOWANCE_WIDENS_THE_APPROVED_GRANT). The complete object with the comment body to post is acquisition-wiring/proposed-allowance.json, built by tools/propose_historical_allowance.py and run through the real verifier.",
+   "superseded_2026_09_26": "the field list named five of the ten fields and gave the cap as [0, 0, 1232]; repository, approver_login, delegation_record_path and sec_wiring_receipt_path were added to the gate after it was written, each for a measured way an allowance could pass without the approval it claims."
+  },
+  "the_meaning_of_the_grants": "inside the grants' companies, dependency classes and target window, and under the one cumulative cap, a dependency the declaration comes to require is admitted - including one the saved catalog cannot declare today; anything outside the grants, or beyond the cap, needs a measured increment. This is the meaning the object already had; no grant and no gate changed, only the text."
+ },
+ "revision_4": {
+  "date": "2026-09-26",
+  "cap_before": 1352,
+  "cap_now": 1354,
+  "why": "the text and the execution scope did not describe the same set: the text left JPMorgan's event windows out while the proposed envelope admitted JPMorgan with the event class, and two event headers whose latest GET failed were needed by windows the text counted as saved. The two headers are added to class B by name; the proposal now carries grants, one per measured class and company group, so the gate admits exactly what this text counts.",
+  "grants": "see acquisition-wiring/proposed-allowance.json - A for the annual chain of all ten companies and JPMorgan's metadata, B for the event windows of the nine others plus the two named headers, G for the governance proxies of the nine others plus JPMorgan FY2024; COMPANYFACTS is in no grant because no class counts it",
+  "ledger": {
+   "proposed_budget_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-sec-v1",
+   "why_there": "beside Issue #28's root on the same host and under the same parent, so it persists with the user's state rather than with a checkout, and is plainly a different ledger",
+   "what_the_gate_refuses": "a relative path, a path containing '..', Issue #28's root or anything inside it, and anything inside the repository checkout"
+  }
+ },
+ "revision_5": {
+  "date": "2026-09-26",
+  "cap_before": 1354,
+  "cap_now": 1354,
+  "why": "the text and the grant object disagreed on JPMorgan's three periods its saved shards do not reach: the text said their annual chains needed a separate application, while A_ANNUAL_CHAIN - jpmorgan_chase, ANNUAL_PERIOD_IDENTITY and ACCESSION_INSTANCE_DISCOVERY, 2021-12-31 to 2026-01-31 - admits them. Asked of the real gate with the planner's own row shape, it admits the primary and index of FY2021-FY2023 and of FY2020 as FY2021's prior year, and refuses JPMorgan's FY2021-FY2024 event filings and FY2021-FY2023 proxies. Found by an external review of f0bb8053 and reproduced here before anything was changed.",
+  "chosen_meaning": "inside the grants' companies, dependency classes and target window, and under the one cumulative cap, a dependency the declaration comes to require is admitted - including one the saved catalog cannot declare today; anything outside the grants, or beyond the cap, needs a measured increment. This is the meaning the object already had; no grant and no gate changed, only the text.",
+  "not_yet_declarable": {
+   "jpmorgan_chase": {
+    "targets": [
+     "2021-12-31",
+     "2022-12-31",
+     "2023-12-31"
+    ],
+    "admitted_once_declarable": [
+     "ACCESSION_INSTANCE_DISCOVERY",
+     "ANNUAL_PERIOD_IDENTITY"
+    ],
+    "outside_every_grant": [
+     "FISCAL_EVENT_FILING",
+     "GOVERNANCE_DISCLOSURE_FILING"
+    ]
+   }
+  },
+  "how_it_is_held": "tools/propose_historical_allowance.py asks the gate about every target a catalog does not reach yet, one row per probed class, and does not write the proposal unless the answers equal not_yet_declarable above",
+  "what_it_costs": "JPMorgan's unreached annual chains are not in class A's 150: by the planner's shape for a five-year chain they are 8 attempts (primary and index for FY2021-FY2023 and for FY2020 as FY2021's prior), assuming no amendments - a shape estimate, not a measurement. They draw on the same cumulative cap; the reserve's 20-attempt margin holds 8. If the shards reveal more, reaching the cap stops execution and the remainder is reported by class.",
+  "what_47_is": "the measured coverage of class A - 12 attemptable periods today, 47 once class A lands - not a limit the machine enforces. Within this grant up to 50 periods can be attempted: JPMorgan's three once their chains are fetched, still without their event windows and proxies, which are outside every grant.",
+  "what_the_cap_is_not": "a guarantee: 1,354 is a stop-cap, and completing it guarantees neither 50 periods nor 1,950 positions",
+  "fault_injections": {
+   "script": "docs/evidence/issue47_history/acquisition-wiring/not_yet_declarable_injections.sh",
+   "results": {
+    "PLAN_STATES_THE_OLD_MEANING": "refused, THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS; proposal not written",
+    "GRANT_NARROWED_TEXT_UNCHANGED": "refused, THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS; proposal not written",
+    "GRANT_COVERS_ONLY_SOME_YEARS": "refused, NOT_YET_DECLARABLE_ANSWER_DIFFERS_BY_TARGET; proposal not written"
+   },
+   "restored": "plan, tool and proposal compared byte for byte after the run",
+   "calls": [
+    0,
+    0,
+    0
+   ],
+   "script_at": "a0f51ddc; removed at 968076ba and replaced by not_yet_declarable_injections.py",
+   "how_these_results_were_read": "by a person, from each run's printed exit status, last output line and whether the proposal bytes changed; the script asserted none of them and exited 0 whatever they were. The conclusions stand as read. The script was not evidence that a wrong result would be stopped: a syntax, import or any other error also exits 1."
+  },
+  "fault_injections_judged": {
+   "script": "docs/evidence/issue47_history/acquisition-wiring/not_yet_declarable_injections.py",
+   "commit": "968076ba",
+   "what_it_requires": "control: exit 0, nothing on stderr, a proposal byte-identical to the committed one. Each injection: exit 1, nothing on stdout, no proposal written, and stderr exactly the SystemExit message of the check it targets, derived from this plan's statement. A timeout fails the case; any failing case, or a change to the tool, plan or committed proposal during the run, exits 1. An edit that does not apply exactly once, or does not compile, exits 2 before anything runs.",
+   "results": {
+    "CONTROL": "PASS, proposal reproduced byte for byte",
+    "PLAN_STATES_THE_OLD_MEANING": "PASS, THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS",
+    "GRANT_NARROWED_TEXT_UNCHANGED": "PASS, THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS",
+    "GRANT_COVERS_ONLY_SOME_YEARS": "PASS, NOT_YET_DECLARABLE_ANSWER_DIFFERS_BY_TARGET",
+    "exit": 0,
+    "seconds": 543
+   },
+   "bypass_control": {
+    "how": "--bypass-target-check disables, in each injection, the check it targets",
+    "exit": 1,
+    "results": {
+     "CONTROL": "PASS",
+     "PLAN_STATES_THE_OLD_MEANING": "FAIL: exit 0, stderr empty, summary printed, proposal written",
+     "GRANT_NARROWED_TEXT_UNCHANGED": "FAIL: exit 0, stderr empty, summary printed, proposal written",
+     "GRANT_COVERS_ONLY_SOME_YEARS": "FAIL: exit 1 but refused by THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS, which is not the targeted check"
+    }
+   },
+   "one_off_checks_not_kept_as_modes": {
+    "an unrelated RuntimeError at the top of the tool": "exit 1, judged not refused",
+    "a missing import at the top of the tool": "exit 1, judged not refused",
+    "a 5-second timeout": "judged a failure",
+    "an edit that does not compile": "INJECTED_SOURCE_DOES_NOT_COMPILE, nothing run",
+    "an edit whose target text is absent": "INJECTION_DID_NOT_APPLY, nothing run"
+   },
+   "isolation": "nothing in the checkout is written: the tool's source is edited in memory and run in a subprocess with __file__ set to the real tool, so it reads the real repository, and its one plan read and one proposal write are redirected into a temporary directory; bytecode caching is off in the subprocess",
+   "exits_measured": "SIGTERM (exit 143), SIGINT (KeyboardInterrupt) and SIGHUP (exit 129) sent to the verifier while the tool was running: each time the tool was killed, the temporary directory removed and the tool, plan and committed proposal unchanged",
+   "not_covered": [
+    "SIGKILL of the verifier or a host crash: the temporary directory stays in the system temp directory, outside the checkout, and a running tool can finish into it",
+    "the expected messages are derived from this plan's statement and the grants' shape; if JPMorgan's unreached targets or the annual-chain grant change, they can stop matching and the verifier fails - it does not pass on a different reason - and the injections need re-reading, not only re-running"
+   ],
+   "calls": [
+    0,
+    0,
+    0
+   ]
+  },
+  "what_the_one_answer_per_class_check_is": "a check that the per-company, per-class statement above fits the grants proposed today, not a rule that a class must be granted alike for every year. A grant approved for some years only is a legitimate decision; the statement then says so per year and the check changes with it, rather than refusing it."
+ }
+}

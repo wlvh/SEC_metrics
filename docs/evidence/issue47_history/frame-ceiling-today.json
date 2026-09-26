@@ -1,0 +1,96 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "consequences_for_the_open_list": {
+  "history_shard_year_positive": "the cheapest candidates are Salesforce's 2023-01-31 and 2022-01-31, whose 10-K rows are in a history shard. Both are in the acquisition plan's class A.",
+  "three_company_five_year_pilot": "blocked on acquisition, not on implementation. Ford, Salesforce and Macy's each hold one of five originals, so four fifths of that pilot's coordinates have nothing to read. Naming it as open work without naming its blocker made it look like code was missing.",
+  "what_would_change_it": "the 142 class-A acquisitions. They are what turns 11 periods into 50, and no amount of implementation moves that number."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "measured": {
+  "by_company": {
+   "enphase_energy": {
+    "dates": [
+     "2025-12-31"
+    ],
+    "originals_saved": 1,
+    "reachable": 5
+   },
+   "ford_motor_company": {
+    "dates": [
+     "2025-12-31"
+    ],
+    "originals_saved": 1,
+    "reachable": 5
+   },
+   "jpmorgan_chase": {
+    "dates": [],
+    "originals_saved": 0,
+    "reachable": 2
+   },
+   "lumen_technologies": {
+    "dates": [
+     "2025-12-31"
+    ],
+    "originals_saved": 1,
+    "reachable": 5
+   },
+   "macys": {
+    "dates": [
+     "2026-01-31"
+    ],
+    "originals_saved": 1,
+    "reachable": 5
+   },
+   "marriott_international": {
+    "dates": [
+     "2023-12-31",
+     "2024-12-31",
+     "2025-12-31"
+    ],
+    "originals_saved": 3,
+    "reachable": 5
+   },
+   "paramount_skydance_paramount_global": {
+    "dates": [
+     "2025-12-31"
+    ],
+    "originals_saved": 1,
+    "reachable": 1
+   },
+   "pfizer": {
+    "dates": [
+     "2025-12-31"
+    ],
+    "originals_saved": 1,
+    "reachable": 5
+   },
+   "salesforce": {
+    "dates": [
+     "2026-01-31"
+    ],
+    "originals_saved": 1,
+    "reachable": 5
+   },
+   "southwest_airlines": {
+    "dates": [
+     "2025-12-31"
+    ],
+    "originals_saved": 1,
+    "reachable": 5
+   }
+  },
+  "target_periods_in_the_frame": 50,
+  "target_periods_whose_original_is_saved": 11
+ },
+ "record_type": "ISSUE_47_FRAME_CEILING_TODAY",
+ "what_it_means": {
+  "only_one_company_has_more_than_one_year": "Marriott, with three. Every other company has exactly one, and JPMorgan has none - its catalog reaches two periods and neither original is saved.",
+  "positions_attemptable": "11 periods x 39 declared metrics = 429 of 1,950 frame positions, before any question of whether a route is wired for them.",
+  "the_batch_is_not_a_sample": "the eleven periods with a saved original are exactly what a batch can attempt today. Running more companies or more years would produce SOURCE_MISSING_TARGET_ORIGINAL, not results."
+ },
+ "what_this_is": "How much of the 10 x 39 x 5 frame can be attempted at all right now, measured from plan_historical_sources rather than inferred from a batch."
+}

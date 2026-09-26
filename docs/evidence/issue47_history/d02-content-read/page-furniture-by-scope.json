@@ -1,0 +1,247 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "fault_injections": {
+  "results": {
+   "DO_NOT_WIDEN_THE_SCOPE_COVERAGE": {
+    "cases_that_failed": [
+     "test_fords_result_holds_no_running_header"
+    ],
+    "caught": true,
+    "exit_code": 1
+   },
+   "LET_THE_SKIP_APPLY_TO_D03_TOO": {
+    "cases_that_failed": [
+     "test_a_signature_line_naming_an_officer_does_not_close_an_item",
+     "test_d03_keeps_the_repeated_table_rows_this_criterion_would_take"
+    ],
+    "caught": true,
+    "exit_code": 1
+   },
+   "RECOMPUTE_EVERY_SCOPE_INCLUDING_THE_SUB_NOTE": {
+    "cases_that_failed": [],
+    "caught": false,
+    "exit_code": 0
+   },
+   "WRITE_THE_FURNITURE_ONTO_THE_SCOPE": {
+    "cases_that_failed": [
+     "test_a_signature_line_naming_an_officer_does_not_close_an_item",
+     "test_d03_keeps_the_repeated_table_rows_this_criterion_would_take"
+    ],
+    "caught": true,
+    "exit_code": 1
+   }
+  },
+  "the_one_not_caught": {
+   "injection": "RECOMPUTE_EVERY_SCOPE_INCLUDING_THE_SUB_NOTE",
+   "why_no_case_sees_it": "no filing in this corpus distinguishes counting repeats over a sub-note from counting them over its parent. Measured directly on four filings, including Pfizer, whose sub-note scope is the only one where the two differ in principle: identical sets both ways. The guard is kept because it preserves the semantics each existing scope was measured with; this records that nothing exercises it rather than implying something does."
+  }
+ },
+ "filled_in_rather_than_recomputed": {
+  "and_what_the_corpus_says_about_it": {
+   "kept": {
+    "ford_motor_company": 45,
+    "lumen_technologies": 41,
+    "paramount_skydance_paramount_global": 28,
+    "pfizer": 96
+   },
+   "measured": "the guard was removed and four filings re-derived",
+   "uniform_recompute": {
+    "ford_motor_company": 45,
+    "lumen_technologies": 41,
+    "paramount_skydance_paramount_global": 28,
+    "pfizer": 96
+   },
+   "verdict": "no filing here distinguishes the two. The guard is kept because it preserves the semantics each existing scope was measured with, and this records that nothing in the corpus exercises it rather than implying something does."
+  },
+  "why": "a lettered sub-note scope counts repeats over its PARENT note's range, which is a different question from counting them over the sub-note. Recomputing uniformly would answer the second one for Pfizer without saying so."
+ },
+ "how_it_was_found": "by reading Ford's excerpt set against the filing, not by inspecting the code. The eight blocks are in the delivered payload.",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "measured_after_the_change": {
+  "how": "both D02 and D03 candidate sets, and the proposal and coverage hashes, derived under the tree before and after the change, for all eleven saved periods.",
+  "per_period": {
+   "enphase_energy 2025-12-31": {
+    "d02_after": 18,
+    "d02_before": 18,
+    "d02_dropped": [],
+    "d03_after": 40,
+    "d03_before": 40,
+    "proposal_and_coverage_identical": true
+   },
+   "ford_motor_company 2025-12-31": {
+    "d02_after": 45,
+    "d02_before": 53,
+    "d02_dropped": [
+     3963,
+     3964,
+     3965,
+     3974,
+     3975,
+     3976,
+     3990,
+     3991
+    ],
+    "d03_after": 29,
+    "d03_before": 29,
+    "proposal_and_coverage_identical": false
+   },
+   "lumen_technologies 2025-12-31": {
+    "d02_after": 41,
+    "d02_before": 41,
+    "d02_dropped": [],
+    "d03_after": 54,
+    "d03_before": 54,
+    "proposal_and_coverage_identical": true
+   },
+   "macys 2026-01-31": {
+    "d02_after": 3,
+    "d02_before": 3,
+    "d02_dropped": [],
+    "d03_after": 42,
+    "d03_before": 42,
+    "proposal_and_coverage_identical": true
+   },
+   "marriott_international 2023-12-31": {
+    "d02_after": 8,
+    "d02_before": 8,
+    "d02_dropped": [],
+    "d03_after": 19,
+    "d03_before": 19,
+    "proposal_and_coverage_identical": true
+   },
+   "marriott_international 2024-12-31": {
+    "d02_after": 10,
+    "d02_before": 10,
+    "d02_dropped": [],
+    "d03_after": 21,
+    "d03_before": 21,
+    "proposal_and_coverage_identical": true
+   },
+   "marriott_international 2025-12-31": {
+    "d02_after": 11,
+    "d02_before": 11,
+    "d02_dropped": [],
+    "d03_after": 20,
+    "d03_before": 20,
+    "proposal_and_coverage_identical": true
+   },
+   "paramount_skydance_paramount_global 2025-12-31": {
+    "d02_after": 28,
+    "d02_before": 28,
+    "d02_dropped": [],
+    "d03_after": 32,
+    "d03_before": 32,
+    "proposal_and_coverage_identical": true
+   },
+   "pfizer 2025-12-31": {
+    "d02_after": 96,
+    "d02_before": 96,
+    "d02_dropped": [],
+    "d03_after": 89,
+    "d03_before": 89,
+    "proposal_and_coverage_identical": true
+   },
+   "salesforce 2026-01-31": {
+    "d02_after": 15,
+    "d02_before": 15,
+    "d02_dropped": [],
+    "d03_after": 52,
+    "d03_before": 52,
+    "proposal_and_coverage_identical": true
+   },
+   "southwest_airlines 2025-12-31": {
+    "d02_after": 25,
+    "d02_before": 25,
+    "d02_dropped": [],
+    "d03_after": 61,
+    "d03_before": 61,
+    "proposal_and_coverage_identical": true
+   }
+  }
+ },
+ "measured_before_the_change": {
+  "enphase_energy 2025-12-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 294,
+   "blocks": [],
+   "excerpts": 18,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  },
+  "ford_motor_company 2025-12-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 8,
+   "blocks": [],
+   "excerpts": 45,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  },
+  "lumen_technologies 2025-12-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 389,
+   "blocks": [],
+   "excerpts": 41,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  },
+  "macys 2026-01-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 202,
+   "blocks": [],
+   "excerpts": 3,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  },
+  "marriott_international 2023-12-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 119,
+   "blocks": [],
+   "excerpts": 8,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  },
+  "marriott_international 2024-12-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 127,
+   "blocks": [],
+   "excerpts": 10,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  },
+  "marriott_international 2025-12-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 138,
+   "blocks": [],
+   "excerpts": 11,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  },
+  "paramount_skydance_paramount_global 2025-12-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 497,
+   "blocks": [],
+   "excerpts": 28,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  },
+  "pfizer 2025-12-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 366,
+   "blocks": [],
+   "excerpts": 96,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  },
+  "salesforce 2026-01-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 161,
+   "blocks": [],
+   "excerpts": 15,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  },
+  "southwest_airlines 2025-12-31": {
+   "already_excluded_as_furniture_by_the_scopes_that_use_it": 106,
+   "blocks": [],
+   "excerpts": 25,
+   "selected_blocks_the_same_criterion_would_drop": 0
+  }
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_D02_PAGE_FURNITURE_BY_SCOPE",
+ "the_mistake_this_reading_made_and_measured": {
+  "and_it_is_the_same_mistake_as_the_audit_report_rule": "already recorded in this Issue: a rule measured on one metric took blocks out of another metric's candidate set because both are built in one pass.",
+  "how_it_was_caught": "an existing case that compares Macy's whole candidate to the frozen implementation's. That was an accident of what it asserts, so a case naming the concern was added.",
+  "what": "the first version skipped the block outright, which is what the existing furniture field does.",
+  "what_that_cost": "the same loop builds D03's regulatory candidate set, so two of Macy's forty-two regulatory candidates left with it - blocks 1566 and 1573, 'Settlement(189)(123)— —', a pension-note row the filing states twice among other repeating rows. Macy's D02 set does not move at all, so nothing about the metric being worked on would have shown it.",
+  "what_this_also_says_about_the_criterion": "it can see a repeated table row as a running header. That costs nothing here because no D02 scope in these eleven filings contains such a row, and it is the reason the criterion is not obviously safe to widen further."
+ },
+ "what_changed": "the furniture criterion - a block that repeats inside its scope next to another repeating block - was attached only to the scopes this successor builds. Item 3 and a wholesale note went without it. Every scope now gets it. The criterion itself is unchanged; it reaches further.",
+ "what_it_does_not_catch": {
+  "enphase_energy 2025-12-31 block 755": "'Enphase Energy, Inc. | 2025 Form 10-K | 46'. The footer carries the page number, so no two instances are the same text and repetition has nothing to compare. Registered as D02_ENPHASE_2025_PAGE_FOOTER_CARRIES_ITS_PAGE_NUMBER rather than fixed, because catching it needs a second criterion and this corpus has one example of it."
+ }
+}

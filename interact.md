@@ -535,3 +535,55 @@ D04的条件、例证或过去原因只影响其实际限定的断言；明确�
 
 私有完整版本将选中原生行与前驱其余行一起交给统一读取入口；继承行保持原信用。该演练没有正式发布/active切换权，现有公开读取仍返回已采纳版本，不能把开发私有预览称为生产结果。
 <!-- capability-anchor: CAPABILITY.ordinary_private_release_draft -->
+
+## 历史五年覆盖汇总（`tools/vnext_history_coverage.py`）
+
+只读。它不运行任何指标、不解析财报、不渲染公共行，也不发起网络调用；
+给 `--runs-root` 时从冻结 Run 自带的三个文件哈希校验后读取 `METRIC_RESULT`，
+被编辑过的 run 目录以 `RUN_RECEIPT_FILE_CHANGED` 拒绝。
+
+输出把三件事分开，且都按整个目标帧计数：
+
+* `first_blocking_reason_counts` 是**首个**阻断原因，不是每个坐标的剩余工作量。
+  39 个指标共用同一份申报，所以坐标会坍缩——把坐标数读成工作量会让来源预算
+  看起来等于全部剩余成本。
+* `dimension_counts` 是互不包含的独立维度。
+* `delivery_layer_counts` 是交付三层：`native_run`（哪个版本产出什么、是否冻结
+  并验证）、`public_row`（Run 旁是否有点名该结果的 `row_receipt.json`）、
+  `content_acceptance`。**未证明的一层在 `delivery_layer_unproven_reasons` 里
+  写明理由**，不省略。`content_acceptance` 由
+  `docs/evidence/issue47_history/accepted_result_content.json` 决定，**方向与缺陷登记
+  相反**：缺陷一直撤回到被显式释放为止，接受**只在它点名的那个值仍是该坐标当前的值
+  时成立**——接受说的是"这一个数被对着申报读过"，换成另一个数就没人读过。两者冲突
+  时撤回胜出。**它曾经处处为 0，那句话已不成立**，不要按旧值读；当前数目由该登记与当
+  前结果共同决定，报告自己会给出。
+  `verified_outcome` 只回答第一层，不能当交付率读。
+* `delivery_by_outcome` 把这三层与坐标自己说的话交叉：`VALUE`（实际数值）、
+  `STRUCTURALLY_NOT_APPLICABLE`（结构不适用）、`RAN_WITHOUT_A_VALUE`（跑过但没有值，
+  含显式 WITHHELD 与发布了但无值两种，桶内各自计数）、`NO_RESULT`。
+  **只看 `public_row` 的数分不出它们**——WITHHELD 的结果同样渲染
+  出一行，结构不适用也是。把行数当交付，就是把「机器跑通了」读成「数在那里」。
+  该交叉表是对整帧的划分，每层各 outcome 之和等于 `delivery_layer_counts` 的
+  同名项。**这里不写当前数字**：它随每次接线移动，写进来就会过期，而一份
+  过期的数字比没有数字更容易让人得出错误结论；每次批次的实测分布由该批次
+  自己的证据给出（最近一次见
+  `docs/evidence/issue47_history/native-run-batch-30-metrics/measured.json`
+  的 `delivery_by_outcome`）。
+* `unreadable_run_directories` 列出 runs 根目录下 manifest 与自身文件对不上的
+  目录，按名字和理由报告而不是抛出——批次还在写时读该目录必然遇到一个。记录
+  区分两种：OPEN 是正在被写，FROZEN 是这个目录不是它声称的那个 Run。
+  同一原因在更细的粒度上也成立：`NOT_PROVEN:NO_ROW_BUNDLE_BESIDE_THE_RUN`
+  在批次仍在写时可能只是「收据还没写出来」，而不是渲染器拒绝——实测扫到过
+  一个 FROZEN/PASSED/EXACT 但当时没有收据的 Run，稍后重读即存在且被接受。
+
+一个坐标在多个 Requirement 版本下跑过就有多份收据。不给
+`--requirement-closure-hash` 时报 `RUN_RECEIPT_VERSION_AMBIGUOUS`——**由文件名
+决定报哪个版本不是答案**。同一版本内若几份收据记录不同结果，报
+`RUN_RECEIPT_AMBIGUOUS`；若记录同一结果但状态不同（依赖指标的结果会同时记在
+自己的 Run 和消费它的 Run 里），报证据最强的那份并置 `receipt_status_uniform=false`，
+把分歧显示出来而不是吸收掉。
+
+已确认内容有缺陷的结果由 `docs/evidence/issue47_history/known_result_defects.json`
+登记并从当前交付中撤回。坐标级条目只有在其 `released` 块**点名被修复结果的
+`result_id`**（及产生它的 closure）时才停止撤回；`repair_state` 是工作记录，
+不释放任何东西。

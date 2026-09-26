@@ -1,0 +1,498 @@
+{
+ "all_checks_passed": true,
+ "bound_files": {
+  "docs/evidence/issue47_history/model-egress/egress-registration.patch": {
+   "sha256": "1d01f62a7e1e3124641c78f883051316df15ed1a75c6ce3ae0a749d2627825b6",
+   "size": 58166
+  },
+  "docs/evidence/issue47_history/model-egress/verify.py": {
+   "sha256": "e3cb4ad141d13ba3c14fbb54a4df251f249d88485a5bcf8a3ccd53cad8b02d55",
+   "size": 15653
+  },
+  "scripts/vnext/ai_adapter.py": {
+   "sha256": "61b2e0ee4b78d7bfeef9a35db7d6be7cdf838b3aa4ca4a90a4adae743c405b7c",
+   "size": 189950
+  },
+  "scripts/vnext/historical_model_calls.py": {
+   "sha256": "bea4c5c712e5c607ba5cd03e164c125b69c8ffe574a48f0a8d35deb4a0956db4",
+   "size": 39934
+  },
+  "scripts/vnext/historical_model_egress.py": {
+   "sha256": "df5ff915dc80cb1400b8774cb706182d85b5de1000bed44c0c6afcd2fbf97d6f",
+   "size": 17457
+  },
+  "scripts/vnext/invocation_control.py": {
+   "sha256": "b51d93618f9c41b9f2377fe465c65c3081aac1ce0aac1000d9afc7400f1d08a4",
+   "size": 140328
+  },
+  "tests/vnext/test_historical_model_egress.py": {
+   "sha256": "9a96e4adf96853b7eb8a9343defd64b5116e48a002144c98ef3f88e36c18b5ad",
+   "size": 34755
+  },
+  "tools/check_provider_egress.py": {
+   "sha256": "a8c7ca66b4ff9c7ff089dc0a0a504f3471e69300203207e7c4f4d4b3e4e6a3d2",
+   "size": 14654
+  },
+  "tools/vnext_mint_historical_requirement.py": {
+   "sha256": "ea63a7752971207514a3bed3db3958baca158609d33d3576065decb5c763509d",
+   "size": 21754
+  }
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "checks": {
+  "egress_gate_passes": true,
+  "every_injection_caught": true,
+  "every_injection_compiles": true,
+  "patch_is_applied_here": true,
+  "snapshot_minted_for_these_bytes": true,
+  "suite_passes": true,
+  "tree_restored_after_injections": true
+ },
+ "egress_gate": {
+  "egress_capability_references": [
+   "scripts/vnext/ai_adapter.py::_ApprovedTransportAdapter._complete_repository_transport",
+   "scripts/vnext/ai_adapter.py::_InvocationControllerTransport.send",
+   "scripts/vnext/ai_adapter.py::_ScopedInvocationControllerTransport.send",
+   "scripts/vnext/ai_adapter.py::_TableContextMeasurementTransport.send",
+   "scripts/vnext/ai_adapter.py::_open_provider_request",
+   "scripts/vnext/continuous_semantic_calls.py::_Transport.send",
+   "scripts/vnext/historical_model_egress.py::_Transport.send"
+  ],
+  "gate_receipt_id": "sha256:0818d7eb6e058b4d847da361c09ba5240b29b40fc8cbc02aaf4136e27250ffc5",
+  "repository_transport_factories": [
+   "scripts/vnext/ai_adapter.py::_ApprovedTransportAdapter._complete_repository_transport",
+   "scripts/vnext/ai_adapter.py::_ScopedInvocationControllerTransport.send",
+   "scripts/vnext/continuous_semantic_calls.py::_Transport.send",
+   "scripts/vnext/historical_model_egress.py::_Transport.send"
+  ]
+ },
+ "fault_injections": [
+  {
+   "failures": [
+    {
+     "case": "test_one_call_counts_one_provider_and_one_paid",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_one_call_counts_one_provider_and_one_paid"
+   ],
+   "id": "A_REQUEST_MAY_BE_REDRAWN",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_a_slot_without_a_terminal_counts_and_stops",
+     "raised": "+ []"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_a_slot_without_a_terminal_counts_and_stops"
+   ],
+   "id": "A_SLOT_WITHOUT_A_TERMINAL_DOES_NOT_STOP",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_http_402_stops_the_channel",
+     "raised": "+ USAGE_UNKNOWN"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_http_402_stops_the_channel"
+   ],
+   "id": "HTTP_402_DOES_NOT_STOP",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_unknown_usage_stops_the_channel",
+     "raised": "+"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_unknown_usage_stops_the_channel"
+   ],
+   "id": "UNKNOWN_USAGE_DOES_NOT_STOP",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_the_third_call_is_refused_before_a_slot",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_the_third_call_is_refused_before_a_slot"
+   ],
+   "id": "NO_CUMULATIVE_LIMIT",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_a_wider_mapping_than_the_authority_bound_is_refused",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_calls.py",
+   "first_caught_by": [
+    "test_a_wider_mapping_than_the_authority_bound_is_refused"
+   ],
+   "id": "A_CALLERS_ALLOWANCE_IS_TRUSTED",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_the_adapter_hands_bytes_only_to_the_named_type",
+     "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_REQUEST_TYPE_REQUIRED"
+    }
+   ],
+   "file": "scripts/vnext/ai_adapter.py",
+   "first_caught_by": [
+    "test_the_adapter_hands_bytes_only_to_the_named_type"
+   ],
+   "id": "THE_ADAPTER_MATCHES_THE_CLASS_NAME_ONLY",
+   "minted_for_the_injection": true,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (errors=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_a_request_that_stops_rebuilding_never_reaches_the_opener",
+     "raised": "vnext.historical_model_calls.HistoricalModelCallError: ISSUE_47_MODEL_SOURCE_CHANGED"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_egress.py",
+   "first_caught_by": [
+    "test_a_request_that_stops_rebuilding_never_reaches_the_opener"
+   ],
+   "id": "NO_SOURCE_CHECK_AT_THE_SOCKET",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (errors=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_the_approval_is_rechecked_on_github_before_the_socket",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_egress.py",
+   "first_caught_by": [
+    "test_the_approval_is_rechecked_on_github_before_the_socket"
+   ],
+   "id": "NO_GITHUB_RECHECK_BEFORE_THE_SOCKET",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_recorded_bytes_cannot_run_live",
+     "raised": "+ [PosixPath('/tmp/issue47-egress-ivncy1i4/granted-ledger/calls/0001')]"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_egress.py",
+   "first_caught_by": [
+    "test_recorded_bytes_cannot_run_live"
+   ],
+   "id": "RECORDED_BYTES_ARE_ONLY_REFUSED_AFTER_THE_CLAIM",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_the_gate_passes_and_lists_the_one_new_caller",
+     "raised": "check_provider_egress.ProviderEgressGateError: repository transport factory exact set differs"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_egress.py",
+   "first_caught_by": [
+    "test_the_gate_passes_and_lists_the_one_new_caller"
+   ],
+   "id": "A_SECOND_TRANSPORT_CALLER",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (errors=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_every_request_answered_registers_and_a_run_can_read_it",
+     "raised": "+ LIVE"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_egress.py",
+   "first_caught_by": [
+    "test_every_request_answered_registers_and_a_run_can_read_it"
+   ],
+   "id": "REGISTRATION_TAKES_A_MODE_OF_ITS_OWN",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_a_failed_slot_cannot_complete_an_assessment",
+     "raised": "ValueError: D04_NATIVE_RESPONSE_REQUEST_CHANGED"
+    }
+   ],
+   "file": "scripts/vnext/historical_model_egress.py",
+   "first_caught_by": [
+    "test_a_failed_slot_cannot_complete_an_assessment"
+   ],
+   "id": "A_FAILED_SLOT_MAY_BE_REGISTERED",
+   "minted_for_the_injection": false,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (errors=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "setUpClass",
+     "class": "OnlyIssue47sOwnAuthorityReachesTheCallPath",
+     "raised": "vnext.invocation_control.InvocationControlError: Scoped R4 invocation requires a registered R4 revision"
+    }
+   ],
+   "file": "scripts/vnext/invocation_control.py",
+   "first_caught_by": [
+    "setUpClass"
+   ],
+   "id": "THE_CONTROLLER_BRANCH_IS_ABSENT",
+   "minted_for_the_injection": true,
+   "outcome": "CAUGHT_AT_FIXTURE",
+   "suite_result": "FAILED (errors=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_the_third_call_is_refused_before_a_slot",
+     "raised": "vnext.invocation_control.InvocationControlError: estimated cost must be decimal text"
+    }
+   ],
+   "file": "scripts/vnext/invocation_control.py",
+   "first_caught_by": [
+    "test_the_third_call_is_refused_before_a_slot"
+   ],
+   "id": "PLANS_MAY_NOT_KEEP_AN_UNAVAILABLE_PRICE",
+   "minted_for_the_injection": true,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (errors=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_the_gate_passes_and_lists_the_one_new_caller",
+     "raised": "check_provider_egress.ProviderEgressGateError: repository transport factory exact set differs"
+    }
+   ],
+   "file": "tools/check_provider_egress.py",
+   "first_caught_by": [
+    "test_the_gate_passes_and_lists_the_one_new_caller"
+   ],
+   "id": "THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER",
+   "minted_for_the_injection": true,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (errors=1)"
+  },
+  {
+   "failures": [
+    {
+     "case": "test_the_gate_passes_and_lists_the_one_new_caller",
+     "raised": "check_provider_egress.ProviderEgressGateError: egress capability reference exact set differs"
+    }
+   ],
+   "file": "tools/check_provider_egress.py",
+   "first_caught_by": [
+    "test_the_gate_passes_and_lists_the_one_new_caller"
+   ],
+   "id": "THE_GATE_DOES_NOT_LIST_THE_CAPABILITY_REFERENCE",
+   "minted_for_the_injection": true,
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (errors=1)"
+  }
+ ],
+ "generation_manifests_measured": {
+  "ai_first_v3_3_1": {
+   "sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+   "size": 4889
+  },
+  "issue_15_v1": {
+   "sha256": "f6dac7b0c37aeba77e477dfbb3539fa0bc8226b00843ee0e538406aa9911c25f",
+   "size": 6137
+  },
+  "issue_28_v1": {
+   "sha256": "842646de48d78eaedef39603e98078fb3a45812bf74b1ab5bd29d1243bedd624",
+   "size": 20395
+  },
+  "issue_28_v10": {
+   "sha256": "3202e46feb217867aadf5acaf6f5d085f31d6d6ac8e456b253858e943591697f",
+   "size": 41849
+  },
+  "issue_28_v11": {
+   "sha256": "6b596df25e580feb55e20108f4611be8a4443f0f9859a3ba40353e30dfb54b2d",
+   "size": 47442
+  },
+  "issue_28_v12": {
+   "sha256": "0535bb13cb56e79858cf8c3c235e53e581126dec6a2e77a7d17f0e8a8b5e21d2",
+   "size": 51821
+  },
+  "issue_28_v13": {
+   "sha256": "6d8401798ac1c28c0a56c3a9f0f0c99b0ae5954f161cf533f86cb3dc223d39d5",
+   "size": 71809
+  },
+  "issue_28_v14": {
+   "sha256": "d01f2be87dd2d22d44d652719c045847ab4ed6290999bf425346f6a3e5408c37",
+   "size": 87422
+  },
+  "issue_28_v2": {
+   "sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+   "size": 55879
+  },
+  "issue_28_v3": {
+   "sha256": "dc8475bcd0b05e39814f4dcba8b6031d338d54db6b1db9dba5bdd568bfd2d117",
+   "size": 57735
+  },
+  "issue_28_v4": {
+   "sha256": "a1660c0857d805019007b9f10a5a4f8c2a2f96386a17daabaeaf34e2d219d04f",
+   "size": 61173
+  },
+  "issue_28_v5": {
+   "sha256": "757ffd2ec709da2430ca2a81dd79070b31962bc888623957f560689ee9b8f339",
+   "size": 64184
+  },
+  "issue_28_v6": {
+   "sha256": "2d92c3bed871c6b76f007af89dcccc74d130b917192ababd1b19abb5f018db23",
+   "size": 67386
+  },
+  "issue_28_v7": {
+   "sha256": "bcfe57cdb91eea71fddf40e4449ebfde44fc83da8ba22479f47d3034086a59f6",
+   "size": 69074
+  },
+  "issue_28_v8": {
+   "sha256": "1eef33bbf62072a153a276c866bcf822b080b307c67877fa53deeb7a2c7f72c2",
+   "size": 70907
+  },
+  "issue_28_v9": {
+   "sha256": "03968e3496abf355eaf601f6270f4552f4f2b3b0cc0e8f2c71baea73603701c3",
+   "size": 39818
+  },
+  "issue_47_v1": {
+   "sha256": "fcfec21aac96bca20e5d5f9962ae2104e265065c8ff8d6ca6506cf47c5904d4f",
+   "size": 70903
+  }
+ },
+ "generations_that_record_the_boundary_files": {
+  "issue_28_v10": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v11": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v12": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v13": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v14": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v2": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v3": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v4": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v5": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v6": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v7": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v8": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_28_v9": [
+   "scripts/vnext/ai_adapter.py",
+   "scripts/vnext/invocation_control.py",
+   "tools/check_provider_egress.py"
+  ],
+  "issue_47_v1": []
+ },
+ "live_call_authorized": false,
+ "production_authorized": false,
+ "receipt_id": "sha256:5ac39a6c128f9d62d8e6ed3881fe898b22c043fa3d714643a02441abe1bff3dc",
+ "record_type": "ISSUE_47_MODEL_EGRESS_OFFLINE_VERIFICATION",
+ "requirement_id": "issue_47_v1",
+ "suite": {
+  "failed": [],
+  "ran": "Ran 27 tests in 880.592s",
+  "returncode": 0,
+  "summary": "OK"
+ },
+ "what_applying_the_patch_moves": "every generation listed above records these files by bytes; those whose list is non-empty no longer validate their execution authority in a tree with the patch applied, so the patch cannot be applied beside them unchanged"
+}

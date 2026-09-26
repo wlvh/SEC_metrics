@@ -1,0 +1,45 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "record_type": "ISSUE_47_BATCH_VERSION_BINDING",
+ "the_batch": {
+  "read_from": "the manifest of any run directory it produced",
+  "requirement_closure_hash": "sha256:df2f56ff56a8032bd...",
+  "runtime_tree": "/tmp/claude-0/native/runtime, synced before the D02 audit-report rule landed",
+  "scope": "the eleven target periods whose original is saved - every period a batch can attempt today"
+ },
+ "visible_in_the_output": {
+  "not_a_defect_in_the_batch": "it ran the rules it was bound to. A batch that showed 95 items here would mean the runtime tree had drifted from the closure its manifests name.",
+  "so": "the four audit-report blocks the new rule removes are present in this batch's row, which is what a pre-fix closure looks like from the outside. The batch is evidence for the version it ran, not for the current one.",
+  "what": "Pfizer's D02 public row in this batch begins with 'Evaluation of product liability and other product-related litigation' - block 1881, the heading of the auditor's critical audit matter."
+ },
+ "what_changed_in_the_repository_since": {
+  "closure_bound": {
+   "scripts/vnext/historical_text_results.py": {
+    "effect": "a rule file, so the repository now mints a different closure than the batch ran under",
+    "repository": "c6a846711de17bda",
+    "runtime": "f1aa94e7ae091409"
+   }
+  },
+  "not_closure_bound": {
+   "effect": "neither is a rule file, so the report is produced by the current reading layer while the runs it reads were produced under the earlier closure. That is the intended arrangement: a reading fix does not require recomputing what it reads.",
+   "scripts/vnext/historical_coverage.py": {
+    "repository": "72a92b5d12b2207c",
+    "runtime": "025c889134da45f9"
+   },
+   "scripts/vnext/historical_run_receipts.py": {
+    "repository": "938331dd27d743ab",
+    "runtime": "f4a510ea4c882e36"
+   }
+  }
+ },
+ "what_this_batch_is_and_is_not": {
+  "is": "diagnostic and regression evidence for closure sha256:df2f56ff...; the measurement of what an earlier year delivers; and the material the report layer was checked against.",
+  "is_not": "acceptance evidence for the current closure. The D02 rule change needs its own targeted verification - one Pfizer coordinate, not a new batch - once the runtime tree is re-synced."
+ },
+ "why_this_exists": "The review asked that a running batch be saved bound to the version it actually ran, rather than stopped and recomputed every time a report layer problem is found. This records which version that is, in a way a reader can check, before the batch's numbers are reported."
+}

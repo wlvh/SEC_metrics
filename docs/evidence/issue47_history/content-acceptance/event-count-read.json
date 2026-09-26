@@ -1,0 +1,3496 @@
+{
+ "a_question_this_raises_and_does_not_answer": {
+  "what": "the 8-K/A amends the same January event the original 8-K reported - same report date - so C01 counts one leadership change twice.",
+  "what_it_is": "a question about whether the definition answers the metric's own name. That is a correctness standard, not an implementation choice, and the acceptance register says explicitly that it does not establish it.",
+  "why_it_is_not_a_defect_here": "the approved definition for C01 is '来源：8-K Item 5.02。输出事件清单：date、accession、item code、brief', which specifies an event list keyed by accession. One entry per filing carrying the item is what it asks for."
+ },
+ "both_window_bases": "every accepted count is the same under the filing date and the report date, so it does not depend on which reading of the window is taken.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "e01_is_the_one_route_this_cannot_read": {
+  "measured": {
+   "enphase-2025": {
+    "eight_o_one_filings": 0,
+    "published": "0",
+    "read": 0
+   },
+   "ford-2025": {
+    "eight_o_one_filings": 5,
+    "published": "2",
+    "read": 2
+   },
+   "lumen-2025": {
+    "eight_o_one_filings": 8,
+    "published": "7",
+    "read": 8
+   },
+   "macys-2026": {
+    "eight_o_one_filings": 4,
+    "published": "2",
+    "read": 3
+   },
+   "marriott-2025": {
+    "eight_o_one_filings": 2,
+    "published": "0",
+    "read": 2
+   },
+   "pfizer-2025": {
+    "eight_o_one_filings": 3,
+    "published": "0",
+    "read": 1
+   },
+   "southwest-2025": {
+    "eight_o_one_filings": 1,
+    "published": "2",
+    "read": 2
+   }
+  },
+  "why": "it is the only route with a keyword branch, and reading it means reproducing the route's text scoping. brief_source_priority puts the item code first and a primary-document heading second; a scan over every document in the accession matches 'transaction' in almost any exhibit, which over-counts. Six of the seven windows hold an 8.01 filing, so E01 is accepted only for the one that does not."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "per_position": {
+  "enphase-2025": {
+   "company_id": "enphase_energy",
+   "e01_keyword_rule_note": "E01's column is the literal alias rule over every saved document of each 8.01 filing; it is recorded, and E01 is accepted only from e01-eight-o-one-read.json",
+   "eight_ks_in_window": {
+    "filing_date": 6,
+    "report_date": 6
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001463101-25-000111",
+      "filingDate": "2025-10-28",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001463101-25-000099",
+      "filingDate": "2025-07-22",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001463101-25-000090",
+      "filingDate": "2025-06-30",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001463101-25-000075",
+      "filingDate": "2025-05-20",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001463101-25-000054",
+      "filingDate": "2025-04-22",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001463101-25-000014",
+      "filingDate": "2025-02-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001463101-25-000111",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-10-28"
+     },
+     {
+      "accession": "0001463101-25-000099",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-07-22"
+     },
+     {
+      "accession": "0001463101-25-000090",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-06-30"
+     },
+     {
+      "accession": "0001463101-25-000075",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ],
+      "reportDate": "2025-05-14"
+     },
+     {
+      "accession": "0001463101-25-000054",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-04-22"
+     },
+     {
+      "accession": "0001463101-25-000014",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-02-04"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 1,
+     "by_report_date": 1,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:1d8c6b6d675bbe0e1f0658ef4e23ae1ed0437ca56c776aeed4704500b521b94c",
+       "run_id": "run:historical-period:db385a8d979ed0f1b9904f66caffd598d834b5b448659aa3bd7212581e42e502"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-25-000014",
+       "0001463101-25-000054",
+       "0001463101-25-000075",
+       "0001463101-25-000090",
+       "0001463101-25-000099",
+       "0001463101-25-000111"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "1",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:d2ecc051ffc5278ea7a2b2e9c6f10ad3365474425863c15b06e6177696168879",
+       "run_id": "run:historical-period:a45c81628a9c4a509fc7a0b3694eb5a70a8eab0631b36c3b1c84a2a359597f2c"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-25-000014",
+       "0001463101-25-000054",
+       "0001463101-25-000075",
+       "0001463101-25-000090",
+       "0001463101-25-000099",
+       "0001463101-25-000111"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+      "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:71e8d2d47648a91c2134015d3782dc453798db142d614150448040408daa6527",
+       "run_id": "run:historical-period:422de1328f1df3fa0354cc8bb246aad732f91c91bf5f72d282bd7424efbfe359"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-25-000014",
+       "0001463101-25-000054",
+       "0001463101-25-000075",
+       "0001463101-25-000090",
+       "0001463101-25-000099",
+       "0001463101-25-000111"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6ca42aef435dde02b451c1aa3d0afaf984858fdae962da02b1ad877cbb4f8c23",
+      "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 1,
+     "by_report_date": 1,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:51aa334fe4d5cd14abf592b16a3200c8e76bbd4494b49e9fd12fa9fb479a2542",
+       "run_id": "run:historical-period:5cdd04785102de37b90218584cac2b1802c047c9838343ede70b4fd567eca27f"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-25-000014",
+       "0001463101-25-000054",
+       "0001463101-25-000075",
+       "0001463101-25-000090",
+       "0001463101-25-000099",
+       "0001463101-25-000111"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "1",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:0e7f3d6e2ecb6cd1948fe8366028060778f6eb40f33d71918d20454cd98bc5e6",
+       "run_id": "run:historical-period:64a4409b2137dd7c2d4e0ef4d8b615de29414a00bcd1c212a81ad6ea1479156b"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-25-000014",
+       "0001463101-25-000054",
+       "0001463101-25-000075",
+       "0001463101-25-000090",
+       "0001463101-25-000099",
+       "0001463101-25-000111"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:0d029fe3b4e3fa5a6aa6047ec69804c5acba0e42f29514fe5b0f382395aff828",
+      "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:923c4c857e139a79b4116ea261dd40ba3a0024ba37ffd0993d531234e2918fa3",
+       "run_id": "run:historical-period:3b74203682414a9c299873d3c4125f5f452c97486d559da854401a6b46117cec"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001463101-25-000014",
+       "0001463101-25-000054",
+       "0001463101-25-000075",
+       "0001463101-25-000090",
+       "0001463101-25-000099",
+       "0001463101-25-000111"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6b232d81c480ca18f6035fadb7b13fb12f12a55152029919627f82b6b872e7b9",
+      "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "submissions_index": "evidence/request_attempts/75/750c9c99aa82c68b27f878636c61a86a4a5650f916c896038767366b47091f41/CIK0001463101.json",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  },
+  "ford-2025": {
+   "company_id": "ford_motor_company",
+   "e01_keyword_rule_note": "E01's column is the literal alias rule over every saved document of each 8.01 filing; it is recorded, and E01 is accepted only from e01-eight-o-one-read.json",
+   "eight_ks_in_window": {
+    "filing_date": 17,
+    "report_date": 17
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000037996-25-000238",
+      "filingDate": "2025-12-15",
+      "items": [
+       "2.06",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000236",
+      "filingDate": "2025-12-12",
+      "items": [
+       "5.02",
+       "5.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000210",
+      "filingDate": "2025-11-21",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000185",
+      "filingDate": "2025-10-23",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000175",
+      "filingDate": "2025-10-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000146",
+      "filingDate": "2025-07-30",
+      "items": [
+       "2.02",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000143",
+      "filingDate": "2025-07-28",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000141",
+      "filingDate": "2025-07-16",
+      "items": [
+       "7.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000139",
+      "filingDate": "2025-07-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000074",
+      "filingDate": "2025-05-13",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000071",
+      "filingDate": "2025-05-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000067",
+      "filingDate": "2025-04-17",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000065",
+      "filingDate": "2025-04-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000011",
+      "filingDate": "2025-02-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000009",
+      "filingDate": "2025-02-05",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000006",
+      "filingDate": "2025-01-23",
+      "items": [
+       "7.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000002",
+      "filingDate": "2025-01-03",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000037996-25-000238",
+      "items": [
+       "2.06",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-09"
+     },
+     {
+      "accession": "0000037996-25-000236",
+      "items": [
+       "5.02",
+       "5.03",
+       "9.01"
+      ],
+      "reportDate": "2025-12-11"
+     },
+     {
+      "accession": "0000037996-25-000210",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-11-21"
+     },
+     {
+      "accession": "0000037996-25-000185",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-10-23"
+     },
+     {
+      "accession": "0000037996-25-000175",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-10-01"
+     },
+     {
+      "accession": "0000037996-25-000146",
+      "items": [
+       "2.02",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-30"
+     },
+     {
+      "accession": "0000037996-25-000143",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "reportDate": "2025-07-28"
+     },
+     {
+      "accession": "0000037996-25-000141",
+      "items": [
+       "7.01"
+      ],
+      "reportDate": "2025-07-16"
+     },
+     {
+      "accession": "0000037996-25-000139",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-01"
+     },
+     {
+      "accession": "0000037996-25-000074",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ],
+      "reportDate": "2025-05-07"
+     },
+     {
+      "accession": "0000037996-25-000071",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-05-05"
+     },
+     {
+      "accession": "0000037996-25-000067",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "reportDate": "2025-04-17"
+     },
+     {
+      "accession": "0000037996-25-000065",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-04-01"
+     },
+     {
+      "accession": "0000037996-25-000011",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-02-05"
+     },
+     {
+      "accession": "0000037996-25-000009",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-05"
+     },
+     {
+      "accession": "0000037996-25-000006",
+      "items": [
+       "7.01"
+      ],
+      "reportDate": "2025-01-23"
+     },
+     {
+      "accession": "0000037996-25-000002",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-01-03"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 3,
+     "by_report_date": 3,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:131cee5746771a6035bf4132fdde1d2ab74aecee76c23f121c12058d99fcdc8e",
+       "run_id": "run:historical-period:00bdd17f12388e885bba57ee44cb2b46745c003a2ff379d1d9a16fccee0e45fe"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-25-000002",
+       "0000037996-25-000006",
+       "0000037996-25-000009",
+       "0000037996-25-000011",
+       "0000037996-25-000065",
+       "0000037996-25-000067",
+       "0000037996-25-000071",
+       "0000037996-25-000074",
+       "0000037996-25-000139",
+       "0000037996-25-000141",
+       "0000037996-25-000143",
+       "0000037996-25-000146",
+       "0000037996-25-000175",
+       "0000037996-25-000185",
+       "0000037996-25-000210",
+       "0000037996-25-000236",
+       "0000037996-25-000238"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "3",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:ad429204f625d04682026883564e86d95e1e1fbd00d137677b1d2da279dd721c",
+       "run_id": "run:historical-period:33090d0eaea404e183697f7992855098219284cfdb88fc48f23c7b057f7b27e5"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-25-000002",
+       "0000037996-25-000006",
+       "0000037996-25-000009",
+       "0000037996-25-000011",
+       "0000037996-25-000065",
+       "0000037996-25-000067",
+       "0000037996-25-000071",
+       "0000037996-25-000074",
+       "0000037996-25-000139",
+       "0000037996-25-000141",
+       "0000037996-25-000143",
+       "0000037996-25-000146",
+       "0000037996-25-000175",
+       "0000037996-25-000185",
+       "0000037996-25-000210",
+       "0000037996-25-000236",
+       "0000037996-25-000238"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+      "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:24a77dbd5e0cb87fe3cc36a9f71ef2b7e03e7d4b5244bd908905c2268c47ea9d",
+       "run_id": "run:historical-period:15300f195e3174dd8f02956ff43b36ef34bb2df41b2bd44dd72ed60bf4329251"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-25-000002",
+       "0000037996-25-000006",
+       "0000037996-25-000009",
+       "0000037996-25-000011",
+       "0000037996-25-000065",
+       "0000037996-25-000067",
+       "0000037996-25-000071",
+       "0000037996-25-000074",
+       "0000037996-25-000139",
+       "0000037996-25-000141",
+       "0000037996-25-000143",
+       "0000037996-25-000146",
+       "0000037996-25-000175",
+       "0000037996-25-000185",
+       "0000037996-25-000210",
+       "0000037996-25-000236",
+       "0000037996-25-000238"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6ca42aef435dde02b451c1aa3d0afaf984858fdae962da02b1ad877cbb4f8c23",
+      "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 3,
+     "by_report_date": 3,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:484d0279a7bc58af01eb27f2721f002fe3550a2817a27b3f0c1aa3b54f790394",
+       "run_id": "run:historical-period:39459b4659c1246cc71138be304031f14794657870385760cd12299db73145b3"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-25-000002",
+       "0000037996-25-000006",
+       "0000037996-25-000009",
+       "0000037996-25-000011",
+       "0000037996-25-000065",
+       "0000037996-25-000067",
+       "0000037996-25-000071",
+       "0000037996-25-000074",
+       "0000037996-25-000139",
+       "0000037996-25-000141",
+       "0000037996-25-000143",
+       "0000037996-25-000146",
+       "0000037996-25-000175",
+       "0000037996-25-000185",
+       "0000037996-25-000210",
+       "0000037996-25-000236",
+       "0000037996-25-000238"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "3",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:a0223bf37f97872936021b3ac4b32feaea5f1178dc297507e1fb801dc44b35db",
+       "run_id": "run:historical-period:d1fd788cfe58c223743fa25e5e9eb9c9d267d36afaf42fa2b9c168f0bc0cd274"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-25-000002",
+       "0000037996-25-000006",
+       "0000037996-25-000009",
+       "0000037996-25-000011",
+       "0000037996-25-000065",
+       "0000037996-25-000067",
+       "0000037996-25-000071",
+       "0000037996-25-000074",
+       "0000037996-25-000139",
+       "0000037996-25-000141",
+       "0000037996-25-000143",
+       "0000037996-25-000146",
+       "0000037996-25-000175",
+       "0000037996-25-000185",
+       "0000037996-25-000210",
+       "0000037996-25-000236",
+       "0000037996-25-000238"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:0d029fe3b4e3fa5a6aa6047ec69804c5acba0e42f29514fe5b0f382395aff828",
+      "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:5947abbb4e7172fdc491efd96c0c3bd192547478f8479043109c54ac83f64275",
+       "run_id": "run:historical-period:fc0145d0ba502a09c328da86fed75259a0f541c533bd47b0c9a601fa16c8e027"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000037996-25-000002",
+       "0000037996-25-000006",
+       "0000037996-25-000009",
+       "0000037996-25-000011",
+       "0000037996-25-000065",
+       "0000037996-25-000067",
+       "0000037996-25-000071",
+       "0000037996-25-000074",
+       "0000037996-25-000139",
+       "0000037996-25-000141",
+       "0000037996-25-000143",
+       "0000037996-25-000146",
+       "0000037996-25-000175",
+       "0000037996-25-000185",
+       "0000037996-25-000210",
+       "0000037996-25-000236",
+       "0000037996-25-000238"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6b232d81c480ca18f6035fadb7b13fb12f12a55152029919627f82b6b872e7b9",
+      "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "submissions_index": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  },
+  "lumen-2025": {
+   "company_id": "lumen_technologies",
+   "e01_keyword_rule_note": "E01's column is the literal alias rule over every saved document of each 8.01 filing; it is recorded, and E01 is accepted only from e01-eight-o-one-read.json",
+   "eight_ks_in_window": {
+    "filing_date": 19,
+    "report_date": 19
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001193125-25-330850",
+      "filingDate": "2025-12-23",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-327637",
+      "filingDate": "2025-12-22",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-311581",
+      "filingDate": "2025-12-09",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-308717",
+      "filingDate": "2025-12-05",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000110",
+      "filingDate": "2025-10-30",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-223206",
+      "filingDate": "2025-09-29",
+      "items": [
+       "1.01",
+       "2.03",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-203545",
+      "filingDate": "2025-09-15",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0001193125-25-198334",
+      "filingDate": "2025-09-08",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-196061",
+      "filingDate": "2025-09-04",
+      "items": [
+       "7.01",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-182730",
+      "filingDate": "2025-08-18",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-172843",
+      "filingDate": "2025-08-05",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000092",
+      "filingDate": "2025-07-31",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-152683",
+      "filingDate": "2025-06-30",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-141702",
+      "filingDate": "2025-06-17",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-124002",
+      "filingDate": "2025-05-21",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000059",
+      "filingDate": "2025-05-15",
+      "items": [
+       "5.07",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000047",
+      "filingDate": "2025-05-01",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000039",
+      "filingDate": "2025-04-02",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000004",
+      "filingDate": "2025-02-04",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001193125-25-330850",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-23"
+     },
+     {
+      "accession": "0001193125-25-327637",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-22"
+     },
+     {
+      "accession": "0001193125-25-311581",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-08"
+     },
+     {
+      "accession": "0001193125-25-308717",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-12-01"
+     },
+     {
+      "accession": "0000018926-25-000110",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-10-30"
+     },
+     {
+      "accession": "0001193125-25-223206",
+      "items": [
+       "1.01",
+       "2.03",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-09-29"
+     },
+     {
+      "accession": "0001193125-25-203545",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-09-09"
+     },
+     {
+      "accession": "0001193125-25-198334",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "reportDate": "2025-09-08"
+     },
+     {
+      "accession": "0001193125-25-196061",
+      "items": [
+       "7.01",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-09-04"
+     },
+     {
+      "accession": "0001193125-25-182730",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-08-18"
+     },
+     {
+      "accession": "0001193125-25-172843",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-08-04"
+     },
+     {
+      "accession": "0000018926-25-000092",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-31"
+     },
+     {
+      "accession": "0001193125-25-152683",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-06-30"
+     },
+     {
+      "accession": "0001193125-25-141702",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-06-16"
+     },
+     {
+      "accession": "0001193125-25-124002",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-05-21"
+     },
+     {
+      "accession": "0000018926-25-000059",
+      "items": [
+       "5.07",
+       "9.01"
+      ],
+      "reportDate": "2025-05-13"
+     },
+     {
+      "accession": "0000018926-25-000047",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-05-01"
+     },
+     {
+      "accession": "0000018926-25-000039",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "reportDate": "2025-03-27"
+     },
+     {
+      "accession": "0000018926-25-000004",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-04"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:ee481300b4c568832a61a74c2c156571d208b8cd50cdc6db257d6d5095138363",
+       "run_id": "run:historical-period:a847ed41e6400955676572543e88143c172321a9666525230cd01f70c5697738"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-25-000004",
+       "0000018926-25-000039",
+       "0000018926-25-000047",
+       "0000018926-25-000059",
+       "0000018926-25-000092",
+       "0000018926-25-000110",
+       "0001193125-25-124002",
+       "0001193125-25-141702",
+       "0001193125-25-152683",
+       "0001193125-25-172843",
+       "0001193125-25-182730",
+       "0001193125-25-196061",
+       "0001193125-25-198334",
+       "0001193125-25-203545",
+       "0001193125-25-223206",
+       "0001193125-25-308717",
+       "0001193125-25-311581",
+       "0001193125-25-327637",
+       "0001193125-25-330850"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 8,
+     "by_report_date": 8,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:21824ee7aae2ebbaa80673d394e62e897e18e66566c728d4c1c558692d56a037",
+       "run_id": "run:historical-period:2469ecb55223e5205c6bd267d916fb50fffc5fc946933ac5b7de1d8bd2bbc605"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-25-000004",
+       "0000018926-25-000039",
+       "0000018926-25-000047",
+       "0000018926-25-000059",
+       "0000018926-25-000092",
+       "0000018926-25-000110",
+       "0001193125-25-124002",
+       "0001193125-25-141702",
+       "0001193125-25-152683",
+       "0001193125-25-172843",
+       "0001193125-25-182730",
+       "0001193125-25-196061",
+       "0001193125-25-198334",
+       "0001193125-25-203545",
+       "0001193125-25-223206",
+       "0001193125-25-308717",
+       "0001193125-25-311581",
+       "0001193125-25-327637",
+       "0001193125-25-330850"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+      "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "7",
+     "verdict": "DIFFERS"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:c589a9dc1ef8fbfa8d8b08918ae64f52f937e177278a467995f40caee5abd6be",
+       "run_id": "run:historical-period:dfa71f1e21c77799959687833ee7b4148eb556ab5d85d49e322ad874fb0a53f9"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-25-000004",
+       "0000018926-25-000039",
+       "0000018926-25-000047",
+       "0000018926-25-000059",
+       "0000018926-25-000092",
+       "0000018926-25-000110",
+       "0001193125-25-124002",
+       "0001193125-25-141702",
+       "0001193125-25-152683",
+       "0001193125-25-172843",
+       "0001193125-25-182730",
+       "0001193125-25-196061",
+       "0001193125-25-198334",
+       "0001193125-25-203545",
+       "0001193125-25-223206",
+       "0001193125-25-308717",
+       "0001193125-25-311581",
+       "0001193125-25-327637",
+       "0001193125-25-330850"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6ca42aef435dde02b451c1aa3d0afaf984858fdae962da02b1ad877cbb4f8c23",
+      "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:0e6e051e066c1c94102b91432724e6c358614627625c72c29f58fac81ba7758d",
+       "run_id": "run:historical-period:293595cc8dc83ab8279cfbe098320c4b615ee12ff4f9508c58d9d14ba55082ba"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-25-000004",
+       "0000018926-25-000039",
+       "0000018926-25-000047",
+       "0000018926-25-000059",
+       "0000018926-25-000092",
+       "0000018926-25-000110",
+       "0001193125-25-124002",
+       "0001193125-25-141702",
+       "0001193125-25-152683",
+       "0001193125-25-172843",
+       "0001193125-25-182730",
+       "0001193125-25-196061",
+       "0001193125-25-198334",
+       "0001193125-25-203545",
+       "0001193125-25-223206",
+       "0001193125-25-308717",
+       "0001193125-25-311581",
+       "0001193125-25-327637",
+       "0001193125-25-330850"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:a720b60268372ff33a7718a431b39ae240f208bf23ee180472ea9b10a1411ca6",
+       "run_id": "run:historical-period:a8e9ff530fc1b0c7057c54fd02f6de013dae4d4740f9d57aee50d859d0e71483"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-25-000004",
+       "0000018926-25-000039",
+       "0000018926-25-000047",
+       "0000018926-25-000059",
+       "0000018926-25-000092",
+       "0000018926-25-000110",
+       "0001193125-25-124002",
+       "0001193125-25-141702",
+       "0001193125-25-152683",
+       "0001193125-25-172843",
+       "0001193125-25-182730",
+       "0001193125-25-196061",
+       "0001193125-25-198334",
+       "0001193125-25-203545",
+       "0001193125-25-223206",
+       "0001193125-25-308717",
+       "0001193125-25-311581",
+       "0001193125-25-327637",
+       "0001193125-25-330850"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:0d029fe3b4e3fa5a6aa6047ec69804c5acba0e42f29514fe5b0f382395aff828",
+      "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 7,
+     "by_report_date": 7,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:757571efce528f0ca2c813ceb40e803acf676789562b7f5408325d6aac7e3ed4",
+       "run_id": "run:historical-period:864cfcbc66a6317d97ef5f10000d9ace0c1d63f5abdea680f4c6429751d6c0c3"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000018926-25-000004",
+       "0000018926-25-000039",
+       "0000018926-25-000047",
+       "0000018926-25-000059",
+       "0000018926-25-000092",
+       "0000018926-25-000110",
+       "0001193125-25-124002",
+       "0001193125-25-141702",
+       "0001193125-25-152683",
+       "0001193125-25-172843",
+       "0001193125-25-182730",
+       "0001193125-25-196061",
+       "0001193125-25-198334",
+       "0001193125-25-203545",
+       "0001193125-25-223206",
+       "0001193125-25-308717",
+       "0001193125-25-311581",
+       "0001193125-25-327637",
+       "0001193125-25-330850"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6b232d81c480ca18f6035fadb7b13fb12f12a55152029919627f82b6b872e7b9",
+      "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "7",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "submissions_index": "evidence/request_attempts/4a/4a4759ce43286c10a8d620b980f85f88044645829b52317d78aef433789a3520/CIK0000018926.json",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  },
+  "macys-2026": {
+   "company_id": "macys",
+   "e01_keyword_rule_note": "E01's column is the literal alias rule over every saved document of each 8.01 filing; it is recorded, and E01 is accepted only from e01-eight-o-one-read.json",
+   "eight_ks_in_window": {
+    "filing_date": 13,
+    "report_date": 13
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000794367-25-000169",
+      "filingDate": "2025-12-12",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000165",
+      "filingDate": "2025-12-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-054900",
+      "filingDate": "2025-12-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000139",
+      "filingDate": "2025-09-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000137",
+      "filingDate": "2025-07-29",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000132",
+      "filingDate": "2025-07-14",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000128",
+      "filingDate": "2025-07-14",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-028040",
+      "filingDate": "2025-05-28",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000092",
+      "filingDate": "2025-05-20",
+      "items": [
+       "5.07"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000087",
+      "filingDate": "2025-04-09",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000054",
+      "filingDate": "2025-04-01",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-010767",
+      "filingDate": "2025-03-06",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000010",
+      "filingDate": "2025-02-28",
+      "items": [
+       "8.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000794367-25-000169",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-12-08"
+     },
+     {
+      "accession": "0000794367-25-000165",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-12-03"
+     },
+     {
+      "accession": "0001628280-25-054900",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-12-03"
+     },
+     {
+      "accession": "0000794367-25-000139",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-09-03"
+     },
+     {
+      "accession": "0000794367-25-000137",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-28"
+     },
+     {
+      "accession": "0000794367-25-000132",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-14"
+     },
+     {
+      "accession": "0000794367-25-000128",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-14"
+     },
+     {
+      "accession": "0001628280-25-028040",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-05-28"
+     },
+     {
+      "accession": "0000794367-25-000092",
+      "items": [
+       "5.07"
+      ],
+      "reportDate": "2025-05-16"
+     },
+     {
+      "accession": "0000794367-25-000087",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "reportDate": "2025-04-09"
+     },
+     {
+      "accession": "0000794367-25-000054",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-04-01"
+     },
+     {
+      "accession": "0001628280-25-010767",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-03-06"
+     },
+     {
+      "accession": "0000794367-25-000010",
+      "items": [
+       "8.01"
+      ],
+      "reportDate": "2025-02-28"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:2f7c44fd52bc881b72bd7c892c2f64a8a06e088ec8b89e3bf41b3f95a7def057",
+       "run_id": "run:historical-period:c4caef67283e271a035a7b59915d5bbda5fa2164bf4a4ee5d03ffca42f06d2e7"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000794367-25-000010",
+       "0000794367-25-000054",
+       "0000794367-25-000087",
+       "0000794367-25-000092",
+       "0000794367-25-000128",
+       "0000794367-25-000132",
+       "0000794367-25-000137",
+       "0000794367-25-000139",
+       "0000794367-25-000165",
+       "0000794367-25-000169",
+       "0001628280-25-010767",
+       "0001628280-25-028040",
+       "0001628280-25-054900"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 3,
+     "by_report_date": 3,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:ba457ef857aa34408be5d12097ac734c0f44baf3ceaf20a9498a2af969c3c111",
+       "run_id": "run:historical-period:5c5b0873f906205ed3fa47d3fce139f72b1044963a8f1ecf83af1f3ca679bef6"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000794367-25-000010",
+       "0000794367-25-000054",
+       "0000794367-25-000087",
+       "0000794367-25-000092",
+       "0000794367-25-000128",
+       "0000794367-25-000132",
+       "0000794367-25-000137",
+       "0000794367-25-000139",
+       "0000794367-25-000165",
+       "0000794367-25-000169",
+       "0001628280-25-010767",
+       "0001628280-25-028040",
+       "0001628280-25-054900"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+      "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "DIFFERS"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:73fbecc8287b04daa5d48d2564125a7a292ffecb07588c569c2e387b24f5796f",
+       "run_id": "run:historical-period:6acdf0f6c6e9df9dc2c69c2c9accb359e23e9c91c16345050a81804894cf6554"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000794367-25-000010",
+       "0000794367-25-000054",
+       "0000794367-25-000087",
+       "0000794367-25-000092",
+       "0000794367-25-000128",
+       "0000794367-25-000132",
+       "0000794367-25-000137",
+       "0000794367-25-000139",
+       "0000794367-25-000165",
+       "0000794367-25-000169",
+       "0001628280-25-010767",
+       "0001628280-25-028040",
+       "0001628280-25-054900"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:6ca42aef435dde02b451c1aa3d0afaf984858fdae962da02b1ad877cbb4f8c23",
+      "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:6490ef582b57925692c6d0af37c2fa23370d1c54d0bfa5d9b917bab4068fc2fc",
+       "run_id": "run:historical-period:e3942aa0e77f494c460a5dc17822d96665f6de350a67e817ed89e256260391f3"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000794367-25-000010",
+       "0000794367-25-000054",
+       "0000794367-25-000087",
+       "0000794367-25-000092",
+       "0000794367-25-000128",
+       "0000794367-25-000132",
+       "0000794367-25-000137",
+       "0000794367-25-000139",
+       "0000794367-25-000165",
+       "0000794367-25-000169",
+       "0001628280-25-010767",
+       "0001628280-25-028040",
+       "0001628280-25-054900"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:32994bc982055dd5e4a767f13f03b0b57cb750560a63da7f533643e2c2293dd7",
+       "run_id": "run:historical-period:0ed8979fe0393a7eeb41d93882c5191314fae66771a1150b1d60467ddc2aae64"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000794367-25-000010",
+       "0000794367-25-000054",
+       "0000794367-25-000087",
+       "0000794367-25-000092",
+       "0000794367-25-000128",
+       "0000794367-25-000132",
+       "0000794367-25-000137",
+       "0000794367-25-000139",
+       "0000794367-25-000165",
+       "0000794367-25-000169",
+       "0001628280-25-010767",
+       "0001628280-25-028040",
+       "0001628280-25-054900"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:0d029fe3b4e3fa5a6aa6047ec69804c5acba0e42f29514fe5b0f382395aff828",
+      "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:a61b78c7a73bf33640b3923edf1e3527a055a145402f6b16ccf77a030bfa13dc",
+       "run_id": "run:historical-period:ffa8b6d2c6a326dbbc66fc4c3bcfda58b4e9e0ca6682e44e98dba1f29379374d"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000794367-25-000010",
+       "0000794367-25-000054",
+       "0000794367-25-000087",
+       "0000794367-25-000092",
+       "0000794367-25-000128",
+       "0000794367-25-000132",
+       "0000794367-25-000137",
+       "0000794367-25-000139",
+       "0000794367-25-000165",
+       "0000794367-25-000169",
+       "0001628280-25-010767",
+       "0001628280-25-028040",
+       "0001628280-25-054900"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-02",
+      "scope_key": "sha256:6b232d81c480ca18f6035fadb7b13fb12f12a55152029919627f82b6b872e7b9",
+      "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "submissions_index": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json",
+   "window": [
+    "2025-02-02",
+    "2026-01-31"
+   ]
+  },
+  "marriott-2025": {
+   "company_id": "marriott_international",
+   "e01_keyword_rule_note": "E01's column is the literal alias rule over every saved document of each 8.01 filing; it is recorded, and E01 is accepted only from e01-eight-o-one-read.json",
+   "eight_ks_in_window": {
+    "filing_date": 10,
+    "report_date": 10
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001048286-25-000011",
+      "filingDate": "2025-11-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-184082",
+      "filingDate": "2025-08-20",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-037592",
+      "filingDate": "2025-08-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-158742",
+      "filingDate": "2025-07-14",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-118861",
+      "filingDate": "2025-05-13",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0001193125-25-118853",
+      "filingDate": "2025-05-13",
+      "items": [
+       "5.07"
+      ]
+     },
+     {
+      "accession": "0001628280-25-022390",
+      "filingDate": "2025-05-06",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-036732",
+      "filingDate": "2025-02-26",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-004772",
+      "filingDate": "2025-02-11",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-009110",
+      "filingDate": "2025-01-21",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001048286-25-000011",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-11-04"
+     },
+     {
+      "accession": "0001193125-25-184082",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-08-18"
+     },
+     {
+      "accession": "0001628280-25-037592",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-08-05"
+     },
+     {
+      "accession": "0001193125-25-158742",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-11"
+     },
+     {
+      "accession": "0001193125-25-118861",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-01-17"
+     },
+     {
+      "accession": "0001193125-25-118853",
+      "items": [
+       "5.07"
+      ],
+      "reportDate": "2025-05-09"
+     },
+     {
+      "accession": "0001628280-25-022390",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-05-06"
+     },
+     {
+      "accession": "0001193125-25-036732",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-24"
+     },
+     {
+      "accession": "0001628280-25-004772",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-02-11"
+     },
+     {
+      "accession": "0001193125-25-009110",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-01-17"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 3,
+     "by_report_date": 3,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+       "run_id": "run:historical-period:d0cdaa8c54a999fa369cbd04b464e97d7b66be9b876a9de1faf9c23a87093950"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-25-000011",
+       "0001193125-25-009110",
+       "0001193125-25-036732",
+       "0001193125-25-118853",
+       "0001193125-25-118861",
+       "0001193125-25-158742",
+       "0001193125-25-184082",
+       "0001628280-25-004772",
+       "0001628280-25-022390",
+       "0001628280-25-037592"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "3",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:1870c574ee0054b417f735a1d89c87e8eb18b9dedcc98a0ea9214ba2f76cbc66",
+       "run_id": "run:historical-period:622de2ca9abb1cf57ef7c4580b1ee2211a9de05caa03317275db2165a985fb71"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-25-000011",
+       "0001193125-25-009110",
+       "0001193125-25-036732",
+       "0001193125-25-118853",
+       "0001193125-25-118861",
+       "0001193125-25-158742",
+       "0001193125-25-184082",
+       "0001628280-25-004772",
+       "0001628280-25-022390",
+       "0001628280-25-037592"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+      "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "DIFFERS"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:c6d1db93d6de3daa1e6b3d7e48f00677837d7f8654d31014f3670ee79d0f59f7",
+       "run_id": "run:historical-period:2f6f6d5b913423bfd5f7993c3cc83f3356d69d9a8bb98c35982b99f4c0169e60"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-25-000011",
+       "0001193125-25-009110",
+       "0001193125-25-036732",
+       "0001193125-25-118853",
+       "0001193125-25-118861",
+       "0001193125-25-158742",
+       "0001193125-25-184082",
+       "0001628280-25-004772",
+       "0001628280-25-022390",
+       "0001628280-25-037592"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6ca42aef435dde02b451c1aa3d0afaf984858fdae962da02b1ad877cbb4f8c23",
+      "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 3,
+     "by_report_date": 3,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:194c54dd2b71af9c94019b454a3f4a4cce97e440ea0ba7e71934171a9e1c00fc",
+       "run_id": "run:historical-period:ff7c73b2660e41194d8b94e7989507098d372982aabbd1cf5348b7af149143bd"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-25-000011",
+       "0001193125-25-009110",
+       "0001193125-25-036732",
+       "0001193125-25-118853",
+       "0001193125-25-118861",
+       "0001193125-25-158742",
+       "0001193125-25-184082",
+       "0001628280-25-004772",
+       "0001628280-25-022390",
+       "0001628280-25-037592"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "3",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:7d9fa3c8ac95b52aee2d9661961c45891240fdc69a233edbcdb061b106dd3e5d",
+       "run_id": "run:historical-period:1b3796fc686df0c5560934b7bdd6c6ccf5db2f197345174c29bc5eb1076c2c10"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-25-000011",
+       "0001193125-25-009110",
+       "0001193125-25-036732",
+       "0001193125-25-118853",
+       "0001193125-25-118861",
+       "0001193125-25-158742",
+       "0001193125-25-184082",
+       "0001628280-25-004772",
+       "0001628280-25-022390",
+       "0001628280-25-037592"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:0d029fe3b4e3fa5a6aa6047ec69804c5acba0e42f29514fe5b0f382395aff828",
+      "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:6a205f117a3b49cb89126cad1b9c7b6e719c926653601663561dba0e8981d554",
+       "run_id": "run:historical-period:b9e1c5a5633dc2032021a3cda1bcff4d5905da783159f3c51afd330b8e438e5e"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001048286-25-000011",
+       "0001193125-25-009110",
+       "0001193125-25-036732",
+       "0001193125-25-118853",
+       "0001193125-25-118861",
+       "0001193125-25-158742",
+       "0001193125-25-184082",
+       "0001628280-25-004772",
+       "0001628280-25-022390",
+       "0001628280-25-037592"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6b232d81c480ca18f6035fadb7b13fb12f12a55152029919627f82b6b872e7b9",
+      "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "submissions_index": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  },
+  "pfizer-2025": {
+   "company_id": "pfizer",
+   "e01_keyword_rule_note": "E01's column is the literal alias rule over every saved document of each 8.01 filing; it is recorded, and E01 is accepted only from e01-eight-o-one-read.json",
+   "eight_ks_in_window": {
+    "filing_date": 9,
+    "report_date": 9
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000078003-25-000167",
+      "filingDate": "2025-12-16",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-291406",
+      "filingDate": "2025-11-21",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000159",
+      "filingDate": "2025-11-13",
+      "items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000149",
+      "filingDate": "2025-11-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000136",
+      "filingDate": "2025-08-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-122480",
+      "filingDate": "2025-05-19",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000111",
+      "filingDate": "2025-04-29",
+      "items": [
+       "2.02",
+       "2.05",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000109",
+      "filingDate": "2025-04-28",
+      "items": [
+       "5.07"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000017",
+      "filingDate": "2025-02-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000078003-25-000167",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-16"
+     },
+     {
+      "accession": "0001193125-25-291406",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-11-18"
+     },
+     {
+      "accession": "0000078003-25-000159",
+      "items": [
+       "8.01"
+      ],
+      "reportDate": "2025-11-13"
+     },
+     {
+      "accession": "0000078003-25-000149",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-11-04"
+     },
+     {
+      "accession": "0000078003-25-000136",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-08-05"
+     },
+     {
+      "accession": "0001193125-25-122480",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-05-14"
+     },
+     {
+      "accession": "0000078003-25-000111",
+      "items": [
+       "2.02",
+       "2.05",
+       "9.01"
+      ],
+      "reportDate": "2025-04-29"
+     },
+     {
+      "accession": "0000078003-25-000109",
+      "items": [
+       "5.07"
+      ],
+      "reportDate": "2025-04-24"
+     },
+     {
+      "accession": "0000078003-25-000017",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-02-04"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:a609ba9cace7fb83b07dabbaf3493e3a60bc58bdb20ecb6716fba5607dbd0014",
+       "run_id": "run:historical-period:4a87f0b85ad66835efd71c72ff63364252089938ad4ea17f4c3b4d632bc7e19a"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-25-000017",
+       "0000078003-25-000109",
+       "0000078003-25-000111",
+       "0000078003-25-000136",
+       "0000078003-25-000149",
+       "0000078003-25-000159",
+       "0000078003-25-000167",
+       "0001193125-25-122480",
+       "0001193125-25-291406"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 1,
+     "by_report_date": 1,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1",
+       "run_id": "run:historical-period:9ea9765a3c2240825529526a72a63f215a22d67b1dfcf43d85a3364a5a100f76"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-25-000017",
+       "0000078003-25-000109",
+       "0000078003-25-000111",
+       "0000078003-25-000136",
+       "0000078003-25-000149",
+       "0000078003-25-000159",
+       "0000078003-25-000167",
+       "0001193125-25-122480",
+       "0001193125-25-291406"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+      "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "DIFFERS"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:bd170d67634f18b4980eb72ab76eeddd67aee80689844a59d63a8d18a89a8cbf",
+       "run_id": "run:historical-period:fcac783c434f22da46608a2d0e1b10eef3a546e2bce4db3100617e9a8a4ee8b3"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-25-000017",
+       "0000078003-25-000109",
+       "0000078003-25-000111",
+       "0000078003-25-000136",
+       "0000078003-25-000149",
+       "0000078003-25-000159",
+       "0000078003-25-000167",
+       "0001193125-25-122480",
+       "0001193125-25-291406"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6ca42aef435dde02b451c1aa3d0afaf984858fdae962da02b1ad877cbb4f8c23",
+      "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:1fdc9996d056c0914c41cc1629cac72c22fabe540baf90edaa8dc2670fb0a5be",
+       "run_id": "run:historical-period:fc0ba0d8b08493bb07001bbd7f392b9f45f9e7c6c0cb8ecd47a6db97660ec971"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-25-000017",
+       "0000078003-25-000109",
+       "0000078003-25-000111",
+       "0000078003-25-000136",
+       "0000078003-25-000149",
+       "0000078003-25-000159",
+       "0000078003-25-000167",
+       "0001193125-25-122480",
+       "0001193125-25-291406"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:53b87409783be3e13efbcbe30f63f520de1203b7f9024cc9596574132a03cb74",
+       "run_id": "run:historical-period:94aa1145880786acc924f6546c9346f2cc8a77050a9034e7864e913f8c6c8ac3"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-25-000017",
+       "0000078003-25-000109",
+       "0000078003-25-000111",
+       "0000078003-25-000136",
+       "0000078003-25-000149",
+       "0000078003-25-000159",
+       "0000078003-25-000167",
+       "0001193125-25-122480",
+       "0001193125-25-291406"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:0d029fe3b4e3fa5a6aa6047ec69804c5acba0e42f29514fe5b0f382395aff828",
+      "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:d97cc73f992fdc626d625972bae6a3e3a747e228fb0c8c9d895aa7e212606206",
+       "run_id": "run:historical-period:268d850ed64986e8856bc9966a381f90c8482353a234bc7776508ff6a5541b78"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000078003-25-000017",
+       "0000078003-25-000109",
+       "0000078003-25-000111",
+       "0000078003-25-000136",
+       "0000078003-25-000149",
+       "0000078003-25-000159",
+       "0000078003-25-000167",
+       "0001193125-25-122480",
+       "0001193125-25-291406"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6b232d81c480ca18f6035fadb7b13fb12f12a55152029919627f82b6b872e7b9",
+      "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "submissions_index": "evidence/request_attempts/e0/e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331/CIK0000078003.json",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  },
+  "southwest-2025": {
+   "company_id": "southwest_airlines",
+   "e01_keyword_rule_note": "E01's column is the literal alias rule over every saved document of each 8.01 filing; it is recorded, and E01 is accepted only from e01-eight-o-one-read.json",
+   "eight_ks_in_window": {
+    "filing_date": 17,
+    "report_date": 17
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000092380-25-000144",
+      "filingDate": "2025-12-05",
+      "items": [
+       "7.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-262544",
+      "filingDate": "2025-11-03",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000138",
+      "filingDate": "2025-10-22",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000131",
+      "filingDate": "2025-07-23",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000119",
+      "filingDate": "2025-05-19",
+      "items": [
+       "3.03",
+       "5.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000117",
+      "filingDate": "2025-05-19",
+      "items": [
+       "5.07"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000079",
+      "filingDate": "2025-04-23",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000075",
+      "filingDate": "2025-03-31",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000059",
+      "filingDate": "2025-03-11",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-029062",
+      "filingDate": "2025-02-19",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-028035",
+      "filingDate": "2025-02-18",
+      "items": [
+       "2.05",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-023650",
+      "filingDate": "2025-02-10",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000025",
+      "filingDate": "2025-02-07",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000007",
+      "filingDate": "2025-01-30",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-013376",
+      "filingDate": "2025-01-27",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-004026",
+      "filingDate": "2025-01-10",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000003",
+      "filingDate": "2025-01-07",
+      "items": [
+       "7.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000092380-25-000144",
+      "items": [
+       "7.01"
+      ],
+      "reportDate": "2025-12-05"
+     },
+     {
+      "accession": "0001193125-25-262544",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-11-03"
+     },
+     {
+      "accession": "0000092380-25-000138",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-10-22"
+     },
+     {
+      "accession": "0000092380-25-000131",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-23"
+     },
+     {
+      "accession": "0000092380-25-000119",
+      "items": [
+       "3.03",
+       "5.03",
+       "9.01"
+      ],
+      "reportDate": "2025-05-16"
+     },
+     {
+      "accession": "0000092380-25-000117",
+      "items": [
+       "5.07"
+      ],
+      "reportDate": "2025-05-14"
+     },
+     {
+      "accession": "0000092380-25-000079",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-04-23"
+     },
+     {
+      "accession": "0000092380-25-000075",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-03-28"
+     },
+     {
+      "accession": "0000092380-25-000059",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-03-11"
+     },
+     {
+      "accession": "0001193125-25-029062",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-18"
+     },
+     {
+      "accession": "0001193125-25-028035",
+      "items": [
+       "2.05",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-17"
+     },
+     {
+      "accession": "0001193125-25-023650",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-02-04"
+     },
+     {
+      "accession": "0000092380-25-000025",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-02-04"
+     },
+     {
+      "accession": "0000092380-25-000007",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-01-30"
+     },
+     {
+      "accession": "0001193125-25-013376",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-01-27"
+     },
+     {
+      "accession": "0001193125-25-004026",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-01-07"
+     },
+     {
+      "accession": "0000092380-25-000003",
+      "items": [
+       "7.01"
+      ],
+      "reportDate": "2025-01-07"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 4,
+     "by_report_date": 4,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:41a83e0107e45e1ca5dfdb91c8a172d219b07f1f0336a2c447344e0c4eedc90e",
+       "run_id": "run:historical-period:1a798e707a75126223abe1a5d07091922746e902952525aff6821d46e1094f6f"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-25-000003",
+       "0000092380-25-000007",
+       "0000092380-25-000025",
+       "0000092380-25-000059",
+       "0000092380-25-000075",
+       "0000092380-25-000079",
+       "0000092380-25-000117",
+       "0000092380-25-000119",
+       "0000092380-25-000131",
+       "0000092380-25-000138",
+       "0000092380-25-000144",
+       "0001193125-25-004026",
+       "0001193125-25-013376",
+       "0001193125-25-023650",
+       "0001193125-25-028035",
+       "0001193125-25-029062",
+       "0001193125-25-262544"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "4",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E01": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9",
+       "run_id": "run:historical-period:22ca781a045b2300524f705343ea71cea283320b1793782e6d25294a1517469e"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-25-000003",
+       "0000092380-25-000007",
+       "0000092380-25-000025",
+       "0000092380-25-000059",
+       "0000092380-25-000075",
+       "0000092380-25-000079",
+       "0000092380-25-000117",
+       "0000092380-25-000119",
+       "0000092380-25-000131",
+       "0000092380-25-000138",
+       "0000092380-25-000144",
+       "0001193125-25-004026",
+       "0001193125-25-013376",
+       "0001193125-25-023650",
+       "0001193125-25-028035",
+       "0001193125-25-029062",
+       "0001193125-25-262544"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+      "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:1a200def37406b2cf72c2bb5c101b22bd03520f436ef8f3f3e79f7d666211214",
+       "run_id": "run:historical-period:336bdcddb5107cf56750fd4e1df0308bc2873d808c84ef8e3dd56f3a460f8e7a"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-25-000003",
+       "0000092380-25-000007",
+       "0000092380-25-000025",
+       "0000092380-25-000059",
+       "0000092380-25-000075",
+       "0000092380-25-000079",
+       "0000092380-25-000117",
+       "0000092380-25-000119",
+       "0000092380-25-000131",
+       "0000092380-25-000138",
+       "0000092380-25-000144",
+       "0001193125-25-004026",
+       "0001193125-25-013376",
+       "0001193125-25-023650",
+       "0001193125-25-028035",
+       "0001193125-25-029062",
+       "0001193125-25-262544"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6ca42aef435dde02b451c1aa3d0afaf984858fdae962da02b1ad877cbb4f8c23",
+      "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 4,
+     "by_report_date": 4,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:5b8326d06680b1908f98570a4dc0c84e8dd5bef4da173e62eaf007785b696a30",
+       "run_id": "run:historical-period:f10535744debb8afeb68d2c756803c2747fa6de595c5e8cda30f8364fd094993"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-25-000003",
+       "0000092380-25-000007",
+       "0000092380-25-000025",
+       "0000092380-25-000059",
+       "0000092380-25-000075",
+       "0000092380-25-000079",
+       "0000092380-25-000117",
+       "0000092380-25-000119",
+       "0000092380-25-000131",
+       "0000092380-25-000138",
+       "0000092380-25-000144",
+       "0001193125-25-004026",
+       "0001193125-25-013376",
+       "0001193125-25-023650",
+       "0001193125-25-028035",
+       "0001193125-25-029062",
+       "0001193125-25-262544"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "4",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:8574da1f96a5fbf9ef4c22ab785c0254a229fd17cc695271146e3612138dc1dc",
+       "run_id": "run:historical-period:3fcb62a194a5490b1a7becfd0fbfd37763e2b26ce6171290107fc2d9ee7ce3d1"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-25-000003",
+       "0000092380-25-000007",
+       "0000092380-25-000025",
+       "0000092380-25-000059",
+       "0000092380-25-000075",
+       "0000092380-25-000079",
+       "0000092380-25-000117",
+       "0000092380-25-000119",
+       "0000092380-25-000131",
+       "0000092380-25-000138",
+       "0000092380-25-000144",
+       "0001193125-25-004026",
+       "0001193125-25-013376",
+       "0001193125-25-023650",
+       "0001193125-25-028035",
+       "0001193125-25-029062",
+       "0001193125-25-262544"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:0d029fe3b4e3fa5a6aa6047ec69804c5acba0e42f29514fe5b0f382395aff828",
+      "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 2,
+     "by_report_date": 2,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+       "result_id": "sha256:082c0621a2a01bc80b3b636f5e59fe4cae5703bf87c73936488a856aec788eda",
+       "run_id": "run:historical-period:3d4f61c55932aa0c9d249309c6689459a92fc577b7406b6e218807c6ef339e25"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000092380-25-000003",
+       "0000092380-25-000007",
+       "0000092380-25-000025",
+       "0000092380-25-000059",
+       "0000092380-25-000075",
+       "0000092380-25-000079",
+       "0000092380-25-000117",
+       "0000092380-25-000119",
+       "0000092380-25-000131",
+       "0000092380-25-000138",
+       "0000092380-25-000144",
+       "0001193125-25-004026",
+       "0001193125-25-013376",
+       "0001193125-25-023650",
+       "0001193125-25-028035",
+       "0001193125-25-029062",
+       "0001193125-25-262544"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:6b232d81c480ca18f6035fadb7b13fb12f12a55152029919627f82b6b872e7b9",
+      "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "2",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "submissions_index": "evidence/request_attempts/bf/bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600/CIK0000092380.json",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ]
+  }
+ },
+ "production_authorized": false,
+ "reader": "tools/read_event_counts.py",
+ "record_type": "ISSUE_47_EVENT_COUNT_READ",
+ "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+ "result": {
+  "MATCH_BOTH_BASES": 35,
+  "positions_compared_excluding_e01": 35
+ },
+ "the_defect_this_found_was_mine_again": {
+  "what_it_looked_like": "Marriott's C01 and E03 read 2 against a published 3, on a window where every header was saved and two independent copies of the submissions index agree on the filing set.",
+  "what_it_was": "the reading filtered on form == '8-K' and Marriott's 2025 window holds one 8-K/A carrying item 5.02, amending the January filing. Including it gives exactly 3.",
+  "why_it_is_worth_writing_down": "this is the third time in this block that a reading written to check the route was the thing that was wrong. A quickly written second implementation is less reliable than the route it checks, so every difference gets run to ground before it is called a defect."
+ },
+ "what_this_is": "the six 8-K event metrics counted from the filings' own SEC headers, for the seven company-periods that deliver them."
+}

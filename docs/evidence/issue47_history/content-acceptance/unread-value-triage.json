@@ -1,0 +1,89 @@
+{
+  "record_type": "ISSUE47_UNREAD_VALUE_TRIAGE",
+  "schema_version": 1,
+  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+  "purpose": "155 values carry a result; 128 have an acceptance. This asks what the other 27 are blocked on, because 'nobody read it' and 'the material is not here' are different answers and only one of them is about this repository.",
+  "the_27_by_metric": {
+    "B03": 1,
+    "B06": 4,
+    "C03": 4,
+    "C04": 5,
+    "D02": 7,
+    "E01": 6
+  },
+  "already_recorded_limitations": {
+    "B06": "back-solving the components from the published value is fitting, not checking; and the filing can feed two approved debt models that give different answers",
+    "E01": "the only route with a keyword branch; scanning a whole accession hits 'transaction' in almost any exhibit, so only windows with no 8.01 filing were accepted",
+    "D02": "the four sets read whole turned up errors in two of them, so the seven unread cannot be accepted on their strength",
+    "B03": "Salesforce: the main document does not tag DepreciationDepletionAndAmortization, which the route reads from the accession's fact set - my reader cannot reach it"
+  },
+  "c03_was_recorded_wrongly_and_this_corrects_it": {
+    "what_the_earlier_reader_said": "NO_SAVED_PROXY_REPORTS_THE_TARGET_PERIOD for four of nine C03 positions, which reads as a material gap",
+    "what_is_actually_on_disk": {
+      "enphase_energy": {
+        "pinned_proxy": "enph-20260401.htm",
+        "form": "DEF 14A",
+        "filing_date": "2026-04-01",
+        "saved_status": "VERIFIED_SAVED_SOURCE",
+        "readable_on_disk": true,
+        "n_ecd_facts": 76,
+        "mentions_pay_versus_performance": true,
+        "declaration_limitations": []
+      },
+      "lumen_technologies": {
+        "pinned_proxy": "lumn-20260401.htm",
+        "form": "DEF 14A",
+        "filing_date": "2026-04-06",
+        "saved_status": "VERIFIED_SAVED_SOURCE",
+        "readable_on_disk": true,
+        "n_ecd_facts": 89,
+        "mentions_pay_versus_performance": true,
+        "declaration_limitations": []
+      },
+      "pfizer": {
+        "pinned_proxy": "pfe-20260312.htm",
+        "form": "DEF 14A",
+        "filing_date": "2026-03-12",
+        "saved_status": "VERIFIED_SAVED_SOURCE",
+        "readable_on_disk": true,
+        "n_ecd_facts": 138,
+        "mentions_pay_versus_performance": false,
+        "declaration_limitations": []
+      },
+      "salesforce": {
+        "pinned_proxy": "crm-20260416.htm",
+        "form": "DEF 14A",
+        "filing_date": "2026-04-16",
+        "saved_status": "VERIFIED_SAVED_SOURCE",
+        "readable_on_disk": true,
+        "n_ecd_facts": 82,
+        "mentions_pay_versus_performance": true,
+        "declaration_limitations": []
+      },
+      "ford_motor_company": {
+        "pinned_proxy": "e26003_f-def14a.htm",
+        "form": "DEF 14A",
+        "filing_date": "2026-03-27",
+        "saved_status": "VERIFIED_SAVED_SOURCE",
+        "readable_on_disk": true,
+        "n_ecd_facts": 103,
+        "mentions_pay_versus_performance": true,
+        "declaration_limitations": []
+      }
+    },
+    "the_control": "ford_motor_company, whose C03 WAS accepted, sits in the same table with the same shape - saved, readable, 103 ecd facts",
+    "conclusion": "the material is there. Every one of the four pinned proxies is VERIFIED_SAVED_SOURCE, readable, and carries 76 to 138 ecd facts. The NOT_READ verdict was my reader's, not the filing's - the seventh defect in my own readers in this Issue, and the same shape as the two context-parsing defects already recorded: a lookup that comes back empty reads exactly like a document with nothing in it.",
+    "what_is_owed": "find why the period match fails for these four and not for Ford, then read the four values. Until then they stay unaccepted - a wrong reason for not accepting is still not an acceptance.",
+    "what_must_not_be_said": "that four C03 positions are blocked on material. They are blocked on my reader."
+  },
+  "c04_not_yet_retriaged": {
+    "earlier_verdict": "PREVIOUS_YEARS_FILING_NOT_READABLE for five positions",
+    "why_it_is_not_settled": "the route does not read the previous year's primary HTML - it reads each accession's index and the AuditorName concept. My reader chose a harder path, so its verdict may be about my path rather than the material, exactly as C03's turned out to be. Not measured here.",
+    "so": "the five C04 positions are recorded as untriaged, not as a material gap"
+  },
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

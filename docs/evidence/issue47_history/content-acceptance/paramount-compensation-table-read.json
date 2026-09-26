@@ -1,0 +1,54 @@
+{
+ "an_internal_check_the_other_readings_do_not_have": "the row's five components sum to its total, so the number is confirmed by the table's own arithmetic as well as by matching the published value.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "checked_identity": {
+  "bound_from": {
+   "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+   "result_id": "sha256:a3a5fa1b790731fd5382472a3ae307b5e1ba55b9a38d2bbd91e781b6cd7695e3",
+   "run_id": "run:historical-period:313648165509b18ee44c4a65cc9e5bd0a9645e6ce0d14ff1563622fd22b4803b"
+  },
+  "checked_against_the_reading": [
+   "value",
+   "filings_contain_the_filing_the_reading_opened"
+  ],
+  "entities": [],
+  "established_by": "RECORDED_AT_READING_TIME",
+  "filings": [
+   "0001140361-26-016758"
+  ],
+  "not_named_by_the_reading": [
+   "window"
+  ],
+  "period_end": "2025-12-31",
+  "period_start": "2025-08-07",
+  "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+  "spec_closure_hash": "sha256:0f5527096806bae71d6677a0d68a8c159f76c8b035d7ae50d175747af155dc76",
+  "unit": "USD",
+  "value_kind": null
+ },
+ "company_id": "paramount_skydance_paramount_global",
+ "components": {
+  "all_other_compensation": "1693523",
+  "bonus": "0",
+  "non_equity_incentive_plan_compensation": "1410000",
+  "salary": "1408046",
+  "stock_awards": "58700000"
+ },
+ "components_sum_to_the_total": true,
+ "document": "evidence/accession_materials/paramount_skydance_paramount_global_2041610_000114036126016758/ef20071103_10ka.htm",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "period_end": "2025-12-31",
+ "production_authorized": false,
+ "published": "63211569",
+ "reader": "tools/read_single_facts.py",
+ "record_type": "ISSUE_47_COMPENSATION_TABLE_READ",
+ "total_read": "63211569",
+ "verdict": "MATCH",
+ "what_this_is": "the one C03 this repository answers from an annual report's own Summary Compensation Table rather than from a proxy's ecd facts, read off that table.",
+ "where": "the Summary Compensation Table, row 'David Ellison / Chairman and CEO', year 2025. The table's own preamble says it covers the period from the Closing Date to December 31, 2025.",
+ "which_document_it_is_in_and_why_that_is_not_odd": "the 10-K/A, not the 10-K. That amendment exists to add Part III Items 10-14, which is where a Summary Compensation Table lives, so C03 reading it is the amendment being used for exactly what it is. The same amendment is what the approved policy declines to clear for this company's statement-class inputs, and those are different questions about the same document."
+}

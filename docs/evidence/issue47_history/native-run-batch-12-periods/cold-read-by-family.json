@@ -1,0 +1,363 @@
+{
+ "all_passed": true,
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "families_covered": [
+  "accession",
+  "capacity_scope",
+  "companyfacts",
+  "debt",
+  "governance",
+  "lodging",
+  "structural",
+  "text",
+  "zero_ai_event",
+  "zero_ai_statement"
+ ],
+ "families_not_present_in_this_batch": [
+  "semantic"
+ ],
+ "families_the_batch_held": [
+  "accession",
+  "capacity_scope",
+  "companyfacts",
+  "debt",
+  "governance",
+  "lodging",
+  "structural",
+  "text",
+  "zero_ai_event",
+  "zero_ai_statement"
+ ],
+ "read_details": [
+  {
+   "batch_run_id": "run:historical-period:b2d5054a27b8e1d150bb601fa2762fd13efcb00eae5ff4cf12a63cb57e31eccc",
+   "batch_value": null,
+   "carried_a_value": false,
+   "case": "enphase-2025",
+   "cold_read": {
+    "quality": "NONE",
+    "reason_code": "TRAIT_NOT_APPLICABLE",
+    "records": 8,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:b2d5054a27b8e1d150bb601fa2762fd13efcb00eae5ff4cf12a63cb57e31eccc",
+    "status": "FROZEN",
+    "value": null
+   },
+   "family": "accession",
+   "metric_id": "A01",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:c6f3739181819ac062cacd381f2089935dc124212cff90ac027b46088195ba05",
+   "batch_value": null,
+   "carried_a_value": false,
+   "case": "enphase-2025",
+   "cold_read": {
+    "quality": "NONE",
+    "reason_code": "TRAIT_NOT_APPLICABLE",
+    "records": 8,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:c6f3739181819ac062cacd381f2089935dc124212cff90ac027b46088195ba05",
+    "status": "FROZEN",
+    "value": null
+   },
+   "family": "structural",
+   "metric_id": "A03",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:c9010b574499f466fa84c1a1ac3419bacfba6b236b22b7970da814b87f75ab38",
+   "batch_value": null,
+   "carried_a_value": false,
+   "case": "enphase-2025",
+   "cold_read": {
+    "quality": "NONE",
+    "reason_code": "TRAIT_NOT_APPLICABLE",
+    "records": 13,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:c9010b574499f466fa84c1a1ac3419bacfba6b236b22b7970da814b87f75ab38",
+    "status": "FROZEN",
+    "value": null
+   },
+   "family": "companyfacts",
+   "metric_id": "A05",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:c0cea296b605cf5bca08196d2de1f211eae83a8af444498350a26dc9a9867d8b",
+   "batch_value": "1472985000",
+   "carried_a_value": true,
+   "case": "enphase-2025",
+   "cold_read": {
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "records": 12,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:c0cea296b605cf5bca08196d2de1f211eae83a8af444498350a26dc9a9867d8b",
+    "status": "FROZEN",
+    "value": "1472985000"
+   },
+   "family": "zero_ai_statement",
+   "metric_id": "B01",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:d1a57ce10ef06c968977882fe5e844827dc4c84759f1f0e98f6e205c870cf217",
+   "batch_value": "0.1071886817555546034487812908",
+   "carried_a_value": true,
+   "case": "enphase-2025",
+   "cold_read": {
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "records": 16,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:d1a57ce10ef06c968977882fe5e844827dc4c84759f1f0e98f6e205c870cf217",
+    "status": "FROZEN",
+    "value": "0.1071886817555546034487812908"
+   },
+   "family": "companyfacts",
+   "metric_id": "B02",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:cfce750a74e02667a198693e9da688dcfd65897c9973b753cfaca56d70dc0b95",
+   "batch_value": "1.107959077222837051285943352",
+   "carried_a_value": true,
+   "case": "enphase-2025",
+   "cold_read": {
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "records": 16,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:cfce750a74e02667a198693e9da688dcfd65897c9973b753cfaca56d70dc0b95",
+    "status": "FROZEN",
+    "value": "1.107959077222837051285943352"
+   },
+   "family": "debt",
+   "metric_id": "B06",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:899e1366fe24db177983541936d01dcc742179438abf1ca739cba26544d37830",
+   "batch_value": null,
+   "carried_a_value": false,
+   "case": "enphase-2025",
+   "cold_read": {
+    "quality": "NONE",
+    "reason_code": "TRAIT_NOT_APPLICABLE",
+    "records": 8,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:899e1366fe24db177983541936d01dcc742179438abf1ca739cba26544d37830",
+    "status": "FROZEN",
+    "value": null
+   },
+   "family": "lodging",
+   "metric_id": "B10",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:db385a8d979ed0f1b9904f66caffd598d834b5b448659aa3bd7212581e42e502",
+   "batch_value": "1",
+   "carried_a_value": true,
+   "case": "enphase-2025",
+   "cold_read": {
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "records": 46,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:db385a8d979ed0f1b9904f66caffd598d834b5b448659aa3bd7212581e42e502",
+    "status": "FROZEN",
+    "value": "1"
+   },
+   "family": "zero_ai_event",
+   "metric_id": "C01",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:0cecfa109cec93586e7b4b10d538b78b7622732aab1404a92190f009b39d065c",
+   "batch_value": "Our Board of Directors (the “Board”) has nominated three directors to serve for three-year terms until 2029. The nominees and members have a broad and diverse set of skills, perspectives and experiences that are integral to our success. We believe in a classified board structure to promote boardroom continuity and institutional knowledge, as well as helping to drive execution of long-term strategy.\nA Board member (when requested), together with our General Counsel and Corporate Secretary, our head of investor relations, and other members of the legal team, participated in our outreach efforts in the Fall and Winter of 2025/26. All feedback was shared and discussed with the Compensation Committee of the Board (the “Compensation Committee”), the Nominating and Corporate Governance Committee of the Board (the “Nominating and Corporate Governance Committee”) and the full Board.\nWe are asking our stockholders to elect three Class II nominees to serve on the Board each for a three-year term and until their successors are duly elected and qualified. The current Class II nominees up for election are Jamie Haenggi, Benjamin Kortlang and Richard Mora. The Board currently has seven members and is divided into three classes, each with a three-year term. Class I currently has two members, Class II has three members and Class III has two members. We believe a classified board provides stability and continuity, permitting directors to share institutional knowledge, develop and advance our strategy, and focus on near- and long-term success.\nDirectors are elected by a plurality of the votes of the holders of shares present in person or represented by proxy at the Annual Meeting and entitled to vote generally on the election of directors. The three nominees receiving the highest number of votes “FOR” will be elected. Shares represented by executed proxies will be voted, if authority to do so is not withheld, for the election of the nominees named below. If any or all of the nominees become unavailable for election as a result of an unexpected occurrence, shares represented by executed proxies that would have been voted for each such nominee instead will be voted for such substitute nominee as the Nominating and Corporate Governance Committee may propose. Each of the nominees is a director of Enphase and has been previously elected by the stockholders. The persons nominated for election have agreed to serve if elected. Our management has no reason to believe that any nominee will be unable to serve.\nAs the Chair of the Nominating and Corporate Governance Committee, Mr. Kortlang leads Board oversight of the Company’s sustainability report, director evaluation and nominations, and corporate governance matters. Mr. Kortlang also serves on the Board’s pricing committee related to the repurchase of the Company’s common stock under the share repurchase program authorized by the Board.\nMr. Gomo brings to the Board valuable financial and business expertise through his years of experience as a chief financial officer with publicly traded companies, as well as serving as a board member of privately-held and publicly-traded companies. Mr. Gomo provides an important role in leading the Board’s activities as the Board Chair, and on financial and auditing matters as the Audit Committee Chair, as well as collaborating with our independent registered public accounting firm and management team in these areas.\nThe Board is responsible for selecting nominees for election as directors. The Board delegates the initial screening process to the Nominating and Corporate Governance Committee with the expectation that other members of the Board participate in this process, as appropriate. On an ongoing basis, including in connection with the annual Board self-evaluation and setting the director slate for the annual meeting, the Nominating and Corporate Governance Committee regularly assesses the composition of the Board to maintain alignment with the company’s strategy and other priorities.\nUnder The Nasdaq Stock Market LLC (“Nasdaq”) listing standards, a majority of the members of a listed company’s board of directors must qualify as “independent,” as affirmatively determined by the board of directors. In addition, Nasdaq listing standards require that, subject to specified exceptions, each member of a listed company’s audit, compensation and nominating committees be independent within the meaning of the Nasdaq listing standards. Under the Nasdaq listing standards, a director will only qualify as an “independent director” if, in the opinion of a company’s board of directors, that person does not have a relationship that would interfere with the exercise of independent judgment in carrying out the responsibilities of a director. Audit committee members must also satisfy the independence criteria set forth in Rule 10A-3 under the Exchange Act of 1934, as amended (the “Exchange Act”).\nThe Board undertook a review of the independence of each director. Based on information provided by each director concerning his or her background, employment and affiliations, the Board determined that each of Messrs. Gomo, Kortlang, Malchow, Mora and Rodgers and Ms. Haenggi do not have a relationship with Enphase that would interfere with the exercise of independent judgment in carrying out the responsibilities of a director, and that each of these is “independent” as that term is defined under the applicable rules and regulations of the SEC and the Nasdaq listing standards. Accordingly, a majority of our directors are independent, as required under Nasdaq listing standards. The Board determined that Mr. Kothandaraman is not “independent” as defined under the applicable Nasdaq listing standards due to his services as our president and CEO.\nAt the 2025 Annual Meeting, Mr. Rodgers did not receive a majority of the votes cast but was elected under our plurality voting standard for directors. The Nominating and Corporate Governance Committee strongly recommended to the Board that he remain a member of the Board, which was unanimously approved by all directors (excluding Mr. Rodgers). The Board believed that Mr. Rodgers received less than 50% of the votes cast primarily due to proxy voting guidelines related to over-boarding policies at several of our largest institutional stockholders. However, Mr. Rodgers had served with distinction on the Board since 2017, as an engaged and active member, and was and is an indispensable force on the Board and to the long-term success of Enphase. In addition, Mr. Rodgers attended 100% of the Board and committee meetings in 2024 and 2025.\nOne of the Board’s key functions is informed oversight of our risk management process. The Board does not have a standing risk management committee, but rather administers this oversight function directly through the Board as a whole, as well as through various Board standing committees that address risks inherent in their respective areas of oversight. In particular, the Board is responsible for monitoring and assessing strategic risk exposure, including a determination of the nature and level of risk appropriate for Enphase.\nThe Board has three standing committees: an Audit Committee, a Compensation Committee and a Nominating and Corporate Governance Committee, each of which has the composition and responsibilities described below. All directors on the Board also participate on the Strategic Committee, which was established by the Board to consider and make recommendations regarding issues impacting our strategic direction, with participation from management, from time to time.\nThe Audit Committee is composed of three directors: Messrs. Gomo, Kortlang and Mora. The Audit Committee met five times in 2025. The Audit Committee has adopted a written charter, which is reviewed annually, and is available to stockholders on our website at https://investor.enphase.com/corporate-governance.\nThe Board reviews the Nasdaq listing standards definition of independence for Audit Committee members on an annual basis and has determined that all members of the Audit Committee are independent, as required by Rule 5605(c)(2)(A)(i) and (ii) of the Nasdaq listing standards.\nThe Board has determined that each member of the Audit Committee can read and understand fundamental financial statements in accordance with applicable requirements. The Board has also determined that Messrs. Gomo and Mora each qualify as an “audit committee financial expert,” as defined in SEC rules. The Board made a qualitative assessment of their level of knowledge and experience based on a number of factors, including formal education, experience as a chief financial officer for public reporting companies or experience as a chief executive officer with financial oversight responsibilities.\nThe Compensation Committee is composed of two directors: Messrs. Mora and Rodgers. All members of the Compensation Committee have been and are “independent,” as required by Rules 5605(a)(2) and 5605(d)(2) of the Nasdaq listing standards. The Compensation Committee met four times in 2025. The Compensation Committee has adopted a written charter, which is reviewed annually, and is available to stockholders on our website at https://investor.enphase.com/corporate-governance.\nThe agenda for each meeting is usually developed by the Chair of the Compensation Committee, in consultation with our CEO\nand senior vice president of human resources. The Compensation Committee meets periodically in executive session, without management. From time to time, various members of management and other employees as well as outside advisors or consultants may be invited by the Compensation Committee to make presentations, to provide financial or other background information or advice or to otherwise participate in Compensation Committee meetings. Our CEO does not participate in, and is not present during, any deliberations or determinations of the Compensation Committee regarding his compensation or individual performance objectives. The charter of the Compensation Committee grants the Compensation Committee full access to all books, records, facilities and personnel, as well as authority to obtain, at the expense of Enphase, advice and assistance from internal and external legal, accounting or other advisors and consultants and other external resources that the Compensation Committee considers necessary or appropriate in the performance of its duties. In particular, the Compensation Committee has the sole authority to retain compensation consultants to assist in its evaluation of executive and director compensation, including the authority to approve the consultant’s independence, reasonable fees and other retention terms.\nThe Nominating and Corporate Governance Committee is responsible for identifying, reviewing and evaluating candidates to serve as directors (consistent with criteria approved by the Board), reviewing and evaluating incumbent directors, recommending to the Board for selection candidates for election to the Board, making recommendations to the Board regarding the membership of the committees of the Board, assessing the performance of the Board, and developing a set of corporate governance principles. The Nominating and Corporate Governance Committee is also responsible for overseeing our sustainability strategy, initiatives and policies, including communications with employees, investors and other stakeholders.\nThe Nominating and Corporate Governance Committee was composed of four directors during 2025: Messrs. Kortlang, Malchow and Rodgers and Ms. Haenggi. The Board appointed Mr. Malchow to serve as the fourth member of the Nominating and Governance Committee as of January 23, 2025. All members of the Nominating and Corporate Governance Committee are independent (as independence is defined in Rule 5605(a)(2) of the Nasdaq listing standards). The Nominating and Corporate Governance Committee met four times in 2025, and Nominating and Corporate Governance Committee business was also discussed from time to time during meetings of the Board. The Nominating and Corporate Governance Committee has adopted a written charter, which is reviewed annually, and is available to stockholders on our website at https://investor.enphase.com/corporate-governance.\nThe Nominating and Corporate Governance Committee, to date, has not adopted a formal policy with regard to the consideration of director candidates recommended by stockholders and will consider director candidates recommended by stockholders on a case-by-case basis, as appropriate. The Nominating and Corporate Governance Committee believes that it is in the best position to identify, review, evaluate and select qualified candidates for Board membership, based on the comprehensive criteria for Board membership approved by the Board. The Nominating and Corporate Governance Committee does not intend to alter the manner in which it evaluates candidates, including the minimum criteria set forth above, based on whether the candidate was recommended by a stockholder. The Board amended our Amended and Restated Bylaws (as amended, the “Bylaws”), effective April 6, 2022, in order to implement proxy access. Pursuant to the proxy access provision, a stockholder or a group of no more than twenty (20) stockholders owning three percent (3%) or more of the voting power of the our outstanding capital stock continuously for at least three (3) years may nominate, and include in our proxy statement for an annual meeting, director nominees constituting up to the greater of two (2) individuals or twenty percent (20%) of the number of directors in office, provided that the stockholders satisfy the requirements specified in the Bylaws.\nTo date, the Nominating and Corporate Governance Committee has not received any such nominations, nor has it rejected a director nominee from a stockholder or stockholders holding more than 5% of our voting stock. Stockholders who wish to recommend individuals for consideration by the Nominating and Corporate Governance Committee to become nominees for election to the Board at the next annual meeting may do so by delivering a written recommendation to our Corporate Secretary at the following address: 47281 Bayside Parkway, Fremont, CA 94538, not earlier than the close of business on November 2, 2026 and not later than the close of business on December 2, 2026. Submissions must include the full name of the proposed nominee, a description of the proposed nominee’s business experience for at least the previous five years, complete biographical information, a description of the proposed nominee’s qualifications as a director and a representation that the nominating stockholder is a beneficial or record holder of our stock and has been a holder for at least one year. Any such submission must be accompanied by the written consent of the proposed nominee to be named as a nominee and to serve as a director if elected.\nThe Board and its principal committees perform an annual self-assessment to foster a culture of accountability for performance and continuous improvement so that the Board is able to meet its strategic objectives. As part of the process, directors are requested to complete written questionnaires, which are benchmarked and refreshed each year focusing on the performance of the Board and each of its committees as well as the objectives and priorities for the upcoming year. The annual evaluation process provides the Board with valuable insight regarding areas where the Board believes it functions effectively, and where it can improve. This process is overseen by the chair of the Nominating and Governance Committee and the General Counsel.\nIn addition, any interested person, including any stockholder, may communicate directly with our non-employee directors. Persons interested in communicating directly with our non-employee directors regarding any concerns or issues may do so by addressing correspondence to a particular director, or to our non-employee directors generally, in care of Enphase Energy, Inc. 47281 Bayside Parkway, Fremont, CA 94538. If no particular director is named, letters will be forwarded, depending upon the subject matter, to the Chair of the Board, the Chair of the Audit Committee, the Chair of the Compensation Committee, or the Chair of the Nominating and Corporate Governance Committee.\nThe Compensation Committee last made changes to our non-employee director compensation policy in November 2020 in order to ensure that our compensation for directors remains competitive and allows us to attract and retain highly qualified members of the Board. Based on the Compensation Committee’s most recent review of director compensation in 2024, no further changes were recommended. As a result, the Non-Employee Director Compensation Policy summarized below provided the following compensation package for our non-employee directors in 2025.\nAdditional retainer Audit Committee chair\nAdditional retainer Compensation Committee chair\nAdditional retainer Nominating and Corporate Governance Committee chair\nMessrs. Rodgers and Mora served on the Compensation Committee for the entire fiscal year ended December 31, 2025. None of the members of the Compensation Committee have, at any time, been one of our officers or employees. None of our executive officers serve, or in the past year have served, as a member of the board of directors or compensation committee of any entity that has one or more executive officers who serve on the Board or the Compensation Committee.\nWe do not have any formal policies for allocating compensation among salary, bonus awards and equity grants. Instead, the Compensation Committee and Board set the compensation of our NEOs at levels they determine to be competitive and appropriate for each NEO, using compensation information benchmarked against our peer companies and those companies against whom we compete for talent and the professional experience, and the judgment of the Compensation Committee and Board members. In order to align the NEOs’ incentives with the interests of our stockholders and corporate goals, a significant portion of the NEOs’ total target compensation is comprised of performance-based quarterly cash bonus opportunities and long-term equity awards that vest based upon achievement of performance goals and also upon continuous service over time. Separately, upon initial commencement of employment, our NEOs generally are awarded an initial new hire equity grant. We may also make equity grants to our NEOs in connection with promotions on a case-by-case basis. New hire and promotion equity grants are based primarily on competitive conditions applicable to each specific executive position, and no such grants were made in 2025.\nThe Compensation Committee works with and receives information and analysis from management, including our legal, finance and human resources departments, and our CEO, and considers the information and analyses in determining the structure and amount of compensation to be paid to our employees, including our CFO. Our legal, finance and human resources departments work with our CEO to: design and develop recommended compensation programs for our NEOs and other senior executives; recommend changes to existing compensation programs; recommend financial and other performance targets to be achieved under those programs; prepare analyses of financial data; prepare peer data comparisons and other briefing materials; and ultimately implement the decisions of the Compensation Committee. Our CEO evaluates the individual performance of our CFO and provides the Compensation Committee with such performance assessments and management’s recommendations and proposals regarding NEO compensation programs and decisions affecting base salaries, performance bonuses, equity compensation and other compensation-related matters outside of the presence of any other NEOs. However, the Compensation Committee and the Board retain the final authority to make all compensation decisions. While the CEO and members of our management team discuss recommendations and compensation arrangements with the Compensation Committee, they do not participate in the deliberations concerning or the determination of their own compensation.\nThe Compensation Committee generally reviews our NEOs’ base salaries on an annual basis. As shown in the chart below, the annual base salaries of our NEOs remained unchanged in 2025, as compared with 2024 levels, because the Compensation Committee determined that each NEO’s total compensation – comprised of salary, bonus and equity awards – remained competitive based on market data. The Compensation Committee believed it was more important to tie a greater percentage of each NEO’s total compensation to rewarding performance, whether through cash bonus payments or performance-based equity awards that can be earned based on Relative TSR and the achievement of SMART Goals, as further described below.\nOur insider trading policy prohibits our directors, NEOs and any other employee required to comply with the blackout periods and pre-clearance requirements from engaging in short sales, transactions in put or call options, hedging transactions, pledges, or other inherently speculative transactions relating to our common stock. In addition, our directors, NEOs and any person required to comply with the blackout periods and pre-clearance requirements under our insider trading policy are prohibited from pledging our securities as collateral for loans and may not hold our securities in margin accounts unless permitted by the Clearing Officer with the approval of the Chair of the Board, Chair of the Audit Committee, or the Board.\nAs of March 20, 2026, the date of this report, the Audit Committee consisted of three members: Steven J. Gomo, who serves as the Chair of the Committee, Benjamin Kortlang and Richard Mora. Each member is an independent director under Nasdaq and SEC rules, and meets the standards for committee independence as set forth in our Corporate Governance Guidelines. The Audit Committee has the duties and powers described in its written charter adopted by the Board. A copy of the charter is available on our website at https://investor.enphase.com/corporate-governance.",
+   "carried_a_value": true,
+   "case": "enphase-2025",
+   "cold_read": {
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "records": 47,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:0cecfa109cec93586e7b4b10d538b78b7622732aab1404a92190f009b39d065c",
+    "status": "FROZEN",
+    "value": "Our Board of Directors (the “Board”) has nominated three directors to serve for three-year terms until 2029. The nominees and members have a broad and diverse set of skills, perspectives and experiences that are integral to our success. We believe in a classified board structure to promote boardroom continuity and institutional knowledge, as well as helping to drive execution of long-term strategy.\nA Board member (when requested), together with our General Counsel and Corporate Secretary, our head of investor relations, and other members of the legal team, participated in our outreach efforts in the Fall and Winter of 2025/26. All feedback was shared and discussed with the Compensation Committee of the Board (the “Compensation Committee”), the Nominating and Corporate Governance Committee of the Board (the “Nominating and Corporate Governance Committee”) and the full Board.\nWe are asking our stockholders to elect three Class II nominees to serve on the Board each for a three-year term and until their successors are duly elected and qualified. The current Class II nominees up for election are Jamie Haenggi, Benjamin Kortlang and Richard Mora. The Board currently has seven members and is divided into three classes, each with a three-year term. Class I currently has two members, Class II has three members and Class III has two members. We believe a classified board provides stability and continuity, permitting directors to share institutional knowledge, develop and advance our strategy, and focus on near- and long-term success.\nDirectors are elected by a plurality of the votes of the holders of shares present in person or represented by proxy at the Annual Meeting and entitled to vote generally on the election of directors. The three nominees receiving the highest number of votes “FOR” will be elected. Shares represented by executed proxies will be voted, if authority to do so is not withheld, for the election of the nominees named below. If any or all of the nominees become unavailable for election as a result of an unexpected occurrence, shares represented by executed proxies that would have been voted for each such nominee instead will be voted for such substitute nominee as the Nominating and Corporate Governance Committee may propose. Each of the nominees is a director of Enphase and has been previously elected by the stockholders. The persons nominated for election have agreed to serve if elected. Our management has no reason to believe that any nominee will be unable to serve.\nAs the Chair of the Nominating and Corporate Governance Committee, Mr. Kortlang leads Board oversight of the Company’s sustainability report, director evaluation and nominations, and corporate governance matters. Mr. Kortlang also serves on the Board’s pricing committee related to the repurchase of the Company’s common stock under the share repurchase program authorized by the Board.\nMr. Gomo brings to the Board valuable financial and business expertise through his years of experience as a chief financial officer with publicly traded companies, as well as serving as a board member of privately-held and publicly-traded companies. Mr. Gomo provides an important role in leading the Board’s activities as the Board Chair, and on financial and auditing matters as the Audit Committee Chair, as well as collaborating with our independent registered public accounting firm and management team in these areas.\nThe Board is responsible for selecting nominees for election as directors. The Board delegates the initial screening process to the Nominating and Corporate Governance Committee with the expectation that other members of the Board participate in this process, as appropriate. On an ongoing basis, including in connection with the annual Board self-evaluation and setting the director slate for the annual meeting, the Nominating and Corporate Governance Committee regularly assesses the composition of the Board to maintain alignment with the company’s strategy and other priorities.\nUnder The Nasdaq Stock Market LLC (“Nasdaq”) listing standards, a majority of the members of a listed company’s board of directors must qualify as “independent,” as affirmatively determined by the board of directors. In addition, Nasdaq listing standards require that, subject to specified exceptions, each member of a listed company’s audit, compensation and nominating committees be independent within the meaning of the Nasdaq listing standards. Under the Nasdaq listing standards, a director will only qualify as an “independent director” if, in the opinion of a company’s board of directors, that person does not have a relationship that would interfere with the exercise of independent judgment in carrying out the responsibilities of a director. Audit committee members must also satisfy the independence criteria set forth in Rule 10A-3 under the Exchange Act of 1934, as amended (the “Exchange Act”).\nThe Board undertook a review of the independence of each director. Based on information provided by each director concerning his or her background, employment and affiliations, the Board determined that each of Messrs. Gomo, Kortlang, Malchow, Mora and Rodgers and Ms. Haenggi do not have a relationship with Enphase that would interfere with the exercise of independent judgment in carrying out the responsibilities of a director, and that each of these is “independent” as that term is defined under the applicable rules and regulations of the SEC and the Nasdaq listing standards. Accordingly, a majority of our directors are independent, as required under Nasdaq listing standards. The Board determined that Mr. Kothandaraman is not “independent” as defined under the applicable Nasdaq listing standards due to his services as our president and CEO.\nAt the 2025 Annual Meeting, Mr. Rodgers did not receive a majority of the votes cast but was elected under our plurality voting standard for directors. The Nominating and Corporate Governance Committee strongly recommended to the Board that he remain a member of the Board, which was unanimously approved by all directors (excluding Mr. Rodgers). The Board believed that Mr. Rodgers received less than 50% of the votes cast primarily due to proxy voting guidelines related to over-boarding policies at several of our largest institutional stockholders. However, Mr. Rodgers had served with distinction on the Board since 2017, as an engaged and active member, and was and is an indispensable force on the Board and to the long-term success of Enphase. In addition, Mr. Rodgers attended 100% of the Board and committee meetings in 2024 and 2025.\nOne of the Board’s key functions is informed oversight of our risk management process. The Board does not have a standing risk management committee, but rather administers this oversight function directly through the Board as a whole, as well as through various Board standing committees that address risks inherent in their respective areas of oversight. In particular, the Board is responsible for monitoring and assessing strategic risk exposure, including a determination of the nature and level of risk appropriate for Enphase.\nThe Board has three standing committees: an Audit Committee, a Compensation Committee and a Nominating and Corporate Governance Committee, each of which has the composition and responsibilities described below. All directors on the Board also participate on the Strategic Committee, which was established by the Board to consider and make recommendations regarding issues impacting our strategic direction, with participation from management, from time to time.\nThe Audit Committee is composed of three directors: Messrs. Gomo, Kortlang and Mora. The Audit Committee met five times in 2025. The Audit Committee has adopted a written charter, which is reviewed annually, and is available to stockholders on our website at https://investor.enphase.com/corporate-governance.\nThe Board reviews the Nasdaq listing standards definition of independence for Audit Committee members on an annual basis and has determined that all members of the Audit Committee are independent, as required by Rule 5605(c)(2)(A)(i) and (ii) of the Nasdaq listing standards.\nThe Board has determined that each member of the Audit Committee can read and understand fundamental financial statements in accordance with applicable requirements. The Board has also determined that Messrs. Gomo and Mora each qualify as an “audit committee financial expert,” as defined in SEC rules. The Board made a qualitative assessment of their level of knowledge and experience based on a number of factors, including formal education, experience as a chief financial officer for public reporting companies or experience as a chief executive officer with financial oversight responsibilities.\nThe Compensation Committee is composed of two directors: Messrs. Mora and Rodgers. All members of the Compensation Committee have been and are “independent,” as required by Rules 5605(a)(2) and 5605(d)(2) of the Nasdaq listing standards. The Compensation Committee met four times in 2025. The Compensation Committee has adopted a written charter, which is reviewed annually, and is available to stockholders on our website at https://investor.enphase.com/corporate-governance.\nThe agenda for each meeting is usually developed by the Chair of the Compensation Committee, in consultation with our CEO\nand senior vice president of human resources. The Compensation Committee meets periodically in executive session, without management. From time to time, various members of management and other employees as well as outside advisors or consultants may be invited by the Compensation Committee to make presentations, to provide financial or other background information or advice or to otherwise participate in Compensation Committee meetings. Our CEO does not participate in, and is not present during, any deliberations or determinations of the Compensation Committee regarding his compensation or individual performance objectives. The charter of the Compensation Committee grants the Compensation Committee full access to all books, records, facilities and personnel, as well as authority to obtain, at the expense of Enphase, advice and assistance from internal and external legal, accounting or other advisors and consultants and other external resources that the Compensation Committee considers necessary or appropriate in the performance of its duties. In particular, the Compensation Committee has the sole authority to retain compensation consultants to assist in its evaluation of executive and director compensation, including the authority to approve the consultant’s independence, reasonable fees and other retention terms.\nThe Nominating and Corporate Governance Committee is responsible for identifying, reviewing and evaluating candidates to serve as directors (consistent with criteria approved by the Board), reviewing and evaluating incumbent directors, recommending to the Board for selection candidates for election to the Board, making recommendations to the Board regarding the membership of the committees of the Board, assessing the performance of the Board, and developing a set of corporate governance principles. The Nominating and Corporate Governance Committee is also responsible for overseeing our sustainability strategy, initiatives and policies, including communications with employees, investors and other stakeholders.\nThe Nominating and Corporate Governance Committee was composed of four directors during 2025: Messrs. Kortlang, Malchow and Rodgers and Ms. Haenggi. The Board appointed Mr. Malchow to serve as the fourth member of the Nominating and Governance Committee as of January 23, 2025. All members of the Nominating and Corporate Governance Committee are independent (as independence is defined in Rule 5605(a)(2) of the Nasdaq listing standards). The Nominating and Corporate Governance Committee met four times in 2025, and Nominating and Corporate Governance Committee business was also discussed from time to time during meetings of the Board. The Nominating and Corporate Governance Committee has adopted a written charter, which is reviewed annually, and is available to stockholders on our website at https://investor.enphase.com/corporate-governance.\nThe Nominating and Corporate Governance Committee, to date, has not adopted a formal policy with regard to the consideration of director candidates recommended by stockholders and will consider director candidates recommended by stockholders on a case-by-case basis, as appropriate. The Nominating and Corporate Governance Committee believes that it is in the best position to identify, review, evaluate and select qualified candidates for Board membership, based on the comprehensive criteria for Board membership approved by the Board. The Nominating and Corporate Governance Committee does not intend to alter the manner in which it evaluates candidates, including the minimum criteria set forth above, based on whether the candidate was recommended by a stockholder. The Board amended our Amended and Restated Bylaws (as amended, the “Bylaws”), effective April 6, 2022, in order to implement proxy access. Pursuant to the proxy access provision, a stockholder or a group of no more than twenty (20) stockholders owning three percent (3%) or more of the voting power of the our outstanding capital stock continuously for at least three (3) years may nominate, and include in our proxy statement for an annual meeting, director nominees constituting up to the greater of two (2) individuals or twenty percent (20%) of the number of directors in office, provided that the stockholders satisfy the requirements specified in the Bylaws.\nTo date, the Nominating and Corporate Governance Committee has not received any such nominations, nor has it rejected a director nominee from a stockholder or stockholders holding more than 5% of our voting stock. Stockholders who wish to recommend individuals for consideration by the Nominating and Corporate Governance Committee to become nominees for election to the Board at the next annual meeting may do so by delivering a written recommendation to our Corporate Secretary at the following address: 47281 Bayside Parkway, Fremont, CA 94538, not earlier than the close of business on November 2, 2026 and not later than the close of business on December 2, 2026. Submissions must include the full name of the proposed nominee, a description of the proposed nominee’s business experience for at least the previous five years, complete biographical information, a description of the proposed nominee’s qualifications as a director and a representation that the nominating stockholder is a beneficial or record holder of our stock and has been a holder for at least one year. Any such submission must be accompanied by the written consent of the proposed nominee to be named as a nominee and to serve as a director if elected.\nThe Board and its principal committees perform an annual self-assessment to foster a culture of accountability for performance and continuous improvement so that the Board is able to meet its strategic objectives. As part of the process, directors are requested to complete written questionnaires, which are benchmarked and refreshed each year focusing on the performance of the Board and each of its committees as well as the objectives and priorities for the upcoming year. The annual evaluation process provides the Board with valuable insight regarding areas where the Board believes it functions effectively, and where it can improve. This process is overseen by the chair of the Nominating and Governance Committee and the General Counsel.\nIn addition, any interested person, including any stockholder, may communicate directly with our non-employee directors. Persons interested in communicating directly with our non-employee directors regarding any concerns or issues may do so by addressing correspondence to a particular director, or to our non-employee directors generally, in care of Enphase Energy, Inc. 47281 Bayside Parkway, Fremont, CA 94538. If no particular director is named, letters will be forwarded, depending upon the subject matter, to the Chair of the Board, the Chair of the Audit Committee, the Chair of the Compensation Committee, or the Chair of the Nominating and Corporate Governance Committee.\nThe Compensation Committee last made changes to our non-employee director compensation policy in November 2020 in order to ensure that our compensation for directors remains competitive and allows us to attract and retain highly qualified members of the Board. Based on the Compensation Committee’s most recent review of director compensation in 2024, no further changes were recommended. As a result, the Non-Employee Director Compensation Policy summarized below provided the following compensation package for our non-employee directors in 2025.\nAdditional retainer Audit Committee chair\nAdditional retainer Compensation Committee chair\nAdditional retainer Nominating and Corporate Governance Committee chair\nMessrs. Rodgers and Mora served on the Compensation Committee for the entire fiscal year ended December 31, 2025. None of the members of the Compensation Committee have, at any time, been one of our officers or employees. None of our executive officers serve, or in the past year have served, as a member of the board of directors or compensation committee of any entity that has one or more executive officers who serve on the Board or the Compensation Committee.\nWe do not have any formal policies for allocating compensation among salary, bonus awards and equity grants. Instead, the Compensation Committee and Board set the compensation of our NEOs at levels they determine to be competitive and appropriate for each NEO, using compensation information benchmarked against our peer companies and those companies against whom we compete for talent and the professional experience, and the judgment of the Compensation Committee and Board members. In order to align the NEOs’ incentives with the interests of our stockholders and corporate goals, a significant portion of the NEOs’ total target compensation is comprised of performance-based quarterly cash bonus opportunities and long-term equity awards that vest based upon achievement of performance goals and also upon continuous service over time. Separately, upon initial commencement of employment, our NEOs generally are awarded an initial new hire equity grant. We may also make equity grants to our NEOs in connection with promotions on a case-by-case basis. New hire and promotion equity grants are based primarily on competitive conditions applicable to each specific executive position, and no such grants were made in 2025.\nThe Compensation Committee works with and receives information and analysis from management, including our legal, finance and human resources departments, and our CEO, and considers the information and analyses in determining the structure and amount of compensation to be paid to our employees, including our CFO. Our legal, finance and human resources departments work with our CEO to: design and develop recommended compensation programs for our NEOs and other senior executives; recommend changes to existing compensation programs; recommend financial and other performance targets to be achieved under those programs; prepare analyses of financial data; prepare peer data comparisons and other briefing materials; and ultimately implement the decisions of the Compensation Committee. Our CEO evaluates the individual performance of our CFO and provides the Compensation Committee with such performance assessments and management’s recommendations and proposals regarding NEO compensation programs and decisions affecting base salaries, performance bonuses, equity compensation and other compensation-related matters outside of the presence of any other NEOs. However, the Compensation Committee and the Board retain the final authority to make all compensation decisions. While the CEO and members of our management team discuss recommendations and compensation arrangements with the Compensation Committee, they do not participate in the deliberations concerning or the determination of their own compensation.\nThe Compensation Committee generally reviews our NEOs’ base salaries on an annual basis. As shown in the chart below, the annual base salaries of our NEOs remained unchanged in 2025, as compared with 2024 levels, because the Compensation Committee determined that each NEO’s total compensation – comprised of salary, bonus and equity awards – remained competitive based on market data. The Compensation Committee believed it was more important to tie a greater percentage of each NEO’s total compensation to rewarding performance, whether through cash bonus payments or performance-based equity awards that can be earned based on Relative TSR and the achievement of SMART Goals, as further described below.\nOur insider trading policy prohibits our directors, NEOs and any other employee required to comply with the blackout periods and pre-clearance requirements from engaging in short sales, transactions in put or call options, hedging transactions, pledges, or other inherently speculative transactions relating to our common stock. In addition, our directors, NEOs and any person required to comply with the blackout periods and pre-clearance requirements under our insider trading policy are prohibited from pledging our securities as collateral for loans and may not hold our securities in margin accounts unless permitted by the Clearing Officer with the approval of the Chair of the Board, Chair of the Audit Committee, or the Board.\nAs of March 20, 2026, the date of this report, the Audit Committee consisted of three members: Steven J. Gomo, who serves as the Chair of the Committee, Benjamin Kortlang and Richard Mora. Each member is an independent director under Nasdaq and SEC rules, and meets the standards for committee independence as set forth in our Corporate Governance Guidelines. The Audit Committee has the duties and powers described in its written charter adopted by the Board. A copy of the charter is available on our website at https://investor.enphase.com/corporate-governance."
+   },
+   "family": "text",
+   "metric_id": "C02",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:1b9318c53e8a3070c26cc86ce65b7d32b3834345b142695cf753cee3a6471a7a",
+   "batch_value": "9601958",
+   "carried_a_value": true,
+   "case": "enphase-2025",
+   "cold_read": {
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "records": 9,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:1b9318c53e8a3070c26cc86ce65b7d32b3834345b142695cf753cee3a6471a7a",
+    "status": "FROZEN",
+    "value": "9601958"
+   },
+   "family": "governance",
+   "metric_id": "C03",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:97d9a48a9e8111fae3282a4d8e8a87a75abb4a3afc2879dec3d8cb89d25fea4d",
+   "batch_value": null,
+   "carried_a_value": false,
+   "case": "ford-2025",
+   "cold_read": {
+    "quality": "NONE",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+    "records": 13,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:97d9a48a9e8111fae3282a4d8e8a87a75abb4a3afc2879dec3d8cb89d25fea4d",
+    "status": "FROZEN",
+    "value": null
+   },
+   "family": "debt",
+   "metric_id": "B06",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:a2ae6459813c3f315582acbfa9952b49e86b585fcf63c1cb28127face0f45df9",
+   "batch_value": null,
+   "carried_a_value": false,
+   "case": "lumen-2025",
+   "cold_read": {
+    "quality": "NONE",
+    "reason_code": "TRAIT_NOT_APPLICABLE",
+    "records": 8,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:a2ae6459813c3f315582acbfa9952b49e86b585fcf63c1cb28127face0f45df9",
+    "status": "FROZEN",
+    "value": null
+   },
+   "family": "capacity_scope",
+   "metric_id": "B13",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:81d907a4e4f08b06732f0b5dd28425d7a5a9c7fee70e6142372206346a20028d",
+   "batch_value": null,
+   "carried_a_value": false,
+   "case": "marriott-2023",
+   "cold_read": {
+    "quality": "NONE",
+    "reason_code": "ALL_BRANCHES_REJECTED",
+    "records": 30,
+    "results_in_run": 2,
+    "run_id": "run:historical-period:81d907a4e4f08b06732f0b5dd28425d7a5a9c7fee70e6142372206346a20028d",
+    "status": "FROZEN",
+    "value": null
+   },
+   "family": "zero_ai_statement",
+   "metric_id": "B03",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:68d030bbf9434c23b062bca82140db09f0080fd8344d0406945f4c645ab1d3b6",
+   "batch_value": "0.692",
+   "carried_a_value": true,
+   "case": "marriott-2023",
+   "cold_read": {
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "records": 10,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:68d030bbf9434c23b062bca82140db09f0080fd8344d0406945f4c645ab1d3b6",
+    "status": "FROZEN",
+    "value": "0.692"
+   },
+   "family": "lodging",
+   "metric_id": "B10",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:0a875d2d2a20eee78696ab6f73243ca551fc8d661d89a095e9085fa7b3a0bb1d",
+   "batch_value": null,
+   "carried_a_value": false,
+   "case": "marriott-2023",
+   "cold_read": {
+    "quality": "NONE",
+    "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+    "records": 8,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:0a875d2d2a20eee78696ab6f73243ca551fc8d661d89a095e9085fa7b3a0bb1d",
+    "status": "FROZEN",
+    "value": null
+   },
+   "family": "zero_ai_event",
+   "metric_id": "C01",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:7d793d0bd6c0cc48a54df5161efacc0c14570ca0d13f7e8de7072831f712d226",
+   "batch_value": null,
+   "carried_a_value": false,
+   "case": "marriott-2023",
+   "cold_read": {
+    "quality": "NONE",
+    "reason_code": "C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND",
+    "records": 8,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:7d793d0bd6c0cc48a54df5161efacc0c14570ca0d13f7e8de7072831f712d226",
+    "status": "FROZEN",
+    "value": null
+   },
+   "family": "governance",
+   "metric_id": "C03",
+   "same_run": true,
+   "same_value": true
+  },
+  {
+   "batch_run_id": "run:historical-period:af2021c895c1cd1972b49f00bc661a7290a3c9ab7985236d6c312c17ac336c38",
+   "batch_value": "72400000000",
+   "carried_a_value": true,
+   "case": "salesforce-2026",
+   "cold_read": {
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "records": 10,
+    "results_in_run": 1,
+    "run_id": "run:historical-period:af2021c895c1cd1972b49f00bc661a7290a3c9ab7985236d6c312c17ac336c38",
+    "status": "FROZEN",
+    "value": "72400000000"
+   },
+   "family": "accession",
+   "metric_id": "B12",
+   "same_run": true,
+   "same_value": true
+  }
+ ],
+ "reads": 17,
+ "record_type": "ISSUE_47_COLD_READ_BY_FAMILY",
+ "what_this_answers": "whether a frozen Run of each route kind can be read back from its own bytes by a process that did not create it"
+}

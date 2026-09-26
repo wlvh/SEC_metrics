@@ -1,0 +1,1054 @@
+{
+ "defects": [
+  {
+   "company_id": "pfizer",
+   "defect_id": "D02_PFIZER_2025_OFFICER_SECTION",
+   "evidence": "docs/evidence/issue47_history/d02-section-boundary/",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "repair": "scripts/vnext/historical_text_results.py closes a numbered item at the form's unnumbered Part I item",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
+   "reported_quality": "EXACT",
+   "requirement_closure_hash": "sha256:a82225adf77f04414e7dfa7b46b48975f24b83ef24b467f2cb044fe59249098a",
+   "result_id": "sha256:ab1bfcb4f1673b07580b64eab4b219744802bcac55ef04cb7c09f20c631fcd4a",
+   "run_id": "run:historical-period:fad2a7b37dfa0cdfc74e5b110f0b076a19d512b7059674719e611549930cc732",
+   "summary": "26 of 58 excerpts are executive-officer biography from the Form 10-K unnumbered Part I item, labelled EXPLICIT_LEGAL_SECTION_TEXT because ITEM_3 ran past that item to ITEM 5.",
+   "recomputed": {
+    "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+    "present_in": {
+     "28-metric batch": "sha256:ecacd7f240045e7dba7ef61c4ec3637015d49a9fdfbccc4b3876f7fd59b745a1",
+     "29-metric batch": "sha256:d4c4a7abdb78ed8594f06e3dc12e5ef16cfff8eb81b4bbd6f89b776e36e15cdc",
+     "30-metric batch": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084"
+    },
+    "measured": "the recomputed payload holds none of 'Executive Officers', 'has served as', 'Chief Executive Officer', 'Chief Financial Officer', 'was appointed' or 'Executive Vice President'; the officer section no longer reaches it",
+    "why_no_release": "this entry names the result it was raised against and withdraws only that one, so there is nothing at the coordinate for it to release; the recomputed result is answered for by the coordinate-level entries"
+   }
+  },
+  {
+   "closed_decision": {
+    "measured_cost_paid": {
+     "guarantee": "differential: 26 mutations compared against the frozen implementation inside the old bound, and every item-level mutation re-run at index 80 where only the raised bound reaches",
+     "re_recorded_from_tree": "3 files became 6 - calculator.py, constraints.py and projector.py joined, because the patch now edits bytes issue_28_v13 records. The divergence between this generation and its parent is wider, not narrower.",
+     "registration_patch": "3 files and 9 hunks became 6 files and 13 hunks",
+     "successor_lines": "five functions in historical_text_protocol.py"
+    },
+    "measured_scope": {
+     "filings_measured_at_2025_12_31": 7,
+     "filings_over_the_bound": [
+      "pfizer"
+     ],
+     "largest_under_the_bound": 53,
+     "reached_with_only_the_renderer_swapped_in_process": "PUBLIC_ROW"
+    },
+    "not_done": [
+     "merging adjacent excerpts so the count fits, which trades one observation per source block for a smaller number",
+     "narrowing the scope so the count fits",
+     "routing a Spec that declares 192 while the runtime still refuses 65"
+    ],
+    "options": [
+     {
+      "action": "carry a successor text-result protocol in this generation",
+      "cost": "about 155 duplicated lines including two integrity checks; patch 3->6 files",
+      "id": "A"
+     },
+     {
+      "action": "leave the bound at 64 and record this coordinate as refused by the protocol, with the measurement",
+      "cost": "Pfizer D02 produces no result in any year whose filing exceeds 64 excerpts",
+      "id": "B"
+     }
+    ],
+    "question": "whether this generation carries a successor text-result protocol so a result of more than 64 excerpts can be rendered at all",
+    "recommendation": "B unless this coordinate must be delivered in this PR",
+    "resolved": "Completed rather than withdrawn. Recording it as an A/B choice between doing the work and dropping the coordinate was the wrong framing: the capacity was already approved, and finding the bound in more places is wiring to finish, not a decision to re-open.",
+    "why_it_is_not_an_implementation_choice": "64 is a literal in text_results.render_text_payload, a new_rule_file of issue_28_v11 checked on both roots and in fourteen generations' execution authority. A successor would duplicate about 155 lines across five functions, two of which - validate_text_record and verify_text_trace - are the integrity checks on a text result, and would grow the registration patch from 3 files and 9 hunks to about 6 files and 14 hunks."
+   },
+   "company_id": "pfizer",
+   "defect_id": "D02_PFIZER_2025_EXCEEDS_ITEM_BOUND",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-section-boundary/",
+    "docs/evidence/issue47_history/d02-item-bound/"
+   ],
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "recomputed": {
+    "evidence": "docs/evidence/issue47_history/d02-item-bound/raised-capacity-end-to-end.json",
+    "items": 92,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "rendered_characters": 41860,
+    "run_status": "FROZEN",
+    "separate_process_cold_read": "same run_id, FROZEN, 92 items",
+    "still_not_accepted": "that the 92 excerpts are the right 92. Evidence PASS and a frozen Run are not business content acceptance."
+   },
+   "released": [
+    {
+     "items": 92,
+     "rendered_characters": 41860,
+     "requirement_closure_hash": "sha256:1b6d9c87b9bc6487333893394744362e5bdc2c8e4c38637799c269c39685c5ea",
+     "result_id": "sha256:a394e0b53f201bb0e68a09197565f33de137d56a09ff5517a45b52a8d11dd6fb",
+     "run_id": "run:historical-period:3a222b03869dd8f223a3d5bf432777fd4ac19b518abb95841c6aa0fe96105d34",
+     "what_it_does_not_assert": "That the 92 excerpts are the right 92. Business content acceptance is a separate state and is still open.",
+     "what_this_releases": "This result and no other. The defect stays in force at this coordinate for any other result, including the ones produced before the repair."
+    },
+    {
+     "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+     "what_this_releases": "this entry, for this result: it renders 96 excerpts, past the old 64, and is published EXACT with a public row, which is the whole of what this defect was about. The same result_id was produced under the 30-metric batch's version and under the targeted round's, so each version is named.",
+     "what_it_does_not_assert": "that the 96 lines are the right 96, or that the position is delivered: D02_PFIZER_2025_SCOPE_CONTENT_READ still withdraws it for the two keyword-admitted items. Without this release the frame named this entry - repaired for this result - as the reason, because it comes first in the register.",
+     "read_by": "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json",
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084"
+    },
+    {
+     "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+     "what_this_releases": "this entry, for this result: it renders 96 excerpts, past the old 64, and is published EXACT with a public row, which is the whole of what this defect was about. The same result_id was produced under the 30-metric batch's version and under the targeted round's, so each version is named.",
+     "what_it_does_not_assert": "that the 96 lines are the right 96, or that the position is delivered: D02_PFIZER_2025_SCOPE_CONTENT_READ still withdraws it for the two keyword-admitted items. Without this release the frame named this entry - repaired for this result - as the reason, because it comes first in the register.",
+     "read_by": "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json",
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "run_id": "run:historical-period:390c799f1661f9d85f2124010345b318c9e39dd12880f5a2944d163dfb1f3d9e",
+     "public_row_hash": "sha256:b0e3c504ede82f2b179533bc86615cdf767c1c918da2336214cb85b3e0de9cb1"
+    },
+    {
+     "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+     "run_id": "run:historical-period:754d865e517b2bc1529a85b1092cf829746517f3e94f18baca33b10fff72c9cd",
+     "public_row_hash": "sha256:a1bc50f58c2ae342242ae789e85684933091c88306185e52ee7610e4e0e66b57",
+     "read_by": "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again by the twelve-period batch under its own version; named for that version on its own.",
+     "what_it_does_not_assert": "that any position outside that batch ran under this version, or anything about results with another result_id (docs/evidence/issue47_history/native-run-batch-12-periods/)."
+    }
+   ],
+   "repair": "Three steps, all landed. scripts/vnext/historical_text_results.incorporated_scopes locates the lettered sub-note. scripts/vnext/historical_spec_revision.py raises what a Spec may declare, without changing specs.py. scripts/vnext/historical_text_protocol.py raises what ORDERED_NEWLINE_V1 will render, without changing text_results.py. The route declares catalog/r6/D02_legal_disclosures_v2.md.",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
+   "result_id": null,
+   "summary": "Item 3 incorporates Note 16A by reference. The sub-note is located: Note 16 carries 'A. Legal Proceedings' with B (guarantees), C (commitments), D (contingent consideration) and E (insurance) after it, and the scope runs from A to B. Correctly scoped, the excerpt set is 92 items and 41,860 rendered characters - 65 percent of max_text_chars and 144 percent of max_items - so what stops this coordinate is the item count, not the scope and not the volume."
+  },
+  {
+   "company_id": "pfizer",
+   "completeness_direction": {
+    "done": "2026-09-22",
+    "evidence": "docs/evidence/issue47_history/d02-content-read/pfizer-2025-both-directions.json",
+    "still_not_covered": "the 2,226 untaken blocks inside Item 8 outside the note. They are the _LEGAL keyword proxy's question, measured and open.",
+    "verdict": "the 25 untaken are five identical page headers of five blocks each, judged by counting repetition in the document rather than by asking the rule that excluded them. Nothing reading as a disclosure is dropped inside this scope.",
+    "what_it_did_find": "Item 3 itself, taken by no one: the range held one block and the selection took zero. Registered as D02_PFIZER_2025_HYPERLINKED_ITEM_THREE_DROPPED and repaired.",
+    "what_was_read": "all 116 blocks inside the located note scope [3821, 3937), the 91 taken and the 25 not"
+   },
+   "corrected_count_would_be": {
+    "accepted_by_the_reading": "94 of 96. The two the reading rejects are 2175 and 2240, held by the keyword proxy, and they are why this coordinate stays withdrawn.",
+    "measured_now": "96 after the hyperlinked Item 3 sentence was restored; 95 before it",
+    "the_earlier_prediction_of_93": "assumed all six would leave together. They do not: the audit-report rule removes four and the keyword defect holds the other two, so 95 is where the repaired half lands. This is why the number had to stay a prediction rather than become a target - an implementation tuned until it emitted 93 would have had to remove two blocks for the wrong reason.",
+    "when_the_keyword_defect_is_repaired": "93, if and only if those two are the only ones it is holding. Not asserted."
+   },
+   "defect_id": "D02_PFIZER_2025_SCOPE_CONTENT_READ",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/"
+   ],
+   "found_by": "reading the original filing's blocks in the declared scope ranges and judging each one against the approved source definition, rather than by re-running the selector that produced them",
+   "in_scope_items_missing": [
+    {
+     "block_index": 3858,
+     "cause": "REPEATED_WITHIN_SCOPE",
+     "text": "Comirnaty (tozinameran)"
+    },
+    {
+     "block_index": 3874,
+     "cause": "REPEATED_WITHIN_SCOPE",
+     "text": "Comirnaty (tozinameran)"
+    },
+    {
+     "block_index": 3870,
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12",
+     "text": "Paxlovid"
+    },
+    {
+     "block_index": 3882,
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12",
+     "text": "Asbestos"
+    },
+    {
+     "block_index": 3886,
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12",
+     "text": "Docetaxel"
+    },
+    {
+     "block_index": 3889,
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12",
+     "text": "Zantac"
+    },
+    {
+     "block_index": 3899,
+     "cause": "SUBSTANTIVE_MINIMUM_LENGTH_12",
+     "text": "Chantix"
+    }
+   ],
+   "measured_across_filings": {
+    "evidence": "docs/evidence/issue47_history/d02-content-read/audit-report-boundary.json",
+    "filings_read": [
+     "pfizer",
+     "southwest_airlines",
+     "lumen_technologies",
+     "enphase_energy",
+     "marriott_international",
+     "ford_motor_company"
+    ],
+    "how_often_it_bites": "only Pfizer over-takes. The other five take nothing from inside their audit reports, because only Pfizer's auditor names a litigation critical audit matter. Rare, and structural: any filing whose auditor names one is exposed.",
+    "no_op_elsewhere": "the other five filings' proposal records are byte-identical before and after - same proposal_id and same coverage_hash, not merely the same candidate count.",
+    "the_rule_that_failed": "closing the span at the firm's /s/ signature passes five filings and leaves both of Pfizer's openings unbounded - the one filing it was written for. Pfizer's report has no /s/ block; it closes with a tenure sentence that does not even use the usual wording.",
+    "what_varies": "the audit report is at the front of Item 8 in four, at the back in Southwest, and absent in Ford, whose whole Item 8 is one cross-reference block. Every filing carries two reports, and some also carry unemphasised mentions."
+   },
+   "metric_id": "D02",
+   "out_of_scope_items": [
+    {
+     "block_index": 1881,
+     "state": "EXCLUDED",
+     "text": "Evaluation of product liability and other product-related litigation",
+     "why": "heading of the independent auditor's critical audit matter"
+    },
+    {
+     "block_index": 1882,
+     "state": "EXCLUDED",
+     "text": "As discussed in Notes 1S and 16 to the consolidated financial statements, the Company is involved in product liability and other product-related litigation...",
+     "why": "the auditor restating what Notes 1S and 16 say. Note 16A is already taken in full, so it adds no disclosure while mixing in a second document part"
+    },
+    {
+     "block_index": 1883,
+     "state": "EXCLUDED",
+     "text": "We identified the evaluation of product liability and other product-related litigation as a critical audit matter...",
+     "why": "the auditor's statement of why this was a critical audit matter"
+    },
+    {
+     "block_index": 1884,
+     "state": "EXCLUDED",
+     "text": "The following are the primary procedures we performed to address this critical audit matter...",
+     "why": "1,233 characters of audit procedures, which is not a legal proceeding"
+    },
+    {
+     "block_index": 2175,
+     "state": "STILL_TAKEN",
+     "text": "Our estimates are often based on complex judgments and assumptions...",
+     "why": "critical accounting estimates; matched on 'litigation' inside a list of risk factors. The _LEGAL keyword defect, not the audit-report one"
+    },
+    {
+     "block_index": 2240,
+     "state": "STILL_TAKEN",
+     "text": "In determining the reserve percentages for each pool of trade accounts receivables...",
+     "why": "credit-loss policy; matched on 'written off after all reasonable means to collect the full amount (including litigation, where appropriate) have been exhausted'. Same keyword defect"
+    }
+   ],
+   "partial_repair": {
+    "audit_report": "scripts/vnext/historical_text_results.audit_report_spans; 99 to 95, the four excluded",
+    "headings": "scripts/vnext/historical_text_results._page_furniture and _note_heading; 92 to 99, seven recovered",
+    "still_open": "blocks 2175 and 2240, and with them the _LEGAL keyword standing in for 'is this a legal-proceedings disclosure'. Measured across the same six filings: the proxy admits 17 Item 8 blocks, 14 of them correctly - Pfizer's 2302 and 2351, Southwest's five, Marriott's three, Lumen's two and Enphase's two - and 3 wrongly, Pfizer's two plus Lumen's 1670. Narrowing the proxy would cost the fourteen to remove the three, so the repair has to be surgical and is not taken on six filings at one period each. See docs/evidence/issue47_history/d02-content-read/keyword-proxy-scope.json."
+   },
+   "period_end": "2025-12-31",
+   "repair_state": "TEN_OF_THIRTEEN_REPAIRED_TWO_KEYWORD_ITEMS_STILL_TAKEN",
+   "result_id": null,
+   "scope_note": "this withdraws the coordinate's result from current delivery. It does not change the approved definition: entity_scope registrant and source 'Item 3 / legal proceedings / contingencies notes' are what each item was judged against.",
+   "summary": "The 92-item set was not the 92 it should be: six items outside the approved source and seven in-scope sub-headings missing. Seven headings were recovered (92 to 99) and the four audit-report items were then excluded (99 to 95). Two items remain - accounting-policy paragraphs admitted on a single occurrence of the word litigation - and they are a different defect with a different cause.",
+   "the_reasoning_that_was_withdrawn": {
+    "what_replaced_it": "document part, supported by content. The approved source names Item 3, the legal proceedings section and the contingencies notes; the audit report is none of them. The content agrees: 1884 is audit procedures and 1882 restates a note already taken in full.",
+    "what_was_written": "'we' is the auditor; entity_scope is registrant.",
+    "why_it_was_wrong": "entity_scope answers which entity the disclosure concerns, not who is speaking. Block 1882, read whole, is about the registrant's own litigation exposure, so a rule excluding it for being in the auditor's voice would exclude a disclosure about the registrant. The Spec includes ITEM_8 explicitly."
+   },
+   "two_distinct_causes": {
+    "REPEATED_WITHIN_SCOPE": "historical_text_results counts normalised block text within the scope and treats anything appearing more than once as page furniture. That rule was added to drop running headers and it does. It also drops a product sub-heading that legitimately appears twice in one note - Comirnaty appears under 'Actions in Which We are the Defendant' and again under 'Matters Involving Pfizer and its Collaboration/Licensing Partners'.",
+    "SUBSTANTIVE_MINIMUM_LENGTH_12": "text_business_candidates._substantive requires at least twelve characters. Product names are shorter than that: Zantac is six, Chantix seven, Paxlovid and Asbestos eight, Docetaxel nine. Orgovyx (relugolix) at nineteen is kept, so the set is inconsistent in a way that depends on how long the generic name is."
+   },
+   "what_is_correct": "every substantive paragraph of Note 16A is present, in order, and the two in-scope items outside the sub-note - the contingencies note lead-in at 2302 and the Seagen legal-matters bullet at 2351 - are correctly included. The scope boundary [3821, 3937) is right: guarantees, commitments, contingent consideration and insurance all start at or after 3937 and none is in the set."
+  },
+  {
+   "company_id": "lumen_technologies",
+   "confirmed_in": {
+    "how": "read out of the batch Run's own records rather than inferred from the census: the observation at block 1670 is present and its value is the text above. Every other batch D02 result was swept for the census's three wrong blocks and none carries one.",
+    "items": 41,
+    "reported_quality": "EXACT",
+    "requirement_closure_hash": "sha256:95a0f340dbd55a8b10b0fd562f4d5285b558dc4294e80a755282cc2a15a7280b",
+    "result_id": "sha256:cb34c9819da92e7b18602ade3f8e2e0dfe33db27b5f19cf8e72cdc34c6cbbb8c",
+    "run_id": "run:historical-period:81223cbf74b704298a5f225082709d225db885bcc87121d1bcebc907a274f9ad"
+   },
+   "defect_id": "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/keyword-proxy-scope.json",
+    "docs/evidence/issue47_history/native-run-batch-25-metrics.json"
+   ],
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "result_id": null,
+   "same_cause_as": [
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "scope_note": "This withdraws the coordinate's result from current delivery. The other 40 items are the ones the census judged correct, including Lumen's two correctly admitted Item 8 blocks; withdrawing the set is not a claim that they are wrong, it is that a set with a wrong member is not the right set.",
+   "shared_root_cause": "scripts/vnext/text_business_candidates._LEGAL standing in for 'is this a legal-proceedings disclosure' on Item 8 blocks that the filing does not incorporate by name. Measured across six filings the proxy admits 17 Item 8 blocks, 14 of them correctly; the three wrong ones are Pfizer's 2175 and 2240 and this one. Narrowing the proxy would cost the fourteen to remove the three, so the repair is surgical and is not written from six filings at one period each.",
+   "summary": "Block 1670 is Lumen's external-legal-counsel cost policy, admitted to the excerpt set because the word litigation appears inside a list of advisory matters. It is not a legal-proceedings disclosure, so the 41-item set is not the set it should be.",
+   "the_block": {
+    "block_index": 1670,
+    "text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on finance, regulatory, litigation, and other matters. Subject to certain exceptions, we expense these costs as the related services are received.",
+    "why_out_of_scope": "an accounting policy for legal fees. The keyword sits in a comma list of advisory subjects whose head noun is counsel costs, not a proceeding the registrant is party to."
+   },
+   "why_it_was_missing": "The census named this block in prose inside the Pfizer entry's still_open note - 'Pfizer's two plus Lumen's 1670' - which the machine-read layer never sees. So the repository had found the error and was still counting the result as verified: known_content_defect was 1 when two coordinates were known bad. Finding an error and withdrawing it are two separate acts and only the second one moves a number."
+  },
+  {
+   "company_id": "pfizer",
+   "defect_id": "D02_PFIZER_2025_HYPERLINKED_ITEM_THREE_DROPPED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/hyperlinked-item-three.json",
+    "docs/evidence/issue47_history/d02-content-read/pfizer-2025-both-directions.json"
+   ],
+   "found_by": "the completeness direction of the content read: enumerating every block inside each declared range that the selection does not take. Reading only the taken set cannot see this.",
+   "it_was_not_registered_before": "it was recorded in prose in two READMEs and in AGENTS.md, and d02-content-read/finding.json asserted it was 'already registered as a separate defect'. It was not in this file, so it withdrew nothing. That claim has been corrected in finding.json.",
+   "measured": {
+    "evidence": "docs/evidence/issue47_history/d02-content-read/hyperlinked-item-three.json",
+    "filings_measured": [
+     "pfizer",
+     "marriott_international",
+     "southwest_airlines",
+     "ford_motor_company",
+     "lumen_technologies",
+     "enphase_energy"
+    ],
+    "no_op_elsewhere": "the other five filings' proposal records are byte-identical - same proposal_id, not merely the same count - and every D03 candidate set in the corpus is unchanged, Pfizer's included",
+    "pfizer": "95 -> 96, adding block 937 and removing nothing"
+   },
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "repair": "scripts/vnext/historical_text_results._hyperlinked_sentence asks the frozen rule again with the anchor taken off, and _d02_section is now one expression both paths ask. Thirteen of the fourteen blocks the clause could otherwise let into D02 are 'Table of Contents' and the frozen navigation-header pattern already rejects them, so no second discriminator was added.",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
+   "result_id": null,
+   "severity": "set composition, not lost substance: Note 16A is taken in full, so the disclosure the sentence points at was already present.",
+   "summary": "Pfizer's whole Item 3 is one 77-character hyperlinked sentence and _substantive drops any linked block under 120 characters, so the first source the approved definition names contributed nothing. Lumen's Item 3 is the same kind of sentence, 226 characters and unlinked, and is taken - the two filings answered the same content differently on the anchor alone.",
+   "what_stays_open": "a hyperlink of twelve characters or more that is not a navigation header and repeats inside a note scope would be admitted once per occurrence. No filing here holds one, so this is recorded rather than guarded.",
+   "recomputed": {
+    "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+    "present_in": {
+     "28-metric batch": "sha256:ecacd7f240045e7dba7ef61c4ec3637015d49a9fdfbccc4b3876f7fd59b745a1",
+     "29-metric batch": "sha256:d4c4a7abdb78ed8594f06e3dc12e5ef16cfff8eb81b4bbd6f89b776e36e15cdc",
+     "30-metric batch": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084"
+    },
+    "measured": "the recomputed payload carries 'Certain legal proceedings in which we are involved are discussed in Note 16A.' as its own line; 96 lines against 95 before"
+   },
+   "released": [
+    {
+     "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+     "requirement_closure_hash": "sha256:5c89905acee709da1cb43e7f50fc4364e52d075343a4264e8a869a1a92d15084",
+     "what_this_releases": "this entry, for this result under the version the 30-metric batch ran. The same result under the two earlier versions is not released by it, and D02_PFIZER_2025_SCOPE_CONTENT_READ still withdraws it everywhere: two keyword-admitted items remain.",
+     "what_it_does_not_assert": "that the 96 lines are the right 96."
+    },
+    {
+     "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "run_id": "run:historical-period:390c799f1661f9d85f2124010345b318c9e39dd12880f5a2944d163dfb1f3d9e",
+     "public_row_hash": "sha256:b0e3c504ede82f2b179533bc86615cdf767c1c918da2336214cb85b3e0de9cb1",
+     "read_by": "docs/evidence/issue47_history/d02-content-read/hyperlinked-item-three.json",
+     "what_this_releases": "The same result under the round's version, named for that version on its own.",
+     "what_it_does_not_assert": "that the position is delivered: D02_PFIZER_2025_SCOPE_CONTENT_READ still withdraws it for the two keyword-admitted blocks."
+    },
+    {
+     "result_id": "sha256:367fe2ef6045af95b2ab828d345f39fa8f197ef1138432842566deb633b26d1f",
+     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+     "run_id": "run:historical-period:754d865e517b2bc1529a85b1092cf829746517f3e94f18baca33b10fff72c9cd",
+     "public_row_hash": "sha256:a1bc50f58c2ae342242ae789e85684933091c88306185e52ee7610e4e0e66b57",
+     "read_by": "docs/evidence/issue47_history/d02-content-read/hyperlinked-item-three.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again by the twelve-period batch under its own version; named for that version on its own.",
+     "what_it_does_not_assert": "that any position outside that batch ran under this version, or anything about results with another result_id (docs/evidence/issue47_history/native-run-batch-12-periods/)."
+    }
+   ]
+  },
+  {
+   "company_id": "paramount_skydance_paramount_global",
+   "confirmed_in": {
+    "how": "read out of the batch Run's own records, not inferred from a census: the observations at blocks 2108 and 2257 are present with the text above. The same sweep judged block 1900 correctly admitted.",
+    "items": 28,
+    "reported_quality": "EXACT",
+    "requirement_closure_hash": "sha256:6a75dcb423e5a4bcfc51bb084098c3eb6b520dd68362fa50a35040f045a8fcfe",
+    "result_id": "sha256:81289af7736204e48130369e42c1996d2965098934f0cf7ef06f709039b33db6",
+    "run_id": "run:historical-period:a14974e6b78d7d9a3e16676c95b94bf95b7907090333b626685850086f32039b"
+   },
+   "defect_id": "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/keyword-proxy-all-eleven.json"
+   ],
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "repair_state": "ROOT_CAUSE_MEASURED_NOT_REPAIRED",
+   "result_id": null,
+   "same_cause_as": [
+    "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+   ],
+   "scope_note": "This withdraws the coordinate's result from current delivery. The other 26 items include block 1900, which the census judged correctly admitted; withdrawing the set is not a claim that they are wrong.",
+   "shared_root_cause": "scripts/vnext/text_business_candidates._LEGAL standing in for 'is this a legal-proceedings disclosure' on Item 8 blocks the filing does not incorporate by name. Across all eleven saved periods the proxy admits 24 Item 8 blocks, 19 of them correctly. Narrowing it would risk the nineteen to remove the five, and the enumeration criterion that looked like it would separate them is falsified by Macy's block 1065.",
+   "summary": "Two of the 28 excerpts are not legal-proceedings disclosures. Block 2108 is transaction-related cost composition and block 2257 is a credit-facility leverage covenant; each is admitted because a keyword appears inside an enumeration about something else. A 28-item set with two wrong members is not the right set.",
+   "the_blocks": {
+    "2108": {
+     "why_out_of_scope": "the subject is what transaction costs consist of - 'banking, legal, advisory, and other professional fees'. It does carry one litigation-related amount, a $156 million 2023 benefit from stockholder litigation, so it is not empty of legal content; it is not a legal-proceedings or contingencies disclosure, which is what the approved source names."
+    },
+    "2257": {
+     "why_out_of_scope": "a leverage-ratio covenant. The keyword is in the definition of an EBITDA add-back: 'restructuring or other business optimization programs, litigation and environmental reserves'."
+    }
+   },
+   "why_it_was_missing": "the first census read six filings at one period each and this issuer was not among them. Its D02 result was counted as delivered in two batches.",
+   "other_direction_found_later": "The italic matter label 'Asbestos' (block 3249) inside the incorporated note was dropped as well; the italic-label repair admits it (d02-content-read/italic-note-labels.json). The keyword-proxy blocks still withdraw this coordinate."
+  },
+  {
+   "company_id": "enphase_energy",
+   "defect_id": "D02_ENPHASE_2025_PAGE_FOOTER_CARRIES_ITS_PAGE_NUMBER",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/four-sets-both-directions.json",
+    "docs/evidence/issue47_history/d02-content-read/page-furniture-by-scope.json"
+   ],
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
+   "result_id": null,
+   "same_cause_as": [],
+   "scope_note": "This withdraws the coordinate's result from current delivery. The other 17 excerpts were read against the filing and are legal-proceedings disclosure - thirteen Item 3 blocks and two headings covering the securities class actions and the shareholder derivative suits, and two contingency blocks in Item 8. (This note first said fourteen Item 3 blocks, which counted the footer.) Withdrawing the set is not a claim that they are wrong.",
+   "shared_root_cause": "The page-furniture criterion identifies a running header by repetition: a block that repeats inside its scope next to another repeating block. Enphase writes its footer as one block that carries the page number, so every instance is a different text and no two can be compared. This is not the scope-coverage problem fixed in the same reading - widening that criterion to every scope removes Ford's eight running headers and, measured over all eleven saved periods, touches nothing else, including this block.",
+   "summary": "One of the 18 excerpts is the page footer \"Enphase Energy, Inc. | 2025 Form 10-K | 46\". It is not a disclosure by any reading, and an 18-item set with a page footer in it is not the right set.",
+   "the_blocks": {
+    "755": {
+     "why_out_of_scope": "document furniture. It sits at a page break inside Item 3, immediately before the \"Table of Contents\" link that opens the next page, and says nothing about any proceeding."
+    }
+   },
+   "why_it_was_not_repaired_at_first": "Catching it needs a second criterion - repetition after the digits are removed, or something like it - and this corpus offers exactly one example of it. A rule written from one filing is the rule that fails on the seventh, which is the mistake this Issue has already made and recorded. It is registered so the coordinate stops counting as verified, and a positive case is what would justify writing the rule.",
+   "why_it_was_repaired_after_all": "The rule asks for more than the one example shows: the text before the page number must recur on at least three pages and sit beside a neighbour that recurs too. Over the eleven saved D02 filings it removes this block and no other, and no D03 set moves.",
+   "repair": "scripts/vnext/historical_text_results._numbered_page_footers, committed in d5de1684; probe in targeted-round-c7a49b98/probe-before-the-repair.json",
+   "recomputed": {
+    "run_id": "run:historical-period:954bc13e3b575c21ccfbd3278bdeadf3425a31205f658feac15bb9d49165fb96",
+    "result_id": "sha256:6350fa46c5e8329a0d3f7b4e119e30ea40e80ef0e90c63007a622356deb3718e",
+    "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+    "run_status": "FROZEN",
+    "public_row_hash": "sha256:fa3249d0a68be2639080a43d6bff4df9cff5ec8eeedfaeddf0e674c98c685056",
+    "excerpts": 17,
+    "lines_removed": [
+     "Enphase Energy, Inc. | 2025 Form 10-K | 46"
+    ],
+    "lines_added": [],
+    "new_calls": {
+     "provider": 0,
+     "paid": 0,
+     "sec": 0
+    },
+    "evidence": "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json"
+   },
+   "released": [
+    {
+     "result_id": "sha256:6350fa46c5e8329a0d3f7b4e119e30ea40e80ef0e90c63007a622356deb3718e",
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "run_id": "run:historical-period:954bc13e3b575c21ccfbd3278bdeadf3425a31205f658feac15bb9d49165fb96",
+     "public_row_hash": "sha256:fa3249d0a68be2639080a43d6bff4df9cff5ec8eeedfaeddf0e674c98c685056",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+     "what_this_releases": "This result: the earlier set with the footer line removed and nothing else changed, in the same order - so each remaining line is one the earlier reading judged disclosure.",
+     "what_it_does_not_assert": "that the eighteen-item result the defect was raised against is correct; it stays withdrawn."
+    },
+    {
+     "result_id": "sha256:6350fa46c5e8329a0d3f7b4e119e30ea40e80ef0e90c63007a622356deb3718e",
+     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+     "run_id": "run:historical-period:26e18ae6d0557aac59050640ddcef6b8ef70504ea9c1b91a87cf644a7f583d1a",
+     "public_row_hash": "sha256:ecbd41012cd8e4bfc50e1c8f9f66c98bca2e7a345cf8d9fef6483b30c6e1e895",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again by the twelve-period batch under its own version; named for that version on its own.",
+     "what_it_does_not_assert": "that any position outside that batch ran under this version, or anything about results with another result_id (docs/evidence/issue47_history/native-run-batch-12-periods/)."
+    }
+   ]
+  },
+  {
+   "company_id": "marriott_international",
+   "defect_id": "D01_MARRIOTT_2025_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED",
+   "evidence": [
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json",
+    "docs/evidence/issue47_history/d01-risk-headings/underline-repair.json"
+   ],
+   "metric_id": "D01",
+   "missed_headings": [
+    "Operational Risks",
+    "Development and Financing Risks",
+    "Technology, Information Protection, and Privacy Risks",
+    "General Risk Factors"
+   ],
+   "period_end": "2025-12-31",
+   "repair": "scripts/vnext/historical_text_emphasis.py admits underline beside bold and scripts/vnext/historical_risk_results.py carries it for D01; proven end to end on all three years, 34/35/33 headings becoming 38/39/37",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
+   "reported_quality": "EXACT",
+   "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
+   "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
+   "summary": "34 of 38 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'General Risk Factors' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only.",
+   "recomputed": {
+    "run_id": "run:historical-period:d11137bf87796a21b6edd6fc24b4ec703e33a17af03348be96e028ba64ab867e",
+    "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+    "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+    "run_status": "FROZEN",
+    "validation_status": "PASSED",
+    "public_row_hash": "sha256:e77f60f4c47e0f2986d5cadf33e1e236a68358dcbd4211628a1d32a7dd245d37",
+    "headings": 38,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "execution_bytes": "the run's recorded baseline_manifest hash is the runtime tree's current one, all 26 rule files hash to it in both trees, and the trees differ only in the six registration-patch entries; see d01-risk-headings/repaired-results.json",
+    "evidence": "docs/evidence/issue47_history/d01-risk-headings/repaired-results.json"
+   },
+   "released": [
+    {
+     "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+     "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+     "run_id": "run:historical-period:d11137bf87796a21b6edd6fc24b4ec703e33a17af03348be96e028ba64ab867e",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+     "what_this_releases": "This result and no other. Any other result at this coordinate - including the one the defect was raised against, which the 30-metric batch still holds - stays withdrawn.",
+     "what_it_does_not_assert": "that any batch has re-run under this version. The 30-metric batch ran under the previous closure and is not re-signed; this release applies only where this exact result is what a position carries."
+    },
+    {
+     "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "run_id": "run:historical-period:d8d11622d8dbd60520637e63ec569b693a18f8dba0391e0f8c2e8bb0bf092a90",
+     "public_row_hash": "sha256:e77f60f4c47e0f2986d5cadf33e1e236a68358dcbd4211628a1d32a7dd245d37",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again under the round's version; the release is named for that version on its own.",
+     "what_it_does_not_assert": "that this version was run for any position outside the targeted round (docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json)."
+    },
+    {
+     "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+     "run_id": "run:historical-period:e0e628b62f730ec9e82b344cc9ced4c8997cd4676e22299206d3935299ad5aeb",
+     "public_row_hash": "sha256:b8c765b4ff57446869dc049782dc4672d3404e53f975b55016da60cc9ecd3e8d",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again by the twelve-period batch under its own version; named for that version on its own.",
+     "what_it_does_not_assert": "that any position outside that batch ran under this version, or anything about results with another result_id (docs/evidence/issue47_history/native-run-batch-12-periods/)."
+    }
+   ]
+  },
+  {
+   "company_id": "marriott_international",
+   "defect_id": "D01_MARRIOTT_2024_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED",
+   "evidence": [
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json",
+    "docs/evidence/issue47_history/d01-risk-headings/underline-repair.json"
+   ],
+   "metric_id": "D01",
+   "missed_headings": [
+    "Operational Risks",
+    "Development and Financing Risks",
+    "Technology, Information Protection, and Privacy Risks",
+    "General Risk Factors"
+   ],
+   "period_end": "2024-12-31",
+   "repair": "scripts/vnext/historical_text_emphasis.py admits underline beside bold and scripts/vnext/historical_risk_results.py carries it for D01; proven end to end on all three years, 34/35/33 headings becoming 38/39/37",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
+   "reported_quality": "EXACT",
+   "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
+   "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
+   "summary": "35 of 39 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'General Risk Factors' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only.",
+   "recomputed": {
+    "run_id": "run:historical-period:deee5ce3c941e33791683cd30fd22e048d6081019f01b8b2e83a9bdac7d91192",
+    "result_id": "sha256:2058162f1b9d6e1c48a98e2186bf92d52a3ca03abce74f4302ac7ef9809a2904",
+    "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+    "run_status": "FROZEN",
+    "validation_status": "PASSED",
+    "public_row_hash": "sha256:25835b2e108a56959628e9c5e6765d5e07240810334c8c4bbc82d49304dee5f4",
+    "headings": 39,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "execution_bytes": "the run's recorded baseline_manifest hash is the runtime tree's current one, all 26 rule files hash to it in both trees, and the trees differ only in the six registration-patch entries; see d01-risk-headings/repaired-results.json",
+    "evidence": "docs/evidence/issue47_history/d01-risk-headings/repaired-results.json"
+   },
+   "released": [
+    {
+     "result_id": "sha256:2058162f1b9d6e1c48a98e2186bf92d52a3ca03abce74f4302ac7ef9809a2904",
+     "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+     "run_id": "run:historical-period:deee5ce3c941e33791683cd30fd22e048d6081019f01b8b2e83a9bdac7d91192",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+     "what_this_releases": "This result and no other. Any other result at this coordinate - including the one the defect was raised against, which the 30-metric batch still holds - stays withdrawn.",
+     "what_it_does_not_assert": "that any batch has re-run under this version. The 30-metric batch ran under the previous closure and is not re-signed; this release applies only where this exact result is what a position carries."
+    },
+    {
+     "result_id": "sha256:2058162f1b9d6e1c48a98e2186bf92d52a3ca03abce74f4302ac7ef9809a2904",
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "run_id": "run:historical-period:9329a38c7156b48357ac9f0aa3ec5f3474fb3a45df6a77d26560efed6abbcfc0",
+     "public_row_hash": "sha256:25835b2e108a56959628e9c5e6765d5e07240810334c8c4bbc82d49304dee5f4",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again under the round's version; the release is named for that version on its own.",
+     "what_it_does_not_assert": "that this version was run for any position outside the targeted round (docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json)."
+    },
+    {
+     "result_id": "sha256:2058162f1b9d6e1c48a98e2186bf92d52a3ca03abce74f4302ac7ef9809a2904",
+     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+     "run_id": "run:historical-period:a6520033ece8975d4231afeec89c660783c7397854101f4fe47349265fe06b73",
+     "public_row_hash": "sha256:1b1357d98ba5c4d42e580048fb22d126c04ebe966a090503474d0115d8a0b4da",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again by the twelve-period batch under its own version; named for that version on its own.",
+     "what_it_does_not_assert": "that any position outside that batch ran under this version, or anything about results with another result_id (docs/evidence/issue47_history/native-run-batch-12-periods/)."
+    }
+   ]
+  },
+  {
+   "company_id": "marriott_international",
+   "defect_id": "D01_MARRIOTT_2023_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED",
+   "evidence": [
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json",
+    "docs/evidence/issue47_history/d01-risk-headings/underline-repair.json"
+   ],
+   "metric_id": "D01",
+   "missed_headings": [
+    "Operational Risks",
+    "Development and Financing Risks",
+    "Technology, Information Protection, and Privacy Risks",
+    "Governance Risk"
+   ],
+   "period_end": "2023-12-31",
+   "repair": "scripts/vnext/historical_text_emphasis.py admits underline beside bold and scripts/vnext/historical_risk_results.py carries it for D01; proven end to end on all three years, 34/35/33 headings becoming 38/39/37",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
+   "reported_quality": "EXACT",
+   "root_cause": "scripts/vnext/text_coverage.py computes leading_emphasis from <b>/<strong>/<h1>-<h6>/font-weight>=600 only; its bytes are named by issue_28_v11 and checked on both roots, so a repair needs a successor rule file and moves the closure.",
+   "scope_measured": "Marriott is the only one of the nine readable filings whose Item 1A carries an underlined, non-bold, non-furniture block, and every one of them is a risk-category heading. Admitting italic as well would take Ford's fourteen running heads and two filers' italic lead-in sentences, so the measured rule is underline, not emphasis in general.",
+   "summary": "33 of 37 Item 1A headings. The four this filer marks with text-decoration:underline and font-weight:400 - 'Operational Risks', 'Development and Financing Risks', 'Technology, Information Protection, and Privacy Risks', 'Governance Risk' - are dropped, while the two it marks with font-weight:700 are kept, in the same document and the same wrapper. text_coverage's leading_emphasis is bold only.",
+   "recomputed": {
+    "run_id": "run:historical-period:6d8788ab5f8621e37fa6ac8504cc2084fc41ddd7019af1c04db23c88fe32496a",
+    "result_id": "sha256:178bc9625bc39e3de5abd36027f310ef57070547d87ddb39cd390a364c2fa754",
+    "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+    "run_status": "FROZEN",
+    "validation_status": "PASSED",
+    "public_row_hash": "sha256:3762c327a8cd4645a77309ef1df596ffa628d38fc0a44cbb0bd608f6918cca01",
+    "headings": 37,
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "execution_bytes": "the run's recorded baseline_manifest hash is the runtime tree's current one, all 26 rule files hash to it in both trees, and the trees differ only in the six registration-patch entries; see d01-risk-headings/repaired-results.json",
+    "evidence": "docs/evidence/issue47_history/d01-risk-headings/repaired-results.json"
+   },
+   "released": [
+    {
+     "result_id": "sha256:178bc9625bc39e3de5abd36027f310ef57070547d87ddb39cd390a364c2fa754",
+     "requirement_closure_hash": "sha256:d4cf2c3f021107d2e4c02f36c16051ff51d250e96f6c44ea66c4574b3060b1aa",
+     "run_id": "run:historical-period:6d8788ab5f8621e37fa6ac8504cc2084fc41ddd7019af1c04db23c88fe32496a",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+     "what_this_releases": "This result and no other. Any other result at this coordinate - including the one the defect was raised against, which the 30-metric batch still holds - stays withdrawn.",
+     "what_it_does_not_assert": "that any batch has re-run under this version. The 30-metric batch ran under the previous closure and is not re-signed; this release applies only where this exact result is what a position carries."
+    },
+    {
+     "result_id": "sha256:178bc9625bc39e3de5abd36027f310ef57070547d87ddb39cd390a364c2fa754",
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "run_id": "run:historical-period:78eff36a828f75cf815ff3d91cb241d35b9ab20f556452b16fdf9da46b5b9f2c",
+     "public_row_hash": "sha256:3762c327a8cd4645a77309ef1df596ffa628d38fc0a44cbb0bd608f6918cca01",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again under the round's version; the release is named for that version on its own.",
+     "what_it_does_not_assert": "that this version was run for any position outside the targeted round (docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json)."
+    },
+    {
+     "result_id": "sha256:178bc9625bc39e3de5abd36027f310ef57070547d87ddb39cd390a364c2fa754",
+     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+     "run_id": "run:historical-period:773ea7c8bee6d193c915130f6125bb77606eaf61afdc953be918822892afca59",
+     "public_row_hash": "sha256:ecdea8c47a4b55451a376a01d844e665e89b3b8cebe68563c9234f65030a3e4a",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again by the twelve-period batch under its own version; named for that version on its own.",
+     "what_it_does_not_assert": "that any position outside that batch ran under this version, or anything about results with another result_id (docs/evidence/issue47_history/native-run-batch-12-periods/)."
+    }
+   ]
+  },
+  {
+   "block_index": 292,
+   "company_id": "paramount_skydance_paramount_global",
+   "defect_id": "D01_PARAMOUNT_2025_HEADING_TRUNCATED_AT_AN_UNBOLDED_PERIOD",
+   "evidence": [
+    "docs/evidence/issue47_history/d01-risk-headings/content-read.json"
+   ],
+   "metric_id": "D01",
+   "period_end": "2025-12-31",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
+   "reported_quality": "EXACT",
+   "root_cause": "text_coverage._Blocks._flush builds leading_emphasis from the leading run of emphasised parts and stops at the first unemphasised one. That is deliberate - a bold lead sentence is kept apart from its following paragraph - and this is the case where the run resumes after the gap.",
+   "scope_measured": "One instance in nine readable filings. Twenty-six of Ford's thirty headings and thirty-two of Marriott's thirty-four also have a prefix shorter than their block, and in every one of those the emphasis does not resume - they are the deliberate lead-sentence case. Only Paramount's resumes, and the gap is a single period.",
+   "summary": "One of the thirty-eight headings is delivered as 'Failures to comply with or changes in U'. The filer marks the periods in 'U.S.' with font-weight:400 between bold letters, and D01 delivers the leading contiguous emphasised run, which ends at the first unbolded part. The block's own text carries the whole sentence: 'Failures to comply with or changes in U.S. or foreign laws or regulations could have an adverse effect on our business, financial condition or results of operations.'",
+   "not_repaired_at_first_because": "A rule written from one example is the kind that fails on the next filing. What the corpus supports is the finding, not yet a repair: 'an unemphasised gap of punctuation only does not end the run' has one instance behind it.",
+   "why_it_was_repaired_after_all": "One real instance limits how far a rule may be generalised; it is not a reason never to repair. The repair is the smallest one this failure needs - a gap of one or two punctuation characters between emphasised runs does not end the run - checked on every saved D01 filing, where it moves this heading and no other.",
+   "repair": "scripts/vnext/historical_text_emphasis.py (UnderlineBlocks bridge_punctuation), committed in d5de1684; probe in targeted-round-c7a49b98/probe-before-the-repair.json",
+   "recomputed": {
+    "run_id": "run:historical-period:873f3f3f42fad6a41c0248c25642ea748764a8cccfcbc87d44d83a68d7c17d38",
+    "result_id": "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+    "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+    "run_status": "FROZEN",
+    "public_row_hash": "sha256:19c86061c8b627b7c07927a945c93f5482611c3a7fc12393b33629568e33a32e",
+    "headings": 38,
+    "new_calls": {
+     "provider": 0,
+     "paid": 0,
+     "sec": 0
+    },
+    "evidence": "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json"
+   },
+   "released": [
+    {
+     "result_id": "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "run_id": "run:historical-period:873f3f3f42fad6a41c0248c25642ea748764a8cccfcbc87d44d83a68d7c17d38",
+     "public_row_hash": "sha256:19c86061c8b627b7c07927a945c93f5482611c3a7fc12393b33629568e33a32e",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json",
+     "what_this_releases": "This result. The reading reads the line from the filing's own runs and takes the whole sentence only through a recorded judgement about that one flagged line.",
+     "what_it_does_not_assert": "that any other Paramount result is repaired: the result the defect was raised against stays withdrawn."
+    },
+    {
+     "result_id": "sha256:6795449bafa12651099b226e569ad3b2882f72a89cd317adb559c8096058afdd",
+     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+     "run_id": "run:historical-period:b334ea075167804391e50d3622377cf0b49cb9f7fac9b2ee5030c8daf8d9fefe",
+     "public_row_hash": "sha256:c9d0d8fa9536b655ae54d95871823f24df0fdd604e09a993c666bb3240c42655",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again by the twelve-period batch under its own version; named for that version on its own.",
+     "what_it_does_not_assert": "that any position outside that batch ran under this version, or anything about results with another result_id (docs/evidence/issue47_history/native-run-batch-12-periods/)."
+    }
+   ]
+  },
+  {
+   "defect_id": "D02_LUMEN_2025_UNDERLINED_CASE_LABEL_DROPPED",
+   "company_id": "lumen_technologies",
+   "metric_id": "D02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Lumen's legal note names each case with a short underlined, italic label, and the case paragraphs under it were in the set; the label 'Blum' (block 3400, between two class-action passages) was not, because the frozen parse counts only bold as emphasis and a short unemphasised block is not substantive text.",
+   "found_by": "the keyword-proxy census's reading of Lumen's note (d02-content-read/keyword-proxy-scope.json), which reads every block in the declared ranges.",
+   "it_was_not_registered_before": "AGENTS.md said this label 'stays registered' after the underline repair for D01 was scoped to D01 alone. It was never in this file, so it withdrew nothing - the same thing that happened with Pfizer's hyperlinked Item 3. Lumen's D02 was withdrawn throughout by D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY, which is why the gap changed no count.",
+   "repair": "scripts/vnext/historical_text_results._note_heading reads the label's own span in the filing's bytes and admits it as a heading when that span is underlined, committed in d5de1684; probe in targeted-round-c7a49b98/probe-before-the-repair.json",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/keyword-proxy-scope.json",
+    "docs/evidence/issue47_history/targeted-round-c7a49b98/probe-before-the-repair.json",
+    "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json"
+   ],
+   "recomputed": {
+    "run_id": "run:historical-period:5d3f4301451d821f53f2d15ee1d6d684b521beb3cc248897196542aa2268deb5",
+    "result_id": "sha256:38de68e71db270b03797ed9ee3330731c04a3589709772b177df2bb8b07b74ae",
+    "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+    "run_status": "FROZEN",
+    "public_row_hash": "sha256:6aef7fc0d721fe793b41508d84fbf52b9049565ea6763e78562a955ec7701e0e",
+    "excerpts": 42,
+    "lines_added": [
+     "Blum"
+    ],
+    "lines_removed": [],
+    "new_calls": {
+     "provider": 0,
+     "paid": 0,
+     "sec": 0
+    },
+    "evidence": "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json"
+   },
+   "released": [
+    {
+     "result_id": "sha256:38de68e71db270b03797ed9ee3330731c04a3589709772b177df2bb8b07b74ae",
+     "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+     "run_id": "run:historical-period:5d3f4301451d821f53f2d15ee1d6d684b521beb3cc248897196542aa2268deb5",
+     "public_row_hash": "sha256:6aef7fc0d721fe793b41508d84fbf52b9049565ea6763e78562a955ec7701e0e",
+     "read_by": "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json",
+     "what_this_releases": "This defect, for this result: the label is present, in the filing's order, and nothing else in the set moved.",
+     "what_it_does_not_assert": "that the result is delivered or its content accepted: D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY still withdraws it, and no reading of the whole 42-item set is recorded."
+    },
+    {
+     "result_id": "sha256:38de68e71db270b03797ed9ee3330731c04a3589709772b177df2bb8b07b74ae",
+     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+     "run_id": "run:historical-period:69eee70fa19c6459784bc293e08e8b98920938b38061058ea732a80b024aaaeb",
+     "public_row_hash": "sha256:833a02144f1d0b69ae7ca6d5b63e95c7a6b0f861d792ce1ec3eedef08a98c643",
+     "read_by": "docs/evidence/issue47_history/targeted-round-c7a49b98/rerun-results.json",
+     "what_this_releases": "The same result - the same result_id, so the same value and identity - produced again by the twelve-period batch under its own version; named for that version on its own.",
+     "what_it_does_not_assert": "that any position outside that batch ran under this version, or anything about results with another result_id (docs/evidence/issue47_history/native-run-batch-12-periods/)."
+    }
+   ]
+  },
+  {
+   "defect_id": "E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM",
+   "company_id": "pfizer",
+   "metric_id": "E01",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Published 0. Pfizer's 8-K of 2025-11-13 (0000078003-25-000159) carries only item 8.01, headed 'Results of Other Events', and reports that Pfizer 'completed the previously announced acquisition of Metsera, Inc. ... pursuant to the Agreement and Plan of Merger'. The approved definition counts an 8.01 once a keyword in its text confirms it ('8.01 需正文关键词确认'); 'acquisition' and 'merger' are both in the item. Under every reading of that confirmation - literal in the item, literal anywhere in the document, or the item reporting a transaction - the count is 1.",
+   "root_cause": "deterministic_router.match_event_claims tests the aliases against the claim's 'brief'. adapt_8k_item_index sets that brief to '8-K item <code> parsed from hdr.sgml' whenever the filing's hdr.sgml carries item codes, and the primary-document heading only when it does not; catalog/event_routes.json puts HDR_SGML_ITEM_CODE first. Every filing in the seven windows has hdr item codes, so the 8.01 branch compares the aliases with a constant string that contains none of them and admits nothing. The heading text is computed (primary_heading_brief) and never matched. The router's bytes are frozen by the issue_28 generations and shared with the ordinary route, which carries the same behaviour.",
+   "scope_measured": "Twenty-three item 8.01 filings in the seven windows that deliver E01, each read whole (content-acceptance/e01-eight-o-one-read.json). One reports a transaction the registrant is party to - this one. Four carry an alias inside the item and only this one of them reports a transaction; the other three are Marriott's use of proceeds ('may include ... acquisitions', twice) and Macy's tender offer ('a combined aggregate purchase price'). Four more carry one only in another item (Item 1.01 covenant text, Item 7.01 'repricing transaction').",
+   "found_by": "the E01 8.01 reading, which reads each item off the saved primary document instead of reproducing the route's text scoping. The first extraction missed this very filing: it looked for the heading 'Other Events' and Pfizer's reads 'Results of Other Events', so the item read as empty and carried no alias - the same shape as the route's miss, one layer up.",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
+   "why_not_repaired_yet": "Pfizer's count is 1 under every reading, but any repair has to pick one, and the choice moves other positions: the literal reading in the item adds Marriott's two use-of-proceeds filings and Macy's tender offer, which are not M&A announcements. Which reading the definition means is the decision in e01-keyword-branch/decision.json.",
+   "evidence": [
+    "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json",
+    "docs/evidence/issue47_history/e01-keyword-branch/eight-o-one-judgements.json",
+    "docs/evidence/issue47_history/e01-keyword-branch/decision.json"
+   ],
+   "repair": "scripts/vnext/historical_event_items.py reads each 8.01 from its own text in the primary document; the brief is no longer consulted (docs/evidence/issue47_history/e01-item-text/). The ordinary route keeps the frozen matcher and this behaviour.",
+   "released": [
+    {
+     "result_id": "sha256:49196de27061cd25311b3f65b4e9c1cbe487b979a5d1945b79f54e9f3d2d7d81",
+     "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+     "run_id": "run:historical-period:4e855cc11bdebd8cdb0f1bfcdaa5ea7f52d040ecdff92eafc2ba4b655b2a970e",
+     "what_this_releases": "this entry, for this result: the Run read Metsera's 8.01 from its own text, found 'acquisition' and 'merger' there, and withheld the window by name (HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING) instead of publishing the 0 the brief produced. The defect stays in force for every other result at this coordinate, including the published 0.",
+     "what_it_does_not_assert": "that the position is delivered - it carries no value until the meaning of an alias in an 8.01's text is decided; the count is 1 under both readings the decision packet sets out, but the route does not make that judgement.",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json"
+    }
+   ]
+  },
+  {
+   "defect_id": "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL",
+   "company_id": "salesforce",
+   "metric_id": "B03",
+   "period_end": "2026-01-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Published 0.2295243829018663455749548465. The D&A it adds is DepreciationDepletionAndAmortization 1,200,000,000, which the filing tags in one sentence of its property and equipment note: 'Depreciation and amortization of fixed assets totaled $1.2 billion'. The filing's statement total, DepreciationAndAmortization 3,631,000,000, includes amortization of acquired intangibles - $692 million in cost of revenues and $995 million in sales and marketing - which the taken fact leaves out.",
+   "root_cause": "calculator._select_structured_fact takes the first approved concept that carries a candidate and never compares it with the later ones; B03's direct chain lists DepreciationDepletionAndAmortization first. A concept name is a clue, not proof of what a number covers, and here the filer uses the concept for a narrower quantity than the chain assumes.",
+   "scope_measured": "all nine B03 filings in this frame (b03-depreciation-scope/finding.json). This is the only one whose direct D&A candidates disagree; Lumen tags two direct concepts and they agree.",
+   "found_by": "the D&A-family census over each filing's own inline XBRL, run while re-reading the one B03 value the earlier cross-source reading had written up as 'the route is right and the reading cannot confirm it'. That record said the primary document does not tag DepreciationDepletionAndAmortization; it does.",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_WITHHELD_BY_NAME",
+   "evidence": [
+    "docs/evidence/issue47_history/b03-depreciation-scope/da_census.py",
+    "docs/evidence/issue47_history/b03-depreciation-scope/finding.json",
+    "docs/evidence/issue47_history/b03-depreciation-scope/route-fault-injections.json",
+    "docs/evidence/issue47_history/b03-depreciation-scope/targeted-runs.json"
+   ],
+   "repair": "The historical route now compares the chain's D&A with what the filing's own inline facts tag for the target year (historical_da_scope_candidate, rule file 36 of issue_47_v1). Candidates that agree keep the approved chain's choice; a conflict the filing's own Depreciation + AmortizationOfIntangibleAssets resolves retakes the proven total; otherwise the result is withheld by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN. That is the standing rule - do not take a subtotal as the complete total, and where the scope cannot be proven, limit the metric precisely - not a new decision. The ordinary route still takes the chain's first concept; carrying the rule there belongs to a generation that can re-record the file.",
+   "recomputed": {
+    "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
+    "publication": "WITHHELD",
+    "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+    "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT",
+    "b01_it_carries_unchanged": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d"
+   },
+   "released": [
+    {
+     "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
+     "requirement_closure_hash": "sha256:3e0183f332fcd7c8aa80042ba755593b160947fd2831325606bb11a3fe08f6a4",
+     "run_id": "run:historical-period:e619deee011d7c1f4d141eb04580e4877e6ecd48225c0c15e76a071e499d4cd4",
+     "read_by": "docs/evidence/issue47_history/b03-depreciation-scope/targeted-runs.json",
+     "what_this_releases": "This withheld result and no other. The published 0.2295243829018663455749548465 the 12-period batch still holds, and any other result at this coordinate, stays withdrawn.",
+     "what_it_does_not_assert": "that the coordinate has a correct value. It has none: the filing's statement total, DepreciationAndAmortization 3,631,000,000, carries right-of-use asset amortization and impairment, the definition does not add impairment back, and the year's impairment is not tagged separately. Nor that any batch has re-run under this version."
+    }
+   ]
+  },
+  {
+   "defect_id": "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "enphase_energy",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "10 of the value's 34 excerpts are outside board composition under every reading of the definition (294: shareholder outreach; 578: communicating with directors; 583: director compensation policy; 590: director compensation label: audit chair retainer). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 4, \"COMPOSITION_FACT\": 13, \"COMPOSITION_POLICY_OR_PROCESS\": 7, \"NOT_BOARD_COMPOSITION\": 10}.",
+   "root_cause": "text_business_candidates.board_composition_candidates labels a block 'committee information' when it names any committee anywhere and contains any of the committee_structure words anywhere ('chair of', 'members of', 'committee chair', 'serves as', 'member of', ...). The two are not required to relate, nor to describe this board: a director-compensation line ('Audit Committee Chair Retainer'), an equity plan's administrator clause, a biography's other-company committee and the audit committee's auditor pre-approval all qualify. Across the ten judged values 87 of the 94 excerpts outside board composition carry the committee label. The selector's bytes are frozen by the issue_28 generations and shared with the ordinary route, which carries the same behaviour.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_FORD_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "ford_motor_company",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "5 of the value's 23 excerpts are outside board composition under every reading of the definition (759: related person transactions policy; 914: nominee biography: another organisation's audit committee; 950: executive biography; 1150: director compensation line: audit chair fee). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 2, \"COMPOSITION_FACT\": 12, \"COMPOSITION_POLICY_OR_PROCESS\": 4, \"NOT_BOARD_COMPOSITION\": 5}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_LUMEN_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "lumen_technologies",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "12 of the value's 17 excerpts are outside board composition under every reading of the definition (620: nominee biography: another company's committees; 621: nominee biography: another company's committees; 1085: meeting attendance; 1089: heading/label without content). Categories: {\"COMPOSITION_FACT\": 4, \"COMPOSITION_POLICY_OR_PROCESS\": 1, \"NOT_BOARD_COMPOSITION\": 12}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MACYS_2026_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "macys",
+   "metric_id": "C02",
+   "period_end": "2026-01-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "5 of the value's 13 excerpts are outside board composition under every reading of the definition (624: nominee biography: committee roles on another company's board; 841: nominee biography: another organisation's committee; 876: nominee biography: another company's audit committee; 1031: AI governance structure). Categories: {\"COMPOSITION_FACT\": 5, \"COMPOSITION_POLICY_OR_PROCESS\": 3, \"NOT_BOARD_COMPOSITION\": 5}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_MARRIOTT_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "marriott_international",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "9 of the value's 29 excerpts are outside board composition under every reading of the definition (402: executive pay and performance; 1024: nominee biography; 1438: CEO performance review; 1511: communicating with directors). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 1, \"COMPOSITION_FACT\": 10, \"COMPOSITION_POLICY_OR_PROCESS\": 9, \"NOT_BOARD_COMPOSITION\": 9}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PARAMOUNT_2024_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "C02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "13 of the value's 36 excerpts are outside board composition under every reading of the definition (768: beneficial ownership footnote; 782: related-party review recusal; 802: nominee biography: other organisations' committees; 817: director biography). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 5, \"COMPOSITION_FACT\": 11, \"COMPOSITION_POLICY_OR_PROCESS\": 7, \"NOT_BOARD_COMPOSITION\": 13}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PARAMOUNT_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "3 of the value's 12 excerpts are outside board composition under every reading of the definition (110: director biography; 435: compensation consultants retained; 667: signature label of the compensation committee report). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 1, \"COMPOSITION_FACT\": 6, \"COMPOSITION_POLICY_OR_PROCESS\": 2, \"NOT_BOARD_COMPOSITION\": 3}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_PFIZER_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "pfizer",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "12 of the value's 24 excerpts are outside board composition under every reading of the definition (219: say-on-pay shareholder engagement; 1195: shareholder engagement; 1239: shareholder proposal engagement; 1262: investor feedback to the governance committee). Categories: {\"COMPOSITION_FACT\": 4, \"COMPOSITION_POLICY_OR_PROCESS\": 8, \"NOT_BOARD_COMPOSITION\": 12}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_SALESFORCE_2026_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "salesforce",
+   "metric_id": "C02",
+   "period_end": "2026-01-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "19 of the value's 30 excerpts are outside board composition under every reading of the definition (693: annual meeting attendance; 861: enterprise risk surveys; 919: director equity awards; 933: director compensation table). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 2, \"COMPOSITION_FACT\": 7, \"COMPOSITION_POLICY_OR_PROCESS\": 2, \"NOT_BOARD_COMPOSITION\": 19}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "C02_SOUTHWEST_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION",
+   "company_id": "southwest_airlines",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION"
+   ],
+   "summary": "6 of the value's 28 excerpts are outside board composition under every reading of the definition (988: nominee biography: another company's audit committee; 1402: related-party questionnaire; 3247: director fees; 3285: director compensation market data). Categories: {\"COMMITTEE_OR_BOARD_FUNCTION\": 4, \"COMPOSITION_FACT\": 10, \"COMPOSITION_POLICY_OR_PROCESS\": 8, \"NOT_BOARD_COMPOSITION\": 6}.",
+   "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
+   "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
+   "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
+   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
+   "evidence": [
+    "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
+    "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ]
+  },
+  {
+   "defect_id": "D02_PARAMOUNT_2024_KEYWORD_PROXY_ADMITS_TRANSACTION_COST_NOTE",
+   "company_id": "paramount_skydance_paramount_global",
+   "metric_id": "D02",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [
+    "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES"
+   ],
+   "summary": "Read in both directions against the predecessor's own 10-K (CIK 813828). Of the sixteen excerpts, fifteen are the Item 3 incorporation and the incorporated 'Legal Matters' caption of Note 19 (the transaction litigation, the Section 220 demands, the asbestos and environmental claims). Block 2010 is the 'Transaction-Related Items' paragraph of the corporate-matters note: what the transaction costs were, including the stockholder-litigation settlement amounts of 2022 and 2023. It is admitted because 'litigation' appears in it; it is not the legal-proceedings or contingencies disclosure the approved source names - the same judgement as the successor year's block 2108. The other direction found the italic matter labels 'Asbestos' (2877) and 'Other' (2885) dropped; that half is repaired (d02-content-read/italic-note-labels.json).",
+   "root_cause": "Same as D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES: the _LEGAL keyword standing in for 'is this a legal-proceedings disclosure' on Item 8 blocks outside the incorporated note.",
+   "scope_measured": "All sixteen excerpts and every untaken block inside Item 3 and the incorporated caption (d02-content-read/italic-note-labels.json census).",
+   "found_by": "a both-directions reading of the FY2024 set, derived from the saved filing through the route's own text input",
+   "repair_state": "LABEL_HALF_REPAIRED_KEYWORD_PROXY_HALF_AWAITS_ITS_DECISION",
+   "why_not_repaired_yet": "The keyword proxy is the registered decision in d02-content-read/keyword-proxy-decision.json; this filing adds a sixth instance and no new criterion.",
+   "evidence": [
+    "docs/evidence/issue47_history/d02-content-read/italic-note-labels.json"
+   ]
+  }
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "purpose": "Results this repository has confirmed hold wrong content. An entry withdraws a result from current delivery. It does not delete it, re-sign it, or relabel it as a structural non-applicability: the original Run stays readable so the defect can be demonstrated and the repair checked.",
+ "record_type": "KNOWN_RESULT_DEFECT_REGISTER",
+ "release_rule": "A coordinate-level entry stops withdrawing only when its 'released' block names the repaired result by result_id, and the Requirement closure it was produced under. repair_state is a note about the work; it releases nothing. An entry naming a result_id withdraws exactly that result and is never released.",
+ "schema_version": 2
+}
