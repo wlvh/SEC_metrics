@@ -3644,5 +3644,26 @@
       "issue47_branch_or_ledger_touched": false
     },
     "independent_review_path": "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/independent-review/conclusion.md"
+  },
+  "c04_ci_selector_limit_20260927": {
+    "status": "TARGETED_C04_SOURCE_SELECTOR_300_SECONDS_GLOBAL_SOURCE_240_JOB_35_MIN_UNCHANGED",
+    "trigger_head": "68abb7a1a12a0c765abbd6b642bc4e175a103e74",
+    "trigger_main_ci_run": 36262871721,
+    "failed_selector": "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",
+    "prior_default_timeout_seconds": 240,
+    "targeted_override_seconds": 300,
+    "shortened_single_version_local_seconds": 227.794,
+    "other_source_timeout_seconds": 240,
+    "saved_source_job_timeout_minutes": 35,
+    "test_runner_function_body_changed": false,
+    "workflow_changed": false,
+    "business_code_changed": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "docs/evidence/issue28_continuous/c04-ci-selector-limit-20260927/README.md",
+    "new_head_ci": "PENDING_AFTER_PUSH"
   }
 }

@@ -131,6 +131,9 @@ SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
     "tests.vnext.test_continuous_sec_acquisition": 480,
+    # One complete C04 source refresh passed locally in 227.794s; the prior
+    # two-version CI case hit 240s. Keep the job deadline unchanged.
+    "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": 300,
 }
 
 
