@@ -1645,6 +1645,28 @@
       "result_path": "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/independent-review/conclusion.md",
       "verdict": "NEEDS_FIX_C04_ONLY_MAX_PROVIDER_POSITIVE_COMPATIBILITY",
       "tool_call_count_note": "Agent reported 18 functions.exec orchestrations and 40 nested tool calls."
+    },
+    {
+      "task_name": "review_c04resume_d99fe48",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_FOLLOWUP",
+      "module": "c04_mixed_resume",
+      "followup_of_patch_sha": "d99fe4896d46eaa6e3c38f54d151ee2d1b9ecb84",
+      "scope_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_refresh_resume.py",
+        "tools/run_fast_tests_v2.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/"
+      ],
+      "patch_sha": "c9b3c18eb931b7aef83f8cfc4982d278a6a0a5bc",
+      "spawned_at": "2026-09-26T21:38:25.434090Z",
+      "ended_at": "2026-09-26T21:40:47.895276Z",
+      "tool_calls": 16,
+      "result_path": "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_C04_ONLY_POSITIVE_PROVIDER_LIMIT_PRECHECK",
+      "total_agent_tool_call_cap": 80,
+      "prior_agent_tool_calls": 40,
+      "tool_call_count_note": "Agent followup reported 16 additional nested tools; cumulative 56 of 80."
     }
   ],
   "ci_capacity_20260922": {
@@ -3613,13 +3635,14 @@
       51
     ],
     "evidence": "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/README.md",
-    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "independent_review": "PASS_WITH_BOUNDS_C04_ONLY_POSITIVE_PROVIDER_LIMIT_PRECHECK",
     "shared_with_47": {
       "file": "scripts/vnext/ordinary_refresh_cycle.py",
       "function": "refresh_and_process",
       "old_default_changed": false,
       "only_unfrozen_v14_binding_changed": true,
       "issue47_branch_or_ledger_touched": false
-    }
+    },
+    "independent_review_path": "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/independent-review/conclusion.md"
   }
 }
