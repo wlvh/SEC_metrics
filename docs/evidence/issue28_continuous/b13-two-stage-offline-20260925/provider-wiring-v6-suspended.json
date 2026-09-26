@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:639b9bf39a3962784a59dee7d66704e648713e520948183e9b478c3993bdae65",
-  "execution_authority_hash": "sha256:9d4c0436fd23c6e7feb04af80f4f12504b06d21dcc69accbce484a910a0e9a16",
+  "requirement_closure_hash": "sha256:93b6b5d6e320e606789d62df0e73a825728100e800a72d68304966e45036fcbb",
+  "execution_authority_hash": "sha256:3507e50c656e12bd3a6a42e943de76a194eebd4caf6097a1b1148580337c8b57",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -96,8 +96,12 @@
     "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/mixed-route-test.log": "76893f604fa54084dbd9b62461322b02dce45c7d220a3af83159460f2ec8a201",
     "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/mixed-positive-final.log": "dae409fcae428ee73e9ead51f05a3cbbcaf1de8b85aa6f3c1a6c8029e8fdbcf0",
     "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/binding-check.log": "470108d422c9cc8caf6c31415fd676dd59a718ef514358f89323a1fc90b8dbf5",
-    "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/binding-final.log": "4b49cd8ca70d70bd9cd6c80df4ef00b333d50b62dfc1463a45863dd4db10dbb8"
+    "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/binding-final.log": "4b49cd8ca70d70bd9cd6c80df4ef00b333d50b62dfc1463a45863dd4db10dbb8",
+    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/mixed-two-step.log": "ac288f5b2677ce00fb997c508cd2bf01ada2a69d762c8448586cf237f297b880",
+    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/c04-only-resume-current.log": "18b38a4df35782ed42594fbab18171a85bbada0506a01d1c9a98f8dbd8a9b048",
+    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/fast-role-scope.log": "445221b98f22d14309aaea4fee1a9f41c9659ced4c922d71fbc0dcbbde571045",
+    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/binding-current.log": "e4a8e7e4ca5901741298c4d5e1859b60cd1d1957a1d5e0254ed0d6ce0cef76c3"
   },
-  "scope": "Current V15 B13 V6 fail-closed binding. Mocked provider factory/controller rerun without network; recorded scan still saves only a scan receipt, while V6 judgment stops before a second claim and every native/registered acceptance entry rejects. Earlier evidence revalidated by exact bytes. C04 zero-provider refresh route is now bound and recorded-tested; B13 V6 remains suspended and no provider request is authorized by this receipt. Current C04 mixed-source route has recorded-only source capture, no provider request; provider execution code is unchanged and this receipt only rebinds the current unfrozen execution identity.",
+  "scope": "Current V15 B13 V6 fail-closed binding. Mocked provider factory/controller rerun without network; recorded scan still saves only a scan receipt, while V6 judgment stops before a second claim and every native/registered acceptance entry rejects. Earlier evidence revalidated by exact bytes. C04 zero-provider refresh route is now bound and recorded-tested; B13 V6 remains suspended and no provider request is authorized by this receipt. Current C04 mixed-source route has recorded-only source capture, no provider request; provider execution code is unchanged and this receipt only rebinds the current unfrozen execution identity. Mixed C04 one-request continuation is recorded-only and preserves zero provider requests; provider factory/controller code is unchanged by this repair.",
   "independent_review": "V6_SUSPENSION_INCREMENT_REVIEW_PENDING"
 }

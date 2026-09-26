@@ -679,7 +679,7 @@ C04正常保存来源更新用 `python3 tools/vnext_normal_update.py --process -
 
 该两版录制selector在`2f3a36da`的CI达到单项240秒上限，其余12个主作业成功；`c04-source-ci-runtime-20260927/`记录了只移除测试内额外旧Run重放后的180.047秒本地通过。两版来源/Result及前驱断言保留，旧版的独立冷读证据另存；最终仍须以修后head的CI终态为准。
 
-后继范围回修见`docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/`及`c04-mixed-auto-refresh-20260927/`：公开CLI的B01-only选择仍走原控制器。旧处理副本存在时，混合B01+C04调用只对当前C04原生来源证明列出的URL使用C04来源模式取得资料；未证明的URL不得申领，B01等仍标为当前处理输入未满足，整体仍未完成。录制正向与无关URL负例分别测试，不代表旧根已自动更新所有普通指标或发生新财年获取。
+后继范围回修见`docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/`、`c04-mixed-auto-refresh-20260927/`和`c04-mixed-resume-repair-20260927/`：公开CLI的B01-only选择仍走原控制器。旧处理副本存在时，混合B01+C04调用只对当次C04原生来源证明**且**发现角色为C04所需的URL使用C04来源模式；仅因共享准备器读取的代理URL不获此路径。每轮只准1条SEC时，以前次报告、原账本槽和更新历史重建续接，不重取已得的submissions；B01等仍标为当前处理输入未满足，整体仍未完成。两条不同录制SEC来源、原C04-only续接和无关URL负例分别测试，不代表旧根已自动更新所有普通指标或发生新财年获取。
 
 单次有限SEC上限不足时，C04可用 `tools/vnext_ordinary_refresh.py --company marriott_international --metric C04 --state-root /absolute/same-update-root --max-sec-requests 1 --max-provider-requests 0 --resume-report /absolute/previous-immutable-report.json --output /absolute/new-report.json` 作一次**异常续接**。它重读前次真实账本收据和同一更新历史，再从已验证来源状态重建待刷新集合，逐项比对外部报告；不能靠改报告或重领已取得URL继续。`tests.vnext.test_c04_refresh_resume`在source-material层使用录制来源验证两条不同SEC依赖、篡改与重复报告拒绝。正常运行应为预计来源设置足够的有限上限，此路径不是日常人工指定URL或指标答案，也不扩大发送许可。实际第193槽的待办篡改拒绝和当前正向预检见`docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/`；第二条真实GET须另看其结果，离线通过不是实际刷新完成。
 

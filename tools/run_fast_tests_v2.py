@@ -100,6 +100,7 @@ FAST_TESTS += ("tests.vnext.test_capacity_visible_source_roles",)
 FAST_TESTS += ("tests.vnext.test_continuous_batch33",)
 FAST_TESTS += ("tests.vnext.test_capacity_two_stage",)
 FAST_TESTS += ("tests.vnext.test_c04_update_cycle.C04UpdateCreditBoundaryTest",)
+FAST_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceScopeFastTest",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)
 SOURCE_TESTS += ("tests.vnext.test_r6_semantic_verification",)
@@ -125,7 +126,6 @@ SOURCE_TESTS += ("tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest
 SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest",)
 SOURCE_TESTS += ("tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",)
-SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_does_not_capture_unproved_source",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

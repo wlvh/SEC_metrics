@@ -1,6 +1,6 @@
 {
   "record_type": "ORDINARY_REFRESH_OFFLINE_WIRING",
-  "execution_authority_hash": "sha256:9d4c0436fd23c6e7feb04af80f4f12504b06d21dcc69accbce484a910a0e9a16",
+  "execution_authority_hash": "sha256:3507e50c656e12bd3a6a42e943de76a194eebd4caf6097a1b1148580337c8b57",
   "calls": [
     0,
     0,
@@ -18,7 +18,7 @@
   "actual_new_fiscal_year_verified": false,
   "full390_acceptance": false,
   "production_authorized": false,
-  "independent_review": "CURRENT_MIXED_C04_SOURCE_INCREMENT_REVIEW_PENDING; previous scoped review retained",
+  "independent_review": "MIXED_RESUME_AND_ROLE_SCOPE_REPAIR_REVIEW_PENDING; prior 0cefb9bb NEEDS_FIX retained",
   "receipt_installation": "CURRENT_EXECUTION_BOUND",
   "evidence": {
     "docs/evidence/issue28_continuous/ordinary-refresh-cycle/current-lifecycle.log": "52344cb3020252d2fdfeb638c14a67b4f2dbb16c33eb3e185ca0f9db037b921b",
@@ -60,7 +60,11 @@
     "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/mixed-route-test.log": "76893f604fa54084dbd9b62461322b02dce45c7d220a3af83159460f2ec8a201",
     "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/mixed-positive-final.log": "dae409fcae428ee73e9ead51f05a3cbbcaf1de8b85aa6f3c1a6c8029e8fdbcf0",
     "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/binding-check.log": "470108d422c9cc8caf6c31415fd676dd59a718ef514358f89323a1fc90b8dbf5",
-    "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/binding-final.log": "4b49cd8ca70d70bd9cd6c80df4ef00b333d50b62dfc1463a45863dd4db10dbb8"
+    "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/binding-final.log": "4b49cd8ca70d70bd9cd6c80df4ef00b333d50b62dfc1463a45863dd4db10dbb8",
+    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/mixed-two-step.log": "ac288f5b2677ce00fb997c508cd2bf01ada2a69d762c8448586cf237f297b880",
+    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/c04-only-resume-current.log": "18b38a4df35782ed42594fbab18171a85bbada0506a01d1c9a98f8dbd8a9b048",
+    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/fast-role-scope.log": "445221b98f22d14309aaea4fee1a9f41c9659ced4c922d71fbc0dcbbde571045",
+    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/binding-current.log": "e4a8e7e4ca5901741298c4d5e1859b60cd1d1957a1d5e0254ed0d6ce0cef76c3"
   },
   "c04_successor_recorded_route_verified": true,
   "c04_controller_sha256": "4146468f043e9e4f568ae5c0d2fbe1dab8b51bbce6fea0ccd7150dab81abf417",
@@ -68,5 +72,7 @@
   "c04_source_only_existing_root_verified": true,
   "c04_one_prior_source_resume_recorded_verified": true,
   "c04_resume_deferred_source_reconstruction_verified": true,
-  "c04_mixed_old_root_only_c04_proved_source_acquired": true
+  "c04_mixed_old_root_only_c04_proved_source_acquired": true,
+  "c04_mixed_source_role_limited": true,
+  "c04_mixed_one_request_resume_recorded_verified": true
 }

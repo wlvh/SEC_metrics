@@ -1,11 +1,13 @@
 """Old acquisition roots remain immutable while the explicit C04 route reads them."""
 from pathlib import Path
+import csv
+import json
 import socket
 import tempfile
 import unittest
 from unittest.mock import patch
 
-from sec_urls import submissions_url
+from sec_urls import submissions_url, companyfacts_url
 
 from vnext import normal_run_v3 as normal
 from vnext import ordinary_refresh_cycle as refresh
@@ -77,25 +79,51 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
             (source/'config/ordinary_public_projection_v1.json').write_bytes(
                 b'{"historical_processing_copy":true}\n')
             (source/'catalog/r5/C04_auditor_changes_v3.md').unlink()
-            session.response = _Sources(ROOT, 'marriott_international', '1048286').read(
-                submissions_url(cik=1048286), role='sec_submissions_inventory',
-                media_type='application/json')['raw_bytes']
+            urls = [submissions_url(cik=1048286), companyfacts_url(cik=1048286)]
+            with (ROOT/'evidence/requests_log.csv').open(newline='') as handle:
+                rows = [row for row in csv.DictReader(handle)
+                        if row['status_code'] == '200' and row['source_url'] in urls]
+            bodies = {url: (ROOT/next(row['repo_relative_path']
+                       for row in reversed(rows) if row['source_url'] == url)).read_bytes()
+                      for url in urls}
+            session.response = bodies[urls[0]]
+            captures = []
+            native_capture = session.capture
+            def capture(**kwargs):
+                captures.append(kwargs['url'])
+                session.response = bodies[kwargs['url']]
+                return native_capture(**kwargs)
             with patch.object(socket.socket, 'connect',
                               side_effect=AssertionError('NETWORK_FORBIDDEN')), \
                  patch.object(socket, 'getaddrinfo',
                               side_effect=AssertionError('DNS_FORBIDDEN')), \
                  patch('sec_http.urlopen',
-                       side_effect=AssertionError('HTTP_FORBIDDEN')):
+                       side_effect=AssertionError('HTTP_FORBIDDEN')), \
+                 patch.object(session, 'capture', side_effect=capture):
                 result = refresh.refresh_and_process(session=session,
                     state_root=root/'state', company_ids=['marriott_international'],
                     metric_ids=['B01', 'C04'], max_sec_requests=1,
                     c04_successor=True)
+                prior = root/'prior-report.json'
+                prior.write_text(json.dumps(result, ensure_ascii=False)+'\n')
+                resumed = refresh.refresh_and_process(session=session,
+                    state_root=root/'state', company_ids=['marriott_international'],
+                    metric_ids=['B01', 'C04'], max_sec_requests=1,
+                    c04_successor=True, resume_from=prior)
             self.assertEqual(1, len(result['captures']))
             self.assertEqual('SUCCEEDED', result['captures'][0]['result']['status'])
-            self.assertEqual(submissions_url(cik=1048286),
-                             result['captures'][0]['source_url'])
+            self.assertEqual(urls, captures)
+            self.assertEqual(urls[0], result['captures'][0]['source_url'])
+            self.assertEqual(urls[1], resumed['captures'][0]['source_url'])
             self.assertTrue(result['c04_mixed_source_only'])
+            self.assertTrue(resumed['c04_mixed_source_only'])
             self.assertEqual({'provider': 0, 'paid': 0, 'sec': 0}, result['calls'])
+            self.assertEqual({'provider': 0, 'paid': 0, 'sec': 0}, resumed['calls'])
+            self.assertEqual('UPDATES_INCOMPLETE', resumed['status'])
+            self.assertEqual([], resumed['companies'][0]['source_refresh']
+                             ['deferred_source_urls'])
+            self.assertEqual(['UPDATE_BLOCKED', 'NO_SOURCE_CONTENT_CHANGE'],
+                [row['status'] for row in resumed['companies'][0]['updates']['metrics']])
             company, = result['companies']
             self.assertEqual('UPDATES_PARTIAL', company['updates']['status'])
             self.assertEqual(['UPDATE_BLOCKED', 'CANDIDATE_READY'],
@@ -105,7 +133,7 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
             self.assertEqual('C04_REGISTRATION_FOUR_FORM_UPDATE_V1',
                              plan['source_only_processing_route'])
             with session.ledger.locked():
-                self.assertEqual([0, 0, 1], session.ledger.snapshot()['counts'])
+                self.assertEqual([0, 0, 2], session.ledger.snapshot()['counts'])
 
     def test_mixed_old_root_does_not_capture_unproved_source(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -128,6 +156,20 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
             self.assertEqual([], result['captures'])
             with session.ledger.locked():
                 self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
+
+
+class C04MixedSourceScopeFastTest(unittest.TestCase):
+    def test_current_proof_and_c04_role_are_both_required(self):
+        proofs = [{'source_url': 'https://example.test/companyfacts'},
+                  {'source_url': 'https://example.test/proxy'}]
+        pending = [{'source_url': 'https://example.test/companyfacts',
+                    'roles': ['companyfacts']},
+                   {'source_url': 'https://example.test/proxy',
+                    'roles': ['proxy_primary']},
+                   {'source_url': 'https://example.test/unproved',
+                    'roles': ['fiscal_event_primary']}]
+        self.assertEqual([pending[0]],
+            refresh._c04_mixed_pending(pending, proofs))
 
 
 if __name__ == '__main__':

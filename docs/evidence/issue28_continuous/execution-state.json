@@ -3508,5 +3508,57 @@
       "issue47_branch_ledger_snapshot_touched": false
     },
     "independent_review_path": "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/independent-review/conclusion.md"
+  },
+  "c04_mixed_resume_repair_20260927": {
+    "status": "RECORDED_TWO_DISTINCT_C04_SEC_SOURCES_PASS_OLD_C04_ONLY_RESUME_PASS_REVIEW_PENDING",
+    "reviewed_base_sha": "0cefb9bb4831316e7587ef25daccd86157148c7e",
+    "prior_review_path": "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/independent-review/conclusion.md",
+    "prior_review_verdict_preserved": "NEEDS_FIX_MIXED_MAX1_REPEAT_AND_OVERBROAD_SOURCE_PROOFS",
+    "code_paths": [
+      "scripts/vnext/ordinary_refresh_cycle.py",
+      "requirements/issue_28_v14/baseline_manifest.json"
+    ],
+    "functions": [
+      "refresh_and_process",
+      "_resume_one_c04_source",
+      "_c04_mixed_pending"
+    ],
+    "new_behavior": "explicit C04 mixed stale mode may resume exactly one previous successful SEC source from authenticated report and original ledger; current C04 proof plus C04 input role required for prior and next source",
+    "old_default_behavior_preserved": true,
+    "ordinary_v13_closure_unchanged": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+    "continuous_v14_closure": "sha256:93b6b5d6e320e606789d62df0e73a825728100e800a72d68304966e45036fcbb",
+    "execution_authority_hash": "sha256:3507e50c656e12bd3a6a42e943de76a194eebd4caf6097a1b1148580337c8b57",
+    "tests": [
+      "MIXED_TWO_STEP_RECORDED_PASS_365_477_SECONDS",
+      "C04_ONLY_EXISTING_RESUME_PASS_330_682_SECONDS",
+      "C04_ROLE_SCOPE_FAST_PASS",
+      "UNPROVED_SOURCE_FULL_NEGATIVE_PASS_203_393_SECONDS_NO_DURABLE_LOG"
+    ],
+    "test_limitations": "two-step source bodies saved originals in recorded SEC session; no real new SEC request or new fiscal year",
+    "real_new_provider_paid_sec": [
+      0,
+      0,
+      0
+    ],
+    "real_ledger_ordinal": 194,
+    "real_ledger_counts": [
+      143,
+      143,
+      51
+    ],
+    "new_complete_company_results": 0,
+    "evidence": "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/README.md",
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_47": {
+      "file": "scripts/vnext/ordinary_refresh_cycle.py",
+      "functions": [
+        "refresh_and_process",
+        "_resume_one_c04_source",
+        "_c04_mixed_pending"
+      ],
+      "default_c04_successor_false_behavior_changed": false,
+      "requirement_change": "unfrozen issue_28_v14 execution binding only",
+      "issue47_branch_or_ledger_touched": false
+    }
   }
 }

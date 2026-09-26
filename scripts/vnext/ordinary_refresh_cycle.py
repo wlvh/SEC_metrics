@@ -20,6 +20,13 @@ from .normal_run_v3 import update_metric_ids
 from .sources import resolve_repository_file
 
 WIRING_PATH = 'docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json'
+C04_MIXED_SOURCE_ROLES = frozenset({
+    'sec_submissions_inventory', 'sec_submissions_history', 'companyfacts',
+    'current_annual_primary', 'prior_annual_primary',
+    'annual_accession_index', 'annual_accession_instance',
+    'fiscal_event_primary', 'fiscal_event_header',
+    'registration_event_primary', 'registration_event_header',
+})
 
 
 def _check_session(session, *, c04_successor=False):
@@ -72,6 +79,15 @@ def _pending(discovery, attempted, failed):
             and r['saved_status'] != 'SAVED_SOURCE_BLOCKED']
 
 
+def _c04_mixed_pending(pending, proofs):
+    """Permit only URLs with both current C04 proof and a C04 input role."""
+    proven = {proof['source_url'] for proof in proofs}
+    return [item for item in pending
+            if item['source_url'] in proven
+            and type(item.get('roles')) is list
+            and set(item['roles']) & C04_MIXED_SOURCE_ROLES]
+
+
 def _call_accounting(captures, before, after, live, capture_error):
     delta = [end - start for start, end in zip(before, after)]
     need(len(delta) == 3 and all(value >= 0 for value in delta), 'ORDINARY_REFRESH_LEDGER_COUNT_REGRESSED')
@@ -98,7 +114,7 @@ def _historical_c04_processing_copies(root, requirement):
 
 
 def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
-                           report_path):
+                           report_path, metric_ids, mixed_stale):
     """Carry one authenticated prior SEC capture into a finite next pass."""
     path = Path(report_path)
     need(path.is_absolute() and path.is_file()
@@ -110,6 +126,7 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
     expected_mode = 'LIVE' if session.ledger.live else 'RECORDED_TEST_ONLY'
     need(report['record_type'] == 'ORDINARY_BOUNDED_REFRESH_AND_UPDATE'
          and report['execution_mode'] == expected_mode
+         and report.get('c04_mixed_source_only', False) is mixed_stale
          and report['max_sec_requests'] == 1
          and report['ledger_counts_after'] == snapshot['counts']
          and report['calls'] == {'provider': 0, 'paid': 0,
@@ -142,6 +159,15 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
          and receipt['ledger_after_sha256'] == sha256_file(
              path=session.data_root/'evidence/requests_log.csv'),
          'ORDINARY_REFRESH_RESUME_SEC_SOURCE_CHANGED')
+    if mixed_stale:
+        from .normal_run_v3 import prepare_case
+        from .c04_registration_successor import EVENT_FORMS
+        current_case = prepare_case(data_root=session.data_root,
+            company_id=company_id, metric_id='C04',
+            c04_event_forms=EVENT_FORMS)
+        need(_c04_mixed_pending([plan['source_dependency']],
+             current_case['source_proofs']) == [plan['source_dependency']],
+             'ORDINARY_REFRESH_RESUME_PRIOR_SOURCE_NOT_C04_BOUND')
     from . import c04_update_cycle as c04
     from . import ordinary_update_cycle as cycle
     root = state_root/company_id/'metrics/C04-registration-v3'
@@ -149,11 +175,23 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
          'ORDINARY_REFRESH_RESUME_C04_STATE_MISSING')
     configuration = c04._configuration(root, session.data_root, company_id)
     state = cycle._state(root, configuration)
-    row, = report['companies'][0]['updates']['metrics']
+    rows = report['companies'][0]['updates']['metrics']
+    need(type(rows) is list and len(rows) == len(metric_ids)
+         and {item['metric_id'] for item in rows} == set(metric_ids),
+         'ORDINARY_REFRESH_RESUME_METRIC_SCOPE_CHANGED')
+    row, = [item for item in rows if item['metric_id'] == 'C04']
+    expected_errors = ([{'stage': 'SOURCE_SCOPE',
+        'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_OTHER_METRICS_BLOCKED'}]
+        if mixed_stale else [])
     need(row['metric_id'] == 'C04'
          and state['latest_attempt'] == row['attempt_id']
          and state['successful_attempt'] == row['successful_attempt']
-         and cycle._terminal(root, row['attempt_id']) == row['terminal'],
+         and cycle._terminal(root, row['attempt_id']) == row['terminal']
+         and report['companies'][0]['acquisition_errors'] == expected_errors
+         and (not mixed_stale or all(item['status'] ==
+              ('UPDATE_BLOCKED' if item['metric_id'] in update_metric_ids()
+               else 'UPDATE_NOT_IMPLEMENTED')
+              for item in rows if item['metric_id'] != 'C04')),
          'ORDINARY_REFRESH_RESUME_C04_HISTORY_CHANGED')
     allowed = report['companies'][0]['source_refresh']['deferred_source_urls']
     need(type(allowed) is list and bool(allowed)
@@ -171,7 +209,7 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
          and source_check['source_discovery_status'] == discovery['status']
          and source_check['failed_source_urls_not_retried'] == sorted({
              item['source_url'] for item in discovery['requirements']} & failed)
-         and not report['companies'][0]['acquisition_errors'],
+         and report['companies'][0]['acquisition_errors'] == expected_errors,
          'ORDINARY_REFRESH_RESUME_DEFERRED_SET_CHANGED')
     return {'prior_ordinal': ordinal, 'prior_source_url': prior['source_url'],
             'prior_report_sha256': sha256_file(path=path),
@@ -199,10 +237,12 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
     need(not c04_successor or 'C04' in metrics,
          'ORDINARY_REFRESH_C04_ROUTE_REQUIRES_C04')
     c04_only = c04_successor and metrics == ['C04']
-    need(resume_from is None or (c04_only and len(selected) == 1
-         and max_sec_requests == 1), 'ORDINARY_REFRESH_RESUME_C04_ONE_REQUEST_REQUIRED')
     mixed_stale = (c04_successor and not c04_only and
         _historical_c04_processing_copies(session.data_root, session.requirement))
+    need(resume_from is None or ((c04_only or mixed_stale)
+         and len(selected) == 1 and max_sec_requests == 1
+         and max_provider_requests == 0),
+         'ORDINARY_REFRESH_RESUME_C04_ONE_REQUEST_REQUIRED')
     state_root = Path(state_root)
     need(state_root.is_absolute() and first_symlink_in_path(path=state_root) is None,
          'ORDINARY_REFRESH_ABSOLUTE_UNALIASED_STATE_REQUIRED')
@@ -219,7 +259,8 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
         snapshot = session.ledger.snapshot()
         before = snapshot['counts']
     resumed = (_resume_one_c04_source(session=session, state_root=state_root,
-        company_id=selected[0], snapshot=snapshot, report_path=resume_from)
+        company_id=selected[0], snapshot=snapshot, report_path=resume_from,
+        metric_ids=metrics, mixed_stale=mixed_stale)
         if resume_from is not None else None)
     failed = _failed_urls(session.data_root)
     attempted = ({resumed['prior_source_url']} if resumed is not None else set())
@@ -247,10 +288,8 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                     c04_case = prepare_case(data_root=session.data_root,
                         company_id=company, metric_id='C04',
                         c04_event_forms=EVENT_FORMS)
-                    c04_urls = {proof['source_url'] for proof in
-                                c04_case['source_proofs']}
-                    pending = [item for item in pending
-                               if item['source_url'] in c04_urls]
+                    pending = _c04_mixed_pending(pending,
+                        c04_case['source_proofs'])
             except Exception as error:
                 errors.setdefault(company, []).append({'stage': 'DISCOVERY', 'error_type': type(error).__name__, 'reason': str(error)})
                 continue
