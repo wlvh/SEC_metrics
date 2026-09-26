@@ -65,11 +65,13 @@
 
 **第二次运行也在封存前停下**：修好上面三处后，它跑在一棵**落后于仓库**的运行树里——合并 base 带来的 #28 快照与 B03 接线都还没同步进去。被验证的边界文件、套件与调用模块与"当前 HEAD + 补丁"逐字节相同，但铸造工具与各世代清单是旧的：封存出来的收据会绑定旧的铸造工具，在真正的目标树上对不上，"会移动哪些世代"也是按旧快照量的。改为先把运行树同步到当前 HEAD、重新打补丁并 mint，逐文件核对它等于"HEAD + 两个补丁"，再运行；收据另记下它读过的每个世代清单的哈希（`generation_manifests_measured`），读者可以核对量的是哪一份快照。
 
-结果见 `offline-verification.json`（套件、注错、扫描器输出、会被移动的世代）。**本目录首次提交时验证仍在进行**：完整套件 27 例已全部通过，注错逐个进行中；收据只在全部成立后封存，随后单独提交。在那之前，仓库用例断言实时路径以"缺收据"按名拒绝。
+结果见 `offline-verification.json`（套件、注错、扫描器输出、会被移动的世代）。**第三次运行全部成立并已封存**（收据 `sha256:fb320805…`，运行树逐文件核对过等于"HEAD + 注册补丁 + 出口补丁"）：出口扫描器通过，且只多出 `historical_model_egress._Transport.send` 这一个调用方；完整套件 27 例全部通过（850 秒，全程拒绝 DNS、原始 socket 与 SEC）；17 个注错全部被抓——**16 个由对应的用例抓到**（例如去掉 402 停止由 `test_http_402_stops_the_channel` 抓到、适配器只比类名由 `test_the_adapter_hands_bytes_only_to_the_named_type` 抓到，后者先 mint 过，所以抓住它的是用例而不是字节绑定），**1 个只在类夹具里被抓**：去掉控制器的 `issue_47_v1` 分支，各类的 `setUpClass` 在造授权对象时就被控制器拒绝（`Scoped R4 invocation requires a registered R4 revision`）——这正是被破坏的性质，但它不是某条具名用例，如实记为钝的捕获；收尾核对补丁、snapshot 与全部绑定文件回到起点。
+
+收据放进本仓库后，`tests/vnext/test_historical_model_calls.py` 走"有收据"分支：它描述的是打了补丁的树，在未打补丁的仓库里实时路径仍按名拒绝（只有调用模块、`verify.py` 与补丁本身三个绑定文件与仓库相同）。
 
 ## 应用补丁的代价——需要决定，不是副作用
 
-三个边界文件被 `issue_28_v2` 至 `issue_28_v14` 共 13 个世代按字节记录（从各世代自己的清单读出，`offline-verification.json` 的 `generations_that_record_the_boundary_files` 逐个列出）。在应用了补丁的树里，这些世代的执行授权不再成立，也就是说**补丁不能原样应用在 #28 仍在用这些世代的同一检出里**。选项：
+三个边界文件被 `issue_28_v2` 至 `issue_28_v14` 共 13 个世代按字节记录（从各世代自己的清单读出，`offline-verification.json` 的 `generations_that_record_the_boundary_files` 逐个列出；第三次运行在同步到当前 HEAD 的树上重新量过，结果相同，读过的 17 份世代清单的哈希记在 `generation_manifests_measured`）。在应用了补丁的树里，这些世代的执行授权不再成立，也就是说**补丁不能原样应用在 #28 仍在用这些世代的同一检出里**。选项：
 
 - (a) 与 #28 的维护者协调，由一个新世代同时携带两边的注册；
 - (b) 像 `issue_47_v1` 的注册补丁一样，只在 #47 的运行树里应用，真实调用只从那里发出；
