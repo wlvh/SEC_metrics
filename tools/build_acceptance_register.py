@@ -351,13 +351,15 @@ def build_register(*, repo_root: Path):
                             "producing a negative ratio where the route "
                             "published none. There is no value to accept.",
   "marriott 2023 B02 and B03": "that period's source gaps.",
-  "E01 for Lumen, Macy's, Marriott and Pfizer": "every 8.01 in the seven "
-   "windows is read (content-acceptance/e01-eight-o-one-read.json). Lumen's, "
-   "Macy's and Marriott's counts hold under some readings of the definition's "
-   "keyword confirmation and not others - the decision is in "
-   "e01-keyword-branch/decision.json. Pfizer's is wrong under every reading: "
-   "its Metsera acquisition was reported under item 8.01 and the route's 8.01 "
-   "branch never reads the item. That is a registered defect.",
+  "E01 for Macy's, Marriott and Pfizer": "every 8.01 in the seven windows is "
+   "read (content-acceptance/e01-eight-o-one-read.json). The historical route "
+   "now reads each 8.01 from its own text instead of the brief the program "
+   "wrote (e01-item-text/), and withholds a window where an alias occurs in "
+   "an 8.01's text until the meaning of that occurrence is decided "
+   "(e01-keyword-branch/decision.json) - so these three carry no value to "
+   "accept. Lumen's count no longer depends on the open reading: the reading "
+   "that let another item's covenant language confirm an 8.01 is not a reading "
+   "of the 8.01's own text, and Lumen's 8.01 texts carry no alias.",
   "C03": "all nine are read. The four that previously read as 'no saved proxy "
          "reports the target period' were a defect in the reading, not a gap "
          "in the material: it globbed *def14a*.htm, and only one of the ten "

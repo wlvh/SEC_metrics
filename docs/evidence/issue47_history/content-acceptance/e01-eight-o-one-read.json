@@ -10,9 +10,9 @@
   "enphase-2025": {
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
-     "result_id": "sha256:d2ecc051ffc5278ea7a2b2e9c6f10ad3365474425863c15b06e6177696168879",
-     "run_id": "run:historical-period:a45c81628a9c4a509fc7a0b3694eb5a70a8eab0631b36c3b1c84a2a359597f2c"
+     "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+     "result_id": "sha256:38ac62acfb8f7554612640943160625d5ff46c94ef5f670aa118460e59dc4bcf",
+     "run_id": "run:historical-period:9c35070d8635686d9346bff1800a41c9753757708ae37a9e91aae1f7693402ce"
     },
     "checked_against_the_reading": [
      "value",
@@ -69,9 +69,9 @@
   "ford-2025": {
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
-     "result_id": "sha256:ad429204f625d04682026883564e86d95e1e1fbd00d137677b1d2da279dd721c",
-     "run_id": "run:historical-period:33090d0eaea404e183697f7992855098219284cfdb88fc48f23c7b057f7b27e5"
+     "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+     "result_id": "sha256:5c33103030b0a8868545984bfc66cad211c13392843577983d66b7755fe2673a",
+     "run_id": "run:historical-period:1f302c6833234de39350da24f693c79814d8ef5d0fedbac81286a5fd649b4a96"
     },
     "checked_against_the_reading": [
      "value",
@@ -230,9 +230,9 @@
   "lumen-2025": {
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
-     "result_id": "sha256:21824ee7aae2ebbaa80673d394e62e897e18e66566c728d4c1c558692d56a037",
-     "run_id": "run:historical-period:2469ecb55223e5205c6bd267d916fb50fffc5fc946933ac5b7de1d8bd2bbc605"
+     "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+     "result_id": "sha256:9a2ba36adfc6fc6bafbe51a1490b445717e164ce9066203463003a7e21f03a94",
+     "run_id": "run:historical-period:3348148afa7745ae48fb59323079d4f635c2f1f059d4969e573c37d13fb5d0cc"
     },
     "checked_against_the_reading": [
      "value",
@@ -456,49 +456,13 @@
    "reading": "E01_EIGHT_O_ONE_ITEMS_READ_FROM_THE_FILING_BYTES",
    "reports_a_transaction_without_an_alias": [],
    "route_as_built": 7,
-   "verdict": "DEPENDS_ON_THE_CONFIRMATION_READING",
+   "verdict": "MATCH",
    "window": [
     "2025-01-01",
     "2025-12-31"
    ]
   },
   "macys-2026": {
-   "checked_identity": {
-    "bound_from": {
-     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
-     "result_id": "sha256:ba457ef857aa34408be5d12097ac734c0f44baf3ceaf20a9498a2af969c3c111",
-     "run_id": "run:historical-period:5c5b0873f906205ed3fa47d3fce139f72b1044963a8f1ecf83af1f3ca679bef6"
-    },
-    "checked_against_the_reading": [
-     "value",
-     "filings_equal_the_whole_set_the_reading_enumerated",
-     "window"
-    ],
-    "entities": [],
-    "established_by": "RECORDED_AT_READING_TIME",
-    "filings": [
-     "0000794367-25-000010",
-     "0000794367-25-000054",
-     "0000794367-25-000087",
-     "0000794367-25-000092",
-     "0000794367-25-000128",
-     "0000794367-25-000132",
-     "0000794367-25-000137",
-     "0000794367-25-000139",
-     "0000794367-25-000165",
-     "0000794367-25-000169",
-     "0001628280-25-010767",
-     "0001628280-25-028040",
-     "0001628280-25-054900"
-    ],
-    "not_named_by_the_reading": [],
-    "period_end": "2026-01-31",
-    "period_start": "2025-02-02",
-    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
-    "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
-    "unit": "count",
-    "value_kind": null
-   },
    "company_id": "macys",
    "counts": {
     "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 2,
@@ -598,50 +562,19 @@
     "0001628280-25-054900"
    ],
    "period_end": "2026-01-31",
-   "published": "2",
+   "published": null,
    "reading": "E01_EIGHT_O_ONE_ITEMS_READ_FROM_THE_FILING_BYTES",
+   "reading_sees_an_alias_in_an_8_01": true,
    "reports_a_transaction_without_an_alias": [],
    "route_as_built": 2,
-   "verdict": "DEPENDS_ON_THE_CONFIRMATION_READING",
+   "verdict": "NO_PUBLISHED_VALUE:HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING",
    "window": [
     "2025-02-02",
     "2026-01-31"
-   ]
+   ],
+   "withheld_reason": "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING"
   },
   "marriott-2025": {
-   "checked_identity": {
-    "bound_from": {
-     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
-     "result_id": "sha256:1870c574ee0054b417f735a1d89c87e8eb18b9dedcc98a0ea9214ba2f76cbc66",
-     "run_id": "run:historical-period:622de2ca9abb1cf57ef7c4580b1ee2211a9de05caa03317275db2165a985fb71"
-    },
-    "checked_against_the_reading": [
-     "value",
-     "filings_equal_the_whole_set_the_reading_enumerated",
-     "window"
-    ],
-    "entities": [],
-    "established_by": "RECORDED_AT_READING_TIME",
-    "filings": [
-     "0001048286-25-000011",
-     "0001193125-25-009110",
-     "0001193125-25-036732",
-     "0001193125-25-118853",
-     "0001193125-25-118861",
-     "0001193125-25-158742",
-     "0001193125-25-184082",
-     "0001628280-25-004772",
-     "0001628280-25-022390",
-     "0001628280-25-037592"
-    ],
-    "not_named_by_the_reading": [],
-    "period_end": "2025-12-31",
-    "period_start": "2025-01-01",
-    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
-    "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
-    "unit": "count",
-    "value_kind": null
-   },
    "company_id": "marriott_international",
    "counts": {
     "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 0,
@@ -702,49 +635,19 @@
     "0001628280-25-037592"
    ],
    "period_end": "2025-12-31",
-   "published": "0",
+   "published": null,
    "reading": "E01_EIGHT_O_ONE_ITEMS_READ_FROM_THE_FILING_BYTES",
+   "reading_sees_an_alias_in_an_8_01": true,
    "reports_a_transaction_without_an_alias": [],
    "route_as_built": 0,
-   "verdict": "DEPENDS_ON_THE_CONFIRMATION_READING",
+   "verdict": "NO_PUBLISHED_VALUE:HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING",
    "window": [
     "2025-01-01",
     "2025-12-31"
-   ]
+   ],
+   "withheld_reason": "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING"
   },
   "pfizer-2025": {
-   "checked_identity": {
-    "bound_from": {
-     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
-     "result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1",
-     "run_id": "run:historical-period:9ea9765a3c2240825529526a72a63f215a22d67b1dfcf43d85a3364a5a100f76"
-    },
-    "checked_against_the_reading": [
-     "value",
-     "filings_equal_the_whole_set_the_reading_enumerated",
-     "window"
-    ],
-    "entities": [],
-    "established_by": "RECORDED_AT_READING_TIME",
-    "filings": [
-     "0000078003-25-000017",
-     "0000078003-25-000109",
-     "0000078003-25-000111",
-     "0000078003-25-000136",
-     "0000078003-25-000149",
-     "0000078003-25-000159",
-     "0000078003-25-000167",
-     "0001193125-25-122480",
-     "0001193125-25-291406"
-    ],
-    "not_named_by_the_reading": [],
-    "period_end": "2025-12-31",
-    "period_start": "2025-01-01",
-    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
-    "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
-    "unit": "count",
-    "value_kind": null
-   },
    "company_id": "pfizer",
    "counts": {
     "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 1,
@@ -816,22 +719,24 @@
     "0001193125-25-291406"
    ],
    "period_end": "2025-12-31",
-   "published": "0",
+   "published": null,
    "reading": "E01_EIGHT_O_ONE_ITEMS_READ_FROM_THE_FILING_BYTES",
+   "reading_sees_an_alias_in_an_8_01": true,
    "reports_a_transaction_without_an_alias": [],
    "route_as_built": 0,
-   "verdict": "DIFFERS",
+   "verdict": "NO_PUBLISHED_VALUE:HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING",
    "window": [
     "2025-01-01",
     "2025-12-31"
-   ]
+   ],
+   "withheld_reason": "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING"
   },
   "southwest-2025": {
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
-     "result_id": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9",
-     "run_id": "run:historical-period:22ca781a045b2300524f705343ea71cea283320b1793782e6d25294a1517469e"
+     "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+     "result_id": "sha256:16680f66fd9a0d85b533c2872f768797be895891b0f785ba33d2c3a30bc97d86",
+     "run_id": "run:historical-period:2cc108ccb90cd84f9326059519bea2d994c933a8b1e24a1f19a53c8956301a07"
     },
     "checked_against_the_reading": [
      "value",
@@ -934,10 +839,9 @@
  },
  "readings_of_the_confirmation": [
   "LITERAL_IN_THE_8_01_ITEM",
-  "LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT",
   "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION"
  ],
  "record_type": "ISSUE_47_E01_EIGHT_O_ONE_READ",
- "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+ "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
  "windows_from": "docs/evidence/issue47_history/content-acceptance/event-count-read.json"
 }

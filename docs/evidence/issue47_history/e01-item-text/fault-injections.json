@@ -1,0 +1,91 @@
+[
+ {
+  "id": "READ_THE_BRIEF_NOT_THE_ITEM",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_window_where_one_carries_an_alias_is_withheld_by_name",
+   "test_the_brief_is_never_consulted"
+  ],
+  "suite_result": "FAILED (failures=4)"
+ },
+ {
+  "id": "READ_ONLY_THE_FROZEN_BRIEF_WINDOW",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_window_where_one_carries_an_alias_is_withheld_by_name"
+  ],
+  "suite_result": "FAILED (failures=2)"
+ },
+ {
+  "id": "READ_TO_THE_END_OF_THE_DOCUMENT",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_sentence_ending_in_an_item_reference_does_not_start_that_item",
+   "test_consecutive_headings_of_one_item_are_one_item",
+   "test_every_saved_8_01_is_located_once",
+   "test_the_text_is_the_one_an_independent_reading_finds"
+  ],
+  "suite_result": "FAILED (failures=36)"
+ },
+ {
+  "id": "PUBLISH_THE_DIRECT_COUNT_WHEN_AN_ALIAS_IS_THERE",
+  "file": "scripts/vnext/historical_zero_ai_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_window_where_one_carries_an_alias_is_withheld_by_name"
+  ],
+  "suite_result": "FAILED (failures=3)"
+ },
+ {
+  "id": "ANY_LOWERCASE_WORD_MAKES_A_REFERENCE",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_checkbox_glyph_before_the_heading_is_not_a_reference",
+   "test_a_window_where_one_carries_an_alias_is_withheld_by_name",
+   "test_every_keyword_item_in_the_window_is_read",
+   "test_every_saved_8_01_is_located_once",
+   "test_the_text_is_the_one_an_independent_reading_finds"
+  ],
+  "suite_result": "FAILED (failures=1, errors=6)"
+ },
+ {
+  "id": "A_QUOTE_DOES_NOT_MAKE_A_REFERENCE",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_quoted_title_is_a_reference"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "EACH_SUB_ITEM_HEADING_IS_ITS_OWN_ITEM",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_consecutive_headings_of_one_item_are_one_item"
+  ],
+  "suite_result": "FAILED (errors=1)"
+ },
+ {
+  "id": "TAKE_THE_FIRST_OF_TWO_HEADINGS",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_an_item_headed_twice_around_another_is_refused"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "DIRECT_ONLY_ROUTES_ARE_READ_TOO",
+  "file": "scripts/vnext/historical_zero_ai_results.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_route_without_keyword_items_is_untouched"
+  ],
+  "suite_result": "FAILED (failures=2)"
+ }
+]

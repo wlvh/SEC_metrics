@@ -134,12 +134,20 @@ class TheCommittedReadingSaysWhatTheFilingsSayTest(unittest.TestCase):
 
     def test_the_verdicts(self):
         verdicts = {label: row["verdict"] for label, row in _committed()["per_position"].items()}
+        # The route now reads each 8.01 from its own text and withholds a window
+        # where an alias occurs there until the meaning is decided; Lumen's count
+        # no longer rests on the reading that let another item confirm an 8.01.
+        pending = "NO_PUBLISHED_VALUE:" + reader.PENDING
         self.assertEqual({"enphase-2025": "MATCH", "ford-2025": "MATCH",
-                          "southwest-2025": "MATCH",
-                          "lumen-2025": "DEPENDS_ON_THE_CONFIRMATION_READING",
-                          "macys-2026": "DEPENDS_ON_THE_CONFIRMATION_READING",
-                          "marriott-2025": "DEPENDS_ON_THE_CONFIRMATION_READING",
-                          "pfizer-2025": "DIFFERS"}, verdicts)
+                          "southwest-2025": "MATCH", "lumen-2025": "MATCH",
+                          "macys-2026": pending, "marriott-2025": pending,
+                          "pfizer-2025": pending}, verdicts)
+
+    def test_every_withheld_window_is_one_this_reading_also_sees_an_alias_in(self):
+        for label, row in _committed()["per_position"].items():
+            if row["published"] is None:
+                with self.subTest(label):
+                    self.assertTrue(row["reading_sees_an_alias_in_an_8_01"])
 
     def test_every_judgement_is_about_a_filing_a_window_holds(self):
         body = _committed()
@@ -150,6 +158,8 @@ class TheCommittedReadingSaysWhatTheFilingsSayTest(unittest.TestCase):
 
     def test_the_identity_was_recorded_when_the_reading_was_made(self):
         for label, row in _committed()["per_position"].items():
+            if row["published"] is None:
+                continue
             with self.subTest(label):
                 identity = row["checked_identity"]
                 self.assertEqual("RECORDED_AT_READING_TIME", identity["established_by"])
@@ -164,16 +174,19 @@ class TheRegisterTakesE01FromThisReadingOnlyTest(unittest.TestCase):
         e01 = {entry["company_id"]: entry["evidence"] for entry in register["acceptances"]
                if entry["metric_id"] == "E01"}
         self.assertEqual({"enphase_energy": READING, "ford_motor_company": READING,
-                          "southwest_airlines": READING}, e01)
+                          "lumen_technologies": READING, "southwest_airlines": READING}, e01)
 
-    def test_pfizer_is_withdrawn_by_a_registered_defect(self):
+    def test_pfizer_s_defect_withdraws_the_published_zero_and_releases_only_the_repair(self):
         defects = json.loads((ROOT / DEFECTS).read_text(encoding="utf-8"))["defects"]
         entry = next(d for d in defects
                      if d["defect_id"] == "E01_PFIZER_2025_EIGHT_O_ONE_BRANCH_NEVER_READS_THE_ITEM")
         self.assertEqual(("pfizer", "E01", "2025-12-31", None),
                          (entry["company_id"], entry["metric_id"], entry["period_end"],
                           entry["result_id"]))
-        self.assertNotIn("released", entry)
+        # Coordinate-level, so the published 0 stays withdrawn; the one release
+        # names the Run that read the item and withheld the window.
+        self.assertEqual([release["result_id"] for release in entry["released"]],
+                         ["sha256:49196de27061cd25311b3f65b4e9c1cbe487b979a5d1945b79f54e9f3d2d7d81"])
 
 
 if __name__ == "__main__":

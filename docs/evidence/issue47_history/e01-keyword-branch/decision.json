@@ -116,6 +116,64 @@
   }
  ],
  "production_authorized": false,
+ "question_as_posed_2026_09_26": {
+  "options": [
+   {
+    "implementable_now": "yes, deterministically; it is the interim reading plus counting the alias hits",
+    "meaning": "the approved definition with its keyword clause read literally: every 1.01 and 2.01 counts; an 8.01 counts when a declared alias occurs in its own text.",
+    "option": "ITEM_RULE_TRADE_LEADS",
+    "values_in_the_seven_windows": {
+     "enphase-2025": 0,
+     "ford-2025": 2,
+     "lumen-2025": 7,
+     "macys-2026": 3,
+     "marriott-2025": 2,
+     "pfizer-2025": 1,
+     "southwest-2025": 2
+    },
+    "what_it_counts_that_is_not_a_transaction": "over the forty saved 8.01 items, five of the seven alias hits are not transactions: a tender offer's 'combined', two use-of-proceeds 'acquisitions', a compensation item's 'Transaction Agreement', a buyback's 'open market transactions'. In the seven windows, eleven of the thirteen 1.01 items are borrowing agreements.",
+    "what_it_misses": "three saved 8.01 items report a transaction with no declared alias in their text (Paramount's completed sale of its Viacom 18 stake; Paramount Skydance's proposal to acquire Warner Bros. Discovery and its tender offer extension)"
+   },
+   {
+    "cost": "a revision of catalog/event_routes.json's approved route through the existing mechanism, carried in #47's own successor rule, with the ordinary route unchanged until #28's owner adopts it there",
+    "implementable_now": "not deterministically on the evidence here: neither deterministic candidate reproduces the judgements over the forty saved 8.01 items (the literal alias rule is right on 2 of 7 and misses 3; the named-counterparty pattern the first packet sketched admits only 1 and misses 4). It needs a content judgement on every candidate item, by a broader deterministic grammar validated on more filings or by model review under a concrete call request, and it must cover both directions: items that should count and do not carry a keyword.",
+    "meaning": "an item counts when its content reports a merger, acquisition or business combination the registrant or a subsidiary is party to - announced, agreed or completed - whichever of 1.01, 2.01 or 8.01 it is filed under. The keyword requirement is dropped: keywords become a way of finding candidates, not the test.",
+    "option": "CONTENT_CONFIRMED_M_AND_A_ANNOUNCEMENTS",
+    "the_1_01_tension_this_resolves": "the approved definition counts every 1.01 without confirmation; in the seven windows that counts eleven borrowing agreements and a shareholder cooperation agreement as M&A announcements. Fixing only the 8.01 branch is not M&A identification; this option is.",
+    "values_in_the_seven_windows": {
+     "enphase-2025": 0,
+     "ford-2025": 0,
+     "lumen-2025": 1,
+     "macys-2026": 0,
+     "marriott-2025": 0,
+     "pfizer-2025": 1,
+     "southwest-2025": 0
+    }
+   }
+  ],
+  "question": "E01 究竟要做'按既定申报条目规则生成的交易线索'，还是'经内容确认的并购公告'？",
+  "recommendation": "CONTENT_CONFIRMED_M_AND_A_ANNOUNCEMENTS, as the reviewer also recommends, because it is what the metric is named for and it is the only option that treats the 1.01 borrowing agreements correctly. Its implementation is a separate step with its own evidence; until the decision the route answers only what does not depend on it.",
+  "supersedes": "the four options above as the framing of the decision. They stay as the record of what was first asked; this is the question the owner is asked.",
+  "what_is_no_longer_a_decision": {
+   "the_constant_brief": "the 8.01 branch matched the aliases against a sentence the program wrote ('8-K item 8.01 parsed from hdr.sgml'). That was an implementation error, not a meaning question, and it is repaired in the historical route: the 8.01 is read from its own text (../e01-item-text/).",
+   "the_source_scope": "the 8.01's own text, from its heading to the next item heading or the signatures. Another item's text (a 1.01 covenant's 'merger or consolidation') does not confirm an 8.01, so the old option D is not a reading of '8.01 正文'; its counts stay recorded in the reading."
+  },
+  "what_the_route_does_until_then": {
+   "answered": {
+    "enphase-2025": "0",
+    "ford-2025": "2",
+    "lumen-2025": "7",
+    "southwest-2025": "2"
+   },
+   "rule": "AN_ALIAS_IN_A_KEYWORD_ITEM_S_OWN_TEXT_WITHHOLDS_UNTIL_ITS_MEANING_IS_DECIDED",
+   "what_the_answered_values_are": "values under the approved definition - 1.01 and 2.01 counted directly, no 8.01 confirmed. If the content-confirmed option is adopted they become a different metric's values: Ford 0, Lumen 1, Southwest 0.",
+   "withheld_by_name": {
+    "macys-2026": "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING",
+    "marriott-2025": "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING",
+    "pfizer-2025": "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING"
+   }
+  }
+ },
  "raised_and_not_decided_here": {
   "one_o_ones": [
    {
@@ -207,7 +265,7 @@
   "why": "it is the only reading under which every count here is what the filings report: the one acquisition counts and the financing does not. B keeps the approved mechanism and applies it where the definition says, but the definition's own mechanism is what produces three false announcements out of four; A is honest about the route but deletes a clause the owner approved. C's weakness is its evidence base - one positive - and the plan answers it by recording every declined alias hit."
  },
  "record_type": "ISSUE_47_E01_CONFIRMATION_READING_DECISION",
- "status": "AWAITING_OWNER_DECISION",
+ "status": "QUESTION_REPOSED_2026_09_26; interim rule wired in the historical route; no decision taken",
  "the_missing_meaning_judgement": "Does an item 8.01 whose text uses one of the aliases only in a financing context - a use-of-proceeds list ('may include ... acquisitions'), a tender offer's 'combined aggregate purchase price' - confirm an M&A announcement? The approved match mode, a substring anywhere in the text, says yes; the metric's name says no. In this corpus the two disagree on three of the four 8.01 items that carry an alias. A second, smaller question rides with it: whether another item's text in the same filing (Item 1.01 covenants, Item 7.01) can confirm the 8.01.",
  "what_the_definition_says": {
   "route": "catalog/event_routes.json routes.E01: direct_item_codes 1.01, 2.01; keyword_item_rules 8.01 with aliases merger, acquisition, combine, transaction; match_mode SUBSTRING_ANY; text_normalization NFKC casefold collapse whitespace.",

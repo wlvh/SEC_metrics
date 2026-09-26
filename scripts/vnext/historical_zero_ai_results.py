@@ -19,6 +19,13 @@ predecessor as well as to the successor. That widening is the event
 measurement, not the Run's coordinate, and the two are kept apart - see
 ``event_measurement_window`` below and ``historical_results._run_coordinate``.
 No cross-entity financial combination is authorised by any of this.
+
+E01's 8.01 items are confirmed from their own text, read from the primary
+document by ``historical_event_items``, not from the frozen brief, which for an
+hdr-coded filing is a sentence the program wrote and which no 8.01 in this
+repository ever matched. What an alias found there means is undecided, so a
+window where one occurs is withheld by name rather than answered either way.
+The other five event routes have no keyword items and are untouched.
 """
 from pathlib import Path
 
@@ -30,6 +37,8 @@ from .calculator import (calculate_metric, calculate_observation_metric,
                          withheld_metric_result)
 from .canonical import content_hash, sha256_file, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_event_items import (NOT_LOCATED_REASON, PENDING_REASON, EventItemTextError,
+                                     compact, keyword_item_answer)
 from .historical_filing_inventory import filing_inventory
 from .normal_annual_input_v2 import exact_json_value
 from .normal_governance_input import _Sources, NormalGovernanceInputError
@@ -54,6 +63,10 @@ _SOURCE_ERRORS = (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateErr
 
 class _AmendmentRefused(Exception):
     """Control flow only: the approved amendment policy refused this input class."""
+
+
+class _KeywordMeaningPending(Exception):
+    """Control flow only: a keyword item's own text carries an alias, whose meaning is undecided."""
 
 
 class _EventRouteResolved(Exception):
@@ -228,6 +241,7 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     claims, source_sets, observations, dependency_records = [], [], [], []
     filings = [prepared["filing"]]
     selection = {}
+    keyword = None
     try:
         if amendment_refusal is not None:
             raise _AmendmentRefused
@@ -248,8 +262,24 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                 claims, source_sets, events = _event_sources(
                     repo_root=repo_root, reader=reader, prepared=prepared, inventory=inventory)
             filings.extend(events)
+            route = catalog["routes"][metric_id]
+            projected = claims
+            if route["keyword_item_rules"]:
+                # A keyword item is confirmed by its own text, read from the
+                # primary document (historical_event_items), never by the
+                # frozen brief, which for an hdr-coded filing is a sentence the
+                # program wrote. Until the meaning of an alias occurring there
+                # is decided, only the directly counted items are projected,
+                # and a window where a keyword item's text carries an alias is
+                # withheld by name below.
+                keyword = keyword_item_answer(repo_root=repo_root, route=route,
+                                              claims=claims, records=reader.records)
+                if keyword["status"] == "MEANING_PENDING":
+                    raise _KeywordMeaningPending
+                counted = set(keyword["counted_claim_ids"])
+                projected = [claim for claim in claims if claim["verified_claim_id"] in counted]
             graph = project_event_result(
-                metric_id=metric_id, claims=claims, source_set_manifest=source_sets[-1],
+                metric_id=metric_id, claims=projected, source_set_manifest=source_sets[-1],
                 inventory_source_reference=inventory["source_reference"],
                 target_period=period, catalog=catalog)
             original = graph["observation"]
@@ -258,6 +288,8 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
             binding = {**original["source_binding"],
                        "source_role": inventory["source_reference"]["source_role"],
                        "source_set_role": source_sets[-1]["source_role"]}
+            if keyword is not None:
+                binding["keyword_item_confirmation"] = compact(keyword)
             observation = structured_observation(
                 metric_id=metric_id, semantic_role=original["semantic_role"],
                 company_id=company_id, period_start=period["period_start"],
@@ -272,6 +304,8 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                          "matched_verified_claim_ids": graph["matched_verified_claim_ids"],
                          "source_event_accessions": sorted({f["accessionNumber"]
                                                             for f in events})}
+            if keyword is not None:
+                selection["keyword_item_confirmation"] = keyword
             raise _EventRouteResolved
         # The statement source set is proved against the document that lists
         # the filing; the event branch above keeps the main index, because its
@@ -311,6 +345,26 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                      "reason_code": result["reason_code"]}
     except _EventRouteResolved:
         pass
+    except _KeywordMeaningPending:
+        result, trace = withheld_metric_result(compiled_spec=spec, target=target,
+                                               reason_code=PENDING_REASON)
+        observations = []
+        selection = {"reason_code": result["reason_code"],
+                     "category": "PRODUCT_MEANING_PENDING",
+                     "pending_claim_ids": keyword["pending_claim_ids"],
+                     "source_event_accessions": sorted({f["accessionNumber"]
+                                                        for f in filings[1:]}),
+                     "keyword_item_confirmation": keyword}
+    except EventItemTextError as error:
+        # An item whose own text could not be read never counts and never
+        # silently fails to count; the reason names it.
+        result, trace = withheld_metric_result(
+            compiled_spec=spec, target=target,
+            reason_code=(NOT_LOCATED_REASON if error.category == "IMPLEMENTATION_GAP"
+                         else "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED"))
+        observations = []
+        selection = {"reason_code": result["reason_code"], "reason": str(error),
+                     "category": error.category}
     except _AmendmentRefused:
         result, trace = withheld_metric_result(
             compiled_spec=spec, target=target,

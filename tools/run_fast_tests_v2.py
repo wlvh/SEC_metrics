@@ -275,6 +275,13 @@ SOURCE_TESTS += ("tests.vnext.test_historical_block_inputs",)
 # exactly as on the repository root. Builds a recorded root with Marriott's rows
 # up to 2024-06-30 moved into a new block; 52 seconds measured beside a sweep.
 SOURCE_TESTS += ("tests.vnext.test_historical_filing_inventory",)
+# E01's 8.01 items read from their own text: every saved 8.01 located once and
+# compared with the independent reading, and the route resolving the seven value
+# windows; 84 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_event_items",)
+# The candidate B03 D&A rule on the nine filings the cross-source reading opened,
+# with the frozen fact parser's output compared fact by fact; 10 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_da_scope_candidate",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
@@ -360,6 +367,8 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Copies the baseline corpus into a recorded root, then resolves three route
     # families on both roots; 52 seconds measured beside a running sweep.
     "tests.vnext.test_historical_filing_inventory": 480,
+    # Resolves E01 for seven windows through the route; 84 seconds measured.
+    "tests.vnext.test_historical_event_items": 480,
 }
 
 

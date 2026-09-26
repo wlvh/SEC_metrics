@@ -772,12 +772,23 @@
    "root_cause": "deterministic_router.match_event_claims tests the aliases against the claim's 'brief'. adapt_8k_item_index sets that brief to '8-K item <code> parsed from hdr.sgml' whenever the filing's hdr.sgml carries item codes, and the primary-document heading only when it does not; catalog/event_routes.json puts HDR_SGML_ITEM_CODE first. Every filing in the seven windows has hdr item codes, so the 8.01 branch compares the aliases with a constant string that contains none of them and admits nothing. The heading text is computed (primary_heading_brief) and never matched. The router's bytes are frozen by the issue_28 generations and shared with the ordinary route, which carries the same behaviour.",
    "scope_measured": "Twenty-three item 8.01 filings in the seven windows that deliver E01, each read whole (content-acceptance/e01-eight-o-one-read.json). One reports a transaction the registrant is party to - this one. Four carry an alias inside the item and only this one of them reports a transaction; the other three are Marriott's use of proceeds ('may include ... acquisitions', twice) and Macy's tender offer ('a combined aggregate purchase price'). Four more carry one only in another item (Item 1.01 covenant text, Item 7.01 'repricing transaction').",
    "found_by": "the E01 8.01 reading, which reads each item off the saved primary document instead of reproducing the route's text scoping. The first extraction missed this very filing: it looked for the heading 'Other Events' and Pfizer's reads 'Results of Other Events', so the item read as empty and carried no alias - the same shape as the route's miss, one layer up.",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_AWAITS_THE_CONFIRMATION_READING",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "Pfizer's count is 1 under every reading, but any repair has to pick one, and the choice moves other positions: the literal reading in the item adds Marriott's two use-of-proceeds filings and Macy's tender offer, which are not M&A announcements. Which reading the definition means is the decision in e01-keyword-branch/decision.json.",
    "evidence": [
     "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json",
     "docs/evidence/issue47_history/e01-keyword-branch/eight-o-one-judgements.json",
     "docs/evidence/issue47_history/e01-keyword-branch/decision.json"
+   ],
+   "repair": "scripts/vnext/historical_event_items.py reads each 8.01 from its own text in the primary document; the brief is no longer consulted (docs/evidence/issue47_history/e01-item-text/). The ordinary route keeps the frozen matcher and this behaviour.",
+   "released": [
+    {
+     "result_id": "sha256:49196de27061cd25311b3f65b4e9c1cbe487b979a5d1945b79f54e9f3d2d7d81",
+     "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+     "run_id": "run:historical-period:4e855cc11bdebd8cdb0f1bfcdaa5ea7f52d040ecdff92eafc2ba4b655b2a970e",
+     "what_this_releases": "this entry, for this result: the Run read Metsera's 8.01 from its own text, found 'acquisition' and 'merger' there, and withheld the window by name (HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING) instead of publishing the 0 the brief produced. The defect stays in force for every other result at this coordinate, including the published 0.",
+     "what_it_does_not_assert": "that the position is delivered - it carries no value until the meaning of an alias in an 8.01's text is decided; the count is 1 under both readings the decision packet sets out, but the route does not make that judgement.",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json"
+    }
    ]
   },
   {

@@ -7070,9 +7070,9 @@
    "accepted_value": "0",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
-     "result_id": "sha256:d2ecc051ffc5278ea7a2b2e9c6f10ad3365474425863c15b06e6177696168879",
-     "run_id": "run:historical-period:a45c81628a9c4a509fc7a0b3694eb5a70a8eab0631b36c3b1c84a2a359597f2c"
+     "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+     "result_id": "sha256:38ac62acfb8f7554612640943160625d5ff46c94ef5f670aa118460e59dc4bcf",
+     "run_id": "run:historical-period:9c35070d8635686d9346bff1800a41c9753757708ae37a9e91aae1f7693402ce"
     },
     "checked_against_the_reading": [
      "value",
@@ -7122,9 +7122,9 @@
    "accepted_value": "2",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
-     "result_id": "sha256:ad429204f625d04682026883564e86d95e1e1fbd00d137677b1d2da279dd721c",
-     "run_id": "run:historical-period:33090d0eaea404e183697f7992855098219284cfdb88fc48f23c7b057f7b27e5"
+     "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+     "result_id": "sha256:5c33103030b0a8868545984bfc66cad211c13392843577983d66b7755fe2673a",
+     "run_id": "run:historical-period:1f302c6833234de39350da24f693c79814d8ef5d0fedbac81286a5fd649b4a96"
     },
     "checked_against_the_reading": [
      "value",
@@ -7226,13 +7226,172 @@
    "what_this_does_not_establish": "what is established is that this count does not depend on which reading of '8.01 需正文关键词确认' is chosen: no 8.01 in the window changes it under any of the three. It does not establish that counting every 1.01 answers the metric's name - in these windows eleven of thirteen 1.01 items are debt agreements - nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_E01_LUMEN_2025",
+   "accepted_value": "7",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+     "result_id": "sha256:9a2ba36adfc6fc6bafbe51a1490b445717e164ce9066203463003a7e21f03a94",
+     "run_id": "run:historical-period:3348148afa7745ae48fb59323079d4f635c2f1f059d4969e573c37d13fb5d0cc"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000018926-25-000004",
+     "0000018926-25-000039",
+     "0000018926-25-000047",
+     "0000018926-25-000059",
+     "0000018926-25-000092",
+     "0000018926-25-000110",
+     "0001193125-25-124002",
+     "0001193125-25-141702",
+     "0001193125-25-152683",
+     "0001193125-25-172843",
+     "0001193125-25-182730",
+     "0001193125-25-196061",
+     "0001193125-25-198334",
+     "0001193125-25-203545",
+     "0001193125-25-223206",
+     "0001193125-25-308717",
+     "0001193125-25-311581",
+     "0001193125-25-327637",
+     "0001193125-25-330850"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+    "spec_closure_hash": "sha256:7d5864cc3a591b5f0a3b903c4cadcaeb0782dcb60bfe2f75b744cef8f8364ccb",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "lumen_technologies",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json",
+   "method": "the window's 1.01 and 2.01 items from each filing's own SEC header, as for the other event metrics, and every item 8.01 in the window read off the saved primary document: the item located by its own heading and ended at Item 9.01 or the signatures, the catalog's aliases matched under its own normalisation, and a recorded judgement per filing of whether the item reports a merger, acquisition or business combination the registrant is party to. Counted in the route's unit, one per matched item, under three readings of the confirmation - alias in the item, alias anywhere in the document, alias in the item that reports a transaction - and accepted only where all three give the published count.",
+   "metric_id": "E01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "counts_under_each_reading": {
+     "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION": 7,
+     "LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT": 11,
+     "LITERAL_IN_THE_8_01_ITEM": 7
+    },
+    "direct_item_claims": [
+     {
+      "accession": "0001193125-25-330850",
+      "item": "1.01"
+     },
+     {
+      "accession": "0001193125-25-223206",
+      "item": "1.01"
+     },
+     {
+      "accession": "0001193125-25-198334",
+      "item": "1.01"
+     },
+     {
+      "accession": "0001193125-25-182730",
+      "item": "1.01"
+     },
+     {
+      "accession": "0001193125-25-152683",
+      "item": "1.01"
+     },
+     {
+      "accession": "0001193125-25-124002",
+      "item": "1.01"
+     },
+     {
+      "accession": "0000018926-25-000039",
+      "item": "1.01"
+     }
+    ],
+    "eight_o_ones": [
+     {
+      "accession": "0001193125-25-330850",
+      "aliases_anywhere_in_the_primary_document": [
+       "transaction"
+      ],
+      "aliases_in_the_8_01_item": [],
+      "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "heading": "Item 8.01 Other Events"
+     },
+     {
+      "accession": "0001193125-25-327637",
+      "aliases_anywhere_in_the_primary_document": [],
+      "aliases_in_the_8_01_item": [],
+      "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "heading": "Item 8.01 Other Events."
+     },
+     {
+      "accession": "0001193125-25-311581",
+      "aliases_anywhere_in_the_primary_document": [],
+      "aliases_in_the_8_01_item": [],
+      "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "heading": "Item 8.01 Other Events."
+     },
+     {
+      "accession": "0001193125-25-196061",
+      "aliases_anywhere_in_the_primary_document": [
+       "transaction"
+      ],
+      "aliases_in_the_8_01_item": [],
+      "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "heading": "Item 8.01 Other Events."
+     },
+     {
+      "accession": "0001193125-25-182730",
+      "aliases_anywhere_in_the_primary_document": [
+       "transaction"
+      ],
+      "aliases_in_the_8_01_item": [],
+      "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "heading": "Item 8.01 Other Events."
+     },
+     {
+      "accession": "0001193125-25-172843",
+      "aliases_anywhere_in_the_primary_document": [],
+      "aliases_in_the_8_01_item": [],
+      "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "heading": "Item 8.01 Other Events."
+     },
+     {
+      "accession": "0001193125-25-152683",
+      "aliases_anywhere_in_the_primary_document": [
+       "transaction"
+      ],
+      "aliases_in_the_8_01_item": [],
+      "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "heading": "Item 8.01 Other Events."
+     },
+     {
+      "accession": "0001193125-25-141702",
+      "aliases_anywhere_in_the_primary_document": [],
+      "aliases_in_the_8_01_item": [],
+      "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+      "heading": "Item 8.01 Other Events."
+     }
+    ],
+    "window": [
+     "2025-01-01",
+     "2025-12-31"
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that this count does not depend on which reading of '8.01 需正文关键词确认' is chosen: no 8.01 in the window changes it under any of the three. It does not establish that counting every 1.01 answers the metric's name - in these windows eleven of thirteen 1.01 items are debt agreements - nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_E01_SOUTHWEST_2025",
    "accepted_value": "2",
    "checked_identity": {
     "bound_from": {
-     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
-     "result_id": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9",
-     "run_id": "run:historical-period:22ca781a045b2300524f705343ea71cea283320b1793782e6d25294a1517469e"
+     "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+     "result_id": "sha256:16680f66fd9a0d85b533c2872f768797be895891b0f785ba33d2c3a30bc97d86",
+     "run_id": "run:historical-period:2cc108ccb90cd84f9326059519bea2d994c933a8b1e24a1f19a53c8956301a07"
     },
     "checked_against_the_reading": [
      "value",
@@ -10539,7 +10698,7 @@
   "C03": "all nine are read. The four that previously read as 'no saved proxy reports the target period' were a defect in the reading, not a gap in the material: it globbed *def14a*.htm, and only one of the ten companies names its proxy that way. Earlier periods remain unread and that IS a source gap - each registrant declares 16 to 33 DEF 14A filings and exactly one is on disk.",
   "C04": "all six positions that carry a value are read. The five that previously reported the previous year's 10-K as not readable were three defects in the reading: it demanded the prior primary HTML where the route reads any document of that accession carrying dei facts, it parsed the accession out of an error string it had itself truncated, and it computed the prior period end by replacing the year - which for a 52/53-week filer names a date the calendar never had. Southwest and Salesforce have no published C04 value at all.",
   "D02 for four of the eleven": "Pfizer's 96 excerpts, Lumen's 41, Paramount's 28 and Enphase's 18 were read whole and found wrong - two, one, two and one blocks respectively - so each is a registered defect rather than an unread set. The other seven have been read in both directions and are accepted.",
-  "E01 for Lumen, Macy's, Marriott and Pfizer": "every 8.01 in the seven windows is read (content-acceptance/e01-eight-o-one-read.json). Lumen's, Macy's and Marriott's counts hold under some readings of the definition's keyword confirmation and not others - the decision is in e01-keyword-branch/decision.json. Pfizer's is wrong under every reading: its Metsera acquisition was reported under item 8.01 and the route's 8.01 branch never reads the item. That is a registered defect.",
+  "E01 for Macy's, Marriott and Pfizer": "every 8.01 in the seven windows is read (content-acceptance/e01-eight-o-one-read.json). The historical route now reads each 8.01 from its own text instead of the brief the program wrote (e01-item-text/), and withholds a window where an alias occurs in an 8.01's text until the meaning of that occurrence is decided (e01-keyword-branch/decision.json) - so these three carry no value to accept. Lumen's count no longer depends on the open reading: the reading that let another item's covenant language confirm an 8.01 is not a reading of the 8.01's own text, and Lumen's 8.01 texts carry no alias.",
   "everything else": "no reading has been made.",
   "ford B07 and lumen B07": "operating income is negative, the definition says NOT_MEANINGFUL, and the reading agrees by producing a negative ratio where the route published none. There is no value to accept.",
   "marriott 2023 B02 and B03": "that period's source gaps.",
@@ -10590,8 +10749,8 @@
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json": {
-   "acceptances_contributed": 3,
-   "content_sha256": "sha256:d57cc08f235f28804851ec5744e670f947538fe091c0b40301a27485b333eb03",
+   "acceptances_contributed": 4,
+   "content_sha256": "sha256:a83c4141bac552bbe9ab6ebe5df31dc818f0b63b6045da554e9a708460a5146c",
    "positions_examined": 7,
    "positions_examined_is_null_because": null
   },

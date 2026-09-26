@@ -26,9 +26,17 @@ The judgement is the part a program cannot supply and is recorded per filing
 (docs/evidence/issue47_history/e01-keyword-branch/eight-o-one-judgements.json);
 every 8.01 in a window needs one, and a judgement about a filing the window
 does not hold fails the reading. A position MATCHes only when the published
-count equals the count under every reading - the value does not depend on the
-reading still to be chosen. It DIFFERS when no reading gives it, and otherwise
-DEPENDS_ON_THE_CONFIRMATION_READING.
+count equals the count under both readings of the item's own text - the value
+does not depend on the reading still to be chosen. It DIFFERS when neither
+gives it, and otherwise DEPENDS_ON_THE_CONFIRMATION_READING.
+
+The third count, ``LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT``, is still
+recorded and no longer decides: the route now reads the 8.01 from its own
+heading to the next item heading (historical_event_items), which fixes the
+source scope as the item's own text - another item's covenant language does
+not confirm an 8.01. Where the route withholds a window because an alias
+occurs in an 8.01's text and its meaning is undecided, the verdict records the
+withholding and whether this reading, independently, sees an alias there too.
 
 The window and its filing set are the ones event-count-read.json enumerated
 from the saved submissions index, read from their SEC headers; this adds the
@@ -64,8 +72,9 @@ OUT = EVIDENCE + "content-acceptance/e01-eight-o-one-read.json"
 REPORTS = "REPORTS_A_TRANSACTION_THE_REGISTRANT_IS_PARTY_TO"
 DECISIONS = (REPORTS, "DOES_NOT_REPORT_A_TRANSACTION")
 READINGS_OF_THE_CONFIRMATION = ("LITERAL_IN_THE_8_01_ITEM",
-                                "LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT",
                                 "ALIAS_IN_THE_ITEM_AND_IT_REPORTS_A_TRANSACTION")
+RECORDED_AND_NOT_DECIDING = ("LITERAL_ANYWHERE_IN_THE_PRIMARY_DOCUMENT",)
+PENDING = "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING"
 _HEADING = re.compile(r"Item\s*8\.01\b\.?\s*(?:Results\s+of\s+)?Other\s+Events\.?", re.I)
 _END = re.compile(r"Item\s*9\.01\b|SIGNATURES?\b", re.I)
 
@@ -145,8 +154,9 @@ def verdict(*, published, counts, complete):
     """MATCH only where the value does not depend on the reading still open."""
     if not complete:
         return "READING_INCOMPLETE"
-    agreeing = [name for name, count in counts.items() if str(count) == str(published)]
-    if len(agreeing) == len(counts):
+    deciding = {name: counts[name] for name in READINGS_OF_THE_CONFIRMATION}
+    agreeing = [name for name, count in deciding.items() if str(count) == str(published)]
+    if len(agreeing) == len(deciding):
         return "MATCH"
     return "DIFFERS" if not agreeing else "DEPENDS_ON_THE_CONFIRMATION_READING"
 
@@ -210,6 +220,17 @@ def read_position(*, label, case, judgements, index, closure, ciks):
     selection = select_receipt(found=index.get(key, []), closure=closure)
     if selection["result"] is None:
         raise SystemExit("NO_RESULT_TO_COMPARE:" + label)
+    if selection["result"]["publication"] == "WITHHELD":
+        # Nothing to accept. What is recorded is why, and whether this reading,
+        # which finds the item its own way, also sees an alias in an 8.01.
+        reason = selection["result"]["reason_code"]
+        sees_an_alias = any(e["aliases_in_the_8_01_item"] for e in eights)
+        position.update(published=None, withheld_reason=reason,
+                        reading_sees_an_alias_in_an_8_01=sees_an_alias,
+                        verdict=("NO_PUBLISHED_VALUE:" + reason
+                                 if reason != PENDING or sees_an_alias
+                                 else "WITHHELD_WHERE_THIS_READING_SEES_NO_ALIAS"))
+        return position, in_window
     position["published"] = str(selection["result"]["value"])
     identity, refusal = identity_for(
         position={"company_id": case["company_id"], "metric_id": "E01",

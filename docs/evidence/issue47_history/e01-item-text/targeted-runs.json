@@ -1,0 +1,341 @@
+{
+ "batch_closure": [
+  "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+ ],
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "closure": [
+  "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d"
+ ],
+ "positions": [
+  {
+   "before": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+    "result_id": "sha256:d2ecc051ffc5278ea7a2b2e9c6f10ad3365474425863c15b06e6177696168879",
+    "run_id": "run:historical-period:a45c81628a9c4a509fc7a0b3694eb5a70a8eab0631b36c3b1c84a2a359597f2c",
+    "status": "FROZEN",
+    "value": "0"
+   },
+   "cold_read_same_result": true,
+   "metric_id": "E01",
+   "now": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+    "result_id": "sha256:38ac62acfb8f7554612640943160625d5ff46c94ef5f670aa118460e59dc4bcf",
+    "run_id": "run:historical-period:9c35070d8635686d9346bff1800a41c9753757708ae37a9e91aae1f7693402ce",
+    "status": "FROZEN",
+    "value": "0"
+   },
+   "position": "enphase-2025",
+   "public_row": true,
+   "same_answer": true,
+   "same_result_id": false,
+   "separate_process_cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:38ac62acfb8f7554612640943160625d5ff46c94ef5f670aa118460e59dc4bcf",
+    "run_id": "run:historical-period:9c35070d8635686d9346bff1800a41c9753757708ae37a9e91aae1f7693402ce",
+    "status": "FROZEN",
+    "value_sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+   }
+  },
+  {
+   "before": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+    "result_id": "sha256:ad429204f625d04682026883564e86d95e1e1fbd00d137677b1d2da279dd721c",
+    "run_id": "run:historical-period:33090d0eaea404e183697f7992855098219284cfdb88fc48f23c7b057f7b27e5",
+    "status": "FROZEN",
+    "value": "2"
+   },
+   "cold_read_same_result": true,
+   "metric_id": "E01",
+   "now": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+    "result_id": "sha256:5c33103030b0a8868545984bfc66cad211c13392843577983d66b7755fe2673a",
+    "run_id": "run:historical-period:1f302c6833234de39350da24f693c79814d8ef5d0fedbac81286a5fd649b4a96",
+    "status": "FROZEN",
+    "value": "2"
+   },
+   "position": "ford-2025",
+   "public_row": true,
+   "same_answer": true,
+   "same_result_id": false,
+   "separate_process_cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:5c33103030b0a8868545984bfc66cad211c13392843577983d66b7755fe2673a",
+    "run_id": "run:historical-period:1f302c6833234de39350da24f693c79814d8ef5d0fedbac81286a5fd649b4a96",
+    "status": "FROZEN",
+    "value_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+   }
+  },
+  {
+   "before": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+    "result_id": "sha256:131cee5746771a6035bf4132fdde1d2ab74aecee76c23f121c12058d99fcdc8e",
+    "run_id": "run:historical-period:00bdd17f12388e885bba57ee44cb2b46745c003a2ff379d1d9a16fccee0e45fe",
+    "status": "FROZEN",
+    "value": "3"
+   },
+   "cold_read_same_result": true,
+   "metric_id": "C01",
+   "now": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+    "result_id": "sha256:131cee5746771a6035bf4132fdde1d2ab74aecee76c23f121c12058d99fcdc8e",
+    "run_id": "run:historical-period:fc2e23fb8573e7ae1beb4714d051fd39d66a2235e323058074c26240b4c73495",
+    "status": "FROZEN",
+    "value": "3"
+   },
+   "position": "ford-2025",
+   "public_row": true,
+   "same_answer": true,
+   "same_result_id": true,
+   "separate_process_cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:131cee5746771a6035bf4132fdde1d2ab74aecee76c23f121c12058d99fcdc8e",
+    "run_id": "run:historical-period:fc2e23fb8573e7ae1beb4714d051fd39d66a2235e323058074c26240b4c73495",
+    "status": "FROZEN",
+    "value_sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+   }
+  },
+  {
+   "before": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+    "result_id": "sha256:5947abbb4e7172fdc491efd96c0c3bd192547478f8479043109c54ac83f64275",
+    "run_id": "run:historical-period:fc0145d0ba502a09c328da86fed75259a0f541c533bd47b0c9a601fa16c8e027",
+    "status": "FROZEN",
+    "value": "2"
+   },
+   "cold_read_same_result": true,
+   "metric_id": "E05",
+   "now": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+    "result_id": "sha256:5947abbb4e7172fdc491efd96c0c3bd192547478f8479043109c54ac83f64275",
+    "run_id": "run:historical-period:60c256d3a12cd3a857d821af8a9cbca8593f3886fa4b876ca548317eefffb37f",
+    "status": "FROZEN",
+    "value": "2"
+   },
+   "position": "ford-2025",
+   "public_row": true,
+   "same_answer": true,
+   "same_result_id": true,
+   "separate_process_cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:5947abbb4e7172fdc491efd96c0c3bd192547478f8479043109c54ac83f64275",
+    "run_id": "run:historical-period:60c256d3a12cd3a857d821af8a9cbca8593f3886fa4b876ca548317eefffb37f",
+    "status": "FROZEN",
+    "value_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+   }
+  },
+  {
+   "before": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+    "result_id": "sha256:21824ee7aae2ebbaa80673d394e62e897e18e66566c728d4c1c558692d56a037",
+    "run_id": "run:historical-period:2469ecb55223e5205c6bd267d916fb50fffc5fc946933ac5b7de1d8bd2bbc605",
+    "status": "FROZEN",
+    "value": "7"
+   },
+   "cold_read_same_result": true,
+   "metric_id": "E01",
+   "now": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+    "result_id": "sha256:9a2ba36adfc6fc6bafbe51a1490b445717e164ce9066203463003a7e21f03a94",
+    "run_id": "run:historical-period:3348148afa7745ae48fb59323079d4f635c2f1f059d4969e573c37d13fb5d0cc",
+    "status": "FROZEN",
+    "value": "7"
+   },
+   "position": "lumen-2025",
+   "public_row": true,
+   "same_answer": true,
+   "same_result_id": false,
+   "separate_process_cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:9a2ba36adfc6fc6bafbe51a1490b445717e164ce9066203463003a7e21f03a94",
+    "run_id": "run:historical-period:3348148afa7745ae48fb59323079d4f635c2f1f059d4969e573c37d13fb5d0cc",
+    "status": "FROZEN",
+    "value_sha256": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451"
+   }
+  },
+  {
+   "before": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+    "result_id": "sha256:ba457ef857aa34408be5d12097ac734c0f44baf3ceaf20a9498a2af969c3c111",
+    "run_id": "run:historical-period:5c5b0873f906205ed3fa47d3fce139f72b1044963a8f1ecf83af1f3ca679bef6",
+    "status": "FROZEN",
+    "value": "2"
+   },
+   "cold_read_same_result": true,
+   "metric_id": "E01",
+   "now": {
+    "publication": "WITHHELD",
+    "reason_code": "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING",
+    "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+    "result_id": "sha256:edb09ad79f3e3ca4672aaaac6de50613374b7d51e3d8bd5658cb528eb225c47b",
+    "run_id": "run:historical-period:c0d9cf61c8630beb523bf46ae57784d1e29c5a00db5a4ca2de63b965ce47afbe",
+    "status": "FROZEN",
+    "value": null
+   },
+   "position": "macys-2026",
+   "public_row": true,
+   "same_answer": false,
+   "same_result_id": false,
+   "separate_process_cold_read": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:edb09ad79f3e3ca4672aaaac6de50613374b7d51e3d8bd5658cb528eb225c47b",
+    "run_id": "run:historical-period:c0d9cf61c8630beb523bf46ae57784d1e29c5a00db5a4ca2de63b965ce47afbe",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   }
+  },
+  {
+   "before": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+    "result_id": "sha256:1870c574ee0054b417f735a1d89c87e8eb18b9dedcc98a0ea9214ba2f76cbc66",
+    "run_id": "run:historical-period:622de2ca9abb1cf57ef7c4580b1ee2211a9de05caa03317275db2165a985fb71",
+    "status": "FROZEN",
+    "value": "0"
+   },
+   "cold_read_same_result": true,
+   "metric_id": "E01",
+   "now": {
+    "publication": "WITHHELD",
+    "reason_code": "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING",
+    "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+    "result_id": "sha256:d81b9e423d48775e37235ddb01bd994e9853c630f999c7820d801374a0d75276",
+    "run_id": "run:historical-period:aa78f0c6e3b32150ee3e9c30f5d514e5a150a0c959ddf4358275eba314a86625",
+    "status": "FROZEN",
+    "value": null
+   },
+   "position": "marriott-2025",
+   "public_row": true,
+   "same_answer": false,
+   "same_result_id": false,
+   "separate_process_cold_read": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:d81b9e423d48775e37235ddb01bd994e9853c630f999c7820d801374a0d75276",
+    "run_id": "run:historical-period:aa78f0c6e3b32150ee3e9c30f5d514e5a150a0c959ddf4358275eba314a86625",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   }
+  },
+  {
+   "before": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+    "result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1",
+    "run_id": "run:historical-period:9ea9765a3c2240825529526a72a63f215a22d67b1dfcf43d85a3364a5a100f76",
+    "status": "FROZEN",
+    "value": "0"
+   },
+   "cold_read_same_result": true,
+   "metric_id": "E01",
+   "now": {
+    "publication": "WITHHELD",
+    "reason_code": "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING",
+    "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+    "result_id": "sha256:49196de27061cd25311b3f65b4e9c1cbe487b979a5d1945b79f54e9f3d2d7d81",
+    "run_id": "run:historical-period:4e855cc11bdebd8cdb0f1bfcdaa5ea7f52d040ecdff92eafc2ba4b655b2a970e",
+    "status": "FROZEN",
+    "value": null
+   },
+   "position": "pfizer-2025",
+   "public_row": true,
+   "same_answer": false,
+   "same_result_id": false,
+   "separate_process_cold_read": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:49196de27061cd25311b3f65b4e9c1cbe487b979a5d1945b79f54e9f3d2d7d81",
+    "run_id": "run:historical-period:4e855cc11bdebd8cdb0f1bfcdaa5ea7f52d040ecdff92eafc2ba4b655b2a970e",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   }
+  },
+  {
+   "before": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+    "result_id": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9",
+    "run_id": "run:historical-period:22ca781a045b2300524f705343ea71cea283320b1793782e6d25294a1517469e",
+    "status": "FROZEN",
+    "value": "2"
+   },
+   "cold_read_same_result": true,
+   "metric_id": "E01",
+   "now": {
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:b4aebe32362b49cf0ce3921b416031b2f7bd62e47a780b510a14b1ce01d2ab7d",
+    "result_id": "sha256:16680f66fd9a0d85b533c2872f768797be895891b0f785ba33d2c3a30bc97d86",
+    "run_id": "run:historical-period:2cc108ccb90cd84f9326059519bea2d994c933a8b1e24a1f19a53c8956301a07",
+    "status": "FROZEN",
+    "value": "2"
+   },
+   "position": "southwest-2025",
+   "public_row": true,
+   "same_answer": true,
+   "same_result_id": false,
+   "separate_process_cold_read": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:16680f66fd9a0d85b533c2872f768797be895891b0f785ba33d2c3a30bc97d86",
+    "run_id": "run:historical-period:2cc108ccb90cd84f9326059519bea2d994c933a8b1e24a1f19a53c8956301a07",
+    "status": "FROZEN",
+    "value_sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+   }
+  }
+ ],
+ "record_type": "ISSUE_47_E01_ITEM_TEXT_TARGETED_RUNS",
+ "summary": {
+  "all_frozen_with_public_row_and_cold_read": true,
+  "e01_now_withheld": [
+   "macys-2026",
+   "marriott-2025",
+   "pfizer-2025"
+  ],
+  "e01_same_answer": [
+   "enphase-2025",
+   "ford-2025",
+   "lumen-2025",
+   "southwest-2025"
+  ],
+  "runs": 9,
+  "untouched_routes_same_result_id": [
+   "ford-2025:C01",
+   "ford-2025:E05"
+  ]
+ }
+}
