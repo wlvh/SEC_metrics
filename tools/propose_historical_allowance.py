@@ -134,7 +134,8 @@ with tempfile.TemporaryDirectory() as directory:
 # The alignment itself, measured: every row the declaration says still needs a
 # fetch, asked of the proposed scope exactly as the gate will ask it. What the
 # grants refuse must be what the plan's text says it does not cover, and
-# nothing else.
+# nothing else. This covers the rows declared today; the rows a catalog cannot
+# declare yet are asked about below.
 from vnext.historical_source_acquisition import (HistoricalAcquisitionError,  # noqa: E402
                                                  request_is_in_scope)
 census = {"admitted_by_grant": {}, "refused": {}}
@@ -153,6 +154,80 @@ for frame in _FRAMES:
             reason = str(error).split(":")[0]
             key = frame["company_id"] + ":" + row["dependency_class"] + ":" + reason
             census["refused"][key] = census["refused"].get(key, 0) + 1
+
+
+# The census can only ask about rows the declaration makes today. The grants are
+# company x class x target window, so they also decide the rows it will make
+# once a catalog reaches further back. The plan once said JPMorgan's three
+# periods its saved shards do not reach needed a separate application, while
+# A_ANNUAL_CHAIN admitted their annual chains: the text described one grant and
+# the object was another. So the plan now states, as data, what the grants do
+# with each target a catalog does not reach yet, and this asks the same gate the
+# same question - one row per probed class, the target as its consumer, which is
+# how the planner ties even the earliest target's prior-year documents to a
+# target inside the window. The proposal is not written if the two disagree.
+def _unreached_targets(frame, years):
+    """Targets a frame's catalog does not reach yet, stepped back a year at a time.
+
+    Exact for a calendar fiscal year; for a 52/53-week year the stepped date can
+    miss the real period end by days, which matters only if that moves it across
+    a grant's window edge.
+    """
+    from datetime import date
+    reached = sorted(frame["target_report_dates"])
+    if not reached:
+        raise SystemExit("NOT_YET_DECLARABLE_HAS_NO_REACHED_TARGET_TO_STEP_FROM:"
+                         + frame["company_id"])
+    earliest = date.fromisoformat(reached[0])
+    stepped = []
+    for step in range(1, years - len(reached) + 1):
+        day = min(earliest.day, 28) if earliest.month == 2 else earliest.day
+        stepped.append(earliest.replace(year=earliest.year - step, day=day).isoformat())
+    return sorted(stepped)
+
+
+PROBED_CLASSES = ("ACCESSION_INSTANCE_DISCOVERY", "ANNUAL_PERIOD_IDENTITY",
+                  "FISCAL_EVENT_FILING", "GOVERNANCE_DISCLOSURE_FILING")
+not_yet_declarable = {}
+for frame in _FRAMES:
+    targets = _unreached_targets(frame, years=5)
+    if not targets:
+        continue
+    by_class = {}
+    for target in targets:
+        for dependency_class in PROBED_CLASSES:
+            try:
+                request_is_in_scope(
+                    allowance={"scope": approved["scope"]}, company_id=frame["company_id"],
+                    dependency={"dependency_class": dependency_class,
+                                "consumers": ["period:" + target]},
+                    purpose="ISSUE47_HISTORICAL_SOURCE_DEPENDENCY",
+                    frame_report_dates=frame["target_report_dates"])
+                answer = "admitted_once_declarable"
+            except HistoricalAcquisitionError as error:
+                # Only "no grant covers it" is an answer about the grants; a
+                # refusal for any other reason means the probe asked badly.
+                if not str(error).startswith("ISSUE_47_REQUEST_OUTSIDE_EVERY_GRANT"):
+                    raise SystemExit("NOT_YET_DECLARABLE_REFUSED_FOR_ANOTHER_REASON:"
+                                     + str(error)[:160])
+                answer = "outside_every_grant"
+            by_class.setdefault(dependency_class, set()).add(answer)
+    # One answer per class across the unreached targets, or the plan's
+    # per-company statement cannot say it truthfully.
+    mixed = sorted(name for name, answers in by_class.items() if len(answers) > 1)
+    if mixed:
+        raise SystemExit("NOT_YET_DECLARABLE_ANSWER_DIFFERS_BY_TARGET:"
+                         + frame["company_id"] + ":" + ",".join(mixed))
+    not_yet_declarable[frame["company_id"]] = {
+        "targets": targets,
+        **{answer: sorted(name for name, answers in by_class.items() if answer in answers)
+           for answer in ("admitted_once_declarable", "outside_every_grant")}}
+stated = PLAN["revision_5"]["not_yet_declarable"]
+if stated != not_yet_declarable:
+    raise SystemExit("THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS: plan "
+                     + json.dumps(stated, sort_keys=True) + " gate "
+                     + json.dumps(not_yet_declarable, sort_keys=True))
+checks["not_yet_declarable_matches_the_plan"] = True
 
 out = {"record_type": "ISSUE_47_PROPOSED_SEC_ALLOWANCE",
        "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
@@ -175,6 +250,19 @@ out = {"record_type": "ISSUE_47_PROPOSED_SEC_ALLOWANCE",
                   "companies' frames, asked of this scope exactly as the gate asks "
                   "it: which grant admits it, or why it is refused"),
          **census},
+       "grants_for_dependencies_not_yet_declarable": {
+         "what": ("for every target a company's saved catalog does not reach yet, "
+                  "whether the grants admit each probed class once the declaration "
+                  "can name its rows, asked of the same gate with the target as the "
+                  "row's consumer"),
+         "measured": not_yet_declarable,
+         "stated_in": "docs/evidence/issue47_history/acquisition-plan.json revision_5",
+         "meaning": ("inside the grants' companies, classes and target window, a "
+                     "dependency the declaration comes to require is admitted and "
+                     "draws on the one cumulative cap, whether or not it could be "
+                     "counted when the cap was measured; outside them it needs a "
+                     "measured increment. The proposal is not written when the "
+                     "gate's answers differ from the plan's statement.")},
        "required_policy_fields": list(REQUIRED_POLICY_FIELDS),
        "the_comment_body_to_post": approved,
        "the_comment_body_as_text": body,

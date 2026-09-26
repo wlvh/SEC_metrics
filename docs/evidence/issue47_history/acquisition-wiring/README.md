@@ -592,6 +592,26 @@ primary declares no window), which is why the plan's class totals are larger
 than today's declared rows; a JPMorgan earlier-year event row declared later
 would be refused by name, `ISSUE_47_REQUEST_OUTSIDE_EVERY_GRANT`.
 
+**What the grants do with rows the declaration cannot make yet** (review of
+`f0bb8053`). The census above asks only about rows declared today. The plan's
+text said JPMorgan's three periods its saved shards do not reach would need a
+separate application, while `A_ANNUAL_CHAIN` names JPMorgan and those two
+classes over the whole frame window. Reproduced before anything changed, with
+the planner's own row shape (its earliest target's prior-year documents name
+only that target, so no row reaches before the window): the primary and index
+of FY2021-FY2023, and of FY2020 as FY2021's prior year, are admitted by
+`A_ANNUAL_CHAIN`; JPMorgan's FY2021-FY2024 event filings and FY2021-FY2023
+proxies are outside every grant. The object's meaning was kept and the text
+now says it: inside the grants and the one cumulative cap, a dependency the
+declaration comes to require is admitted even when it could not be counted
+when the cap was measured (8 attempts for those chains, by the planner's shape,
+not measured). No grant and no gate changed. The plan states the answers as
+data (`acquisition-plan.json`, `revision_5.not_yet_declarable`), and
+`tools/propose_historical_allowance.py` asks the gate about every target a
+catalog does not reach yet - one row per probed class - and does not write the
+proposal when the two differ, or when one class gets different answers for
+different years. The approved body and its digest did not move.
+
 **The ledger path.** Proposed: `/Users/lyuhongwang/.local/state/sec_metrics/
 issue47-historical-sec-v1` — beside Issue #28's root on the same host, so it
 persists with the user's state rather than with a checkout, and is plainly a

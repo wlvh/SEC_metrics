@@ -15,6 +15,28 @@
   "refused": {},
   "what": "every declared row that still needs a fetch, across all ten companies' frames, asked of this scope exactly as the gate asks it: which grant admits it, or why it is refused"
  },
+ "grants_for_dependencies_not_yet_declarable": {
+  "meaning": "inside the grants' companies, classes and target window, a dependency the declaration comes to require is admitted and draws on the one cumulative cap, whether or not it could be counted when the cap was measured; outside them it needs a measured increment. The proposal is not written when the gate's answers differ from the plan's statement.",
+  "measured": {
+   "jpmorgan_chase": {
+    "admitted_once_declarable": [
+     "ACCESSION_INSTANCE_DISCOVERY",
+     "ANNUAL_PERIOD_IDENTITY"
+    ],
+    "outside_every_grant": [
+     "FISCAL_EVENT_FILING",
+     "GOVERNANCE_DISCLOSURE_FILING"
+    ],
+    "targets": [
+     "2021-12-31",
+     "2022-12-31",
+     "2023-12-31"
+    ]
+   }
+  },
+  "stated_in": "docs/evidence/issue47_history/acquisition-plan.json revision_5",
+  "what": "for every target a company's saved catalog does not reach yet, whether the grants admit each probed class once the declaration can name its rows, asked of the same gate with the target as the row's consumer"
+ },
  "how_the_values_were_obtained": {
   "cap": "docs/evidence/issue47_history/acquisition-plan.json - 150 + 1048 + 36 + 120, a stop-cap rather than an estimate",
   "company_ids": "config/company_registry.csv",
@@ -187,6 +209,7 @@
    0,
    1354
   ],
+  "not_yet_declarable_matches_the_plan": true,
   "provenance_verified_against_github": null
  }
 }

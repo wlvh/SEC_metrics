@@ -33,7 +33,8 @@
     "SUBMISSIONS_INDEX": "one current submissions index refresh, JPMorgan's"
    },
    "why_jpmorgan_is_70_of_the_142": "JPMorgan files often enough that a shard holds under two months, and the saved shards were partitioned differently from the ones now declared. Its catalog therefore reaches two annual periods, so its other three periods are not in this count at all - they become measurable only after the shards land.",
-   "why_paramount_is_8": "the predecessor's four years are in the frame now: four annual primaries and their four accession indexes. FY2024's are saved; FY2021-FY2023's and the chain's prior year are not."
+   "why_paramount_is_8": "the predecessor's four years are in the frame now: four annual primaries and their four accession indexes. FY2024's are saved; FY2021-FY2023's and the chain's prior year are not.",
+   "jpmorgan_unreached_periods_2026_09_26": "not in this count, because the saved catalog cannot declare them, but inside A_ANNUAL_CHAIN: once the shards land and the planner declares their annual chain the gate admits it and it draws on the one cumulative cap - 8 attempts by the planner's shape, not measured (revision_5)."
   },
   "B_event_windows_for_the_wired_event_metrics": {
    "attempts": 1048,
@@ -98,7 +99,8 @@
      }
     ],
     "found_by": "reading the declaration row by row (declared_frame marks both new_acquisition_required) and the ledger's latest GET per URL; the earlier count of this class came from saved metadata for the earlier years' windows and did not reach either."
-   }
+   },
+   "named_grants_2026_09_26": "B_JPMORGAN_FY2025_KNOWN_HEADER is named for the one row of that window that needs a fetch today, but a grant is company x class x target period: it admits whatever the declaration comes to require in JPMorgan's FY2025 event window, and today that is exactly the one failed header. G_JPMORGAN_FY2024_PROXY is the same shape for FY2024's proxy."
   },
   "C_reserve_for_what_the_originals_name": {
    "certainty": "BOUNDED_BY_CONSTRUCTION",
@@ -136,8 +138,9 @@
   "this_is_the_number": "an execution stop-cap for Issue #47, not an estimate and not a guarantee of completion. The three are different things and the earlier revision conflated them by offering a class upper bound of 993 and a first tranche of 30 without ever naming a total.",
   "what_it_does_not_cover": {
    "consequence": "reaching the uncovered items needs a separate increment with its own measured basis",
-   "jpmorgan": "its FY2021-FY2024 event windows and the three periods the saved shards cannot reach; measurable only after class A's 68 shards land",
-   "model_calls": "B13 (Ford, Enphase), D03 and D04 need provider calls under a separate allowance; see semantic-route-need/measured.json. This cap is SEC request attempts only."
+   "jpmorgan": "its FY2021-FY2024 event windows and its FY2021-FY2023 proxies: outside every grant, measurable only after class A's 68 shards land, and they need a measured increment. Its three unreached periods' annual chains are not in this list: A_ANNUAL_CHAIN admits them once they can be declared, from this cap (revision_5).",
+   "model_calls": "B13 (Ford, Enphase), D03 and D04 need provider calls under a separate allowance; see semantic-route-need/measured.json. This cap is SEC request attempts only.",
+   "jpmorgan_until_2026_09_26": "its FY2021-FY2024 event windows and the three periods the saved shards cannot reach; measurable only after class A's 68 shards land"
   }
  },
  "execution_discipline_after_authorisation": "continuous, under the cap: plan the tranche, capture it, install, run, report against the cap, take the next tranche. No per-URL question and no per-company question. At the cap, stop and report what remains.",
@@ -211,8 +214,10 @@
   "evidence": "remaining-work-2026-09-25/README.md for the current frame; frame-ceiling-today.json keeps the earlier measurement this section first cited",
   "in_positions": "12 x 39 = 468 of 1,950 frame positions can be attempted at all today, before any question of whether a route is wired for them. The other 1,482 wait on a source: 1,287 (33 periods) on a missing target original, and all 195 of JPMorgan's - 78 in the two periods its saved catalog reaches but refuses as incoherent, 117 in the three it does not reach.",
   "measured": "12 of the frame's 50 target periods can be attempted today: Marriott three, Paramount two (the successor's FY2025 and the predecessor's FY2024), seven companies their latest year, JPMorgan none. JPMorgan's FY2025 original is saved; its saved catalog is what cannot select the period.",
-  "so": "class A's 150 acquisitions are what can turn 12 attemptable periods into 47: the 33 missing originals of the nine other companies with their chains' prior years, and JPMorgan's 68 shards and index refresh, which bring its two reachable periods within reach of selection. JPMorgan's other three periods are not in this count at all; they become measurable only after the shards land and need an increment measured then (cumulative_cap.what_it_does_not_cover). Under the current source rules no implementation moves these numbers: a batch over those periods produces SOURCE_MISSING_TARGET_ORIGINAL or a catalog refusal, not results. JPMorgan FY2025 does select on a recorded root whose index was derived from the saved shards' own bodies, but a derived index is not an SEC response and admits nothing.",
-  "superseded_2026_09_26": "this section said 11 periods, 429 positions and 142 class-A acquisitions turning 11 periods into 50. It was measured before Paramount's predecessor years entered the frame, and '50' left out that JPMorgan's catalog reaches only two of its five periods."
+  "so": "class A's 150 measured acquisitions are what turn 12 attemptable periods into 47: the 33 missing originals of the nine other companies with their chains' prior years, and JPMorgan's 68 shards and index refresh, which bring its two reachable periods within reach of selection. JPMorgan's other three periods are not in the 150 - the saved catalog cannot declare them - but their annual chains are inside A_ANNUAL_CHAIN: once the shards land and the planner declares them they are admitted and draw on the same cap (revision_5). So up to 50 periods can be attempted within this grant; what JPMorgan's three still lack after that is their event windows and proxies, which are outside every grant. Under the current source rules no implementation moves these numbers: a batch over those periods produces SOURCE_MISSING_TARGET_ORIGINAL or a catalog refusal, not results. JPMorgan FY2025 does select on a recorded root whose index was derived from the saved shards' own bodies, but a derived index is not an SEC response and admits nothing.",
+  "superseded_2026_09_26": "this section said 11 periods, 429 positions and 142 class-A acquisitions turning 11 periods into 50. It was measured before Paramount's predecessor years entered the frame, and '50' left out that JPMorgan's catalog reaches only two of its five periods.",
+  "superseded_again_2026_09_26": "the first correction said class A makes 'at most 47 periods attemptable' and that JPMorgan's other three 'need an increment measured then'. That described a narrower grant than the object: A_ANNUAL_CHAIN admits their annual chains (revision_5). 47 is the measured coverage, not a limit.",
+  "first_correction_so": "class A's 150 acquisitions are what can turn 12 attemptable periods into 47: the 33 missing originals of the nine other companies with their chains' prior years, and JPMorgan's 68 shards and index refresh, which bring its two reachable periods within reach of selection. JPMorgan's other three periods are not in this count at all; they become measurable only after the shards land and need an increment measured then (cumulative_cap.what_it_does_not_cover). Under the current source rules no implementation moves these numbers: a batch over those periods produces SOURCE_MISSING_TARGET_ORIGINAL or a catalog refusal, not results. JPMorgan FY2025 does select on a recorded root whose index was derived from the saved shards' own bodies, but a derived index is not an SEC response and admits nothing."
  },
  "what_is_asked_of_the_owner": {
   "a_second_allowance_this_plan_does_not_cover": {
@@ -251,7 +256,8 @@
    "why_this_is_here": "'a cap of 1354' is a number in a document. What the code would have to read is an object, and naming its fields makes the ask checkable rather than interpretable.",
    "what_the_comment_must_restate": "maximum_additional_provider_paid_sec_calls, budget_root and scope, exactly; a policy granting more than its comment is refused (ISSUE_47_ALLOWANCE_WIDENS_THE_APPROVED_GRANT). The complete object with the comment body to post is acquisition-wiring/proposed-allowance.json, built by tools/propose_historical_allowance.py and run through the real verifier.",
    "superseded_2026_09_26": "the field list named five of the ten fields and gave the cap as [0, 0, 1232]; repository, approver_login, delegation_record_path and sec_wiring_receipt_path were added to the gate after it was written, each for a measured way an allowance could pass without the approval it claims."
-  }
+  },
+  "the_meaning_of_the_grants": "inside the grants' companies, dependency classes and target window, and under the one cumulative cap, a dependency the declaration comes to require is admitted - including one the saved catalog cannot declare today; anything outside the grants, or beyond the cap, needs a measured increment. This is the meaning the object already had; no grant and no gate changed, only the text."
  },
  "revision_4": {
   "date": "2026-09-26",
@@ -263,6 +269,48 @@
    "proposed_budget_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-sec-v1",
    "why_there": "beside Issue #28's root on the same host and under the same parent, so it persists with the user's state rather than with a checkout, and is plainly a different ledger",
    "what_the_gate_refuses": "a relative path, a path containing '..', Issue #28's root or anything inside it, and anything inside the repository checkout"
+  }
+ },
+ "revision_5": {
+  "date": "2026-09-26",
+  "cap_before": 1354,
+  "cap_now": 1354,
+  "why": "the text and the grant object disagreed on JPMorgan's three periods its saved shards do not reach: the text said their annual chains needed a separate application, while A_ANNUAL_CHAIN - jpmorgan_chase, ANNUAL_PERIOD_IDENTITY and ACCESSION_INSTANCE_DISCOVERY, 2021-12-31 to 2026-01-31 - admits them. Asked of the real gate with the planner's own row shape, it admits the primary and index of FY2021-FY2023 and of FY2020 as FY2021's prior year, and refuses JPMorgan's FY2021-FY2024 event filings and FY2021-FY2023 proxies. Found by an external review of f0bb8053 and reproduced here before anything was changed.",
+  "chosen_meaning": "inside the grants' companies, dependency classes and target window, and under the one cumulative cap, a dependency the declaration comes to require is admitted - including one the saved catalog cannot declare today; anything outside the grants, or beyond the cap, needs a measured increment. This is the meaning the object already had; no grant and no gate changed, only the text.",
+  "not_yet_declarable": {
+   "jpmorgan_chase": {
+    "targets": [
+     "2021-12-31",
+     "2022-12-31",
+     "2023-12-31"
+    ],
+    "admitted_once_declarable": [
+     "ACCESSION_INSTANCE_DISCOVERY",
+     "ANNUAL_PERIOD_IDENTITY"
+    ],
+    "outside_every_grant": [
+     "FISCAL_EVENT_FILING",
+     "GOVERNANCE_DISCLOSURE_FILING"
+    ]
+   }
+  },
+  "how_it_is_held": "tools/propose_historical_allowance.py asks the gate about every target a catalog does not reach yet, one row per probed class, and does not write the proposal unless the answers equal not_yet_declarable above",
+  "what_it_costs": "JPMorgan's unreached annual chains are not in class A's 150: by the planner's shape for a five-year chain they are 8 attempts (primary and index for FY2021-FY2023 and for FY2020 as FY2021's prior), assuming no amendments - a shape estimate, not a measurement. They draw on the same cumulative cap; the reserve's 20-attempt margin holds 8. If the shards reveal more, reaching the cap stops execution and the remainder is reported by class.",
+  "what_47_is": "the measured coverage of class A - 12 attemptable periods today, 47 once class A lands - not a limit the machine enforces. Within this grant up to 50 periods can be attempted: JPMorgan's three once their chains are fetched, still without their event windows and proxies, which are outside every grant.",
+  "what_the_cap_is_not": "a guarantee: 1,354 is a stop-cap, and completing it guarantees neither 50 periods nor 1,950 positions",
+  "fault_injections": {
+   "script": "docs/evidence/issue47_history/acquisition-wiring/not_yet_declarable_injections.sh",
+   "results": {
+    "PLAN_STATES_THE_OLD_MEANING": "refused, THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS; proposal not written",
+    "GRANT_NARROWED_TEXT_UNCHANGED": "refused, THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS; proposal not written",
+    "GRANT_COVERS_ONLY_SOME_YEARS": "refused, NOT_YET_DECLARABLE_ANSWER_DIFFERS_BY_TARGET; proposal not written"
+   },
+   "restored": "plan, tool and proposal compared byte for byte after the run",
+   "calls": [
+    0,
+    0,
+    0
+   ]
   }
  }
 }
