@@ -71,3 +71,5 @@ C04正常有限刷新接线：当前`tools/vnext_ordinary_refresh.py`显式选�
 `b2f7ed41`独审原`NEEDS_FIX`保留：公开B01-only被误要求含C04，旧根处理副本豁免传给混合范围全部SEC来源。限定回修使B01-only仍走旧路线；只有单独C04可在旧处理副本模式下实际获取。旧根混合请求不申领SEC，C04保存来源候选可继续，其他指标明确阻断、整体未完成。当前代码/需求绑定下10项短测、2项旧根来源范围材料和两版Marriott录制刷新均通过；当前Marriott发现的29项URL全部在显式C04来源证明中，未来新元数据需重验。V13普通身份仍`a573...`，V14新闭包`56c6...`，原真实账本仍143/143/49，新差异独审待做，未发新真实SEC。证据见`c04-normal-refresh-scope-repair-20260927/`。
 
 `ab584906`限定新增差异独审`PASS_WITH_BOUNDS`，结论见`c04-normal-refresh-scope-repair-20260927/independent-review/conclusion.md`，旧`b2f7ed41`的NEEDS_FIX原义不改。禁网独立重算当前Marriott 29/29来源URL均在C04原生来源证明内，下一条申报清单URL适用；新元数据发现的URL需另验，不能把此结论扩大为任意SEC请求。真实账本此时仍143/143/49，新真实来源刷新尚未执行。
+
+原账本第193槽对Marriott C04当前申报清单真实SEC GET `SUCCEEDED`，provider/paid/SEC累计143/143/50、余97/97/30；批次provider使用不变。来源变化生成新C04原生`PUBLISHED/0` Result `d41ffcee...`，旧`a5517d36...`与新版本均在独立禁网进程冷读通过。整体刷新仍`UPDATES_INCOMPLETE`，Company Facts待本轮刷新；`c04-real-refresh-20260927/after-first-source-map.log`发现新一次普通`max1`调用会重选已取得的申报清单，因此**禁止原样重跑**，先在原账本已存收据上实现有界续接并证明下一URL来源责任。无新模型调用、无生产采纳，证据见`c04-real-refresh-20260927/`。

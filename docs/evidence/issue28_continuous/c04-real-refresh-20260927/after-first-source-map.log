@@ -1,0 +1,31 @@
+{
+  "status": "BLOCKED",
+  "requirements": 29,
+  "c04_proofs": 29,
+  "not_in_c04": [],
+  "next_pending": [
+    {
+      "url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "roles": [
+        "sec_submissions_inventory"
+      ],
+      "in_c04": true
+    },
+    {
+      "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "roles": [
+        "companyfacts"
+      ],
+      "in_c04": true
+    }
+  ],
+  "source_ledger_sha256": "6c5fa272fd25936bbcdb7fd344a0b25479c8c62da3edb7ef473ddaf4a659d4cf",
+  "real_calls": [
+    0,
+    0,
+    0
+  ]
+}
+Traceback (most recent call last):
+  File "<stdin>", line 21, in <module>
+AssertionError

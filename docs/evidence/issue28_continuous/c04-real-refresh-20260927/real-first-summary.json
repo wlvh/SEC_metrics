@@ -1,0 +1,39 @@
+{
+  "record_type": "C04_FIRST_REAL_SEC_SOURCE_REFRESH",
+  "status": "ONE_ACTUAL_SEC_SOURCE_SUCCEEDED_C04_NEW_CANDIDATE_FRESHNESS_INCOMPLETE",
+  "git_head_at_execution": "2f3a36da04c83b0c39ee00e7453fab866672e785",
+  "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+  "call_ordinal": 193,
+  "terminal_status": "SUCCEEDED",
+  "receipt_sha256": "36f2f40f819faabefdb7cb5e4f0962088d9528108114fc4aa21d7d7580d37c23",
+  "source_ledger_sha256": "6c5fa272fd25936bbcdb7fd344a0b25479c8c62da3edb7ef473ddaf4a659d4cf",
+  "counts_before_after": [
+    [
+      143,
+      143,
+      49
+    ],
+    [
+      143,
+      143,
+      50
+    ]
+  ],
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 1
+  },
+  "prior_c04_successful_attempt": "abac05647d8c49aeb13de815f92e0093",
+  "new_c04_successful_attempt": "aab4e843487049afa4ace32bc833fb35",
+  "new_c04_result_id": "sha256:d41ffcee4edd8898ab66931441b7cdc850c64b589fa9e2974d4b87cb59aae70e",
+  "new_c04_publication": "PUBLISHED",
+  "new_c04_value": "0",
+  "source_refresh_status": "REFRESH_INCOMPLETE",
+  "deferred_url": [
+    "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+  ],
+  "next_invocation_without_bound_resume_would_reselect_first_metadata_url": true,
+  "provider_requests": 0,
+  "production_authorized": false
+}
