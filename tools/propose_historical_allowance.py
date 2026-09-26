@@ -213,8 +213,12 @@ for frame in _FRAMES:
                 answer = "outside_every_grant"
             by_class.setdefault(dependency_class, set()).add(answer)
     # One answer per class across the unreached targets, or the plan's
-    # per-company statement cannot say it truthfully.
-    mixed = sorted(name for name, answers in by_class.items() if len(answers) > 1)
+    # per-company statement cannot say it truthfully. This checks that the
+    # statement's shape fits the grants proposed today; it is not a rule that
+    # a class must be granted alike for every year. A grant approved for some
+    # years only is a legitimate decision: the statement then says so per
+    # year, and this check changes with it rather than refusing it.
+    mixed =sorted(name for name, answers in by_class.items() if len(answers) > 1)
     if mixed:
         raise SystemExit("NOT_YET_DECLARABLE_ANSWER_DIFFERS_BY_TARGET:"
                          + frame["company_id"] + ":" + ",".join(mixed))
