@@ -13,6 +13,7 @@ from tests.vnext.common import REPO_ROOT as ROOT
 
 FINDING = "docs/evidence/issue47_history/b03-depreciation-scope/finding.json"
 DEFECTS = "docs/evidence/issue47_history/known_result_defects.json"
+TARGETED = "docs/evidence/issue47_history/b03-depreciation-scope/targeted-runs.json"
 SALESFORCE = ("evidence/accession_materials/salesforce_1108524_000110852426000060/"
               "crm-20260131.htm")
 
@@ -62,14 +63,29 @@ class OnlyOneFilingsDirectCandidatesDisagreeTest(unittest.TestCase):
 
 class TheDefectWithdrawsTheCoordinateTest(unittest.TestCase):
 
-    def test_registered_and_not_released(self):
+    def test_registered_and_released_only_on_the_withheld_result(self):
+        """The published 0.2295 stays withdrawn; the release names the withheld repair only.
+
+        Until the route was repaired this case asserted the entry had no release
+        at all. The repair withholds the coordinate by name, and the entry now
+        releases that one result under the version that produced it - so what
+        is held here is that the release can never cover a published value.
+        """
         defects = json.loads((ROOT / DEFECTS).read_text(encoding="utf-8"))["defects"]
         entry = next(d for d in defects if d["defect_id"]
                      == "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL")
         self.assertEqual(("salesforce", "B03", "2026-01-31", None),
                          (entry["company_id"], entry["metric_id"], entry["period_end"],
                           entry["result_id"]))
-        self.assertNotIn("released", entry)
+        runs = json.loads((ROOT / TARGETED).read_text(encoding="utf-8"))
+        row = next(r for r in runs["rows"] if r["position"] == "salesforce-2026")
+        withheld, published = row["targeted"]["results"]["B03"], row["batch"]["results"]["B03"]
+        self.assertEqual(("WITHHELD", None), (withheld["publication"], withheld["value"]))
+        self.assertEqual("PUBLISHED", published["publication"])
+        self.assertEqual([(withheld["result_id"], runs["targeted_closure"])],
+                         [(r["result_id"], r["requirement_closure_hash"])
+                          for r in entry["released"]])
+        self.assertNotIn(published["result_id"], [r["result_id"] for r in entry["released"]])
 
 
 if __name__ == "__main__":

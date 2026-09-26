@@ -38,7 +38,7 @@ Salesforce FY2026 的 B03 把一句"固定资产折旧与摊销共 12 亿美元"
 
 **实测**（十个位置，与 12 期间批次逐位比较）：只有 Salesforce FY2026 由发布 0.2295 变为按名扣留 `B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN`（仍带着它的 B01）；Enphase、Ford、Lumen、Macy's、Pfizer、Southwest 与 Marriott 2024/2025 的值逐位不变；Marriott 2023 仍是原来的 `ALL_BRANCHES_REJECTED`。用例 `tests/vnext/test_historical_da_scope_route.py`（6 例，44 秒）：Salesforce 扣留且带 B01；Enphase 与 Marriott 2025 的结果与关掉检查时完全相同；另四个形状是替换"申报的 inline 事实说什么"构造出来的，并如实标明。七个注错（`route_fault_injections.py` → `route-fault-injections.json`）全部被抓，**其中五个只被构造用例抓到**：构成消解（两个）、链条取了申报没标的总额、标了总额却走构成、数值超出精度——已存的十份申报里没有这些形状。
 
-**定向原生 Run**（闭包 `sha256:3e0183f3…`，`targeted-runs.json`，由同目录 `compare_runs.py` 从两边各自的 Run 记录读出，含 B03 Run 里带着的 B01）：Salesforce FY2026、Enphase 2025、Marriott 2025 各走完装入→原生 Run→冻结→公共行→另一进程冷读，零调用。Salesforce 的 B03 由发布 0.2295 变为按名扣留，它带的 B01 结果编号与 12 期间批次**逐字节相同**；Enphase 与 Marriott 的 B03（0.16169…、0.17563…）与 B01 的结果编号都与批次相同。已登记缺陷 `B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL` 按这一扣留结果与闭包释放；12 期间批次里已发布的旧值仍被撤回，这个坐标仍没有正确的值（合计含使用权资产的摊销与减值，定义不加回减值，而当年减值没有单独标注）。这不是全量帧。
+**定向原生 Run**（闭包 `sha256:3e0183f3…`，`targeted-runs.json`，由同目录 `compare_runs.py` 从两边各自的 Run 记录读出，含 B03 Run 里带着的 B01）：Salesforce FY2026、Enphase 2025、Marriott 2025 各走完装入→原生 Run→冻结→公共行→另一进程冷读，零调用。Salesforce 的 B03 由发布 0.2295 变为按名扣留，它带的 B01 结果编号与 12 期间批次**逐字节相同**；Enphase 与 Marriott 的 B03（0.16169…、0.17563…）与 B01 的结果编号都与批次相同。已登记缺陷 `B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL` 按这一扣留结果与闭包释放；12 期间批次里已发布的旧值仍被撤回，这个坐标仍没有正确的值（合计含使用权资产的摊销与减值，定义不加回减值，而当年减值没有单独标注）。覆盖表按这个闭包读这三个 Run：Salesforce 的 B03 是扣留、缺陷不再撤回它；Enphase 与 Marriott 的 B03 仍被原有的内容接受覆盖——接受绑定的是值与业务身份，这两者都没变，所以不需要重读。这不是全量帧。
 
 ## 不主张
 
