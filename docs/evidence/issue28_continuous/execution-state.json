@@ -1555,6 +1555,23 @@
       "result_path": "docs/evidence/issue28_continuous/c04-refresh-resume-20260927/independent-review/conclusion.md",
       "verdict": "NEEDS_FIX_P2_RESUME_DEFERRED_SET_UNAUTHENTICATED",
       "tool_call_count_note": "66 total tool calls reported by agent, including 16 functions.exec orchestrations."
+    },
+    {
+      "task_name": "review_c04deferred_4f57f9c",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "tests/vnext/test_c04_refresh_resume.py",
+        "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/"
+      ],
+      "patch_sha": "4f57f9cbfe51965e0e2a8949093a0d7bc2b85778",
+      "spawned_at": "2026-09-26T17:37:35Z",
+      "ended_at": "2026-09-26T17:45:12Z",
+      "tool_calls": 45,
+      "result_path": "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_C04_RESUME_DEFERRED_SET_CURRENT_ORDINAL193",
+      "tool_call_count_note": "Agent final reported 18 orchestrations and 45 nested calls; conclusion body was written one call earlier."
     }
   ],
   "ci_capacity_20260922": {
@@ -3079,7 +3096,7 @@
     }
   },
   "c04_normal_refresh_20260927": {
-    "status": "C04_REAL_FIRST_SOURCE_SUCCEEDED_DEFERRED_SET_REPAIR_OFFLINE_PASS_SECOND_GET_REVIEW_PENDING",
+    "status": "C04_REAL_FIRST_SOURCE_SUCCEEDED_BOUNDED_RESUME_REVIEW_PASS_SECOND_GET_PENDING",
     "code_paths": [
       "scripts/vnext/ordinary_refresh_cycle.py",
       "scripts/vnext/continuous_sec_acquisition.py",
@@ -3271,7 +3288,7 @@
         0,
         0
       ],
-      "independent_review": "PENDING_EXACT_REPAIR_SHA",
+      "independent_review": "PASS_WITH_BOUNDS_C04_RESUME_DEFERRED_SET_CURRENT_ORDINAL193",
       "evidence_path": "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/README.md",
       "shared_with_47": {
         "files": [
@@ -3285,7 +3302,9 @@
         "shared_default_unchanged": true,
         "ordinary_v13_parent_unchanged": true,
         "other_branch_touched": false
-      }
+      },
+      "independent_review_path": "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/independent-review/conclusion.md",
+      "second_real_get_preconditions": "UNIQUE_ISSUE28_EXECUTOR_AND_IMMEDIATE_LEDGER_193_COUNTS_143_143_50_SOURCE_SHA_6c5fa272fd25936bbcdb7fd344a0b25479c8c62da3ed7ef473ddaf4a659d4cf"
     }
   }
 }
