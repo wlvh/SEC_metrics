@@ -1,6 +1,6 @@
 {
   "record_type": "SEC_ACQUISITION_OFFLINE_WIRING",
-  "execution_authority_hash": "sha256:61d4320637a5ee0dd641a61567afb8de13317b048564afb81862fa943e9de982",
+  "execution_authority_hash": "sha256:94cf9e4133cdc400ce4bca1aeec17343055e56a6c14188f33939c4b4af3e93c9",
   "calls": [
     0,
     0,
@@ -41,7 +41,11 @@
     "docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/c04-source-map.log": "3b87f12ec97c81b6c244e7d4474724839a1aec4efc91628bffd06ef55c70af6f",
     "docs/evidence/issue28_continuous/c04-refresh-resume-20260927/resume-material-v13-preserved.log": "2fdb7025aef2dde6ede6bd0b5517f72c778380467b5895dbbba3cd661d0ddef5",
     "docs/evidence/issue28_continuous/c04-refresh-resume-20260927/boundary.log": "e33b25ceb2f9a3db0b4786505bd70d17a816d7e897537ddb2275a35e54f099f6",
-    "docs/evidence/issue28_continuous/c04-refresh-resume-20260927/real-resume-preflight.log": "db6205699308a218b715b664f4ddeea32f247ad427da827c5380ea51a3ed8199"
+    "docs/evidence/issue28_continuous/c04-refresh-resume-20260927/real-resume-preflight.log": "db6205699308a218b715b664f4ddeea32f247ad427da827c5380ea51a3ed8199",
+    "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/resume-deferred-auth.log": "16d868da159ddaf10370f824b31be5541c8f6d486444e5b4ed58f8a949997c4f",
+    "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/real-report-tamper.log": "983e99022ee9ec27cc20c33769bb96ffe53e77036d201433312b4e6149a9bf26",
+    "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/real-resume-preflight.log": "db6205699308a218b715b664f4ddeea32f247ad427da827c5380ea51a3ed8199",
+    "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/boundary.log": "16ebe4d7b6f6efdda3245170c3c28d9e9c3e9cae2885893331681597d7c9e268"
   },
   "production_authorized": false,
   "validation_scope": "Current execution file identity rebound. SEC source/acquisition code and policy unchanged by B13 V6 native suspension; prior no-network SEC HTTP, checkpoint and failure isolation evidence revalidated by exact byte hashes. No new SEC request or production credit. C04 normal refresh uses the unchanged SEC acquisition session; two authentic saved metadata versions passed recorded capture and native update. No new live SEC call is credited. Existing source-inputs processing copies remain immutable in the explicit C04-only source mode; unrelated rule drift still blocks. Recorded source-only capture and unchanged default denial tested. C04-only source mode now cannot be forwarded by mixed-source refresh; mixed stale roots defer all acquisition."

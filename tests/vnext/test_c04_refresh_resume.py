@@ -55,6 +55,14 @@ class C04RefreshResumeMaterialTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,
                         'ORDINARY_REFRESH_RESUME_SEC_SOURCE_CHANGED'):
                     advance(forged)
+                altered = json.loads(prior.read_text())
+                altered['companies'][0]['source_refresh'][
+                    'deferred_source_urls'].append(urls[0])
+                forged_deferred = root/'forged-deferred-report.json'
+                forged_deferred.write_text(json.dumps(altered, ensure_ascii=False)+'\n')
+                with self.assertRaisesRegex(ValueError,
+                        'ORDINARY_REFRESH_RESUME_DEFERRED_SET_CHANGED'):
+                    advance(forged_deferred)
                 self.assertEqual([urls[0]], captured)
                 second = advance(prior)
                 self.assertEqual(urls, captured)

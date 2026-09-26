@@ -160,9 +160,23 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
          and len(allowed) == len(set(allowed))
          and all(type(url) is str for url in allowed),
          'ORDINARY_REFRESH_RESUME_DEFERRED_SET_INVALID')
+    discovery = discover_saved_source_requirements(
+        repo_root=session.data_root, company_id=company_id)
+    failed = _failed_urls(session.data_root)
+    rebuilt = [item['source_url'] for item in
+        _pending(discovery, {prior['source_url']}, failed)]
+    source_check = report['companies'][0]['source_refresh']
+    need(allowed == rebuilt
+         and source_check['requirements_id'] == discovery['requirements_id']
+         and source_check['source_discovery_status'] == discovery['status']
+         and source_check['failed_source_urls_not_retried'] == sorted({
+             item['source_url'] for item in discovery['requirements']} & failed)
+         and not report['companies'][0]['acquisition_errors'],
+         'ORDINARY_REFRESH_RESUME_DEFERRED_SET_CHANGED')
     return {'prior_ordinal': ordinal, 'prior_source_url': prior['source_url'],
             'prior_report_sha256': sha256_file(path=path),
             'source_ledger_sha256': receipt['ledger_after_sha256'],
+            'prior_intent_id': snapshot['previous_intent_id'],
             'allowed_next_urls': allowed}
 
 
@@ -243,6 +257,13 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                          and url in {proof['source_url'] for proof in
                                      current_case['source_proofs']},
                          'ORDINARY_REFRESH_RESUME_NEXT_SOURCE_NOT_C04_BOUND')
+                    with session.ledger.locked():
+                        current_ledger = session.ledger.snapshot()
+                    need(current_ledger['previous_intent_id'] ==
+                             resumed['prior_intent_id']
+                         and current_ledger['counts'] == before
+                         and len(current_ledger['rows']) == resumed['prior_ordinal'],
+                         'ORDINARY_REFRESH_RESUME_LEDGER_CHANGED_BEFORE_CAPTURE')
                     need(sha256_file(path=session.data_root/'evidence/requests_log.csv')
                          == resumed['source_ledger_sha256'],
                          'ORDINARY_REFRESH_RESUME_SOURCE_CHANGED_BEFORE_CAPTURE')
@@ -353,7 +374,8 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
     return {'record_type': 'ORDINARY_BOUNDED_REFRESH_AND_UPDATE', 'schema_version': 1,
         **({'c04_mixed_source_acquisition_deferred': True} if mixed_stale else {}),
         **({'resumed_c04_source': {key: value for key, value in resumed.items()
-            if key not in {'source_ledger_sha256', 'allowed_next_urls'}}}
+            if key not in {'source_ledger_sha256', 'allowed_next_urls',
+                           'prior_intent_id'}}}
             if resumed is not None else {}),
         **({'max_provider_requests':max_provider_requests,'native_preparations':native_attempts} if max_provider_requests else {}),
         'status': 'CALL_ACCOUNTING_UNRESOLVED' if accounting['status'] == 'UNKNOWN' else
