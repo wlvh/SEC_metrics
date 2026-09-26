@@ -673,6 +673,8 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_source_requirements` 已加入source-material层。实际Marriott/Salesforce/JPM材料覆盖可用来源、最终失败GET和历史清单冲突；外部副本删除新主文件仍能发现其地址，删除/篡改目录不会宣布子文件齐备；后续年报元数据的纯解析不授予新来源信用。十公司实际CLI命令为 `python3 tools/vnext_normal_update.py --discover-sources --output /absolute/new-external-directory/source-requirements.json`；有缺口返回2并保留所有公司，不执行指标或请求。说明见`docs/normal_source_discovery.md`。
 
+C04正常保存来源更新用 `python3 tools/vnext_normal_update.py --process --data-root /absolute/saved-source-root --state-root /absolute/persistent-update-root --company marriott_international --metric C04`。此入口明确选四形式后继并记录到`metrics/C04-registration-v3`，旧普通控制器与共享`normal_run_v3`默认行为不改。`tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest`已追加在source-material选择器列表末尾，核对Marriott原件正向Run和相同输入不重复建Run。`docs/evidence/issue28_continuous/c04-normal-update-20260926/`另以两份已经保存、内容不同的真实SEC清单录制更新：新输入形成第二个版本，旧版可读；失败、指针中断与资料不足的Paramount状态分别保留。该材料禁网且不发真实GET，不能替代新财报实际发现/获取、十公司C04完整验收或正式生产。
+
 ### 普通主体接续与期末余额
 
 来源规则与十公司原生组件用 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_instant_balance_amendment tests.vnext.test_normal_companyfacts_results` 验证；两模块均在source-material层。实际Part III修订和链接更正保留不同证明，覆盖额外用途、错原报告日、正文更正/余额、已发生重述、封面标志、引语和新增原生财务事实。缺少修订原件必须拒绝源重放。

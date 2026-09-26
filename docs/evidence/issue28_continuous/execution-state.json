@@ -2900,5 +2900,46 @@
     "review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-batch-route/conclusion.md",
     "candidate_batch_main_return_code": 2,
     "verification_script_exit_code": 0
+  },
+  "c04_normal_update_successor_20260926": {
+    "status": "RECORDED_TWO_SOURCE_VERSION_POSITIVE_AND_WITHHELD_UPDATE_CHAIN_PASS_REVIEW_PENDING",
+    "code_paths": ["scripts/vnext/c04_update_cycle.py", "tools/vnext_normal_update.py"],
+    "controller_sha256": "3b402203f6012aa4e128825c64d0a2c9ae0f6b263df75a04f007488e466cfe39",
+    "prior_ordinary_update_controller_modified": false,
+    "normal_run_v3_default_modified": false,
+    "state_schema_version": 2,
+    "route": "C04_REGISTRATION_FOUR_FORM_UPDATE_V1",
+    "marriott_recorded_source_inventory_hashes": [
+      "9112ca35a9fc7dd55470dcd49bf9b47168e14cc0daa5b89a3a71c8b9fc63216d",
+      "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8"
+    ],
+    "marriott_first_success": "36cae89dc9884512b08f07160b551822",
+    "marriott_changed_source_success": "4e927e6679464e6abd8a450c11905d5d",
+    "marriott_both_results": "PUBLISHED_C04_0_DISTINCT_RUN_AND_RESULT_IDS",
+    "repeat": "NO_SOURCE_CONTENT_CHANGE_NO_NEW_RUN",
+    "injected_source_failure": "INPUT_FAILED_PRESERVED_PREVIOUS_SUCCESS",
+    "interrupted_pointer_recovery": "NO_SOURCE_CONTENT_CHANGE_REUSED_COMPLETED_RUN",
+    "paramount": "CANDIDATE_WITHHELD_NULL",
+    "paramount_repeat": "PREVIOUS_INPUT_WITHHELD_NO_NEW_RUN",
+    "independent_cold_read": "PASS_TWO_MARRIOTT_SUCCESS_VERSIONS_NETWORK_AND_SUBPROCESS_DISABLED",
+    "mixed_b01_c04": "PASS_BOTH_CANDIDATE_READY_DISTINCT_ROUTE_STATE_ROOTS",
+    "source_root": "/private/tmp/issue28-c04-normal-update-20260926-01/source",
+    "state_root": "/private/tmp/issue28-c04-normal-update-20260926-01/state",
+    "ordinary_requirement_closure_unchanged": "sha256:2620e1c13900bdfd7bb501b7a3ff9c2aece37ec25cb22a03d9a78e8d7872f300",
+    "continuous_requirement_closure_unchanged": "sha256:9c02b4772e364f33b311c10b6282dca3a4083ad0aad528d1ad2a75ce33956a3e",
+    "real_ledger_rows_before_after": [192, 192],
+    "real_ledger_counts_before_after": [[143, 143, 49], [143, 143, 49]],
+    "new_real_calls": [0, 0, 0],
+    "real_new_filing_acquisition_verified": false,
+    "ten_company_c04_update_complete": false,
+    "production_authorized": false,
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_47": {
+      "scope_paths": ["tools/vnext_normal_update.py", "scripts/vnext/c04_update_cycle.py"],
+      "functions": ["tools.vnext_normal_update.main", "c04_update_cycle.run_once", "c04_update_cycle.run_company"],
+      "old_default_functions_changed": false,
+      "frozen_prior_snapshots_changed": false,
+      "other_branch_touched": false
+    }
   }
 }

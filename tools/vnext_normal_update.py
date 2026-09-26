@@ -41,7 +41,7 @@ def main(argv=None):
                                   for p in target.parents):
             parser.error("output exists or belongs to a publication workspace")
     if args.process:
-        from vnext.ordinary_update_cycle import run_company
+        from vnext.ordinary_update_cycle import run_company as run_ordinary_company
         from vnext.normal_annual_input import _registry_rows
         from vnext.normal_run_v3 import _policy
         companies=[c['company_id'] for c in _registry_rows(repo_root=ROOT)]
@@ -50,7 +50,35 @@ def main(argv=None):
         results=[]
         for company in selected:
             try:
-                outcome=run_company(state_root=args.state_root.resolve()/company,source_root=args.data_root.resolve(),company_id=company,metric_ids=metrics)
+                company_root=args.state_root.resolve()/company
+                source_root=args.data_root.resolve()
+                ordinary=[metric for metric in metrics if metric!='C04']
+                rows=[]
+                if ordinary:
+                    rows.extend(run_ordinary_company(state_root=company_root,
+                        source_root=source_root,company_id=company,
+                        metric_ids=ordinary)['metrics'])
+                if 'C04' in metrics:
+                    from vnext.c04_update_cycle import run_company as run_c04_company
+                    try:
+                        c04=run_c04_company(state_root=company_root/'metrics/C04-registration-v3',
+                            source_root=source_root,company_id=company)
+                        rows.extend(c04['metrics'])
+                    except Exception as error:
+                        rows.append({'metric_id':'C04','status':'UPDATE_BLOCKED',
+                            'error_type':type(error).__name__,'reason':str(error),
+                            'last_verified_candidate':None,
+                            'calls':{'provider':0,'paid':0,'sec':0},
+                            'production_authorized':False})
+                by_metric={row['metric_id']:row for row in rows}
+                rows=[by_metric[metric] for metric in metrics]
+                ready=sum(row['status'] in {'CANDIDATE_READY','NO_SOURCE_CONTENT_CHANGE'}
+                          for row in rows)
+                outcome={'company_id':company,
+                    'status':'UPDATES_READY' if ready==len(rows) else
+                        'UPDATES_PARTIAL' if ready else 'UPDATES_INCOMPLETE',
+                    'metrics':rows,'calls':{'provider':0,'paid':0,'sec':0},
+                    'production_authorized':False}
                 results.append(outcome)
             except Exception as error:results.append({'company_id':company,'status':'UPDATE_BLOCKED','error_type':type(error).__name__,'reason':str(error)})
         report={'record_type':'ORDINARY_SAVED_UPDATE_CHECK','companies':results,'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
