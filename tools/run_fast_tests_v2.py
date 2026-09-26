@@ -319,6 +319,8 @@ FAST_TESTS += ("tests.vnext.test_source_tier_shard",)
 # meaning must build the committed register byte for byte. It reads the
 # committed readings and a few saved attempt headers; 0.2 seconds measured.
 FAST_TESTS += ("tests.vnext.test_acceptance_identity",)
+SOURCE_TESTS += ("tests.vnext.test_regulatory_fact_review",)
+SOURCE_TESTS += ("tests.vnext.test_c04_registration_successor",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

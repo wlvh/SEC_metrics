@@ -1,0 +1,42 @@
+old_only: guard=False ACCEPTED unresolved=[]
+  Our contract manufacturers used to have production capacity for anticipated demand.
+other_only: guard=False ACCEPTED unresolved=[]
+  A supplier has manufacturing capacity for its own products.
+old_then_other: guard=True REJECTED B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+  Our contract manufacturers used to have production capacity for anticipated demand; a supplier has production capacity for its own products.
+old_then_conditional_other: guard=False ACCEPTED unresolved=[]
+  Our contract manufacturers used to have production capacity for anticipated demand; if demand rises, a supplier has production capacity for its own products.
+
+dated_old_only guard=False
+  In fiscal 2023, our contract manufacturers had production capacity for anticipated demand.
+  other_context/OTHER_ENTITY/CURRENT_REPORT REJECTED B13_TWO_STAGE_UNRESOLVED
+  other_entity/OTHER_ENTITY/CURRENT_REPORT REJECTED B13_TWO_STAGE_UNRESOLVED
+  other_context/TARGET_REGISTRANT/HISTORICAL REJECTED B13_TWO_STAGE_UNRESOLVED
+dated_old_then_current guard=False
+  In fiscal 2023, our contract manufacturers had limited output, but they now have sufficient production capacity for anticipated demand.
+  other_context/OTHER_ENTITY/CURRENT_REPORT REJECTED B13_TWO_STAGE_UNRESOLVED
+  other_entity/OTHER_ENTITY/CURRENT_REPORT REJECTED B13_TWO_STAGE_UNRESOLVED
+  other_context/TARGET_REGISTRANT/HISTORICAL REJECTED B13_TWO_STAGE_UNRESOLVED
+dated_old_then_current_semicolon guard=False
+  Our contract manufacturers had limited output in fiscal 2023; today they have sufficient production capacity for anticipated demand.
+  other_context/OTHER_ENTITY/CURRENT_REPORT REJECTED B13_TWO_STAGE_UNRESOLVED
+  other_entity/OTHER_ENTITY/CURRENT_REPORT REJECTED B13_TWO_STAGE_UNRESOLVED
+  other_context/TARGET_REGISTRANT/HISTORICAL REJECTED B13_TWO_STAGE_UNRESOLVED
+conditional_only guard=False
+  If demand increases, our contract manufacturers could have sufficient production capacity for anticipated demand.
+  other_context/OTHER_ENTITY/CURRENT_REPORT ACCEPTED unresolved=[]
+  other_entity/OTHER_ENTITY/CURRENT_REPORT ACCEPTED unresolved=[]
+  other_context/TARGET_REGISTRANT/HISTORICAL ACCEPTED unresolved=[]
+
+direct_historical_output_other_capacity guard=True findings=[('other_entity', 'OTHER_ENTITY', 'CURRENT_REPORT')] REJECTED B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+  Our contract manufacturers previously had limited output; a supplier has manufacturing capacity for its own products.
+direct_historical_output_other_capacity guard=True findings=[('historical_statement', 'TARGET_REGISTRANT', 'HISTORICAL'), ('other_entity', 'OTHER_ENTITY', 'CURRENT_REPORT')] REJECTED B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+  Our contract manufacturers previously had limited output; a supplier has manufacturing capacity for its own products.
+direct_old_capacity_other_capacity guard=True findings=[('other_entity', 'OTHER_ENTITY', 'CURRENT_REPORT')] REJECTED B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+  Our contract manufacturers used to have production capacity for anticipated demand; a supplier has production capacity for its own products.
+direct_old_capacity_other_capacity guard=True findings=[('historical_statement', 'TARGET_REGISTRANT', 'HISTORICAL'), ('other_entity', 'OTHER_ENTITY', 'CURRENT_REPORT')] REJECTED B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+  Our contract manufacturers used to have production capacity for anticipated demand; a supplier has production capacity for its own products.
+
+statement: Our contract manufacturers previously had limited output; a supplier has manufacturing capacity for its own products.
+baseline_99d868f: guard=False ACCEPTED unresolved=[]
+patch_79fe67b: guard=True REJECTED B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW

@@ -39,7 +39,8 @@ def validate_deterministic_candidate_shape(*, candidate):
              'B13_TEXT_DOCUMENT_BINDING_CHANGED')
 
 
-def _prepare(*, compiled_spec, target, source, assessment, source_references, raw_bytes_by_id):
+def _prepare(*, compiled_spec, target, source, assessment, source_references, raw_bytes_by_id,
+             actual_requests=None):
     policy = text_policy(compiled_spec)
     metric = compiled_spec['compiled']['metric_id']
     need(metric in METHODS and source['metric_id'] == metric
@@ -52,8 +53,13 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
          'B13_TEXT_ASSESSMENT_SOURCE_CHANGED')
     need(assessment['all_source_requests_accepted'] is True and not assessment['missing_request_ids']
          and not assessment['failed_requests'], 'B13_TEXT_COMPLETE_ASSESSMENT_REQUIRED')
-    from .native_unit_index import reconstruct_requests
-    requests = reconstruct_requests(source, assessment.get('native_request_variants'))
+    from .native_unit_index import reconstruct_requests, validate_request_partition
+    if actual_requests is None:
+        requests = reconstruct_requests(source, assessment.get('native_request_variants'))
+    else:
+        requests = actual_requests
+        need(validate_request_partition(source, requests) == assessment.get('native_request_variants'),
+             'B13_TEXT_REQUEST_PARTITION_CHANGED')
     request_ids = [r['request_id'] for r in requests]
     need(assessment['required_request_ids'] == request_ids
          and [row['request_id'] for row in assessment['completed']] == request_ids,
@@ -75,7 +81,8 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
         need(not unresolved, 'B13_QUANTITY_SCOPE_UNRESOLVED')
     if source.get('program_quantity_role_contract_version'):
         from .capacity_program_roles import verify_original_program_assessment
-        verify_original_program_assessment(source=source,assessment=assessment,raw_bytes_by_id=raw_bytes_by_id)
+        verify_original_program_assessment(source=source,assessment=assessment,
+            raw_bytes_by_id=raw_bytes_by_id,actual_requests=actual_requests)
     current_kinds = {f['kind'] for f in findings
                      if f['subject'] == 'TARGET_REGISTRANT' and f['timing'] == 'CURRENT_REPORT'}
     need(metric != 'B13' or not {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY'} <= current_kinds,
@@ -145,9 +152,12 @@ def _prepare(*, compiled_spec, target, source, assessment, source_references, ra
     return claims, bindings, coverages
 
 
-def create_deterministic_text_candidate(*, compiled_spec, target, source, assessment, source_references, raw_bytes_by_id):
+def create_deterministic_text_candidate(*, compiled_spec, target, source, assessment,
+                                        source_references, raw_bytes_by_id,
+                                        actual_requests=None):
     selected, bindings, _ = _prepare(compiled_spec=compiled_spec, target=target, source=source,
-        assessment=assessment, source_references=source_references, raw_bytes_by_id=raw_bytes_by_id)
+        assessment=assessment, source_references=source_references,
+        raw_bytes_by_id=raw_bytes_by_id, actual_requests=actual_requests)
     body = {'record_type': 'DETERMINISTIC_TEXT_CANDIDATE', 'method': METHODS[compiled_spec['compiled']['metric_id']],
         'spec_semantic_hash': compiled_spec['spec_semantic_hash'], 'spec_closure_hash': compiled_spec['spec_closure_hash'],
         'source_set_hash': content_hash(value=source_references), 'document_bindings': bindings,

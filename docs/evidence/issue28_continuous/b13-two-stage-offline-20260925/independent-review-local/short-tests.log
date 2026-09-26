@@ -1,0 +1,6 @@
+command: PYTHONPATH=scripts python3 -m unittest tests.vnext.test_capacity_two_stage tests.vnext.test_capacity_reference_contract tests.vnext.test_native_unit_index -q
+----------------------------------------------------------------------
+Ran 31 tests in 1.110s
+
+OK
+exit_code: 0

@@ -72,9 +72,10 @@ class ContinuousCallPolicyTest(unittest.TestCase):
     def test_current_wiring_rejects_stale_declared_requirement_closure(self):
         requirement=load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v14')
         original=continuous_call_wiring.strict_json_file
+        receipt_path=ROOT/requirement['policy']['offline_wiring_receipt_path']
         def stale_receipt(*,path):
             value=original(path=path)
-            if Path(path).name=='offline-wiring.json':
+            if Path(path)==receipt_path:
                 return {**value,'requirement_closure_hash':
                     'sha256:c26a3552fc5682896d4f4f7afb55a2d8a25edb8ab187b5f0be719c528f5e72be'}
             return value

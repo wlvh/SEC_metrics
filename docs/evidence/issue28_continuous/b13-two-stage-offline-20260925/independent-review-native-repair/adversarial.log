@@ -1,0 +1,16 @@
+current_plain text= Our contract manufacturers have sufficient production capacity for anticipated demand. current_guard= True
+   other_context OTHER_ENTITY CURRENT_REPORT => REJECTED, ValueError: B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+   other_entity OTHER_ENTITY CURRENT_REPORT => REJECTED, ValueError: B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+   other_context TARGET_REGISTRANT HISTORICAL => REJECTED, ValueError: B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+current_with_prior_comparison text= Unlike prior years, our contract manufacturers have sufficient production capacity for anticipated demand. current_guard= False
+   other_context OTHER_ENTITY CURRENT_REPORT => ACCEPTED, unresolved=[]
+   other_entity OTHER_ENTITY CURRENT_REPORT => ACCEPTED, unresolved=[]
+   other_context TARGET_REGISTRANT HISTORICAL => ACCEPTED, unresolved=[]
+current_after_prior_clause text= Our contract manufacturers previously had limited output, but they have sufficient production capacity for anticipated demand. current_guard= False
+   other_context OTHER_ENTITY CURRENT_REPORT => ACCEPTED, unresolved=[]
+   other_entity OTHER_ENTITY CURRENT_REPORT => ACCEPTED, unresolved=[]
+   other_context TARGET_REGISTRANT HISTORICAL => ACCEPTED, unresolved=[]
+genuine_other_entity text= A supplier has manufacturing capacity for its own products. current_guard= False
+   other_entity OTHER_ENTITY CURRENT_REPORT => ACCEPTED, unresolved=[]
+genuine_historical text= In fiscal 2023, our contract manufacturers had production capacity for anticipated demand. current_guard= False
+   historical_statement TARGET_REGISTRANT HISTORICAL => REJECTED, ValueError: B13_TWO_STAGE_UNRESOLVED

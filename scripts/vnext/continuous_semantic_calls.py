@@ -39,6 +39,7 @@ SEMANTIC_RULE_PATHS = (
     'scripts/vnext/r6_historical_controls.py','config/r6_historical_control_sources_v1.json',
     'scripts/vnext/regulatory_statement_facts.py',
     'scripts/vnext/capacity_semantic_source.py', 'scripts/vnext/capacity_semantic_review.py',
+    'scripts/vnext/capacity_two_stage.py',
     'catalog/r5/capacity_semantic_review_v1.json', 'catalog/r5/capacity_semantic_review_v2.json',
     'catalog/r5/capacity_semantic_review_v3.json',
     'catalog/r5/capacity_semantic_review_v4.json',
@@ -135,7 +136,8 @@ def request_digest(request, policy):
     for field in ('program_quantity_role_contract_version','program_quantity_contract',
                   'quantity_scope_context', 'quantity_scope_instructions', 'response_contract_version',
                   'required_response_unit_ids', 'unit_response_requirements',
-                  'unit_index_requirements'):
+                  'unit_index_requirements', 'scan_contract', 'two_stage_contract',
+                  'two_stage_scan'):
         if field in request:
             body[field] = request[field]
     if 'indexed_unit_contract' in request:
@@ -259,7 +261,15 @@ class SemanticRequest:
             source_equivalence(current=current,original=source)
         original_requests = source_requests(source)
         if request not in original_requests:
-            if 'source_reference_contract' in request:
+            if request.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST':
+                from .capacity_reference_contract import upgrade_request as reference_request
+                from .capacity_two_stage import scan_request
+                need(source['metric_id'] == 'B13' and
+                     any(scan_request(reference_request(original, compact=True,
+                         role_labels=True, relevance_scope=True)) == request
+                         for original in original_requests),
+                     'CONTINUOUS_SCAN_REQUEST_NOT_IN_SOURCE')
+            elif 'source_reference_contract' in request:
                 from .capacity_reference_contract import restore_base_request
                 need(restore_base_request(request) in original_requests, 'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
             else:
@@ -673,8 +683,47 @@ def execute_capacity_assessment(*, prepared, ledger, recorded_wire=None):
     """Accept new B13 source proposals through full native Candidate/Evidence."""
     need(strict_json_loads(text=prepared.request_bytes.decode()).get('metric_id') == 'B13',
          'B13_NATIVE_ASSESSMENT_REQUIRED')
+    need(strict_json_loads(text=prepared.request_bytes.decode()).get('record_type') !=
+         'B13_REFERENCE_SCAN_REQUEST', 'B13_SCAN_STAGE_HAS_NO_METRIC_RESULT')
+    from .capacity_reference_contract import SCANNED_VERSION
+    need(strict_json_loads(text=prepared.request_bytes.decode()).get(
+         'source_reference_contract', {}).get('version') != SCANNED_VERSION,
+         'B13_TWO_STAGE_EXECUTION_PROOF_REQUIRED')
     return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=recorded_wire,
                              native_assessment=True)
+
+
+def execute_capacity_scan(*, prepared, ledger, recorded_wire=None):
+    """Record a bounded scan with no metric Result or live-call authority."""
+    request = strict_json_loads(text=prepared.request_bytes.decode())
+    need(request.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST'
+         and request.get('metric_id') == 'B13', 'B13_SCAN_STAGE_REQUIRED')
+    need(not ledger.live, 'B13_TWO_STAGE_LIVE_EXECUTION_NOT_AUTHORIZED')
+    return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=recorded_wire,
+                             native_assessment=True, scan_stage=True)
+
+
+def execute_capacity_interpretation(*, prepared, ledger, recorded_wire=None):
+    """Recorded V5 assessment requires an earlier exact successful scan."""
+    from .capacity_reference_contract import SCANNED_VERSION
+    from .capacity_two_stage import saved_scan_stage
+    request = strict_json_loads(text=prepared.request_bytes.decode())
+    need(request.get('metric_id') == 'B13'
+         and request.get('source_reference_contract', {}).get('version') == SCANNED_VERSION,
+         'B13_TWO_STAGE_INTERPRETATION_REQUIRED')
+    need(not ledger.live, 'B13_TWO_STAGE_LIVE_EXECUTION_NOT_AUTHORIZED')
+    proof = request['two_stage_contract']['scan_execution_proof']
+    ordinal = proof['scan_ordinal']
+    need(type(ordinal) is int and ordinal > 0, 'B13_TWO_STAGE_SCAN_ORDER_INVALID')
+    path = ledger.root/'calls'/('%04d' % ordinal)
+    with ledger.locked():
+        state = ledger.snapshot()
+        need(any(row['ordinal'] == ordinal and row['status'] == 'SUCCEEDED'
+                 for row in state['rows']), 'B13_TWO_STAGE_SCAN_LEDGER_SUCCESS_REQUIRED')
+        stage = saved_scan_stage(prepared=prepared, scan_path=path)
+        need(stage['stage_proof'] == proof, 'B13_TWO_STAGE_SCAN_PROOF_CHANGED')
+    return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=recorded_wire,
+                             native_assessment=True, two_stage_scan=(path, stage))
 
 
 def execute_d04_assessment(*, prepared, ledger, recorded_wire=None):
@@ -685,9 +734,16 @@ def execute_d04_assessment(*, prepared, ledger, recorded_wire=None):
                              native_assessment=True)
 
 
-def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
+def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
+                      scan_stage=False, two_stage_scan=None):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
+    need(not scan_stage or (native_assessment and not ledger.live
+         and request_fields.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST'),
+         'B13_SCAN_STAGE_EXECUTION_SCOPE_CHANGED')
+    need(two_stage_scan is None or (native_assessment and not ledger.live
+         and request_fields.get('metric_id') == 'B13'),
+         'B13_TWO_STAGE_EXECUTION_SCOPE_CHANGED')
     if request_fields.get('metric_id') == 'B13':
         from .capacity_reference_contract import ROLE_VERSION, RELEVANCE_VERSION
         need(not (ledger.live and request_fields.get('source_reference_contract', {}).get('version')
@@ -706,6 +762,22 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
         from .r6_semantic_verification import validate_response
     elif request_fields.get('metric_id')=='D03':
         from .r6_regulatory_semantics import validate_response
+    elif scan_stage:
+        from .capacity_two_stage import prior_for_scan, validate_scan
+        prior = prior_for_scan(source=strict_json_loads(text=prepared.source_bytes.decode()),
+                               scan=request_fields)
+        def validate_response(*, request, raw_response):
+            return validate_scan(request=prior, scan_request_value=request,
+                                 raw_response=raw_response)
+    elif two_stage_scan is not None:
+        from .capacity_two_stage import validate_interpretation
+        _, stage = two_stage_scan
+        def validate_response(*, request, raw_response):
+            return validate_interpretation(request=stage['prior_request'],
+                scan_result=stage['scan_result'],
+                scan_raw_response=stage['scan_raw_response'],
+                interpretation=request, raw_response=raw_response,
+                source=strict_json_loads(text=prepared.source_bytes.decode()))
     elif request_fields.get('metric_id') == 'B13':
         from .capacity_semantic_review import validate_response as capacity_validate_response
         def validate_response(*,request,raw_response):
@@ -738,7 +810,15 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
 
     def evidence_validator(**kwargs):
         if native_assessment:
-            if request_fields.get('metric_id') == 'B13':
+            if scan_stage:
+                from .capacity_two_stage import build_scan_acceptance as build_acceptance
+            elif two_stage_scan is not None:
+                from .capacity_two_stage import build_interpretation_acceptance
+                def build_acceptance(*, prepared, plan, response_body):
+                    return build_interpretation_acceptance(prepared=prepared,
+                        plan=plan, response_body=response_body,
+                        scan_path=two_stage_scan[0])
+            elif request_fields.get('metric_id') == 'B13':
                 from .capacity_native_assessment import build_acceptance
             else:
                 from .d04_native_assessment import build_acceptance
@@ -804,7 +884,8 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment):
             'semantic_correctness_verified':False,'native_result_created':False,'production_authorized':False}
         if native_assessment:
             result['native_candidate_evidence_created'] = execution['status'] == 'SUCCEEDED'
-            result['acceptance_scope'] = ('ONE_HISTORICAL_CONTROL_REQUEST_NOT_CURRENT_OR_WHOLE_FILING'
+            result['acceptance_scope'] = ('SCAN_SHAPE_ONLY_NO_B13_METRIC_CREDIT' if scan_stage
+                else 'ONE_HISTORICAL_CONTROL_REQUEST_NOT_CURRENT_OR_WHOLE_FILING'
                 if 'historical_control' in request_fields else 'ONE_REQUEST_SOURCE_ASSESSMENT_NOT_COMPLETE_METRIC')
         output = path/'wire/assistant-output.bin'
         if output.exists() and not transport.wire['error_class']:

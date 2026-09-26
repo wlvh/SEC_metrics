@@ -1235,6 +1235,163 @@
       "tool_calls": 57,
       "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-v3/conclusion.md",
       "verdict": "BLOCKED_SCOPED_D03_CROSS_SUBJECT_ANAPHORA_P2"
+    },
+    {
+      "task_name": "review_b13native_7cde5ae",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "scripts/vnext/capacity_reference_contract.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "scripts/vnext/native_unit_index.py",
+        "scripts/vnext/capacity_assessment_input.py",
+        "scripts/vnext/capacity_run.py",
+        "scripts/vnext/capacity_text_results.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage_material.py"
+      ],
+      "patch_sha": "7cde5ae02b176d768fc6ea078f5f310211d2923e",
+      "spawned_at": "2026-09-25T17:40:33Z",
+      "ended_at": "2026-09-25T17:47:34Z",
+      "tool_calls": 58,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-native/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_WRONG_SUBJECT_OR_TIMING_BYPASS"
+    },
+    {
+      "task_name": "review_b13guard_99d868f",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/repair-native-replay-summary.json"
+      ],
+      "patch_sha": "99d868f52cf94d42966c28175d840e5a10917a2e",
+      "spawned_at": "2026-09-25T18:37:58Z",
+      "ended_at": "2026-09-25T18:50:44Z",
+      "tool_calls": 44,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-native-repair/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_HISTORICAL_CONTRAST_BYPASS"
+    },
+    {
+      "task_name": "review_b13local_79fe67b",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/stage3-local-repair.log"
+      ],
+      "patch_sha": "79fe67b197c601d387fc9464f7a7ff3358fb65b3",
+      "spawned_at": "2026-09-25T18:52:31Z",
+      "ended_at": "2026-09-25T18:58:50Z",
+      "tool_calls": 41,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-local/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_CROSS_CLAUSE_OTHER_ENTITY_FALSE_REJECTION"
+    },
+    {
+      "task_name": "review_b13clause_f6be093",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/stage3-clause-repair.log"
+      ],
+      "patch_sha": "f6be0934d8c2fc73cb3fbb3bdcb113a462135837",
+      "spawned_at": "2026-09-25T19:04:27Z",
+      "ended_at": "2026-09-25T19:10:42Z",
+      "tool_calls": 38,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-clause/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_SAME_CLAUSE_SECOND_ASSERTION_FALSE_ACCEPTANCE_AND_SUPPLIER_FALSE_REJECTION"
+    },
+    {
+      "task_name": "review_d03anchor_225842f",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/regulatory_fact_review.py",
+        "tests/vnext/test_regulatory_fact_review.py",
+        "tools/run_fast_tests_v2.py",
+        "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/anchor-successor-directed.log"
+      ],
+      "patch_sha": "225842f06bcf73300917d643a4a51f5a8ff93958",
+      "spawned_at": "2026-09-25T19:13:24Z",
+      "ended_at": "2026-09-25T19:23:59Z",
+      "tool_calls": 65,
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor/conclusion.md",
+      "verdict": "NEEDS_FIX_TWO_P2_CANDIDATE_CONFLICT_AND_SOURCE_BINDING"
+    },
+    {
+      "task_name": "review_d03anchor_937849f",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/regulatory_fact_review.py",
+        "tests/vnext/test_regulatory_fact_review.py",
+        "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/anchor-repair-test-final.log"
+      ],
+      "patch_sha": "937849fb6a519cb3f00316ec6efe465cb5a56199",
+      "spawned_at": "2026-09-25T19:44:44Z",
+      "ended_at": "2026-09-25T19:50:44Z",
+      "tool_calls": 30,
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor-repair/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_MULTI_CANDIDATE_SAME_SENTENCE_CONFLICT_AND_RAW_PROVIDER_RESPONSE_NOT_PRESERVED"
+    },
+    {
+      "task_name": "review_d03block_5e0b815",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/regulatory_fact_review.py",
+        "tests/vnext/test_regulatory_fact_review.py",
+        "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/anchor-repair-followup-test.log"
+      ],
+      "patch_sha": "5e0b815e2df928b323c2bf3814bb6556dc5e740c",
+      "spawned_at": "2026-09-25T19:54:13Z",
+      "ended_at": "2026-09-25T19:58:01Z",
+      "tool_calls": 24,
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-block-followup/conclusion.md",
+      "verdict": "PASS_LIMITED_D03_MULTI_CANDIDATE_UNRESOLVED_AND_RESPONSE_IDENTITY"
+    },
+    {
+      "task_name": "review_c04native_46912ce",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/c04_registration_successor.py",
+        "scripts/vnext/normal_run_v3.py",
+        "catalog/r5/C04_auditor_changes_v3.md",
+        "config/issue28_normal_results_v2.json",
+        "config/issue28_continuous_calls_v1.json",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "tests/vnext/test_c04_registration_successor.py",
+        "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/summary.json"
+      ],
+      "patch_sha": "46912cec61e981fc89750db27447710dba952aa2",
+      "spawned_at": "2026-09-26T03:48:11Z",
+      "ended_at": "2026-09-26T03:54:36Z",
+      "tool_calls": 54,
+      "result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_REGISTRATION_HISTORY_SHARD_RANGE_CAN_OMIT_EVENT_AND_FALSE_ZERO"
+    },
+    {
+      "task_name": "review_c04shard_2c4d236",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/c04_registration_successor.py",
+        "tests/vnext/test_c04_registration_successor.py",
+        "config/issue28_continuous_calls_v1.json",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/summary-shard-repair.json",
+        "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/wiring-shard-repair.log"
+      ],
+      "patch_sha": "2c4d2361280ed0a18f293007aefa0ca55018c843",
+      "spawned_at": "2026-09-26T04:04:27Z",
+      "ended_at": "2026-09-26T04:10:12Z",
+      "tool_calls": 39,
+      "result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-shard-repair/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_LOADED_HISTORY_SHARD_ALIGNMENT_AND_EVENT_CENSUS"
     }
   ],
   "ci_capacity_20260922": {
@@ -1378,7 +1535,7 @@
     "following_B13_failure": "112 finish_reason=length,4096output; prefix also contains wrong-kind source449; no retry",
     "invariants": "recovery-110-20260922/after-recovery-invariants.json"
   },
-  "call_count_snapshot_scope": "Cumulative through192: provider143/paid143/SEC49. D04 all ten complete real candidates; B13 Enphase group0 success190, group1 failures191/192 retained, no complete B13 company. Conditional old-grouping base gap at least49, but group1 retry authorization exhausted.",
+  "call_count_snapshot_scope": "Cumulative through192: provider143/paid143/SEC49. D04 all ten complete real candidates; B13 Enphase group0 success190, group1 failures191/192 retained, no complete B13 company. Old-grouping base gap at least49; if B13 uses 32 new scan/interpretation requests and D03 first round stays130, conditional base gap is at least65 against remaining97. Neither is final budget or new-call authority.",
   "source_unit_preflight_guard": {
     "status": "SCOPED_REVIEW_AND_LOSSLESS_POSITIVE_CHAIN_COLD_READ_PASS",
     "reason": "113 Greek question mark normalized by source serialization; check before paying, not repair of old113",
@@ -1992,7 +2149,7 @@
   },
   "b13_two_stage_offline_20260925": {
     "base_head": "50c341c26d745ddfc19b9b5bde69d479a1464716",
-    "status": "SELECTED_OFFLINE_CANDIDATE_PENDING_SCOPED_REVIEW_AND_NATIVE_INTEGRATION",
+    "status": "RECORDED_NATIVE_CHAIN_PASS_SEMANTIC_ACCEPTANCE_BLOCKED_AFTER_BOUNDED_REVIEWS",
     "selected_route": "FULL_SOURCE_SCAN_THEN_FULL_SOURCE_INTERPRETATION",
     "evidence_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/",
     "saved_source_measurement": {
@@ -2002,7 +2159,14 @@
       "option_a_illustrative_new_calls": 60,
       "option_b_max_new_calls": 32,
       "candidate_refs_per_group_cap": 64,
-      "all_synthetic_64_ref_stage_inputs_fit_existing_context_and_4096_reserve": true
+      "all_synthetic_64_ref_stage_inputs_fit_existing_context_and_4096_reserve": true,
+      "current_max_unresolved_context_tokens": 199648,
+      "tightest_company": "ford_motor_company",
+      "tightest_group_index": 9,
+      "tightest_stage": "assessment",
+      "tightest_remaining_tokens": 352,
+      "all_max_unresolved_stage_inputs_fit_existing_context_and_4096_reserve": true,
+      "conditional_new_route_base_gap_at_least_if_d03_130_unchanged": 65
     },
     "review": "INITIAL_A48D282_TWO_P2_RETAINED; C44BB047_SCOPED_P2_INCREMENT_PASS",
     "real_new_calls": [
@@ -2016,7 +2180,49 @@
     "old_191_192_third_opportunity": false,
     "initial_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review/conclusion.md",
     "post_p2_tests": "21_DIRECTED_PASS; 128_FAST_SELECTORS_PASS; SAVED_MEASUREMENT_BYTE_EQUAL",
-    "followup_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-followup/conclusion.md"
+    "followup_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-followup/conclusion.md",
+    "requirement_closure_hash": "sha256:5a28b5906fcb312ec69a9fbdec4e9f2118e999ddf0c437ea70cc05a2c4878ac6",
+    "execution_authority_hash": "sha256:87fae05b931045f34309395265457ebc2b9b51342867f114a518c6971f49f91a",
+    "current_scope_review": "F6BE093_LIMITED_REVIEW_NEEDS_FIX_P2_ASSERTION_SCOPE; STOP_LEXICAL_PATCH_ROUTE",
+    "recorded_mixed_v4_v5_group_count": 6,
+    "recorded_stage_claims": [
+      7,
+      7,
+      0
+    ],
+    "recorded_native_run_and_public_rows_cold_read_proven": true,
+    "current_binding_replay_without_new_recorded_claims": true,
+    "real_190_exact_request_and_source_read_only_replay_proven": true,
+    "actual_live_190_plus_new_live_stages_company_result_proven": false,
+    "source_role_false_exclusion_guard": "DIRECT_CURRENT_TARGET_AND_CONTRACT_MANUFACTURER_CAPACITY_CHECKS_KIND_SUBJECT_AND_TIME",
+    "fast_local_status": "PINNED_126_OF_128_PASS_TWO_30_SECOND_PARALLEL_TIMEOUTS; BOTH_FAILED_SELECTORS_PASS_IN_ISOLATION",
+    "provider_wiring_receipt": "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json",
+    "sec_wiring_receipt": "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json",
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/capacity_run.py"
+      ],
+      "functions": [
+        "capacity_run.prepare_case"
+      ],
+      "new_behavior": "V5 registered input passes explicit actual_requests into native text/program validation",
+      "default_behavior": "No V5 variant means no added text_arguments key; old request, return and record shapes retained",
+      "v15_requirement_closure_changed": true,
+      "other_branch_modified": false
+    },
+    "current_scope_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-clause/conclusion.md",
+    "repair_recorded_chain": "PASS_AT_SHA256_ACD297_CLOSURE; CURRENT_LOCAL_REPAIR_STAGE3_ONLY_NOT_FULL_COLD",
+    "repair_evidence_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/repair-native-replay-summary.json",
+    "repair_directed_tests": "30_PASS",
+    "local_repair_directed_tests": "31_PASS",
+    "local_repair_stage3_read_only_replay": "PASS_CURRENT_CLOSURE_NO_NEW_CLAIMS",
+    "local_repair_full_company_cold_status": "PRIOR_CLOSURE_RECORDING_REUSED; NOT_RERUN_AT_CURRENT_CLOSURE",
+    "clause_repair_directed_tests": "31_PASS",
+    "clause_repair_stage3_read_only_replay": "PASS_CURRENT_CLOSURE_NO_NEW_CLAIMS",
+    "clause_repair_full_company_cold_status": "PRIOR_CLOSURE_RECORDING_REUSED; NOT_RERUN_AT_CURRENT_CLOSURE",
+    "live_validation_admission": "CLOSED_NO_NEW_B13_TWO_STAGE_CALL_AUTHORITY",
+    "next_required_engineering_choice": "ASSERTION_SPAN_BOUND_EXCLUSION_OR_EXPLICIT_UNRESOLVED_CONTRACT",
+    "complete_real_company_result_created": false
   },
   "ci_36112753619": {
     "head": "50c341c26d745ddfc19b9b5bde69d479a1464716",
@@ -2131,7 +2337,66 @@
       }
     ],
     "current_source_fact_sha256": "3dda5cded82a471f1d5559654f44f50701439942f833f18526986409594057b2",
-    "local_repair_tests": "HISTORICAL_EXPERIMENTS_ONLY_NOT_CURRENT_ACCEPTANCE"
+    "local_repair_tests": "HISTORICAL_EXPERIMENTS_ONLY_NOT_CURRENT_ACCEPTANCE",
+    "successor_offline_candidate": {
+      "status": "OFFLINE_CANDIDATE_SCOPED_REVIEW_NEEDS_FIX_NOT_EXECUTION_BOUND",
+      "module": "scripts/vnext/regulatory_fact_review.py",
+      "test": "tests/vnext/test_regulatory_fact_review.py",
+      "evidence_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/anchor-successor-directed.log",
+      "saved_jpm_material_test": "1_PASS_23_SECONDS",
+      "old_source_statement_fact_rule_modified": false,
+      "current_request_factory_modified": false,
+      "semantic_status_proven_by_program": false,
+      "new_provider_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "native_result_created": false,
+      "independent_review": "NEEDS_FIX_TWO_P2_CANDIDATE_CONFLICT_AND_SOURCE_BINDING",
+      "independent_review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor/conclusion.md",
+      "next_required_design": "EXACT_SOURCE_RECONSTRUCTION_AND_PER_CANDIDATE_RESPONSE_BINDING"
+    },
+    "anchor_successor_repair": {
+      "status": "OFFLINE_CODE_AND_DIRECTED_TEST_PASS_SCOPED_INDEPENDENT_REVIEW_PENDING",
+      "scope_paths": [
+        "scripts/vnext/regulatory_fact_review.py",
+        "tests/vnext/test_regulatory_fact_review.py"
+      ],
+      "source_boundary": "REPREPARE_SAVED_SOURCE_AND_EXACTLY_MATCH_ORIGINAL_REQUEST_FROM_INSTALLED_ROOT",
+      "candidate_boundary": "EXPLICIT_CANDIDATE_ID_TO_DISTINCT_FINDING_INDICES; CONFLICT_RETAINS_UNRESOLVED",
+      "no_network_test": "JPM_SAVED_SOURCE_1_PASS_61.944_SECONDS_CURRENT_TEST_SOURCE",
+      "prior_full_reprepare_test": "JPM_SAVED_SOURCE_1_PASS_185.804_SECONDS_BEFORE_TEST_MATRIX_OPTIMIZATION",
+      "real_new_calls": [
+        0,
+        0,
+        0
+      ],
+      "d03_live_bound": false,
+      "native_result_created": false,
+      "independent_review": "NEEDS_FIX_SCOPED_REVIEW_937849F",
+      "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-anchor-repair/conclusion.md",
+      "followup_repair": {
+        "status": "LIMITED_INDEPENDENT_REVIEW_PASS_OFFLINE_ONLY",
+        "scope_paths": [
+          "scripts/vnext/regulatory_fact_review.py",
+          "tests/vnext/test_regulatory_fact_review.py"
+        ],
+        "precursor_review": "937849FB_NEEDS_FIX_MULTI_CANDIDATE_CONFLICT_AND_PROVIDER_RESPONSE_BOUNDARY",
+        "conservative_same_block_rule": "ALL_SAME_BLOCK_MULTIPLE_CANDIDATES_REMAIN_UNRESOLVED_WITHOUT_ASSERTION_SPAN_ATTRIBUTION",
+        "provider_response": "FULL_RECEIVED_PARSED_OBJECT_AND_RAW_SHA256; SEPARATE_RAW_PERSISTENCE_NOT_CLAIMED",
+        "directed_test": "JPM_SAVED_SOURCE_AND_SYNTHETIC_MULTI_CANDIDATE_2_PASS_60.087_SECONDS",
+        "new_calls": [
+          0,
+          0,
+          0
+        ],
+        "live_bound": false,
+        "native_result_created": false,
+        "review_result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-block-followup/conclusion.md",
+        "review_patch_sha": "5e0b815e2df928b323c2bf3814bb6556dc5e740c"
+      }
+    }
   },
   "ci_36116965890": {
     "head": "b276b1e7d90ae2bfbe1c62cd9d8c82e748865355",
@@ -2142,5 +2407,187 @@
     "cancelled": 0,
     "source_material": "success",
     "not_covered": "Later local C04 evidence and D03 source-fact repair"
+  },
+  "ci_36124099928": {
+    "head": "1e05850b85bb9b4905c5cd7aef9c6af68ccfb019",
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at_utc": "2026-09-25T11:03:16Z",
+    "scope": "previous_head_only_not_new_two_stage_native_increment"
+  },
+  "ci_36179574745": {
+    "head": "bb0b8b5bdd80e9001ee1adcd09602a115d9962aa",
+    "observed_at_utc": "2026-09-25T19:58:01Z",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_success": 13,
+    "jobs_in_progress": [],
+    "scope": "B13 recorded native chain, bounded semantic checker changes and first D03 offline candidate; later D03 repair commits not included",
+    "rerun_triggered": false,
+    "updated_at_utc": "2026-09-25T20:01:33Z"
+  },
+  "ci_36182994518": {
+    "head": "b4d21130d1945bd281dc88371adcd63daa900cdb",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_success": 13,
+    "jobs_failed": 0,
+    "jobs_cancelled": 0,
+    "updated_at_utc": "2026-09-25T20:32:42Z",
+    "scope": "prior pushed head; new C04 successor is still local/uncommitted and not covered"
+  },
+  "paramount_c04_native_four_forms_20260926": {
+    "status": "EXPLICIT_NATIVE_OPEN_RUN_AND_INSTALLED_COLD_READ_PASS_WITHHELD_NO_FALSE_ZERO",
+    "evidence_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "installed_root": "/private/tmp/issue28-c04-four-form-20260926-02/data",
+    "company_id": "paramount_skydance_paramount_global",
+    "source_cik": "2041610",
+    "form_types": [
+      "8-K",
+      "8-K/A",
+      "8-K12B",
+      "8-K12B/A"
+    ],
+    "event_count": 6,
+    "registration_event_count": 2,
+    "item_claim_count": 22,
+    "item_4_01_count": 0,
+    "run_id": "run:ordinary-integrated:88e7b237fc25b6df89294ae969045162c931c52fc4d5281235df51be5aababc7",
+    "result_id": "sha256:ccb7957bbbf6de55aaf2c03aa566ba64344810cc263eb5374315ff5e100c9cbc",
+    "result_value": null,
+    "reason_code": "C04_COMPARABLE_AUDITOR_FACTS_MISSING",
+    "public_row_sha256": {
+      "metrics_matrix.csv": "9ffac1d2c445e3f5d9cbc3d04655f961dd25fb457c423fa6f6c140c6da7eec00",
+      "metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8"
+    },
+    "cold_read": "PASS_INSTALLED_C04_FOUR_FORM_COLD_READ",
+    "data_ledger_counts_before_after": [
+      [
+        143,
+        143,
+        49
+      ],
+      [
+        143,
+        143,
+        49
+      ]
+    ],
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "ordinary_requirement_closure": "sha256:85a83df9416014a489b2e3e8ed69df48a658688050e13af5b1e938e3c8c1b356",
+    "continuous_requirement_closure": "sha256:4defd18b3a3eae907ab59aec2065d65621666861dfb251d29ba3fe0d6592ae95",
+    "execution_authority_hash": "sha256:a7ba90e29c99106a1035d90ebcc9731fec98b494c3c7e8f34973ac3bc59c133d",
+    "provider_sec_offline_wiring": "PASS_CURRENT_CLOSURE_SHORT_TESTS_AND_REUSED_VERIFIED_EVIDENCE",
+    "default_normal_c04_v2_behavior_changed": false,
+    "default_binding_function_body_changed": false,
+    "new_current_requirement_closure_changes_new_run_identity": true,
+    "frozen_parent_modules_modified": false,
+    "normal_automatic_update_complete": false,
+    "formal_publication_authorized": false,
+    "pending_business_rule": "NO_SAME_CIK_PRIOR_10K_NEGATIVE_PATH",
+    "independent_review": "NEEDS_FIX_P2_HISTORY_SHARD_ALIGNMENT",
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/normal_run_v3.py",
+        "config/issue28_normal_results_v2.json",
+        "config/issue28_continuous_calls_v1.json",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v13/decision_register.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/decision_register.json",
+        "requirements/issue_28_v14/transfer_manifest.json",
+        "scripts/vnext/c04_registration_successor.py",
+        "catalog/r5/C04_auditor_changes_v3.md"
+      ],
+      "functions": [
+        "normal_run_v3.prepare_case",
+        "normal_run_v3.install_normal_inputs",
+        "normal_run_v3.create_normal_run",
+        "normal_run_v3.replay_case"
+      ],
+      "optional_parameter_default": "None preserves prior default C04 two-form route",
+      "binding_function_body_unchanged": true,
+      "return_and_record_types_default_unchanged": true,
+      "new_v13_v14_current_requirement_closure_changed": true,
+      "frozen_prior_snapshots_changed": false,
+      "other_branch_modified": false
+    },
+    "review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review/conclusion.md"
+  },
+  "paramount_c04_history_shard_repair_20260926": {
+    "status": "LIMITED_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS",
+    "precursor_patch_sha": "46912cec61e981fc89750db27447710dba952aa2",
+    "precursor_review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review/conclusion.md",
+    "repair": "CHECK_FOUR_FORM_HISTORY_BODY_AGAINST_SHARD_INDEX_BEFORE_SELECTION_AND_ASSERT_EVENT_ACCESSION_CENSUS",
+    "directed_tests": "3_PASS_6.932_SECONDS",
+    "native_run_id": "run:ordinary-integrated:0c4eb986dc08a25b227b1bfd7ae8727bb79ee1bcd4d12cd08d8417a74cebfdf0",
+    "result_id": "sha256:ccb7957bbbf6de55aaf2c03aa566ba64344810cc263eb5374315ff5e100c9cbc",
+    "value": null,
+    "reason_code": "C04_COMPARABLE_AUDITOR_FACTS_MISSING",
+    "public_row_sha256": {
+      "metrics_matrix.csv": "9ffac1d2c445e3f5d9cbc3d04655f961dd25fb457c423fa6f6c140c6da7eec00",
+      "metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8"
+    },
+    "saved_event_count": 6,
+    "registration_event_count": 2,
+    "item_claim_count": 22,
+    "item_4_01_count": 0,
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "installed_root": "/private/tmp/issue28-c04-four-form-20260926-03/data",
+    "cold_read": "PASS_INSTALLED_C04_FOUR_FORM_COLD_READ",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "ledger_before_after": [
+      [
+        143,
+        143,
+        49
+      ],
+      [
+        143,
+        143,
+        49
+      ]
+    ],
+    "ordinary_requirement_closure": "sha256:2620e1c13900bdfd7bb501b7a3ff9c2aece37ec25cb22a03d9a78e8d7872f300",
+    "continuous_requirement_closure": "sha256:2ac87f016ea8f356298cc206ddfb9f71fca43adbdd9956d80b9b5a16bd7f9c1f",
+    "execution_authority_hash": "sha256:f17a202a240d606ccc405e4ab1b4a63976cba40992fd868546055d5c42483bb2",
+    "provider_sec_offline_wiring": "PASS_CURRENT_CLOSURE_WITH_NEW_RECEIPTS_AND_TEST_LOGS",
+    "previous_evidence_files_modified": false,
+    "independent_review": "PASS_WITH_BOUNDS_EXACT_SHA_2C4D236",
+    "business_conclusion": "NO_SAME_CIK_PRIOR_COMPARISON_WITHHELD_NO_ZERO",
+    "normal_automatic_update_complete": false,
+    "shared_default_binding_function_changed": false,
+    "frozen_parent_modules_modified": false,
+    "formal_publication_authorized": false,
+    "review_patch_sha": "2c4d2361280ed0a18f293007aefa0ca55018c843",
+    "review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-shard-repair/conclusion.md",
+    "uncovered_scope": "UNLOADED_HISTORY_SHARD_BODY_NOT_PROVEN_BY_THIS_INCREMENT"
+  },
+  "ci_36217092936": {
+    "head": "fb9db1991bebe27f164ea474ad50ee71be05c442",
+    "observed_at_utc": "2026-09-26T04:22:06Z",
+    "status": "in_progress_at_observation",
+    "fast_job": "FAILED_STALE_TEST_RECEIPT_FILENAME",
+    "fast_job_id": 108335108220,
+    "other_jobs_terminal": "NOT_YET_KNOWN",
+    "rerun_triggered": false
+  },
+  "ci_fast_wiring_test_repair_20260926": {
+    "cause": "TEST_MUTATION_TARGETED_OLD_OFFLINE_WIRING_BASENAME_INSTEAD_OF_ACTIVE_POLICY_RECEIPT_PATH",
+    "changed_path": "tests/vnext/test_continuous_call_policy.py",
+    "runtime_wiring_code_changed": false,
+    "current_receipt_changed": false,
+    "directed_tests": "5_PASS",
+    "evidence_log": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/ci-fast-repair-directed.log",
+    "new_calls": [0, 0, 0]
   }
 }
