@@ -1,0 +1,40 @@
+{
+  "record_type": "C04_SECOND_REAL_SEC_SOURCE_REFRESH",
+  "status": "COMPLETE_CURRENT_MARRIOTT_C04_SOURCE_REFRESH_ZERO_MODEL",
+  "git_head_at_execution": "97a5a6e70338af1c448129d47079283c05f08853",
+  "sec_ordinal": 194,
+  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+  "sec_terminal_status": "SUCCEEDED",
+  "sec_receipt_sha256": "2f01ff17877e8e1d9c69c6839f46d1abd45ead342e1682bbc0dc5b9c1a2367f8",
+  "source_ledger_sha256": "755d8d1760b22bd49990bfc8dc62e5c3538708fc3d245254da933f0016786476",
+  "counts_before_after": [
+    [
+      143,
+      143,
+      50
+    ],
+    [
+      143,
+      143,
+      51
+    ]
+  ],
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 1
+  },
+  "prior_ordinal_from_resume": 193,
+  "prior_report_sha256": "ca80ecee09f57099cf5a61eb0649b993f9b4e161821d4de429f9e56d65903955",
+  "source_refresh_status": "REFRESH_CHECK_COMPLETED",
+  "source_refresh_deferred_urls": [],
+  "c04_update_status": "NO_SOURCE_CONTENT_CHANGE",
+  "c04_successful_attempt": "aab4e843487049afa4ace32bc833fb35",
+  "c04_result_id": "sha256:d41ffcee4edd8898ab66931441b7cdc850c64b589fa9e2974d4b87cb59aae70e",
+  "c04_publication": "PUBLISHED",
+  "c04_value": "0",
+  "old_and_new_native_cold_read": "PASS_NETWORK_AND_SUBPROCESS_FORBIDDEN",
+  "new_fiscal_year_proven": false,
+  "ten_company_c04_complete": false,
+  "formal_publication_authorized": false
+}
