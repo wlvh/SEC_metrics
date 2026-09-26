@@ -1489,6 +1489,32 @@
       "result_path": "docs/evidence/issue28_continuous/c04-normal-update-20260926/independent-review/conclusion.md",
       "verdict": "NEEDS_FIX_P2_C04_UPDATE_TERMINAL_CREDIT_AND_PUBLICATION_NOT_RECHECKED_P3_DUPLICATE_METRIC",
       "tool_call_count_note": "20 functions.exec orchestrations and 39 nested tool calls reported by agent."
+    },
+    {
+      "task_name": "review_c04refresh_b2f7ed4",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/c04_update_cycle.py",
+        "scripts/vnext/continuous_sec_acquisition.py",
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tools/vnext_normal_update.py",
+        "tools/vnext_ordinary_refresh.py",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "tests/vnext/test_c04_update_cycle.py",
+        "tests/vnext/test_c04_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py",
+        "tests/vnext/test_ordinary_refresh_cycle.py",
+        "docs/evidence/issue28_continuous/c04-normal-update-repair-20260926/",
+        "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/"
+      ],
+      "patch_sha": "b2f7ed4148f4d26a8d7f63ae9ec860ef54d86172",
+      "spawned_at": "2026-09-26T16:20:21Z",
+      "ended_at": "2026-09-26T16:29:10Z",
+      "tool_calls": 54,
+      "result_path": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_NON_C04_CLI_ROUTE_AND_MIXED_SCOPE_C04_SOURCE_ONLY_ACQUISITION",
+      "tool_call_count_note": "22 functions.exec orchestrations and 54 nested tool calls reported by agent."
     }
   ],
   "ci_capacity_20260922": {
@@ -3013,7 +3039,7 @@
     }
   },
   "c04_normal_refresh_20260927": {
-    "status": "RECORDED_TWO_VERSION_REFRESH_PASS_REAL_LEDGER_ZERO_CALL_SAVED_RESULT_PASS_SCOPED_REVIEW_PENDING",
+    "status": "RECORDED_AND_REAL_ZERO_CALL_C04_PASS_SCOPE_REVIEW_FOUND_TWO_P2",
     "code_paths": [
       "scripts/vnext/ordinary_refresh_cycle.py",
       "scripts/vnext/continuous_sec_acquisition.py",
@@ -3064,7 +3090,7 @@
     "new_fiscal_year_discovered_and_processed": false,
     "ten_company_c04_update_complete": false,
     "formal_publication_or_active_switch": false,
-    "independent_review": "PENDING_EXACT_FINAL_PATCH_SHA",
+    "independent_review": "NEEDS_FIX_P2_NON_C04_CLI_ROUTE_AND_MIXED_SCOPE_C04_SOURCE_ONLY_ACQUISITION",
     "shared_with_47": {
       "scope_paths": [
         "scripts/vnext/continuous_sec_acquisition.py",
@@ -3086,6 +3112,7 @@
       "issue47_branch_or_ledger_touched": false,
       "downstream_note": "Stacked #47 comparison base may need its maintainer to import new current bindings; no #47 artifacts were edited."
     },
-    "evidence_path": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/README.md"
+    "evidence_path": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/README.md",
+    "independent_review_path": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/independent-review/conclusion.md"
   }
 }
