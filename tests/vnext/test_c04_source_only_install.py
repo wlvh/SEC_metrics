@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from sec_urls import submissions_url, companyfacts_url
+from sec_urls import accession_document_url, submissions_url, companyfacts_url
 
 from vnext import normal_run_v3 as normal
 from vnext import ordinary_refresh_cycle as refresh
@@ -170,6 +170,93 @@ class C04MixedSourceScopeFastTest(unittest.TestCase):
                     'roles': ['fiscal_event_primary']}]
         self.assertEqual([pending[0]],
             refresh._c04_mixed_pending(pending, proofs))
+
+    def test_verified_submissions_can_name_one_missing_current_annual(self):
+        cik = 1048286
+        accession = '0001048286-27-000001'
+        document = 'new-annual.htm'
+        url = accession_document_url(cik=cik, accession=accession,
+                                     document_name=document)
+        annual = {'source_url': url, 'roles': ['current_annual_primary'],
+                  'saved_status': 'MISSING_SAVED_SOURCE'}
+        inventory = {'source_url': submissions_url(cik=cik),
+                     'roles': ['sec_submissions_inventory'],
+                     'saved_status': 'VERIFIED_SAVED_SOURCE', 'proof': {}}
+        discovery = {'primary_cik': str(cik),
+                     'metadata_declared_annual_selection': {'filing': {
+                         'form': '10-K', 'accessionNumber': accession,
+                         'primaryDocument': document}},
+                     'requirements': [inventory, annual]}
+        self.assertEqual([annual],
+            refresh._c04_missing_current_annual([annual], discovery))
+        self.assertEqual([], refresh._c04_missing_current_annual(
+            [dict(annual, roles=['proxy_primary'])], discovery))
+        self.assertEqual([], refresh._c04_missing_current_annual(
+            [dict(annual, source_url=url+'-other')], discovery))
+        self.assertEqual([], refresh._c04_missing_current_annual(
+            [annual], {**discovery, 'requirements': [
+                {**inventory, 'saved_status': 'SAVED_SOURCE_BLOCKED'}, annual]}))
+
+
+class C04MissingAnnualBootstrapFastTest(unittest.TestCase):
+    def test_declared_missing_annual_reaches_source_only_capture(self):
+        cik = 1048286
+        accession = '0001048286-27-000001'
+        annual_url = accession_document_url(cik=cik, accession=accession,
+                                            document_name='new-annual.htm')
+        discovery = {'record_type': 'ORDINARY_SOURCE_REQUIREMENTS',
+            'company_id': 'marriott_international', 'primary_cik': str(cik),
+            'requirements_id': 'recorded-discovery',
+            'status': 'METADATA_REFRESH_REQUIRED', 'limitations': [],
+            'metadata_declared_annual_selection': {'filing': {
+                'form': '10-K', 'accessionNumber': accession,
+                'primaryDocument': 'new-annual.htm'}},
+            'requirements': [
+                {'source_url': submissions_url(cik=cik),
+                 'roles': ['sec_submissions_inventory'],
+                 'saved_status': 'VERIFIED_SAVED_SOURCE',
+                 'refresh_for_new_discovery': True, 'proof': {}},
+                {'source_url': annual_url, 'roles': ['current_annual_primary'],
+                 'saved_status': 'MISSING_SAVED_SOURCE',
+                 'refresh_for_new_discovery': False}]}
+        captured = []
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
+            def capture(**kwargs):
+                captured.append(kwargs)
+                return {'status': 'SUCCEEDED', 'calls': [0, 0, 0]}
+            with patch.object(refresh, '_check_session'), \
+                 patch.object(refresh, 'initialize_source_inputs'), \
+                 patch.object(refresh, '_historical_c04_processing_copies',
+                              return_value=True), \
+                 patch.object(refresh, '_failed_urls', return_value=set()), \
+                 patch.object(refresh, 'discover_saved_source_requirements',
+                              return_value=discovery), \
+                 patch('vnext.normal_run_v3.prepare_case',
+                       side_effect=ValueError('SAVED_SOURCE_MISSING:' + annual_url)), \
+                 patch.object(session, 'capture', side_effect=capture), \
+                 patch('vnext.c04_update_cycle.run_company', return_value={
+                     'metrics': [{'metric_id': 'C04', 'status': 'UPDATE_BLOCKED'}]}):
+                result = refresh.refresh_and_process(session=session,
+                    state_root=root/'state',
+                    company_ids=['marriott_international'],
+                    metric_ids=['B01', 'C04'], max_sec_requests=1,
+                    c04_successor=True)
+                with patch('vnext.normal_run_v3.prepare_case',
+                           side_effect=ValueError('UNRELATED_SOURCE_CONFLICT')):
+                    unrelated = refresh.refresh_and_process(session=session,
+                        state_root=root/'state',
+                        company_ids=['marriott_international'],
+                        metric_ids=['B01', 'C04'], max_sec_requests=1,
+                        c04_successor=True)
+            self.assertEqual([annual_url], [item['url'] for item in captured])
+            self.assertEqual([True], [item['source_only_c04'] for item in captured])
+            self.assertEqual('UPDATES_INCOMPLETE', result['status'])
+            self.assertEqual('DISCOVERY', unrelated['companies'][0]
+                             ['acquisition_errors'][-1]['stage'])
+            with session.ledger.locked():
+                self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
 
 
 if __name__ == '__main__':

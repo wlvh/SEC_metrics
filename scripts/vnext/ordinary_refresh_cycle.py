@@ -7,6 +7,7 @@ publication action is introduced here.
 from pathlib import Path
 
 from sec_http import parse_request_log_rows, validate_request_log_manifest
+from sec_urls import accession_document_url, submissions_url
 from git_workspace import first_symlink_in_path
 from .canonical import content_hash, sha256_file, strict_json_file
 from .continuous_call_policy import need
@@ -88,6 +89,39 @@ def _c04_mixed_pending(pending, proofs):
             and set(item['roles']) & C04_MIXED_SOURCE_ROLES]
 
 
+def _c04_declared_annual_url(discovery):
+    """Name the current annual primary from verified issuer submissions."""
+    cik = discovery.get('primary_cik')
+    declared = discovery.get('metadata_declared_annual_selection')
+    if not (type(cik) is str and cik.isdigit() and type(declared) is dict
+            and type(declared.get('filing')) is dict):
+        return None
+    inventory = [item for item in discovery['requirements']
+        if item['source_url'] == submissions_url(cik=int(cik))
+        and 'sec_submissions_inventory' in item['roles']]
+    if not (len(inventory) == 1
+            and inventory[0]['saved_status'] == 'VERIFIED_SAVED_SOURCE'
+            and type(inventory[0].get('proof')) is dict):
+        return None
+    filing = declared['filing']
+    if not (filing.get('form') in {'10-K', '10-K/A'}
+            and type(filing.get('accessionNumber')) is str
+            and type(filing.get('primaryDocument')) is str):
+        return None
+    return accession_document_url(cik=int(cik),
+        accession=filing['accessionNumber'],
+        document_name=filing['primaryDocument'])
+
+
+def _c04_missing_current_annual(pending, discovery):
+    """Bootstrap only a declared, not-yet-saved current annual primary."""
+    url = _c04_declared_annual_url(discovery)
+    return [item for item in pending if url is not None
+            and item['source_url'] == url
+            and item['saved_status'] == 'MISSING_SAVED_SOURCE'
+            and item['roles'] == ['current_annual_primary']]
+
+
 def _call_accounting(captures, before, after, live, capture_error):
     delta = [end - start for start, end in zip(before, after)]
     need(len(delta) == 3 and all(value >= 0 for value in delta), 'ORDINARY_REFRESH_LEDGER_COUNT_REGRESSED')
@@ -159,15 +193,32 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
          and receipt['ledger_after_sha256'] == sha256_file(
              path=session.data_root/'evidence/requests_log.csv'),
          'ORDINARY_REFRESH_RESUME_SEC_SOURCE_CHANGED')
+    discovery = discover_saved_source_requirements(
+        repo_root=session.data_root, company_id=company_id)
     if mixed_stale:
         from .normal_run_v3 import prepare_case
         from .c04_registration_successor import EVENT_FORMS
-        current_case = prepare_case(data_root=session.data_root,
-            company_id=company_id, metric_id='C04',
-            c04_event_forms=EVENT_FORMS)
-        need(_c04_mixed_pending([plan['source_dependency']],
-             current_case['source_proofs']) == [plan['source_dependency']],
-             'ORDINARY_REFRESH_RESUME_PRIOR_SOURCE_NOT_C04_BOUND')
+        try:
+            current_case = prepare_case(data_root=session.data_root,
+                company_id=company_id, metric_id='C04',
+                c04_event_forms=EVENT_FORMS)
+            prior_bound = (_c04_mixed_pending([plan['source_dependency']],
+                current_case['source_proofs']) == [plan['source_dependency']])
+        except ValueError as error:
+            url = _c04_declared_annual_url(discovery)
+            need(url is not None and str(error) == 'SAVED_SOURCE_MISSING:' + url,
+                 'ORDINARY_REFRESH_RESUME_C04_SOURCE_ERROR_NOT_BOOTSTRAP')
+            accepted = {('current_annual_primary', url),
+                ('sec_submissions_inventory', submissions_url(
+                    cik=int(discovery['primary_cik'])))} if url else set()
+            role, = plan['source_dependency']['roles']
+            prior_bound = ((role, prior['source_url']) in accepted
+                and len([item for item in discovery['requirements']
+                    if item['source_url'] == prior['source_url']
+                    and role in item['roles']
+                    and item['saved_status'] == 'VERIFIED_SAVED_SOURCE'
+                    and type(item.get('proof')) is dict]) == 1)
+        need(prior_bound, 'ORDINARY_REFRESH_RESUME_PRIOR_SOURCE_NOT_C04_BOUND')
     from . import c04_update_cycle as c04
     from . import ordinary_update_cycle as cycle
     root = state_root/company_id/'metrics/C04-registration-v3'
@@ -198,8 +249,6 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
          and len(allowed) == len(set(allowed))
          and all(type(url) is str for url in allowed),
          'ORDINARY_REFRESH_RESUME_DEFERRED_SET_INVALID')
-    discovery = discover_saved_source_requirements(
-        repo_root=session.data_root, company_id=company_id)
     failed = _failed_urls(session.data_root)
     rebuilt = [item['source_url'] for item in
         _pending(discovery, {prior['source_url']}, failed)]
@@ -285,11 +334,18 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                     # processing copies still block those other metrics.
                     from .normal_run_v3 import prepare_case
                     from .c04_registration_successor import EVENT_FORMS
-                    c04_case = prepare_case(data_root=session.data_root,
-                        company_id=company, metric_id='C04',
-                        c04_event_forms=EVENT_FORMS)
-                    pending = _c04_mixed_pending(pending,
-                        c04_case['source_proofs'])
+                    try:
+                        c04_case = prepare_case(data_root=session.data_root,
+                            company_id=company, metric_id='C04',
+                            c04_event_forms=EVENT_FORMS)
+                        pending = _c04_mixed_pending(pending,
+                            c04_case['source_proofs'])
+                    except ValueError as error:
+                        pending = _c04_missing_current_annual(pending,
+                            discovery)
+                        need(bool(pending) and str(error) ==
+                             'SAVED_SOURCE_MISSING:' + pending[0]['source_url'],
+                             'ORDINARY_REFRESH_C04_DECLARED_SOURCE_NOT_READY')
             except Exception as error:
                 errors.setdefault(company, []).append({'stage': 'DISCOVERY', 'error_type': type(error).__name__, 'reason': str(error)})
                 continue

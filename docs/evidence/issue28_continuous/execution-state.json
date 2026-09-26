@@ -3684,5 +3684,47 @@
       0
     ],
     "evidence": "docs/evidence/issue28_continuous/current-390-three-coordinate-delta-20260927/README.md"
+  },
+  "c04_missing_annual_bootstrap_20260927": {
+    "status": "SYNTHETIC_DECLARED_NEW_ANNUAL_SOURCE_SELECTED_FOR_MOCK_CAPTURE_REVIEW_PENDING",
+    "trigger": "mixed C04 proof-first acquisition cannot prepare a complete case before a newly declared annual primary is saved",
+    "scope": "only exact current_annual_primary URL derived from verified same-CIK submissions when preparation raises SAVED_SOURCE_MISSING for that URL",
+    "implementation_paths": [
+      "scripts/vnext/ordinary_refresh_cycle.py",
+      "requirements/issue_28_v14/baseline_manifest.json"
+    ],
+    "functions": [
+      "_c04_declared_annual_url",
+      "_c04_missing_current_annual",
+      "refresh_and_process",
+      "_resume_one_c04_source"
+    ],
+    "ordinary_v13_closure_unchanged": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+    "continuous_v14_closure": "sha256:f47a2571dbf043a476e234b1f40d604a1988d3a6b5dca20cf533b13edd48aafb",
+    "execution_authority_hash": "sha256:8d45a9bd72b3e4c51d23b3952ee879bc1e88ed4d46052ee9a967233dff09e8c6",
+    "tests": [
+      "THREE_FAST_SYNTHETIC_SCOPE_AND_MOCK_CAPTURE_PASS",
+      "UNRELATED_SOURCE_CONFLICT_NO_CAPTURE",
+      "CURRENT_PROVIDER_SEC_REFRESH_RECEIPTS_PASS"
+    ],
+    "real_new_calls": [
+      0,
+      0,
+      0
+    ],
+    "real_ledger_ordinal": 194,
+    "full_new_year_discovery_fetch_run_proven": false,
+    "evidence": "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/README.md",
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_47": {
+      "file": "scripts/vnext/ordinary_refresh_cycle.py",
+      "functions": [
+        "refresh_and_process",
+        "_resume_one_c04_source"
+      ],
+      "default_behavior_changed": false,
+      "only_unfrozen_v14_binding_changed": true,
+      "issue47_branch_or_ledger_touched": false
+    }
   }
 }
