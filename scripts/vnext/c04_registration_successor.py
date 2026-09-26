@@ -16,6 +16,7 @@ from .canonical import content_hash, strict_json_loads
 from .deterministic_router import adapt_8k_item_index, source_set_manifest
 from .governance_signals import C04_V2_SPEC_PATH
 from .normal_governance_input import (_Sources, _filings, _history_index,
+                                      history_body_alignment,
                                       prepare_saved_governance_input)
 from .normal_source_authority import ROOT
 from .observations import structured_observation
@@ -59,6 +60,14 @@ def _registration_rows(payload, *, inventory_name):
              'metadata_origin': row['metadata_origin']} for row in checked]
 
 
+def _checked_inventory_rows(payload, *, inventory_name, shard=None):
+    rows = _registration_rows(payload, inventory_name=inventory_name)
+    if shard is not None:
+        _need(history_body_alignment(shard=shard, rows=rows) is None,
+              'C04_REGISTRATION_HISTORY_BODY_ALIGNMENT_CONFLICT')
+    return rows
+
+
 def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
                                   event_forms):
     """Rebuild one explicit native C04 case from already saved, proven sources."""
@@ -92,8 +101,9 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
         inventories.append((item, payload))
     rows = []
     for inventory, payload in inventories:
-        rows.extend(_registration_rows(payload,
-            inventory_name=inventory['source_reference']['document_name']))
+        name = inventory['source_reference']['document_name']
+        rows.extend(_checked_inventory_rows(payload, inventory_name=name,
+            shard=indexed.get(name)))
     accessions = [row['accessionNumber'] for row in rows]
     _need(len(accessions) == len(set(accessions)),
           'C04_REGISTRATION_METADATA_ACCESSIONS_OVERLAP')
@@ -112,6 +122,7 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
           'C04_REGISTRATION_RELEVANT_HISTORY_NOT_LOADED')
 
     event_inputs, event_references, event_claims = [], [], []
+    processed_accessions = set()
     for inventory, _ in inventories:
         name = inventory['source_reference']['document_name']
         if inventory is not current and name not in needed_history:
@@ -121,6 +132,9 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
             if filing['metadata_origin']['inventory_name'] != name:
                 continue
             accession = filing['accessionNumber']
+            _need(accession not in processed_accessions,
+                  'C04_REGISTRATION_EVENT_ACCESSION_DUPLICATED')
+            processed_accessions.add(accession)
             registration = filing['form'] in {'8-K12B', '8-K12B/A'}
             primary = reader.read(accession_document_url(cik=int(cik),
                 accession=accession, document_name=filing['primaryDocument']),
@@ -157,6 +171,8 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
         event_inputs.append(event_input)
         event_references.extend([inventory['source_reference'], *references])
     _need(bool(event_inputs), 'C04_REGISTRATION_CURRENT_INVENTORY_MISSING')
+    _need(processed_accessions == {row['accessionNumber'] for row in events},
+          'C04_REGISTRATION_EVENT_CENSUS_INCOMPLETE')
 
     from .governance_signals import resolve_c04
     old_spec = compile_spec_file(path=ROOT / C04_V2_SPEC_PATH,

@@ -3,6 +3,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+import re
 import socket
 import subprocess
 import sys
@@ -26,7 +27,8 @@ def counts():
     return state['counts'], len(state['rows'])
 
 
-def run(source_root, output_root, evidence_root):
+def run(source_root, output_root, evidence_root, evidence_suffix):
+    assert re.fullmatch(r'[a-z0-9-]+', evidence_suffix)
     output_root.mkdir(parents=True, exist_ok=False)
     before = counts()
     data = output_root / 'data'
@@ -96,10 +98,12 @@ print(json.dumps({'status':'PASS_INSTALLED_C04_FOUR_FORM_COLD_READ','result_id':
     empty.mkdir()
     checked = subprocess.run([sys.executable, '-c', cold, str(output_root)],
         cwd=empty, env=env, capture_output=True, text=True)
-    (evidence_root / 'cold.log').write_text(checked.stdout + checked.stderr)
+    (evidence_root / ('cold-' + evidence_suffix + '.log')).write_text(
+        checked.stdout + checked.stderr)
     assert checked.returncode == 0, checked.stdout + checked.stderr
     summary['cold_read'] = 'PASS_INSTALLED_C04_FOUR_FORM_COLD_READ'
-    (evidence_root / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
+    (evidence_root / ('summary-' + evidence_suffix + '.json')).write_text(
+        json.dumps(summary, indent=2) + '\n')
     print(json.dumps({'status': summary['status'], 'cold_read': summary['cold_read'],
         'result_value': summary['result_value'], 'event_count': summary['event_count'],
         'new_calls': summary['new_calls']}))
@@ -109,6 +113,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--source-root', type=Path, required=True)
     parser.add_argument('--output-root', type=Path, required=True)
+    parser.add_argument('--evidence-suffix', required=True)
     args = parser.parse_args()
     run(args.source_root.resolve(), args.output_root.resolve(),
-        Path(__file__).resolve().parent)
+        Path(__file__).resolve().parent, args.evidence_suffix)

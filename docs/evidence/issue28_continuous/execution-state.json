@@ -1352,6 +1352,27 @@
       "tool_calls": 24,
       "result_path": "docs/evidence/issue28_continuous/d03-source-fact-review-20260925/independent-review-block-followup/conclusion.md",
       "verdict": "PASS_LIMITED_D03_MULTI_CANDIDATE_UNRESOLVED_AND_RESPONSE_IDENTITY"
+    },
+    {
+      "task_name": "review_c04native_46912ce",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/c04_registration_successor.py",
+        "scripts/vnext/normal_run_v3.py",
+        "catalog/r5/C04_auditor_changes_v3.md",
+        "config/issue28_normal_results_v2.json",
+        "config/issue28_continuous_calls_v1.json",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "tests/vnext/test_c04_registration_successor.py",
+        "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/summary.json"
+      ],
+      "patch_sha": "46912cec61e981fc89750db27447710dba952aa2",
+      "spawned_at": "2026-09-26T03:48:11Z",
+      "ended_at": "2026-09-26T03:54:36Z",
+      "tool_calls": 54,
+      "result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_REGISTRATION_HISTORY_SHARD_RANGE_CAN_OMIT_EVENT_AND_FALSE_ZERO"
     }
   ],
   "ci_capacity_20260922": {
@@ -2450,7 +2471,7 @@
     "normal_automatic_update_complete": false,
     "formal_publication_authorized": false,
     "pending_business_rule": "NO_SAME_CIK_PRIOR_10K_NEGATIVE_PATH",
-    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "independent_review": "NEEDS_FIX_P2_HISTORY_SHARD_ALIGNMENT",
     "shared_with_47": {
       "scope_paths": [
         "scripts/vnext/normal_run_v3.py",
@@ -2476,6 +2497,57 @@
       "new_v13_v14_current_requirement_closure_changed": true,
       "frozen_prior_snapshots_changed": false,
       "other_branch_modified": false
-    }
+    },
+    "review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review/conclusion.md"
+  },
+  "paramount_c04_history_shard_repair_20260926": {
+    "status": "DIRECTED_NATIVE_COLD_AND_CURRENT_WIRING_PASS_SCOPED_REVIEW_PENDING",
+    "precursor_patch_sha": "46912cec61e981fc89750db27447710dba952aa2",
+    "precursor_review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review/conclusion.md",
+    "repair": "CHECK_FOUR_FORM_HISTORY_BODY_AGAINST_SHARD_INDEX_BEFORE_SELECTION_AND_ASSERT_EVENT_ACCESSION_CENSUS",
+    "directed_tests": "3_PASS_6.932_SECONDS",
+    "native_run_id": "run:ordinary-integrated:0c4eb986dc08a25b227b1bfd7ae8727bb79ee1bcd4d12cd08d8417a74cebfdf0",
+    "result_id": "sha256:ccb7957bbbf6de55aaf2c03aa566ba64344810cc263eb5374315ff5e100c9cbc",
+    "value": null,
+    "reason_code": "C04_COMPARABLE_AUDITOR_FACTS_MISSING",
+    "public_row_sha256": {
+      "metrics_matrix.csv": "9ffac1d2c445e3f5d9cbc3d04655f961dd25fb457c423fa6f6c140c6da7eec00",
+      "metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8"
+    },
+    "saved_event_count": 6,
+    "registration_event_count": 2,
+    "item_claim_count": 22,
+    "item_4_01_count": 0,
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "installed_root": "/private/tmp/issue28-c04-four-form-20260926-03/data",
+    "cold_read": "PASS_INSTALLED_C04_FOUR_FORM_COLD_READ",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "ledger_before_after": [
+      [
+        143,
+        143,
+        49
+      ],
+      [
+        143,
+        143,
+        49
+      ]
+    ],
+    "ordinary_requirement_closure": "sha256:2620e1c13900bdfd7bb501b7a3ff9c2aece37ec25cb22a03d9a78e8d7872f300",
+    "continuous_requirement_closure": "sha256:2ac87f016ea8f356298cc206ddfb9f71fca43adbdd9956d80b9b5a16bd7f9c1f",
+    "execution_authority_hash": "sha256:f17a202a240d606ccc405e4ab1b4a63976cba40992fd868546055d5c42483bb2",
+    "provider_sec_offline_wiring": "PASS_CURRENT_CLOSURE_WITH_NEW_RECEIPTS_AND_TEST_LOGS",
+    "previous_evidence_files_modified": false,
+    "independent_review": "PENDING_EXACT_REPAIR_SHA",
+    "business_conclusion": "NO_SAME_CIK_PRIOR_COMPARISON_WITHHELD_NO_ZERO",
+    "normal_automatic_update_complete": false,
+    "shared_default_binding_function_changed": false,
+    "frozen_parent_modules_modified": false,
+    "formal_publication_authorized": false
   }
 }

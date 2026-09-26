@@ -13,3 +13,13 @@
 `directed.log`中显式新旧路径及错误选择2项通过；此前冻结来源/解析18项指定正反例和普通Run权限4项通过，终端输出分别由本次执行读取，未冒充全套重跑。`provider-wiring-test.log`和`sec-wiring-test.log`分别在最终 V15 闭包下实际走模拟提供方工厂/控制器、录制 SEC HTTP/失败隔离；两项各1项通过，无外网业务请求。`archive_current_wiring.py`先逐份验证旧证据字节，再将新日志加入新的 provider/SEC 禁网收据，`wiring-final.log`记录当前执行权限哈希通过。真实调用前仍须按当时最终绑定再核验。
 
 原总账在原生测试前后均为 provider/paid/SEC `143/143/49`、192槽；本次新增 `0/0/0`。本目录的运行、来源内容判断、两个收据和共享增量仍需指定 SHA 的限定独审及新 head CI；旧 C04 v2 和其他指标历史成功不从此录制候选继承信用。#47/PR52、生产指针和发布入口未操作。
+
+## 历史分片边界的限定回修
+
+`46912cec`的[限定独审](independent-review/conclusion.md)保留为 **NEEDS_FIX**：若已加载历史分片的索引日期与其中一份 `8-K12B` 的实际申报日期不一致，旧读取器会过滤掉这种形式，新后继虽发现申报，却可能依据索引范围跳过它；当前/前期审计师同名时可能错误给0。审阅者用当前 helper 的内存反例复现了前置条件，没有把当前 Paramount 的 `WITHHELD` 原件改判为错误结果。
+
+后继修补在每个已加载分片进入年度事件筛选前，用冻结读取器验证后的**四形式原标签行**核对分片声明的日期范围；矛盾直接拒绝。形成来源集合后，还要求每个年度事件 accession 恰好进入读取集合，不能因跳过分片或遗漏文件给出0。`directed-shard-repair.log`包含注册类行超出历史索引范围的正反对照及默认两形式回归，3项通过。该验证只覆盖明确的索引/正文矛盾，不声称无需索引就能查完所有未加载历史分片。
+
+修后另用新隔离根 `/private/tmp/issue28-c04-four-form-20260926-03/data` 读取相同 Paramount 已保存来源，`native-shard-repair.log`、`summary-shard-repair.json`、`cold-shard-repair.log`记录原生Run、公开行及禁网独立冷读通过，仍为 `WITHHELD/null`、6申报、22条Item、0条4.01，新增调用0。新旧 Result ID 与两份公开行哈希相同；需求绑定变化使新Run ID不同，旧Run未被重签。提交过的`summary.json`、`cold.log`、`binding-before.json`、`binding-after.json`已恢复原字节，修后材料只写新文件。当前普通V14闭包 `sha256:2620e1c13900bdfd7bb501b7a3ff9c2aece37ec25cb22a03d9a78e8d7872f300`；最终V15闭包和收据以随后禁网接线日志为准。修后SHA独审仍待完成。
+
+最终本地V15闭包为 `sha256:2ac87f016ea8f356298cc206ddfb9f71fca43adbdd9956d80b9b5a16bd7f9c1f`、执行权限哈希 `sha256:f17a202a240d606ccc405e4ab1b4a63976cba40992fd868546055d5c42483bb2`。`provider-wiring-test-shard-repair.log`在此闭包下重走受控模型请求工厂、禁网模拟传输与控制器；`sec-wiring-test-shard-repair.log`重走录制SEC HTTP、零重试、checkpoint及失败隔离。各一项通过；`provider-wiring-shard-repair.json`和`sec-wiring-shard-repair.json`为**追加的新收据**，归档脚本逐份验证旧证据哈希再加入本轮日志，`wiring-shard-repair.log`确认当前读取。旧已提交收据未改。本轮仍无真实provider/paid/SEC调用；绑定有效不授新调用权限或生产信用。

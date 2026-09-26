@@ -3,9 +3,11 @@
 Run after the explicit C04 implementation is final. Historical snapshots are
 read as parents; this script never changes them or any recorded Run.
 """
+import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 
 from vnext.normal_source_authority import ROOT
 from vnext.requirement_profile_v1 import validate_execution_authority
@@ -40,7 +42,9 @@ def binding(relative):
     return {'sha256': hashlib.sha256(raw).hexdigest(), 'size': len(raw)}
 
 
-def main():
+def main(evidence_suffix):
+    assert re.fullmatch(r'[a-z0-9-]+', evidence_suffix)
+    suffix = '-' + evidence_suffix
     parent = 'requirements/issue_28_v13/'
     successor = 'requirements/issue_28_v14/'
     previous = {version: read(f'requirements/issue_28_v{version}/baseline_manifest.json')
@@ -53,7 +57,8 @@ def main():
                            for path in CHANGED}
             for version in (13, 14)},
     }
-    (HERE / 'binding-before.json').write_text(json.dumps(before, indent=2) + '\n')
+    (HERE / ('binding-before' + suffix + '.json')).write_text(
+        json.dumps(before, indent=2) + '\n')
 
     policy = read('config/issue28_normal_results_v2.json')
     decision = read(parent + 'decision_register.json')
@@ -100,11 +105,15 @@ def main():
                                   for path in (*CHANGED, *CONTINUOUS_CHANGED)},
         'frozen_parent_files_modified': False,
     }
-    (HERE / 'binding-after.json').write_text(json.dumps(after, indent=2) + '\n')
+    (HERE / ('binding-after' + suffix + '.json')).write_text(
+        json.dumps(after, indent=2) + '\n')
     print(json.dumps({key: after[key] for key in ('ordinary_requirement_closure',
         'continuous_requirement_closure', 'ordinary_execution_authority_file_count',
         'continuous_execution_authority_file_count')}))
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--evidence-suffix', required=True)
+    args = parser.parse_args()
+    main(args.evidence_suffix)

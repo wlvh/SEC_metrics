@@ -3,7 +3,9 @@ import socket
 import unittest
 from unittest.mock import patch
 
-from vnext.c04_registration_successor import EVENT_FORMS, prepare_c04_registration_case
+from vnext.c04_registration_successor import (EVENT_FORMS,
+    _checked_inventory_rows, prepare_c04_registration_case)
+from vnext.normal_governance_input import _filings, history_body_alignment
 from vnext.normal_run_v3 import prepare_case
 from vnext.normal_source_authority import ROOT
 
@@ -41,6 +43,23 @@ class C04RegistrationSuccessorTest(unittest.TestCase):
                                     'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC'):
             prepare_case(data_root=ROOT, company_id='marriott_international',
                 metric_id='B06', c04_event_forms=EVENT_FORMS)
+
+    def test_registration_event_outside_history_index_cannot_be_omitted_before_zero(self):
+        payload = {'form': ['8-K12B'], 'reportDate': ['2025-06-01'],
+                   'filingDate': ['2025-06-01'],
+                   'accessionNumber': ['0000012345-25-000007'],
+                   'primaryDocument': ['event.htm']}
+        name = 'CIK0000012345-submissions-001.json'
+        shard = {'name': name, 'filingFrom': '2024-01-01',
+                 'filingTo': '2024-12-31'}
+        self.assertEqual([], _filings(payload, inventory_name=name))
+        self.assertIsNone(history_body_alignment(shard=shard, rows=[]))
+        with self.assertRaisesRegex(ValueError,
+                                    'C04_REGISTRATION_HISTORY_BODY_ALIGNMENT_CONFLICT'):
+            _checked_inventory_rows(payload, inventory_name=name, shard=shard)
+        shard['filingFrom'], shard['filingTo'] = '2025-01-01', '2025-12-31'
+        rows = _checked_inventory_rows(payload, inventory_name=name, shard=shard)
+        self.assertEqual(['8-K12B'], [row['form'] for row in rows])
 
 
 if __name__ == '__main__':

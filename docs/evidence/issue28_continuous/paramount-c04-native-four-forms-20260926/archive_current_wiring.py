@@ -1,6 +1,8 @@
-"""Bind final unfrozen V15 identity to actually rerun, no-network wiring."""
+"""Append a receipt for the final unfrozen V15 no-network wiring."""
+import argparse
 import json
 from pathlib import Path
+import re
 
 from vnext.canonical import content_hash, sha256_file, strict_json_file
 from vnext.continuous_call_wiring import validate_wiring_receipt
@@ -22,16 +24,23 @@ def checked_evidence(receipt):
     return dict(receipt['evidence'])
 
 
-def main():
+def main(evidence_suffix):
+    assert re.fullmatch(r'[a-z0-9-]+', evidence_suffix)
     requirement = load_requirement_snapshot(
         snapshot_dir=ROOT / 'requirements/issue_28_v14')
     validate_execution_authority(repo_root=ROOT, requirement=requirement)
+    provider_path = HERE / ('provider-wiring-' + evidence_suffix + '.json')
+    sec_path = HERE / ('sec-wiring-' + evidence_suffix + '.json')
+    provider_log_path = HERE / ('provider-wiring-test-' + evidence_suffix + '.log')
+    sec_log_path = HERE / ('sec-wiring-test-' + evidence_suffix + '.log')
+    native_log_path = HERE / ('native-' + evidence_suffix + '.log')
+    cold_log_path = HERE / ('cold-' + evidence_suffix + '.log')
     assert requirement['policy']['offline_wiring_receipt_path'] == str(
-        (HERE / 'provider-wiring.json').relative_to(ROOT))
+        provider_path.relative_to(ROOT))
     assert requirement['policy']['sec_wiring_receipt_path'] == str(
-        (HERE / 'sec-wiring.json').relative_to(ROOT))
-    provider_log = (HERE / 'provider-wiring-test.log').read_text()
-    sec_log = (HERE / 'sec-wiring-test.log').read_text()
+        sec_path.relative_to(ROOT))
+    provider_log = provider_log_path.read_text()
+    sec_log = sec_log_path.read_text()
     assert ('OFFLINE_WIRING_PASS' in provider_log
             and requirement['requirement_closure_hash'] in provider_log
             and 'Ran 1 test' in provider_log and '\nOK\n' in provider_log)
@@ -43,14 +52,14 @@ def main():
         'requirement_closure_hash': requirement['requirement_closure_hash'],
         'execution_authority_hash': execution_hash,
         'evidence': {**checked_evidence(old),
-            str((HERE / 'provider-wiring-test.log').relative_to(ROOT)):
-                sha256_file(path=HERE / 'provider-wiring-test.log')},
+            str(provider_log_path.relative_to(ROOT)):
+                sha256_file(path=provider_log_path)},
         'scope': ('Current V15 execution identity after explicit C04 four-form '
                   'development binding; actual source factory, mocked provider '
                   'opener and controller rerun under network-disabled test. '
                   'Earlier unchanged evidence is verified, not re-executed.'),
         'independent_review': 'CURRENT_C04_DELTA_REVIEW_PENDING'}
-    (HERE / 'provider-wiring.json').write_text(
+    provider_path.write_text(
         json.dumps(provider, ensure_ascii=False, indent=2) + '\n')
     assert validate_wiring_receipt(requirement=requirement) == provider
 
@@ -58,17 +67,17 @@ def main():
     sec = {**old,
         'execution_authority_hash': execution_hash,
         'evidence': {**checked_evidence(old),
-            str((HERE / 'sec-wiring-test.log').relative_to(ROOT)):
-                sha256_file(path=HERE / 'sec-wiring-test.log'),
-            str((HERE / 'native-repair.log').relative_to(ROOT)):
-                sha256_file(path=HERE / 'native-repair.log'),
-            str((HERE / 'cold.log').relative_to(ROOT)):
-                sha256_file(path=HERE / 'cold.log')},
+            str(sec_log_path.relative_to(ROOT)):
+                sha256_file(path=sec_log_path),
+            str(native_log_path.relative_to(ROOT)):
+                sha256_file(path=native_log_path),
+            str(cold_log_path.relative_to(ROOT)):
+                sha256_file(path=cold_log_path)},
         'validation_scope': ('Current V15 execution identity, recorded SEC HTTP '
             'and checkpoint/failure-isolation suite rerun without network; '
             'Paramount C04 used already-acquired sources and installed cold '
             'read. No new SEC acquisition or production credit.')}
-    (HERE / 'sec-wiring.json').write_text(
+    sec_path.write_text(
         json.dumps(sec, ensure_ascii=False, indent=2) + '\n')
     assert sec['record_type'] == 'SEC_ACQUISITION_OFFLINE_WIRING'
     assert sec['execution_authority_hash'] == execution_hash
@@ -83,4 +92,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--evidence-suffix', required=True)
+    args = parser.parse_args()
+    main(args.evidence_suffix)
