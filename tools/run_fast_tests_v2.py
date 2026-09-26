@@ -334,9 +334,13 @@ SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
     "tests.vnext.test_continuous_sec_acquisition": 480,
-    # Nine cases over six filings' full 10-K bytes; measured at 192 seconds,
-    # which is close enough to the 240 default to fail on a slower runner.
-    "tests.vnext.test_historical_text_boundary": 480,
+    # 25 cases over nine filings' full 10-K bytes. The 480 here was sized for
+    # nine cases at 192 seconds; the cases added since - page furniture, the
+    # italic and underlined note labels, the audit-report spans - were never
+    # re-measured, and the saved-source tier timed the module out at 480.
+    # Measured at 1029 seconds alone on a 4-core runner beside one other
+    # single-process job.
+    "tests.vnext.test_historical_text_boundary": 1500,
     # Ten cases over the ordinary zero-AI routes, including the registered
     # event union across two CIKs. Measured at 258 seconds alone - over the
     # default, not near it - so it was timing out rather than flaking, and a
