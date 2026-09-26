@@ -21,7 +21,10 @@ def _acceptor(request, path):
     if request.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST':
         from .capacity_two_stage import build_scan_acceptance
         return build_scan_acceptance
-    from .capacity_reference_contract import SCANNED_VERSION
+    from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, SCANNED_VERSION
+    need(request.get('source_reference_contract', {}).get('version')
+         != ASSERTION_SCOPED_VERSION,
+         'B13_ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED')
     if request.get('source_reference_contract', {}).get('version') == SCANNED_VERSION:
         from .capacity_two_stage import build_interpretation_acceptance
         proof = request['two_stage_contract']['scan_execution_proof']

@@ -71,8 +71,9 @@ def register_assessment_input(*, prepared_requests, ledger, include_source_snaps
                 'wire': strict_json_file(path=path / 'wire/journal.json'),
                 'source_revalidation': replay['revalidation']})
             request = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
-            from .capacity_reference_contract import SCANNED_VERSION
-            if request.get('source_reference_contract', {}).get('version') == SCANNED_VERSION:
+            from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, SCANNED_VERSION
+            if request.get('source_reference_contract', {}).get('version') in {
+                    SCANNED_VERSION, ASSERTION_SCOPED_VERSION}:
                 from .capacity_two_stage import saved_scan_stage
                 proof = request['two_stage_contract']['scan_execution_proof']
                 scan_path = ledger.root / 'calls' / ('%04d' % proof['scan_ordinal'])
@@ -168,9 +169,9 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
     from .continuous_call_policy import configured_transport_policy
     from . import invocation_control as control
     from types import SimpleNamespace
-    from .capacity_reference_contract import SCANNED_VERSION
+    from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, SCANNED_VERSION
     variants = value['assessment'].get('native_request_variants')
-    if variants is not None and SCANNED_VERSION in variants:
+    if variants is not None and {SCANNED_VERSION, ASSERTION_SCOPED_VERSION} & set(variants):
         expected = [row['semantic_request'] for row in value['native_requests']]
         need(validate_request_partition(source, expected) == variants,
              'B13_NATIVE_INPUT_REQUEST_PARTITION_CHANGED')
@@ -188,7 +189,8 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
          'B13_NATIVE_INPUT_SCAN_STAGE_SET_CHANGED')
     staged_by_proof = {row['stage_proof']['proof_id']: row for row in staged}
     need(len(staged_by_proof) == len(staged)
-         and len(staged) == sum(request.get('source_reference_contract', {}).get('version') == SCANNED_VERSION
+         and len(staged) == sum(request.get('source_reference_contract', {}).get('version') in {
+                                 SCANNED_VERSION, ASSERTION_SCOPED_VERSION}
                                 for request in expected)
          and all(row['wire']['mode'] == value['mode'] for row in staged),
          'B13_NATIVE_INPUT_SCAN_STAGE_SET_CHANGED')
@@ -237,7 +239,8 @@ def load_registered_input(*, data_root, source, requirement, mode=None, input_re
             used_histories.append(matches[0])
         prepared = SimpleNamespace(source_bytes=source_bytes, request_bytes=evidence_json_bytes(request),
                                    requirement=requirement)
-        if request.get('source_reference_contract', {}).get('version') == SCANNED_VERSION:
+        if request.get('source_reference_contract', {}).get('version') in {
+                SCANNED_VERSION, ASSERTION_SCOPED_VERSION}:
             from .capacity_two_stage import build_registered_interpretation_acceptance
             proof_id = request['two_stage_contract']['scan_execution_proof']['proof_id']
             need(proof_id in staged_by_proof and proof_id not in used_scan_proofs,

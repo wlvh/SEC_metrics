@@ -1392,6 +1392,86 @@
       "tool_calls": 39,
       "result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-shard-repair/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS_LOADED_HISTORY_SHARD_ALIGNMENT_AND_EVENT_CENSUS"
+    },
+    {
+      "task_name": "review_b13scope_151ce51",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "scripts/vnext/capacity_reference_contract.py",
+        "scripts/vnext/native_unit_index.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "scripts/vnext/capacity_assessment_input.py",
+        "scripts/vnext/capacity_run.py",
+        "scripts/vnext/capacity_program_roles.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage_material.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "config/issue28_continuous_calls_v1.json"
+      ],
+      "patch_sha": "151ce51f2217a2b1bd4e5b71492d47d67c2e9242",
+      "spawned_at": "2026-09-26T05:14:03Z",
+      "ended_at": "2026-09-26T05:23:38Z",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_PRONOUN_ANTECEDENT_LOST_AND_SYNONYM_DOUBLE_COUNT",
+      "tool_call_count_note": "Agent did not report a count; no count inferred."
+    },
+    {
+      "task_name": "review_b13scope_a96fbe2",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "config/issue28_continuous_calls_v1.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/"
+      ],
+      "patch_sha": "a96fbe21756dceca007e15c84bb3380251847517",
+      "spawned_at": "2026-09-26T05:34:29Z",
+      "ended_at": "2026-09-26T05:44:37Z",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-repair/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_CURRENT_HISTORICAL_FALSE_ACCEPTANCE_AND_OVERLAP_FALSE_REJECTION",
+      "tool_call_count_note": "Agent did not report a count; no count inferred."
+    },
+    {
+      "task_name": "review_b13suspend_d41a5e9",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage_material.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "config/issue28_continuous_calls_v1.json"
+      ],
+      "patch_sha": "d41a5e9adf6165b1ab3fc20aae63e689fdb9e228",
+      "spawned_at": "2026-09-26T07:22:30Z",
+      "ended_at": "2026-09-26T07:35:22Z",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-v6-suspension/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_V6_NATIVE_SUCCESS_CREDIT_SUSPENDED",
+      "tool_call_count_note": "Agent did not report a count; no count inferred."
+    },
+    {
+      "task_name": "review_c04batch_c067ffd",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "tools/vnext_normal_candidate.py",
+        "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/verify_batch_route.py",
+        "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/batch-route-summary.json"
+      ],
+      "patch_sha": "c067ffd95d3e51a6e13a7c1fed864725423c567f",
+      "spawned_at": "2026-09-26T07:47:17Z",
+      "ended_at": "2026-09-26T07:51:29Z",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-batch-route/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_C04_SAVED_BATCH_ROUTE",
+      "tool_call_count_note": "Agent did not report a count; no count inferred."
     }
   ],
   "ci_capacity_20260922": {
@@ -2574,11 +2654,12 @@
   },
   "ci_36217092936": {
     "head": "fb9db1991bebe27f164ea474ad50ee71be05c442",
-    "observed_at_utc": "2026-09-26T04:22:06Z",
-    "status": "in_progress_at_observation",
+    "observed_at_utc": "2026-09-26T04:57:22Z",
+    "status": "completed",
+    "conclusion": "failure",
     "fast_job": "FAILED_STALE_TEST_RECEIPT_FILENAME",
     "fast_job_id": 108335108220,
-    "other_jobs_terminal": "NOT_YET_KNOWN",
+    "other_jobs_terminal": "SUCCESS_12_OF_12",
     "rerun_triggered": false
   },
   "ci_fast_wiring_test_repair_20260926": {
@@ -2588,6 +2669,236 @@
     "current_receipt_changed": false,
     "directed_tests": "5_PASS",
     "evidence_log": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/ci-fast-repair-directed.log",
-    "new_calls": [0, 0, 0]
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "repair_head": "9552226d09f9fa5999218644b7a4e72bf387d513",
+    "repair_head_ci": 36217741051,
+    "repair_head_ci_at_last_observation": "SUCCESS_13_OF_13"
+  },
+  "b13_assertion_scoped_v6_offline_20260926": {
+    "status": "SCOPED_REVIEW_NEEDS_FIX_AFTER_RECORDED_PROGRAM_CHAIN_PASS",
+    "evidence_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/",
+    "historical_v5_default_changed": false,
+    "saved_190_identity_changed": false,
+    "new_live_authorization": false,
+    "enphase_remaining_groups": 5,
+    "ford_remaining_groups": 11,
+    "conditional_two_stage_new_call_maximum": 32,
+    "scanned_candidate_cap_per_group": 24,
+    "interpretation_finding_cap_per_group": 28,
+    "maximum_measured_context_tokens": 199876,
+    "context_limit_tokens": 200000,
+    "synthetic_output_example_max_tokens": 3209,
+    "output_limit_tokens": 4096,
+    "output_example_is_absolute_bound": false,
+    "directed_tests": "32_PASS",
+    "recorded_stage_test": "1_PASS_125_290_SECONDS",
+    "installed_mixed_190_company_result": "NOT_VERIFIED",
+    "current_requirement_closure": "sha256:5917d8f0687be9dafe05bf4544260a5b674725ae660753bd2bdb7a7e3af134c2",
+    "execution_authority_hash": "sha256:74da011f33656f8aeb36a7de2a432b6bcead50a7a978b16b895c1b2b3844013c",
+    "provider_wiring": "PASS_CURRENT_RECEIPT",
+    "sec_wiring": "PASS_CURRENT_RECEIPT_WITH_REUSED_PRE_CAP_SEC_TEST",
+    "ledger_rows": 192,
+    "ledger_counts": [
+      143,
+      143,
+      49
+    ],
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "independent_review": "NEEDS_FIX_EXACT_SHA_151CE51F",
+    "issue_47_branch_or_ledger_used": false,
+    "default_run_regression_local_environment_note": "LOCAL_TEST_OMITTED_REQUIRED_CI_B13_REFERENCE_CONTEXT_1_AND_FAILED; PROGRAM_ROLE_TEST_PASS; PRIOR_HEAD_9552226D_CI_NATIVE_JOB_SUCCESS; CURRENT_V6_HEAD_CI_PENDING",
+    "default_run_regression_logs": [
+      "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/assertion-default-run-regression.log",
+      "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/assertion-default-run-py314.log"
+    ],
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/capacity_assessment_input.py",
+        "scripts/vnext/capacity_run.py",
+        "scripts/vnext/native_unit_index.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_program_roles.py"
+      ],
+      "functions": [
+        "capacity_assessment_input.register_assessment_input",
+        "capacity_assessment_input.load_registered_input",
+        "capacity_run.prepare_case",
+        "native_unit_index.validate_request_partition",
+        "continuous_semantic_calls.execute_capacity_assessment",
+        "continuous_semantic_calls.execute_capacity_interpretation",
+        "capacity_program_roles.verify_original_program_assessment"
+      ],
+      "impact": "EXPLICIT_B13_V6_VARIANT_ONLY_OLD_DEFAULT_UNCHANGED",
+      "binding_change": "MUTABLE_ISSUE_28_V14_CURRENT_CLOSURE_ONLY",
+      "old_snapshots_rewritten": false,
+      "other_branch_touched": false,
+      "compatibility_evidence": [
+        "B13_V5_DIRECTED_32_PASS",
+        "B13_V6_RECORDED_STAGE_AND_REPLAY_PASS",
+        "PRIOR_HEAD_9552226D_CI_13_OF_13_SUCCESS"
+      ]
+    },
+    "review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md"
+  },
+  "b13_assertion_scope_repair_20260926": {
+    "status": "SECOND_SCOPED_REVIEW_NEEDS_FIX_NATIVE_CREDIT_MUST_STAY_BLOCKED",
+    "precursor_patch_sha": "151ce51f2217a2b1bd4e5b71492d47d67c2e9242",
+    "precursor_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md",
+    "repair": "PRONOUN_CLAUSE_INCLUDES_ANTECEDENT_AND_EXCLUDED_PHYSICAL_TERMS_CHECKED_INDIVIDUALLY_WITHOUT_COUNTING_TERMS_AS_ASSERTIONS",
+    "v5_default_code_path_changed": false,
+    "directed_tests": "32_PASS_INCLUDING_NATIVE_AND_REGISTERED_GATE_NEGATIVE",
+    "recorded_stage_test": "1_PASS_125_635_SECONDS",
+    "saved_source_group_measurements": 16,
+    "maximum_measured_context_tokens": 199900,
+    "context_limit_tokens": 200000,
+    "synthetic_output_example_max_tokens": 3209,
+    "output_example_is_absolute_bound": false,
+    "current_requirement_closure": "sha256:805130a44789ce57fe7d8f5149918c06612b21de2b06229edabcade9e0c7f9ff",
+    "execution_authority_hash": "sha256:a96131315e295cd3d8d9c97ce6e349f491687d90a5f8e2beb68fbad7d78251c2",
+    "provider_wiring": "PASS_CURRENT_MOCKED_FACTORY_AND_CONTROLLER",
+    "sec_wiring": "PASS_BYTE_REUSE_UNCHANGED_SEC_CODE",
+    "previous_binding_and_receipts_modified": false,
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
+    "new_b13_live_authorization": false,
+    "mixed_190_whole_company_run": "NOT_VERIFIED",
+    "independent_review": "NEEDS_FIX_EXACT_SHA_A96FBE21",
+    "issue_47_branch_or_ledger_used": false,
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "config/issue28_continuous_calls_v1.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/decision_register.json"
+      ],
+      "functions": [
+        "capacity_two_stage._assertion_segments",
+        "capacity_two_stage._direct_current_target_capacity",
+        "capacity_two_stage.validate_interpretation"
+      ],
+      "default_v5_path_behavior_changed": false,
+      "current_v15_binding_changed": true,
+      "frozen_prior_snapshots_changed": false,
+      "other_branch_touched": false
+    },
+    "review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-repair/conclusion.md"
+  },
+  "b13_v6_native_suspension_20260926": {
+    "status": "SCOPED_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS_V6_NO_NATIVE_SUCCESS_CREDIT",
+    "precursor_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md",
+    "second_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-repair/conclusion.md",
+    "current_contract": "V6_OFFLINE_DIAGNOSTIC_ONLY_NO_NATIVE_RESULT_CREDIT",
+    "second_stage_claim_rejected_before_ledger_mutation": true,
+    "native_replay_and_registered_read_rejected": true,
+    "semantic_diagnostic_always_unresolved": true,
+    "v5_default_changed": false,
+    "saved_190_identity_changed": false,
+    "directed_tests": "32_PASS",
+    "recorded_scan_then_stop_test": "1_PASS_50_261_SECONDS",
+    "recorded_test_counts": [
+      1,
+      1,
+      0
+    ],
+    "real_ledger_counts_last_read": [
+      143,
+      143,
+      49
+    ],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "current_requirement_closure": "sha256:9c02b4772e364f33b311c10b6282dca3a4083ad0aad528d1ad2a75ce33956a3e",
+    "execution_authority_hash": "sha256:ecaa9a4d7a9986006154caba08e227b4a35160f4678f4f04d85982e82ed1d061",
+    "provider_wiring": "PASS_CURRENT_MOCKED_FACTORY_AND_CONTROLLER",
+    "sec_wiring": "PASS_BYTE_REUSE_UNCHANGED_SEC_ACQUISITION",
+    "new_scheme_real_execution_authorized": false,
+    "current_complete_b13_company_results": 0,
+    "independent_review": "PASS_WITH_BOUNDS_EXACT_SHA_D41A5E9A",
+    "issue_47_branch_or_ledger_used": false,
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "config/issue28_continuous_calls_v1.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/decision_register.json"
+      ],
+      "functions": [
+        "continuous_semantic_calls.execute_capacity_interpretation",
+        "native_assessment_replay._acceptor"
+      ],
+      "default_v5_and_non_b13_behavior_changed": false,
+      "current_v15_binding_changed": true,
+      "frozen_prior_snapshots_changed": false,
+      "other_branch_touched": false
+    },
+    "review_patch_sha": "d41a5e9adf6165b1ab3fc20aae63e689fdb9e228",
+    "review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-v6-suspension/conclusion.md",
+    "review_v5_recorded_test": "TIMED_OUT_119_SECONDS_NO_CURRENT_PASS_CREDIT",
+    "review_190_read_only_replay": "PASS_ORIGINAL_RECEIPT_ID_UNCHANGED"
+  },
+  "paramount_c04_saved_batch_auto_route_20260926": {
+    "status": "LIMITED_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS_SAVED_BATCH_C04_ROUTE",
+    "changed_path": "tools/vnext_normal_candidate.py",
+    "function": "tools.vnext_normal_candidate.main",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "output_root": "/private/tmp/issue28-c04-batch-20260926-01",
+    "request_c04_event_forms": [
+      "8-K",
+      "8-K/A",
+      "8-K12B",
+      "8-K12B/A"
+    ],
+    "run_id": "run:ordinary-integrated:0c4eb986dc08a25b227b1bfd7ae8727bb79ee1bcd4d12cd08d8417a74cebfdf0",
+    "result_id": "sha256:ccb7957bbbf6de55aaf2c03aa566ba64344810cc263eb5374315ff5e100c9cbc",
+    "result_value": null,
+    "reason_code": "C04_COMPARABLE_AUDITOR_FACTS_MISSING",
+    "public_rows_match_prior_cold_run": true,
+    "candidate_batch_exit_reason": "WITHHELD_COORDINATE_RETAINS_GAP",
+    "ledger_rows": 192,
+    "ledger_counts": [
+      143,
+      143,
+      49
+    ],
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "normal_update_auto_fetch_complete": false,
+    "shared_normal_run_default_changed": false,
+    "independent_review": "PASS_WITH_BOUNDS_EXACT_SHA_C067FFD9",
+    "shared_with_47": {
+      "scope_paths": [
+        "tools/vnext_normal_candidate.py"
+      ],
+      "functions": [
+        "tools.vnext_normal_candidate.main"
+      ],
+      "effect": "SAVED_CANDIDATE_BATCH_C04_DEFAULT_SELECTS_EXPLICIT_FOUR_FORM_ROUTE_ONLY",
+      "other_metrics_batch_route_unchanged": true,
+      "shared_normal_run_function_defaults_unchanged": true,
+      "frozen_snapshots_changed": false,
+      "other_branch_touched": false
+    },
+    "review_patch_sha": "c067ffd95d3e51a6e13a7c1fed864725423c567f",
+    "review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-batch-route/conclusion.md",
+    "candidate_batch_main_return_code": 2,
+    "verification_script_exit_code": 0
   }
 }

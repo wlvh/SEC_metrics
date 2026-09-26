@@ -1,0 +1,10 @@
+scripts/vnext/capacity_two_stage.py BOUND a66f784b42fd421aca02e3579f3d080a8078bbbeb5f38ba969b38ff32b928126 41203
+scripts/vnext/continuous_semantic_calls.py BOUND 817712d916a6c5a4e8b8ae14e2741f245e73e47a8c4497d5bba8511db5f21fdf 57107
+scripts/vnext/native_assessment_replay.py BOUND dceeec11952b3e7eaeacd12339b2497e7091134256cf28b75f3718f3fba4d03a 10848
+config/issue28_continuous_calls_v1.json BOUND 6f458af922855561a2d69a582745dba21a4a834f9dee4f8dad4bf72db40145b4 5600
+provider EVIDENCE_HASHES_OK 58 CALLS {'provider': 0, 'paid': 0, 'sec': 0}
+sec EVIDENCE_HASHES_OK 15 CALLS [0, 0, 0]
+REQUIREMENT_CLOSURE sha256:9c02b4772e364f33b311c10b6282dca3a4083ad0aad528d1ad2a75ce33956a3e
+EXECUTION_AUTHORITY sha256:ecaa9a4d7a9986006154caba08e227b4a35160f4678f4f04d85982e82ed1d061
+PROVIDER_SCOPE Current V15 B13 V6 fail-closed binding. Mocked provider factory/controller rerun without network; recorded scan still saves only a scan receipt, while V6 judgment stops before a second claim and every native/registered acceptance entry rejects. Earlier evidence revalidated by exact bytes.
+SEC_SCOPE Current execution file identity rebound. SEC source/acquisition code and policy unchanged by B13 V6 native suspension; prior no-network SEC HTTP, checkpoint and failure isolation evidence revalidated by exact byte hashes. No new SEC request or production credit.

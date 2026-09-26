@@ -1,0 +1,8 @@
+test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding (tests.vnext.test_continuous_sec_acquisition.ContinuousSecAcquisitionTest.test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding) ... SEC retry exhausted for https://data.sec.gov/submissions/CIK0000019617.json; status=503; error=HTTP Error 503: RECORDED
+{"status": "OFFLINE_SEC_CAPTURE_PASS", "calls": [0, 0, 0], "recorded_count_simulation": [0, 0, 3], "actual_http_path_verified": true, "retryable_http_zero_retry_verified": true, "checkpoint_import_and_failure_isolation_verified": true, "test_checkpoint_cannot_be_relabelled_live": true, "source_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmp_b__ahbe/ledger/source-inputs", "native_selected_source_and_cold_preview_verified": true, "checkpoint_id": "sha256:91d26bf3bd474a070495e9029d78bca4adf7f070d97edca01fb7a42e458ba7e8", "original_provider_fields_unchanged": true, "real_sec_credit": false, "production_authorized": false}
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 92.014s
+
+OK

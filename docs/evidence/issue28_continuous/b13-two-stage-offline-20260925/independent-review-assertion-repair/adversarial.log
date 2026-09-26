@@ -1,0 +1,26 @@
+text: Our contract manufacturers operate plants; they have sufficient production capacity for current demand.
+kind/subject/timing: other_entity OTHER_ENTITY CURRENT_REPORT
+physical_phrase_count: 1
+unresolved: ['B13_ASSERTION_EXCLUDED_CURRENT_TARGET_REQUIRES_REVIEW']
+native_credit_from_validator: False
+
+text: Our contract manufacturers have manufacturing capacity, including production capacity, for current demand.
+kind/subject/timing: physical_capacity_context TARGET_REGISTRANT CURRENT_REPORT
+physical_phrase_count: 2
+unresolved: []
+native_credit_from_validator: False
+
+text: Our contract manufacturers had manufacturing capacity for obsolete products, but currently operate production capacity for current demand.
+kind/subject/timing: historical_statement TARGET_REGISTRANT HISTORICAL
+physical_phrase_count: 2
+unresolved: []
+native_credit_from_validator: False
+
+parent_V6 unresolved ['B13_ASSERTION_MULTIPLE_PHYSICAL_CLAIMS:B0']
+repair_V6 unresolved []
+parent_V6 two_distinct_claims_unresolved []
+repair_V6 two_distinct_claims_unresolved ['B13_ASSERTION_OVERLAPPING_RANGES:B0']
+text: Our contract manufacturers have production capacity for current demand; they plan to add manufacturing capacity next year.
+natural_ellipsis_case: Our contract manufacturers had manufacturing capacity for obsolete products, but currently have production capacity for current demand.
+parent_V6 unresolved ['B13_ASSERTION_MULTIPLE_PHYSICAL_CLAIMS:B0']
+repair_V6 unresolved []

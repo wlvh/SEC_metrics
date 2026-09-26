@@ -171,8 +171,9 @@ def verify_original_program_assessment(*,source,assessment,raw_bytes_by_id,actua
     proofs=[];native=[]
     for request,row in zip(requests,assessment['completed']):
         base=restore_base_request(request) if 'indexed_unit_contract' in request else request
-        from .capacity_reference_contract import SCANNED_VERSION
-        if base.get('source_reference_contract', {}).get('version') == SCANNED_VERSION:
+        from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, SCANNED_VERSION
+        if base.get('source_reference_contract', {}).get('version') in {
+                SCANNED_VERSION, ASSERTION_SCOPED_VERSION}:
             from .capacity_two_stage import restore_prior_interpretation_request
             base=restore_prior_interpretation_request(base)
         contract,program=request_contract(units=_restore_units(base['units'],base['shared_source_dictionaries']),
