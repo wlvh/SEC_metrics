@@ -157,6 +157,20 @@ class OrdinaryRefreshBoundaryTest(unittest.TestCase):
             self.assertFalse(refresh._historical_c04_processing_copies(
                 Path(directory).resolve(), requirement))
 
+    def test_resume_requires_only_c04_and_one_finite_sec_request(self):
+        session = object.__new__(SecAcquisitionSession)
+        session.ledger = SimpleNamespace(live=False)
+        for metrics, maximum, successor in [(['B01'], 1, False),
+                                            (['B01', 'C04'], 1, True),
+                                            (['C04'], 2, True)]:
+            with self.subTest(metrics=metrics, maximum=maximum), \
+                 self.assertRaisesRegex(ValueError,
+                     'ORDINARY_REFRESH_RESUME_C04_ONE_REQUEST_REQUIRED'):
+                refresh_and_process(session=session, state_root=Path('/unexecuted-state'),
+                    company_ids=['marriott_international'], metric_ids=metrics,
+                    max_sec_requests=maximum, c04_successor=successor,
+                    resume_from=Path('/unexecuted-report'))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -22,6 +22,8 @@ def main(argv=None):
     parser.add_argument('--max-sec-requests', required=True, type=int, help='Finite SEC limit for this invocation, within the cumulative allowance')
     parser.add_argument('--max-provider-requests', default=0, type=int, help='Finite new native request limit; default 0, within the same cumulative allowance')
     parser.add_argument('--output', required=True, type=Path, help='New external report file')
+    parser.add_argument('--resume-report', type=Path,
+                        help='One authenticated prior C04-only one-SEC-call report')
     args = parser.parse_args(argv)
     output = args.output
     if (not output.is_absolute() or first_symlink_in_path(path=output) is not None
@@ -33,7 +35,8 @@ def main(argv=None):
     c04_successor = 'C04' in configured
     result = refresh_and_process(session=live_sec_session(), state_root=args.state_root,
         company_ids=args.company, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
-        max_provider_requests=args.max_provider_requests, c04_successor=c04_successor)
+        max_provider_requests=args.max_provider_requests, c04_successor=c04_successor,
+        resume_from=args.resume_report)
     write_immutable_bytes(path=output, content=(json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode())
     print(json.dumps({'status': result['status'], 'calls': result['calls'], 'output': str(output)}, ensure_ascii=False))
     return 0 if result['status'] == 'UPDATES_READY' else 2

@@ -679,6 +679,8 @@ C04正常保存来源更新用 `python3 tools/vnext_normal_update.py --process -
 
 后继范围回修见`docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/`：公开CLI的B01-only选择仍走原控制器；C04来源副本兼容只允许单独C04请求用于实际获取。旧处理副本存在时混合B01+C04调用不得借C04标记发任何SEC请求，现有保存来源的C04可继续形成候选，B01标为当前处理输入未满足，整体仍未完成；这不是旧根已自动更新所有普通指标。
 
+单次有限SEC上限不足时，C04可用 `tools/vnext_ordinary_refresh.py --company marriott_international --metric C04 --state-root /absolute/same-update-root --max-sec-requests 1 --max-provider-requests 0 --resume-report /absolute/previous-immutable-report.json --output /absolute/new-report.json` 作一次**异常续接**。它重读前次真实账本收据、同一更新历史和未完成来源集合，不能靠旧报告重领已取得URL；`tests.vnext.test_c04_refresh_resume`在source-material层使用录制来源验证两条不同SEC依赖、篡改与重复报告拒绝。正常运行应为预计来源设置足够的有限上限，此路径不是日常人工指定URL或指标答案，也不扩大发送许可。实际第193槽后的当前范围核对见`docs/evidence/issue28_continuous/c04-refresh-resume-20260927/`；第二条真实GET须另看其结果，离线通过不是实际刷新完成。
+
 ### 普通主体接续与期末余额
 
 来源规则与十公司原生组件用 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_instant_balance_amendment tests.vnext.test_normal_companyfacts_results` 验证；两模块均在source-material层。实际Part III修订和链接更正保留不同证明，覆盖额外用途、错原报告日、正文更正/余额、已发生重述、封面标志、引语和新增原生财务事实。缺少修订原件必须拒绝源重放。

@@ -97,7 +97,76 @@ def _historical_c04_processing_copies(root, requirement):
     return False
 
 
-def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=None, max_sec_requests, max_provider_requests=0, recorded_native_wire_factory=None, c04_successor=False):
+def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
+                           report_path):
+    """Carry one authenticated prior SEC capture into a finite next pass."""
+    path = Path(report_path)
+    need(path.is_absolute() and path.is_file()
+         and first_symlink_in_path(path=path) is None
+         and not (path == ROOT or ROOT in path.parents)
+         and not (path == session.ledger.root or session.ledger.root in path.parents),
+         'ORDINARY_REFRESH_RESUME_REPORT_PATH_INVALID')
+    report = strict_json_file(path=path)
+    expected_mode = 'LIVE' if session.ledger.live else 'RECORDED_TEST_ONLY'
+    need(report['record_type'] == 'ORDINARY_BOUNDED_REFRESH_AND_UPDATE'
+         and report['execution_mode'] == expected_mode
+         and report['max_sec_requests'] == 1
+         and report['ledger_counts_after'] == snapshot['counts']
+         and report['calls'] == {'provider': 0, 'paid': 0,
+                                 'sec': 1 if session.ledger.live else 0}
+         and report['call_accounting'] == 'KNOWN'
+         and len(report['captures']) == len(report['companies']) == 1
+         and report['companies'][0]['company_id'] == company_id
+         and report['companies'][0]['source_refresh']['status'] == 'REFRESH_INCOMPLETE',
+         'ORDINARY_REFRESH_RESUME_PREDECESSOR_INVALID')
+    prior = report['captures'][0]
+    result = prior['result']
+    need(prior['company_id'] == company_id and result['status'] == 'SUCCEEDED'
+         and result['calls'] == ([0, 0, 1] if session.ledger.live else [0, 0, 0])
+         and len(snapshot['rows']) > 0
+         and snapshot['rows'][-1]['channel'] == 'SEC'
+         and snapshot['rows'][-1]['status'] == 'SUCCEEDED'
+         and snapshot['rows'][-1]['counts'] == [0, 0, 1],
+         'ORDINARY_REFRESH_RESUME_SEC_TERMINAL_INVALID')
+    ordinal = snapshot['rows'][-1]['ordinal']
+    call = session.ledger.root/'calls'/f'{ordinal:04d}'
+    receipt = strict_json_file(path=call/'sec-receipt.json')
+    terminal = strict_json_file(path=call/'terminal.json')
+    plan = strict_json_file(path=call/'sec-plan.json')
+    need(receipt == result['receipt'] and terminal == result['terminal']
+         and plan['company_id'] == company_id
+         and plan['source_only_processing_route'] ==
+             'C04_REGISTRATION_FOUR_FORM_UPDATE_V1'
+         and plan['source_dependency']['source_url'] == prior['source_url']
+         and receipt['proof']['source_url'] == prior['source_url']
+         and receipt['ledger_after_sha256'] == sha256_file(
+             path=session.data_root/'evidence/requests_log.csv'),
+         'ORDINARY_REFRESH_RESUME_SEC_SOURCE_CHANGED')
+    from . import c04_update_cycle as c04
+    from . import ordinary_update_cycle as cycle
+    root = state_root/company_id/'metrics/C04-registration-v3'
+    need((root/'configuration.json').is_file(),
+         'ORDINARY_REFRESH_RESUME_C04_STATE_MISSING')
+    configuration = c04._configuration(root, session.data_root, company_id)
+    state = cycle._state(root, configuration)
+    row, = report['companies'][0]['updates']['metrics']
+    need(row['metric_id'] == 'C04'
+         and state['latest_attempt'] == row['attempt_id']
+         and state['successful_attempt'] == row['successful_attempt']
+         and cycle._terminal(root, row['attempt_id']) == row['terminal'],
+         'ORDINARY_REFRESH_RESUME_C04_HISTORY_CHANGED')
+    allowed = report['companies'][0]['source_refresh']['deferred_source_urls']
+    need(type(allowed) is list and bool(allowed)
+         and len(allowed) == len(set(allowed))
+         and all(type(url) is str for url in allowed),
+         'ORDINARY_REFRESH_RESUME_DEFERRED_SET_INVALID')
+    return {'prior_ordinal': ordinal, 'prior_source_url': prior['source_url'],
+            'prior_report_sha256': sha256_file(path=path),
+            'source_ledger_sha256': receipt['ledger_after_sha256'],
+            'allowed_next_urls': allowed}
+
+
+def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=None, max_sec_requests, max_provider_requests=0, recorded_native_wire_factory=None, c04_successor=False, resume_from=None):
     """Discover inputs automatically, capture each URL at most once, then update."""
     need(type(max_sec_requests) is int and 0 <= max_sec_requests <= 80, 'ORDINARY_REFRESH_FINITE_REQUEST_LIMIT_REQUIRED')
     need(type(max_provider_requests) is int and 0<=max_provider_requests<=240,
@@ -116,6 +185,8 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
     need(not c04_successor or 'C04' in metrics,
          'ORDINARY_REFRESH_C04_ROUTE_REQUIRES_C04')
     c04_only = c04_successor and metrics == ['C04']
+    need(resume_from is None or (c04_only and len(selected) == 1
+         and max_sec_requests == 1), 'ORDINARY_REFRESH_RESUME_C04_ONE_REQUEST_REQUIRED')
     mixed_stale = (c04_successor and not c04_only and
         _historical_c04_processing_copies(session.data_root, session.requirement))
     state_root = Path(state_root)
@@ -131,9 +202,14 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
     with session.ledger.locked():
         initialize_source_inputs(root=session.data_root, requirement=session.requirement,
                                  c04_source_only=c04_only or mixed_stale)
-        before = session.ledger.snapshot()['counts']
+        snapshot = session.ledger.snapshot()
+        before = snapshot['counts']
+    resumed = (_resume_one_c04_source(session=session, state_root=state_root,
+        company_id=selected[0], snapshot=snapshot, report_path=resume_from)
+        if resume_from is not None else None)
     failed = _failed_urls(session.data_root)
-    attempted, captures, discoveries = set(), [], {}
+    attempted = ({resumed['prior_source_url']} if resumed is not None else set())
+    captures, discoveries = [], {}
     errors = ({company: [{'stage': 'SOURCE_SCOPE',
         'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_NO_ACQUISITION'}]
         for company in selected} if mixed_stale else {})
@@ -157,6 +233,19 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                 break
             request = pending[0]; url = request['source_url']; attempted.add(url)
             try:
+                if resumed is not None:
+                    from .normal_run_v3 import prepare_case
+                    from .c04_registration_successor import EVENT_FORMS
+                    current_case = prepare_case(data_root=session.data_root,
+                        company_id=company, metric_id='C04',
+                        c04_event_forms=EVENT_FORMS)
+                    need(url in resumed['allowed_next_urls']
+                         and url in {proof['source_url'] for proof in
+                                     current_case['source_proofs']},
+                         'ORDINARY_REFRESH_RESUME_NEXT_SOURCE_NOT_C04_BOUND')
+                    need(sha256_file(path=session.data_root/'evidence/requests_log.csv')
+                         == resumed['source_ledger_sha256'],
+                         'ORDINARY_REFRESH_RESUME_SOURCE_CHANGED_BEFORE_CAPTURE')
                 result = session.capture(company_id=company, url=url,
                     refresh_metadata=request['refresh_for_new_discovery'],
                     **({'source_only_c04': True} if c04_only else {}))
@@ -263,6 +352,9 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
             accounting['calls'][key]=(None if unknown else sum(r['counts'][i] for r in native_attempts)) if session.ledger.live else 0
     return {'record_type': 'ORDINARY_BOUNDED_REFRESH_AND_UPDATE', 'schema_version': 1,
         **({'c04_mixed_source_acquisition_deferred': True} if mixed_stale else {}),
+        **({'resumed_c04_source': {key: value for key, value in resumed.items()
+            if key not in {'source_ledger_sha256', 'allowed_next_urls'}}}
+            if resumed is not None else {}),
         **({'max_provider_requests':max_provider_requests,'native_preparations':native_attempts} if max_provider_requests else {}),
         'status': 'CALL_ACCOUNTING_UNRESOLVED' if accounting['status'] == 'UNKNOWN' else
                   'UPDATES_READY' if all(r['status'] == 'REFRESHED_UPDATES_READY' for r in results) else 'UPDATES_INCOMPLETE',

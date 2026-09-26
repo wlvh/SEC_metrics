@@ -750,8 +750,8 @@
   "latest_delivery_head": "2f3a36da04c83b0c39ee00e7453fab866672e785",
   "current_applied_binding": {
     "ordinary_V14": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
-    "continuous_V15": "sha256:56c6e144817f1eb16a9328d9778f38b1010a107db7f9b6c0176bfa8f7475dd93",
-    "provider_and_sec_wiring": "Current 2f3a36da bound provider/SEC/normal refresh receipts validated before ordinal193; original sources and older Runs retain their historical bytes."
+    "continuous_V15": "sha256:a8d95123d66e51a8a2355fb24ea13a5b590afbf779a59a68e051c326863d0f89",
+    "provider_and_sec_wiring": "Current bounded C04 resume V14 execution authority and existing SEC/provider/refresh receipts verified offline; real ordinal193 historical V14 identity retained, V13 ordinary identity unchanged."
   },
   "current_observed_call_totals": {
     "through_ordinal": 193,
@@ -3060,7 +3060,7 @@
     }
   },
   "c04_normal_refresh_20260927": {
-    "status": "ONE_REAL_MARRIOTT_SEC_SOURCE_SUCCEEDED_NEW_C04_NATIVE_CANDIDATE_FRESHNESS_RESUME_GAP_OPEN",
+    "status": "ONE_REAL_SEC_SOURCE_NEW_C04_CANDIDATE_RESUME_ENGINEERING_PASS_REVIEW_AND_SECOND_GET_PENDING",
     "code_paths": [
       "scripts/vnext/ordinary_refresh_cycle.py",
       "scripts/vnext/continuous_sec_acquisition.py",
@@ -3192,6 +3192,44 @@
       ],
       "evidence": "docs/evidence/issue28_continuous/c04-real-refresh-20260927/README.md",
       "same_max1_rerun": "FORBIDDEN_UNTIL_BOUND_RESUME_SKIPS_ALREADY_CAPTURED_URL"
+    },
+    "bounded_resume_20260927": {
+      "status": "RECORDED_TWO_DISTINCT_SOURCE_RESUME_PASS_REAL_193_PREDECESSOR_VERIFIED_INDEPENDENT_REVIEW_PENDING",
+      "scope": "SINGLE_COMPANY_SINGLE_C04_ONE_PRIOR_SUCCEEDED_SEC_AND_MAX_ONE_NEW_SEC",
+      "prior_real_ordinal": 193,
+      "next_current_source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "prior_report_sha256": "ca80ecee09f57099cf5a61eb0649b993f9b4e161821d4de429f9e56d65903955",
+      "recorded_resume": "PASS_TWO_DISTINCT_SOURCES_FORGED_URL_AND_REUSED_REPORT_REJECTED",
+      "real_preflight": "PASS_PRIOR_RECEIPT_C04_HISTORY_SOURCE_LEDGER_AND_NEXT_C04_PROOF_NO_GET",
+      "ordinary_v13_parent_unchanged": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+      "current_v14_closure": "sha256:a8d95123d66e51a8a2355fb24ea13a5b590afbf779a59a68e051c326863d0f89",
+      "real_ledger_counts": [
+        143,
+        143,
+        50
+      ],
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
+      "concurrent_external_capture_atomicity": "NOT_PROVEN_PRECAPTURE_SOURCE_HASH_RECHECK_ONLY",
+      "independent_review": "PENDING_EXACT_PATCH_SHA",
+      "evidence_path": "docs/evidence/issue28_continuous/c04-refresh-resume-20260927/README.md",
+      "shared_with_47": {
+        "files": [
+          "scripts/vnext/ordinary_refresh_cycle.py",
+          "tools/vnext_ordinary_refresh.py",
+          "requirements/issue_28_v14/baseline_manifest.json"
+        ],
+        "functions": [
+          "refresh_and_process",
+          "tools.vnext_ordinary_refresh.main"
+        ],
+        "default_args_and_default_return_shape_preserved": true,
+        "ordinary_v13_parent_unchanged": true,
+        "other_branch_touched": false
+      }
     }
   }
 }
