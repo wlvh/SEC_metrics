@@ -1,12 +1,12 @@
 """Build Issue #47's allowance request and check the code would accept it.
 
 The plan asks for a cumulative cap of SEC request attempts. What the
-code reads is an object with nine fields plus an approval comment that
-restates three of them, so an ask written as a sentence is not checkable and
-an ask written as JSON that nobody ran is only probably checkable. This
-builds both halves and runs them through the real verifier in a temporary
-tree, so what is proposed is known to be a thing the gate accepts rather than
-a thing that looks like one.
+code reads is an object carrying every field REQUIRED_POLICY_FIELDS names,
+plus an approval comment that restates three of them, so an ask written as a
+sentence is not checkable and an ask written as JSON that nobody ran is only
+probably checkable. This builds both halves and runs them through the real
+verifier in a temporary tree, so what is proposed is known to be a thing the
+gate accepts rather than a thing that looks like one.
 
 Nothing here grants anything: the policy is written to a proposal path, not to
 config/issue47_historical_calls_v1.json, and the delegation body has to be
