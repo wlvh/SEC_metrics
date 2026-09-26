@@ -1623,6 +1623,28 @@
       "result_path": "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/independent-review/conclusion.md",
       "verdict": "NEEDS_FIX_MIXED_ONE_REQUEST_RESUME_REPEATS_SUBMISSIONS_AND_SOURCE_PROOFS_OVERBROAD",
       "tool_call_count_note": "Agent reported 16 functions.exec orchestrations and 40 nested tool calls."
+    },
+    {
+      "task_name": "review_c04resume_d99fe48",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "c04_mixed_resume",
+      "scope_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json",
+        "tests/vnext/test_c04_source_only_install.py",
+        "tools/run_fast_tests_v2.py",
+        "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/"
+      ],
+      "patch_sha": "d99fe4896d46eaa6e3c38f54d151ee2d1b9ecb84",
+      "spawned_at": "2026-09-26T21:26:56.515336Z",
+      "ended_at": "2026-09-26T21:32:55.475038Z",
+      "tool_calls": 40,
+      "result_path": "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_C04_ONLY_MAX_PROVIDER_POSITIVE_COMPATIBILITY",
+      "tool_call_count_note": "Agent reported 18 functions.exec orchestrations and 40 nested tool calls."
     }
   ],
   "ci_capacity_20260922": {
@@ -3548,7 +3570,7 @@
     ],
     "new_complete_company_results": 0,
     "evidence": "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/README.md",
-    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "independent_review": "NEEDS_FIX_C04_ONLY_POSITIVE_PROVIDER_LIMIT_COMPATIBILITY",
     "shared_with_47": {
       "file": "scripts/vnext/ordinary_refresh_cycle.py",
       "functions": [
@@ -3559,6 +3581,7 @@
       "default_c04_successor_false_behavior_changed": false,
       "requirement_change": "unfrozen issue_28_v14 execution binding only",
       "issue47_branch_or_ledger_touched": false
-    }
+    },
+    "independent_review_path": "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/independent-review/conclusion.md"
   }
 }
