@@ -65,7 +65,7 @@
 
 **第二次运行也在封存前停下**：修好上面三处后，它跑在一棵**落后于仓库**的运行树里——合并 base 带来的 #28 快照与 B03 接线都还没同步进去。被验证的边界文件、套件与调用模块与"当前 HEAD + 补丁"逐字节相同，但铸造工具与各世代清单是旧的：封存出来的收据会绑定旧的铸造工具，在真正的目标树上对不上，"会移动哪些世代"也是按旧快照量的。改为先把运行树同步到当前 HEAD、重新打补丁并 mint，逐文件核对它等于"HEAD + 两个补丁"，再运行；收据另记下它读过的每个世代清单的哈希（`generation_manifests_measured`），读者可以核对量的是哪一份快照。
 
-结果见 `offline-verification.json`（套件、注错、扫描器输出、会被移动的世代）。**第三次运行全部成立并已封存**（收据 `sha256:fb320805…`，运行树逐文件核对过等于"HEAD + 注册补丁 + 出口补丁"）：出口扫描器通过，且只多出 `historical_model_egress._Transport.send` 这一个调用方；完整套件 27 例全部通过（850 秒，全程拒绝 DNS、原始 socket 与 SEC）；17 个注错全部被抓——**16 个由对应的用例抓到**（例如去掉 402 停止由 `test_http_402_stops_the_channel` 抓到、适配器只比类名由 `test_the_adapter_hands_bytes_only_to_the_named_type` 抓到，后者先 mint 过，所以抓住它的是用例而不是字节绑定），**1 个只在类夹具里被抓**：去掉控制器的 `issue_47_v1` 分支，各类的 `setUpClass` 在造授权对象时就被控制器拒绝（`Scoped R4 invocation requires a registered R4 revision`）——这正是被破坏的性质，但它不是某条具名用例，如实记为钝的捕获；收尾核对补丁、snapshot 与全部绑定文件回到起点。
+结果见 `offline-verification.json`（套件、注错、扫描器输出、会被移动的世代）。**第三次运行全部成立并已封存**；随后 base 合并到 `38732ea6`，D04 与出口套件会加载的五个语义模块随之变化，于是在同步到合并后 HEAD 的树上**再跑了一次、结果完全相同**，现在的收据是那一次的（`sha256:5ac39a6c…`，运行树逐文件核对过等于"HEAD + 注册补丁 + 出口补丁"）：出口扫描器通过，且只多出 `historical_model_egress._Transport.send` 这一个调用方；完整套件 27 例全部通过（850 秒，全程拒绝 DNS、原始 socket 与 SEC）；17 个注错全部被抓——**16 个由对应的用例抓到**（例如去掉 402 停止由 `test_http_402_stops_the_channel` 抓到、适配器只比类名由 `test_the_adapter_hands_bytes_only_to_the_named_type` 抓到，后者先 mint 过，所以抓住它的是用例而不是字节绑定），**1 个只在类夹具里被抓**：去掉控制器的 `issue_47_v1` 分支，各类的 `setUpClass` 在造授权对象时就被控制器拒绝（`Scoped R4 invocation requires a registered R4 revision`）——这正是被破坏的性质，但它不是某条具名用例，如实记为钝的捕获；收尾核对补丁、snapshot 与全部绑定文件回到起点。
 
 收据放进本仓库后，`tests/vnext/test_historical_model_calls.py` 走"有收据"分支：它描述的是打了补丁的树，在未打补丁的仓库里实时路径仍按名拒绝（只有调用模块、`verify.py` 与补丁本身三个绑定文件与仓库相同）。
 

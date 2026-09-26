@@ -62,7 +62,7 @@
    "scripts/vnext/continuous_semantic_calls.py::_Transport.send",
    "scripts/vnext/historical_model_egress.py::_Transport.send"
   ],
-  "gate_receipt_id": "sha256:f413e8a01f726e99da8de764137b50e20325601943d6c29e3402b51209a0fe10",
+  "gate_receipt_id": "sha256:0818d7eb6e058b4d847da361c09ba5240b29b40fc8cbc02aaf4136e27250ffc5",
   "repository_transport_factories": [
    "scripts/vnext/ai_adapter.py::_ApprovedTransportAdapter._complete_repository_transport",
    "scripts/vnext/ai_adapter.py::_ScopedInvocationControllerTransport.send",
@@ -219,7 +219,7 @@
    "failures": [
     {
      "case": "test_recorded_bytes_cannot_run_live",
-     "raised": "+ [PosixPath('/tmp/issue47-egress-_vhiejze/granted-ledger/calls/0001')]"
+     "raised": "+ [PosixPath('/tmp/issue47-egress-ivncy1i4/granted-ledger/calls/0001')]"
     }
    ],
    "file": "scripts/vnext/historical_model_egress.py",
@@ -375,7 +375,7 @@
    "size": 71809
   },
   "issue_28_v14": {
-   "sha256": "aadaa6fe7f6515e54d22f0920c66963f4aabf06836eeda95311a77330e647f1d",
+   "sha256": "d01f2be87dd2d22d44d652719c045847ab4ed6290999bf425346f6a3e5408c37",
    "size": 87422
   },
   "issue_28_v2": {
@@ -411,7 +411,7 @@
    "size": 39818
   },
   "issue_47_v1": {
-   "sha256": "117f00baf42124d76b38506e9056b7e620535745402676dd93b7a7a5d5f3b0e7",
+   "sha256": "fcfec21aac96bca20e5d5f9962ae2104e265065c8ff8d6ca6506cf47c5904d4f",
    "size": 70903
   }
  },
@@ -485,12 +485,12 @@
  },
  "live_call_authorized": false,
  "production_authorized": false,
- "receipt_id": "sha256:fb320805227348cb0acabce5162ae79e3e88c744b995203fca1d4a2f55d41336",
+ "receipt_id": "sha256:5ac39a6c128f9d62d8e6ed3881fe898b22c043fa3d714643a02441abe1bff3dc",
  "record_type": "ISSUE_47_MODEL_EGRESS_OFFLINE_VERIFICATION",
  "requirement_id": "issue_47_v1",
  "suite": {
   "failed": [],
-  "ran": "Ran 27 tests in 850.377s",
+  "ran": "Ran 27 tests in 880.592s",
   "returncode": 0,
   "summary": "OK"
  },
