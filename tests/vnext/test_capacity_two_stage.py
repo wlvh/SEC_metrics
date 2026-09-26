@@ -124,9 +124,11 @@ class CapacityTwoStageTest(unittest.TestCase):
                     scan_result=scan_result, scan_raw_response=scan_raw,
                     interpretation=followup,
                     raw_response=canonical_json_bytes(value=value), source=source)
-            return block['text'], response, check
+            return block['text'], response, check, {
+                'source': source, 'prior': prior, 'scan_raw': scan_raw,
+                'scan_result': scan_result, 'request': followup}
 
-        _, supplier_response, supplier = case(
+        _, supplier_response, supplier, _ = case(
             'A supplier has manufacturing capacity for its own products.')
         self.assertEqual(supplier()['original_validator_result']['unresolved'], [])
         overfull = deepcopy(supplier_response)
@@ -138,11 +140,11 @@ class CapacityTwoStageTest(unittest.TestCase):
             interpretation_request(request=self.request,
                 scan_result=self.scan_result, scan_raw_response=self.scan_raw,
                 assertion_scopes=True)
-        text, answer, mixed = case(
+        text, answer, mixed, _ = case(
             'Our contract manufacturers used to have production capacity for '
             'obsolete products and now have production capacity for current demand.')
         checked = mixed()['original_validator_result']
-        self.assertIn('B13_ASSERTION_MULTIPLE_PHYSICAL_CLAIMS:B0',
+        self.assertIn('B13_ASSERTION_EXCLUDED_CURRENT_TARGET_REQUIRES_REVIEW',
                       checked['unresolved'])
         self.assertFalse(mixed()['native_credit'])
         partial = deepcopy(answer)
@@ -153,16 +155,50 @@ class CapacityTwoStageTest(unittest.TestCase):
         absent['findings'][0][5] = []
         with self.assertRaisesRegex(ValueError, 'ASSERTION_VISIBLE_REFERENCE_UNSCOPED'):
             mixed(absent)
-        text, split, incomplete = case(
+        text, split, incomplete, _ = case(
             'A supplier has manufacturing capacity for its own products; '
             'our contract manufacturers have production capacity for current demand.')
         split['findings'][0][5][0][2] = text.index(';')
         self.assertIn('B13_ASSERTION_UNCOVERED_PHYSICAL_SOURCE:B0',
                       incomplete(split)['original_validator_result']['unresolved'])
-        _, _, target = case(
+        _, _, target, _ = case(
             'Our contract manufacturers have production capacity for current demand.')
         self.assertIn('B13_ASSERTION_EXCLUDED_CURRENT_TARGET_REQUIRES_REVIEW',
                       target()['original_validator_result']['unresolved'])
+        text, pronoun_response, pronoun, pronoun_context = case(
+            'Our contract manufacturers operate plants; '
+            'they have sufficient production capacity for current demand.')
+        clipped = deepcopy(pronoun_response)
+        clipped['findings'][0][5][0][1] = text.index('they have')
+        with self.assertRaisesRegex(ValueError, 'ASSERTION_NOT_COMPLETE_SEGMENT'):
+            pronoun(clipped)
+        self.assertIn('B13_ASSERTION_EXCLUDED_CURRENT_TARGET_REQUIRES_REVIEW',
+                      pronoun()['original_validator_result']['unresolved'])
+        from vnext.capacity_native_assessment import _build_acceptance
+        raw = canonical_json_bytes(value=pronoun_response)
+        prepared = SimpleNamespace(
+            request_bytes=canonical_json_bytes(value=pronoun_context['request']),
+            source_bytes=canonical_json_bytes(value=pronoun_context['source']))
+        with self.assertRaisesRegex(ValueError, 'B13_SOURCE_ASSESSMENT_UNRESOLVED'):
+            _build_acceptance(prepared=prepared, plan={}, response_body=raw,
+                checked=pronoun()['original_validator_result'], metric_id='B13',
+                group='b13_capacity_source_assessment_v1', spec_path='',
+                validator_path='')
+        from vnext.capacity_two_stage import build_registered_interpretation_acceptance
+        stage = {'prior_request': pronoun_context['prior'],
+                 'scan_result': pronoun_context['scan_result'],
+                 'scan_raw_response': pronoun_context['scan_raw'],
+                 'stage_proof': None}
+        with patch('vnext.capacity_two_stage.validate_registered_scan_stage',
+                   return_value=stage), \
+             self.assertRaisesRegex(ValueError, 'B13_SOURCE_ASSESSMENT_UNRESOLVED'):
+            build_registered_interpretation_acceptance(
+                prepared=prepared, plan={}, response_body=raw, stage_record={})
+        _, _, synonymous, _ = case(
+            'Our contract manufacturers have manufacturing capacity, '
+            'including production capacity, for current demand.',
+            kind='physical_capacity_context', subject='TARGET_REGISTRANT')
+        self.assertEqual(synonymous()['original_validator_result']['unresolved'], [])
 
     def test_scanned_nonrequired_sales_can_be_correctly_excluded(self):
         sales = next(block for unit in self.source['units']

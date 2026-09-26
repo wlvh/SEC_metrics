@@ -54,6 +54,8 @@ ASSERTION_SUFFIX = (
     'range for each cited B reference. Offsets count Unicode characters in '
     'the supplied block text. A range must cover one complete sentence or '
     'semicolon-delimited assertion, including its subject and time context. '
+    'A semicolon fragment beginning with a referential pronoun must include '
+    'its preceding clause in the range. '
     'Do not select only the capacity phrase while omitting its subject. '
     'If one assertion contains multiple physical-capacity statements that '
     'cannot be assigned separately, put the reference in the owning unit '
@@ -100,7 +102,7 @@ def _need(ok, reason):
         raise ValueError(reason)
 
 
-def _direct_current_target_capacity(text, fiscal_year):
+def _direct_current_target_capacity(text, fiscal_year, *, all_occurrences=False):
     """Only clear present-tense registrant/contract-manufacturer assertions.
 
     This necessary guard does not decide historical, conditional or other
@@ -121,27 +123,29 @@ def _direct_current_target_capacity(text, fiscal_year):
     for _, _, statement in _sentences(text):
         clauses = re.split(r';|\b(?:but|whereas)\b', statement, flags=re.I)
         for index, clause in enumerate(clauses):
-            relation = physical.search(clause)
-            if relation is None:
-                continue
-            # Do not borrow a target-company noun from another entity's
-            # clause. A leading "they" may carry the immediately preceding
-            # expressly identified contract-manufacturer subject.
-            target = direct.search(clause) or (index > 0
-                and re.match(r'^\s*they\s+(?:have|has|are|operate|maintain)\b', clause, re.I)
-                and re.search(r'\bour\s+contract\s+manufacturers?\b', clauses[index - 1], re.I))
-            if not target:
-                continue
-            years = {int(year) for year in re.findall(r'\b(?:19|20)\d{2}\b', clause)}
-            contrast = re.search(r'\b(?:unlike|compared\s+(?:with|to)|versus|in\s+contrast\s+to)\b',
-                                 clause, re.I)
-            if years and years != {fiscal_year} and not contrast:
-                continue
-            prefix = clause[:relation.start()]
-            if (present.search(prefix) and not excluded_context.search(prefix)
-                    and not re.search(r'\bused\s+to\s+(?:have|operate|maintain|possess)\s+'
-                                      r'(?:[A-Za-z-]+\s+){0,4}$', prefix, re.I)):
-                return True
+            relations = (physical.finditer(clause) if all_occurrences else
+                         (physical.search(clause),))
+            for relation in relations:
+                if relation is None:
+                    continue
+                # Do not borrow a target-company noun from another entity's
+                # clause. A leading "they" may carry the immediately preceding
+                # expressly identified contract-manufacturer subject.
+                target = direct.search(clause) or (index > 0
+                    and re.match(r'^\s*they\s+(?:have|has|are|operate|maintain)\b', clause, re.I)
+                    and re.search(r'\bour\s+contract\s+manufacturers?\b', clauses[index - 1], re.I))
+                if not target:
+                    continue
+                years = {int(year) for year in re.findall(r'\b(?:19|20)\d{2}\b', clause)}
+                contrast = re.search(r'\b(?:unlike|compared\s+(?:with|to)|versus|in\s+contrast\s+to)\b',
+                                     clause, re.I)
+                if years and years != {fiscal_year} and not contrast:
+                    continue
+                prefix = clause[:relation.start()]
+                if (present.search(prefix) and not excluded_context.search(prefix)
+                        and not re.search(r'\bused\s+to\s+(?:have|operate|maintain|possess)\s+'
+                                          r'(?:[A-Za-z-]+\s+){0,4}$', prefix, re.I)):
+                    return True
     return False
 
 
@@ -561,7 +565,7 @@ def _assertion_segments(text):
     from .regulatory_investigation_candidates import _sentences
     ranges = set()
     for sentence_start, _, sentence in _sentences(text):
-        for part in re.finditer(r'[^;]+', sentence):
+        for index, part in enumerate(re.finditer(r'[^;]+', sentence)):
             start = sentence_start + part.start()
             end = sentence_start + part.end()
             while start < end and text[start].isspace():
@@ -569,7 +573,13 @@ def _assertion_segments(text):
             while end > start and text[end - 1].isspace():
                 end -= 1
             if start < end:
-                ranges.add((start, end))
+                if index and re.match(r'^(?:they|it|these|those|this|such)\b',
+                                      text[start:end], re.I):
+                    # A pronoun-only later clause cannot establish its own
+                    # subject. Keep its antecedent in the permitted range.
+                    ranges.add((sentence_start, sentence_start + len(sentence)))
+                else:
+                    ranges.add((start, end))
     return ranges
 
 
@@ -623,10 +633,6 @@ def _scoped_projection(*, response, request, scan_result, source):
                        for start, end in ranges)
                for match in _PHYSICAL_CAPACITY.finditer(text)):
             unresolved.append('B13_ASSERTION_UNCOVERED_PHYSICAL_SOURCE:' + ref)
-        if any(sum(start <= match.start() and match.end() <= end
-                   for match in _PHYSICAL_CAPACITY.finditer(text)) > 1
-               for start, end in ranges):
-            unresolved.append('B13_ASSERTION_MULTIPLE_PHYSICAL_CLAIMS:' + ref)
     return projected, scopes, unresolved
 
 
@@ -710,7 +716,8 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
             timing = books['timing'][row[2]]
             if ((kind not in relevant or subject != 'TARGET_REGISTRANT'
                  or timing != 'CURRENT_REPORT')
-                and _direct_current_target_capacity(statement, fiscal_year)):
+                and _direct_current_target_capacity(statement, fiscal_year,
+                                                    all_occurrences=True)):
                 checked['unresolved'].append(
                     'B13_ASSERTION_EXCLUDED_CURRENT_TARGET_REQUIRES_REVIEW')
         checked['unresolved'].extend(scope_unresolved)

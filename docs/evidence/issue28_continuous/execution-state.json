@@ -1392,6 +1392,32 @@
       "tool_calls": 39,
       "result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-shard-repair/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS_LOADED_HISTORY_SHARD_ALIGNMENT_AND_EVENT_CENSUS"
+    },
+    {
+      "task_name": "review_b13scope_151ce51",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "scripts/vnext/capacity_reference_contract.py",
+        "scripts/vnext/native_unit_index.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "scripts/vnext/capacity_assessment_input.py",
+        "scripts/vnext/capacity_run.py",
+        "scripts/vnext/capacity_program_roles.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage_material.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "config/issue28_continuous_calls_v1.json"
+      ],
+      "patch_sha": "151ce51f2217a2b1bd4e5b71492d47d67c2e9242",
+      "spawned_at": "2026-09-26T05:14:03Z",
+      "ended_at": "2026-09-26T05:23:38Z",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_PRONOUN_ANTECEDENT_LOST_AND_SYNONYM_DOUBLE_COUNT",
+      "tool_call_count_note": "Agent did not report a count; no count inferred."
     }
   ],
   "ci_capacity_20260922": {
@@ -2589,13 +2615,17 @@
     "current_receipt_changed": false,
     "directed_tests": "5_PASS",
     "evidence_log": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/ci-fast-repair-directed.log",
-    "new_calls": [0, 0, 0],
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
     "repair_head": "9552226d09f9fa5999218644b7a4e72bf387d513",
     "repair_head_ci": 36217741051,
     "repair_head_ci_at_last_observation": "SUCCESS_13_OF_13"
   },
   "b13_assertion_scoped_v6_offline_20260926": {
-    "status": "EXPLICIT_OFFLINE_SUCCESSOR_RECORDED_NATIVE_STAGE_CHAIN_PASS_REVIEW_PENDING",
+    "status": "SCOPED_REVIEW_NEEDS_FIX_AFTER_RECORDED_PROGRAM_CHAIN_PASS",
     "evidence_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/",
     "historical_v5_default_changed": false,
     "saved_190_identity_changed": false,
@@ -2618,9 +2648,17 @@
     "provider_wiring": "PASS_CURRENT_RECEIPT",
     "sec_wiring": "PASS_CURRENT_RECEIPT_WITH_REUSED_PRE_CAP_SEC_TEST",
     "ledger_rows": 192,
-    "ledger_counts": [143, 143, 49],
-    "new_calls": [0, 0, 0],
-    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "ledger_counts": [
+      143,
+      143,
+      49
+    ],
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "independent_review": "NEEDS_FIX_EXACT_SHA_151CE51F",
     "issue_47_branch_or_ledger_used": false,
     "default_run_regression_local_environment_note": "LOCAL_TEST_OMITTED_REQUIRED_CI_B13_REFERENCE_CONTEXT_1_AND_FAILED; PROGRAM_ROLE_TEST_PASS; PRIOR_HEAD_9552226D_CI_NATIVE_JOB_SUCCESS; CURRENT_V6_HEAD_CI_PENDING",
     "default_run_regression_logs": [
@@ -2653,6 +2691,48 @@
         "B13_V6_RECORDED_STAGE_AND_REPLAY_PASS",
         "PRIOR_HEAD_9552226D_CI_13_OF_13_SUCCESS"
       ]
+    },
+    "review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md"
+  },
+  "b13_assertion_scope_repair_20260926": {
+    "status": "BOUNDED_P2_REPAIR_RECORDED_CHAIN_PASS_NEW_SHA_REVIEW_PENDING",
+    "precursor_patch_sha": "151ce51f2217a2b1bd4e5b71492d47d67c2e9242",
+    "precursor_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md",
+    "repair": "PRONOUN_CLAUSE_INCLUDES_ANTECEDENT_AND_EXCLUDED_PHYSICAL_TERMS_CHECKED_INDIVIDUALLY_WITHOUT_COUNTING_TERMS_AS_ASSERTIONS",
+    "v5_default_code_path_changed": false,
+    "directed_tests": "32_PASS_INCLUDING_NATIVE_AND_REGISTERED_GATE_NEGATIVE",
+    "recorded_stage_test": "1_PASS_125_635_SECONDS",
+    "saved_source_group_measurements": 16,
+    "maximum_measured_context_tokens": 199900,
+    "context_limit_tokens": 200000,
+    "synthetic_output_example_max_tokens": 3209,
+    "output_example_is_absolute_bound": false,
+    "current_requirement_closure": "sha256:805130a44789ce57fe7d8f5149918c06612b21de2b06229edabcade9e0c7f9ff",
+    "execution_authority_hash": "sha256:a96131315e295cd3d8d9c97ce6e349f491687d90a5f8e2beb68fbad7d78251c2",
+    "provider_wiring": "PASS_CURRENT_MOCKED_FACTORY_AND_CONTROLLER",
+    "sec_wiring": "PASS_BYTE_REUSE_UNCHANGED_SEC_CODE",
+    "previous_binding_and_receipts_modified": false,
+    "real_calls": [0, 0, 0],
+    "new_b13_live_authorization": false,
+    "mixed_190_whole_company_run": "NOT_VERIFIED",
+    "independent_review": "PENDING_EXACT_REPAIR_SHA",
+    "issue_47_branch_or_ledger_used": false,
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "config/issue28_continuous_calls_v1.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/decision_register.json"
+      ],
+      "functions": [
+        "capacity_two_stage._assertion_segments",
+        "capacity_two_stage._direct_current_target_capacity",
+        "capacity_two_stage.validate_interpretation"
+      ],
+      "default_v5_path_behavior_changed": false,
+      "current_v15_binding_changed": true,
+      "frozen_prior_snapshots_changed": false,
+      "other_branch_touched": false
     }
   }
 }
