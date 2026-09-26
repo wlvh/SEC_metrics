@@ -1,8 +1,8 @@
 {
   "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
   "requirement_id": "issue_28_v14",
-  "requirement_closure_hash": "sha256:9c02b4772e364f33b311c10b6282dca3a4083ad0aad528d1ad2a75ce33956a3e",
-  "execution_authority_hash": "sha256:ecaa9a4d7a9986006154caba08e227b4a35160f4678f4f04d85982e82ed1d061",
+  "requirement_closure_hash": "sha256:9c58dcfb72e8d3b6daeeb1d56027e104b2238b504df4f832a4886c72d7df11d9",
+  "execution_authority_hash": "sha256:286225283acb01d2a48f53c5328d6c6164b9f394160c4c171aef859532835b9b",
   "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
   "calls": {
     "provider": 0,
@@ -71,8 +71,16 @@
     "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-test-assertion-repair.log": "ea39879e3a31fbe825997aa1eb586103583bcf19bd67b78fe4090bded9b6385c",
     "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/assertion-v6-suspension-directed.log": "b162e5f3facac46e50146be2bd7c98cd06fbc144f3078fff7fbb3268c2d27bc8",
     "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/assertion-v6-suspension-material.log": "8ec18d35ce1c80a9dcd9f7641665828cbc79072985f181c2032047802cfa9d04",
-    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-test-v6-suspended.log": "c1e01e798d9eba5ab80b3acc5564655790f80ea674c9f419cddb134e19c5eff4"
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-test-v6-suspended.log": "c1e01e798d9eba5ab80b3acc5564655790f80ea674c9f419cddb134e19c5eff4",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/recorded-refresh-final.log": "00a351d81b3244544a5152ac7497b2ee22f18f5cbeecf4c6947d178bc4e0b46f",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/boundary.log": "3981e6285aed77a8854e5f481b9efec9438f629973880650b28e742281490eeb",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/boundary-final-8.log": "f5dd5d7cce603509d7a9fcacd019e1d14348a4cf8df030986ff5c6390d46abb2",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/source-only-install-capture-retry.log": "fb4732ac4bf0a72bcb6e989fe1e00057c01ca30c4d93b67c0aa309df2b028ece",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/parent-binding-tests.log": "5d2c9a9c7d962fbe50afebfe27458a6d109d8b47fe13ea47944ede5c4d28f84b",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/recorded-refresh-final-binding.log": "903cb6278634146e942c7bc04f6d0b00af86b76923f789fa3b02110e65e90443",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/live-zero-cold-read.log": "5b0aa36bd0c32d5718fd5f19fce39f961030d1dfd18c396c89aff1f264fc62f7",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/live-zero-refresh-final.log": "c896aea370325d01bd52dad4a5493d92a71ef0cad26f8f1ecfaac418db77cdf0"
   },
-  "scope": "Current V15 B13 V6 fail-closed binding. Mocked provider factory/controller rerun without network; recorded scan still saves only a scan receipt, while V6 judgment stops before a second claim and every native/registered acceptance entry rejects. Earlier evidence revalidated by exact bytes.",
+  "scope": "Current V15 B13 V6 fail-closed binding. Mocked provider factory/controller rerun without network; recorded scan still saves only a scan receipt, while V6 judgment stops before a second claim and every native/registered acceptance entry rejects. Earlier evidence revalidated by exact bytes. C04 zero-provider refresh route is now bound and recorded-tested; B13 V6 remains suspended and no provider request is authorized by this receipt.",
   "independent_review": "V6_SUSPENSION_INCREMENT_REVIEW_PENDING"
 }

@@ -1,6 +1,6 @@
 {
   "record_type": "SEC_ACQUISITION_OFFLINE_WIRING",
-  "execution_authority_hash": "sha256:ecaa9a4d7a9986006154caba08e227b4a35160f4678f4f04d85982e82ed1d061",
+  "execution_authority_hash": "sha256:286225283acb01d2a48f53c5328d6c6164b9f394160c4c171aef859532835b9b",
   "calls": [
     0,
     0,
@@ -24,8 +24,16 @@
     "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/sec-wiring-test-shard-repair.log": "f23c993014c3b593bb3663bfcc818dde0ce56dc4800c4a73a9c961a3d2f7b8c4",
     "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/native-shard-repair.log": "9a1f4c8e3baa54094c890442dbcc628e9c7d5fe74371697420df99720c5b5a4a",
     "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/cold-shard-repair.log": "e8592ceff76cca4cbf2d7f160160a9f7fab729e1f0e3db3fccaf1c34ca88166d",
-    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-test-assertion-v6.log": "fcd68a019dc7b488af86451eca9bea52d99d8f342c98a609fef1dff45aa01f48"
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-test-assertion-v6.log": "fcd68a019dc7b488af86451eca9bea52d99d8f342c98a609fef1dff45aa01f48",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/recorded-refresh-final.log": "00a351d81b3244544a5152ac7497b2ee22f18f5cbeecf4c6947d178bc4e0b46f",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/boundary.log": "3981e6285aed77a8854e5f481b9efec9438f629973880650b28e742281490eeb",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/boundary-final-8.log": "f5dd5d7cce603509d7a9fcacd019e1d14348a4cf8df030986ff5c6390d46abb2",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/source-only-install-capture-retry.log": "fb4732ac4bf0a72bcb6e989fe1e00057c01ca30c4d93b67c0aa309df2b028ece",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/parent-binding-tests.log": "5d2c9a9c7d962fbe50afebfe27458a6d109d8b47fe13ea47944ede5c4d28f84b",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/recorded-refresh-final-binding.log": "903cb6278634146e942c7bc04f6d0b00af86b76923f789fa3b02110e65e90443",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/live-zero-cold-read.log": "5b0aa36bd0c32d5718fd5f19fce39f961030d1dfd18c396c89aff1f264fc62f7",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/live-zero-refresh-final.log": "c896aea370325d01bd52dad4a5493d92a71ef0cad26f8f1ecfaac418db77cdf0"
   },
   "production_authorized": false,
-  "validation_scope": "Current execution file identity rebound. SEC source/acquisition code and policy unchanged by B13 V6 native suspension; prior no-network SEC HTTP, checkpoint and failure isolation evidence revalidated by exact byte hashes. No new SEC request or production credit."
+  "validation_scope": "Current execution file identity rebound. SEC source/acquisition code and policy unchanged by B13 V6 native suspension; prior no-network SEC HTTP, checkpoint and failure isolation evidence revalidated by exact byte hashes. No new SEC request or production credit. C04 normal refresh uses the unchanged SEC acquisition session; two authentic saved metadata versions passed recorded capture and native update. No new live SEC call is credited. Existing source-inputs processing copies remain immutable in the explicit C04-only source mode; unrelated rule drift still blocks. Recorded source-only capture and unchanged default denial tested."
 }

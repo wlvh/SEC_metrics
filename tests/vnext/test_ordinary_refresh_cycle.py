@@ -9,6 +9,10 @@ from unittest.mock import Mock, patch
 from vnext.continuous_sec_acquisition import SecAcquisitionSession
 from vnext.ordinary_refresh_cycle import _call_accounting, _check_session, refresh_and_process
 from vnext import ordinary_refresh_cycle as refresh
+from vnext.canonical import sha256_file
+from vnext.canonical import strict_json_file
+from vnext.requirements import load_requirement_snapshot
+from vnext import c04_update_cycle
 
 
 class OrdinaryRefreshBoundaryTest(unittest.TestCase):
@@ -21,6 +25,33 @@ class OrdinaryRefreshBoundaryTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'ORDINARY_REFRESH_IMPLEMENTATION_NOT_BOUND'):
             _check_session(session)
         session._check.assert_not_called()
+
+    def test_unbound_c04_successor_never_enters_the_sec_session(self):
+        session = object.__new__(SecAcquisitionSession)
+        session.ledger = SimpleNamespace(live=True, root=Path('/unexecuted-test-ledger'))
+        session.data_root = session.ledger.root / 'source-inputs'
+        path = Path(refresh.__file__)
+        session.requirement = {'execution_authority': {'files': {
+            path.relative_to(refresh.ROOT).as_posix(): {
+                'sha256': sha256_file(path=path), 'size': path.stat().st_size}}}}
+        session._check = Mock(side_effect=AssertionError('Must not reach SEC authorization'))
+        with self.assertRaisesRegex(ValueError, 'ORDINARY_REFRESH_C04_SUCCESSOR_NOT_BOUND'):
+            _check_session(session, c04_successor=True)
+        session._check.assert_not_called()
+
+    def test_c04_receipt_cannot_claim_only_the_older_update_route(self):
+        session = object.__new__(SecAcquisitionSession)
+        session.ledger = SimpleNamespace(live=True, root=Path('/unexecuted-test-ledger'))
+        session.data_root = session.ledger.root/'source-inputs'
+        session.requirement = load_requirement_snapshot(
+            snapshot_dir=refresh.ROOT/'requirements/issue_28_v14')
+        session._check = Mock()
+        receipt = strict_json_file(path=refresh.ROOT/refresh.WIRING_PATH)
+        with patch.object(refresh, 'strict_json_file', return_value={
+                **receipt, 'c04_successor_recorded_route_verified': False}):
+            with self.assertRaisesRegex(ValueError, 'ORDINARY_REFRESH_OFFLINE_WIRING_CHANGED'):
+                _check_session(session, c04_successor=True)
+            _check_session(session, c04_successor=False)
 
     def test_a_session_cannot_redirect_acquisition_to_another_source_root(self):
         session = object.__new__(SecAcquisitionSession)
@@ -75,6 +106,32 @@ class OrdinaryRefreshBoundaryTest(unittest.TestCase):
             self.assertEqual('UPDATES_INCOMPLETE', result['status'])
             self.assertEqual('REFRESH_INCOMPLETE', result['companies'][0]['source_refresh']['status'])
             self.assertEqual('CAPTURE', result['companies'][0]['acquisition_errors'][0]['stage'])
+
+    def test_c04_success_cannot_hide_a_neighbor_update_failure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            session = object.__new__(SecAcquisitionSession)
+            session.ledger = SimpleNamespace(live=False, root=root/'ledger',
+                locked=nullcontext, snapshot=lambda: {'counts': [0, 0, 0]})
+            session.data_root = session.ledger.root/'source-inputs'
+            session.requirement = {}
+            discovery = {'status': 'SAVED_SOURCE_DEPENDENCIES_AVAILABLE',
+                'requirements_id': 'recorded-complete', 'limitations': [], 'requirements': []}
+            with patch.object(refresh, '_check_session'), \
+                 patch.object(refresh, 'initialize_source_inputs'), \
+                 patch.object(refresh, '_failed_urls', return_value=set()), \
+                 patch.object(refresh, 'discover_saved_source_requirements', return_value=discovery), \
+                 patch.object(refresh, 'run_company', side_effect=ValueError('B01_RUN_FAILED')), \
+                 patch.object(c04_update_cycle, 'run_company', return_value={
+                     'metrics': [{'metric_id': 'C04', 'status': 'CANDIDATE_READY'}]}):
+                result = refresh_and_process(session=session, state_root=root/'state',
+                    company_ids=['marriott_international'], metric_ids=['B01', 'C04'],
+                    max_sec_requests=0, c04_successor=True)
+            company, = result['companies']
+            self.assertEqual('UPDATES_INCOMPLETE', result['status'])
+            self.assertEqual('UPDATES_PARTIAL', company['updates']['status'])
+            self.assertEqual(['UPDATE_BLOCKED', 'CANDIDATE_READY'],
+                [row['status'] for row in company['updates']['metrics']])
 
 
 if __name__ == '__main__':

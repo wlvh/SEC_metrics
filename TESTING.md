@@ -675,6 +675,8 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 
 C04正常保存来源更新用 `python3 tools/vnext_normal_update.py --process --data-root /absolute/saved-source-root --state-root /absolute/persistent-update-root --company marriott_international --metric C04`。此入口明确选四形式后继并记录到`metrics/C04-registration-v3`，旧普通控制器与共享`normal_run_v3`默认行为不改。`tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest`已追加在source-material选择器列表末尾，核对Marriott原件正向Run和相同输入不重复建Run。`docs/evidence/issue28_continuous/c04-normal-update-20260926/`另以两份已经保存、内容不同的真实SEC清单录制更新：新输入形成第二个版本，旧版可读；失败、指针中断与资料不足的Paramount状态分别保留。该材料禁网且不发真实GET，不能替代新财报实际发现/获取、十公司C04完整验收或正式生产。
 
+有限来源刷新入口 `python3 tools/vnext_ordinary_refresh.py --company marriott_international --metric C04 --state-root /absolute/persistent-update-root --max-sec-requests 0 --max-provider-requests 0 --output /absolute/new-report.json` 现在显式选择同一C04后继；共享`ordinary_refresh_cycle.refresh_and_process`默认仍使用原路线。`tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest`以两份真实保存的Marriott清单及Company Facts逐次录制刷新，经来源发现、获取会话、后继Run、版本保留及旧版重读，全部禁网、真实调用0。旧实际来源根里的三项历史处理副本不会为C04原地改写；新Run安装当前规则，不相关规则漂移仍拒绝，见`tests.vnext.test_c04_source_only_install`。只刷新清单而没有刷新所需Company Facts，或本次完全没有刷新元数据时，协调器仍可报告整体`UPDATES_INCOMPLETE`；不能把C04候选存在误写成来源已是最新。当前绑定、原账本零调用候选及独立冷读见`docs/evidence/issue28_continuous/c04-normal-refresh-20260926/`，不等于实际新财报获取或生产调度。
+
 ### 普通主体接续与期末余额
 
 来源规则与十公司原生组件用 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_instant_balance_amendment tests.vnext.test_normal_companyfacts_results` 验证；两模块均在source-material层。实际Part III修订和链接更正保留不同证明，覆盖额外用途、错原报告日、正文更正/余额、已发生重述、封面标志、引语和新增原生财务事实。缺少修订原件必须拒绝源重放。

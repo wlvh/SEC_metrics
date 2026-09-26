@@ -28,7 +28,8 @@ def main(argv=None):
             or any((p / 'outputs/active_publication.json').exists() for p in output.parents)):
         parser.error('Output must be a new unaliased external report file')
     result = refresh_and_process(session=live_sec_session(), state_root=args.state_root,
-        company_ids=args.company, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,max_provider_requests=args.max_provider_requests)
+        company_ids=args.company, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
+        max_provider_requests=args.max_provider_requests, c04_successor=True)
     write_immutable_bytes(path=output, content=(json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode())
     print(json.dumps({'status': result['status'], 'calls': result['calls'], 'output': str(output)}, ensure_ascii=False))
     return 0 if result['status'] == 'UPDATES_READY' else 2

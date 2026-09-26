@@ -1,0 +1,42 @@
+{
+  "record_type": "C04_REAL_LEDGER_ZERO_CALL_REFRESH_CHECK",
+  "status": "PASS_SAVED_C04_CANDIDATE_WITH_FRESHNESS_INCOMPLETE",
+  "real_ledger_counts_before_after": [
+    [
+      143,
+      143,
+      49
+    ],
+    [
+      143,
+      143,
+      49
+    ]
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "current_ordinary_requirement_closure_hash": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+  "current_continuous_requirement_closure_hash": "sha256:9c58dcfb72e8d3b6daeeb1d56027e104b2238b504df4f832a4886c72d7df11d9",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "state_root": "/private/tmp/issue28-c04-live-zero-refresh-20260926-03/state",
+  "source_original_processing_copies": {
+    "config/issue28_normal_results_v2.json": "830c5f27c9a8b8bdfb13078dec733d1979b3fe327638fc97bd740cb160303fcf",
+    "config/ordinary_public_projection_v1.json": "56d4191d1813e8ad27a0649eda8b956e3a28d89ac52830eeff8f429b97b51141"
+  },
+  "source_original_c04_v3_spec_absent": true,
+  "attempt_id": "abac05647d8c49aeb13de815f92e0093",
+  "native_result_id": "sha256:a5517d36ec92517b057a4e8e5f1277cc8f2850d9108d563a1adb2ad71cb7c3f9",
+  "native_result_publication": "PUBLISHED",
+  "native_result_value": "0",
+  "source_refresh_status": "REFRESH_INCOMPLETE",
+  "deferred_source_urls": [
+    "https://data.sec.gov/submissions/CIK0001048286.json",
+    "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+  ],
+  "live_capture_executed": false,
+  "independent_process_cold_read": "PASS_NETWORK_AND_SUBPROCESS_FORBIDDEN",
+  "production_authorized": false
+}

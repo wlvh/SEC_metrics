@@ -3011,5 +3011,81 @@
       "independent_review": "PENDING_EXACT_REPAIR_SHA",
       "full_refresh_path_wired": false
     }
+  },
+  "c04_normal_refresh_20260927": {
+    "status": "RECORDED_TWO_VERSION_REFRESH_PASS_REAL_LEDGER_ZERO_CALL_SAVED_RESULT_PASS_SCOPED_REVIEW_PENDING",
+    "code_paths": [
+      "scripts/vnext/ordinary_refresh_cycle.py",
+      "scripts/vnext/continuous_sec_acquisition.py",
+      "tools/vnext_ordinary_refresh.py",
+      "scripts/vnext/c04_update_cycle.py"
+    ],
+    "actual_normal_refresh_entry_selects_c04_successor": true,
+    "shared_default_refresh_and_capture_behavior_preserved": true,
+    "recorded_source_refresh": "PASS_TWO_AUTHENTIC_MARRIOTT_SUBMISSIONS_VERSIONS_PLUS_COMPANYFACTS_FOUR_RECORDED_SEC_ATTEMPTS",
+    "recorded_company_outcomes": [
+      "C04_CANDIDATE_READY_PUBLISHED_0",
+      "C04_CANDIDATE_READY_PUBLISHED_0_DISTINCT_SUCCESS_AND_RESULT_ID"
+    ],
+    "recorded_old_version_readback": "PASS_AFTER_NEW_VERSION_CREATED",
+    "recorded_test_log": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/recorded-refresh-final-binding.log",
+    "source_only_installed_root": "EXACT_THREE_NON_SOURCE_PROCESSING_COPIES_PRESERVED_OTHER_RULE_DRIFT_REJECTED",
+    "source_only_test_log": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/parent-binding-tests.log",
+    "real_ledger_zero_call_run": {
+      "status": "C04_CANDIDATE_READY_PUBLISHED_0_SOURCE_REFRESH_INCOMPLETE",
+      "root": "/private/tmp/issue28-c04-live-zero-refresh-20260926-03/state",
+      "result_id": "sha256:a5517d36ec92517b057a4e8e5f1277cc8f2850d9108d563a1adb2ad71cb7c3f9",
+      "independent_process_cold_read": "PASS_NETWORK_AND_SUBPROCESS_DISABLED",
+      "report": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/live-zero-summary.json"
+    },
+    "real_ledger_counts_before_after": [
+      [
+        143,
+        143,
+        49
+      ],
+      [
+        143,
+        143,
+        49
+      ]
+    ],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "ordinary_parent_closure_hash": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+    "continuous_closure_hash": "sha256:9c58dcfb72e8d3b6daeeb1d56027e104b2238b504df4f832a4886c72d7df11d9",
+    "current_provider_sec_refresh_offline_wiring": "PASS_CURRENT_EXECUTION_AUTHORITY_AND_SOURCE_ONLY_RECEIPTS",
+    "receipt_summary": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/binding-summary.json",
+    "original_source_processing_copies_overwritten": false,
+    "actual_new_sec_capture_verified": false,
+    "new_fiscal_year_discovered_and_processed": false,
+    "ten_company_c04_update_complete": false,
+    "formal_publication_or_active_switch": false,
+    "independent_review": "PENDING_EXACT_FINAL_PATCH_SHA",
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/continuous_sec_acquisition.py",
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tools/vnext_ordinary_refresh.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json"
+      ],
+      "functions": [
+        "initialize_source_inputs",
+        "SecAcquisitionSession.capture",
+        "refresh_and_process",
+        "tools.vnext_ordinary_refresh.main"
+      ],
+      "new_optional_parameter_defaults_preserve_old_behavior": true,
+      "ordinary_v13_and_continuous_v14_current_binding_changed": true,
+      "old_attempts_and_failure_bytes_changed": false,
+      "issue47_branch_or_ledger_touched": false,
+      "downstream_note": "Stacked #47 comparison base may need its maintainer to import new current bindings; no #47 artifacts were edited."
+    },
+    "evidence_path": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/README.md"
   }
 }
