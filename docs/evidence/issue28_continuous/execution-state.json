@@ -1710,6 +1710,32 @@
       "total_agent_tool_call_cap": 80,
       "prior_agent_tool_calls": 43,
       "cumulative_agent_tool_calls": 57
+    },
+    {
+      "task_name": "review_b13claim_8fd9d91",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "b13_claim_context_v7",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "scripts/vnext/capacity_reference_contract.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "scripts/vnext/native_unit_index.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-claim-context-v7-20260927/"
+      ],
+      "patch_sha": "8fd9d9129978b9351ceca33900a8a9e62c7a0783",
+      "spawned_at": "2026-09-26T23:04:16Z",
+      "ended_at": "2026-09-26T23:14:10Z",
+      "tool_calls": 46,
+      "result_path": "docs/evidence/issue28_continuous/b13-claim-context-v7-20260927/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_V7_SEMANTICS_PASS_WITH_BOUNDS_FAIL_CLOSED",
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3,
+      "agent_exec_orchestrations": 20
     }
   ],
   "ci_capacity_20260922": {
@@ -3833,7 +3859,7 @@
     }
   },
   "b13_claim_context_v7_20260927": {
-    "status": "OFFLINE_CLAIM_CONTEXT_DIAGNOSTIC_ONLY_EXACT_SHA_REVIEW_PENDING",
+    "status": "OFFLINE_CLAIM_CONTEXT_DIAGNOSTIC_ONLY_LIMITED_REVIEW_NEEDS_FIX",
     "replaces": "NO_HISTORICAL_V6_CREDIT_OR_BYTES_REPLACED",
     "known_failures_addressed_offline": [
       "SHARED_SENTENCE_CONTEXT_DOES_NOT_MAKE_DISTINCT_CLAIMS_DUPLICATE",
@@ -3857,7 +3883,13 @@
     "real_new_calls": [0, 0, 0],
     "real_ledger_ordinal": 194,
     "new_live_route_authorized": false,
-    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "independent_review": "NEEDS_FIX_V7_SEMANTICS_PASS_WITH_BOUNDS_FAIL_CLOSED",
+    "independent_review_path": "docs/evidence/issue28_continuous/b13-claim-context-v7-20260927/independent-review/conclusion.md",
+    "independent_review_counterexamples": [
+      "PRONOUN_BORROWS_WRONG_NEAREST_SUBJECT",
+      "AND_JOINED_CURRENT_AND_PLANNED_CLAIMS_CANNOT_SPLIT",
+      "CLEAR_CURRENT_CONDITIONAL_TIMING_MISLABEL_NOT_UNRESOLVED_EXCEPT_SUSPENSION"
+    ],
     "shared_with_47": {
       "files_and_functions": [
         "scripts/vnext/capacity_reference_contract.py:restore_base_request",
