@@ -2571,5 +2571,23 @@
     "review_patch_sha": "2c4d2361280ed0a18f293007aefa0ca55018c843",
     "review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-shard-repair/conclusion.md",
     "uncovered_scope": "UNLOADED_HISTORY_SHARD_BODY_NOT_PROVEN_BY_THIS_INCREMENT"
+  },
+  "ci_36217092936": {
+    "head": "fb9db1991bebe27f164ea474ad50ee71be05c442",
+    "observed_at_utc": "2026-09-26T04:22:06Z",
+    "status": "in_progress_at_observation",
+    "fast_job": "FAILED_STALE_TEST_RECEIPT_FILENAME",
+    "fast_job_id": 108335108220,
+    "other_jobs_terminal": "NOT_YET_KNOWN",
+    "rerun_triggered": false
+  },
+  "ci_fast_wiring_test_repair_20260926": {
+    "cause": "TEST_MUTATION_TARGETED_OLD_OFFLINE_WIRING_BASENAME_INSTEAD_OF_ACTIVE_POLICY_RECEIPT_PATH",
+    "changed_path": "tests/vnext/test_continuous_call_policy.py",
+    "runtime_wiring_code_changed": false,
+    "current_receipt_changed": false,
+    "directed_tests": "5_PASS",
+    "evidence_log": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/ci-fast-repair-directed.log",
+    "new_calls": [0, 0, 0]
   }
 }
