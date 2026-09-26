@@ -1,6 +1,6 @@
 {
   "record_type": "ORDINARY_REFRESH_OFFLINE_WIRING",
-  "execution_authority_hash": "sha256:3507e50c656e12bd3a6a42e943de76a194eebd4caf6097a1b1148580337c8b57",
+  "execution_authority_hash": "sha256:be3f162dc166f25477e835128cc088723e547b9e456f52f9094e334d9b49b6bc",
   "calls": [
     0,
     0,
@@ -18,7 +18,7 @@
   "actual_new_fiscal_year_verified": false,
   "full390_acceptance": false,
   "production_authorized": false,
-  "independent_review": "MIXED_RESUME_AND_ROLE_SCOPE_REPAIR_REVIEW_PENDING; prior 0cefb9bb NEEDS_FIX retained",
+  "independent_review": "C04_ONLY_PROVIDER_LIMIT_COMPATIBILITY_REPAIR_REVIEW_PENDING; d99fe489 NEEDS_FIX retained",
   "receipt_installation": "CURRENT_EXECUTION_BOUND",
   "evidence": {
     "docs/evidence/issue28_continuous/ordinary-refresh-cycle/current-lifecycle.log": "52344cb3020252d2fdfeb638c14a67b4f2dbb16c33eb3e185ca0f9db037b921b",
@@ -64,7 +64,9 @@
     "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/mixed-two-step.log": "ac288f5b2677ce00fb997c508cd2bf01ada2a69d762c8448586cf237f297b880",
     "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/c04-only-resume-current.log": "18b38a4df35782ed42594fbab18171a85bbada0506a01d1c9a98f8dbd8a9b048",
     "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/fast-role-scope.log": "445221b98f22d14309aaea4fee1a9f41c9659ced4c922d71fbc0dcbbde571045",
-    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/binding-current.log": "e4a8e7e4ca5901741298c4d5e1859b60cd1d1957a1d5e0254ed0d6ce0cef76c3"
+    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/binding-current.log": "e4a8e7e4ca5901741298c4d5e1859b60cd1d1957a1d5e0254ed0d6ce0cef76c3",
+    "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/short-boundary.log": "46df85bcf7701fd5e3b385a18931e7709186b9a75dc68de5748c380c7ee74ef2",
+    "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/binding-current.log": "6fe83b2dae61e8c0d8c888cce9ac04eef49244cea4a97eff3cb3631c89b8395e"
   },
   "c04_successor_recorded_route_verified": true,
   "c04_controller_sha256": "4146468f043e9e4f568ae5c0d2fbe1dab8b51bbce6fea0ccd7150dab81abf417",

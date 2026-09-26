@@ -241,7 +241,7 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
         _historical_c04_processing_copies(session.data_root, session.requirement))
     need(resume_from is None or ((c04_only or mixed_stale)
          and len(selected) == 1 and max_sec_requests == 1
-         and max_provider_requests == 0),
+         and (c04_only or max_provider_requests == 0)),
          'ORDINARY_REFRESH_RESUME_C04_ONE_REQUEST_REQUIRED')
     state_root = Path(state_root)
     need(state_root.is_absolute() and first_symlink_in_path(path=state_root) is None,

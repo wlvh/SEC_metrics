@@ -79,5 +79,31 @@ class C04RefreshResumeMaterialTest(unittest.TestCase):
                 self.assertEqual([0, 0, 2], session.ledger.snapshot()['counts'])
 
 
+class C04ResumeBudgetBoundaryTest(unittest.TestCase):
+    def test_c04_only_keeps_positive_provider_limit_but_mixed_does_not(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
+            options = {'session': session, 'state_root': root/'state',
+                'company_ids': ['marriott_international'],
+                'max_sec_requests': 1, 'max_provider_requests': 1,
+                'c04_successor': True, 'resume_from': root/'prior.json'}
+            with patch.object(refresh, '_check_session'), \
+                 patch.object(refresh, 'initialize_source_inputs'), \
+                 patch.object(refresh, '_resume_one_c04_source',
+                     side_effect=RuntimeError('REACHED_AUTHENTICATED_RESUME')):
+                with self.assertRaisesRegex(RuntimeError,
+                        'REACHED_AUTHENTICATED_RESUME'):
+                    refresh.refresh_and_process(metric_ids=['C04'], **options)
+                with patch.object(refresh, '_historical_c04_processing_copies',
+                                  return_value=True), \
+                     self.assertRaisesRegex(ValueError,
+                         'ORDINARY_REFRESH_RESUME_C04_ONE_REQUEST_REQUIRED'):
+                    refresh.refresh_and_process(metric_ids=['B01', 'C04'],
+                                                **options)
+            with session.ledger.locked():
+                self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
+
+
 if __name__ == '__main__':
     unittest.main()

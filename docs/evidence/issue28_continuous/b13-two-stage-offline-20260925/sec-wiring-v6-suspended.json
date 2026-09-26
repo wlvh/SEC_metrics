@@ -1,6 +1,6 @@
 {
   "record_type": "SEC_ACQUISITION_OFFLINE_WIRING",
-  "execution_authority_hash": "sha256:3507e50c656e12bd3a6a42e943de76a194eebd4caf6097a1b1148580337c8b57",
+  "execution_authority_hash": "sha256:be3f162dc166f25477e835128cc088723e547b9e456f52f9094e334d9b49b6bc",
   "calls": [
     0,
     0,
@@ -53,8 +53,10 @@
     "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/mixed-two-step.log": "ac288f5b2677ce00fb997c508cd2bf01ada2a69d762c8448586cf237f297b880",
     "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/c04-only-resume-current.log": "18b38a4df35782ed42594fbab18171a85bbada0506a01d1c9a98f8dbd8a9b048",
     "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/fast-role-scope.log": "445221b98f22d14309aaea4fee1a9f41c9659ced4c922d71fbc0dcbbde571045",
-    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/binding-current.log": "e4a8e7e4ca5901741298c4d5e1859b60cd1d1957a1d5e0254ed0d6ce0cef76c3"
+    "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/binding-current.log": "e4a8e7e4ca5901741298c4d5e1859b60cd1d1957a1d5e0254ed0d6ce0cef76c3",
+    "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/short-boundary.log": "46df85bcf7701fd5e3b385a18931e7709186b9a75dc68de5748c380c7ee74ef2",
+    "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/binding-current.log": "6fe83b2dae61e8c0d8c888cce9ac04eef49244cea4a97eff3cb3631c89b8395e"
   },
   "production_authorized": false,
-  "validation_scope": "Current execution file identity rebound. SEC source/acquisition code and policy unchanged by B13 V6 native suspension; prior no-network SEC HTTP, checkpoint and failure isolation evidence revalidated by exact byte hashes. No new SEC request or production credit. C04 normal refresh uses the unchanged SEC acquisition session; two authentic saved metadata versions passed recorded capture and native update. No new live SEC call is credited. Existing source-inputs processing copies remain immutable in the explicit C04-only source mode; unrelated rule drift still blocks. Recorded source-only capture and unchanged default denial tested. Mixed stale processing roots now allow only C04-proven URLs through the explicit C04 source-only mode; unrelated ordinary metrics remain blocked. The current mixed recorded capture and unproved-URL refusal are covered by the new test logs, with zero live SEC calls. Mixed C04 continuation now verifies the authenticated prior SEC slot, current C04 attempt, reconstructed deferred set and both proof and C04 role before the next recorded capture. Two distinct recorded SEC slots passed, with zero live calls; the previous mixed-route review defect remains historical."
+  "validation_scope": "Current execution file identity rebound. SEC source/acquisition code and policy unchanged by B13 V6 native suspension; prior no-network SEC HTTP, checkpoint and failure isolation evidence revalidated by exact byte hashes. No new SEC request or production credit. C04 normal refresh uses the unchanged SEC acquisition session; two authentic saved metadata versions passed recorded capture and native update. No new live SEC call is credited. Existing source-inputs processing copies remain immutable in the explicit C04-only source mode; unrelated rule drift still blocks. Recorded source-only capture and unchanged default denial tested. Mixed stale processing roots now allow only C04-proven URLs through the explicit C04 source-only mode; unrelated ordinary metrics remain blocked. The current mixed recorded capture and unproved-URL refusal are covered by the new test logs, with zero live SEC calls. Mixed C04 continuation now verifies the authenticated prior SEC slot, current C04 attempt, reconstructed deferred set and both proof and C04 role before the next recorded capture. Two distinct recorded SEC slots passed, with zero live calls; the previous mixed-route review defect remains historical. Short boundary test confirms C04-only positive provider limit reaches authenticated resume with no claim, while mixed C04 positive provider limit is refused before source capture."
 }

@@ -3583,5 +3583,43 @@
       "issue47_branch_or_ledger_touched": false
     },
     "independent_review_path": "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/independent-review/conclusion.md"
+  },
+  "c04_resume_budget_compat_20260927": {
+    "status": "C04_ONLY_POSITIVE_PROVIDER_LIMIT_PRECHECK_RESTORED_MIXED_STILL_ZERO_PROVIDER_REVIEW_PENDING",
+    "reviewed_base_sha": "d99fe4896d46eaa6e3c38f54d151ee2d1b9ecb84",
+    "prior_review": "NEEDS_FIX_C04_ONLY_MAX_PROVIDER_POSITIVE_COMPATIBILITY",
+    "prior_review_path": "docs/evidence/issue28_continuous/c04-mixed-resume-repair-20260927/independent-review/conclusion.md",
+    "code_path": "scripts/vnext/ordinary_refresh_cycle.py",
+    "function": "refresh_and_process",
+    "change": "resume_from guard retains old C04-only positive max_provider_requests input; mixed stale C04 resume still requires zero provider requests",
+    "short_boundary_test": "PASS_C04_ONLY_MAX_PROVIDER_1_REACHES_AUTHENTICATED_RESUME_MIXED_MAX_PROVIDER_1_REFUSED_LEDGER_ZERO",
+    "unchanged_full_chain_reuse": [
+      "MIXED_TWO_STEP_MAX_PROVIDER_0_RECORDED_PASS",
+      "C04_ONLY_MAX_PROVIDER_0_EXISTING_RESUME_PASS"
+    ],
+    "full_max_provider_1_chain_retested": false,
+    "ordinary_v13_closure_unchanged": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+    "continuous_v14_closure": "sha256:58d0b289393d5adbef8301d228295bcb71e5b1ffd5cd9aa79968efa9b6d92ec6",
+    "execution_authority_hash": "sha256:be3f162dc166f25477e835128cc088723e547b9e456f52f9094e334d9b49b6bc",
+    "real_new_provider_paid_sec": [
+      0,
+      0,
+      0
+    ],
+    "real_ledger_ordinal": 194,
+    "real_ledger_counts": [
+      143,
+      143,
+      51
+    ],
+    "evidence": "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/README.md",
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_47": {
+      "file": "scripts/vnext/ordinary_refresh_cycle.py",
+      "function": "refresh_and_process",
+      "old_default_changed": false,
+      "only_unfrozen_v14_binding_changed": true,
+      "issue47_branch_or_ledger_touched": false
+    }
   }
 }
