@@ -1,6 +1,6 @@
 {
   "record_type": "ORDINARY_REFRESH_OFFLINE_WIRING",
-  "execution_authority_hash": "sha256:286225283acb01d2a48f53c5328d6c6164b9f394160c4c171aef859532835b9b",
+  "execution_authority_hash": "sha256:abace88990ff9257469d020c52a93e46b857ae7699c9d3fa3300d95ab5cf8207",
   "calls": [
     0,
     0,
@@ -43,10 +43,17 @@
     "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/parent-binding-tests.log": "5d2c9a9c7d962fbe50afebfe27458a6d109d8b47fe13ea47944ede5c4d28f84b",
     "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/recorded-refresh-final-binding.log": "903cb6278634146e942c7bc04f6d0b00af86b76923f789fa3b02110e65e90443",
     "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/live-zero-cold-read.log": "5b0aa36bd0c32d5718fd5f19fce39f961030d1dfd18c396c89aff1f264fc62f7",
-    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/live-zero-refresh-final.log": "c896aea370325d01bd52dad4a5493d92a71ef0cad26f8f1ecfaac418db77cdf0"
+    "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/live-zero-refresh-final.log": "c896aea370325d01bd52dad4a5493d92a71ef0cad26f8f1ecfaac418db77cdf0",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/boundary.log": "d6aa777a4f713a4694837becfeb9d153564284f6c843511d635705ec9918dcc2",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/source-scope.log": "799828cdc05af017f4aaddd6ea92612b4a2c279074acb6d1441088f11fae3507",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/boundary-final.log": "e5c1c3dab983141f5fd96c986d1cf0e03bc3c32db257d7a76fdbeedf92dd31d9",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/source-scope-final.log": "da946caa07921a342d2021e7ca1a73965d5dbaea8aa9bbefca96c046337f5d6b",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/c04-two-version-final.log": "b75763decf7c4b26ea3eb6319120f335f4cf4c06b3ee836a107c79a129bc5672",
+    "docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/c04-source-map.log": "3b87f12ec97c81b6c244e7d4474724839a1aec4efc91628bffd06ef55c70af6f"
   },
   "c04_successor_recorded_route_verified": true,
   "c04_controller_sha256": "4146468f043e9e4f568ae5c0d2fbe1dab8b51bbce6fea0ccd7150dab81abf417",
   "validated_c04_coordinate": "marriott_international/C04",
-  "c04_source_only_existing_root_verified": true
+  "c04_source_only_existing_root_verified": true,
+  "c04_mixed_old_root_no_acquisition_verified": true
 }

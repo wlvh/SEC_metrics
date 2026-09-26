@@ -3039,7 +3039,7 @@
     }
   },
   "c04_normal_refresh_20260927": {
-    "status": "RECORDED_AND_REAL_ZERO_CALL_C04_PASS_SCOPE_REVIEW_FOUND_TWO_P2",
+    "status": "C04_SCOPED_REFRESH_REPAIR_OFFLINE_PASS_REAL_GET_REVIEW_PENDING",
     "code_paths": [
       "scripts/vnext/ordinary_refresh_cycle.py",
       "scripts/vnext/continuous_sec_acquisition.py",
@@ -3113,6 +3113,35 @@
       "downstream_note": "Stacked #47 comparison base may need its maintainer to import new current bindings; no #47 artifacts were edited."
     },
     "evidence_path": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/README.md",
-    "independent_review_path": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/independent-review/conclusion.md"
+    "independent_review_path": "docs/evidence/issue28_continuous/c04-normal-refresh-20260926/independent-review/conclusion.md",
+    "scope_repair": {
+      "status": "TARGETED_C04_ONLY_AND_MIXED_STALE_SCOPE_TESTS_PASS_INDEPENDENT_REVIEW_PENDING",
+      "reviewed_base_sha": "b2f7ed4148f4d26a8d7f63ae9ec860ef54d86172",
+      "changed_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tools/vnext_ordinary_refresh.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "tests/vnext/test_ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py"
+      ],
+      "public_non_c04_metric_route": "OLD_DEFAULT_ROUTE_PRESERVED",
+      "c04_only_source_mode": "MAY_CAPTURE_ONLY_WITH_EXPLICIT_C04_ONLY_METRIC_SCOPE",
+      "mixed_old_processing_root": "NO_SEC_CLAIMS_C04_SAVED_CANDIDATE_ALLOWED_OTHER_METRICS_BLOCKED",
+      "missing_new_c04_spec_only": "DOES_NOT_BLOCK_MIXED_CURRENT_PROCESSING_SCOPE",
+      "current_marriott_c04_source_map": "29_OF_29_CURRENT_REQUIRED_URLS_IN_EXPLICIT_C04_SOURCE_PROOFS",
+      "tests": [
+        "10_BOUNDARY_PASS",
+        "2_SOURCE_SCOPE_PASS_70_002_SECONDS",
+        "1_TWO_VERSION_RECORDED_REFRESH_PASS_201_091_SECONDS"
+      ],
+      "evidence_path": "docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/README.md",
+      "continuous_closure_hash": "sha256:56c6e144817f1eb16a9328d9778f38b1010a107db7f9b6c0176bfa8f7475dd93",
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
+      "independent_review": "PENDING_EXACT_REPAIR_SHA"
+    }
   }
 }

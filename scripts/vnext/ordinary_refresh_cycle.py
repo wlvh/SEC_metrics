@@ -10,7 +10,8 @@ from sec_http import parse_request_log_rows, validate_request_log_manifest
 from git_workspace import first_symlink_in_path
 from .canonical import content_hash, sha256_file, strict_json_file
 from .continuous_call_policy import need
-from .continuous_sec_acquisition import SecAcquisitionSession, initialize_source_inputs
+from .continuous_sec_acquisition import (C04_SOURCE_ONLY_STALE_RULE_PATHS,
+    SecAcquisitionSession, initialize_source_inputs)
 from .normal_source_authority import ROOT
 from .normal_source_requirements import discover_saved_source_requirements, source_dependency_satisfied
 from .normal_annual_input import _registry_rows
@@ -80,6 +81,22 @@ def _call_accounting(captures, before, after, live, capture_error):
         'calls': {'provider': 0, 'paid': 0, 'sec': None if unknown else own_sec if live else 0}}
 
 
+def _historical_c04_processing_copies(root, requirement):
+    """Identify the exact old rule copies kept outside current C04 Run roots."""
+    if not root.exists():
+        return False
+    bindings = requirement['parent_snapshot']['execution_authority']['files']
+    for relative in C04_SOURCE_ONLY_STALE_RULE_PATHS:
+        expected = bindings.get(relative)
+        if expected is None:
+            continue
+        path = root/relative
+        if (path.exists() and (first_symlink_in_path(path=path) is not None
+                or {'sha256': sha256_file(path=path), 'size': path.stat().st_size} != expected)):
+            return True
+    return False
+
+
 def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=None, max_sec_requests, max_provider_requests=0, recorded_native_wire_factory=None, c04_successor=False):
     """Discover inputs automatically, capture each URL at most once, then update."""
     need(type(max_sec_requests) is int and 0 <= max_sec_requests <= 80, 'ORDINARY_REFRESH_FINITE_REQUEST_LIMIT_REQUIRED')
@@ -98,6 +115,9 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
          and set(metrics) <= set(strategy['metrics']), 'ORDINARY_REFRESH_METRIC_SCOPE_INVALID')
     need(not c04_successor or 'C04' in metrics,
          'ORDINARY_REFRESH_C04_ROUTE_REQUIRES_C04')
+    c04_only = c04_successor and metrics == ['C04']
+    mixed_stale = (c04_successor and not c04_only and
+        _historical_c04_processing_copies(session.data_root, session.requirement))
     state_root = Path(state_root)
     need(state_root.is_absolute() and first_symlink_in_path(path=state_root) is None,
          'ORDINARY_REFRESH_ABSOLUTE_UNALIASED_STATE_REQUIRED')
@@ -110,14 +130,18 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
     _check_session(session, c04_successor=c04_successor)
     with session.ledger.locked():
         initialize_source_inputs(root=session.data_root, requirement=session.requirement,
-                                 c04_source_only=c04_successor)
+                                 c04_source_only=c04_only or mixed_stale)
         before = session.ledger.snapshot()['counts']
     failed = _failed_urls(session.data_root)
-    attempted, captures, discoveries, errors = set(), [], {}, {}
+    attempted, captures, discoveries = set(), [], {}
+    errors = ({company: [{'stage': 'SOURCE_SCOPE',
+        'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_NO_ACQUISITION'}]
+        for company in selected} if mixed_stale else {})
     capture_error = False
+    capture_limit = 0 if mixed_stale else max_sec_requests
     # One request per company per pass keeps an unrelated company progressing
     # when another company's metadata or original source is unavailable.
-    for _ in range(max_sec_requests):
+    for _ in range(capture_limit):
         progressed = False
         for company in selected:
             try:
@@ -129,13 +153,13 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                 continue
             if not pending:
                 continue
-            if len(captures) >= max_sec_requests:
+            if len(captures) >= capture_limit:
                 break
             request = pending[0]; url = request['source_url']; attempted.add(url)
             try:
                 result = session.capture(company_id=company, url=url,
                     refresh_metadata=request['refresh_for_new_discovery'],
-                    **({'source_only_c04': True} if c04_successor else {}))
+                    **({'source_only_c04': True} if c04_only else {}))
                 captures.append({'company_id': company, 'source_url': url, 'result': result})
                 if result['status'] not in {'SUCCEEDED', 'EXISTING_VERIFIED_SOURCE_REUSED'}:
                     failed.add(url)
@@ -147,7 +171,7 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                 # the original ledger decides which channel is still usable.
                 break
         else:
-            if progressed and len(captures) < max_sec_requests:
+            if progressed and len(captures) < capture_limit:
                 continue
         break
     with session.ledger.locked():
@@ -189,12 +213,19 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                             'error_type':type(error).__name__,'reason':str(error)}
                 native_attempts.append(native)
         ordinary = [metric for metric in requested if not (c04_successor and metric == 'C04')]
-        try:
-            updates = run_company(state_root=Path(state_root) / company, source_root=session.data_root,
-                company_id=company, metric_ids=ordinary,
-                native_assessment_mode='LIVE' if session.ledger.live else 'RECORDED_TEST_ONLY',native_assessment_ledger=session.ledger) if ordinary else {'metrics': [], 'status': 'UPDATES_INCOMPLETE'}
-        except Exception as error:
-            updates = {'status': 'UPDATE_BLOCKED', 'metrics': [], 'error_type': type(error).__name__, 'reason': str(error)}
+        if mixed_stale:
+            updates = {'status': 'UPDATES_INCOMPLETE', 'metrics': [{
+                'metric_id': metric, 'status': 'UPDATE_BLOCKED',
+                'reason': 'ORDINARY_REFRESH_CURRENT_PROCESSING_INPUT_REQUIRED',
+                'last_verified_candidate': None, 'production_authorized': False}
+                for metric in ordinary]}
+        else:
+            try:
+                updates = run_company(state_root=Path(state_root) / company, source_root=session.data_root,
+                    company_id=company, metric_ids=ordinary,
+                    native_assessment_mode='LIVE' if session.ledger.live else 'RECORDED_TEST_ONLY',native_assessment_ledger=session.ledger) if ordinary else {'metrics': [], 'status': 'UPDATES_INCOMPLETE'}
+            except Exception as error:
+                updates = {'status': 'UPDATE_BLOCKED', 'metrics': [], 'error_type': type(error).__name__, 'reason': str(error)}
         if c04_successor and 'C04' in requested:
             if ordinary and updates['status'] == 'UPDATE_BLOCKED':
                 updates['metrics'] = [{'metric_id': metric, 'status': 'UPDATE_BLOCKED',
@@ -231,6 +262,7 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
         for i,key in enumerate(('provider','paid')):
             accounting['calls'][key]=(None if unknown else sum(r['counts'][i] for r in native_attempts)) if session.ledger.live else 0
     return {'record_type': 'ORDINARY_BOUNDED_REFRESH_AND_UPDATE', 'schema_version': 1,
+        **({'c04_mixed_source_acquisition_deferred': True} if mixed_stale else {}),
         **({'max_provider_requests':max_provider_requests,'native_preparations':native_attempts} if max_provider_requests else {}),
         'status': 'CALL_ACCOUNTING_UNRESOLVED' if accounting['status'] == 'UNKNOWN' else
                   'UPDATES_READY' if all(r['status'] == 'REFRESHED_UPDATES_READY' for r in results) else 'UPDATES_INCOMPLETE',

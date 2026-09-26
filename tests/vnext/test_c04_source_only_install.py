@@ -8,6 +8,7 @@ from unittest.mock import patch
 from sec_urls import submissions_url
 
 from vnext import normal_run_v3 as normal
+from vnext import ordinary_refresh_cycle as refresh
 from vnext.c04_registration_successor import EVENT_FORMS
 from vnext.continuous_sec_acquisition import (
     initialize_source_inputs, recorded_sec_session)
@@ -61,6 +62,41 @@ class C04SourceOnlyInstallTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Immutable receipt bytes differ'):
                 initialize_source_inputs(root=source, requirement=session.requirement,
                                          c04_source_only=True)
+
+    def test_mixed_old_root_keeps_c04_but_defer_all_source_claims(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
+            source = session.data_root
+            with session.ledger.locked():
+                initialize_source_inputs(root=source, requirement=session.requirement)
+            (source/'config/issue28_normal_results_v2.json').write_bytes(
+                b'{"historical_processing_copy":true}\n')
+            (source/'config/ordinary_public_projection_v1.json').write_bytes(
+                b'{"historical_processing_copy":true}\n')
+            (source/'catalog/r5/C04_auditor_changes_v3.md').unlink()
+            with patch.object(socket.socket, 'connect',
+                              side_effect=AssertionError('NETWORK_FORBIDDEN')), \
+                 patch.object(socket, 'getaddrinfo',
+                              side_effect=AssertionError('DNS_FORBIDDEN')), \
+                 patch('sec_http.urlopen',
+                       side_effect=AssertionError('HTTP_FORBIDDEN')), \
+                 patch.object(session, 'capture',
+                              side_effect=AssertionError('MIXED_OLD_ROOT_MUST_NOT_CLAIM')):
+                result = refresh.refresh_and_process(session=session,
+                    state_root=root/'state', company_ids=['marriott_international'],
+                    metric_ids=['B01', 'C04'], max_sec_requests=2,
+                    c04_successor=True)
+            self.assertEqual([], result['captures'])
+            self.assertTrue(result['c04_mixed_source_acquisition_deferred'])
+            self.assertEqual({'provider': 0, 'paid': 0, 'sec': 0}, result['calls'])
+            company, = result['companies']
+            self.assertEqual('UPDATES_PARTIAL', company['updates']['status'])
+            self.assertEqual(['UPDATE_BLOCKED', 'CANDIDATE_READY'],
+                [row['status'] for row in company['updates']['metrics']])
+            self.assertEqual('SOURCE_SCOPE', company['acquisition_errors'][0]['stage'])
+            with session.ledger.locked():
+                self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
 
 
 if __name__ == '__main__':

@@ -677,6 +677,8 @@ C04正常保存来源更新用 `python3 tools/vnext_normal_update.py --process -
 
 有限来源刷新入口 `python3 tools/vnext_ordinary_refresh.py --company marriott_international --metric C04 --state-root /absolute/persistent-update-root --max-sec-requests 0 --max-provider-requests 0 --output /absolute/new-report.json` 现在显式选择同一C04后继；共享`ordinary_refresh_cycle.refresh_and_process`默认仍使用原路线。`tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest`以两份真实保存的Marriott清单及Company Facts逐次录制刷新，经来源发现、获取会话、后继Run、版本保留及旧版重读，全部禁网、真实调用0。旧实际来源根里的三项历史处理副本不会为C04原地改写；新Run安装当前规则，不相关规则漂移仍拒绝，见`tests.vnext.test_c04_source_only_install`。只刷新清单而没有刷新所需Company Facts，或本次完全没有刷新元数据时，协调器仍可报告整体`UPDATES_INCOMPLETE`；不能把C04候选存在误写成来源已是最新。当前绑定、原账本零调用候选及独立冷读见`docs/evidence/issue28_continuous/c04-normal-refresh-20260926/`，不等于实际新财报获取或生产调度。
 
+后继范围回修见`docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/`：公开CLI的B01-only选择仍走原控制器；C04来源副本兼容只允许单独C04请求用于实际获取。旧处理副本存在时混合B01+C04调用不得借C04标记发任何SEC请求，现有保存来源的C04可继续形成候选，B01标为当前处理输入未满足，整体仍未完成；这不是旧根已自动更新所有普通指标。
+
 ### 普通主体接续与期末余额
 
 来源规则与十公司原生组件用 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_instant_balance_amendment tests.vnext.test_normal_companyfacts_results` 验证；两模块均在source-material层。实际Part III修订和链接更正保留不同证明，覆盖额外用途、错原报告日、正文更正/余额、已发生重述、封面标志、引语和新增原生财务事实。缺少修订原件必须拒绝源重放。

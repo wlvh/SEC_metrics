@@ -11,6 +11,7 @@ from sec_http import write_immutable_bytes
 from git_workspace import first_symlink_in_path
 from vnext.continuous_sec_acquisition import live_sec_session
 from vnext.ordinary_refresh_cycle import refresh_and_process
+from vnext.canonical import strict_json_file
 
 
 def main(argv=None):
@@ -27,9 +28,12 @@ def main(argv=None):
             or output.exists() or ROOT == output or ROOT in output.parents
             or any((p / 'outputs/active_publication.json').exists() for p in output.parents)):
         parser.error('Output must be a new unaliased external report file')
+    configured = (args.metric if args.metric is not None else
+        strict_json_file(path=ROOT/'config/source_strategy_registry.json')['metrics'])
+    c04_successor = 'C04' in configured
     result = refresh_and_process(session=live_sec_session(), state_root=args.state_root,
         company_ids=args.company, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
-        max_provider_requests=args.max_provider_requests, c04_successor=True)
+        max_provider_requests=args.max_provider_requests, c04_successor=c04_successor)
     write_immutable_bytes(path=output, content=(json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode())
     print(json.dumps({'status': result['status'], 'calls': result['calls'], 'output': str(output)}, ensure_ascii=False))
     return 0 if result['status'] == 'UPDATES_READY' else 2

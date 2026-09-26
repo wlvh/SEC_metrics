@@ -13,6 +13,9 @@ from vnext.canonical import sha256_file
 from vnext.canonical import strict_json_file
 from vnext.requirements import load_requirement_snapshot
 from vnext import c04_update_cycle
+from tools import vnext_ordinary_refresh as refresh_cli
+from contextlib import redirect_stdout
+import io
 
 
 class OrdinaryRefreshBoundaryTest(unittest.TestCase):
@@ -132,6 +135,27 @@ class OrdinaryRefreshBoundaryTest(unittest.TestCase):
             self.assertEqual('UPDATES_PARTIAL', company['updates']['status'])
             self.assertEqual(['UPDATE_BLOCKED', 'CANDIDATE_READY'],
                 [row['status'] for row in company['updates']['metrics']])
+
+    def test_public_cli_keeps_non_c04_metric_on_old_route(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            with patch.object(refresh_cli, 'live_sec_session', return_value=object()), \
+                 patch.object(refresh_cli, 'refresh_and_process', return_value={
+                     'status': 'UPDATES_READY', 'calls': {'provider': 0, 'paid': 0, 'sec': 0}}) as run, \
+                 patch.object(refresh_cli, 'write_immutable_bytes'), \
+                 redirect_stdout(io.StringIO()):
+                code = refresh_cli.main(['--company', 'marriott_international',
+                    '--metric', 'B01', '--state-root', str(root/'state'),
+                    '--max-sec-requests', '0', '--output', str(root/'report.json')])
+            self.assertEqual(0, code)
+            self.assertFalse(run.call_args.kwargs['c04_successor'])
+
+    def test_missing_new_c04_spec_alone_does_not_block_mixed_scope(self):
+        with tempfile.TemporaryDirectory() as directory:
+            requirement = load_requirement_snapshot(
+                snapshot_dir=refresh.ROOT/'requirements/issue_28_v14')
+            self.assertFalse(refresh._historical_c04_processing_copies(
+                Path(directory).resolve(), requirement))
 
 
 if __name__ == '__main__':
