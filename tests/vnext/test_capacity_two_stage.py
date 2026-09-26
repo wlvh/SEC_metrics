@@ -108,9 +108,12 @@ class CapacityTwoStageTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'TWO_STAGE_EXECUTION_PROOF_REQUIRED'):
                 execute_capacity_assessment(prepared=prepared,
                                             ledger=SimpleNamespace(live=True))
-            with self.assertRaisesRegex(ValueError, 'TWO_STAGE_LIVE_EXECUTION_NOT_AUTHORIZED'):
+            with self.assertRaisesRegex(ValueError, 'ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED'):
                 execute_capacity_interpretation(prepared=prepared,
                                                 ledger=SimpleNamespace(live=True))
+            with self.assertRaisesRegex(ValueError, 'ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED'):
+                execute_capacity_interpretation(prepared=prepared,
+                                                ledger=SimpleNamespace(live=False))
             books = followup['response_protocol']['classification_codebooks']
             response = {'units': [{'unit_index': index, 'reviewed': True,
                 'unresolved': [], 'calculation_limits': []}
@@ -130,7 +133,8 @@ class CapacityTwoStageTest(unittest.TestCase):
 
         _, supplier_response, supplier, _ = case(
             'A supplier has manufacturing capacity for its own products.')
-        self.assertEqual(supplier()['original_validator_result']['unresolved'], [])
+        self.assertEqual(supplier()['original_validator_result']['unresolved'],
+                         ['B13_ASSERTION_SCOPE_VALIDATION_SUSPENDED'])
         overfull = deepcopy(supplier_response)
         overfull['findings'] *= 29
         with self.assertRaisesRegex(ValueError, 'ASSERTION_SCOPE_FINDING_CAP_EXCEEDED'):
@@ -191,14 +195,22 @@ class CapacityTwoStageTest(unittest.TestCase):
                  'stage_proof': None}
         with patch('vnext.capacity_two_stage.validate_registered_scan_stage',
                    return_value=stage), \
-             self.assertRaisesRegex(ValueError, 'B13_SOURCE_ASSESSMENT_UNRESOLVED'):
+             self.assertRaisesRegex(ValueError, 'ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED'):
             build_registered_interpretation_acceptance(
                 prepared=prepared, plan={}, response_body=raw, stage_record={})
         _, _, synonymous, _ = case(
             'Our contract manufacturers have manufacturing capacity, '
             'including production capacity, for current demand.',
             kind='physical_capacity_context', subject='TARGET_REGISTRANT')
-        self.assertEqual(synonymous()['original_validator_result']['unresolved'], [])
+        self.assertEqual(synonymous()['original_validator_result']['unresolved'],
+                         ['B13_ASSERTION_SCOPE_VALIDATION_SUSPENDED'])
+        _, _, false_history, _ = case(
+            'Our contract manufacturers had manufacturing capacity for obsolete '
+            'products, but currently have production capacity for current demand.',
+            kind='historical_statement', subject='TARGET_REGISTRANT',
+            timing='HISTORICAL')
+        self.assertIn('B13_ASSERTION_SCOPE_VALIDATION_SUSPENDED',
+                      false_history()['original_validator_result']['unresolved'])
 
     def test_scanned_nonrequired_sales_can_be_correctly_excluded(self):
         sales = next(block for unit in self.source['units']

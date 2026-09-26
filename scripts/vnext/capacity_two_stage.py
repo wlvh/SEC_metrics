@@ -363,8 +363,11 @@ def build_interpretation_acceptance(*, prepared, plan, response_body,
     """Native B13 Evidence binds both actual stage executions, not V4 bytes."""
     from pathlib import Path
     from .capacity_native_assessment import _build_acceptance
-    original = saved_scan_stage(prepared=prepared, scan_path=scan_path)
     interpretation = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
+    _need(interpretation.get('source_reference_contract', {}).get('version')
+          != ASSERTION_SCOPED_VERSION,
+          'B13_ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED')
+    original = saved_scan_stage(prepared=prepared, scan_path=scan_path)
     link = interpretation['two_stage_contract']
     _need(link.get('scan_execution_proof') == original['stage_proof'],
           'B13_TWO_STAGE_SAVED_SCAN_PROOF_CHANGED')
@@ -452,9 +455,12 @@ def build_registered_interpretation_acceptance(*, prepared, plan,
     """Recheck both stages from a creator-saved, portable input record."""
     from pathlib import Path
     from .capacity_native_assessment import _build_acceptance
+    request = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
+    _need(request.get('source_reference_contract', {}).get('version')
+          != ASSERTION_SCOPED_VERSION,
+          'B13_ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED')
     stage = validate_registered_scan_stage(prepared=prepared,
                                           stage_record=stage_record)
-    request = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
     source = strict_json_loads(text=prepared.source_bytes.decode('utf-8'))
     checked = validate_interpretation(request=stage['prior_request'],
         scan_result=stage['scan_result'],
@@ -721,6 +727,10 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
                 checked['unresolved'].append(
                     'B13_ASSERTION_EXCLUDED_CURRENT_TARGET_REQUIRES_REVIEW')
         checked['unresolved'].extend(scope_unresolved)
+        # Two bounded reviews found further semantic counterexamples. Keep
+        # this explicit successor as an offline diagnostic until a new,
+        # separately reviewed contract establishes assertion ownership.
+        checked['unresolved'].append('B13_ASSERTION_SCOPE_VALIDATION_SUSPENDED')
         checked['request_id'] = interpretation['request_id']
         checked['response'] = strict_json_loads(text=raw_response.decode('utf-8'))
     else:

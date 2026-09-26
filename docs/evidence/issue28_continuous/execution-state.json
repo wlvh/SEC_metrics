@@ -1418,6 +1418,24 @@
       "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md",
       "verdict": "NEEDS_FIX_P2_PRONOUN_ANTECEDENT_LOST_AND_SYNONYM_DOUBLE_COUNT",
       "tool_call_count_note": "Agent did not report a count; no count inferred."
+    },
+    {
+      "task_name": "review_b13scope_a96fbe2",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "config/issue28_continuous_calls_v1.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/"
+      ],
+      "patch_sha": "a96fbe21756dceca007e15c84bb3380251847517",
+      "spawned_at": "2026-09-26T05:34:29Z",
+      "ended_at": "2026-09-26T05:44:37Z",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-repair/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_CURRENT_HISTORICAL_FALSE_ACCEPTANCE_AND_OVERLAP_FALSE_REJECTION",
+      "tool_call_count_note": "Agent did not report a count; no count inferred."
     }
   ],
   "ci_capacity_20260922": {
@@ -2695,7 +2713,7 @@
     "review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md"
   },
   "b13_assertion_scope_repair_20260926": {
-    "status": "BOUNDED_P2_REPAIR_RECORDED_CHAIN_PASS_NEW_SHA_REVIEW_PENDING",
+    "status": "SECOND_SCOPED_REVIEW_NEEDS_FIX_NATIVE_CREDIT_MUST_STAY_BLOCKED",
     "precursor_patch_sha": "151ce51f2217a2b1bd4e5b71492d47d67c2e9242",
     "precursor_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md",
     "repair": "PRONOUN_CLAUSE_INCLUDES_ANTECEDENT_AND_EXCLUDED_PHYSICAL_TERMS_CHECKED_INDIVIDUALLY_WITHOUT_COUNTING_TERMS_AS_ASSERTIONS",
@@ -2712,10 +2730,14 @@
     "provider_wiring": "PASS_CURRENT_MOCKED_FACTORY_AND_CONTROLLER",
     "sec_wiring": "PASS_BYTE_REUSE_UNCHANGED_SEC_CODE",
     "previous_binding_and_receipts_modified": false,
-    "real_calls": [0, 0, 0],
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
     "new_b13_live_authorization": false,
     "mixed_190_whole_company_run": "NOT_VERIFIED",
-    "independent_review": "PENDING_EXACT_REPAIR_SHA",
+    "independent_review": "NEEDS_FIX_EXACT_SHA_A96FBE21",
     "issue_47_branch_or_ledger_used": false,
     "shared_with_47": {
       "scope_paths": [
@@ -2730,6 +2752,48 @@
         "capacity_two_stage.validate_interpretation"
       ],
       "default_v5_path_behavior_changed": false,
+      "current_v15_binding_changed": true,
+      "frozen_prior_snapshots_changed": false,
+      "other_branch_touched": false
+    },
+    "review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-repair/conclusion.md"
+  },
+  "b13_v6_native_suspension_20260926": {
+    "status": "V6_NATIVE_ACCEPTANCE_AND_SECOND_STAGE_EXECUTION_SUSPENDED_AFTER_TWO_NEEDS_FIX_REVIEWS",
+    "precursor_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md",
+    "second_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-repair/conclusion.md",
+    "current_contract": "V6_OFFLINE_DIAGNOSTIC_ONLY_NO_NATIVE_RESULT_CREDIT",
+    "second_stage_claim_rejected_before_ledger_mutation": true,
+    "native_replay_and_registered_read_rejected": true,
+    "semantic_diagnostic_always_unresolved": true,
+    "v5_default_changed": false,
+    "saved_190_identity_changed": false,
+    "directed_tests": "32_PASS",
+    "recorded_scan_then_stop_test": "1_PASS_50_261_SECONDS",
+    "recorded_test_counts": [1, 1, 0],
+    "real_ledger_counts_last_read": [143, 143, 49],
+    "new_real_calls": [0, 0, 0],
+    "current_requirement_closure": "sha256:9c02b4772e364f33b311c10b6282dca3a4083ad0aad528d1ad2a75ce33956a3e",
+    "execution_authority_hash": "sha256:ecaa9a4d7a9986006154caba08e227b4a35160f4678f4f04d85982e82ed1d061",
+    "provider_wiring": "PASS_CURRENT_MOCKED_FACTORY_AND_CONTROLLER",
+    "sec_wiring": "PASS_BYTE_REUSE_UNCHANGED_SEC_ACQUISITION",
+    "new_scheme_real_execution_authorized": false,
+    "current_complete_b13_company_results": 0,
+    "independent_review": "PENDING_EXACT_SUSPENSION_SHA",
+    "issue_47_branch_or_ledger_used": false,
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "config/issue28_continuous_calls_v1.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/decision_register.json"
+      ],
+      "functions": [
+        "continuous_semantic_calls.execute_capacity_interpretation",
+        "native_assessment_replay._acceptor"
+      ],
+      "default_v5_and_non_b13_behavior_changed": false,
       "current_v15_binding_changed": true,
       "frozen_prior_snapshots_changed": false,
       "other_branch_touched": false

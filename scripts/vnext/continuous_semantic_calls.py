@@ -709,9 +709,11 @@ def execute_capacity_interpretation(*, prepared, ledger, recorded_wire=None):
     from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, SCANNED_VERSION
     from .capacity_two_stage import saved_scan_stage
     request = strict_json_loads(text=prepared.request_bytes.decode())
+    need(request.get('source_reference_contract', {}).get('version')
+         != ASSERTION_SCOPED_VERSION,
+         'B13_ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED')
     need(request.get('metric_id') == 'B13'
-         and request.get('source_reference_contract', {}).get('version') in {
-             SCANNED_VERSION, ASSERTION_SCOPED_VERSION},
+         and request.get('source_reference_contract', {}).get('version') == SCANNED_VERSION,
          'B13_TWO_STAGE_INTERPRETATION_REQUIRED')
     need(not ledger.live, 'B13_TWO_STAGE_LIVE_EXECUTION_NOT_AUTHORIZED')
     proof = request['two_stage_contract']['scan_execution_proof']
