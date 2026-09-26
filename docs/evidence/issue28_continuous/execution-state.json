@@ -3749,5 +3749,36 @@
       "issue47_branch_or_ledger_touched": false
     },
     "independent_review_path": "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/independent-review/conclusion.md"
+  },
+  "c04_annual_resume_repair_20260927": {
+    "status": "SYNTHETIC_AUTHENTICATED_RESUME_MISSING_ANNUAL_MOCK_CAPTURE_PASS_REVIEW_PENDING",
+    "reviewed_base_sha": "a5a3cebaa8d640821c0054eba1973992f597608c",
+    "prior_review": "NEEDS_FIX_PRECAPTURE_COMPLETE_CASE_REBUILDS_MISSING_ANNUAL",
+    "prior_review_path": "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/independent-review/conclusion.md",
+    "code_path": "scripts/vnext/ordinary_refresh_cycle.py",
+    "function": "refresh_and_process",
+    "change": "after authenticated one-source resume, exact missing current annual URL and SAVED_SOURCE_MISSING error may pass the pre-capture C04 proof gate; other errors and unlisted URLs still fail",
+    "test": "FOUR_FAST_SYNTHETIC_SCOPE_AND_MOCKED_RESUME_CAPTURE_PASS",
+    "prior_report_and_sec_capture_mocked_in_new_test": true,
+    "unchanged_existing_current_source_chains_reused": true,
+    "ordinary_v13_closure_unchanged": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+    "continuous_v14_closure": "sha256:b9f758c266e3365a1e4501bd4b72321455457e1cef0494cc10947a71fc70f3d4",
+    "execution_authority_hash": "sha256:ff544ec5992c7406f8e57b50142d8602516381dd612ad62e0be9558e7d7a0086",
+    "real_new_calls": [
+      0,
+      0,
+      0
+    ],
+    "real_ledger_ordinal": 194,
+    "full_new_fiscal_year_update_proven": false,
+    "evidence": "docs/evidence/issue28_continuous/c04-annual-resume-repair-20260927/README.md",
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_47": {
+      "file": "scripts/vnext/ordinary_refresh_cycle.py",
+      "function": "refresh_and_process",
+      "old_default_changed": false,
+      "only_unfrozen_v14_binding_changed": true,
+      "issue47_branch_or_ledger_touched": false
+    }
   }
 }

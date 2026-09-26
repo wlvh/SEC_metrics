@@ -358,12 +358,17 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                 if resumed is not None:
                     from .normal_run_v3 import prepare_case
                     from .c04_registration_successor import EVENT_FORMS
-                    current_case = prepare_case(data_root=session.data_root,
-                        company_id=company, metric_id='C04',
-                        c04_event_forms=EVENT_FORMS)
-                    need(url in resumed['allowed_next_urls']
-                         and url in {proof['source_url'] for proof in
-                                     current_case['source_proofs']},
+                    try:
+                        current_case = prepare_case(data_root=session.data_root,
+                            company_id=company, metric_id='C04',
+                            c04_event_forms=EVENT_FORMS)
+                        source_bound = url in {proof['source_url'] for proof in
+                                               current_case['source_proofs']}
+                    except ValueError as error:
+                        source_bound = (_c04_missing_current_annual([request],
+                            discovery) == [request]
+                            and str(error) == 'SAVED_SOURCE_MISSING:' + url)
+                    need(url in resumed['allowed_next_urls'] and source_bound,
                          'ORDINARY_REFRESH_RESUME_NEXT_SOURCE_NOT_C04_BOUND')
                     with session.ledger.locked():
                         current_ledger = session.ledger.snapshot()

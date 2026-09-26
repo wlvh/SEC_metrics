@@ -1,6 +1,6 @@
 {
   "record_type": "ORDINARY_REFRESH_OFFLINE_WIRING",
-  "execution_authority_hash": "sha256:8d45a9bd72b3e4c51d23b3952ee879bc1e88ed4d46052ee9a967233dff09e8c6",
+  "execution_authority_hash": "sha256:ff544ec5992c7406f8e57b50142d8602516381dd612ad62e0be9558e7d7a0086",
   "calls": [
     0,
     0,
@@ -18,7 +18,7 @@
   "actual_new_fiscal_year_verified": false,
   "full390_acceptance": false,
   "production_authorized": false,
-  "independent_review": "MISSING_CURRENT_ANNUAL_BOOTSTRAP_REVIEW_PENDING; previous scoped conclusions retained",
+  "independent_review": "DECLARED_ANNUAL_BOOTSTRAP_RESUME_REPAIR_REVIEW_PENDING; prior a5a3ceba NEEDS_FIX retained",
   "receipt_installation": "CURRENT_EXECUTION_BOUND",
   "evidence": {
     "docs/evidence/issue28_continuous/ordinary-refresh-cycle/current-lifecycle.log": "52344cb3020252d2fdfeb638c14a67b4f2dbb16c33eb3e185ca0f9db037b921b",
@@ -68,7 +68,9 @@
     "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/short-boundary.log": "46df85bcf7701fd5e3b385a18931e7709186b9a75dc68de5748c380c7ee74ef2",
     "docs/evidence/issue28_continuous/c04-resume-budget-compat-20260927/binding-current.log": "6fe83b2dae61e8c0d8c888cce9ac04eef49244cea4a97eff3cb3631c89b8395e",
     "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/fast-bootstrap.log": "872635470ae8412ab14f1c0dbbf02634619338278c996d41119f3d4925d68d39",
-    "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/binding-current.log": "fc0afd09cf3a8e012e75c5fd08239c46e2e376692bfc8d7261ed6cd840d032ae"
+    "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/binding-current.log": "fc0afd09cf3a8e012e75c5fd08239c46e2e376692bfc8d7261ed6cd840d032ae",
+    "docs/evidence/issue28_continuous/c04-annual-resume-repair-20260927/fast-resume.log": "5bbb9ed27d17aa5129e3c0919df7e67f40aa3afbbd82febe7911d41d3c16ea53",
+    "docs/evidence/issue28_continuous/c04-annual-resume-repair-20260927/binding-current.log": "565f12078dfd99d8eea8600659b1b7c2880895a39e4c461509d4c146e514a148"
   },
   "c04_successor_recorded_route_verified": true,
   "c04_controller_sha256": "4146468f043e9e4f568ae5c0d2fbe1dab8b51bbce6fea0ccd7150dab81abf417",

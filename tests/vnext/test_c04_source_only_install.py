@@ -258,6 +258,76 @@ class C04MissingAnnualBootstrapFastTest(unittest.TestCase):
             with session.ledger.locked():
                 self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
 
+    def test_authenticated_resume_mock_can_capture_declared_missing_annual(self):
+        cik = 1048286
+        accession = '0001048286-27-000001'
+        annual_url = accession_document_url(cik=cik, accession=accession,
+                                            document_name='new-annual.htm')
+        inventory_url = submissions_url(cik=cik)
+        discovery = {'record_type': 'ORDINARY_SOURCE_REQUIREMENTS',
+            'company_id': 'marriott_international', 'primary_cik': str(cik),
+            'requirements_id': 'recorded-discovery',
+            'status': 'METADATA_REFRESH_REQUIRED', 'limitations': [],
+            'metadata_declared_annual_selection': {'filing': {
+                'form': '10-K', 'accessionNumber': accession,
+                'primaryDocument': 'new-annual.htm'}},
+            'requirements': [
+                {'source_url': inventory_url,
+                 'roles': ['sec_submissions_inventory'],
+                 'saved_status': 'VERIFIED_SAVED_SOURCE',
+                 'refresh_for_new_discovery': True, 'proof': {}},
+                {'source_url': annual_url, 'roles': ['current_annual_primary'],
+                 'saved_status': 'MISSING_SAVED_SOURCE',
+                 'refresh_for_new_discovery': False}]}
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
+            with session.ledger.locked():
+                snapshot = session.ledger.snapshot()
+            prior = {'prior_source_url': inventory_url,
+                'allowed_next_urls': [annual_url], 'prior_ordinal': 0,
+                'prior_intent_id': snapshot['previous_intent_id'],
+                'source_ledger_sha256': 'recorded-source-ledger'}
+            captured = []
+            def capture(**kwargs):
+                captured.append(kwargs)
+                return {'status': 'SUCCEEDED', 'calls': [0, 0, 0]}
+            with patch.object(refresh, '_check_session'), \
+                 patch.object(refresh, 'initialize_source_inputs'), \
+                 patch.object(refresh, '_historical_c04_processing_copies',
+                              return_value=True), \
+                 patch.object(refresh, '_failed_urls', return_value=set()), \
+                 patch.object(refresh, 'discover_saved_source_requirements',
+                              return_value=discovery), \
+                 patch.object(refresh, '_resume_one_c04_source',
+                              return_value=prior), \
+                 patch.object(refresh, 'sha256_file',
+                              return_value='recorded-source-ledger'), \
+                 patch('vnext.normal_run_v3.prepare_case',
+                       side_effect=ValueError('SAVED_SOURCE_MISSING:' + annual_url)), \
+                 patch.object(session, 'capture', side_effect=capture), \
+                 patch('vnext.c04_update_cycle.run_company', return_value={
+                     'metrics': [{'metric_id': 'C04', 'status': 'UPDATE_BLOCKED'}]}):
+                result = refresh.refresh_and_process(session=session,
+                    state_root=root/'state',
+                    company_ids=['marriott_international'],
+                    metric_ids=['B01', 'C04'], max_sec_requests=1,
+                    c04_successor=True, resume_from=root/'prior-report.json')
+                with patch('vnext.normal_run_v3.prepare_case',
+                           side_effect=ValueError('UNRELATED_SOURCE_CONFLICT')):
+                    unrelated = refresh.refresh_and_process(session=session,
+                        state_root=root/'state',
+                        company_ids=['marriott_international'],
+                        metric_ids=['B01', 'C04'], max_sec_requests=1,
+                        c04_successor=True, resume_from=root/'prior-report.json')
+            self.assertEqual([annual_url], [item['url'] for item in captured])
+            self.assertEqual([True], [item['source_only_c04'] for item in captured])
+            self.assertEqual('UPDATES_INCOMPLETE', result['status'])
+            self.assertEqual('DISCOVERY', unrelated['companies'][0]
+                             ['acquisition_errors'][-1]['stage'])
+            with session.ledger.locked():
+                self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
+
 
 if __name__ == '__main__':
     unittest.main()
