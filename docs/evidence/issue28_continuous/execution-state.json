@@ -3899,6 +3899,15 @@
     "provider_and_native_entries_default_closed": true,
     "old_v5_v6_request_bytes_equal_to_pushed_parent_on_pinned_fixture": true,
     "old_v5_checked_result_equal_on_pinned_fixture": true,
+    "old_190_read_only_replay_current_code": {
+      "status": "PASS_WITH_PINNED_OFFLINE_TOKENIZER",
+      "source_and_request_bytes_equal_original": true,
+      "original_acceptance_receipt_id": "sha256:bd0a24265c62e0f3573a1aab5d7848296a7d9bc4e0d11530308c548eea2058f2",
+      "new_provider_calls": 0,
+      "v7_mixed_company_reuse_proven": false,
+      "first_system_python_attempt": "FAILED_BEFORE_TARGET_TOKENIZER_DEPENDENCY_UNAVAILABLE",
+      "evidence": "docs/evidence/issue28_continuous/b13-claim-context-v7-20260927/read-only-190-current-head.log"
+    },
     "targeted_tests": "PASS_31_DIRECTED_SYNTHETIC_AND_SAVED_SOURCE_FIXTURE",
     "full_enphase_ford_saved_source_measurement": "PENDING",
     "full_native_two_stage_company_cold_read": "PENDING",
