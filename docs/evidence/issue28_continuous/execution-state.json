@@ -1667,6 +1667,28 @@
       "total_agent_tool_call_cap": 80,
       "prior_agent_tool_calls": 40,
       "tool_call_count_note": "Agent followup reported 16 additional nested tools; cumulative 56 of 80."
+    },
+    {
+      "task_name": "review_c04annual_a5a3ceb",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "c04_missing_annual",
+      "scope_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py",
+        "tools/run_fast_tests_v2.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json",
+        "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/"
+      ],
+      "patch_sha": "a5a3cebaa8d640821c0054eba1973992f597608c",
+      "spawned_at": "2026-09-26T22:13:44.280250Z",
+      "ended_at": "2026-09-26T22:23:24.239924Z",
+      "tool_calls": 43,
+      "result_path": "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_MISSING_ANNUAL_RESUME_PRECAPTURE_REQUIRES_COMPLETE_CASE",
+      "tool_call_count_note": "Agent reported 25 functions.exec orchestrations and 43 nested tools."
     }
   ],
   "ci_capacity_20260922": {
@@ -3715,7 +3737,7 @@
     "real_ledger_ordinal": 194,
     "full_new_year_discovery_fetch_run_proven": false,
     "evidence": "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/README.md",
-    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "independent_review": "NEEDS_FIX_MISSING_ANNUAL_RESUME_PRECAPTURE_REQUIRES_COMPLETE_CASE",
     "shared_with_47": {
       "file": "scripts/vnext/ordinary_refresh_cycle.py",
       "functions": [
@@ -3725,6 +3747,7 @@
       "default_behavior_changed": false,
       "only_unfrozen_v14_binding_changed": true,
       "issue47_branch_or_ledger_touched": false
-    }
+    },
+    "independent_review_path": "docs/evidence/issue28_continuous/c04-missing-annual-bootstrap-20260927/independent-review/conclusion.md"
   }
 }
