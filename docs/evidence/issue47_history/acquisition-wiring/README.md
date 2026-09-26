@@ -612,6 +612,45 @@ catalog does not reach yet - one row per probed class - and does not write the
 proposal when the two differ, or when one class gets different answers for
 different years. The approved body and its digest did not move.
 
+The one-answer-per-class refusal checks that the plan's per-company statement
+fits the grants proposed today. It is not a rule that a class must be granted
+alike for every year: a grant approved for some years only is a legitimate
+decision, and the statement would then say so per year, with the check
+changing to match rather than refusing it.
+
+**The injections are now judged, not printed** (review of `a0f51ddc`). The
+three injections above were read by a person: the script printed each run's
+exit status, last line and whether the proposal bytes changed, and exited 0
+whatever they were. Its conclusions stand as read, but it was no evidence that
+a wrong result would be stopped - a syntax, import or any other error also
+exits 1. `not_yet_declarable_injections.py` replaces it (`968076ba`). The
+control must exit 0 with nothing on stderr and reproduce the committed
+proposal byte for byte. Each injection must exit 1, print nothing on stdout,
+write no proposal, and put on stderr exactly the SystemExit message of the
+check it targets, derived from the plan's statement. A timeout fails the case;
+an edit that does not apply once or does not compile stops the run with exit 2
+before anything runs. Run at `968076ba`: all four cases pass, exit 0 (543 s).
+With `--bypass-target-check`, which disables each injection's targeted check,
+the verifier exits 1: the two consistency injections exit 0 and write a
+proposal, and the per-year injection is refused by the consistency check
+instead, which does not count. One-off checks, not kept as modes: an unrelated
+`RuntimeError` and a missing import at the top of the tool each exit 1 and are
+judged not refused; a 5-second timeout fails; a non-compiling edit and one
+whose target text is absent stop the run before anything runs.
+
+Nothing in the checkout is written: the tool's source is edited in memory and
+run with `__file__` set to the real tool, so it reads the real repository,
+while its one plan read and one proposal write go to a temporary directory.
+SIGTERM, SIGINT and SIGHUP sent during a run each killed the running tool,
+removed that directory and left the tool, plan and committed proposal
+unchanged. Not covered: SIGKILL of the verifier, or a host crash, leaves the
+directory behind in the system temp directory, outside the checkout. The
+expected messages follow the plan's statement and the grants' shape. If
+JPMorgan's unreached targets or the annual-chain grant change, the verifier
+fails rather than passing on a different reason, and the injections need
+re-reading, not only re-running. Recorded in `acquisition-plan.json`,
+`revision_5.fault_injections_judged`.
+
 **The ledger path.** Proposed: `/Users/lyuhongwang/.local/state/sec_metrics/
 issue47-historical-sec-v1` — beside Issue #28's root on the same host, so it
 persists with the user's state rather than with a checkout, and is plainly a

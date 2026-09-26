@@ -310,7 +310,51 @@
     0,
     0,
     0
+   ],
+   "script_at": "a0f51ddc; removed at 968076ba and replaced by not_yet_declarable_injections.py",
+   "how_these_results_were_read": "by a person, from each run's printed exit status, last output line and whether the proposal bytes changed; the script asserted none of them and exited 0 whatever they were. The conclusions stand as read. The script was not evidence that a wrong result would be stopped: a syntax, import or any other error also exits 1."
+  },
+  "fault_injections_judged": {
+   "script": "docs/evidence/issue47_history/acquisition-wiring/not_yet_declarable_injections.py",
+   "commit": "968076ba",
+   "what_it_requires": "control: exit 0, nothing on stderr, a proposal byte-identical to the committed one. Each injection: exit 1, nothing on stdout, no proposal written, and stderr exactly the SystemExit message of the check it targets, derived from this plan's statement. A timeout fails the case; any failing case, or a change to the tool, plan or committed proposal during the run, exits 1. An edit that does not apply exactly once, or does not compile, exits 2 before anything runs.",
+   "results": {
+    "CONTROL": "PASS, proposal reproduced byte for byte",
+    "PLAN_STATES_THE_OLD_MEANING": "PASS, THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS",
+    "GRANT_NARROWED_TEXT_UNCHANGED": "PASS, THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS",
+    "GRANT_COVERS_ONLY_SOME_YEARS": "PASS, NOT_YET_DECLARABLE_ANSWER_DIFFERS_BY_TARGET",
+    "exit": 0,
+    "seconds": 543
+   },
+   "bypass_control": {
+    "how": "--bypass-target-check disables, in each injection, the check it targets",
+    "exit": 1,
+    "results": {
+     "CONTROL": "PASS",
+     "PLAN_STATES_THE_OLD_MEANING": "FAIL: exit 0, stderr empty, summary printed, proposal written",
+     "GRANT_NARROWED_TEXT_UNCHANGED": "FAIL: exit 0, stderr empty, summary printed, proposal written",
+     "GRANT_COVERS_ONLY_SOME_YEARS": "FAIL: exit 1 but refused by THE_GRANTS_DO_NOT_MEAN_WHAT_THE_PLAN_SAYS, which is not the targeted check"
+    }
+   },
+   "one_off_checks_not_kept_as_modes": {
+    "an unrelated RuntimeError at the top of the tool": "exit 1, judged not refused",
+    "a missing import at the top of the tool": "exit 1, judged not refused",
+    "a 5-second timeout": "judged a failure",
+    "an edit that does not compile": "INJECTED_SOURCE_DOES_NOT_COMPILE, nothing run",
+    "an edit whose target text is absent": "INJECTION_DID_NOT_APPLY, nothing run"
+   },
+   "isolation": "nothing in the checkout is written: the tool's source is edited in memory and run in a subprocess with __file__ set to the real tool, so it reads the real repository, and its one plan read and one proposal write are redirected into a temporary directory; bytecode caching is off in the subprocess",
+   "exits_measured": "SIGTERM (exit 143), SIGINT (KeyboardInterrupt) and SIGHUP (exit 129) sent to the verifier while the tool was running: each time the tool was killed, the temporary directory removed and the tool, plan and committed proposal unchanged",
+   "not_covered": [
+    "SIGKILL of the verifier or a host crash: the temporary directory stays in the system temp directory, outside the checkout, and a running tool can finish into it",
+    "the expected messages are derived from this plan's statement and the grants' shape; if JPMorgan's unreached targets or the annual-chain grant change, they can stop matching and the verifier fails - it does not pass on a different reason - and the injections need re-reading, not only re-running"
+   ],
+   "calls": [
+    0,
+    0,
+    0
    ]
-  }
+  },
+  "what_the_one_answer_per_class_check_is": "a check that the per-company, per-class statement above fits the grants proposed today, not a rule that a class must be granted alike for every year. A grant approved for some years only is a legitimate decision; the statement then says so per year and the check changes with it, rather than refusing it."
  }
 }
