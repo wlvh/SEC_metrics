@@ -219,9 +219,13 @@ class EverythingTheReDerivationReadsIsAdmittedTest(unittest.TestCase):
         self.assertFalse(any("CIK0002041610" in url for url in admitted))
 
 
-class AnAmendmentThePolicyCannotClassifyClearsNothingTest(unittest.TestCase):
-    """Paramount Global's FY2024 10-K/A says Part III only, in wording the approved
-    pattern does not cover: its sentence goes on past 'such Items'."""
+class AnAmendmentTheClassifierRefusesOnItsMarkupTest(unittest.TestCase):
+    """Paramount Global's FY2024 10-K/A says Part III only. The approved classifier
+    refuses it on markup - thirteen blocks for a three-paragraph note, and a
+    purpose sentence that goes on past 'such Items' - and the whole-note reader
+    (historical_amendment_note) proves the approved class, so the event window
+    is cleared and the statement values are not, exactly as for the successor's
+    Part III amendment."""
 
     @classmethod
     def setUpClass(cls):
@@ -236,11 +240,17 @@ class AnAmendmentThePolicyCannotClassifyClearsNothingTest(unittest.TestCase):
                                                  metric_ids=metric_ids, prepared=self.prepared,
                                                  event_metric_ids=("C01", "E01"))
 
-    def test_the_event_window_is_refused_by_the_policy_with_the_reason(self):
+    def test_the_event_window_is_cleared_under_the_approved_class(self):
+        record = self._admit(["C01"])
+        self.assertTrue(record["admitted"])
+        self.assertEqual(["PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS"],
+                         [item["classification"] for item in record["amendments"]])
+
+    def test_the_statement_values_are_still_refused_by_the_policy(self):
         with self.assertRaises(admission.AmendmentAdmissionError) as raised:
-            self._admit(["C01"])
-        self.assertEqual("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED:FISCAL_EVENT_WINDOW:"
-                         "UNCLASSIFIED(AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED)",
+            self._admit(["B01"])
+        self.assertEqual("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED:ORIGINAL_STATEMENT_VALUES:"
+                         "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS",
                          str(raised.exception))
 
     def test_an_integrity_conflict_is_not_folded_into_the_refusal(self):
@@ -296,23 +306,25 @@ class AnApprovedRefusalIsAWithheldResultOnEveryRouteTest(unittest.TestCase):
                 repo_root=ROOT, company_id=PARAMOUNT, period_selection=chosen)
 
     def test_the_zero_ai_route_withholds_with_the_policy_s_reason(self):
-        expected = {"B01": "ORIGINAL_STATEMENT_VALUES", "C01": "FISCAL_EVENT_WINDOW"}
-        for metric, component in self.zero_ai.items():
-            with self.subTest(metric):
-                self.assertEqual(("WITHHELD", "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED"),
-                                 (component["result"]["publication"],
-                                  component["result"]["reason_code"]))
-                selection = component["input_binding"]["selection"]
-                self.assertEqual("APPROVED_AMENDMENT_POLICY_REFUSAL", selection["category"])
-                self.assertEqual("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED:"
-                                 + expected[metric] + ":UNCLASSIFIED("
-                                 "AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED)",
-                                 selection["amendment_policy_decision"])
+        component = self.zero_ai["B01"]
+        self.assertEqual(("WITHHELD", "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED"),
+                         (component["result"]["publication"], component["result"]["reason_code"]))
+        selection = component["input_binding"]["selection"]
+        self.assertEqual("APPROVED_AMENDMENT_POLICY_REFUSAL", selection["category"])
+        self.assertEqual("HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED:ORIGINAL_STATEMENT_VALUES:"
+                         "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS",
+                         selection["amendment_policy_decision"])
+
+    def test_the_event_route_the_policy_clears_is_answered(self):
+        # The same amendment clears the event window: C01 is counted, not refused.
+        event = self.zero_ai["C01"]
+        self.assertEqual(("PUBLISHED", "PASS"),
+                         (event["result"]["publication"], event["result"]["reason_code"]))
 
     def test_nothing_the_refusal_forbids_is_read_for_a_value(self):
-        event = self.zero_ai["C01"]
-        self.assertEqual([], event["input_binding"]["source_set_manifests"])
-        self.assertIsNone(event["result"]["value"])
+        statement = self.zero_ai["B01"]
+        self.assertEqual([], statement["input_binding"]["source_set_manifests"])
+        self.assertIsNone(statement["result"]["value"])
 
     def test_a_withheld_result_arrives_with_its_dependency_s_result(self):
         """The Run needs B03 with B01; a B03 withheld before B01 was computed

@@ -36,7 +36,7 @@
    "why_paramount_is_8": "the predecessor's four years are in the frame now: four annual primaries and their four accession indexes. FY2024's are saved; FY2021-FY2023's and the chain's prior year are not."
   },
   "B_event_windows_for_the_wired_event_metrics": {
-   "attempts": 1046,
+   "attempts": 1048,
    "attempts_per_filing": 2,
    "certainty": "MEASURED_OVER_SAVED_METADATA",
    "filings": {
@@ -59,7 +59,7 @@
     "E04",
     "E05"
    ],
-   "not_included": "JPMorgan's event windows. Its catalog reaches two periods, so its windows cannot be enumerated until class A's shards land.",
+   "not_included": "JPMorgan's FY2021-FY2024 event windows: its catalog cannot enumerate them until class A's shards land, so they have no measured basis and are outside every grant. Its FY2025 window is enumerable, holds all twenty bodies and nineteen headers, and enters only through the one failed header above.",
    "paramount_predecessor": {
     "documents": [
      "813828|0001193125-25-175027|d52142d8k.htm|2025-08-07",
@@ -77,7 +77,28 @@
     "offline_wiring_verified": "tools/vnext_continuous_sec.py plan accepts both the body and the header of 0001193125-25-036747 as declared dependencies of paramount_skydance_paramount_global, returning OFFLINE_SOURCE_PLAN with calls [0, 0, 0]. The wiring for this class is proven, not assumed.",
     "why": "the nine are named documents on a wired route for a pinned period that is already in scope, not a question about which periods belong to whom. docs/evidence/issue47_history/successor-event-gap/wired.json lists all nine; all nine were confirmed absent from evidence/accession_materials by an exhaustive scan, not by sampling."
    },
-   "why_two": "scripts/vnext/normal_zero_ai_results.py:96 reads the accession's hdr.sgml alongside the document, so an event filing costs a body and a header. Measured against the store: of 186 saved accession directories, 151 hold both and none holds a header without a body."
+   "why_two": "scripts/vnext/normal_zero_ai_results.py:96 reads the accession's hdr.sgml alongside the document, so an event filing costs a body and a header. Measured against the store: of 186 saved accession directories, 151 hold both and none holds a header without a body.",
+   "known_failed_latest_attempts": {
+    "attempts": 2,
+    "what": "two event-window headers whose latest recorded GET failed, so saved_source refuses them as not saved: each blocks every event metric of its window, and C04 too for Salesforce. The ledger holds exactly three URLs whose latest GET failed; the third is a companyconcept URL no #47 route reads.",
+    "documents": [
+     {
+      "company_id": "jpmorgan_chase",
+      "window": "FY2025",
+      "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+      "failed": "2026-07-09T08:55:56Z, SSL UNEXPECTED_EOF_WHILE_READING",
+      "reachable_when": "class A's index refresh lets JPMorgan FY2025 be selected on the real data root; the recorded refreshed root already shows it blocks seven positions"
+     },
+     {
+      "company_id": "salesforce",
+      "window": "FY2026 (report end 2026-01-31)",
+      "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml",
+      "failed": "2026-07-09T08:56:16Z, SSL UNEXPECTED_EOF_WHILE_READING",
+      "reachable_when": "now: the period selects, every other document of the window is saved"
+     }
+    ],
+    "found_by": "reading the declaration row by row (declared_frame marks both new_acquisition_required) and the ledger's latest GET per URL; the earlier count of this class came from saved metadata for the earlier years' windows and did not reach either."
+   }
   },
   "C_reserve_for_what_the_originals_name": {
    "certainty": "BOUNDED_BY_CONSTRUCTION",
@@ -110,12 +131,12 @@
   "unknown": "an attempt whose identity or count cannot be determined stops that class immediately and is counted as spent. Continuing past an UNKNOWN would make the running total unreliable, which is the one thing a cap cannot survive."
  },
  "cumulative_cap": {
-  "arithmetic": "150 + 1046 + 36 + 120",
-  "requested": 1352,
+  "arithmetic": "150 + 1048 + 36 + 120",
+  "requested": 1354,
   "this_is_the_number": "an execution stop-cap for Issue #47, not an estimate and not a guarantee of completion. The three are different things and the earlier revision conflated them by offering a class upper bound of 993 and a first tranche of 30 without ever naming a total.",
   "what_it_does_not_cover": {
    "consequence": "reaching the uncovered items needs a separate increment with its own measured basis",
-   "jpmorgan": "its event windows and its three periods the saved shards cannot reach; measurable only after class A's 68 shards land",
+   "jpmorgan": "its FY2021-FY2024 event windows and the three periods the saved shards cannot reach; measurable only after class A's 68 shards land",
    "model_calls": "B13 (Ford, Enphase), D03 and D04 need provider calls under a separate allowance; see semantic-route-need/measured.json. This cap is SEC request attempts only."
   }
  },
@@ -198,7 +219,8 @@
    "not_estimated": "no number is offered for it. The four routes are unwired, so there is nothing yet to count calls against, and a figure produced now would be a guess dressed as a measurement.",
    "the_honest_order": "wire a deterministic route first - C04 composes two historical routes that already exist - and let the semantic ones be costed when they have something to cost.",
    "what": "four of the eight unwired metrics cannot produce a historical value without provider calls: D01 is source_mode ai_text, and B13, D03 and D04 resolve through the semantic review path.",
-   "why_it_is_named_here": "this plan's cap of 1232 is SEC request attempts and says nothing about provider calls. Presenting it as the cost of finishing the frame would understate it by a whole category, which is the same error as reporting a first blocking reason as the only one."
+   "why_it_is_named_here": "this plan's cap of 1232 is SEC request attempts and says nothing about provider calls. Presenting it as the cost of finishing the frame would understate it by a whole category, which is the same error as reporting a first blocking reason as the only one.",
+   "superseded_2026_09_26": "D01 and C04 are wired without provider calls. What still needs model calls is B13 for Ford and Enphase, D03 and D04; that is a separate request whose egress change is under independent review, and it is not part of this SEC cap."
   },
   "not_asked": [
    "a per-URL or per-company approval",
@@ -206,7 +228,7 @@
    "authorisation to execute before the permission exists",
    "an increment for the three uncovered items above, which have no measured basis yet and should not be approved on a guess"
   ],
-  "one_thing": "a cumulative cap of 1232 SEC request attempts for Issue #47, bound to #47's own requirement and scope, with its own ledger.",
+  "one_thing": "a cumulative cap of 1354 SEC request attempts for Issue #47, bound to #47's own requirement, grants and ledger at the proposed budget root.",
   "the_shape_of_the_grant": {
    "current_state": "the file does not exist, and tools/vnext_historical_sec.py capture refuses with exactly that path and field list.",
    "fields": [
@@ -218,6 +240,18 @@
    ],
    "path": "config/issue47_historical_calls_v1.json",
    "why_this_is_here": "'a cap of 1232' is a number in a document. What the code would have to read is an object, and naming its fields makes the ask checkable rather than interpretable."
+  }
+ },
+ "revision_4": {
+  "date": "2026-09-26",
+  "cap_before": 1352,
+  "cap_now": 1354,
+  "why": "the text and the execution scope did not describe the same set: the text left JPMorgan's event windows out while the proposed envelope admitted JPMorgan with the event class, and two event headers whose latest GET failed were needed by windows the text counted as saved. The two headers are added to class B by name; the proposal now carries grants, one per measured class and company group, so the gate admits exactly what this text counts.",
+  "grants": "see acquisition-wiring/proposed-allowance.json - A for the annual chain of all ten companies and JPMorgan's metadata, B for the event windows of the nine others plus the two named headers, G for the governance proxies of the nine others plus JPMorgan FY2024; COMPANYFACTS is in no grant because no class counts it",
+  "ledger": {
+   "proposed_budget_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-sec-v1",
+   "why_there": "beside Issue #28's root on the same host and under the same parent, so it persists with the user's state rather than with a checkout, and is plainly a different ledger",
+   "what_the_gate_refuses": "a relative path, a path containing '..', Issue #28's root or anything inside it, and anything inside the repository checkout"
   }
  }
 }

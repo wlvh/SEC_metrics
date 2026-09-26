@@ -129,6 +129,10 @@ NEW_RULE_FILES = (
     # alias until its meaning is decided. It decides a published count, so both
     # roots check it.
     "scripts/vnext/historical_event_items.py",
+    # A Part III amendment's explanatory note read whole, as paragraphs and
+    # sentences, where the approved classifier refuses it on markup. It decides
+    # whether a period's event window is cleared, so both roots check it.
+    "scripts/vnext/historical_amendment_note.py",
 )
 
 # One module the parent's authority does not name although its own named code

@@ -579,6 +579,14 @@ class TheInstallerCarriesTheRuleInputsItClaims(unittest.TestCase):
         self.assertIn("ISSUE_47_SOURCE_ROOT_UNOWNED", str(caught.exception))
 
 
+def _whole_envelope(scope):
+    """One grant as large as the envelope, for cases about something other than grants."""
+    return {"grant": "WHOLE_ENVELOPE", "company_ids": list(scope["company_ids"]),
+            "dependency_classes": list(scope["dependency_classes"]),
+            "earliest_report_end": scope["earliest_report_end"],
+            "latest_report_end": scope["latest_report_end"]}
+
+
 def _grant_tree(*, scope_overrides=None, body_overrides=None, digest=None, url=None,
                 repository="wlvh/SEC_metrics", approver=None):
     """A tree holding a real, internally consistent Issue #47 allowance.
@@ -600,6 +608,7 @@ def _grant_tree(*, scope_overrides=None, body_overrides=None, digest=None, url=N
                                     "SUBMISSIONS_INDEX"],
              "earliest_report_end": "2000-01-01",
              "latest_report_end": "2099-12-31", **(scope_overrides or {})}
+    scope.setdefault("grants", [_whole_envelope(scope)])
     limits = [0, 0, 80]
     approved = {"record_type": DELEGATION_TYPE, "requirement_id": "issue_47_v1",
                 "maximum_additional_provider_paid_sec_calls": limits,
@@ -913,10 +922,10 @@ class TheScopeGateMustPassTheRealDeclaration(unittest.TestCase):
 
     def _allowance(self, frame, company):
         rows = frame["requirements"]
-        return {"scope": {"purposes": ["p"], "company_ids": [company],
-                          "dependency_classes": sorted({r["dependency_class"] for r in rows}),
-                          "earliest_report_end": "2000-01-01",
-                          "latest_report_end": "2099-12-31"}}
+        scope = {"purposes": ["p"], "company_ids": [company],
+                 "dependency_classes": sorted({r["dependency_class"] for r in rows}),
+                 "earliest_report_end": "2000-01-01", "latest_report_end": "2099-12-31"}
+        return {"scope": {**scope, "grants": [_whole_envelope(scope)]}}
 
     def _admit(self, frame, company, row, allowance=None):
         return request_is_in_scope(allowance=allowance or self._allowance(frame, company),
@@ -982,6 +991,90 @@ class TheScopeGateMustPassTheRealDeclaration(unittest.TestCase):
                                         purpose=("q" if label == "purpose" else "p"),
                                         frame_report_dates=frame["target_report_dates"])
                 self.assertIn(expected, str(caught.exception))
+
+
+class TheApprovalIsReadGrantByGrant(unittest.TestCase):
+    """The envelope is a cross product; the grants are what was approved.
+
+    The plan's text left JPMorgan's event windows out while the proposed
+    envelope listed JPMorgan and the event class, so the gate would have
+    admitted what the approval's own text excluded. A request now has to fall
+    inside one grant whole.
+    """
+
+    GRANTS = [{"grant": "B_EVENT_WINDOWS", "company_ids": ["marriott_international"],
+               "dependency_classes": ["FISCAL_EVENT_FILING"],
+               "earliest_report_end": "2021-12-31", "latest_report_end": "2025-12-31"},
+              {"grant": "B_KNOWN_FAILED_HEADER", "company_ids": ["jpmorgan_chase"],
+               "dependency_classes": ["FISCAL_EVENT_FILING"],
+               "earliest_report_end": "2025-12-31", "latest_report_end": "2025-12-31"},
+              {"grant": "A_METADATA", "company_ids": ["jpmorgan_chase"],
+               "dependency_classes": ["SUBMISSIONS_HISTORY"],
+               "earliest_report_end": "2021-12-31", "latest_report_end": "2025-12-31"}]
+    DATES = ["2021-12-31", "2022-12-31", "2023-12-31", "2024-12-31", "2025-12-31"]
+
+    def _scope(self, **overrides):
+        return {"purposes": ["p"], "company_ids": ["jpmorgan_chase", "marriott_international"],
+                "dependency_classes": ["FISCAL_EVENT_FILING", "SUBMISSIONS_HISTORY"],
+                "earliest_report_end": "2021-12-31", "latest_report_end": "2025-12-31",
+                "grants": self.GRANTS, **overrides}
+
+    def _ask(self, company, dependency_class, period=None):
+        row = {"dependency_class": dependency_class,
+               "consumers": ["period:" + period + ":E01"] if period else ["historical_catalog"]}
+        return request_is_in_scope(allowance={"scope": self._scope()}, company_id=company,
+                                   dependency=row, purpose="p", frame_report_dates=self.DATES)
+
+    def test_the_envelope_admits_it_and_no_grant_covers_it(self):
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            self._ask("jpmorgan_chase", "FISCAL_EVENT_FILING", "2024-12-31")
+        self.assertIn("ISSUE_47_REQUEST_OUTSIDE_EVERY_GRANT:jpmorgan_chase:FISCAL_EVENT_FILING:"
+                      "2024-12-31", str(caught.exception))
+        with self.assertRaises(HistoricalAcquisitionError):
+            self._ask("marriott_international", "SUBMISSIONS_HISTORY")
+
+    def test_the_grant_that_covers_a_request_is_named(self):
+        self.assertEqual(["B_KNOWN_FAILED_HEADER"],
+                         self._ask("jpmorgan_chase", "FISCAL_EVENT_FILING", "2025-12-31")["grants"])
+        self.assertEqual(["B_EVENT_WINDOWS"],
+                         self._ask("marriott_international", "FISCAL_EVENT_FILING",
+                                   "2023-12-31")["grants"])
+        self.assertEqual(["A_METADATA"], self._ask("jpmorgan_chase", "SUBMISSIONS_HISTORY")["grants"])
+
+    def test_an_envelope_wider_than_its_grants_is_malformed(self):
+        from vnext.historical_source_acquisition import _typed_grants
+        for label, scope, reason in (
+                ("company", self._scope(company_ids=["jpmorgan_chase", "marriott_international",
+                                                     "pfizer"]),
+                 "ISSUE_47_ALLOWANCE_ENVELOPE_WIDER_THAN_ITS_GRANTS:company_ids"),
+                ("window", self._scope(earliest_report_end="2020-12-31"),
+                 "ISSUE_47_ALLOWANCE_ENVELOPE_WIDER_THAN_ITS_GRANTS:window"),
+                ("grant", self._scope(grants=[*self.GRANTS, {**self.GRANTS[0], "grant": "X",
+                                                             "company_ids": ["pfizer"]}]),
+                 "ISSUE_47_ALLOWANCE_GRANT_OUTSIDE_THE_ENVELOPE:X:company_ids"),
+                ("names", self._scope(grants=[*self.GRANTS, self.GRANTS[0]]),
+                 "ISSUE_47_ALLOWANCE_GRANT_NAMES_REPEAT")):
+            with self.subTest(label):
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    _typed_grants(scope)
+                self.assertIn(reason, str(caught.exception))
+        _typed_grants(self._scope())
+
+    def test_a_budget_root_is_its_own_absolute_path(self):
+        from vnext.historical_source_acquisition import _typed_budget_root
+        from vnext.normal_source_authority import ROOT as CHECKOUT
+        issue_28 = json.loads((CHECKOUT / "config/issue28_continuous_calls_v1.json")
+                              .read_text(encoding="utf-8"))["budget_root"]
+        for root, reason in ((issue_28, "ISSUE_47_BUDGET_ROOT_OVERLAPS_ISSUE_28_S"),
+                             (issue_28 + "/issue47", "ISSUE_47_BUDGET_ROOT_OVERLAPS_ISSUE_28_S"),
+                             ("ledger/issue47", "ISSUE_47_BUDGET_ROOT_NOT_AN_ABSOLUTE_PATH"),
+                             ("/tmp/a/../b", "ISSUE_47_BUDGET_ROOT_NOT_AN_ABSOLUTE_PATH"),
+                             (str(CHECKOUT / "ledger"), "ISSUE_47_BUDGET_ROOT_INSIDE_THE_CHECKOUT")):
+            with self.subTest(root):
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    _typed_budget_root(root)
+                self.assertIn(reason, str(caught.exception))
+        _typed_budget_root("/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-sec-v1")
 
 
 class AGrantMustComeFromAnApprovalNotFromTwoLocalFiles(unittest.TestCase):

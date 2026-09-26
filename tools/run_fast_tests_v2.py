@@ -282,6 +282,9 @@ SOURCE_TESTS += ("tests.vnext.test_historical_event_items",)
 # The candidate B03 D&A rule on the nine filings the cross-source reading opened,
 # with the frozen fact parser's output compared fact by fact; 10 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_da_scope_candidate",)
+# A Part III amendment's note read whole: the three saved amendments and seven
+# counterexamples built from the predecessor's own bytes; 94 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_amendment_note",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
@@ -369,6 +372,8 @@ SOURCE_TIMEOUT_OVERRIDES = {
     "tests.vnext.test_historical_filing_inventory": 480,
     # Resolves E01 for seven windows through the route; 84 seconds measured.
     "tests.vnext.test_historical_event_items": 480,
+    # Parses the two Paramount amendments and their originals for each case.
+    "tests.vnext.test_historical_amendment_note": 480,
 }
 
 

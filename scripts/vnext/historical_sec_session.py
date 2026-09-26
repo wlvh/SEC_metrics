@@ -894,7 +894,15 @@ def recorded_historical_session(*, root, response, status=200, limits=(0, 0, 80)
                                "company_ids": list(company_ids),
                                "dependency_classes": list(dependency_classes),
                                "earliest_report_end": earliest_report_end,
-                               "latest_report_end": latest_report_end},
+                               "latest_report_end": latest_report_end,
+                               # One grant the size of the envelope: the
+                               # recorded path is held to the same grant check
+                               # as the live one, so it has to carry one.
+                               "grants": [{"grant": "RECORDED_TEST",
+                                           "company_ids": list(company_ids),
+                                           "dependency_classes": list(dependency_classes),
+                                           "earliest_report_end": earliest_report_end,
+                                           "latest_report_end": latest_report_end}]},
                      "delegation_url": None, "delegation_body_sha256": None,
                      "recorded_test_allowance": True}
     return HistoricalSecSession(

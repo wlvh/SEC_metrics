@@ -174,14 +174,21 @@ def _scope(*, repo_root: Path, company_id: str, prepared, amendment):
     except AmendmentScopeError as error:
         if str(error) not in UNCLASSIFIED_SCOPE_REASONS:
             raise
-        # The approved classifier could not classify this amendment at all -
-        # measured on Paramount Global's FY2024 10-K/A, whose Part III sentence
-        # continues past "such Items" where the approved pattern ends. The
-        # policy clears only what it classifies, so an amendment it cannot
-        # classify clears nothing. That is the policy's own fail-closed answer
-        # and is reported under it, by name, rather than as an unhandled error:
-        # extending the approved wording would be a revision of the policy,
-        # not a repair of this route.
+        refusal = str(error)
+    # The approved classifier could not classify this amendment at all -
+    # measured on Paramount Global's FY2024 10-K/A, whose three-paragraph note
+    # is thirteen markup blocks against the classifier's bound of eight, and
+    # whose Part III sentence continues past "such Items" where the approved
+    # pattern ends. Both are about markup and wording, not about what the note
+    # says, so the whole note is read as paragraphs and sentences
+    # (historical_amendment_note) and must prove the approved class on every
+    # sentence, the pointer to the report it amends, and the classifier's own
+    # Part III structure. A note that does not is still refused, by both names.
+    from .historical_amendment_note import AmendmentNoteError, read_part_iii_note
+    try:
+        return read_part_iii_note(original=original, amendment=source, company_id=company_id,
+                                  cik=prepared["entity"], refusal=refusal)
+    except AmendmentNoteError as note_error:
         return {"amendment": {"filing": amendment}, "classification": "UNCLASSIFIED",
-                "issues": [str(error)], "unchanged_input_classes": [], "scope_id": None,
-                "policy_hash": content_hash(value=POLICY)}
+                "issues": [refusal, str(note_error)], "unchanged_input_classes": [],
+                "scope_id": None, "policy_hash": content_hash(value=POLICY)}

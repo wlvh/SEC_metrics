@@ -39,7 +39,34 @@ _DATES = sorted({date for frame in _FRAMES for date in frame["target_report_date
 WINDOW = (_DATES[0], _DATES[-1])
 PLAN = json.loads((REPO / "docs/evidence/issue47_history/acquisition-plan.json").read_text())
 CAP = PLAN["cumulative_cap"]["requested"]
-BUDGET_ROOT = "<OWNER CHOOSES: an absolute path on the executing host, and not Issue #28's>"
+BUDGET_ROOT = PLAN["revision_4"]["ledger"]["proposed_budget_root"]
+EVERYONE = COMPANIES
+BANK = "jpmorgan_chase"
+OTHERS = [company for company in COMPANIES if company != BANK]
+# One grant per measured class and company group, so the gate admits what the
+# plan's text counts and nothing it does not. COMPANYFACTS is in no grant
+# because no class counts a Company Facts request.
+GRANTS = [
+    {"grant": "A_ANNUAL_CHAIN", "company_ids": EVERYONE,
+     "dependency_classes": ["ACCESSION_INSTANCE_DISCOVERY", "ANNUAL_PERIOD_IDENTITY"],
+     "earliest_report_end": WINDOW[0], "latest_report_end": WINDOW[1]},
+    {"grant": "A_JPMORGAN_METADATA", "company_ids": [BANK],
+     "dependency_classes": ["SUBMISSIONS_HISTORY", "SUBMISSIONS_INDEX"],
+     "earliest_report_end": WINDOW[0], "latest_report_end": WINDOW[1]},
+    {"grant": "B_EVENT_WINDOWS", "company_ids": OTHERS,
+     "dependency_classes": ["FISCAL_EVENT_FILING"],
+     "earliest_report_end": WINDOW[0], "latest_report_end": WINDOW[1]},
+    {"grant": "B_JPMORGAN_FY2025_KNOWN_HEADER", "company_ids": [BANK],
+     "dependency_classes": ["FISCAL_EVENT_FILING"],
+     "earliest_report_end": "2025-12-31", "latest_report_end": "2025-12-31"},
+    {"grant": "G_GOVERNANCE_PROXIES", "company_ids": OTHERS,
+     "dependency_classes": ["GOVERNANCE_DISCLOSURE_FILING"],
+     "earliest_report_end": WINDOW[0], "latest_report_end": WINDOW[1]},
+    {"grant": "G_JPMORGAN_FY2024_PROXY", "company_ids": [BANK],
+     "dependency_classes": ["GOVERNANCE_DISCLOSURE_FILING"],
+     "earliest_report_end": "2024-12-31", "latest_report_end": "2024-12-31"},
+]
+GRANTED_CLASSES = sorted({value for grant in GRANTS for value in grant["dependency_classes"]})
 
 approved = {
     "record_type": "ISSUE_47_HISTORICAL_SEC_DELEGATION",
@@ -47,8 +74,9 @@ approved = {
     "maximum_additional_provider_paid_sec_calls": [0, 0, CAP],
     "budget_root": BUDGET_ROOT,
     "scope": {"purposes": ["ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"],
-              "company_ids": COMPANIES, "dependency_classes": CLASSES,
-              "earliest_report_end": WINDOW[0], "latest_report_end": WINDOW[1]},
+              "company_ids": COMPANIES, "dependency_classes": GRANTED_CLASSES,
+              "earliest_report_end": WINDOW[0], "latest_report_end": WINDOW[1],
+              "grants": GRANTS},
     "production_authorized": False,
 }
 body = json.dumps(approved, indent=1, sort_keys=True)
@@ -103,6 +131,29 @@ with tempfile.TemporaryDirectory() as directory:
     except Exception as error:                          # noqa: BLE001 - expected
         checks["a_policy_that_grants_more_than_the_comment"] = str(error)[:120]
 
+# The alignment itself, measured: every row the declaration says still needs a
+# fetch, asked of the proposed scope exactly as the gate will ask it. What the
+# grants refuse must be what the plan's text says it does not cover, and
+# nothing else.
+from vnext.historical_source_acquisition import (HistoricalAcquisitionError,  # noqa: E402
+                                                 request_is_in_scope)
+census = {"admitted_by_grant": {}, "refused": {}}
+for frame in _FRAMES:
+    for row in frame["requirements"]:
+        if not row.get("new_acquisition_required"):
+            continue
+        try:
+            admitted = request_is_in_scope(
+                allowance={"scope": approved["scope"]}, company_id=frame["company_id"],
+                dependency=row, purpose="ISSUE47_HISTORICAL_SOURCE_DEPENDENCY",
+                frame_report_dates=frame["target_report_dates"])
+            for name in admitted["grants"]:
+                census["admitted_by_grant"][name] = census["admitted_by_grant"].get(name, 0) + 1
+        except HistoricalAcquisitionError as error:
+            reason = str(error).split(":")[0]
+            key = frame["company_id"] + ":" + row["dependency_class"] + ":" + reason
+            census["refused"][key] = census["refused"].get(key, 0) + 1
+
 out = {"record_type": "ISSUE_47_PROPOSED_SEC_ALLOWANCE",
        "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
        "this_is_a_proposal_not_a_grant": {
@@ -112,11 +163,18 @@ out = {"record_type": "ISSUE_47_PROPOSED_SEC_ALLOWANCE",
          "what_is_still_missing": ["the owner posts the comment body below on "
                                    "issue 47, which is what creates its id, "
                                    "URL and digest",
-                                   "the owner chooses budget_root - an absolute "
-                                   "path on the executing host, and not Issue "
-                                   "#28's",
+                                   "the owner confirms or replaces budget_root: "
+                                   "proposed beside Issue #28's root on the "
+                                   "executing host, and the gate refuses #28's "
+                                   "root, anything inside it and anything inside "
+                                   "the checkout",
                                    "the saved comment record is fetched from "
                                    "GitHub and must match byte for byte"]},
+       "execution_scope_census": {
+         "what": ("every declared row that still needs a fetch, across all ten "
+                  "companies' frames, asked of this scope exactly as the gate asks "
+                  "it: which grant admits it, or why it is refused"),
+         **census},
        "required_policy_fields": list(REQUIRED_POLICY_FIELDS),
        "the_comment_body_to_post": approved,
        "the_comment_body_as_text": body,

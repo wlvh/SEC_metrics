@@ -545,3 +545,59 @@ default is now checked against the classes the declaration actually emits.
 **No authorization changes.** `FISCAL_EVENT_FILING` is in no approved scope,
 `config/issue47_historical_calls_v1.json` still does not exist, and `capture`
 still refuses with `ISSUE_47_SEC_ALLOWANCE_NOT_GRANTED`.
+
+## Grants: the approval's text and the gate's execution scope describe one set
+
+The review of `0b7f1c9c` found the proposal saying two things. The plan's
+text left JPMorgan's event windows out; the proposed scope was a cross product
+- ten companies, seven dependency classes, one window - so the gate would have
+admitted a JPMorgan event filing the text said was not covered. The scope now
+carries **grants**: one per measured class and company group, and a request is
+in scope only when one grant covers its company, its class and every period
+it serves (`request_is_in_scope`). The envelope is checked to be nothing but
+the grants' union (`_typed_grants`), so an envelope cannot be wider than what
+the grants name.
+
+| grant | companies | classes | window |
+|---|---|---|---|
+| `A_ANNUAL_CHAIN` | all ten | annual identity, accession discovery | frame |
+| `A_JPMORGAN_METADATA` | JPMorgan | submissions index, history | frame |
+| `B_EVENT_WINDOWS` | the nine others | fiscal event filings | frame |
+| `B_JPMORGAN_FY2025_KNOWN_HEADER` | JPMorgan | fiscal event filings | 2025-12-31 only |
+| `G_GOVERNANCE_PROXIES` | the nine others | governance filings | frame |
+| `G_JPMORGAN_FY2024_PROXY` | JPMorgan | governance filings | 2024-12-31 only |
+
+`COMPANYFACTS` is in no grant, because no class of the plan counts a Company
+Facts request.
+
+**The two failed headers.** The ledger holds exactly three URLs whose latest
+GET failed. Two are event headers the declaration marks as needing a fetch,
+and each blocks every event metric of its window (and C04 for Salesforce):
+JPMorgan's `0000019617-25-000332.hdr.sgml` (FY2025) and Salesforce's
+`0001108524-25-000083.hdr.sgml` (FY2026). Neither was in class B, which had
+been counted from saved metadata for the earlier years' windows. Both are now
+in class B by name, one attempt each: cap 1,352 → **1,354**. JPMorgan's header
+enters through its own one-period grant; its FY2021–FY2024 event windows are
+in no grant, because they cannot be enumerated until class A lands and have no
+measured basis. The third failed URL is a `companyconcept` request no #47
+route reads.
+
+**Measured, not argued** (`proposed-allowance.json`, `execution_scope_census`):
+every row the ten companies' declarations mark as needing a fetch, asked of the
+proposed scope exactly as the gate asks it — A_ANNUAL_CHAIN 81,
+A_JPMORGAN_METADATA 69, B_EVENT_WINDOWS 59, B_JPMORGAN_FY2025_KNOWN_HEADER 1,
+G_GOVERNANCE_PROXIES 2; **refused: none**. The event and governance
+declarations are floors that grow as class A lands (a year with no saved annual
+primary declares no window), which is why the plan's class totals are larger
+than today's declared rows; a JPMorgan earlier-year event row declared later
+would be refused by name, `ISSUE_47_REQUEST_OUTSIDE_EVERY_GRANT`.
+
+**The ledger path.** Proposed: `/Users/lyuhongwang/.local/state/sec_metrics/
+issue47-historical-sec-v1` — beside Issue #28's root on the same host, so it
+persists with the user's state rather than with a checkout, and is plainly a
+different ledger. The gate refuses a relative path, a path with `..`, #28's
+root or anything inside it, and anything inside the repository checkout
+(`_typed_budget_root`): a ledger that is reset with the code is not a cap. The
+owner confirms or replaces it when posting the comment; the proposal remains a
+proposal until then (`provenance_verified_against_github` is `null`), and no
+real request is sent before it.

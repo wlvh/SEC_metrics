@@ -4,8 +4,19 @@
   "provider": 0,
   "sec": 0
  },
+ "execution_scope_census": {
+  "admitted_by_grant": {
+   "A_ANNUAL_CHAIN": 81,
+   "A_JPMORGAN_METADATA": 69,
+   "B_EVENT_WINDOWS": 59,
+   "B_JPMORGAN_FY2025_KNOWN_HEADER": 1,
+   "G_GOVERNANCE_PROXIES": 2
+  },
+  "refused": {},
+  "what": "every declared row that still needs a fetch, across all ten companies' frames, asked of this scope exactly as the gate asks it: which grant admits it, or why it is refused"
+ },
  "how_the_values_were_obtained": {
-  "cap": "docs/evidence/issue47_history/acquisition-plan.json - 150 + 1046 + 36 + 120, a stop-cap rather than an estimate",
+  "cap": "docs/evidence/issue47_history/acquisition-plan.json - 150 + 1048 + 36 + 120, a stop-cap rather than an estimate",
   "company_ids": "config/company_registry.csv",
   "dependency_classes": "the classes all ten companies' declared_frame output carries: 578 rows in these 7 classes",
   "window": "the frame's own 14 target report dates, 2021-12-31 through 2026-01-31. The prior-period dependencies each carry the TARGET period as their consumer, so the window does not need to reach back a sixth year even though the materials do."
@@ -25,13 +36,13 @@
   "scope",
   "sec_wiring_receipt_path"
  ],
- "the_comment_body_as_text": "{\n \"budget_root\": \"<OWNER CHOOSES: an absolute path on the executing host, and not Issue #28's>\",\n \"maximum_additional_provider_paid_sec_calls\": [\n  0,\n  0,\n  1352\n ],\n \"production_authorized\": false,\n \"record_type\": \"ISSUE_47_HISTORICAL_SEC_DELEGATION\",\n \"requirement_id\": \"issue_47_v1\",\n \"scope\": {\n  \"company_ids\": [\n   \"enphase_energy\",\n   \"ford_motor_company\",\n   \"jpmorgan_chase\",\n   \"lumen_technologies\",\n   \"macys\",\n   \"marriott_international\",\n   \"paramount_skydance_paramount_global\",\n   \"pfizer\",\n   \"salesforce\",\n   \"southwest_airlines\"\n  ],\n  \"dependency_classes\": [\n   \"ACCESSION_INSTANCE_DISCOVERY\",\n   \"ANNUAL_PERIOD_IDENTITY\",\n   \"COMPANYFACTS\",\n   \"FISCAL_EVENT_FILING\",\n   \"GOVERNANCE_DISCLOSURE_FILING\",\n   \"SUBMISSIONS_HISTORY\",\n   \"SUBMISSIONS_INDEX\"\n  ],\n  \"earliest_report_end\": \"2021-12-31\",\n  \"latest_report_end\": \"2026-01-31\",\n  \"purposes\": [\n   \"ISSUE47_HISTORICAL_SOURCE_DEPENDENCY\"\n  ]\n }\n}",
+ "the_comment_body_as_text": "{\n \"budget_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-sec-v1\",\n \"maximum_additional_provider_paid_sec_calls\": [\n  0,\n  0,\n  1354\n ],\n \"production_authorized\": false,\n \"record_type\": \"ISSUE_47_HISTORICAL_SEC_DELEGATION\",\n \"requirement_id\": \"issue_47_v1\",\n \"scope\": {\n  \"company_ids\": [\n   \"enphase_energy\",\n   \"ford_motor_company\",\n   \"jpmorgan_chase\",\n   \"lumen_technologies\",\n   \"macys\",\n   \"marriott_international\",\n   \"paramount_skydance_paramount_global\",\n   \"pfizer\",\n   \"salesforce\",\n   \"southwest_airlines\"\n  ],\n  \"dependency_classes\": [\n   \"ACCESSION_INSTANCE_DISCOVERY\",\n   \"ANNUAL_PERIOD_IDENTITY\",\n   \"FISCAL_EVENT_FILING\",\n   \"GOVERNANCE_DISCLOSURE_FILING\",\n   \"SUBMISSIONS_HISTORY\",\n   \"SUBMISSIONS_INDEX\"\n  ],\n  \"earliest_report_end\": \"2021-12-31\",\n  \"grants\": [\n   {\n    \"company_ids\": [\n     \"enphase_energy\",\n     \"ford_motor_company\",\n     \"jpmorgan_chase\",\n     \"lumen_technologies\",\n     \"macys\",\n     \"marriott_international\",\n     \"paramount_skydance_paramount_global\",\n     \"pfizer\",\n     \"salesforce\",\n     \"southwest_airlines\"\n    ],\n    \"dependency_classes\": [\n     \"ACCESSION_INSTANCE_DISCOVERY\",\n     \"ANNUAL_PERIOD_IDENTITY\"\n    ],\n    \"earliest_report_end\": \"2021-12-31\",\n    \"grant\": \"A_ANNUAL_CHAIN\",\n    \"latest_report_end\": \"2026-01-31\"\n   },\n   {\n    \"company_ids\": [\n     \"jpmorgan_chase\"\n    ],\n    \"dependency_classes\": [\n     \"SUBMISSIONS_HISTORY\",\n     \"SUBMISSIONS_INDEX\"\n    ],\n    \"earliest_report_end\": \"2021-12-31\",\n    \"grant\": \"A_JPMORGAN_METADATA\",\n    \"latest_report_end\": \"2026-01-31\"\n   },\n   {\n    \"company_ids\": [\n     \"enphase_energy\",\n     \"ford_motor_company\",\n     \"lumen_technologies\",\n     \"macys\",\n     \"marriott_international\",\n     \"paramount_skydance_paramount_global\",\n     \"pfizer\",\n     \"salesforce\",\n     \"southwest_airlines\"\n    ],\n    \"dependency_classes\": [\n     \"FISCAL_EVENT_FILING\"\n    ],\n    \"earliest_report_end\": \"2021-12-31\",\n    \"grant\": \"B_EVENT_WINDOWS\",\n    \"latest_report_end\": \"2026-01-31\"\n   },\n   {\n    \"company_ids\": [\n     \"jpmorgan_chase\"\n    ],\n    \"dependency_classes\": [\n     \"FISCAL_EVENT_FILING\"\n    ],\n    \"earliest_report_end\": \"2025-12-31\",\n    \"grant\": \"B_JPMORGAN_FY2025_KNOWN_HEADER\",\n    \"latest_report_end\": \"2025-12-31\"\n   },\n   {\n    \"company_ids\": [\n     \"enphase_energy\",\n     \"ford_motor_company\",\n     \"lumen_technologies\",\n     \"macys\",\n     \"marriott_international\",\n     \"paramount_skydance_paramount_global\",\n     \"pfizer\",\n     \"salesforce\",\n     \"southwest_airlines\"\n    ],\n    \"dependency_classes\": [\n     \"GOVERNANCE_DISCLOSURE_FILING\"\n    ],\n    \"earliest_report_end\": \"2021-12-31\",\n    \"grant\": \"G_GOVERNANCE_PROXIES\",\n    \"latest_report_end\": \"2026-01-31\"\n   },\n   {\n    \"company_ids\": [\n     \"jpmorgan_chase\"\n    ],\n    \"dependency_classes\": [\n     \"GOVERNANCE_DISCLOSURE_FILING\"\n    ],\n    \"earliest_report_end\": \"2024-12-31\",\n    \"grant\": \"G_JPMORGAN_FY2024_PROXY\",\n    \"latest_report_end\": \"2024-12-31\"\n   }\n  ],\n  \"latest_report_end\": \"2026-01-31\",\n  \"purposes\": [\n   \"ISSUE47_HISTORICAL_SOURCE_DEPENDENCY\"\n  ]\n }\n}",
  "the_comment_body_to_post": {
-  "budget_root": "<OWNER CHOOSES: an absolute path on the executing host, and not Issue #28's>",
+  "budget_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-sec-v1",
   "maximum_additional_provider_paid_sec_calls": [
    0,
    0,
-   1352
+   1354
   ],
   "production_authorized": false,
   "record_type": "ISSUE_47_HISTORICAL_SEC_DELEGATION",
@@ -52,13 +63,107 @@
    "dependency_classes": [
     "ACCESSION_INSTANCE_DISCOVERY",
     "ANNUAL_PERIOD_IDENTITY",
-    "COMPANYFACTS",
     "FISCAL_EVENT_FILING",
     "GOVERNANCE_DISCLOSURE_FILING",
     "SUBMISSIONS_HISTORY",
     "SUBMISSIONS_INDEX"
    ],
    "earliest_report_end": "2021-12-31",
+   "grants": [
+    {
+     "company_ids": [
+      "enphase_energy",
+      "ford_motor_company",
+      "jpmorgan_chase",
+      "lumen_technologies",
+      "macys",
+      "marriott_international",
+      "paramount_skydance_paramount_global",
+      "pfizer",
+      "salesforce",
+      "southwest_airlines"
+     ],
+     "dependency_classes": [
+      "ACCESSION_INSTANCE_DISCOVERY",
+      "ANNUAL_PERIOD_IDENTITY"
+     ],
+     "earliest_report_end": "2021-12-31",
+     "grant": "A_ANNUAL_CHAIN",
+     "latest_report_end": "2026-01-31"
+    },
+    {
+     "company_ids": [
+      "jpmorgan_chase"
+     ],
+     "dependency_classes": [
+      "SUBMISSIONS_HISTORY",
+      "SUBMISSIONS_INDEX"
+     ],
+     "earliest_report_end": "2021-12-31",
+     "grant": "A_JPMORGAN_METADATA",
+     "latest_report_end": "2026-01-31"
+    },
+    {
+     "company_ids": [
+      "enphase_energy",
+      "ford_motor_company",
+      "lumen_technologies",
+      "macys",
+      "marriott_international",
+      "paramount_skydance_paramount_global",
+      "pfizer",
+      "salesforce",
+      "southwest_airlines"
+     ],
+     "dependency_classes": [
+      "FISCAL_EVENT_FILING"
+     ],
+     "earliest_report_end": "2021-12-31",
+     "grant": "B_EVENT_WINDOWS",
+     "latest_report_end": "2026-01-31"
+    },
+    {
+     "company_ids": [
+      "jpmorgan_chase"
+     ],
+     "dependency_classes": [
+      "FISCAL_EVENT_FILING"
+     ],
+     "earliest_report_end": "2025-12-31",
+     "grant": "B_JPMORGAN_FY2025_KNOWN_HEADER",
+     "latest_report_end": "2025-12-31"
+    },
+    {
+     "company_ids": [
+      "enphase_energy",
+      "ford_motor_company",
+      "lumen_technologies",
+      "macys",
+      "marriott_international",
+      "paramount_skydance_paramount_global",
+      "pfizer",
+      "salesforce",
+      "southwest_airlines"
+     ],
+     "dependency_classes": [
+      "GOVERNANCE_DISCLOSURE_FILING"
+     ],
+     "earliest_report_end": "2021-12-31",
+     "grant": "G_GOVERNANCE_PROXIES",
+     "latest_report_end": "2026-01-31"
+    },
+    {
+     "company_ids": [
+      "jpmorgan_chase"
+     ],
+     "dependency_classes": [
+      "GOVERNANCE_DISCLOSURE_FILING"
+     ],
+     "earliest_report_end": "2024-12-31",
+     "grant": "G_JPMORGAN_FY2024_PROXY",
+     "latest_report_end": "2024-12-31"
+    }
+   ],
    "latest_report_end": "2026-01-31",
    "purposes": [
     "ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"
@@ -68,7 +173,7 @@
  "this_is_a_proposal_not_a_grant": {
   "what_is_still_missing": [
    "the owner posts the comment body below on issue 47, which is what creates its id, URL and digest",
-   "the owner chooses budget_root - an absolute path on the executing host, and not Issue #28's",
+   "the owner confirms or replaces budget_root: proposed beside Issue #28's root on the executing host, and the gate refuses #28's root, anything inside it and anything inside the checkout",
    "the saved comment record is fetched from GitHub and must match byte for byte"
   ],
   "where_a_grant_would_live": "config/issue47_historical_calls_v1.json",
@@ -80,7 +185,7 @@
   "limits_read_back": [
    0,
    0,
-   1352
+   1354
   ],
   "provenance_verified_against_github": null
  }

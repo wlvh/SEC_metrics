@@ -33,9 +33,10 @@ exactly what is missing rather than failing vaguely.
 """
 import json
 import re
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 from .normal_history_plan import plan_historical_sources
+from .normal_source_authority import ROOT
 
 RECORD_TYPE = "ISSUE_47_HISTORICAL_SOURCE_DEPENDENCY"
 REQUIREMENT_ID = "issue_47_v1"
@@ -93,6 +94,14 @@ PERIOD_CONSUMER = "period:"
 FRAME_BASIS = "FRAME_TARGET_WINDOW"
 PERIOD_BASIS = "PERIOD_CONSUMERS"
 SCOPE_FIELDS = ("purposes", "company_ids", "dependency_classes",
+                "earliest_report_end", "latest_report_end", "grants")
+# The envelope above says what the approval may touch at all; the grants say
+# which company may draw which class over which window. They exist because the
+# envelope is a cross product: the plan's text excluded JPMorgan's event
+# windows while an envelope listing JPMorgan and the event class admitted them,
+# so what the approval said and what the gate executed were two different
+# things. A request is in scope only when one grant covers it whole.
+GRANT_FIELDS = ("grant", "company_ids", "dependency_classes",
                 "earliest_report_end", "latest_report_end")
 _HEX64 = re.compile(r"\A[0-9a-f]{64}\Z")
 _DATE = re.compile(r"\A[0-9]{4}-[0-9]{2}-[0-9]{2}\Z")
@@ -273,6 +282,7 @@ def _typed(policy):
     for field in ("budget_root", "delegation_record_path", "sec_wiring_receipt_path"):
         _need(type(policy[field]) is str and policy[field],
               "ISSUE_47_ALLOWANCE_FIELD_MALFORMED:" + field)
+    _typed_budget_root(policy["budget_root"])
     scope = policy["scope"]
     _need(type(scope) is dict, "ISSUE_47_ALLOWANCE_SCOPE_MALFORMED")
     missing = [field for field in SCOPE_FIELDS if field not in scope]
@@ -286,6 +296,57 @@ def _typed(policy):
               "ISSUE_47_ALLOWANCE_SCOPE_DATE_MALFORMED:" + field)
     _need(scope["earliest_report_end"] <= scope["latest_report_end"],
           "ISSUE_47_ALLOWANCE_SCOPE_WINDOW_INVERTED")
+    _typed_grants(scope)
+
+
+def _typed_budget_root(budget_root):
+    """An absolute path that is neither Issue #28's ledger nor inside it, nor inside this checkout.
+
+    The ledger is where a granted count is kept. Inside #28's root it would mix
+    two issues' accounting; inside the repository it would be committed, reset
+    or copied with the code, and a count that can be reset is not a cap.
+    """
+    from .continuous_call_policy import POLICY_PATH as ISSUE_28_POLICY
+    from .canonical import strict_json_file
+    root = PurePosixPath(budget_root)
+    _need(root.is_absolute() and ".." not in root.parts,
+          "ISSUE_47_BUDGET_ROOT_NOT_AN_ABSOLUTE_PATH:" + budget_root[:80])
+    issue_28 = PurePosixPath(strict_json_file(path=ROOT / ISSUE_28_POLICY)["budget_root"])
+    _need(root != issue_28 and issue_28 not in root.parents and root not in issue_28.parents,
+          "ISSUE_47_BUDGET_ROOT_OVERLAPS_ISSUE_28_S:" + budget_root[:80])
+    checkout = PurePosixPath(str(ROOT))
+    _need(root != checkout and checkout not in root.parents,
+          "ISSUE_47_BUDGET_ROOT_INSIDE_THE_CHECKOUT:" + budget_root[:80])
+
+
+def _typed_grants(scope):
+    """Every grant well formed, inside the envelope, and the envelope nothing but their union."""
+    grants = scope["grants"]
+    _need(type(grants) is list and grants, "ISSUE_47_ALLOWANCE_GRANTS_MALFORMED")
+    names = []
+    for grant in grants:
+        _need(type(grant) is dict and set(grant) == set(GRANT_FIELDS),
+              "ISSUE_47_ALLOWANCE_GRANT_FIELDS_NOT_EXACT")
+        _need(type(grant["grant"]) is str and grant["grant"], "ISSUE_47_ALLOWANCE_GRANT_UNNAMED")
+        names.append(grant["grant"])
+        for field in ("company_ids", "dependency_classes"):
+            _need(type(grant[field]) is list and grant[field]
+                  and all(type(value) is str and value for value in grant[field])
+                  and set(grant[field]) <= set(scope[field]),
+                  "ISSUE_47_ALLOWANCE_GRANT_OUTSIDE_THE_ENVELOPE:" + grant["grant"] + ":" + field)
+        for field in ("earliest_report_end", "latest_report_end"):
+            _need(_DATE.match(str(grant[field]) or ""),
+                  "ISSUE_47_ALLOWANCE_GRANT_DATE_MALFORMED:" + grant["grant"])
+        _need(scope["earliest_report_end"] <= grant["earliest_report_end"]
+              <= grant["latest_report_end"] <= scope["latest_report_end"],
+              "ISSUE_47_ALLOWANCE_GRANT_WINDOW_OUTSIDE_THE_ENVELOPE:" + grant["grant"])
+    _need(len(names) == len(set(names)), "ISSUE_47_ALLOWANCE_GRANT_NAMES_REPEAT")
+    for field in ("company_ids", "dependency_classes"):
+        _need(set(scope[field]) == {value for grant in grants for value in grant[field]},
+              "ISSUE_47_ALLOWANCE_ENVELOPE_WIDER_THAN_ITS_GRANTS:" + field)
+    _need(scope["earliest_report_end"] == min(g["earliest_report_end"] for g in grants)
+          and scope["latest_report_end"] == max(g["latest_report_end"] for g in grants),
+          "ISSUE_47_ALLOWANCE_ENVELOPE_WIDER_THAN_ITS_GRANTS:window")
 
 
 def github_comment_reader(path):
@@ -438,6 +499,15 @@ def request_is_in_scope(*, allowance, company_id, dependency, purpose,
     outside = [period for period in periods
                if not scope["earliest_report_end"] <= period <= scope["latest_report_end"]]
     _need(not outside, "ISSUE_47_TARGET_PERIOD_NOT_IN_SCOPE:" + ",".join(outside))
+    _need(type(scope.get("grants")) is list and scope["grants"],
+          "ISSUE_47_ALLOWANCE_SCOPE_HAS_NO_GRANTS")
+    covering = sorted(grant["grant"] for grant in scope["grants"]
+                      if company_id in grant["company_ids"]
+                      and dependency["dependency_class"] in grant["dependency_classes"]
+                      and all(grant["earliest_report_end"] <= period <= grant["latest_report_end"]
+                              for period in periods))
+    _need(covering, "ISSUE_47_REQUEST_OUTSIDE_EVERY_GRANT:" + company_id + ":"
+          + str(dependency["dependency_class"]) + ":" + ",".join(periods))
     return {"company_id": company_id, "purpose": purpose,
             "dependency_class": dependency["dependency_class"],
-            "periods": periods, "period_basis": basis}
+            "periods": periods, "period_basis": basis, "grants": covering}
