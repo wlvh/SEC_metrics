@@ -1472,6 +1472,23 @@
       "result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-batch-route/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS_C04_SAVED_BATCH_ROUTE",
       "tool_call_count_note": "Agent did not report a count; no count inferred."
+    },
+    {
+      "task_name": "review_c04update_d77a604",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/c04_update_cycle.py",
+        "tools/vnext_normal_update.py",
+        "tests/vnext/test_c04_update_cycle.py",
+        "docs/evidence/issue28_continuous/c04-normal-update-20260926/"
+      ],
+      "patch_sha": "d77a604ae159c252257127b5b0c12e8fe83614fd",
+      "spawned_at": "2026-09-26T15:23:58Z",
+      "ended_at": "2026-09-26T15:34:17Z",
+      "tool_calls": 39,
+      "result_path": "docs/evidence/issue28_continuous/c04-normal-update-20260926/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_C04_UPDATE_TERMINAL_CREDIT_AND_PUBLICATION_NOT_RECHECKED_P3_DUPLICATE_METRIC",
+      "tool_call_count_note": "20 functions.exec orchestrations and 39 nested tool calls reported by agent."
     }
   ],
   "ci_capacity_20260922": {
@@ -2902,8 +2919,11 @@
     "verification_script_exit_code": 0
   },
   "c04_normal_update_successor_20260926": {
-    "status": "RECORDED_TWO_SOURCE_VERSION_POSITIVE_AND_WITHHELD_UPDATE_CHAIN_PASS_REVIEW_PENDING",
-    "code_paths": ["scripts/vnext/c04_update_cycle.py", "tools/vnext_normal_update.py"],
+    "status": "RECORDED_UPDATE_CHAIN_PASS_SCOPED_REVIEW_FOUND_METADATA_ACCEPTANCE_DEFECT",
+    "code_paths": [
+      "scripts/vnext/c04_update_cycle.py",
+      "tools/vnext_normal_update.py"
+    ],
     "controller_sha256": "3b402203f6012aa4e128825c64d0a2c9ae0f6b263df75a04f007488e466cfe39",
     "prior_ordinary_update_controller_modified": false,
     "normal_run_v3_default_modified": false,
@@ -2927,19 +2947,45 @@
     "state_root": "/private/tmp/issue28-c04-normal-update-20260926-01/state",
     "ordinary_requirement_closure_unchanged": "sha256:2620e1c13900bdfd7bb501b7a3ff9c2aece37ec25cb22a03d9a78e8d7872f300",
     "continuous_requirement_closure_unchanged": "sha256:9c02b4772e364f33b311c10b6282dca3a4083ad0aad528d1ad2a75ce33956a3e",
-    "real_ledger_rows_before_after": [192, 192],
-    "real_ledger_counts_before_after": [[143, 143, 49], [143, 143, 49]],
-    "new_real_calls": [0, 0, 0],
+    "real_ledger_rows_before_after": [
+      192,
+      192
+    ],
+    "real_ledger_counts_before_after": [
+      [
+        143,
+        143,
+        49
+      ],
+      [
+        143,
+        143,
+        49
+      ]
+    ],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "real_new_filing_acquisition_verified": false,
     "ten_company_c04_update_complete": false,
     "production_authorized": false,
-    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "independent_review": "NEEDS_FIX_P2_SUCCESS_TERMINAL_CREDIT_PUBLICATION_AND_P3_DUPLICATE_METRIC",
     "shared_with_47": {
-      "scope_paths": ["tools/vnext_normal_update.py", "scripts/vnext/c04_update_cycle.py"],
-      "functions": ["tools.vnext_normal_update.main", "c04_update_cycle.run_once", "c04_update_cycle.run_company"],
+      "scope_paths": [
+        "tools/vnext_normal_update.py",
+        "scripts/vnext/c04_update_cycle.py"
+      ],
+      "functions": [
+        "tools.vnext_normal_update.main",
+        "c04_update_cycle.run_once",
+        "c04_update_cycle.run_company"
+      ],
       "old_default_functions_changed": false,
       "frozen_prior_snapshots_changed": false,
       "other_branch_touched": false
-    }
+    },
+    "independent_review_path": "docs/evidence/issue28_continuous/c04-normal-update-20260926/independent-review/conclusion.md"
   }
 }
