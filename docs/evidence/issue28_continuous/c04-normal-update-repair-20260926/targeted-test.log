@@ -1,0 +1,27 @@
+test_duplicate_metric_rejected_before_update (tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest.test_duplicate_metric_rejected_before_update) ... usage: python3.14 -m unittest [-h] [--data-root DATA_ROOT]
+                              [--discover-sources] [--company COMPANY]
+                              [--process] [--state-root STATE_ROOT]
+                              [--metric METRIC] [--output OUTPUT]
+python3.14 -m unittest: error: Metrics must be unique configured values
+ok
+test_saved_marriott_positive_then_unchanged_reuses_run (tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest.test_saved_marriott_positive_then_unchanged_reuses_run) ... FAIL
+
+======================================================================
+FAIL: test_saved_marriott_positive_then_unchanged_reuses_run (tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest.test_saved_marriott_positive_then_unchanged_reuses_run)
+----------------------------------------------------------------------
+vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_c04_update_cycle.py", line 42, in test_saved_marriott_positive_then_unchanged_reuses_run
+    with self.assertRaisesRegex(ValueError,
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+            'C04_UPDATE_SUCCESS_CREDIT_OR_PUBLICATION_CHANGED'):
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "C04_UPDATE_SUCCESS_CREDIT_OR_PUBLICATION_CHANGED" does not match "UPDATE_STATE_PATH_ALIAS"
+
+----------------------------------------------------------------------
+Ran 2 tests in 53.456s
+
+FAILED (failures=1)

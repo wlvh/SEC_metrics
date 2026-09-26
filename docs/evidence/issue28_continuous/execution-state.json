@@ -2986,6 +2986,30 @@
       "frozen_prior_snapshots_changed": false,
       "other_branch_touched": false
     },
-    "independent_review_path": "docs/evidence/issue28_continuous/c04-normal-update-20260926/independent-review/conclusion.md"
+    "independent_review_path": "docs/evidence/issue28_continuous/c04-normal-update-20260926/independent-review/conclusion.md",
+    "repair": {
+      "status": "TARGETED_POSITIVE_AND_RESIGNED_TERMINAL_NEGATIVE_PASS_INDEPENDENT_REVIEW_PENDING",
+      "controller_sha256": "4146468f043e9e4f568ae5c0d2fbe1dab8b51bbce6fea0ccd7150dab81abf417",
+      "scope_paths": [
+        "scripts/vnext/c04_update_cycle.py",
+        "tools/vnext_normal_update.py",
+        "tests/vnext/test_c04_update_cycle.py"
+      ],
+      "changed_responsibilities": [
+        "C04_SUCCESS_PUBLICATION_AND_SOURCE_CREDIT_CHECKED_AGAINST_REPLAYED_NATIVE_RUN",
+        "DUPLICATE_OR_UNSUPPORTED_METRIC_REJECTED_BEFORE_UPDATE"
+      ],
+      "test_log": "docs/evidence/issue28_continuous/c04-normal-update-repair-20260926/targeted-test-retry.log",
+      "test_result": "2_PASS_161_677_SECONDS",
+      "failed_precheck_log": "docs/evidence/issue28_continuous/c04-normal-update-repair-20260926/targeted-test.log",
+      "old_recorded_state_continues_under_original_controller_sha": true,
+      "new_live_calls": [
+        0,
+        0,
+        0
+      ],
+      "independent_review": "PENDING_EXACT_REPAIR_SHA",
+      "full_refresh_path_wired": false
+    }
   }
 }

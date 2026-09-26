@@ -43,10 +43,12 @@ def main(argv=None):
     if args.process:
         from vnext.ordinary_update_cycle import run_company as run_ordinary_company
         from vnext.normal_annual_input import _registry_rows
-        from vnext.normal_run_v3 import _policy
+        from vnext.normal_run_v3 import _policy, update_metric_ids
         companies=[c['company_id'] for c in _registry_rows(repo_root=ROOT)]
         selected=args.company or companies;metrics=args.metric or _policy(ROOT)['metric_ids']
         if len(selected)!=len(set(selected)) or set(selected)-set(companies):parser.error("Companies must be unique configured values")
+        if len(metrics)!=len(set(metrics)) or set(metrics)-set(update_metric_ids()):
+            parser.error("Metrics must be unique configured values")
         results=[]
         for company in selected:
             try:

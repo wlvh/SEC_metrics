@@ -10,13 +10,31 @@ from uuid import uuid4
 from . import normal_run_v3 as normal
 from . import ordinary_update_cycle as cycle
 from .c04_registration_successor import EVENT_FORMS
-from .canonical import atomic_write_json, sha256_file
+from .canonical import atomic_write_json, sha256_file, strict_json_file
 from .normal_annual_input import _registry_rows
 from .ordinary_projection import render_ordinary_run
 from .requirements import load_requirement_snapshot
 
 
 ROUTE = 'C04_REGISTRATION_FOUR_FORM_UPDATE_V1'
+
+
+def _verify_candidate(root, terminal, configuration):
+    """Check the C04 journal summary against the replayed native Run."""
+    results = cycle._verify_candidate(root, terminal, configuration)
+    summary = terminal['metrics']['C04']
+    cycle._need(set(summary) == {'result_id', 'publication', 'source_credit', 'files'},
+                'C04_UPDATE_SUCCESS_SUMMARY_CHANGED')
+    work = cycle._attempt(root, terminal['attempt_id'])
+    manifest = strict_json_file(path=work/'runs/C04/manifest.json')
+    cycle._need(manifest['run_id'].startswith(normal.PREFIX),
+                'C04_UPDATE_RUN_IDENTITY_CHANGED')
+    key = manifest['run_id'][len(normal.PREFIX):]
+    binding = strict_json_file(path=work/'data'/normal.BINDING_DIRECTORY/(key+'.json'))
+    cycle._need(summary['publication'] == results['C04']['publication']
+                and summary['source_credit'] == binding['source_admission']['source_credit'],
+                'C04_UPDATE_SUCCESS_CREDIT_OR_PUBLICATION_CHANGED')
+    return results
 
 
 def _configuration(root, source_root, company_id):
@@ -68,7 +86,7 @@ def run_once(*, state_root, source_root, company_id):
         successful_results = {}
         if state['successful_attempt'] is not None:
             previous = cycle._terminal(root, state['successful_attempt'])
-            successful_results = cycle._verify_candidate(root, previous, configuration)
+            successful_results = _verify_candidate(root, previous, configuration)
         identity = uuid4().hex
         work = cycle._attempt(root, identity)
         intent = cycle._record(work/'intent.json', {
@@ -118,7 +136,7 @@ def run_once(*, state_root, source_root, company_id):
                 status = ('CANDIDATE_READY' if result['publication'] == 'PUBLISHED'
                           else 'CANDIDATE_WITHHELD')
                 if status == 'CANDIDATE_READY':
-                    successful_results = cycle._verify_candidate(root, {
+                    successful_results = _verify_candidate(root, {
                         'status': status,
                         'configuration_id': configuration['record_id'],
                         'attempt_id': identity, 'input': descriptor,
