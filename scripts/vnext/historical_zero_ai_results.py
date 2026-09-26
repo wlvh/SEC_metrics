@@ -27,6 +27,7 @@ repository ever matched. What an alias found there means is undecided, so a
 window where one occurs is withheld by name rather than answered either way.
 The other five event routes have no keyword items and are untouched.
 """
+from decimal import Decimal
 from pathlib import Path
 
 from sec_urls import companyfacts_url, submissions_url
@@ -37,6 +38,8 @@ from .calculator import (calculate_metric, calculate_observation_metric,
                          withheld_metric_result)
 from .canonical import content_hash, sha256_file, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_da_scope_candidate import (COMPOSITION, DIRECT, WITHHELD_REASON as DA_SCOPE_REASON,
+                                            agree, annual_facts, da_scope_answer)
 from .historical_event_items import (NOT_LOCATED_REASON, PENDING_REASON, EventItemTextError,
                                      compact, keyword_item_answer)
 from .historical_filing_inventory import filing_inventory
@@ -69,6 +72,14 @@ class _KeywordMeaningPending(Exception):
     """Control flow only: a keyword item's own text carries an alias, whose meaning is undecided."""
 
 
+class _DepreciationScopeUnproven(Exception):
+    """Control flow only: B03's D&A cannot be shown to be the whole of it; the answer rides along."""
+
+    def __init__(self, answer):
+        super().__init__(answer["why"])
+        self.answer = answer
+
+
 class _EventRouteResolved(Exception):
     """Control flow only: the event branch finished and skips the facts branch.
 
@@ -80,6 +91,60 @@ class _EventRouteResolved(Exception):
 def _need(condition, reason, category="SOURCE_INTEGRITY_ERROR"):
     if not condition:
         raise NormalZeroAiError(reason, category)
+
+
+def depreciation_scope(*, raw_bytes, period, observations):
+    """Whether B03's D&A input is provably the whole of the definition's D&A, from the filing itself.
+
+    The approved chain takes the first of three direct concepts Company Facts
+    carries for the target and never compares it with the others; Salesforce's
+    FY2026 filing tags the first one on a fixed-asset note sentence and the
+    statement total on another, and the chain took the note. Standing rules
+    forbid taking a subtotal as the total and require limiting the metric
+    precisely when the total cannot be proven, so the rule below
+    (``historical_da_scope_candidate``) asks the target filing's own inline
+    facts: agreeing direct candidates keep the chain's choice; a conflict the
+    filing's own Depreciation + AmortizationOfIntangibleAssets resolves takes
+    the candidate they prove; anything else withholds by name.
+
+    What the chain used must also be what the filing carries: a direct concept
+    the filing does not tag for this period, or a composition taken while the
+    filing tags a direct total, is a disagreement between the two sources the
+    route cannot settle, and it withholds as well.
+
+    Returns:
+        ``{"status": "KEEP" | "RETAKE" | "WITHHOLD", ...}`` with the filing's
+        answer and the chain's input beside it; ``RETAKE`` names the concept
+        the filing proves.
+    """
+    facts = annual_facts(raw_bytes=raw_bytes, period_start=period["period_start"],
+                         period_end=period["period_end"], concepts=DIRECT + COMPOSITION)
+    answer = da_scope_answer(facts=facts)
+    direct = [o for o in observations if o["semantic_role"] == "depreciation_and_amortization"]
+    composed = [o for o in observations if o["semantic_role"] in ("depreciation", "amortization")]
+    chain = ({"concept": direct[0]["source_binding"]["concept"].split(":")[-1],
+              "value": str(direct[0]["value"])} if direct
+             else {"concept": "+".join(COMPOSITION),
+                   "value": str(sum(Decimal(str(o["value"])) for o in composed))} if composed
+             else None)
+    body = {"filing_answer": answer, "chain_input": chain}
+    if answer["status"] == "WITHHOLD":
+        return {**body, "status": "WITHHOLD", "why": answer["why"]}
+    if answer["status"] == "NO_DIRECT_CANDIDATE":
+        if direct:
+            return {**body, "status": "WITHHOLD",
+                    "why": "THE_CHAIN_TOOK_A_DIRECT_TOTAL_THE_FILING_DOES_NOT_TAG_FOR_THIS_PERIOD"}
+        return {**body, "status": "KEEP", "why": answer["why"]}
+    selected = answer["selected"]
+    if not direct:
+        return {**body, "status": "WITHHOLD",
+                "why": "THE_CHAIN_COMPOSED_WHILE_THE_FILING_TAGS_A_DIRECT_TOTAL"}
+    if chain["concept"] != selected["concept"]:
+        return {**body, "status": "RETAKE", "concept": selected["concept"], "why": answer["why"]}
+    if not agree({"value": chain["value"], "decimals": "INF"}, selected):
+        return {**body, "status": "WITHHOLD",
+                "why": "THE_CHAIN_S_VALUE_IS_NOT_THE_FILING_S_AT_ITS_PRECISION"}
+    return {**body, "status": "KEEP", "why": answer["why"]}
 
 
 def event_measurement_window(*, repo_root: Path, company_id: str, pinned, registered_event):
@@ -338,13 +403,40 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
         result, trace, observations = calculate_metric(
             compiled_spec=spec, target=execution_target, company_traits=traits,
             structured_facts=facts, verified_observations=reusable)
+        da_scope = None
+        if metric_id == "B03" and result["publication"] == "PUBLISHED":
+            da_scope = depreciation_scope(raw_bytes=reader.primary(prepared["filing"])["raw_bytes"],
+                                       period=period, observations=observations)
+            if da_scope["status"] == "WITHHOLD":
+                raise _DepreciationScopeUnproven(da_scope)
+            if da_scope["status"] == "RETAKE":
+                # The filing's own composition proves a later direct candidate;
+                # the frozen selector is asked again over a pool without the
+                # direct candidates it disproves, so it still does the choosing.
+                disproved = set(DIRECT) - {da_scope["concept"]}
+                facts = [fact for fact in facts
+                         if str(fact["concept"]).split(":")[-1] not in disproved]
+                result, trace, observations = calculate_metric(
+                    compiled_spec=spec, target=execution_target, company_traits=traits,
+                    structured_facts=facts, verified_observations=reusable)
         selection = {"source_candidate_count": len(facts),
                      "selected_fact_ids": [o["source_binding"]["fact_id"] for o in observations],
                      "source_reported_periods": sorted({(f["period_start"], f["period_end"])
                                                         for f in facts}),
                      "reason_code": result["reason_code"]}
+        if da_scope is not None:
+            selection["depreciation_scope"] = da_scope
     except _EventRouteResolved:
         pass
+    except _DepreciationScopeUnproven as withheld:
+        # B03 still carries B01: the dependency was computed above and its
+        # records are already in dependency_records, so only B03 is withheld.
+        result, trace = withheld_metric_result(compiled_spec=spec, target=target,
+                                               reason_code=DA_SCOPE_REASON)
+        observations = []
+        selection = {"reason_code": result["reason_code"], "reason": withheld.answer["why"],
+                     "category": "DISCLOSURE_SCOPE_UNPROVEN",
+                     "depreciation_scope": withheld.answer}
     except _KeywordMeaningPending:
         result, trace = withheld_metric_result(compiled_spec=spec, target=target,
                                                reason_code=PENDING_REASON)

@@ -10,11 +10,14 @@ sentence about fixed assets and DepreciationAndAmortization at $3,631 million on
 the cash flow statement; the chain took the first, a subtotal the standing rules
 forbid taking as the total. That result is withdrawn as a registered defect.
 
-This module is the proposed repair, written as a candidate so it can be tested
-before it is adopted. It is not imported by any route and is not a rule file:
-adopting it changes which fact an approved Spec selects, which is a revision
-through the existing mechanism, and the historical and ordinary B03 routes keep
-their meaning until then.
+This module was written as a candidate so it could be tested before it was
+wired, and the name is kept so the evidence that tested it still runs. It is
+now read by the historical B03 route (``historical_zero_ai_results.
+depreciation_scope``) and is a rule file of issue_47_v1. It changes no approved
+meaning: the standing rules already forbid taking a subtotal as the total and
+require limiting a metric precisely when its total cannot be proven, and that
+is all it does - agreeing candidates keep the approved chain's choice. The
+ordinary route (Issue #28) still takes the chain's first concept.
 
 What it says, in the order it is applied:
 

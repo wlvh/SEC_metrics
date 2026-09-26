@@ -285,6 +285,10 @@ SOURCE_TESTS += ("tests.vnext.test_historical_da_scope_candidate",)
 # A Part III amendment's note read whole: the three saved amendments and seven
 # counterexamples built from the predecessor's own bytes; 94 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_amendment_note",)
+# B03 through the pinned route with the D&A scope rule wired in: Salesforce
+# withheld by name with its B01 carried, two filings whose result equals the
+# result with the check off, and four constructed shapes; 44 seconds measured.
+SOURCE_TESTS += ("tests.vnext.test_historical_da_scope_route",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
@@ -319,6 +323,10 @@ FAST_TESTS += ("tests.vnext.test_source_tier_shard",)
 # meaning must build the committed register byte for byte. It reads the
 # committed readings and a few saved attempt headers; 0.2 seconds measured.
 FAST_TESTS += ("tests.vnext.test_acceptance_identity",)
+# #47's model-call allowance, ledger and request binding, in the tree where the
+# egress patch is not applied: nothing here can reach a provider, which is
+# asserted rather than assumed. It reads no source material; about 3 seconds.
+FAST_TESTS += ("tests.vnext.test_historical_model_calls",)
 SOURCE_TESTS += ("tests.vnext.test_regulatory_fact_review",)
 SOURCE_TESTS += ("tests.vnext.test_c04_registration_successor",)
 SOURCE_TIMEOUT_SECONDS = 240

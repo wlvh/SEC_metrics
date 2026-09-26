@@ -133,6 +133,10 @@ NEW_RULE_FILES = (
     # sentences, where the approved classifier refuses it on markup. It decides
     # whether a period's event window is cleared, so both roots check it.
     "scripts/vnext/historical_amendment_note.py",
+    # B03's D&A scope rule: whether the chain's D&A is provably the whole of it,
+    # from the target filing's own inline facts. It decides whether a B03 value
+    # is published or withheld by name, so both roots check it.
+    "scripts/vnext/historical_da_scope_candidate.py",
 )
 
 # One module the parent's authority does not name although its own named code

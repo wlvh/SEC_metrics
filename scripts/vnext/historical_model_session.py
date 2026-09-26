@@ -11,15 +11,20 @@ Live mode refuses, and for two separate reasons that are both stated:
 1. **No allowance.** #47 has no model-call allowance of its own and does not
    borrow #28's. ``ALLOWANCE_PATH`` does not exist.
 2. **No egress path.** Even with an allowance there is no way for #47 to open a
-   provider socket. WB-3's invocation controller
+   provider socket. Three gates decide it, all bound by bytes in the frozen
+   generations: WB-3's invocation controller
    (``invocation_control._prepare_successor_invocation_authority_from_requirement``)
    registers requirement generations by id - issue_28_v2, the R4 revision and
-   issue_28_v14 - and refuses any other; ``tools/check_provider_egress.py``
-   fixes the exact set of repository transport callers, and the only semantic
-   one (``continuous_semantic_calls._Transport.send``) is bound to #28's call
-   ledger and delegation. Both files are bound by bytes in the frozen
-   generations. Adding ``issue_47_v1`` to them is a change to a security
-   boundary and needs its own review; this module does not route around it.
+   issue_28_v14 - and refuses any other; the adapter
+   (``ai_adapter._scoped_transport_payload``) hands bytes to the socket only for
+   request types it names; and ``tools/check_provider_egress.py`` fixes the
+   exact set of transport callers, the only semantic one being #28's
+   (``continuous_semantic_calls._Transport.send``, bound to #28's ledger and
+   delegation). The change that would open them for ``issue_47_v1`` is written
+   as a patch for independent security review, with #47's own allowance,
+   ledger and request binding in ``historical_model_calls`` and the verified
+   offline evidence beside it (docs/evidence/issue47_history/model-egress/);
+   this module does not route around it, and the refusal below names all three.
 
 Recorded mode takes assistant outputs a caller supplies - a test's synthetic
 responses - and registers them as RECORDED_TEST_ONLY. That proves the path from
@@ -36,7 +41,8 @@ from .normal_source_authority import ROOT
 
 REQUIREMENT_ID = "issue_47_v1"
 ALLOWANCE_PATH = "config/issue47_historical_model_calls_v1.json"
-EGRESS_GATES = ("scripts/vnext/invocation_control.py", "tools/check_provider_egress.py")
+EGRESS_GATES = ("scripts/vnext/invocation_control.py", "scripts/vnext/ai_adapter.py",
+                "tools/check_provider_egress.py")
 _FACTORY = object()
 
 
