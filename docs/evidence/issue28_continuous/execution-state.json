@@ -1599,6 +1599,30 @@
       "result_path": "docs/evidence/issue28_continuous/d03-recorded-response-20260927/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS_D03_RECORDED_BYTES_NOT_LIVE_OR_NATIVE_CREDIT",
       "tool_call_count_note": "Agent reported 14 orchestrations and 38 nested tools, 52 total."
+    },
+    {
+      "task_name": "review_c04mixed_0cefb9b",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "c04_mixed_refresh",
+      "scope_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json",
+        "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json",
+        "tests/vnext/test_c04_source_only_install.py",
+        "tests/vnext/test_c04_refresh_cycle.py",
+        "tests/vnext/test_c04_update_cycle.py",
+        "tools/run_fast_tests_v2.py",
+        "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/"
+      ],
+      "patch_sha": "0cefb9bb4831316e7587ef25daccd86157148c7e",
+      "spawned_at": "2026-09-26T20:54:11.497743Z",
+      "ended_at": "2026-09-26T21:04:10.994016Z",
+      "tool_calls": 40,
+      "result_path": "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_MIXED_ONE_REQUEST_RESUME_REPEATS_SUBMISSIONS_AND_SOURCE_PROOFS_OVERBROAD",
+      "tool_call_count_note": "Agent reported 16 functions.exec orchestrations and 40 nested tool calls."
     }
   ],
   "ci_capacity_20260922": {
@@ -3474,7 +3498,7 @@
     "new_fiscal_year_update_proven": false,
     "ten_company_c04_complete": false,
     "evidence": "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/README.md",
-    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "independent_review": "NEEDS_FIX_MIXED_ONE_REQUEST_REPEATS_FIRST_URL_AND_SOURCE_PROOF_SET_OVERBROAD",
     "shared_with_47": {
       "file": "scripts/vnext/ordinary_refresh_cycle.py",
       "function": "refresh_and_process",
@@ -3482,6 +3506,7 @@
       "requirement_change": "unfrozen issue_28_v14 execution binding only",
       "downstream_impact": "stacked comparison base sees explicit C04 mixed route; #47 branch or artifacts not edited",
       "issue47_branch_ledger_snapshot_touched": false
-    }
+    },
+    "independent_review_path": "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/independent-review/conclusion.md"
   }
 }
