@@ -63,7 +63,9 @@ class C04SourceOnlyInstallTest(unittest.TestCase):
                 initialize_source_inputs(root=source, requirement=session.requirement,
                                          c04_source_only=True)
 
-    def test_mixed_old_root_keeps_c04_but_defer_all_source_claims(self):
+
+class C04MixedSourceRouteMaterialTest(unittest.TestCase):
+    def test_mixed_old_root_refreshes_only_c04_and_blocks_other_metrics(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary).resolve()
             session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
@@ -75,26 +77,55 @@ class C04SourceOnlyInstallTest(unittest.TestCase):
             (source/'config/ordinary_public_projection_v1.json').write_bytes(
                 b'{"historical_processing_copy":true}\n')
             (source/'catalog/r5/C04_auditor_changes_v3.md').unlink()
+            session.response = _Sources(ROOT, 'marriott_international', '1048286').read(
+                submissions_url(cik=1048286), role='sec_submissions_inventory',
+                media_type='application/json')['raw_bytes']
             with patch.object(socket.socket, 'connect',
                               side_effect=AssertionError('NETWORK_FORBIDDEN')), \
                  patch.object(socket, 'getaddrinfo',
                               side_effect=AssertionError('DNS_FORBIDDEN')), \
                  patch('sec_http.urlopen',
-                       side_effect=AssertionError('HTTP_FORBIDDEN')), \
-                 patch.object(session, 'capture',
-                              side_effect=AssertionError('MIXED_OLD_ROOT_MUST_NOT_CLAIM')):
+                       side_effect=AssertionError('HTTP_FORBIDDEN')):
                 result = refresh.refresh_and_process(session=session,
                     state_root=root/'state', company_ids=['marriott_international'],
-                    metric_ids=['B01', 'C04'], max_sec_requests=2,
+                    metric_ids=['B01', 'C04'], max_sec_requests=1,
                     c04_successor=True)
-            self.assertEqual([], result['captures'])
-            self.assertTrue(result['c04_mixed_source_acquisition_deferred'])
+            self.assertEqual(1, len(result['captures']))
+            self.assertEqual('SUCCEEDED', result['captures'][0]['result']['status'])
+            self.assertEqual(submissions_url(cik=1048286),
+                             result['captures'][0]['source_url'])
+            self.assertTrue(result['c04_mixed_source_only'])
             self.assertEqual({'provider': 0, 'paid': 0, 'sec': 0}, result['calls'])
             company, = result['companies']
             self.assertEqual('UPDATES_PARTIAL', company['updates']['status'])
             self.assertEqual(['UPDATE_BLOCKED', 'CANDIDATE_READY'],
                 [row['status'] for row in company['updates']['metrics']])
             self.assertEqual('SOURCE_SCOPE', company['acquisition_errors'][0]['stage'])
+            plan = strict_json_file(path=root/'ledger/calls/0001/sec-plan.json')
+            self.assertEqual('C04_REGISTRATION_FOUR_FORM_UPDATE_V1',
+                             plan['source_only_processing_route'])
+            with session.ledger.locked():
+                self.assertEqual([0, 0, 1], session.ledger.snapshot()['counts'])
+
+    def test_mixed_old_root_does_not_capture_unproved_source(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
+            source = session.data_root
+            with session.ledger.locked():
+                initialize_source_inputs(root=source, requirement=session.requirement)
+            (source/'config/issue28_normal_results_v2.json').write_bytes(
+                b'{"historical_processing_copy":true}\n')
+            unproved = {'source_url': 'https://www.sec.gov/Archives/unproved.json',
+                'refresh_for_new_discovery': True, 'saved_status': 'MISSING_SAVED_SOURCE'}
+            with patch.object(refresh, '_pending', return_value=[unproved]), \
+                 patch.object(session, 'capture',
+                              side_effect=AssertionError('UNPROVED_SOURCE_CLAIMED')):
+                result = refresh.refresh_and_process(session=session,
+                    state_root=root/'state', company_ids=['marriott_international'],
+                    metric_ids=['B01', 'C04'], max_sec_requests=1,
+                    c04_successor=True)
+            self.assertEqual([], result['captures'])
             with session.ledger.locked():
                 self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
 

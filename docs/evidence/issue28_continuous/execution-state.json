@@ -146,14 +146,19 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "b276b1e7d90ae2bfbe1c62cd9d8c82e748865355",
-    "run_id": 36116965890,
+    "head": "68abb7a1a12a0c765abbd6b642bc4e175a103e74",
+    "run_id": 36262871721,
     "status": "completed",
-    "conclusion": "success",
-    "jobs_success": 13,
-    "jobs_failed": 0,
-    "jobs_cancelled": 0,
-    "scope": "B13 offline candidate and ordinary binding at b276; later local C04/D03 differences not covered."
+    "conclusion": "failure",
+    "jobs_success": 12,
+    "jobs_failed": 1,
+    "saved_source_material_job_id": 108461895725,
+    "failed_selectors": [
+      "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest:TIMEOUT_240",
+      "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest:TIMEOUT_240"
+    ],
+    "d03_recorded_selector": "PASS_227_163_SECONDS",
+    "evidence": "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/ci-68-failure.json"
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -3377,10 +3382,12 @@
     ],
     "evidence": "docs/evidence/issue28_continuous/c04-source-ci-runtime-20260927/README.md",
     "head_97a5_main_run_36260165182": "IN_PROGRESS_AT_2026_09_27_CHECKPOINT",
-    "new_head_ci": "PENDING_AFTER_NEXT_PUSH"
+    "new_head_ci": "PENDING_AFTER_NEW_PUSH",
+    "head_68_main_run_36262871721": "FAILURE_ONLY_C04_REFRESH_AND_C04_UPDATE_SOURCE_SELECTORS_TIMEOUT_240_OTHER_12_JOBS_SUCCESS",
+    "targeted_shortened_tests": "PASS_C04_UPDATE_164_576_C04_REFRESH_227_794"
   },
   "d03_recorded_raw_response_20260927": {
-    "status": "OFFLINE_RAW_BYTES_PERSISTED_AND_INDEPENDENT_COLD_READ_PASS_SCOPED_REVIEW_PENDING",
+    "status": "OFFLINE_RAW_BYTES_PERSISTED_AND_INDEPENDENT_COLD_READ_PASS_SCOPED_REVIEW_PASS_WITH_BOUNDS",
     "code_path": "scripts/vnext/d03_recorded_response_store.py",
     "module_sha256": "89e46c2bf900ff14935969a784efeac6786cea4a88ce89e1659b51c54eac0785",
     "packet_id": "sha256:4bac51a935deadda11f456ba39f6976647fe2d5cd05fe194f89fbc7ef7ce02d6",
@@ -3409,12 +3416,72 @@
     ],
     "real_ledger_last_ordinal": 194,
     "evidence": "docs/evidence/issue28_continuous/d03-recorded-response-20260927/README.md",
-    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "independent_review": "PASS_WITH_BOUNDS_EXACT_SHA_1535e5c_RECORDED_BYTES_NO_LIVE_OR_NATIVE_CREDIT",
     "remaining": [
       "AUTHORITATIVE_REAL_PROVIDER_PERSISTENCE_WIRING",
       "COMPLETE_SOURCE_AND_SEMANTIC_VALIDATION",
       "NATIVE_RESULT_RUN",
       "D03_REAL_CALL_RESOURCE_DECISION"
-    ]
+    ],
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-recorded-response-20260927/independent-review/conclusion.md"
+  },
+  "ci_36262871721": {
+    "head": "68abb7a1a12a0c765abbd6b642bc4e175a103e74",
+    "run_id": 36262871721,
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs_success": 12,
+    "jobs_failed": 1,
+    "saved_source_material_job_id": 108461895725,
+    "failed_selectors": [
+      "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest:TIMEOUT_240",
+      "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest:TIMEOUT_240"
+    ],
+    "d03_recorded_selector": "PASS_227_163_SECONDS",
+    "evidence": "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/ci-68-failure.json"
+  },
+  "c04_mixed_auto_refresh_20260927": {
+    "status": "RECORDED_MIXED_C04_PROVEN_SOURCE_READY_OTHER_METRICS_BLOCKED_SCOPED_REVIEW_PENDING",
+    "trigger": "mixed old source processing copies previously deferred all SEC capture including C04-proven dependencies",
+    "code_paths": [
+      "scripts/vnext/ordinary_refresh_cycle.py",
+      "requirements/issue_28_v14/baseline_manifest.json"
+    ],
+    "mixed_route_behavior": "filter pending SEC URLs through current C04 prepare_case source_proofs; source_only_c04 capture only; B01 and other stale processing metrics remain UPDATE_BLOCKED; overall UPDATES_INCOMPLETE",
+    "shared_default_refresh_and_capture_behavior_preserved": true,
+    "ordinary_v13_closure_unchanged": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+    "continuous_v14_closure": "sha256:639b9bf39a3962784a59dee7d66704e648713e520948183e9b478c3993bdae65",
+    "execution_authority_hash": "sha256:9d4c0436fd23c6e7feb04af80f4f12504b06d21dcc69accbce484a910a0e9a16",
+    "recorded_mixed_marriott_positive": "PASS_C04_CANDIDATE_READY_B01_UPDATE_BLOCKED_ONE_RECORDED_SEC_SLOT_REAL_CALLS_ZERO",
+    "unproved_url_negative": "PASS_NO_CLAIM",
+    "source_selector_runtime_repairs": {
+      "current_c04_update_material": "PASS_164_576_SECONDS_ONE_REAL_SAVED_RUN",
+      "current_c04_refresh_material": "PASS_227_794_SECONDS_ONE_COMPLETE_RECORDED_SOURCE_REFRESH",
+      "isolated_credit_boundary": "PASS_0_003_SECONDS",
+      "old_two_version_material": "REUSED_BY_EXACT_OLD_EVIDENCE_NOT_RERUN"
+    },
+    "provider_paid_sec_new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "real_ledger_last_ordinal": 194,
+    "real_ledger_counts": [
+      143,
+      143,
+      51
+    ],
+    "new_fiscal_year_update_proven": false,
+    "ten_company_c04_complete": false,
+    "evidence": "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/README.md",
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_47": {
+      "file": "scripts/vnext/ordinary_refresh_cycle.py",
+      "function": "refresh_and_process",
+      "default_c04_successor_false_behavior_changed": false,
+      "requirement_change": "unfrozen issue_28_v14 execution binding only",
+      "downstream_impact": "stacked comparison base sees explicit C04 mixed route; #47 branch or artifacts not edited",
+      "issue47_branch_ledger_snapshot_touched": false
+    }
   }
 }

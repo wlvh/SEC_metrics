@@ -1,0 +1,38 @@
+{
+  "record_type": "C04_MIXED_SOURCE_ONLY_REFRESH_INCREMENT",
+  "tested_git_head": "68abb7a1a12a0c765abbd6b642bc4e175a103e74",
+  "tested_tree_status": "UNCOMMITTED_INCREMENT",
+  "module_sha256": "032d7f75377eab56bd428da464fec10a9393d1ac60a17a10199c44fa4ba46596",
+  "v13_parent_closure_hash": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+  "v14_closure_hash": "sha256:639b9bf39a3962784a59dee7d66704e648713e520948183e9b478c3993bdae65",
+  "v14_execution_authority_hash": "sha256:9d4c0436fd23c6e7feb04af80f4f12504b06d21dcc69accbce484a910a0e9a16",
+  "source_material_first_run": "FAILED_TEST_ASSERTION_RECORDED_LEDGER_SLOT_COUNT",
+  "source_material_first_run_seconds": 286.662,
+  "mixed_positive_retest": "PASS_139_157_SECONDS",
+  "unproved_source_case": "PASS_IN_FIRST_RUN_IMPLEMENTATION_PATH_UNCHANGED",
+  "ci_68_result": "FAILED_ONLY_C04_REFRESH_AND_C04_UPDATE_SELECTORS_TIMEOUT_240",
+  "final_targeted_update": "PASS_164_576_SECONDS",
+  "final_targeted_refresh": "PASS_227_794_SECONDS",
+  "isolated_credit_boundary": "PASS_0_003_SECONDS",
+  "actual_new_calls": [
+    0,
+    0,
+    0
+  ],
+  "real_ledger_ordinal": 194,
+  "real_ledger_counts": [
+    143,
+    143,
+    51
+  ],
+  "ci_terminal_for_new_increment": "NOT_YET_PUSHED",
+  "logs_sha256": {
+    "mixed-route-test.log": "76893f604fa54084dbd9b62461322b02dce45c7d220a3af83159460f2ec8a201",
+    "mixed-positive-final.log": "dae409fcae428ee73e9ead51f05a3cbbcaf1de8b85aa6f3c1a6c8029e8fdbcf0",
+    "ci-68-failure.json": "3408c6e58698e08d226bbbb4035f7d233537b03eeced421823a85618052ea531",
+    "c04-update-ci-targeted.log": "15968017c9baa417070d79dc52ca64e4e1d855da52e242ba605954b80269fa2c",
+    "c04-refresh-ci-targeted.log": "c237c162d9b97c291a7d6e72548e4ddeb3bf440cfcabf323f99330e9ff61c447",
+    "binding-final.log": "4b49cd8ca70d70bd9cd6c80df4ef00b333d50b62dfc1463a45863dd4db10dbb8",
+    "final-receipt-check.log": "3ecbb28bfbfc872e477f51e3db9d7d5c24b607a0fc82e8dfeb7b569084c40d05"
+  }
+}

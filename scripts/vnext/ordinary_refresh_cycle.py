@@ -225,10 +225,10 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
     attempted = ({resumed['prior_source_url']} if resumed is not None else set())
     captures, discoveries = [], {}
     errors = ({company: [{'stage': 'SOURCE_SCOPE',
-        'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_NO_ACQUISITION'}]
+        'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_OTHER_METRICS_BLOCKED'}]
         for company in selected} if mixed_stale else {})
     capture_error = False
-    capture_limit = 0 if mixed_stale else max_sec_requests
+    capture_limit = max_sec_requests
     # One request per company per pass keeps an unrelated company progressing
     # when another company's metadata or original source is unavailable.
     for _ in range(capture_limit):
@@ -238,6 +238,19 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                 discovery = discover_saved_source_requirements(repo_root=session.data_root, company_id=company)
                 discoveries[company] = discovery
                 pending = _pending(discovery, attempted, failed)
+                if mixed_stale:
+                    # A source-only capture must belong to the explicit C04
+                    # case when discovery also lists other metrics. Old
+                    # processing copies still block those other metrics.
+                    from .normal_run_v3 import prepare_case
+                    from .c04_registration_successor import EVENT_FORMS
+                    c04_case = prepare_case(data_root=session.data_root,
+                        company_id=company, metric_id='C04',
+                        c04_event_forms=EVENT_FORMS)
+                    c04_urls = {proof['source_url'] for proof in
+                                c04_case['source_proofs']}
+                    pending = [item for item in pending
+                               if item['source_url'] in c04_urls]
             except Exception as error:
                 errors.setdefault(company, []).append({'stage': 'DISCOVERY', 'error_type': type(error).__name__, 'reason': str(error)})
                 continue
@@ -269,7 +282,7 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                          'ORDINARY_REFRESH_RESUME_SOURCE_CHANGED_BEFORE_CAPTURE')
                 result = session.capture(company_id=company, url=url,
                     refresh_metadata=request['refresh_for_new_discovery'],
-                    **({'source_only_c04': True} if c04_only else {}))
+                    **({'source_only_c04': True} if c04_only or mixed_stale else {}))
                 captures.append({'company_id': company, 'source_url': url, 'result': result})
                 if result['status'] not in {'SUCCEEDED', 'EXISTING_VERIFIED_SOURCE_REUSED'}:
                     failed.add(url)
@@ -372,7 +385,7 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
         for i,key in enumerate(('provider','paid')):
             accounting['calls'][key]=(None if unknown else sum(r['counts'][i] for r in native_attempts)) if session.ledger.live else 0
     return {'record_type': 'ORDINARY_BOUNDED_REFRESH_AND_UPDATE', 'schema_version': 1,
-        **({'c04_mixed_source_acquisition_deferred': True} if mixed_stale else {}),
+        **({'c04_mixed_source_only': True} if mixed_stale else {}),
         **({'resumed_c04_source': {key: value for key, value in resumed.items()
             if key not in {'source_ledger_sha256', 'allowed_next_urls',
                            'prior_intent_id'}}}

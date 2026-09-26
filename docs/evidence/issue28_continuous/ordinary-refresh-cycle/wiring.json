@@ -1,6 +1,6 @@
 {
   "record_type": "ORDINARY_REFRESH_OFFLINE_WIRING",
-  "execution_authority_hash": "sha256:94cf9e4133cdc400ce4bca1aeec17343055e56a6c14188f33939c4b4af3e93c9",
+  "execution_authority_hash": "sha256:9d4c0436fd23c6e7feb04af80f4f12504b06d21dcc69accbce484a910a0e9a16",
   "calls": [
     0,
     0,
@@ -18,7 +18,7 @@
   "actual_new_fiscal_year_verified": false,
   "full390_acceptance": false,
   "production_authorized": false,
-  "independent_review": "SCOPED_REVIEW_COMPLETE_NO_BLOCKERS",
+  "independent_review": "CURRENT_MIXED_C04_SOURCE_INCREMENT_REVIEW_PENDING; previous scoped review retained",
   "receipt_installation": "CURRENT_EXECUTION_BOUND",
   "evidence": {
     "docs/evidence/issue28_continuous/ordinary-refresh-cycle/current-lifecycle.log": "52344cb3020252d2fdfeb638c14a67b4f2dbb16c33eb3e185ca0f9db037b921b",
@@ -56,13 +56,17 @@
     "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/resume-deferred-auth.log": "16d868da159ddaf10370f824b31be5541c8f6d486444e5b4ed58f8a949997c4f",
     "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/real-report-tamper.log": "983e99022ee9ec27cc20c33769bb96ffe53e77036d201433312b4e6149a9bf26",
     "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/real-resume-preflight.log": "db6205699308a218b715b664f4ddeea32f247ad427da827c5380ea51a3ed8199",
-    "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/boundary.log": "16ebe4d7b6f6efdda3245170c3c28d9e9c3e9cae2885893331681597d7c9e268"
+    "docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/boundary.log": "16ebe4d7b6f6efdda3245170c3c28d9e9c3e9cae2885893331681597d7c9e268",
+    "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/mixed-route-test.log": "76893f604fa54084dbd9b62461322b02dce45c7d220a3af83159460f2ec8a201",
+    "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/mixed-positive-final.log": "dae409fcae428ee73e9ead51f05a3cbbcaf1de8b85aa6f3c1a6c8029e8fdbcf0",
+    "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/binding-check.log": "470108d422c9cc8caf6c31415fd676dd59a718ef514358f89323a1fc90b8dbf5",
+    "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/binding-final.log": "4b49cd8ca70d70bd9cd6c80df4ef00b333d50b62dfc1463a45863dd4db10dbb8"
   },
   "c04_successor_recorded_route_verified": true,
   "c04_controller_sha256": "4146468f043e9e4f568ae5c0d2fbe1dab8b51bbce6fea0ccd7150dab81abf417",
   "validated_c04_coordinate": "marriott_international/C04",
   "c04_source_only_existing_root_verified": true,
-  "c04_mixed_old_root_no_acquisition_verified": true,
   "c04_one_prior_source_resume_recorded_verified": true,
-  "c04_resume_deferred_source_reconstruction_verified": true
+  "c04_resume_deferred_source_reconstruction_verified": true,
+  "c04_mixed_old_root_only_c04_proved_source_acquired": true
 }
