@@ -1436,6 +1436,26 @@
       "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-repair/conclusion.md",
       "verdict": "NEEDS_FIX_P2_CURRENT_HISTORICAL_FALSE_ACCEPTANCE_AND_OVERLAP_FALSE_REJECTION",
       "tool_call_count_note": "Agent did not report a count; no count inferred."
+    },
+    {
+      "task_name": "review_b13suspend_d41a5e9",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage_material.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "config/issue28_continuous_calls_v1.json"
+      ],
+      "patch_sha": "d41a5e9adf6165b1ab3fc20aae63e689fdb9e228",
+      "spawned_at": "2026-09-26T07:22:30Z",
+      "ended_at": "2026-09-26T07:35:22Z",
+      "tool_calls": null,
+      "result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-v6-suspension/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_V6_NATIVE_SUCCESS_CREDIT_SUSPENDED",
+      "tool_call_count_note": "Agent did not report a count; no count inferred."
     }
   ],
   "ci_capacity_20260922": {
@@ -2759,7 +2779,7 @@
     "review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-repair/conclusion.md"
   },
   "b13_v6_native_suspension_20260926": {
-    "status": "V6_NATIVE_ACCEPTANCE_AND_SECOND_STAGE_EXECUTION_SUSPENDED_AFTER_TWO_NEEDS_FIX_REVIEWS",
+    "status": "SCOPED_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS_V6_NO_NATIVE_SUCCESS_CREDIT",
     "precursor_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-v6/conclusion.md",
     "second_review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-assertion-repair/conclusion.md",
     "current_contract": "V6_OFFLINE_DIAGNOSTIC_ONLY_NO_NATIVE_RESULT_CREDIT",
@@ -2770,16 +2790,28 @@
     "saved_190_identity_changed": false,
     "directed_tests": "32_PASS",
     "recorded_scan_then_stop_test": "1_PASS_50_261_SECONDS",
-    "recorded_test_counts": [1, 1, 0],
-    "real_ledger_counts_last_read": [143, 143, 49],
-    "new_real_calls": [0, 0, 0],
+    "recorded_test_counts": [
+      1,
+      1,
+      0
+    ],
+    "real_ledger_counts_last_read": [
+      143,
+      143,
+      49
+    ],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
     "current_requirement_closure": "sha256:9c02b4772e364f33b311c10b6282dca3a4083ad0aad528d1ad2a75ce33956a3e",
     "execution_authority_hash": "sha256:ecaa9a4d7a9986006154caba08e227b4a35160f4678f4f04d85982e82ed1d061",
     "provider_wiring": "PASS_CURRENT_MOCKED_FACTORY_AND_CONTROLLER",
     "sec_wiring": "PASS_BYTE_REUSE_UNCHANGED_SEC_ACQUISITION",
     "new_scheme_real_execution_authorized": false,
     "current_complete_b13_company_results": 0,
-    "independent_review": "PENDING_EXACT_SUSPENSION_SHA",
+    "independent_review": "PASS_WITH_BOUNDS_EXACT_SHA_D41A5E9A",
     "issue_47_branch_or_ledger_used": false,
     "shared_with_47": {
       "scope_paths": [
@@ -2797,6 +2829,10 @@
       "current_v15_binding_changed": true,
       "frozen_prior_snapshots_changed": false,
       "other_branch_touched": false
-    }
+    },
+    "review_patch_sha": "d41a5e9adf6165b1ab3fc20aae63e689fdb9e228",
+    "review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-v6-suspension/conclusion.md",
+    "review_v5_recorded_test": "TIMED_OUT_119_SECONDS_NO_CURRENT_PASS_CREDIT",
+    "review_190_read_only_replay": "PASS_ORIGINAL_RECEIPT_ID_UNCHANGED"
   }
 }
