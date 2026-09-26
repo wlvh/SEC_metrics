@@ -685,9 +685,10 @@ def execute_capacity_assessment(*, prepared, ledger, recorded_wire=None):
          'B13_NATIVE_ASSESSMENT_REQUIRED')
     need(strict_json_loads(text=prepared.request_bytes.decode()).get('record_type') !=
          'B13_REFERENCE_SCAN_REQUEST', 'B13_SCAN_STAGE_HAS_NO_METRIC_RESULT')
-    from .capacity_reference_contract import SCANNED_VERSION
+    from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, SCANNED_VERSION
     need(strict_json_loads(text=prepared.request_bytes.decode()).get(
-         'source_reference_contract', {}).get('version') != SCANNED_VERSION,
+         'source_reference_contract', {}).get('version') not in {
+             SCANNED_VERSION, ASSERTION_SCOPED_VERSION},
          'B13_TWO_STAGE_EXECUTION_PROOF_REQUIRED')
     return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=recorded_wire,
                              native_assessment=True)
@@ -705,11 +706,12 @@ def execute_capacity_scan(*, prepared, ledger, recorded_wire=None):
 
 def execute_capacity_interpretation(*, prepared, ledger, recorded_wire=None):
     """Recorded V5 assessment requires an earlier exact successful scan."""
-    from .capacity_reference_contract import SCANNED_VERSION
+    from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, SCANNED_VERSION
     from .capacity_two_stage import saved_scan_stage
     request = strict_json_loads(text=prepared.request_bytes.decode())
     need(request.get('metric_id') == 'B13'
-         and request.get('source_reference_contract', {}).get('version') == SCANNED_VERSION,
+         and request.get('source_reference_contract', {}).get('version') in {
+             SCANNED_VERSION, ASSERTION_SCOPED_VERSION},
          'B13_TWO_STAGE_INTERPRETATION_REQUIRED')
     need(not ledger.live, 'B13_TWO_STAGE_LIVE_EXECUTION_NOT_AUTHORIZED')
     proof = request['two_stage_contract']['scan_execution_proof']

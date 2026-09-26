@@ -2574,11 +2574,12 @@
   },
   "ci_36217092936": {
     "head": "fb9db1991bebe27f164ea474ad50ee71be05c442",
-    "observed_at_utc": "2026-09-26T04:22:06Z",
-    "status": "in_progress_at_observation",
+    "observed_at_utc": "2026-09-26T04:57:22Z",
+    "status": "completed",
+    "conclusion": "failure",
     "fast_job": "FAILED_STALE_TEST_RECEIPT_FILENAME",
     "fast_job_id": 108335108220,
-    "other_jobs_terminal": "NOT_YET_KNOWN",
+    "other_jobs_terminal": "SUCCESS_12_OF_12",
     "rerun_triggered": false
   },
   "ci_fast_wiring_test_repair_20260926": {
@@ -2588,6 +2589,70 @@
     "current_receipt_changed": false,
     "directed_tests": "5_PASS",
     "evidence_log": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/ci-fast-repair-directed.log",
-    "new_calls": [0, 0, 0]
+    "new_calls": [0, 0, 0],
+    "repair_head": "9552226d09f9fa5999218644b7a4e72bf387d513",
+    "repair_head_ci": 36217741051,
+    "repair_head_ci_at_last_observation": "SUCCESS_13_OF_13"
+  },
+  "b13_assertion_scoped_v6_offline_20260926": {
+    "status": "EXPLICIT_OFFLINE_SUCCESSOR_RECORDED_NATIVE_STAGE_CHAIN_PASS_REVIEW_PENDING",
+    "evidence_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/",
+    "historical_v5_default_changed": false,
+    "saved_190_identity_changed": false,
+    "new_live_authorization": false,
+    "enphase_remaining_groups": 5,
+    "ford_remaining_groups": 11,
+    "conditional_two_stage_new_call_maximum": 32,
+    "scanned_candidate_cap_per_group": 24,
+    "interpretation_finding_cap_per_group": 28,
+    "maximum_measured_context_tokens": 199876,
+    "context_limit_tokens": 200000,
+    "synthetic_output_example_max_tokens": 3209,
+    "output_limit_tokens": 4096,
+    "output_example_is_absolute_bound": false,
+    "directed_tests": "32_PASS",
+    "recorded_stage_test": "1_PASS_125_290_SECONDS",
+    "installed_mixed_190_company_result": "NOT_VERIFIED",
+    "current_requirement_closure": "sha256:5917d8f0687be9dafe05bf4544260a5b674725ae660753bd2bdb7a7e3af134c2",
+    "execution_authority_hash": "sha256:74da011f33656f8aeb36a7de2a432b6bcead50a7a978b16b895c1b2b3844013c",
+    "provider_wiring": "PASS_CURRENT_RECEIPT",
+    "sec_wiring": "PASS_CURRENT_RECEIPT_WITH_REUSED_PRE_CAP_SEC_TEST",
+    "ledger_rows": 192,
+    "ledger_counts": [143, 143, 49],
+    "new_calls": [0, 0, 0],
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "issue_47_branch_or_ledger_used": false,
+    "default_run_regression_local_environment_note": "LOCAL_TEST_OMITTED_REQUIRED_CI_B13_REFERENCE_CONTEXT_1_AND_FAILED; PROGRAM_ROLE_TEST_PASS; PRIOR_HEAD_9552226D_CI_NATIVE_JOB_SUCCESS; CURRENT_V6_HEAD_CI_PENDING",
+    "default_run_regression_logs": [
+      "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/assertion-default-run-regression.log",
+      "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/assertion-default-run-py314.log"
+    ],
+    "shared_with_47": {
+      "scope_paths": [
+        "scripts/vnext/capacity_assessment_input.py",
+        "scripts/vnext/capacity_run.py",
+        "scripts/vnext/native_unit_index.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_program_roles.py"
+      ],
+      "functions": [
+        "capacity_assessment_input.register_assessment_input",
+        "capacity_assessment_input.load_registered_input",
+        "capacity_run.prepare_case",
+        "native_unit_index.validate_request_partition",
+        "continuous_semantic_calls.execute_capacity_assessment",
+        "continuous_semantic_calls.execute_capacity_interpretation",
+        "capacity_program_roles.verify_original_program_assessment"
+      ],
+      "impact": "EXPLICIT_B13_V6_VARIANT_ONLY_OLD_DEFAULT_UNCHANGED",
+      "binding_change": "MUTABLE_ISSUE_28_V14_CURRENT_CLOSURE_ONLY",
+      "old_snapshots_rewritten": false,
+      "other_branch_touched": false,
+      "compatibility_evidence": [
+        "B13_V5_DIRECTED_32_PASS",
+        "B13_V6_RECORDED_STAGE_AND_REPLAY_PASS",
+        "PRIOR_HEAD_9552226D_CI_13_OF_13_SUCCESS"
+      ]
+    }
   }
 }

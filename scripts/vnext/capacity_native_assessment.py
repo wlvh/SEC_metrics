@@ -18,8 +18,9 @@ from .sources import resolve_repository_file
 def build_acceptance(*, prepared, plan, response_body):
     request = strict_json_loads(text=prepared.request_bytes.decode())
     need(request['metric_id'] == 'B13', 'B13_NATIVE_ASSESSMENT_REQUIRED')
-    from .capacity_reference_contract import SCANNED_VERSION
-    need(request.get('source_reference_contract', {}).get('version') != SCANNED_VERSION,
+    from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, SCANNED_VERSION
+    need(request.get('source_reference_contract', {}).get('version') not in {
+         SCANNED_VERSION, ASSERTION_SCOPED_VERSION},
          'B13_TWO_STAGE_SCAN_EXECUTION_PROOF_REQUIRED')
     checked = validate_response(request=request, raw_response=response_body,source=strict_json_loads(text=prepared.source_bytes.decode()))
     return _build_acceptance(prepared=prepared, plan=plan, response_body=response_body, checked=checked,
@@ -47,8 +48,9 @@ def _build_acceptance(*, prepared, plan, response_body, checked, metric_id, grou
     if 'program_quantity_contract' in checked:
         body['selected']['source_assessment']['program_quantity_contract']=checked['program_quantity_contract']
     if stage_proof is not None:
-        from .capacity_reference_contract import SCANNED_VERSION
-        need(metric_id == 'B13' and request.get('source_reference_contract', {}).get('version') == SCANNED_VERSION,
+        from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, SCANNED_VERSION
+        need(metric_id == 'B13' and request.get('source_reference_contract', {}).get('version') in {
+             SCANNED_VERSION, ASSERTION_SCOPED_VERSION},
              'B13_TWO_STAGE_ACCEPTANCE_SCOPE_CHANGED')
         body['selected']['source_assessment']['scan_stage_proof'] = stage_proof
     candidate = validate_record(record={'record_type': 'OBSERVATION_CANDIDATE', **body,

@@ -75,9 +75,10 @@ def prepare_case(*, data_root, company_id, assessment_mode=None, assessment_inpu
     registered = load_registered_input(data_root=data_root, source=source, requirement=requirement,
                                        mode=assessment_mode, input_record_id=assessment_input_id,check_export=not current_runtime)
     assessment = registered['assessment']
-    from .capacity_reference_contract import SCANNED_VERSION
+    from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, SCANNED_VERSION
     actual_requests = ([row['semantic_request'] for row in registered['native_requests']]
-        if SCANNED_VERSION in assessment.get('native_request_variants', []) else None)
+        if {SCANNED_VERSION, ASSERTION_SCOPED_VERSION} & set(
+            assessment.get('native_request_variants', [])) else None)
     numeric = metric_id == 'B13' and assessment['proposed_branch'] == 'COMPARABLE_QUANTITY_PAIR_ASSESSMENT_REQUIRED'
     if numeric:
         spec_path = rules['numeric_spec']

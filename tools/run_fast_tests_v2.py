@@ -118,6 +118,7 @@ SOURCE_TESTS += ("tests.vnext.test_d04_native_wiring",)
 SOURCE_TESTS += ("tests.vnext.test_native_assessment_replay",)
 SOURCE_TESTS += ("tests.vnext.test_regulatory_fact_review",)
 SOURCE_TESTS += ("tests.vnext.test_c04_registration_successor",)
+SOURCE_TESTS += ("tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_records_both_stages_without_live_permission",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

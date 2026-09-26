@@ -13,6 +13,7 @@ COMPACT_VERSION = 'B13_TYPED_COMPACT_REFERENCES_V2'
 ROLE_VERSION = 'B13_MEANINGFUL_ROLE_REFERENCES_V3'
 RELEVANCE_VERSION = 'B13_REQUIRED_FIRST_RELEVANCE_V4'
 SCANNED_VERSION = 'B13_SCANNED_INTERPRETATION_V5'
+ASSERTION_SCOPED_VERSION = 'B13_ASSERTION_SCOPED_INTERPRETATION_V6'
 ROLE_LABELS = {
     'physical_capacity_context': 'CAPACITY_QUALITATIVE',
     'sales_or_shipments': 'SALES_OR_SHIPMENTS',
@@ -113,7 +114,8 @@ def restore_base_request(request):
     need(request.get('request_id') == content_hash(value={k: v for k, v in request.items() if k != 'request_id'}),
          'B13_REFERENCE_REQUEST_CHANGED')
     meta = request.get('source_reference_contract')
-    if type(meta) is dict and meta.get('version') == SCANNED_VERSION:
+    if type(meta) is dict and meta.get('version') in {SCANNED_VERSION,
+                                                     ASSERTION_SCOPED_VERSION}:
         from .capacity_two_stage import restore_prior_interpretation_request
         return restore_base_request(restore_prior_interpretation_request(request))
     need(type(meta) is dict and set(meta) == {'version', 'base_request_id'}

@@ -10,13 +10,17 @@ from copy import deepcopy
 import re
 
 from .canonical import (canonical_json_bytes, content_hash, sha256_bytes,
-                        sha256_file, strict_json_loads)
-from .capacity_reference_contract import (RELEVANCE_VERSION, SCANNED_VERSION,
-                                          _owners, restore_base_request)
+                        sha256_file, strict_json_file, strict_json_loads)
+from .capacity_reference_contract import (ASSERTION_SCOPED_VERSION,
+                                          RELEVANCE_VERSION, SCANNED_VERSION,
+                                          ROLE_LABELS, _owners,
+                                          restore_base_request)
 
 SCAN_VERSION = 'B13_COMPLETE_REFERENCE_SCAN_V1'
 ASSESS_VERSION = SCANNED_VERSION
 MAX_CANDIDATE_REFS = 64
+MAX_ASSERTION_SCOPED_REFS = 24
+MAX_ASSERTION_SCOPED_FINDINGS = 28
 _TYPED = re.compile(r'(?:B|F)[0-9]+|S[0-9]+:[0-9]+\Z')
 SCAN_PROMPT = (
     'Scan EVERY supplied B13 source unit, including units without navigation hits. '
@@ -45,6 +49,36 @@ ASSESS_SUFFIX = (
     'SCAN_OMISSION:, rather than silently ignoring it. Review every unit; '
     'all original blocks, facts, headings and context remain supplied.'
 )
+ASSERTION_SUFFIX = (
+    ' For every visible-block finding, add one [typed_reference,start,end] '
+    'range for each cited B reference. Offsets count Unicode characters in '
+    'the supplied block text. A range must cover one complete sentence or '
+    'semicolon-delimited assertion, including its subject and time context. '
+    'Do not select only the capacity phrase while omitting its subject. '
+    'If one assertion contains multiple physical-capacity statements that '
+    'cannot be assigned separately, put the reference in the owning unit '
+    'unresolved list. Do not use an exclusion to erase a second assertion '
+    'in the same source block.'
+)
+_PHYSICAL_CAPACITY = re.compile(
+    r'\b(?:manufacturing|production)\s+(?:capacity|capabilities)\b', re.I)
+
+
+def _assertion_protocol(base):
+    protocol = deepcopy(base)
+    item = protocol['json_schema']['properties']['findings']['items']
+    item['prefixItems'].append({'type': 'array', 'items': {
+        'type': 'array', 'prefixItems': [
+            {'type': 'string'}, {'type': 'integer', 'minimum': 0},
+            {'type': 'integer', 'minimum': 1}],
+        'minItems': 3, 'maxItems': 3, 'items': False}})
+    item['minItems'] = item['maxItems'] = 6
+    protocol['json_schema']['properties']['findings']['maxItems'] = MAX_ASSERTION_SCOPED_FINDINGS
+    protocol['assertion_scope'] = ('The sixth field lists exact visible-block '
+        'assertion ranges [B-reference,start,end] for this finding. '
+        'Non-visible evidence has no range. Ambiguous multi-assertion '
+        'blocks must remain unresolved. At most 28 findings are allowed.')
+    return protocol
 SCAN_PROTOCOL = {
     'root_fields': ['units_reviewed', 'candidate_refs', 'unresolved_refs'],
     'reference_format': 'B<block_index>|F<fact_ordinal>|S<unit_index>:<object_index>',
@@ -431,15 +465,20 @@ def build_registered_interpretation_acceptance(*, prepared, plan,
 
 
 def interpretation_request(*, request, scan_result, scan_raw_response,
-                           scan_execution_proof=None):
+                           scan_execution_proof=None, assertion_scopes=False):
     """Carry the full original source and the exact validated scan proposal."""
     _base(request)
     _need(type(scan_result) is dict and type(scan_raw_response) is bytes
           and scan_result == validate_scan(request=request,
               scan_request_value=scan_request(request), raw_response=scan_raw_response),
           'B13_SCAN_RESULT_NOT_BOUND')
+    _need(type(assertion_scopes) is bool, 'B13_ASSERTION_SCOPE_SELECTION_INVALID')
+    if assertion_scopes:
+        _need(len(scan_result['response']['candidate_refs']) <= MAX_ASSERTION_SCOPED_REFS,
+              'B13_ASSERTION_SCOPE_CANDIDATE_CAP_EXCEEDED')
     body = {key: deepcopy(value) for key, value in request.items() if key != 'request_id'}
-    link = {'version': ASSESS_VERSION, 'prior_request_id': request['request_id']}
+    version = ASSERTION_SCOPED_VERSION if assertion_scopes else ASSESS_VERSION
+    link = {'version': version, 'prior_request_id': request['request_id']}
     if scan_execution_proof is not None:
         _need(type(scan_execution_proof) is dict
               and scan_execution_proof.get('proof_id') == content_hash(value={
@@ -451,10 +490,13 @@ def interpretation_request(*, request, scan_result, scan_raw_response,
                   scan_result['raw_response_sha256'],
               'B13_SCAN_EXECUTION_PROOF_NOT_BOUND')
         link['scan_execution_proof'] = deepcopy(scan_execution_proof)
-    body.update(system_prompt=body['system_prompt'] + ASSESS_SUFFIX,
+    body.update(system_prompt=body['system_prompt'] + ASSESS_SUFFIX +
+                (ASSERTION_SUFFIX if assertion_scopes else ''),
                 two_stage_scan=deepcopy(scan_result),
                 two_stage_contract=link)
-    body['source_reference_contract']['version'] = ASSESS_VERSION
+    body['source_reference_contract']['version'] = version
+    if assertion_scopes:
+        body['response_protocol'] = _assertion_protocol(body['response_protocol'])
     return {**body, 'request_id': content_hash(value=body)}
 
 
@@ -464,22 +506,37 @@ def restore_prior_interpretation_request(request):
           value={key: value for key, value in request.items() if key != 'request_id'}),
           'B13_TWO_STAGE_REQUEST_CHANGED')
     link = request.get('two_stage_contract')
+    version = link.get('version') if type(link) is dict else None
+    _need(version in {ASSESS_VERSION, ASSERTION_SCOPED_VERSION},
+          'B13_TWO_STAGE_CONTRACT_CHANGED')
+    suffix = ASSESS_SUFFIX + (ASSERTION_SUFFIX if version == ASSERTION_SCOPED_VERSION else '')
     _need(type(link) is dict and set(link) in (
               {'version', 'prior_request_id'},
               {'version', 'prior_request_id', 'scan_execution_proof'})
-          and link['version'] == ASSESS_VERSION
-          and request.get('source_reference_contract', {}).get('version') == ASSESS_VERSION
+          and request.get('source_reference_contract', {}).get('version') == version
           and type(request.get('system_prompt')) is str
-          and request['system_prompt'].endswith(ASSESS_SUFFIX),
+          and request['system_prompt'].endswith(suffix),
           'B13_TWO_STAGE_CONTRACT_CHANGED')
     body = {key: deepcopy(value) for key, value in request.items()
             if key not in {'request_id', 'two_stage_scan', 'two_stage_contract'}}
-    body['system_prompt'] = body['system_prompt'][:-len(ASSESS_SUFFIX)]
+    body['system_prompt'] = body['system_prompt'][:-len(suffix)]
     body['source_reference_contract']['version'] = RELEVANCE_VERSION
+    if version == ASSERTION_SCOPED_VERSION:
+        item = body['response_protocol']['json_schema']['properties']['findings']['items']
+        _need(item.get('minItems') == 6 and item.get('maxItems') == 6
+              and len(item.get('prefixItems', [])) == 6,
+              'B13_ASSERTION_SCOPE_PROTOCOL_CHANGED')
+        item['prefixItems'].pop()
+        item['minItems'] = item['maxItems'] = 5
+        body['response_protocol']['json_schema']['properties']['findings'].pop('maxItems')
+        body['response_protocol'].pop('assertion_scope', None)
     prior = {**body, 'request_id': content_hash(value=body)}
     _need(prior['request_id'] == link['prior_request_id'],
           'B13_TWO_STAGE_PRIOR_REQUEST_CHANGED')
     _base(prior)
+    if version == ASSERTION_SCOPED_VERSION:
+        _need(request['response_protocol'] == _assertion_protocol(prior['response_protocol']),
+              'B13_ASSERTION_SCOPE_PROTOCOL_CHANGED')
     scan = request.get('two_stage_scan')
     _need(type(scan) is dict and scan.get('scan_result_id') == content_hash(
           value={key: value for key, value in scan.items() if key != 'scan_result_id'})
@@ -499,6 +556,80 @@ def restore_prior_interpretation_request(request):
     return prior
 
 
+def _assertion_segments(text):
+    """Mechanical character ranges only; no subject or period inference."""
+    from .regulatory_investigation_candidates import _sentences
+    ranges = set()
+    for sentence_start, _, sentence in _sentences(text):
+        for part in re.finditer(r'[^;]+', sentence):
+            start = sentence_start + part.start()
+            end = sentence_start + part.end()
+            while start < end and text[start].isspace():
+                start += 1
+            while end > start and text[end - 1].isspace():
+                end -= 1
+            if start < end:
+                ranges.add((start, end))
+    return ranges
+
+
+def _scoped_projection(*, response, request, scan_result, source):
+    """Bind each visible finding to an entire source assertion segment."""
+    _need(type(response) is dict and set(response) == {'units', 'findings'}
+          and type(response['findings']) is list,
+          'B13_ASSERTION_RESPONSE_FIELDS_CHANGED')
+    inventory = _reference_inventory(request)
+    visible = {}
+    for unit in source['units']:
+        if unit['kind'] == 'VISIBLE_TEXT':
+            for block in unit['payload']['blocks']:
+                ref = 'B' + str(block['block_index'])
+                _need(ref not in visible, 'B13_ASSERTION_SOURCE_AMBIGUOUS')
+                visible[ref] = block['text']
+    projected = deepcopy(response)
+    ranges_by_ref = {}
+    scopes = []
+    for row in projected['findings']:
+        _need(type(row) is list and len(row) == 6 and type(row[3]) is list
+              and type(row[5]) is list,
+              'B13_ASSERTION_FINDING_SHAPE_CHANGED')
+        cited = {ref for ref in row[3] if type(ref) is str and ref.startswith('B')}
+        seen = set()
+        for item in row[5]:
+            _need(type(item) is list and len(item) == 3
+                  and type(item[0]) is str and item[0] in cited
+                  and item[0] in inventory and item[0] in visible
+                  and type(item[1]) is int and type(item[2]) is int
+                  and 0 <= item[1] < item[2] <= len(visible[item[0]])
+                  and item[0] not in seen,
+                  'B13_ASSERTION_RANGE_INVALID')
+            ref, start, end = item
+            _need((start, end) in _assertion_segments(visible[ref]),
+                  'B13_ASSERTION_NOT_COMPLETE_SEGMENT')
+            seen.add(ref)
+            ranges_by_ref.setdefault(ref, []).append((start, end))
+            scopes.append((row, ref, visible[ref][start:end]))
+        _need(seen == cited, 'B13_ASSERTION_VISIBLE_REFERENCE_UNSCOPED')
+        row.pop()
+    unresolved = []
+    for ref in scan_result['response']['candidate_refs']:
+        if ref not in visible:
+            continue
+        text = visible[ref]
+        ranges = sorted(ranges_by_ref.get(ref, []))
+        if any(ranges[i - 1][1] > ranges[i][0] for i in range(1, len(ranges))):
+            unresolved.append('B13_ASSERTION_OVERLAPPING_RANGES:' + ref)
+        if any(not any(start <= match.start() and match.end() <= end
+                       for start, end in ranges)
+               for match in _PHYSICAL_CAPACITY.finditer(text)):
+            unresolved.append('B13_ASSERTION_UNCOVERED_PHYSICAL_SOURCE:' + ref)
+        if any(sum(start <= match.start() and match.end() <= end
+                   for match in _PHYSICAL_CAPACITY.finditer(text)) > 1
+               for start, end in ranges):
+            unresolved.append('B13_ASSERTION_MULTIPLE_PHYSICAL_CLAIMS:' + ref)
+    return projected, scopes, unresolved
+
+
 def validate_interpretation(*, request, scan_result, scan_raw_response,
                             interpretation, raw_response, source):
     """Use existing V4 semantics after checking stage linkage and references.
@@ -506,16 +637,36 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
     This is an offline check; it does not create Candidate/Evidence or replay a
     provider receipt. A missed relevant source item remains a model risk.
     """
+    scoped = (interpretation.get('source_reference_contract', {}).get('version')
+              == ASSERTION_SCOPED_VERSION)
     _need(interpretation == interpretation_request(
               request=request, scan_result=scan_result,
               scan_raw_response=scan_raw_response,
               scan_execution_proof=interpretation.get('two_stage_contract', {}).get(
-                  'scan_execution_proof')),
+                  'scan_execution_proof'), assertion_scopes=scoped),
           'B13_TWO_STAGE_INTERPRETATION_CHANGED')
     _need(type(raw_response) is bytes, 'B13_TWO_STAGE_RESPONSE_BYTES_REQUIRED')
     value = strict_json_loads(text=raw_response.decode('utf-8'))
     _need(type(value) is dict and type(value.get('findings')) is list
           and type(value.get('units')) is list, 'B13_TWO_STAGE_RESPONSE_INVALID')
+    if scoped:
+        _need(len(value['findings']) <= MAX_ASSERTION_SCOPED_FINDINGS,
+              'B13_ASSERTION_SCOPE_FINDING_CAP_EXCEEDED')
+        from .capacity_semantic_review import review_policy_path
+        from .normal_source_authority import ROOT
+        _need(len(raw_response) <= strict_json_file(
+              path=ROOT / review_policy_path(interpretation))['max_response_bytes'],
+              'B13_RESPONSE_TOO_LARGE')
+        projected, assertion_scopes, scope_unresolved = _scoped_projection(
+            response=value, request=request, scan_result=scan_result, source=source)
+        semantic_request = interpretation_request(request=request,
+            scan_result=scan_result, scan_raw_response=scan_raw_response,
+            scan_execution_proof=interpretation['two_stage_contract'].get('scan_execution_proof'))
+        semantic_raw = canonical_json_bytes(value=projected)
+        value = projected
+    else:
+        semantic_request = interpretation
+        semantic_raw = raw_response
     allowed = set(scan_result['response']['candidate_refs'])
     accounted = set()
     still_unresolved = set()
@@ -542,7 +693,7 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
     _need(set(scan_result['response']['unresolved_refs']) <= still_unresolved,
           'B13_TWO_STAGE_SCAN_UNRESOLVED_LOST')
     from .capacity_semantic_review import validate_response
-    checked = validate_response(request=interpretation, raw_response=raw_response,
+    checked = validate_response(request=semantic_request, raw_response=semantic_raw,
                                 source=source)
     # A scan can legitimately overselect sales or another entity's capacity.
     # A directly bound present-tense registrant assertion cannot be discarded
@@ -551,15 +702,30 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
     relevant = {'ACTUAL_PRODUCTION', 'AVAILABLE_CAPACITY',
                 'CAPACITY_QUALITATIVE', 'PLANNED_CAPACITY'}
     fiscal_year = request['target_period']['fiscal_year']
-    for finding in checked['findings']:
-        if ((finding['kind'] not in relevant
-             or finding['subject'] != 'TARGET_REGISTRANT'
-             or finding['timing'] != 'CURRENT_REPORT')
-            and any(evidence['kind'] == 'VISIBLE_BLOCK'
-                    and _direct_current_target_capacity(evidence['text'], fiscal_year)
-                    for evidence in finding['resolved_evidence'])):
-            raise ValueError('B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW')
-    _need(not checked['unresolved'], 'B13_TWO_STAGE_UNRESOLVED')
+    if scoped:
+        books = interpretation['response_protocol']['classification_codebooks']
+        for row, _, statement in assertion_scopes:
+            kind = ROLE_LABELS[row[0]]
+            subject = books['subject'][row[1]]
+            timing = books['timing'][row[2]]
+            if ((kind not in relevant or subject != 'TARGET_REGISTRANT'
+                 or timing != 'CURRENT_REPORT')
+                and _direct_current_target_capacity(statement, fiscal_year)):
+                checked['unresolved'].append(
+                    'B13_ASSERTION_EXCLUDED_CURRENT_TARGET_REQUIRES_REVIEW')
+        checked['unresolved'].extend(scope_unresolved)
+        checked['request_id'] = interpretation['request_id']
+        checked['response'] = strict_json_loads(text=raw_response.decode('utf-8'))
+    else:
+        for finding in checked['findings']:
+            if ((finding['kind'] not in relevant
+                 or finding['subject'] != 'TARGET_REGISTRANT'
+                 or finding['timing'] != 'CURRENT_REPORT')
+                and any(evidence['kind'] == 'VISIBLE_BLOCK'
+                        and _direct_current_target_capacity(evidence['text'], fiscal_year)
+                        for evidence in finding['resolved_evidence'])):
+                raise ValueError('B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW')
+        _need(not checked['unresolved'], 'B13_TWO_STAGE_UNRESOLVED')
     return {'scan_result_id': scan_result['scan_result_id'],
             'interpretation_request_id': interpretation['request_id'],
             'original_validator_result': checked,
