@@ -3746,7 +3746,7 @@
     ],
     "evidence": "docs/evidence/issue28_continuous/c04-ci-selector-limit-20260927/README.md",
     "head_2eab_main_run_36273877133": "CANCELLED_SAVED_SOURCE_JOB_AT_35_MINUTES_OTHER_12_JOBS_SUCCESS",
-    "new_head_ci": "PENDING_AFTER_SOURCE_SHARD_PUSH"
+    "new_head_ci": "1613DAB6_MAIN_CI_FAILURE_ONLY_D03_SOURCE_SELECTOR_TIMEOUT_IN_SHARD_0_AND_AGGREGATE"
   },
   "ci_source_shards_20260927": {
     "trigger_head": "2eabdfbb743400a7ee7076162087dfcdbd8f4196",
@@ -3760,9 +3760,36 @@
     "per_case_and_job_timeouts_unchanged": true,
     "runner_function_and_workflow_changed_separately_from_business_binding": true,
     "local_verification": "PASS_SELECTOR_PARTITION_MOCK_RUNNER_NEGATIVES_AND_WORKFLOW_YAML_PARSE",
-    "full_source_material_tests_on_this_patch": "PENDING_NEW_HEAD_CI",
+    "head": "1613dab6b4d41e378c5f6d3ef922789f14ff0331",
+    "main_ci_run_id": 36276931767,
+    "main_ci_status": "COMPLETED_FAILURE_13_SUCCESS_2_FAILURE",
+    "source_shard_1": "SUCCESS",
+    "source_shard_0": "FAILURE_ONLY_D03_RECORDED_RESPONSE_STORE_240S_TIMEOUT",
+    "aggregate_check": "FAILURE_BECAUSE_SHARD_0_FAILED",
+    "all_other_main_jobs": "SUCCESS",
+    "full_source_material_tests_on_this_patch": "NOT_ALL_PASS_ONE_D03_TIMEOUT",
     "new_real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/ci-source-shards-20260927/README.md"
+  },
+  "ci_d03_source_timeout_20260927": {
+    "trigger_head": "1613dab6b4d41e378c5f6d3ef922789f14ff0331",
+    "trigger_main_ci_run_id": 36276931767,
+    "failed_job_id": 108501393597,
+    "failed_selector": "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",
+    "return_code": 124,
+    "measured_seconds": 240.11,
+    "prior_same_selector_ci_pass_seconds": 227.163,
+    "prior_local_pass_seconds": 116.887,
+    "d03_implementation_and_test_unchanged_between_pass_and_failure": true,
+    "new_selector_timeout_seconds": 300,
+    "unchanged_source_default_seconds": 240,
+    "unchanged_other_overrides_seconds": {"c04_refresh": 300, "sec_acquisition": 480},
+    "unchanged_shard_job_timeout_minutes": 35,
+    "business_code_changed": false,
+    "full_d03_material_reexecution_this_patch": false,
+    "new_head_ci": "PENDING_AFTER_PUSH",
+    "new_real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/ci-d03-source-timeout-20260927/README.md"
   },
   "current_390_delta_after_194": {
     "parent_index": "d04-remaining-20260922/current-390.json",

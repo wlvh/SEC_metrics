@@ -135,6 +135,9 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # One complete C04 source refresh passed locally in 227.794s; the prior
     # two-version CI case hit 240s. Keep the job deadline unchanged.
     "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": 300,
+    # The saved JPM D03 packet passed on the prior runner in 227.163s but
+    # reached the 240s per-case bound while two complete CI shards ran.
+    "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": 300,
 }
 
 
