@@ -5205,6 +5205,156 @@
    "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C01_PARAMOUNT_2024",
+   "accepted_value": "9",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+     "result_id": "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7",
+     "run_id": "run:historical-period:f784c09d2c16c8d7a8ff825418cad813b7fecc459fc72e6c2ea88b3d3bc21978"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:75613bafa50d9681b0b3d3adf10dfd519cc6caa24f4079f0a802488ca3dd54ac",
+    "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json",
+   "method": "8-K and 8-K/A filings in the pinned fiscal window, selected from the saved submissions index, with each one's item codes read out of its own SEC header, counted against catalog/event_routes.json's declared item codes. Counted under both the filing date and the report date; every accepted position agrees under both.",
+   "metric_id": "C01",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "counted_under": [
+     "filing_date",
+     "report_date"
+    ],
+    "eight_k_filings_in_window": 22,
+    "item_codes": [
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "1.01",
+      "9.01"
+     ],
+     [
+      "1.01",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "5.03",
+      "5.07",
+      "9.01"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ]
+    ],
+    "window": [
+     "2024-01-01",
+     "2024-12-31"
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C01_PFIZER_2025",
    "accepted_value": "0",
    "checked_identity": {
@@ -8041,6 +8191,156 @@
    "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_E02_PARAMOUNT_2024",
+   "accepted_value": "0",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+     "result_id": "sha256:e10afa0f60c42c6478f87330c094ee7b7a8d5cda2eea8952ae73d2d952942b2f",
+     "run_id": "run:historical-period:8b27477f7fa5e695f218c3067fad3797126f0ae8b6dd7c9ade272119035415bc"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:9250c4fdd6eb8d2b28b845651b0b26965b346a27cd817d67f0da6502dfc0b4ab",
+    "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json",
+   "method": "8-K and 8-K/A filings in the pinned fiscal window, selected from the saved submissions index, with each one's item codes read out of its own SEC header, counted against catalog/event_routes.json's declared item codes. Counted under both the filing date and the report date; every accepted position agrees under both.",
+   "metric_id": "E02",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "counted_under": [
+     "filing_date",
+     "report_date"
+    ],
+    "eight_k_filings_in_window": 22,
+    "item_codes": [
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "1.01",
+      "9.01"
+     ],
+     [
+      "1.01",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "5.03",
+      "5.07",
+      "9.01"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ]
+    ],
+    "window": [
+     "2024-01-01",
+     "2024-12-31"
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_E02_PFIZER_2025",
    "accepted_value": "0",
    "checked_identity": {
@@ -8839,6 +9139,156 @@
     "window": [
      "2025-01-01",
      "2025-12-31"
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_E03_PARAMOUNT_2024",
+   "accepted_value": "9",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+     "result_id": "sha256:55f584e9bfb494fa20c9ea7da786e5910a89ecf24684b628b2297630671a9923",
+     "run_id": "run:historical-period:4339bc1b9cb771a5c5921d2351b5e5153aff5d776d5ccfaf4502eecd1f34aec2"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:75613bafa50d9681b0b3d3adf10dfd519cc6caa24f4079f0a802488ca3dd54ac",
+    "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json",
+   "method": "8-K and 8-K/A filings in the pinned fiscal window, selected from the saved submissions index, with each one's item codes read out of its own SEC header, counted against catalog/event_routes.json's declared item codes. Counted under both the filing date and the report date; every accepted position agrees under both.",
+   "metric_id": "E03",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "counted_under": [
+     "filing_date",
+     "report_date"
+    ],
+    "eight_k_filings_in_window": 22,
+    "item_codes": [
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "1.01",
+      "9.01"
+     ],
+     [
+      "1.01",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "5.03",
+      "5.07",
+      "9.01"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ]
+    ],
+    "window": [
+     "2024-01-01",
+     "2024-12-31"
     ]
    },
    "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
@@ -9647,6 +10097,156 @@
    "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_E04_PARAMOUNT_2024",
+   "accepted_value": "0",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+     "result_id": "sha256:0b49d91e36add194157c3ed3d4aa3f9db7b23582dba981a7405b79a709006b0c",
+     "run_id": "run:historical-period:ac41d2428badfff71fd1f7e8c56cfbfe29a02b9ea64e4ba67d14c8b54c28b44f"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:d595cb600c9260b74e5dad6ae2d789199ba94af3c7aef6fdd6248ca7f679494f",
+    "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json",
+   "method": "8-K and 8-K/A filings in the pinned fiscal window, selected from the saved submissions index, with each one's item codes read out of its own SEC header, counted against catalog/event_routes.json's declared item codes. Counted under both the filing date and the report date; every accepted position agrees under both.",
+   "metric_id": "E04",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "counted_under": [
+     "filing_date",
+     "report_date"
+    ],
+    "eight_k_filings_in_window": 22,
+    "item_codes": [
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "1.01",
+      "9.01"
+     ],
+     [
+      "1.01",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "5.03",
+      "5.07",
+      "9.01"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ]
+    ],
+    "window": [
+     "2024-01-01",
+     "2024-12-31"
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_E04_PFIZER_2025",
    "accepted_value": "0",
    "checked_identity": {
@@ -10450,6 +11050,156 @@
    "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_E05_PARAMOUNT_2024",
+   "accepted_value": "2",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:903b8c7fe520d72cab3b55dd824341bca3c3c96ce95df8ef62d1e05a22c6c9a9",
+     "result_id": "sha256:eebd9525bc97c329f9bbbcf22a720100aff7c7f3d8e674671b3274db394de9a7",
+     "run_id": "run:historical-period:f2bcd1766b586b1fbcf83c51235adcb99e90ead209d897bcd432feef73641fba"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:31d69318b459f7f3d7a56d0313d48bb9b677ba18673366e29dfaa63f63092e41",
+    "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json",
+   "method": "8-K and 8-K/A filings in the pinned fiscal window, selected from the saved submissions index, with each one's item codes read out of its own SEC header, counted against catalog/event_routes.json's declared item codes. Counted under both the filing date and the report date; every accepted position agrees under both.",
+   "metric_id": "E05",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "counted_under": [
+     "filing_date",
+     "report_date"
+    ],
+    "eight_k_filings_in_window": 22,
+    "item_codes": [
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "1.01",
+      "9.01"
+     ],
+     [
+      "1.01",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02"
+     ],
+     [
+      "5.02",
+      "8.01"
+     ],
+     [
+      "5.03",
+      "5.07",
+      "9.01"
+     ],
+     [
+      "5.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "8.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ]
+    ],
+    "window": [
+     "2024-01-01",
+     "2024-12-31"
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_E05_PFIZER_2025",
    "accepted_value": "0",
    "checked_identity": {
@@ -10681,6 +11431,7 @@
   "docs/evidence/issue47_history/content-acceptance/cross-source-read.json",
   "docs/evidence/issue47_history/content-acceptance/lodging-table-read.json",
   "docs/evidence/issue47_history/content-acceptance/event-count-read.json",
+  "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json",
   "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json",
   "docs/evidence/issue47_history/content-acceptance/governance-read.json",
   "docs/evidence/issue47_history/content-acceptance/d02-both-directions-read.json",
@@ -10752,6 +11503,12 @@
    "acceptances_contributed": 4,
    "content_sha256": "sha256:a83c4141bac552bbe9ab6ebe5df31dc818f0b63b6045da554e9a708460a5146c",
    "positions_examined": 7,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json": {
+   "acceptances_contributed": 5,
+   "content_sha256": "sha256:a3a7d35701e94781c9d3af2d4d3d09097d56ab79ecc0fc134846dabe6874e7db",
+   "positions_examined": 1,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/event-count-read.json": {

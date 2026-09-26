@@ -20,6 +20,8 @@
 
 **实测**：前身 FY2024 由"无法分类"变为已批类别——12 块→3 段，三句依次为目的（带那句延续）、不变声明、定义句；指针 2024-12-31 / 2025-02-26 与原件一致。对分类器本来就能分类的继任 FY2025 那份，强制走这条路给出**相同**类别、相同未变输入类、相同 Parts/Items/声明。Southwest 的附件链接更正不被读成 Part III。路线效果：Paramount FY2024 的 C01=9、E02=0、E03=9、E04=0、E05=2 由扣留变为发布；E01 按名扣留（两份 8.01 正文有 "Transaction"，见 `../e01-item-text/`）；B01 等报表类仍被拒，理由由 `UNCLASSIFIED(...)` 变为点名已批类别。
 
+**定向原生 Run**（闭包 `sha256:903b8c7f…`，`targeted-runs.json`，由同目录 `compare_runs.py` 从两边各自的 Run 记录读出）：前身 FY2024 的 8 个位置走完装入→原生 Run→冻结→公共行→另一进程冷读，零调用。C01=9、E02=0、E03=9、E04=0、E05=2 由扣留变为发布；E01 仍扣留，理由由修订未清除变为 `HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING`；B01、B02 仍以 `HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED` 扣留，且结果编号与 12 期间批次**逐字节相同**——Run 记录只带理由代码，理由里点名的类别由 `UNCLASSIFIED` 变为已批类别这一点记录在路线层的 `statement-values-request.json`。五个新值随后由 `tools/read_event_counts.py` 从前身自己的 22 份 2024 年 8-K 头文件逐份计数（`../content-acceptance/event-count-read-paramount-2024.json`）：按申报日与按报告日两种窗口读法都与发布值一致，按阅读时记录的身份进入接受登记（160→165）；覆盖表按这个闭包读这批 Run，三层分别是原生 Run 8、公共行 8、内容接受 5（`tools/vnext_history_coverage.py --company paramount_skydance_paramount_global --runs-root <这批 Run> --requirement-closure-hash sha256:903b8c7f…`）。这不是全量帧，12 期间批次不改签。
+
 **反例**（用例 `tests/vnext/test_historical_amendment_note.py`，都是在前身自己的字节里改一处）：延续里加另一个目的、在已批模式留空的中段塞 "Item 8"、定义句后多一句"本修订还重述了资产负债表"、指针指向另一份报告、去掉"不变"声明（换成一句认得的定义句，所以拒绝的理由正是缺声明）、定义句点名另一家公司、第 15 项改成"附有财务报表"、说明超过 8 段——各自按名拒绝。
 
 **注错**（`fault_injections.py` → `fault-injections.json`）：八项全部被抓——按块而不是按段计上限、接受任意延续、恢复已批模式的宽中段、每段只读第一句、不查指针、不要求"不变"声明、定义句接受任何注册人、跳过 Part III 结构检查。其中六项只被一条专门用例抓到（如实记录：各自的守卫只在它会咬的那一处被行使）；按块计上限与宽中段让前身本身就读不通，所以挂了九条。

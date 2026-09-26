@@ -327,6 +327,7 @@ FAST_TESTS += ("tests.vnext.test_acceptance_identity",)
 # egress patch is not applied: nothing here can reach a provider, which is
 # asserted rather than assumed. It reads no source material; about 3 seconds.
 FAST_TESTS += ("tests.vnext.test_historical_model_calls",)
+FAST_TESTS += ("tests.vnext.test_c02_core_fact_reach",)
 SOURCE_TESTS += ("tests.vnext.test_regulatory_fact_review",)
 SOURCE_TESTS += ("tests.vnext.test_c04_registration_successor",)
 SOURCE_TIMEOUT_SECONDS = 240

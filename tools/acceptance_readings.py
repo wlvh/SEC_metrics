@@ -28,6 +28,11 @@ EVIDENCE = "docs/evidence/issue47_history/content-acceptance/"
 CROSS = EVIDENCE + "cross-source-read.json"
 LODGING = EVIDENCE + "lodging-table-read.json"
 EVENTS = EVIDENCE + "event-count-read.json"
+# Paramount's predecessor year, read the same way against the targeted Runs of
+# the closure that cleared its event window (part-iii-statement-review/): a
+# reading's positions all compare results of one closure, so it is its own file.
+EVENTS_PARAMOUNT_PREDECESSOR = EVIDENCE + "event-count-read-paramount-2024.json"
+EVENT_READINGS = (EVENTS, EVENTS_PARAMOUNT_PREDECESSOR)
 # E01 counts an 8.01 only once a keyword in its text confirms it, which a count
 # of header item codes cannot check. Every 8.01 in the E01 windows is read here
 # by tools/read_e01_eight_o_ones.py, under each reading of that confirmation.
@@ -54,8 +59,8 @@ COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 # B06 read off each filing's balance sheet and lease note by
 # tools/read_debt_to_equity.py, which imports none of the debt cascade.
 DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
-READINGS = (CROSS, LODGING, EVENTS, E01_EIGHT_O_ONES, GOVERNANCE, TEXT, *D01_READINGS, RPO,
-            COMPENSATION, DEBT_TO_EQUITY)
+READINGS = (CROSS, LODGING, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE, TEXT, *D01_READINGS,
+            RPO, COMPENSATION, DEBT_TO_EQUITY)
 # The readings key some positions by a label only. The label is what the
 # reading recorded, and this is the period each label names.
 PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
@@ -63,7 +68,8 @@ PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
            "pfizer-2025": "2025-12-31", "lumen-2025": "2025-12-31",
            "enphase-2025": "2025-12-31", "southwest-2025": "2025-12-31",
            "salesforce-2026": "2026-01-31", "macys-2026": "2026-01-31",
-           "paramount-2025": "2025-12-31", "jpmorgan-2025": "2025-12-31"}
+           "paramount-2025": "2025-12-31", "paramount-2024": "2024-12-31",
+           "jpmorgan-2025": "2025-12-31"}
 _ACCESSION_DIRECTORY = re.compile(r"_(\d+)_(\d{10})(\d{2})(\d{6})\Z")
 _ARCHIVE_URL = re.compile(r"/Archives/edgar/data/(\d+)/(\d{10})(\d{2})(\d{6})/")
 
@@ -178,7 +184,7 @@ def positions(*, repo_root: Path, path: str, body):
                     company_id="marriott_international", metric_id=metric,
                     period_end=PERIODS[label], published=row["published"],
                     verdict=row["verdict"], filings=[accession], case=case))
-    elif path == EVENTS:
+    elif path in EVENT_READINGS:
         for label, case in sorted(body["per_position"].items()):
             if "metrics" not in case:
                 continue

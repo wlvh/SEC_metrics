@@ -802,11 +802,30 @@
    "root_cause": "calculator._select_structured_fact takes the first approved concept that carries a candidate and never compares it with the later ones; B03's direct chain lists DepreciationDepletionAndAmortization first. A concept name is a clue, not proof of what a number covers, and here the filer uses the concept for a narrower quantity than the chain assumes.",
    "scope_measured": "all nine B03 filings in this frame (b03-depreciation-scope/finding.json). This is the only one whose direct D&A candidates disagree; Lumen tags two direct concepts and they agree.",
    "found_by": "the D&A-family census over each filing's own inline XBRL, run while re-reading the one B03 value the earlier cross-source reading had written up as 'the route is right and the reading cannot confirm it'. That record said the primary document does not tag DepreciationDepletionAndAmortization; it does.",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_AWAITS_A_DECISION",
-   "why_not_repaired_yet": "the statement total cannot simply replace the subtotal: it also carries amortization and impairment of right-of-use assets, the definition says impairment is not added back, and the year's amount is not tagged separately. The recommended repair - withhold when direct D&A candidates disagree - changes the approved selection rule, so it goes through the revision mechanism. See b03-depreciation-scope/finding.json.",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_WITHHELD_BY_NAME",
    "evidence": [
+    "docs/evidence/issue47_history/b03-depreciation-scope/da_census.py",
     "docs/evidence/issue47_history/b03-depreciation-scope/finding.json",
-    "docs/evidence/issue47_history/b03-depreciation-scope/da_census.py"
+    "docs/evidence/issue47_history/b03-depreciation-scope/route-fault-injections.json",
+    "docs/evidence/issue47_history/b03-depreciation-scope/targeted-runs.json"
+   ],
+   "repair": "The historical route now compares the chain's D&A with what the filing's own inline facts tag for the target year (historical_da_scope_candidate, rule file 36 of issue_47_v1). Candidates that agree keep the approved chain's choice; a conflict the filing's own Depreciation + AmortizationOfIntangibleAssets resolves retakes the proven total; otherwise the result is withheld by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN. That is the standing rule - do not take a subtotal as the complete total, and where the scope cannot be proven, limit the metric precisely - not a new decision. The ordinary route still takes the chain's first concept; carrying the rule there belongs to a generation that can re-record the file.",
+   "recomputed": {
+    "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
+    "publication": "WITHHELD",
+    "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+    "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT",
+    "b01_it_carries_unchanged": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d"
+   },
+   "released": [
+    {
+     "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
+     "requirement_closure_hash": "sha256:3e0183f332fcd7c8aa80042ba755593b160947fd2831325606bb11a3fe08f6a4",
+     "run_id": "run:historical-period:e619deee011d7c1f4d141eb04580e4877e6ecd48225c0c15e76a071e499d4cd4",
+     "read_by": "docs/evidence/issue47_history/b03-depreciation-scope/targeted-runs.json",
+     "what_this_releases": "This withheld result and no other. The published 0.2295243829018663455749548465 the 12-period batch still holds, and any other result at this coordinate, stays withdrawn.",
+     "what_it_does_not_assert": "that the coordinate has a correct value. It has none: the filing's statement total, DepreciationAndAmortization 3,631,000,000, carries right-of-use asset amortization and impairment, the definition does not add impairment back, and the year's impairment is not tagged separately. Nor that any batch has re-run under this version."
+    }
    ]
   },
   {

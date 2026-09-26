@@ -5,16 +5,27 @@ and whose submissions index was whichever copy an unsorted glob found first.
 """
 import ast
 import json
+import sys
 import unittest
+from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools import read_event_counts as reader
 
 READING = "docs/evidence/issue47_history/content-acceptance/event-count-read.json"
+# A position whose results ran under another closure is its own reading.
+READINGS = (READING,
+            "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json")
 
 
 def _committed():
-    return json.loads((ROOT / READING).read_text(encoding="utf-8"))["per_position"]
+    positions = {}
+    for path in READINGS:
+        for label, row in json.loads((ROOT / path).read_text(encoding="utf-8"))[
+                "per_position"].items():
+            assert label not in positions, label
+            positions[label] = row
+    return positions
 
 
 def _recount(label):
@@ -80,6 +91,25 @@ class TheSavedFilingsGiveTheCommittedCountsTest(unittest.TestCase):
             with self.subTest(label):
                 self.assertEqual(row["submissions_index"],
                                  saved["proof"]["request_repo_relative_path"])
+
+
+class ACaseOfItsOwnIsAReadingOfItsOwnTest(unittest.TestCase):
+
+    def test_a_named_case_is_not_written_into_the_default_reading(self):
+        """The default reading's positions all compare one closure's results."""
+        argv = ["read_event_counts.py", "--runs-root", "/nonexistent", "--closure", "sha256:x",
+                "--case", "paramount-2024=paramount_skydance_paramount_global:2024-12-31"]
+        with patch.object(sys, "argv", argv), self.assertRaises(SystemExit) as refused:
+            reader.main()
+        self.assertEqual("A_CASE_OF_ITS_OWN_IS_WRITTEN_TO_A_READING_OF_ITS_OWN",
+                         str(refused.exception))
+
+    def test_a_case_names_its_label_company_and_period(self):
+        self.assertEqual(("paramount_skydance_paramount_global", "2024-12-31", "paramount-2024"),
+                         reader._case("paramount-2024=paramount_skydance_paramount_global:"
+                                      "2024-12-31"))
+        with self.assertRaises(SystemExit):
+            reader._case("paramount-2024")
 
 
 class TheVerdictTest(unittest.TestCase):

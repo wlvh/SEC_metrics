@@ -294,5 +294,78 @@
   "judgements": "docs/evidence/issue47_history/e01-keyword-branch/eight-o-one-judgements.json",
   "reading": "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json",
   "windows": 7
+ },
+ "a_fourth_position_held_until_the_decision_2026_09_26": {
+  "position": "paramount-2024",
+  "why_it_is_new": "The Part III note reader cleared the predecessor FY2024 event window (part-iii-statement-review/), so this E01 now reaches the interim rule. Two of the window's six 8.01 items carry an alias in their own text, so the route withholds it by name, HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING (targeted Run under closure 903b8c7f).",
+  "window": [
+   "2024-01-01",
+   "2024-12-31"
+  ],
+  "items": [
+   {
+    "accession": "0001193125-24-177535",
+    "filed": "2024-07-11",
+    "item": "1.01",
+    "decision": "REPORTS_A_TRANSACTION_THE_REGISTRANT_IS_PARTY_TO",
+    "judgement": "The Transaction Agreement with Skydance Media and New Pluto Global: the pre-closing merger of a merger sub into Paramount and the combination under New Paramount - a business combination the registrant is party to. Read in full from the saved primary document."
+   },
+   {
+    "accession": "0001193125-24-196053",
+    "filed": "2024-08-07",
+    "item": "1.01",
+    "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+    "judgement": "Amendment No. 4 to the amended and restated credit agreement: the Required Lenders deem the Skydance transactions permitted, operative on their consummation. A borrowing agreement that refers to the transaction, not a report of it."
+   },
+   {
+    "accession": "0000813828-24-000009",
+    "item": "8.01",
+    "alias_in_the_item": true,
+    "decision": "REPORTS_A_TRANSACTION_THE_REGISTRANT_IS_PARTY_TO",
+    "judgement_in": "../e01-item-text/more-eight-o-one-judgements.json"
+   },
+   {
+    "accession": "0000813828-24-000018",
+    "item": "8.01",
+    "alias_in_the_item": false,
+    "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+    "judgement_in": "../e01-item-text/more-eight-o-one-judgements.json",
+    "caveat": "the item's own text only points to an Exhibit 99 press release that is not saved; judged on the item's text"
+   },
+   {
+    "accession": "0000813828-24-000033",
+    "item": "8.01",
+    "alias_in_the_item": false,
+    "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+    "judgement_in": "../e01-item-text/more-eight-o-one-judgements.json"
+   },
+   {
+    "accession": "0000813828-24-000073",
+    "item": "8.01",
+    "alias_in_the_item": false,
+    "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+    "judgement_in": "../e01-item-text/more-eight-o-one-judgements.json"
+   },
+   {
+    "accession": "0000813828-24-000081",
+    "item": "8.01",
+    "alias_in_the_item": false,
+    "decision": "REPORTS_A_TRANSACTION_THE_REGISTRANT_IS_PARTY_TO",
+    "judgement_in": "../e01-item-text/more-eight-o-one-judgements.json"
+   },
+   {
+    "accession": "0000813828-24-000087",
+    "item": "8.01",
+    "alias_in_the_item": true,
+    "decision": "DOES_NOT_REPORT_A_TRANSACTION",
+    "judgement_in": "../e01-item-text/more-eight-o-one-judgements.json"
+   }
+  ],
+  "values": {
+   "ITEM_RULE_TRADE_LEADS": 4,
+   "CONTENT_CONFIRMED_M_AND_A_ANNOUNCEMENTS": 3
+  },
+  "how_the_values_are_counted": "ITEM_RULE_TRADE_LEADS: both 1.01 items count directly and the two 8.01 items with an alias in their own text count (the Viacom 18 sale agreement and the RSU acceleration that names the Transaction Agreement). CONTENT_CONFIRMED: the Skydance agreement, the Viacom 18 sale agreement and its completion; the completion carries no alias, so the item rule misses it while counting the credit agreement amendment and the RSU acceleration.",
+  "what_it_adds_to_the_question": "the same two tensions as the seven windows, on one position: a 1.01 that is a borrowing agreement counted without confirmation, and a reported transaction with no keyword in its text"
  }
 }

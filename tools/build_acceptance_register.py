@@ -31,7 +31,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
 from acceptance_readings import (COMPENSATION, CROSS, D01_READINGS,  # noqa: E402
-                                 DEBT_TO_EQUITY, E01_EIGHT_O_ONES, EVENTS, GOVERNANCE,
+                                 DEBT_TO_EQUITY, E01_EIGHT_O_ONES, EVENT_READINGS, GOVERNANCE,
                                  LODGING, READINGS, RPO, TEXT, load, positions)
 
 REGISTER = "docs/evidence/issue47_history/accepted_result_content.json"
@@ -158,7 +158,7 @@ def _read_from(position):
         return {"document": case["document"], "table_ordinal": case["read"]["table_ordinal"],
                 "row_text": case["read"]["row_text"],
                 "tables_naming_the_scope_literal": case["tables_matching_scope"]}
-    if path == EVENTS:
+    if path in EVENT_READINGS:
         return {"window": case["window"],
                 "eight_k_filings_in_window": case["eight_ks_in_window"]["filing_date"],
                 "item_codes": [f["items"] for f in case["filings"]["filing_date"]],
@@ -198,7 +198,7 @@ def _method_and_limit(position):
         return STATEMENT_METHOD, STATEMENT_LIMIT
     if path == LODGING:
         return LODGING_METHOD, LODGING_LIMIT
-    if path == EVENTS:
+    if path in EVENT_READINGS:
         return EVENT_METHOD, EVENT_LIMIT
     if path == E01_EIGHT_O_ONES:
         return E01_METHOD, E01_LIMIT
@@ -267,7 +267,7 @@ def _accepted(position):
     reading still to be decided.
     """
     path, verdict = position["reading"], position["verdict"]
-    if path == EVENTS:
+    if path in EVENT_READINGS:
         return verdict == "MATCH_BOTH_BASES" and position["metric_id"] != "E01"
     return verdict == "MATCH"
 
