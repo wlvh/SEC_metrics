@@ -1373,6 +1373,25 @@
       "tool_calls": 54,
       "result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review/conclusion.md",
       "verdict": "NEEDS_FIX_P2_REGISTRATION_HISTORY_SHARD_RANGE_CAN_OMIT_EVENT_AND_FALSE_ZERO"
+    },
+    {
+      "task_name": "review_c04shard_2c4d236",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/c04_registration_successor.py",
+        "tests/vnext/test_c04_registration_successor.py",
+        "config/issue28_continuous_calls_v1.json",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/",
+        "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/summary-shard-repair.json",
+        "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/wiring-shard-repair.log"
+      ],
+      "patch_sha": "2c4d2361280ed0a18f293007aefa0ca55018c843",
+      "spawned_at": "2026-09-26T04:04:27Z",
+      "ended_at": "2026-09-26T04:10:12Z",
+      "tool_calls": 39,
+      "result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-shard-repair/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_LOADED_HISTORY_SHARD_ALIGNMENT_AND_EVENT_CENSUS"
     }
   ],
   "ci_capacity_20260922": {
@@ -2501,7 +2520,7 @@
     "review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review/conclusion.md"
   },
   "paramount_c04_history_shard_repair_20260926": {
-    "status": "DIRECTED_NATIVE_COLD_AND_CURRENT_WIRING_PASS_SCOPED_REVIEW_PENDING",
+    "status": "LIMITED_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS",
     "precursor_patch_sha": "46912cec61e981fc89750db27447710dba952aa2",
     "precursor_review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review/conclusion.md",
     "repair": "CHECK_FOUR_FORM_HISTORY_BODY_AGAINST_SHARD_INDEX_BEFORE_SELECTION_AND_ASSERT_EVENT_ACCESSION_CENSUS",
@@ -2543,11 +2562,14 @@
     "execution_authority_hash": "sha256:f17a202a240d606ccc405e4ab1b4a63976cba40992fd868546055d5c42483bb2",
     "provider_sec_offline_wiring": "PASS_CURRENT_CLOSURE_WITH_NEW_RECEIPTS_AND_TEST_LOGS",
     "previous_evidence_files_modified": false,
-    "independent_review": "PENDING_EXACT_REPAIR_SHA",
+    "independent_review": "PASS_WITH_BOUNDS_EXACT_SHA_2C4D236",
     "business_conclusion": "NO_SAME_CIK_PRIOR_COMPARISON_WITHHELD_NO_ZERO",
     "normal_automatic_update_complete": false,
     "shared_default_binding_function_changed": false,
     "frozen_parent_modules_modified": false,
-    "formal_publication_authorized": false
+    "formal_publication_authorized": false,
+    "review_patch_sha": "2c4d2361280ed0a18f293007aefa0ca55018c843",
+    "review_result_path": "docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/independent-review-shard-repair/conclusion.md",
+    "uncovered_scope": "UNLOADED_HISTORY_SHARD_BODY_NOT_PROVEN_BY_THIS_INCREMENT"
   }
 }
