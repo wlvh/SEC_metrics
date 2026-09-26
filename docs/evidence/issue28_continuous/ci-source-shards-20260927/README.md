@@ -1,0 +1,7 @@
+# Saved-source CI source sharding
+
+At `2eabdfbb`, main CI `36273877133` finished `cancelled`: 12 jobs succeeded, but `vNext saved-source material` was cancelled at its 35-minute job limit. Its log starts the complete selector command at 2026-09-26T21:43:28Z and cancels it at 22:18:08Z without a test JSON verdict. This is a job-limit cancellation, not a passing source suite or a particular semantic assertion failure.
+
+The successor CI change divides the existing 75 source selectors by stable selector index into 38 and 37. Each shard uses the same two workers and per-case limits. A final job retains the original `vNext saved-source material` check name and succeeds only when both shards succeed. The default local command and its complete selector list remain unchanged; the fast suite refuses sharding. This changes the CI runner function body and workflow solely because the whole source job could not finish under the existing limit. No business code, frozen V13 runner, model/SEC calls, or job deadline changes.
+
+`verify_shards.py` checks the exact union, disjointness, order, unchanged default, invalid options and a mocked runner path. `verify.log` records the local result and YAML parse; it is not an execution of all 75 saved-source tests. The next pushed head must supply the actual CI verdict for both shards and the aggregate check. The earlier 35-minute cancellation remains historical.

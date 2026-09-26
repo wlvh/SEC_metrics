@@ -30,7 +30,7 @@
   "actual_new_calls": {
     "provider": 143,
     "paid": 143,
-    "sec": 49,
+    "sec": 51,
     "unknown": 0
   },
   "current_work": [
@@ -3551,6 +3551,18 @@
     "d03_recorded_selector": "PASS_227_163_SECONDS",
     "evidence": "docs/evidence/issue28_continuous/c04-mixed-auto-refresh-20260927/ci-68-failure.json"
   },
+  "ci_36273877133": {
+    "head": "2eabdfbb743400a7ee7076162087dfcdbd8f4196",
+    "run_id": 36273877133,
+    "status": "completed",
+    "conclusion": "cancelled",
+    "jobs_success": 12,
+    "jobs_cancelled": 1,
+    "saved_source_material_job_id": 108492773745,
+    "saved_source_material": "CANCELLED_AT_35_MINUTE_JOB_LIMIT_NO_TEST_JSON_VERDICT",
+    "other_success_includes": "JPM_REMAINING_SOURCE_RUNS",
+    "evidence": "docs/evidence/issue28_continuous/ci-source-shards-20260927/README.md"
+  },
   "c04_mixed_auto_refresh_20260927": {
     "status": "RECORDED_MIXED_C04_PROVEN_SOURCE_READY_OTHER_METRICS_BLOCKED_SCOPED_REVIEW_PENDING",
     "trigger": "mixed old source processing copies previously deferred all SEC capture including C04-proven dependencies",
@@ -3707,7 +3719,24 @@
       0
     ],
     "evidence": "docs/evidence/issue28_continuous/c04-ci-selector-limit-20260927/README.md",
-    "new_head_ci": "PENDING_AFTER_PUSH"
+    "head_2eab_main_run_36273877133": "CANCELLED_SAVED_SOURCE_JOB_AT_35_MINUTES_OTHER_12_JOBS_SUCCESS",
+    "new_head_ci": "PENDING_AFTER_SOURCE_SHARD_PUSH"
+  },
+  "ci_source_shards_20260927": {
+    "trigger_head": "2eabdfbb743400a7ee7076162087dfcdbd8f4196",
+    "trigger_run_id": 36273877133,
+    "trigger": "SAVED_SOURCE_JOB_CANCELLED_AT_35_MINUTE_LIMIT_NO_SELECTOR_TERMINAL",
+    "full_source_selectors": 75,
+    "deterministic_shard_sizes": [38, 37],
+    "disjoint_complete_default_preserved": true,
+    "fast_suite_unsharded": true,
+    "original_check_name_retained_by_aggregate": "vNext saved-source material",
+    "per_case_and_job_timeouts_unchanged": true,
+    "runner_function_and_workflow_changed_separately_from_business_binding": true,
+    "local_verification": "PASS_SELECTOR_PARTITION_MOCK_RUNNER_NEGATIVES_AND_WORKFLOW_YAML_PARSE",
+    "full_source_material_tests_on_this_patch": "PENDING_NEW_HEAD_CI",
+    "new_real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/ci-source-shards-20260927/README.md"
   },
   "current_390_delta_after_194": {
     "parent_index": "d04-remaining-20260922/current-390.json",

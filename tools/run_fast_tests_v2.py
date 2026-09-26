@@ -156,8 +156,16 @@ def _run_source_case(name):
             "stdout_tail":stdout[-2000:],"stderr_tail":stderr[-2000:]}
 
 
-def run_fast_tests(*, jobs, suite="fast"):
-    selectors = FAST_TESTS if suite == "fast" else SOURCE_TESTS
+def _selected_tests(suite, shard_index, shard_count):
+    if (shard_count < 1 or shard_index < 0 or shard_index >= shard_count
+            or (suite != "source-material" and (shard_index, shard_count) != (0, 1))):
+        raise inherited.FastTestError("FAST_TEST_SHARD_INVALID")
+    complete = FAST_TESTS if suite == "fast" else SOURCE_TESTS
+    return tuple(name for index, name in enumerate(complete) if index % shard_count == shard_index)
+
+
+def run_fast_tests(*, jobs, suite="fast", shard_index=0, shard_count=1):
+    selectors = _selected_tests(suite, shard_index, shard_count)
     all_selectors = (*FAST_TESTS,*SOURCE_TESTS)
     if jobs < 1 or jobs > len(selectors):
         raise inherited.FastTestError("FAST_TEST_JOBS_INVALID")
@@ -171,6 +179,7 @@ def run_fast_tests(*, jobs, suite="fast"):
         rows = sorted((f.result() for f in futures), key=lambda r:r["test"])
     return {"evidence_tier":"FAST_LOCAL_ONLY" if suite == "fast" else "SOURCE_MATERIAL_LOCAL_ONLY",
         "selector_generation":2, "suite":suite, "jobs":jobs,
+        **({"shard_index":shard_index,"shard_count":shard_count} if shard_count > 1 else {}),
         "per_case_timeout_seconds":inherited.FAST_TEST_TIMEOUT_SECONDS if suite == "fast" else SOURCE_TIMEOUT_SECONDS,
         **({"per_case_timeout_overrides":SOURCE_TIMEOUT_OVERRIDES} if suite != "fast" else {}),
         "duration_seconds":round(time.monotonic()-start, 3), "tests":rows,
@@ -182,12 +191,16 @@ def main(argv):
     parser.add_argument("--jobs", type=int, default=2)
     parser.add_argument("--list", action="store_true")
     parser.add_argument("--suite",choices=("fast","source-material"),default="fast")
+    parser.add_argument("--shard-index",type=int,default=0)
+    parser.add_argument("--shard-count",type=int,default=1)
     args = parser.parse_args(argv)
-    if args.list:
-        print(json.dumps({"suite":args.suite,"tests":FAST_TESTS if args.suite == "fast" else SOURCE_TESTS}, sort_keys=True))
-        return 0
     try:
-        result = run_fast_tests(jobs=args.jobs,suite=args.suite)
+        if args.list:
+            selectors = _selected_tests(args.suite,args.shard_index,args.shard_count)
+            print(json.dumps({"suite":args.suite,"tests":selectors}, sort_keys=True))
+            return 0
+        result = run_fast_tests(jobs=args.jobs,suite=args.suite,
+                                shard_index=args.shard_index,shard_count=args.shard_count)
     except inherited.FastTestError as error:
         print(str(error), file=sys.stderr)
         return 2
