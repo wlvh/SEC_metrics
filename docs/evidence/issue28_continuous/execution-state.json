@@ -41,7 +41,8 @@
     "Ordinary v13/V14 execution binding and transfer parent repaired at5c307e5; initial independent review found stale B13 receipt closure P2. Exact e0158f89 followup made validator reject old closure and updated receipts; incremental independent review PASS, 31 directed tests and fast127 PASS, 190 still read-only reusable. Current branch pushes/CI pending; no new calls.",
     "Marriott C04 ordinal193 actual SEC submissions source refresh succeeded: new native PUBLISHED/0 candidate and old version cold-read; full freshness still pending Company Facts. A fresh max1 invocation would repeat the first URL, so bounded continuation is engineering work before another claim.",
     "Marriott C04 current source refresh completed using real SEC ordinals193-194, UPDATES_READY and cold-read PUBLISHED/0; FY2025 saved-scope result, not a new fiscal-year update or ten-company C04 acceptance.",
-    "C04 saved-source material selector at prior head2f3a exceeded its 240s CI per-case limit, not a semantic assertion failure; redundant old-Run replay removed from test only, local shortened selector 180.047s PASS, new-head CI required."
+    "C04 saved-source material selector at prior head2f3a exceeded its 240s CI per-case limit, not a semantic assertion failure; redundant old-Run replay removed from test only, local shortened selector 180.047s PASS, new-head CI required.",
+    "D03 offline successor now has a dedicated recorded raw-response byte packet with verified JPM source/request, unresolved replay and independent no-network cold read; no real D03 request or native Result/Run credit."
   ],
   "next": [
     "Push append-only reviewed ordinary binding commits, then read new-head CI once and at a later natural checkpoint inspect its final terminal. Preserve the first blocked review and scoped followup PASS; do not rerun long material with unchanged test bytes.",
@@ -3358,5 +3359,43 @@
     "evidence": "docs/evidence/issue28_continuous/c04-source-ci-runtime-20260927/README.md",
     "head_97a5_main_run_36260165182": "IN_PROGRESS_AT_2026_09_27_CHECKPOINT",
     "new_head_ci": "PENDING_AFTER_NEXT_PUSH"
+  },
+  "d03_recorded_raw_response_20260927": {
+    "status": "OFFLINE_RAW_BYTES_PERSISTED_AND_INDEPENDENT_COLD_READ_PASS_SCOPED_REVIEW_PENDING",
+    "code_path": "scripts/vnext/d03_recorded_response_store.py",
+    "module_sha256": "89e46c2bf900ff14935969a784efeac6786cea4a88ce89e1659b51c54eac0785",
+    "packet_id": "sha256:4bac51a935deadda11f456ba39f6976647fe2d5cd05fe194f89fbc7ef7ce02d6",
+    "raw_response_sha256": "dca9c0862586d7048d9f9b3b67d0e0bd25c4eb866461cddb9354a9e3542098ca",
+    "source_material": "JPM_SAVED_REAL_SOURCE_SYNTHETIC_RECORDED_RESPONSE",
+    "raw_u037e_preserved": true,
+    "unresolved_count": 2,
+    "tests": [
+      "2_PASS_116_887_SECONDS",
+      "PASS_INDEPENDENT_PROCESS_NETWORK_AND_SUBPROCESS_FORBIDDEN"
+    ],
+    "tamper_rejection": [
+      "RAW_RESPONSE_FILE_CHANGED",
+      "CREDIT_RESIGNED_LIVE",
+      "INCOMPLETE_PACKET",
+      "LIVE_LEDGER_ROOT_FORBIDDEN"
+    ],
+    "existing_regulatory_fact_review_bytes_modified": false,
+    "ordinary_v13_and_continuous_v14_binding_modified": false,
+    "provider_execution_credit": "RECORDED_TEST_ONLY",
+    "native_result_or_run_created": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "real_ledger_last_ordinal": 194,
+    "evidence": "docs/evidence/issue28_continuous/d03-recorded-response-20260927/README.md",
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "remaining": [
+      "AUTHORITATIVE_REAL_PROVIDER_PERSISTENCE_WIRING",
+      "COMPLETE_SOURCE_AND_SEMANTIC_VALIDATION",
+      "NATIVE_RESULT_RUN",
+      "D03_REAL_CALL_RESOURCE_DECISION"
+    ]
   }
 }

@@ -83,3 +83,5 @@ C04正常有限刷新接线：当前`tools/vnext_ordinary_refresh.py`显式选�
 Marriott C04的有界真实来源刷新第二步已在原账本第194槽取得Company Facts，终态SUCCEEDED、归属0/0/1；累计provider/paid/SEC143/143/51，余97/97/29。前次第193槽申报清单没有重取。来源刷新`UPDATES_READY`，无待补/失败URL；C04本次为`NO_SOURCE_CONTENT_CHANGE`，复用第193槽形成的`PUBLISHED/0` Result `d41ffcee...`，未新建第三个Run。旧`a5517d36...`和新`d41ffcee...`及第194槽收据在独立禁网禁子进程冷读通过。当前FY2025范围，不是新财年自动更新或正式采纳；证据在`c04-real-refresh-second-20260927/`。先前主CI`2f3a36da`的saved-source material唯一失败为新C04两版测试单项240秒超时，其余12作业成功；需缩短该selector后观察新head CI，不改业务结果。
 
 旧已推`2f3a36da`主CI`36257074760`仅saved-source material作业失败：新增C04两版录制selector撞单项240秒上限（124），其余12个作业成功。没有将其归于业务语义。仅删除该测试内重复的旧Run重放，保留两版保存来源、完整录制刷新及不同Result/前驱断言；原独立冷读与真实第193—194槽双版本冷读复用。缩短后本地1项180.047秒通过，最终远端仍待新head CI；证据`c04-source-ci-runtime-20260927/`。
+
+D03未绑定离线后继新增**录制响应原字节**保存包：保存JPM真实原件所构造的候选、合成非规范JSON响应原字节、检查结果与逐文件SHA，另一个禁网禁子进程读取进程从持久副本重做来源/请求/语义检查，U+037E逐字节保留、两项未决仍未决。最终2项测试116.887秒通过；改原响应、伪LIVE信用、不完整包和写入原账本拒绝。当前测试发生于提交前工作树，独审待做；它不授D03真实请求或原生Result/Run，原账本仍止于194槽。证据`d03-recorded-response-20260927/`。

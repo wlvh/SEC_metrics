@@ -786,6 +786,8 @@ CURRENT_INCOME_NATIVE_BATCH/CURRENT_INCOME_ATTACK_ROOT指定原生及新反例�
 短反例：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_capacity_semantic_source.CapacitySemanticSourceTest tests.vnext.test_regulatory_statement_facts.RegulatoryStatementFactsTest -v`。覆盖重签后的来源缺项、关键词未命中仍保留隐藏事实，以及否定、假设、历史/引语、其他主体、与政府行动没有直接关系的诉讼。
 
 完整材料：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest -v`，禁网读取Ford/Enphase及JPM已存原件，后者从原文别名定义重建339段并验证响应冲突。两类分别加入当前fast/source-material入口；可选B13_COMPLETE_SOURCE_OUTPUT和D03_STATEMENT_MATERIAL_OUTPUT只写全新外部测试路径。JPM属于已参与修复的回归样本，模拟响应与执行者自查不算真实模型通过、原生或独立审阅。
+
+D03后继的**录制响应字节保存**用`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_d03_recorded_response_store`在source-material层验证：已保存JPM原件与合成响应的原字节、来源和请求身份、未决及录制信用，经独立文件重读；改原响应、把录制信用改签LIVE、不完整包和写入原真实账本均被拒。`D03_RECORDED_PACKET_COPY=/absolute/new/external-root`可保留测试时的有效包供独立进程禁网冷读，证据见`docs/evidence/issue28_continuous/d03-recorded-response-20260927/`。这是离线持久化步骤，不是D03真实请求、原生Result/Run或完整公司结论。
 <!-- capability-anchor: CAPABILITY.b13_complete_source_input -->
 <!-- capability-anchor: CAPABILITY.regulatory_aggregate_statement_fact -->
 
