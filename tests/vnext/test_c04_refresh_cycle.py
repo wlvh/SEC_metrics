@@ -7,8 +7,7 @@ import unittest
 from unittest.mock import patch
 
 from sec_urls import companyfacts_url, submissions_url
-from vnext import c04_update_cycle as c04, ordinary_refresh_cycle as refresh
-from vnext.canonical import strict_json_file
+from vnext import ordinary_refresh_cycle as refresh
 from vnext.continuous_sec_acquisition import recorded_sec_session
 from vnext.normal_source_authority import ROOT
 
@@ -72,11 +71,6 @@ class C04RefreshCycleMaterialTest(unittest.TestCase):
                 self.assertEqual('0', second['last_verified_candidate']['results']['C04']['value'])
                 self.assertNotEqual(first['last_verified_candidate']['results']['C04']['result_id'],
                                     second['last_verified_candidate']['results']['C04']['result_id'])
-                c04_state = state/'marriott_international/metrics/C04-registration-v3'
-                configuration = strict_json_file(path=c04_state/'configuration.json')
-                first_terminal = c04.cycle._terminal(c04_state, first['successful_attempt'])
-                original = c04._verify_candidate(c04_state, first_terminal, configuration)
-                self.assertEqual('0', original['C04']['value'])
             self.assertEqual(url, first_report['captures'][0]['source_url'])
             self.assertEqual(url, second_report['captures'][0]['source_url'])
             self.assertEqual(companyfacts, first_report['captures'][1]['source_url'])

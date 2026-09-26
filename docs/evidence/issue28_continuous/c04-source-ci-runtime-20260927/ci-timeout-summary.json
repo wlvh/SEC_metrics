@@ -1,0 +1,22 @@
+{
+  "record_type": "C04_SOURCE_MATERIAL_CI_TIMEOUT_DIAGNOSIS",
+  "prior_main_run_id": 36257074760,
+  "prior_head": "2f3a36da04c83b0c39ee00e7453fab866672e785",
+  "failed_job_id": 108445772034,
+  "failed_job": "vNext saved-source material",
+  "prior_job_duration_seconds": 1477.75,
+  "failed_selector": "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",
+  "prior_selector_timeout_seconds": 240,
+  "prior_selector_return_code": 124,
+  "other_main_jobs": "12_OF_12_SUCCESS",
+  "local_shortened_selector_seconds": 180.047,
+  "local_shortened_selector_status": "PASS",
+  "changed_test_responsibility": "Removed redundant in-test readback of first persisted C04 Run; two-source recorded refresh, distinct result identities and previous-success relation retained. Existing independent cold-read evidence remains bound to prior exact implementation.",
+  "business_code_or_requirement_changed": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_head_ci_status": "NOT_YET_TERMINAL_AT_THIS_CHECKPOINT"
+}

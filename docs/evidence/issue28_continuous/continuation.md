@@ -81,3 +81,5 @@ C04正常有限刷新接线：当前`tools/vnext_ordinary_refresh.py`显式选�
 `4f57f9cb`限定新增差异独审`PASS_WITH_BOUNDS`，结论在`c04-refresh-resume-repair-20260927/independent-review/conclusion.md`；`8115b114`的原NEEDS_FIX保留。审阅者独立读真实第193槽并复现旧报告正向与待办列表篡改拒绝，仍未发第二条GET。只有唯一#28账本执行者即时核对末槽193、累计143/143/50与来源SHA`6c5fa272...`不变，才可按现有许可一次申领Marriott Company Facts；跨锁并发不宣称原子安全。
 
 Marriott C04的有界真实来源刷新第二步已在原账本第194槽取得Company Facts，终态SUCCEEDED、归属0/0/1；累计provider/paid/SEC143/143/51，余97/97/29。前次第193槽申报清单没有重取。来源刷新`UPDATES_READY`，无待补/失败URL；C04本次为`NO_SOURCE_CONTENT_CHANGE`，复用第193槽形成的`PUBLISHED/0` Result `d41ffcee...`，未新建第三个Run。旧`a5517d36...`和新`d41ffcee...`及第194槽收据在独立禁网禁子进程冷读通过。当前FY2025范围，不是新财年自动更新或正式采纳；证据在`c04-real-refresh-second-20260927/`。先前主CI`2f3a36da`的saved-source material唯一失败为新C04两版测试单项240秒超时，其余12作业成功；需缩短该selector后观察新head CI，不改业务结果。
+
+旧已推`2f3a36da`主CI`36257074760`仅saved-source material作业失败：新增C04两版录制selector撞单项240秒上限（124），其余12个作业成功。没有将其归于业务语义。仅删除该测试内重复的旧Run重放，保留两版保存来源、完整录制刷新及不同Result/前驱断言；原独立冷读与真实第193—194槽双版本冷读复用。缩短后本地1项180.047秒通过，最终远端仍待新head CI；证据`c04-source-ci-runtime-20260927/`。
