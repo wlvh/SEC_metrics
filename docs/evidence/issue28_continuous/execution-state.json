@@ -2834,5 +2834,35 @@
     "review_result_path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/independent-review-v6-suspension/conclusion.md",
     "review_v5_recorded_test": "TIMED_OUT_119_SECONDS_NO_CURRENT_PASS_CREDIT",
     "review_190_read_only_replay": "PASS_ORIGINAL_RECEIPT_ID_UNCHANGED"
+  },
+  "paramount_c04_saved_batch_auto_route_20260926": {
+    "status": "ONE_COORDINATE_SAVED_BATCH_AUTO_FOUR_FORM_ROUTE_PASS_WITHHELD",
+    "changed_path": "tools/vnext_normal_candidate.py",
+    "function": "tools.vnext_normal_candidate.main",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "output_root": "/private/tmp/issue28-c04-batch-20260926-01",
+    "request_c04_event_forms": ["8-K", "8-K/A", "8-K12B", "8-K12B/A"],
+    "run_id": "run:ordinary-integrated:0c4eb986dc08a25b227b1bfd7ae8727bb79ee1bcd4d12cd08d8417a74cebfdf0",
+    "result_id": "sha256:ccb7957bbbf6de55aaf2c03aa566ba64344810cc263eb5374315ff5e100c9cbc",
+    "result_value": null,
+    "reason_code": "C04_COMPARABLE_AUDITOR_FACTS_MISSING",
+    "public_rows_match_prior_cold_run": true,
+    "candidate_batch_exit_code": 2,
+    "candidate_batch_exit_reason": "WITHHELD_COORDINATE_RETAINS_GAP",
+    "ledger_rows": 192,
+    "ledger_counts": [143, 143, 49],
+    "new_calls": [0, 0, 0],
+    "normal_update_auto_fetch_complete": false,
+    "shared_normal_run_default_changed": false,
+    "independent_review": "PENDING_EXACT_CLI_PATCH_SHA",
+    "shared_with_47": {
+      "scope_paths": ["tools/vnext_normal_candidate.py"],
+      "functions": ["tools.vnext_normal_candidate.main"],
+      "effect": "SAVED_CANDIDATE_BATCH_C04_DEFAULT_SELECTS_EXPLICIT_FOUR_FORM_ROUTE_ONLY",
+      "other_metrics_batch_route_unchanged": true,
+      "shared_normal_run_function_defaults_unchanged": true,
+      "frozen_snapshots_changed": false,
+      "other_branch_touched": false
+    }
   }
 }

@@ -14,6 +14,7 @@ from sec_http import write_immutable_bytes
 from vnext.canonical import content_hash
 from vnext.normal_annual_input import _registry_rows
 from vnext.normal_run_v3 import install_normal_inputs, create_normal_run, POLICY_PATH
+from vnext.c04_registration_successor import EVENT_FORMS as C04_EVENT_FORMS
 from vnext.ordinary_projection import render_ordinary_run
 
 
@@ -61,10 +62,13 @@ def main(argv=None):
         parser.error(str(error))
     output.mkdir(parents=True)
     started = datetime.now(timezone.utc).isoformat()
-    _write(output / "request.json", {"companies": selected, "metrics": metrics,
+    request = {"companies": selected, "metrics": metrics,
         "started_at_utc": started, "source": "EXPLICIT_SAVED_SOURCE_WORKSPACE" if args.source_root else "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
         "source_root":str(args.source_root) if args.source_root else None,
-        "production_authorized": False, "new_calls": {"provider": 0, "paid": 0, "sec": 0}})
+        "production_authorized": False, "new_calls": {"provider": 0, "paid": 0, "sec": 0}}
+    if 'C04' in metrics:
+        request['c04_event_forms'] = C04_EVENT_FORMS
+    _write(output / "request.json", request)
     coordinates = []
     for company in selected:
         data = output / "data" / company
@@ -74,9 +78,12 @@ def main(argv=None):
                    "run_path": run.relative_to(output).as_posix(),
                    "data_path": data.relative_to(output).as_posix()}
             try:
-                install_normal_inputs(data_root=data, company_id=company, metric_id=metric,source_root=args.source_root)
+                route = {'c04_event_forms': C04_EVENT_FORMS} if metric == 'C04' else {}
+                install_normal_inputs(data_root=data, company_id=company,
+                    metric_id=metric, source_root=args.source_root, **route)
                 result = create_normal_run(data_root=data, run_dir=run,
-                    company_id=company, metric_id=metric, freeze=args.freeze)
+                    company_id=company, metric_id=metric, freeze=args.freeze,
+                    **route)
                 native = result["result"]
                 accepted_status = "FROZEN_CANDIDATE" if result["manifest"]["status"] == "FROZEN" else "OPEN_CANDIDATE"
                 row.update(status=accepted_status if native["publication"] == "PUBLISHED" else "WITHHELD_CANDIDATE",
