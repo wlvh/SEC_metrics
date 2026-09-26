@@ -1,0 +1,72 @@
+test_historical_company_assertion_does_not_unlock_current_industry (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_historical_company_assertion_does_not_unlock_current_industry) ... ok
+test_industry_assertion_does_not_become_company_capacity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_industry_assertion_does_not_become_company_capacity) ... ok
+test_mixed_company_assertion_keeps_target_capacity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_mixed_company_assertion_keeps_target_capacity) ... ok
+test_native_records_and_public_absence_repeat_source_role_checks (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_native_records_and_public_absence_repeat_source_role_checks) ... ok
+test_nonquantity_dates_model_names_and_cancelled_plans_do_not_create_amounts (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_nonquantity_dates_model_names_and_cancelled_plans_do_not_create_amounts) ... ok
+test_operating_antecedent_dates_its_quantity_without_dating_cause_or_later_shipping (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_operating_antecedent_dates_its_quantity_without_dating_cause_or_later_shipping) ... ok
+test_qualitative_production_is_not_a_quantity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_qualitative_production_is_not_a_quantity) ... ok
+test_quarterly_arrangements_role_is_preserved_without_annualization (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_quarterly_arrangements_role_is_preserved_without_annualization) ... ok
+test_unsupported_quantity_is_implementation_unresolved (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_unsupported_quantity_is_implementation_unresolved) ... ok
+test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding) ... ok
+test_all_source_navigation_schema_and_messages_enter_count (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_all_source_navigation_schema_and_messages_enter_count) ... ok
+test_b13_and_d03_grouped_responses_still_account_for_each_source_unit (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_b13_and_d03_grouped_responses_still_account_for_each_source_unit) ... ok
+test_grouper_preserves_every_unit_and_checks_full_identity (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_grouper_preserves_every_unit_and_checks_full_identity) ... ok
+test_missing_engine_is_conservative_and_cannot_regroup (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_missing_engine_is_conservative_and_cannot_regroup) ... ok
+test_new_source_format_does_not_relabel_old_requests (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_new_source_format_does_not_relabel_old_requests) ... ok
+test_output_reservation_changes_the_real_200000_boundary (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_output_reservation_changes_the_real_200000_boundary) ... ok
+test_real_usage_feedback_has_a_separate_context_failure (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_real_usage_feedback_has_a_separate_context_failure) ... ok
+test_reference_vectors_include_prompt_envelope_and_output_reserve (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_reference_vectors_include_prompt_envelope_and_output_reserve) ... ok
+test_resource_mutation_after_cached_parse_is_rejected (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_resource_mutation_after_cached_parse_is_rejected) ... ok
+test_unsupported_service_and_format_are_explicit (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_unsupported_service_and_format_are_explicit) ... ok
+test_clear_capacity_with_no_production_is_a_calculation_limit (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_clear_capacity_with_no_production_is_a_calculation_limit) ... FAIL
+test_complete_source_and_exact_quotes_required (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_complete_source_and_exact_quotes_required) ... ok
+test_native_reference_uses_original_ordinal_not_packed_row_position (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_native_reference_uses_original_ordinal_not_packed_row_position) ... ok
+test_sales_only_source_cannot_be_labelled_actual_production (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_sales_only_source_cannot_be_labelled_actual_production) ... ok
+test_shared_metadata_is_restored_and_conflicts_rejected (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_shared_metadata_is_restored_and_conflicts_rejected) ... ok
+test_source_unit_missing_from_declared_census_rejected (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_source_unit_missing_from_declared_census_rejected) ... ok
+test_tax_credit_is_not_capacity_or_borrowing_and_mixed_scope_remains (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_tax_credit_is_not_capacity_or_borrowing_and_mixed_scope_remains) ... ok
+test_explicit_ordinary_uses_runtime_rules_before_raw_source_read (tests.vnext.test_native_source_runtime_policy.NativeSourceRuntimePolicyTest.test_explicit_ordinary_uses_runtime_rules_before_raw_source_read) ... ok
+test_changed_source_matching_old_group_blocks_before_any_new_call (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_changed_source_matching_old_group_blocks_before_any_new_call) ... ok
+test_default_zero_and_whole_source_reuse_never_execute (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_default_zero_and_whole_source_reuse_never_execute) ... ok
+test_failed_terminal_then_one_snapshot_error_counts_ordinal_once (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_failed_terminal_then_one_snapshot_error_counts_ordinal_once) ... ok
+test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format) ... ok
+test_finite_partial_success_then_exact_reuse_completes_without_redraw (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_finite_partial_success_then_exact_reuse_completes_without_redraw) ... ok
+test_invalid_limits_and_d03_cannot_enter (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_invalid_limits_and_d03_cannot_enter) ... ok
+test_live_b13_pause_and_recorded_wire_rejection (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_live_b13_pause_and_recorded_wire_rejection) ... ok
+test_old_success_or_source_errors_are_never_treated_as_missing_credit (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_old_success_or_source_errors_are_never_treated_as_missing_credit) ... ok
+test_recorded_b13_uses_native_acceptance_without_lifting_live_pause (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_recorded_b13_uses_native_acceptance_without_lifting_live_pause) ... ok
+test_snapshot_failure_after_success_keeps_consumed_limit_and_stops_provider (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_snapshot_failure_after_success_keeps_consumed_limit_and_stops_provider) ... ok
+test_unknown_claim_keeps_count_and_stops_provider (tests.vnext.test_native_refresh_execution.NewNativeUpdateTest.test_unknown_claim_keeps_count_and_stops_provider) ... ok
+test_failure_continues_other_metrics_and_uses_one_shared_limit (tests.vnext.test_native_refresh_execution.RefreshCoordinatorNewNativeTest.test_failure_continues_other_metrics_and_uses_one_shared_limit) ... ok
+test_alias_and_active_ancestor_rejected (tests.vnext.test_ordinary_isolated_publication.OrdinaryIsolatedPublicationBoundaryTest.test_alias_and_active_ancestor_rejected) ... ok
+test_existing_active_root_never_adopted_by_stage (tests.vnext.test_ordinary_isolated_publication.OrdinaryIsolatedPublicationBoundaryTest.test_existing_active_root_never_adopted_by_stage) ... ok
+test_local_json_cannot_supply_private_capability (tests.vnext.test_ordinary_isolated_publication.OrdinaryIsolatedPublicationBoundaryTest.test_local_json_cannot_supply_private_capability) ... ok
+test_official_root_ancestors_and_descendants_rejected (tests.vnext.test_ordinary_isolated_publication.OrdinaryIsolatedPublicationBoundaryTest.test_official_root_ancestors_and_descendants_rejected) ... ok
+test_self_signed_marker_cannot_register_an_existing_workspace (tests.vnext.test_ordinary_isolated_publication.OrdinaryIsolatedPublicationBoundaryTest.test_self_signed_marker_cannot_register_an_existing_workspace) ... ok
+
+======================================================================
+FAIL: test_clear_capacity_with_no_production_is_a_calculation_limit (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_clear_capacity_with_no_production_is_a_calculation_limit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_semantic_review.py", line 105, in test_clear_capacity_with_no_production_is_a_calculation_limit
+    self.assertEqual(checked['unresolved'], [])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [{'unit_id': 'sha256:2d6a3da57183cda1557a4[336 chars]ED'}] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+{'unit_id': 'sha256:2d6a3da57183cda1557a43f9239b979b3dcd5c8b96145b4d4775bd7b742af4ca', 'reason': 'B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED', 'source_indices': [7], 'quantity_role': 'AVAILABLE_CAPACITY'}
+
++ []
+- [{'quantity_role': 'AVAILABLE_CAPACITY',
+-   'reason': 'B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED',
+-   'source_indices': [7],
+-   'unit_id': 'sha256:2d6a3da57183cda1557a43f9239b979b3dcd5c8b96145b4d4775bd7b742af4ca'},
+-  {'reason': 'B13_PHYSICAL_QUANTITY_ROLE_SCOPE_UNSUPPORTED',
+-   'source_index': 7,
+-   'unit_id': 'sha256:2d6a3da57183cda1557a43f9239b979b3dcd5c8b96145b4d4775bd7b742af4ca'}]
+
+----------------------------------------------------------------------
+Ran 45 tests in 1.551s
+
+FAILED (failures=1)

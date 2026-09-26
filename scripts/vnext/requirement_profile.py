@@ -19,6 +19,10 @@ from . import requirement_profile_v7 as v7
 from . import requirement_profile_v8 as v8
 from . import requirement_profile_v9 as v9
 from . import requirement_profile_v10 as v10
+from . import requirement_profile_v11 as v11
+from . import requirement_profile_v12 as v12
+from . import requirement_profile_v13 as v13
+from . import requirement_profile_v14 as v14
 from .requirement_profile_v1 import CONTENT_HASH_PATTERN
 from .requirement_profile_v1 import EXPLICIT_ARTIFACT_GENERATION
 from .requirement_profile_v1 import LEGACY_ARTIFACT_GENERATION
@@ -43,6 +47,11 @@ PROFILE_ENGINES = {
     v8.PROFILE_REQUIREMENT_GENERATION: v8,
     v9.PROFILE_REQUIREMENT_GENERATION: v9,
     v10.PROFILE_REQUIREMENT_GENERATION: v10,
+    v11.PROFILE_REQUIREMENT_GENERATION: v11,
+    v12.PROFILE_REQUIREMENT_GENERATION: v12,
+    v13.PROFILE_REQUIREMENT_GENERATION: v13,
+    v14.PROFILE_REQUIREMENT_GENERATION: v14,
+    "PROFILE_DRIVEN_V15": ".requirement_profile_v15",
 }
 _LOADING_PATHS = ContextVar("requirement_loading_paths", default=())
 
@@ -55,6 +64,11 @@ def load_profile_requirement_snapshot(
     engine = PROFILE_ENGINES.get(baseline.get("requirement_generation"))
     if engine is None:
         raise RequirementProfileError("Unknown Requirement engine generation")
+    if isinstance(engine, str):
+        # Retained ordinary runtimes need not import a later call-policy
+        # engine that is absent from their own execution file set.
+        from importlib import import_module
+        engine = import_module(engine, package=__package__)
     path = str(snapshot_dir.resolve())
     if path in _LOADING_PATHS.get():
         raise RequirementProfileError("Requirement ancestry contains a cycle")

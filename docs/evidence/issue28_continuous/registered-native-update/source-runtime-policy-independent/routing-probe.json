@@ -1,0 +1,57 @@
+{
+  "scope": "real policy path/bytes checks; downstream raw-source work deliberately stopped, not full factory or Run acceptance",
+  "checks": [
+    {
+      "metric": "D04",
+      "explicit_ordinary": false,
+      "error": "Source path is not a regular file: /var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpixxpxi13/catalog/r6/semantic_source_v1.json",
+      "original_source_root_preserved": false
+    },
+    {
+      "metric": "D04",
+      "explicit_ordinary": true,
+      "error": "RAW_SOURCE_CALL_REACHED",
+      "original_source_root_preserved": true
+    },
+    {
+      "metric": "D04",
+      "invalid_runtime_rejected": true,
+      "error": "SEMANTIC_SOURCE_INSTALLED_POLICY_CHANGED"
+    },
+    {
+      "metric": "B13",
+      "explicit_ordinary": false,
+      "error": "JSON input must be a regular file: /var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpixxpxi13/config/b13_production_capacity_v1.json",
+      "original_source_root_preserved": false
+    },
+    {
+      "metric": "B13",
+      "explicit_ordinary": true,
+      "error": "RAW_SOURCE_CALL_REACHED",
+      "original_source_root_preserved": true
+    },
+    {
+      "metric": "B13",
+      "invalid_runtime_rejected": true,
+      "error": "B13_INSTALLED_RULES_CHANGED"
+    },
+    {
+      "metric": "ANNUAL",
+      "explicit_ordinary": false,
+      "error": "Source path is not a regular file: /var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpixxpxi13/config/normal_fiscal_year_labels_v1.json",
+      "original_source_root_preserved": false
+    },
+    {
+      "metric": "ANNUAL",
+      "explicit_ordinary": true,
+      "error": "RAW_SOURCE_CALL_REACHED",
+      "original_source_root_preserved": true
+    },
+    {
+      "metric": "ANNUAL",
+      "invalid_runtime_rejected": true,
+      "error": "'policy_id'"
+    }
+  ],
+  "patch_sha256": "93f3e6062d5dfd0b0af14ce57b8201fa823dfa6eb48d6e34d4f840206ffaf5e6"
+}

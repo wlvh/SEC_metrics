@@ -1,0 +1,80 @@
+test_historical_company_assertion_does_not_unlock_current_industry (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_historical_company_assertion_does_not_unlock_current_industry) ... ok
+test_industry_assertion_does_not_become_company_capacity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_industry_assertion_does_not_become_company_capacity) ... ok
+test_mixed_company_assertion_keeps_target_capacity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_mixed_company_assertion_keeps_target_capacity) ... ok
+test_native_records_and_public_absence_repeat_source_role_checks (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_native_records_and_public_absence_repeat_source_role_checks) ... ok
+test_operating_antecedent_dates_its_quantity_without_dating_cause_or_later_shipping (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_operating_antecedent_dates_its_quantity_without_dating_cause_or_later_shipping) ... ok
+test_qualitative_production_is_not_a_quantity (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_qualitative_production_is_not_a_quantity) ... ok
+test_quarterly_arrangements_role_is_preserved_without_annualization (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_quarterly_arrangements_role_is_preserved_without_annualization) ... ok
+test_unsupported_quantity_is_implementation_unresolved (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_unsupported_quantity_is_implementation_unresolved) ... ok
+test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding) ... ERROR
+test_defined_absence_needs_complete_source_set_and_effective_review (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_defined_absence_needs_complete_source_set_and_effective_review) ... ok
+test_forged_complete_flags_and_numeric_opportunity_do_not_become_text (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_forged_complete_flags_and_numeric_opportunity_do_not_become_text) ... ok
+test_raw_source_and_effective_review_are_required (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_raw_source_and_effective_review_are_required) ... ERROR
+test_reviewed_capacity_prose_is_text_without_annualization_or_ratio (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_reviewed_capacity_prose_is_text_without_annualization_or_ratio) ... ERROR
+
+======================================================================
+ERROR: test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding (tests.vnext.test_capacity_quantity_roles.CapacityQuantityRolesTest.test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_quantity_roles.py", line 106, in test_unsupported_source_quantity_cannot_be_erased_by_other_or_missing_finding
+    checked=validate_response(request=request,raw_response=_bytes(response))
+  File "/tmp/sec_metrics_issue28_continuous/b13-role-proof-independent-review/v2/overlay/scripts/vnext/capacity_semantic_review.py", line 330, in validate_response
+    checked['unresolved'].extend(validate_quantity_role_findings(units=units,findings=checked['findings'],
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        period=request['target_period'],quantity_scope=request.get('quantity_scope_context')))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/sec_metrics_issue28_continuous/b13-role-proof-independent-review/v2/overlay/scripts/vnext/capacity_quantity_roles.py", line 144, in validate_quantity_role_findings
+    else:need(False,'B13_PHYSICAL_QUANTITY_ROLE_NOT_ESTABLISHED')
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_PHYSICAL_QUANTITY_ROLE_NOT_ESTABLISHED
+
+======================================================================
+ERROR: test_raw_source_and_effective_review_are_required (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_raw_source_and_effective_review_are_required)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_text_results.py", line 162, in test_raw_source_and_effective_review_are_required
+    args = self.reviewed()
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_text_results.py", line 65, in reviewed
+    candidate = api.create_deterministic_text_candidate(**args)
+  File "/tmp/sec_metrics_issue28_continuous/b13-role-proof-independent-review/v2/overlay/scripts/vnext/capacity_text_results.py", line 146, in create_deterministic_text_candidate
+    selected, bindings, _ = _prepare(compiled_spec=compiled_spec, target=target, source=source,
+                            ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        assessment=assessment, source_references=source_references, raw_bytes_by_id=raw_bytes_by_id)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/sec_metrics_issue28_continuous/b13-role-proof-independent-review/v2/overlay/scripts/vnext/capacity_text_results.py", line 75, in _prepare
+    need(not unresolved, 'B13_QUANTITY_SCOPE_UNRESOLVED')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_QUANTITY_SCOPE_UNRESOLVED
+
+======================================================================
+ERROR: test_reviewed_capacity_prose_is_text_without_annualization_or_ratio (tests.vnext.test_capacity_text_results.CapacityTextResultTest.test_reviewed_capacity_prose_is_text_without_annualization_or_ratio)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_text_results.py", line 137, in test_reviewed_capacity_prose_is_text_without_annualization_or_ratio
+    result, trace, observations = api.replay_text_result(**self.reviewed())
+                                                           ~~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_text_results.py", line 65, in reviewed
+    candidate = api.create_deterministic_text_candidate(**args)
+  File "/tmp/sec_metrics_issue28_continuous/b13-role-proof-independent-review/v2/overlay/scripts/vnext/capacity_text_results.py", line 146, in create_deterministic_text_candidate
+    selected, bindings, _ = _prepare(compiled_spec=compiled_spec, target=target, source=source,
+                            ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        assessment=assessment, source_references=source_references, raw_bytes_by_id=raw_bytes_by_id)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/sec_metrics_issue28_continuous/b13-role-proof-independent-review/v2/overlay/scripts/vnext/capacity_text_results.py", line 75, in _prepare
+    need(not unresolved, 'B13_QUANTITY_SCOPE_UNRESOLVED')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: B13_QUANTITY_SCOPE_UNRESOLVED
+
+----------------------------------------------------------------------
+Ran 13 tests in 6.826s
+
+FAILED (errors=3)

@@ -1,0 +1,75 @@
+{
+  "scope": "complete response contract independent review",
+  "rows": [
+    {
+      "case": "complete_positive",
+      "outcome": "ACCEPTED",
+      "unresolved": []
+    },
+    {
+      "case": "reversed_complete_units",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED"
+    },
+    {
+      "case": "missing_unit",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED"
+    },
+    {
+      "case": "duplicate_unit",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED"
+    },
+    {
+      "case": "shrink_schema_count",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D04_NATIVE_REQUEST_POLICY_CHANGED"
+    },
+    {
+      "case": "shrink_schema_enum",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D04_NATIVE_REQUEST_POLICY_CHANGED"
+    },
+    {
+      "case": "shrink_required_ids",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D04_NATIVE_REQUEST_POLICY_CHANGED"
+    },
+    {
+      "case": "shrink_checklist",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D04_NATIVE_REQUEST_POLICY_CHANGED"
+    },
+    {
+      "case": "wrong_version",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D04_RESPONSE_CONTRACT_VERSION_UNSUPPORTED"
+    },
+    {
+      "case": "downgrade_version_only",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D04_NATIVE_REQUEST_POLICY_CHANGED"
+    },
+    {
+      "case": "remove_required_candidates_and_update_checklist",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

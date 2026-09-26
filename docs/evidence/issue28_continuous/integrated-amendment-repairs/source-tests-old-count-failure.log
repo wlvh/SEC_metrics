@@ -1,0 +1,20 @@
+.........F.......................
+======================================================================
+FAIL: test_twenty_actual_coordinates_use_native_records_and_never_create_a_run (tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiPrototypeTest.test_twenty_actual_coordinates_use_native_records_and_never_create_a_run)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_zero_ai_results.py", line 84, in test_twenty_actual_coordinates_use_native_records_and_never_create_a_run
+    self.assertEqual({'number':13,'structural':1,'withheld':6},counts)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'number': 13, 'structural': 1, 'withheld': 6} != {'number': 15, 'structural': 1, 'withheld': 4}
+- {'number': 13, 'structural': 1, 'withheld': 6}
+?             ^                               ^
+
++ {'number': 15, 'structural': 1, 'withheld': 4}
+?             ^                               ^
+
+
+----------------------------------------------------------------------
+Ran 33 tests in 133.102s
+
+FAILED (failures=1)

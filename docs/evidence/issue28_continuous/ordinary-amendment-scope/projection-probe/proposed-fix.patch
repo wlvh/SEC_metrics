@@ -1,0 +1,15 @@
+--- a/scripts/vnext/ordinary_projection.py
++++ b/scripts/vnext/ordinary_projection.py
+@@ -80,7 +80,11 @@
+     ordered,_ = projector._ordered_observations(trace=trace,observations=indexes["observations"],projection=projection)
+     view = {"compiled":{"name":item["name"] or spec["compiled"]["name"],"reported_unit":spec["compiled"]["reported_unit"],"legacy_projection":projection}}
+     baseline = {key:"" for key in publication.METRIC_FIELDS}
+-    baseline.update(form=annual["filing"]["form"],filed_date=annual["filing"]["filingDate"])
++    baseline.update(company=company["display_name"],cik=company["primary_cik"],metric_id=metric,
++        metric_name=view["compiled"]["name"],unit=projection["unit"],status=result["quality"],
++        source_class=projection["source_class"],formula=projection.get("formula",""),
++        period_start=result["period_start"],period_end=result["period_end"],fiscal_year=str(period["fiscal_year"]),
++        notes=projection.get("notes",""),form=annual["filing"]["form"],filed_date=annual["filing"]["filingDate"])
+     if result["publication"] == "WITHHELD":
+         row = dict(baseline);evidence=[]
+         row.update(company=company["display_name"],cik=company["primary_cik"],metric_id=metric,metric_name=view["compiled"]["name"],

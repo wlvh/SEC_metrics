@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "record_type": "ISSUE_15_FOUNDATION_VERIFICATION_RECEIPT",
+  "requirement_id": "issue_15_v1",
+  "verified_at_utc": "2026-08-19T04:02:38Z",
+  "status": "PASSED",
+  "highest_evidence_level": "FAST_LOCAL_ONLY",
+  "not_evidence_for": [
+    "CI",
+    "LIVE_PROVIDER",
+    "QUALIFICATION",
+    "ACTIVE_PUBLICATION",
+    "FULL_ACCEPTANCE"
+  ],
+  "repository_identity": {
+    "name_with_owner": "wlvh/SEC_metrics",
+    "remote_url": "https://github.com/wlvh/SEC_metrics.git",
+    "default_branch": "main"
+  },
+  "foundation_source_commit": "f1cc44342e6814522ec2688cf3674f7ec442be8d",
+  "foundation_source_tree": "46e47a219f077f5561e373bc3cb69bdfe23ee065",
+  "foundation_tag": "issue-15-foundation-v1",
+  "foundation_tag_object": "372d9486f4881d9432db3c3ccdca9b737d524bf3",
+  "foundation_tag_peeled_commit": "f1cc44342e6814522ec2688cf3674f7ec442be8d",
+  "foundation_merge_commit": "4d02db6a474f93eec9e058d780e206b4504ab24d",
+  "foundation_merge_tree": "46e47a219f077f5561e373bc3cb69bdfe23ee065",
+  "verification_rollout": {
+    "rollout_id": "01a0149f-ab8b-7b00-b87a-1e321ece0113",
+    "verified_worktree": "$FOUNDATION_WORKTREE",
+    "verified_commit": "f1cc44342e6814522ec2688cf3674f7ec442be8d"
+  },
+  "verification_commands": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4",
+      "return_code": 0,
+      "status": "PASSED",
+      "tool_call_id": "call_6Mml48oKrJ4JHydj0HreHU4Z",
+      "stdout_sha256": "95bae33ec68ce4245e2aaa21469376e15f7e4bd5009897b68afa1c751f9aabb2",
+      "stdout_size": 1979,
+      "receipt_paths": [
+        "outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/r4_fast_test_policy_dc1dc3cd8fc10e26da743be66ede68af079a80cc170560da40f14211100c71cb.json"
+      ]
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_acceptance.py --scope recorded",
+      "return_code": 0,
+      "status": "PASSED_FAST_LOCAL_ONLY",
+      "tool_call_id": "call_EPvgKOCv7DWBk2LoMznpNQk2",
+      "stdout_sha256": "28a774f3836f9d6c5020e31a833bb051a5b857f0297c97be8de82a35534f5c02",
+      "stdout_size": 296,
+      "receipt_paths": [
+        "outputs/acceptance_receipts/2b9bf937edcc1144d40fb9072bf9d205b0a0705cc893c5bf3197c491850852d8.json"
+      ]
+    },
+    {
+      "command": "python3 tools/check_capability_contract_alignment.py --base-ref origin/main",
+      "return_code": 0,
+      "status": "PASSED",
+      "tool_call_id": "call_b6MxTbXPDZjehrx22i5z7l7p",
+      "stdout_sha256": "27bef0812539b30e00a83c1773b045c97d65a8e7b8623802f6ba88ceb042aedb",
+      "stdout_size": 108,
+      "receipt_paths": [
+        "outputs/acceptance_receipts/2b9bf937edcc1144d40fb9072bf9d205b0a0705cc893c5bf3197c491850852d8.json"
+      ]
+    },
+    {
+      "command": "python3 tools/check_no_company_literals.py",
+      "return_code": 0,
+      "status": "PASSED",
+      "tool_call_id": "call_GVBF6U7C0CxmabBFOTtLPm6j",
+      "stdout_sha256": "aea0e91c3ba45dd88d06e41e3dae49c1f423320429c18e3b09b63ade4eba26f7",
+      "stdout_size": 43,
+      "receipt_paths": [
+        "outputs/scalability_audit.csv"
+      ]
+    }
+  ],
+  "receipt_bindings": [
+    {
+      "receipt_id": "sha256:2b9bf937edcc1144d40fb9072bf9d205b0a0705cc893c5bf3197c491850852d8",
+      "path": "outputs/acceptance_receipts/2b9bf937edcc1144d40fb9072bf9d205b0a0705cc893c5bf3197c491850852d8.json",
+      "sha256": "a2af20bb0a8e03a3bf3870b33336439563a88339c1675e4ab1c4c7f56ac71891",
+      "size": 405062
+    },
+    {
+      "receipt_id": "sha256:dc1dc3cd8fc10e26da743be66ede68af079a80cc170560da40f14211100c71cb",
+      "path": "outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/r4_fast_test_policy_dc1dc3cd8fc10e26da743be66ede68af079a80cc170560da40f14211100c71cb.json",
+      "sha256": "6989a43d3c10008e20fb21da88f8adea1fffe57e444e9fc9597d7cc8c26567c2",
+      "size": 6009
+    },
+    {
+      "receipt_id": "sha256:485dc613db6896d5db1b15abf1fc5078c9e7b09b65ee0d6db9a745870bfd6de1",
+      "path": "outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/semantic_audit_receipt.json",
+      "sha256": "485dc613db6896d5db1b15abf1fc5078c9e7b09b65ee0d6db9a745870bfd6de1",
+      "size": 4422
+    },
+    {
+      "receipt_id": "sha256:13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f",
+      "path": "outputs/acceptance_receipts/recorded_gate_runs/005b7fc1211941cb959335df3f031d28/scalability_audit.csv",
+      "sha256": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f",
+      "size": 55
+    },
+    {
+      "receipt_id": "sha256:58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+      "path": "outputs/scalability_audit.csv",
+      "sha256": "58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+      "size": 56
+    }
+  ],
+  "real_external_provider_egress_count": 0,
+  "paid_provider_call_count": 0,
+  "sec_request_count": 0,
+  "socket_guard": "PROCESS_TREE_NETWORK_DENY_PLUS_PYTHON_AUDIT_GUARD",
+  "active_publication_created": false,
+  "ci_status": "NOT_RUN",
+  "live_status": "NOT_RUN",
+  "qualification_status": "NOT_RUN",
+  "full_acceptance_status": "NOT_RUN"
+}

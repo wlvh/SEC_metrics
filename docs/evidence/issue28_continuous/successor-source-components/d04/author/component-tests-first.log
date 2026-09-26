@@ -1,0 +1,37 @@
+test_clean_audit_and_keyword_miss_never_become_no_doubt (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_clean_audit_and_keyword_miss_never_become_no_doubt) ... ok
+test_exact_current_report_and_named_statement_are_candidates_only (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_exact_current_report_and_named_statement_are_candidates_only) ... ok
+test_fragment_is_preserved_as_incomplete_not_no_disclosure (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_fragment_is_preserved_as_incomplete_not_no_disclosure) ... ok
+test_full_text_includes_unmatched_late_language_and_does_not_clip_large_block (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_full_text_includes_unmatched_late_language_and_does_not_clip_large_block) ... ok
+test_historical_hypothetical_other_entity_and_negated_claims_stay_separate (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_historical_hypothetical_other_entity_and_negated_claims_stay_separate) ... ok
+test_internal_control_audit_is_not_a_financial_statement_audit (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_internal_control_audit_is_not_a_financial_statement_audit) ... ok
+test_negation_retains_negative_statement_without_closed_world_absence (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_negation_retains_negative_statement_without_closed_world_absence) ... ok
+test_real_json_roundtrip_and_resigned_tampering (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_real_json_roundtrip_and_resigned_tampering) ... ok
+test_real_pfizer_acquisition_phrase_and_paramount_predecessor (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_real_pfizer_acquisition_phrase_and_paramount_predecessor) ... ERROR
+test_same_date_elsewhere_does_not_repair_wrong_audit_subject_or_period (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_same_date_elsewhere_does_not_repair_wrong_audit_subject_or_period) ... ok
+test_source_entity_or_period_conflict_rejected (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_source_entity_or_period_conflict_rejected) ... ok
+test_unmapped_native_boolean_retains_namespace_context_and_source_value (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_unmapped_native_boolean_retains_namespace_context_and_source_value) ... ok
+
+======================================================================
+ERROR: test_real_pfizer_acquisition_phrase_and_paramount_predecessor (tests.vnext.test_going_concern_source.GoingConcernSourceTest.test_real_pfizer_acquisition_phrase_and_paramount_predecessor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_going_concern_source.py", line 166, in test_real_pfizer_acquisition_phrase_and_paramount_predecessor
+    p = prepare_ordinary_going_concern_source(repo_root=REPO_ROOT,company_id="paramount_skydance_paramount_global")
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/going_concern_source.py", line 249, in prepare_ordinary_going_concern_source
+    components.append(inspect_going_concern_source(raw_bytes=raw, raw_blob=blob,
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        source_reference=ref, company_id=company_id, cik=prepared["entity"], filing=filing))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/going_concern_source.py", line 188, in inspect_going_concern_source
+    _need(supplied == [[b["block_index"], b["text"]] for b in document["blocks"]],
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "GOING_CONCERN_VISIBLE_BLOCK_COVERAGE_CHANGED")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/going_concern_source.py", line 47, in _need
+    raise GoingConcernSourceError(reason)
+vnext.going_concern_source.GoingConcernSourceError: GOING_CONCERN_VISIBLE_BLOCK_COVERAGE_CHANGED
+
+----------------------------------------------------------------------
+Ran 12 tests in 4.978s
+
+FAILED (errors=1)

@@ -268,3 +268,60 @@ publication switch在改root mirrors前先于独占锁内写`outputs/publication
 
 B06结构化主路径的待审候选由`tools/vnext_r5_b06.py read`读取。它未替换正式报告；遇范围/修订/债务涵盖未决时公共值为空且给出原因，原生当时申报结果仍可核对。完整说明见`docs/r5_b06_structured.md`。
 <!-- capability-anchor: CAPABILITY.r5_b06_structured_primary -->
+
+B06新来源的两份历史验证只提供候选结果：可查看原始年报、计算组成、完整性检查及修订状态，不能把它们当作正式active中的新指标。无法证明融资项目性质时显示具体缺口；新来源文件能被读取不等于已获可信来源身份。两份候选及其重放材料见`docs/evidence/b06_new_source/README.md`。
+<!-- capability-anchor: CAPABILITY.b06_new_source_candidates -->
+## 年度输入检查的当前范围
+
+开发入口`tools/vnext_normal_update.py`可以读取已保存年报清单，按原文财年准备自然年、非自然年及52/53周年输入。它会同时保留普通10-K和修订状态；“原件已准备”不能读作“本期财务指标已更新”。缺少来源、来源失败和程序尚不支持的情况分别报告，其他公司继续检查。正式结果仍从既有PublicationView读取；本入口不会发布结果。
+<!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
+
+
+普通候选开发可在保存材料上检查薪酬、审计师变更与风险标题。薪酬保留披露实际覆盖期间，不把交易后数月金额冒充全年；缺少可比前期或来源获取失败，不显示“无变更”。风险标题输出是公司原文摘录，并附原始定位，不表示该风险已经发生。候选结果和完整正式发布保持分别可见，本轮尚未接入正式结果更新。
+<!-- capability-anchor: CAPABILITY.normal_governance_input -->
+<!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->
+
+多指标开发候选的入口和状态见`docs/normal_candidates.md`。金融数值保留实际季度、时点或全年期间，董事会披露显示真实申报日期，不推定为年末董事会状态；暂不出值时保留具体原因。当前已出现原生冻结和公共行材料，但完整390坐标、正常新来源更新与正式采纳仍未完成，正式报告不因此自动改变。
+
+<!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
+<!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
+
+开发中的19项普通零AI来源组件现已进入该CLI的V14草案，尚未进入正式报告。事件条目数不代表已核实的人事变更人数；上一期材料缺失不会被当作同比零变化。D03/D04目前完成的来源准备也不等于已确认有无调查或持续经营疑虑。
+<!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->
+
+<!-- capability-anchor: CAPABILITY.ordinary_accession_native_components -->
+
+A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，已接入34项V14草案CLI，正式报告不变；详见`docs/normal_source_components.md`。
+
+当前开发入口已将34项支持路线接到同一原生验证链，但V14仍是OPEN草案。公共行明确区分主结果与计算所用事实；财年名称按受支持的原文定义显示，原始标签冲突仍可追溯。正式报告和active不因此改变，完整390坐标与上线条件仍未完成。
+
+候选页会保留具体来源失败原因；“无经济意义”的比值保持空值，并能继续查看原始证据。已核实仅更正链接的修订不会一概阻断原报告数值，但其他修订仍需完成其相应检查。借款小计不等于完整债务指标，没有单独融资租赁披露也不等于金额为零。
+<!-- capability-anchor: CAPABILITY.ordinary_candidate_diagnostics -->
+<!-- capability-anchor: CAPABILITY.ordinary_amendment_input_scope -->
+<!-- capability-anchor: CAPABILITY.b06_combined_borrowing_reconciliation -->
+<!-- capability-anchor: CAPABILITY.b06_financing_disclosure_inventory -->
+
+普通开发候选现覆盖36项。入住率与RevPAR可以从原表及其明确年度说明自动生成，分别显示百分比和美元，并保留实际表格证据；这不意味着重新调用或认证了旧AI资格。其他公司仍按原适用性显示不适用，正式版本保持不变。
+<!-- capability-anchor: CAPABILITY.ordinary_deterministic_lodging -->
+
+当前开发中的C04候选可区分SEC原文档名与获取工具的本地保存名，并保留原请求追溯；仍须核对实际主体、年度、审计师与事件证据。开发候选与正式结果分开，生产active未随本次获取或修复改变。
+
+<!-- capability-anchor: CAPABILITY.ordinary_document_identity -->
+
+检查银行/工业B06空值时，可从候选选择记录查看两份原件共同证明的融资分项、工业列和具体尚缺的证明。小计和工业净资产不能自行替代完整债务比率；正式系统仍以active版本为准。
+
+<!-- capability-anchor: CAPABILITY.ordinary_special_debt_scope -->
+
+接续主体的事件统计窗口可能长于报告财年；请以结果的period_start/period_end读取覆盖范围。当前开发候选会保留各已登记主体的全部来源，不能因为计数恰好为零就省略前身。正式结果仍由active发布版本决定。
+
+<!-- capability-anchor: CAPABILITY.registered_event_native_scope -->
+
+NOT_MEANINGFUL可以表示当前主体只报告不足一年的期间，而非没有披露收入。查看实际period_start/period_end及原件观察；短期实报数仍可追溯，但不作为全年指标，也不能自行加上前身期间。
+
+<!-- capability-anchor: CAPABILITY.current_income_statement_scope -->
+
+### 开发中的普通更新与私有版本
+
+有限刷新可自动发现并取得所需来源，报告各指标新尝试与历史有效结果。某项未完成不会把其他无依赖结果抹去；旧结果仍按原期间显示。完整来源的程序范围文字、实际计算值、结构性不适用和实现失败分别阅读，不因存在一条记录就视为390项全部验收。私有发布演练不会改变当前正式结果，正式采纳仍待集中确认。入口及具体边界见[普通刷新说明](ordinary_refresh_cycle.md)。
+<!-- capability-anchor: CAPABILITY.ordinary_refresh_native_draft -->
+<!-- capability-anchor: CAPABILITY.ordinary_private_release_draft -->

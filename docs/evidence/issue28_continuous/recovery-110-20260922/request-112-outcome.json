@@ -1,0 +1,74 @@
+{
+  "ordinal": 112,
+  "intent": {
+    "binding_id": "sha256:fc28545b68f44f4993716ee1005a731ed2ca5748cc12b830831df86c8fcfdb7a",
+    "channel": "PROVIDER",
+    "execution_mode": "LIVE",
+    "intent_id": "sha256:730b3680b443704dedd3959dd0e826b10695d1c461f1cb2bed5d10c8e480a623",
+    "ordinal": 112,
+    "plan_id": "sha256:7a49e41ae8d47021b525fbfb6f1c49c60a27cf3cfe8162d2949287eee2c169ac",
+    "previous_intent_id": "sha256:339e148b0638c8149c45dd668722d3796233649f799bee90fc57a36ae2fc7ea9",
+    "purpose": "remaining_development_feasibility",
+    "record_type": "CONTINUOUS_CALL_INTENT",
+    "request_digest": "1acc31ac57c3c1e6275d7f563602a2fd98f3a3782896164efd2bf5c86363a9a9",
+    "requirement_closure_hash": "sha256:4cc2d5ee63b181942e41da6411d52e6cbe4763ed841c6638ec1553bba113c4ee",
+    "requirement_id": "issue_28_v14"
+  },
+  "terminal": {
+    "counts": [
+      1,
+      1,
+      0
+    ],
+    "counts_kind": "ACTUAL_OR_UNKNOWN_CHARGED",
+    "evidence": {
+      "execution-rules.json": "b209a5c6ab6f70ea005608dda4afd47ee54f7ecf295c0f7ee4209aea0ddd06e0",
+      "execution-rules.tar.gz": "604a4ff6cdd1c72090113c2e1798c4a048a7565b0fd50aa6dc4e057fb0965360",
+      "intent.json": "ac48ed819ba705015a27bc0ff99745fc5ceacfdafcbcf5316154cc73f676fa23",
+      "invocation_control/attempts/957acf209f1c8274395de12bfa9038bee8303c6d80ae776ef449880fcbd02481/01_6d4cafcec6db58c5a6dd840605e1f74c94f7cf68e5bc269fc67ecce719791be1.json": "42349723415c036f1bef73c0b3fc48c65feacddf5d8aee2ff31eff77387903f2",
+      "invocation_control/egress/957acf209f1c8274395de12bfa9038bee8303c6d80ae776ef449880fcbd02481/01.json": "4a049641d4021c3c6c4c44d3ac11be9a14293ecef8e0c7400e14f3e3c77c663f",
+      "invocation_control/executions/957acf209f1c8274395de12bfa9038bee8303c6d80ae776ef449880fcbd02481.json": "f39d09fe1a45c7d202c706a40b8e5fc96c55f924b8744dbc1a191d8174a12df6",
+      "invocation_control/plans/7a49e41ae8d47021b525fbfb6f1c49c60a27cf3cfe8162d2949287eee2c169ac.json": "02d6b9c1f1cb1559bfbc00e377a253bc4384415cd0a502a25ba8e7099b311d3f",
+      "invocation_control/requests/e7531aad58f4eb6a73edf61d71aae5b0806acc15f4f6d8aeabda6b8d6a9ee3cf.bin": "f9f26c12145a5866f40ce0ae80718963fec30ba4dbba4c37782ad87ee02c0043",
+      "invocation_control/reservation_archive/e7531aad58f4eb6a73edf61d71aae5b0806acc15f4f6d8aeabda6b8d6a9ee3cf/957acf209f1c8274395de12bfa9038bee8303c6d80ae776ef449880fcbd02481.json": "e5114082a1ec3e5ad8c02f1130d28369aefed1793abd52c2435d75c1ff1b3949",
+      "semantic-request.json": "020e3cde8e37d3104b815ffae539d2742b5b94dd1cbeedc21d1d547f455da5db",
+      "source.json": "4e0dde89514a0722f92804849148d75115a14b65a3c5a1b29d38afeda8d6e597",
+      "wire/journal.json": "35bf78751e1ef6bcbdc7db570c1fc25f2bd3d200f3667b2d8965122286431109",
+      "wire/raw-response.bin": "2e0098e58fdfe254311f237622464b1e7cfa49d42cc35ae3be39752ca37d05f3"
+    },
+    "execution_receipt_id": "sha256:7c24041f74ccbfe14c221df9fde7b0062f506d02fc618fd12a61377196884949",
+    "intent_id": "sha256:730b3680b443704dedd3959dd0e826b10695d1c461f1cb2bed5d10c8e480a623",
+    "record_type": "CONTINUOUS_CALL_TERMINAL",
+    "status": "FAILED_TERMINAL",
+    "stop_reason": "",
+    "terminal_id": "sha256:1929d02e0beb22810e8e98afdb8bd40f2ffd971328e4294a4f3d4578e5807b1d"
+  },
+  "wire_journal": {
+    "ai_invocation_plan_id": "sha256:7a49e41ae8d47021b525fbfb6f1c49c60a27cf3cfe8162d2949287eee2c169ac",
+    "assistant_output_sha256": null,
+    "error_class": "DEEPSEEK_RESPONSE_INVALID",
+    "error_detail": "DeepSeek response did not complete",
+    "execution_id": "sha256:957acf209f1c8274395de12bfa9038bee8303c6d80ae776ef449880fcbd02481",
+    "intent_id": "sha256:730b3680b443704dedd3959dd0e826b10695d1c461f1cb2bed5d10c8e480a623",
+    "mode": "LIVE",
+    "observed_at_utc": "2026-09-22T12:02:46.249312Z",
+    "provider_request_id": "",
+    "raw_response_sha256": "2e0098e58fdfe254311f237622464b1e7cfa49d42cc35ae3be39752ca37d05f3",
+    "record_type": "CONTINUOUS_ORIGINAL_WIRE",
+    "request_sha256": "f9f26c12145a5866f40ce0ae80718963fec30ba4dbba4c37782ad87ee02c0043",
+    "status_code": 0,
+    "usage": {
+      "actual_cost": null,
+      "cache_hit_input_tokens": 1408,
+      "cache_miss_input_tokens": 154977,
+      "input_tokens": 156385,
+      "output_tokens": 4096
+    },
+    "wire_id": "sha256:b8065fa4bb3df8c979e75086ee7397b72f806e1b19f7e56e78006df53da9cb13"
+  },
+  "finish_reason": "length",
+  "native_candidate_evidence_created": false,
+  "source_request_sha256": "020e3cde8e37d3104b815ffae539d2742b5b94dd1cbeedc21d1d547f455da5db",
+  "complete_company_result": false,
+  "original_call_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0112"
+}

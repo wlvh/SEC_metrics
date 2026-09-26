@@ -1,0 +1,25 @@
+test_original_source_binding_and_offline_provider_bridge (tests.vnext.test_r6_regulatory_semantics.RegulatorySemanticTest.test_original_source_binding_and_offline_provider_bridge) ... ERROR
+
+======================================================================
+ERROR: test_original_source_binding_and_offline_provider_bridge (tests.vnext.test_r6_regulatory_semantics.RegulatorySemanticTest.test_original_source_binding_and_offline_provider_bridge)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_r6_regulatory_semantics.py", line 122, in test_original_source_binding_and_offline_provider_bridge
+    path,outcome=execute_feasibility(prepared=prepared,ledger=ledger,recorded_wire=wire)
+                 ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 407, in execute_feasibility
+    preserve_execution_rules(prepared,path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 281, in preserve_execution_rules
+    need({'sha256':sha256_bytes(content=raw),'size':len(raw)}==binding,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'CONTINUOUS_EXECUTION_RULE_CHANGED:' + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_policy.py", line 15, in need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_EXECUTION_RULE_CHANGED:scripts/vnext/regulatory_statement_facts.py
+
+----------------------------------------------------------------------
+Ran 1 test in 57.163s
+
+FAILED (errors=1)

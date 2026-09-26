@@ -1,0 +1,55 @@
+{
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+      "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+      "company_id": "pfizer",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+      "accession": "0000078003-26-000026",
+      "document_name": "pfe-20251231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:ed98ed04b39b84f625fc730b878ccb1a71b4199180025ea543e5ca72c21dfda9",
+      "raw_asset_id": "sha256:41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+      "company_id": "pfizer",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231_htm.xml",
+      "accession": "0000078003-26-000026",
+      "document_name": "pfe-20251231_htm.xml",
+      "source_role": "auditor_facts",
+      "request_attempt_id": "request:attempt:a4278a6155d79ae3f8b99378f4b525be88acbf387adcaf0aa261e2ee4b52f01f"
+    }
+  ],
+  "source_admission": {
+    "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+    "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+    "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+    "request_attempt_ids": [
+      "request:attempt:87479e2b81668856179f2daca30e8af491662248937271857494243f337cc21b",
+      "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db",
+      "request:attempt:029b3a4bee35a799456ca443537f785f63907894df5594ca6642d843b6e5fe83",
+      "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4",
+      "request:attempt:a4278a6155d79ae3f8b99378f4b525be88acbf387adcaf0aa261e2ee4b52f01f"
+    ],
+    "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "native_fact_census": {
+    "primary": [],
+    "xml": []
+  },
+  "matching_primary_blocks": [],
+  "limitation": "No missing value is inferred as zero; this is a bounded source census, not a complete B06.",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "patch_path": "/tmp/sec_metrics_issue28_continuous/native-request-construction-session.patch",
+  "patch_sha256": "42dcfe007cebfd6203580356dc04eec063ce08171462d7841cc9e5e71b4e6fd4",
+  "files": {
+    "scripts/vnext/native_request_construction.py": {
+      "before": null,
+      "after": "27cc983e3b93505cd1ddad18ca3857a906f56730057a86fb737a48de0a4945aa"
+    },
+    "scripts/vnext/continuous_semantic_calls.py": {
+      "before": "d801ded3df06f102f9c6eb6e338ceb9357fc6516eb14b23d04712ffbc5677276",
+      "after": "1c998a02008b3277cbab4f5408b6b68e772189dd83a5ea35691b30849500b0da"
+    },
+    "scripts/vnext/capacity_update_input.py": {
+      "before": "bd6d8fc3649c20e3b3ed4de7484c7bd420a0625fd449a265b67294814684f23e",
+      "after": "e621d20e5fe73df5f92e552b60f4e77c843960479566c5d26cf00bbf6753080f"
+    },
+    "tests/vnext/test_native_request_construction.py": {
+      "before": null,
+      "after": "df7e9dea2fd27555fd0b04cfd673c71a2092f122badb7553e38c267b76719245"
+    }
+  },
+  "main_runtime_modified": false,
+  "original_measured_source": {
+    "path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0070/source.json",
+    "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+    "bytes": 7142869,
+    "units": 52,
+    "requests": 11
+  },
+  "uncached_plain_seconds": 8.707092500058934,
+  "second_profiled_seconds": 9.984251040965319,
+  "profile_tokenizer_encode_calls": 62,
+  "profile_tokenizer_encode_seconds": 7.304,
+  "independent_runtime": "/private/tmp/sec_metrics_issue28_continuous/native-request-construction-session/runtime",
+  "independent_runtime_closure": "sha256:6db37be210a6c54b64df194b91ff2c2eb5141808a1f0c42f931be003389c4b53",
+  "independent_cached_runs": [
+    {
+      "round": 1,
+      "seconds": 8.996050374931656,
+      "requests": 11,
+      "builds": 1,
+      "hits": 0,
+      "cache_bytes": 12363551,
+      "all_JSON_and_HTTP_bytes_identical_to_uncached": true
+    },
+    {
+      "round": 2,
+      "seconds": 0.10398233402520418,
+      "requests": 11,
+      "builds": 1,
+      "hits": 1,
+      "cache_bytes": 12363551,
+      "all_JSON_and_HTTP_bytes_identical_to_uncached": true
+    },
+    {
+      "round": 3,
+      "seconds": 0.10291124996729195,
+      "requests": 11,
+      "builds": 1,
+      "hits": 2,
+      "cache_bytes": 12363551,
+      "all_JSON_and_HTTP_bytes_identical_to_uncached": true
+    }
+  ],
+  "all_11_request_JSON_and_HTTP_bytes_identical": true,
+  "session_scope": "One prepare_registered_update call; no persistence; at most two complete source packets and 64MiB of input+request bytes",
+  "cache_key": "All original Unicode codepoints, complete field values including source_id, and dictionary order; no canonical/NFC hash key",
+  "rule_validation": "Every use rehashes current execution-rule files and checks format constants, model configuration, tokenizer resource/version and actual tokenizer object serialization",
+  "not_cached": [
+    "source authenticity or ledger",
+    "old responses or receipts",
+    "current semantic acceptance",
+    "execution/success credit"
+  ],
+  "tests": {
+    "independent_methods": 10,
+    "seconds": 5.507,
+    "includes": [
+      "NFC/NFD same source hash remain different cache entries and preserve original codepoints",
+      "source_id change",
+      "source changed without rehash",
+      "returned nested object mutation",
+      "actual rule-file mutation then restoration latches failure",
+      "tokenizer version, format/output/context bounds change",
+      "tokenizer truncation state mutation",
+      "source authenticity second check still executes and rejects",
+      "scope exit clears all entries",
+      "unsupported Python numeric types follow original constructor without cache"
+    ],
+    "final_log": "independent-probe-final.log"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "claim_scope": "Deterministic construction CPU only; not a claim that all 2777s or the complete Ford update is fixed",
+  "direct_full_byte_comparison_to_uncached": true,
+  "pre_type_fix_patch_sha256": "7724341c1fa9829b6d5e6fcb3f978200479dd2e305f6432e1213fe25fbb5188e",
+  "independent_runtime_closure_after_type_fix": "sha256:274aa594fe6a35715845f13f3795595a29cefc8d4bac6176214f8e208ac8de9e",
+  "tests_after_type_fix": {
+    "methods": 13,
+    "seconds": 7.025,
+    "log": "independent-type-fix-probe.log",
+    "new_negatives": [
+      "string/int dictionary key coercion collision",
+      "list/tuple coercion",
+      "dict and list subclass bypass",
+      "non-plain constructor outputs preserved without caching"
+    ]
+  },
+  "independent_cached_runs_after_type_fix": [
+    {
+      "round": 1,
+      "seconds": 8.937325874925591,
+      "requests": 11,
+      "builds": 1,
+      "hits": 0,
+      "cache_bytes": 12363551,
+      "all_JSON_and_HTTP_bytes_identical_to_uncached": true
+    },
+    {
+      "round": 2,
+      "seconds": 0.11906470800749958,
+      "requests": 11,
+      "builds": 1,
+      "hits": 1,
+      "cache_bytes": 12363551,
+      "all_JSON_and_HTTP_bytes_identical_to_uncached": true
+    },
+    {
+      "round": 3,
+      "seconds": 0.11819808301515877,
+      "requests": 11,
+      "builds": 1,
+      "hits": 2,
+      "cache_bytes": 12363551,
+      "all_JSON_and_HTTP_bytes_identical_to_uncached": true
+    }
+  ],
+  "cache_admission_after_type_fix": "Only exact built-in dict/list/str/int/bool/None with recursively exact string keys; all other inputs use original constructor. Only equally plain outputs may be cached."
+}

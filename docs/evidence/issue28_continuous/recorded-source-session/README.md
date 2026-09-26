@@ -1,0 +1,13 @@
+# Recorded source-update session
+
+This validates native persistence, ledger append, source-proof checks and basic annual input reads under an explicit recorded test session. It does not implement real SEC acquisition, a live budget, fiscal-label-v2 integration, cold trusted session recovery, normal Run admission or production updates.
+
+Actual material: three known original responses were persisted through SecHttpClient._persist_result/_append_log_row without HTTP. The exact 984-row baseline prefix remains, followed by three session-owned rows. The unchanged basic annual reader selected their proofs. The native B01 Calculator returned26186000000USD; input comparison returnedNO_SOURCE_CONTENT_CHANGE despite changed request identities. Native result-record PUBLISHED is not a Run/publication. All realprovider/paid/SECcounts=0; sourcecreditRECORDED_TEST_ONLY.
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_source_session`: finalninePASS3.006s; samecommand with/usr/bin/python3: ninePASS3.669s. Tests block bothsocketconnect andsec_http.urlopen. Cases cover unownedappend, terminalforgery, source/prefixmutation, unknownoutcome, failed-last-request/no-fallback, recordedslotlimit, source-contentcomparison andaliases beforewrite. Final material was rerun after pathguards and records implementation hashes.
+
+First failures are preserved: reservedexample-domain testcontact was rejected by the existingidentity gate; fixture copied a deliberately corrupted immutable response into a second case, so nativepersistence correctly rejected it before the intended injectedfailure; an initial materialscript imported a helper fromthewrongmodule. These harness/setup issues were repaired, not bypassed or labelled realSECfailures. Localvalidation now precedes intentreservation.
+
+Session terminal identity is held by the live in-process testobject; it is not a durable production trustregistry. Callerdata cannot turn a consistent ledger into realcredit. The unchanged normal_source_authority baseline rejects these appended testrecords. Further real/newsource work must reuse existingclient/ledger primitives with an approved persistentbudget and separate trustedadmission, preserving frozen V12/V13 rules and oldclosedquotas.
+
+The exact retained materialroot is /tmp/sec_metrics_issue28_continuous/ordinary-source-session-material-final. Native body/header bytes are indexed by material-files.sha256.json; currentinput/result/journal are included forinspection. This is recorded source-update evidence, not a newfinancialyear or newRun. Previous45ecd8f CI passed allfourjobs and is retained separately; it does not give CIcredit to this increment.

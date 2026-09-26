@@ -1,0 +1,46 @@
+{
+  "recovery_authorization_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5775635612",
+  "status": "B13_PAUSED_AFTER_FAILURE_NO_RETRY",
+  "code_requirement": "sha256:4cc2d5ee63b181942e41da6411d52e6cbe4763ed841c6638ec1553bba113c4ee",
+  "before": [
+    61,
+    61,
+    49
+  ],
+  "companies": [
+    {
+      "company_id": "enphase_energy",
+      "planned_requests": 6,
+      "calls": [
+        {
+          "ordinal": 111,
+          "status": "SUCCEEDED",
+          "call_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0111",
+          "stop_reason": ""
+        },
+        {
+          "ordinal": 112,
+          "status": "FAILED_TERMINAL",
+          "call_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0112",
+          "stop_reason": ""
+        }
+      ],
+      "status": "FAILED_TERMINAL_SCOPE_PAUSED"
+    }
+  ],
+  "allowed_provider_requests": 17,
+  "production_authorized": false,
+  "after": [
+    63,
+    63,
+    49
+  ],
+  "new_calls": [
+    2,
+    2,
+    0
+  ],
+  "last_ordinal": 112,
+  "seconds": 61.192,
+  "recovery_consumed_at_ordinal": 111
+}

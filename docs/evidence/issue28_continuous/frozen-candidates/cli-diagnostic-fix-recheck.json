@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "expected_exit_code": 2,
+  "coordinate_statuses": [
+    "WITHHELD_CANDIDATE",
+    "FROZEN_CANDIDATE"
+  ],
+  "selection_preserved_exactly": {
+    "reason": "DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:DebtDisclosureTextBlock",
+    "classification": "IMPLEMENTATION_GAP"
+  },
+  "selection_hash": "sha256:e8540a4b800b1e588fbdf803de577338656ceb57444bd8609ad6beefa8cd4396",
+  "d01_public_row_status": "CANDIDATE_ROW_PREPARED",
+  "schema": {
+    "matrix": 20,
+    "evidence": 18
+  },
+  "reviewed_files_before": {
+    "tools/vnext_normal_candidate.py": "28afc8504dd60dcf0a2991d123438cded6069b03e144216abe90ff6f2b8dd1f6",
+    "scripts/vnext/normal_projection.py": "230e4487851d2f5b78adda1d63c1c584dfc94148e56e42373b4834f8b6dfb677",
+    "config/normal_public_projection_v1.json": "5a521601fd5aa54594946ac351fc0c571e4557caa99297bcafbf3690c7278db7",
+    "tests/vnext/test_normal_candidate_cli.py": "927658629b03813c7f9ad25436ef717b3132627c484cf12a2d88947c65b748e9",
+    "tests/vnext/test_normal_projection.py": "847847e8f99c7272c679e902b8b81916d7aafdade39ac3f79d5a0dd465bd65aa",
+    "docs/normal_candidates.md": "1168dc508df1df7b0a6421caafcdb57c784edd776a204ed0a121874d2ab0d55b"
+  },
+  "reviewed_files_after": {
+    "tools/vnext_normal_candidate.py": "921c61063be2d5256db07c8661b5b4825beed9bfde530b19e9274bd095e4dce6",
+    "scripts/vnext/normal_projection.py": "230e4487851d2f5b78adda1d63c1c584dfc94148e56e42373b4834f8b6dfb677",
+    "config/normal_public_projection_v1.json": "5a521601fd5aa54594946ac351fc0c571e4557caa99297bcafbf3690c7278db7",
+    "tests/vnext/test_normal_candidate_cli.py": "927658629b03813c7f9ad25436ef717b3132627c484cf12a2d88947c65b748e9",
+    "tests/vnext/test_normal_projection.py": "847847e8f99c7272c679e902b8b81916d7aafdade39ac3f79d5a0dd465bd65aa",
+    "docs/normal_candidates.md": "e6aa9283fd9bc0b4b45bc035a310b114202649aa3e0208124b629c1c2f82c8f9"
+  },
+  "changes_during_review": [
+    "tools/vnext_normal_candidate.py",
+    "docs/normal_candidates.md"
+  ]
+}

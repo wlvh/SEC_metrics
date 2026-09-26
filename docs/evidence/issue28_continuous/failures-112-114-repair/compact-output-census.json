@@ -1,0 +1,103 @@
+{
+  "status": "PASS_BOUND_COMPACT_CENSUS_AND_111_EXACT_REUSE",
+  "report_from_saved_source": true,
+  "factory_success_reuse_evidence": "Prior census reached final report serialization after all assertions; independent-review/conclusion.md also verifies111 source and HTTP bytes",
+  "groups": [
+    {
+      "group_index": 0,
+      "source_units": 5,
+      "required_assessments": 5,
+      "synthetic_findings": 4,
+      "v1_tokens": 360,
+      "compact_tokens": 197,
+      "fits4096": true,
+      "actual_model_output_guaranteed": false,
+      "variant": {
+        "original_ordinal": 111,
+        "variant": "B13_SOURCE_REFERENCES_V1"
+      }
+    },
+    {
+      "group_index": 1,
+      "source_units": 4,
+      "required_assessments": 0,
+      "synthetic_findings": 0,
+      "v1_tokens": 98,
+      "compact_tokens": 98,
+      "fits4096": true,
+      "actual_model_output_guaranteed": false,
+      "variant": {
+        "original_ordinal": null,
+        "variant": "B13_TYPED_COMPACT_REFERENCES_V2"
+      }
+    },
+    {
+      "group_index": 2,
+      "source_units": 4,
+      "required_assessments": 0,
+      "synthetic_findings": 0,
+      "v1_tokens": 98,
+      "compact_tokens": 98,
+      "fits4096": true,
+      "actual_model_output_guaranteed": false,
+      "variant": {
+        "original_ordinal": null,
+        "variant": "B13_TYPED_COMPACT_REFERENCES_V2"
+      }
+    },
+    {
+      "group_index": 3,
+      "source_units": 4,
+      "required_assessments": 0,
+      "synthetic_findings": 0,
+      "v1_tokens": 98,
+      "compact_tokens": 98,
+      "fits4096": true,
+      "actual_model_output_guaranteed": false,
+      "variant": {
+        "original_ordinal": null,
+        "variant": "B13_TYPED_COMPACT_REFERENCES_V2"
+      }
+    },
+    {
+      "group_index": 4,
+      "source_units": 7,
+      "required_assessments": 0,
+      "synthetic_findings": 0,
+      "v1_tokens": 164,
+      "compact_tokens": 164,
+      "fits4096": true,
+      "actual_model_output_guaranteed": false,
+      "variant": {
+        "original_ordinal": null,
+        "variant": "B13_TYPED_COMPACT_REFERENCES_V2"
+      }
+    },
+    {
+      "group_index": 5,
+      "source_units": 5,
+      "required_assessments": 0,
+      "synthetic_findings": 0,
+      "v1_tokens": 120,
+      "compact_tokens": 120,
+      "fits4096": true,
+      "actual_model_output_guaranteed": false,
+      "variant": {
+        "original_ordinal": null,
+        "variant": "B13_TYPED_COMPACT_REFERENCES_V2"
+      }
+    }
+  ],
+  "unchanged_groups": 6,
+  "successful111_request_bytes_unchanged": true,
+  "grouping_changed": false,
+  "remaining_b13_groups": 16,
+  "original112_failed": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "seconds": 18.162,
+  "capacity_interpretation": "The full recorded answers contain4 findings in group1 and0 in groups2-6; original112 has0 required candidate assessments. Counts establish encodability of this complete test set, not a worst-case bound or model completeness. No required source was removed."
+}

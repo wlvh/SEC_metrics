@@ -1,0 +1,32 @@
+{
+  "status": "PASS_ACTUAL_ENTRY_HTTP402_SINGLE_RECOVERY_NATIVE_SUCCESS_AND_REUSE",
+  "original110_business_digest_unchanged": true,
+  "request_digest": "c13df85d996a6ba01c2bc13a8959013694ba494f783be7ee43474a6bd12d12e4",
+  "source_request_count": 6,
+  "selected_index": 0,
+  "mock_official_opener_calls": 1,
+  "failed_ordinal": 1,
+  "recovered_ordinal": 2,
+  "recorded_counts": [
+    2,
+    2,
+    0
+  ],
+  "original_failure_bytes_unchanged": true,
+  "success_reused": true,
+  "restart_replay_pass": true,
+  "one_opportunity_consumed_on_claim": true,
+  "network_disabled": true,
+  "legacy_default_forbidden": true,
+  "real_request_factory_to_controller_verified": true,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "requirement_closure_hash": "sha256:5510d4241f233bf7a225281d6b5fe28fc8ef7415ea8fe63620c9100473e52959",
+  "execution_authority_hash": "sha256:f8935970c303e1fbc50b0fae2fa7f7a29534e794c668c9e107965ec1ec6a97cf",
+  "seconds": 32.001,
+  "complete_company_result": false,
+  "material_root": "/tmp/sec_metrics_recovery110_wiring_20260922"
+}

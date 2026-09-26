@@ -1,0 +1,25 @@
+test_all_source_navigation_schema_and_messages_enter_count (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_all_source_navigation_schema_and_messages_enter_count) ... ok
+test_b13_and_d03_grouped_responses_still_account_for_each_source_unit (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_b13_and_d03_grouped_responses_still_account_for_each_source_unit) ... ok
+test_grouper_preserves_every_unit_and_checks_full_identity (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_grouper_preserves_every_unit_and_checks_full_identity) ... ok
+test_missing_engine_is_conservative_and_cannot_regroup (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_missing_engine_is_conservative_and_cannot_regroup) ... ok
+test_new_source_format_does_not_relabel_old_requests (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_new_source_format_does_not_relabel_old_requests) ... ok
+test_output_reservation_changes_the_real_200000_boundary (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_output_reservation_changes_the_real_200000_boundary) ... ok
+test_reference_vectors_include_prompt_envelope_and_output_reserve (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_reference_vectors_include_prompt_envelope_and_output_reserve) ... ok
+test_resource_mutation_after_cached_parse_is_rejected (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_resource_mutation_after_cached_parse_is_rejected) ... ok
+test_unsupported_service_and_format_are_explicit (tests.vnext.test_continuous_request_context.ContinuousRequestContextTest.test_unsupported_service_and_format_are_explicit) ... ok
+test_complete_saved_packages_restore_without_navigation_filter (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewMaterialTest.test_complete_saved_packages_restore_without_navigation_filter) ... ok
+test_original_accepted_tax_credit_response_fails_content_replay (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewMaterialTest.test_original_accepted_tax_credit_response_fails_content_replay) ... ok
+test_clear_capacity_with_no_production_is_a_calculation_limit (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_clear_capacity_with_no_production_is_a_calculation_limit) ... ok
+test_complete_source_and_exact_quotes_required (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_complete_source_and_exact_quotes_required) ... ok
+test_native_reference_uses_original_ordinal_not_packed_row_position (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_native_reference_uses_original_ordinal_not_packed_row_position) ... ok
+test_sales_only_source_cannot_be_labelled_actual_production (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_sales_only_source_cannot_be_labelled_actual_production) ... ok
+test_shared_metadata_is_restored_and_conflicts_rejected (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_shared_metadata_is_restored_and_conflicts_rejected) ... ok
+test_source_unit_missing_from_declared_census_rejected (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_source_unit_missing_from_declared_census_rejected) ... ok
+test_tax_credit_is_not_capacity_or_borrowing_and_mixed_scope_remains (tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest.test_tax_credit_is_not_capacity_or_borrowing_and_mixed_scope_remains) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 4.744s
+
+OK
+enphase_energy.json {'original_units': 29, 'requests': 27, 'original_bytes': 3880332, 'shared_bytes': 2948590}
+ford_motor_company.json {'original_units': 52, 'requests': 42, 'original_bytes': 6960659, 'shared_bytes': 5199139}

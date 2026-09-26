@@ -1,0 +1,433 @@
+{
+  "record_type": "B13_ASSERTION_SCOPED_SAVED_SOURCE_SIZING",
+  "read_only": true,
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "maximum_candidate_refs_per_group": 24,
+  "maximum_findings_per_interpretation": 28,
+  "provider_output_limit_tokens": 4096,
+  "scope": "Worst-case-like high-entropy 128-character reason example is a size sample, not an absolute token bound or model-success proof. Scan uncertainty and a synthetic execution proof are included in interpretation request sizing.",
+  "companies": [
+    {
+      "company_id": "enphase_energy",
+      "saved_ordinal": 190,
+      "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c",
+      "groups": [
+        {
+          "group_index": 0,
+          "status": "KEEP_190_ORIGINAL"
+        },
+        {
+          "group_index": 1,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 155601,
+            "context_tokens": 159697,
+            "fits": true,
+            "request_bytes": 437748,
+            "request_sha256": "281dee85014ac7b07eed160628c15acb984c2c7ab3cb3c5d5a3372b58d78220a"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 158245,
+            "context_tokens": 162341,
+            "fits": true,
+            "request_bytes": 447944,
+            "request_sha256": "4047315e12d7ffeb51fa5732afc04bfc233fd084cd2fee768a675c829dc00b1c"
+          },
+          "output_example": {
+            "example_bytes": 5385,
+            "example_tokens": 3121,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 2,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 186324,
+            "context_tokens": 190420,
+            "fits": true,
+            "request_bytes": 546202,
+            "request_sha256": "489d6ac29a0b3be99f732369c3fea63edb6072cb2e012532e46d226653d27e75"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 188947,
+            "context_tokens": 193043,
+            "fits": true,
+            "request_bytes": 556409,
+            "request_sha256": "8a051d72e6ff3a4c03aac44abb122be57c740ee61f5c484c8bff860990081bc4"
+          },
+          "output_example": {
+            "example_bytes": 5385,
+            "example_tokens": 3121,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 3,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 170953,
+            "context_tokens": 175049,
+            "fits": true,
+            "request_bytes": 501961,
+            "request_sha256": "b03f3377fbde283d50468a0cc343defb0371fa6379ebf1a00dfa1be5842470a2"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 173625,
+            "context_tokens": 177721,
+            "fits": true,
+            "request_bytes": 512211,
+            "request_sha256": "319ae2e6a395a6417be72a6222ba6bfddf6444b001a319defe9a5c8892e66756"
+          },
+          "output_example": {
+            "example_bytes": 5385,
+            "example_tokens": 3121,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 4,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 185275,
+            "context_tokens": 189371,
+            "fits": true,
+            "request_bytes": 643577,
+            "request_sha256": "f7310c6ad33c7390536dd11e36b95264b95b9ede05b976c396f80a797bd40023"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 188069,
+            "context_tokens": 192165,
+            "fits": true,
+            "request_bytes": 653947,
+            "request_sha256": "957bcf71205e7ea32ad0defa9e3f22e852b8c760a0703c2c76c379f8beb191ce"
+          },
+          "output_example": {
+            "example_bytes": 5604,
+            "example_tokens": 3187,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 5,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 122773,
+            "context_tokens": 126869,
+            "fits": true,
+            "request_bytes": 417577,
+            "request_sha256": "24bc76687d02ba6e2b0b914181214344d0310cebe31c619eeef48817f2165ab3"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 125495,
+            "context_tokens": 129591,
+            "fits": true,
+            "request_bytes": 427797,
+            "request_sha256": "ef7d7a09d8228c5f74255e42b16e376238a81618d0fb5f12c391a8278e9dfe83"
+          },
+          "output_example": {
+            "example_bytes": 5458,
+            "example_tokens": 3143,
+            "example_not_absolute_maximum": true
+          }
+        }
+      ]
+    },
+    {
+      "company_id": "ford_motor_company",
+      "saved_ordinal": 171,
+      "source_id": "sha256:5ae42d4aebed1e8720ea77ed71efbb20cb79418301a8ccc7c4fd94922176c396",
+      "groups": [
+        {
+          "group_index": 0,
+          "source_units_unchanged": true,
+          "required_refs": 16,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 185931,
+            "context_tokens": 190027,
+            "fits": true,
+            "request_bytes": 619021,
+            "request_sha256": "f4e1044f02a440bf5ba115ef0b2fdae1f014638da523f4930bc2c18ef3080cc3"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 188486,
+            "context_tokens": 192582,
+            "fits": true,
+            "request_bytes": 629073,
+            "request_sha256": "5444fb8642a3d637b91c3a28fb2e6bd70cafb0a0aebd9e9d741235bc3eb50782"
+          },
+          "output_example": {
+            "example_bytes": 5458,
+            "example_tokens": 3143,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 1,
+          "source_units_unchanged": true,
+          "required_refs": 1,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 170658,
+            "context_tokens": 174754,
+            "fits": true,
+            "request_bytes": 452378,
+            "request_sha256": "ab2c86740f6c02b748bc46e5c8db2f85499af24fcb77f1f6ef359d533ae34419"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 173293,
+            "context_tokens": 177389,
+            "fits": true,
+            "request_bytes": 462571,
+            "request_sha256": "71777426525ffff1bf511f0887a354159a51d5ef3c5370e84d1ba2173e4e89d8"
+          },
+          "output_example": {
+            "example_bytes": 5385,
+            "example_tokens": 3121,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 2,
+          "source_units_unchanged": true,
+          "required_refs": 2,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 159903,
+            "context_tokens": 163999,
+            "fits": true,
+            "request_bytes": 474665,
+            "request_sha256": "d37806895c776d8ddbc178c9b5b5a6fd024a0483af5791b97ab8afb7868e729b"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 162563,
+            "context_tokens": 166659,
+            "fits": true,
+            "request_bytes": 484850,
+            "request_sha256": "98a14dfb73baf434440591aac5e0ba1d763d3d6ed21560e385d1fd4368c0e0d5"
+          },
+          "output_example": {
+            "example_bytes": 5385,
+            "example_tokens": 3121,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 3,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 184548,
+            "context_tokens": 188644,
+            "fits": true,
+            "request_bytes": 538977,
+            "request_sha256": "68cdf1dc0ff65fcc26e8aa51221e2b386ead503139b00451f8f54b00ff1dcb38"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 187178,
+            "context_tokens": 191274,
+            "fits": true,
+            "request_bytes": 549192,
+            "request_sha256": "c7da95b8dcc6afac15fbc57f29c750451767a16156eb9960287dfe5831625020"
+          },
+          "output_example": {
+            "example_bytes": 5385,
+            "example_tokens": 3121,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 4,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 183768,
+            "context_tokens": 187864,
+            "fits": true,
+            "request_bytes": 530847,
+            "request_sha256": "a2afe67a0a690752684d7b7d032ecbbc816a80c7fb0abdfd721635e03315b2fc"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 186491,
+            "context_tokens": 190587,
+            "fits": true,
+            "request_bytes": 541145,
+            "request_sha256": "d66a22b394764b5451575250825d66ccf0d06b8f1a630878e269a790fdf3f545"
+          },
+          "output_example": {
+            "example_bytes": 5385,
+            "example_tokens": 3121,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 5,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 152569,
+            "context_tokens": 156665,
+            "fits": true,
+            "request_bytes": 430775,
+            "request_sha256": "b27e087544a7a73637c5b4d3530eb44e09e4a45b3a18582c24f75e9386df9d32"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 155212,
+            "context_tokens": 159308,
+            "fits": true,
+            "request_bytes": 440922,
+            "request_sha256": "bd4054e44ec19af4377b659a6eb28eae8c42e7ede034ddbe28ca37ec1c67eb99"
+          },
+          "output_example": {
+            "example_bytes": 5312,
+            "example_tokens": 3099,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 6,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 151389,
+            "context_tokens": 155485,
+            "fits": true,
+            "request_bytes": 432028,
+            "request_sha256": "4f56ccd4fb3ad45bda8c56c8f11e6214e4ddd1fd5fa72295fabf6d1aa3a20a41"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 153954,
+            "context_tokens": 158050,
+            "fits": true,
+            "request_bytes": 441965,
+            "request_sha256": "9b01775e6d58e0f689ec6f6f1ac9eabed639e34bf41234acdde38233f65a3d26"
+          },
+          "output_example": {
+            "example_bytes": 5312,
+            "example_tokens": 3099,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 7,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 24,
+          "scan_input": {
+            "input_tokens": 180912,
+            "context_tokens": 185008,
+            "fits": true,
+            "request_bytes": 558827,
+            "request_sha256": "4767e2aeebe133faeb343e0f95a6ce64ad7b739a4b57e681b46c292c5bf2a5fc"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 183636,
+            "context_tokens": 187732,
+            "fits": true,
+            "request_bytes": 569212,
+            "request_sha256": "09ffde33a4e4b01d17eceb2ef25e0b0b74864e63e112a2c264a29af9a240588f"
+          },
+          "output_example": {
+            "example_bytes": 5531,
+            "example_tokens": 3165,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 8,
+          "source_units_unchanged": true,
+          "required_refs": 1,
+          "synthetic_refs": 23,
+          "scan_input": {
+            "input_tokens": 189569,
+            "context_tokens": 193665,
+            "fits": true,
+            "request_bytes": 639162,
+            "request_sha256": "0108c532863b843a6d19a8881e47935e67fc8800b3a441432778595690527818"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 192363,
+            "context_tokens": 196459,
+            "fits": true,
+            "request_bytes": 649574,
+            "request_sha256": "eb1aa610117bc2b9b43608f2593f5e09991f6d3aee5fe791320959aaf19c43a9"
+          },
+          "output_example": {
+            "example_bytes": 5677,
+            "example_tokens": 3209,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 9,
+          "source_units_unchanged": true,
+          "required_refs": 0,
+          "synthetic_refs": 23,
+          "scan_input": {
+            "input_tokens": 192993,
+            "context_tokens": 197089,
+            "fits": true,
+            "request_bytes": 641836,
+            "request_sha256": "aad5c9ded41967aad232bd2a6865dd9046dbb9360019f5506671cdf1d16fc0cf"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 195804,
+            "context_tokens": 199900,
+            "fits": true,
+            "request_bytes": 652256,
+            "request_sha256": "0ac39bb2c041b6d26d58e238fa8fa4bd5bff823ed40463214039f2b99776228d"
+          },
+          "output_example": {
+            "example_bytes": 5677,
+            "example_tokens": 3209,
+            "example_not_absolute_maximum": true
+          }
+        },
+        {
+          "group_index": 10,
+          "source_units_unchanged": true,
+          "required_refs": 2,
+          "synthetic_refs": 14,
+          "scan_input": {
+            "input_tokens": 84448,
+            "context_tokens": 88544,
+            "fits": true,
+            "request_bytes": 288116,
+            "request_sha256": "8640d0a138084a7b42d391057e55c01dfc4b7c6ddb5551b5ad5633f4497fedd5"
+          },
+          "scoped_interpretation_input": {
+            "input_tokens": 87024,
+            "context_tokens": 91120,
+            "fits": true,
+            "request_bytes": 297982,
+            "request_sha256": "2eab1515213e7d21c2b5af67a9cb506ae0a400ae7a656d6eea43c74df945ef35"
+          },
+          "output_example": {
+            "example_bytes": 5312,
+            "example_tokens": 3099,
+            "example_not_absolute_maximum": true
+          }
+        }
+      ]
+    }
+  ]
+}

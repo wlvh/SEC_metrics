@@ -1,0 +1,235 @@
+{
+  "record_type": "NORMAL_SAVED_CANDIDATE_BATCH",
+  "status": "COMPLETED_WITH_GAPS",
+  "started_at_utc": "2026-09-12T11:50:37.453927+00:00",
+  "completed_at_utc": "2026-09-12T11:53:14.667528+00:00",
+  "requested_coordinate_count": 6,
+  "coordinates": [
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B06",
+      "run_path": "runs/marriott_international/B06",
+      "data_path": "data/marriott_international",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:2eb526481bdbdae4f15c16df467c1e2635c2675c8a4ca0698f28fcf38fd415a5",
+      "run_status": "OPEN",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B06",
+        "period_end": "2025-12-31",
+        "period_start": "2025-12-31",
+        "publication": "PUBLISHED",
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "DENOMINATOR_NONPOSITIVE",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:a847e60210e698fc5b86fa65234f58c12dbf2be4d8d31a05a17ddd6cd87fa842",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:53f9e16980b3401f1ad2fa90e44ea16ff908f9e6a9f73fa6a443ef73b28cb1e0",
+        "trace_id": "sha256:1746a6ed4041d8769146490a16da7261d3cc193323e528e2e95442aa34d4c7c9",
+        "unit": null,
+        "value": null
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/marriott_international-B06.json",
+      "selection_hash": "sha256:63f6959216155b9ee565c01e3db96139a65e9c6e75ddc0ec627ff7494778d1df",
+      "selection_summary": {
+        "reason_code": "DENOMINATOR_NONPOSITIVE"
+      }
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B07",
+      "run_path": "runs/marriott_international/B07",
+      "data_path": "data/marriott_international",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:24cf638918961d26a238e650f16cef306bacbcd95b9bf27598c19190ba08cb95",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B07",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "5.118665018541409147095179234",
+        "unit": "ratio",
+        "trace_id": "sha256:e23a144b9d8dc9cdc2529b5b3e0006f9041a2581f26468d4d1e3a94c962c7f7f",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:b5199f67eb551da449705600f3763dfba9df83d981a4445e5120e48499bbe557"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B06",
+      "run_path": "runs/ford_motor_company/B06",
+      "data_path": "data/ford_motor_company",
+      "status": "WITHHELD_CANDIDATE",
+      "run_id": "run:ordinary-integrated:36b5ad0562112ba2dcaa4e8eda9f7d7355ee8101e86e443f67530f8e209cfe7a",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "ford_motor_company",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+        "applicability": "APPLICABLE",
+        "quality": "NONE",
+        "publication": "WITHHELD",
+        "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:c2f8c972b7916d87a175cab121c27ee35647ac62a37da5650b16d9ce8ebb6d2a",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:3cfdb4866a546c8ff41a65bfa14463e0b1717f54a946d417a245144b14cea07a"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/ford_motor_company-B06.json",
+      "selection_hash": "sha256:7497ee169656254f07eb7d32b5de1165507451065d82903c0dbb6c9bca75458e",
+      "selection_summary": {
+        "reason": "B06_INDUSTRIAL_SCOPE_REQUIRES_SEPARATE_PROOF",
+        "classification": "IMPLEMENTATION_GAP"
+      }
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B07",
+      "run_path": "runs/ford_motor_company/B07",
+      "data_path": "data/ford_motor_company",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:3ac4a314c75b948e58bf6fd9270bbc2f7c331d67456b5276142d7e4eef5c75e1",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:a19fed2da1f71c66d61db46fe0e1cff907000f5a2bf3d43714adc0a36306bf43",
+        "company_id": "ford_motor_company",
+        "metric_id": "B07",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+        "applicability": "APPLICABLE",
+        "quality": "NOT_MEANINGFUL",
+        "publication": "PUBLISHED",
+        "reason_code": "RATIO_NUMERATOR_NOT_POSITIVE",
+        "value": null,
+        "unit": "ratio",
+        "trace_id": "sha256:3045afa4440a918828fe4b524334ae822c6e766475baafedcc39199f2ff32b41"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B06",
+      "run_path": "runs/lumen_technologies/B06",
+      "data_path": "data/lumen_technologies",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:0c6e419e34b49936a1fd2a6573118eb50c230abb10415b79f0813d4f21b46ee0",
+      "run_status": "OPEN",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "lumen_technologies",
+        "metric_id": "B06",
+        "period_end": "2025-12-31",
+        "period_start": "2025-12-31",
+        "publication": "PUBLISHED",
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "DENOMINATOR_NONPOSITIVE",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:de85e95241c10d0ef220d12960fb01941f25b0c910a5cdd16168f89a4b389530",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:53f9e16980b3401f1ad2fa90e44ea16ff908f9e6a9f73fa6a443ef73b28cb1e0",
+        "trace_id": "sha256:caa15df335e2ffbf064e670a30206ebbfbb38391efa0c8be68639a46ac5c0f86",
+        "unit": null,
+        "value": null
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/lumen_technologies-B06.json",
+      "selection_hash": "sha256:ba326742f4ab10a2e5bba97981aa78edf262a123eaac8b246970d1508eb61ff8",
+      "selection_summary": {
+        "reason_code": "DENOMINATOR_NONPOSITIVE"
+      }
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B07",
+      "run_path": "runs/lumen_technologies/B07",
+      "data_path": "data/lumen_technologies",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:5c8eed9131dc25a8ca56f6a2ccf3f228f1b09ad36f07544b5f71cb1c822b6711",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:f54cef3ed1950e369ca87556477a12f8fb871a0c928a21b2ae4684a8a47eca7e",
+        "company_id": "lumen_technologies",
+        "metric_id": "B07",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+        "applicability": "APPLICABLE",
+        "quality": "NOT_MEANINGFUL",
+        "publication": "PUBLISHED",
+        "reason_code": "RATIO_NUMERATOR_NOT_POSITIVE",
+        "value": null,
+        "unit": "ratio",
+        "trace_id": "sha256:6aabe7d0208ed5bca160c9c3e37868bd9be221826e9c8dbad4695a6ed11342d9"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    }
+  ],
+  "full_issue_acceptance": false,
+  "production_authorized": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "limits": [
+    "Saved sources do not prove current SEC freshness",
+    "Rows are not a complete publication",
+    "Unimplemented and withheld coordinates remain explicit"
+  ]
+}

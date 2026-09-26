@@ -1,0 +1,30 @@
+{
+  "record_type": "INSTANT_BALANCE_AMENDMENT_INPUT_POLICY",
+  "schema_version": 1,
+  "policy_id": "instant_balance_amendment_v1",
+  "input_class": "ORIGINAL_CURRENT_INSTANT_BALANCES",
+  "metric_ids": [
+    "B08",
+    "B09"
+  ],
+  "production_authorized": false,
+  "part_iii_note_pattern": "(?P<registrant>.+?) \\(the “Company”\\), a [A-Za-z ]+ corporation, is filing this Amendment No\\. (?P<number>[0-9]+) on Form 10[‑-]K/A \\(this “Amendment”\\) to its Annual Report on Form 10-K for the year ended (?P<end>[A-Z][a-z]+ [0-9]{1,2}, [0-9]{4}), originally filed with the Securities and Exchange Commission \\(the “SEC”\\) on (?P<filed>[A-Z][a-z]+ [0-9]{1,2}, [0-9]{4}) \\(the “Initial Form 10-K”\\), to amend Part III, Items 10, 11, 12, 13 and 14 of the Initial Form 10-K to include the information required by such Items\\. Except as explicitly set forth herein, this Amendment does not otherwise change, modify or update the disclosures in, or exhibits to, the Initial Form 10-K\\. References to (?P<aliases>.+?) refer to (?P<scope_name>.+?) and its consolidated subsidiaries, unless the context otherwise requires\\.",
+  "alias_list_pattern": "“[A-Za-z][A-Za-z .&-]*,” the “Company,” “we,” “us” and “our”",
+  "error_correction_concept": "DocumentFinStmtErrorCorrectionFlag",
+  "error_correction_cover_pattern": "If securities are registered pursuant to Section 12\\(b\\) of the Act, indicate by check mark whether the financial statements of the registrant included in the filing reflect the correction of an error to previously issued financial statements\\. ☐",
+  "financial_subject_pattern": "\\b(?:financial statements?|balance sheets?|current assets|current liabilities|cash(?: and cash equivalents| reserves| balances)?)\\b",
+  "revision_pattern": "\\b(?:restat(?:e|ed|es|ing|ement|ements)|revis(?:e|ed|es|ing|ion|ions)|correct(?:ed|s|ion|ions|ing)?|errors?|misstat(?:ed|ement|ements)|overstat(?:ed|ement|ements)|understat(?:ed|ement|ements))\\b",
+  "conditional_recovery_patterns": [
+    "in the event of a financial restatement without regard to misconduct",
+    "in the event of a restatement of the financial statements of [A-Za-z][A-Za-z .&-]* or applicable business unit on which the calculation or determination of the incentive-based compensation was based"
+  ],
+  "current_status_suffix_pattern": "\\b(?:which|that)\\s+(?:has|have|had|did|occurred|arose|resulted)\\b",
+  "no_new_statements_pattern": "No financial statements or supplemental data are filed with this Amendment\\. See Index to Financial Statements and Supplemental Data of the Initial Form 10-K\\.",
+  "limitations": [
+    "Only current-instant original balance inputs for the two installed catalog metrics.",
+    "Does not establish annual continuity, comparative performance, debt completeness, governance or legal conclusions.",
+    "Explicit correction language outside recognized conditional compensation clauses remains unresolved."
+  ],
+  "restatement_cover_pattern": "Indicate by check mark whether any of those error corrections are restatements that required a recovery analysis of incentive-based compensation received by any of the registrant’s executive officers during the relevant recovery period pursuant to §240\\.10D-1\\(b\\)\\. ☐",
+  "balance_statement_pattern": "\\b(?:current assets|current liabilities|cash (?:and cash equivalents|reserves|balances|on hand)|cash\\s+(?:was|is|were|total(?:ed|s)?|amount(?:ed|s) to|of)\\s+(?:approximately |about )?\\$?[0-9]|held\\s+\\$?[0-9][0-9,. ]*\\s*(?:million|billion)?\\s+in cash)\\b"
+}

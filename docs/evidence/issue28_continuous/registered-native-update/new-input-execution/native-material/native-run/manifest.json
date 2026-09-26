@@ -1,0 +1,72 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "OPEN",
+  "records_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "14fe1ac3388cd9d9cc3d9bd7e3cf6a181602c9388c10f4e2062f4810e1ea9136",
+  "content_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "audit_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "run_id": "run:ordinary-integrated:044eb0cc87c58a748aa8b5724b54f05cab4c6c377fab17b20bc491e70c68a8bd",
+  "company_id": "enphase_energy",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2026,
+    "period_end": "2026-12-31",
+    "period_start": "2026-01-01"
+  },
+  "source_references": [
+    {
+      "accession": "0001463101-27-900001",
+      "company_id": "enphase_energy",
+      "document_name": "synthetic-enph-20261231.htm",
+      "raw_asset_id": "sha256:a7d1b89225cc634ea5f0bf7b06cf2b987d56b7b2802b95f2fab890d41e508fd8",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:e0e6cf929dce956f5d2a6a17c12d59cc3c877334e621bfb3c09013e6c53157b1",
+      "source_reference_id": "sha256:eb4240d20ce531431edced2ba8760cc1e4d6a263e1854a95474e52fbefca7b23",
+      "source_role": "target_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310127900001/synthetic-enph-20261231.htm"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:7a12ec7fd0d1973c3ca730f2fde498907e8482252fb91356f57e837d8d67bbc6",
+      "raw_asset_id": "sha256:a8172837ed9f4f769417ee4b4a872036bc8ed48f2b3be71771d92b3374d3ae10",
+      "company_id": "enphase_energy",
+      "source_url": "https://data.sec.gov/submissions/CIK0001463101.json",
+      "accession": "SUBMISSIONS-1463101",
+      "document_name": "CIK0001463101.json",
+      "source_role": "supporting_input",
+      "request_attempt_id": "request:attempt:5e410268441fd2f7e89c3d0aa182a9ffafcd796120c3e322998fb01a4850be12"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:01bbc4ca1098bca8c12018f655fb9ca13af457dec13da4b285d9b9c628a49e6f",
+      "raw_asset_id": "sha256:bdad470f60587ae62b3cf30d77185845dee3f51a5f7296700500f4a4e50d6967",
+      "company_id": "enphase_energy",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001463101.json",
+      "accession": "0001463101-27-900001",
+      "document_name": "CIK0001463101.json",
+      "source_role": "supporting_input",
+      "request_attempt_id": "request:attempt:6528636fa7e4e5196e2942cf636372fa7328153e533b130014edd3ee50bd835a"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r6/D04_going_concern_assessment_v1.md": "b0d4e25d4af8b49ca99efda0f04abd127258b12f0a2d0110c33fccb66faeed7f"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "e0932cc5316edae343f43e811a9abb2a900a2f520449a80122b3a5155bc5c942",
+    "contract_sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+    "decision_register_sha256": "25c287e2fbf6f6e703a90f460e766816690bce586a2c4c8d4eb63220bb534a5f",
+    "invariant_profile_sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+    "transfer_manifest_sha256": "1430e5345d1e7d6ed359fe66aa4e575bf46b046853940548b116d85271ac84a6",
+    "parent_requirement_closure_hash": "sha256:47bde4438bdf3297d83c7cd27ac06ff189b310cf179984e0885e3bf16e34bdfa",
+    "validator_sha256": "794923cf5838664dfe0a7dafc91bab4d022ce59edebc6545535857ff2d4e8b4a"
+  },
+  "requirement_closure_hash": "sha256:5cc1b460f3b488d96ee4db8a102264a5195b1b72ae4cace71ae7e822a935b513",
+  "requirement_id": "issue_28_v14",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

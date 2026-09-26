@@ -11,7 +11,7 @@ PR32 的 R4 标签修复使用 `issue_28_v3` 和独立的 `docs/r4_v3/qualified_
 
 ## Issue #15 D-26 测试执行边界
 
-`requirements/issue_15_v1/decision_register.json` 的 historical D-26 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级；该集合现在以successor smoke同时加载`issue_28_v1`和exact `issue_15_v1` parent。它继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件，并保留single-flight、HTTP 402停批、UNKNOWN no-retry、零网络replay/rollback/restore等短小确定性测试。`.github/workflows/vnext-fast.yml` 在 PR 上运行同一命令；本地receipt与CI fast check都不是live、full acceptance或active Cutover。
+`requirements/issue_15_v1/decision_register.json` 的 historical D-26 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级；该集合现在以successor smoke同时加载`issue_28_v1`和exact `issue_15_v1` parent。它继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件，并保留single-flight、HTTP 402停批、UNKNOWN no-retry、零网络replay/rollback/restore等短小确定性测试。当前PR CI使用`tools/run_fast_tests_v2.py`后继清单，旧入口保留为V13冻结规则；完整选择与测试分层见`TESTING.md`。本地receipt与CI fast check都不是live、full acceptance或active Cutover。
 
 ## Issue #28 successor Requirement transition
 
@@ -25,6 +25,8 @@ PR-B 当前另有未激活的`requirements/issue_28_v2/`与保留的V3 engine，
 
 PR-B必须交付可供未来PR-C调用、但当前未授权的生产接缝，不能把补Python推迟到发布PR。审核时运行`TESTING.md`的dormant R4集成与portable gate：12个recorded scoped execution、3个native structured Run、4类zero-call和失败前缀/usage/UNKNOWN/tamper。`tools/vnext_r4_qualification.py`的`plan`/`execute`只属于未来明确授权的PR-C；当前只可运行`draft`和隔离recorded测试，不得请求或签发live grant。新head/closure须独立审核后激活，保持PR30 Draft。
 <!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
+
+PR43当前Issue28的受限批次另见`docs/evidence/issue28_continuous/batch33-authorization/`。先核对服务器评论5791560371、旧171/113/114等终态和33组固定manifest；再完成`TESTING.md`所列新账本正反例、限定独审和当前执行闭包的禁网接线。只有这些门槛通过后，`tools/vnext_batch33.py`才能在原账本逐次执行获准组：D04 Enphase6→Paramount10，之后B13 Enphase6→Ford11；每次申领都保存真实终态，遇新402/UNKNOWN等立即停止受影响通道。公司完成以完整原生Run、公开行及冷读为准，录制链或单条请求成功不计入正式完成；D03、生产active和旧入口退出仍另验。
 
 下面是已完成的PR-A transition流程，不是重新打开Issue #15/#24或重做历史snapshot的指令。
 
@@ -162,3 +164,9 @@ PublicationView回读，测试按 `TESTING.md` 对应章节；实际R3和正式r
 受限年度连续更新：按`docs/annual_update_continuity.md`的initialize-data、stage-proposal与run-once入口操作；原生候选、完整包与切换继续共用已有机制。阶段固定预算和到期，数据在checkout外；本轮仅隔离验证，真实生产保持只读，有限trigger交付前停止。
 
 R5 B06结构化主路径：读取`docs/r5_b06_structured.md`，在外部隔离目录执行`tools/vnext_r5_b06.py prepare/read`；业务调用0/0/0。完整候选BLOCKED不等于正式迁移，后续批准与旧生产退出另行验收。
+
+B06新来源历史有限工作包：`tools/vnext_b06_new_source.py install-rules/run/read`；先核对
+来源执行日志、材料与检查范围，再按`TESTING.md`完成语义反例及真实材料层。
+该历史工作包只交付原生候选Run。现行Issue级总委托取代局部开发停点；不恢复历史额度，未经新生产批准仍无合并、发布或active切换权限。
+
+正常年度输入检查：`tools/vnext_normal_update.py --data-root <保存材料根> --output <新外部JSON>`；按`TESTING.md`的正常年度输入选择验证。该入口只准备当前普通原件参数并保留修订/缺口，不执行指标；有受阻公司时exit 2但报告仍包含全部配置公司。

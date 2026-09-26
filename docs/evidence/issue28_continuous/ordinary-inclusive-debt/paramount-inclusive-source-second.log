@@ -1,0 +1,30 @@
+setUpClass (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest) ... ERROR
+
+======================================================================
+ERROR: setUpClass (tests.vnext.test_b06_inclusive_table.InclusiveDebtSourceTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_inclusive_table.py", line 22, in setUpClass
+    cls.actual=inspect_inclusive_debt_scope(**cls.args)
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 470, in inspect_inclusive_debt_scope
+    component=inspect_inclusive_balance_scope(primary=primary,xml=xml,prepared=prepared)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 280, in inspect_inclusive_balance_scope
+    component=inspect_inclusive_composition(primary=primary,xml=xml,prepared=prepared)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 166, in inspect_inclusive_composition
+    ip,inotes,ireports,imembers=_native(primary,prepared,'primary')
+                                ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 133, in _native
+    _need(str(int(c['entity_identifier']))==prepared['entity'] and any(compact(f['text']) in n for n in full_notes),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'ADDITIONAL_FINANCING_NOTE_OUTSIDE_PROVEN_SCOPE')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 31, in _need
+    if not condition:raise InclusiveDebtError('INCLUSIVE_DEBT_'+reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_inclusive_table.InclusiveDebtError: INCLUSIVE_DEBT_ADDITIONAL_FINANCING_NOTE_OUTSIDE_PROVEN_SCOPE
+
+----------------------------------------------------------------------
+Ran 0 tests in 2.386s
+
+FAILED (errors=1)

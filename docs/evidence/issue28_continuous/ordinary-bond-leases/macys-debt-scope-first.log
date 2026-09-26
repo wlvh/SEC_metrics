@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 636, in inspect_bond_debt_scope
+    inventory = _financing_inventory(primary,xml,prepared,composition,members,other)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 575, in _financing_inventory
+    value = Decimal(_source_value(f,m)); disposition = None
+                    ~~~~~~~~~~~~~^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/governance_signals.py", line 122, in _source_value
+    _need(str(fact["text"]).strip() in {"-", "—", "–", "0"}, "C03_ZERO_TRANSFORM_TEXT_CONFLICT")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/governance_signals.py", line 42, in _need
+    raise GovernanceSignalError(reason)
+vnext.governance_signals.GovernanceSignalError: C03_ZERO_TRANSFORM_TEXT_CONFLICT

@@ -1,1 +1,20 @@
 *.csv whitespace=cr-at-eol
+# Source quote cells retain the filing's original whitespace.
+docs/evidence/issue28_continuous/v13-frozen-candidates/**/metric_evidence.csv -whitespace
+# Retain GitHub's original checkout log bytes, including blank-line spacing.
+docs/evidence/issue28_continuous/integrated-v14-open/checks/pr43-ffeaed3-ci-complete.log -whitespace
+# Preserve literal captured output and context lines in these archived probes.
+docs/evidence/issue28_continuous/ordinary-amendment-scope/pfizer-b06/census.log -whitespace
+docs/evidence/issue28_continuous/ordinary-amendment-scope/portable/final.log -whitespace
+docs/evidence/issue28_continuous/ordinary-amendment-scope/route-probe/proposed-route.patch -whitespace
+docs/evidence/issue28_continuous/ordinary-borrowing-composition/portable/earlier-run.log -whitespace
+docs/evidence/issue28_continuous/ordinary-borrowing-composition/portable/final.log -whitespace
+docs/evidence/issue28_continuous/ordinary-financing-inventory/portable/execution.log -whitespace
+docs/evidence/issue28_continuous/ordinary-financing-inventory/source-gaps/supplier-source-census.log -whitespace
+docs/evidence/issue28_continuous/ordinary-lodging/previous-ci/35a65b5-original.log -whitespace
+docs/evidence/issue28_continuous/ordinary-lodging/source/original-census.log -whitespace
+docs/evidence/issue28_continuous/ordinary-source-discovery/pr43-b69-ci-complete.log -whitespace
+docs/evidence/issue28_continuous/ordinary-instant-balances/pr43-050-ci-complete.log -whitespace
+docs/evidence/issue28_continuous/instant-ci-timeout/pr43-4e02565-ci-first-terminal.log -whitespace
+docs/evidence/issue28_continuous/r6-offline-protocol/pr43-3d71577-ci-complete.log -whitespace
+docs/evidence/issue28_continuous/recorded-source-session/pr43-45ecd8f-ci-complete.log -whitespace

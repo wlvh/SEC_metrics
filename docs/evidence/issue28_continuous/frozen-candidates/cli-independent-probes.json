@@ -1,0 +1,120 @@
+{
+  "provider_paid_sec": [
+    0,
+    0,
+    0
+  ],
+  "probes": [
+    {
+      "name": "output_paths",
+      "status": "PASS",
+      "details": [
+        {
+          "path": "relative",
+          "rejected": "Output must be a new absolute external directory"
+        },
+        {
+          "path": "/Users/lyuhongwang/Developer/SEC_metrics/fresh-review-output",
+          "rejected": "Candidate output cannot be inside the source checkout"
+        },
+        {
+          "path": "/private/tmp/sec_metrics_issue28_continuous/pr43-review/normal-cli-review-20260912a/path-fixtures/existing",
+          "rejected": "Output already exists or belongs to a publication workspace"
+        },
+        {
+          "path": "/private/tmp/sec_metrics_issue28_continuous/pr43-review/normal-cli-review-20260912a/path-fixtures/source-alias/fresh",
+          "rejected": "Candidate output cannot be inside the source checkout"
+        },
+        {
+          "path": "/private/tmp/sec_metrics_issue28_continuous/pr43-review/normal-cli-review-20260912a/path-fixtures/publication/nested/fresh",
+          "rejected": "Output already exists or belongs to a publication workspace"
+        },
+        {
+          "path": "/private/tmp/sec_metrics_issue28_continuous/pr43-review/normal-cli-review-20260912a/path-fixtures/publication-alias/nested/fresh",
+          "rejected": "Output already exists or belongs to a publication workspace"
+        }
+      ]
+    },
+    {
+      "name": "projection_marriott_international",
+      "status": "PASS",
+      "details": {
+        "row_columns": 20,
+        "evidence_columns": 18,
+        "raw_byte_spans_verified": 34,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "cik": "1048286",
+        "filed_date": "2026-02-10",
+        "run_id": "run:normal-saved:0c9e57e53239508bd69512b6f1fe21fa24ea16284f4115ec235d2e0628945f3c"
+      }
+    },
+    {
+      "name": "projection_salesforce",
+      "status": "PASS",
+      "details": {
+        "row_columns": 20,
+        "evidence_columns": 18,
+        "raw_byte_spans_verified": 43,
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "cik": "1108524",
+        "filed_date": "2026-03-02",
+        "run_id": "run:normal-saved:1481133700da359ce8b18f84fae88da1c788196ff5ebbf46aefb20a8a663c104"
+      }
+    },
+    {
+      "name": "projection_macys",
+      "status": "PASS",
+      "details": {
+        "row_columns": 20,
+        "evidence_columns": 18,
+        "raw_byte_spans_verified": 36,
+        "period_start": "2025-02-02",
+        "period_end": "2026-01-31",
+        "cik": "794367",
+        "filed_date": "2026-03-27",
+        "run_id": "run:normal-saved:33205a2253446f1d4044bfd8e330e0091408adce8286e1567220c492a643b709"
+      }
+    },
+    {
+      "name": "projection_paramount_skydance_paramount_global",
+      "status": "PASS",
+      "details": {
+        "row_columns": 20,
+        "evidence_columns": 18,
+        "raw_byte_spans_verified": 38,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "cik": "2041610",
+        "filed_date": "2026-02-25",
+        "run_id": "run:normal-saved:e548ed6496abfd00d7b9ac1a35f9a97507510a4921f84c6f71ed82b513ef8e04"
+      }
+    },
+    {
+      "name": "real_open_run_is_not_projected",
+      "status": "PASS",
+      "details": {
+        "actual_run_status": "OPEN",
+        "native_result_publication": "PUBLISHED",
+        "rejected": "Replay requires a FROZEN Run",
+        "no_csv_written": true
+      }
+    },
+    {
+      "name": "local_exception_is_recorded_and_second_coordinate_finishes",
+      "status": "PASS",
+      "details": {
+        "test_only_fault": "OSError injected before first-coordinate local source preparation",
+        "exit_code": 2,
+        "coordinate_statuses": [
+          "INPUT_OR_EXECUTION_FAILED",
+          "FROZEN_CANDIDATE"
+        ],
+        "diagnostic_retained": true,
+        "second_coordinate_genuine_frozen": true
+      }
+    }
+  ],
+  "protected_state_unchanged": true
+}

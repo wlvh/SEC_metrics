@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "record_type": "ISSUE_15_AUTHORITY_TRANSFER_MANIFEST",
+  "requirement_id": "issue_15_v1",
+  "created_at_utc": "2026-08-19T04:02:38Z",
+  "issue_number": 15,
+  "issue_url": "https://github.com/wlvh/SEC_metrics/issues/15",
+  "contract_path": "requirements/issue_15_v1/CONTRACT.md",
+  "contract_sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+  "parent_requirement_id": "ai_first_v3_3_1",
+  "parent_snapshot_path": "requirements/ai_first_v3_3_1",
+  "parent_requirement_closure_hash": "sha256:8e888bfab9965e96fc72ec963fa46652ba2dc423b156b8239d8de416c05fc2b7",
+  "parent_requirement_hashes": {
+    "baseline_sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+    "decision_register_sha256": "6471d3313748a266aa394ac5a8f2861ddb8c683ea1dc06787e20cbf4c3bd1f49",
+    "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+    "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+    "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+    "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+    "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  },
+  "parent_snapshot_files": {
+    "FSD.md": {
+      "sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+      "size": 37161
+    },
+    "IMPLEMENTATION_TODO.md": {
+      "sha256": "516b7a43254f9fbe09ff8f11892a34b5196acd912cab818ae19d961ccb8e8574",
+      "size": 17934
+    },
+    "ISSUE_CONTRACT.md": {
+      "sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+      "size": 75990
+    },
+    "ISSUE_CONTRACT_R3_ADDENDUM.md": {
+      "sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+      "size": 18814
+    },
+    "baseline_manifest.json": {
+      "sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+      "size": 4889
+    },
+    "decision_register.json": {
+      "sha256": "6471d3313748a266aa394ac5a8f2861ddb8c683ea1dc06787e20cbf4c3bd1f49",
+      "size": 8663
+    },
+    "legacy_path_inventory.json": {
+      "sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+      "size": 9908
+    }
+  },
+  "parent_snapshot_mutation_policy": "EXACT_BYTES_IMMUTABLE",
+  "authority_transfer": {
+    "inherited": [
+      "evidence_invariants",
+      "publication_invariants",
+      "fail_closed_invariants",
+      "existing_implementation_foundation"
+    ],
+    "superseded_issue": 12,
+    "superseded_issue_state": "CLOSED_NOT_PLANNED",
+    "active_issue": 15,
+    "future_requirement_id": "issue_15_v1"
+  },
+  "decision_transfer": {
+    "historical_decision_records_preserved": 13,
+    "new_tip_decision_ids": [
+      "D-01",
+      "D-26"
+    ],
+    "new_root_decision_ids": [
+      "D-30",
+      "D-31",
+      "D-32",
+      "D-33",
+      "D-34",
+      "D-35",
+      "D-36",
+      "D-37",
+      "D-38"
+    ],
+    "cross_decision_id_supersede": false,
+    "parent_contract_risk_transitions": [
+      {
+        "parent_risk_id": "D-20",
+        "status": "SUPERSEDED_BY_NEW_DECISION",
+        "new_decision_id": "D-37",
+        "preserved_risk_objective": "MODEL_NONDETERMINISM_MITIGATION"
+      }
+    ]
+  },
+  "foundation_source_commit": "f1cc44342e6814522ec2688cf3674f7ec442be8d",
+  "foundation_merge_commit": "4d02db6a474f93eec9e058d780e206b4504ab24d",
+  "foundation_tag": "issue-15-foundation-v1",
+  "implementation_scope": "WB-1_AUTHORITY_TRANSFER_ONLY",
+  "forbidden_scope": [
+    "WB-2_SOURCE_STRATEGY_REGISTRY",
+    "WB-2B_SOURCE_ROUTER",
+    "WB-3_INVOCATION_CONTROL",
+    "READER_FAMILY",
+    "ACTIVE_PUBLICATION",
+    "REAL_SEC_OR_MODEL_PROVIDER_CALL"
+  ]
+}

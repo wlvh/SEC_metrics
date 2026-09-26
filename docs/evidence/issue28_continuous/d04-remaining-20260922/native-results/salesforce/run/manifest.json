@@ -1,0 +1,73 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "OPEN",
+  "records_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "e36df80d1549eec83a0c9a9a67d4054465a88a068dc36abab7330b4f6ae9ea43",
+  "content_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "audit_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "run_id": "run:ordinary-integrated:2440ed3ed359e8078607823f2f69717514f3d05f197b7da2537ab1a7c905c6cc",
+  "company_id": "salesforce",
+  "company_traits": [
+    "non_financial",
+    "subscription_or_contract_revenue"
+  ],
+  "target_period": {
+    "fiscal_year": 2026,
+    "period_start": "2025-02-01",
+    "period_end": "2026-01-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
+      "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+      "company_id": "salesforce",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+      "accession": "0001108524-26-000060",
+      "document_name": "crm-20260131.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:e77139068ea22f06506cb89efab75d894db1f5035f611ac5e96ef5a6b73b0211",
+      "raw_asset_id": "sha256:fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911",
+      "company_id": "salesforce",
+      "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+      "accession": "SUBMISSIONS-1108524",
+      "document_name": "CIK0001108524.json",
+      "source_role": "supporting_input",
+      "request_attempt_id": "request:attempt:707d67a40b04183d948b0c9918eedef55fccd995a3e9bbfe46bcb588d6bdb745"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:1514bd45c54fb6cecd1746afdee72fbd5fa62ba9bcb634c20453f7265744d5f9",
+      "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+      "company_id": "salesforce",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+      "accession": "0001108524-26-000060",
+      "document_name": "CIK0001108524.json",
+      "source_role": "supporting_input",
+      "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r6/D04_going_concern_assessment_v1.md": "b0d4e25d4af8b49ca99efda0f04abd127258b12f0a2d0110c33fccb66faeed7f"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "93fcec196d9b7efaf09400346ee2b732a06bfd00a635cff17656bfa6fe79aabd",
+    "contract_sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+    "decision_register_sha256": "229a634e1986396e1599b6a8abd4ddd2d048f16a9e7708c08f761e7ac7f5edce",
+    "invariant_profile_sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+    "transfer_manifest_sha256": "970630546c6bb95f3ced795aaac2c81533fb10c1467fbd5386049bf85278c5cd",
+    "parent_requirement_closure_hash": "sha256:047e4d4061740281e125ae8fde7ddf3277e0d00bf250b574c040c48bcf8f1bf8",
+    "validator_sha256": "794923cf5838664dfe0a7dafc91bab4d022ce59edebc6545535857ff2d4e8b4a"
+  },
+  "requirement_closure_hash": "sha256:0f724fa70733781ac79d2a5672a169d030b5b3994b5afe50b407c4bec3b41bd9",
+  "requirement_id": "issue_28_v14",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

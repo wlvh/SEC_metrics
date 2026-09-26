@@ -1,0 +1,276 @@
+{
+  "scope": "SYNTHETIC_CLASSIFICATION_VARIANTS_OVER_UNMODIFIED_REAL_REQUESTS_AND_REFERENCES_NOT_NEW_PROVIDER_RESULTS",
+  "results": [
+    {
+      "name": "82-original",
+      "accepted": false,
+      "error": "ValueError",
+      "reason": "B13_CALCULATION_LIMIT_CONTRADICTS_FINDING"
+    },
+    {
+      "name": "82-limits-only-removed",
+      "accepted": false,
+      "error": "ValueError",
+      "reason": "B13_SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION"
+    },
+    {
+      "name": "82-sales-role-correct-quarter-capacity-kept",
+      "accepted": true,
+      "unresolved": [
+        {
+          "unit_id": "sha256:5af948eb6210b0f7e047a83e111aaa2d045df14975f384e4393a2b97fa6a207d",
+          "source_index": 316,
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED",
+          "quantity_role": "ACTUAL_PRODUCTION",
+          "statement_start_character": 234,
+          "statement_end_character": 441
+        },
+        {
+          "unit_id": "sha256:b310efaf23ffc795abfa6e1ffd47d0b90d24cdea5182ce7ab1036ff0e9320e8c",
+          "source_index": 815,
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED",
+          "quantity_role": "ACTUAL_PRODUCTION",
+          "statement_start_character": 143,
+          "statement_end_character": 350
+        }
+      ],
+      "findings": [
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            443,
+            454
+          ]
+        },
+        {
+          "kind": "AVAILABLE_CAPACITY",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            809
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            834
+          ]
+        },
+        {
+          "kind": "SALES_OR_SHIPMENTS",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            883
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1022
+          ]
+        }
+      ]
+    },
+    {
+      "name": "809-independent-role-proof",
+      "proofs": [
+        {
+          "basis": "AVAILABLE_CAPACITY",
+          "statement_text": "These arrangements maintained a combined manufacturing capacity of approximately five-million microinverters per quarter.",
+          "start_character": 237,
+          "end_character": 358,
+          "reported_number": "five-million",
+          "reported_product": "microinverters",
+          "reported_period": "quarter",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "annual_comparability_proven": false,
+          "antecedent_statement": "To mitigate supply chain risks and tariff exposure and to leverage U.S. manufacturing incentives, we continued to operate our domestic manufacturing footprint, including our in‑house manufacturing facility and our partnership with Flex."
+        }
+      ]
+    },
+    {
+      "name": "94-original",
+      "accepted": false,
+      "error": "ValueError",
+      "reason": "B13_CALCULATION_LIMIT_CONTRADICTS_FINDING"
+    },
+    {
+      "name": "94-limits-only-removed",
+      "accepted": false,
+      "error": "ValueError",
+      "reason": "B13_PHYSICAL_QUANTITY_ROLE_NOT_ESTABLISHED"
+    },
+    {
+      "name": "94-no-quantity-role-corrected-industry-still-wrong",
+      "accepted": false,
+      "error": "ValueError",
+      "reason": "B13_INDUSTRY_CAPACITY_IS_NOT_TARGET_CAPACITY"
+    },
+    {
+      "name": "94-no-quantity-and-industry-corrected",
+      "accepted": true,
+      "unresolved": [
+        {
+          "unit_id": "sha256:57248e0b7c39b48d6d05244eda04d198a40215446f831d2dd583d98ce1abde89",
+          "source_index": 785,
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED",
+          "quantity_role": "ACTUAL_PRODUCTION",
+          "statement_start_character": 0,
+          "statement_end_character": 174
+        },
+        {
+          "unit_id": "sha256:4be5c9027c73c6c8672ea47ce03eab1c130c8de09af3267a2830d8b5acb4de67",
+          "source_index": 1014,
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED",
+          "quantity_role": "ACTUAL_PRODUCTION",
+          "statement_start_character": 0,
+          "statement_end_character": 174
+        }
+      ],
+      "findings": [
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            423
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            432
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            437
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "OTHER_ENTITY",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            476
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            482
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "OTHER_ENTITY",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            669
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            674
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            678
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            697
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            699
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            700
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            701
+          ]
+        },
+        {
+          "kind": "OTHER_CONTEXT",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            849
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1420
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1710
+          ]
+        },
+        {
+          "kind": "CAPACITY_QUALITATIVE",
+          "subject": "TARGET_REGISTRANT",
+          "timing": "CURRENT_REPORT",
+          "indices": [
+            1725
+          ]
+        }
+      ]
+    }
+  ],
+  "original_slots_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

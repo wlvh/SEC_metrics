@@ -1,0 +1,1047 @@
+{
+  "resolver": "auditor_change_complete_filings_v2",
+  "target": {
+    "company_id": "marriott_international",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope": {
+      "entity_scope": "registrant"
+    },
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6"
+  },
+  "current_filing_checks": [
+    {
+      "accession": "0001048286-26-000007",
+      "form": "10-K",
+      "source_references": [
+        {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+          "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "company_id": "marriott_international",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+          "accession": "0001048286-26-000007",
+          "document_name": "mar-20251231.htm",
+          "source_role": "target_primary",
+          "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+        },
+        {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:6139c18acde58b3ba5aff86a1debd212c1fade31d2ba8a0ce35a748947694a07",
+          "raw_asset_id": "sha256:39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+          "company_id": "marriott_international",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231_htm.xml",
+          "accession": "0001048286-26-000007",
+          "document_name": "mar-20251231_htm.xml",
+          "source_role": "auditor_facts",
+          "request_attempt_id": "request:attempt:5176c0832cd4a1a68fb8d7860959306d772750de3a1317dffe59319fa1a20f5e"
+        }
+      ],
+      "facts": [
+        {
+          "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+          "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "accession": "0001048286-26-000007",
+          "name": "Ernst & Young LLP",
+          "canonical_name": "ernstyoungllp",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "entity_identifier": "0001048286",
+          "locator": {
+            "qualified_name": "dei:AuditorName",
+            "context_ref": "c-1",
+            "ordinal": 61
+          }
+        },
+        {
+          "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+          "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "accession": "0001048286-26-000007",
+          "name": "Ernst & Young LLP",
+          "canonical_name": "ernstyoungllp",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "entity_identifier": "0001048286",
+          "locator": {
+            "qualified_name": "dei:AuditorName",
+            "context_ref": "c-1",
+            "ordinal": 63
+          }
+        },
+        {
+          "source_reference_id": "sha256:6139c18acde58b3ba5aff86a1debd212c1fade31d2ba8a0ce35a748947694a07",
+          "raw_asset_id": "sha256:39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+          "accession": "0001048286-26-000007",
+          "name": "Ernst & Young LLP",
+          "canonical_name": "ernstyoungllp",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "entity_identifier": "0001048286",
+          "locator": {
+            "qualified_name": "dei:auditorname",
+            "context_ref": "c-1",
+            "ordinal": 61
+          }
+        },
+        {
+          "source_reference_id": "sha256:6139c18acde58b3ba5aff86a1debd212c1fade31d2ba8a0ce35a748947694a07",
+          "raw_asset_id": "sha256:39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+          "accession": "0001048286-26-000007",
+          "name": "Ernst & Young LLP",
+          "canonical_name": "ernstyoungllp",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "entity_identifier": "0001048286",
+          "locator": {
+            "qualified_name": "dei:auditorname",
+            "context_ref": "c-1",
+            "ordinal": 63
+          }
+        }
+      ],
+      "problems": [],
+      "canonical_names": [
+        "ernstyoungllp"
+      ],
+      "status": "FOUND"
+    }
+  ],
+  "selected_current_accession": "0001048286-26-000007",
+  "prior_filing_check": {
+    "accession": "0001628280-25-004818",
+    "form": "10-K",
+    "source_references": [
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+        "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+        "accession": "0001628280-25-004818",
+        "document_name": "mar-20241231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+      },
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+        "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+        "accession": "0001628280-25-004818",
+        "document_name": "mar-20241231_htm.xml",
+        "source_role": "auditor_facts",
+        "request_attempt_id": "request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292"
+      }
+    ],
+    "facts": [
+      {
+        "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+        "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+        "accession": "0001628280-25-004818",
+        "name": "Ernst & Young LLP",
+        "canonical_name": "ernstyoungllp",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "entity_identifier": "0001048286",
+        "locator": {
+          "qualified_name": "dei:AuditorName",
+          "context_ref": "c-1",
+          "ordinal": 64
+        }
+      },
+      {
+        "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+        "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+        "accession": "0001628280-25-004818",
+        "name": "Ernst & Young LLP",
+        "canonical_name": "ernstyoungllp",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "entity_identifier": "0001048286",
+        "locator": {
+          "qualified_name": "dei:AuditorName",
+          "context_ref": "c-1",
+          "ordinal": 66
+        }
+      },
+      {
+        "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+        "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+        "accession": "0001628280-25-004818",
+        "name": "Ernst & Young LLP",
+        "canonical_name": "ernstyoungllp",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "entity_identifier": "0001048286",
+        "locator": {
+          "qualified_name": "dei:auditorname",
+          "context_ref": "c-1",
+          "ordinal": 64
+        }
+      },
+      {
+        "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+        "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+        "accession": "0001628280-25-004818",
+        "name": "Ernst & Young LLP",
+        "canonical_name": "ernstyoungllp",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "entity_identifier": "0001048286",
+        "locator": {
+          "qualified_name": "dei:auditorname",
+          "context_ref": "c-1",
+          "ordinal": 66
+        }
+      }
+    ],
+    "problems": [],
+    "canonical_names": [
+      "ernstyoungllp"
+    ],
+    "status": "FOUND"
+  },
+  "names_differ": false,
+  "event_source_set_manifest": {
+    "schema_version": 1,
+    "record_type": "SOURCE_SET_MANIFEST",
+    "company_id": "marriott_international",
+    "source_role": "fy_8k_item_inventory",
+    "form_types": [
+      "8-K",
+      "8-K/A"
+    ],
+    "fiscal_or_date_window": {
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "discovery_policy": "PINNED_SUBMISSIONS",
+    "discovered_accession_set_hash": "sha256:4194f5040472ebea8955d9656f58a0a22b8460d40b392e4bc3cd23845b544c95",
+    "sec_submissions_inventory_hash": "sha256:e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+    "inventory_source_reference_id": "sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe",
+    "ordered_source_reference_ids": [
+      "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+      "sha256:fad6b06c485aa6415e0dfdfb312d09e774c0d42951288db4d0bbe035c62c52bb",
+      "sha256:60936afcc1962b3f09c405897c949eb586c262d02fdcd5e316511733012058eb",
+      "sha256:bbe8d18d5b70456fdfe6a7141f2da0e1b2ee5866d814c1fecf09b786ec310e45",
+      "sha256:1f83e50639e251e30a9d72aa512b92666a3d1238a9c34f9afe4b101057dae5cf",
+      "sha256:b7918006e714a2f7fd504bdb6267415f25cec432dabd167cb9a5fbbedcfcc888",
+      "sha256:61a6a86137f6a970ed09f81a01e7f1635fd9245a556be6e5987a840f7b605ece",
+      "sha256:46b84f82f464a007e2db9a2072261bb78d01fa2116e2d0da5ae8bf4d5638b6b8",
+      "sha256:cf130d2988d1fb9f249c865230b00afbe0e54cc31af3a7efc93a336c736927fa",
+      "sha256:7b56655b78f8633b1c90334cbbb23d0fa2f500317ba3216a4a42986a6bc315c7",
+      "sha256:2afc5ddf640c0aaa4cb4142cb7a0d46731c1d8f777997290321cee9e191449d9",
+      "sha256:317b5401fbe6ef4544bf193a8a0f144c0359e680e7c6293ab7ff264d2a1b6be5",
+      "sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc",
+      "sha256:691fb329e31d5d498d01bf3693695a2b456bbc6e9ddef8f6c88f3894f5357caf",
+      "sha256:04bb0255f0a10aaf9794d06b52cc4cbb45f4a45b8717df332bca22cd3741e8c0",
+      "sha256:124b8847246c3b2b1035f38a9edfd8055b78a34b5829ea329db922848dfafc92",
+      "sha256:38d839367e9e4abfd3e2ebb4ddc32a2f53e5a3bf74d9338be0c1059bb33efbb3",
+      "sha256:291ee02009d2b24b65045254d61aae4e99f2cda9580bafac1a2e992e37dfdb66",
+      "sha256:d4fdf2105a90e20788593ec0dd8922df5d294c1f446c1386216dfa613c20c65b",
+      "sha256:794697f46a8915c60583241949d41513405204326be36bdfc6b384c092e548d4"
+    ],
+    "cutoff_timestamp_or_pinned_submissions_attempt": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085",
+    "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879"
+  },
+  "event_source_sets": [
+    {
+      "manifest": {
+        "schema_version": 1,
+        "record_type": "SOURCE_SET_MANIFEST",
+        "company_id": "marriott_international",
+        "source_role": "fy_8k_item_inventory",
+        "form_types": [
+          "8-K",
+          "8-K/A"
+        ],
+        "fiscal_or_date_window": {
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "discovery_policy": "PINNED_SUBMISSIONS",
+        "discovered_accession_set_hash": "sha256:4194f5040472ebea8955d9656f58a0a22b8460d40b392e4bc3cd23845b544c95",
+        "sec_submissions_inventory_hash": "sha256:e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+        "inventory_source_reference_id": "sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe",
+        "ordered_source_reference_ids": [
+          "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+          "sha256:fad6b06c485aa6415e0dfdfb312d09e774c0d42951288db4d0bbe035c62c52bb",
+          "sha256:60936afcc1962b3f09c405897c949eb586c262d02fdcd5e316511733012058eb",
+          "sha256:bbe8d18d5b70456fdfe6a7141f2da0e1b2ee5866d814c1fecf09b786ec310e45",
+          "sha256:1f83e50639e251e30a9d72aa512b92666a3d1238a9c34f9afe4b101057dae5cf",
+          "sha256:b7918006e714a2f7fd504bdb6267415f25cec432dabd167cb9a5fbbedcfcc888",
+          "sha256:61a6a86137f6a970ed09f81a01e7f1635fd9245a556be6e5987a840f7b605ece",
+          "sha256:46b84f82f464a007e2db9a2072261bb78d01fa2116e2d0da5ae8bf4d5638b6b8",
+          "sha256:cf130d2988d1fb9f249c865230b00afbe0e54cc31af3a7efc93a336c736927fa",
+          "sha256:7b56655b78f8633b1c90334cbbb23d0fa2f500317ba3216a4a42986a6bc315c7",
+          "sha256:2afc5ddf640c0aaa4cb4142cb7a0d46731c1d8f777997290321cee9e191449d9",
+          "sha256:317b5401fbe6ef4544bf193a8a0f144c0359e680e7c6293ab7ff264d2a1b6be5",
+          "sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc",
+          "sha256:691fb329e31d5d498d01bf3693695a2b456bbc6e9ddef8f6c88f3894f5357caf",
+          "sha256:04bb0255f0a10aaf9794d06b52cc4cbb45f4a45b8717df332bca22cd3741e8c0",
+          "sha256:124b8847246c3b2b1035f38a9edfd8055b78a34b5829ea329db922848dfafc92",
+          "sha256:38d839367e9e4abfd3e2ebb4ddc32a2f53e5a3bf74d9338be0c1059bb33efbb3",
+          "sha256:291ee02009d2b24b65045254d61aae4e99f2cda9580bafac1a2e992e37dfdb66",
+          "sha256:d4fdf2105a90e20788593ec0dd8922df5d294c1f446c1386216dfa613c20c65b",
+          "sha256:794697f46a8915c60583241949d41513405204326be36bdfc6b384c092e548d4"
+        ],
+        "cutoff_timestamp_or_pinned_submissions_attempt": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085",
+        "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879"
+      },
+      "inventory_source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe",
+        "raw_asset_id": "sha256:e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+        "company_id": "marriott_international",
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "accession": "SUBMISSIONS-1048286",
+        "document_name": "CIK0001048286.json",
+        "source_role": "sec_submissions_inventory",
+        "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+      }
+    }
+  ],
+  "event_item_claims": [
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:d4fdf2105a90e20788593ec0dd8922df5d294c1f446c1386216dfa613c20c65b",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "2.02",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 2.02 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001048286-25-000011",
+        "brief": "8-K item 2.02 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml",
+          "accession": "0001048286-25-000011",
+          "item_code": "2.02"
+        },
+        "event_key_hash": "sha256:8849470afb1d38a75a8a8853cc77930b0c16faf3b27591d9312ec93a358419f1",
+        "hdr_source_reference_id": "sha256:d4fdf2105a90e20788593ec0dd8922df5d294c1f446c1386216dfa613c20c65b",
+        "primary_source_reference_id": "sha256:794697f46a8915c60583241949d41513405204326be36bdfc6b384c092e548d4",
+        "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Item 2.02. Results of Operations and Financial Condition. Financial Results for the Quarter Ended September 30, 2025 On November 4, 2025, Marriott International, Inc. ( “ Marriott ” ) is issuing a press release reporting financia",
+        "item_code": "2.02",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:d7514e195fdd296777d819aa078c5f8623f7846c4059baae76d399e2421e64c0"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:d4fdf2105a90e20788593ec0dd8922df5d294c1f446c1386216dfa613c20c65b",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "9.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 9.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001048286-25-000011",
+        "brief": "8-K item 9.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml",
+          "accession": "0001048286-25-000011",
+          "item_code": "9.01"
+        },
+        "event_key_hash": "sha256:08e4c1a1d8177b30354a914e1ed0518903843aec4bb6ddf5cd7fa111792ddb74",
+        "hdr_source_reference_id": "sha256:d4fdf2105a90e20788593ec0dd8922df5d294c1f446c1386216dfa613c20c65b",
+        "primary_source_reference_id": "sha256:794697f46a8915c60583241949d41513405204326be36bdfc6b384c092e548d4",
+        "primary_heading_brief": "rriott’s press release is attached as Exhibit 99 and incorporated by reference. Item 9.01. Financial Statements and Exhibits. (d) Exhibits. The following exhibits are furnished with this report: 99 Press release dated November 4 , 2025, reporting financial results for the quarter ended September 30, 2025. 10",
+        "item_code": "9.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:a91ea5027db145bfa97d2339f5c2164c9a9b55788f2e433326f63c0f3d0b8167"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "5.02",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 5.02 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-009110",
+        "brief": "8-K item 5.02 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+          "accession": "0001193125-25-009110",
+          "item_code": "5.02"
+        },
+        "event_key_hash": "sha256:ed9880e38ec54dccd80a9f7ce5a960600426598bc5b72f03ea815b9cc25c5bab",
+        "hdr_source_reference_id": "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+        "primary_source_reference_id": "sha256:fad6b06c485aa6415e0dfdfb312d09e774c0d42951288db4d0bbe035c62c52bb",
+        "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Item 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers. On January 17, 2025, the Board of Directors (the “Board”) of Marriott I",
+        "item_code": "5.02",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:298484a847e3d30a1f1f04475b7a90c7c3167ce6b7cac2e14c2350059550c5de"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "7.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 7.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-009110",
+        "brief": "8-K item 7.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+          "accession": "0001193125-25-009110",
+          "item_code": "7.01"
+        },
+        "event_key_hash": "sha256:c6f4de1031dc1fc5fc4259a05ed6b668071e0608ad3f629ee0f9e8ea9514ba49",
+        "hdr_source_reference_id": "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+        "primary_source_reference_id": "sha256:fad6b06c485aa6415e0dfdfb312d09e774c0d42951288db4d0bbe035c62c52bb",
+        "primary_heading_brief": "Statement, filed with the Securities and Exchange Commission on March 27, 2024. Item 7.01. Regulation FD Disclosure. A copy of the Company’s press release announcing Mr. Tresvant’s election to the Board is furnished as Exhibit 99. The information in this Item 7.01, including Exhibit 99, is being furnished an",
+        "item_code": "7.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:c1e5de86b0de0b00e4d6d5eb23099328fedc91042d007434c97b970c4655163b"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "9.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 9.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-009110",
+        "brief": "8-K item 9.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+          "accession": "0001193125-25-009110",
+          "item_code": "9.01"
+        },
+        "event_key_hash": "sha256:0a10b62843a8d9fdf68dbc17f9eee927961fd6f0d4e700c77ed4e17b0e1f8ff7",
+        "hdr_source_reference_id": "sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094",
+        "primary_source_reference_id": "sha256:fad6b06c485aa6415e0dfdfb312d09e774c0d42951288db4d0bbe035c62c52bb",
+        "primary_heading_brief": "by reference into any other filing with the Securities and Exchange Commission. Item 9.01. Financial Statements and Exhibits. (d) Exhibits. The following exhibits are furnished with this report: 99 Press release issued on January 21, 2025. 104 The cover page from this Current Report on Form 8-K, formatted in",
+        "item_code": "9.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:e88c684a1fd86dc47c6535b095ace95aa0376863d00206b7d24b69a906289634"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:1f83e50639e251e30a9d72aa512b92666a3d1238a9c34f9afe4b101057dae5cf",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "8.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 8.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-036732",
+        "brief": "8-K item 8.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/0001193125-25-036732.hdr.sgml",
+          "accession": "0001193125-25-036732",
+          "item_code": "8.01"
+        },
+        "event_key_hash": "sha256:ba64a0ad37799ed3bb974a1bc1cadbd5b7c6848e3aed25836c12c740d4d42a04",
+        "hdr_source_reference_id": "sha256:1f83e50639e251e30a9d72aa512b92666a3d1238a9c34f9afe4b101057dae5cf",
+        "primary_source_reference_id": "sha256:b7918006e714a2f7fd504bdb6267415f25cec432dabd167cb9a5fbbedcfcc888",
+        "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Item 8.01. Other Events. On February 24, 2025, Marriott International, Inc. (“we”) entered into a Terms Agreement with BofA Securities, Inc., Fifth Third Securities, Inc., TD Securities (USA) LLC, U.S. Bancorp Investments, Inc. a",
+        "item_code": "8.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/0001193125-25-036732.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:7bedd35d2936e16f262e7671b23bbbc118440a8d62a3715ec4c68703b8cdd00a"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:1f83e50639e251e30a9d72aa512b92666a3d1238a9c34f9afe4b101057dae5cf",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "9.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 9.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-036732",
+        "brief": "8-K item 9.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/0001193125-25-036732.hdr.sgml",
+          "accession": "0001193125-25-036732",
+          "item_code": "9.01"
+        },
+        "event_key_hash": "sha256:dc262ba7fc649c0e0d6b9fe6cc51ccc1b11f8ca4adbe759f2df33cc98971be01",
+        "hdr_source_reference_id": "sha256:1f83e50639e251e30a9d72aa512b92666a3d1238a9c34f9afe4b101057dae5cf",
+        "primary_source_reference_id": "sha256:b7918006e714a2f7fd504bdb6267415f25cec432dabd167cb9a5fbbedcfcc888",
+        "primary_heading_brief": "or the purpose of incorporating them as exhibits to the Registration Statement. Item 9.01. Financial Statements and Exhibits. (d) Exhibits. The following exhibits are filed with this report: 1.1 Terms Agreement, dated February 24, 2025, among Marriott International, Inc. and the Underwriters named therein. 4",
+        "item_code": "9.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/0001193125-25-036732.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:e1f968dfa7145b5722d94891a5a9a9201c49b6d40c95e66cfe4f1f8f873daaed"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:cf130d2988d1fb9f249c865230b00afbe0e54cc31af3a7efc93a336c736927fa",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "5.07",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 5.07 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-118853",
+        "brief": "8-K item 5.07 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/0001193125-25-118853.hdr.sgml",
+          "accession": "0001193125-25-118853",
+          "item_code": "5.07"
+        },
+        "event_key_hash": "sha256:424efce44f88d976527e50ffbf29932247060f16c73bd58a7205115b627fc17e",
+        "hdr_source_reference_id": "sha256:cf130d2988d1fb9f249c865230b00afbe0e54cc31af3a7efc93a336c736927fa",
+        "primary_source_reference_id": "sha256:7b56655b78f8633b1c90334cbbb23d0fa2f500317ba3216a4a42986a6bc315c7",
+        "primary_heading_brief": "l accounting standards provided pursuant to Section 13(a) of the Exchange Act ☐ Item 5.07. Submission of Matters to a Vote of Security Holders. On May 9, 2025, Marriott International, Inc. (“Marriott”) held its Annual Meeting of Stockholders. Marriott’s stockholders voted on the items outlined in the 2025 Pr",
+        "item_code": "5.07",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/0001193125-25-118853.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:1cb209ba2c10ee64a16315bf86d2521bfeeb3fa06517895862ec56d82f511d25"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:2afc5ddf640c0aaa4cb4142cb7a0d46731c1d8f777997290321cee9e191449d9",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "5.02",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 5.02 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-118861",
+        "brief": "8-K item 5.02 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/0001193125-25-118861.hdr.sgml",
+          "accession": "0001193125-25-118861",
+          "item_code": "5.02"
+        },
+        "event_key_hash": "sha256:0751e7d536fe8c72bc7f85612089263b810b70e31ea72c554bfd7ce385cc2b57",
+        "hdr_source_reference_id": "sha256:2afc5ddf640c0aaa4cb4142cb7a0d46731c1d8f777997290321cee9e191449d9",
+        "primary_source_reference_id": "sha256:317b5401fbe6ef4544bf193a8a0f144c0359e680e7c6293ab7ff264d2a1b6be5",
+        "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Item 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers. Marriott International, Inc. (the “Company”) filed a Current Report on",
+        "item_code": "5.02",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/0001193125-25-118861.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:6ae0e5d4dd6981ed98ed917dcacd19752794178f9d94430ebd9d46b75975ef35"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "5.02",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 5.02 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-158742",
+        "brief": "8-K item 5.02 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+          "accession": "0001193125-25-158742",
+          "item_code": "5.02"
+        },
+        "event_key_hash": "sha256:241d743805871a434fb26a1123bf1af2bec6fcc650d887738ad95006a5acfaf3",
+        "hdr_source_reference_id": "sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc",
+        "primary_source_reference_id": "sha256:691fb329e31d5d498d01bf3693695a2b456bbc6e9ddef8f6c88f3894f5357caf",
+        "primary_heading_brief": "l accounting standards provided pursuant to Section 13(a) of the Exchange Act ☐ Item 5.02. Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers. On July 11, 2025, Kathleen K. Oberg, Chief Financial Officer and Execut",
+        "item_code": "5.02",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:17e543c70feb68c010ec513a32726fd39fcecca75626a343516ec8b2382dac21"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "7.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 7.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-158742",
+        "brief": "8-K item 7.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+          "accession": "0001193125-25-158742",
+          "item_code": "7.01"
+        },
+        "event_key_hash": "sha256:3501721fda7d954fe9ac55e5d01bcd892006384ba4ff8d78d53106397c63ffe1",
+        "hdr_source_reference_id": "sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc",
+        "primary_source_reference_id": "sha256:691fb329e31d5d498d01bf3693695a2b456bbc6e9ddef8f6c88f3894f5357caf",
+        "primary_heading_brief": "of Business Administration from The Wharton School, University of Pennsylvania. Item 7.01. Regulation FD Disclosure. A copy of the press release announcing the retirement of Ms. Oberg from the company, the appointment of Ms. Mason, and certain other company leadership appointments is furnished as Exhibit 99.",
+        "item_code": "7.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:4e52f55dd735047c949b51ae470fda5e2f00b1633c709058c96567f7ab9b4230"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "9.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 9.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-158742",
+        "brief": "8-K item 9.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+          "accession": "0001193125-25-158742",
+          "item_code": "9.01"
+        },
+        "event_key_hash": "sha256:530cbec38af00dbbd304f5b1176c25e59e9aa6ff08668c7a4860531e0698120a",
+        "hdr_source_reference_id": "sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc",
+        "primary_source_reference_id": "sha256:691fb329e31d5d498d01bf3693695a2b456bbc6e9ddef8f6c88f3894f5357caf",
+        "primary_heading_brief": "by reference into any other filing with the Securities and Exchange Commission. Item 9.01 Financial Statements and Exhibits (d) Exhibits. The following exhibits are furnished with this report: 99.1 Press release issued on July 14, 2025. 104 The cover page from this Current Report on Form 8-K, formatted in In",
+        "item_code": "9.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:3edfe8b5c0ff28ab94602bd2db488c96c9b92326ad31887e605e8c6944190c2f"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:38d839367e9e4abfd3e2ebb4ddc32a2f53e5a3bf74d9338be0c1059bb33efbb3",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "8.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 8.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-184082",
+        "brief": "8-K item 8.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/0001193125-25-184082.hdr.sgml",
+          "accession": "0001193125-25-184082",
+          "item_code": "8.01"
+        },
+        "event_key_hash": "sha256:6e60e2a478677a8eb246420903259dc1f4c131e7a7f261d393b6f1babfafc58e",
+        "hdr_source_reference_id": "sha256:38d839367e9e4abfd3e2ebb4ddc32a2f53e5a3bf74d9338be0c1059bb33efbb3",
+        "primary_source_reference_id": "sha256:291ee02009d2b24b65045254d61aae4e99f2cda9580bafac1a2e992e37dfdb66",
+        "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Item 8.01. Other Events. On August 18, 2025, Marriott International, Inc. (“we”) entered into a Terms Agreement with Wells Fargo Securities, LLC, PNC Capital Markets LLC, Scotia Capital (USA) Inc., Truist Securities, Inc. and the",
+        "item_code": "8.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/0001193125-25-184082.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:81c17c38c24b765334e38af526168d4a07a04d3a3b440614dc929f03e58f2870"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:38d839367e9e4abfd3e2ebb4ddc32a2f53e5a3bf74d9338be0c1059bb33efbb3",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "9.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 9.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001193125-25-184082",
+        "brief": "8-K item 9.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/0001193125-25-184082.hdr.sgml",
+          "accession": "0001193125-25-184082",
+          "item_code": "9.01"
+        },
+        "event_key_hash": "sha256:9e6ebaba0c33b51e083404dc08bccbb78f87f8e605c2ee495bbfdb879b2a2ad0",
+        "hdr_source_reference_id": "sha256:38d839367e9e4abfd3e2ebb4ddc32a2f53e5a3bf74d9338be0c1059bb33efbb3",
+        "primary_source_reference_id": "sha256:291ee02009d2b24b65045254d61aae4e99f2cda9580bafac1a2e992e37dfdb66",
+        "primary_heading_brief": "or the purpose of incorporating them as exhibits to the Registration Statement. Item 9.01. Financial Statements and Exhibits. (d) Exhibits. The following exhibits are filed with this report: 1.1 Terms Agreement, dated August 18, 2025, among Marriott International, Inc. and the Underwriters named therein. 4.1",
+        "item_code": "9.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/0001193125-25-184082.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:d5dc7a88ef4d58e0dd661e17283951472490263dcf9196e8d5783a7f84b2f20b"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:60936afcc1962b3f09c405897c949eb586c262d02fdcd5e316511733012058eb",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "2.02",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 2.02 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001628280-25-004772",
+        "brief": "8-K item 2.02 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/0001628280-25-004772.hdr.sgml",
+          "accession": "0001628280-25-004772",
+          "item_code": "2.02"
+        },
+        "event_key_hash": "sha256:7c196d6c6b1d79ce0358aaa3102532bc67424b91c1e7d5ef74773df78b5e7357",
+        "hdr_source_reference_id": "sha256:60936afcc1962b3f09c405897c949eb586c262d02fdcd5e316511733012058eb",
+        "primary_source_reference_id": "sha256:bbe8d18d5b70456fdfe6a7141f2da0e1b2ee5866d814c1fecf09b786ec310e45",
+        "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Item 2.02. Results of Operations and Financial Condition. Financial Results for the Quarter and Year Ended December 31, 2024 Marriott International, Inc. ( “ Marriott ” ) issued a press release reporting financial results for the",
+        "item_code": "2.02",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/0001628280-25-004772.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:86ef0535db477d91a87b8a3c105de2e3a3ae6b96cd920bc4feceaf37778dd917"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:60936afcc1962b3f09c405897c949eb586c262d02fdcd5e316511733012058eb",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "9.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 9.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001628280-25-004772",
+        "brief": "8-K item 9.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/0001628280-25-004772.hdr.sgml",
+          "accession": "0001628280-25-004772",
+          "item_code": "9.01"
+        },
+        "event_key_hash": "sha256:181760e41a23227a880e9b6953217550202479c83d66feef654296973b050602",
+        "hdr_source_reference_id": "sha256:60936afcc1962b3f09c405897c949eb586c262d02fdcd5e316511733012058eb",
+        "primary_source_reference_id": "sha256:bbe8d18d5b70456fdfe6a7141f2da0e1b2ee5866d814c1fecf09b786ec310e45",
+        "primary_heading_brief": "rriott’s press release is attached as Exhibit 99 and incorporated by reference. Item 9.01. Financial Statements and Exhibits. (d) Exhibits. The following exhibits are furnished with this report: 99 Press release dated February 11, 2025, reporting financial results for the quarter and year ended December 31,",
+        "item_code": "9.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/0001628280-25-004772.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:5063942552ff313e8bd6812cd34e0ab9dc381a0c656efeb447dcb57bee3b05de"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:61a6a86137f6a970ed09f81a01e7f1635fd9245a556be6e5987a840f7b605ece",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "2.02",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 2.02 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001628280-25-022390",
+        "brief": "8-K item 2.02 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/0001628280-25-022390.hdr.sgml",
+          "accession": "0001628280-25-022390",
+          "item_code": "2.02"
+        },
+        "event_key_hash": "sha256:83178c5543c0ef052e9fd38c8b5c99884520918680b77bef455823860b991c10",
+        "hdr_source_reference_id": "sha256:61a6a86137f6a970ed09f81a01e7f1635fd9245a556be6e5987a840f7b605ece",
+        "primary_source_reference_id": "sha256:46b84f82f464a007e2db9a2072261bb78d01fa2116e2d0da5ae8bf4d5638b6b8",
+        "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Item 2.02. Results of Operations and Financial Condition. Financial Results for the Quarter Ended March 31, 2025 On May 6, 2025 , Marriott International, Inc. ( “ Marriott ” ) is issuing a press release reporting financial result",
+        "item_code": "2.02",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/0001628280-25-022390.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:42cca50cbee90c01785dd5de5751abdc92757dab7acee312cdadb64d34041581"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:61a6a86137f6a970ed09f81a01e7f1635fd9245a556be6e5987a840f7b605ece",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "9.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 9.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001628280-25-022390",
+        "brief": "8-K item 9.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/0001628280-25-022390.hdr.sgml",
+          "accession": "0001628280-25-022390",
+          "item_code": "9.01"
+        },
+        "event_key_hash": "sha256:70c933758a32d943ed01840c2bf9e4efc99ba32c6db1188cab123d5a3213cf7a",
+        "hdr_source_reference_id": "sha256:61a6a86137f6a970ed09f81a01e7f1635fd9245a556be6e5987a840f7b605ece",
+        "primary_source_reference_id": "sha256:46b84f82f464a007e2db9a2072261bb78d01fa2116e2d0da5ae8bf4d5638b6b8",
+        "primary_heading_brief": "rriott’s press release is attached as Exhibit 99 and incorporated by reference. Item 9.01. Financial Statements and Exhibits. (d) Exhibits. The following exhibits are furnished with this report: 99 Press release dated May 6, 2025 , reporting financial results for the quarter ended March 31, 202 5 . 104 The c",
+        "item_code": "9.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/0001628280-25-022390.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:181b50c8765cbeea02412ca258b03acd957b24d63a16cfa2ff87ffb87e48928c"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:04bb0255f0a10aaf9794d06b52cc4cbb45f4a45b8717df332bca22cd3741e8c0",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "2.02",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 2.02 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001628280-25-037592",
+        "brief": "8-K item 2.02 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/0001628280-25-037592.hdr.sgml",
+          "accession": "0001628280-25-037592",
+          "item_code": "2.02"
+        },
+        "event_key_hash": "sha256:ac14323c46e3196a31eff9eab24d9f144bd3d39e57d95f71a4247bb040ed4c01",
+        "hdr_source_reference_id": "sha256:04bb0255f0a10aaf9794d06b52cc4cbb45f4a45b8717df332bca22cd3741e8c0",
+        "primary_source_reference_id": "sha256:124b8847246c3b2b1035f38a9edfd8055b78a34b5829ea329db922848dfafc92",
+        "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. ☐ Item 2.02. Results of Operations and Financial Condition. Financial Results for the Quarter Ended June 30, 2025 On August 5, 2025, Marriott International, Inc. ( “ Marriott ” ) is issuing a press release reporting financial resul",
+        "item_code": "2.02",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/0001628280-25-037592.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:ebd529afc5183680526195eb1f82e725e068c1927bbb35f8ac9b358fe3b60b43"
+    },
+    {
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+      "company_id": "marriott_international",
+      "source_reference_id": "sha256:04bb0255f0a10aaf9794d06b52cc4cbb45f4a45b8717df332bca22cd3741e8c0",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:8a6274b59fb0fdcc250a1801a441ebb3591b53aa1d8aa144bb0275ae7913f879",
+      "locator": {
+        "item_code": "9.01",
+        "brief_source": "HDR_SGML_ITEM_CODE"
+      },
+      "value": "8-K item 9.01 parsed from hdr.sgml",
+      "unit": "text",
+      "attributes": {
+        "accession": "0001628280-25-037592",
+        "brief": "8-K item 9.01 parsed from hdr.sgml",
+        "brief_source": "HDR_SGML_ITEM_CODE",
+        "event_key": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/0001628280-25-037592.hdr.sgml",
+          "accession": "0001628280-25-037592",
+          "item_code": "9.01"
+        },
+        "event_key_hash": "sha256:1f3abe303cbb86f5732eb3d4da66b877a52102fe11fbb8bd6596b3f28e506a9c",
+        "hdr_source_reference_id": "sha256:04bb0255f0a10aaf9794d06b52cc4cbb45f4a45b8717df332bca22cd3741e8c0",
+        "primary_source_reference_id": "sha256:124b8847246c3b2b1035f38a9edfd8055b78a34b5829ea329db922848dfafc92",
+        "primary_heading_brief": "rriott’s press release is attached as Exhibit 99 and incorporated by reference. Item 9.01. Financial Statements and Exhibits. (d) Exhibits. The following exhibits are furnished with this report: 99 Press release dated August 5 , 2025, reporting financial results for the quarter ended June 30 , 2025. 104 The",
+        "item_code": "9.01",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/0001628280-25-037592.hdr.sgml",
+        "deterministic_router_semantic_version": "2"
+      },
+      "verified_claim_id": "sha256:ab38801606e79659185dfe03fb413e6d0f0ff6fe64c1fe639bdba09c4046ee7d"
+    }
+  ],
+  "matched_item_4_01_claim_ids": [],
+  "reason_code": "PASS",
+  "prior_filing_checks": [
+    {
+      "accession": "0001628280-25-004818",
+      "form": "10-K",
+      "source_references": [
+        {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+          "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "company_id": "marriott_international",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+          "accession": "0001628280-25-004818",
+          "document_name": "mar-20241231.htm",
+          "source_role": "target_primary",
+          "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+        },
+        {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+          "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+          "company_id": "marriott_international",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+          "accession": "0001628280-25-004818",
+          "document_name": "mar-20241231_htm.xml",
+          "source_role": "auditor_facts",
+          "request_attempt_id": "request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292"
+        }
+      ],
+      "facts": [
+        {
+          "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+          "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "accession": "0001628280-25-004818",
+          "name": "Ernst & Young LLP",
+          "canonical_name": "ernstyoungllp",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "entity_identifier": "0001048286",
+          "locator": {
+            "qualified_name": "dei:AuditorName",
+            "context_ref": "c-1",
+            "ordinal": 64
+          }
+        },
+        {
+          "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+          "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "accession": "0001628280-25-004818",
+          "name": "Ernst & Young LLP",
+          "canonical_name": "ernstyoungllp",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "entity_identifier": "0001048286",
+          "locator": {
+            "qualified_name": "dei:AuditorName",
+            "context_ref": "c-1",
+            "ordinal": 66
+          }
+        },
+        {
+          "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+          "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+          "accession": "0001628280-25-004818",
+          "name": "Ernst & Young LLP",
+          "canonical_name": "ernstyoungllp",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "entity_identifier": "0001048286",
+          "locator": {
+            "qualified_name": "dei:auditorname",
+            "context_ref": "c-1",
+            "ordinal": 64
+          }
+        },
+        {
+          "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+          "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+          "accession": "0001628280-25-004818",
+          "name": "Ernst & Young LLP",
+          "canonical_name": "ernstyoungllp",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "entity_identifier": "0001048286",
+          "locator": {
+            "qualified_name": "dei:auditorname",
+            "context_ref": "c-1",
+            "ordinal": 66
+          }
+        }
+      ],
+      "problems": [],
+      "canonical_names": [
+        "ernstyoungllp"
+      ],
+      "status": "FOUND"
+    }
+  ],
+  "selection_id": "sha256:6b3fa67faa929da40ff4872dc1e7f7be4236b27be435045be9ea661fe402a385"
+}

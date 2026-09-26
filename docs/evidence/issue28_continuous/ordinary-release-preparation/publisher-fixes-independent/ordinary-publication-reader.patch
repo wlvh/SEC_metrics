@@ -1,0 +1,71 @@
+--- a/scripts/vnext/publication_results.py
++++ b/scripts/vnext/publication_results.py
+@@ -16,10 +16,16 @@
+     return strict_json_loads(text=view.read_bytes(relative_path=path).decode())
+ 
+ 
++def _ordinary(view):
++    return (view.manifest['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE
++            and view.manifest.get('publication_credit') == 'NONE_ISOLATED_ORDINARY_VERSION')
++
++
+ def _predecessor(view):
+     from .publication import PublicationView
+     identity = view.manifest['previous_publication_id']
+-    prefix = 'internal/predecessor/' + identity
++    prefix = ('internal/ordinary_preparation/predecessor/' if _ordinary(view)
++              else 'internal/predecessor/') + identity
+     raw = view.read_bytes(relative_path=prefix + '/publication_manifest.json')
+     manifest = validate_record(record=strict_json_loads(text=raw.decode()))
+     _need(manifest['publication_id'] == identity, 'PUBLISHED_PREDECESSOR_ID_CHANGED')
+@@ -35,6 +41,9 @@
+     """Read the coverage authority of this version, without selecting a Result."""
+     from .publication import _safe_relative
+     relative_path = _safe_relative(value=relative_path).as_posix()
++    if _ordinary(view):
++        # Selected ordinary rows do not grant a new formal migration scope.
++        return authority_bytes(_predecessor(view), relative_path)
+     prefix = ('internal/annual_snapshot/data/' if
+               view.manifest['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE else
+               'internal/authority/')
+@@ -46,7 +55,21 @@
+     _need(view.publication_id not in _visited and len(_visited) < 32,
+           'PUBLISHED_RESULT_ANCESTRY_INVALID')
+     chain = (*_visited, view.publication_id)
+-    if view.manifest['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE:
++    if _ordinary(view):
++        batch = _json(view, 'internal/ordinary_complete_version.json')
++        found = [r for r in batch['selected_results']
++                 if (r['company_id'], r['metric_id']) == (company_id, metric_id)]
++        _need(len(found) <= 1, 'PUBLISHED_RESULT_BINDING_NOT_UNIQUE')
++        if not found:
++            _need({'company_id': company_id, 'metric_id': metric_id} in batch['unselected_coordinate_keys'],
++                  'PUBLISHED_RESULT_BINDING_NOT_UNIQUE')
++            result = native_result(_predecessor(view), company_id, metric_id, _visited=chain)
++            return {**result, 'requested_publication_id': chain[0],
++                    'inheritance_chain': list(chain) + result['inheritance_chain'][len(chain):]}
++        binding = found[0]
++        _need(binding['origin'] == 'VERIFIED_ORDINARY_RUN', 'PUBLISHED_RESULT_ORIGIN_UNKNOWN')
++        paths = [('internal/ordinary_preparation/' + binding['run_path'], binding)]
++    elif view.manifest['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE:
+         batch = _json(view, 'internal/annual_complete_version.json')
+         found = [r for r in batch['cumulative_result_bindings']
+                  if (r['company_id'], r['metric_id']) == (company_id, metric_id)]
+@@ -86,6 +109,17 @@
+         observations = [r for r in records if r['record_type'] == 'VERIFIED_OBSERVATION'
+                         and r['observation_id'] in trace[0]['input_observation_ids']]
+         source_ids = {r['source_binding']['source_reference_id'] for r in observations}
++        if _ordinary(view) and binding.get('selection_basis') == 'NATIVE_REVIEWED_DEFINED_SCOPE_STATEMENT':
++            # The bundle's native verifier has already proved the complete
++            # source census and effective Review; absence has no observations.
++            reasons = {'D04': 'D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE',
++                       'B13': 'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE'}
++            _need(result['metric_id'] in reasons and result['reason_code'] == reasons[result['metric_id']]
++                  and result['publication'] == 'WITHHELD' and result.get('value_kind') == 'TEXT_V1'
++                  and result['value'] is None and result.get('text_payload') is None
++                  and result['quality'] == 'NONE' and result['applicability'] == 'APPLICABLE',
++                  'PUBLISHED_DEFINED_SCOPE_RESULT_CHANGED')
++            source_ids = {r['source_reference_id'] for r in manifest['source_references']}
+         if view.manifest.get('publication_credit') == 'NONE_ISOLATED_STRUCTURED_MIGRATION' and not source_ids:
+             # A blocked candidate has no accepted Observation; return its
+             # actual bound sources for review without inventing acceptance.

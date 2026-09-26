@@ -1,0 +1,40 @@
+E
+======================================================================
+ERROR: test_numeric_run_replays_sources_and_rejects_resigned_false_ratio (tests.vnext.test_capacity_numeric_run.CapacityNumericRunTest.test_numeric_run_replays_sources_and_rejects_resigned_false_ratio)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2028, in load_requirement_snapshot
+    return load_profile_requirement_snapshot(
+        snapshot_dir=snapshot_dir,
+        parent_loader=load_requirement_snapshot,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile.py", line 77, in load_profile_requirement_snapshot
+    return engine.load_profile_requirement_snapshot(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        snapshot_dir=snapshot_dir, parent_loader=parent_loader,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 48, in load_profile_requirement_snapshot
+    need({'sha256':sha256_file(path=path),'size':path.stat().st_size} == binding
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and sha256_file(path=installed/relative) == binding['sha256'], 'Continuous rule bytes differ: ' + relative)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v15.py", line 15, in need
+    if not condition:raise v1.RequirementProfileError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.requirement_profile_v1.RequirementProfileError: Continuous rule bytes differ: scripts/vnext/r6_regulatory_semantics.py
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_numeric_run.py", line 46, in test_numeric_run_replays_sources_and_rejects_resigned_false_ratio
+    requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v14')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2033, in load_requirement_snapshot
+    raise RequirementError(str(error)) from error
+vnext.requirements.RequirementError: Continuous rule bytes differ: scripts/vnext/r6_regulatory_semantics.py
+
+----------------------------------------------------------------------
+Ran 1 test in 1.291s
+
+FAILED (errors=1)

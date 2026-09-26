@@ -1,0 +1,63 @@
+{
+  "finding": "SOURCE_AND_SEMANTIC_MODULES_NOT_IN_ORIGINAL_EXECUTION_FILE_SET",
+  "affected_slots": [
+    32,
+    33,
+    34,
+    35,
+    36,
+    37
+  ],
+  "missing_rules": {
+    "scripts/vnext/r6_semantic_source.py": {
+      "sha256": "6d043bca98f4ff3554b22c827647e5b4a863e21461b696a6ef39cf7b2e4b8bc8",
+      "size": 11701,
+      "source_commit": "210c43f342bede8a88b794f9985ca128f2e356ad"
+    },
+    "scripts/vnext/r6_semantic_review.py": {
+      "sha256": "e9280b9a1acc3a3651c4e79e01dad13bf3a0a9b1b3fa1ea82baa6b1cd07d33a9",
+      "size": 12121,
+      "source_commit": "210c43f342bede8a88b794f9985ca128f2e356ad"
+    },
+    "scripts/vnext/going_concern_source.py": {
+      "sha256": "6ffa23724395e1e781abbe9aa75f25f04a7149103cf426c88392e6c82a904276",
+      "size": 20620,
+      "source_commit": "210c43f342bede8a88b794f9985ca128f2e356ad"
+    },
+    "scripts/vnext/regulatory_investigation_candidates.py": {
+      "sha256": "0d9de9dd726f974bdf36b9176a2b1263cdb8b2b83014457d51e3220117994add",
+      "size": 13873,
+      "source_commit": "210c43f342bede8a88b794f9985ca128f2e356ad"
+    },
+    "catalog/r6/semantic_source_v1.json": {
+      "sha256": "92bb9aa587b27260188286665e57cbd9e12ef8264d2d36de08a41fe619917c05",
+      "size": 813,
+      "source_commit": "210c43f342bede8a88b794f9985ca128f2e356ad"
+    },
+    "catalog/r6/semantic_review_v1.json": {
+      "sha256": "82964e3181bad38197d18a444f29d030ae55493507e40c871f8e344389299ac4",
+      "size": 2415,
+      "source_commit": "210c43f342bede8a88b794f9985ca128f2e356ad"
+    },
+    "catalog/r6/going_concern_source_rules_v1.json": {
+      "sha256": "df84bdc5314a1a096f1a0b4da4a39f4c4049858332ca0b145e2f9f1847b53719",
+      "size": 821,
+      "source_commit": "210c43f342bede8a88b794f9985ca128f2e356ad"
+    },
+    "catalog/r6/regulatory_investigation_candidates_v1.json": {
+      "sha256": "ed6219001e9f83fdd3d630b25c6ca0bf25991c9a435e9e75311d8ffd277dae90",
+      "size": 7527,
+      "source_commit": "210c43f342bede8a88b794f9985ca128f2e356ad"
+    }
+  },
+  "supplement_origin": "Read from the exact retained code at48d73/210c43f; bytes equal across both heads and source.module_sha256 matches all six calls",
+  "original_slot_or_authority_rewritten": false,
+  "supplement_grants_execution_or_acceptance_credit": false,
+  "historical_observation_limit": "Original provider/request/response/counts remain real; complete bound runtime and native semantic acceptance are not retrospectively granted",
+  "repair": "New successor rule set includes all source/interpretation modules and policies; factory rejects missing/mismatched bindings before preparing sources",
+  "calls_after_discovery_before_new_wiring": [
+    0,
+    0,
+    0
+  ]
+}

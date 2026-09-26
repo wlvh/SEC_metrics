@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "first_candidate": "c767cd9d27dd455f9e9af3af2f015893",
+  "changed_content_candidate": "d7e5c5e02ebc4490971cf9a3a4b95d6d",
+  "recovered_candidate": "f691a91039194ac9a4b25448b434d705",
+  "checks": [
+    "initial-candidate",
+    "request-only-change-no-new-run",
+    "two-actual-source-versions-new-candidate",
+    "failed-source-preserves-success",
+    "restored-source-no-new-run",
+    "ready-terminal-pointer-recovery",
+    "unfinished-intent-retained",
+    "concurrent-check-rejected",
+    "invented-latest-reference-rejected",
+    "changed-successful-row-rejected",
+    "same-withheld-input-does-not-create-more-runs",
+    "terminal-and-intent-identities-and-ancestry-rejected"
+  ],
+  "metadata_rejections": [
+    "latest-terminal-id",
+    "latest-terminal-type",
+    "older-terminal-id",
+    "older-terminal-type",
+    "older-terminal-status",
+    "older-terminal-intent",
+    "older-terminal-configuration",
+    "older-intent-type",
+    "older-success-predecessor",
+    "older-terminal-removed"
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "real_new_filing_verified": false,
+  "production_authorized": false
+}

@@ -1,0 +1,12 @@
+past_then_supplier_other_clause baseline_guard=True patch_guard=False ACCEPTED unresolved=[]
+  Our contract manufacturers previously had limited output; a supplier has manufacturing capacity for its own products.
+supplier_same_clause baseline_guard=True patch_guard=True REJECTED B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+  Our contract manufacturers source parts from a supplier that has manufacturing capacity for its own products.
+current_after_past_same_clause baseline_guard=True patch_guard=False ACCEPTED unresolved=[]
+  Our contract manufacturers used to have production capacity for obsolete products and now have production capacity for current demand.
+they_current_after_past baseline_guard=True patch_guard=True REJECTED B13_TWO_STAGE_EXCLUDED_PHYSICAL_CAPACITY_REQUIRES_REVIEW
+  Our contract manufacturers previously had limited output; they have sufficient production capacity for anticipated demand.
+past_only baseline_guard=False patch_guard=False ACCEPTED unresolved=[]
+  Our contract manufacturers used to have production capacity for anticipated demand.
+conditional_only baseline_guard=False patch_guard=False ACCEPTED unresolved=[]
+  If demand increases, our contract manufacturers could have sufficient production capacity for anticipated demand.

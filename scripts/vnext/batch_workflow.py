@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import csv
 from pathlib import Path
+from urllib.parse import urlsplit
 from typing import Dict, List, Mapping, Sequence
 
 from sec_http import legacy_response_snapshot_paths, parse_request_log_rows
@@ -309,13 +310,20 @@ def validate_request_attempt_binding(
         raise BatchWorkflowError("Planned request attempt is absent")
     row_index, row = matches[0]
     archive_accession = request_accession(source_url=source_url)
+    # The requested document identity is the URL's final path component.
+    # A pinned immutable attempt may retain a different local storage name;
+    # its original path/header pair is still validated using the logged name.
+    logical_name = Path(urlsplit(source_url).path).name
+    immutable_storage_name = str(row["repo_relative_path"]).startswith("evidence/request_attempts/")
+    document_matches = (row["document_name"] == document_name
+                        or (immutable_storage_name and document_name == logical_name and bool(logical_name)))
     if (
         row["method"] != "GET"
         or row["status_code"] != "200"
         or row["error"]
         or row["source_url"] != source_url
         or row["content_sha256"] != content_sha256
-        or row["document_name"] != document_name
+        or not document_matches
         or (
             row["accession"] != archive_accession == accession
             if archive_accession
@@ -330,7 +338,7 @@ def validate_request_attempt_binding(
         row=row,
         source_url=source_url,
         content_sha256=content_sha256,
-        document_name=document_name,
+        document_name=row["document_name"],
     )
     if require_immutable and proof["request_locator_kind"] != (
         "IMMUTABLE_ATTEMPT"

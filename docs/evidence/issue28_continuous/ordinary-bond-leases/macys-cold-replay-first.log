@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/b06-note-cold-replay.py", line 9, in <module>
+    manifest,records,decisions=run_store._mechanically_replay_open_run(run_dir=run,repo_root=data,require_complete_results=True)
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/sec_metrics_issue28_continuous/v14-macys-bond-native-first/data/macys/scripts/vnext/run_store.py", line 3425, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/private/tmp/sec_metrics_issue28_continuous/v14-macys-bond-native-first/data/macys/scripts/vnext/run_store.py", line 2135, in _validate_record_graph
+    ordinary_case = validate_normal_run_authority(repo_root=repo_root,manifest=manifest,
+        records=records,compiled_specs=compiled_specs)
+  File "/private/tmp/sec_metrics_issue28_continuous/v14-macys-bond-native-first/data/macys/scripts/vnext/normal_run_v3.py", line 245, in validate_normal_run_authority
+    case = replay_case(data_root=repo_root,manifest=manifest)
+  File "/private/tmp/sec_metrics_issue28_continuous/v14-macys-bond-native-first/data/macys/scripts/vnext/normal_run_v3.py", line 231, in replay_case
+    case = prepare_case(data_root=data_root,company_id=manifest["company_id"],metric_id=metric_id)
+  File "/private/tmp/sec_metrics_issue28_continuous/v14-macys-bond-native-first/data/macys/scripts/vnext/normal_run_v3.py", line 66, in prepare_case
+    from .normal_bond_debt_results import prepare_bond_debt_case
+  File "/private/tmp/sec_metrics_issue28_continuous/v14-macys-bond-native-first/data/macys/scripts/vnext/normal_bond_debt_results.py", line 2, in <module>
+    from .b06_bond_leases import POLICY, POLICY_PATH, BondLeaseError, inspect_bond_debt_scope
+  File "/private/tmp/sec_metrics_issue28_continuous/v14-macys-bond-native-first/data/macys/scripts/vnext/b06_bond_leases.py", line 13, in <module>
+    from .b06_financing_inventory import inspect_financing_inventory
+ModuleNotFoundError: No module named 'vnext.b06_financing_inventory'

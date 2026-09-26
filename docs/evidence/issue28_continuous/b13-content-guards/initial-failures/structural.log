@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/resume-20260915/check_structural.py", line 20, in <module>
+    install_inputs(data_root=root/'data',company_id=cid)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_run.py", line 124, in install_inputs
+    case = prepare_case(data_root=source_root, company_id=company_id, assessment_mode=assessment_mode,
+                        assessment_input_id=assessment_input_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_run.py", line 23, in prepare_case
+    return _prepare_structural_case(data_root=data_root, company_id=company_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_run.py", line 105, in _prepare_structural_case
+    result, trace = build_text_result_and_trace(compiled_spec=spec, target=target,
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        structural=True, reason_code='B13_OUTSIDE_APPROVED_APPLICABILITY')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/text_results.py", line 410, in build_text_result_and_trace
+    return _record(result), _record(trace)
+           ~~~~~~~^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/text_results.py", line 41, in _record
+    return validate_record(record=value)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/records.py", line 1881, in validate_record
+    _validate_record_semantics(record_type=semantic_type, record=record)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/records.py", line 1712, in _validate_record_semantics
+    raise RecordError("Structural MetricResult state is inconsistent")
+vnext.records.RecordError: Structural MetricResult state is inconsistent

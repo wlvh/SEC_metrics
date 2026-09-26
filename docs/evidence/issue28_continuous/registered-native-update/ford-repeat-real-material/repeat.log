@@ -1,0 +1,25 @@
+runtime/config verified; repeat started
+{
+  "status": "UPDATES_READY",
+  "metric_status": "NO_SOURCE_CONTENT_CHANGE",
+  "new_candidate": false,
+  "counts_before": [
+    59,
+    59,
+    49
+  ],
+  "counts_after": [
+    60,
+    60,
+    49
+  ],
+  "seconds": 621.2231322920416,
+  "changed_paths": [
+    "metrics/D04/current.json"
+  ]
+}
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/ford-repeat-6ccf/repeat.py", line 33, in <module>
+    assert result['status']=='UPDATES_READY'and row['status']=='NO_SOURCE_CONTENT_CHANGE'and row['new_candidate_created']is False and before==after and not events
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,344 @@
+{
+  "before": {
+    "scripts/vnext/text_results_v2.py": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+    "catalog/r6/text_results_v2_policy.json": "16d9b7e46aa73d61f678ff06b0b9b24c1bedb9849840e2d84e90fd3919ce7d3c",
+    "catalog/r6/D02_legal_disclosures_v1.md": "66e25bccd5235d13d5c5edc03a8eb52f20fd65875a2eadaef961915a192b188f",
+    "tests/vnext/test_text_results_v2.py": "61f96cfd8dbbf7883d21e6ef632fed69224391ac220b9ea736b2f82ee32fa487"
+  },
+  "after": {
+    "scripts/vnext/text_results_v2.py": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+    "catalog/r6/text_results_v2_policy.json": "16d9b7e46aa73d61f678ff06b0b9b24c1bedb9849840e2d84e90fd3919ce7d3c",
+    "catalog/r6/D02_legal_disclosures_v1.md": "66e25bccd5235d13d5c5edc03a8eb52f20fd65875a2eadaef961915a192b188f",
+    "tests/vnext/test_text_results_v2.py": "61f96cfd8dbbf7883d21e6ef632fed69224391ac220b9ea736b2f82ee32fa487"
+  },
+  "unchanged": true,
+  "cases": [
+    {
+      "name": "baseline_current",
+      "source_sha256": "47fac924f1ed5370f5e22d35f99b276ddbe4ede652dc04150a80fbb50a151449",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "107",
+          "value_normalized": "107000000",
+          "verification_status": "VERIFIED_AS_REPORTED_MONETARY_FACT",
+          "reasons": [],
+          "currency": "USD",
+          "entity_relation": "SAME_REGISTRANT",
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "12345",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 1,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "comma_decimal",
+      "source_sha256": "16fd970f710e17f791cbd6c7409d194fb54920063dfcbf5401a07704a82b8cf5",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "1,23",
+          "value_normalized": null,
+          "verification_status": "SOURCE_LITERAL_ONLY",
+          "reasons": [
+            "D02_FACT_UNSUPPORTED_NUMERIC_TRANSFORM"
+          ],
+          "currency": null,
+          "entity_relation": null,
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "12345",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 1,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "declared_EUR",
+      "source_sha256": "3de245ad0a631772069b814d034ed374886717323a53b15f26e9e4b3dd36f399",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "107",
+          "value_normalized": "107000000",
+          "verification_status": "VERIFIED_AS_REPORTED_MONETARY_FACT",
+          "reasons": [],
+          "currency": "EUR",
+          "entity_relation": "SAME_REGISTRANT",
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "12345",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 1,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "fake_iso4217_namespace",
+      "source_sha256": "03c2e8c8aed93bb4237ffdecc87cbac5971395bcbe606e1c12c33b901b1a0945",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "107",
+          "value_normalized": null,
+          "verification_status": "SOURCE_LITERAL_ONLY",
+          "reasons": [
+            "D02_FACT_MONETARY_UNIT_NOT_PROVEN"
+          ],
+          "currency": null,
+          "entity_relation": null,
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "12345",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 0,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "fake_transform_namespace",
+      "source_sha256": "b47965544e067d2211b6d2ee372f9f24dd1c95b93ccfda954f5392bb63d8ac19",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "107",
+          "value_normalized": null,
+          "verification_status": "SOURCE_LITERAL_ONLY",
+          "reasons": [
+            "D02_FACT_UNSUPPORTED_TRANSFORM_NAMESPACE"
+          ],
+          "currency": null,
+          "entity_relation": null,
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "12345",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 1,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "forged_us_gaap_uri",
+      "source_sha256": "9d03974817094f6cafc8cf2554d99505ca2d6765a23d167ea90de408ba26080a",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 0,
+      "facts": [],
+      "current_fact_count": 0,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "malformed_dot_decimal",
+      "source_sha256": "882ea00dbea4139bf205655b1c2327d5f76af26a86f467d28763dc3ae883e27e",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "1,23",
+          "value_normalized": null,
+          "verification_status": "SOURCE_LITERAL_ONLY",
+          "reasons": [
+            "D02_FACT_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED"
+          ],
+          "currency": null,
+          "entity_relation": null,
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "12345",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 1,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "old_period",
+      "source_sha256": "c6dfc9b7bdc7f9670e9765d0dcd36f4dc502e6ae37b06ebb90e1287ccd76ca7b",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "107",
+          "value_normalized": "107000000",
+          "verification_status": "VERIFIED_AS_REPORTED_MONETARY_FACT",
+          "reasons": [],
+          "currency": "USD",
+          "entity_relation": "SAME_REGISTRANT",
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "12345",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 0,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "other_entity",
+      "source_sha256": "56d0bf61928f9f69ee8e886f1c89aee7476f2b3895912119062ef8ce4e66243c",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "107",
+          "value_normalized": "107000000",
+          "verification_status": "VERIFIED_AS_REPORTED_MONETARY_FACT",
+          "reasons": [],
+          "currency": "USD",
+          "entity_relation": "OTHER_ENTITY_AS_REPORTED",
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "54321",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 0,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "undefined_currency_ZZZ",
+      "source_sha256": "f6b86c3a4fffefb2135cc680c3944c2db0dcc1933ba793d7d31afcce83bc000a",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "107",
+          "value_normalized": null,
+          "verification_status": "SOURCE_LITERAL_ONLY",
+          "reasons": [
+            "D02_FACT_CURRENCY_NOT_SUPPORTED"
+          ],
+          "currency": null,
+          "entity_relation": null,
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "12345",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 0,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "unformatted_comma_decimal",
+      "source_sha256": "f81cd1cffdb8076790806c0989a0e496e4113e2aa48d52d5d555a0a8627e604d",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "1,23",
+          "value_normalized": null,
+          "verification_status": "SOURCE_LITERAL_ONLY",
+          "reasons": [
+            "D02_FACT_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED"
+          ],
+          "currency": null,
+          "entity_relation": null,
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "12345",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 1,
+      "expected_check": "PASS"
+    },
+    {
+      "name": "wrong_cik_scheme",
+      "source_sha256": "898b6058873d466093ef7f79cff024d1c7ed0683c82b23f130c46cb144a5dcef",
+      "text_result": "TEXT_V1",
+      "publication": "PUBLISHED",
+      "fact_count": 1,
+      "facts": [
+        {
+          "source_text": "107",
+          "value_normalized": null,
+          "verification_status": "SOURCE_LITERAL_ONLY",
+          "reasons": [
+            "D02_FACT_ENTITY_SCHEME_NOT_PROVEN"
+          ],
+          "currency": null,
+          "entity_relation": null,
+          "context": {
+            "context_ref": "reported",
+            "dimensions": {},
+            "entity_identifier": "12345",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "current_fact_count": 0,
+      "expected_check": "PASS"
+    }
+  ],
+  "scope": "TEST_ONLY_source_material_and_native_records; no Run/admission/publication credit",
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

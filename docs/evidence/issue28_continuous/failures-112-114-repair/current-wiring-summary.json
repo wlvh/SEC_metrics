@@ -1,0 +1,39 @@
+{
+  "status": "PASS_CURRENT_TYPED_COMPACT_AND_LOSSLESS_INDEXED_FACTORY_CONTROLLER",
+  "requirement_closure_hash": "sha256:ad0b4f4e27ac3019e2ccd3c46e823d75d19246bf38d8776712821136be13a9c8",
+  "stale_wiring_rejected": "Source path is not a regular file: /Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/failures-112-114-repair/offline-wiring.json",
+  "mock_opener_calls_this_launch": [
+    "B13",
+    "D04"
+  ],
+  "prior_completed_recorded_calls_reused": [
+    1
+  ],
+  "recorded_native_calls": [
+    {
+      "metric": "B13",
+      "ordinal": 1,
+      "request_id": "sha256:49ae4151f20a6d9f07ea848953db8e7ca36e96e4f09bb947e0dc75fbc01fb306"
+    },
+    {
+      "metric": "B13",
+      "ordinal": 2,
+      "request_id": "sha256:c381311bd269f741ffe0aa4373b7508852e62f7f2db5c0f870d99ad95867cd24"
+    },
+    {
+      "metric": "D04",
+      "ordinal": 3,
+      "request_id": "sha256:df5c856849f041fc6a2b0b3e31ad03d51fe168308b240cfad2176d6bf4d0e4a2"
+    }
+  ],
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "original113_indexed_digest_unchanged": true,
+  "network_disabled": true,
+  "legacy_default_forbidden": true,
+  "real_request_factory_to_controller_verified": true,
+  "seconds": 65.731
+}

@@ -1,0 +1,121 @@
+{
+  "cases": [
+    {
+      "company_id": "marriott_international",
+      "status": "PREPARED",
+      "quality": "NOT_MEANINGFUL",
+      "publication": "PUBLISHED",
+      "value": null,
+      "reason": "DENOMINATOR_NONPOSITIVE",
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "amendment_count": 0,
+      "selection_reason": null
+    },
+    {
+      "company_id": "southwest_airlines",
+      "status": "PREPARED",
+      "quality": "NONE",
+      "publication": "WITHHELD",
+      "value": null,
+      "reason": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "amendment_count": 1,
+      "selection_reason": "UNRESOLVED_FINANCING_ITEM:[{'origin': 'all_instant_xbrl', 'concept': 'us-gaap:supplierfinanceprogramobligationcurrent', 'ordinal': 1560, 'value': '24000000', 'disposition': 'UNRESOLVED'}]"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "status": "PREPARED",
+      "quality": "NONE",
+      "publication": "WITHHELD",
+      "value": null,
+      "reason": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "amendment_count": 0,
+      "selection_reason": "B06_INDUSTRIAL_SCOPE_REQUIRES_SEPARATE_PROOF"
+    },
+    {
+      "company_id": "pfizer",
+      "status": "PREPARED",
+      "quality": "NONE",
+      "publication": "WITHHELD",
+      "value": null,
+      "reason": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "amendment_count": 0,
+      "selection_reason": "DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:DebtDisclosureTextBlock"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "status": "PREPARED",
+      "quality": "NONE",
+      "publication": "WITHHELD",
+      "value": null,
+      "reason": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "amendment_count": 0,
+      "selection_reason": "B06_BANK_SCOPE_NOT_IMPLEMENTED_IN_THIS_RESOLVER"
+    },
+    {
+      "company_id": "salesforce",
+      "status": "PREPARED",
+      "quality": "EXACT",
+      "publication": "PUBLISHED",
+      "value": "0.2531872442595786412363464205",
+      "reason": "PASS",
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "amendment_count": 0,
+      "selection_reason": null
+    },
+    {
+      "company_id": "lumen_technologies",
+      "status": "PREPARED",
+      "quality": "NOT_MEANINGFUL",
+      "publication": "PUBLISHED",
+      "value": null,
+      "reason": "DENOMINATOR_NONPOSITIVE",
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "amendment_count": 0,
+      "selection_reason": null
+    },
+    {
+      "company_id": "macys",
+      "status": "PREPARED",
+      "quality": "EXACT",
+      "publication": "PUBLISHED",
+      "value": "0.5030864197530864197530864198",
+      "reason": "PASS",
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "amendment_count": 0,
+      "selection_reason": null
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "status": "PREPARED",
+      "quality": "NONE",
+      "publication": "WITHHELD",
+      "value": null,
+      "reason": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "amendment_count": 1,
+      "selection_reason": "DISCLOSURE_NOTE_MISSING_OR_AMBIGUOUS:us-gaap:ScheduleOfDebtInstrumentsTextBlock"
+    },
+    {
+      "company_id": "enphase_energy",
+      "status": "PREPARED",
+      "quality": "EXACT",
+      "publication": "PUBLISHED",
+      "value": "1.107959077222837051285943352",
+      "reason": "PASS",
+      "input_decision": "INPUT_PROPERTY_PROVEN",
+      "amendment_count": 0,
+      "selection_reason": null
+    }
+  ],
+  "seconds": 133.33299520798028,
+  "native_runs_created": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

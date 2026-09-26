@@ -1,0 +1,41 @@
+{
+  "record_type": "B13_SAVED_SOURCE_PHYSICAL_PHRASE_CENSUS",
+  "regex": "\\b(?:manufacturing|production)\\s+(?:capacity|capabilities)\\b",
+  "read_only": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "interpretation_boundary": "Counts exact phrase occurrences only. Does not identify assertion spans, subjects, timing, scan selections, model accuracy, or absence of other capacity meanings.",
+  "companies": [
+    {
+      "company_id": "enphase_energy",
+      "saved_ordinal": 190,
+      "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c",
+      "visible_unit_count": 7,
+      "visible_block_count": 2709,
+      "matched_block_count": 5,
+      "multi_phrase_block_count": 1,
+      "max_phrase_count_in_block": 2,
+      "multi_phrase_blocks": [
+        {
+          "block_index": 454,
+          "phrase_count": 2,
+          "text_sha256": "4fde58a594a214fa1224b5834d749096023f3cb48bb9866210985f8c75734e21"
+        }
+      ]
+    },
+    {
+      "company_id": "ford_motor_company",
+      "saved_ordinal": 171,
+      "source_id": "sha256:5ae42d4aebed1e8720ea77ed71efbb20cb79418301a8ccc7c4fd94922176c396",
+      "visible_unit_count": 10,
+      "visible_block_count": 4176,
+      "matched_block_count": 11,
+      "multi_phrase_block_count": 0,
+      "max_phrase_count_in_block": 1,
+      "multi_phrase_blocks": []
+    }
+  ]
+}

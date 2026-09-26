@@ -1,0 +1,39 @@
+{
+  "observations": [
+    {
+      "slot": 36,
+      "model": "deepseek-flash",
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 0,
+        "cache_miss_input_tokens": 36559,
+        "input_tokens": 36559,
+        "output_tokens": 270
+      },
+      "source_reference_check": "PASS",
+      "executor_meaning_assessment": "EXPECTED_ORDINARY_BUSINESS_MEANING",
+      "timing_assessment": "Current source describes talent recruitment; no going-concern assertion",
+      "independent_review": false,
+      "native_result_created": false
+    },
+    {
+      "slot": 37,
+      "model": "deepseek-flash",
+      "usage": {
+        "actual_cost": null,
+        "cache_hit_input_tokens": 1664,
+        "cache_miss_input_tokens": 50463,
+        "input_tokens": 52127,
+        "output_tokens": 249
+      },
+      "source_reference_check": "PASS",
+      "executor_meaning_assessment": "EXPECTED_ORDINARY_BUSINESS_MEANING",
+      "timing_assessment": "Ford Credit conditional cross-paragraph wording still needs precise timing evaluation",
+      "independent_review": false,
+      "native_result_created": false
+    }
+  ],
+  "semantic_route_fully_proven": false,
+  "whole_source_coverage_accepted": false,
+  "production_authorized": false
+}

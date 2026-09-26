@@ -1,0 +1,34 @@
+{
+  "status": "PASS_CURRENT_B13_FACTORY_OPENER_CONTROLLER_POSITIVE_AND_SOURCE_ROLE_REJECTION",
+  "requirement_closure_hash": "sha256:cd18e0c80283ef70bf3b51a9367a620badb0478c6f017398eb9f56673160bb03",
+  "prior_receipt_error": "Source path is not a regular file: /Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json",
+  "mock_opener_calls": [
+    "valid_empty_group",
+    "original111_current_semantic_rejection"
+  ],
+  "results": [
+    {
+      "name": "valid_empty_group",
+      "status": "SUCCEEDED",
+      "native_candidate_evidence_created": true
+    },
+    {
+      "name": "original111_current_semantic_rejection",
+      "status": "FAILED_TERMINAL",
+      "native_candidate_evidence_created": false
+    }
+  ],
+  "original111_request_identity_unchanged": true,
+  "original111_current_reuse_credit": false,
+  "old111_terminal_changed": false,
+  "complete_company_result": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "network_disabled": true,
+  "legacy_default_forbidden": true,
+  "real_request_factory_to_controller_verified": true,
+  "seconds": 33.086
+}

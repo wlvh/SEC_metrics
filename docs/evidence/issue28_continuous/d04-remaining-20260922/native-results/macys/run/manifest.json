@@ -1,0 +1,72 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "OPEN",
+  "records_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "ce36c01ef894c68b054d03f45331f2405141c1b9869029420ec1fa700ef7ddbc",
+  "content_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "audit_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "run_id": "run:ordinary-integrated:5addd60e5b3ff71850808aac3cfc8de88daa819da36853a02fd68ec559295037",
+  "company_id": "macys",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-02-02",
+    "period_end": "2026-01-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:ca1e56ece9708a8e150c00ef57fc0b09f3b2d3da66c45ce29221919e6cab8250",
+      "raw_asset_id": "sha256:47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+      "company_id": "macys",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm",
+      "accession": "0001628280-26-021721",
+      "document_name": "m-20260131.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:223eda17f6f6bff9feaeb05ea949911e3b385ef3af99fa2b15831f5270bed413",
+      "raw_asset_id": "sha256:75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+      "company_id": "macys",
+      "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+      "accession": "SUBMISSIONS-794367",
+      "document_name": "CIK0000794367.json",
+      "source_role": "supporting_input",
+      "request_attempt_id": "request:attempt:d3b5914e9e0a6f3568a2da42a67774d198faa3a0a04e220054489d3c045c9529"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:4163482e3420ee7898514aec62641858fd27181a5905ebee09b165ca10f553eb",
+      "raw_asset_id": "sha256:fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+      "company_id": "macys",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+      "accession": "0001628280-26-021721",
+      "document_name": "CIK0000794367.json",
+      "source_role": "supporting_input",
+      "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r6/D04_going_concern_assessment_v1.md": "b0d4e25d4af8b49ca99efda0f04abd127258b12f0a2d0110c33fccb66faeed7f"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "93fcec196d9b7efaf09400346ee2b732a06bfd00a635cff17656bfa6fe79aabd",
+    "contract_sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+    "decision_register_sha256": "229a634e1986396e1599b6a8abd4ddd2d048f16a9e7708c08f761e7ac7f5edce",
+    "invariant_profile_sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+    "transfer_manifest_sha256": "970630546c6bb95f3ced795aaac2c81533fb10c1467fbd5386049bf85278c5cd",
+    "parent_requirement_closure_hash": "sha256:047e4d4061740281e125ae8fde7ddf3277e0d00bf250b574c040c48bcf8f1bf8",
+    "validator_sha256": "794923cf5838664dfe0a7dafc91bab4d022ce59edebc6545535857ff2d4e8b4a"
+  },
+  "requirement_closure_hash": "sha256:0f724fa70733781ac79d2a5672a169d030b5b3994b5afe50b407c4bec3b41bd9",
+  "requirement_id": "issue_28_v14",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

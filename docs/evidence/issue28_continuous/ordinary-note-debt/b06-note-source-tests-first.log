@@ -1,0 +1,22 @@
+test_actual_complete_member_reconciliation_and_explicit_lease_absence (tests.vnext.test_b06_note_carrying.NoteCarryingTest.test_actual_complete_member_reconciliation_and_explicit_lease_absence) ... ok
+test_additional_current_borrowing_in_full_note_is_not_a_table_total (tests.vnext.test_b06_note_carrying.NoteCarryingTest.test_additional_current_borrowing_in_full_note_is_not_a_table_total) ... ok
+test_an_unknown_table_row_cannot_hide_in_a_supported_schedule (tests.vnext.test_b06_note_carrying.NoteCarryingTest.test_an_unknown_table_row_cannot_hide_in_a_supported_schedule) ... ok
+test_cross_document_disagreement_and_wrong_currency_namespace_reject (tests.vnext.test_b06_note_carrying.NoteCarryingTest.test_cross_document_disagreement_and_wrong_currency_namespace_reject) ... ok
+test_each_note_principal_and_adjustment_must_reconcile (tests.vnext.test_b06_note_carrying.NoteCarryingTest.test_each_note_principal_and_adjustment_must_reconcile) ... ok
+test_independent_native_inventory_catches_other_debt_and_finance_leases (tests.vnext.test_b06_note_carrying.NoteCarryingTest.test_independent_native_inventory_catches_other_debt_and_finance_leases) ... FAIL
+test_missing_or_historical_lease_statement_never_means_zero (tests.vnext.test_b06_note_carrying.NoteCarryingTest.test_missing_or_historical_lease_statement_never_means_zero) ... ok
+test_quoted_or_contradicted_lease_statement_is_not_current_issuer_evidence (tests.vnext.test_b06_note_carrying.NoteCarryingTest.test_quoted_or_contradicted_lease_statement_is_not_current_issuer_evidence) ... ok
+
+======================================================================
+FAIL: test_independent_native_inventory_catches_other_debt_and_finance_leases (tests.vnext.test_b06_note_carrying.NoteCarryingTest.test_independent_native_inventory_catches_other_debt_and_finance_leases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_note_carrying.py", line 92, in test_independent_native_inventory_catches_other_debt_and_finance_leases
+    with self.assertRaisesRegex(ValueError,reason): self.inspect(args)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 8 tests in 15.161s
+
+FAILED (failures=1)

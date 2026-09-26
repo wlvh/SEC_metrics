@@ -1,0 +1,317 @@
+{
+  "status": "PASS",
+  "preparation_id": "sha256:ea3d09a0c46efde7ec5282ec593c317e31fa1ba600c0ad319f93877ec3b2be42",
+  "selected_results": [
+    {
+      "company_id": "pfizer",
+      "metric_id": "B01",
+      "origin": "VERIFIED_ORDINARY_RUN",
+      "data_path": "native/000/data",
+      "run_path": "native/000/run",
+      "run_id": "run:ordinary-integrated:6a174ea35fd3adebeb11508a44dc3d32bad8cce43f9a8955c1bd85e1abbfb37e",
+      "run_status": "OPEN",
+      "result_id": "sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf",
+      "value_kind": "NUMERIC",
+      "quality": "EXACT",
+      "applicability": "APPLICABLE",
+      "reason_code": "PASS",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "requirement_id": "issue_28_v13",
+      "requirement_hashes": {
+        "baseline_sha256": "91d49ad5734f7707a78f90a3b71e740577eead4c6f9bb32b29607061c2f10d85",
+        "contract_sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+        "decision_register_sha256": "15b7023fd433c5bef7633e067b361ca1f26b5b94bf9642df752a47cd32fa77c5",
+        "invariant_profile_sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+        "transfer_manifest_sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+        "parent_requirement_closure_hash": "sha256:b1719ce7b13ce8e8cf8fab5b368076ed9c0116084524c377e0a2f11168c68e8c",
+        "validator_sha256": "b06a50acafece1cc6fa0f0c0b8d57d780b1e6f13768c0efd5d8bbf7a49e17dab"
+      },
+      "requirement_closure_hash": "sha256:32befd88bf8470e116afe0ca117b9161e0041f07ff229a814e8c7ac71ff84fe7",
+      "render_receipt": {
+        "record_type": "ORDINARY_INTEGRATED_ROW_RECEIPT",
+        "status": "VERIFIED_OPEN_PREVIEW",
+        "run_id": "run:ordinary-integrated:6a174ea35fd3adebeb11508a44dc3d32bad8cce43f9a8955c1bd85e1abbfb37e",
+        "run_status": "OPEN",
+        "result_id": "sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf",
+        "primary_metric_id": "B01",
+        "source_required_metric_ids": [
+          "B01"
+        ],
+        "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+        "renderer_sha256": "cb9adfd261cce51eea8349fa53892adb680dfd5717053761e6c9785f88ba565b",
+        "row_hash": "sha256:65e4499c82e4a2675f231dbd1bece6cd72c52be1f091d3a639a1ca8729d59ace",
+        "evidence_hash": "sha256:e1b8cd1b1d234fe7526d1575fa0479f3cfcf0fb15b340b4582483e10dea2d693",
+        "evidence_count": 1,
+        "source_validation": "FULL_NATIVE_RUN_REPLAY",
+        "production_authorized": false,
+        "receipt_id": "sha256:716b888d4a295d82cce94b5e8d0f83350aa1c3cd158a7cd8337f57f1ea5845af"
+      },
+      "source_locations": [
+        {
+          "evidence_hash": "sha256:5291eb850b556898ac76b9c93e9f53c7eb346361965080da8d2ae565ea78f383",
+          "package_path": "native/000/data/evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json",
+          "sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566"
+        }
+      ],
+      "source_admission": {
+        "new_business_calls": {
+          "paid": 0,
+          "provider": 0,
+          "sec": 0
+        },
+        "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+        "request_attempt_ids": [
+          "request:attempt:87479e2b81668856179f2daca30e8af491662248937271857494243f337cc21b",
+          "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4",
+          "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db"
+        ],
+        "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+        "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+        "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270"
+      }
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "C02",
+      "origin": "VERIFIED_ORDINARY_RUN",
+      "data_path": "native/001/data",
+      "run_path": "native/001/run",
+      "run_id": "run:ordinary-integrated:3768bb431ee5c90c83ccc2afe2954aa88b59a79c1bc94ac757303a299049141f",
+      "run_status": "OPEN",
+      "result_id": "sha256:6d2608aed318b6113f7de35984cefaab059bcc38b949b2c6a7c6b9eda3e2ac5a",
+      "value_kind": "TEXT_V1",
+      "quality": "EXACT",
+      "applicability": "APPLICABLE",
+      "reason_code": "PASS",
+      "target_period": {
+        "fiscal_year": 2026,
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31"
+      },
+      "requirement_id": "issue_28_v13",
+      "requirement_hashes": {
+        "baseline_sha256": "91d49ad5734f7707a78f90a3b71e740577eead4c6f9bb32b29607061c2f10d85",
+        "contract_sha256": "5e3232baf304e70256328084b00c36545031b06dd3e956b5b3983862a2b4d374",
+        "decision_register_sha256": "15b7023fd433c5bef7633e067b361ca1f26b5b94bf9642df752a47cd32fa77c5",
+        "invariant_profile_sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
+        "transfer_manifest_sha256": "e373d84a8311d084028b9dc3457530dc6de9ac6cf2a17292eb8c0d0258795a06",
+        "parent_requirement_closure_hash": "sha256:b1719ce7b13ce8e8cf8fab5b368076ed9c0116084524c377e0a2f11168c68e8c",
+        "validator_sha256": "b06a50acafece1cc6fa0f0c0b8d57d780b1e6f13768c0efd5d8bbf7a49e17dab"
+      },
+      "requirement_closure_hash": "sha256:32befd88bf8470e116afe0ca117b9161e0041f07ff229a814e8c7ac71ff84fe7",
+      "render_receipt": {
+        "record_type": "ORDINARY_INTEGRATED_ROW_RECEIPT",
+        "status": "VERIFIED_OPEN_PREVIEW",
+        "run_id": "run:ordinary-integrated:3768bb431ee5c90c83ccc2afe2954aa88b59a79c1bc94ac757303a299049141f",
+        "run_status": "OPEN",
+        "result_id": "sha256:6d2608aed318b6113f7de35984cefaab059bcc38b949b2c6a7c6b9eda3e2ac5a",
+        "primary_metric_id": "C02",
+        "source_required_metric_ids": [
+          "C02"
+        ],
+        "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+        "renderer_sha256": "cb9adfd261cce51eea8349fa53892adb680dfd5717053761e6c9785f88ba565b",
+        "row_hash": "sha256:bde49ba6e4277a13003bb75aa28da6d68043527cc9bcbcc3e5048a66ad7fed02",
+        "evidence_hash": "sha256:4b662331f620a917a3782f5e4bb12ca234430ccb2a5800c39027858434ccd7b8",
+        "evidence_count": 30,
+        "source_validation": "FULL_NATIVE_RUN_REPLAY",
+        "production_authorized": false,
+        "receipt_id": "sha256:66eff5e61449b9e9e0113aac1f9fc7bcd7452eaf9548d74c1805ec6f05b335e5"
+      },
+      "source_locations": [
+        {
+          "evidence_hash": "sha256:c10ce9ad5c733419189e378b4acca20a9d9ceaabd7b8e0ca5fb7f90a9f2d50d3",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:7a8a096b60be35950ccadc0ce57cfd062d66d9886124adacd84cfb8d12983e42",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:da2c9bfb968848bb7c4ea0626a58712f19bf9827988fceff725a38fc4ca84052",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:b487772a185f5cd4f09bbc28b473a1ae52222ffe94dd96936a976c585e94bbff",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:c69ffeae993cdd86eca3977870705768473c21506688aabd8cace2bd9f2337be",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:f324dd7906988eb3acec9d601f0854d5f70250cba4f86a8726cb57a0f5190d25",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:e1ed036d355f2d5d88035a237d26ad2403c1be00e992b4e9003dd6a62a476056",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:d1efe50de81da0571ac2826608ee8a9d34d414e432a94335e7a56701a2d63576",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:ee4ff439fcbcab6a6a675b2ffa1040194ebc3d28ff06b3615ccae4bad589e295",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:9990b379380bef2c5d47c1283ecd0d053cca117c0b62283609dc4118b57f158c",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:bd8a24d4e42b98187c5b7a1d0df17069eba90065a5651d48a1adc722ef7420f7",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:39a894ef58c5a2ab7503185c1b32864a3fa13989e686b48ae759113c096a7951",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:4a09ec89ee29a96a2469133ad082c2e6e992a8059404133f489909dba775d824",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:e0e29e282135b5fd3ab8a3b58ed6eaa91d202d5015b07e57d4201e13edc45d70",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:70e046c868131ce5a2fe3abc6a9d1b5c981f63ec8efc5fb318302a726959f602",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:858450dce0b49eaff8f09671f72a7f9449b9c372ba33560621a145cad0d49b96",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:e4fed7843a260187392051c9c1409b7b314b5b1b87b108fb512242312bb5e65f",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:d0d7fbe42069ead4db11056ed30c8e99d3948a8f35435c405c8044f315bebc41",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:d7e86b04d974512eee44425b5c373b3b0afc3c4aa032a56522dfa9f73768176b",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:bbf42843674c5752c72bfe8f4def69deeab520c745c34fa2a3e2a76787d14497",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:8c3a8fcdb5ce37b58643c163e34b1079558180a07c0ec40390e53ebe7cf3cc14",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:9971b468f6b37bbb7660aa210f8a4bb23d0764aa6591dfebdb5f58b346c247eb",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:3cb2c096e1d390da9630c9c6f77913b1bd95c1cc73e111b83f236ffddb68e4ed",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:3cfc50eeff6c50af3626e45f072aff987ed2b59b43ead97ca0138828316eef9a",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:65ad487af7fa321963317108cf677f56cc2b6515d12a750eb45a0ae981a5e922",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:e452ff845e8d05d52351361eb16ca69124c785d339c6684ccbc4bca9aca183cd",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:6eaa337977d6c892b4d0e9f9eb4d5e3d53f653a425c7a0477248e393c0479698",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:3eeb90dbbc83849180bb980a17c6f6b5a42d7117cc1f9d060e51a8eadd970d1f",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:0b9484cb2e0395c84fb537c19d91a83d17fbd47724f802c0d30e56db78a44add",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        },
+        {
+          "evidence_hash": "sha256:ad294903324f75955d36d0c94ffcb17c2b6393630ac85582ccc390689ff3c122",
+          "package_path": "native/001/data/evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+          "sha256": "11698e408f66fe45f2d5a359c0fa4328e6e4e415acbcf321384538fc90fe0bdf"
+        }
+      ],
+      "source_admission": {
+        "new_business_calls": {
+          "paid": 0,
+          "provider": 0,
+          "sec": 0
+        },
+        "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+        "request_attempt_ids": [
+          "request:attempt:707d67a40b04183d948b0c9918eedef55fccd995a3e9bbfe46bcb588d6bdb745",
+          "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7",
+          "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026",
+          "request:attempt:41e5d9678b4a1d9fbf654ef55f2feebcf2498ef9e3e81c3faa89ae893f33a330"
+        ],
+        "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+        "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+        "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270"
+      }
+    }
+  ],
+  "public_row_count": 327,
+  "inherited_public_row_count": 325,
+  "source_credit": "SAVED_SOURCE_NATIVE_REPLAY_NO_NEW_ACQUISITION",
+  "reused_completed_native_inputs": true,
+  "new_real_source_or_provider_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "checks": [
+    "numeric-and-text-native-run",
+    "full-predecessor-preserved",
+    "original-input-directories-unavailable",
+    "all-selected-evidence-resolved",
+    "resigned-public-value-rejected",
+    "review-removal-rejected",
+    "restored-package-replay",
+    "actual-pointer-unchanged"
+  ],
+  "production_authorized": false,
+  "full390_acceptance": false
+}

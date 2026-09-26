@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 82, in check
+    row['details']=action();row['passed']=not reject;row['outcome']='ACCEPTED'
+                   ~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 69, in <lambda>
+    self.check('draft-freeze-rejection',lambda:normal.create_normal_run(data_root=self.bases['B03'][0],
+                                               ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        run_dir=output/'forbidden-frozen-run',company_id='marriott_international',metric_id='B03',freeze=True),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 152, in create_normal_run
+    _need(not freeze or _policy(data_root)["freeze_enabled"],"ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 29, in _need
+    raise ValueError(reason)
+ValueError: ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED

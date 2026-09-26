@@ -1,0 +1,150 @@
+{
+  "record_type": "NORMAL_SAVED_CANDIDATE_BATCH",
+  "status": "COMPLETED_WITH_GAPS",
+  "started_at_utc": "2026-09-12T23:14:43.165049+00:00",
+  "completed_at_utc": "2026-09-12T23:15:32.401222+00:00",
+  "requested_coordinate_count": 5,
+  "coordinates": [
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B03",
+      "run_path": "runs/marriott_international/B03",
+      "data_path": "data/marriott_international",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:23dd808489ad976f9109b08fe3e59cb7dc7fdee96fe12127aaa62990bc0648c4",
+      "run_status": "OPEN",
+      "source_credit": "RECORDED_TEST_ONLY",
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B03",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+        "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.1756281982738868097456656229",
+        "unit": "ratio",
+        "trace_id": "sha256:3275ed7c3df1da60a68258e4834dcf29b2ae38b4e26f534cdd65d063d85823d0",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/marriott_international-B03.json",
+      "selection_hash": "sha256:39229f13fe8093e9af6e146775136ddb76718a9eb35d4753181f72f6550df4cb",
+      "selection_summary": {
+        "reason_code": "PASS"
+      }
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B08",
+      "run_path": "runs/marriott_international/B08",
+      "data_path": "data/marriott_international",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:4ba8e4813e6e0fa89b7281067fe0b33c440d23375376f9a19e77f4f09bf81e7a",
+      "run_status": "OPEN",
+      "source_credit": "RECORDED_TEST_ONLY",
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B08",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.4267682781614670159561800429",
+        "unit": "ratio",
+        "trace_id": "sha256:166ce68f1e951c8d7d020af7733bc44e5f1c94ad8a79d9e0138cdb8c8b7746d9",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:01fa1f756f0ca8b5544ed265c92140b92f909aa346219bfb109889b4b66ce5d5"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B09",
+      "run_path": "runs/marriott_international/B09",
+      "data_path": "data/marriott_international",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:32d06612d381f4d3b043e8a00c3bd0613a5c8629a0865d628a8caa37cf5fea6d",
+      "run_status": "OPEN",
+      "source_credit": "RECORDED_TEST_ONLY",
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B09",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "358000000",
+        "unit": "USD",
+        "trace_id": "sha256:efefe57b291e48fbe51ec964b86dc3dd21ded406c04504b55336d296b14e63c8",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:c425ff310606553eac30193fb93e92de5788c280117c775f4b0ec1bbba29800f"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B10",
+      "run_path": "runs/marriott_international/B10",
+      "data_path": "data/marriott_international",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "error_type": "NormalSourceAuthorityError",
+      "error": "TRUSTED_SAVED_BASELINE_BYTES_CHANGED:evidence/requests_log.csv",
+      "category": "UNCLASSIFIED_EXECUTION_FAILURE",
+      "production_authorized": false
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B11",
+      "run_path": "runs/marriott_international/B11",
+      "data_path": "data/marriott_international",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "error_type": "NormalSourceAuthorityError",
+      "error": "TRUSTED_SAVED_BASELINE_BYTES_CHANGED:evidence/requests_log.csv",
+      "category": "UNCLASSIFIED_EXECUTION_FAILURE",
+      "production_authorized": false
+    }
+  ],
+  "full_issue_acceptance": false,
+  "production_authorized": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "limits": [
+    "Saved sources do not prove current SEC freshness",
+    "Rows are not a complete publication",
+    "Unimplemented and withheld coordinates remain explicit"
+  ]
+}

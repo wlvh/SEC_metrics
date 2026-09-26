@@ -1,0 +1,78 @@
+{
+  "record_type": "ISSUE28_REMAINING_SEC_AND_D03_CALL_MEASUREMENT",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "declared_unique_urls": 421,
+  "resource_counts": {
+    "DECLARED_METADATA_REFRESH": 29,
+    "VERIFIED_SAVED_REUSE_NO_NEW_SEC_REQUIRED": 386,
+    "OPTIONAL_PRIOR_HTML_EXISTING_NATIVE_ALTERNATIVE_VERIFIED": 6
+  },
+  "metadata_components": {
+    "current_submissions": 10,
+    "companyfacts": 10,
+    "jpm_history_shards": 8,
+    "additional_registered_predecessor_submissions": 1,
+    "deduplicated_total": 29
+  },
+  "confirmed_required_missing_originals_in_current_graph": 0,
+  "conditional_known_graph_sec_gets": 29,
+  "metadata_refresh_already_completed_after_snapshot": "m(t): count each unique required URL once only after valid capture in this update round",
+  "remaining_known_sec_formula": "29 - m(t); plus newly discovered required URLs only after actual refreshed metadata is read",
+  "future_source_graph_global_upper_bound": null,
+  "current_declared_failed_or_blocked_url_count": 0,
+  "processing_rule_boundary_at_measurement": {
+    "relative_path": "config/ordinary_public_projection_v1.json",
+    "fixed_source_root_sha256": "56d4191d1813e8ad27a0649eda8b956e3a28d89ac52830eeff8f429b97b51141",
+    "current_repository_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+    "bytes_equal": false,
+    "normal_refresh_initialization_ready": false,
+    "known_failure": "Immutable receipt bytes differ before SEC egress; this read-only discovery is not successful refresh initialization"
+  },
+  "later_initializer_repair_status_not_inferred_from_this_readonly_report": true,
+  "d03": {
+    "current_proposal_factory_requests": 130,
+    "native_result_route_completed": false,
+    "verification_requests_per_selected_valid_saved_proposal_response": 1,
+    "verification_count_not_yet_determined": true,
+    "conditional_verification_request_count_bound": [
+      0,
+      130
+    ],
+    "conditional_verification_bound_requires": [
+      "at most one verification request per current proposal response",
+      "each complete verification envelope fits actual limits",
+      "one check sufficient for the chosen final route"
+    ],
+    "verification_not_whole_source_or_native_acceptance": true
+  },
+  "provider_formula": {
+    "anchor": "After original71, before subsequent root native requests",
+    "charged_at_anchor": 36,
+    "current_base_request_successes_at_anchor": 1,
+    "base_total_requests": 240,
+    "delta_p": "additional provider/paid allowance consumption since anchor, including actual attempts, failures, diagnostics and UNKNOWN charged by the fixed ledger; not account money inspection",
+    "delta_s": "new unique valid responses completing the same base source-group requests; never duplicate/historical/failed credit",
+    "remaining_base": "239 - delta_s",
+    "remaining_existing_provider_allowance": "204 - delta_p",
+    "known_base_shortfall": "max(0, 35 + delta_p - delta_s)",
+    "complete_plan_shortfall": "max(0, 35 + delta_p - delta_s + V_remaining + U_remaining + A_remaining)",
+    "V_remaining": "actually needed future D03 verification requests after real responses are available",
+    "U_remaining": "additional future model requests for changed update inputs not already represented by uncompleted base groups",
+    "A_remaining": "additional final acceptance model requests only if a genuinely different request is required; unchanged valid exact requests cost 0 new calls"
+  },
+  "not_an_incremental_resource_request": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "fixed_data_hashes_unchanged": true,
+  "production_authorized": false,
+  "prior_xml_alternative_auditor_fact_check": {
+    "companies": 6,
+    "status": "ALL_FOUND",
+    "facts_per_company": 1,
+    "evidence": "prior-html-with-auditor.json",
+    "new_metric_run_credit": false
+  }
+}

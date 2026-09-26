@@ -1,0 +1,38 @@
+{
+  "record_type": "TEXT_BUSINESS_CANDIDATE_POLICY",
+  "schema_version": 1,
+  "policy_id": "text_business_candidates_v1",
+  "reader_families": [
+    "governance_proxy",
+    "risk_legal_text",
+    "auditor_report"
+  ],
+  "result_boundary": "SOURCE_EXCERPTS_AND_MATCHES_ONLY_NO_SEMANTIC_ABSENCE_OR_RISK_ASSERTION",
+  "patterns": {
+    "legal": "\\b(?:litigation|lawsuits?|legal proceedings?|legal claims?|loss contingenc(?:y|ies)|litigation reserves?)\\b",
+    "authority": "\\b(?:SEC|DOJ|FTC|FDA|EPA|CFTC|CFPB|Department of Justice|Securities and Exchange Commission|Attorney General|attorneys general|regulators?|regulatory|government(?:al)? authorities)\\b",
+    "action": "\\b(?:investigat(?:ion|ions|ed|ing)|subpoenas?|inquir(?:y|ies)|enforcement|consent (?:order|decree)|settlement|settled)\\b",
+    "going": "\\b(?:going[\\s-]+concern|substantial doubt|ability to continue (?:as|in)|continue as a going[\\s-]+concern)\\b",
+    "prospective": "\\b(?:may|might|could|potential|hypothetical|if|risk of|risk that|from time to time)\\b",
+    "negation": "\\b(?:no|not|without|resolved|settled|dismissed|no longer)\\b",
+    "board": "\\b(?:board(?: of directors)?|directors?)\\b",
+    "independence": "\\bindependen(?:t|ce)\\b",
+    "board_number": "\\b(?:\\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty)\\s+(?:directors?|members?|nominees)\\b",
+    "committee": "\\b(?:audit|compensation|nominating|governance|risk|executive|finance)\\s+committee\\b|\\bstanding committees\\b",
+    "statement": "\\b(?:determined|determination|considered|concluded|consists|composed|comprised|comprises|currently|has|have|are|is|serves?|members?|membership)\\b",
+    "note_reference": "\\bNote\\s+(\\d{1,3}[A-Z]?)\\b",
+    "note_heading": "^(?:Note\\s+)?(\\d{1,3}[A-Z]?)[.)\\s:—–-]+([A-Za-z].+)$",
+    "audit_heading": "^report(?:s)? of (?:the )?independent (?:registered )?public accounting firm\\s*$",
+    "financial_heading": "^(?:consolidated|combined)(?: and consolidated)? (?:financial statements|income statements?|balance sheets?|statements? of|statements? and|statements?—)",
+    "prospective_board_context": "\\b(?:nominees?|election|will|proposed|upon)\\b",
+    "navigation_header": "^(?:table of contents|item\\s+\\d+[A-Z]?\\b)",
+    "legal_fact_concepts": "LossContingenc.*Accru|Accru.*Litigat|LitigationReserve|GoingConcern",
+    "committee_structure": "\\b(?:membership|members? of|composed|consists|comprised|committee chairs?|chairs? of|serve[sd]? on|serves? as|standing committees|following committees|committee assignments)\\b",
+    "note_identifier": "^(?:Note\\s+)?(\\d{1,3}[A-Z]?)[.)\\s:—–-]*$",
+    "audit_opening": "\\bwe have audited\\b",
+    "continued_heading": "\\bcontinued\\b",
+    "board_size_statement": "\\b(?:board(?: of directors)?|directors?)\\b.{0,120}\\b(?:consists? of|composed of|comprised of|comprises|currently has|has|are|will consist of)\\b|\\b(?:we have|there are)\\b.{0,80}\\bdirectors?\\b",
+    "independence_statement": "\\b(?:the |our )?board\\b.{0,140}\\b(?:determined|concluded|considered)\\b|\\b(?:all|each|every)\\b.{0,100}\\b(?:directors?|nominees?)\\b.{0,80}\\b(?:are|is|qualify|satisfy|meet)\\b",
+    "explicit_note_prefix": "^Note\\s+"
+  }
+}

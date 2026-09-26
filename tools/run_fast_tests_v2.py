@@ -1,0 +1,192 @@
+"""Current CI selectors, retaining the frozen V13 runner byte for byte.
+
+The inherited selector is kept in its original module for historical replay;
+this successor runs all its variants separately with the same subprocess
+runner, timeout and evidence tier. It never changes the inherited globals.
+"""
+from __future__ import annotations
+
+import argparse
+from concurrent.futures import ThreadPoolExecutor
+import json
+import os
+import subprocess
+import sys
+import time
+
+import run_fast_tests as inherited
+
+
+REPLACED = "tests.vnext.test_financial_balance_scope.FinancialBalanceScopeTest.test_var_reported_estimate_is_distinct_from_an_illustrative_table"
+VAR_SELECTORS = tuple("tests.vnext.test_financial_balance_scope.VarReportingFastTest." + name for name in (
+    "test_hypothetical_table_is_rejected", "test_illustrative_table_is_rejected",
+    "test_unrelated_hypothetical_example_preserves_reported_var"))
+FAST_TESTS = tuple(selector for original in inherited.FAST_TESTS
+                   for selector in (VAR_SELECTORS if original == REPLACED else (original,))) + (
+    "tests.vnext.test_regulatory_investigation_candidates",
+    "tests.vnext.test_going_concern_source",
+    "tests.vnext.test_fiscal_year_labels",
+)
+ALL_PREVIOUS_SELECTORS = FAST_TESTS
+# These selectors parse complete saved filings, often with several independent
+# source variants. They are source-material checks, not 30-second unit checks.
+SOURCE_PREFIXES = (
+    "tests.vnext.test_financial_candidates.LcrEntityFastTest.",
+    "tests.vnext.test_financial_balance_scope.AumClientFastTest.",
+    "tests.vnext.test_financial_balance_scope.VarReportingFastTest.",
+    "tests.vnext.test_financial_structured.FinancialStructuredTest.",
+    "tests.vnext.test_financial_duration",
+    "tests.vnext.test_b06_disclosure_v2.",
+    "tests.vnext.test_risk_signals",
+    "tests.vnext.test_text_results",
+    "tests.vnext.test_going_concern_source",
+    "tests.vnext.test_fiscal_year_labels",
+)
+SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for p in SOURCE_PREFIXES)) + (
+    "tests.vnext.test_normal_companyfacts_results",
+    "tests.vnext.test_normal_zero_ai_results",
+    "tests.vnext.test_normal_accession_results",
+    "tests.vnext.test_normal_annual_input_v2",
+    "tests.vnext.test_normal_run_inputs",
+    "tests.vnext.test_annual_amendment_scope",
+    "tests.vnext.test_b06_combined_borrowings",
+    "tests.vnext.test_b06_financing_inventory",
+    "tests.vnext.test_b06_note_carrying",
+    "tests.vnext.test_b06_bond_leases",
+    "tests.vnext.test_b06_inclusive_table",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_debt_or_equity_outside_the_purpose_note_is_rejected",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_current_run_input_retains_the_actual_amendment_without_creating_debt",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_source_relationship_failure_remains_a_withheld_result",
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard",
+    "tests.vnext.test_lodging_table_source",
+    "tests.vnext.test_normal_source_requirements",
+    "tests.vnext.test_instant_balance_amendment",
+    "tests.vnext.test_r6_semantic_review",
+)
+FAST_TESTS = tuple(s for s in FAST_TESTS if s not in SOURCE_TESTS)
+FAST_TESTS += ("tests.vnext.test_ordinary_source_session",)
+FAST_TESTS += ("tests.vnext.test_ordinary_source_authority",)
+FAST_TESTS += ("tests.vnext.test_continuous_call_ledger",)
+FAST_TESTS += ("tests.vnext.test_continuous_call_policy",)
+FAST_TESTS += ("tests.vnext.test_capacity_utilization_source.CapacityComparisonTest",)
+FAST_TESTS += ("tests.vnext.test_ordinary_storage_identity",)
+FAST_TESTS += ("tests.vnext.test_r6_semantic_scope",)
+FAST_TESTS += ("tests.vnext.test_regulatory_statement_facts.RegulatoryStatementFactsTest",)
+FAST_TESTS += ("tests.vnext.test_capacity_semantic_source.CapacitySemanticSourceTest",)
+FAST_TESTS += ("tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewTest",)
+FAST_TESTS += ("tests.vnext.test_capacity_applicability.CapacityApplicabilityTest",)
+FAST_TESTS += ("tests.vnext.test_d04_native_assessment",)
+FAST_TESTS += ("tests.vnext.test_native_request_variants",)
+FAST_TESTS += ("tests.vnext.test_native_unit_index",)
+FAST_TESTS += ("tests.vnext.test_source_input_rule_roles",)
+FAST_TESTS += ("tests.vnext.test_prior_html_dependency",)
+FAST_TESTS += ("tests.vnext.test_registration_event_discovery",)
+FAST_TESTS += ("tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest",)
+FAST_TESTS += ("tests.vnext.test_native_source_runtime_policy",)
+FAST_TESTS += ("tests.vnext.test_native_refresh_execution",)
+FAST_TESTS += ("tests.vnext.test_native_request_construction",)
+FAST_TESTS += ("tests.vnext.test_ordinary_isolated_publication.OrdinaryIsolatedPublicationBoundaryTest",)
+FAST_TESTS += ("tests.vnext.test_continuous_request_context",)
+FAST_TESTS += ("tests.vnext.test_capacity_quantity_scope",)
+FAST_TESTS += ("tests.vnext.test_capacity_quantity_roles",)
+FAST_TESTS += ("tests.vnext.test_capacity_program_roles",)
+FAST_TESTS += ("tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingTest",)
+FAST_TESTS += ("tests.vnext.test_capacity_reference_contract",)
+FAST_TESTS += ("tests.vnext.test_continuous_recovery_110",)
+FAST_TESTS += ("tests.vnext.test_continuous_source_unit_bytes",)
+FAST_TESTS += ("tests.vnext.test_capacity_visible_source_roles",)
+FAST_TESTS += ("tests.vnext.test_continuous_batch33",)
+FAST_TESTS += ("tests.vnext.test_capacity_two_stage",)
+SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
+SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)
+SOURCE_TESTS += ("tests.vnext.test_r6_semantic_verification",)
+SOURCE_TESTS += ("tests.vnext.test_r6_historical_controls",)
+SOURCE_TESTS += ("tests.vnext.test_capacity_utilization_source.CapacitySourceMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_continuous_sec_acquisition",)
+SOURCE_TESTS += ("tests.vnext.test_ordinary_special_debt_scope",)
+SOURCE_TESTS += ("tests.vnext.test_ordinary_income_input",)
+SOURCE_TESTS += ("tests.vnext.test_capacity_semantic_review.CapacitySemanticReviewMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_capacity_native_assessment",)
+SOURCE_TESTS += ("tests.vnext.test_capacity_text_results",)
+SOURCE_TESTS += ("tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_d04_native_wiring",)
+SOURCE_TESTS += ("tests.vnext.test_native_assessment_replay",)
+SOURCE_TESTS += ("tests.vnext.test_regulatory_fact_review",)
+SOURCE_TESTS += ("tests.vnext.test_c04_registration_successor",)
+SOURCE_TESTS += ("tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",)
+SOURCE_TESTS += ("tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest",)
+SOURCE_TESTS += ("tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",)
+SOURCE_TIMEOUT_SECONDS = 240
+SOURCE_TIMEOUT_OVERRIDES = {
+    # This single case includes acquisition, native installation and cold replay.
+    "tests.vnext.test_continuous_sec_acquisition": 480,
+}
+
+
+def _run_source_case(name):
+    start = time.monotonic()
+    timeout = SOURCE_TIMEOUT_OVERRIDES.get(name, SOURCE_TIMEOUT_SECONDS)
+    environment = {**os.environ,"PYTHONDONTWRITEBYTECODE":"1"}
+    try:
+        done = subprocess.run([sys.executable,"-m","unittest","-q",name],cwd=str(inherited.REPO_ROOT),
+            env=environment,capture_output=True,encoding="utf-8",timeout=timeout)
+        code,stdout,stderr = done.returncode,done.stdout,done.stderr
+    except subprocess.TimeoutExpired as error:
+        code,stdout,stderr = 124,error.stdout or "",error.stderr or ""
+        stdout = stdout.decode("utf-8",errors="replace") if isinstance(stdout,bytes) else stdout
+        stderr = stderr.decode("utf-8",errors="replace") if isinstance(stderr,bytes) else stderr
+        stderr += "\nSOURCE_MATERIAL_TIMEOUT_SECONDS="+str(timeout)
+    return {"test":name,"return_code":code,"duration_seconds":round(time.monotonic()-start,3),
+            "timeout_seconds":timeout,
+            "stdout_tail":stdout[-2000:],"stderr_tail":stderr[-2000:]}
+
+
+def run_fast_tests(*, jobs, suite="fast"):
+    selectors = FAST_TESTS if suite == "fast" else SOURCE_TESTS
+    all_selectors = (*FAST_TESTS,*SOURCE_TESTS)
+    if jobs < 1 or jobs > len(selectors):
+        raise inherited.FastTestError("FAST_TEST_JOBS_INVALID")
+    if (inherited.FAST_TESTS.count(REPLACED) != 1 or len(set(all_selectors)) != len(all_selectors)
+            or not set(ALL_PREVIOUS_SELECTORS) <= set(all_selectors)):
+        raise inherited.FastTestError("FAST_TEST_SUCCESSOR_SELECTOR_CONFLICT")
+    start = time.monotonic()
+    with ThreadPoolExecutor(max_workers=jobs) as executor:
+        futures = [executor.submit(inherited._run_case, test_name=name) if suite == "fast"
+                   else executor.submit(_run_source_case,name) for name in selectors]
+        rows = sorted((f.result() for f in futures), key=lambda r:r["test"])
+    return {"evidence_tier":"FAST_LOCAL_ONLY" if suite == "fast" else "SOURCE_MATERIAL_LOCAL_ONLY",
+        "selector_generation":2, "suite":suite, "jobs":jobs,
+        "per_case_timeout_seconds":inherited.FAST_TEST_TIMEOUT_SECONDS if suite == "fast" else SOURCE_TIMEOUT_SECONDS,
+        **({"per_case_timeout_overrides":SOURCE_TIMEOUT_OVERRIDES} if suite != "fast" else {}),
+        "duration_seconds":round(time.monotonic()-start, 3), "tests":rows,
+        "status":"PASSED" if all(r["return_code"] == 0 for r in rows) else "FAILED"}
+
+
+def main(argv):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--jobs", type=int, default=2)
+    parser.add_argument("--list", action="store_true")
+    parser.add_argument("--suite",choices=("fast","source-material"),default="fast")
+    args = parser.parse_args(argv)
+    if args.list:
+        print(json.dumps({"suite":args.suite,"tests":FAST_TESTS if args.suite == "fast" else SOURCE_TESTS}, sort_keys=True))
+        return 0
+    try:
+        result = run_fast_tests(jobs=args.jobs,suite=args.suite)
+    except inherited.FastTestError as error:
+        print(str(error), file=sys.stderr)
+        return 2
+    print(json.dumps(result, sort_keys=True))
+    return 0 if result["status"] == "PASSED" else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))

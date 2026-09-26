@@ -1,0 +1,513 @@
+{
+  "record_type": "SOURCE_COMPONENT_EXCERPT_WITH_ASSET_OMITTED",
+  "original_component_file_sha256": "9c5cf283e585e07c900c74dc011f02e4c7546a88961eb193c74f30a8aa153525",
+  "original_path": "/tmp/sec_metrics_issue28_continuous/lodging-three-originals-third/2025-12-31.json",
+  "source_proofs": [
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "accession": "",
+      "document_name": "CIK0001048286.json",
+      "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "request_body_size": 147714,
+      "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+      "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+      "request_headers_size": 736,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+      "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231.htm",
+      "content_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "request_body_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "request_body_size": 2048661,
+      "request_headers_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm.d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283.headers.json",
+      "request_headers_sha256": "d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283",
+      "request_headers_size": 1087,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+    }
+  ],
+  "source_admission": {
+    "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+    "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+    "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+    "request_attempt_ids": [
+      "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085",
+      "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+    ],
+    "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "component_excerpt": {
+    "record_type": "ORDINARY_DETERMINISTIC_LODGING_SOURCE",
+    "company_id": "marriott_international",
+    "filing": {
+      "accessionNumber": "0001048286-26-000007",
+      "filingDate": "2026-02-10",
+      "reportDate": "2025-12-31",
+      "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+      "act": "34",
+      "form": "10-K",
+      "fileNumber": "001-13881",
+      "filmNumber": "26614897",
+      "items": "",
+      "core_type": "XBRL",
+      "size": 12393244,
+      "isXBRL": 1,
+      "isInlineXBRL": 1,
+      "isXBRLNumeric": null,
+      "primaryDocument": "mar-20251231.htm",
+      "primaryDocDescription": "10-K"
+    },
+    "source_reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+      "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+    },
+    "source_blob": {
+      "record_type": "RAW_BLOB",
+      "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "byte_length": 2048661,
+      "media_type": "text/html",
+      "storage_uri": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
+    },
+    "table_count": 68,
+    "selection": {
+      "facts": {
+        "B10": {
+          "metric_id": "B10",
+          "value": "0.693",
+          "unit": "ratio",
+          "reported_value": "69.3",
+          "reported_unit": "%",
+          "scope": {
+            "property_population": "comparable",
+            "operating_scope": "systemwide",
+            "geography": "worldwide"
+          },
+          "period": {
+            "fiscal_year": 2025,
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          },
+          "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+          "source_witnesses": {
+            "amount": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 15,
+                "origin_row_index": 26,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 2
+              },
+              "raw_text": "69.3&#160;",
+              "text": "69.3",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "unit": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 17,
+                "origin_row_index": 26,
+                "origin_column_index": 17,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "%",
+              "text": "%",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "year": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 4,
+                "column_index": 15,
+                "origin_row_index": 4,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "2025",
+              "text": "2025",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "measure": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 3,
+                "column_index": 15,
+                "origin_row_index": 3,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 12
+              },
+              "raw_text": "Occupancy",
+              "text": "Occupancy",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "population_and_operating_scope": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 18,
+                "column_index": 0,
+                "origin_row_index": 18,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "Comparable Systemwide Properties",
+              "text": "Comparable Systemwide Properties",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "geography": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 0,
+                "origin_row_index": 26,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "\nWorldwide (2)",
+              "text": "Worldwide (2)",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            }
+          }
+        },
+        "B11": {
+          "metric_id": "B11",
+          "value": "128.8",
+          "unit": "USD",
+          "reported_value": "128.80",
+          "reported_unit": "$",
+          "scope": {
+            "property_population": "comparable",
+            "operating_scope": "systemwide",
+            "geography": "worldwide"
+          },
+          "period": {
+            "fiscal_year": 2025,
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31"
+          },
+          "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+          "source_witnesses": {
+            "amount": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 4,
+                "origin_row_index": 26,
+                "origin_column_index": 4,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "128.80&#160;",
+              "text": "128.80",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "unit": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 3,
+                "origin_row_index": 26,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "$",
+              "text": "$",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "year": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 4,
+                "column_index": 3,
+                "origin_row_index": 4,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "2025",
+              "text": "2025",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "measure": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 3,
+                "column_index": 3,
+                "origin_row_index": 3,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 9
+              },
+              "raw_text": "RevPAR",
+              "text": "RevPAR",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "population_and_operating_scope": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 18,
+                "column_index": 0,
+                "origin_row_index": 18,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "Comparable Systemwide Properties",
+              "text": "Comparable Systemwide Properties",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            },
+            "geography": {
+              "locator": {
+                "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+                "table_id": "table_000011",
+                "row_index": 26,
+                "column_index": 0,
+                "origin_row_index": 26,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "\nWorldwide (2)",
+              "text": "Worldwide (2)",
+              "grid_sha256": "sha256:8e270aaf65de0b1214a11498d00478194f814d1fb686b0638679eb24cb1e23cf"
+            }
+          }
+        }
+      },
+      "context": {
+        "heading": {
+          "text": "Lodging Statistics",
+          "start": 584539,
+          "end": 584557,
+          "linked": false,
+          "emphasized": true,
+          "leading_emphasis": {
+            "text": "Lodging Statistics",
+            "start": 584539,
+            "end": 584557
+          },
+          "quoted_context": false,
+          "start_byte": 584539,
+          "end_byte": 584557
+        },
+        "introduction": {
+          "text": "The following table presents RevPAR, occupancy, and ADR statistics for comparable properties for 2025, and 2025 compared to 2024. Systemwide statistics include data from our franchised properties, in addition to our company-operated properties.",
+          "blocks": [
+            {
+              "text": "The following table presents RevPAR, occupancy, and ADR statistics for comparable properties for 2025, and 2025 compared to 2024. Systemwide statistics include data from our franchised properties, in addition to our company-operated properties.",
+              "start": 584729,
+              "end": 584973,
+              "linked": false,
+              "emphasized": false,
+              "leading_emphasis": null,
+              "quoted_context": false,
+              "start_byte": 584729,
+              "end_byte": 584973
+            }
+          ],
+          "pagination_omitted": []
+        },
+        "local_preface": [
+          {
+            "text": "(1)Licensed and other properties include our timeshare properties, MGM Collection with Marriott Bonvoy, Design Hotels, and The Ritz-Carlton Yacht Collection.",
+            "start": 582837,
+            "end": 583133,
+            "linked": false,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "quoted_context": false,
+            "start_byte": 582837,
+            "end_byte": 583133
+          },
+          {
+            "text": "23",
+            "start": 583397,
+            "end": 583399,
+            "linked": false,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "quoted_context": false,
+            "start_byte": 583397,
+            "end_byte": 583399
+          },
+          {
+            "text": "Table of Contents",
+            "start": 583881,
+            "end": 584380,
+            "linked": true,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "quoted_context": false,
+            "start_byte": 583881,
+            "end_byte": 584380
+          },
+          {
+            "text": "Lodging Statistics",
+            "start": 584539,
+            "end": 584557,
+            "linked": false,
+            "emphasized": true,
+            "leading_emphasis": {
+              "text": "Lodging Statistics",
+              "start": 584539,
+              "end": 584557
+            },
+            "quoted_context": false,
+            "start_byte": 584539,
+            "end_byte": 584557
+          },
+          {
+            "text": "The following table presents RevPAR, occupancy, and ADR statistics for comparable properties for 2025, and 2025 compared to 2024. Systemwide statistics include data from our franchised properties, in addition to our company-operated properties.",
+            "start": 584729,
+            "end": 584973,
+            "linked": false,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "quoted_context": false,
+            "start_byte": 584729,
+            "end_byte": 584973
+          }
+        ],
+        "local_notes": [
+          {
+            "text": "(1)Includes Europe, Middle East & Africa, Greater China, Asia Pacific excluding China, and Caribbean & Latin America.",
+            "start": 654811,
+            "end": 655075,
+            "linked": false,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "quoted_context": false,
+            "start_byte": 654811,
+            "end_byte": 655075
+          },
+          {
+            "text": "(2)Includes U.S. & Canada and International - All.",
+            "start": 655303,
+            "end": 655496,
+            "linked": false,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "quoted_context": false,
+            "start_byte": 655303,
+            "end_byte": 655496
+          }
+        ],
+        "currency_definition": {
+          "text": "We believe Revenue per Available Room (“RevPAR”), which we calculate by dividing property level room revenue by total rooms available for the period, is a meaningful indicator of our performance because it measures the period-over-period change in room revenues. RevPAR may not be comparable to similarly titled measures, such as revenues, and should not be viewed as necessarily correlating with our fee revenue. We also believe occupancy and average daily rate (“ADR”), which are components of calculating RevPAR, are meaningful indicators of our performance. Occupancy, which we calculate by dividing total rooms sold by total rooms available for the period, measures the utilization of a property’s available capacity. ADR, which we calculate by dividing property level room revenue by total rooms sold, measures average room price and is useful in assessing pricing levels. Unless otherwise stated, RevPAR, occupancy, and ADR statistics are on a systemwide basis for comparable properties, and all changes refer to year-over-year changes for the comparable period. Comparisons to prior periods are on a constant U.S. dollar basis, which we calculate by applying exchange rates for the current period to the prior comparable period. We believe constant dollar analysis provides valuable information regarding the performance of hotels in our system as it removes currency fluctuations from the presentation of such results.",
+          "start": 549298,
+          "end": 550755,
+          "linked": false,
+          "emphasized": false,
+          "leading_emphasis": null,
+          "quoted_context": false,
+          "start_byte": 549298,
+          "end_byte": 550755
+        },
+        "table_source_span": {
+          "table_order": 10,
+          "start_byte": 584980,
+          "end_byte": 654520,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:320",
+            "table:1"
+          ],
+          "span_sha256": "7e320f35cb9ee40d84faf2cf4c10ad8302d5f7cc8ff1129e8d135650e21b492a"
+        },
+        "note_pagination_omitted": []
+      },
+      "geographic_footnotes": {
+        "1": {
+          "members": [
+            "Europe",
+            "Middle East & Africa",
+            "Greater China",
+            "Asia Pacific excluding China",
+            "Caribbean & Latin America"
+          ],
+          "source_note": {
+            "text": "(1)Includes Europe, Middle East & Africa, Greater China, Asia Pacific excluding China, and Caribbean & Latin America.",
+            "start": 654811,
+            "end": 655075,
+            "linked": false,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "quoted_context": false,
+            "start_byte": 654811,
+            "end_byte": 655075
+          }
+        },
+        "2": {
+          "members": [
+            "U.S. & Canada",
+            "International - All"
+          ],
+          "source_note": {
+            "text": "(2)Includes U.S. & Canada and International - All.",
+            "start": 655303,
+            "end": 655496,
+            "linked": false,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "quoted_context": false,
+            "start_byte": 655303,
+            "end_byte": 655496
+          }
+        }
+      },
+      "table_id": "table_000011",
+      "scope_section_row": 18,
+      "worldwide_row": 26,
+      "year_header_row": 4
+    },
+    "other_measure_tables": [],
+    "original_spec_closures": {
+      "B10": "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424",
+      "B11": "sha256:1c0fec749db938e5581ba6280e00a8e492bc4d5f65b64a4dd63dda1a4189f764"
+    },
+    "policy_hash": "sha256:ae4ff9ea224e233f243ed72f1a3f1839bcd6e3a3c3ec0e6bf086e3f7b4694e5d",
+    "source_acquisition_credit": false,
+    "qualification_credit": false,
+    "ai_response_used": false,
+    "native_run_created": false,
+    "production_authorized": false,
+    "component_id": "sha256:4cb64cebbe3d1984271b2b820f3ad4ec7a48e95dc061f19e6b9e082399e6a1d3"
+  }
+}

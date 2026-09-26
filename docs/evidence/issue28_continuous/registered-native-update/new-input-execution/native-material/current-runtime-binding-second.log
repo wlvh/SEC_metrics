@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/private/tmp/sec_metrics_issue28_continuous/native-refresh-execution/current-runtime/sync-current-authority-local.py", line 18, in <module>
+    for rel in group:group[rel]=bind(rel)
+                                ~~~~^^^^^
+  File "/private/tmp/sec_metrics_issue28_continuous/native-refresh-execution/current-runtime/sync-current-authority-local.py", line 5, in bind
+    raw=(r/rel).read_bytes();return {'sha256':hashlib.sha256(raw).hexdigest(),'size':len(raw)}
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/private/tmp/sec_metrics_issue28_continuous/native-refresh-execution/current-runtime/requirements-continuous-context.txt'

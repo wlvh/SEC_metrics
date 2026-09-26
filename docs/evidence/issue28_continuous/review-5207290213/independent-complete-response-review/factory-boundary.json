@@ -1,0 +1,16 @@
+{
+  "self_consistent_short_dictionary": "PER_REQUEST_VALID_ONLY_NOT_AUTHORITY",
+  "actual_SemanticRequest_validate": "CONTINUOUS_REQUEST_NOT_IN_SOURCE",
+  "test_doubles": [
+    "source admission verifier",
+    "process authority check",
+    "transport policy loader"
+  ],
+  "scope": "Actual factory membership check is not mocked; no live request, model response, source admission or result credit",
+  "original69_old_v4_rejection": "D04_RESPONSE_UNIT_SET_INCOMPLETE",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
