@@ -2099,6 +2099,25 @@
       "tool_calls": 45,
       "result_path": "docs/evidence/issue28_continuous/c04-recovery-credit-20260928/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS_C04_RECOVERY_CREDIT_BEFORE_POINTER_CURRENT_VERSION_ONLY"
+    },
+    {
+      "task_name": "review_ordinaryreplay_d4927a8",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/ordinary_projection.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "tests/vnext/test_c04_update_cycle.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json",
+        "docs/evidence/issue28_continuous/c04-mixed-resume-timing-20260928/"
+      ],
+      "patch_sha": "d4927a86f0d7f94461ce58030856503c34604e56",
+      "spawned_at": "2026-09-27T22:06:00+00:00",
+      "ended_at": "2026-09-27T22:11:03+00:00",
+      "tool_calls": 34,
+      "result_path": "docs/evidence/issue28_continuous/c04-mixed-resume-timing-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_SAME_OPERATION_VERIFIED_REPLAY_REUSE"
     }
   ],
   "ci_capacity_20260922": {
@@ -5133,5 +5152,59 @@
       0
     ],
     "nonblocking_review_note": "c04_update_cycle module docstring says older controller byte-identical; this patch changes ordinary_update_cycle bytes while preserving its default verifier behavior"
+  },
+  "shared_with_issue47_ordinary_replay_20260928": {
+    "status": "CURRENT_ISSUE28_OPTIONAL_RENDER_CONTEXT_DEFAULT_COMPATIBLE",
+    "commit_marker": "[shared-with-#47]",
+    "files_functions": {
+      "scripts/vnext/ordinary_projection.py": [
+        "render_ordinary_run(_return_replay_context=False): default four-field output preserved"
+      ],
+      "scripts/vnext/ordinary_update_cycle.py": [
+        "_verify_candidate consumes same-operation renderer replay; persisted record and return shapes unchanged"
+      ]
+    },
+    "bindings": [
+      "requirements/issue_28_v13/baseline_manifest.json",
+      "requirements/issue_28_v14/baseline_manifest.json",
+      "requirements/issue_28_v14/transfer_manifest.json",
+      "current provider/SEC/ordinary-refresh wiring receipts"
+    ],
+    "compatibility_evidence": [
+      "Marriott mixed resume material PASS before 326.990s after 272.203s; prepare_case calls 39 to 31",
+      "Marriott C04 standalone source material PASS 136.796s and default renderer four-field assertion",
+      "15 directed tests, 5 provider boundary tests, 134 fast selectors, current wiring PASS; limited independent review PASS_WITH_BOUNDS"
+    ],
+    "possible_downstream_impact": "#47 may need to rebind its own dependent current execution snapshot; no #47 branch, ledger, source, run or PR operation."
+  },
+  "c04_mixed_resume_replay_20260928": {
+    "status": "COMMITTED_LIMITED_REVIEW_PASS_WITH_BOUNDS_PUSH_PENDING",
+    "patch_sha": "d4927a86f0d7f94461ce58030856503c34604e56",
+    "evidence": "docs/evidence/issue28_continuous/c04-mixed-resume-timing-20260928/README.md",
+    "independent_review": "docs/evidence/issue28_continuous/c04-mixed-resume-timing-20260928/independent-review/conclusion.md",
+    "before_after_material_seconds": [
+      326.99,
+      272.203
+    ],
+    "before_after_prepare_case_calls": [
+      39,
+      31
+    ],
+    "c04_standalone_material_seconds": 136.796,
+    "fast_selectors_passed": 134,
+    "v13_closure": "sha256:7ff851292f26326a83dfaec46ee0a418163a8bfcd8b20ce032e5e7c8a9f8fed4",
+    "v14_closure": "sha256:6372c5dbd59d2127227eb3c1ad1f34cd4a6742ba62d1cbd691f04cece8a3cf45",
+    "default_render_output_shape_unchanged": true,
+    "persisted_update_record_shape_unchanged": true,
+    "independent_next_run_replays_from_disk": true,
+    "current_wiring_valid": true,
+    "new_complete_390_coordinate_count": 0,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "predecessor_ea6_ci_shard0": "FAILURE_C04_UPDATE_MATERIAL_240_106_SECONDS_RETURN_124_OTHER_39_SELECTORS_PASS_MAIN_RUN_STILL_IN_PROGRESS",
+    "current_head_ci_terminal": "PENDING_AFTER_PUSH"
   }
 }
