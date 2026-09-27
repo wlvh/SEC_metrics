@@ -1,4 +1,4 @@
-"""Compare installed Enphase D04 input to each original 173-178 call byte."""
+"""Compare installed Enphase D04 input with six original call identities."""
 import hashlib
 import json
 from pathlib import Path
@@ -77,7 +77,7 @@ for row in sorted(registered['native_requests'], key=lambda item: item['ordinal'
         'installed_request_and_terminal_equal_original': True})
 
 report = {'record_type': 'ISSUE28_ENPHASE_D04_INSTALLED_RAW_IDENTITY_AUDIT',
-    'status': 'PASS_SIX_ORIGINAL_CALL_IDENTITIES_AND_BYTES_BOUND_TO_CURRENT_RUN',
+    'status': 'PASS_SIX_ORIGINAL_RESPONSES_AND_JSON_CONTENT_BOUND_TO_CURRENT_RUN',
     'company_id': 'enphase_energy', 'metric_id': 'D04',
     'original_source_id': finish['source_id'],
     'original_assessment_input_id': finish['assessment_input_id'],

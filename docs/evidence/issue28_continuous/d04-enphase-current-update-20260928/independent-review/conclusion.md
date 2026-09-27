@@ -13,3 +13,11 @@
 - 对账实际读取矩阵行，核对 Enphase Energy、D04、`TEXT_QUAL`、空数值和 `2025-01-01` 至 `2025-12-31`；Result 保持 `WITHHELD / D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE`。这是**规定来源范围未见持续经营疑虑披露**的文字结论，不能转述为公司财务健康保证。它不增加十家公司已完成候选数，也不授予正式采纳、生产切换、跨财年在线自动更新或 390 坐标验收。
 
 **需要维持的证据边界。** `run-existing-real.py:95` 的 173—178 是预填常量，`reconcile.py:36-40` 只把原摘要的序号与各次 Result ID 对齐；本包未将当前安装 Run 的来源/评估输入身份与原摘要中的 `source_id`、`assessment_input_id` 逐项比较。`run-existing-real.py:31-36,58-61,83-107` 比较的是计数、行数、调用目录名和选定哨兵，未对 173—178 调用原件或旧私有 Run 做整树前后哈希。因此可说“同一 Result 身份由当前入口重建”“所列哨兵及计数不变”，不宜把这些观察扩写成“每份原响应/旧 Run 原件已证实逐字未变”。如要升级这一结论，只需对现有记录做一次只读的身份与哈希核对，无需重发请求或重跑长任务。
+
+## `e974fcf8` 后续增量审阅
+
+**结论：PASS_WITH_BOUNDS。** 新增的原始身份对账补上了上段所说的**当前 Run 对原六条响应的逐条绑定**，但不补上“本轮运行前后原调用目录及旧私有 Run 整树逐字不变”的历史缺口。短命令 `python3 .../verify-raw-identity.py` 通过；重算后的 `raw-identity.json` 与提交内容一致。只核对本次新增脚本、JSON、README 段落和被引用的只读身份，未重跑普通更新、冷读或重复链。
+
+六条安装登记的 ordinal 恰为 173—178。逐条检查确认：安装的 `source_snapshot`、`semantic_request`、`wire`、`intent`、`terminal` 与原账本相应 JSON **解析后的内容相同**；安装的助手正文编码后与原 `assistant-output.bin` **字节相同**；安装的 wire 记录所载原始响应 SHA 与当前原 `raw-response.bin` 哈希相同，acceptance receipt 的正文哈希也与助手原字节相同。原 `calls.json` 的请求 ID、摘要和成功终态一致；我另只读核对其六条公司、指标、来源 ID、调用路径及 173→178 前驱序列均一致。安装登记 source ID 与原完成摘要相同，当前 `input_record_id` 与安装 Run 绑定相同；另独立重算登记去掉 ID 后的内容哈希及绑定内容哈希，分别吻合 `input_record_id` 和 Run ID 后缀。
+
+当前 schema 2 登记的需求闭包 `sha256:6372c5db...` 与原完成摘要的 `sha256:568ab1eb...` 不同；当前 input ID `sha256:046940fa...` 与原 `sha256:44801106...` 不同且已明确保留，不能把两者写成同一个输入身份。闭包字段参与当前登记的内容哈希，足以解释 ID 必须改变；本项没有比较原登记的所有其他字段，不能说闭包是唯一差异。README 所称“原字节”应限于助手正文的直接字节相等和原始响应的哈希绑定；source/request/wire/intent/terminal 是 JSON 内容相等，`raw-identity.json` 也未保存后三者各自的原文件 SHA。`original_call_files_before_after_full_tree_hashed_during_update=false` 是诚实边界：本次事后逐条核对不能补造执行前后的整树哈希。
