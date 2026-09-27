@@ -47,6 +47,29 @@ _PREPARED = {}
 _DOCUMENTS = {}
 
 
+# The same few filings' source sets are prepared by most cases here, some of
+# them three times in one case (the candidate builder prepares twice and the
+# case asks once more), and preparing a 5 MB filing is where this module's
+# time goes: 1,000 s measured, 222 s in one case that reads five filings. The
+# route's own `shared_source_preparation` is the scope a Run creation opens so
+# each exact (metric, target, references, bytes) set is prepared once; the
+# module holds one open for its whole run and every case gets a fresh copy.
+# That is only safe because no case here patches the route - a case that did
+# would have to prepare outside the scope, since a shared result computed
+# without its patch would answer it.
+_SCOPE = []
+
+
+def setUpModule():
+    scope = fixed.shared_source_preparation()
+    scope.__enter__()
+    _SCOPE.append(scope)
+
+
+def tearDownModule():
+    _SCOPE.pop().__exit__(None, None, None)
+
+
 def _text_arguments(company_id, report_end):
     key = (company_id, report_end)
     if key not in _PREPARED:
@@ -734,14 +757,21 @@ class PageFurnitureInEveryScopeTest(unittest.TestCase):
         self.assertEqual(set(), set(in_scope) & selected)
 
 
+_PROPOSALS = {}
+
+
 def _proposal(company_id, report_end="2025-12-31"):
-    _, prepared = _text_arguments(company_id, report_end)
-    document = _frozen_document(prepared, company_id)
-    arguments = prepared["text_arguments"]
-    reference = arguments["source_references"][0]
-    return fixed.referenced_note_candidates(
-        document=fixed.narrow_document_sections(document=document),
-        raw_bytes=arguments["raw_bytes_by_id"][reference["raw_asset_id"]]), document
+    """The successor's note candidates for one filing, derived once and copied out."""
+    key = (company_id, report_end)
+    if key not in _PROPOSALS:
+        _, prepared = _text_arguments(company_id, report_end)
+        document = _frozen_document(prepared, company_id)
+        arguments = prepared["text_arguments"]
+        reference = arguments["source_references"][0]
+        _PROPOSALS[key] = (fixed.referenced_note_candidates(
+            document=fixed.narrow_document_sections(document=document),
+            raw_bytes=arguments["raw_bytes_by_id"][reference["raw_asset_id"]]), document)
+    return copy.deepcopy(_PROPOSALS[key])
 
 
 class HyperlinkedSentenceTest(unittest.TestCase):

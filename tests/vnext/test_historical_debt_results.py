@@ -11,6 +11,7 @@ single-stage wiring would have used for everything - is shown giving a
 different answer than the cascade does. That is the evidence for wiring seven
 stages rather than one, stated as a test rather than as a claim.
 """
+import copy
 import difflib
 import inspect
 import unittest
@@ -53,13 +54,31 @@ _RESULT_FIELDS = ("metric_id", "status", "quality", "value", "unit", "reason_cod
                   "publication", "period_start", "period_end")
 
 
+# Resolving a company's B06 for a period is the same work in every case that
+# asks, and six cases here ask for the same latest periods; the saved-source CI
+# tier ran out of time before any case failed. Each case gets its own copy, so
+# none can see another's edits, and the one case that watches the resolution
+# happen (the grammar spy) calls the route itself.
+_LATEST = {}
+_RESOLVED = {}
+
+
 def _latest_end(company_id):
-    with original_sources_only():
-        return prepare_saved_annual_input(repo_root=ROOT,
-                                          company_id=company_id)["filing"]["reportDate"]
+    if company_id not in _LATEST:
+        with original_sources_only():
+            _LATEST[company_id] = prepare_saved_annual_input(
+                repo_root=ROOT, company_id=company_id)["filing"]["reportDate"]
+    return _LATEST[company_id]
 
 
 def _resolve(company_id, report_end):
+    key = (company_id, report_end)
+    if key not in _RESOLVED:
+        _RESOLVED[key] = _resolve_now(company_id, report_end)
+    return copy.deepcopy(_RESOLVED[key])
+
+
+def _resolve_now(company_id, report_end):
     with original_sources_only():
         selection = resolve_period_selection(repo_root=ROOT, company_id=company_id,
                                              report_end=report_end)
@@ -360,7 +379,8 @@ class SuccessorSubjectTest(unittest.TestCase):
 
         table._current_column = spy
         try:
-            _resolve(SUCCESSOR_COMPANY, SUCCESSOR_END)
+            # Uncached: the spy has to see the grammar being called.
+            _resolve_now(SUCCESSOR_COMPANY, SUCCESSOR_END)
         finally:
             table._current_column = frozen
         self.assertTrue(seen)

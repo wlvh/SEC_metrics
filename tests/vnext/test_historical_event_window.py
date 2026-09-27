@@ -12,6 +12,7 @@ makes the Run claim a fiscal year it did not have; narrowing the sources to fit
 the coordinate drops filings the policy says belong to the measurement. These
 cases assert neither happened.
 """
+import copy
 import unittest
 from pathlib import Path
 
@@ -131,10 +132,21 @@ class ASuccessorStatementMetricUsesTheApprovedIncomeProofTest(unittest.TestCase)
     """
 
     METRICS = ("B01", "B03")
+    # Three cases read the same B01 resolution; it is built once and each case
+    # gets a copy. The case that patches the route resolves for itself.
+    _resolved = {}
 
     def _selection(self):
         return resolve_period_selection(repo_root=ROOT, company_id=SUCCESSOR,
                                         report_end=PERIOD)
+
+    def _historical(self, metric_id):
+        if metric_id not in self._resolved:
+            with original_sources_only():
+                type(self)._resolved[metric_id] = resolve_historical_zero_ai_metric(
+                    repo_root=ROOT, company_id=SUCCESSOR, metric_id=metric_id,
+                    period_selection=self._selection())
+        return copy.deepcopy(self._resolved[metric_id])
 
     def test_the_answers_are_the_ordinary_chain_s_answers(self):
         # Load-bearing: it was measured that passing the guard alone left the
@@ -146,12 +158,9 @@ class ASuccessorStatementMetricUsesTheApprovedIncomeProofTest(unittest.TestCase)
         fields = ("applicability", "quality", "reason_code", "value",
                   "period_start", "period_end")
         with original_sources_only():
-            selection = self._selection()
             for metric_id in self.METRICS:
                 with self.subTest(metric_id):
-                    historical = resolve_historical_zero_ai_metric(
-                        repo_root=ROOT, company_id=SUCCESSOR, metric_id=metric_id,
-                        period_selection=selection)["result"]
+                    historical = self._historical(metric_id)["result"]
                     ordinary = resolve_ordinary_zero_ai_metric(
                         repo_root=ROOT, company_id=SUCCESSOR,
                         metric_id=metric_id)["result"]
@@ -161,10 +170,7 @@ class ASuccessorStatementMetricUsesTheApprovedIncomeProofTest(unittest.TestCase)
                                      historical["reason_code"])
 
     def test_the_result_carries_the_measured_window_not_the_pinned_year(self):
-        with original_sources_only():
-            resolved = resolve_historical_zero_ai_metric(
-                repo_root=ROOT, company_id=SUCCESSOR, metric_id="B01",
-                period_selection=self._selection())
+        resolved = self._historical("B01")
         result = resolved["result"]
         pinned = resolved["input_binding"]["prepared_input"]["table_input"]["target_period"]
         self.assertNotEqual(pinned["period_start"], result["period_start"])
@@ -172,11 +178,7 @@ class ASuccessorStatementMetricUsesTheApprovedIncomeProofTest(unittest.TestCase)
         self.assertTrue(pinned["period_start"] <= result["period_start"])
 
     def test_the_income_proof_is_recorded_as_the_input_it_is(self):
-        with original_sources_only():
-            resolved = resolve_historical_zero_ai_metric(
-                repo_root=ROOT, company_id=SUCCESSOR, metric_id="B01",
-                period_selection=self._selection())
-        binding = resolved["input_binding"]
+        binding = self._historical("B01")["input_binding"]
         self.assertEqual("CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES",
                          binding["amendment_input"]["input_class"])
         self.assertEqual("INPUT_PROPERTY_PROVEN", binding["amendment_input"]["decision"])

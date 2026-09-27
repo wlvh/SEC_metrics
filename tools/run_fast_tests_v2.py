@@ -338,6 +338,9 @@ FAST_TESTS += ("tests.vnext.test_historical_ma_confirmation",)
 # evidence: a pure function over accessions; no filing is read.
 FAST_TESTS += ("tests.vnext.test_historical_row_notes",)
 FAST_TESTS += ("tests.vnext.test_c02_core_fact_reach",)
+# The saved-source tier's split across its CI jobs: every case in exactly one
+# shard, every weight naming a real case. Imports the runner; no material.
+FAST_TESTS += ("tests.vnext.test_source_tier_split",)
 # C02 composition facts: synthetic structures, one rule per case.
 FAST_TESTS += ("tests.vnext.test_historical_board_composition",)
 # C02 composition facts on the ten saved governance filings, both directions.
@@ -453,12 +456,110 @@ def _run_source_case(name):
             "stdout_tail":stdout[-2000:],"stderr_tail":stderr[-2000:]}
 
 
+# How long each saved-source case took on CI, in seconds, for the cases over
+# half a minute: the per-case progress lines of run 36321956779 (ca9feec2),
+# both shards. The few cases that run did not reach before its 35-minute limit,
+# and the #47 cases a later commit made cheaper, carry an estimate and say so.
+# These are weights for splitting the tier across its CI jobs, not limits - a
+# wrong weight unbalances the split and fails nothing.
+SOURCE_CI_SECONDS = {
+    "tests.vnext.test_continuous_sec_acquisition": 257,
+    "tests.vnext.test_normal_companyfacts_results": 190,
+    "tests.vnext.test_normal_zero_ai_results": 162,
+    "tests.vnext.test_b06_inclusive_table": 132,
+    "tests.vnext.test_normal_accession_results": 132,
+    "tests.vnext.test_b06_bond_leases": 100,
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_current_run_input_retains_the_actual_amendment_without_creating_debt": 92,
+    "tests.vnext.test_instant_balance_amendment": 78,
+    "tests.vnext.test_ordinary_income_input": 74,
+    "tests.vnext.test_b06_combined_borrowings": 73,
+    "tests.vnext.test_annual_amendment_scope": 61,
+    "tests.vnext.test_normal_source_requirements": 60,
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard": 57,
+    "tests.vnext.test_r6_historical_controls": 55,
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass": 54,
+    "tests.vnext.test_capacity_text_results": 51,
+    "tests.vnext.test_ordinary_special_debt_scope": 50,
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_debt_or_equity_outside_the_purpose_note_is_rejected": 49,
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_source_relationship_failure_remains_a_withheld_result": 48,
+    "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy": 47,
+    "tests.vnext.test_b06_note_carrying": 47,
+    "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_named_holding_is_rejected": 45,
+    "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest": 45,
+    "tests.vnext.test_normal_run_inputs": 44,
+    "tests.vnext.test_b06_financing_inventory": 42,
+    "tests.vnext.test_d04_native_wiring": 41,
+    "tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest": 41,
+    "tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest": 40,
+    "tests.vnext.test_r6_regulatory_semantics": 40,
+    "tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest": 39,
+    "tests.vnext.test_lodging_table_source": 37,
+    "tests.vnext.test_normal_annual_input_v2": 33,
+    "tests.vnext.test_capacity_native_assessment": 32,
+    "tests.vnext.test_financial_structured.FinancialStructuredTest.test_native_tags_do_not_override_an_explicit_non_reported_table_declaration": 32,
+    "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_consolidated_group_is_rejected": 31,
+    # Not reached before the limit on that run; the local measurement or the
+    # CI figure its own timeout comment records.
+    "tests.vnext.test_regulatory_fact_review": 170,
+    "tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan": 120,
+    "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest": 103,
+    "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": 240,
+    "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest": 163,
+    "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": 230,
+    "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 150,
+    # Issue #47.
+    "tests.vnext.test_historical_sec_session": 560,
+    "tests.vnext.test_historical_text_boundary": 313,
+    "tests.vnext.test_historical_debt_results": 334,
+    "tests.vnext.test_historical_event_window": 190,
+    "tests.vnext.test_historical_lodging_results": 125,
+    "tests.vnext.test_historical_risk_headings": 140,
+    "tests.vnext.test_historical_period_results": 204,
+    "tests.vnext.test_historical_financial_results": 190,
+    "tests.vnext.test_historical_coverage": 178,
+    "tests.vnext.test_historical_semantic_routes": 167,
+    "tests.vnext.test_historical_d02_marks": 164,
+    "tests.vnext.test_historical_board_composition_filings": 154,
+    "tests.vnext.test_historical_event_items": 132,
+    "tests.vnext.test_historical_shared_sources": 118,
+    "tests.vnext.test_historical_predecessor_periods": 110,
+    "tests.vnext.test_c02_board_reading": 103,
+    "tests.vnext.test_historical_governance_results": 94,
+    "tests.vnext.test_historical_source_acquisition": 88,
+    "tests.vnext.test_historical_amendment_note": 81,
+    "tests.vnext.test_historical_filing_inventory": 66,
+    "tests.vnext.test_historical_da_scope_route": 53,
+    "tests.vnext.test_historical_governance_text": 41,
+    "tests.vnext.test_historical_block_inputs": 39,
+    "tests.vnext.test_historical_capacity_results": 37,
+}
+SOURCE_DEFAULT_CI_SECONDS = 30
+
+
+def _heaviest_first(names):
+    return sorted(names, key=lambda name: (-SOURCE_CI_SECONDS.get(name, SOURCE_DEFAULT_CI_SECONDS),
+                                           name))
+
+
 def _selected_tests(suite, shard_index, shard_count):
     if (shard_count < 1 or shard_index < 0 or shard_index >= shard_count
             or (suite != "source-material" and (shard_index, shard_count) != (0, 1))):
         raise inherited.FastTestError("FAST_TEST_SHARD_INVALID")
-    complete = FAST_TESTS if suite == "fast" else SOURCE_TESTS
-    return tuple(name for index, name in enumerate(complete) if index % shard_count == shard_index)
+    if suite == "fast":
+        return FAST_TESTS
+    # Each case goes, heaviest first, to the shard with less measured work so
+    # far, and each shard runs its heaviest cases first. Assigning by list
+    # position put 4,840 measured seconds in one shard and 4,155 in the other
+    # (run 36321956779) and both were cancelled at 35 minutes with every case
+    # they reached passing; with two jobs a shard, it is the total and a long
+    # case started late that decide when a shard ends. Ties go by name, so
+    # every job computes the same split and each case lands in exactly one.
+    loads, shards = [0] * shard_count, [[] for _ in range(shard_count)]
+    for name in _heaviest_first(SOURCE_TESTS):
+        lightest = min(range(shard_count), key=lambda index: (loads[index], index))
+        loads[lightest] += SOURCE_CI_SECONDS.get(name, SOURCE_DEFAULT_CI_SECONDS)
+        shards[lightest].append(name)
+    return tuple(shards[shard_index])
 
 
 def run_fast_tests(*, jobs, suite="fast", shard_index=0, shard_count=1):

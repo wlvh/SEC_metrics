@@ -24,6 +24,7 @@ import json
 import os
 import shutil
 import socket
+import stat
 import subprocess
 import sys
 import tempfile
@@ -91,6 +92,56 @@ RECEIPT_READER_TOKENS = ("_receipt_under_check" + "()",
                          WIRING.RECEIPT_PATH.rsplit("/", 1)[1])
 
 _FRAMES = {}
+
+
+# ------------------------------------------------ one frame per exact data root
+# Planning a company's declared frame is most of what a recorded capture costs:
+# measured over this module, 26 captures spent 457 of 969 seconds in it, and 21
+# of them planned Marriott on a freshly installed baseline whose files are byte
+# for byte those of every other fresh baseline - 336 seconds computing one
+# answer 21 times, while the saved-source CI tier ran out of time before any of
+# its cases failed. The frame is a function of the company, the years and the
+# files under the data root, so the session's reference is replaced for this
+# module's run by one that computes it once per exact root content and hands
+# each capture a fresh copy. The key is every entry under the root - its
+# relative path, its kind (a symlink is not the file it points at), its mode
+# and the SHA-256 of its bytes - so a case that deletes, adds, edits or
+# relinks anything gets a real computation, which is what the cases about
+# tampered evidence need. A frame that raises is never kept. Cases that patch
+# the reference themselves still do; the patch sits on top of this one.
+_SHARED_FRAMES = {}
+_REAL_DECLARED_FRAME = []
+
+
+def _root_content(root):
+    digest = hashlib.sha256()
+    root = Path(root)
+    for path in sorted(root.rglob("*")):
+        status = path.lstat()
+        digest.update(str(path.relative_to(root)).encode("utf-8") + b"\0"
+                      + str(stat.S_IFMT(status.st_mode)).encode() + b"\0"
+                      + str(stat.S_IMODE(status.st_mode)).encode() + b"\0")
+        if stat.S_ISLNK(status.st_mode):
+            digest.update(os.readlink(path).encode("utf-8"))
+        elif stat.S_ISREG(status.st_mode):
+            digest.update(hashlib.sha256(path.read_bytes()).digest())
+    return digest.hexdigest()
+
+
+def _shared_frame(**arguments):
+    key = (arguments.get("company_id"), arguments.get("years"),
+           _root_content(arguments["repo_root"]))
+    if key not in _SHARED_FRAMES:
+        _SHARED_FRAMES[key] = _REAL_DECLARED_FRAME[0](**arguments)
+    return copy.deepcopy(_SHARED_FRAMES[key])
+
+
+def setUpModule():
+    from vnext import historical_sec_session as session_module
+    _REAL_DECLARED_FRAME.append(session_module.declared_frame)
+    patcher = patch.object(session_module, "declared_frame", _shared_frame)
+    patcher.start()
+    unittest.addModuleCleanup(patcher.stop)
 
 
 def _frame(company_id):

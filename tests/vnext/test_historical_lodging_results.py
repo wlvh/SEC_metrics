@@ -10,6 +10,7 @@ constant: same value, same unit, same quality, same table and same Spec. A
 route reading a different table in the same filing would agree on the number
 whenever the filing repeats it, so the table identity is part of the claim.
 """
+import copy
 import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
@@ -29,7 +30,19 @@ EARLIER = ("2024-12-31", "2023-12-31")
 RESULT_FIELDS = ("value", "unit", "quality", "publication", "reason_code", "applicability")
 
 
-def _historical(company_id, report_end, metric_id):
+# The same current-period answers are read by three cases, each through both
+# routes; each is built once and every case gets its own copy. The case that
+# patches the route resolves for itself.
+_ANSWERS = {}
+
+
+def _once(key, build):
+    if key not in _ANSWERS:
+        _ANSWERS[key] = build()
+    return copy.deepcopy(_ANSWERS[key])
+
+
+def _historical_now(company_id, report_end, metric_id):
     with original_sources_only():
         selection = resolve_period_selection(repo_root=ROOT, company_id=company_id,
                                              report_end=report_end)
@@ -38,10 +51,17 @@ def _historical(company_id, report_end, metric_id):
             period_selection=selection)
 
 
+def _historical(company_id, report_end, metric_id):
+    return _once(("historical", company_id, report_end, metric_id),
+                 lambda: _historical_now(company_id, report_end, metric_id))
+
+
 def _ordinary(metric_id):
-    with original_sources_only():
-        return prepare_ordinary_lodging_case(repo_root=ROOT, company_id=MARRIOTT,
-                                             metric_id=metric_id)
+    def build():
+        with original_sources_only():
+            return prepare_ordinary_lodging_case(repo_root=ROOT, company_id=MARRIOTT,
+                                                 metric_id=metric_id)
+    return _once(("ordinary", metric_id), build)
 
 
 class HistoricalLodgingResultsTest(unittest.TestCase):
@@ -208,8 +228,10 @@ class HistoricalLodgingResultsTest(unittest.TestCase):
             selection = {**component["selection"], "facts": facts}
             return {**component, "selection": selection}
 
+        # Uncached on purpose: the patched answer must neither come from nor
+        # enter the shared answers the other cases read.
         with mock.patch.object(route, "inspect_lodging_table_source", shifted):
-            component = _historical(MARRIOTT, CURRENT, "B10")
+            component = _historical_now(MARRIOTT, CURRENT, "B10")
         self.assertIsNone(component["result"]["value"])
         self.assertEqual("HISTORICAL_LODGING_SOURCE_ROUTE_UNRESOLVED",
                          component["result"]["reason_code"])

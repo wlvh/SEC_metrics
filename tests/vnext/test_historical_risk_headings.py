@@ -17,6 +17,7 @@ new rules, so they are kept and exercised by constructing the divergence they
 guard - as the lodging route's scope check was - instead of dropped for having
 no example.
 """
+import copy
 import unittest
 from unittest.mock import patch
 
@@ -66,13 +67,27 @@ def _candidate(arguments, spec):
            **{key: value for key, value in arguments.items() if key != "compiled_spec"}})
 
 
-def _pinned(company_id, report_end, metric_id="D01"):
+def _pinned_now(company_id, report_end, metric_id="D01"):
     with original_sources_only():
         selection = resolve_period_selection(repo_root=ROOT, company_id=company_id,
                                              report_end=report_end)
         return prepare_historical_business_text_input(
             repo_root=ROOT, company_id=company_id, metric_id=metric_id,
             period_selection=selection)
+
+
+# The same few inputs are prepared by most cases here - Marriott 2025 by five
+# of them - and preparing one reads and inspects the whole annual filing. Each
+# is prepared once and every case gets its own copy; the case that patches the
+# preparation prepares for itself.
+_PINNED = {}
+
+
+def _pinned(company_id, report_end, metric_id="D01"):
+    key = (company_id, report_end, metric_id)
+    if key not in _PINNED:
+        _PINNED[key] = _pinned_now(company_id, report_end, metric_id)
+    return copy.deepcopy(_PINNED[key])
 
 
 def _current(company_id, metric_id="D01"):
@@ -222,7 +237,7 @@ class TheD01InputShapeIsNotInheritedByAccidentTest(unittest.TestCase):
             return {**plan, "text_filings": [*plan["text_filings"], plan["text_filings"][0]]}
 
         with patch.object(pinned_input, "_source_plan", side_effect=two_filings):
-            prepared = _pinned(FORD, "2025-12-31")
+            prepared = _pinned_now(FORD, "2025-12-31")
         self.assertEqual("BLOCKED", prepared["input_status"])
         self.assertEqual(["HISTORICAL_TEXT_D01_PLAN_SHAPE_CHANGED"],
                          [limitation["reason"]
