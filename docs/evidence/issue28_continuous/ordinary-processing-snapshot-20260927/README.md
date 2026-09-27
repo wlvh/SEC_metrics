@@ -21,3 +21,9 @@
 `independent-review/conclusion.md`对`40bff457`给出`NEEDS_FIX`：混合刷新已能让B01形成候选，但续跑入口仍要求旧报告里“B01阻断”的形状，因而新报告不能作为下一次受限SEC捕获的前驱。该报告的来源副本、账本身份及旧默认兼容认可边界仍有效，失败结论保持原义。
 
 受限回修只改变`ordinary_refresh_cycle._resume_one_c04_source()`：带处理副本ID的新报告必须核对原来源账本、私有副本、每个已执行普通指标的本地配置/指针/终态、C04原终态和待办URL；旧报告没有副本ID时仍按旧阻断形状读取，不能把旧报告改签为新Run。相应材料用例先篡改B01尝试编号，要求在第二次SEC捕获前拒绝，再用原报告完成两次录制捕获。初跑走完录制链却在最后因测试仍期待旧整体`UPDATES_INCOMPLETE`而失败；该实际状态为来源补齐后的`UPDATES_READY`，失败原文在`resume-material-first.log`。改正预期后同一录制材料测试完整通过，`resume-material.log`记录1项PASS/195.651秒；两次C04来源捕获及B01/C04更新状态都由实际测试断言检查。`resume-short.log`记录原旧刷新边界11项PASS。第一次快测误用缺tokenizers的系统Python，`resume-fast-system-python-failed.log`保留环境失败；在已有`/private/tmp/issue28_py314_venv`的tokenizers0.22.2中重跑`resume-fast.log`为132/132 PASS、118.048秒。当前SEC实账本没有变化；录制槽不计真实信用。该测试已在`tools/run_fast_tests_v2.py`的来源材料选择器末尾追加，未改runner函数体；新补丁限定独审和新head CI仍待完成。
+
+## 134dcf4f限定审阅的两个恢复边界
+
+`independent-review-followup/conclusion.md`仍给`NEEDS_FIX`，且确认前述正常路径P2已关：一是可把B01真实成功行伪装成`UPDATE_BLOCKED`，使新报告跳过B01尝试核对；二是处理副本在已成功SEC捕获后创建失败时，报告无副本ID，续跑误按旧`SOURCE_SCOPE`报告拒绝。这两个都是同一恢复入口的明确反例，不扩大成通用审批平台。
+
+本次回修要求新报告的`UPDATE_BLOCKED`行没有对应普通更新配置或当前指针；有真实尝试的行仍需逐份匹配终态。混合报告明确标记副本`READY`或`FAILED`；失败态保留SEC成功收据和C04状态，下一次捕获前先重建并验当前副本，再检查原待办URL和账本序列。无标记旧报告保留旧形状，但不能伪装成已经执行普通指标的报告。`resume-followup-material.log`用两套独立临时来源根完成2项录制材料测试、合计377.258秒PASS：正常续跑前拒绝尝试编号和状态降格篡改，副本创建失败后不撤销已成功捕获，修复副本后再完成另一URL和B01/C04结果。`resume-followup-short.log`11项PASS，固定tokenizers0.22.2下`resume-followup-fast.log`132/132 PASS（118.568秒）；V14绑定与三份接线收据见`binding-resume-followup-after.json`。第二条材料选择器仅追加于`tools/run_fast_tests_v2.py`末尾，runner函数体不变。新差异限定独审与当前head CI另验；原`134dcf4f`结论不改，录制槽不计真实调用或新公司结果。
