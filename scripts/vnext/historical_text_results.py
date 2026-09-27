@@ -32,6 +32,16 @@ and 19,918 characters for Pfizer alone. ``referenced_note_candidates`` keeps
 the note as a note and deduplicates by the rule that decides it honestly: the
 innermost range containing a block owns it.
 
+C02 is corrected here too, for a different reason: the owner fixed its
+meaning as board composition facts, and the frozen selector labels a block as
+committee information whenever a committee name and a structural word occur
+anywhere in it. ``historical_board_composition`` reads composition facts the
+way proxies lay them out; this module replaces only the governance document's
+proposal with that reader's, so the frozen preparation still owns every
+source, identity and period check and the frozen candidate builder, Evidence,
+review and Result shapes are unchanged. C02's Spec is the v2 successor, whose
+only front-matter change is the successor item bound.
+
 ``_derive_candidate``, ``build_text_review_unit``, ``_note_references``,
 ``_excerpt``, ``_substantive`` and the record shape validator are the frozen
 ones, called unchanged. ``build_text_evidence``, ``reviewed_text_observations``
@@ -57,10 +67,11 @@ from .text_business_candidates import (_ACTION, _AUTHORITY, _LEGAL, _NEGATION, _
                                        _PROSPECTIVE, _check_document, _excerpt, _note_references,
                                        _ranges, _substantive)
 from . import text_results_v2 as frozen
+from .historical_board_composition import board_composition_facts
 from .text_results_v2 import TextResultV2Error, build_text_review_unit
 
 SECTION_BOUNDARY_POLICY = "FORM_UNNUMBERED_PART_I_ITEM_V1"
-SUPPORTED_METRICS = ("D02",)
+SUPPORTED_METRICS = ("D02", "C02")
 
 # Form 10-K General Instruction G(3) names the item but leaves the registrant an
 # "appropriate caption", so the accepted captions are the observed wordings and
@@ -830,6 +841,8 @@ def prepare_business_text_sources(*, metric_id, **source_arguments):
         # stored object would let one caller's edit reach the next one.
         return copy.deepcopy(shared[key])
     prepared = frozen.prepare_business_text_sources(metric_id=metric_id, **source_arguments)
+    if metric_id == "C02":
+        return _remember(shared=shared, key=key, prepared=_composition_facts(prepared))
     _need(len(prepared["documents"]) == 1, "HISTORICAL_TEXT_BOUNDARY_EXPECTS_ONE_DOCUMENT")
     reference_id = next(iter(prepared["documents"]))
     document = prepared["documents"][reference_id]
@@ -856,6 +869,28 @@ def prepare_business_text_sources(*, metric_id, **source_arguments):
         "documents": {**prepared["documents"], reference_id: corrected},
         "coverages": {**prepared["coverages"], reference_id: coverage},
         "proposals": {**prepared["proposals"], reference_id: proposal}})
+
+
+def _composition_facts(prepared):
+    """The frozen C02 preparation with its governance proposal replaced.
+
+    Only which blocks are excerpts changes. The annual anchor and the
+    governance document were built and checked by the frozen preparation; the
+    coverage record keeps every field it had and names the selection policy,
+    so a reader of the Evidence can tell which rule chose the excerpts.
+    """
+    governance = list(prepared["proposals"])
+    _need(len(governance) == 1, "HISTORICAL_C02_EXPECTS_ONE_GOVERNANCE_DOCUMENT")
+    reference_id = governance[0]
+    proposal = board_composition_facts(document=prepared["documents"][reference_id])
+    _need(proposal["candidates"], "HISTORICAL_C02_NO_COMPOSITION_FACT_FOUND")
+    coverage = {key: value for key, value in prepared["coverages"][reference_id].items()
+                if key != "coverage_hash"}
+    coverage["selection_policy"] = proposal["selection_policy"]
+    coverage["coverage_hash"] = content_hash(value=coverage)
+    return {**prepared,
+            "coverages": {**prepared["coverages"], reference_id: coverage},
+            "proposals": {**prepared["proposals"], reference_id: proposal}}
 
 
 def _remember(*, shared, key, prepared):
@@ -963,8 +998,8 @@ def replay_text_result(*, compiled_spec, target, company_traits, candidate, evid
 def text_api(metric_id):
     """Route the metrics this generation corrects here and the rest to the parent.
 
-    Two successors, not one. D02's corrections live in this module and run on
-    the v2 result API; D01's live in ``historical_risk_results`` and run on the
+    Two successors, not one. D02's and C02's corrections live in this module
+    and run on the v2 result API; D01's live in ``historical_risk_results`` and run on the
     frozen v1 one, with its own review builder. Routing D01 here instead would
     hand it D02's raised renderer capacity and its section-boundary narrowing,
     neither of which anything in D01's own Spec asks for.

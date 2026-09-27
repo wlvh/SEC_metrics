@@ -1,0 +1,420 @@
+"""C02 composition facts: each structure the reader accepts, and its near misses.
+
+Synthetic documents keep one structure per case, so a failure names the rule
+that broke. The real filings are read in ``test_historical_board_composition_
+filings``; both are needed, because a rule that only a real filing exercises
+can be broken without any synthetic case noticing, and the reverse.
+"""
+from __future__ import annotations
+
+from pathlib import Path
+import sys
+import unittest
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts"))
+
+from vnext.canonical import content_hash, sha256_bytes  # noqa: E402
+from vnext.historical_board_composition import (  # noqa: E402
+    _mentions_person, board_composition_facts, committee_name, person_name, statement_labels)
+
+
+def _document(texts, *, emphasized=(), linked=(), registrant="Example Corporation"):
+    """A governance document record with the frozen shape and a valid identity."""
+    blocks, offset = [], 0
+    for index, text in enumerate(texts):
+        raw = text.encode("utf-8")
+        blocks.append({"block_index": index, "text": text, "emphasized": index in emphasized,
+                       "linked": index in linked, "raw_start_byte": offset,
+                       "raw_end_byte": offset + len(raw), "raw_span_sha256": sha256_bytes(content=raw)})
+        offset += len(raw) + 1
+    body = {"blocks": blocks, "source_reference_id": "sha256:" + "1" * 64,
+            "raw_asset_id": "sha256:" + "2" * 64,
+            "source_filing": {"form": "DEF 14A", "accessionNumber": "0000000000-26-000001"},
+            "source_state": "COMPLETE_LOCAL_DOCUMENT", "source_reasons": [],
+            "registrant_names": [registrant]}
+    return {**body, "text_document_id": content_hash(value=body)}
+
+
+def _selected(texts, **kwargs):
+    proposal = board_composition_facts(document=_document(texts, **kwargs))
+    return {c["block_index"]: c["labels"] for c in proposal["candidates"]}
+
+
+class ANameIsTheWholeBlock(unittest.TestCase):
+
+    def test_names_as_proxies_print_them(self):
+        for text in ("Susan Desmond-Hellmann, MD, M.P.H.", "• William Clay Ford, Jr., Chair",
+                     "Pierre R. Breber (Chair)*", "GoldbergCaposselaCollinsMcMillan", "Isabella D.",
+                     "Goren", "BARBARA M. BYRNE", "Maynard Webb(1)", "General Kevin P. Chilton"):
+            with self.subTest(text=text):
+                self.assertTrue(person_name(text))
+
+    def test_headings_captions_and_furniture_are_not_names(self):
+        for text in ("Recent Committee Focus Areas", "Key Responsibilities", "Marriott International, Inc.",
+                     "2026 Proxy Statement", "Meetings in 2025: 7", "Corporate Governance",
+                     "Other Public Company Boards (Current)", "Chair", "Members", "Audit Committee"):
+            with self.subTest(text=text):
+                self.assertFalse(person_name(text))
+
+
+class ACommitteeHeadingNamesOneCommittee(unittest.TestCase):
+
+    def test_page_headings_signatures_and_row_labels(self):
+        for text, name in (("The Audit Committee", "audit"), ("AUDIT COMMITTEE", "audit"),
+                           ("Audit & Finance Committee", "audit & finance"),
+                           ("Fleet Oversight Committee*", "fleet oversight"),
+                           ("Members of the Compensation Committee", "compensation"),
+                           ("Nominating and Corporate Governance Committee", "nominating and corporate governance")):
+            with self.subTest(text=text):
+                self.assertEqual(name, committee_name(text))
+
+    def test_headings_about_committees_name_none(self):
+        for text in ("Compensation Committee Report", "Board Committees", "Additional Committee Members:",
+                     "Compensation Committee Interlocks and Insider Participation",
+                     "Additional retainer Audit Committee chair", "Committee"):
+            with self.subTest(text=text):
+                self.assertIsNone(committee_name(text))
+
+
+class ACommitteePageIsReadAsAStructure(unittest.TestCase):
+
+    def test_heading_chair_label_members_and_determination_not_duties(self):
+        texts = ["The Audit Committee", "Chair: Suzanne Nora Johnson",
+                 "The Committee’s primary responsibilities include:",
+                 "•reviewing the adequacy of internal control over financial reporting;",
+                 "Additional Committee Members:", "Ronald E. Blaylock", "Cyrus Taraporevala",
+                 "All Members are Independent and Financially Literate", "Meetings Held in 2025: 9"]
+        chosen = _selected(texts, emphasized={0, 4, 8})
+        self.assertEqual({0, 1, 4, 5, 6, 7}, set(chosen))
+
+    def test_a_member_column_laid_out_after_the_duties(self):
+        texts = ["Audit Committee", "Number of Meetings in 2025: 8", "Current Members", "Key Responsibilities",
+                 "•", "Oversee accounting and financial reporting.", "Isabella D.", "Goren", "CHAIR",
+                 "Frederick A.", "Henderson", "Human Resources and Compensation Committee"]
+        chosen = _selected(texts)
+        self.assertEqual({0, 2, 6, 7, 8, 9, 10}, set(chosen))
+
+    def test_a_signature_is_a_roster_and_a_fee_table_is_not(self):
+        chosen = _selected(["THE AUDIT COMMITTEE", "Suzanne Nora Johnson, Chair", "Ronald E. Blaylock",
+                            "Audit Committee", "•Chair—$35,000", "•Member—$17,500"])
+        self.assertEqual({0, 1, 2}, set(chosen))
+
+    def test_a_matrix_column_of_directors_is_not_a_roster(self):
+        texts = ["Oversight", "Committee", "Lisa M. Atherton", "● ● ●", "Pierre R. Breber",
+                 "● ●", "Douglas H. Brooks", "● ● ●"]
+        self.assertEqual({}, _selected(texts, emphasized={0, 1}))
+
+    def test_an_inline_members_line(self):
+        chosen = _selected(["Compensation Committee",
+                            "Members: Mason Morfit (Chair), Neelie Kroes, John V. Roos, Maynard Webb(1)"])
+        self.assertEqual({0, 1}, set(chosen))
+
+    def test_a_lead_in_to_duties_does_not_carry_the_duties(self):
+        # The sentence that ends in the colon introduces duties, even though an
+        # earlier sentence of the same block states the committee's makeup.
+        texts = ["Role of the Committee", "The Compensation Committee is composed solely of independent "
+                 "directors. Its responsibilities include:", "\u2022Determining compensation for our CEO;",
+                 "\u2022Reviewing equity incentive programs."]
+        self.assertEqual({1}, set(_selected(texts, emphasized={0})))
+
+    def test_a_composition_sentence_that_introduces_duties(self):
+        # The sentence ending in the colon states the committee's makeup, but
+        # what it introduces is duties.
+        texts = ["As further described below, the Compensation Committee, which is composed solely of independent "
+                 "directors, is responsible for, among other things, the following:",
+                 "\u2022Determining and approving compensation for our CEO;",
+                 "\u2022Reviewing the design of equity incentive programs."]
+        self.assertNotIn(1, _selected(texts))
+
+    def test_dated_changes_including_a_wrapped_line(self):
+        texts = ["Audit Committee*", "Chair: Michelle J. Goldberg", "Additions", "May 2026: Michelle J. Goldberg",
+                 "as Chair, Michael Collins and Stephen McMillan, if elected", "Departures",
+                 "December 2025: James Fowler", "Key Responsibilities"]
+        self.assertEqual({0, 1, 2, 3, 4, 5, 6}, set(_selected(texts)))
+
+
+class ADirectorCardIsReadOnlyWhenItNamesItsDirector(unittest.TestCase):
+
+    def test_committee_lines_then_the_director(self):
+        texts = ["Director since: 2025", "Committees:", "• Audit Committee (Chair)",
+                 "• Nominating and Governance Committee", "BARBARA M. BYRNE", "Ms. Byrne has served as a member."]
+        self.assertEqual({1, 2, 3, 4}, set(_selected(texts)))
+
+    def test_the_director_named_above_the_card_fields(self):
+        # Name, title, designation, age and tenure, then the committee label:
+        # the card fields between the name and the label belong to one card.
+        texts = ["Robert B. Chavez", "Founder and Chief Executive Officer, Chavez Luxury Advisers, LLC",
+                 "Age: 71", "Director Since: 2016", "Committees:", "• Audit Committee", "Professional Background"]
+        self.assertEqual({0, 4, 5}, set(_selected(texts)))
+
+    def test_a_card_whose_director_is_not_beside_it_is_left_out(self):
+        # A paragraph stands between the name and the label: nothing ties them.
+        texts = ["Robert B. Chavez", "Mr. Chavez brings to the Board decades of experience leading luxury retail "
+                 "businesses, including as chief executive of a publicly traded company, and a record of "
+                 "building brands across markets.", "Committees:", "• Audit Committee", "Professional Background"]
+        self.assertEqual({}, _selected(texts))
+
+    def test_a_card_between_two_names_is_not_given_either(self):
+        texts = ["Robert B. Chavez", "Age: 71", "Committees:", "• Audit Committee", "Jill Granoff", "Age: 60"]
+        self.assertEqual({}, _selected(texts))
+
+    def test_a_card_uses_the_filing_s_own_short_forms(self):
+        texts = ["Human Resources and Compensation Committee", "Members: Quincy L. Allen (Chair), Martha Béjar",
+                 "Audit Committee", "Members: Hal Stanley Jones (Chair), Michelle J. Goldberg",
+                 "General Kevin P. Chilton", "INDEPENDENT", "71 years old", "Committees: A, HRC (Chair)",
+                 "Skills:"]
+        chosen = _selected(texts, emphasized={4, 5})
+        self.assertEqual(["DIRECTOR_COMMITTEE_LABEL"], chosen[7])
+        self.assertEqual(["DIRECTOR_NAME"], chosen[4])
+        # A code the filing never uses for one of its committees is not one.
+        texts[7] = "Committees: A, XYZ"
+        self.assertNotIn(7, _selected(texts, emphasized={4, 5}))
+
+    def test_none_is_a_fact_for_a_director_and_not_for_a_nominee(self):
+        sitting = ["Director Nominee", "Age: 71", "Director since: 1994", "Committees:", "• None",
+                   "SHARI E. REDSTONE", "Ms. Redstone has been a member of our Board since January 1994."]
+        chosen = _selected(sitting)
+        self.assertEqual(["DIRECTOR_NO_COMMITTEE"], chosen[3])
+        self.assertIn(5, chosen)
+        nominee = ["Director Nominee", "Age: 74", "Director since: N/A", "Committees: N/A", "MARY BOIES",
+                   "Ms. Boies has served, since 2011, as Counsel to a law firm."]
+        chosen = _selected(nominee)
+        self.assertNotIn(3, chosen)
+        # The card still says she is a nominee: its designation and her name.
+        self.assertEqual({0, 4}, set(chosen))
+
+
+class AProseFactIsAStatementAboutThisBoard(unittest.TestCase):
+
+    def assertStates(self, text, label):
+        self.assertIn(label, statement_labels(text, frozenset({"audit", "compensation", "example"})))
+
+    def assertStatesNothing(self, text):
+        self.assertEqual([], statement_labels(text, frozenset({"audit", "compensation", "example"})))
+
+    def test_committee_board_and_leadership_facts(self):
+        self.assertStates("The Audit Committee is composed of three directors: Messrs. Gomo, Kortlang and Mora.",
+                          "COMMITTEE_COMPOSITION_STATEMENT")
+        self.assertStates("The Board has determined that all of our current Directors (other than Dr. Albert "
+                          "Bourla) are independent of the company.", "BOARD_INDEPENDENCE_STATEMENT")
+        self.assertStates("9 out of 11 members of the Board are independent.", "BOARD_INDEPENDENCE_STATEMENT")
+        self.assertStates("1.To elect 12 members of the Board of Directors.", "BOARD_SIZE_STATEMENT")
+        self.assertStates("The Board appointed Douglas H. Brooks as independent Chair of the Board, effective "
+                          "August 1, 2025.", "BOARD_LEADERSHIP_STATEMENT")
+        self.assertStates("No member of the Compensation Committee has ever been an executive officer of the "
+                          "Company.", "COMMITTEE_COMPOSITION_STATEMENT")
+        self.assertStates("Dr. Hockfield will retire from the Board in April 2026.", "BOARD_MEMBERSHIP_CHANGE")
+
+    def test_a_determination_qualified_by_a_rule_is_still_a_determination(self):
+        self.assertStates("The Board has determined that all members of the Audit Committee are independent, as "
+                          "required by Rule 5605(c)(2)(A).", "COMMITTEE_MEMBER_QUALIFICATION")
+        # Not an "as required by" phrase: the requirement word follows the
+        # determination, and only its position says it qualifies it.
+        self.assertStates("The Board also affirmatively determined that each member of the Audit Committee meets "
+                          "the heightened independence standards required for audit committee members.",
+                          "COMMITTEE_MEMBER_QUALIFICATION")
+
+    def test_rules_hypotheticals_and_process_are_not_facts(self):
+        self.assertStatesNothing("Our Principles require that a majority of the Board consist of directors who "
+                                 "the Board has determined are independent.")
+        self.assertStatesNothing("The Charter provides that the Committee will be comprised of at least three "
+                                 "members.")
+        self.assertStatesNothing("If the Chairman is not an independent director, the Board will designate a lead "
+                                 "independent director.")
+        self.assertStatesNothing("The director candidates are either immediately appointed to the Board or "
+                                 "nominated to stand for election.")
+        self.assertStatesNothing("Directors are elected by a plurality of the votes cast. The three nominees "
+                                 "receiving the most votes will be elected.")
+
+    def test_another_organisations_board_is_not_this_one(self):
+        self.assertStatesNothing("She serves on the audit committee of Acme Corporation.")
+        self.assertStatesNothing("Ms. Casiano also serves as a director of the Federal Home Loan Bank of Atlanta, "
+                                 "where she serves as Vice Chair of the Audit Committee.")
+        self.assertStatesNothing("At Vonage, he served on the audit and compensation committees.")
+        self.assertStatesNothing("Ms. Chandoha serves as Chair of the Risk Committee on the State Street "
+                                 "Corporation board.")
+
+    def test_pay_and_letters_are_not_facts(self):
+        self.assertStatesNothing("Includes $25,000 for service as Chair of the Audit Committee.")
+        self.assertStatesNothing("As Chair of the Compensation Committee, I want to share some thoughts.")
+        self.assertStatesNothing("Each outside director receives an annual retainer of $100,000.")
+
+    def test_who_chaired_is_a_fact_even_where_a_fee_is_explained(self):
+        self.assertStates("Cash fees paid to Mr. Roos relate to his service as Chair of the Compensation "
+                          "Committee for the first quarter of fiscal 2026.", "COMMITTEE_COMPOSITION_STATEMENT")
+        self.assertStates("As of March 25, 2026, there were approximately 83,093 employees, including six Named "
+                          "Executive Officers and 11 non-employee directors, each of whom would be eligible to be "
+                          "granted awards under the 2013 Plan.", "BOARD_SIZE_STATEMENT")
+
+
+class ALeadershipOrMembershipFactNamesThisBoardAndThePerson(unittest.TestCase):
+
+    OWN = frozenset({"audit", "compensation", "example"})
+
+    def labels(self, text):
+        return statement_labels(text, self.OWN, acronyms=frozenset({"HRC", "HRCC"}),
+                                registrant=frozenset({"example"}))
+
+    def test_whose_chair_the_sentence_says(self):
+        for text in ("T. Michael Glenn has served as Example's independent, non-executive Chairman since May 2020.",
+                     "Mr. Ellison has served as our Chairman and Chief Executive Officer since August 2025.",
+                     "Mr. Spring currently serves as Chairman and Chief Executive Officer of the company.",
+                     "The Committee determined that it would be in the best interest of the company for Dr. "
+                     "Bourla, the CEO, to continue serving as Chairman of the Board in 2026."):
+            with self.subTest(text=text):
+                self.assertIn("BOARD_LEADERSHIP_STATEMENT", self.labels(text))
+
+    def test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s(self):
+        for text in ("Mr. Varga has served as Acme's Chairman since 2010.",
+                     "Mr. Lawler currently serves as Vice Chair of the Company.",
+                     "Governor Huntsman served as Example's Vice Chair, Policy advising the Company's CEO."):
+            with self.subTest(text=text):
+                self.assertNotIn("BOARD_LEADERSHIP_STATEMENT", self.labels(text))
+
+    def test_who_joined_left_or_stayed(self):
+        for text in ("The Board appointed C. David Cush, Sarah E. Feinberg, and Patricia A. Watson to the Board, "
+                     "each effective as of November 1, 2024.",
+                     "Mr. Tresvant was appointed to the Board effective February 12, 2025.",
+                     "Dennis Cinelli served as a member of the Board from September 2025 until January 2026.",
+                     "On April 8, 2026, Mr. Shell ceased to serve as an employee of the Company and member of the "
+                     "Board.",
+                     "Following his appointment to the Board in July 2025, David B. Kirk joined the Compensation "
+                     "Committee in December 2025.",
+                     "Mr. Fowler served on Example's Board of Directors from 2023 until 2025.",
+                     "In November 2022, our former President and CEO Jeffrey K. Storey retired from the Board.",
+                     "The Board did not elect any new Directors during 2025.",
+                     "Commitment to Board Refreshment, with Two New Directors Effective July 2025"):
+            with self.subTest(text=text):
+                self.assertIn("BOARD_MEMBERSHIP_CHANGE", self.labels(text))
+
+    def test_a_person_is_named_by_an_honorific_or_a_full_name(self):
+        for sentence in ("In November 2022, our former President and CEO Jeffrey K. Storey retired from the Board.",
+                         "Mr. Rodgers will remain a member of the Board."):
+            with self.subTest(sentence=sentence):
+                self.assertTrue(_mentions_person(sentence))
+        for sentence in ("We have added new directors in support of the new era of Agentic AI.",
+                         "Write to our Corporate Secretary at 47281 Bayside Parkway, Fremont.",
+                         "Directors who reach age 75 retire from the Board."):
+            with self.subTest(sentence=sentence):
+                self.assertFalse(_mentions_person(sentence))
+
+    def test_a_process_or_an_adjective_is_not_a_change(self):
+        for text in ("His leadership experience would add tremendous value to the Board.",
+                     "Stockholders may recommend individuals to become nominees for election to the Board.",
+                     "Investors asked about the recently elected Directors, Messrs. Buckley and Taraporevala, "
+                     "including their contributions to the Board to date.",
+                     "Over the past few years, we have thoughtfully added new directors to the Board in support "
+                     "of the new era of Agentic AI.",
+                     "The Board expects to add two new directors."):
+            with self.subTest(text=text):
+                self.assertNotIn("BOARD_MEMBERSHIP_CHANGE", self.labels(text))
+
+    def test_size_setup_and_determinations(self):
+        cases = (("With Ms. Lee's impending departure, the Board has reduced its size from 13 to 12.",
+                  "BOARD_SIZE_STATEMENT"),
+                 ("The Board has focused on refreshment, reducing the Board size to eleven members in 2026.",
+                  "BOARD_SIZE_STATEMENT"),
+                 ("Of the 12 directors then-serving on our Board, all 12 directors participated in the meeting.",
+                  "BOARD_SIZE_STATEMENT"),
+                 ("The former Finance Committee, which was dissolved in February 2026, met 9 times.",
+                  "STANDING_COMMITTEES_STATEMENT"),
+                 ("The Audit Committee has established a subcommittee that meets with management.",
+                  "STANDING_COMMITTEES_STATEMENT"),
+                 ("As a result, we determined that all Directors are in compliance with the company's Principles.",
+                  "DIRECTOR_QUALIFICATION_DETERMINATION"),
+                 ("In December 2025, the Board determined that the criteria for Board membership have been "
+                  "satisfied.", "DIRECTOR_QUALIFICATION_DETERMINATION"),
+                 ("The NCG Committee determined that the amounts involved were below the thresholds set forth in "
+                  "the Standards for Director Independence.", "DIRECTOR_QUALIFICATION_DETERMINATION"),
+                 ("The following directors served on the HRCC for some or all of 2025: Quincy L. Allen and "
+                  "Martha Helena Béjar.", "COMMITTEE_COMPOSITION_STATEMENT"))
+        for text, label in cases:
+            with self.subTest(text=text):
+                self.assertIn(label, self.labels(text))
+
+    def test_the_statute_an_audit_committee_cites_is_not_a_setup_change(self):
+        self.assertEqual([], self.labels("The Audit Committee was established by the Board in accordance with "
+                                         "Section 3(a)(58)(A) of the Exchange Act, to monitor and oversee our "
+                                         "financial reporting."))
+
+
+class ACardOrTableStatesWhoAndWhat(unittest.TestCase):
+
+    def test_a_signature_under_its_lead_in(self):
+        texts = ["Submitted by the Audit Committee of the Board of Directors as of February 16, 2026.",
+                 "Hal Stanley Jones", "(Chair)", "Christopher CaposselaKevin P. ChiltonMichelle Goldberg", "50"]
+        self.assertEqual({0, 1, 2, 3}, set(_selected(texts)))
+
+    def test_member_and_chair_tails_on_signatures(self):
+        texts = ["Compensation Committee", "Thurman John Rodgers, Chair", "Richard Mora, Member",
+                 "*The material in this report is not soliciting material."]
+        chosen = _selected(texts)
+        self.assertEqual({0, 1, 2}, set(chosen))
+        self.assertIn("COMMITTEE_CHAIR_NAME", chosen[1])
+
+    def test_a_blank_block_inside_a_roster_and_a_heading_with_information_in_it(self):
+        texts = ["Technology and Information Security Oversight Committee", "Current Members",
+                 "Key Responsibilities", "•", "Review privacy and information security policies.",
+                 "Margaret M.", "McCarthy", "CHAIR", "\u200b", "Lauren R.", "Hobart", "Sean C.", "Tresvant",
+                 "The Board also maintains an Executive Committee."]
+        chosen = _selected(texts)
+        self.assertTrue({0, 1, 5, 6, 7, 9, 10, 11, 12} <= set(chosen))
+
+    def test_a_designation_on_a_card_and_not_a_table_header(self):
+        card = ["ROBERT L. FORNARO", "Age: 73 | Director", "Expertise Relevant to the Business"]
+        self.assertEqual({0: ["DIRECTOR_NAME"], 1: ["DIRECTOR_DESIGNATION"]}, _selected(card))
+        header = ["Name", "Age", "Director Since", "Independent", "Director", "Shari E. Redstone", "70"]
+        self.assertEqual({}, _selected(header))
+
+    def test_a_title_line_at_this_registrant_and_not_elsewhere(self):
+        self.assertEqual({0: ["BOARD_LEADERSHIP_TITLE"]},
+                         _selected(["Chairman and Chief Executive Officer, Example Corporation (2024 to Present)"]))
+        self.assertEqual({0: ["BOARD_LEADERSHIP_TITLE"]},
+                         _selected(["President, CEO, and Vice Chairman of the Board of Example Corporation"]))
+        for text in ("Member of the Board of PhRMA and Chair of the Board of The Example Foundation",
+                     "Former Chairman and Chief Executive Officer, Example Corporation",
+                     "Chairman and Chief Executive Officer, Example Corporation, until 2020",
+                     "Chairman and Chief Executive Officer, Acme Industries"):
+            with self.subTest(text=text):
+                self.assertEqual({}, _selected([text]))
+
+    def test_a_table_of_directors_by_class_and_not_a_card_under_a_heading(self):
+        table = ["Continuing Class III Directors (Until 2027 Annual Meeting of Stockholders)",
+                 "Badrinarayanan Kothandaraman", "President and CEO, Example Corporation", "54", "2017",
+                 "Joseph Malchow", "Founding Partner, a venture firm", "IND", "40", "2020",
+                 "Continuing Class I Directors (Until 2028 Annual Meeting of Stockholders)"]
+        chosen = _selected(table, emphasized={0, 1, 5, 7, 10})
+        self.assertEqual({0, 1, 5}, {i for i, labels in chosen.items() if labels[0].startswith("DIRECTOR_GROUP")})
+        cards = ["Nominees for Election as Directors:", "Emilie Arel", "President, Mitchell & Ness", "Independent",
+                 "Age: 44"]
+        self.assertNotIn(0, _selected(cards, emphasized={1, 3}))
+
+    def test_a_footnoted_departure_is_taken_with_the_names_that_carry_its_mark(self):
+        texts = ["Director", "Eduardo F. Conrado(2)", "58,527", "Elaine Mendoza(2)", "70,000", "Gary Kelly", "(1)",
+                 "Awards consist of shares of common stock.", "(2)", "Retired from the Board effective May 14, 2025."]
+        self.assertEqual({1, 3, 9}, set(_selected(texts)))
+
+
+class TheProposalKeepsTheFrozenShape(unittest.TestCase):
+
+    def test_candidates_are_whole_blocks_in_document_order(self):
+        document = _document(["Compensation Committee", "Members: Mason Morfit (Chair), Neelie Kroes",
+                              "The Audit Committee is composed of two directors: Ms. Byrne and Mr. Hamill."])
+        proposal = board_composition_facts(document=document)
+        self.assertEqual([0, 1, 2], [c["block_index"] for c in proposal["candidates"]])
+        self.assertTrue(all(c["section_id"] == "GOVERNANCE_DISCLOSURES" for c in proposal["candidates"]))
+        self.assertEqual(document["blocks"][2]["text"], proposal["candidates"][2]["text"])
+        self.assertEqual("BOARD_COMPOSITION_FACTS_V1", proposal["selection_policy"])
+        self.assertFalse(proposal["numeric_board_counts_asserted"])
+
+    def test_the_identity_moves_with_the_rules_not_with_the_comments(self):
+        document = _document(["Compensation Committee", "Members: Mason Morfit (Chair), Neelie Kroes"])
+        first = board_composition_facts(document=document)
+        second = board_composition_facts(document=document)
+        self.assertEqual(first["proposal_id"], second["proposal_id"])
+        self.assertTrue(first["policy_hash"].startswith("sha256:"))
+
+
+if __name__ == "__main__":
+    unittest.main()

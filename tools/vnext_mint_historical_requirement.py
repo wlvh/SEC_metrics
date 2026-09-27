@@ -63,6 +63,8 @@ NEW_RULE_FILES = (
     # decide a metric's bound belongs in the rule set rather than only in the
     # authority, so both roots check it.
     "catalog/r6/D02_legal_disclosures_v2.md",
+    "scripts/vnext/historical_board_composition.py",
+    "catalog/r6/C02_board_disclosures_v2.md",
     "scripts/vnext/historical_spec_revision.py",
     # 64 was two bounds: what a Spec may declare, and what ORDERED_NEWLINE_V1
     # will render. This carries the second, so a file that decides how many

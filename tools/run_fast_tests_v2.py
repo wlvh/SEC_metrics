@@ -328,6 +328,10 @@ FAST_TESTS += ("tests.vnext.test_acceptance_identity",)
 # asserted rather than assumed. It reads no source material; about 3 seconds.
 FAST_TESTS += ("tests.vnext.test_historical_model_calls",)
 FAST_TESTS += ("tests.vnext.test_c02_core_fact_reach",)
+# C02 composition facts: synthetic structures, one rule per case.
+FAST_TESTS += ("tests.vnext.test_historical_board_composition",)
+# C02 composition facts on the ten saved governance filings, both directions.
+SOURCE_TESTS += ("tests.vnext.test_historical_board_composition_filings",)
 SOURCE_TESTS += ("tests.vnext.test_regulatory_fact_review",)
 SOURCE_TESTS += ("tests.vnext.test_c04_registration_successor",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",)
@@ -358,6 +362,9 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # default is the same margin that was judged too thin above, so this keeps
     # an override, at the size the current cases actually need.
     "tests.vnext.test_historical_coverage": 480,
+    # Seven cases that recompute ten positions through the historical route;
+    # measured at 202 seconds alone.
+    "tests.vnext.test_historical_board_composition_filings": 600,
     # Fourteen cases over nine filings' full 10-K bytes, three of which parse
     # the same document twice to hold the successor parser to the frozen one.
     # Measured at 187 seconds, too close to the 240 default to survive a

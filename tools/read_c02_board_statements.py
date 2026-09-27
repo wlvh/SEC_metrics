@@ -35,21 +35,28 @@ OUTSIDE = "NOT_BOARD_COMPOSITION"
 FACT = "COMPOSITION_FACT"
 
 
+# This reading judged the values the frozen selector produced under C02's v1
+# Spec - the ten values that were withdrawn. The historical route now selects
+# composition facts (historical_board_composition, C02 v2), which a different
+# reading checks (tools/read_c02_composition.py). So the selection this tool
+# recomputes is pinned to the frozen route and the v1 Spec by name, rather
+# than read from whatever the route currently uses: a reading must keep
+# describing the values it read.
+FROZEN_SPEC_PATH = "catalog/r6/C02_board_disclosures_v1.md"
+
+
 def route_selection(*, repo_root: Path, company_id: str, report_end: str):
-    """The C02 excerpts the route selects for the pinned period, in order."""
-    from vnext.historical_results import TEXT_SPEC_PATHS
-    from vnext.historical_spec_revision import compile_historical_spec_file
+    """The C02 excerpts the frozen v1 route selects for the pinned period, in order."""
     from vnext.historical_text_input import prepare_historical_business_text_input
-    from vnext.historical_text_results import text_api
     from vnext.normal_period_selection import resolve_period_selection
+    from vnext.normal_run_v3 import text_api
+    from vnext.specs import compile_spec_file
     selection = resolve_period_selection(repo_root=repo_root, company_id=company_id,
                                          report_end=report_end)
     prepared = prepare_historical_business_text_input(repo_root=repo_root,
                                                       company_id=company_id, metric_id="C02",
                                                       period_selection=selection)
-    spec = compile_historical_spec_file(repo_root=repo_root,
-                                        repo_relative_path=TEXT_SPEC_PATHS["C02"],
-                                        dependency_specs={})
+    spec = compile_spec_file(path=repo_root / FROZEN_SPEC_PATH, dependency_specs={})
     api, _ = text_api("C02")
     candidate = api.create_deterministic_text_candidate(compiled_spec=spec,
                                                         **prepared["text_arguments"])

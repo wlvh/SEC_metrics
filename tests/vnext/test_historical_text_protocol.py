@@ -362,20 +362,27 @@ class CapacityFollowsSpecIdentityTest(unittest.TestCase):
         import tempfile
         from pathlib import Path
         from tests.vnext.common import REPO_ROOT as ROOT
+        from vnext.historical_spec_revision import REVISED_TEXT_SPECS
         first = revised_spec_ceilings()
         with tempfile.TemporaryDirectory(prefix="protocol-root-") as temporary:
             root = Path(temporary)
             (root / "catalog/r6").mkdir(parents=True)
-            for name in ("D02_legal_disclosures_v1.md", "D02_legal_disclosures_v2.md"):
-                (root / "catalog/r6" / name).write_bytes(
-                    (Path(ROOT) / "catalog/r6" / name).read_bytes())
+            # Every revision the registry names, successor and predecessor:
+            # a copy of only some of them is a different registry.
+            for path in {*REVISED_TEXT_SPECS, *REVISED_TEXT_SPECS.values()}:
+                (root / path).write_bytes((Path(ROOT) / path).read_bytes())
             self.assertEqual(first, revised_spec_ceilings(repo_root=root))
             edited = (root / "catalog/r6" / "D02_legal_disclosures_v2.md")
             edited.write_text(edited.read_text(encoding="utf-8").replace(
                 '"max_items": 192', '"max_items": 100'), encoding="utf-8")
             again = revised_spec_ceilings(repo_root=root)
-        self.assertEqual([100], sorted(set(again.values())))
-        self.assertNotEqual(sorted(first), sorted(again))
+        # The edited Spec has a new identity with the new bound; every other
+        # revision keeps its identity and its bound.
+        moved = set(first) - set(again)
+        self.assertEqual(1, len(moved))
+        self.assertEqual([100], [again[key] for key in set(again) - set(first)])
+        self.assertEqual({key: value for key, value in first.items() if key not in moved},
+                         {key: value for key, value in again.items() if key in first})
         self.assertEqual(first, revised_spec_ceilings())
 
 

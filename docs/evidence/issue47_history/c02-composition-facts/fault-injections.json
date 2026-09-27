@@ -1,0 +1,258 @@
+{
+ "record_type": "C02_COMPOSITION_FAULT_INJECTIONS",
+ "suite": "tests.vnext.test_historical_board_composition",
+ "control_failures": [],
+ "control_tests_run": 40,
+ "caught": 30,
+ "total": 30,
+ "results": [
+  {
+   "injection": "SKIP_MATRIX_MARKS_AS_LIST_BULLETS",
+   "expected": "test_a_matrix_column_of_directors_is_not_a_roster",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_matrix_column_of_directors_is_not_a_roster"
+   ]
+  },
+  {
+   "injection": "READ_ANOTHER_BODY_AS_THIS_BOARD",
+   "expected": "test_another_organisations_board_is_not_this_one",
+   "result": "CAUGHT",
+   "failed": [
+    "test_another_organisations_board_is_not_this_one"
+   ]
+  },
+  {
+   "injection": "ANY_REQUIREMENT_WORD_VETOES",
+   "expected": "test_a_determination_qualified_by_a_rule_is_still_a_determination",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_determination_qualified_by_a_rule_is_still_a_determination"
+   ]
+  },
+  {
+   "injection": "NO_REQUIREMENT_VETO",
+   "expected": "test_rules_hypotheticals_and_process_are_not_facts",
+   "result": "CAUGHT",
+   "failed": [
+    "test_rules_hypotheticals_and_process_are_not_facts"
+   ]
+  },
+  {
+   "injection": "PASS_OVER_A_PARAGRAPH_TO_A_NAME",
+   "expected": "test_a_card_whose_director_is_not_beside_it_is_left_out",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_card_whose_director_is_not_beside_it_is_left_out"
+   ]
+  },
+  {
+   "injection": "GIVE_A_CARD_BETWEEN_TWO_NAMES",
+   "expected": "test_a_card_between_two_names_is_not_given_either",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_card_between_two_names_is_not_given_either"
+   ]
+  },
+  {
+   "injection": "DROP_A_WRAPPED_CHANGE_LINE",
+   "expected": "test_dated_changes_including_a_wrapped_line",
+   "result": "CAUGHT",
+   "failed": [
+    "test_dated_changes_including_a_wrapped_line"
+   ]
+  },
+  {
+   "injection": "READ_ONLY_THE_NAMES_BESIDE_THE_LABEL",
+   "expected": "test_a_member_column_laid_out_after_the_duties",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_blank_block_inside_a_roster_and_a_heading_with_information_in_it",
+    "test_a_member_column_laid_out_after_the_duties"
+   ]
+  },
+  {
+   "injection": "ACCEPT_A_LETTER_IN_THE_FIRST_PERSON",
+   "expected": "test_pay_and_letters_are_not_facts",
+   "result": "CAUGHT",
+   "failed": [
+    "test_pay_and_letters_are_not_facts"
+   ]
+  },
+  {
+   "injection": "LET_A_TITLE_S_PERIOD_END_THE_SENTENCE",
+   "expected": "test_committee_board_and_leadership_facts",
+   "result": "CAUGHT",
+   "failed": [
+    "test_committee_board_and_leadership_facts",
+    "test_who_joined_left_or_stayed"
+   ]
+  },
+  {
+   "injection": "CONTINUE_A_LEAD_IN_TO_DUTIES",
+   "expected": "test_a_composition_sentence_that_introduces_duties",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_composition_sentence_that_introduces_duties"
+   ]
+  },
+  {
+   "injection": "IGNORE_THE_MEMBER_TAIL",
+   "expected": "test_member_and_chair_tails_on_signatures",
+   "result": "CAUGHT",
+   "failed": [
+    "test_member_and_chair_tails_on_signatures"
+   ]
+  },
+  {
+   "injection": "STOP_AT_A_BLANK_BLOCK",
+   "expected": "test_a_blank_block_inside_a_roster_and_a_heading_with_information_in_it",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_blank_block_inside_a_roster_and_a_heading_with_information_in_it"
+   ]
+  },
+  {
+   "injection": "INFORMATION_ENDS_A_COMMITTEE_NAME",
+   "expected": "test_a_blank_block_inside_a_roster_and_a_heading_with_information_in_it",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_blank_block_inside_a_roster_and_a_heading_with_information_in_it"
+   ]
+  },
+  {
+   "injection": "NO_SIGNATURE_LEAD_IN",
+   "expected": "test_a_signature_under_its_lead_in",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_signature_under_its_lead_in"
+   ]
+  },
+  {
+   "injection": "CARD_ITEMS_MUST_SAY_COMMITTEE",
+   "expected": "test_a_card_uses_the_filing_s_own_short_forms",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_card_uses_the_filing_s_own_short_forms"
+   ]
+  },
+  {
+   "injection": "ANY_CODE_IS_A_COMMITTEE",
+   "expected": "test_a_card_uses_the_filing_s_own_short_forms",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_card_between_two_names_is_not_given_either",
+    "test_a_card_uses_the_filing_s_own_short_forms",
+    "test_committee_lines_then_the_director",
+    "test_the_director_named_above_the_card_fields"
+   ]
+  },
+  {
+   "injection": "NONE_ON_A_NOMINEE_S_CARD",
+   "expected": "test_none_is_a_fact_for_a_director_and_not_for_a_nominee",
+   "result": "CAUGHT",
+   "failed": [
+    "test_none_is_a_fact_for_a_director_and_not_for_a_nominee"
+   ]
+  },
+  {
+   "injection": "A_DESIGNATION_NEEDS_NO_CARD",
+   "expected": "test_a_designation_on_a_card_and_not_a_table_header",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_designation_on_a_card_and_not_a_table_header",
+    "test_a_footnoted_departure_is_taken_with_the_names_that_carry_its_mark",
+    "test_a_signature_is_a_roster_and_a_fee_table_is_not"
+   ]
+  },
+  {
+   "injection": "A_TITLE_LINE_AT_ANY_BODY",
+   "expected": "test_a_title_line_at_this_registrant_and_not_elsewhere",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_card_uses_the_filing_s_own_short_forms",
+    "test_a_title_line_at_this_registrant_and_not_elsewhere"
+   ]
+  },
+  {
+   "injection": "A_FORMER_TITLE_COUNTS",
+   "expected": "test_a_title_line_at_this_registrant_and_not_elsewhere",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_title_line_at_this_registrant_and_not_elsewhere"
+   ]
+  },
+  {
+   "injection": "ONE_NAME_MAKES_A_TABLE",
+   "expected": "test_a_table_of_directors_by_class_and_not_a_card_under_a_heading",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_table_of_directors_by_class_and_not_a_card_under_a_heading"
+   ]
+  },
+  {
+   "injection": "A_FOOTNOTE_WITHOUT_ITS_NAMES",
+   "expected": "test_a_footnoted_departure_is_taken_with_the_names_that_carry_its_mark",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_footnoted_departure_is_taken_with_the_names_that_carry_its_mark"
+   ]
+  },
+  {
+   "injection": "A_VICE_CHAIR_IS_THE_BOARD_S",
+   "expected": "test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s",
+   "result": "CAUGHT",
+   "failed": [
+    "test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s"
+   ]
+  },
+  {
+   "injection": "ANY_POSSESSIVE_OWNS_THE_CHAIR",
+   "expected": "test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s",
+   "result": "CAUGHT",
+   "failed": [
+    "test_another_body_s_chair_and_an_officer_s_vice_chair_are_not_this_board_s"
+   ]
+  },
+  {
+   "injection": "APPOINT_ANYTHING_TO_THE_BOARD",
+   "expected": "test_a_process_or_an_adjective_is_not_a_change",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_process_or_an_adjective_is_not_a_change"
+   ]
+  },
+  {
+   "injection": "ANY_CAPITALISED_SPAN_IS_A_PERSON",
+   "expected": "test_a_person_is_named_by_an_honorific_or_a_full_name",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_person_is_named_by_an_honorific_or_a_full_name"
+   ]
+  },
+  {
+   "injection": "AN_UNDATED_SETUP_CHANGE",
+   "expected": "test_the_statute_an_audit_committee_cites_is_not_a_setup_change",
+   "result": "CAUGHT",
+   "failed": [
+    "test_the_statute_an_audit_committee_cites_is_not_a_setup_change"
+   ]
+  },
+  {
+   "injection": "PAY_HIDES_WHO_CHAIRED",
+   "expected": "test_who_chaired_is_a_fact_even_where_a_fee_is_explained",
+   "result": "CAUGHT",
+   "failed": [
+    "test_who_chaired_is_a_fact_even_where_a_fee_is_explained"
+   ]
+  },
+  {
+   "injection": "NO_COMMITTEE_ACRONYMS",
+   "expected": "test_size_setup_and_determinations",
+   "result": "CAUGHT",
+   "failed": [
+    "test_size_setup_and_determinations"
+   ]
+  }
+ ]
+}

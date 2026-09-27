@@ -63,6 +63,9 @@ from .specs import (
 SUCCESSOR_MAX_ITEMS = 192
 REVISED_TEXT_SPECS = {
     "catalog/r6/D02_legal_disclosures_v2.md": "catalog/r6/D02_legal_disclosures_v1.md",
+    # The composition-fact meaning lives in the body and the selection code;
+    # the front matter moves only the bound, which is what this proof checks.
+    "catalog/r6/C02_board_disclosures_v2.md": "catalog/r6/C02_board_disclosures_v1.md",
 }
 # The one front-matter value a revision handled here may move. Anything else is
 # a different Spec, not a revision of this one.
