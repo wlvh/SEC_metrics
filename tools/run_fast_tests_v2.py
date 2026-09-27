@@ -519,7 +519,13 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": 240,
     "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest": 163,
     "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": 230,
-    "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 150,
+    "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 240,
+    # Added by the base after that run: the two mixed-source C04 cases passed
+    # together in 377.6 s locally and each reached the 240 s per-case limit on
+    # CI; the processing-source case took 49.5 s locally.
+    "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 280,
+    "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 280,
+    "tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest": 60,
     # Issue #47.
     "tests.vnext.test_historical_sec_session": 560,
     "tests.vnext.test_historical_text_boundary": 313,
