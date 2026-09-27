@@ -426,6 +426,11 @@ SOURCE_TIMEOUT_OVERRIDES = {
 def _run_source_case(name):
     start = time.monotonic()
     timeout = SOURCE_TIMEOUT_OVERRIDES.get(name, SOURCE_TIMEOUT_SECONDS)
+    # One line when a case starts and one when it ends, on stderr. The result
+    # JSON is printed only once every case is done, so a job cancelled at its
+    # time limit printed nothing at all: two consecutive shard runs were
+    # cancelled at 35 minutes with no way to tell which case was running.
+    print(json.dumps({"started": name, "timeout_seconds": timeout}), file=sys.stderr, flush=True)
     environment = {**os.environ,"PYTHONDONTWRITEBYTECODE":"1"}
     try:
         done = subprocess.run([sys.executable,"-m","unittest","-q",name],cwd=str(inherited.REPO_ROOT),
@@ -436,7 +441,10 @@ def _run_source_case(name):
         stdout = stdout.decode("utf-8",errors="replace") if isinstance(stdout,bytes) else stdout
         stderr = stderr.decode("utf-8",errors="replace") if isinstance(stderr,bytes) else stderr
         stderr += "\nSOURCE_MATERIAL_TIMEOUT_SECONDS="+str(timeout)
-    return {"test":name,"return_code":code,"duration_seconds":round(time.monotonic()-start,3),
+    seconds = round(time.monotonic()-start,3)
+    print(json.dumps({"finished": name, "return_code": code, "seconds": seconds}),
+          file=sys.stderr, flush=True)
+    return {"test":name,"return_code":code,"duration_seconds":seconds,
             "timeout_seconds":timeout,
             "stdout_tail":stdout[-2000:],"stderr_tail":stderr[-2000:]}
 

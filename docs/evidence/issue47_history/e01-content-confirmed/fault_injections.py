@@ -104,18 +104,24 @@ def run_one(edits):
                 "sys.argv=['x', *%r]; import unittest; unittest.main(module=None)"
                 ) % (str(REPO / "scripts"), tmp, list(SUITES))
         run = subprocess.run([sys.executable, "-c", code], cwd=REPO, capture_output=True, text=True, timeout=1800)
-        failed = sorted({line.split(" ")[1] for line in run.stderr.splitlines()
-                         if line.startswith(("FAIL: ", "ERROR: "))})
+        lines = [line for line in run.stderr.splitlines() if line.startswith(("FAIL: ", "ERROR: "))]
+        # A class fixture that raises is reported as "ERROR: setUpClass (<class>)"
+        # and none of that class's cases run. Kept apart from the named cases:
+        # a fixture failure is a blunt catch, and the named case the injection
+        # targets may have run - and failed - in another class all the same.
+        fixtures = sorted({line.split("(", 1)[1].rstrip(")") for line in lines
+                           if line.split(" ")[1] == "setUpClass"})
+        failed = sorted({line.split(" ")[1] for line in lines} - {"setUpClass"})
         ran = [int(line.split()[1]) for line in run.stderr.splitlines() if line.startswith("Ran ")]
-        return failed, (ran[-1] if ran else 0), run.returncode
+        return failed, fixtures, (ran[-1] if ran else 0), run.returncode
 
 
 def main():
     originals = {module: module.read_text(encoding="utf-8") for module in MODULES}
-    control, control_ran, control_code = run_one({})
-    if control or control_code != 0 or control_ran == 0:
-        raise SystemExit("E01_INJECTION_CONTROL_DID_NOT_RUN_CLEAN: failed=%s ran=%s rc=%s"
-                         % (control, control_ran, control_code))
+    control, control_fixtures, control_ran, control_code = run_one({})
+    if control or control_fixtures or control_code != 0 or control_ran == 0:
+        raise SystemExit("E01_INJECTION_CONTROL_DID_NOT_RUN_CLEAN: failed=%s fixtures=%s ran=%s rc=%s"
+                         % (control, control_fixtures, control_ran, control_code))
     results = []
     for name, module, old, new, expected in INJECTIONS:
         text = originals[module]
@@ -124,13 +130,20 @@ def main():
             continue
         # A module edited alone: the others are the checkout's.
         edits = {module: text.replace(old, new)}
-        failed, ran, _code = run_one(edits)
-        if ran != control_ran:
-            results.append({"injection": name, "expected": expected, "result": "SUITE_DID_NOT_RUN", "ran": ran})
-            continue
-        results.append({"injection": name, "module": module.name, "expected": expected,
-                        "result": "CAUGHT" if expected in failed else ("CAUGHT_ELSEWHERE" if failed else "MISSED"),
-                        "failed": failed})
+        failed, fixtures, ran, _code = run_one(edits)
+        row = {"injection": name, "module": module.name, "expected": expected, "failed": failed}
+        if fixtures:
+            row.update(fixtures_failed=fixtures, ran=ran)
+        if expected in failed:
+            row["result"] = "CAUGHT"
+        elif ran != control_ran and not fixtures:
+            # Fewer cases ran and no fixture says why: the suite did not run.
+            row["result"] = "SUITE_DID_NOT_RUN"
+        elif fixtures:
+            row["result"] = "CAUGHT_AT_FIXTURE_ONLY"
+        else:
+            row["result"] = "CAUGHT_ELSEWHERE" if failed else "MISSED"
+        results.append(row)
     out = {"record_type": "E01_CONTENT_CONFIRMED_FAULT_INJECTIONS", "suites": list(SUITES),
            "control_failures": control, "control_tests_run": control_ran,
            "caught": sum(r["result"] == "CAUGHT" for r in results), "total": len(results), "results": results}
