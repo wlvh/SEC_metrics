@@ -1,0 +1,6 @@
+Command: PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=.:scripts /private/tmp/issue28_py314_venv/bin/python -m unittest tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest.test_complete_original_source_set_and_exact_raw_bytes_survive_cold_read
+.
+----------------------------------------------------------------------
+Ran 1 test in 29.957s
+
+OK
