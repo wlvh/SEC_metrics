@@ -40,6 +40,8 @@ from .canonical import content_hash, sha256_file, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_da_scope_candidate import (COMPOSITION, DIRECT, WITHHELD_REASON as DA_SCOPE_REASON,
                                             agree, annual_facts, da_scope_answer)
+from .historical_ma_confirmation import (ConfirmationNotRegistered, confirmation_request,
+                                         item_id, load_registered_confirmation)
 from .historical_event_items import (CONFIRMATION_REASON, NOT_LOCATED_REASON, SUCCESSOR_EVENT_ROUTES,
                                      EventItemTextError, compact_confirmation,
                                      content_confirmation_candidates, successor_event_route)
@@ -68,6 +70,22 @@ _SOURCE_ERRORS = (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateErr
 
 class _AmendmentRefused(Exception):
     """Control flow only: the approved amendment policy refused this input class."""
+
+
+class _ConfirmationUnsettled(Exception):
+    """A registered confirmation names an item its own text does not settle."""
+
+    def __init__(self, registered):
+        super().__init__(registered["counted"]["withheld_reason"])
+        self.registered = registered
+
+
+class _ConfirmationRequestBuilt(Exception):
+    """The call path asked for the request, not the result; it carries the request."""
+
+    def __init__(self, request, proofs):
+        super().__init__("E01_CONFIRMATION_REQUEST_BUILT")
+        self.request, self.proofs = request, proofs
 
 
 class _ConfirmationNotRegistered(Exception):
@@ -209,8 +227,34 @@ def _successor_income_input(*, repo_root: Path, company_id: str, metric_id: str,
     return income_input
 
 
+def e01_confirmation_request(*, repo_root: Path, company_id: str, period_selection):
+    """The content-confirmation request of E01's window at a pinned period, and its source proofs.
+
+    Built by the route itself, up to the point where it would ask for a
+    registered confirmation - the same prepared input, amendment answer, window,
+    event discovery and candidate reading - so the question a model is asked is
+    the one the route will check the answer against. A window with no candidate
+    item has no request; the route answers it zero.
+    """
+    try:
+        component = resolve_historical_zero_ai_metric(
+            repo_root=repo_root, company_id=company_id, metric_id="E01",
+            period_selection=period_selection, _build_request_only=True)
+    except _ConfirmationRequestBuilt as built:
+        return built.request, built.proofs
+    # No request: either the window has no candidate item and is answered, or
+    # the route stopped before reading one - and then the reason is the
+    # route's, not "no candidate".
+    result = component["result"]
+    if result["publication"] == "PUBLISHED":
+        raise NormalZeroAiError("HISTORICAL_E01_WINDOW_HAS_NO_CANDIDATE_TO_CONFIRM")
+    raise NormalZeroAiError("HISTORICAL_E01_WINDOW_HAS_NO_REQUEST:" + str(result["reason_code"]),
+                            component["selection"].get("category", "IMPLEMENTATION_GAP"))
+
+
 def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str,
-                                      period_selection):
+                                      period_selection, confirmation_mode=None,
+                                      _build_request_only=False):
     """Resolve revenue, or EBITDA margin with its rebuilt revenue dependency.
 
     Values come from the selected filing's own accession, which is the same
@@ -218,6 +262,8 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     """
     _need(metric_id in SUPPORTED_METRICS,
           "HISTORICAL_ZERO_AI_METRIC_NOT_WIRED:" + metric_id, "IMPLEMENTATION_GAP")
+    _need(confirmation_mode is None or metric_id in SUCCESSOR_EVENT_ROUTES,
+          "HISTORICAL_CONFIRMATION_MODE_WITHOUT_CONFIRMATION", "IMPLEMENTATION_GAP")
     authority = _authority(repo_root)
     if metric_id in SUCCESSOR_EVENT_ROUTES:
         # The successor route is read from the data root the Run is built in;
@@ -362,9 +408,50 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                 # through the route's own matcher, which then finds no
                 # candidate code among the claims.
                 confirmation = content_confirmation_candidates(
-                    repo_root=repo_root, route=route, claims=claims, records=reader.records)
+                    repo_root=repo_root, route=route, claims=claims, records=reader.records,
+                    keep_text=True)
                 if confirmation["candidates"]:
-                    raise _ConfirmationNotRegistered
+                    request = confirmation_request(
+                        route=route, company_id=company_id, target_cik=prepared["entity"],
+                        window=period, candidates=confirmation["candidates"])
+                    if _build_request_only:
+                        raise _ConfirmationRequestBuilt(request, list(
+                            {content_hash(value=p): p for p in [
+                                *prepared["source_proofs"],
+                                *[entry["proof"] for entry in reader.proofs.values()]]}.values()))
+                    try:
+                        registered = load_registered_confirmation(
+                            data_root=repo_root, request=request,
+                            period_selection_id=period_selection["selection_id"],
+                            mode=confirmation_mode)
+                    except ConfirmationNotRegistered:
+                        raise _ConfirmationNotRegistered
+                    confirmation = {**confirmation, "registered": {
+                        "input_record_id": registered["input_record_id"],
+                        "request_id": registered["request_id"], "mode": registered["mode"]}}
+                    for candidate in confirmation["candidates"]:
+                        candidate["confirmation"] = registered["decisions"][
+                            item_id(candidate)]["decision"]
+                    # Carried for installation whichever way it answers: a
+                    # window withheld because an item's text does not settle
+                    # it is rebuilt from the data root by the same record, and
+                    # without the installed copy that rebuild would read "not
+                    # registered" instead.
+                    confirmation["registered_record"] = registered
+                    if registered["counted"]["value"] is None:
+                        raise _ConfirmationUnsettled(registered)
+                    # The route's own matcher, over the confirmed candidates
+                    # and every claim that is not a candidate: a candidate the
+                    # confirmation says does not report a transaction is not
+                    # an announcement, and the matcher then never sees it.
+                    confirmed = {candidate["verified_claim_id"]
+                                 for candidate in confirmation["candidates"]
+                                 if candidate["confirmation"] == "REPORTS_A_TRANSACTION"}
+                    candidate_ids = {candidate["verified_claim_id"]
+                                     for candidate in confirmation["candidates"]}
+                    claims = [claim for claim in claims
+                              if claim["verified_claim_id"] not in candidate_ids
+                              or claim["verified_claim_id"] in confirmed]
             graph = project_event_result(
                 metric_id=metric_id, claims=claims, source_set_manifest=source_sets[-1],
                 inventory_source_reference=inventory["source_reference"],
@@ -377,6 +464,8 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                        "source_set_role": source_sets[-1]["source_role"]}
             if confirmation is not None:
                 binding["content_confirmation"] = compact_confirmation(confirmation)
+                if "registered" in confirmation:
+                    binding["content_confirmation"]["registered"] = confirmation["registered"]
             observation = structured_observation(
                 metric_id=metric_id, semantic_role=original["semantic_role"],
                 company_id=company_id, period_start=period["period_start"],
@@ -392,7 +481,7 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                          "source_event_accessions": sorted({f["accessionNumber"]
                                                             for f in events})}
             if confirmation is not None:
-                selection["content_confirmation"] = confirmation
+                selection["content_confirmation"] = _without_text(confirmation)
             raise _EventRouteResolved
         # The statement source set is proved against the document that lists
         # the filing; the event branch above keeps the main index, because its
@@ -459,6 +548,17 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
         selection = {"reason_code": result["reason_code"], "reason": withheld.answer["why"],
                      "category": "DISCLOSURE_SCOPE_UNPROVEN",
                      "depreciation_scope": withheld.answer}
+    except _ConfirmationUnsettled as unsettled:
+        # The registered answer says an item's own text does not settle it:
+        # most candidate items incorporate an exhibit, and none is saved.
+        # Counting the settled ones would report a lower bound as the count.
+        result, trace = withheld_metric_result(compiled_spec=spec, target=target,
+                                               reason_code=unsettled.registered["counted"]["withheld_reason"])
+        observations = []
+        selection = {"reason_code": result["reason_code"],
+                     "category": "CONTENT_CONFIRMATION_DOES_NOT_SETTLE_IT",
+                     "unsettled_items": unsettled.registered["counted"]["items"],
+                     "content_confirmation": _without_text(confirmation)}
     except _ConfirmationNotRegistered:
         # A candidate may or may not report an M&A transaction; until its
         # content confirmation is registered the window is not counted, and the
@@ -470,7 +570,7 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                      "category": "CONTENT_CONFIRMATION_NOT_EXECUTED",
                      "source_event_accessions": sorted({f["accessionNumber"]
                                                         for f in filings[1:]}),
-                     "content_confirmation": confirmation}
+                     "content_confirmation": _without_text(confirmation)}
     except EventItemTextError as error:
         # An item whose own text could not be read never counts and never
         # silently fails to count; the reason names it.
@@ -576,9 +676,21 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
             "native_run_status": "NOT_CREATED", "current_latest_verified": False,
             "latest_restated_values_used": False,
             "calls": {"provider": 0, "paid": 0, "sec": 0}, "production_authorized": False}
+    if confirmation is not None and confirmation.get("registered_record") is not None:
+        body["registered_confirmation"] = confirmation["registered_record"]
     body = exact_json_value(body)
     return {**body, "input_binding_id": content_hash(value=body["input_binding"]),
             "component_id": content_hash(value=body)}
+
+
+def _without_text(confirmation):
+    """A confirmation as a record carries it: every candidate's hash, not its text."""
+    if confirmation is None:
+        return None
+    kept = {key: value for key, value in confirmation.items() if key != "registered_record"}
+    kept["candidates"] = [{key: value for key, value in candidate.items() if key != "text"}
+                          for candidate in confirmation["candidates"]]
+    return kept
 
 
 def verify_historical_zero_ai_metric(*, candidate, repo_root: Path, company_id: str,

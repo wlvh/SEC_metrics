@@ -1,0 +1,78 @@
+{
+ "answer_is": "synthetic: every item declined except the confirmed accessions, the named items left undecided; the test's answer, not a model's and not a reading",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "cold_read_matches": true,
+ "company_id": "paramount_skydance_paramount_global",
+ "confirmed_accessions": [
+  "0001193125-24-177535"
+ ],
+ "default_installation": {
+  "publication": "WITHHELD",
+  "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED"
+ },
+ "production_authorized": false,
+ "public_row": {
+  "evidence_count": 1,
+  "notes": "Count of 8-K items filed under 1.01, 2.01 or 8.01 in the fiscal-year event window whose own text was confirmed to report a merger, acquisition, disposition or business combination to which the registrant or a subsidiary is party; financing agreements, tender offers for the registrant's own securities, repurchases, compensation and shareholder agreements are not counted. A window with an item whose confirmation is not registered, or whose own text does not settle it, is withheld by name. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS. Pinned historical period; the current value comes from the selected filing and the prior value from the prior selected filing. No latest-restated view is applied. Source classifications use recorded test responses; no real model execution credit.",
+  "period_end": "2024-12-31",
+  "row_hash": "sha256:c039d8646142148726ecc92b59b4df4c29564660e09e23d063ac68b651f47d38",
+  "semantic_assessment_mode": "RECORDED_TEST_ONLY",
+  "status": "8K_ITEM_OK",
+  "value": "1"
+ },
+ "recorded_mode_marked": true,
+ "registration": {
+  "counted": {
+   "items": [
+    "0001193125-24-177535#1.01@2210"
+   ],
+   "value": 1,
+   "withheld_reason": null
+  },
+  "input_record_id": "sha256:daa6f56df00889811d0d92284ff7f0a22ce2fec95b363947fec585dd0418cac0",
+  "items": 8,
+  "mode": "RECORDED_TEST_ONLY",
+  "request_id": "sha256:3831616f67165ebfc27c770cc69a79835c7cf9205c7e35ec734159907dc90753"
+ },
+ "report_end": "2024-12-31",
+ "run": {
+  "new_calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "publication": "PUBLISHED",
+  "quality": "EXACT",
+  "reason_code": "PASS",
+  "requirement_closure_hash": "sha256:3a42764a79eaf16be16998469257d9f6b6849c261afc09dab1a9d3d3db240b14",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:0e7fca2a78058bf26edbeb6e809622ac5966c0bd3735b4fdf9b1356c217e27f0",
+  "run_id": "run:historical-period:36665007f5257418fb3d728aac45329cef92355d7a2774eee4abb7854b9a5f9b",
+  "status": "FROZEN",
+  "target_period": {
+   "fiscal_year": 2024,
+   "period_end": "2024-12-31",
+   "period_start": "2024-01-01"
+  },
+  "value": "1"
+ },
+ "runtime_tree": "/tmp/claude-0/native/rt-d04",
+ "separate_process_cold_read": {
+  "publication": "PUBLISHED",
+  "quality": "EXACT",
+  "reason_code": "PASS",
+  "records": 128,
+  "requirement_closure_hash": "sha256:3a42764a79eaf16be16998469257d9f6b6849c261afc09dab1a9d3d3db240b14",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:0e7fca2a78058bf26edbeb6e809622ac5966c0bd3735b4fdf9b1356c217e27f0",
+  "run_id": "run:historical-period:36665007f5257418fb3d728aac45329cef92355d7a2774eee4abb7854b9a5f9b",
+  "status": "FROZEN",
+  "value": "1"
+ },
+ "successor_meaning_on_the_row": true,
+ "undecided_items": []
+}

@@ -68,6 +68,9 @@ NEW_RULE_FILES = (
     # E01's content-confirmed successor route: its hash is the Spec's, so the
     # meaning it carries belongs in the rule set.
     "catalog/r6/E01_content_confirmed_ma_v1.json",
+    # The Spec that route compiles to, as the Markdown file a Run compiles its
+    # Specs from; generated from the route and held to its bytes.
+    "catalog/r6/E01_content_confirmed_ma_v1.md",
     "scripts/vnext/historical_spec_revision.py",
     # 64 was two bounds: what a Spec may declare, and what ORDERED_NEWLINE_V1
     # will render. This carries the second, so a file that decides how many
@@ -134,6 +137,11 @@ NEW_RULE_FILES = (
     # alias until its meaning is decided. It decides a published count, so both
     # roots check it.
     "scripts/vnext/historical_event_items.py",
+    # E01's content confirmation: the one request a window's candidate items
+    # make, the checks an answer must pass, and what a checked, registered
+    # answer counts. It decides whether a window is counted, withheld or
+    # answered, so both roots check it.
+    "scripts/vnext/historical_ma_confirmation.py",
     # A Part III amendment's explanatory note read whole, as paragraphs and
     # sentences, where the approved classifier refuses it on markup. It decides
     # whether a period's event window is cleared, so both roots check it.

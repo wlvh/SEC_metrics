@@ -327,6 +327,9 @@ FAST_TESTS += ("tests.vnext.test_acceptance_identity",)
 # egress patch is not applied: nothing here can reach a provider, which is
 # asserted rather than assumed. It reads no source material; about 3 seconds.
 FAST_TESTS += ("tests.vnext.test_historical_model_calls",)
+# E01's content-confirmation contract on synthetic candidates: the request, the
+# answer's form and the count. Reads no filing; well under a second.
+FAST_TESTS += ("tests.vnext.test_historical_ma_confirmation",)
 FAST_TESTS += ("tests.vnext.test_c02_core_fact_reach",)
 # C02 composition facts: synthetic structures, one rule per case.
 FAST_TESTS += ("tests.vnext.test_historical_board_composition",)

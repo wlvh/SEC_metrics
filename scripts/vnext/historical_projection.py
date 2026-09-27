@@ -132,6 +132,15 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
     item = policy["metrics"][metric]
     projection = {**item["projection"],
                   **item["spec_overrides"].get(prepared["spec_paths"][metric], {})}
+    # A metric the owner gave a successor route (E01) keeps the ordinary
+    # policy's unit and class, but not its note: that note describes the
+    # approved route's count ("filing items matched by the approved route"),
+    # which is not what a content-confirmed count is. Found on the first E01
+    # row rendered end to end.
+    from .historical_event_items import SUCCESSOR_EVENT_ROUTES, successor_public_notes
+    if metric in SUCCESSOR_EVENT_ROUTES:
+        projection = {**projection,
+                      "notes": successor_public_notes(repo_root=data_root, metric_id=metric)}
     # A text metric has no canonical numeric unit for the projection to agree with.
     same_unit = text_route or scope_answer or (
         projection["unit"] == spec["compiled"].get("canonical_unit")
@@ -184,9 +193,11 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
             result=result, trace=trace, company=company, spec=view, baseline_row=baseline,
             indexes=indexes, fiscal_year=str(period["fiscal_year"]),
             metric_fields=publication.METRIC_FIELDS)
-    # Only a Run input that carries a registered assessment has a review mode;
-    # a document-text component's fields are not asked.
-    semantic_mode = (prepared["component"]["mode"]
+    # Only a Run input that carries a registered model answer has a review mode:
+    # D04's assessment or E01's content confirmation, each record carrying its
+    # own. Read from the record rather than the component, whose fields differ
+    # by route - E01's has no mode, and asking it for one raised.
+    semantic_mode = (prepared["registered_assessment"]["mode"]
                      if prepared.get("registered_assessment") is not None else None)
     if text_route and result["reason_code"] in DEFINED_ABSENCE_REASONS:
         # D04's "no going-concern doubt disclosed" carries no text payload, so the

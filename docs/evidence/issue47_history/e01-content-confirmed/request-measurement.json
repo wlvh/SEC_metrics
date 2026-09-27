@@ -1,0 +1,196 @@
+{
+ "record_type": "E01_CONTENT_CONFIRMATION_REQUEST_MEASUREMENT",
+ "what_this_is": "the one confirmation request of each window whose E01 route reads candidate items, built by the route and counted by the pinned reference tokenizer; no request was sent",
+ "windows": [
+  {
+   "case": "enphase-2025",
+   "company_id": "enphase_energy",
+   "report_end": "2025-12-31",
+   "no_request": "NormalZeroAiError: HISTORICAL_E01_WINDOW_HAS_NO_CANDIDATE_TO_CONFIRM"
+  },
+  {
+   "case": "ford-2025",
+   "company_id": "ford_motor_company",
+   "report_end": "2025-12-31",
+   "request_id": "sha256:c368d047537e4297da7ead9dda75b8f044482eccbae2aabf9522419eeca07476",
+   "source_id": "sha256:2ea13e57cd5223af22296debd41e8aa90483a8b0bea0ca8330ae46a2deb3cdf9",
+   "ledger_digest": "sha256:d9cccb1b837280b371b6872739c2df3ab1e192789a9c0e395845a305a9a3224c",
+   "items": 7,
+   "item_codes": [
+    "1.01",
+    "8.01"
+   ],
+   "item_text_characters": 10439,
+   "provider_body_bytes": 15458,
+   "provider_body_sha256": "sha256:ba93585478a7d23961b87210ad7864d0b681ac5d55abd875e6f2d69e6db34c49",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "reference_input_tokens": 3804,
+   "max_output_tokens": 4096,
+   "planned_context_tokens": 7900,
+   "fits_the_ceiling": true
+  },
+  {
+   "case": "lumen-2025",
+   "company_id": "lumen_technologies",
+   "report_end": "2025-12-31",
+   "request_id": "sha256:e347a58d2ae0216994ae51b778609039ee881a635bb3fefd575690a01e24e6a4",
+   "source_id": "sha256:466d330c7d91c08ac4849daf25098105feb730d4f1abacf074bee00bec9a4efe",
+   "ledger_digest": "sha256:294b5f171a5a7b088c3bb2a4f87d929372c99fb1c9740cde1dadfc3aa8b6caf1",
+   "items": 15,
+   "item_codes": [
+    "1.01",
+    "8.01"
+   ],
+   "item_text_characters": 71372,
+   "provider_body_bytes": 79881,
+   "provider_body_sha256": "sha256:87c5f4dc3d20ee8e8d78d9c26943e1ca52048e91188832734626c15add7938eb",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "reference_input_tokens": 17601,
+   "max_output_tokens": 4096,
+   "planned_context_tokens": 21697,
+   "fits_the_ceiling": true
+  },
+  {
+   "case": "macys-2026",
+   "company_id": "macys",
+   "report_end": "2026-01-31",
+   "request_id": "sha256:536fa8ed89844be40ccba48baab4d46963fdc23f1e68609a1093b5c80c96f6a3",
+   "source_id": "sha256:48497c24464cb71150f43b31a78647edee5c196cba63b8e36f5200664cff925b",
+   "ledger_digest": "sha256:3d76e57a1ef2366a79a660ee7b7cbfa47b726845f6ffbfa8a53753e284574c41",
+   "items": 6,
+   "item_codes": [
+    "1.01",
+    "8.01"
+   ],
+   "item_text_characters": 11641,
+   "provider_body_bytes": 16351,
+   "provider_body_sha256": "sha256:15a30b067e8bb799e513deb78552c6011483dae4602b63d9ab99076106c49962",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "reference_input_tokens": 4118,
+   "max_output_tokens": 4096,
+   "planned_context_tokens": 8214,
+   "fits_the_ceiling": true
+  },
+  {
+   "case": "marriott-2023",
+   "company_id": "marriott_international",
+   "report_end": "2023-12-31",
+   "no_request": "NormalZeroAiError: HISTORICAL_E01_WINDOW_HAS_NO_REQUEST:HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED"
+  },
+  {
+   "case": "marriott-2024",
+   "company_id": "marriott_international",
+   "report_end": "2024-12-31",
+   "no_request": "NormalZeroAiError: HISTORICAL_E01_WINDOW_HAS_NO_REQUEST:HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED"
+  },
+  {
+   "case": "marriott-2025",
+   "company_id": "marriott_international",
+   "report_end": "2025-12-31",
+   "request_id": "sha256:038a2c4ec30a65fd392f43c536bec548b818315cbf41a99937776eee02c14496",
+   "source_id": "sha256:8ece9583f01a65f7d57353158866c058f151cea8d2a876d6588393937265c2a6",
+   "ledger_digest": "sha256:b39dbfb0f6139c6f40133d5812a420ba937ed90df0297b229c1905c749943f1b",
+   "items": 2,
+   "item_codes": [
+    "8.01"
+   ],
+   "item_text_characters": 5577,
+   "provider_body_bytes": 8820,
+   "provider_body_sha256": "sha256:7e521f10bf6f474f63fa9937e8fc9e678011dac0ed44988564751cdf5e9a084f",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "reference_input_tokens": 2233,
+   "max_output_tokens": 4096,
+   "planned_context_tokens": 6329,
+   "fits_the_ceiling": true
+  },
+  {
+   "case": "paramount-2024",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "request_id": "sha256:3831616f67165ebfc27c770cc69a79835c7cf9205c7e35ec734159907dc90753",
+   "source_id": "sha256:159756dba98ca261dce59cc1064d2ce483d863fb3bd0f412f311ebf167763f10",
+   "ledger_digest": "sha256:37b82867609f54b1be02759260a8361466170ab98b876234eed521f4eeec367f",
+   "items": 8,
+   "item_codes": [
+    "1.01",
+    "8.01"
+   ],
+   "item_text_characters": 44249,
+   "provider_body_bytes": 50034,
+   "provider_body_sha256": "sha256:11f9f8deeecc0691ed326daa2f2d65817d65bf24c90a32e16b5df07d5cf65554",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "reference_input_tokens": 10542,
+   "max_output_tokens": 4096,
+   "planned_context_tokens": 14638,
+   "fits_the_ceiling": true
+  },
+  {
+   "case": "paramount-2025",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2025-12-31",
+   "no_request": "NormalZeroAiError: HISTORICAL_E01_WINDOW_HAS_NO_REQUEST:HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED"
+  },
+  {
+   "case": "pfizer-2025",
+   "company_id": "pfizer",
+   "report_end": "2025-12-31",
+   "request_id": "sha256:bccfda8803a7b0db6a076a153b553d082aab8b972351a40aefa63276f4a15346",
+   "source_id": "sha256:fa00a13b99de9c412e60ea31e554bf4fbdf251d88c64e6990b4becbde4ab2f33",
+   "ledger_digest": "sha256:c825a030b60bcadb4dbe56453394f5f670f2efef15f0de16b9e1a42cbeb648ec",
+   "items": 3,
+   "item_codes": [
+    "8.01"
+   ],
+   "item_text_characters": 7620,
+   "provider_body_bytes": 11288,
+   "provider_body_sha256": "sha256:01e2446cb97c68f34962b6b24b39136fd2f45ed1cd45d5a0df12a76bf6afbb4b",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "reference_input_tokens": 2949,
+   "max_output_tokens": 4096,
+   "planned_context_tokens": 7045,
+   "fits_the_ceiling": true
+  },
+  {
+   "case": "salesforce-2026",
+   "company_id": "salesforce",
+   "report_end": "2026-01-31",
+   "no_request": "NormalZeroAiError: HISTORICAL_E01_WINDOW_HAS_NO_REQUEST:HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED"
+  },
+  {
+   "case": "southwest-2025",
+   "company_id": "southwest_airlines",
+   "report_end": "2025-12-31",
+   "request_id": "sha256:71f77ff6331fb82af7e31cba6051cca885c15b71d722bdeca8bd89e02e075d4a",
+   "source_id": "sha256:6505e274de71be4638195ad720dd8a7e500498f89fe1faf567196f84fe13ddea",
+   "ledger_digest": "sha256:05dd025fba4a98f86a9d47f572fa810339c5e7f75c025560e8526c235d488d71",
+   "items": 3,
+   "item_codes": [
+    "1.01",
+    "8.01"
+   ],
+   "item_text_characters": 3573,
+   "provider_body_bytes": 7169,
+   "provider_body_sha256": "sha256:5111af6c7cdf60e9bc6fc94f3370041f78104a2964de83edb624b9ea5be5dfb8",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "reference_input_tokens": 1862,
+   "max_output_tokens": 4096,
+   "planned_context_tokens": 5958,
+   "fits_the_ceiling": true
+  }
+ ],
+ "totals": {
+  "requests": 7,
+  "items": 44,
+  "reference_input_tokens": 43109,
+  "provider_paid_sec_calls_if_each_is_called_once": [
+   7,
+   7,
+   0
+  ]
+ },
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

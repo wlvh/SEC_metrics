@@ -43,7 +43,8 @@ def main():
         if confirmation is not None:
             row["status"] = confirmation["status"]
             row["candidates"] = [{key: item[key] for key in ("accession", "item_code", "heading", "characters",
-                                                              "incorporates_an_exhibit", "text_sha256")}
+                                                              "incorporates_an_exhibit", "shares_the_body_of",
+                                                              "text_sha256")}
                                  for item in confirmation["candidates"]]
             for item in confirmation["candidates"]:
                 total["candidates"] += 1

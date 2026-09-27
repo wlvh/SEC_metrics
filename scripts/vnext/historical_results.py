@@ -505,6 +505,35 @@ def _historical_component_run_input(*, repo_root, company_id, metric_id, period_
     return {**body, "input_id": content_hash(value=body)}
 
 
+def _successor_event_spec(*, repo_root: Path, metric_id: str):
+    """The Spec a successor event route compiles to, and the Spec file a Run compiles it from.
+
+    A Run compiles its Specs from Markdown MetricSpec files
+    (run_store.load_run_bound_specs), so a route-derived Spec needs one, as the
+    ordinary set's event Specs have (normal_run_specs). The file in
+    ``repo_root`` must be byte for byte the document the route generates, and
+    must compile back to the route's Spec. Found by the first E01 Run built end
+    to end: pointing the Run at the JSON route froze nothing, because the Run
+    store cannot compile a route - "MetricSpec must begin with ---".
+    """
+    from .deterministic_router import load_event_route_catalog
+    from .historical_event_items import SUCCESSOR_SPEC_DOCUMENTS, successor_event_route
+    from .normal_run_specs import _spec_document
+    from .normal_zero_ai_results import _compiled_event_spec
+    from .sources import resolve_repository_file
+    from .specs import compile_spec_file
+    catalog = load_event_route_catalog(repo_root=repo_root)
+    route = successor_event_route(repo_root=repo_root, metric_id=metric_id,
+                                  frozen_route=catalog["routes"][metric_id])
+    compiled = _compiled_event_spec(metric_id=metric_id, route=route)
+    path = SUCCESSOR_SPEC_DOCUMENTS[metric_id]
+    document = resolve_repository_file(repo_root=repo_root, repo_relative_path=path)
+    _need(document.read_text(encoding="utf-8") == _spec_document(compiled)
+          and compile_spec_file(path=document, dependency_specs={}) == compiled,
+          "HISTORICAL_SUCCESSOR_SPEC_DOCUMENT_IS_NOT_THE_ROUTE_S:" + metric_id)
+    return path, compiled
+
+
 def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id: str,
                                  period_selection, assessment_mode=None):
     """Assemble one metric's complete historical graph for a Run factory.
@@ -518,7 +547,11 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     is refused for every other metric, which has nothing it could select.
     """
     from .historical_semantic_results import SUPPORTED_METRICS as SEMANTIC_METRICS
-    _need(assessment_mode is None or metric_id in SEMANTIC_METRICS,
+    from .historical_event_items import SUCCESSOR_EVENT_ROUTES
+    # E01's content confirmation is a registered model answer too, selected the
+    # same way: None means the installed copy's mode, and LIVE otherwise.
+    _need(assessment_mode is None or metric_id in SEMANTIC_METRICS
+          or metric_id in SUCCESSOR_EVENT_ROUTES,
           "HISTORICAL_RUN_ASSESSMENT_MODE_WITHOUT_ASSESSMENT")
     from .historical_accession_results import resolve_historical_accession_metrics
     # Revenue and the 8-K event windows share one adapter, as they do in the
@@ -609,9 +642,10 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     _need(metric_id in specifications, "HISTORICAL_RUN_METRIC_NOT_IN_ZERO_AI_SET")
     expected_ids = {metric_id, *specifications[metric_id]["compiled_spec"]["compiled"]["dependencies"]}
     if metric_id in ZERO_AI_METRICS:
-        component = resolve_historical_zero_ai_metric(repo_root=repo_root, company_id=company_id,
-                                                      metric_id=metric_id,
-                                                      period_selection=period_selection)
+        component = resolve_historical_zero_ai_metric(
+            repo_root=repo_root, company_id=company_id, metric_id=metric_id,
+            period_selection=period_selection,
+            **({"confirmation_mode": assessment_mode} if metric_id in SUCCESSOR_EVENT_ROUTES else {}))
         specs = {metric_id: component["compiled_spec"], **component["dependency_specs"]}
         source_records = component["source_records"]
         records = [*component["records"], *component["claims"]]
@@ -652,7 +686,21 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
         _need(result["trace_id"] == traces[metric_key]["trace_id"]
               and result["spec_closure_hash"] == specs[metric_key]["spec_closure_hash"],
               "HISTORICAL_RUN_RESULT_TRACE_OR_SPEC_CHANGED")
+    # A metric the owner gave a successor route (E01) is compiled from that
+    # route, not from the frozen catalog the ordinary set compiles, so its Spec
+    # differs from the ordinary one by design. Its Spec file is the route file
+    # the Run installs and hashes; its Spec is the one that file compiles to.
+    # Measured before this: every E01 Run under the successor stopped here with
+    # HISTORICAL_RUN_INSTALLED_SPEC_DIFFERS_FROM_SOURCE_ROUTE:E01 - the route's
+    # own cases resolved the component and never built a Run.
+    from .historical_event_items import SUCCESSOR_EVENT_ROUTES
+    successors = {}
     for metric_key, spec in specs.items():
+        if metric_key in SUCCESSOR_EVENT_ROUTES:
+            path, compiled = _successor_event_spec(repo_root=repo_root, metric_id=metric_key)
+            _need(spec == compiled, "HISTORICAL_RUN_SUCCESSOR_SPEC_DIFFERS_FROM_ITS_ROUTE:" + metric_key)
+            successors[metric_key] = path
+            continue
         _need(spec == specifications[metric_key]["compiled_spec"],
               "HISTORICAL_RUN_INSTALLED_SPEC_DIFFERS_FROM_SOURCE_ROUTE:" + metric_key)
     _need(set(specs) == expected_ids, "HISTORICAL_RUN_DEPENDENCY_SPEC_SET_CHANGED")
@@ -661,7 +709,8 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     body = {"record_type": RUN_INPUT_RECORD_TYPE, "company_id": company_id,
             "primary_metric_id": metric_id, "period_selection": period_selection,
             "requested_metric_ids": [metric_id], "required_metric_ids": sorted(expected_ids),
-            "spec_paths": {m: specifications[m]["path"] for m in sorted(expected_ids)},
+            "spec_paths": {m: successors.get(m, specifications[m]["path"])
+                           for m in sorted(expected_ids)},
             "compiled_specs": specs, "records": records, "source_records": source_records,
             "source_references": [r for r in source_records if r["record_type"] == "SOURCE_REFERENCE"],
             "source_proofs": component["source_proofs"],
@@ -671,5 +720,8 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
             "component": component, "kind": "STRUCTURED",
             "calls": {"provider": 0, "paid": 0, "sec": 0},
             "native_run_status": "NOT_CREATED", "production_authorized": False}
+    if component.get("registered_confirmation") is not None:
+        # Only where there is one, so every other Run's input keeps its bytes.
+        body["registered_assessment"] = component["registered_confirmation"]
     body = exact_json_value(body)
     return {**body, "input_id": content_hash(value=body)}

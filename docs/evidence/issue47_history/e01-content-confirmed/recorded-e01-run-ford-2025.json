@@ -1,0 +1,78 @@
+{
+ "answer_is": "synthetic: every item declined except the confirmed accessions, the named items left undecided; the test's answer, not a model's and not a reading",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "cold_read_matches": true,
+ "company_id": "ford_motor_company",
+ "confirmed_accessions": [],
+ "default_installation": {
+  "publication": "WITHHELD",
+  "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED"
+ },
+ "production_authorized": false,
+ "public_row": {
+  "evidence_count": 0,
+  "notes": "Count of 8-K items filed under 1.01, 2.01 or 8.01 in the fiscal-year event window whose own text was confirmed to report a merger, acquisition, disposition or business combination to which the registrant or a subsidiary is party; financing agreements, tender offers for the registrant's own securities, repurchases, compensation and shareholder agreements are not counted. A window with an item whose confirmation is not registered, or whose own text does not settle it, is withheld by name. No accepted value is asserted for this target period. Native state: WITHHELD; reason: HISTORICAL_E01_ITEM_TEXT_DOES_NOT_SETTLE_IT. Pinned historical period; the current value comes from the selected filing and the prior value from the prior selected filing. No latest-restated view is applied. Source classifications use recorded test responses; no real model execution credit.",
+  "period_end": "2025-12-31",
+  "row_hash": "sha256:014e770707f2ad8ee63a75d7e93c079e67f58d692221a571d6ad80abee9b6eea",
+  "semantic_assessment_mode": "RECORDED_TEST_ONLY",
+  "status": "WITHHELD",
+  "value": ""
+ },
+ "recorded_mode_marked": true,
+ "registration": {
+  "counted": {
+   "items": [
+    "0000037996-25-000002#8.01@2268"
+   ],
+   "value": null,
+   "withheld_reason": "HISTORICAL_E01_ITEM_TEXT_DOES_NOT_SETTLE_IT"
+  },
+  "input_record_id": "sha256:e758b7cf98c8cafd227d44d370570e06538bf551e7a6e65ec59a445587e2feec",
+  "items": 7,
+  "mode": "RECORDED_TEST_ONLY",
+  "request_id": "sha256:c368d047537e4297da7ead9dda75b8f044482eccbae2aabf9522419eeca07476"
+ },
+ "report_end": "2025-12-31",
+ "run": {
+  "new_calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "publication": "WITHHELD",
+  "quality": "NONE",
+  "reason_code": "HISTORICAL_E01_ITEM_TEXT_DOES_NOT_SETTLE_IT",
+  "requirement_closure_hash": "sha256:3a42764a79eaf16be16998469257d9f6b6849c261afc09dab1a9d3d3db240b14",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:3fa51513cd6977da00bfb197cf3c51f2d2c8ca7c9cc05b70c0c2fbf177c2f9ca",
+  "run_id": "run:historical-period:c3e45d1ddc4ba378c80e963f6945afa842241cd42eb432f2174a204384c54917",
+  "status": "FROZEN",
+  "target_period": {
+   "fiscal_year": 2025,
+   "period_end": "2025-12-31",
+   "period_start": "2025-01-01"
+  },
+  "value": null
+ },
+ "runtime_tree": "/tmp/claude-0/native/rt-d04",
+ "separate_process_cold_read": {
+  "publication": "WITHHELD",
+  "quality": "NONE",
+  "reason_code": "HISTORICAL_E01_ITEM_TEXT_DOES_NOT_SETTLE_IT",
+  "records": 115,
+  "requirement_closure_hash": "sha256:3a42764a79eaf16be16998469257d9f6b6849c261afc09dab1a9d3d3db240b14",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:3fa51513cd6977da00bfb197cf3c51f2d2c8ca7c9cc05b70c0c2fbf177c2f9ca",
+  "run_id": "run:historical-period:c3e45d1ddc4ba378c80e963f6945afa842241cd42eb432f2174a204384c54917",
+  "status": "FROZEN",
+  "value": null
+ },
+ "successor_meaning_on_the_row": true,
+ "undecided_items": [
+  "0000037996-25-000002#8.01@2268"
+ ]
+}

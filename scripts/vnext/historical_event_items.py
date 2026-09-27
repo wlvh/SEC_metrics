@@ -64,6 +64,11 @@ NOT_LOCATED_REASON = "HISTORICAL_EVENT_ITEM_TEXT_NOT_LOCATED"
 # successor. The frozen catalog keeps the approved route for the ordinary path
 # and for every Run frozen under it.
 SUCCESSOR_EVENT_ROUTES = {"E01": "catalog/r6/E01_content_confirmed_ma_v1.json"}
+# The Spec each successor route compiles to, as the Markdown MetricSpec file a
+# Run compiles its Specs from. Generated from the route by the ordinary set's
+# own document writer (normal_run_specs._spec_document) and held to its bytes,
+# so the file cannot say anything the route does not.
+SUCCESSOR_SPEC_DOCUMENTS = {"E01": "catalog/r6/E01_content_confirmed_ma_v1.md"}
 
 _HEADING = re.compile(
     r"(?<![A-Za-z])Items?\s*(\d{1,2}\.\d{2})(?:\([a-z]\))*\s*[.:\-\u2013\u2014]?\s*(?=[A-Z])")
@@ -75,6 +80,24 @@ _REFERENCE_BEFORE = re.compile(
     r"(?:\b(?:this|that|these|those|in|into|under|and|or|of|to|see|with|from|by|per|"
     r"pursuant|such|also)|[\u201c\u2018\"'])\s*$")
 _SIGNATURES = re.compile(r"\bSIGNATURES?\b")
+# Form 8-K's own captions for the items a successor route reads as candidates,
+# and for the items filers most often head beside them. An item whose text is
+# nothing but its caption, followed at once by another item's heading, is one
+# whose content the filer wrote once under the headings together - Ford heads a
+# credit-agreement amendment "Item 1.01 ... Item 2.03 ..." and writes it under
+# 2.03 - so it shares the body that follows. The captions are the form's, not
+# any filer's, and nothing is inferred from a caption that is not on this list.
+_CAPTIONS = {
+    "1.01": "Entry into a Material Definitive Agreement",
+    "1.02": "Termination of a Material Definitive Agreement",
+    "2.01": "Completion of Acquisition or Disposition of Assets",
+    "2.03": ("Creation of a Direct Financial Obligation or an Obligation under an "
+             "Off-Balance Sheet Arrangement of a Registrant"),
+    "7.01": "Regulation FD Disclosure",
+    "8.01": "Other Events",
+    "9.01": "Financial Statements and Exhibits",
+}
+_LETTERS = re.compile(r"[^a-z]+")
 _EXHIBIT = re.compile(r"\bExhibits?\s+\d+(?:\.\d+)?", re.I)
 _CONTEXT = 240
 
@@ -117,7 +140,18 @@ def item_text(*, raw_bytes, item_code):
     _need(len(own) == 1, "EVENT_ITEM_HEADED_MORE_THAN_ONCE:" + item_code)
     start, heading_end, _ = own[0][0]
     later = [heading[0] for heading in headings if heading[0] > start and heading[2] != item_code]
-    signatures = _SIGNATURES.search(text, heading_end)
+    # Caption-only items share the body of the headings that follow them, as
+    # far as each one in turn is caption-only too.
+    shared, body_from = [], own[0][-1][1]
+    following = [heading for heading in headings if heading[0] >= body_from]
+    while (following and following[0][2] != item_code
+           and _caption_only(text[body_from:following[0][0]], code=item_code if not shared
+                             else shared[-1])):
+        shared.append(following[0][2])
+        body_from = following[0][1]
+        following = following[1:]
+        later = [heading[0] for heading in following if heading[2] != item_code]
+    signatures = _SIGNATURES.search(text, heading_end if not shared else body_from)
     if later and (signatures is None or later[0] < signatures.start()):
         end, marker = later[0], "NEXT_ITEM_HEADING"
     elif signatures is not None:
@@ -128,7 +162,14 @@ def item_text(*, raw_bytes, item_code):
     return {"item_code": item_code, "text_view": TEXT_VIEW, "rule": RULE,
             "start": start, "end": end, "end_marker": marker,
             "heading": text[start:heading_end].strip(), "text": body,
-            "text_sha256": "sha256:" + sha256_bytes(content=body.encode("utf-8"))}
+            "text_sha256": "sha256:" + sha256_bytes(content=body.encode("utf-8")),
+            "shares_the_body_of": shared}
+
+
+def _caption_only(gap, *, code):
+    """True where ``gap`` - what follows an item's heading - is only that item's own caption."""
+    caption = _CAPTIONS.get(code)
+    return caption is not None and _LETTERS.sub("", gap.lower()) == _LETTERS.sub("", caption.lower())
 
 
 def _primary_bytes(*, repo_root, records, reference_id):
@@ -166,7 +207,24 @@ def successor_event_route(*, repo_root, metric_id, frozen_route):
     return route
 
 
-def content_confirmation_candidates(*, repo_root, route, claims, records):
+def successor_public_notes(*, repo_root, metric_id):
+    """What a public row under a successor route says its value means.
+
+    The ordinary presentation policy's note for the metric describes the
+    approved route's count, and that policy is bound by the issue_28
+    generations, so the successor states its own meaning in its own file -
+    beside the route, not inside it, so neither the route hash nor the Spec
+    moves with the wording.
+    """
+    record = strict_json_loads(text=(Path(repo_root) / SUCCESSOR_EVENT_ROUTES[metric_id]).read_text(
+        encoding="utf-8"))
+    notes = record.get("public_notes")
+    _need(type(notes) is str and notes.strip() == notes and bool(notes),
+          "HISTORICAL_EVENT_SUCCESSOR_PUBLIC_NOTES_INVALID:" + metric_id)
+    return notes
+
+
+def content_confirmation_candidates(*, repo_root, route, claims, records, keep_text=False):
     """Every candidate item of a content-confirmed route, read from its own text.
 
     ``claims`` are the frozen adapter's item claims for the whole window and
@@ -198,7 +256,11 @@ def content_confirmation_candidates(*, repo_root, route, claims, records):
                            "end_marker": body["end_marker"], "text_sha256": body["text_sha256"],
                            "characters": len(body["text"]),
                            "incorporates_an_exhibit": bool(_EXHIBIT.search(body["text"])),
-                           "confirmation": "NOT_REGISTERED"})
+                           "shares_the_body_of": body["shares_the_body_of"],
+                           "confirmation": "NOT_REGISTERED",
+                           # The text itself only where a confirmation request is
+                           # built from it; a binding carries its hash.
+                           **({"text": body["text"]} if keep_text else {})})
     return {"policy": CONFIRMATION_POLICY, "rule": RULE, "candidate_item_codes": codes,
             "candidates": candidates,
             "status": "CONFIRMATION_NOT_REGISTERED" if candidates else "NO_CANDIDATE_ITEM",

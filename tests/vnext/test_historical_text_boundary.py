@@ -582,11 +582,27 @@ class FormUnnumberedItemBoundaryTest(unittest.TestCase):
         legal = {claim["block_index"] for claim in proposal["D02"]["candidates"]}
         self.assertEqual(set(), inside & legal)
 
-    def test_the_successor_routes_only_the_metric_it_corrects(self):
-        module, _ = fixed.text_api("D02")
-        self.assertIs(fixed, module)
-        parent, _ = fixed.text_api("C02")
-        self.assertIs(frozen, parent)
+    def test_the_successor_routes_only_the_metrics_it_corrects(self):
+        """The corrected metrics run here; every other text metric keeps its own route.
+
+        The first version named C02 as a metric that goes to the frozen module.
+        That was true until the owner's composition-fact meaning (db8e5b7b)
+        moved C02 here, and the case then failed on the right routing - a case
+        that names a metric goes stale the day that metric is wired, so this
+        one asks the property: the supported set comes here, D01 and D04 go to
+        their own successors, and a text metric nothing here corrects gets the
+        parent's module.
+        """
+        self.assertIn("D02", fixed.SUPPORTED_METRICS)
+        for metric_id in fixed.SUPPORTED_METRICS:
+            module, _ = fixed.text_api(metric_id)
+            self.assertIs(fixed, module, metric_id)
+        from vnext import capacity_text_results, historical_risk_results
+        self.assertIs(historical_risk_results, fixed.text_api("D01")[0])
+        self.assertIs(capacity_text_results, fixed.text_api("D04")[0])
+        uncorrected = "D03"
+        self.assertNotIn(uncorrected, fixed.SUPPORTED_METRICS)
+        self.assertIs(frozen, fixed.text_api(uncorrected)[0])
 
 
 def _selected(company_id, report_end="2025-12-31"):

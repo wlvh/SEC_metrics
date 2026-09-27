@@ -93,7 +93,11 @@ def install_historical_run_inputs(*, data_root, company_id, metric_id, period_se
     extra = None
     if prepared.get("registered_assessment") is not None:
         from .historical_semantic_results import EXPORT_PATHS, registered_export_bytes
-        extra = {EXPORT_PATHS[metric_id]: registered_export_bytes(prepared["registered_assessment"])}
+        from .historical_ma_confirmation import EXPORT_PATH as CONFIRMATION_EXPORT
+        # D04's registered assessment or E01's registered confirmation: the
+        # same evidence serialiser, each at its own installed path.
+        exports = {**EXPORT_PATHS, "E01": CONFIRMATION_EXPORT}
+        extra = {exports[metric_id]: registered_export_bytes(prepared["registered_assessment"])}
     _install_case_inputs(data_root=data_root, source_root=source_root, company_id=company_id,
                          case=case, requirement=requirement, extra_input_bytes=extra)
     rebuilt = prepare_historical_run_input(repo_root=data_root, company_id=company_id,
