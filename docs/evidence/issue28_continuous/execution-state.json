@@ -4116,10 +4116,7 @@
     "trigger_run_id": 36273877133,
     "trigger": "SAVED_SOURCE_JOB_CANCELLED_AT_35_MINUTE_LIMIT_NO_SELECTOR_TERMINAL",
     "full_source_selectors": 75,
-    "deterministic_shard_sizes": [
-      38,
-      37
-    ],
+    "deterministic_shard_sizes": [38, 37],
     "disjoint_complete_default_preserved": true,
     "fast_suite_unsharded": true,
     "original_check_name_retained_by_aggregate": "vNext saved-source material",
@@ -4134,11 +4131,7 @@
     "aggregate_check": "FAILURE_BECAUSE_SHARD_0_FAILED",
     "all_other_main_jobs": "SUCCESS",
     "full_source_material_tests_on_this_patch": "NOT_ALL_PASS_ONE_D03_TIMEOUT",
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/ci-source-shards-20260927/README.md"
   },
   "ci_d03_source_timeout_20260927": {
@@ -4153,19 +4146,12 @@
     "d03_implementation_and_test_unchanged_between_pass_and_failure": true,
     "new_selector_timeout_seconds": 300,
     "unchanged_source_default_seconds": 240,
-    "unchanged_other_overrides_seconds": {
-      "c04_refresh": 300,
-      "sec_acquisition": 480
-    },
+    "unchanged_other_overrides_seconds": {"c04_refresh": 300, "sec_acquisition": 480},
     "unchanged_shard_job_timeout_minutes": 35,
     "business_code_changed": false,
     "full_d03_material_reexecution_this_patch": false,
     "new_head_ci": "PENDING_AFTER_PUSH",
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/ci-d03-source-timeout-20260927/README.md"
   },
   "current_390_delta_after_194": {
@@ -4197,11 +4183,7 @@
     "current_private_result_id": "sha256:2f06895d80507148edfd7602427abffb8f6918323a48689c26345345c8170fe6",
     "new_complete_coordinate_count": 0,
     "real_sec_call_for_source": 195,
-    "delta_mapping_new_calls": [
-      0,
-      0,
-      0
-    ],
+    "delta_mapping_new_calls": [0, 0, 0],
     "cross_year_update_transition_proven": false,
     "all390_acceptance": false,
     "formal_adoption": false,
@@ -4312,16 +4294,8 @@
     "v14_closure": "sha256:94d32ea6d0d8eb55b99c1e64f3ad79b86190f83682c4db839f7da65669fbd709",
     "execution_authority_hash": "sha256:d456fd2dca1e6e5264e1ca471159592c794752829348aa9927f62331b8278a47",
     "v13_frozen_snapshot_modified": false,
-    "current_provider_sec_refresh_evidence_hashes_checked": [
-      95,
-      50,
-      50
-    ],
-    "real_new_calls": [
-      0,
-      0,
-      0
-    ],
+    "current_provider_sec_refresh_evidence_hashes_checked": [95, 50, 50],
+    "real_new_calls": [0, 0, 0],
     "real_ledger_ordinal": 194,
     "new_live_route_authorized": false,
     "independent_review": "NEEDS_FIX_V7_SEMANTICS_PASS_WITH_BOUNDS_FAIL_CLOSED",
@@ -4355,26 +4329,11 @@
     "trigger_result": "TIMEOUT_300_109_SECONDS_RETURN_124_NO_SEMANTIC_ASSERTION_TERMINAL",
     "measured_before_seconds": 116.66,
     "measured_after_seconds": 80.409,
-    "source_rebuild_count_before_after": [
-      6,
-      4
-    ],
-    "saved_source_rebuild_in_record_before_after": [
-      2,
-      1
-    ],
-    "independent_source_rebuild_in_replay_before_after": [
-      2,
-      1
-    ],
-    "record_packet_seconds_before_after": [
-      37.655,
-      19.055
-    ],
-    "cold_replay_seconds_before_after": [
-      36.909,
-      18.686
-    ],
+    "source_rebuild_count_before_after": [6, 4],
+    "saved_source_rebuild_in_record_before_after": [2, 1],
+    "independent_source_rebuild_in_replay_before_after": [2, 1],
+    "record_packet_seconds_before_after": [37.655, 19.055],
+    "cold_replay_seconds_before_after": [36.909, 18.686],
     "final_two_material_tests": "PASS_80_510_SECONDS_WITH_UNKNOWN_MODULE_HASH_NEGATIVE",
     "historical_packet_id": "sha256:4bac51a935deadda11f456ba39f6976647fe2d5cd05fe194f89fbc7ef7ce02d6",
     "historical_packet_original_module_sha256": "89e46c2bf900ff14935969a784efeac6786cea4a88ce89e1659b51c54eac0785",
@@ -4384,11 +4343,7 @@
     "default_validator_output_shape_changed": false,
     "old_offline_packet_re_signed": false,
     "native_result_created": false,
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "real_ledger_last_ordinal": 194,
     "independent_review": "NEEDS_FIX_HISTORICAL_MODULE_HASH_SWAP_REPLAY_CREATOR_IDENTITY_NOT_ESTABLISHED",
     "independent_review_path": "docs/evidence/issue28_continuous/d03-material-timing-20260927/independent-review/conclusion.md",
@@ -4418,11 +4373,7 @@
     "pre_newer_annual_filing_submissions_snapshot_in_original_issue28_root_for_these_pairs": false,
     "full_source_admission_or_http_transition_proven": false,
     "new_fiscal_year_native_c04_run_created": false,
-    "real_new_calls": [
-      0,
-      0,
-      0
-    ],
+    "real_new_calls": [0, 0, 0],
     "issue47_source_or_permission_used": false,
     "evidence": "docs/evidence/issue28_continuous/c04-adjacent-year-inventory-20260927/README.md"
   },
@@ -4447,20 +4398,13 @@
     "same_actual_period": "2025-02-01_TO_2026-01-31",
     "existing_390_result_fiscal_year": 2026,
     "fiscal_label_guard_evidence": "docs/evidence/issue28_continuous/c04-salesforce-fiscal-label-guard-20260927/README.md",
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "needed": "EXPLICIT_BACKWARD_COMPATIBLE_ALIAS_ADMISSION_WITH_ORIGINAL_PROOF_AND_SEPARATE_FISCAL_LABEL_RULE_DECISION",
     "evidence": "docs/evidence/issue28_continuous/c04-salesforce-current-20260927/README.md"
   },
   "c04_salesforce_fiscal_label_guard_20260927": {
     "status": "REAL_SOURCE_CONFLICT_GUARD_PASS_NO_NEW_RUN",
-    "actual_period": {
-      "period_start": "2025-02-01",
-      "period_end": "2026-01-31"
-    },
+    "actual_period": {"period_start": "2025-02-01", "period_end": "2026-01-31"},
     "issuer_defined_fiscal_year": 2026,
     "dei_and_companyfacts_fiscal_year": 2025,
     "current_ordinary_input_fiscal_year": 2025,
@@ -4469,11 +4413,7 @@
     "saved_primary_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
     "original_source_admission": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
     "new_result_or_run_created": false,
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "business_precedence_decision_pending": true,
     "evidence": "docs/evidence/issue28_continuous/c04-salesforce-fiscal-label-guard-20260927/README.md"
   },
@@ -4525,17 +4465,10 @@
     ],
     "local_followup_experiment": "FAILED_OLD_V4_PLANNED_ROLE_FOR_MORE_CAPACITY_UNCOMMITTED_SOURCE_RESTORED",
     "current_v7_native_and_live_acceptance_suspended": true,
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "shared_with_47": {
       "file": "scripts/vnext/capacity_two_stage.py",
-      "functions": [
-        "_claim_segments",
-        "_claim_contradictions"
-      ],
+      "functions": ["_claim_segments", "_claim_contradictions"],
       "default_request_bytes_changed": false,
       "v13_default_modified": false,
       "downstream_integration_by_47_executor_only": true
@@ -4551,13 +4484,7 @@
     "ci_timeout_return_code": 124,
     "business_assertion_failure_observed": false,
     "local_complete_test_seconds": 119.135,
-    "local_branches_seconds": [
-      65.738,
-      0.122,
-      4.635,
-      45.358,
-      0.044
-    ],
+    "local_branches_seconds": [65.738, 0.122, 4.635, 45.358, 0.044],
     "scoped_new_per_case_timeout_seconds": 360,
     "other_source_case_default_seconds": 240,
     "d03_case_timeout_seconds": 300,
@@ -4565,22 +4492,14 @@
     "full_material_rerun_after_config_change": false,
     "ci_run_id": 36313170912,
     "ci_all_15_jobs_success": true,
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/ci-c04-resume-timeout-20260927/README.md"
   },
   "c04_salesforce_alias_label_native_20260927": {
     "status": "PRIVATE_FY2026_CANDIDATE_READY_PUBLISHED_ZERO_INDEPENDENT_COLD_READ_PASS",
     "company_id": "salesforce",
     "metric_id": "C04",
-    "actual_period": {
-      "fiscal_year": 2026,
-      "period_start": "2025-02-01",
-      "period_end": "2026-01-31"
-    },
+    "actual_period": {"fiscal_year": 2026, "period_start": "2025-02-01", "period_end": "2026-01-31"},
     "original_dei_and_companyfacts_fiscal_year": 2025,
     "selected_fiscal_year_basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION_EXISTING_V1_POLICY",
     "original_alias_document_name": "0002.body",
@@ -4604,11 +4523,7 @@
     "limited_independent_review": "PASS_WITH_BOUNDS_15260ba5",
     "limited_independent_review_result": "docs/evidence/issue28_continuous/c04-verified-alias-label-20260927/independent-review/conclusion.md",
     "new_head_ci": "SUCCESS_36315612650_15_OF_15",
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "formal_adoption_or_production_authorized": false,
     "shared_with_47": {
       "changed_current_execution_paths": [
@@ -4634,11 +4549,7 @@
     "consolidated_equity_is_not_industrial_denominator": true,
     "current_result": "WITHHELD_NULL_B06_SOURCE_RELATIONSHIP_UNRESOLVED",
     "source_scope_limit": "CURRENT_PERIOD_XBRL_FACTS_IN_ALREADY_SAVED_ANNUAL_PRIMARY_AND_ACCESSION_XML_ONLY",
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "independent_review_or_business_approval": false,
     "evidence": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/README.md"
   },
@@ -4665,11 +4576,7 @@
     "source_statement_fact_count": 1,
     "every_group_output_and_semantics_proven": false,
     "native_result_or_run_created": false,
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "d03_real_requests_authorized": false,
     "conditional_provider_shortfall_d03_only_if_one_call_per_group": 33,
     "evidence": "docs/evidence/issue28_continuous/d03-current-input-census-20260927/README.md"
@@ -4688,11 +4595,7 @@
     "old_d03_recorded_response_store_module_unchanged": true,
     "real_provider_response_or_semantic_accuracy_proven": false,
     "native_result_or_run_created": false,
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "d03_real_requests_authorized": false,
     "limited_independent_review": "PASS_WITH_BOUNDS_065cbb87",
     "limited_independent_review_result": "docs/evidence/issue28_continuous/d03-complete-recorded-set-20260927/independent-review/conclusion.md",
@@ -4710,11 +4613,7 @@
     "current_c04_native_result_and_public_rows_replayed": true,
     "active_pointer_ledger_and_run_bytes_unchanged": true,
     "complete_390_graph_or_formal_old_exit_proven": false,
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/c04-legacy-independent-replay-20260927/README.md"
   },
   "ordinary_processing_snapshot_20260927": {
@@ -4839,8 +4738,7 @@
       ],
       "scripts/vnext/ordinary_update_cycle.py": [
         "run_once(source_identity_root=None)",
-        "run_company(source_identity_root=None)",
-        "_recover(verify_candidate=None): default ordinary verifier retained; explicit C04 override"
+        "run_company(source_identity_root=None)"
       ],
       "scripts/vnext/ordinary_refresh_cycle.py": [
         "refresh_and_process explicit c04_successor+mixed_stale branch",
@@ -4852,9 +4750,6 @@
       ],
       "tools/run_fast_tests_v2.py": [
         "SOURCE_TIMEOUT_OVERRIDES for three measured #28 material selectors only; runner functions and all other defaults unchanged"
-      ],
-      "scripts/vnext/c04_update_cycle.py": [
-        "run_once: explicit C04 verifier supplied for journal recovery"
       ]
     },
     "bindings": [
@@ -4864,8 +4759,7 @@
       "provider/SEC/ordinary-refresh current wiring receipts",
       "followup current V14 closure sha256:155a4e9af8c1b9bf583726736f40f24460460a15efbc545b49a0e731313b3063; V13 parent closure unchanged",
       "third current V14 closure sha256:6f1adf3663ba7573658f44d9e4a44d231ae42585d83cbee6dc1df7667129d2d8; V13 parent unchanged",
-      "fourth current V14 closure sha256:d6ba0de4c9bec5e535375c21189fdd8840354964fda02700f9c8dd4d5081e8b4; V13 parent unchanged",
-      "C04 recovery current V13 sha256:69ac613ed512f13e3ef6c8519dd38ce6e67dca81b0d47415b088280e0f81415d; V14 sha256:50e9f6d352cbc7ed560410ab4c15525262822ea9e477c28e7f56933d7c7c785b"
+      "fourth current V14 closure sha256:d6ba0de4c9bec5e535375c21189fdd8840354964fda02700f9c8dd4d5081e8b4; V13 parent unchanged"
     ],
     "compatibility_evidence": [
       "existing SEC default initializer 1 recorded material test PASS",
@@ -4873,8 +4767,7 @@
       "fast suite 132/132 PASS",
       "head5e2 source shards failed only three named 240s per-case timeouts; scoped 360/360/300 limits add no new tests or source semantics",
       "source identity root optional default preserves old configuration and results",
-      "old frozen V12 bytes unchanged",
-      "18d8d8a7: optional _recover callback preserves ordinary default; 15 directed tests, 134 fast selectors, Marriott C04 recovery material and current provider/SEC/refresh wiring PASS; old version C04 state still requires its original installed runtime"
+      "old frozen V12 bytes unchanged"
     ],
     "possible_downstream_impact": "#47 may need to rebind its own dependent current execution snapshot after #28 base moves; its executor owns that integration. #28 did not touch the #47 branch, snapshot, ledger, source or run root."
   },
@@ -4957,11 +4850,7 @@
     "v7_request_bytes_unchanged": true,
     "independent_review": "NEEDS_FIX_THREE_SPECIFIC_SEMANTIC_COUNTEREXAMPLES_FAIL_CLOSED",
     "evidence": "docs/evidence/issue28_continuous/b13-model-spans-v8-offline-20260927/README.md",
-    "real_calls": [
-      0,
-      0,
-      0
-    ],
+    "real_calls": [0, 0, 0],
     "complete_company_result": false,
     "new_live_permission": false
   },
@@ -4986,11 +4875,7 @@
     "scoped_override_green_run": 36334148033,
     "scoped_override_green_jobs": "15_OF_15_SUCCESS_BOTH_SOURCE_SHARDS_AND_AGGREGATE",
     "evidence": "docs/evidence/issue28_continuous/c04-resume-timing-20260927/README.md",
-    "real_calls": [
-      0,
-      0,
-      0
-    ]
+    "real_calls": [0, 0, 0]
   },
   "c04_adjacent_year_rehearsal_20260927": {
     "head": "1abe167e1a259f261cc91ab3ef82ebf0159247b9",
@@ -5004,11 +4889,7 @@
     "complete_company_result_added": false,
     "original_source_response_used_as_prior": false,
     "evidence": "docs/evidence/issue28_continuous/c04-adjacent-year-rehearsal-20260927/README.md",
-    "real_calls": [
-      0,
-      0,
-      0
-    ]
+    "real_calls": [0, 0, 0]
   },
   "b01_private_legacy_disabled_20260928": {
     "patch_sha": "4e743c1adb425e2092545ea77694a512d8a018c1",
@@ -5021,11 +4902,7 @@
     "independent_process_cold_read": true,
     "old_entrypoints_formally_retired": false,
     "all390_proven": false,
-    "real_calls": [
-      0,
-      0,
-      0
-    ],
+    "real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/ordinary-b01-legacy-exit-20260928/README.md"
   },
   "c04_mixed_one_pass_recorded_20260928": {
@@ -5040,11 +4917,7 @@
     "c04_value": "0",
     "independent_process_cold_read": true,
     "true_new_fiscal_year_update_proven": false,
-    "new_real_calls": [
-      0,
-      0,
-      0
-    ],
+    "new_real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/c04-mixed-one-pass-20260928/README.md"
   },
   "c04_historical_b01_prestate_20260928": {
@@ -5066,19 +4939,12 @@
     "default_sec_acquisition": "1_PASS_118_382_SECONDS_SEC_MODULE_UNCHANGED_AFTER_TEST",
     "historical_old_b01_installed_package_read": "PASS_WITH_OLD_INSTALLED_RUNTIME_NOT_CURRENT_CHECKOUT",
     "same_history_continuation_across_v13_code_versions_proven": false,
-    "real_calls": [
-      0,
-      0,
-      0
-    ],
+    "real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/README.md",
     "shared_with_47": {
       "file": "scripts/vnext/continuous_sec_acquisition.py",
       "function": "SecAcquisitionSession.capture",
-      "new_parameters": [
-        "ordinary_prestate_root",
-        "ordinary_prestate_metric_ids"
-      ],
+      "new_parameters": ["ordinary_prestate_root", "ordinary_prestate_metric_ids"],
       "default_value": null,
       "default_plan_extra_fields": false,
       "return_and_record_types_changed": false,
@@ -5106,11 +4972,7 @@
     "first_regression_failure_preserved": "PRECLAIM_REJECTION_CONTINUED_TO_C04_UPDATE_322_258_SECONDS",
     "same_root_cooperative_update_lock_recheck": true,
     "cross_version_history_write_proven": false,
-    "real_calls": [
-      0,
-      0,
-      0
-    ],
+    "real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/README.md",
     "shared_with_47": {
       "file": "scripts/vnext/ordinary_refresh_cycle.py",
@@ -5142,11 +5004,7 @@
     "preclaim_rejection_changes_c04_history": false,
     "incorrect_predecessor_claims_new_sec_slot": false,
     "cross_version_history_write_proven": false,
-    "real_calls": [
-      0,
-      0,
-      0
-    ],
+    "real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/README.md",
     "shared_with_47": {
       "files_and_functions": [
@@ -5181,11 +5039,7 @@
     "returned_input_is_native_credit_certificate": false,
     "d03_metric_spec_created": false,
     "all_ten_companies_native_preparation_verified": false,
-    "real_calls": [
-      0,
-      0,
-      0
-    ],
+    "real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/d03-native-preparation-20260928/README.md"
   },
   "d03_complete_interpretation_20260928": {
@@ -5207,11 +5061,7 @@
     "native_candidate_evidence_result_or_run_created": false,
     "returned_proposal_is_native_credit_certificate": false,
     "d03_metric_spec_created": false,
-    "real_calls": [
-      0,
-      0,
-      0
-    ],
+    "real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/d03-complete-interpretation-20260928/README.md"
   },
   "ordinary_d02_legacy_exit_20260928": {
@@ -5235,12 +5085,31 @@
     "original_ledger_source_log_and_active_bytes_unchanged": true,
     "all390_proven": false,
     "old_entrypoints_formally_retired": false,
-    "real_calls": [
-      0,
-      0,
-      0
-    ],
+    "real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/ordinary-d02-legacy-exit-20260928/README.md"
+  },
+  "shared_with_issue47_c04_recovery_20260928": {
+    "status": "EXPLICIT_ISSUE28_C04_RECOVERY_DEFAULT_COMPATIBLE",
+    "commit_marker": "[shared-with-#47]",
+    "files_functions": {
+      "scripts/vnext/ordinary_update_cycle.py": [
+        "_recover(verify_candidate=None): default ordinary verifier retained; explicit C04 override"
+      ],
+      "scripts/vnext/c04_update_cycle.py": [
+        "run_once: explicit C04 verifier supplied for journal recovery"
+      ]
+    },
+    "bindings": [
+      "requirements/issue_28_v13/baseline_manifest.json",
+      "requirements/issue_28_v14/baseline_manifest.json",
+      "requirements/issue_28_v14/transfer_manifest.json",
+      "current provider/SEC/ordinary-refresh wiring receipts"
+    ],
+    "compatibility_evidence": [
+      "15 directed tests, 134 fast selectors, Marriott C04 recovery material, current provider/SEC/refresh wiring PASS",
+      "optional _recover callback preserves ordinary default; old C04 version state still requires original installed runtime"
+    ],
+    "possible_downstream_impact": "#47 may need to rebind its own dependent current execution snapshot after #28 base moves; #28 did not operate its branch or roots."
   },
   "c04_recovery_credit_20260928": {
     "status": "COMMITTED_LIMITED_REVIEW_PASS_WITH_BOUNDS_PUSH_PENDING",
