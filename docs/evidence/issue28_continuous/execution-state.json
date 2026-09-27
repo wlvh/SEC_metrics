@@ -1962,6 +1962,26 @@
         "web_calls": 2,
         "patch_operations": 2
       }
+    },
+    {
+      "task_name": "review_b13span_ab20519",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "scripts/vnext/capacity_reference_contract.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "scripts/vnext/native_unit_index.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json"
+      ],
+      "patch_sha": "ab2051939b3460c74c271a263920fb52346ecdc8",
+      "spawned_at": "2026-09-27T15:44:54.672835+00:00",
+      "ended_at": "2026-09-27T15:51:02.407311+00:00",
+      "tool_calls": 44,
+      "result_path": "docs/evidence/issue28_continuous/b13-model-spans-v8-offline-20260927/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_V8_SEMANTICS_PASS_WITH_BOUNDS_FAIL_CLOSED"
     }
   ],
   "ci_capacity_20260922": {
