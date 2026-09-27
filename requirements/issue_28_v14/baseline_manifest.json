@@ -7,15 +7,15 @@
   "contract_revision": "continuous-calls-and-b13-v1",
   "parent": {
     "requirement_id": "issue_28_v13",
-    "requirement_closure_hash": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+    "requirement_closure_hash": "sha256:744b75370388dc52ce2203f36ea2ad1af8a8f4782ba96ed66f268734651e80f5",
     "snapshot_files": {
       "decision_register.json": {
         "sha256": "830bba34212b0b40328308c431219287d01520b3c16793cb1e410b591ab3fad5",
         "size": 7877
       },
       "baseline_manifest.json": {
-        "sha256": "f6b5cb43bbf6255b5a54d141567117d6b53444c0ee5e657e23d69db1c0d5f162",
-        "size": 71809
+        "sha256": "026d5a6eb69c82b87ad3d4a965542056f5b827f2eda58b0b36a09291401fd8d3",
+        "size": 71982
       },
       "invariant_profile.json": {
         "sha256": "f44bdccf99970b67798c7f7f8db25c27c9e1452358823823e82f7039fd42d3aa",
@@ -2117,8 +2117,12 @@
         "size": 9828
       },
       "scripts/vnext/c04_registration_successor.py": {
-        "sha256": "553726e0b7c713ec78bba6e33292f8913e19efbc745ba73801d6664ee78e4d6b",
-        "size": 15314
+        "sha256": "67fc4d90c971c53578d70ea86bfc1b8758e29bc14c146c868257262d4edfe3b6",
+        "size": 17788
+      },
+      "scripts/vnext/c04_verified_document_alias.py": {
+        "sha256": "e4c5d2491e8d5c4f8bbbc222d9e5855d42bd5dbc436a661438abbdee3d53d59d",
+        "size": 10343
       }
     },
     "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"

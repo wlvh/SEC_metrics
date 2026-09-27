@@ -81,6 +81,25 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
           'C04_REGISTRATION_BASE_INPUT_UNRESOLVED')
     selected = binding['selection']
     annual = binding['prepared_annual_input']['table_input']['target_period']
+    from .normal_annual_input_v2 import prepare_saved_annual_input as prepare_labelled_annual
+    labelled = prepare_labelled_annual(repo_root=repo_root, company_id=company_id)
+    _need(labelled['original_input'] == binding['prepared_annual_input']
+          and all(labelled['table_input']['target_period'][key] == annual[key]
+                  for key in ('period_start', 'period_end')),
+          'C04_REGISTRATION_ANNUAL_LABEL_SOURCE_CHANGED')
+    label_resolution = labelled['fiscal_year_label_resolution']
+    fiscal_year = labelled['table_input']['target_period']['fiscal_year']
+    label_changed = (fiscal_year != annual['fiscal_year']
+                     or label_resolution['metadata_conflict_retained'])
+    label_binding = ({'selected_fiscal_year': fiscal_year,
+        'basis': label_resolution['basis'],
+        'source_inspection_id': content_hash(value=label_resolution['source_inspection']),
+        'policy_sha256': label_resolution['policy_sha256'],
+        'original_dei_fiscal_year': label_resolution['original_dei_fiscal_year'],
+        'original_companyfacts_fiscal_year_values':
+            label_resolution['original_companyfacts_fiscal_year_values'],
+        'metadata_conflict_retained': label_resolution['metadata_conflict_retained']}
+        if label_changed else None)
     cik = binding['prepared_annual_input']['entity']
     reader = _Sources(repo_root, company_id, cik)
     current = reader.read(submissions_url(cik=int(cik)),
@@ -174,12 +193,23 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
     _need(processed_accessions == {row['accessionNumber'] for row in events},
           'C04_REGISTRATION_EVENT_CENSUS_INCOMPLETE')
 
-    from .governance_signals import resolve_c04
+    from .governance_signals import GovernanceSignalError, resolve_c04
     old_spec = compile_spec_file(path=ROOT / C04_V2_SPEC_PATH,
                                  dependency_specs={})
     old_arguments = dict(base['resolver_inputs']['c04']['arguments'])
     old_arguments.update(compiled_spec=old_spec, event_input=None)
-    annual_check = resolve_c04(**old_arguments)['selection']
+    try:
+        annual_check = resolve_c04(**old_arguments)['selection']
+    except GovernanceSignalError as error:
+        if str(error) != 'C04_SAME_CIK_FILING_REQUIRED':
+            raise
+        # The frozen v2 parser cannot accept a historical local body label.
+        # The explicit successor rechecks every original GET proof and keeps
+        # its SourceReference identity while parsing the same annual facts.
+        from .c04_verified_document_alias import annual_selection_with_verified_aliases
+        annual_check = annual_selection_with_verified_aliases(
+            arguments=old_arguments, source_proofs=binding['source_proofs'],
+            data_root=repo_root)['selection']
     spec_file = (repo_root / SPEC_PATH if (repo_root / SPEC_PATH).is_file()
                  else ROOT / SPEC_PATH)
     spec = compile_spec_file(path=spec_file, dependency_specs={})
@@ -209,6 +239,11 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
         event_item_claims=event_claims,
         matched_item_4_01_claim_ids=[claim['verified_claim_id'] for claim in matching],
         same_cik_prior_status=selected['prior_status'], reason_code=reason)
+    if annual_check.get('verified_document_aliases'):
+        selection['verified_annual_document_aliases'] = annual_check[
+            'verified_document_aliases']
+    if label_binding is not None:
+        selection['fiscal_year_label_binding'] = label_binding
     selection['selection_id'] = content_hash(value=selection)
     target = old_arguments['target']
     observations = []
@@ -265,9 +300,14 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
             for item in event_inputs],
         'source_proofs': proofs, 'same_cik_prior_status': selected['prior_status'],
         'source_admission': admission, 'production_authorized': False}
+    if annual_check.get('verified_document_aliases'):
+        input_body['verified_annual_document_aliases'] = annual_check[
+            'verified_document_aliases']
+    if label_binding is not None:
+        input_body['fiscal_year_label_binding'] = label_binding
     input_binding = {**input_body,
         'input_binding_id': content_hash(value=input_body)}
-    period = {'fiscal_year': annual['fiscal_year'],
+    period = {'fiscal_year': fiscal_year,
         'period_start': result['period_start'], 'period_end': result['period_end']}
     return {'kind': 'STRUCTURED', 'primary_metric_id': 'C04',
         'input_binding': {'c04_registration_successor': input_binding},
