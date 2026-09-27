@@ -330,6 +330,9 @@ FAST_TESTS += ("tests.vnext.test_historical_model_calls",)
 # E01's content-confirmation contract on synthetic candidates: the request, the
 # answer's form and the count. Reads no filing; well under a second.
 FAST_TESTS += ("tests.vnext.test_historical_ma_confirmation",)
+# What a pinned row says about where its values come from, chosen by its own
+# evidence: a pure function over accessions; no filing is read.
+FAST_TESTS += ("tests.vnext.test_historical_row_notes",)
 FAST_TESTS += ("tests.vnext.test_c02_core_fact_reach",)
 # C02 composition facts: synthetic structures, one rule per case.
 FAST_TESTS += ("tests.vnext.test_historical_board_composition",)

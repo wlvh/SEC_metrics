@@ -8,9 +8,9 @@ the company's *latest* annual input and requires the Run's fiscal label to
 equal it, which is exactly what a past year cannot satisfy. Here the annual
 input comes from the Run's own pinned selection.
 
-Structured routes only. A historical text or capacity route is not wired, and
-this refuses those explicitly rather than rendering something it cannot
-validate.
+Every wired historical route renders here: structured, text, event and the
+registered-assessment routes (D04, E01), each with the row and receipt saying
+when its source classification is a recorded test answer.
 """
 import json
 from pathlib import Path
@@ -33,6 +33,30 @@ class HistoricalProjectionError(ValueError):
 def _need(condition, reason):
     if not condition:
         raise HistoricalProjectionError(reason)
+
+
+PRIOR_FILING_NOTE = ("Pinned historical period; the current value comes from the selected "
+                     "filing and the prior value from the prior selected filing. No "
+                     "latest-restated view is applied.")
+SELECTED_SOURCES_NOTE = ("Pinned historical period; values come only from the sources "
+                         "named in the evidence, as selected for this period. No "
+                         "latest-restated view is applied.")
+
+
+def pinned_period_note(*, prior_accession, evidence_accessions):
+    """Say where a pinned row's values come from, as its own evidence shows.
+
+    The first version told every row that its prior value came from the prior
+    selected filing. That is what a comparative metric does - B02's evidence
+    names both years' annual filings - but an event count's evidence is the
+    window's filings and a text metric's is the selected filing alone, and
+    neither has a prior value. The sentence is chosen by whether the prior
+    selected filing is actually among the row's evidence, so a comparative row
+    keeps its words and no other row claims a prior value it does not have.
+    """
+    if prior_accession is not None and prior_accession in evidence_accessions:
+        return PRIOR_FILING_NOTE
+    return SELECTED_SOURCES_NOTE
 
 
 def _claims(prepared):
@@ -280,10 +304,7 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
     row["fiscal_period"] = label
     row["notes"] = " ".join([row.get("notes", ""), note,
                              "Native state: " + result["publication"]
-                             + "; reason: " + result["reason_code"] + ".",
-                             "Pinned historical period; the current value comes from the "
-                             "selected filing and the prior value from the prior selected "
-                             "filing. No latest-restated view is applied."])
+                             + "; reason: " + result["reason_code"] + "."])
     row["context_or_dimension"] = json.dumps(
         {"scope": trace["calculation_target"]["scope"], "measurement_kind": label,
          "annual_filing_period": period,
@@ -295,6 +316,10 @@ def render_historical_run(*, data_root: Path, run_dir: Path, frozen=False, persi
         ensure_ascii=False, sort_keys=True)
     filings = _filings(prepared)
     accessions = list(dict.fromkeys(e["accession"] for e in evidence))
+    prior_filing = case["period_selection"]["prior_filing"]
+    row["notes"] += " " + pinned_period_note(
+        prior_accession=prior_filing["accessionNumber"] if prior_filing else None,
+        evidence_accessions=accessions)
     known = [filings[a] for a in accessions if a in filings]
     row.update(accession=";".join(accessions), confidence="")
     if known:
