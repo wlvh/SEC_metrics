@@ -34,7 +34,7 @@
     "unknown": 0
   },
   "current_work": [
-    "Current ordinary mixed refresh can use a private current-rule processing snapshot of the authenticated #28 source ledger: Salesforce saved-source private B01 and C04 each produced CANDIDATE_READY and repeat NO_SOURCE_CONTENT_CHANGE; overall discovery remains UPDATES_INCOMPLETE. Final closure recorded baseline material test, source version rehearsal, SEC default regression and fast132/132 PASS; exact-SHA limited review and new-head CI remain pending. No real calls; original source root and previous Run identities unchanged.",
+    "Current ordinary mixed refresh can use a private current-rule processing snapshot of authenticated #28 sources. Salesforce private saved-source B01 and C04 each reached CANDIDATE_READY with no repeat candidate; overall source discovery remained incomplete. The first limited review of patch40bff457 found a P2 mixed-report resume mismatch; bounded followup now passes a real recorded two-capture test with B01 attempt tamper rejected before capture. Prior failure remains NEEDS_FIX; followup exact-SHA review and current-head CI pending. Real ledger143/143/52 unchanged.",
     "D04 ten companies retain complete real native candidates and independent cold reads; no formal adoption or production switch.",
     "B13 historical190 success is preserved, 111 current reuse remains blocked, 191/192 failed and exhausted their group opportunities. The V7 exact-SHA followup review of the 32-test limited repair remains NEEDS_FIX due three additional bounded counterexamples; live/native acceptance remains suspended and no complete B13 company exists.",
     "Marriott C04 real SEC193-194 same-year refresh preserves two private result versions; Southwest SEC195 acquired its exact missing FY2024 prior annual primary, and a FY2025 C04 PUBLISHED/0 private native Run and independent cold read succeeded. This is not an old-FY2024-Run to new-FY2025-Run automatic transition.",
@@ -44,7 +44,7 @@
     "Ford FY2025 saved primary/XML contain no CompanyExcludingFordCredit equity fact while consolidated equity exists; industrial debt21919m remains a subtotal and B06 WITHHELD. D03 current complete source forms130 groups across ten companies; an offline full-set raw response store has two targeted tests passing and exact-SHA limited review PASS_WITH_BOUNDS and never creates native Result/Run. D03 real provider execution is forbidden. Complete390 and old-entry retirement remain; Paramount C04 lacks same-registrant prior auditor comparison facts."
   ],
   "next": [
-    "Prior head b686814f main CI36318290207 completed SUCCESS 15/15. The new ordinary processing snapshot and source/Run binding delta require exact-SHA limited review and new-head CI; do not treat prior-head CI as coverage for this delta.",
+    "Prior head b686814f main CI36318290207 completed SUCCESS 15/15. Patch40bff457 limited review NEEDS_FIX exposed mixed-stale report resume; followup recorded two-capture material case passed and needs exact-SHA limited review/current-head CI before claiming full repair.",
     "Preserve Southwest FY2025 and Salesforce FY2026 private C04 native results and original source identities. The current processing-source copy removes a mixed B01/C04 old-rule blocker without claiming full source acquisition or cross-year online update. Continue bounded normal source discovery/acquisition engineering and 390 acceptance.",
     "Salesforce C04 now has a private FY2026 Run using the existing issuer-label policy and original 0002.body proof; preserve original request identity and old FY2026 Result. Continue normal update/cross-year and 390 acceptance without counting the new version as a second coordinate or formal adoption.",
     "Keep B13 V7 closed. The exact-SHA review of 9d04d65 found adjacent-and scope, trailing-if classification and clear-pronoun false rejection; a local followup experiment failed the original role validator, so no unreviewed source patch was retained. Do not resample191/192 or treat pause code as semantic diagnosis. D03 stays no-call: the recorded full-set stores bytes but cannot prove content correctness or generate a native result; build the necessary semantic/native chain without reviving the old source-fact override. Continue B06/390/exit preparation independently.",
@@ -1847,6 +1847,39 @@
       "total_agent_tool_call_cap": 80,
       "total_agent_time_cap_minutes": 90,
       "total_agent_message_cap": 3
+    },
+    {
+      "task_name": "review_normsrc_40bff45",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_processing_source",
+      "scope_paths": [
+        "scripts/vnext/ordinary_processing_source.py",
+        "scripts/vnext/continuous_sec_acquisition.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tests/vnext/test_ordinary_processing_source.py",
+        "tests/vnext/test_ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/"
+      ],
+      "patch_sha": "40bff4570776f04d2ee9b562d23ee33c05f8a429",
+      "spawned_at": "2026-09-27T13:24:22.774032Z",
+      "ended_at": "2026-09-27T13:27:58.195622Z",
+      "tool_calls": 37,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_MIXED_STALE_RESUME_HISTORY_CHECK",
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3,
+      "ordinary_messages_observed": 3,
+      "tool_call_count_detail": {
+        "outer_exec": 14,
+        "nested_commands": 21,
+        "patch_operations": 2
+      }
     }
   ],
   "ci_capacity_20260922": {
@@ -4365,12 +4398,12 @@
     "evidence": "docs/evidence/issue28_continuous/c04-legacy-independent-replay-20260927/README.md"
   },
   "ordinary_processing_snapshot_20260927": {
-    "status": "IMPLEMENTED_LOCAL_FINAL_BINDING_REVIEW_AND_NEW_HEAD_CI_PENDING",
+    "status": "RESUME_FOLLOWUP_MATERIAL_AND_FAST_PASS_LIMITED_REVIEW_PENDING",
     "reason": "Authenticated fixed #28 source root contains old ordinary rule copies, preventing current B01 before business input evaluation in explicit C04 mixed refresh.",
     "evidence": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/README.md",
     "current_parent_v13_closure": "sha256:bcdbd50d5a5aa0c23edc5ee5cd61d7f39a2d846570b23fccba565b2e3d5abfe0",
-    "current_child_v14_closure": "sha256:ea97c693f7eec57f4007363fcd5fa659a4f3116c52b76fd216d222484205f652",
-    "execution_authority_hash": "sha256:bc4435004fc9b06d2cef3163d20750830dbd75874c9dc420c9863bc554fc838d",
+    "current_child_v14_closure": "sha256:155a4e9af8c1b9bf583726736f40f24460460a15efbc545b49a0e731313b3063",
+    "execution_authority_hash": "sha256:82ae15b982ab7c0e00345a7b947452fd5905e24fbd7361cff1af7209317816f3",
     "real_ledger_before_after": [
       143,
       143,
@@ -4401,15 +4434,35 @@
       "material": "1_PASS_49.451_SECONDS",
       "ordinary_refresh": "11_PASS",
       "C04_source_only_boundaries": "2_PASS",
-      "SEC_default": "1_PASS_100.237_SECONDS"
+      "SEC_default": "1_PASS_100.237_SECONDS",
+      "resume_recorded_material": "1_PASS_195.651_SECONDS",
+      "resume_old_refresh_short": "11_PASS_2.481_SECONDS",
+      "resume_fast_fixed_tokenizers": "132/132_PASS_118.048_SECONDS",
+      "resume_fast_system_python": "FAILED_ONLY_TOKENIZER_DEPENDENCY_UNAVAILABLE"
     },
     "remaining": [
-      "LIMITED_INDEPENDENT_REVIEW_EXACT_SHA",
+      "FOLLOWUP_PATCH_LIMITED_INDEPENDENT_REVIEW",
       "CURRENT_HEAD_MAIN_CI",
       "NON_C04_FRESH_SOURCE_CAPTURE_NOT_YET_WIDENED",
       "NO_CROSS_YEAR_REAL_ONLINE_UPDATE_CREDIT",
       "NO_FULL390_ACCEPTANCE"
-    ]
+    ],
+    "first_limited_review": {
+      "patch_sha": "40bff4570776f04d2ee9b562d23ee33c05f8a429",
+      "verdict": "NEEDS_FIX_P2_MIXED_REPORT_RESUME_HISTORY",
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review/conclusion.md",
+      "scope": "new processing source, ledger/copy identity, ordinary update, explicit mixed refresh and current binding; long material chain not rerun independently"
+    },
+    "resume_followup": {
+      "implementation": "NEW_SNAPSHOT_REPORT_VERIFIES_ORIGINAL_LEDGER_COPY_AND_EACH_PERSISTED_ORDINARY_ATTEMPT;OLD_REPORT_SHAPE_PRESERVED",
+      "first_recorded_material_run": "FAILED_OBSOLETE_EXPECTED_OVERALL_STATUS_AFTER_SECOND_CAPTURE_REAL_RESULT_UPDATES_READY_193.869_SECONDS",
+      "corrected_recorded_material_run": "1_PASS_195.651_SECONDS_TAMPER_REJECTED_BEFORE_CAPTURE_TWO_RECORDED_SOURCE_CAPTURES_B01_C04_COMPLETE",
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ]
+    }
   },
   "shared_with_issue47_20260927": {
     "status": "EXPLICIT_ISSUE28_PATH_ONLY_BACKWARD_COMPATIBLE",
@@ -4424,7 +4477,8 @@
         "run_company(source_identity_root=None)"
       ],
       "scripts/vnext/ordinary_refresh_cycle.py": [
-        "refresh_and_process explicit c04_successor+mixed_stale branch"
+        "refresh_and_process explicit c04_successor+mixed_stale branch",
+        "_resume_one_c04_source explicit new processing-snapshot report and legacy blocked-report verification"
       ],
       "scripts/vnext/ordinary_processing_source.py": [
         "current_processing_source(new)",
@@ -4435,7 +4489,8 @@
       "requirements/issue_28_v13/baseline_manifest.json",
       "requirements/issue_28_v14/baseline_manifest.json",
       "requirements/issue_28_v14/transfer_manifest.json",
-      "provider/SEC/ordinary-refresh current wiring receipts"
+      "provider/SEC/ordinary-refresh current wiring receipts",
+      "followup current V14 closure sha256:155a4e9af8c1b9bf583726736f40f24460460a15efbc545b49a0e731313b3063; V13 parent closure unchanged"
     ],
     "compatibility_evidence": [
       "existing SEC default initializer 1 recorded material test PASS",

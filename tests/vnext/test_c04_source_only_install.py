@@ -67,7 +67,7 @@ class C04SourceOnlyInstallTest(unittest.TestCase):
 
 
 class C04MixedSourceRouteMaterialTest(unittest.TestCase):
-    def test_mixed_old_root_refreshes_only_c04_and_blocks_other_metrics(self):
+    def test_mixed_old_root_resumes_current_rule_metric_and_c04(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary).resolve()
             session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
@@ -106,6 +106,16 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
                     c04_successor=True)
                 prior = root/'prior-report.json'
                 prior.write_text(json.dumps(result, ensure_ascii=False)+'\n')
+                changed = json.loads(prior.read_text())
+                changed['companies'][0]['updates']['metrics'][0]['attempt_id'] = '0'*32
+                tampered = root/'tampered-report.json'
+                tampered.write_text(json.dumps(changed, ensure_ascii=False)+'\n')
+                with self.assertRaisesRegex(ValueError,
+                        'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED'):
+                    refresh.refresh_and_process(session=session,
+                        state_root=root/'state', company_ids=['marriott_international'],
+                        metric_ids=['B01', 'C04'], max_sec_requests=1,
+                        c04_successor=True, resume_from=tampered)
                 resumed = refresh.refresh_and_process(session=session,
                     state_root=root/'state', company_ids=['marriott_international'],
                     metric_ids=['B01', 'C04'], max_sec_requests=1,
@@ -119,16 +129,17 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
             self.assertTrue(resumed['c04_mixed_source_only'])
             self.assertEqual({'provider': 0, 'paid': 0, 'sec': 0}, result['calls'])
             self.assertEqual({'provider': 0, 'paid': 0, 'sec': 0}, resumed['calls'])
-            self.assertEqual('UPDATES_INCOMPLETE', resumed['status'])
+            self.assertEqual('UPDATES_READY', resumed['status'])
             self.assertEqual([], resumed['companies'][0]['source_refresh']
                              ['deferred_source_urls'])
-            self.assertEqual(['UPDATE_BLOCKED', 'NO_SOURCE_CONTENT_CHANGE'],
+            self.assertEqual(['NO_SOURCE_CONTENT_CHANGE', 'NO_SOURCE_CONTENT_CHANGE'],
                 [row['status'] for row in resumed['companies'][0]['updates']['metrics']])
             company, = result['companies']
-            self.assertEqual('UPDATES_PARTIAL', company['updates']['status'])
-            self.assertEqual(['UPDATE_BLOCKED', 'CANDIDATE_READY'],
+            self.assertEqual('UPDATES_READY', company['updates']['status'])
+            self.assertEqual(['CANDIDATE_READY', 'CANDIDATE_READY'],
                 [row['status'] for row in company['updates']['metrics']])
-            self.assertEqual('SOURCE_SCOPE', company['acquisition_errors'][0]['stage'])
+            self.assertEqual([], company['acquisition_errors'])
+            self.assertTrue(result['current_processing_source_snapshot_id'])
             plan = strict_json_file(path=root/'ledger/calls/0001/sec-plan.json')
             self.assertEqual('C04_REGISTRATION_FOUR_FORM_UPDATE_V1',
                              plan['source_only_processing_route'])

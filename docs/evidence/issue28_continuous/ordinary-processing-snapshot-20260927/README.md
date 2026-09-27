@@ -15,3 +15,9 @@
 首次来源探针因把可缺的C04规则副本当作必须存在而在复制前失败；初次写时复制反例选了属于展示文件、不会进入当前来源规则集的路径；前几次材料测试分别假设JSON空白会触发语义政策错误、冻结基线已含Salesforce额外C04来源、可在录制账本初始化前写来源，以及把所有本地Git身份读取也当成外部网络子进程。原日志保留，最终测试只允许本地只读Git命令、阻断网络/HTTP与其它子进程。
 
 这不是正式采纳、生产切换、全390成功或新财年在线更新完成。旧候选/Run按原安装身份继续读取，私有副本只是本轮显式路线的当前处理输入；新代码和绑定须限定独审及新head CI另验。无provider/paid/SEC新调用，无#47分支、快照、账本或运行根操作。
+
+## 40bff457限定审阅发现与受限回修
+
+`independent-review/conclusion.md`对`40bff457`给出`NEEDS_FIX`：混合刷新已能让B01形成候选，但续跑入口仍要求旧报告里“B01阻断”的形状，因而新报告不能作为下一次受限SEC捕获的前驱。该报告的来源副本、账本身份及旧默认兼容认可边界仍有效，失败结论保持原义。
+
+受限回修只改变`ordinary_refresh_cycle._resume_one_c04_source()`：带处理副本ID的新报告必须核对原来源账本、私有副本、每个已执行普通指标的本地配置/指针/终态、C04原终态和待办URL；旧报告没有副本ID时仍按旧阻断形状读取，不能把旧报告改签为新Run。相应材料用例先篡改B01尝试编号，要求在第二次SEC捕获前拒绝，再用原报告完成两次录制捕获。初跑走完录制链却在最后因测试仍期待旧整体`UPDATES_INCOMPLETE`而失败；该实际状态为来源补齐后的`UPDATES_READY`，失败原文在`resume-material-first.log`。改正预期后同一录制材料测试完整通过，`resume-material.log`记录1项PASS/195.651秒；两次C04来源捕获及B01/C04更新状态都由实际测试断言检查。`resume-short.log`记录原旧刷新边界11项PASS。第一次快测误用缺tokenizers的系统Python，`resume-fast-system-python-failed.log`保留环境失败；在已有`/private/tmp/issue28_py314_venv`的tokenizers0.22.2中重跑`resume-fast.log`为132/132 PASS、118.048秒。当前SEC实账本没有变化；录制槽不计真实信用。该测试已在`tools/run_fast_tests_v2.py`的来源材料选择器末尾追加，未改runner函数体；新补丁限定独审和新head CI仍待完成。

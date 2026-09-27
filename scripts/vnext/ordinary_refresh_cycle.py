@@ -231,18 +231,75 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
          and {item['metric_id'] for item in rows} == set(metric_ids),
          'ORDINARY_REFRESH_RESUME_METRIC_SCOPE_CHANGED')
     row, = [item for item in rows if item['metric_id'] == 'C04']
-    expected_errors = ([{'stage': 'SOURCE_SCOPE',
-        'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_OTHER_METRICS_BLOCKED'}]
-        if mixed_stale else [])
+    snapshot_id = report.get('current_processing_source_snapshot_id')
+    if mixed_stale and snapshot_id is not None:
+        from .ordinary_processing_source import verify_processing_source
+        need(type(snapshot_id) is str and snapshot_id.startswith('sha256:')
+             and len(snapshot_id) == 71,
+             'ORDINARY_REFRESH_RESUME_PROCESSING_ID_INVALID')
+        verified = verify_processing_source(
+            acquisition_root=session.data_root,
+            processing_root=state_root/'_processing_sources'/snapshot_id[7:],
+            requirement=session.requirement)
+        need(verified['snapshot_id'] == snapshot_id,
+             'ORDINARY_REFRESH_RESUME_PROCESSING_SOURCE_CHANGED')
+        expected_errors = []
+        for item in rows:
+            metric = item['metric_id']
+            if metric == 'C04':
+                continue
+            if metric not in update_metric_ids():
+                need(item['status'] == 'UPDATE_NOT_IMPLEMENTED'
+                     and item.get('last_verified_candidate') is None
+                     and item.get('production_authorized') is False,
+                     'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED')
+            elif item['status'] == 'UPDATE_BLOCKED':
+                need(item.get('attempt_id') is None
+                     and item.get('last_verified_candidate') is None
+                     and item.get('production_authorized') is False
+                     and 'terminal' not in item,
+                     'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED')
+            else:
+                metric_root = state_root/company_id/'metrics'/metric
+                need((metric_root/'configuration.json').is_file(),
+                     'ORDINARY_REFRESH_RESUME_OTHER_METRIC_STATE_MISSING')
+                metric_configuration = cycle._config(metric_root,
+                    session.data_root, company_id, [metric], expected_mode)
+                metric_state = cycle._state(metric_root, metric_configuration)
+                need(metric_state['latest_attempt'] == item['attempt_id'],
+                     'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED')
+                metric_terminal = cycle._terminal(metric_root, item['attempt_id'])
+                need(metric_state['successful_attempt'] == item['successful_attempt']
+                     and item['latest_attempt'] == item['attempt_id']
+                     and metric_terminal == item['terminal']
+                     and metric_terminal['status'] == item['status']
+                     and item['calls'] == {'provider': 0, 'paid': 0, 'sec': 0}
+                     and item['production_authorized'] is False
+                     and item['new_candidate_created'] == bool(metric_terminal['metrics'])
+                     and item['previous_successful_attempt'] ==
+                         cycle._intent(metric_root, item['attempt_id'])['previous_successful_attempt']
+                     and (item['last_verified_candidate'] is None) ==
+                         (metric_state['successful_attempt'] is None)
+                     and (item['last_verified_candidate'] is None or
+                          item['last_verified_candidate']['attempt_id'] ==
+                          metric_state['successful_attempt']),
+                     'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED')
+    else:
+        # Old reports remain readable under their original blocked-metric
+        # contract; their absence of a processing snapshot grants no new Run.
+        expected_errors = ([{'stage': 'SOURCE_SCOPE',
+            'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_OTHER_METRICS_BLOCKED'}]
+            if mixed_stale else [])
+        need(not mixed_stale or all(item['status'] ==
+             ('UPDATE_BLOCKED' if item['metric_id'] in update_metric_ids()
+              else 'UPDATE_NOT_IMPLEMENTED')
+             for item in rows if item['metric_id'] != 'C04'),
+             'ORDINARY_REFRESH_RESUME_C04_HISTORY_CHANGED')
     need(row['metric_id'] == 'C04'
          and state['latest_attempt'] == row['attempt_id']
          and state['successful_attempt'] == row['successful_attempt']
          and cycle._terminal(root, row['attempt_id']) == row['terminal']
-         and report['companies'][0]['acquisition_errors'] == expected_errors
-         and (not mixed_stale or all(item['status'] ==
-              ('UPDATE_BLOCKED' if item['metric_id'] in update_metric_ids()
-               else 'UPDATE_NOT_IMPLEMENTED')
-              for item in rows if item['metric_id'] != 'C04')),
+         and report['companies'][0]['acquisition_errors'] == expected_errors,
          'ORDINARY_REFRESH_RESUME_C04_HISTORY_CHANGED')
     allowed = report['companies'][0]['source_refresh']['deferred_source_urls']
     need(type(allowed) is list and bool(allowed)
