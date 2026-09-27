@@ -4956,5 +4956,23 @@
       "compatibility_evidence": "default C04 recorded route and original installed historical package evidence; current V13/V14 load and wiring validation",
       "potential_downstream_impact": "#47 stacked branch must rebind its own dependent snapshot if it integrates this PR43 head; no #47 files, ledger or runtime touched."
     }
+  },
+  "d03_native_preparation_20260928": {
+    "status": "LOCAL_TESTED_LIMITED_INDEPENDENT_REVIEW_PENDING",
+    "scope_paths": [
+      "scripts/vnext/d03_native_preparation.py",
+      "tests/vnext/test_d03_native_preparation.py",
+      "tools/run_fast_tests_v2.py"
+    ],
+    "current_source_full_unit_partition_checked": "JPMORGAN_SAVED_SOURCE_ONLY",
+    "source_anchor_successor_replaces_old_fact_override": true,
+    "old_request_payload_in_executable_groups": false,
+    "final_tests": "2_PASS_149_225_SECONDS",
+    "provider_execution_bound": false,
+    "native_result_or_run_created": false,
+    "d03_metric_spec_created": false,
+    "all_ten_companies_native_preparation_verified": false,
+    "real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/d03-native-preparation-20260928/README.md"
   }
 }
