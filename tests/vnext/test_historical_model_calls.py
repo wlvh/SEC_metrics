@@ -9,7 +9,9 @@ except the socket. What is proven here, without the patch:
   one; only wired metrics may be granted; the ledger root overlaps neither
   #28's, the checkout nor #47's SEC ledger;
 * the ledger counts every claim, never redraws a request, stops on a slot
-  without a terminal and on the stop reasons, and refuses a changed slot;
+  without a terminal and on the stop reasons, and refuses a changed slot; a
+  stop is recomputed from the slot's own evidence, and a count or a stop
+  cannot be released by deleting a slot, the claim log or the whole root;
 * nothing here can reach a provider: the controller makes no issue_47_v1
   authority, the adapter hands no bytes to this module's request type, the
   egress gate passes with this module present, and the sealed offline
@@ -45,13 +47,18 @@ TRANSPORT = {"provider": "deepseek", "model": "deepseek-flash", "api": "chat_com
              "filing_egress_policy": "PUBLIC_SEC_FILING_CONTENT_ONLY"}
 
 
-def scope(first="2023-12-31", last="2023-12-31", metric="D04"):
+# The requests the fixture grant names: the digests the ledger cases claim.
+GRANTED = ["sha256:" + digit * 64 for digit in "123"]
+
+
+def scope(first="2023-12-31", last="2023-12-31", metric="D04", digests=None):
     return {"purposes": [calls.PURPOSE], "metric_ids": [metric],
             "company_ids": ["marriott_international"], "earliest_report_end": first,
             "latest_report_end": last,
             "grants": [{"grant": "TEST", "metric_ids": [metric],
                         "company_ids": ["marriott_international"],
-                        "earliest_report_end": first, "latest_report_end": last}]}
+                        "earliest_report_end": first, "latest_report_end": last,
+                        "request_digests": list(digests or GRANTED)}]}
 
 
 def fixture_tree(directory, *, policy_overrides=None, body_overrides=None, comment_overrides=None,
@@ -62,7 +69,8 @@ def fixture_tree(directory, *, policy_overrides=None, body_overrides=None, comme
               "approver_login": "wlvh", "delegation_url": URL, "delegation_record_path": RECORD,
               "budget_root": budget_root, "maximum_additional_provider_paid_sec_calls": [4, 4, 0],
               "scope": scope(), "transport": dict(TRANSPORT),
-              "retry_policy": dict(calls.FIXED_RETRY_POLICY), "model_wiring_receipt_path": RECEIPT}
+              "retry_policy": dict(calls.FIXED_RETRY_POLICY), "model_wiring_receipt_path": RECEIPT,
+              "model_wiring_receipt_id": "sha256:" + "1" * 64}
     policy.update(policy_overrides or {})
     body = {"record_type": calls.DELEGATION_TYPE, "requirement_id": calls.REQUIREMENT_ID,
             "fixture": "RECORDED_TEST_ONLY_NOT_AN_APPROVAL", "production_authorized": False,
@@ -158,14 +166,106 @@ class TheAllowanceIsVerifiedNotMerelyPresent(unittest.TestCase):
                                         "ISSUE_47_MODEL_LEDGER_OVERLAPS_THE_SEC_LEDGER"):
                 calls.model_allowance(repo_root=Path(directory))
 
+    def test_a_duplicate_key_is_refused_not_resolved_last_wins(self):
+        """An independent review had [4,4,0] followed by a duplicate [400,400,0] granted as the larger."""
+        with tempfile.TemporaryDirectory() as directory:
+            fixture_tree(directory)
+            path = Path(directory) / calls.ALLOWANCE_PATH
+            text = path.read_text(encoding="utf-8")
+            path.write_text(text[:-1] + ', "maximum_additional_provider_paid_sec_calls": [400, 400, 0]}',
+                            encoding="utf-8")
+            with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                        "ISSUE_47_MODEL_ALLOWANCE_NOT_STRICT_JSON"):
+                calls.model_allowance(repo_root=Path(directory))
+        with tempfile.TemporaryDirectory() as directory:
+            comment = fixture_tree(directory)
+            body = comment["body"][:-1] + ', "maximum_additional_provider_paid_sec_calls": [400, 400, 0]}'
+            (Path(directory) / RECORD).write_text(json.dumps({**comment, "body": body}), encoding="utf-8")
+            policy_path = Path(directory) / calls.ALLOWANCE_PATH
+            policy = json.loads(policy_path.read_text(encoding="utf-8"))
+            policy["delegation_body_sha256"] = sha256_bytes(content=body.encode("utf-8"))
+            policy_path.write_text(json.dumps(policy), encoding="utf-8")
+            with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                        "ISSUE_47_MODEL_DELEGATION_BODY_IS_NOT_A_RECORD"):
+                calls.model_allowance(repo_root=Path(directory))
+
+    def test_an_edited_approval_comment_is_refused(self):
+        """An approval is what was posted; an edit is a new decision and needs a new comment."""
+        self.refused("ISSUE_47_DELEGATION_COMMENT_WAS_EDITED:saved_record",
+                     comment_overrides={"updated_at": "2026-09-28T00:00:00Z"})
+        with tempfile.TemporaryDirectory() as directory:
+            comment = fixture_tree(directory)
+            edited = {**comment, "updated_at": "2026-09-28T00:00:00Z"}
+            with self.assertRaisesRegex(ValueError, "ISSUE_47_DELEGATION_COMMENT_WAS_EDITED:fetched"):
+                calls.model_allowance(repo_root=Path(directory), delegation_reader=lambda path: edited)
+
+    def test_the_sec_ledger_root_respelt_is_still_the_sec_ledger_root(self):
+        """Compared as directories - real paths, casefolded, both ways - not as strings."""
+        with tempfile.TemporaryDirectory() as outside:
+            sec_root = Path(outside) / "issue47-sec-ledger"
+            sec_root.mkdir()
+            alias = Path(outside) / "issue47-sec-alias"
+            alias.symlink_to(sec_root)
+            for spelling in (str(alias), str(sec_root).upper(), str(sec_root) + "/model"):
+                with self.subTest(spelling=spelling), tempfile.TemporaryDirectory() as directory:
+                    fixture_tree(directory, budget_root=spelling)
+                    (Path(directory) / "config/issue47_historical_calls_v1.json").write_text(
+                        json.dumps({"budget_root": str(sec_root)}), encoding="utf-8")
+                    with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                                "ISSUE_47_MODEL_LEDGER_OVERLAPS_THE_SEC_LEDGER"):
+                        calls.model_allowance(repo_root=Path(directory))
+
     def test_the_approval_must_say_what_the_policy_grants(self):
         self.refused("ISSUE_47_MODEL_DELEGATION_BODY_DOES_NOT_MATCH", digest="0" * 64)
+        self.refused("ISSUE_47_MODEL_ALLOWANCE_WIDENS_THE_APPROVED_GRANT:model_wiring_receipt_id",
+                     body_overrides={"model_wiring_receipt_id": "sha256:" + "2" * 64})
+        self.refused("ISSUE_47_MODEL_ALLOWANCE_FIELD_MALFORMED:model_wiring_receipt_id",
+                     policy_overrides={"model_wiring_receipt_id": "not-a-receipt-id"})
         self.refused("ISSUE_47_MODEL_ALLOWANCE_WIDENS_THE_APPROVED_GRANT:scope",
                      body_overrides={"scope": scope(metric="D04") | {"company_ids": ["x"]}})
         self.refused("ISSUE_47_MODEL_DELEGATION_MUST_NOT_AUTHORIZE_PRODUCTION",
                      body_overrides={"production_authorized": True})
         self.refused("ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER",
                      comment_overrides={"user": {"login": "someone-else"}})
+
+    def test_a_grant_names_the_requests_it_allows(self):
+        """A grant by position alone let any request built for that position through."""
+        base = scope()
+        cases = (({key: value for key, value in base["grants"][0].items()
+                   if key != "request_digests"}, "ISSUE_47_MODEL_GRANT_FIELDS_NOT_EXACT"),
+                 ({**base["grants"][0], "request_digests": []},
+                  "ISSUE_47_MODEL_GRANT_REQUEST_DIGESTS_MALFORMED"),
+                 ({**base["grants"][0], "request_digests": ["not-a-digest"]},
+                  "ISSUE_47_MODEL_GRANT_REQUEST_DIGESTS_MALFORMED"),
+                 ({**base["grants"][0], "request_digests": [GRANTED[0], GRANTED[0]]},
+                  "ISSUE_47_MODEL_GRANT_REQUEST_DIGESTS_MALFORMED"))
+        for grant, reason in cases:
+            with self.subTest(reason=reason), tempfile.TemporaryDirectory() as directory:
+                fixture_tree(directory, policy_overrides={"scope": {**base, "grants": [grant]}})
+                with self.assertRaisesRegex(calls.HistoricalModelCallError, reason):
+                    calls.model_allowance(repo_root=Path(directory))
+
+    def test_one_request_is_not_named_by_two_grants(self):
+        base = scope()
+        second = {**base["grants"][0], "grant": "TEST_TWO"}
+        with tempfile.TemporaryDirectory() as directory:
+            fixture_tree(directory, policy_overrides={"scope": {**base, "grants": [
+                base["grants"][0], second]}})
+            with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                        "ISSUE_47_MODEL_GRANT_REQUEST_DIGEST_REPEATS"):
+                calls.model_allowance(repo_root=Path(directory))
+
+    def test_a_request_inside_the_position_but_not_named_is_outside(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fixture_tree(directory)
+            allowance = calls.model_allowance(repo_root=Path(directory))
+            where = {"allowance": allowance, "metric_id": "D04",
+                     "company_id": "marriott_international", "report_end": "2023-12-31"}
+            self.assertEqual(["TEST"], calls.request_in_scope(**where))
+            self.assertEqual(["TEST"], calls.request_in_scope(**where, request_digest=GRANTED[1]))
+            with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                        "ISSUE_47_MODEL_REQUEST_DIGEST_NOT_GRANTED"):
+                calls.request_in_scope(**where, request_digest="sha256:" + "9" * 64)
 
     def test_a_request_outside_every_grant(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -179,6 +279,85 @@ class TheAllowanceIsVerifiedNotMerelyPresent(unittest.TestCase):
                                     "marriott_international:2024-12-31"):
             calls.request_in_scope(allowance=allowance, metric_id="D04",
                                    company_id="marriott_international", report_end="2024-12-31")
+
+
+def slot_evidence(path, intent, *, stop=""):
+    """Write the three files ``_slot_evidence`` reads, shaped to imply ``stop``."""
+    identity = intent["intent_id"].split(":", 1)[1][:24]
+    execution_id = "execution:" + identity
+    status = "UNKNOWN_REMOTE_OUTCOME" if stop == "UNKNOWN_REMOTE_OUTCOME" else (
+        "FAILED" if stop else "SUCCEEDED")
+    execution = calls._sealed({"execution_id": execution_id, "status": status,
+                               "counters": {"real_model_provider_egress_count": 0,
+                                            "paid_model_provider_call_count": 0,
+                                            "mock_transport_invocation_count": 1}},
+                              "execution_receipt_id")
+    marker = calls._sealed({"ai_invocation_plan_id": intent["plan_id"], "execution_id": execution_id,
+                            "attempt_ordinal": 1, "transport_kind": "MOCK"}, "egress_marker_id")
+    error_class = stop if stop not in ("", "UNKNOWN_REMOTE_OUTCOME", "USAGE_UNKNOWN") else ""
+    wire = calls._sealed({"intent_id": intent["intent_id"], "execution_id": execution_id,
+                          "mode": "RECORDED_TEST_ONLY", "error_class": error_class,
+                          "usage": {"input_tokens": None if stop == "USAGE_UNKNOWN" else 100,
+                                    "output_tokens": 20},
+                          "raw_response_sha256": None, "assistant_output_sha256": None}, "wire_id")
+    calls._write_once(path / "invocation_control" / "executions" / (identity + ".json"), execution)
+    calls._write_once(path / "invocation_control" / "egress" / identity / "01.json", marker)
+    calls._write_once(path / "wire" / "journal.json", wire)
+    return execution, wire
+
+
+class TheApprovalIsRegisteredFromWhatWasPosted(unittest.TestCase):
+    """The owner posts the committed proposal; registration writes the allowance from the post."""
+
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.root = Path(self.directory.name)
+        # A fixture tree whose allowance and record are then removed: what is
+        # left is the proposal, which is what an owner's checkout holds.
+        comment = fixture_tree(self.directory.name)
+        (self.root / calls.ALLOWANCE_PATH).unlink()
+        (self.root / RECORD).unlink()
+        (self.root / calls.APPROVAL_BODY_PATH).parent.mkdir(parents=True, exist_ok=True)
+        (self.root / calls.APPROVAL_BODY_PATH).write_text(comment["body"], encoding="utf-8")
+        self.comment = comment
+
+    def register(self, comment):
+        return calls.register_model_approval(repo_root=self.root, comment_url=URL,
+                                             reader=lambda path: comment)
+
+    def test_the_posted_proposal_is_registered_and_checked_by_the_gate(self):
+        registered = self.register(self.comment)
+        self.assertEqual("MODEL_APPROVAL_REGISTERED", registered["status"])
+        self.assertEqual([4, 4, 0], registered["limits"])
+        allowance = calls.model_allowance(repo_root=self.root, delegation_reader=lambda path: self.comment)
+        self.assertTrue(allowance["provenance_verified_against_github"])
+        self.assertEqual(self.register(self.comment)["written"], registered["written"])
+
+    def test_a_post_that_is_not_the_proposal_is_refused(self):
+        changed = {**self.comment, "body": self.comment["body"] + " "}
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_POSTED_BODY_IS_NOT_THE_PROPOSED_TEXT"):
+            self.register(changed)
+        self.assertFalse((self.root / calls.ALLOWANCE_PATH).exists())
+
+    def test_a_post_by_someone_else_or_edited_is_refused(self):
+        for overrides, reason in (({"user": {"login": "someone-else"}},
+                                   "ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER"),
+                                  ({"updated_at": "2026-09-28T00:00:00Z"},
+                                   "ISSUE_47_DELEGATION_COMMENT_WAS_EDITED")):
+            with self.subTest(reason=reason), self.assertRaisesRegex(ValueError, reason):
+                self.register({**self.comment, **overrides})
+        self.assertFalse((self.root / calls.ALLOWANCE_PATH).exists())
+
+    def test_an_allowance_already_registered_differently_is_not_overwritten(self):
+        self.register(self.comment)
+        path = self.root / calls.ALLOWANCE_PATH
+        path.write_text(path.read_text(encoding="utf-8").replace('"wlvh/SEC_metrics"', '"wlvh/other"'),
+                        encoding="utf-8")
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_ALLOWANCE_ALREADY_REGISTERED_DIFFERENTLY"):
+            self.register(self.comment)
 
 
 class TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount(unittest.TestCase):
@@ -198,16 +377,37 @@ class TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount(unittest.TestC
                                  authority_files_hash="sha256:" + "0" * 64)
 
     def finish(self, path, intent, stop=""):
-        body = {"record_type": "ISSUE_47_HISTORICAL_MODEL_CALL_TERMINAL",
-                "intent_id": intent["intent_id"], "status": "SUCCEEDED" if not stop else "FAILED",
-                "stop_reason": stop, "counts": [1, 1, 0], "counts_kind": "RECORDED_TEST_SIMULATION",
-                "execution_receipt_id": "e", "evidence": {}, "production_authorized": False}
-        calls._write_once(path / "terminal.json", {**body, "terminal_id": content_hash(value=body)})
+        """Seal a slot through the ledger from evidence that implies ``stop``.
+
+        The ledger reads a stop from the slot's own files - the controller's
+        execution receipt, its egress marker and the wire journal - not from a
+        terminal a caller writes, so the fixture writes those files and lets
+        ``finish`` seal them. They are synthetic (no controller ran here); what
+        is tested is that the ledger derives the stop from them.
+        """
+        execution, wire = slot_evidence(path, intent, stop=stop)
+        return self.ledger.finish(path=path, intent=intent, execution=execution, wire=wire)
 
     def test_a_claim_needs_the_lock(self):
         with self.assertRaisesRegex(calls.HistoricalModelCallError,
                                     "ISSUE_47_MODEL_LEDGER_LOCK_REQUIRED"):
             self.claim("sha256:" + "1" * 64)
+
+    def test_a_claim_for_a_request_no_grant_names_is_refused(self):
+        """The ledger holds the approval's request list, so a caller cannot pass a wider one."""
+        with self.ledger.locked():
+            for grants in (["TEST"], [], ["OTHER"]):
+                with self.subTest(grants=grants), self.assertRaisesRegex(
+                        calls.HistoricalModelCallError, "ISSUE_47_MODEL_REQUEST_DIGEST_NOT_GRANTED"):
+                    self.ledger.claim(request_digest="sha256:" + "9" * 64, plan_id="p",
+                                      purpose=calls.PURPOSE, grants=grants, request_identity="r",
+                                      authority_files_hash="sha256:" + "0" * 64)
+            with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                        "ISSUE_47_MODEL_REQUEST_DIGEST_NOT_GRANTED"):
+                self.ledger.claim(request_digest=GRANTED[0], plan_id="p", purpose=calls.PURPOSE,
+                                  grants=["OTHER"], request_identity="r",
+                                  authority_files_hash="sha256:" + "0" * 64)
+            self.assertEqual([0, 0, 0], self.ledger.snapshot()["counts"])
 
     def test_counts_are_cumulative_and_a_request_is_never_redrawn(self):
         with self.ledger.locked():
@@ -245,14 +445,83 @@ class TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount(unittest.TestC
                         self.claim("sha256:" + "2" * 64)
 
     def test_a_changed_slot_is_refused(self):
+        """An edited intent disagrees with the synced claim log before anything else."""
         with self.ledger.locked():
             path, intent = self.claim("sha256:" + "1" * 64)
             self.finish(path, intent)
         (path / "intent.json").chmod(0o600)
         (path / "intent.json").write_text(json.dumps({**intent, "purpose": "OTHER"}))
-        with self.assertRaisesRegex(calls.HistoricalModelCallError,
-                                    "ISSUE_47_MODEL_LEDGER_SLOT_CHANGED:0001"):
+        with self.ledger.locked(), self.assertRaisesRegex(
+                calls.HistoricalModelCallError, "ISSUE_47_MODEL_LEDGER_CLAIM_CHANGED:0001"):
             self.ledger.snapshot()
+
+    def stopped(self):
+        """A ledger whose only slot ended with a stop the evidence implies."""
+        with self.ledger.locked():
+            path, intent = self.claim("sha256:" + "1" * 64)
+            self.finish(path, intent, stop="HTTP_402")
+            self.assertEqual(["0001=HTTP_402"], self.ledger.snapshot()["stopped"])
+        return path
+
+    def test_deleting_a_stopped_slot_refuses_rather_than_releasing_it(self):
+        """An independent review deleted a stopped slot and claimed the same request again."""
+        import shutil
+        shutil.rmtree(self.stopped())
+        with self.ledger.locked(), self.assertRaisesRegex(
+                calls.HistoricalModelCallError, "ISSUE_47_MODEL_LEDGER_CLAIM_SET_CHANGED"):
+            self.claim("sha256:" + "1" * 64)
+
+    def test_deleting_the_claim_log_refuses_rather_than_forgetting_the_claims(self):
+        self.stopped()
+        (self.ledger.root / "claims.jsonl").unlink()
+        with self.ledger.locked(), self.assertRaisesRegex(
+                calls.HistoricalModelCallError, "ISSUE_47_MODEL_LEDGER_CLAIM_SET_CHANGED"):
+            self.ledger.snapshot()
+
+    def test_deleting_the_root_refuses_rather_than_resetting_the_count(self):
+        """The anchor beside the root is what deleting the root does not take with it."""
+        import shutil
+        self.stopped()
+        shutil.rmtree(self.ledger.root)
+        self.assertTrue(calls.HistoricalModelLedger.anchor_path(self.ledger.root).is_file())
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_LEDGER_BINDING_MISSING_OR_RESET"):
+            with self.ledger.locked():
+                pass
+
+    def test_a_resealed_terminal_that_drops_its_stop_is_refused(self):
+        """The stop is recomputed from the slot's evidence, not read from a self-hashed terminal."""
+        path = self.stopped()
+        terminal = json.loads((path / "terminal.json").read_text())
+        body = {**{key: value for key, value in terminal.items() if key != "terminal_id"},
+                "stop_reason": ""}
+        (path / "terminal.json").chmod(0o600)
+        (path / "terminal.json").write_text(json.dumps({**body, "terminal_id": content_hash(value=body)}))
+        with self.ledger.locked(), self.assertRaisesRegex(
+                calls.HistoricalModelCallError,
+                "ISSUE_47_MODEL_LEDGER_TERMINAL_DISAGREES_WITH_ITS_EVIDENCE:0001"):
+            self.ledger.snapshot()
+
+    def test_a_ledger_root_reached_through_a_symlink_is_refused(self):
+        real = Path(self.directory.name) / "real-ledger"
+        real.mkdir()
+        alias = Path(self.directory.name) / "alias-ledger"
+        alias.symlink_to(real)
+        ledger = calls._ledger(allowance=self.allowance, root=alias, live=False)
+        with self.assertRaisesRegex(calls.HistoricalModelCallError, "ISSUE_47_MODEL_LEDGER_PATH_ALIAS"):
+            with ledger.locked():
+                pass
+
+    def test_only_the_open_last_claim_is_a_claimed_slot(self):
+        """What a transport's send asks before the socket: this slot is counted and still open."""
+        with self.ledger.locked():
+            path, intent = self.claim("sha256:" + "1" * 64)
+            self.assertTrue(self.ledger.claimed_slot(path=path, intent=intent))
+            self.assertFalse(self.ledger.claimed_slot(path=path, intent={**intent, "purpose": "X"}))
+            self.assertFalse(self.ledger.claimed_slot(path=path.parent / "0002", intent=intent))
+            self.finish(path, intent)
+            self.assertFalse(self.ledger.claimed_slot(path=path, intent=intent))
+        self.assertFalse(self.ledger.claimed_slot(path=path, intent=intent))
 
     def test_a_recorded_ledger_is_never_the_granted_one_or_in_the_checkout(self):
         granted = Path(self.allowance["budget_root"])
@@ -304,22 +573,32 @@ class NothingHereReachesAProvider(unittest.TestCase):
         if not (ROOT / RECEIPT).is_file():
             with self.assertRaisesRegex(calls.HistoricalModelCallError,
                                         "ISSUE_47_MODEL_WIRING_RECEIPT_MISSING:" + RECEIPT):
-                calls.verify_model_wiring(receipt_path=RECEIPT)
+                calls.verify_model_wiring(receipt_path=RECEIPT, receipt_id="sha256:" + "0" * 64)
             return
         receipt = json.loads((ROOT / RECEIPT).read_text(encoding="utf-8"))
         self.assertTrue(receipt["all_checks_passed"])
         self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, receipt["calls"])
+        # Named by the approval or not, it does not hold here: a receipt the
+        # approval does not name is refused first, and the one it names still
+        # describes a patched tree.
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_WIRING_RECEIPT_IS_NOT_THE_APPROVED_ONE"):
+            calls.verify_model_wiring(receipt_path=RECEIPT, receipt_id="sha256:" + "0" * 64)
         with self.assertRaisesRegex(calls.HistoricalModelCallError,
                                     "ISSUE_47_MODEL_WIRING_FILE_(CHANGED|MISSING):"):
-            calls.verify_model_wiring(receipt_path=RECEIPT)
+            calls.verify_model_wiring(receipt_path=RECEIPT, receipt_id=receipt["receipt_id"])
         # What it binds that this tree has unchanged is exactly what the
-        # repository carries: this module, the harness and the patch itself.
-        # Everything else is either new in the patch or changed by it.
+        # repository carries: this module, the SEC module whose approval checks
+        # it imports and that module's tests (the gh reader's case runs in the
+        # harness), the harness and the patch itself. Everything else is
+        # either new in the patch or changed by it.
         same = sorted(relative for relative, binding in receipt["bound_files"].items()
                       if (ROOT / relative).is_file()
                       and {"sha256": sha256_bytes(content=(ROOT / relative).read_bytes()),
                            "size": (ROOT / relative).stat().st_size} == binding)
         self.assertEqual(sorted(["scripts/vnext/historical_model_calls.py",
+                                 "scripts/vnext/historical_source_acquisition.py",
+                                 "tests/vnext/test_historical_source_acquisition.py",
                                  "docs/evidence/issue47_history/model-egress/verify.py",
                                  "docs/evidence/issue47_history/model-egress/"
                                  "egress-registration.patch"]), same)

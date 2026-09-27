@@ -15,8 +15,16 @@ tests/vnext/test_historical_model_calls.py asserts). Steps, each recorded:
    snapshot is minted for these bytes;
 2. the repository's egress gate passes and names the one new caller;
 3. the verification suite passes (every case, network refused);
-4. every fault injection is caught, and by which case first (fail-fast, fast
-   classes first; ``first_caught_by`` is not the full set of catching cases).
+4. every fault injection is caught, and by which case. Each injection names
+   the class written to catch it; that class runs first, fail-fast, and a
+   failing case there is recorded as the catch. Only when it does not catch
+   does the whole suite run, fail-fast in the fixed order, so a catch
+   elsewhere is still found and recorded as elsewhere. (The first versions
+   ran the whole suite for every injection; at 45 injections and 58 cases
+   that is most of a day, and it answers no more: a catch is a catch whichever
+   case makes it, and the expected class is named so a reader can check the
+   case is the one designed for it. ``first_caught_by`` is not the full set of
+   catching cases either way.)
    Two ways an injection can look caught without any case having seen it are
    closed. Injected text must compile: a syntax error fails the suite before
    one case runs. And an injection into a file the snapshot records by bytes
@@ -43,18 +51,34 @@ PATCH = HERE + "/egress-registration.patch"
 OUTPUT = HERE + "/offline-verification.json"
 SUITE = "tests.vnext.test_historical_model_egress"
 # Fast classes first, so fail-fast injections are decided without the slow ones.
-ORDER = ("TheEgressGateNamesExactlyOneNewCaller", "OnlyIssue47sOwnAuthorityReachesTheCallPath",
-         "TheLimitIsCumulativeAndTheAllowanceIsTheAuthoritys",
+# Every class the suite declares must be here - checked before anything runs,
+# because a class left out would simply never run - plus the one class of the
+# SEC acquisition suite that covers what the model path imports from it: the
+# gh reader's narrowed environment.
+GH_READER = "tests.vnext.test_historical_source_acquisition.TheGithubReaderPassesGhOnlyWhatItNeeds"
+ORDER = ("TheEgressGateNamesExactlyOneNewCaller", "TheFixturesNeverTouchAnAllowanceTheyDidNotWrite",
+         GH_READER, "OnlyIssue47sOwnAuthorityReachesTheCallPath",
+         "TheApprovalIsReadStrictly", "TheLedgerCannotBeResetByDeletingIt",
+         "TheLimitIsCumulativeAndTheAllowanceIsTheAuthoritys", "OnlyTheRequestsTheApprovalNamesAreClaimed",
          "EveryCallIsCountedOnceAndStopsWhereTheCountCannotBeTrusted",
          "TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener",
-         "ACompleteAssessmentRegistersOnlyFromItsOwnSlots")
+         "ACompleteAssessmentRegistersOnlyFromItsOwnSlots",
+         "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
+         "AD02ReviewIsOneCountedCallOnTheSamePath")
 BOUNDARY = ("scripts/vnext/invocation_control.py", "scripts/vnext/ai_adapter.py",
             "tools/check_provider_egress.py")
 BOUND = ("scripts/vnext/historical_model_calls.py", "scripts/vnext/historical_model_egress.py",
+         "scripts/vnext/historical_source_acquisition.py", "tools/vnext_historical_model.py",
          *BOUNDARY, "tools/vnext_mint_historical_requirement.py",
-         "tests/vnext/test_historical_model_egress.py", HERE + "/verify.py", PATCH)
+         "tests/vnext/test_historical_model_egress.py",
+         # The generation's snapshot: the live path requires the receipt to
+         # bind it (historical_model_calls.CALL_PATH_FILES).
+         "requirements/issue_47_v1/baseline_manifest.json",
+         "tests/vnext/test_historical_source_acquisition.py", HERE + "/verify.py", PATCH)
 CALLS = "scripts/vnext/historical_model_calls.py"
 EGRESS = "scripts/vnext/historical_model_egress.py"
+SEC = "scripts/vnext/historical_source_acquisition.py"
+TESTS = "tests/vnext/test_historical_model_egress.py"
 INJECTIONS = [
     ("A_REQUEST_MAY_BE_REDRAWN", CALLS,
      [('        _need(request_digest not in state["requests"],\n'
@@ -64,8 +88,122 @@ INJECTIONS = [
     ("HTTP_402_DOES_NOT_STOP", CALLS,
      [('STOPS = frozenset({"HTTP_402", ', 'STOPS = frozenset({')]),
     ("UNKNOWN_USAGE_DOES_NOT_STOP", CALLS,
-     [('"USAGE_UNKNOWN", "CONTEXT_REFERENCE_MISMATCH"})', '"CONTEXT_REFERENCE_MISMATCH"})'),
-      ('            stop = stop or "USAGE_UNKNOWN"\n', "            pass\n")]),
+     [('"USAGE_UNKNOWN", "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT"})',
+       '"CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT"})'),
+      ('        stop = stop or "USAGE_UNKNOWN"\n', "        pass\n")]),
+    # From here, one per finding of the independent security review
+    # (independent-review-2026-09-27/README.md), each broken on its own.
+    # M1: a count or a stop released by deleting files.
+    ("SLOTS_ARE_COUNTED_WITHOUT_THE_CLAIM_LOG", CALLS,
+     [('        _need(len(slots) == len(claims), "ISSUE_47_MODEL_LEDGER_CLAIM_SET_CHANGED:"',
+       '        _need(True or len(slots) == len(claims), "ISSUE_47_MODEL_LEDGER_CLAIM_SET_CHANGED:"')]),
+    ("THE_ANCHOR_IS_INSIDE_THE_ROOT", CALLS,
+     [('        return root.parent / ("." + root.name + ".initialized.json")',
+       '        return root / ".initialized.json"')]),
+    ("THE_STOP_IS_READ_FROM_THE_TERMINAL", CALLS,
+     [('            execution, _wire, stop = _slot_evidence(path=slot, intent=intent, live=self.live)\n',
+       '            execution, _wire, stop = _slot_evidence(path=slot, intent=intent, live=self.live)\n'
+       '            stop = terminal["stop_reason"]\n')]),
+    # L1: ledger roots compared as strings.
+    ("A_LEDGER_ROOT_MAY_BE_AN_ALIAS", CALLS,
+     [('              and not any(path.is_symlink() for path in [self.root, *self.root.parents]),',
+       '              and not any(False for path in [self.root, *self.root.parents]),')]),
+    ("THE_SEC_ROOT_IS_COMPARED_AS_TEXT", CALLS,
+     [('        for mine, theirs in ((real(budget_root), real(other)),\n'
+       '                             (PurePosixPath(budget_root.casefold()), PurePosixPath(other.casefold()))):',
+       '        for mine, theirs in ((PurePosixPath(budget_root), PurePosixPath(other)),):')]),
+    # M2: approvals read last-key-wins, and an edited approval.
+    ("THE_POLICY_IS_READ_LAST_KEY_WINS", CALLS,
+     [('        policy = strict_json_loads(text=path.read_text(encoding="utf-8"))',
+       '        policy = json.loads(path.read_text(encoding="utf-8"))')]),
+    ("THE_APPROVAL_IS_READ_LAST_KEY_WINS", CALLS,
+     [('        approved = strict_json_loads(text=comment["body"])',
+       '        approved = json.loads(comment["body"])')]),
+    ("AN_EDITED_APPROVAL_IS_ACCEPTED", SEC,
+     [('          and comment.get("created_at") == comment.get("updated_at"),',
+       '          and True,')]),
+    # M3, the part code can hold: the approval names the verified receipt.
+    ("THE_APPROVED_RECEIPT_IS_NOT_CHECKED", CALLS,
+     [('    _need(receipt["receipt_id"] == receipt_id, "ISSUE_47_MODEL_WIRING_RECEIPT_IS_NOT_THE_APPROVED_ONE")',
+       '    _need(True or receipt["receipt_id"] == receipt_id, "ISSUE_47_MODEL_WIRING_RECEIPT_IS_NOT_THE_APPROVED_ONE")')]),
+    # M3, the rest code can hold: the approval names the exact requests, and
+    # the verified receipt binds the generation's snapshot.
+    ("THE_SCOPE_IGNORES_THE_REQUEST_DIGEST", CALLS,
+     [('        covering = [name for name in covering if request_digest in named[name]]',
+       '        covering = list(covering)')]),
+    ("THE_LEDGER_TRUSTS_THE_CALLER_S_GRANTS", CALLS,
+     [('        _need(bool(grants) and all(name in allowed and request_digest in allowed[name]',
+       '        _need(True or bool(grants) and all(name in allowed and request_digest in allowed[name]')]),
+    ("THE_RECEIPT_NEED_NOT_BIND_THE_SNAPSHOT", CALLS,
+     [('                   "requirements/issue_47_v1/baseline_manifest.json")',
+       '                   )')]),
+    # L2: a send outside a counted slot.
+    ("A_SEND_NEED_NOT_BE_COUNTED", EGRESS,
+     [('        _need(self.ledger.claimed_slot(path=self.path, intent=self.intent),\n'
+       '              "ISSUE_47_MODEL_SEND_WITHOUT_A_COUNTED_SLOT")\n', "")]),
+    # L3: a source that is only re-hashed, not rebuilt from the filing.
+    ("THE_SOURCE_IS_NOT_REBUILT_FROM_THE_FILING", CALLS,
+     [('        _need(evidence_json_bytes(rebuilt) == self.source_bytes,',
+       '        _need(True or evidence_json_bytes(rebuilt) == self.source_bytes,')]),
+    # L4: a context overrun, a missing tokenizer, the order of the two checks.
+    ("A_CONTEXT_OVERRUN_DOES_NOT_STOP", CALLS,
+     [('"CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT"})', '"CONTEXT_REFERENCE_MISMATCH"})')]),
+    ("A_LIVE_CALL_MAY_BE_PLANNED_WITHOUT_THE_REFERENCE_TOKENIZER", EGRESS,
+     [('    _need(not ledger.live or plan["observability"]["estimator_method"] == "PINNED_REFERENCE_CHAT_FORMAT",',
+       '    _need(True or not ledger.live or plan["observability"]["estimator_method"] == "PINNED_REFERENCE_CHAT_FORMAT",')]),
+    ("THE_LIMIT_IS_ANSWERED_BEFORE_THE_REFERENCE", EGRESS,
+     [('            if usage["input_tokens"] is not None and usage["input_tokens"] != reference_input:\n'
+       '                error_class = "CONTEXT_REFERENCE_MISMATCH"\n',
+       '            error_class = usage_error(raw, expected_prompt_tokens=reference_input,\n'
+       '                                      enforce_total_context=True)\n')]),
+    # L6: the suite's fixtures and a tree's own allowance.
+    ("THE_FIXTURES_OVERWRITE_A_REAL_ALLOWANCE", TESTS,
+     [('            raise unittest.SkipTest("REFUSED: an allowance or fixture directory already exists in this tree")',
+       '            pass')]),
+    ("THE_FIXTURES_REMOVE_WHAT_THEY_DID_NOT_WRITE", TESTS,
+     [('        raise AssertionError("FIXTURE_REPLACED_BY_SOMETHING_ELSE:" + relative)',
+       '        pass')]),
+    # L7: gh run with the caller's whole environment.
+    ("GH_GETS_THE_WHOLE_ENVIRONMENT", SEC,
+     [('    return {name: os.environ[name] for name in GH_ENVIRONMENT if name in os.environ}',
+       '    return dict(os.environ)')]),
+    # The runner the owner runs adds a loop and two rules; each is broken on its own.
+    ("THE_RUNNER_GOES_ON_PAST_A_STOP", "tools/vnext_historical_model.py",
+     [('                if outcome["stop_reason"]:\n'
+       '                    stop = (metric_id + ":" + company_id + ":" + report_end + ":"\n'
+       '                            + outcome["stop_reason"])\n'
+       '                    break\n', '')]),
+    # E01 on the same path: each metric held to its own request type, its own
+    # response contract, and its registration in the ledger's own mode.
+    ("A_REQUEST_NEED_NOT_BE_ITS_METRIC_S_TYPE", EGRESS,
+     [('    _need(request_fields.get("record_type") == REQUEST_TYPES.get(prepared.metric_id),',
+       '    _need(True or request_fields.get("record_type") == REQUEST_TYPES.get(prepared.metric_id),')]),
+    ("AN_E01_ANSWER_IS_HELD_TO_D04_S_CONTRACT", EGRESS,
+     [('    if prepared.metric_id == "D04":\n        from .d04_native_assessment import',
+       '    if True:\n        from .d04_native_assessment import')]),
+    ("AN_E01_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN", EGRESS,
+     [('                                     output=output, mode=ledger.mode)',
+       '                                     output=output, mode="LIVE")')]),
+    ("THE_RUNNER_REGISTERS_AN_INCOMPLETE_POSITION", "tools/vnext_historical_model.py",
+     [('        if not row["unsuccessful"]:\n', '        if True:\n')]),
+    # D02 on the same path: its own response contract, and its registration in
+    # the ledger's own mode.
+    ("A_D02_ANSWER_IS_HELD_TO_E01_S_CONTRACT", EGRESS,
+     [('    if prepared.metric_id == "D02":\n        from .historical_legal_review import',
+       '    if False:\n        from .historical_legal_review import')]),
+    ("A_D02_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN", EGRESS,
+     [('                               output=output, mode=ledger.mode)',
+       '                               output=output, mode="LIVE")')]),
+    # The three checks the review neutralized at once without any case failing.
+    ("THE_SEND_DOES_NOT_RECHECK_ITS_RESERVATION", EGRESS,
+     [('        _need(reservation["owner_process_id"] == os.getpid()',
+       '        _need(True or reservation["owner_process_id"] == os.getpid()')]),
+    ("A_LIVE_LEDGER_MAY_BE_ANYWHERE", EGRESS,
+     [('        _need(ledger.root == Path(prepared.allowance["budget_root"]),',
+       '        _need(True or ledger.root == Path(prepared.allowance["budget_root"]),')]),
+    ("A_LEDGER_FOR_ANOTHER_ALLOWANCE_IS_USED", EGRESS,
+     [('    _need(ledger.binding["delegation_url"] == prepared.allowance["delegation_url"]',
+       '    _need(True or ledger.binding["delegation_url"] == prepared.allowance["delegation_url"]')]),
     ("NO_CUMULATIVE_LIMIT", CALLS,
      [('        _need(state["counts"][0] + 1 <= self.binding["limits"][0]\n',
        '        _need(True or state["counts"][0] + 1 <= self.binding["limits"][0]\n')]),
@@ -119,6 +257,54 @@ INJECTIONS = [
 ]
 
 
+# The class each injection is written against: the one holding the case that
+# names the property it breaks. Every injection has one and every one is a
+# class the suite declares, which main() checks before anything runs.
+LIVE = "TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener"
+COUNTED = "EveryCallIsCountedOnceAndStopsWhereTheCountCannotBeTrusted"
+AUTHORITY = "OnlyIssue47sOwnAuthorityReachesTheCallPath"
+LEDGER = "TheLedgerCannotBeResetByDeletingIt"
+APPROVAL = "TheApprovalIsReadStrictly"
+LIMIT = "TheLimitIsCumulativeAndTheAllowanceIsTheAuthoritys"
+NAMED = "OnlyTheRequestsTheApprovalNamesAreClaimed"
+E01 = "AnE01ConfirmationIsOneCountedCallOnTheSamePath"
+D02 = "AD02ReviewIsOneCountedCallOnTheSamePath"
+COMPLETE = "ACompleteAssessmentRegistersOnlyFromItsOwnSlots"
+FIXTURES_CLASS = "TheFixturesNeverTouchAnAllowanceTheyDidNotWrite"
+GATE = "TheEgressGateNamesExactlyOneNewCaller"
+EXPECTED = {
+    "A_REQUEST_MAY_BE_REDRAWN": COUNTED, "A_SLOT_WITHOUT_A_TERMINAL_DOES_NOT_STOP": COUNTED,
+    "HTTP_402_DOES_NOT_STOP": LIVE, "UNKNOWN_USAGE_DOES_NOT_STOP": COUNTED,
+    "SLOTS_ARE_COUNTED_WITHOUT_THE_CLAIM_LOG": LEDGER, "THE_ANCHOR_IS_INSIDE_THE_ROOT": LEDGER,
+    "THE_STOP_IS_READ_FROM_THE_TERMINAL": LEDGER, "A_LEDGER_ROOT_MAY_BE_AN_ALIAS": LEDGER,
+    "THE_SEC_ROOT_IS_COMPARED_AS_TEXT": APPROVAL, "THE_POLICY_IS_READ_LAST_KEY_WINS": APPROVAL,
+    "THE_APPROVAL_IS_READ_LAST_KEY_WINS": APPROVAL, "AN_EDITED_APPROVAL_IS_ACCEPTED": APPROVAL,
+    "THE_APPROVED_RECEIPT_IS_NOT_CHECKED": APPROVAL,
+    "THE_SCOPE_IGNORES_THE_REQUEST_DIGEST": NAMED, "THE_LEDGER_TRUSTS_THE_CALLER_S_GRANTS": NAMED,
+    "THE_RECEIPT_NEED_NOT_BIND_THE_SNAPSHOT": NAMED,
+    "A_SEND_NEED_NOT_BE_COUNTED": AUTHORITY, "THE_SOURCE_IS_NOT_REBUILT_FROM_THE_FILING": AUTHORITY,
+    "A_CONTEXT_OVERRUN_DOES_NOT_STOP": LIVE,
+    "A_LIVE_CALL_MAY_BE_PLANNED_WITHOUT_THE_REFERENCE_TOKENIZER": LIVE,
+    "THE_LIMIT_IS_ANSWERED_BEFORE_THE_REFERENCE": LIVE,
+    "THE_FIXTURES_OVERWRITE_A_REAL_ALLOWANCE": FIXTURES_CLASS,
+    "THE_FIXTURES_REMOVE_WHAT_THEY_DID_NOT_WRITE": FIXTURES_CLASS,
+    "GH_GETS_THE_WHOLE_ENVIRONMENT": GH_READER,
+    "THE_RUNNER_GOES_ON_PAST_A_STOP": LIVE, "A_REQUEST_NEED_NOT_BE_ITS_METRIC_S_TYPE": E01,
+    "AN_E01_ANSWER_IS_HELD_TO_D04_S_CONTRACT": E01, "AN_E01_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN": E01,
+    "THE_RUNNER_REGISTERS_AN_INCOMPLETE_POSITION": LIVE,
+    "A_D02_ANSWER_IS_HELD_TO_E01_S_CONTRACT": D02, "A_D02_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN": D02,
+    "THE_SEND_DOES_NOT_RECHECK_ITS_RESERVATION": LIVE, "A_LIVE_LEDGER_MAY_BE_ANYWHERE": LIVE,
+    "A_LEDGER_FOR_ANOTHER_ALLOWANCE_IS_USED": LEDGER, "NO_CUMULATIVE_LIMIT": LIMIT,
+    "A_CALLERS_ALLOWANCE_IS_TRUSTED": LIMIT, "THE_ADAPTER_MATCHES_THE_CLASS_NAME_ONLY": AUTHORITY,
+    "NO_SOURCE_CHECK_AT_THE_SOCKET": LIVE, "NO_GITHUB_RECHECK_BEFORE_THE_SOCKET": LIVE,
+    "RECORDED_BYTES_ARE_ONLY_REFUSED_AFTER_THE_CLAIM": LIVE, "A_SECOND_TRANSPORT_CALLER": GATE,
+    "REGISTRATION_TAKES_A_MODE_OF_ITS_OWN": COMPLETE, "A_FAILED_SLOT_MAY_BE_REGISTERED": COMPLETE,
+    "THE_CONTROLLER_BRANCH_IS_ABSENT": AUTHORITY, "PLANS_MAY_NOT_KEEP_AN_UNAVAILABLE_PRICE": LIMIT,
+    "THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER": GATE,
+    "THE_GATE_DOES_NOT_LIST_THE_CAPABILITY_REFERENCE": GATE,
+}
+
+
 def _run(arguments, **kwargs):
     return subprocess.run(arguments, cwd=ROOT, capture_output=True, text=True, **kwargs)
 
@@ -153,10 +339,22 @@ def _outcome(code, failures):
     return "CAUGHT_AT_FIXTURE" if failures else "FAILED_OUTSIDE_ANY_CASE"
 
 
-def _suite(fail_fast):
-    names = [SUITE + "." + name for name in ORDER]
+def _declared_classes():
+    """The TestCase classes the suite file declares, read from its source rather than imported."""
+    import ast
+    tree = ast.parse((ROOT / TESTS).read_text(encoding="utf-8"))
+    return sorted(node.name for node in tree.body if isinstance(node, ast.ClassDef)
+                  and not node.name.startswith("_")
+                  and any(getattr(base, "id", getattr(base, "attr", "")) in ("_Isolated", "TestCase")
+                          for base in node.bases))
+
+
+def _suite(fail_fast, classes=ORDER):
+    names = [name if name.startswith("tests.") else SUITE + "." + name for name in classes]
+    # Generous on purpose: the whole suite ran 880 s alone and far longer beside
+    # a batch, and a timeout here would stop the harness without a receipt.
     run = _run([sys.executable, "-m", "unittest", *(["-f"] if fail_fast else []), *names],
-               timeout=5400)
+               timeout=14400)
     lines = run.stderr.strip().splitlines()
     failures = _failures(lines)
     return run.returncode, failures, (lines[-1] if lines else ""), next(
@@ -216,6 +414,15 @@ def main():
     if applied.returncode or minted.returncode:
         print(applied.stderr, minted.stdout, minted.stderr)
         return 2
+    local = sorted(name for name in ORDER if not name.startswith("tests."))
+    if local != _declared_classes():
+        print("ORDER_DOES_NOT_COVER_THE_SUITE", local, _declared_classes())
+        return 2
+    names = [name for name, _, _ in INJECTIONS]
+    if sorted(names) != sorted(EXPECTED) or not set(EXPECTED.values()) <= set(ORDER):
+        print("EVERY_INJECTION_NEEDS_ONE_EXPECTED_CLASS_THE_SUITE_DECLARES",
+              sorted(set(names) ^ set(EXPECTED)), sorted(set(EXPECTED.values()) - set(ORDER)))
+        return 2
     before = {path: _sha(path) for path in BOUND}
     snapshot = _snapshot()
     recorded = _recorded_by_the_snapshot()
@@ -246,7 +453,15 @@ def main():
             target.write_text(text, encoding="utf-8")
             if row["minted_for_the_injection"]:
                 assert _mint().returncode == 0, name
-            code_i, failures_i, summary_i, _ = _suite(fail_fast=True)
+            expected = EXPECTED[name]
+            code_i, failures_i, summary_i, _ = _suite(fail_fast=True, classes=(expected,))
+            row.update(expected_class=expected,
+                       expected_class_outcome=_outcome(code_i, failures_i))
+            if row["expected_class_outcome"] in ("NOT_CAUGHT", "FAILED_OUTSIDE_ANY_CASE"):
+                # The class written for it did not catch it; the whole suite
+                # still might, and a catch there is recorded as one elsewhere.
+                code_i, failures_i, summary_i, _ = _suite(fail_fast=True)
+                row["whole_suite_run"] = True
         finally:
             target.write_bytes(original)
             if row["minted_for_the_injection"]:
@@ -264,6 +479,7 @@ def main():
                 and _mint(check=True).returncode == 0 and _snapshot() == snapshot
                 and {path: _sha(path) for path in BOUND} == before)
     checks = {"patch_is_applied_here": applied.returncode == 0,
+              "every_declared_class_ran": local == _declared_classes(),
               "snapshot_minted_for_these_bytes": minted.returncode == 0,
               "egress_gate_passes": gate["status"] == "PASS",
               "suite_passes": code == 0,

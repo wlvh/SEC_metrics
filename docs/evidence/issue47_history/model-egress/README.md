@@ -1,6 +1,6 @@
-# #47 模型出口：限定差异与离线验证（供独立安全审阅）
+# #47 模型出口：限定差异、离线验证、独立审阅与调用申请
 
-**这是什么**：让 #47 的历史 D04 路线在所有者另行批准后能发出受限模型调用所需的最小改动（`egress-registration.patch`），以及在一棵应用了补丁的临时副本里做的离线验证（`verify.py` → `offline-verification.json`）。
+**这是什么**：让 #47 的历史语义路线在所有者另行批准后能发出受限模型调用所需的最小改动（`egress-registration.patch`，7 个文件），在一棵应用了补丁的临时副本里做的离线验证（`verify.py` → `offline-verification.json`），两次独立安全审阅（`independent-review-2026-09-27/`、`independent-review-2026-09-27-rereview/`），以及一份调用申请（`call-application.md`）。补丁现在承载三种请求：D04 的原生解释请求（#28 的合同）、E01 的内容确认请求（#47 自己的合同 `historical_ma_confirmation.py`，所有者 2026-09-27 采用"经内容确认的并购公告"之后新增）与 D02 的 Item 8 审阅请求（#47 自己的合同 `historical_legal_review.py`，关键词代理三次确定性替代都失败之后新增，两个方向都覆盖，见 `../d02-item-8-review/`）。
 
 **不是什么**：不是调用许可，也没有发出任何调用；补丁在仓库里**没有应用**。今天的仓库：控制器不给 `issue_47_v1` 造授权对象，适配器不把字节交给 #47 的请求类型，出口扫描器通过——这三点由 `tests/vnext/test_historical_model_calls.py` 在未打补丁的树上断言。#28 的工作现场、额度、账本和旧评估都不读、不借、不复用。
 
@@ -10,15 +10,13 @@
 
 | 门 | 今天的行为 | 补丁做什么 |
 |---|---|---|
-| `invocation_control._prepare_successor_invocation_authority_from_requirement` | 按 requirement_id 登记世代（issue_28_v2、R4 修订、issue_28_v14），其余一律拒绝 | 加 `issue_47_v1` 分支：字段由 `historical_model_calls.invocation_authority_fields` 在验证 #47 自己的许可后描述，**授权对象仍只由控制器的私有工厂创建** |
-| `ai_adapter._scoped_transport_payload` | 只把字节交给 #28 的 `SemanticRequest`（按模块名＋类名）或 LiveScopedReaderRequest | 加一种类型：`historical_model_calls.HistoricalSemanticRequest`（同样按模块名＋类名），交字节前从保存的申报字节重验请求 |
+| `invocation_control._prepare_successor_invocation_authority_from_requirement` | 按 requirement_id 登记世代，其余一律拒绝 | 加 `issue_47_v1` 分支：字段由 `historical_model_calls.invocation_authority_fields` 在验证 #47 自己的许可后描述，**授权对象仍只由控制器的私有工厂创建** |
+| `ai_adapter._scoped_transport_payload` | 只把字节交给 #28 的 `SemanticRequest` 或 LiveScopedReaderRequest | 加一种类型：`historical_model_calls.HistoricalSemanticRequest`（模块名与类名都比对），交字节前从保存的申报字节重验请求 |
 | `tools/check_provider_egress.py` | 固定传输调用方与出口令牌引用的精确集合 | 把同一个 `historical_model_egress._Transport.send` 加进两个集合 |
 
-另有一处是量出来的：控制器只对 `issue_28_v14` 容忍"价格未知"（计划的 `estimated_cost` 为 null）；#47 的计划同样没有价格快照，否则在建计划时就被拒。所以 `_continuous_observations` 也要认 `issue_47_v1`。
+另两处是量出来的：控制器只对 `issue_28_v14` 容忍"价格未知"，#47 的计划否则在建计划时就被拒，所以 `_continuous_observations` 也要认 `issue_47_v1`；三个文件都在 `issue_47_v1` 的执行授权里，不重记就在建授权时以 `Successor execution authority bytes differ` 拒绝，所以铸造工具要把三者加进 `RE_RECORDED_FROM_TREE`。
 
-还有一处是跑出来的：三个文件都在 `issue_47_v1` 的执行授权里（继承自父代），不重记就在建授权时以 `Successor execution authority bytes differ` 拒绝——先后撞到 `ai_adapter.py` 与 `tools/check_provider_egress.py`。所以 mint 工具要把三者加进 `RE_RECORDED_FROM_TREE`。
-
-## 补丁的全部内容（6 个文件，`git apply --check` 对当前仓库通过）
+## 补丁的全部内容（7 个文件，`git apply --check` 对当前 HEAD 通过）
 
 | 文件 | 改动 |
 |---|---|
@@ -26,76 +24,95 @@
 | `scripts/vnext/ai_adapter.py` | +4：认 `HistoricalSemanticRequest` 并调用它的 `transport_payload` |
 | `tools/check_provider_egress.py` | +2：同一个 `_Transport.send` 进两个精确集合 |
 | `tools/vnext_mint_historical_requirement.py` | +9：三文件进 `RE_RECORDED_FROM_TREE` |
-| 新 `scripts/vnext/historical_model_egress.py` | 300 行：`_Transport.send`、`execute_historical_semantic`、`register_from_slots` |
-| 新 `tests/vnext/test_historical_model_egress.py` | 616 行：离线验证套件 |
+| 新 `scripts/vnext/historical_model_egress.py` | 363 行：`_Transport.send`（唯一发送点）、`execute_historical_semantic`、按指标选合同的 `_contract`、`register_from_slots` |
+| 新 `tools/vnext_historical_model.py` | 174 行：所有者本机用的执行器（`register-approval` / `run --metric D04\|E01\|D02 --position …` / `status`） |
+| 新 `tests/vnext/test_historical_model_egress.py` | 1,276 行：离线验证套件，62 例 |
 
 不在补丁里、已在仓库的：`scripts/vnext/historical_model_calls.py`（许可、请求、计划、账本——不碰传输工厂、出口令牌或服务商主机名，所以出口扫描器在仓库里通过）与它在未打补丁状态下的用例。
 
 ## 一次调用绑定什么（按检查顺序）
 
-1. **#47 自己的许可**（`config/issue47_historical_model_calls_v1.json`，不存在）：与 SEC 许可同样三层——字段逐个定型；按摘要读出批准评论正文并重算哈希，且评论须是本仓库议题 47 上、由批准人发的；评论须复述上限、账本根、scope、传输与重试政策，许可不能比批准宽。实时路径从 GitHub 取回评论并要求逐字节相同。模型许可特有的规则：一次调用＝一次服务商调用＋一次付费调用，**不含任何 SEC 请求**（上限第三项必须为 0）；传输必须是固定那一个（服务商主机名与适配器的常量比较，不写在本模块里）；scope 只能点名已接线的指标（今天只有 D04），用途只有一个；信封恰好是授予之并；账本根不与 #28 的根、本检出、#47 的 SEC 账本根重叠或嵌套。
-2. **请求**：由钉定期间的来源在准备时一次建成（内容寻址）；每次校验重算来源身份、逐单元重哈希、重新证明所读的每份保存文件，并要求请求是来源分出的请求之一、服务商请求体与 schema 逐字节不变——与 #28 的请求在同样位置做的检查相同，而不是每次重新解析申报。
-3. **授权对象**：控制器从许可文件造出；文件表＝本世代执行授权＋调用路径的两个模块＋许可文件＋保存的批准，每次检查都重算哈希，任何一个中途改变即拒。调用方传入的许可映射必须与授权对象绑定的三个决策哈希相同，否则 `ISSUE_47_MODEL_ALLOWANCE_IS_NOT_THE_ONE_THE_AUTHORITY_BOUND`——一个更宽的映射不是许可。
-4. **WB-3 计划与执行**：`build_successor_ai_invocation_plan` 与 `execute_successor_invocation`，控制器已要求的预约、所有者令牌与出口标记；`_Transport.send` 在打开任何东西之前再核一遍这三样，实时路径还在 socket 前从 GitHub 重验批准、从保存字节重验请求。
-5. **账本槽位**：在 socket 之前写入 [1,1,0] 的意图，永不删除。
+1. **#47 自己的许可**（`config/issue47_historical_model_calls_v1.json`，不存在）：政策与批准正文都按严格 JSON 解析（重复键拒绝）；批准评论须在本仓库议题 47、由批准人发出、**未被编辑**；正文复述上限、账本根、scope（按授予逐项列出，每个授予点名指标、公司、期间与它放行的每个请求的账本摘要）、传输与重试政策，并**点名离线验证收据的编号**——代码变了收据就变，旧批准自动失效。上限第三项（SEC）必须为 0；传输固定；只能点名已接线指标；账本根按真实路径与 #28 的根、本检出、#47 的 SEC 账本根比较，不重叠、不嵌套。实时路径从 GitHub 取回评论并要求与本地记录逐字节相同。
+2. **请求**：由钉定期间的来源在准备时一次建成（内容寻址）；每次校验重算来源身份、逐单元重哈希、重新证明所读的每份保存文件，并要求请求是来源分出的请求之一、服务商请求体与 schema 逐字节不变。**请求须被批准点名**：范围检查只接受点名了这个请求摘要的授予，位置落在授予之内而摘要没被点名，按 `ISSUE_47_MODEL_REQUEST_DIGEST_NOT_GRANTED` 拒绝。**请求类型绑定指标**：每组授予只能放行本指标的请求（`ISSUE_47_MODEL_REQUEST_TYPE_IS_NOT_THE_METRIC_S`）。
+3. **授权对象**：控制器从许可文件造出；文件表＝本世代执行授权＋调用路径两个模块＋许可文件＋保存的批准，每次检查都重算。调用方传入的许可映射必须与授权对象绑定的三个决策哈希相同。
+4. **WB-3 计划与执行**：控制器已要求的预约、所有者令牌与出口标记；`_Transport.send` 在打开任何东西之前再核一遍这三样，并要求存在一个已认领的账本槽位；实时路径还在 socket 前从 GitHub 重验批准、从保存字节重验请求。
+5. **账本槽位**：在 socket 之前写入 [1,1,0] 的意图，永不删除。账本在认领时再核一次：调用方报的授予必须都点名这个摘要（账本的绑定记着每个授予点名的摘要），所以绕过范围检查的调用方也认领不到槽位。
+6. **回答**：D04 由冻结的 D04 检查器逐条核验；E01 与 D02 只按形式核验（E01：每个条目恰答一次、三种决定之一、引文是该条目原文的精确子串；D02：每个必答块恰答一次、计入与无法判定带该块原文的精确子串、排除不带、额外计入必须是请求里的其他块）。**形式不合格是一次计数的失败调用，不是登记**。登记只从槽位自己记录的回答写出、取账本的模式。
 
 ## 计数、停止与恢复
 
-- **计数**：每次认领计一次服务商、一次付费调用，失败也计；累计数每次从账本目录重读，跨进程、跨会话成立；进程锁防同机并发。
-- **不重抽**：同一请求摘要只能认领一次（`ISSUE_47_MODEL_REQUEST_ALREADY_CLAIMED_NO_REDRAW`）。控制器本身对后继计划零自动重试。
-- **停止**（与 `issue_28_v14` 账本相同的集合）：没有终态的槽位（可能已到达端点，按全额计并停）、`HTTP_402`、`UNKNOWN_REMOTE_OUTCOME`/超时、`USAGE_UNKNOWN`、`SOURCE_AUTHENTICITY_FAILED`、`CONTEXT_REFERENCE_MISMATCH`（服务商报告的输入令牌数与固定参考分词器不一致）。停止后任何认领都按名拒绝。
-- **恢复**：补丁**不实现**恢复入口。停止后恢复是所有者的决定，要有新的书面批准（如 #28 对 110、172 的受限恢复授权），不是重试。
+- **计数**：每次认领计一次服务商、一次付费调用，失败也计；累计数每次从账本目录重读。
+- **账本不能靠删除重置**（第一次审阅 M1）：根目录旁有初始化锚点、根内有绑定文件（绑定到许可）、只追加的认领日志带前驱链、目录锁、拒绝符号链接；删掉一个停止的槽位、删掉整个根、或重封一个去掉停止的终态，都按名拒绝而不是放行。停止由槽位自己的证据重算，不信任自封的终态。
+- **不重抽**：同一请求摘要只能认领一次。控制器本身对后继计划零自动重试。
+- **停止**（与 `issue_28_v14` 账本相同的集合）：没有终态的槽位、`HTTP_402`、未知结果/超时、用量未知、来源真实性失败、服务商报告的输入令牌数与固定参考分词器不一致、上下文超限。停止后任何认领都按名拒绝。
+- **恢复**：补丁**不实现**恢复入口。停止后恢复是所有者的决定，要有新的书面批准，不是重试。
 
-## 离线验证的做法
+## 第一次独立安全审阅与处理
 
-在一棵带 `issue_47_v1` 注册补丁的运行树副本里应用本补丁并 mint，然后 `python3 docs/evidence/issue47_history/model-egress/verify.py`：
+`independent-review-2026-09-27/`：全新上下文的同族子代理（不是人），对 `92da6f2f` 加补丁的结论是 PASS_WITH_FINDINGS，**在 M1–M3 修好之前不能授予任何模型额度**。逐条处理：
 
-1. 确认本补丁就是这里应用的那一份（`git apply -R --check`），snapshot 为这些字节 mint 过；
+| 发现 | 处理 | 守住它的用例 |
+|---|---|---|
+| M1 删账本文件可重置上限与停止 | 移植 #28 账本的绑定、锚点、追加日志、前驱链、目录锁、拒绝符号链接；停止从证据重算 | `TheLedgerCannotBeResetByDeletingIt`（5 例） |
+| M2 重复键取最后值、编辑过的评论被接受 | 严格 JSON；评论须未编辑 | `TheApprovalIsReadStrictly` 的重复键两例与 `test_an_edited_approval_comment_is_refused` |
+| M3 "批准人"只证明"由 wlvh 账号发出" | 代码能承载的部分：批准正文点名验证收据编号，代码变了旧批准失效（`test_a_verification_the_approval_does_not_name_is_refused`）；收据绑定本世代快照，任何规则文件变了也失效；批准逐个点名请求摘要，请求变了就不在批准里（见下一节）；其余是批准方式的决定，写进调用申请 | `OnlyTheRequestsTheApprovalNamesAreClaimed`（4 例） |
+| L1 账本根按字符串比较 | 按真实路径双向比较 | `test_a_ledger_root_reached_through_a_symlink_is_refused`、`test_the_sec_ledger_root_respelt_is_still_the_sec_ledger_root` |
+| L2 传输无已计数槽位也能到达连接器 | 发送点要求已认领的槽位，并在 WB-3 之外拒绝 | `test_the_transport_refuses_outside_wb3` |
+| L3 校验不从申报重推请求文字 | 每次校验重推来源并逐单元比对 | `test_a_source_edited_and_resealed_does_not_rebuild_from_the_filing` |
+| L4 令牌计数大幅不一致不停止 | 计数不一致在上下文超限之前判定，二者都是停止 | `test_a_count_disagreement_is_the_stop_named_even_past_the_limit`、`test_a_context_overrun_stops_the_channel` |
+| L5 出口扫描器只按名字匹配（既有） | 不由扫描器兜住，由唯一发送点在连接前再核预约、令牌与标记兜住 | `test_the_send_rechecks_the_reservation_and_its_marker` |
+| L6 套件会覆盖并删除所在树的许可文件 | 夹具只动自己写的文件，旁边有真实许可就拒绝运行 | `TheFixturesNeverTouchAnAllowanceTheyDidNotWrite`（2 例） |
+| L7 `gh` 复核继承完整环境（含服务商密钥） | 只传 `gh` 需要的变量 | SEC 套件的 `TheGithubReaderPassesGhOnlyWhatItNeeds`（验证脚本一并运行） |
+| 三处检查没有用例覆盖（发送时重核、实时账本根、账本与许可绑定） | 各补用例 | `test_the_send_rechecks_the_reservation_and_its_marker`、`test_a_live_ledger_outside_the_granted_root_is_refused`、`test_a_ledger_for_another_allowance_is_refused_before_a_slot` |
+
+M1、M2、L1 同样描述 SEC 路径，在所有者花 SEC 额度之前已先在 SEC 侧修好（`../acquisition-wiring/`）。
+
+## 复审前自查补上的两处
+
+修完上表之后，逐项问"批准到底绑定了什么"，查出两处审阅没有点名、但同属 M3 的缺口：
+
+1. **收据不绑定本世代快照**。`verify_model_wiring` 只重算调用路径几个模块的哈希；E01 的回答检查与它继承的 D04 检查器都是规则文件，改弱其中一个再重铸快照，收据照样成立，旧批准照样放行。现在 `CALL_PATH_FILES` 含 `requirements/issue_47_v1/baseline_manifest.json`：快照记录每个规则文件的字节，任何规则文件变了收据就不成立（`test_a_receipt_that_does_not_bind_the_snapshot_is_refused`）。
+2. **批准只点名位置，不点名请求**。授予放行"某指标 × 某公司 × 某期间"之内建出的任何请求，于是提示词或合同变了、只要位置不变照样花额度。现在每个授予列出它放行的请求摘要，范围检查与账本认领各自要求被点名（`test_a_request_the_approval_does_not_name_claims_nothing`、`test_the_ledger_refuses_an_unnamed_request_whatever_grants_a_caller_passes`；两层各有只有它能答的用例，靠拒绝消息的格式区分，否则两层并存时破坏任何一层都读成"没抓到"）。提案工具用同一组函数算出摘要，并要求等于三份计量文件记下的摘要（`test_the_planned_digests_are_the_ones_a_claim_computes`）。
+
+## 离线验证
+
+在一棵逐文件核对过等于"HEAD + 注册补丁 + 出口补丁"的运行树里（HEAD 之外的差异恰好是这两个补丁、未提交的模型调用改动与重铸的快照），`python3 docs/evidence/issue47_history/model-egress/verify.py`：
+
+1. 本补丁就是这里应用的那一份（`git apply -R --check`），snapshot 为这些字节 mint 过；
 2. 出口扫描器通过，且两份 #47 模块里恰好只有 `_Transport.send` 一处调用传输工厂、一处引用出口令牌；
-3. 跑完整套件：全程拒绝 DNS、原始 socket 与 SEC；唯一的服务商连接器换成受控的一个，它断言 URL、请求体、超时后返回录制字节，或抛出 402、连接重置、超时；
-4. 逐个注错，按"快类在前、遇错即停"跑套件，记录每个注错**首先**被哪条用例抓到（不是全部抓到它的用例），连同它抛出的那一行。两种"看起来抓到、其实没有用例看见"的情形被关掉：注错后的文本必须能编译（语法错误会让套件在任何用例运行之前失败）；注错落在 snapshot 按字节记录的文件（三个边界文件）上时，先 mint 再跑套件——字节绑定对任何改动都拒绝，有害无害都一样，在那里被拒只说明文件被绑定，不说明有用例断言了注错破坏的那条性质。跑完恢复原字节、再 mint，snapshot 必须逐字节回到原样，否则整次验证停下。只在类夹具（`setUpClass`）里失败的记为 `CAUGHT_AT_FIXTURE`，如实记为钝的捕获；
-5. 从各世代自己的清单读出哪些世代按字节记录了三个边界文件，因而会被应用补丁移动——是读出来的，不是推出来的；
-6. 树回到起点：补丁仍可反向应用，snapshot 仍一致，每个绑定文件的字节与验证前相同。
+3. 跑完整套件：全程拒绝 DNS、原始 socket 与 SEC；唯一的服务商连接器换成受控的一个；
+4. 逐个注错：每个注错点名写来抓它的用例类，先只跑那个类（遇失败即停），失败就记为被它抓到；只有它没抓到时才按固定顺序跑整套（同样遇失败即停），在别处被抓到就如实记为别处。最初几版对每个注错都跑整套，按 47 个注错、62 例算要大半天，而答不出更多：抓到就是抓到，点名的预期类让读者能核对抓到它的是不是为它写的那条用例（无论哪种做法，`first_caught_by` 都不是所有能抓到它的用例的全集）。注错文本必须能编译；落在 snapshot 按字节记录的文件上的注错先 mint 再跑，跑完恢复并逐字节核对；只在类夹具里失败的如实记为钝的捕获；
+5. 从各世代自己的清单读出哪些世代按字节记录了三个边界文件；
+6. 树回到起点。
 
-全部成立才封存 `offline-verification.json`。它绑定调用路径两个模块、三个边界文件、mint 工具、套件、`verify.py` 与补丁本身；`historical_model_calls.live_model_ledger` 要求它对当前树逐字节成立，所以实时路径不能在验证过的代码之外运行。在今天的仓库里它不成立（补丁未应用），这由仓库用例断言。
+全部成立才封存 `offline-verification.json`。{VERIFY_RESULT}
 
-**受控的**是什么要说清：许可与批准评论是测试夹具，写入临时副本、跑完删除，评论正文自带 `"fixture": "RECORDED_TEST_ONLY_NOT_AN_APPROVAL"`；模型输出是语义路线套件的合成夹具（冻结检查器自己推出的关系），所以登记出来的东西证明的是"一次计数的调用到创建者日志"这条路，**不证明任何申报的内容**。
+历次运行的教训保留在这里，因为它们决定了上面每一步为什么存在：第一次运行把"返回码非零"当成抓到（一个注错让文件本身 `IndentationError`、边界文件注错被字节绑定"抓到"、门禁注错的目标串出现两次），在封存前停下；第二次运行所在的运行树落后于仓库，收据会绑定旧的铸造工具，也在封存前停下。
 
-**第一次运行有三处缺陷，在封存之前停下、没有产出收据**：(1) `UNKNOWN_USAGE_DOES_NOT_STOP` 删掉了一个 `if` 的唯一语句，注错后的文件是 `IndentationError`，套件在任何用例之前失败，却按"返回码非零"记成了抓到、`first_caught_by` 为空——够不到目标代码的注错不是证据；改为用 `pass` 占位，且每个注错先编译。(2) `THE_ADAPTER_MATCHES_THE_CLASS_NAME_ONLY` "首先被 `setUpClass` 抓到"，那是控制器的字节绑定（`ai_adapter.py` 在 `issue_47_v1` 里被重记）拒绝了任何改动，不是 `test_the_adapter_hands_bytes_only_to_the_named_type` 看见了按类名放行；改为对被记录文件先 mint。(3) 门禁注错的目标串在 `check_provider_egress.py` 里出现两次（两个精确集合各一次），脚本会在那一项断言失败中止；拆成两个注错，各破坏一个集合，所以只查一个集合的门禁也会被看见。
+## 独立复审
 
-**第二次运行也在封存前停下**：修好上面三处后，它跑在一棵**落后于仓库**的运行树里——合并 base 带来的 #28 快照与 B03 接线都还没同步进去。被验证的边界文件、套件与调用模块与"当前 HEAD + 补丁"逐字节相同，但铸造工具与各世代清单是旧的：封存出来的收据会绑定旧的铸造工具，在真正的目标树上对不上，"会移动哪些世代"也是按旧快照量的。改为先把运行树同步到当前 HEAD、重新打补丁并 mint，逐文件核对它等于"HEAD + 两个补丁"，再运行；收据另记下它读过的每个世代清单的哈希（`generation_manifests_measured`），读者可以核对量的是哪一份快照。
-
-结果见 `offline-verification.json`（套件、注错、扫描器输出、会被移动的世代）。**第三次运行全部成立并已封存**；随后 base 合并到 `38732ea6`，D04 与出口套件会加载的五个语义模块随之变化，于是在同步到合并后 HEAD 的树上**再跑了一次、结果完全相同**，现在的收据是那一次的（`sha256:5ac39a6c…`，运行树逐文件核对过等于"HEAD + 注册补丁 + 出口补丁"）：出口扫描器通过，且只多出 `historical_model_egress._Transport.send` 这一个调用方；完整套件 27 例全部通过（881 秒——收据记的是合并后这次重跑，合并前那次是 850 秒——全程拒绝 DNS、原始 socket 与 SEC）；17 个注错全部被抓——**16 个由对应的用例抓到**（例如去掉 402 停止由 `test_http_402_stops_the_channel` 抓到、适配器只比类名由 `test_the_adapter_hands_bytes_only_to_the_named_type` 抓到，后者先 mint 过，所以抓住它的是用例而不是字节绑定），**1 个只在类夹具里被抓**：去掉控制器的 `issue_47_v1` 分支，各类的 `setUpClass` 在造授权对象时就被控制器拒绝（`Scoped R4 invocation requires a registered R4 revision`）——这正是被破坏的性质，但它不是某条具名用例，如实记为钝的捕获；收尾核对补丁、snapshot 与全部绑定文件回到起点。
-
-收据放进本仓库后，`tests/vnext/test_historical_model_calls.py` 走"有收据"分支：它描述的是打了补丁的树，在未打补丁的仓库里实时路径仍按名拒绝（只有调用模块、`verify.py` 与补丁本身三个绑定文件与仓库相同）。
+{REREVIEW_RESULT}
 
 ## 应用补丁的代价——需要决定，不是副作用
 
-三个边界文件被 `issue_28_v2` 至 `issue_28_v14` 共 13 个世代按字节记录（从各世代自己的清单读出，`offline-verification.json` 的 `generations_that_record_the_boundary_files` 逐个列出；第三次运行在同步到当前 HEAD 的树上重新量过，结果相同，读过的 17 份世代清单的哈希记在 `generation_manifests_measured`）。在应用了补丁的树里，这些世代的执行授权不再成立，也就是说**补丁不能原样应用在 #28 仍在用这些世代的同一检出里**。选项：
+三个边界文件被 `issue_28_v2` 至 `issue_28_v14` 共 13 个世代按字节记录（`offline-verification.json` 的 `generations_that_record_the_boundary_files` 逐个列出，读过的世代清单哈希记在 `generation_manifests_measured`）。在应用了补丁的树里，这些世代的执行授权不再成立，所以**补丁不能原样应用在 #28 仍在用这些世代的同一检出里**。推荐只在 #47 的运行树里应用（与 #47 今天运行历史 Run 的方式相同）；真实调用只在所有者本机的运行树里进行（账本根与密钥本来就只在那里）。
 
-- (a) 与 #28 的维护者协调，由一个新世代同时携带两边的注册；
-- (b) 像 `issue_47_v1` 的注册补丁一样，只在 #47 的运行树里应用，真实调用只从那里发出；
-- (c) 暂不应用。
+## 调用申请
 
-推荐 (b)：它与 #47 今天运行历史 Run 的方式相同，不移动 #28 的任何东西；代价是真实调用必须在所有者本机的运行树里进行（账本根与密钥本来就只在那里）。选哪个、以及是否授予调用，都是所有者的决定。
-
-## 真实调用需求（背景，不是申请）
-
-今天能量的往年 D04 请求：Marriott 2023 年 4 个、2024 年 4 个，Paramount 前身 FY2024 8 个，共 16 个；其余往年期间先要原件（SEC 获取计划 A 类）。最新年份 D04 与 #28 的请求普查逐个相等，那里的问题不是额度，而是 #47 要不要复审 #28 已在审的内容。B13 在范围内分支与 D03 仍未接线（理由见 `../semantic-route-wiring/`），本补丁不为它们开路。
+`call-application.md`：D04 16 次（3 个往年期间）、E01 7 次（7 个有候选的窗口）与 D02 12 次（12 份已存年报的 Item 8），合计上限 `[35, 35, 0]`，三组授予互不借用；请求逐个计量（`d04-request-measurement.json`；`../e01-content-confirmed/request-measurement.json`；`../d02-item-8-review/request-measurement.json`，含输出 token 的实测）。需要所有者决定的事写在申请末尾。
 
 ## 给安全审阅者：建议逐处核对的地方与复现步骤
 
-这一节是为独立审阅写的清单，不是结论。每处都写了它要成立的性质、以及如果它不成立会发生什么：
+1. **控制器的 `issue_47_v1` 分支**（补丁里 `invocation_control.py`）：授权对象仍只由控制器的私有工厂创建；字段只来自 `historical_model_calls.invocation_authority_fields`，它先完整验证 #47 自己的许可。
+2. **适配器按类型交出字节**（补丁里 `ai_adapter._scoped_transport_payload`）：只认 `vnext.historical_model_calls.HistoricalSemanticRequest`，交字节前从保存字节重验请求。
+3. **出口扫描器的两个精确集合**（补丁里 `tools/check_provider_egress.py`）：各多一项，都是 `historical_model_egress._Transport.send`。
+4. **唯一的发送点**（`historical_model_egress._Transport.send`）：连接前再核预约、所有者令牌、出口标记与已认领槽位；实时路径在 socket 前从 GitHub 重取批准、从保存字节重验请求。
+5. **按指标的合同**（`historical_model_egress._contract`）：D04 用冻结检查器、E01 用 `historical_ma_confirmation`、D02 用 `historical_legal_review`；请求类型绑定指标；登记分支按指标（`register_from_slots`）。
+6. **账本**（`historical_model_calls.HistoricalModelLedger`）：认领在 socket 之前写意图、永不删除；不能靠删除重置；停止从证据重算。
+7. **许可本身**（`historical_model_calls.model_allowance`）：严格 JSON、未编辑的评论、按授予的 scope、收据编号、真实路径比较的账本根。
 
-1. **控制器的 `issue_47_v1` 分支**（补丁里 `invocation_control._prepare_successor_invocation_authority_from_requirement`）：授权对象仍只由控制器的私有工厂创建；字段只来自 `historical_model_calls.invocation_authority_fields`，而它在描述字段之前先完整验证 #47 自己的许可。不成立时：一个伪造或过宽的许可能造出可用的授权对象。
-2. **适配器按类型交出字节**（补丁里 `ai_adapter._scoped_transport_payload`）：只认 `vnext.historical_model_calls` 模块里的 `HistoricalSemanticRequest`（模块名与类名都比对），交字节前调它的 `transport_payload` 从保存的申报字节重验请求。不成立时：同名的仿冒类型能拿到服务商请求体。
-3. **出口扫描器的两个精确集合**（补丁里 `tools/check_provider_egress.py`）：各多一项，都是 `historical_model_egress._Transport.send`，没有别的新调用方。不成立时：第二个传输调用方可以绕过预约与令牌。
-4. **唯一的发送点**（新模块 `historical_model_egress._Transport.send`，第 69 行起）：在打开任何连接之前再核预约、所有者令牌与出口标记；实时路径在 socket 前从 GitHub 重取批准评论并要求与本地记录逐字节相同，并从保存字节重验请求；只经控制器那个唯一的服务商 opener。
-5. **账本**（仓库里 `historical_model_calls.HistoricalModelLedger`，`claim` 第 565 行、`finish` 第 594 行）：每次认领在 socket 之前写 [1,1,0] 的意图、永不删除；同一请求摘要只能认领一次；累计数每次从账本目录重读；停止集合与 `issue_28_v14` 相同；没有终态的槽位按全额计并停。
-6. **许可本身**（`historical_model_calls.model_allowance`，第 207 行）：批准评论须在本仓库议题 47、由批准人发出，正文复述上限、账本根、scope、传输与重试政策；上限第三项（SEC）必须为 0；账本根不与 #28 的根、本检出、#47 的 SEC 账本根重叠或嵌套。
-
-**复现**：在当前 HEAD 的一份副本里依次 `git apply docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch`（`issue_47_v1` 的注册补丁：六个继承文件，只在运行树里应用；已核对它应用到 HEAD 后与验证所用运行树里的六个文件逐字节相同）、`git apply docs/evidence/issue47_history/model-egress/egress-registration.patch`、`python3 tools/vnext_mint_historical_requirement.py`，然后 `python3 docs/evidence/issue47_history/model-egress/verify.py`。收据绑定的文件哈希（`bound_files`）与世代清单哈希（`generation_manifests_measured`）可用来确认复现的是同一棵树。
+**复现**：在当前 HEAD 的一份副本里依次 `git apply docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch`、`git apply docs/evidence/issue47_history/model-egress/egress-registration.patch`、`python3 tools/vnext_mint_historical_requirement.py`，然后 `python3 docs/evidence/issue47_history/model-egress/verify.py`。收据的 `bound_files` 与 `generation_manifests_measured` 可用来确认复现的是同一棵树。
 
 ## 不覆盖
 
-真实网络行为（只有受控连接器）；模型语义正确性；恢复入口；跨机器共用同一账本根（锁只在本机）；B13/D03；E01、D02、C02 的模型辅助判断——它们若采用模型，要各自的请求合同、调用申请与验收，不借用 D04 的出口。补丁通过审阅、某个指标有可信的请求合同、某个具体请求获得调用许可是三件分开的事；语义路线请求普查的 193 个是计量，不是可执行清单。
+真实网络行为（只有受控连接器）；模型语义正确性（E01、D02 的形式检查挡得住答非所问与编造引文，挡不住读错意思，那是内容验收的事）；恢复入口；跨机器共用同一账本根（锁只在本机）；B13/D03；C02 的模型辅助判断——C02 已按"构成事实"口径用确定性规则重写，不需要模型。补丁通过审阅、某个指标有可信的请求合同、某个具体请求获得调用许可是三件分开的事；语义路线请求普查的 193 个是计量，不是可执行清单。
