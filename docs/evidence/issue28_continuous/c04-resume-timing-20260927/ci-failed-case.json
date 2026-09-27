@@ -1,0 +1,17 @@
+{
+  "run_id": 36328893119,
+  "job_id": 108646885430,
+  "head_sha": "9cf9314d2d74026c26b204719a2986648448af04",
+  "suite": "source-material",
+  "jobs": 2,
+  "shard_index": 0,
+  "duration_seconds": 1250.666,
+  "failed_case": {
+    "duration_seconds": 360.063,
+    "return_code": 124,
+    "stderr_tail": "\nSOURCE_MATERIAL_TIMEOUT_SECONDS=360",
+    "stdout_tail": "",
+    "test": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",
+    "timeout_seconds": 360
+  }
+}

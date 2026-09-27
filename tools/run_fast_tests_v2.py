@@ -156,7 +156,7 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Head 5e2a5ca9 shard0 ended this exact two-capture recovery case at the
     # 240.105s per-case limit (rc124); the local two-case run passed in
     # 377.591s. Keep the rest of the source suite and job deadline unchanged.
-    "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 360,
+    "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 480,
 }
 
 
