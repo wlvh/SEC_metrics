@@ -2016,6 +2016,25 @@
       "tool_calls": 39,
       "result_path": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/independent-review-lock/conclusion.md",
       "verdict": "NEEDS_FIX_PRECLAIM_CAPTURE_ABORT_AND_ATOMIC_LEDGER_PREDECESSOR"
+    },
+    {
+      "task_name": "review_c04atomic_1042c88",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/continuous_sec_acquisition.py",
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tests/vnext/test_ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json"
+      ],
+      "patch_sha": "1042c8827e572630fad388abeb19f9bf80e43b2f",
+      "spawned_at": "2026-09-27T20:01:01+00:00",
+      "ended_at": "2026-09-27T20:06:09+00:00",
+      "tool_calls": 42,
+      "result_path": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/independent-review-atomic/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_C04_MIXED_RESUME_ATOMIC_CLAIM"
     }
   ],
   "ci_capacity_20260922": {
@@ -4903,7 +4922,9 @@
     }
   },
   "c04_resume_atomic_predecessor_20260928": {
-    "status": "LOCAL_TESTED_NEW_SHA_INDEPENDENT_REVIEW_PENDING",
+    "status": "COMMITTED_SCOPED_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS_REMOTE_CI_PENDING",
+    "patch_sha": "1042c8827e572630fad388abeb19f9bf80e43b2f",
+    "independent_review": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/independent-review-atomic/conclusion.md",
     "scope_paths": [
       "scripts/vnext/continuous_sec_acquisition.py",
       "scripts/vnext/ordinary_refresh_cycle.py",
