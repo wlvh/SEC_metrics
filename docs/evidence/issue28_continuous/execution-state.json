@@ -34,18 +34,18 @@
     "unknown": 0
   },
   "current_work": [
-    "Current ordinary mixed refresh uses authenticated saved sources with current-rule private processing. Three exact-SHA limited reviews each found a bounded resume P2 and retain NEEDS_FIX histories. The fourth config-only correction distinguishes a written configuration from a persisted attempt; short12 PASS, two recorded material cases PASS in377.591s, exact-SHA limited review PASS_WITH_BOUNDS; current-head CI pending. Historical prior pointers without pre-state proof remain fail-closed. Real ledger143/143/52 unchanged.",
+    "Current ordinary mixed refresh uses authenticated saved sources with current-rule private processing. Three exact-SHA limited reviews retain NEEDS_FIX histories; the final config-only patch aed8c1cc passed 12 short and two recorded material tests (377.591s), with PASS_WITH_BOUNDS limited review. Head5e2a5ca9 main CI is in progress: source-material shard0 and shard1 failed on three per-case 240s timeouts, with no business assertion failure; a scoped runner-only timeout repair is local and unpushed. Historical prior pointers without pre-state proof remain fail-closed. Real ledger143/143/52 unchanged.",
     "D04 ten companies retain complete real native candidates and independent cold reads; no formal adoption or production switch.",
     "B13 historical190 success is preserved, 111 current reuse remains blocked, 191/192 failed and exhausted their group opportunities. The V7 exact-SHA followup review of the 32-test limited repair remains NEEDS_FIX due three additional bounded counterexamples; live/native acceptance remains suspended and no complete B13 company exists.",
     "Marriott C04 real SEC193-194 same-year refresh preserves two private result versions; Southwest SEC195 acquired its exact missing FY2024 prior annual primary, and a FY2025 C04 PUBLISHED/0 private native Run and independent cold read succeeded. This is not an old-FY2024-Run to new-FY2025-Run automatic transition.",
     "Salesforce current period ending2026-01-31 and prior annuals are saved. The explicit C04 successor binds the original 0002.body GET proof without changing frozen v2, and reuses the existing issuer-label policy to preserve FY2026 while retaining DEI/Company Facts FY2025. Private PUBLISHED/0 native Run/public row, independent cold read and unchanged-input reuse passed; old FY2026 390 Result remains a separate historical version, not a new complete coordinate or formal adoption. Patch15260ba5 limited review PASS_WITH_BOUNDS; head ed4dd057 main CI36315612650 15/15 SUCCESS.",
     "D03 source-material duplicate rebuild reduction measured 116.660 to 80.409 seconds locally; final two original material tests 78.737 seconds and exact-SHA limited followup review PASS_WITH_BOUNDS. Head9fa84fc2 main CI36298137866 completed SUCCESS, all15 jobs including saved-source shard0 succeeded.",
     "Heads f5e7bc0d and 2ab35195 main CI failed only because C04RefreshResumeMaterialTest in saved-source shard1 hit its 240-second per-case limit. The measured scoped360-second override at head084ed601 passed main CI36313170912, all15 jobs. Subsequent C04 alias/label head ed4dd057 also passed main CI36315612650, all15 jobs.",
-    "Ford FY2025 saved primary/XML contain no CompanyExcludingFordCredit equity fact while consolidated equity exists; industrial debt21919m remains a subtotal and B06 WITHHELD. D03 current complete source forms130 groups across ten companies; an offline full-set raw response store has two targeted tests passing and exact-SHA limited review PASS_WITH_BOUNDS and never creates native Result/Run. D03 real provider execution is forbidden. Complete390 and old-entry retirement remain; Paramount C04 lacks same-registrant prior auditor comparison facts."
+    "Ford FY2025 primary/XML contain no CompanyExcludingFordCredit equity XBRL fact; the visible segment table separately reports industrial assets130934m and liabilities109758m, whose residual21176m is not proved attributable equity. Note18 industrial debt current5550m+long16369m=21919m includes finance leases136m+754m; no extra lease addition. B06 remains WITHHELD pending approved denominator relationship. D03 current complete source forms130 groups across ten companies; an offline full-set raw response store has two targeted tests passing and exact-SHA limited review PASS_WITH_BOUNDS and never creates native Result/Run. D03 real provider execution is forbidden. Complete390 and old-entry retirement remain; Paramount C04 lacks same-registrant prior auditor comparison facts."
   ],
   "next": [
-    "Prior head b686814f main CI36318290207 SUCCESS 15/15. Preserve three NEEDS_FIX limited reviews; preserve the config-only resume material PASS and preserve exact-SHA followup PASS_WITH_BOUNDS, then push and inspect new-head CI. Do not treat local recorded candidates as online year update or full390 acceptance.",
-    "Preserve Southwest FY2025 and Salesforce FY2026 private C04 native results and original source identities. The current processing-source copy removes a mixed B01/C04 old-rule blocker without claiming full source acquisition or cross-year online update. Continue bounded normal source discovery/acquisition engineering and 390 acceptance.",
+    "Wait for head5e2a5ca9 remaining JPMorgan CI job and record main terminal. Then push only the measured three-selector timeout repair (360/360/300, job35m unchanged) with its original logs; do not rerun already passed local long materials. Continue source/B06/D03 work without new provider/SEC calls or production permission.",
+    "Read-only ten-company current source discovery found no unresolved saved-source URL; five missing prior-primary HTML files are satisfied by verified same-filing native alternatives. Do not widen SEC capture or fetch the five merely for form completeness. A full metadata refresh has 29 listed URLs versus current SEC remainder28 before reuse/necessity review. Continue normal update, D03/B06 and 390 acceptance on actual gaps.",
     "Salesforce C04 now has a private FY2026 Run using the existing issuer-label policy and original 0002.body proof; preserve original request identity and old FY2026 Result. Continue normal update/cross-year and 390 acceptance without counting the new version as a second coordinate or formal adoption.",
     "Keep B13 V7 closed. The exact-SHA review of 9d04d65 found adjacent-and scope, trailing-if classification and clear-pronoun false rejection; a local followup experiment failed the original role validator, so no unreviewed source patch was retained. Do not resample191/192 or treat pause code as semantic diagnosis. D03 stays no-call: the recorded full-set stores bytes but cannot prove content correctness or generate a native result; build the necessary semantic/native chain without reviving the old source-fact override. Continue B06/390/exit preparation independently.",
     "No Ready, merge, adoption, deployment, active switch, long-running production, #47 interaction or new provider permission."
@@ -4610,6 +4610,9 @@
       "scripts/vnext/ordinary_processing_source.py": [
         "current_processing_source(new)",
         "verify_processing_source(new)"
+      ],
+      "tools/run_fast_tests_v2.py": [
+        "SOURCE_TIMEOUT_OVERRIDES for three measured #28 material selectors only; runner functions and all other defaults unchanged"
       ]
     },
     "bindings": [
@@ -4625,9 +4628,78 @@
       "existing SEC default initializer 1 recorded material test PASS",
       "old ordinary refresh tests 11 PASS",
       "fast suite 132/132 PASS",
+      "head5e2 source shards failed only three named 240s per-case timeouts; scoped 360/360/300 limits add no new tests or source semantics",
       "source identity root optional default preserves old configuration and results",
       "old frozen V12 bytes unchanged"
     ],
     "possible_downstream_impact": "#47 may need to rebind its own dependent current execution snapshot after #28 base moves; its executor owns that integration. #28 did not touch the #47 branch, snapshot, ledger, source or run root."
+  },
+  "ordinary_source_gap_census_20260927": {
+    "status": "READ_ONLY_WORKTREE_NOT_YET_PUSHED",
+    "evidence": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/source-gap-census.jsonl",
+    "script": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/source-gap-census.py",
+    "source_root": "ORIGINAL_FIXED_ISSUE28_SOURCE_INPUTS",
+    "company_count": 10,
+    "unresolved_source_dependency_count": 0,
+    "missing_prior_primary_html_count_with_verified_native_alternative": 5,
+    "metadata_refresh_urls_listed": 29,
+    "current_sec_remainder": 28,
+    "resource_difference_if_all_29_UNREUSED_urls_required": 1,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "meaning": "Current source graph available does not establish all39 metric results or freshness; no basis yet to widen non-C04 capture or spend SEC on alternative-satisfied HTML."
+  },
+  "b06_ford_visible_balance_debt_20260927": {
+    "status": "READ_ONLY_WORKTREE_NOT_YET_PUSHED",
+    "evidence": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance.json",
+    "script": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance-probe.py",
+    "accession": "0000037996-26-000015",
+    "period_end": "2025-12-31",
+    "reported_unit": "USD_MILLIONS",
+    "industrial_assets": 130934,
+    "industrial_liabilities": 109758,
+    "same_scope_net_assets_residual": 21176,
+    "industrial_attributable_equity_proven": false,
+    "debt_current": 5550,
+    "debt_noncurrent": 16369,
+    "debt_total": 21919,
+    "finance_lease_current_included": 136,
+    "finance_lease_noncurrent_included": 754,
+    "finance_lease_total_included": 890,
+    "ratio_result_created": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "business_boundary": "No industrial allocation of consolidated noncontrolling interest and no approved conversion of same-column net assets into industrial attributable equity; retain WITHHELD."
+  },
+  "ci_mixed_resume_timeout_20260927": {
+    "status": "HEAD5E2_MAIN_IN_PROGRESS_TWO_SOURCE_SHARDS_FAILED_PER_CASE_TIMEOUT",
+    "head": "5e2a5ca9da25419e155f4325140a57236461a0ab",
+    "run_id": 36326213320,
+    "shard0_job_id": 108639357090,
+    "shard0": "39_OF_40_PASS_NEW_C04_FAILED_COPY_RESUME_RC124_AT_240.105_SECONDS",
+    "shard1_job_id": 108639357083,
+    "shard1": "37_OF_39_PASS_NEW_C04_NORMAL_RESUME_RC124_240.106_AND_D03_COMPLETE_SET_RC124_240.107",
+    "prior_green_d03_duration_seconds": 216.596,
+    "local_recorded_c04_two_cases": "2_PASS_377.591_SECONDS",
+    "runner_only_override_seconds": {
+      "new_c04_normal_resume": 360,
+      "new_c04_failed_copy_resume": 360,
+      "d03_complete_recorded_set": 300
+    },
+    "job_timeout_minutes_unchanged": 35,
+    "business_assertion_failure_observed": false,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "docs/evidence/issue28_continuous/ci-mixed-resume-timeout-20260927/README.md",
+    "remaining": "WAIT_MAIN_TERMINAL_AND_NEW_HEAD_CI"
   }
 }

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance-probe.py", line 84, in <module>
+    assets_i, assets = find_table(parser.tables,
+                       ~~~~~~~~~~^^^^^^^^^^^^^^^
+        ('Company excluding Ford Credit', 'Ford Credit', 'Total assets',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'December 31, 2025'))
+         ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance-probe.py", line 56, in find_table
+    raise ValueError('FORD_VISIBLE_TABLE_NOT_UNIQUE:' + repr(required))
+ValueError: FORD_VISIBLE_TABLE_NOT_UNIQUE:('Company excluding Ford Credit', 'Ford Credit', 'Total assets', 'December 31, 2025')

@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance-probe.py", line 107, in <module>
+    'debt_current': row(debt, 'Total debt payable within one year'),
+                    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance-probe.py", line 63, in row
+    raise ValueError('FORD_VISIBLE_ROW_NOT_UNIQUE:' + label)
+ValueError: FORD_VISIBLE_ROW_NOT_UNIQUE:Total debt payable within one year
