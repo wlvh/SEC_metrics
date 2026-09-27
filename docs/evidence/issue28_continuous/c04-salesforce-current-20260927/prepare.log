@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/c04-salesforce-current-20260927/prepare_saved.py", line 14, in <module>
+    case = prepare_case(data_root=DATA, company_id='salesforce',
+                        metric_id='C04', c04_event_forms=EVENT_FORMS)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 111, in prepare_case
+    case = prepare_c04_registration_case(repo_root=data_root,
+        company_id=company_id, event_forms=c04_event_forms)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 182, in prepare_c04_registration_case
+    annual_check = resolve_c04(**old_arguments)['selection']
+                   ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/governance_signals.py", line 386, in resolve_c04
+    prior_checks = [_auditor_filing(sources=sources, company_id=target["company_id"], cik=expected_cik, period_end=prior_period_end)
+                    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/governance_signals.py", line 317, in _auditor_filing
+    _need(ref["source_url"] == expected_url, "C04_SAME_CIK_FILING_REQUIRED")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/governance_signals.py", line 42, in _need
+    raise GovernanceSignalError(reason)
+vnext.governance_signals.GovernanceSignalError: C04_SAME_CIK_FILING_REQUIRED

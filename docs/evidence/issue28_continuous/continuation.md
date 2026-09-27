@@ -119,3 +119,5 @@ V7当前绑定下，对原真实第190次做一次只读原生回放：固定离
 `c94bf076`对上述确切旧包兼容的同代理限定复核为`PASS_WITH_BOUNDS`：旧SHA须配登记的旧packet ID，各文件只读一次并用同一字节做长度/哈希/解析；原`0af0f717`的`NEEDS_FIX`保留历史原义。若新包仅以自身内容重新计算ID而没有外部期望ID，仍不能证明创建进程或真实provider响应；完整D03公司结果未完成。新head远端CI另行核对。
 
 C04跨年演练的只读原件盘点覆盖#28十家公司当前累计来源根：按申报清单所列的最新两个10-K，Marriott FY2024/FY2025及Salesforce FY2025/FY2026各有两份年报主文件，选中body的SHA与#28请求日志一致；其他八家公司在该定义下缺较早主文件或只列一个10-K。对这两组正文齐备的公司，此#28根中没有较新年报申报**之前**保存的submissions响应。因此可以用真实年报文本准备有限演练，但尚不能把当前申报清单裁剪成“旧时收到的真实响应”，也不能宣称缺年报→完整来源→新财年Run的真实历史链已通过。此盘点只查日志与选中body，不是完整来源准入、C04原生Run或SEC新请求，见`c04-adjacent-year-inventory-20260927/`。
+
+进一步用#28原来源执行Salesforce FY2026显式C04四形式`prepare_case`，在原生Run前得到`C04_SAME_CIK_FILING_REQUIRED`。同一前期FY2025 HTML的原SourceReference/IMMUTABLE_ATTEMPT证明保留内部`document_name=0002.body`，实际SEC URL末尾为`crm-20250131.htm`；当前FY2026两份引用及前期XML引用URL/文件名吻合。错误来自冻结v2比较器以内部别名拼出预期URL，并非URL的CIK或accession与Salesforce不符。旧日志、引用、V13冻结默认不改，亦不丢HTML或重发已保存URL以换元数据；这是明确的C04实现/来源别名解释缺口，不能记成`WITHHELD/null`业务结果或跨年Run。原件关系、失败栈和保存请求证明摘要见`c04-salesforce-current-20260927/`，零新调用。
