@@ -3874,6 +3874,22 @@
     ],
     "evidence": "docs/evidence/issue28_continuous/current-390-three-coordinate-delta-20260927/README.md"
   },
+  "current_390_southwest_c04_after_195": {
+    "parent_index": "docs/evidence/issue28_continuous/d04-remaining-20260922/current-390.json",
+    "coordinate_key": "southwest_airlines:C04",
+    "prior_category": "NUMERIC_RESULT",
+    "current_category": "NUMERIC_RESULT",
+    "period": "FY2025",
+    "prior_result_id": "sha256:2171ae2f78349dafc0eca33c372693916c7b43de7c1e1c1908c1685ea071bdb6",
+    "current_private_result_id": "sha256:2f06895d80507148edfd7602427abffb8f6918323a48689c26345345c8170fe6",
+    "new_complete_coordinate_count": 0,
+    "real_sec_call_for_source": 195,
+    "delta_mapping_new_calls": [0, 0, 0],
+    "cross_year_update_transition_proven": false,
+    "all390_acceptance": false,
+    "formal_adoption": false,
+    "evidence": "docs/evidence/issue28_continuous/current-390-southwest-c04-20260927/README.md"
+  },
   "c04_missing_annual_bootstrap_20260927": {
     "status": "SYNTHETIC_DECLARED_NEW_ANNUAL_SOURCE_SELECTED_FOR_MOCK_CAPTURE_REVIEW_PENDING",
     "trigger": "mixed C04 proof-first acquisition cannot prepare a complete case before a newly declared annual primary is saved",
