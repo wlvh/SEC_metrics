@@ -673,6 +673,16 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_source_requirements` 已加入source-material层。实际Marriott/Salesforce/JPM材料覆盖可用来源、最终失败GET和历史清单冲突；外部副本删除新主文件仍能发现其地址，删除/篡改目录不会宣布子文件齐备；后续年报元数据的纯解析不授予新来源信用。十公司实际CLI命令为 `python3 tools/vnext_normal_update.py --discover-sources --output /absolute/new-external-directory/source-requirements.json`；有缺口返回2并保留所有公司，不执行指标或请求。说明见`docs/normal_source_discovery.md`。
 
+C04正常保存来源更新用 `python3 tools/vnext_normal_update.py --process --data-root /absolute/saved-source-root --state-root /absolute/persistent-update-root --company marriott_international --metric C04`。此入口明确选四形式后继并记录到`metrics/C04-registration-v3`，旧普通控制器与共享`normal_run_v3`默认行为不改。CI中的`tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest`核对一次Marriott原件正向Run；来源信用与发布字段的重签反例另由短测试覆盖。相同输入不重复建Run及两份已保存、内容不同的真实SEC清单更新，按`docs/evidence/issue28_continuous/c04-normal-update-20260926/`原录制与真实第194槽无变化续接保留：新输入形成第二个版本、旧版可读；失败、指针中断与资料不足的Paramount状态分别保留。CI不因业务实现未改每次重复两版长演练；该材料禁网且不发真实GET，不能替代新财报实际发现/获取、十公司C04完整验收或正式生产。
+
+有限来源刷新入口 `python3 tools/vnext_ordinary_refresh.py --company marriott_international --metric C04 --state-root /absolute/persistent-update-root --max-sec-requests 0 --max-provider-requests 0 --output /absolute/new-report.json` 现在显式选择同一C04后继；共享`ordinary_refresh_cycle.refresh_and_process`默认仍使用原路线。CI中的`tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest`用保存的Marriott清单及Company Facts作一次完整禁网录制刷新，核对`UPDATES_READY`与原生C04结果，真实调用0。原来两份清单变化、两个完整刷新及旧版重读的较长录制链按原证据保留；当前代码的真实第193—194槽完成了一次来源变化和双版本冷读。CI每次不重复完整两版长演练；涉及版本机制变化时须有针对性重验。单版来源刷新本地227.794秒、先前远端曾触及240秒默认上限，因此仅该selector使用300秒局部上限，其他source-material selector与35分钟作业期限不变。旧实际来源根里的三项历史处理副本不会为C04原地改写；新Run安装当前规则，不相关规则漂移仍拒绝，见`tests.vnext.test_c04_source_only_install`。只刷新清单而没有刷新所需Company Facts，或本次完全没有刷新元数据时，协调器仍可报告整体`UPDATES_INCOMPLETE`；不能把C04候选存在误写成来源已是最新。当前绑定、原账本零调用候选及独立冷读见`docs/evidence/issue28_continuous/c04-normal-refresh-20260926/`，不等于实际新财报获取或生产调度。
+
+该两版录制selector在`2f3a36da`的CI达到单项240秒上限，其余12个主作业成功；`c04-source-ci-runtime-20260927/`记录了只移除测试内额外旧Run重放后的180.047秒本地通过。两版来源/Result及前驱断言保留，旧版的独立冷读证据另存；最终仍须以修后head的CI终态为准。
+
+后继范围回修见`docs/evidence/issue28_continuous/c04-normal-refresh-scope-repair-20260927/`、`c04-mixed-auto-refresh-20260927/`和`c04-mixed-resume-repair-20260927/`：公开CLI的B01-only选择仍走原控制器。旧处理副本存在时，混合B01+C04调用对已可构造C04 case的来源同时要求当次原生证明和C04输入角色；唯一尚缺的本期10-K主文件可由已验证的同CIK submissions申报行精确启动，其他缺件或仅因共享准备器读取的代理URL不获此路径。每轮只准1条SEC时，以前次报告、原账本槽和更新历史重建续接，不重取已得的submissions；B01等仍标为当前处理输入未满足，整体仍未完成。两条不同录制SEC来源、原C04-only续接和无关URL负例分别测试，不代表旧根已自动更新所有普通指标或发生新财年获取。 新财年主年报尚缺件时另以`c04-missing-annual-bootstrap-20260927/`的合成离线场景检查已验证submissions明确列出的唯一10-K主文件可进入来源获取选择；后续`c04-annual-resume-repair-20260927/`还覆盖模拟认证报告后的单次请求续接；这些只测试准入及模拟捕获，不能替代真实新年报获取及完整C04结果。
+
+单次有限SEC上限不足时，C04可用 `tools/vnext_ordinary_refresh.py --company marriott_international --metric C04 --state-root /absolute/same-update-root --max-sec-requests 1 --max-provider-requests 0 --resume-report /absolute/previous-immutable-report.json --output /absolute/new-report.json` 作一次**异常续接**。它重读前次真实账本收据和同一更新历史，再从已验证来源状态重建待刷新集合，逐项比对外部报告；不能靠改报告或重领已取得URL继续。`tests.vnext.test_c04_refresh_resume`在source-material层使用录制来源验证两条不同SEC依赖、篡改与重复报告拒绝；新增短测试确认C04-only仍接受正值模型上限作为旧兼容输入（该指标不会申领模型），混合旧根的续接则保持零模型上限。正常运行应为预计来源设置足够的有限上限，此路径不是日常人工指定URL或指标答案，也不扩大发送许可。实际第193槽的待办篡改拒绝和当前正向预检见`docs/evidence/issue28_continuous/c04-refresh-resume-repair-20260927/`；第二条真实GET已按`c04-real-refresh-second-20260927/`原账本取得，离线通过不能替代新财年更新。
+
 ### 普通主体接续与期末余额
 
 来源规则与十公司原生组件用 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_instant_balance_amendment tests.vnext.test_normal_companyfacts_results` 验证；两模块均在source-material层。实际Part III修订和链接更正保留不同证明，覆盖额外用途、错原报告日、正文更正/余额、已发生重述、封面标志、引语和新增原生财务事实。缺少修订原件必须拒绝源重放。
@@ -776,6 +786,8 @@ CURRENT_INCOME_NATIVE_BATCH/CURRENT_INCOME_ATTACK_ROOT指定原生及新反例�
 短反例：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_capacity_semantic_source.CapacitySemanticSourceTest tests.vnext.test_regulatory_statement_facts.RegulatoryStatementFactsTest -v`。覆盖重签后的来源缺项、关键词未命中仍保留隐藏事实，以及否定、假设、历史/引语、其他主体、与政府行动没有直接关系的诉讼。
 
 完整材料：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_capacity_semantic_source.CapacityCompleteSourceMaterialTest tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest -v`，禁网读取Ford/Enphase及JPM已存原件，后者从原文别名定义重建339段并验证响应冲突。两类分别加入当前fast/source-material入口；可选B13_COMPLETE_SOURCE_OUTPUT和D03_STATEMENT_MATERIAL_OUTPUT只写全新外部测试路径。JPM属于已参与修复的回归样本，模拟响应与执行者自查不算真实模型通过、原生或独立审阅。
+
+D03后继的**录制响应字节保存**用`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_d03_recorded_response_store`在source-material层验证：已保存JPM原件与合成响应的原字节、来源和请求身份、未决及录制信用，经独立文件重读；改原响应、把录制信用改签LIVE、不完整包和写入原真实账本均被拒。`D03_RECORDED_PACKET_COPY=/absolute/new/external-root`可保留测试时的有效包供独立进程禁网冷读，证据见`docs/evidence/issue28_continuous/d03-recorded-response-20260927/`。这是离线持久化步骤，不是D03真实请求、原生Result/Run或完整公司结论。
 <!-- capability-anchor: CAPABILITY.b13_complete_source_input -->
 <!-- capability-anchor: CAPABILITY.regulatory_aggregate_statement_fact -->
 

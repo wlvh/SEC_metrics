@@ -1,0 +1,36 @@
+{
+  "record_type": "C04_ONE_PRIOR_SOURCE_RESUME_BINDING",
+  "ordinary_parent_closure_hash": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+  "continuous_requirement_closure_hash": "sha256:a8d95123d66e51a8a2355fb24ea13a5b590afbf779a59a68e051c326863d0f89",
+  "execution_authority_hash": "sha256:61d4320637a5ee0dd641a61567afb8de13317b048564afb81862fa943e9de982",
+  "bound_files": {
+    "scripts/vnext/ordinary_refresh_cycle.py": {
+      "sha256": "4f9107b645d1b85646e9e5d20a2fad9d33432afa7c1ed0c15acd10b0d0f11c01",
+      "size": 23089
+    },
+    "tools/vnext_ordinary_refresh.py": {
+      "sha256": "231d12ca2bdbe0cc1ad1ea4d5858f79935f54c463af2120c8ac20b9508097dae",
+      "size": 2711
+    }
+  },
+  "receipt_before_sha256": {
+    "provider": "f0b71365c23b992f12fcd9743ca825fead9353fd07ce5414d249dcca758e6d92",
+    "sec": "515a6bd15f37282debef1b0338acc44531a8228cf0c54dd317247db62b542a09",
+    "refresh": "c4596c5636a2080adb2359729f50eeb1bee8cc2a1855c2793d87429ae5deb160"
+  },
+  "receipt_after_sha256": {
+    "provider": "ae5f8891b870706eafbe06a3d0c4a03a8fd596cfc25f3405c6a5bd9c292c792c",
+    "sec": "bfa61267b18882f0214c18a88b7ea6208946980c56e5b3c2ec76ae7de28957fd",
+    "refresh": "485f16a840703710fa5f7b5723951067dc5ac77ae795e1774019149710c5833e"
+  },
+  "recorded_resume_log_sha256": "2fdb7025aef2dde6ede6bd0b5517f72c778380467b5895dbbba3cd661d0ddef5",
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "prior_live_ordinal": 193,
+  "prior_live_ordinal_reissued": false,
+  "boundary_sha256": "e33b25ceb2f9a3db0b4786505bd70d17a816d7e897537ddb2275a35e54f099f6",
+  "real_resume_preflight_sha256": "db6205699308a218b715b664f4ddeea32f247ad427da827c5380ea51a3ed8199"
+}

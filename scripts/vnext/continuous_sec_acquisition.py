@@ -23,6 +23,14 @@ from .invocation_control import _exclusive_write_json,_exclusive_write_bytes
 
 _FACTORY=object()
 CHECKPOINT_TYPE='ORDINARY_SEC_ACQUISITION_CHECKPOINT'
+# The C04 successor reads original source and an explicit C04 contract, then
+# installs current processing rules into a new Run root. These older rule
+# copies in a pre-existing acquisition root are never used as C04 authority.
+C04_SOURCE_ONLY_STALE_RULE_PATHS=frozenset({
+    'config/issue28_normal_results_v2.json',
+    'config/ordinary_public_projection_v1.json',
+    'catalog/r5/C04_auditor_changes_v3.md',
+})
 
 
 def _seal(body,field):return {**body,field:content_hash(value=body)}
@@ -41,9 +49,11 @@ def _journal():
     return path
 
 
-def initialize_source_inputs(*,root,requirement):
+def initialize_source_inputs(*,root,requirement,c04_source_only=False):
     """Copy the finite existing source corpus once; never fetch duplicates."""
+    need(type(c04_source_only) is bool,'SEC_ACQUISITION_SOURCE_MODE_INVALID')
     baseline=strict_json_file(path=ROOT/MANIFEST_PATH)
+    existing=root.exists()
     if root.exists():
         need((root/'source-baseline.json').is_file(),'SEC_ACQUISITION_SOURCE_ROOT_UNOWNED')
         need(strict_json_file(path=root/'source-baseline.json')=={'baseline_manifest_sha256':sha256_file(path=ROOT/MANIFEST_PATH)},
@@ -68,6 +78,8 @@ def initialize_source_inputs(*,root,requirement):
         # runtime. It is not an acquisition/source dependency; retain any
         # historical copy instead of overwriting it or blocking new sources.
         if relative in presentation_paths or not relative.startswith(('config/','catalog/')):continue
+        if c04_source_only and existing and relative in C04_SOURCE_ONLY_STALE_RULE_PATHS:
+            continue
         raw=resolve_repository_file(repo_root=ROOT,repo_relative_path=relative).read_bytes()
         need({'sha256':sha256_bytes(content=raw),'size':len(raw)}==binding,
              'SEC_ACQUISITION_PROCESSING_RULE_CHANGED')
@@ -111,12 +123,16 @@ class SecAcquisitionSession:
                 need(sha256_file(path=resolve_repository_file(repo_root=ROOT,repo_relative_path=relative))==digest,
                      'SEC_ACQUISITION_OFFLINE_EVIDENCE_CHANGED')
 
-    def capture(self,*,company_id,url,refresh_metadata=False,control_id=None):
+    def capture(self,*,company_id,url,refresh_metadata=False,control_id=None,
+                source_only_c04=False):
         """Capture one declared dependency; no loop or automatic retry."""
+        need(type(source_only_c04) is bool and not (source_only_c04 and control_id is not None),
+             'SEC_ACQUISITION_C04_SOURCE_MODE_INVALID')
         from .normal_source_requirements import discover_saved_source_requirements
         self._check();validate_official_sec_url(url=url)
         with self.ledger.locked():
-            initialize_source_inputs(root=self.data_root,requirement=self.requirement)
+            initialize_source_inputs(root=self.data_root,requirement=self.requirement,
+                                     c04_source_only=source_only_c04)
             if control_id is None:
                 discovery=discover_saved_source_requirements(repo_root=self.data_root,company_id=company_id)
             else:
@@ -140,6 +156,8 @@ class SecAcquisitionSession:
                 'requirement_closure_hash':self.requirement['requirement_closure_hash'],
                 'source_dependency':selected,'discovery_id':discovery['requirements_id'],'request':request,
                 'source_ledger_before_sha256':sha256_bytes(content=before),'source_row_count_before':len(old_rows)}
+            if source_only_c04:
+                plan['source_only_processing_route']='C04_REGISTRATION_FOUR_FORM_UPDATE_V1'
             if control_id is not None:
                 plan['historical_semantic_control_id']=control_id
                 plan['historical_source_scope']=discovery['scope']

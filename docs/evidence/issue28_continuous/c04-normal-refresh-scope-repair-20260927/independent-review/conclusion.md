@@ -1,0 +1,10 @@
+# ab584906 C04 刷新范围新增差异限定独立审阅
+
+**Verdict：PASS_WITH_BOUNDS。** 审阅精确范围为 `b2f7ed4148f4d26a8d7f63ae9ec860ef54d86172..ab584906d341ab42eb1155490f865e472acd8e48` 中指定的控制器、CLI、V14 绑定、两项测试、范围回修材料及当前 provider／SEC／refresh 收据。前次 `NEEDS_FIX` 的两项 P2 在本次限定范围内已关闭；这不表示默认十公司全部指标更新、真实新财报获取或生产采纳完成。
+
+1. **B01-only 公开入口可达原路线。** `tools/vnext_ordinary_refresh.py` 只在所选集合含 C04 时设置 `c04_successor`；显式 `--metric B01` 传 `False`。本审阅实际运行的短测包含该公开入口回归，10 项全部通过，见 `short-tests.log`。该测试把 live session 与刷新函数替换为替身，证明的是选路，不是 B01 在旧来源根上已成功运行。
+2. **旧处理根的混合请求不再借 C04 模式申领 SEC。** `ordinary_refresh_cycle.py` 对三份历史处理副本按父需求绑定逐字节检查；混合 B01+C04 且副本旧时，`capture_limit=0`，不会调用 `session.capture()`，C04 仍可从已有原件形成候选，B01 明确 `UPDATE_BLOCKED`，公司状态 `UPDATES_PARTIAL`、来源状态 `REFRESH_INCOMPLETE`、总状态 `UPDATES_INCOMPLETE`。保存的 `source-scope-final.log` 记录 2 项原件测试通过（70.002 秒）和零录制申领；本审阅只读该长测日志。单独 C04 才把 `source_only_c04` 传给获取器；新根无旧副本时走严格普通初始化。只有 v3 规格缺失不会触发“旧处理根混合”判定：代码只把**存在且与绑定不符**的副本算旧副本；当前短测覆盖判定函数，未单独重跑该情形的完整获取。
+3. **当前 Marriott 下一条 URL 属于 C04 原生来源证明。** 本审阅在禁网条件下，从实际保存来源根重新运行来源发现与 `prepare_c04_registration_case()`：29 个已声明 URL 均落在 29 个 C04 原生来源证明中；当前待刷新第一条为 `https://data.sec.gov/submissions/CIK0001048286.json`，第二条为该 CIK 的 Company Facts，两条都在证明集合内，见 `source-map-recheck.log`。这与提交的 `c04-source-map.log` 一致。新清单可能带来新 URL；当前 29 项集合不为未来 URL 提供永久来源证明，后续每次发现后须重新核对。控制器尚无逐 URL 的 C04 证明检查，因此本结论仅覆盖当前保存来源及所述第一条请求，不外推为任意多请求 C04-only 获取。
+4. **失败和计数没有升格。** `c04-two-version-regression.log` 的执行期间字节变动失败仍作为失败保留；后续 `c04-two-version-final.log` 记录同一材料在最终绑定下 1 项通过（201.091 秒、录制获取 4 次），本审阅没有重跑。原保存真实账本的零调用报告记 `[143,143,49]→[143,143,49]`、`REFRESH_INCOMPLETE`／`UPDATES_INCOMPLETE`；它证明旧保存原件候选，不证明本次新获取。本审阅未独立重读当前真实账本终态。当前 V14 需求闭包 `sha256:56c6e144…`、执行绑定 `sha256:abace889…` 与三份零调用收据经 `validate_final_wiring.py` 通过；该脚本对 SEC authorizer 使用替身，结果明确 `actual_live_sec_capture_executed=false`、`new_real_calls=[0,0,0]`。本审阅自身无真实 provider／SEC 请求。
+
+**未覆盖：** 未重跑 70 秒／201 秒材料、完整十公司刷新、真实 SEC 获取、真实 provider、长期调度或正式发布；未操作 #47／PR52、提交、推送或打包。工作树原有 `execution-state.json` 修改不是本审阅写入。工具使用为 15 次 `functions.exec` 编排、30 次内部工具调用（含最终文件核对），低于 80 次上限。

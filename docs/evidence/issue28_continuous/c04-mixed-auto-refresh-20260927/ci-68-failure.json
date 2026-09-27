@@ -1,0 +1,25 @@
+{
+  "head": "68abb7a1a12a0c765abbd6b642bc4e175a103e74",
+  "run_id": 36262871721,
+  "job_id": 108461895725,
+  "suite_status": "FAILED",
+  "suite_duration_seconds": 1982.631,
+  "failed_selectors": [
+    {
+      "test": "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",
+      "return_code": 124,
+      "duration_seconds": 240.01,
+      "timeout_seconds": 240
+    },
+    {
+      "test": "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest",
+      "return_code": 124,
+      "duration_seconds": 240.101,
+      "timeout_seconds": 240
+    }
+  ],
+  "d03_recorded_selector": {
+    "return_code": 0,
+    "duration_seconds": 227.163
+  }
+}

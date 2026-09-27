@@ -111,6 +111,19 @@ A job that exceeds `timeout-minutes` is cancelled rather than failed, so the
 run reads as `cancelled` and no assertion failed anywhere. `0002` already
 covers the two capacity jobs. This is the third.
 
+**Superseded on 2026-09-27 by the base's own split.** Issue #28's branch
+(`1613dab6`, merged here with `2ab35195`) splits the saved-source job itself:
+`--shard-index {0,1} --shard-count 2`, round-robin by position in the list,
+with a job that requires both shards. The merge took that interface for
+`tools/run_fast_tests_v2.py`, because the workflow the base ships calls it;
+this branch's `--shard i/n`, its budget-balanced partition and
+`tests/vnext/test_source_tier_shard.py` were removed with it rather than kept
+as a second way to split the same list. By each case's declared timeout the
+two round-robin shards hold 15,960 and 17,220 seconds of budget, so they are
+not far from even; whether each finishes inside the job's 35 minutes is a CI
+measurement, not a claim made here. `0003` below is kept as a record and no
+longer applies.
+
 `0003-split-saved-source-material-job.patch` splits the saved-source job in
 two, `--shard 1/2` and `--shard 2/2`, at 30 minutes each. Raising the single
 cap would work for a while and stop working again: the tier grows with the

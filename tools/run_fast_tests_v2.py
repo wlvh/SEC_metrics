@@ -105,6 +105,10 @@ FAST_TESTS += ("tests.vnext.test_continuous_source_unit_bytes",)
 FAST_TESTS += ("tests.vnext.test_capacity_visible_source_roles",)
 FAST_TESTS += ("tests.vnext.test_continuous_batch33",)
 FAST_TESTS += ("tests.vnext.test_capacity_two_stage",)
+FAST_TESTS += ("tests.vnext.test_c04_update_cycle.C04UpdateCreditBoundaryTest",)
+FAST_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceScopeFastTest",)
+FAST_TESTS += ("tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest",)
+FAST_TESTS += ("tests.vnext.test_c04_refresh_resume.C04ResumeBudgetBoundaryTest",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)
 SOURCE_TESTS += ("tests.vnext.test_r6_semantic_verification",)
@@ -313,10 +317,6 @@ FAST_TESTS += ("tests.vnext.test_historical_text_protocol",)
 # registration patch, which is not a pass - it is registered so that a run
 # declaring the patch applied shows the skip rather than hiding it.
 FAST_TESTS += ("tests.vnext.test_historical_protocol_wiring",)
-# Splitting the saved-source tier must be a partition. A split that dropped a
-# case or ran one twice would still look green, so the exactness, the balance
-# and the determinism are checked here. No source material; 0.004 seconds.
-FAST_TESTS += ("tests.vnext.test_source_tier_shard",)
 # What an acceptance binds and where it gets it. The generator reads no Run -
 # asserted by replacing every binding of the receipt readers - and an unchanged
 # reading regenerated beside a batch whose result moved unit, scope, filing or
@@ -335,6 +335,11 @@ SOURCE_TESTS += ("tests.vnext.test_historical_board_composition_filings",)
 SOURCE_TESTS += ("tests.vnext.test_regulatory_fact_review",)
 SOURCE_TESTS += ("tests.vnext.test_c04_registration_successor",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",)
+SOURCE_TESTS += ("tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest",)
+SOURCE_TESTS += ("tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
@@ -397,6 +402,12 @@ SOURCE_TIMEOUT_OVERRIDES = {
     "tests.vnext.test_historical_event_items": 480,
     # Parses the two Paramount amendments and their originals for each case.
     "tests.vnext.test_historical_amendment_note": 480,
+    # One complete C04 source refresh passed locally in 227.794s; the prior
+    # two-version CI case hit 240s. Keep the job deadline unchanged.
+    "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": 300,
+    # The saved JPM D03 packet passed on the prior runner in 227.163s but
+    # reached the 240s per-case bound while two complete CI shards ran.
+    "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": 300,
 }
 
 
@@ -418,42 +429,16 @@ def _run_source_case(name):
             "stdout_tail":stdout[-2000:],"stderr_tail":stderr[-2000:]}
 
 
-def source_shard(*, shard, shards):
-    """One part of the source tier, balanced by each case's own time budget.
-
-    The saved-source job reached its thirty-five minute cap and was cancelled
-    mid-step, which reads as "cancelled" rather than as a failing assertion.
-    Splitting it needs a partition that is exact and does not depend on how the
-    list happens to be ordered, and dealing the cases round-robin would put the
-    three long ones together whenever their positions line up.
-
-    So the weight is each case's own timeout - the number this file already
-    keeps for how long a case may take - and the heaviest case goes to the
-    lightest shard. The result is a partition: every case in exactly one shard,
-    and the same shard every time.
-    """
-    if shards < 1 or not 1 <= shard <= shards:
-        raise inherited.FastTestError("SOURCE_SHARD_INVALID")
-    weighed = sorted(SOURCE_TESTS,
-                     key=lambda name: (-SOURCE_TIMEOUT_OVERRIDES.get(name,
-                                                                     SOURCE_TIMEOUT_SECONDS),
-                                       name))
-    buckets = [[] for _ in range(shards)]
-    budgets = [0] * shards
-    for name in weighed:
-        lightest = min(range(shards), key=lambda index: (budgets[index], index))
-        buckets[lightest].append(name)
-        budgets[lightest] += SOURCE_TIMEOUT_OVERRIDES.get(name, SOURCE_TIMEOUT_SECONDS)
-    return tuple(sorted(buckets[shard - 1]))
+def _selected_tests(suite, shard_index, shard_count):
+    if (shard_count < 1 or shard_index < 0 or shard_index >= shard_count
+            or (suite != "source-material" and (shard_index, shard_count) != (0, 1))):
+        raise inherited.FastTestError("FAST_TEST_SHARD_INVALID")
+    complete = FAST_TESTS if suite == "fast" else SOURCE_TESTS
+    return tuple(name for index, name in enumerate(complete) if index % shard_count == shard_index)
 
 
-def run_fast_tests(*, jobs, suite="fast", shard=None, shards=None):
-    if suite == "fast":
-        selectors = FAST_TESTS
-    elif shard is None:
-        selectors = SOURCE_TESTS
-    else:
-        selectors = source_shard(shard=shard, shards=shards)
+def run_fast_tests(*, jobs, suite="fast", shard_index=0, shard_count=1):
+    selectors = _selected_tests(suite, shard_index, shard_count)
     all_selectors = (*FAST_TESTS,*SOURCE_TESTS)
     if jobs < 1 or jobs > len(selectors):
         raise inherited.FastTestError("FAST_TEST_JOBS_INVALID")
@@ -467,10 +452,7 @@ def run_fast_tests(*, jobs, suite="fast", shard=None, shards=None):
         rows = sorted((f.result() for f in futures), key=lambda r:r["test"])
     return {"evidence_tier":"FAST_LOCAL_ONLY" if suite == "fast" else "SOURCE_MATERIAL_LOCAL_ONLY",
         "selector_generation":2, "suite":suite, "jobs":jobs,
-        # A sharded run covers part of the tier. Saying which part is the
-        # difference between evidence about a shard and a claim about the tier.
-        **({"shard":shard,"shards":shards,"tier_case_count":len(SOURCE_TESTS)}
-           if shard is not None else {}),
+        **({"shard_index":shard_index,"shard_count":shard_count} if shard_count > 1 else {}),
         "per_case_timeout_seconds":inherited.FAST_TEST_TIMEOUT_SECONDS if suite == "fast" else SOURCE_TIMEOUT_SECONDS,
         **({"per_case_timeout_overrides":SOURCE_TIMEOUT_OVERRIDES} if suite != "fast" else {}),
         "duration_seconds":round(time.monotonic()-start, 3), "tests":rows,
@@ -482,24 +464,16 @@ def main(argv):
     parser.add_argument("--jobs", type=int, default=2)
     parser.add_argument("--list", action="store_true")
     parser.add_argument("--suite",choices=("fast","source-material"),default="fast")
-    parser.add_argument("--shard",help="i/n - run part i of n of the source tier")
+    parser.add_argument("--shard-index",type=int,default=0)
+    parser.add_argument("--shard-count",type=int,default=1)
     args = parser.parse_args(argv)
-    shard = shards = None
-    if args.shard is not None:
-        if args.suite != "source-material" or args.shard.count("/") != 1:
-            parser.error("--shard is i/n and belongs to --suite source-material")
-        part, _, total = args.shard.partition("/")
-        if not part.isdigit() or not total.isdigit():
-            parser.error("--shard is i/n with whole numbers")
-        shard, shards = int(part), int(total)
-    if args.list:
-        listed = (FAST_TESTS if args.suite == "fast"
-                  else SOURCE_TESTS if shard is None
-                  else source_shard(shard=shard, shards=shards))
-        print(json.dumps({"suite":args.suite,"tests":listed}, sort_keys=True))
-        return 0
     try:
-        result = run_fast_tests(jobs=args.jobs,suite=args.suite,shard=shard,shards=shards)
+        if args.list:
+            selectors = _selected_tests(args.suite,args.shard_index,args.shard_count)
+            print(json.dumps({"suite":args.suite,"tests":selectors}, sort_keys=True))
+            return 0
+        result = run_fast_tests(jobs=args.jobs,suite=args.suite,
+                                shard_index=args.shard_index,shard_count=args.shard_count)
     except inherited.FastTestError as error:
         print(str(error), file=sys.stderr)
         return 2

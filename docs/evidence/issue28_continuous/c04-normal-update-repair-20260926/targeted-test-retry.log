@@ -1,0 +1,12 @@
+test_duplicate_metric_rejected_before_update (tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest.test_duplicate_metric_rejected_before_update) ... usage: python3.14 -m unittest [-h] [--data-root DATA_ROOT]
+                              [--discover-sources] [--company COMPANY]
+                              [--process] [--state-root STATE_ROOT]
+                              [--metric METRIC] [--output OUTPUT]
+python3.14 -m unittest: error: Metrics must be unique configured values
+ok
+test_saved_marriott_positive_then_unchanged_reuses_run (tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest.test_saved_marriott_positive_then_unchanged_reuses_run) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 161.677s
+
+OK

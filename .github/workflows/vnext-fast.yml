@@ -31,10 +31,14 @@ jobs:
         # Keep each selected case's existing 30-second limit, with two workers.
         run: python3 tools/run_fast_tests_v2.py --jobs 2
 
-  source-material:
-    name: vNext saved-source material
+  source_material_parts:
+    name: vNext saved-source material (shard ${{ matrix.shard_index }})
     runs-on: ubuntu-latest
     timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        shard_index: [0, 1]
     steps:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
@@ -49,7 +53,19 @@ jobs:
       - name: Run complete saved-source material tests
         env:
           PYTHONDONTWRITEBYTECODE: "1"
-        run: python3 tools/run_fast_tests_v2.py --suite source-material --jobs 2
+        run: python3 tools/run_fast_tests_v2.py --suite source-material --jobs 2 --shard-index ${{ matrix.shard_index }} --shard-count 2
+
+  source-material:
+    name: vNext saved-source material
+    needs: source_material_parts
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Require both complete source shards
+        env:
+          SHARDS_RESULT: ${{ needs.source_material_parts.result }}
+        run: test "$SHARDS_RESULT" = success
 
   native-runs:
     name: vNext ordinary native Runs

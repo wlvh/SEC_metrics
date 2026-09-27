@@ -1,0 +1,31 @@
+{
+  "record_type": "C04_MIXED_ONE_REQUEST_RESUME_AND_ROLE_SCOPE_REPAIR",
+  "reviewed_base_sha": "0cefb9bb4831316e7587ef25daccd86157148c7e",
+  "tested_tree": "UNCOMMITTED_INCREMENT",
+  "module_sha256": "ac07d189748f3e30f91b6cd965ae06d9929772f80adcaae8e96cc7260df01575",
+  "v13_parent_closure_hash": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+  "v14_closure_hash": "sha256:93b6b5d6e320e606789d62df0e73a825728100e800a72d68304966e45036fcbb",
+  "v14_execution_authority_hash": "sha256:3507e50c656e12bd3a6a42e943de76a194eebd4caf6097a1b1148580337c8b57",
+  "recorded_two_step": "PASS_365_477_SECONDS_TWO_DISTINCT_SEC_SLOTS",
+  "c04_only_resume_regression": "PASS_330_682_SECONDS",
+  "role_scope_fast": "PASS",
+  "real_new_calls": [
+    0,
+    0,
+    0
+  ],
+  "real_ledger_last_ordinal": 194,
+  "real_ledger_counts": [
+    143,
+    143,
+    51
+  ],
+  "new_company_results": 0,
+  "review": "PENDING_EXACT_PATCH_SHA",
+  "logs_sha256": {
+    "mixed-two-step.log": "ac288f5b2677ce00fb997c508cd2bf01ada2a69d762c8448586cf237f297b880",
+    "c04-only-resume-current.log": "18b38a4df35782ed42594fbab18171a85bbada0506a01d1c9a98f8dbd8a9b048",
+    "fast-role-scope.log": "445221b98f22d14309aaea4fee1a9f41c9659ced4c922d71fbc0dcbbde571045",
+    "binding-current.log": "e4a8e7e4ca5901741298c4d5e1859b60cd1d1957a1d5e0254ed0d6ce0cef76c3"
+  }
+}

@@ -1,0 +1,18 @@
+test_two_saved_metadata_versions_create_two_native_c04_results (tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest.test_two_saved_metadata_versions_create_two_native_c04_results) ... FAIL
+
+======================================================================
+FAIL: test_two_saved_metadata_versions_create_two_native_c04_results (tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest.test_two_saved_metadata_versions_create_two_native_c04_results)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_c04_refresh_cycle.py", line 48, in test_two_saved_metadata_versions_create_two_native_c04_results
+    self.assertEqual('UPDATES_READY', first_report['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UPDATES_READY' != 'UPDATES_INCOMPLETE'
+- UPDATES_READY
++ UPDATES_INCOMPLETE
+
+
+----------------------------------------------------------------------
+Ran 1 test in 65.102s
+
+FAILED (failures=1)

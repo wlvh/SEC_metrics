@@ -133,12 +133,17 @@ def _candidate_uncertainty(*, anchors, reviews, units):
     return uncertain
 
 
-def validate_candidate_response(*, original_request, source, request, raw_response,
-                                repo_root=ROOT):
+def validate_candidate_response(*, original_request, source, raw_response,
+                                request=None, repo_root=ROOT,
+                                return_authenticated_request=False):
     """Keep citations strict; unresolved semantics never become a proven fact."""
-    _need(request == candidate_request(original_request, source=source,
-                                       repo_root=repo_root),
+    _need(type(return_authenticated_request) is bool,
+          'D03_ANCHOR_AUTHENTICATED_RETURN_FLAG_INVALID')
+    authenticated = candidate_request(original_request, source=source,
+                                      repo_root=repo_root)
+    _need(request is None or request == authenticated,
           'D03_ANCHOR_REQUEST_NOT_SOURCE_BOUND')
+    request = authenticated
     from .r6_regulatory_semantics import POLICY_PATH
     _need(type(raw_response) is bytes and len(raw_response) <=
           strict_json_file(path=ROOT / POLICY_PATH)['max_response_bytes'],
@@ -201,7 +206,7 @@ def validate_candidate_response(*, original_request, source, request, raw_respon
                if key != 'candidate_reviews'}))
     uncertain = _candidate_uncertainty(anchors=request['source_fact_candidates'],
                                        reviews=reviews, units=units)
-    return {**checked, 'unresolved': [*checked['unresolved'], *uncertain],
+    result = {**checked, 'unresolved': [*checked['unresolved'], *uncertain],
             'source_fact_candidate_review': uncertain,
             'candidate_reviews': response['candidate_reviews'],
             'provider_response': response,
@@ -209,3 +214,4 @@ def validate_candidate_response(*, original_request, source, request, raw_respon
             'raw_provider_response_preserved_separately': False,
             'source_fact_current_status_proven_by_program': False,
             'native_result_created': False}
+    return (result, authenticated) if return_authenticated_request else result

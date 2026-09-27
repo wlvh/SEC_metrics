@@ -12,6 +12,7 @@ import re
 from .canonical import (canonical_json_bytes, content_hash, sha256_bytes,
                         sha256_file, strict_json_file, strict_json_loads)
 from .capacity_reference_contract import (ASSERTION_SCOPED_VERSION,
+                                          CLAIM_CONTEXT_VERSION,
                                           RELEVANCE_VERSION, SCANNED_VERSION,
                                           ROLE_LABELS, _owners,
                                           restore_base_request)
@@ -62,6 +63,17 @@ ASSERTION_SUFFIX = (
     'unresolved list. Do not use an exclusion to erase a second assertion '
     'in the same source block.'
 )
+CLAIM_CONTEXT_SUFFIX = (
+    ' For each visible-block finding, give one [typed_reference,claim_start,'
+    'claim_end,context_start,context_end] for every cited B reference. Offsets '
+    'count Unicode characters in the supplied original block. A claim is one '
+    'complete sentence or a clause separated by a semicolon, but, or whereas. '
+    'Context is its entire original sentence and may be shared by different '
+    'claims; sharing context does not make those claims duplicates. Give each '
+    'distinct physical-capacity claim its own nonoverlapping claim range and '
+    'classification. If a clause has no provable subject or period, leave its '
+    'reference unresolved instead of borrowing a label from another claim.'
+)
 _PHYSICAL_CAPACITY = re.compile(
     r'\b(?:manufacturing|production)\s+(?:capacity|capabilities)\b', re.I)
 
@@ -80,6 +92,24 @@ def _assertion_protocol(base):
         'assertion ranges [B-reference,start,end] for this finding. '
         'Non-visible evidence has no range. Ambiguous multi-assertion '
         'blocks must remain unresolved. At most 28 findings are allowed.')
+    return protocol
+
+
+def _claim_context_protocol(base):
+    protocol = deepcopy(base)
+    item = protocol['json_schema']['properties']['findings']['items']
+    item['prefixItems'].append({'type': 'array', 'items': {
+        'type': 'array', 'prefixItems': [
+            {'type': 'string'}, {'type': 'integer', 'minimum': 0},
+            {'type': 'integer', 'minimum': 1}, {'type': 'integer', 'minimum': 0},
+            {'type': 'integer', 'minimum': 1}],
+        'minItems': 5, 'maxItems': 5, 'items': False}})
+    item['minItems'] = item['maxItems'] = 6
+    protocol['json_schema']['properties']['findings']['maxItems'] = MAX_ASSERTION_SCOPED_FINDINGS
+    protocol['claim_context_scope'] = ('The sixth finding field gives exact '
+        '[B-reference,claim_start,claim_end,context_start,context_end] ranges. '
+        'Claim ranges identify distinct assertions; sentence context may overlap. '
+        'Unclear attribution remains unresolved. At most 28 findings.')
     return protocol
 SCAN_PROTOCOL = {
     'root_fields': ['units_reviewed', 'candidate_refs', 'unresolved_refs'],
@@ -365,7 +395,7 @@ def build_interpretation_acceptance(*, prepared, plan, response_body,
     from .capacity_native_assessment import _build_acceptance
     interpretation = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
     _need(interpretation.get('source_reference_contract', {}).get('version')
-          != ASSERTION_SCOPED_VERSION,
+          not in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION},
           'B13_ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED')
     original = saved_scan_stage(prepared=prepared, scan_path=scan_path)
     link = interpretation['two_stage_contract']
@@ -457,7 +487,7 @@ def build_registered_interpretation_acceptance(*, prepared, plan,
     from .capacity_native_assessment import _build_acceptance
     request = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
     _need(request.get('source_reference_contract', {}).get('version')
-          != ASSERTION_SCOPED_VERSION,
+          not in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION},
           'B13_ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED')
     stage = validate_registered_scan_stage(prepared=prepared,
                                           stage_record=stage_record)
@@ -475,19 +505,23 @@ def build_registered_interpretation_acceptance(*, prepared, plan,
 
 
 def interpretation_request(*, request, scan_result, scan_raw_response,
-                           scan_execution_proof=None, assertion_scopes=False):
+                           scan_execution_proof=None, assertion_scopes=False,
+                           claim_contexts=False):
     """Carry the full original source and the exact validated scan proposal."""
     _base(request)
     _need(type(scan_result) is dict and type(scan_raw_response) is bytes
           and scan_result == validate_scan(request=request,
               scan_request_value=scan_request(request), raw_response=scan_raw_response),
           'B13_SCAN_RESULT_NOT_BOUND')
-    _need(type(assertion_scopes) is bool, 'B13_ASSERTION_SCOPE_SELECTION_INVALID')
-    if assertion_scopes:
+    _need(type(assertion_scopes) is bool and type(claim_contexts) is bool
+          and not (assertion_scopes and claim_contexts),
+          'B13_ASSERTION_SCOPE_SELECTION_INVALID')
+    if assertion_scopes or claim_contexts:
         _need(len(scan_result['response']['candidate_refs']) <= MAX_ASSERTION_SCOPED_REFS,
               'B13_ASSERTION_SCOPE_CANDIDATE_CAP_EXCEEDED')
     body = {key: deepcopy(value) for key, value in request.items() if key != 'request_id'}
-    version = ASSERTION_SCOPED_VERSION if assertion_scopes else ASSESS_VERSION
+    version = (CLAIM_CONTEXT_VERSION if claim_contexts else
+               ASSERTION_SCOPED_VERSION if assertion_scopes else ASSESS_VERSION)
     link = {'version': version, 'prior_request_id': request['request_id']}
     if scan_execution_proof is not None:
         _need(type(scan_execution_proof) is dict
@@ -501,12 +535,14 @@ def interpretation_request(*, request, scan_result, scan_raw_response,
               'B13_SCAN_EXECUTION_PROOF_NOT_BOUND')
         link['scan_execution_proof'] = deepcopy(scan_execution_proof)
     body.update(system_prompt=body['system_prompt'] + ASSESS_SUFFIX +
-                (ASSERTION_SUFFIX if assertion_scopes else ''),
+                (CLAIM_CONTEXT_SUFFIX if claim_contexts else
+                 ASSERTION_SUFFIX if assertion_scopes else ''),
                 two_stage_scan=deepcopy(scan_result),
                 two_stage_contract=link)
     body['source_reference_contract']['version'] = version
-    if assertion_scopes:
-        body['response_protocol'] = _assertion_protocol(body['response_protocol'])
+    if assertion_scopes or claim_contexts:
+        body['response_protocol'] = (_claim_context_protocol(body['response_protocol'])
+            if claim_contexts else _assertion_protocol(body['response_protocol']))
     return {**body, 'request_id': content_hash(value=body)}
 
 
@@ -517,9 +553,11 @@ def restore_prior_interpretation_request(request):
           'B13_TWO_STAGE_REQUEST_CHANGED')
     link = request.get('two_stage_contract')
     version = link.get('version') if type(link) is dict else None
-    _need(version in {ASSESS_VERSION, ASSERTION_SCOPED_VERSION},
+    _need(version in {ASSESS_VERSION, ASSERTION_SCOPED_VERSION,
+                      CLAIM_CONTEXT_VERSION},
           'B13_TWO_STAGE_CONTRACT_CHANGED')
-    suffix = ASSESS_SUFFIX + (ASSERTION_SUFFIX if version == ASSERTION_SCOPED_VERSION else '')
+    suffix = ASSESS_SUFFIX + (CLAIM_CONTEXT_SUFFIX if version == CLAIM_CONTEXT_VERSION
+        else ASSERTION_SUFFIX if version == ASSERTION_SCOPED_VERSION else '')
     _need(type(link) is dict and set(link) in (
               {'version', 'prior_request_id'},
               {'version', 'prior_request_id', 'scan_execution_proof'})
@@ -531,7 +569,7 @@ def restore_prior_interpretation_request(request):
             if key not in {'request_id', 'two_stage_scan', 'two_stage_contract'}}
     body['system_prompt'] = body['system_prompt'][:-len(suffix)]
     body['source_reference_contract']['version'] = RELEVANCE_VERSION
-    if version == ASSERTION_SCOPED_VERSION:
+    if version in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION}:
         item = body['response_protocol']['json_schema']['properties']['findings']['items']
         _need(item.get('minItems') == 6 and item.get('maxItems') == 6
               and len(item.get('prefixItems', [])) == 6,
@@ -539,13 +577,16 @@ def restore_prior_interpretation_request(request):
         item['prefixItems'].pop()
         item['minItems'] = item['maxItems'] = 5
         body['response_protocol']['json_schema']['properties']['findings'].pop('maxItems')
-        body['response_protocol'].pop('assertion_scope', None)
+        body['response_protocol'].pop('assertion_scope' if version ==
+            ASSERTION_SCOPED_VERSION else 'claim_context_scope', None)
     prior = {**body, 'request_id': content_hash(value=body)}
     _need(prior['request_id'] == link['prior_request_id'],
           'B13_TWO_STAGE_PRIOR_REQUEST_CHANGED')
     _base(prior)
-    if version == ASSERTION_SCOPED_VERSION:
-        _need(request['response_protocol'] == _assertion_protocol(prior['response_protocol']),
+    if version in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION}:
+        expected = (_assertion_protocol(prior['response_protocol']) if version ==
+            ASSERTION_SCOPED_VERSION else _claim_context_protocol(prior['response_protocol']))
+        _need(request['response_protocol'] == expected,
               'B13_ASSERTION_SCOPE_PROTOCOL_CHANGED')
     scan = request.get('two_stage_scan')
     _need(type(scan) is dict and scan.get('scan_result_id') == content_hash(
@@ -587,6 +628,160 @@ def _assertion_segments(text):
                 else:
                     ranges.add((start, end))
     return ranges
+
+
+def _claim_segments(text):
+    """Locate independent clauses while retaining their shared sentence context."""
+    from .regulatory_investigation_candidates import _sentences
+    segments = {}
+    for sentence_start, sentence_end, sentence in _sentences(text):
+        hard = list(re.finditer(r';|\bbut\b|\bwhereas\b', sentence, re.I))
+        separators = list(hard)
+        bounds = [0, *(match.start() for match in hard), len(sentence)]
+        for index in range(len(bounds) - 1):
+            start = bounds[index] if index == 0 else hard[index - 1].end()
+            end = bounds[index + 1]
+            for match in re.finditer(r'\band\b', sentence, re.I):
+                if not start <= match.start() < end:
+                    continue
+                joint = match.start()
+                left, right = sentence[start:joint], sentence[match.end():end]
+                # A conjunction of two capacity nouns is one assertion. Two
+                # separately predicated capacity statements may share the
+                # sentence for subject/period evidence without sharing scope.
+                if (_PHYSICAL_CAPACITY.search(left) and _PHYSICAL_CAPACITY.search(right)
+                        and (_CLAIM_PRESENT.search(left) or _CLAIM_PAST.search(left))
+                        and (_CLAIM_PRESENT.search(right) or _CLAIM_PAST.search(right))):
+                    separators.append(match)
+        separators.sort(key=lambda match: match.start())
+        boundaries = [0, *(match.start() for match in separators), len(sentence)]
+        for index in range(len(boundaries) - 1):
+            start = boundaries[index] if index == 0 else separators[index - 1].end()
+            end = boundaries[index + 1]
+            while start < end and sentence[start] in ' \t\r\n,':
+                start += 1
+            while end > start and sentence[end - 1] in ' \t\r\n,':
+                end -= 1
+            if start < end:
+                segments[(sentence_start + start, sentence_start + end)] = (
+                    sentence_start, sentence_end)
+    return segments
+
+
+def _claim_context_projection(*, response, request, scan_result, source):
+    """Keep V7 claim ownership separate from overlapping sentence context."""
+    _need(type(response) is dict and set(response) == {'units', 'findings'}
+          and type(response['findings']) is list,
+          'B13_CLAIM_RESPONSE_FIELDS_CHANGED')
+    inventory = _reference_inventory(request)
+    visible = {}
+    for unit in source['units']:
+        if unit['kind'] == 'VISIBLE_TEXT':
+            for block in unit['payload']['blocks']:
+                ref = 'B' + str(block['block_index'])
+                _need(ref not in visible, 'B13_CLAIM_SOURCE_AMBIGUOUS')
+                visible[ref] = block['text']
+    projected = deepcopy(response)
+    ranges_by_ref = {}
+    scopes = []
+    for row in projected['findings']:
+        _need(type(row) is list and len(row) == 6 and type(row[3]) is list
+              and type(row[5]) is list,
+              'B13_CLAIM_FINDING_SHAPE_CHANGED')
+        cited = {ref for ref in row[3] if type(ref) is str and ref.startswith('B')}
+        seen = set()
+        for item in row[5]:
+            _need(type(item) is list and len(item) == 5
+                  and type(item[0]) is str and item[0] in cited
+                  and item[0] in inventory and item[0] in visible
+                  and all(type(value) is int for value in item[1:])
+                  and 0 <= item[3] <= item[1] < item[2] <= item[4] <= len(visible[item[0]])
+                  and item[0] not in seen,
+                  'B13_CLAIM_RANGE_INVALID')
+            ref, start, end, context_start, context_end = item
+            segments = _claim_segments(visible[ref])
+            _need(segments.get((start, end)) == (context_start, context_end),
+                  'B13_CLAIM_NOT_COMPLETE_SEGMENT_OR_CONTEXT')
+            seen.add(ref)
+            ranges_by_ref.setdefault(ref, []).append((start, end))
+            scopes.append((row, ref, visible[ref][start:end],
+                           visible[ref][context_start:start]))
+        _need(seen == cited, 'B13_CLAIM_VISIBLE_REFERENCE_UNSCOPED')
+        row.pop()
+    unresolved = []
+    for ref in scan_result['response']['candidate_refs']:
+        if ref not in visible:
+            continue
+        text = visible[ref]
+        ranges = sorted(ranges_by_ref.get(ref, []))
+        if any(ranges[index - 1][1] > ranges[index][0]
+               for index in range(1, len(ranges))):
+            unresolved.append('B13_CLAIM_OVERLAPPING_RANGES:' + ref)
+        if any(not any(start <= match.start() and match.end() <= end
+                       for start, end in ranges)
+               for match in _PHYSICAL_CAPACITY.finditer(text)):
+            unresolved.append('B13_CLAIM_UNCOVERED_PHYSICAL_SOURCE:' + ref)
+    return projected, scopes, unresolved
+
+
+_CLAIM_SUBJECT = re.compile(
+    r'\bour\s+contract\s+manufacturers?\b|\bour\s+(?:manufacturing|production)\s+'
+    r'capacity\b|\bwe\b|\b(?:a|the|our)\s+suppliers?\b', re.I)
+_CLAIM_PRESENT = re.compile(r'\b(?:have|has|is|are|operate|maintain|plan|currently|now|can)\b', re.I)
+_CLAIM_PAST = re.compile(r'\b(?:had|previously|used\s+to)\b', re.I)
+
+
+def _claim_contradictions(*, row, claim, antecedent, books):
+    """Abstain on a plainly conflicting claim, without borrowing whole-block labels."""
+    physical = _PHYSICAL_CAPACITY.search(claim)
+    if physical is None:
+        return []
+    subject = books['subject'][row[1]]
+    timing = books['timing'][row[2]]
+    kind = ROLE_LABELS[row[0]]
+    local = list(_CLAIM_SUBJECT.finditer(claim[:physical.start()]))
+    borrowing = (re.match(r'^\s*(?:they|it|these|those|this|such|currently|now)\b',
+                          claim, re.I)
+        or re.search(r'\band\s*$', antecedent, re.I)
+        and _CLAIM_PRESENT.match(claim.lstrip()))
+    earlier = list(_CLAIM_SUBJECT.finditer(antecedent)) if borrowing else []
+    ambiguous_antecedent = not local and len({m.group().casefold() for m in earlier}) > 1
+    markers = local or (earlier if not ambiguous_antecedent else [])
+    owner = None
+    if markers:
+        label = markers[-1].group().lower()
+        owner = 'OTHER_ENTITY' if 'supplier' in label else 'TARGET_REGISTRANT'
+    present = bool(_CLAIM_PRESENT.search(claim))
+    past = bool(_CLAIM_PAST.search(claim))
+    unresolved = []
+    if ambiguous_antecedent:
+        unresolved.append('B13_CLAIM_ANTECEDENT_AMBIGUOUS')
+    elif owner is None:
+        unresolved.append('B13_CLAIM_SUBJECT_NOT_ESTABLISHED')
+    elif subject != owner:
+        unresolved.append('B13_CLAIM_SUBJECT_CONFLICT')
+    if present and past:
+        unresolved.append('B13_CLAIM_MIXED_TIME_UNRESOLVED')
+    elif timing == 'HISTORICAL' and present:
+        unresolved.append('B13_CLAIM_CURRENT_MARKED_HISTORICAL')
+    elif timing == 'CURRENT_REPORT' and past and not present:
+        unresolved.append('B13_CLAIM_PAST_MARKED_CURRENT')
+    conditional = bool(re.match(r'^\s*if\b', claim, re.I))
+    if conditional and timing == 'CURRENT_REPORT':
+        unresolved.append('B13_CLAIM_CONDITIONAL_MARKED_CURRENT')
+    if conditional and kind not in {'CONDITIONAL_OR_BOILERPLATE', 'OTHER_CONTEXT'}:
+        unresolved.append('B13_CLAIM_HYPOTHETICAL_RETAINED_AS_ACTUAL')
+    if (not conditional and present and not past
+            and re.search(r'\bcould\b', claim, re.I) is None):
+        if timing == 'CONDITIONAL':
+            unresolved.append('B13_CLAIM_UNSUPPORTED_CONDITIONAL_TIME')
+        if kind == 'CONDITIONAL_OR_BOILERPLATE':
+            unresolved.append('B13_CLAIM_UNSUPPORTED_CONDITIONAL_KIND')
+    if (owner == 'TARGET_REGISTRANT' and present and not past
+            and kind in {'OTHER_ENTITY', 'HISTORICAL_STATEMENT',
+                         'OTHER_CONTEXT', 'SALES_OR_SHIPMENTS'}):
+        unresolved.append('B13_CLAIM_TARGET_CAPACITY_EXCLUDED')
+    return unresolved
 
 
 def _scoped_projection(*, response, request, scan_result, source):
@@ -649,19 +844,21 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
     This is an offline check; it does not create Candidate/Evidence or replay a
     provider receipt. A missed relevant source item remains a model risk.
     """
-    scoped = (interpretation.get('source_reference_contract', {}).get('version')
-              == ASSERTION_SCOPED_VERSION)
+    version = interpretation.get('source_reference_contract', {}).get('version')
+    scoped = version == ASSERTION_SCOPED_VERSION
+    claim_contexts = version == CLAIM_CONTEXT_VERSION
     _need(interpretation == interpretation_request(
               request=request, scan_result=scan_result,
               scan_raw_response=scan_raw_response,
               scan_execution_proof=interpretation.get('two_stage_contract', {}).get(
-                  'scan_execution_proof'), assertion_scopes=scoped),
+                  'scan_execution_proof'), assertion_scopes=scoped,
+              claim_contexts=claim_contexts),
           'B13_TWO_STAGE_INTERPRETATION_CHANGED')
     _need(type(raw_response) is bytes, 'B13_TWO_STAGE_RESPONSE_BYTES_REQUIRED')
     value = strict_json_loads(text=raw_response.decode('utf-8'))
     _need(type(value) is dict and type(value.get('findings')) is list
           and type(value.get('units')) is list, 'B13_TWO_STAGE_RESPONSE_INVALID')
-    if scoped:
+    if scoped or claim_contexts:
         _need(len(value['findings']) <= MAX_ASSERTION_SCOPED_FINDINGS,
               'B13_ASSERTION_SCOPE_FINDING_CAP_EXCEEDED')
         from .capacity_semantic_review import review_policy_path
@@ -669,8 +866,12 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
         _need(len(raw_response) <= strict_json_file(
               path=ROOT / review_policy_path(interpretation))['max_response_bytes'],
               'B13_RESPONSE_TOO_LARGE')
-        projected, assertion_scopes, scope_unresolved = _scoped_projection(
-            response=value, request=request, scan_result=scan_result, source=source)
+        if claim_contexts:
+            projected, claim_scopes, scope_unresolved = _claim_context_projection(
+                response=value, request=request, scan_result=scan_result, source=source)
+        else:
+            projected, assertion_scopes, scope_unresolved = _scoped_projection(
+                response=value, request=request, scan_result=scan_result, source=source)
         semantic_request = interpretation_request(request=request,
             scan_result=scan_result, scan_raw_response=scan_raw_response,
             scan_execution_proof=interpretation['two_stage_contract'].get('scan_execution_proof'))
@@ -731,6 +932,18 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
         # this explicit successor as an offline diagnostic until a new,
         # separately reviewed contract establishes assertion ownership.
         checked['unresolved'].append('B13_ASSERTION_SCOPE_VALIDATION_SUSPENDED')
+        checked['request_id'] = interpretation['request_id']
+        checked['response'] = strict_json_loads(text=raw_response.decode('utf-8'))
+    elif claim_contexts:
+        books = interpretation['response_protocol']['classification_codebooks']
+        for row, ref, claim, antecedent in claim_scopes:
+            checked['unresolved'].extend(code + ':' + ref for code in
+                _claim_contradictions(row=row, claim=claim,
+                                      antecedent=antecedent, books=books))
+        checked['unresolved'].extend(scope_unresolved)
+        # V7 remains an offline diagnostic until its native chain and limited
+        # review establish acceptance; request construction is no call grant.
+        checked['unresolved'].append('B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED')
         checked['request_id'] = interpretation['request_id']
         checked['response'] = strict_json_loads(text=raw_response.decode('utf-8'))
     else:

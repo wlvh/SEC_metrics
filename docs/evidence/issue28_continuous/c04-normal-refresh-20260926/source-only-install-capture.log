@@ -1,0 +1,27 @@
+test_old_processing_files_remain_old_and_unrelated_drift_blocks (tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest.test_old_processing_files_remain_old_and_unrelated_drift_blocks) ... ERROR
+
+======================================================================
+ERROR: test_old_processing_files_remain_old_and_unrelated_drift_blocks (tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest.test_old_processing_files_remain_old_and_unrelated_drift_blocks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 50, in test_old_processing_files_remain_old_and_unrelated_drift_blocks
+    captured = session.capture(company_id='marriott_international',
+        url=url, refresh_metadata=True, source_only_c04=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 133, in capture
+    with self.ledger.locked():
+         ~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_ledger.py", line 60, in locked
+    need(not anchor.exists() and not list(self.root.iterdir()),
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'CONTINUOUS_LEDGER_BINDING_MISSING_OR_RESET')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_policy.py", line 15, in need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_LEDGER_BINDING_MISSING_OR_RESET
+
+----------------------------------------------------------------------
+Ran 1 test in 6.814s
+
+FAILED (errors=1)
