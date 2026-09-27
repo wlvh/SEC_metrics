@@ -104,6 +104,7 @@ FAST_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceScopeFast
 FAST_TESTS += ("tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest",)
 FAST_TESTS += ("tests.vnext.test_c04_refresh_resume.C04ResumeBudgetBoundaryTest",)
 FAST_TESTS += ("tests.vnext.test_d03_native_preparation.D03NativePreparationTest.test_successor_cannot_drop_original_units_or_required_items",)
+FAST_TESTS += ("tests.vnext.test_d03_complete_interpretation.D03CompleteInterpretationTest.test_complete_empty_proposal_never_becomes_negative_result",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)
 SOURCE_TESTS += ("tests.vnext.test_r6_semantic_verification",)
