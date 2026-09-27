@@ -1,0 +1,195 @@
+{
+ "record_type": "D02_ITEM_8_REVIEW_FAULT_INJECTIONS",
+ "suites": [
+  "tests.vnext.test_historical_legal_review"
+ ],
+ "control_failures": [],
+ "control_tests_run": 28,
+ "caught": 18,
+ "total": 18,
+ "results": [
+  {
+   "injection": "MUST_DECIDE_IS_ONLY_THE_VOCABULARY",
+   "module": "historical_legal_review.py",
+   "expected": "test_a_keyword_admission_is_decided_even_without_the_vocabulary",
+   "failed": [
+    "test_a_keyword_admission_is_decided_even_without_the_vocabulary"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "THE_POOL_TAKES_WHAT_A_NOTE_OWNS",
+   "module": "historical_text_results.py",
+   "expected": "test_the_pool_is_item_8_s_own_blocks",
+   "failed": [
+    "test_a_position_whose_only_review_is_stale_is_refused_at_input",
+    "test_a_review_of_another_request_is_refused",
+    "test_a_review_replaces_only_the_item_8_excerpts",
+    "test_an_unsettled_review_withholds_the_filing_by_name",
+    "test_c02_takes_no_review",
+    "test_the_candidate_and_its_evidence_follow_the_review",
+    "test_the_input_carries_a_registered_review_only_in_its_mode",
+    "test_the_pool_is_item_8_s_own_blocks",
+    "test_the_request_holds_the_keyword_admissions_and_more"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "THE_POOL_AND_THE_PROPOSAL_MAY_DISAGREE",
+   "module": "historical_text_results.py",
+   "expected": "test_a_pool_that_disagrees_with_the_proposal_is_refused",
+   "failed": [
+    "test_a_pool_that_disagrees_with_the_proposal_is_refused"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_BLOCK_MAY_GO_UNDECIDED",
+   "module": "historical_legal_review.py",
+   "expected": "test_every_must_decide_block_is_decided_exactly_once",
+   "failed": [
+    "test_every_must_decide_block_is_decided_exactly_once"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "AN_OUT_OF_SCOPE_MAY_CARRY_A_QUOTE",
+   "module": "historical_legal_review.py",
+   "expected": "test_decisions_and_quotes",
+   "failed": [
+    "test_decisions_and_quotes"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_QUOTE_NEED_NOT_BE_THE_BLOCK_S_WORDS",
+   "module": "historical_legal_review.py",
+   "expected": "test_decisions_and_quotes",
+   "failed": [
+    "test_additions",
+    "test_decisions_and_quotes"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "AN_ADDITION_MAY_NAME_ANY_BLOCK",
+   "module": "historical_legal_review.py",
+   "expected": "test_additions",
+   "failed": [
+    "test_additions"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "AN_UNSETTLED_FILING_PUBLISHES_THE_SETTLED_PART",
+   "module": "historical_legal_review.py",
+   "expected": "test_an_unsettled_block_withholds_the_filing",
+   "failed": [
+    "test_an_unsettled_block_withholds_the_filing",
+    "test_an_unsettled_review_withholds_the_filing_by_name"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "AN_ADDITION_IS_NOT_COUNTED",
+   "module": "historical_legal_review.py",
+   "expected": "test_in_scope_and_additions_in_document_order",
+   "failed": [
+    "test_a_review_replaces_only_the_item_8_excerpts",
+    "test_in_scope_and_additions_in_document_order",
+    "test_the_candidate_and_its_evidence_follow_the_review"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_STALE_REVIEW_READS_AS_UNREVIEWED",
+   "module": "historical_legal_review.py",
+   "expected": "test_a_record_for_another_request_is_refused_not_read_as_unreviewed",
+   "failed": [
+    "test_a_position_whose_only_review_is_stale_is_refused_at_input",
+    "test_a_record_for_another_request_is_refused_not_read_as_unreviewed",
+    "test_a_review_of_another_request_is_refused"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_RESEALED_REVIEW_IS_ACCEPTED",
+   "module": "historical_legal_review.py",
+   "expected": "test_an_edited_count_is_refused_even_when_resealed",
+   "failed": [
+    "test_an_edited_count_is_refused_even_when_resealed"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_BATCH_CONSUMES_A_RECORDED_REVIEW",
+   "module": "historical_legal_review.py",
+   "expected": "test_the_input_carries_a_registered_review_only_in_its_mode",
+   "failed": [
+    "test_the_input_carries_a_registered_review_only_in_its_mode"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "AN_INSTALLED_REVIEW_OF_ANOTHER_POSITION_IS_READ",
+   "module": "historical_legal_review.py",
+   "expected": "test_an_installed_recorded_copy_is_read_only_for_its_own_position",
+   "failed": [
+    "test_an_installed_recorded_copy_is_read_only_for_its_own_position"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "THE_KEYWORD_ADMISSIONS_STAY",
+   "module": "historical_text_results.py",
+   "expected": "test_a_review_replaces_only_the_item_8_excerpts",
+   "failed": [
+    "test_a_review_replaces_only_the_item_8_excerpts",
+    "test_the_candidate_and_its_evidence_follow_the_review"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "AN_UNSETTLED_REVIEW_IS_APPLIED",
+   "module": "historical_text_results.py",
+   "expected": "test_an_unsettled_review_withholds_the_filing_by_name",
+   "failed": [
+    "test_an_unsettled_review_withholds_the_filing_by_name"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_REVIEW_MAY_REACH_C02",
+   "module": "historical_text_results.py",
+   "expected": "test_c02_takes_no_review",
+   "failed": [
+    "test_c02_takes_no_review"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "THE_INPUT_IGNORES_REGISTERED_REVIEWS",
+   "module": "historical_text_input.py",
+   "expected": "test_the_input_carries_a_registered_review_only_in_its_mode",
+   "failed": [
+    "test_a_position_whose_only_review_is_stale_is_refused_at_input",
+    "test_the_input_carries_a_registered_review_only_in_its_mode"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "THE_INPUT_NEVER_CHECKS_WHICH_REVIEW_ANSWERS",
+   "module": "historical_text_input.py",
+   "expected": "test_a_position_whose_only_review_is_stale_is_refused_at_input",
+   "failed": [
+    "test_a_position_whose_only_review_is_stale_is_refused_at_input"
+   ],
+   "result": "CAUGHT"
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

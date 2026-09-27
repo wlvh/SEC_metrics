@@ -35,7 +35,7 @@ D02 的已批来源是 Item 3、legal proceedings 与 contingencies notes。路�
 ## 验证（零调用）
 
 - **用例**：`tests/vnext/test_historical_legal_review.py`，27 例（合成文档上的合同 17 例在 fast 层；Lumen FY2025 真实申报上的 10 例在 saved-source 层）。
-- **注错**：`fault_injections.py`，{INJECT}（`fault-injections.json`）。
+- **注错**：`fault_injections.py`，18 个注错全部由具名用例抓到。第一次运行是 17 个："池吃进附注占有的块"在类夹具处就被池与提案的一致性检查拒绝——它同时改变池与关键词两份列表，守卫先于任何用例触发，这是守卫该做的事，但记下来是夹具处的捕获；于是把请求改成第一次用到时才构造、另加一条不经请求直接读池的用例（`test_the_pool_is_item_8_s_own_blocks`），重跑后 18 个全部由具名用例抓到（`fault-injections.json`）。
 - **运行树端到端**：`recorded_d02_run.py`，Lumen FY2025，合成回答把 3382、3383 判为计入、其余必答块判为排除（`recorded-d02-run-lumen-2025.json`）。同一位置按批次默认（LIVE，没有可消费的登记）建出的 Run，Item 8 摘录是关键词给的 1670、3382、3383；按记录模式装入审阅后 Item 8 只剩 3382、3383，Run 冻结、PUBLISHED/EXACT，公共行 41 条证据并写明"记录测试回答、无真实调用信用"，删掉创建者日志里的登记后另一进程冷读得到同一 run_id 与结果编号，两种 Run 的结果编号不同。运行树是 `ba54996a` 加未提交改动与两份补丁（闭包 `3d1c84cc…`）。
 - **出口路径**：补丁内的 `AD02ReviewIsOneCountedCallOnTheSamePath`（福特）——一次计数的调用、答案检查、从本账本自己的槽位登记、批次默认读不到测试登记、形式失败是计数的失败而不是登记、D02 的请求不能被当成别的指标的请求。
 
