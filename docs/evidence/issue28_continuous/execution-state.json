@@ -34,7 +34,7 @@
     "unknown": 0
   },
   "current_work": [
-    "Current ordinary mixed refresh uses authenticated saved sources with current-rule private processing. Three exact-SHA limited reviews retain NEEDS_FIX histories; the final config-only patch aed8c1cc passed 12 short and two recorded material tests (377.591s), with PASS_WITH_BOUNDS limited review. Head5e2a5ca9 main CI is in progress: source-material shard0 and shard1 failed on three per-case 240s timeouts, with no business assertion failure; a scoped runner-only timeout repair is local and unpushed. Historical prior pointers without pre-state proof remain fail-closed. Real ledger143/143/52 unchanged.",
+    "Current ordinary mixed refresh uses authenticated saved sources with current-rule private processing. Three exact-SHA limited reviews retain NEEDS_FIX histories; the final config-only patch aed8c1cc passed 12 short and two recorded material tests (377.591s), with PASS_WITH_BOUNDS limited review. Head5e2a5ca9 main CI completed failure: only source-material shard0, shard1 and their aggregator failed; the three selectors hit 240s per-case limits without business assertion failure, while 12 other jobs including JPMorgan succeeded. Scoped runner-only timeout repair is committed locally and not yet pushed. Historical prior pointers without pre-state proof remain fail-closed. Real ledger143/143/52 unchanged.",
     "D04 ten companies retain complete real native candidates and independent cold reads; no formal adoption or production switch.",
     "B13 historical190 success is preserved, 111 current reuse remains blocked, 191/192 failed and exhausted their group opportunities. The V7 exact-SHA followup review of the 32-test limited repair remains NEEDS_FIX due three additional bounded counterexamples; live/native acceptance remains suspended and no complete B13 company exists.",
     "Marriott C04 real SEC193-194 same-year refresh preserves two private result versions; Southwest SEC195 acquired its exact missing FY2024 prior annual primary, and a FY2025 C04 PUBLISHED/0 private native Run and independent cold read succeeded. This is not an old-FY2024-Run to new-FY2025-Run automatic transition.",
@@ -44,7 +44,7 @@
     "Ford FY2025 primary/XML contain no CompanyExcludingFordCredit equity XBRL fact; the visible segment table separately reports industrial assets130934m and liabilities109758m, whose residual21176m is not proved attributable equity. Note18 industrial debt current5550m+long16369m=21919m includes finance leases136m+754m; no extra lease addition. B06 remains WITHHELD pending approved denominator relationship. D03 current complete source forms130 groups across ten companies; an offline full-set raw response store has two targeted tests passing and exact-SHA limited review PASS_WITH_BOUNDS and never creates native Result/Run. D03 real provider execution is forbidden. Complete390 and old-entry retirement remain; Paramount C04 lacks same-registrant prior auditor comparison facts."
   ],
   "next": [
-    "Wait for head5e2a5ca9 remaining JPMorgan CI job and record main terminal. Then push only the measured three-selector timeout repair (360/360/300, job35m unchanged) with its original logs; do not rerun already passed local long materials. Continue source/B06/D03 work without new provider/SEC calls or production permission.",
+    "Head5e2a5ca9 CI completed failure with 12 successful jobs and source-material shards failing only measured per-case limits. Push appended e4dbbf8d timeout repair plus c922223e read-only source/B06 audits, then inspect exact new-head CI once and continue independent Issue28 work. Do not rerun passed local long materials or issue real D03/B13 calls.",
     "Read-only ten-company current source discovery found no unresolved saved-source URL; five missing prior-primary HTML files are satisfied by verified same-filing native alternatives. Do not widen SEC capture or fetch the five merely for form completeness. A full metadata refresh has 29 listed URLs versus current SEC remainder28 before reuse/necessity review. Continue normal update, D03/B06 and 390 acceptance on actual gaps.",
     "Salesforce C04 now has a private FY2026 Run using the existing issuer-label policy and original 0002.body proof; preserve original request identity and old FY2026 Result. Continue normal update/cross-year and 390 acceptance without counting the new version as a second coordinate or formal adoption.",
     "Keep B13 V7 closed. The exact-SHA review of 9d04d65 found adjacent-and scope, trailing-if classification and clear-pronoun false rejection; a local followup experiment failed the original role validator, so no unreviewed source patch was retained. Do not resample191/192 or treat pause code as semantic diagnosis. D03 stays no-call: the recorded full-set stores bytes but cannot prove content correctness or generate a native result; build the necessary semantic/native chain without reviving the old source-fact override. Continue B06/390/exit preparation independently.",
@@ -4678,7 +4678,7 @@
     "business_boundary": "No industrial allocation of consolidated noncontrolling interest and no approved conversion of same-column net assets into industrial attributable equity; retain WITHHELD."
   },
   "ci_mixed_resume_timeout_20260927": {
-    "status": "HEAD5E2_MAIN_IN_PROGRESS_TWO_SOURCE_SHARDS_FAILED_PER_CASE_TIMEOUT",
+    "status": "HEAD5E2_MAIN_FAILURE_ONLY_TWO_SOURCE_SHARDS_AND_AGGREGATOR",
     "head": "5e2a5ca9da25419e155f4325140a57236461a0ab",
     "run_id": 36326213320,
     "shard0_job_id": 108639357090,
@@ -4694,12 +4694,14 @@
     },
     "job_timeout_minutes_unchanged": 35,
     "business_assertion_failure_observed": false,
+    "old_head_terminal": "docs/evidence/issue28_continuous/ci-mixed-resume-timeout-20260927/old-head-ci-terminal.json",
+    "old_head_jobs": "12_SUCCESS_3_FAILURE_TWO_SOURCE_SHARDS_PLUS_AGGREGATOR",
     "new_business_calls": [
       0,
       0,
       0
     ],
     "evidence": "docs/evidence/issue28_continuous/ci-mixed-resume-timeout-20260927/README.md",
-    "remaining": "WAIT_MAIN_TERMINAL_AND_NEW_HEAD_CI"
+    "remaining": "PUSH_SCOPED_RESOURCE_FIX_THEN_NEW_HEAD_CI"
   }
 }
