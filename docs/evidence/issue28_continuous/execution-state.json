@@ -37,15 +37,16 @@
     "D04 ten companies retain complete real native candidates and independent cold reads; no formal adoption or production switch.",
     "B13 historical190 success is preserved, 111 current reuse remains blocked, 191/192 failed and exhausted their group opportunities. The V7 exact-SHA followup review of the 32-test limited repair remains NEEDS_FIX due three additional bounded counterexamples; live/native acceptance remains suspended and no complete B13 company exists.",
     "Marriott C04 real SEC193-194 same-year refresh preserves two private result versions; Southwest SEC195 acquired its exact missing FY2024 prior annual primary, and a FY2025 C04 PUBLISHED/0 private native Run and independent cold read succeeded. This is not an old-FY2024-Run to new-FY2025-Run automatic transition.",
-    "Salesforce current period ending2026-01-31 and prior annuals are saved, but two separate issues block a new C04 Run: frozen v2 URL/document-name equality rejects one genuine legacy 0002.body request-log alias; the issuer explicitly defines fiscal2026 while DEI and current ordinary input label the same period2025. Original proof and old FY2026 390 row remain unchanged; a compatible successor and fiscal-label business rule are separate prerequisites.",
+    "Salesforce current period ending2026-01-31 and prior annuals are saved. The explicit C04 successor binds the original 0002.body GET proof without changing frozen v2, and reuses the existing issuer-label policy to preserve FY2026 while retaining DEI/Company Facts FY2025. Private PUBLISHED/0 native Run/public row, independent cold read and unchanged-input reuse passed; old FY2026 390 Result remains a separate historical version, not a new complete coordinate or formal adoption. Patch15260ba5 limited review PASS_WITH_BOUNDS; head ed4dd057 main CI36315612650 15/15 SUCCESS.",
     "D03 source-material duplicate rebuild reduction measured 116.660 to 80.409 seconds locally; final two original material tests 78.737 seconds and exact-SHA limited followup review PASS_WITH_BOUNDS. Head9fa84fc2 main CI36298137866 completed SUCCESS, all15 jobs including saved-source shard0 succeeded.",
-    "D03 real provider execution is still forbidden; B06 same-scope industrial equity, complete390 and old-entry retirement remain. Paramount C04 lacks same-registrant prior auditor comparison facts, so no invented zero or one."
+    "Heads f5e7bc0d and 2ab35195 main CI failed only because C04RefreshResumeMaterialTest in saved-source shard1 hit its 240-second per-case limit. The measured scoped360-second override at head084ed601 passed main CI36313170912, all15 jobs. Subsequent C04 alias/label head ed4dd057 also passed main CI36315612650, all15 jobs.",
+    "Ford FY2025 saved primary/XML contain no CompanyExcludingFordCredit equity fact while consolidated equity exists; industrial debt21919m remains a subtotal and B06 WITHHELD. D03 current complete source forms130 groups across ten companies; an offline full-set raw response store has two targeted tests passing but still requires new limited review and never creates native Result/Run. D03 real provider execution is forbidden. Complete390 and old-entry retirement remain; Paramount C04 lacks same-registrant prior auditor comparison facts."
   ],
   "next": [
-    "Preserve head9fa84fc2 main CI36298137866 all15 SUCCESS; do not rerun passed D03 material or other jobs merely to obtain a second result.",
+    "Preserve head ed4dd057 main CI36315612650 all15 SUCCESS for the C04 alias/label code, with separate exact-SHA limited review; do not extend this to all390 or cross-year automatic update. New D03 offline packet code must receive exact-SHA limited review and current-head CI after push.",
     "Use the newly saved Southwest prior annual in the private C04 native Run chain; keep the 195 real source and cold read. Cross-year automatic transition remains unproven until an authentic earlier submissions/Run version exists; do not fabricate an old HTTP response.",
-    "For Salesforce, handle 0002.body only through an explicit source-proven successor preserving original proof and frozen defaults, and resolve the separately confirmed FY2026 issuer-definition versus DEI2025 identity conflict before generating a new Run. An alias-only prototype was discarded after exposing the wrong FY2025 label.",
-    "Keep B13 V7 closed. The exact-SHA review of 9d04d65 found adjacent-and scope, trailing-if classification and clear-pronoun false rejection; a local followup experiment failed the original role validator, so no unreviewed source patch was retained. Do not resample191/192 or treat pause code as semantic diagnosis. D03 stays no-call; continue B06/390/exit preparation independently.",
+    "Salesforce C04 now has a private FY2026 Run using the existing issuer-label policy and original 0002.body proof; preserve original request identity and old FY2026 Result. Continue normal update/cross-year and 390 acceptance without counting the new version as a second coordinate or formal adoption.",
+    "Keep B13 V7 closed. The exact-SHA review of 9d04d65 found adjacent-and scope, trailing-if classification and clear-pronoun false rejection; a local followup experiment failed the original role validator, so no unreviewed source patch was retained. Do not resample191/192 or treat pause code as semantic diagnosis. D03 stays no-call: the recorded full-set stores bytes but cannot prove content correctness or generate a native result; build the necessary semantic/native chain without reviving the old source-fact override. Continue B06/390/exit preparation independently.",
     "No Ready, merge, adoption, deployment, active switch, long-running production, #47 interaction or new provider permission."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
@@ -143,17 +144,17 @@
     "material": "ordinary-document-identity/"
   },
   "latest_ci_observation": {
-    "head": "9fa84fc2dec0faaffc0e09073dfc96c24a9e6717",
-    "run_id": 36298137866,
+    "head": "084ed60139d847b182631ff549820b078f930b15",
+    "run_id": 36313170912,
     "status": "completed",
     "conclusion": "success",
     "jobs_success": 15,
     "jobs_failed": 0,
     "saved_source_material_shard_0": "success",
-    "saved_source_material_shard_1": "success",
+    "saved_source_material_shard_1": "success_with_C04_REFRESH_RESUME_360_SECOND_OVERRIDE",
     "d03_recorded_selector": "PASS_WITHIN_300_SECOND_RUNNER_LIMIT",
-    "observed_final_updated_at_utc": "2026-09-27T06:22:11Z",
-    "source": "https://github.com/wlvh/SEC_metrics/actions/runs/36298137866"
+    "observed_final_updated_at_utc": "2026-09-27T11:05:10Z",
+    "source": "https://github.com/wlvh/SEC_metrics/actions/runs/36313170912"
   },
   "ordinary_special_debt_scope": {
     "source_tests": "6_PASS_23.968_SECONDS",
@@ -750,11 +751,11 @@
     "material": "paramount-c04-source-inspection/registration-variants-real-material/",
     "current_metric_complete": false
   },
-  "latest_delivery_head": "227182efe31b7ce6364c866753ae1332afb41ea2",
+  "latest_delivery_head": "084ed60139d847b182631ff549820b078f930b15",
   "current_applied_binding": {
-    "ordinary_V14": "sha256:d5655149260a8a4dfc81372fe484f2c2c8a4d959c06d81eabf732e762d418ab9",
-    "continuous_V15": "sha256:fc4477f827c65cc252e944ce43719ea4a330b5ad037bfcf62e8c8d205dc4a307",
-    "provider_and_sec_wiring": "V14 B13 explicit V7-only finite diagnostic bytes rebound; provider/SEC/ordinary-refresh receipts current and 95/50/50 evidence hashes verified offline. V13 default unchanged; real SEC195 separately counted."
+    "ordinary_V14": "sha256:744b75370388dc52ce2203f36ea2ad1af8a8f4782ba96ed66f268734651e80f5",
+    "continuous_V15": "sha256:cc90fc7b8f9ad0a589e09fab64fc3088f8c6b092cdb5d8698d378c74cd546dd3",
+    "provider_and_sec_wiring": "Current unfrozen V13/V14 C04 explicit successor code and three provider/SEC/ordinary-refresh receipts verified offline; frozen v12 governance_signals bytes unchanged, original SEC ledger through195 unchanged."
   },
   "current_observed_call_totals": {
     "through_ordinal": 195,
@@ -1800,6 +1801,51 @@
       "ordinary_messages_observed": 5,
       "message_cap_exceeded": true,
       "followup_task_sent_only_for_call_tally_after_review": true
+    },
+    {
+      "task_name": "review_c04alias_15260ba",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "c04_verified_alias_label",
+      "scope_paths": [
+        "scripts/vnext/c04_registration_successor.py",
+        "scripts/vnext/c04_verified_document_alias.py",
+        "tests/vnext/test_c04_registration_successor.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json",
+        "docs/evidence/issue28_continuous/c04-verified-alias-label-20260927/"
+      ],
+      "patch_sha": "15260ba5fead08d6cdd0e6cc66c344b5aea06aa5",
+      "spawned_at": "2026-09-27T11:14:38Z",
+      "ended_at": "2026-09-27T11:23:14Z",
+      "tool_calls": 28,
+      "result_path": "docs/evidence/issue28_continuous/c04-verified-alias-label-20260927/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_C04_ALIAS_LABEL_PRIVATE_RUN_SOURCE_BINDING",
+      "ordinary_messages_observed": 1,
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3
+    },
+    {
+      "task_name": "review_d03set_065cbb8",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_complete_recorded_response_set",
+      "scope_paths": [
+        "scripts/vnext/d03_recorded_response_set.py",
+        "tests/vnext/test_d03_recorded_response_set.py",
+        "tools/run_fast_tests_v2.py",
+        "docs/evidence/issue28_continuous/d03-complete-recorded-set-20260927/"
+      ],
+      "patch_sha": "065cbb8708acd9a87131fbf9281408a0d54305d4",
+      "spawned_at": "2026-09-27T12:06:44Z",
+      "ended_at": "2026-09-27T12:12:45Z",
+      "tool_calls": 62,
+      "result_path": "docs/evidence/issue28_continuous/d03-complete-recorded-set-20260927/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_D03_OFFLINE_COMPLETE_RECORDED_SET",
+      "ordinary_messages_observed": 1,
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -4175,5 +4221,131 @@
       "downstream_integration_by_47_executor_only": true
     },
     "evidence": "docs/evidence/issue28_continuous/b13-v7-finite-claim-repair-20260927/README.md"
+  },
+  "ci_c04_resume_timeout_20260927": {
+    "status": "MEASURED_SINGLE_SELECTOR_LIMIT_REPAIR_HEAD084ED601_CI_SUCCESS",
+    "selector": "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",
+    "ci_pass_9fa84fc2_seconds": 163.194,
+    "ci_timeout_f5e7bc0d_seconds": 240.053,
+    "ci_timeout_2ab35195_seconds": 240.104,
+    "ci_timeout_return_code": 124,
+    "business_assertion_failure_observed": false,
+    "local_complete_test_seconds": 119.135,
+    "local_branches_seconds": [65.738, 0.122, 4.635, 45.358, 0.044],
+    "scoped_new_per_case_timeout_seconds": 360,
+    "other_source_case_default_seconds": 240,
+    "d03_case_timeout_seconds": 300,
+    "overall_ci_shard_job_timeout_minutes_unchanged": 35,
+    "full_material_rerun_after_config_change": false,
+    "ci_run_id": 36313170912,
+    "ci_all_15_jobs_success": true,
+    "new_real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/ci-c04-resume-timeout-20260927/README.md"
+  },
+  "c04_salesforce_alias_label_native_20260927": {
+    "status": "PRIVATE_FY2026_CANDIDATE_READY_PUBLISHED_ZERO_INDEPENDENT_COLD_READ_PASS",
+    "company_id": "salesforce",
+    "metric_id": "C04",
+    "actual_period": {"fiscal_year": 2026, "period_start": "2025-02-01", "period_end": "2026-01-31"},
+    "original_dei_and_companyfacts_fiscal_year": 2025,
+    "selected_fiscal_year_basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION_EXISTING_V1_POLICY",
+    "original_alias_document_name": "0002.body",
+    "actual_sec_url_document_name": "crm-20250131.htm",
+    "original_source_reference_id": "sha256:5dba75f58e0215431818b4822462606124c54301fd82c5a6be8f5feb1e9b5c43",
+    "private_result_id": "sha256:96553cca7232ec4860d878158cc1a01dc9bdac82b14effc0fef8c707aae688b1",
+    "private_run_id": "run:ordinary-integrated:b9aee93c890b69b0265c882a6d0b00bc1f490c46c0a81ec2fd781576cb9f13b5",
+    "private_successful_attempt": "fb650d2925f945638f7f924acf79d21b",
+    "publication": "PUBLISHED",
+    "value": "0",
+    "original_marriott_result_selection_binding_ids_unchanged": true,
+    "paramount_still_withheld": true,
+    "macys_fiscal_year_2025_retained": true,
+    "unchanged_input_reuses_same_successful_result": true,
+    "independent_cold_read_network_and_subprocess_forbidden": true,
+    "historical_southwest_installed_code_cold_read": "PASS_ORIGINAL_RESULT_AND_ROW_BYTES",
+    "wrong_current_code_root_old_package_rejected": true,
+    "old_390_salesforce_result_retained": true,
+    "new_complete_390_coordinate_count": 0,
+    "cross_year_automatic_update_proven": false,
+    "limited_independent_review": "PASS_WITH_BOUNDS_15260ba5",
+    "limited_independent_review_result": "docs/evidence/issue28_continuous/c04-verified-alias-label-20260927/independent-review/conclusion.md",
+    "new_head_ci": "SUCCESS_36315612650_15_OF_15",
+    "new_real_calls": [0, 0, 0],
+    "formal_adoption_or_production_authorized": false,
+    "shared_with_47": {
+      "changed_current_execution_paths": [
+        "scripts/vnext/c04_registration_successor.py",
+        "scripts/vnext/c04_verified_document_alias.py"
+      ],
+      "frozen_governance_signals_unchanged": true,
+      "v13_v14_current_binding_changed": true,
+      "old_installed_run_default_behavior_and_readback_preserved": true,
+      "issue47_branch_or_ledger_touched": false
+    },
+    "evidence": "docs/evidence/issue28_continuous/c04-verified-alias-label-20260927/README.md"
+  },
+  "b06_ford_equity_scope_20260927": {
+    "status": "SAVED_FY2025_PRIMARY_AND_XML_NO_INDUSTRIAL_DIMENSION_EQUITY_FACT",
+    "company_id": "ford_motor_company",
+    "metric_id": "B06",
+    "accession": "0000037996-26-000015",
+    "period_end": "2025-12-31",
+    "industrial_debt_reported_subtotal_usd": "21919000000",
+    "same_scope_attributable_equity_proven": false,
+    "industrial_debt_set_completeness_proven": false,
+    "consolidated_equity_is_not_industrial_denominator": true,
+    "current_result": "WITHHELD_NULL_B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+    "source_scope_limit": "CURRENT_PERIOD_XBRL_FACTS_IN_ALREADY_SAVED_ANNUAL_PRIMARY_AND_ACCESSION_XML_ONLY",
+    "new_real_calls": [0, 0, 0],
+    "independent_review_or_business_approval": false,
+    "evidence": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/README.md"
+  },
+  "d03_current_input_census_20260927": {
+    "status": "TEN_COMPANIES_COMPLETE_SAVED_INPUTS_GROUPED_OFFLINE_NO_REAL_EXECUTION",
+    "tested_code_head": "5dcded2a7725cb613f2dab89a1e38234b7cfa6b6",
+    "request_context_format": "deepseek-v41-two-message-json-chat-1",
+    "tokenizers_version": "0.22.2",
+    "full_source_units": 448,
+    "current_group_count": 130,
+    "company_group_counts": {
+      "marriott_international": 5,
+      "southwest_airlines": 9,
+      "ford_motor_company": 15,
+      "pfizer": 16,
+      "jpmorgan_chase": 38,
+      "salesforce": 7,
+      "lumen_technologies": 11,
+      "macys": 7,
+      "paramount_skydance_paramount_global": 14,
+      "enphase_energy": 8
+    },
+    "source_statement_fact_group_count": 1,
+    "source_statement_fact_count": 1,
+    "every_group_output_and_semantics_proven": false,
+    "native_result_or_run_created": false,
+    "new_real_calls": [0, 0, 0],
+    "d03_real_requests_authorized": false,
+    "conditional_provider_shortfall_d03_only_if_one_call_per_group": 33,
+    "evidence": "docs/evidence/issue28_continuous/d03-current-input-census-20260927/README.md"
+  },
+  "d03_complete_recorded_set_20260927": {
+    "status": "OFFLINE_COMPLETE_RESPONSE_SET_RAW_BYTES_COLD_REPLAY_NO_NATIVE_OR_LIVE_CREDIT",
+    "module": "scripts/vnext/d03_recorded_response_set.py",
+    "source_test_selector": "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest",
+    "test_result": "PASS_2_TESTS_117_372_SECONDS",
+    "real_marriott_group_count_tested": 5,
+    "real_jpmorgan_source_anchor_successor_tested": true,
+    "separate_process_marriott_record_and_cold_read": "PASS_5_OF_5_REQUESTS_WITH_5_UNRESOLVED",
+    "recorded_packet_id": "sha256:198ade1a29070ec2737f8372618415e1e1da6b5155b507ea748d5f5550029162",
+    "exact_raw_response_and_external_packet_id_checked": true,
+    "missing_extra_tampered_packet_rejected": true,
+    "old_d03_recorded_response_store_module_unchanged": true,
+    "real_provider_response_or_semantic_accuracy_proven": false,
+    "native_result_or_run_created": false,
+    "new_real_calls": [0, 0, 0],
+    "d03_real_requests_authorized": false,
+    "limited_independent_review": "PASS_WITH_BOUNDS_065cbb87",
+    "limited_independent_review_result": "docs/evidence/issue28_continuous/d03-complete-recorded-set-20260927/independent-review/conclusion.md",
+    "evidence": "docs/evidence/issue28_continuous/d03-complete-recorded-set-20260927/README.md"
   }
 }
