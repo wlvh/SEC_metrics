@@ -33,3 +33,5 @@
 `independent-review-recovery/conclusion.md`确认上述两项指定反例已处理，但结论仍为`NEEDS_FIX`：普通更新先写`configuration.json`，随后若状态读取失败会返回真实`UPDATE_BLOCKED`而没有创建尝试；先前把配置存在一律当作尝试，误拦C04独立来源续跑。短注入日志`independent-review-recovery/blocked-history-short.log`记录了这个实际写入顺序，前次独审结论保留。
 
 本轮仅让“配置存在但与当前来源/规则身份一致、当前指针和尝试目录都不存在”成为可续跑的阻断状态；已有真实尝试或当前指针仍不可凭报告自称阻断来跳过核对。已有历史指针但本轮未尝试的情形没有独立的前态证明，本路径保守拒绝该报告的`resume_from`，不把它宣称为全部恢复能力。`config-only-short.log`12项PASS，验证配置先写、状态读取失败时没有尝试；`config-only-material.log`两套录制来源材料2项PASS、合计377.591秒，把有效既存配置放入副本失败报告的同一状态根，恢复后仍完成另一来源及B01/C04结果，并保留成功行状态降格拒绝。当前V13父级闭包字节未变，V14与三份收据见`binding-config-only-after.json`。前次`resume-followup-fast.log`132/132只覆盖旧子补丁；本次受影响短测与材料另验，新head CI仍待核对。原账本无新增真实调用或生产采纳；本补丁限定独审另记。
+
+精确补丁`aed8c1cc`的独审见`independent-review-config-only/conclusion.md`，结论`PASS_WITH_BOUNDS`：亲自重跑短测12项并核对合法配置、错误来源身份及篡改配置反例；377秒材料只读取保存日志，未重复执行。它明确不覆盖已有历史指针但本轮未尝试的恢复、真实在线获取、完整公司结果或390验收。前三份`NEEDS_FIX`审阅保持历史原义，本份只覆盖最新配置/尝试差异。新head CI和真实业务缺口单独验收。

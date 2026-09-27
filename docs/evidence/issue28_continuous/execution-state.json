@@ -34,7 +34,7 @@
     "unknown": 0
   },
   "current_work": [
-    "Current ordinary mixed refresh uses authenticated saved sources with current-rule private processing. Three exact-SHA limited reviews each found a bounded resume P2 and retain NEEDS_FIX histories. The fourth config-only correction distinguishes a written configuration from a persisted attempt; short12 PASS, two recorded material cases PASS in377.591s, exact-SHA review and current-head CI pending. Real ledger143/143/52 unchanged.",
+    "Current ordinary mixed refresh uses authenticated saved sources with current-rule private processing. Three exact-SHA limited reviews each found a bounded resume P2 and retain NEEDS_FIX histories. The fourth config-only correction distinguishes a written configuration from a persisted attempt; short12 PASS, two recorded material cases PASS in377.591s, exact-SHA limited review PASS_WITH_BOUNDS; current-head CI pending. Historical prior pointers without pre-state proof remain fail-closed. Real ledger143/143/52 unchanged.",
     "D04 ten companies retain complete real native candidates and independent cold reads; no formal adoption or production switch.",
     "B13 historical190 success is preserved, 111 current reuse remains blocked, 191/192 failed and exhausted their group opportunities. The V7 exact-SHA followup review of the 32-test limited repair remains NEEDS_FIX due three additional bounded counterexamples; live/native acceptance remains suspended and no complete B13 company exists.",
     "Marriott C04 real SEC193-194 same-year refresh preserves two private result versions; Southwest SEC195 acquired its exact missing FY2024 prior annual primary, and a FY2025 C04 PUBLISHED/0 private native Run and independent cold read succeeded. This is not an old-FY2024-Run to new-FY2025-Run automatic transition.",
@@ -44,7 +44,7 @@
     "Ford FY2025 saved primary/XML contain no CompanyExcludingFordCredit equity fact while consolidated equity exists; industrial debt21919m remains a subtotal and B06 WITHHELD. D03 current complete source forms130 groups across ten companies; an offline full-set raw response store has two targeted tests passing and exact-SHA limited review PASS_WITH_BOUNDS and never creates native Result/Run. D03 real provider execution is forbidden. Complete390 and old-entry retirement remain; Paramount C04 lacks same-registrant prior auditor comparison facts."
   ],
   "next": [
-    "Prior head b686814f main CI36318290207 SUCCESS 15/15. Preserve three NEEDS_FIX limited reviews; preserve the config-only resume material PASS and complete exact-SHA followup review, then push and inspect new-head CI. Do not treat local recorded candidates as online year update or full390 acceptance.",
+    "Prior head b686814f main CI36318290207 SUCCESS 15/15. Preserve three NEEDS_FIX limited reviews; preserve the config-only resume material PASS and preserve exact-SHA followup PASS_WITH_BOUNDS, then push and inspect new-head CI. Do not treat local recorded candidates as online year update or full390 acceptance.",
     "Preserve Southwest FY2025 and Salesforce FY2026 private C04 native results and original source identities. The current processing-source copy removes a mixed B01/C04 old-rule blocker without claiming full source acquisition or cross-year online update. Continue bounded normal source discovery/acquisition engineering and 390 acceptance.",
     "Salesforce C04 now has a private FY2026 Run using the existing issuer-label policy and original 0002.body proof; preserve original request identity and old FY2026 Result. Continue normal update/cross-year and 390 acceptance without counting the new version as a second coordinate or formal adoption.",
     "Keep B13 V7 closed. The exact-SHA review of 9d04d65 found adjacent-and scope, trailing-if classification and clear-pronoun false rejection; a local followup experiment failed the original role validator, so no unreviewed source patch was retained. Do not resample191/192 or treat pause code as semantic diagnosis. D03 stays no-call: the recorded full-set stores bytes but cannot prove content correctness or generate a native result; build the necessary semantic/native chain without reviving the old source-fact override. Continue B06/390/exit preparation independently.",
@@ -1932,6 +1932,34 @@
       "tool_call_count_detail": {
         "outer_exec": 14,
         "nested_commands": 39,
+        "patch_operations": 2
+      }
+    },
+    {
+      "task_name": "review_normconfig_aed8c1c",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_config_only_resume",
+      "scope_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tests/vnext/test_ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/"
+      ],
+      "patch_sha": "aed8c1ccf66728b6e9dbc1faa5f9ece5ccc87c8c",
+      "spawned_at": "2026-09-27T14:23:57.230155Z",
+      "ended_at": "2026-09-27T14:30:11.598936Z",
+      "tool_calls": 60,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review-config-only/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_CONFIG_ONLY_NO_ATTEMPT_RESUME",
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3,
+      "ordinary_messages_observed": 3,
+      "tool_call_count_detail": {
+        "outer_exec": 18,
+        "nested_commands": 38,
+        "web_calls": 2,
         "patch_operations": 2
       }
     }
@@ -4452,7 +4480,7 @@
     "evidence": "docs/evidence/issue28_continuous/c04-legacy-independent-replay-20260927/README.md"
   },
   "ordinary_processing_snapshot_20260927": {
-    "status": "FOURTH_CONFIG_ONLY_MATERIAL_PASS_LIMITED_REVIEW_AND_CI_PENDING",
+    "status": "FOURTH_CONFIG_ONLY_LIMITED_REVIEW_PASS_WITH_BOUNDS_CI_PENDING",
     "reason": "Authenticated fixed #28 source root contains old ordinary rule copies, preventing current B01 before business input evaluation in explicit C04 mixed refresh.",
     "evidence": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/README.md",
     "current_parent_v13_closure": "sha256:bcdbd50d5a5aa0c23edc5ee5cd61d7f39a2d846570b23fccba565b2e3d5abfe0",
@@ -4500,9 +4528,9 @@
       "fourth_config_only_short": "12_PASS_3.899_SECONDS"
     },
     "remaining": [
-      "FOURTH_CONFIG_ONLY_EXACT_SHA_LIMITED_REVIEW",
       "CURRENT_HEAD_MAIN_CI",
       "NON_C04_FRESH_SOURCE_CAPTURE_NOT_YET_WIDENED",
+      "HISTORICAL_POINTER_RESUME_WITHOUT_PRESTATE_PROOF_FAIL_CLOSED",
       "NO_CROSS_YEAR_REAL_ONLINE_UPDATE_CREDIT",
       "NO_FULL390_ACCEPTANCE"
     ],
@@ -4555,6 +4583,12 @@
         0,
         0
       ]
+    },
+    "fourth_limited_review": {
+      "patch_sha": "aed8c1ccf66728b6e9dbc1faa5f9ece5ccc87c8c",
+      "verdict": "PASS_WITH_BOUNDS_CONFIG_ONLY_NO_ATTEMPT_RESUME",
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review-config-only/conclusion.md",
+      "scope": "config-only blocked resume, identity and current V14 binding; long material logs read, not rerun"
     }
   },
   "shared_with_issue47_20260927": {

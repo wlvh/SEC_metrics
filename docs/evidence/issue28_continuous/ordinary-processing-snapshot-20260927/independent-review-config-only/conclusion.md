@@ -1,0 +1,11 @@
+# aed8c1cc 配置已写、无尝试续跑的限定独立审阅
+
+结论：**PASS_WITH_BOUNDS；本增量未发现新的阻断项。** 审阅对象为 `aed8c1ccf66728b6e9dbc1faa5f9ece5ccc87c8c` 相对 `8ce178a5a70db21cd80f39e33b6a446e3bd9d620` 的配置已写、无普通指标尝试的续跑修正。它处理了前次独审指出的一个真实误拦截：`ordinary_update_cycle.run_once()` 在创建尝试意图前先写 `configuration.json`、读取状态；读取失败由 `run_company()` 报为没有 `attempt_id` 的 `UPDATE_BLOCKED`（`ordinary_update_cycle.py:276-284,349-357`）。新谓词允许这个配置文件存在，但仍要求报告无尝试/终态/成功候选、磁盘无 `current.json` 和 `attempts`（`ordinary_refresh_cycle.py:238-259`）。因此“配置已写”与“已有尝试”不再被混为一谈。
+
+接受已有配置时，谓词调用原生 `_config()`：其 `_read()` 校验 `record_id`，随后核对公司、单一指标、来源身份根、Requirement closure 及零外发/非生产标志；B13/D04 的登记选项另含运行模式（`ordinary_update_cycle.py:34-43,58-82`）。本审阅独立做了短反例：同身份重复读取成功，换来源根和破坏 `record_id` 均被拒绝。真实成功的 B01 尝试会留下 `attempts` 及 `current.json`，故将其报告行伪造为 `UPDATE_BLOCKED` 不会经由这条新分支通过；保存的录制材料测试在第二次捕获前明确断言拒绝该降格（`test_c04_source_only_install.py:119-135`）。已写入意图但尚无当前指针时，只要 `attempts` 目录存在也会保守拒绝。
+
+同一谓词用于带有效处理副本的 `READY` 报告、处理副本失败的 `FAILED` 报告和无新状态字段的旧 `SOURCE_SCOPE` 报告（`ordinary_refresh_cycle.py:260-348`）。保存的录制材料测试在失败副本分支预置合法 B01 配置，完成原 SEC 成功收据的接续和第二条来源捕获；旧报告在**无现存尝试与当前指针**的条件下也能使用此谓词。**已有历史 `current.json` 或 `attempts` 的状态根仍被明确拒绝**，即使本轮没有新尝试；补丁没有保存本轮开始前的状态身份，因而不证明这种历史根的续跑兼容。短测证明实际状态读取失败会产生配置已写而未创建尝试的状态；保存材料与代码路径共同支持这个有限修复，但未独立执行“同一轮真实状态读取失败 + READY 副本 + 两次来源捕获”的完整组合。
+
+验证：本审阅亲自运行 `PYTHONPATH=scripts /private/tmp/issue28_py314_venv/bin/python -m unittest tests.vnext.test_ordinary_refresh_cycle`，**12/12 PASS**（`short.log`）；独立配置身份反例通过（`config-identity.log`）；只读 V14 execution authority、三份接线 receipt 和当前模块 SHA/size 校验通过（`binding.log`）。模块 SHA 为 `ba39198377748d9d060e2aaf1085f0c203c5d49bde9c7ea2864c15638145b234`，V14 closure 为 `sha256:d6ba0de4c9bec5e535375c21189fdd8840354964fda02700f9c8dd4d5081e8b4`。读取提交内的 `config-only-short.log`（12/12 PASS）、`config-only-material.log`（录制材料 2/2 PASS，377.591 秒）及 `binding-config-only-after.json`；本审阅**没有重跑**材料测试、132 项快测或旧长链。配置身份反例首次用了含系统软链接的临时目录，路径守卫按预期拒绝；改用 `/private/tmp` 后通过，该失败不代表产品代码缺陷。
+
+范围：这是离线、录制与代码级的限定审阅；没有发出 SEC/provider 请求，也未验证 live 恢复、旧历史指针可续跑、完整公司结果、390 坐标、正式采纳或生产切换。未修改产品代码，未提交、推送、触碰 #47/PR52 或打包。新增项目调用 `provider/paid/SEC = 0/0/0`。工具/消息：`functions.exec` 18 次（本地 `exec_command` 38 次、`web` 2 次、`apply_patch` 2 次，含最终文件核验），普通进度消息 2 条、最终报告 1 份，耗时低于 90 分钟。
