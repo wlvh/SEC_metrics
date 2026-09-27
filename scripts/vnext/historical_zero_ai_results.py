@@ -40,8 +40,9 @@ from .canonical import content_hash, sha256_file, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_da_scope_candidate import (COMPOSITION, DIRECT, WITHHELD_REASON as DA_SCOPE_REASON,
                                             agree, annual_facts, da_scope_answer)
-from .historical_event_items import (NOT_LOCATED_REASON, PENDING_REASON, EventItemTextError,
-                                     compact, keyword_item_answer)
+from .historical_event_items import (CONFIRMATION_REASON, NOT_LOCATED_REASON, SUCCESSOR_EVENT_ROUTES,
+                                     EventItemTextError, compact_confirmation,
+                                     content_confirmation_candidates, successor_event_route)
 from .historical_filing_inventory import filing_inventory
 from .normal_annual_input_v2 import exact_json_value
 from .normal_governance_input import _Sources, NormalGovernanceInputError
@@ -51,7 +52,8 @@ from .normal_zero_ai_results import (B01_SPEC_PATH, B03_SPEC_PATH, EVENT_METRICS
 from .observations import structured_observation
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
-from .sources import companyfacts_structured_facts, SourceError
+from .normal_source_authority import ROOT
+from .sources import companyfacts_structured_facts, resolve_repository_file, SourceError
 from .specs import compile_spec_file
 from .traits import repository_company_traits
 from .deterministic_router import (adapt_companyfacts, load_event_route_catalog,
@@ -68,8 +70,8 @@ class _AmendmentRefused(Exception):
     """Control flow only: the approved amendment policy refused this input class."""
 
 
-class _KeywordMeaningPending(Exception):
-    """Control flow only: a keyword item's own text carries an alias, whose meaning is undecided."""
+class _ConfirmationNotRegistered(Exception):
+    """Control flow only: a content-confirmed route's window holds a candidate nobody has confirmed."""
 
 
 class _DepreciationScopeUnproven(Exception):
@@ -217,6 +219,14 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     _need(metric_id in SUPPORTED_METRICS,
           "HISTORICAL_ZERO_AI_METRIC_NOT_WIRED:" + metric_id, "IMPLEMENTATION_GAP")
     authority = _authority(repo_root)
+    if metric_id in SUCCESSOR_EVENT_ROUTES:
+        # The successor route is read from the data root the Run is built in;
+        # it must be the code tree's own, as every frozen authority file is.
+        relative = SUCCESSOR_EVENT_ROUTES[metric_id]
+        expected = sha256_file(path=ROOT / relative)
+        _need(sha256_file(path=resolve_repository_file(repo_root=repo_root, repo_relative_path=relative))
+              == expected, "HISTORICAL_EVENT_SUCCESSOR_ROUTE_NOT_INSTALLED:" + relative, "AUTHORITY_CONFLICT")
+        authority = {**authority, relative: expected}
     prepared = prepare_historical_annual_input(repo_root=repo_root, company_id=company_id,
                                                period_selection=period_selection)
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
@@ -281,6 +291,15 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
         catalog = load_event_route_catalog(repo_root=repo_root)
         spec_path = None
         spec_origin = {"catalog_path": "catalog/event_routes.json", "metric_id": metric_id}
+        if metric_id in SUCCESSOR_EVENT_ROUTES:
+            # The owner's content-confirmed meaning is a new route with its own
+            # hash, so its Spec - and every acceptance bound to a Spec - is not
+            # the approved item-rule route's. The frozen catalog is left as it
+            # is; only this metric's route is substituted.
+            route = successor_event_route(repo_root=repo_root, metric_id=metric_id,
+                                          frozen_route=catalog["routes"][metric_id])
+            catalog = {**catalog, "routes": {**catalog["routes"], metric_id: route}}
+            spec_origin = {"catalog_path": SUCCESSOR_EVENT_ROUTES[metric_id], "metric_id": metric_id}
         spec = _compiled_event_spec(metric_id=metric_id, route=catalog["routes"][metric_id])
         scope = {"coverage": "fiscal_year_source_set", "fiscal_year": period["fiscal_year"],
                  "shared_claim_group_id": catalog["routes"][metric_id]["shared_claim_group_id"]}
@@ -307,7 +326,7 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     claims, source_sets, observations, dependency_records = [], [], [], []
     filings = [prepared["filing"]]
     selection = {}
-    keyword = None
+    confirmation = None
     try:
         if amendment_refusal is not None:
             raise _AmendmentRefused
@@ -329,23 +348,25 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                     repo_root=repo_root, reader=reader, prepared=prepared, inventory=inventory)
             filings.extend(events)
             route = catalog["routes"][metric_id]
-            projected = claims
-            if route["keyword_item_rules"]:
-                # A keyword item is confirmed by its own text, read from the
-                # primary document (historical_event_items), never by the
-                # frozen brief, which for an hdr-coded filing is a sentence the
-                # program wrote. Until the meaning of an alias occurring there
-                # is decided, only the directly counted items are projected,
-                # and a window where a keyword item's text carries an alias is
-                # withheld by name below.
-                keyword = keyword_item_answer(repo_root=repo_root, route=route,
-                                              claims=claims, records=reader.records)
-                if keyword["status"] == "MEANING_PENDING":
-                    raise _KeywordMeaningPending
-                counted = set(keyword["counted_claim_ids"])
-                projected = [claim for claim in claims if claim["verified_claim_id"] in counted]
+            # The frozen matcher reads a keyword item's alias off the claim's
+            # brief, which for an hdr-coded filing is a sentence the program
+            # wrote; the one route that had keyword items now reads its
+            # candidates' own text instead. A route with keyword items reaching
+            # here would be answered by that brief, so it stops by name.
+            _need(not route["keyword_item_rules"], "HISTORICAL_EVENT_KEYWORD_ROUTE_NOT_READ:" + metric_id,
+                  "IMPLEMENTATION_GAP")
+            if "confirmation" in route:
+                # Every candidate is read from its own text; none is confirmed
+                # here. A window with a candidate is withheld by name until its
+                # confirmations are registered; a window with none is answered
+                # through the route's own matcher, which then finds no
+                # candidate code among the claims.
+                confirmation = content_confirmation_candidates(
+                    repo_root=repo_root, route=route, claims=claims, records=reader.records)
+                if confirmation["candidates"]:
+                    raise _ConfirmationNotRegistered
             graph = project_event_result(
-                metric_id=metric_id, claims=projected, source_set_manifest=source_sets[-1],
+                metric_id=metric_id, claims=claims, source_set_manifest=source_sets[-1],
                 inventory_source_reference=inventory["source_reference"],
                 target_period=period, catalog=catalog)
             original = graph["observation"]
@@ -354,8 +375,8 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
             binding = {**original["source_binding"],
                        "source_role": inventory["source_reference"]["source_role"],
                        "source_set_role": source_sets[-1]["source_role"]}
-            if keyword is not None:
-                binding["keyword_item_confirmation"] = compact(keyword)
+            if confirmation is not None:
+                binding["content_confirmation"] = compact_confirmation(confirmation)
             observation = structured_observation(
                 metric_id=metric_id, semantic_role=original["semantic_role"],
                 company_id=company_id, period_start=period["period_start"],
@@ -370,8 +391,8 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                          "matched_verified_claim_ids": graph["matched_verified_claim_ids"],
                          "source_event_accessions": sorted({f["accessionNumber"]
                                                             for f in events})}
-            if keyword is not None:
-                selection["keyword_item_confirmation"] = keyword
+            if confirmation is not None:
+                selection["content_confirmation"] = confirmation
             raise _EventRouteResolved
         # The statement source set is proved against the document that lists
         # the filing; the event branch above keeps the main index, because its
@@ -438,16 +459,18 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
         selection = {"reason_code": result["reason_code"], "reason": withheld.answer["why"],
                      "category": "DISCLOSURE_SCOPE_UNPROVEN",
                      "depreciation_scope": withheld.answer}
-    except _KeywordMeaningPending:
+    except _ConfirmationNotRegistered:
+        # A candidate may or may not report an M&A transaction; until its
+        # content confirmation is registered the window is not counted, and the
+        # withheld result lists exactly which item spans are waiting.
         result, trace = withheld_metric_result(compiled_spec=spec, target=target,
-                                               reason_code=PENDING_REASON)
+                                               reason_code=CONFIRMATION_REASON)
         observations = []
         selection = {"reason_code": result["reason_code"],
-                     "category": "PRODUCT_MEANING_PENDING",
-                     "pending_claim_ids": keyword["pending_claim_ids"],
+                     "category": "CONTENT_CONFIRMATION_NOT_EXECUTED",
                      "source_event_accessions": sorted({f["accessionNumber"]
                                                         for f in filings[1:]}),
-                     "keyword_item_confirmation": keyword}
+                     "content_confirmation": confirmation}
     except EventItemTextError as error:
         # An item whose own text could not be read never counts and never
         # silently fails to count; the reason names it.

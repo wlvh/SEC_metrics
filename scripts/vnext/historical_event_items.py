@@ -1,41 +1,35 @@
-"""Read an 8-K item's own text for an event route's keyword confirmation.
+"""Read an 8-K item's own text for E01's content-confirmed meaning.
 
 E01's approved definition counts items 1.01, 2.01 and 8.01 and says of the last
-"8.01 需正文关键词确认": an 8.01 counts once a keyword in its text confirms it.
-The frozen matcher (``deterministic_router.match_event_claims``) compares the
-declared aliases with each claim's ``brief``, and when the filing's hdr.sgml
-carries item codes - every saved 8-K here - that brief is the program's own
-sentence ``"8-K item 8.01 parsed from hdr.sgml"``. No alias can occur in it, so
-the branch never admitted an 8.01 and never read one. The router is frozen by
-every ``issue_28`` generation and the ordinary route uses it unchanged, so the
-repair is carried here, for the historical routes only.
+"8.01 需正文关键词确认". The frozen matcher (``deterministic_router.
+match_event_claims``) compares the declared aliases with each claim's
+``brief``, and when the filing's hdr.sgml carries item codes - every saved 8-K
+here - that brief is the program's own sentence ``"8-K item 8.01 parsed from
+hdr.sgml"``, so no 8.01 was ever read. The router is frozen by every
+``issue_28`` generation and the ordinary route uses it unchanged.
 
-What this module owns is the reading, not the meaning. It locates the item in
-the filing's primary document, reads its text from its heading to the next
-item heading or the signatures, and records every alias the catalog declares
-that occurs in that text, under the catalog's own normalisation and substring
-match. The hdr brief is not consulted.
+The owner's 2026-09-27 decision replaced the meaning for the historical route:
+E01 counts content-confirmed M&A announcements - an item counts when its own
+text reports a merger, acquisition, disposition or business combination the
+registrant or a subsidiary is party to, whichever candidate code it is filed
+under, and a keyword never confirms one. Over the forty saved 8.01 items a
+keyword rule was right twice, wrong five times and missed three transactions,
+and eleven of the thirteen 1.01 items in the answered windows are borrowing
+agreements (docs/evidence/issue47_history/e01-item-text/census.json,
+e01-keyword-branch/decision.json), so no item-code or keyword rule stands in
+for the reading.
 
-Whether an alias occurring in the item confirms it is the undecided part: the
-approved substring rule says every occurrence does; read against the metric's
-name, an occurrence in a use-of-proceeds list or a tender offer does not.
-Until that meaning is decided the answer is kept to what does not depend on
-it. The approved clause asks for keyword confirmation, so an item whose own
-text carries no alias is not confirmed under any reading of that clause, and a
-window whose keyword items all read that way is answered with the directly
-counted items. A window where some keyword item's text does carry an alias is
-withheld by name, with each occurrence recorded - neither reading is chosen by
-default, and "must name a counterparty" is not adopted as the meaning here.
-
-What the interim answer does not settle is a revision of the definition
-itself. Counting "content-confirmed M&A announcements" would drop the keyword
-requirement and ask the same of item 1.01, which the approved definition counts
-directly: over the forty saved 8.01 items, three report a transaction the
-registrant is party to with no declared alias in their text, and eleven of
-the thirteen 1.01 items in the answered windows are borrowing agreements.
-Values answered here are values under the approved definition; a revised one
-is a new definition with its own results (docs/evidence/issue47_history/
-e01-item-text/census.json and e01-keyword-branch/decision.json).
+The successor route (catalog/r6/E01_content_confirmed_ma_v1.json) names the
+approved route it replaces by hash, keeps the approved candidate codes, and
+carries the confirmation meaning. What this module owns is reading each
+candidate: it locates the item in the filing's primary document and reads its
+text from its heading to the next item heading or the signatures, and binds
+that span to its bytes, so a confirmation can be asked of exactly that span.
+Nothing here confirms a candidate. A window with a candidate whose confirmation
+is not registered is withheld by name, listing each candidate; a window with no
+candidate item is answered zero. Values and acceptances under the approved
+definition do not carry over: the successor route has its own hash, so its
+Spec, and every acceptance bound to a Spec, is a different one.
 
 The heading is found in the frozen ``_visible_text`` view of the primary bytes,
 so a reader can rebuild the same span from the same bytes. A heading is an
@@ -47,21 +41,29 @@ twice with another item between, stops the answer by name: an unread item
 never counts and never silently fails to count.
 
 Not read: exhibits the item incorporates by reference. They are separate
-documents, none of them is saved, and whether they belong to "8.01 正文" is
-part of the scope question the decision has to settle; each item records
-whether its own text incorporates an exhibit.
+documents and none of them is saved; each candidate records whether its own
+text incorporates an exhibit, so a confirmation that needs one says so.
+Outside the candidate set: an announcement made only under another item (a
+press release furnished under 7.01). The candidate codes are the approved
+definition's; widening them would be a further change of meaning.
 """
 import re
 
-from .canonical import sha256_bytes
-from .deterministic_router import _visible_text, normalize_event_text
+from pathlib import Path
+
+from .canonical import content_hash, sha256_bytes, strict_json_loads
+from .deterministic_router import _visible_text
 from .sources import resolve_repository_file
 
 RULE = "ITEM_TEXT_FROM_ITS_HEADING_TO_THE_NEXT_ITEM_HEADING_OR_THE_SIGNATURES"
 TEXT_VIEW = "deterministic_router._visible_text"
-INTERIM_POLICY = "AN_ALIAS_IN_A_KEYWORD_ITEM_S_OWN_TEXT_WITHHOLDS_UNTIL_ITS_MEANING_IS_DECIDED"
-PENDING_REASON = "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING"
-NOT_LOCATED_REASON = "HISTORICAL_EVENT_KEYWORD_ITEM_TEXT_NOT_LOCATED"
+CONFIRMATION_POLICY = "CONTENT_CONFIRMED_M_AND_A_ANNOUNCEMENT_V1"
+CONFIRMATION_REASON = "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED"
+NOT_LOCATED_REASON = "HISTORICAL_EVENT_ITEM_TEXT_NOT_LOCATED"
+# A metric whose route the owner replaced, and the file that carries the
+# successor. The frozen catalog keeps the approved route for the ordinary path
+# and for every Run frozen under it.
+SUCCESSOR_EVENT_ROUTES = {"E01": "catalog/r6/E01_content_confirmed_ma_v1.json"}
 
 _HEADING = re.compile(
     r"(?<![A-Za-z])Items?\s*(\d{1,2}\.\d{2})(?:\([a-z]\))*\s*[.:\-\u2013\u2014]?\s*(?=[A-Z])")
@@ -129,31 +131,6 @@ def item_text(*, raw_bytes, item_code):
             "text_sha256": "sha256:" + sha256_bytes(content=body.encode("utf-8"))}
 
 
-def alias_occurrences(*, text, aliases):
-    """Every declared alias in ``text``, under the catalog's normalisation.
-
-    Offsets are into the normalised text, which is what the match runs on and
-    what ``normalized_sha256`` names.
-    """
-    normalised = normalize_event_text(value=text)
-    found = []
-    for alias in aliases:
-        needle = normalize_event_text(value=alias)
-        position = normalised.find(needle)
-        while position >= 0:
-            begin = normalised.rfind(". ", 0, position)
-            finish = normalised.find(". ", position + len(needle))
-            begin = 0 if begin < 0 else begin + 2
-            finish = len(normalised) if finish < 0 else finish + 1
-            if finish - begin > 2 * _CONTEXT:
-                begin = max(begin, position - _CONTEXT)
-                finish = min(finish, position + len(needle) + _CONTEXT)
-            found.append({"alias": alias, "offset": position,
-                          "sentence": normalised[begin:finish]})
-            position = normalised.find(needle, position + 1)
-    return normalised, sorted(found, key=lambda hit: (hit["offset"], hit["alias"]))
-
-
 def _primary_bytes(*, repo_root, records, reference_id):
     reference = records.get(reference_id)
     _need(reference is not None and reference["record_type"] == "SOURCE_REFERENCE",
@@ -168,64 +145,70 @@ def _primary_bytes(*, repo_root, records, reference_id):
     return reference, raw
 
 
-def keyword_item_answer(*, repo_root, route, claims, records):
-    """Read each keyword item's own text and answer only what does not depend on its meaning.
+def successor_event_route(*, repo_root, metric_id, frozen_route):
+    """The successor route for one metric, checked against the route it replaces.
+
+    The record names its predecessor by route hash, so a successor written
+    against a different approved route is refused rather than substituted. Its
+    candidate codes are the codes it projects, and it has no keyword rules:
+    under the content meaning a keyword never confirms an item.
+    """
+    record = strict_json_loads(text=(Path(repo_root) / SUCCESSOR_EVENT_ROUTES[metric_id]).read_text(
+        encoding="utf-8"))
+    _need(record.get("record_type") == "HISTORICAL_EVENT_ROUTE_SUCCESSOR" and record.get("metric_id") == metric_id,
+          "HISTORICAL_EVENT_SUCCESSOR_ROUTE_INVALID:" + metric_id)
+    _need(record["predecessor"]["route_hash"] == content_hash(value=dict(frozen_route)),
+          "HISTORICAL_EVENT_SUCCESSOR_PREDECESSOR_CHANGED:" + metric_id)
+    route = record["route"]
+    _need(route["candidate_item_codes"] == route["direct_item_codes"] and not route["keyword_item_rules"]
+          and route.get("confirmation", {}).get("policy") == CONFIRMATION_POLICY,
+          "HISTORICAL_EVENT_SUCCESSOR_ROUTE_SHAPE_INVALID:" + metric_id)
+    return route
+
+
+def content_confirmation_candidates(*, repo_root, route, claims, records):
+    """Every candidate item of a content-confirmed route, read from its own text.
 
     ``claims`` are the frozen adapter's item claims for the whole window and
     ``records`` the Run's source records, from which each primary document is
-    read back by its reference and checked against its content hash.
+    read back by its reference and checked against its content hash. Nothing
+    here confirms a candidate; it records where each one's own text is, so a
+    confirmation can be asked of exactly that span and bound to its bytes.
     """
-    keyword = {str(rule["item_code"]): [str(alias) for alias in rule["aliases"]]
-               for rule in route["keyword_item_rules"]}
-    direct = set(route["direct_item_codes"])
-    _need(not direct & set(keyword), "EVENT_ROUTE_ITEM_CODE_IS_BOTH_DIRECT_AND_KEYWORD")
-    items, pending, counted = [], [], []
+    _need(route["confirmation"]["policy"] == CONFIRMATION_POLICY,
+          "EVENT_ROUTE_CONFIRMATION_POLICY_UNKNOWN:" + str(route["confirmation"].get("policy")))
+    codes = [str(code) for code in route["candidate_item_codes"]]
+    candidates = []
     for claim in claims:
         attributes = claim["attributes"]
         code = str(attributes["item_code"])
-        if code in direct:
-            counted.append(claim["verified_claim_id"])
-        if code not in keyword:
+        if code not in codes:
             continue
         reference, raw = _primary_bytes(repo_root=repo_root, records=records,
                                         reference_id=attributes["primary_source_reference_id"])
         _need(reference["accession"] == attributes["accession"],
               "EVENT_ITEM_PRIMARY_IS_ANOTHER_FILING", "SOURCE_INTEGRITY_ERROR")
         body = item_text(raw_bytes=raw, item_code=code)
-        normalised, occurrences = alias_occurrences(text=body["text"], aliases=keyword[code])
-        item = {"verified_claim_id": claim["verified_claim_id"],
-                "accession": attributes["accession"], "item_code": code,
-                "brief_source": attributes["brief_source"],
-                "primary_source_reference_id": reference["source_reference_id"],
-                "primary_raw_asset_id": reference["raw_asset_id"],
-                "text_view": body["text_view"], "rule": body["rule"],
-                "heading": body["heading"], "start": body["start"], "end": body["end"],
-                "end_marker": body["end_marker"], "text_sha256": body["text_sha256"],
-                "normalized_sha256": "sha256:" + sha256_bytes(content=normalised.encode("utf-8")),
-                "alias_occurrences": occurrences,
-                "incorporates_an_exhibit": bool(_EXHIBIT.search(body["text"])),
-                "reading": ("ALIAS_IN_ITS_OWN_TEXT" if occurrences
-                            else "NO_ALIAS_IN_ITS_OWN_TEXT")}
-        items.append(item)
-        if occurrences:
-            pending.append(claim["verified_claim_id"])
-    status = ("NO_KEYWORD_ITEM" if not items
-              else "MEANING_PENDING" if pending else "NO_ALIAS_IN_ANY_KEYWORD_ITEM")
-    return {"policy": INTERIM_POLICY, "rule": RULE, "keyword_item_codes": sorted(keyword),
-            "items": items, "status": status, "pending_claim_ids": pending,
-            "counted_claim_ids": counted,
-            "not_read": "exhibits an item incorporates by reference; none is saved and "
-                        "whether they belong to the item's text is part of the pending "
-                        "scope question"}
+        candidates.append({"verified_claim_id": claim["verified_claim_id"],
+                           "accession": attributes["accession"], "item_code": code,
+                           "primary_source_reference_id": reference["source_reference_id"],
+                           "primary_raw_asset_id": reference["raw_asset_id"],
+                           "text_view": body["text_view"], "rule": body["rule"],
+                           "heading": body["heading"], "start": body["start"], "end": body["end"],
+                           "end_marker": body["end_marker"], "text_sha256": body["text_sha256"],
+                           "characters": len(body["text"]),
+                           "incorporates_an_exhibit": bool(_EXHIBIT.search(body["text"])),
+                           "confirmation": "NOT_REGISTERED"})
+    return {"policy": CONFIRMATION_POLICY, "rule": RULE, "candidate_item_codes": codes,
+            "candidates": candidates,
+            "status": "CONFIRMATION_NOT_REGISTERED" if candidates else "NO_CANDIDATE_ITEM",
+            "not_read": "exhibits an item incorporates by reference; none is saved"}
 
 
-def compact(answer):
-    """The part a Run's observation binds: which items were read, where, and what they held."""
+def compact_confirmation(answer):
+    """The part a Run's observation binds: which candidates were read, and where."""
     return {"policy": answer["policy"], "rule": answer["rule"], "status": answer["status"],
-            "items": [{**{key: item[key] for key in (
-                "verified_claim_id", "item_code", "primary_source_reference_id",
-                "primary_raw_asset_id", "text_view", "start", "end", "end_marker",
-                "text_sha256", "normalized_sha256", "reading", "incorporates_an_exhibit")},
-                "alias_offsets": [[hit["alias"], hit["offset"]]
-                                  for hit in item["alias_occurrences"]]}
-                for item in answer["items"]]}
+            "candidate_item_codes": answer["candidate_item_codes"],
+            "candidates": [{key: item[key] for key in (
+                "verified_claim_id", "item_code", "primary_source_reference_id", "start", "end",
+                "text_sha256", "confirmation")} for item in answer["candidates"]]}

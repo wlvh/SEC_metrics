@@ -1,0 +1,61 @@
+{
+ "record_type": "E01_CONTENT_CONFIRMED_FAULT_INJECTIONS",
+ "suite": "tests.vnext.test_historical_event_items",
+ "control_failures": [],
+ "control_tests_run": 18,
+ "caught": 5,
+ "total": 5,
+ "results": [
+  {
+   "injection": "COUNT_EVERY_CANDIDATE_UNCONFIRMED",
+   "module": "historical_zero_ai_results.py",
+   "expected": "test_a_window_with_a_candidate_is_withheld_by_name",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_window_with_a_candidate_is_withheld_by_name",
+    "test_no_value_of_the_approved_definition_is_carried_over"
+   ]
+  },
+  {
+   "injection": "KEEP_THE_APPROVED_ROUTE",
+   "module": "historical_zero_ai_results.py",
+   "expected": "test_the_spec_is_the_successor_route_s",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_window_with_a_candidate_is_withheld_by_name",
+    "test_a_window_with_no_candidate_is_answered_zero_by_the_route_s_matcher",
+    "test_every_candidate_item_is_read_from_its_own_text",
+    "test_no_value_of_the_approved_definition_is_carried_over",
+    "test_the_spec_is_the_successor_route_s"
+   ]
+  },
+  {
+   "injection": "ACCEPT_A_SUCCESSOR_OF_ANOTHER_ROUTE",
+   "module": "historical_event_items.py",
+   "expected": "test_a_successor_written_against_another_route_is_refused",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_successor_written_against_another_route_is_refused"
+   ]
+  },
+  {
+   "injection": "READ_ONLY_THE_8_01_ITEMS",
+   "module": "historical_event_items.py",
+   "expected": "test_every_candidate_item_is_read_from_its_own_text",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_window_with_no_candidate_is_answered_zero_by_the_route_s_matcher",
+    "test_every_candidate_item_is_read_from_its_own_text"
+   ]
+  },
+  {
+   "injection": "A_ZERO_WINDOW_NOT_BOUND_TO_ITS_READING",
+   "module": "historical_zero_ai_results.py",
+   "expected": "test_a_window_with_no_candidate_is_answered_zero_by_the_route_s_matcher",
+   "result": "CAUGHT",
+   "failed": [
+    "test_a_window_with_no_candidate_is_answered_zero_by_the_route_s_matcher"
+   ]
+  }
+ ]
+}

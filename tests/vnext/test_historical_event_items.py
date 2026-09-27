@@ -1,11 +1,13 @@
-"""E01's keyword items, read from their own text.
+"""E01's candidate items, read from their own text, under the content-confirmed meaning.
 
 The frozen matcher compares E01's aliases with each claim's brief, and for an
 hdr-coded filing that brief is the program's sentence "8-K item 8.01 parsed
-from hdr.sgml", so no 8.01 was ever read. historical_event_items reads the
-item from its heading to the next item heading or the signatures in the
-primary document and records every alias there. What an alias there means is
-undecided, so the route answers only what that meaning cannot move.
+from hdr.sgml", so no 8.01 was ever read. The owner's 2026-09-27 decision made
+E01 count content-confirmed M&A announcements: every 1.01, 2.01 and 8.01 item
+is a candidate, read from its heading to the next item heading or the
+signatures in the primary document, and none counts until its content
+confirmation is registered. No confirmation is registered yet, so a window
+with a candidate is withheld by name.
 
 The text cases run on every saved 8-K that carries an 8.01, and are compared
 with tools/read_e01_eight_o_ones.py, which finds the item its own way and
@@ -19,10 +21,12 @@ from pathlib import Path
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools import read_e01_eight_o_ones as reading
-from vnext.deterministic_router import _hdr_item_codes, _visible_text, load_event_route_catalog
-from vnext.historical_event_items import (NOT_LOCATED_REASON, PENDING_REASON,
-                                          EventItemTextError, alias_occurrences,
-                                          item_headings, item_text, keyword_item_answer)
+from vnext.canonical import content_hash
+from vnext.deterministic_router import (_compiled_event_spec, _hdr_item_codes, _visible_text,
+                                        load_event_route_catalog)
+from vnext.historical_event_items import (CONFIRMATION_REASON, NOT_LOCATED_REASON,
+                                          EventItemTextError, content_confirmation_candidates,
+                                          item_headings, item_text, successor_event_route)
 from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
 from vnext.normal_period_selection import resolve_period_selection
 
@@ -31,14 +35,11 @@ WINDOWS = {"enphase_energy": "2025-12-31", "ford_motor_company": "2025-12-31",
            "lumen_technologies": "2025-12-31", "macys": "2026-01-31",
            "marriott_international": "2025-12-31", "pfizer": "2025-12-31",
            "southwest_airlines": "2025-12-31"}
-# Read by eye against each filing; recorded in
-# docs/evidence/issue47_history/e01-keyword-branch/eight-o-one-judgements.json.
-ALIAS_IN_THE_ITEM = {"macys": {"0000794367-25-000128"},
-                     "marriott_international": {"0001193125-25-036732",
-                                                "0001193125-25-184082"},
-                     "pfizer": {"0000078003-25-000159"}}
+# Values of the approved item-rule definition, published before the decision;
+# none of them is a value of the content-confirmed meaning.
 PUBLISHED = {"enphase_energy": "0", "ford_motor_company": "2", "lumen_technologies": "7",
              "southwest_airlines": "2"}
+CANDIDATE_CODES = ("1.01", "2.01", "8.01")
 
 
 def _saved_eight_ks():
@@ -155,40 +156,8 @@ class HeadingsAndReferences(unittest.TestCase):
         self.assertNotIn("Pursuant", text["text"])
 
 
-class TheAliasIsFoundInTheItemsOwnText(unittest.TestCase):
-
-    def test_the_catalog_normalisation_and_substring_match(self):
-        normalised, hits = alias_occurrences(
-            text="a COMBINED  aggregate price; Acquisitions.", aliases=["combine", "acquisition"])
-        self.assertEqual(normalised, "a combined aggregate price; acquisitions.")
-        self.assertEqual([(hit["alias"], hit["offset"]) for hit in hits],
-                         [("combine", 2), ("acquisition", 28)])
-
-    def test_the_brief_is_never_consulted(self):
-        """Ford's five 8.01s carry no alias in their own text; a brief rewritten
-        to hold one changes nothing, because the brief is not read."""
-        selection = resolve_period_selection(repo_root=ROOT, company_id="ford_motor_company",
-                                             report_end="2025-12-31")
-        component = resolve_historical_zero_ai_metric(repo_root=ROOT,
-                                                      company_id="ford_motor_company",
-                                                      metric_id="E01",
-                                                      period_selection=selection)
-        route = load_event_route_catalog(repo_root=ROOT)["routes"]["E01"]
-        records = {r.get("source_reference_id") or r["raw_asset_id"]: r
-                   for r in component["source_records"]}
-        rewritten = [{**claim, "attributes": {**claim["attributes"],
-                                              "brief": "merger acquisition transaction"}}
-                     for claim in component["claims"]]
-        before = keyword_item_answer(repo_root=ROOT, route=route, claims=component["claims"],
-                                     records=records)
-        after = keyword_item_answer(repo_root=ROOT, route=route, claims=rewritten,
-                                    records=records)
-        self.assertEqual(len(before["items"]), 5)
-        self.assertEqual(before, after)
-        self.assertEqual(after["status"], "NO_ALIAS_IN_ANY_KEYWORD_ITEM")
-
-
-class TheRouteAnswersOnlyWhatTheMeaningCannotMove(unittest.TestCase):
+class TheContentConfirmedRouteCountsNothingItHasNotConfirmed(unittest.TestCase):
+    """The owner's E01 meaning, on the seven saved windows."""
 
     @classmethod
     def setUpClass(cls):
@@ -199,48 +168,88 @@ class TheRouteAnswersOnlyWhatTheMeaningCannotMove(unittest.TestCase):
             cls.components[company] = resolve_historical_zero_ai_metric(
                 repo_root=ROOT, company_id=company, metric_id="E01", period_selection=selection)
 
-    def test_a_window_whose_keyword_items_carry_no_alias_is_answered(self):
-        for company, value in PUBLISHED.items():
-            with self.subTest(company):
-                result = self.components[company]["result"]
-                self.assertEqual((result["publication"], result["value"]), ("PUBLISHED", value))
+    def _has_candidate(self, component):
+        return any(claim["attributes"]["item_code"] in CANDIDATE_CODES for claim in component["claims"])
 
-    def test_a_window_where_one_carries_an_alias_is_withheld_by_name(self):
-        for company, accessions in ALIAS_IN_THE_ITEM.items():
+    def test_a_window_with_a_candidate_is_withheld_by_name(self):
+        withheld = [company for company, component in self.components.items() if self._has_candidate(component)]
+        self.assertEqual(6, len(withheld))
+        for company in withheld:
+            component = self.components[company]
             with self.subTest(company):
-                component = self.components[company]
-                self.assertEqual((component["result"]["publication"],
-                                  component["result"]["reason_code"]),
-                                 ("WITHHELD", PENDING_REASON))
-                answer = component["selection"]["keyword_item_confirmation"]
-                self.assertEqual({item["accession"] for item in answer["items"]
-                                  if item["alias_occurrences"]}, accessions)
-                self.assertEqual(component["selection"]["category"], "PRODUCT_MEANING_PENDING")
+                self.assertEqual((component["result"]["publication"], component["result"]["reason_code"]),
+                                 ("WITHHELD", CONFIRMATION_REASON))
+                self.assertEqual(component["selection"]["category"], "CONTENT_CONFIRMATION_NOT_EXECUTED")
 
-    def test_every_keyword_item_in_the_window_is_read(self):
+    def test_a_window_with_no_candidate_is_answered_zero_by_the_route_s_matcher(self):
+        # Enphase filed no 1.01, 2.01 or 8.01 item in its fiscal-year window.
+        component = self.components["enphase_energy"]
+        self.assertFalse(self._has_candidate(component))
+        self.assertEqual((component["result"]["publication"], component["result"]["value"]), ("PUBLISHED", "0"))
+        (observation,) = component["observations"]
+        bound = observation["source_binding"]["content_confirmation"]
+        self.assertEqual((bound["status"], bound["candidates"]), ("NO_CANDIDATE_ITEM", []))
+        self.assertEqual(component["selection"]["content_confirmation"]["candidate_item_codes"],
+                         list(CANDIDATE_CODES))
+
+    def test_every_candidate_item_is_read_from_its_own_text(self):
         for company, component in self.components.items():
-            listed = {claim["attributes"]["accession"] for claim in component["claims"]
-                      if claim["attributes"]["item_code"] == "8.01"}
-            read = {item["accession"] for item in
-                    component["selection"]["keyword_item_confirmation"]["items"]}
+            listed = sorted((claim["attributes"]["accession"], claim["attributes"]["item_code"])
+                            for claim in component["claims"]
+                            if claim["attributes"]["item_code"] in CANDIDATE_CODES)
+            answer = component["selection"]["content_confirmation"]
+            read = sorted((item["accession"], item["item_code"]) for item in answer["candidates"])
             with self.subTest(company):
                 self.assertEqual(read, listed)
+                self.assertTrue(all(item["confirmation"] == "NOT_REGISTERED" for item in answer["candidates"]))
+                self.assertTrue(all(item["text_sha256"].startswith("sha256:") for item in answer["candidates"]))
 
-    def test_the_observation_binds_what_was_read(self):
-        for company in PUBLISHED:
-            component = self.components[company]
-            (observation,) = component["observations"]
-            bound = observation["source_binding"]["keyword_item_confirmation"]
-            full = component["selection"]["keyword_item_confirmation"]
+    def test_no_value_of_the_approved_definition_is_carried_over(self):
+        # A window with a candidate loses its approved-definition value; the
+        # one window with none has its zero recomputed under the successor's
+        # Spec, which is why an acceptance of the old zero does not reach it.
+        frozen = _compiled_event_spec(metric_id="E01",
+                                      route=load_event_route_catalog(repo_root=ROOT)["routes"]["E01"])
+        for company, value in PUBLISHED.items():
+            result = self.components[company]["result"]
             with self.subTest(company):
-                self.assertEqual([item["text_sha256"] for item in bound["items"]],
-                                 [item["text_sha256"] for item in full["items"]])
-                self.assertEqual(observation["source_binding"]["matched_verified_claim_ids"],
-                                 component["selection"]["matched_verified_claim_ids"])
-                self.assertTrue(all(item["reading"] == "NO_ALIAS_IN_ITS_OWN_TEXT"
-                                    for item in bound["items"]))
+                self.assertNotEqual(frozen["spec_closure_hash"], result["spec_closure_hash"])
+                if self._has_candidate(self.components[company]):
+                    self.assertNotEqual("PUBLISHED", result["publication"])
+                    self.assertIsNone(result["value"])
 
-    def test_a_route_without_keyword_items_is_untouched(self):
+    def test_the_spec_is_the_successor_route_s(self):
+        frozen = load_event_route_catalog(repo_root=ROOT)["routes"]["E01"]
+        frozen_spec = _compiled_event_spec(metric_id="E01", route=frozen)
+        for company, component in self.components.items():
+            with self.subTest(company):
+                self.assertNotEqual(component["result"]["spec_closure_hash"], frozen_spec["spec_closure_hash"])
+                self.assertEqual(component["spec_origin"]["catalog_path"],
+                                 "catalog/r6/E01_content_confirmed_ma_v1.json")
+
+    def test_the_brief_is_never_consulted(self):
+        """A brief rewritten to name a merger changes no candidate: the brief is not read."""
+        component = self.components["ford_motor_company"]
+        catalog = load_event_route_catalog(repo_root=ROOT)
+        route = successor_event_route(repo_root=ROOT, metric_id="E01", frozen_route=catalog["routes"]["E01"])
+        records = {r.get("source_reference_id") or r["raw_asset_id"]: r for r in component["source_records"]}
+        rewritten = [{**claim, "attributes": {**claim["attributes"], "brief": "merger acquisition transaction"}}
+                     for claim in component["claims"]]
+        before = content_confirmation_candidates(repo_root=ROOT, route=route, claims=component["claims"],
+                                                 records=records)
+        after = content_confirmation_candidates(repo_root=ROOT, route=route, claims=rewritten, records=records)
+        self.assertEqual(before, after)
+        self.assertEqual(before["status"], "CONFIRMATION_NOT_REGISTERED")
+
+    def test_a_successor_written_against_another_route_is_refused(self):
+        frozen = load_event_route_catalog(repo_root=ROOT)["routes"]["E01"]
+        altered = {**frozen, "direct_item_codes": ["1.01"]}
+        self.assertNotEqual(content_hash(value=dict(altered)), content_hash(value=dict(frozen)))
+        with self.assertRaises(EventItemTextError) as caught:
+            successor_event_route(repo_root=ROOT, metric_id="E01", frozen_route=altered)
+        self.assertIn("HISTORICAL_EVENT_SUCCESSOR_PREDECESSOR_CHANGED", str(caught.exception))
+
+    def test_a_route_without_candidates_is_untouched(self):
         selection = resolve_period_selection(repo_root=ROOT, company_id="ford_motor_company",
                                              report_end="2025-12-31")
         for metric_id in ("C01", "E05"):
@@ -248,16 +257,15 @@ class TheRouteAnswersOnlyWhatTheMeaningCannotMove(unittest.TestCase):
                 repo_root=ROOT, company_id="ford_motor_company", metric_id=metric_id,
                 period_selection=selection)
             with self.subTest(metric_id):
-                self.assertNotIn("keyword_item_confirmation", component["selection"])
-                for observation in component["observations"]:
-                    self.assertNotIn("keyword_item_confirmation", observation["source_binding"])
+                self.assertNotIn("content_confirmation", component["selection"])
+                self.assertEqual("PUBLISHED", component["result"]["publication"])
 
 
 class TheReasonsAreNamed(unittest.TestCase):
 
     def test_the_reason_codes(self):
-        self.assertEqual(PENDING_REASON, "HISTORICAL_EVENT_KEYWORD_CONFIRMATION_MEANING_PENDING")
-        self.assertEqual(NOT_LOCATED_REASON, "HISTORICAL_EVENT_KEYWORD_ITEM_TEXT_NOT_LOCATED")
+        self.assertEqual(CONFIRMATION_REASON, "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED")
+        self.assertEqual(NOT_LOCATED_REASON, "HISTORICAL_EVENT_ITEM_TEXT_NOT_LOCATED")
 
 
 if __name__ == "__main__":
