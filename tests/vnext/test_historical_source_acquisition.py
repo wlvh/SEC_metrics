@@ -188,5 +188,41 @@ class HistoricalSourceAcquisitionTest(unittest.TestCase):
                 "ISSUE_47_SEC_ALLOWANCE_INCOMPLETE:"))
 
 
+
+class TheGithubReaderPassesGhOnlyWhatItNeeds(unittest.TestCase):
+    """The approval re-check runs gh; a provider key in the caller's environment stays behind."""
+
+    def test_the_environment_is_narrowed(self):
+        import os
+        import subprocess
+        from unittest import mock
+        from vnext.historical_source_acquisition import GH_ENVIRONMENT, github_comment_reader
+        seen = {}
+
+        def run(argv, **kwargs):
+            seen.update(argv=argv, env=kwargs["env"])
+            return subprocess.CompletedProcess(argv, 0, stdout='{"id": 1}', stderr="")
+
+        caller = {"DEEPSEEK_API_KEY": "secret", "GH_TOKEN": "token", "PATH": "/usr/bin",
+                  "AWS_SECRET_ACCESS_KEY": "secret"}
+        with mock.patch.dict(os.environ, caller, clear=True), mock.patch("subprocess.run", run):
+            self.assertEqual({"id": 1}, github_comment_reader("repos/o/r/issues/comments/1"))
+        self.assertEqual(["gh", "api", "--hostname", "github.com", "repos/o/r/issues/comments/1"], seen["argv"])
+        self.assertEqual({"GH_TOKEN": "token", "PATH": "/usr/bin"}, seen["env"])
+        self.assertTrue(set(seen["env"]) <= set(GH_ENVIRONMENT))
+
+    def test_a_reply_that_is_not_strict_json_is_refused(self):
+        import subprocess
+        from unittest import mock
+        from vnext.historical_source_acquisition import HistoricalAcquisitionError, github_comment_reader
+
+        def run(argv, **kwargs):
+            return subprocess.CompletedProcess(argv, 0, stdout='{"id": 1, "id": 2}', stderr="")
+
+        with mock.patch("subprocess.run", run), self.assertRaises(HistoricalAcquisitionError) as caught:
+            github_comment_reader("repos/o/r/issues/comments/1")
+        self.assertIn("ISSUE_47_GITHUB_READ_NOT_STRICT_JSON", str(caught.exception))
+
+
 if __name__ == "__main__":
     unittest.main()

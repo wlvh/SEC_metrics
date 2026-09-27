@@ -367,25 +367,43 @@ def _typed_grants(scope):
           "ISSUE_47_ALLOWANCE_ENVELOPE_WIDER_THAN_ITS_GRANTS:window")
 
 
+# What gh needs to find itself, its configuration and its credentials, and to
+# reach GitHub through a proxy. Nothing else in the caller's environment is
+# passed: an independent review found the re-check ran gh with the full
+# environment, a provider API key included.
+GH_ENVIRONMENT = ("PATH", "HOME", "USER", "LOGNAME", "LANG", "LC_ALL", "TMPDIR", "XDG_CONFIG_HOME",
+                  "GH_CONFIG_DIR", "GH_HOST", "GH_TOKEN", "GITHUB_TOKEN", "SSL_CERT_FILE",
+                  "HTTPS_PROXY", "HTTP_PROXY", "NO_PROXY", "https_proxy", "http_proxy", "no_proxy")
+
+
+def _gh_environment():
+    return {name: os.environ[name] for name in GH_ENVIRONMENT if name in os.environ}
+
+
 def github_comment_reader(path):
-    """Read one comment from GitHub, through the boundary the repository uses.
+    """Read one comment from GitHub with the gh command line, in a narrowed environment.
 
     Kept as a named function so the live path has one, and so a test can pass
     a different reader without the production path ever having a default that
     returns a local file.
     """
-    from .annual_candidate import AnnualCandidateError, _github
+    import subprocess
     # A read that cannot happen is a refusal with a name, not a traceback: the
     # owner runs this on their own machine, and "gh is missing" and "gh is not
     # signed in" are the two things most likely to be wrong there.
     try:
-        return _github(path)
+        result = subprocess.run(["gh", "api", "--hostname", "github.com", path], cwd=str(ROOT),
+                                env=_gh_environment(), text=True, capture_output=True, check=False)
     except FileNotFoundError:
         raise HistoricalAcquisitionError(
             "ISSUE_47_GITHUB_CLI_NOT_FOUND: install gh and run 'gh auth login'")
-    except AnnualCandidateError:
+    if result.returncode != 0:
         raise HistoricalAcquisitionError(
             "ISSUE_47_GITHUB_READ_FAILED:" + path + " (is gh signed in to github.com?)")
+    try:
+        return strict_json_loads(text=result.stdout)
+    except ValueError:
+        raise HistoricalAcquisitionError("ISSUE_47_GITHUB_READ_NOT_STRICT_JSON:" + path)
 
 
 def _provenance(*, comment, policy, where):
