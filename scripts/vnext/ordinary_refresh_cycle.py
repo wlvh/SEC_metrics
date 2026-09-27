@@ -238,13 +238,25 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
     def no_ordinary_attempt(item):
         metric = item['metric_id']
         metric_root = state_root/company_id/'metrics'/metric
-        return (item['status'] == 'UPDATE_BLOCKED'
+        attempts = metric_root/'attempts'
+        basic = (item['status'] == 'UPDATE_BLOCKED'
             and item.get('attempt_id') is None
             and item.get('last_verified_candidate') is None
             and item.get('production_authorized') is False
             and 'terminal' not in item
-            and not (metric_root/'configuration.json').exists()
-            and not (metric_root/'current.json').exists())
+            and not (metric_root/'current.json').exists()
+            and not attempts.exists())
+        if not basic:
+            return False
+        if (metric_root/'configuration.json').exists():
+            # Configuration precedes intent creation; its presence alone is
+            # not evidence that this refresh made an ordinary attempt.
+            try:
+                cycle._config(metric_root, session.data_root, company_id,
+                              [metric], expected_mode)
+            except ValueError:
+                return False
+        return True
     if mixed_stale and snapshot_id is not None:
         from .ordinary_processing_source import verify_processing_source
         need(processing_status in (None, 'READY')

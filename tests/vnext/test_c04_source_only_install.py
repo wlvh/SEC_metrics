@@ -169,6 +169,13 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
             (source/'config/issue28_normal_results_v2.json').write_bytes(
                 b'{"historical_processing_copy":true}\n')
             (source/'catalog/r5/C04_auditor_changes_v3.md').unlink()
+            from vnext import ordinary_update_cycle as update
+            b01_root = root/'state/marriott_international/metrics/B01'
+            update._config(b01_root, source, 'marriott_international',
+                           ['B01'], 'RECORDED_TEST_ONLY')
+            self.assertTrue((b01_root/'configuration.json').is_file())
+            self.assertFalse((b01_root/'current.json').exists())
+            self.assertFalse((b01_root/'attempts').exists())
             urls = [submissions_url(cik=1048286), companyfacts_url(cik=1048286)]
             with (ROOT/'evidence/requests_log.csv').open(newline='') as handle:
                 rows = [row for row in csv.DictReader(handle)

@@ -26,4 +26,10 @@
 
 `independent-review-followup/conclusion.md`仍给`NEEDS_FIX`，且确认前述正常路径P2已关：一是可把B01真实成功行伪装成`UPDATE_BLOCKED`，使新报告跳过B01尝试核对；二是处理副本在已成功SEC捕获后创建失败时，报告无副本ID，续跑误按旧`SOURCE_SCOPE`报告拒绝。这两个都是同一恢复入口的明确反例，不扩大成通用审批平台。
 
-本次回修要求新报告的`UPDATE_BLOCKED`行没有对应普通更新配置或当前指针；有真实尝试的行仍需逐份匹配终态。混合报告明确标记副本`READY`或`FAILED`；失败态保留SEC成功收据和C04状态，下一次捕获前先重建并验当前副本，再检查原待办URL和账本序列。无标记旧报告保留旧形状，但不能伪装成已经执行普通指标的报告。`resume-followup-material.log`用两套独立临时来源根完成2项录制材料测试、合计377.258秒PASS：正常续跑前拒绝尝试编号和状态降格篡改，副本创建失败后不撤销已成功捕获，修复副本后再完成另一URL和B01/C04结果。`resume-followup-short.log`11项PASS，固定tokenizers0.22.2下`resume-followup-fast.log`132/132 PASS（118.568秒）；V14绑定与三份接线收据见`binding-resume-followup-after.json`。第二条材料选择器仅追加于`tools/run_fast_tests_v2.py`末尾，runner函数体不变。新差异限定独审与当前head CI另验；原`134dcf4f`结论不改，录制槽不计真实调用或新公司结果。
+当时的受限回修要求新报告的`UPDATE_BLOCKED`行没有对应普通更新配置或当前指针；此要求在下节核对实际配置写入顺序后进一步收窄；有真实尝试的行仍需逐份匹配终态。混合报告明确标记副本`READY`或`FAILED`；失败态保留SEC成功收据和C04状态，下一次捕获前先重建并验当前副本，再检查原待办URL和账本序列。无标记旧报告保留旧形状，但不能伪装成已经执行普通指标的报告。`resume-followup-material.log`用两套独立临时来源根完成2项录制材料测试、合计377.258秒PASS：正常续跑前拒绝尝试编号和状态降格篡改，副本创建失败后不撤销已成功捕获，修复副本后再完成另一URL和B01/C04结果。`resume-followup-short.log`11项PASS，固定tokenizers0.22.2下`resume-followup-fast.log`132/132 PASS（118.568秒）；V14绑定与三份接线收据见`binding-resume-followup-after.json`。第二条材料选择器仅追加于`tools/run_fast_tests_v2.py`末尾，runner函数体不变。新差异限定独审与当前head CI另验；原`134dcf4f`结论不改，录制槽不计真实调用或新公司结果。
+
+## 8ce178a5限定审阅后的配置/尝试边界
+
+`independent-review-recovery/conclusion.md`确认上述两项指定反例已处理，但结论仍为`NEEDS_FIX`：普通更新先写`configuration.json`，随后若状态读取失败会返回真实`UPDATE_BLOCKED`而没有创建尝试；先前把配置存在一律当作尝试，误拦C04独立来源续跑。短注入日志`independent-review-recovery/blocked-history-short.log`记录了这个实际写入顺序，前次独审结论保留。
+
+本轮仅让“配置存在但与当前来源/规则身份一致、当前指针和尝试目录都不存在”成为可续跑的阻断状态；已有真实尝试或当前指针仍不可凭报告自称阻断来跳过核对。已有历史指针但本轮未尝试的情形没有独立的前态证明，本路径保守拒绝该报告的`resume_from`，不把它宣称为全部恢复能力。`config-only-short.log`12项PASS，验证配置先写、状态读取失败时没有尝试；`config-only-material.log`两套录制来源材料2项PASS、合计377.591秒，把有效既存配置放入副本失败报告的同一状态根，恢复后仍完成另一来源及B01/C04结果，并保留成功行状态降格拒绝。当前V13父级闭包字节未变，V14与三份收据见`binding-config-only-after.json`。前次`resume-followup-fast.log`132/132只覆盖旧子补丁；本次受影响短测与材料另验，新head CI仍待核对。原账本无新增真实调用或生产采纳；本补丁限定独审另记。
