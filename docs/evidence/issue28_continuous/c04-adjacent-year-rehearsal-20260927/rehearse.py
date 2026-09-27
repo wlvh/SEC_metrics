@@ -15,14 +15,13 @@ from vnext import ordinary_refresh_cycle as refresh
 from vnext.normal_source_authority import ROOT
 
 
-COMPANY = 'marriott_international'
-URL = submissions_url(cik=1048286)
+COMPANIES = {'marriott_international': 1048286, 'salesforce': 1108524}
 
 
-def saved_response():
+def saved_response(url):
     with (ROOT / 'evidence/requests_log.csv').open(newline='') as handle:
         rows = [row for row in csv.DictReader(handle)
-                if row['source_url'] == URL and row['status_code'] == '200']
+                if row['source_url'] == url and row['status_code'] == '200']
     assert rows
     row = rows[-1]
     raw = (ROOT / row['repo_relative_path']).read_bytes()
@@ -50,7 +49,10 @@ def derived_prior_response(current):
 
 
 def main():
-    current, original_row = saved_response()
+    company_id = ('salesforce' if '--salesforce' in sys.argv[1:]
+                  else 'marriott_international')
+    url = submissions_url(cik=COMPANIES[company_id])
+    current, original_row = saved_response(url)
     prior, annual = derived_prior_response(current)
     with tempfile.TemporaryDirectory(prefix='issue28-c04-adjacent-') as temporary:
         root = Path(temporary).resolve()
@@ -58,7 +60,7 @@ def main():
         state = root/'state'
         def advance(maximum):
             result = refresh.refresh_and_process(session=session,
-                state_root=state, company_ids=[COMPANY], metric_ids=['C04'],
+                state_root=state, company_ids=[company_id], metric_ids=['C04'],
                 max_sec_requests=maximum, c04_successor=True)
             company, = result['companies']
             metric, = company['updates']['metrics']
@@ -83,21 +85,22 @@ def main():
                           side_effect=AssertionError('DNS_FORBIDDEN')), \
              patch('sec_http.urlopen',
                    side_effect=AssertionError('HTTP_FORBIDDEN')):
-            old_capture = session.capture(company_id=COMPANY, url=URL,
+            old_capture = session.capture(company_id=company_id, url=url,
                 refresh_metadata=True, source_only_c04=True)
             assert old_capture['status'] == 'SUCCEEDED'
             first, first_metric = advance(0)
-            if sys.argv[1:] == ['--prior-only']:
+            if '--prior-only' in sys.argv[1:]:
                 return
             session.response = current
             second, second_metric = advance(1)
             third, third_metric = advance(0)
-        state_root = state/COMPANY/'metrics/C04-registration-v3'
+        state_root = state/company_id/'metrics/C04-registration-v3'
         pointer = json.loads((state_root/'current.json').read_text())
         with session.ledger.locked():
             counts = session.ledger.snapshot()['counts']
         summary = {
             'kind': 'RECORDED_DERIVED_PRIOR_METADATA_REHEARSAL',
+            'company_id': company_id,
             'current_original_source_path': original_row['repo_relative_path'],
             'current_original_source_sha256': hashlib.sha256(current).hexdigest(),
             'derived_prior_submissions_sha256': hashlib.sha256(prior).hexdigest(),
@@ -114,7 +117,8 @@ def main():
             'actual_historical_submissions_response_used': False,
             'authentic_online_cross_year_update_proven': False,
         }
-        Path(__file__).with_name('result.json').write_text(
+        Path(__file__).with_name('salesforce-result.json' if company_id ==
+            'salesforce' else 'result.json').write_text(
             json.dumps(summary, ensure_ascii=False, indent=2, default=str)+'\n')
         print(json.dumps({'final': summary}, ensure_ascii=False,
                          default=str), flush=True)

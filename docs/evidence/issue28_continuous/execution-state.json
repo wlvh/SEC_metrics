@@ -4655,7 +4655,7 @@
     "possible_downstream_impact": "#47 may need to rebind its own dependent current execution snapshot after #28 base moves; its executor owns that integration. #28 did not touch the #47 branch, snapshot, ledger, source or run root."
   },
   "ordinary_source_gap_census_20260927": {
-    "status": "READ_ONLY_WORKTREE_NOT_YET_PUSHED",
+    "status": "PUSHED_WITH_HEAD_9cf9314d",
     "evidence": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/source-gap-census.jsonl",
     "script": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/source-gap-census.py",
     "source_root": "ORIGINAL_FIXED_ISSUE28_SOURCE_INPUTS",
@@ -4673,7 +4673,7 @@
     "meaning": "Current source graph available does not establish all39 metric results or freshness; no basis yet to widen non-C04 capture or spend SEC on alternative-satisfied HTML."
   },
   "b06_ford_visible_balance_debt_20260927": {
-    "status": "READ_ONLY_WORKTREE_NOT_YET_PUSHED",
+    "status": "PUSHED_WITH_HEAD_9cf9314d",
     "evidence": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance.json",
     "script": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance-probe.py",
     "accession": "0000037996-26-000015",
@@ -4722,6 +4722,48 @@
       0
     ],
     "evidence": "docs/evidence/issue28_continuous/ci-mixed-resume-timeout-20260927/README.md",
-    "remaining": "PUSH_SCOPED_RESOURCE_FIX_THEN_NEW_HEAD_CI"
+    "remaining": "HEAD_9CF9314D_CI_36328893119_FAILED_C04_FAILED_COPY_RESUME_AT_360_SECONDS"
+  },
+  "b13_model_spans_v8_20260927": {
+    "patch_sha": "ab2051939b3460c74c271a263920fb52346ecdc8",
+    "review_record_sha": "9432fc0b",
+    "status": "OFFLINE_DIAGNOSTIC_NEEDS_FIX_LIVE_AND_NATIVE_SUSPENDED",
+    "v14_closure": "sha256:b1deaa8d7eff75728473fefb63cacfc7e93e81d1b146e09545d9c9db94b8684c",
+    "targeted_tests": "40_PASS_LOCAL_AFTER_BINDING",
+    "v7_request_bytes_unchanged": true,
+    "independent_review": "NEEDS_FIX_THREE_SPECIFIC_SEMANTIC_COUNTEREXAMPLES_FAIL_CLOSED",
+    "evidence": "docs/evidence/issue28_continuous/b13-model-spans-v8-offline-20260927/README.md",
+    "real_calls": [0, 0, 0],
+    "complete_company_result": false,
+    "new_live_permission": false
+  },
+  "ci_c04_resume_timing_20260927": {
+    "old_head": "9cf9314d2d74026c26b204719a2986648448af04",
+    "old_run": 36328893119,
+    "old_terminal": "FAILURE_SINGLE_C04_FAILED_COPY_RESUME_RC124_AT_360_063_SECONDS",
+    "local_full_material_seconds": 166.09,
+    "local_material_passed": true,
+    "local_c04_run_seconds_inclusive": 80.478,
+    "local_ordinary_run_seconds_inclusive": 32.15,
+    "new_case_timeout_seconds": 480,
+    "new_head": "f8679a1839cbdd4f120c7e39dc9a665398edac5f",
+    "new_run": 36331478871,
+    "new_run_status_last_checked": "IN_PROGRESS",
+    "evidence": "docs/evidence/issue28_continuous/c04-resume-timing-20260927/README.md",
+    "real_calls": [0, 0, 0]
+  },
+  "c04_adjacent_year_rehearsal_20260927": {
+    "head": "1abe167e1a259f261cc91ab3ef82ebf0159247b9",
+    "status": "RECORDED_DERIVED_PRIOR_METADATA_OLD_INPUT_FAILED_CURRENT_2025_CANDIDATE_READY",
+    "old_failure": "C04_REGISTRATION_BASE_INPUT_UNRESOLVED",
+    "salesforce_prior_only_failure": "SAVED_SOURCE_MISSING_PRIOR_FY2025_BODY_IN_ISOLATED_BASELINE_TEST_ROOT_NOT_ORIGINAL_CUMULATIVE_ROOT",
+    "new_period_end": "2025-12-31",
+    "new_result_value": "0",
+    "repeat_status": "NO_SOURCE_CONTENT_CHANGE",
+    "authentic_cross_year_update_proven": false,
+    "complete_company_result_added": false,
+    "original_source_response_used_as_prior": false,
+    "evidence": "docs/evidence/issue28_continuous/c04-adjacent-year-rehearsal-20260927/README.md",
+    "real_calls": [0, 0, 0]
   }
 }
