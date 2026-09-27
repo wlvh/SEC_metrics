@@ -35,7 +35,7 @@
   },
   "current_work": [
     "D04 ten companies retain complete real native candidates and independent cold reads; no formal adoption or production switch.",
-    "B13 historical190 success is preserved, 111 current reuse remains blocked, 191/192 failed and exhausted their group opportunities. V7 three known semantic counterexamples have a limited offline repair with 32 directed tests, but exact-SHA independent review is pending and live/native acceptance remains suspended; no complete B13 company.",
+    "B13 historical190 success is preserved, 111 current reuse remains blocked, 191/192 failed and exhausted their group opportunities. The V7 exact-SHA followup review of the 32-test limited repair remains NEEDS_FIX due three additional bounded counterexamples; live/native acceptance remains suspended and no complete B13 company exists.",
     "Marriott C04 real SEC193-194 same-year refresh preserves two private result versions; Southwest SEC195 acquired its exact missing FY2024 prior annual primary, and a FY2025 C04 PUBLISHED/0 private native Run and independent cold read succeeded. This is not an old-FY2024-Run to new-FY2025-Run automatic transition.",
     "Salesforce current FY2026 and prior FY2025 annuals are saved, but the frozen C04 v2 URL/document-name equality rejects one genuine legacy 0002.body request-log alias before native Run. Original proof remains unchanged; explicit compatible successor admission is still needed.",
     "D03 source-material duplicate rebuild reduction measured 116.660 to 80.409 seconds locally; final two original material tests 78.737 seconds and exact-SHA limited followup review PASS_WITH_BOUNDS. Head9fa84fc2 main CI36298137866 completed SUCCESS, all15 jobs including saved-source shard0 succeeded.",
@@ -45,7 +45,7 @@
     "Preserve head9fa84fc2 main CI36298137866 all15 SUCCESS; do not rerun passed D03 material or other jobs merely to obtain a second result.",
     "Use the newly saved Southwest prior annual in the private C04 native Run chain; keep the 195 real source and cold read. Cross-year automatic transition remains unproven until an authentic earlier submissions/Run version exists; do not fabricate an old HTTP response.",
     "Handle the Salesforce 0002.body legacy source-document alias only through an explicit source-proven successor that preserves original immutable proof and frozen default behavior; independently review any new code before business credit.",
-    "Keep B13 V7 closed while addressing specific semantic false acceptance or false rejection with finite tests; do not resample191/192 or treat pause code as semantic diagnosis. D03 stays no-call; continue B06/390/exit preparation independently.",
+    "Keep B13 V7 closed. The exact-SHA review of 9d04d65 found adjacent-and scope, trailing-if classification and clear-pronoun false rejection; a local followup experiment failed the original role validator, so no unreviewed source patch was retained. Do not resample191/192 or treat pause code as semantic diagnosis. D03 stays no-call; continue B06/390/exit preparation independently.",
     "No Ready, merge, adoption, deployment, active switch, long-running production, #47 interaction or new provider permission."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
@@ -1776,6 +1776,30 @@
       "total_agent_message_cap": 3,
       "cumulative_agent_tool_calls": 37,
       "agent_exec_orchestrations": 5
+    },
+    {
+      "task_name": "review_b13claim_9d04d65",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "b13_claim_context_v7",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-v7-finite-claim-repair-20260927/"
+      ],
+      "patch_sha": "9d04d654af7649aa0ab90719d6c8f2ca7a94efaa",
+      "spawned_at": "2026-09-27T06:37:11Z",
+      "ended_at": "2026-09-27T06:47:50Z",
+      "tool_calls": 35,
+      "result_path": "docs/evidence/issue28_continuous/b13-v7-finite-claim-repair-20260927/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_V7_SEMANTICS_PASS_WITH_BOUNDS_FAIL_CLOSED",
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3,
+      "agent_exec_orchestrations": 20,
+      "ordinary_messages_observed": 5,
+      "message_cap_exceeded": true,
+      "followup_task_sent_only_for_call_tally_after_review": true
     }
   ],
   "ci_capacity_20260922": {
@@ -4077,7 +4101,7 @@
     "evidence": "docs/evidence/issue28_continuous/c04-southwest-prior-source-20260927/README.md"
   },
   "b13_v7_finite_claim_repair_20260927": {
-    "status": "OFFLINE_FINITE_COUNTEREXAMPLE_REPAIR_PENDING_EXACT_SHA_REVIEW",
+    "status": "OFFLINE_FINITE_COUNTEREXAMPLE_REPAIR_REVIEW_NEEDS_FIX_LIVE_SUSPENDED",
     "base_head": "227182efe31b7ce6364c866753ae1332afb41ea2",
     "changed_function_scope": [
       "scripts/vnext/capacity_two_stage.py:_claim_segments",
@@ -4097,6 +4121,14 @@
     "provider_sec_refresh_receipts_validated": true,
     "v13_default_modified": false,
     "historical_v7_needs_fix_preserved": true,
+    "independent_review": "NEEDS_FIX_V7_SEMANTICS;PASS_WITH_BOUNDS_PAUSE_AND_BINDING",
+    "independent_review_path": "docs/evidence/issue28_continuous/b13-v7-finite-claim-repair-20260927/independent-review/conclusion.md",
+    "new_counterexamples": [
+      "TWO_AND_JOINTS_SPLIT_SINGLE_PREDICATE_CAPACITY_NOUNS",
+      "TRAILING_IF_WRONGLY_CURRENT_ONLY_PAUSE",
+      "CLEAR_THEY_ANTECEDENT_WITH_RELATIVE_WE_FALSE_AMBIGUOUS"
+    ],
+    "local_followup_experiment": "FAILED_OLD_V4_PLANNED_ROLE_FOR_MORE_CAPACITY_UNCOMMITTED_SOURCE_RESTORED",
     "current_v7_native_and_live_acceptance_suspended": true,
     "new_real_calls": [0, 0, 0],
     "shared_with_47": {
