@@ -11,8 +11,9 @@ printed exit statuses and last lines for a person to read and exited 0 whatever
 they were; this one decides:
 
   control    exit 0, nothing on stderr, and a proposal byte-identical to the
-             committed one, which also shows the redirection below changes
-             nothing;
+             committed one. That shows the redirection below leaves this
+             input's proposal unchanged, not that the edited copy behaves like
+             the command line for every input;
   injection  exit 1, nothing on stdout, stderr exactly the SystemExit message
              of the targeted check, and no proposal written. A traceback - a
              syntax, import or any other error, which also exits 1 - or a

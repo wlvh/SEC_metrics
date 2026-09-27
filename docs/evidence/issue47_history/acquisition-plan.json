@@ -353,7 +353,14 @@
     0,
     0,
     0
-   ]
+   ],
+   "external_review_b9323992": {
+    "verdict": "accepted; the gap in the injection script is closed. This closes that gap only: it is not a closure of #47 and approves no call or product decision.",
+    "what_the_reviewer_ran": "19 local checks of the reviewer's own, through this script's unmodified judge and runner functions with stand-in subprocesses of known behaviour in place of the proposal tool - as reported by the reviewer, not reproduced here",
+    "not_independently_rerun": "the four-case run against the real tool, --bypass-target-check against the real tool, the SIGTERM/SIGINT/SIGHUP runs and CI; these remain the executor's records",
+    "what_the_evidence_supports": "the control: the redirection leaves this input's proposal unchanged; the injections: the named checks recognise these contradictions. Not command-line equivalence for every input, not that the proposal matches the owner's intent, not production safety.",
+    "docstring_corrected": "the verifier's docstring said the control shows the redirection changes nothing; it now says the control shows this input's proposal unchanged. Code unchanged: the module's syntax tree without its docstring equals the version run at 968076ba."
+   }
   },
   "what_the_one_answer_per_class_check_is": "a check that the per-company, per-class statement above fits the grants proposed today, not a rule that a class must be granted alike for every year. A grant approved for some years only is a legitimate decision; the statement then says so per year and the check changes with it, rather than refusing it."
  }
