@@ -56,6 +56,14 @@ class OrdinaryRefreshBoundaryTest(unittest.TestCase):
                 url='https://data.sec.gov/submissions/CIK0001048286.json',
                 ordinary_prestate_root=Path('/unexecuted-state'),
                 ordinary_prestate_metric_ids=['B01', 'C04'])
+        with self.assertRaisesRegex(ValueError,
+                'SEC_ACQUISITION_RESUME_PREDECESSOR_SCOPE_INVALID'):
+            session.capture(company_id='marriott_international',
+                url='https://data.sec.gov/submissions/CIK0001048286.json',
+                source_only_c04=True,
+                resume_predecessor={'previous_intent_id': 'unbound',
+                    'counts': [0, 0, 1], 'ordinal': 1,
+                    'source_ledger_sha256': '0'*64})
 
     def test_config_written_before_failed_state_read_is_not_an_attempt(self):
         from vnext import ordinary_update_cycle as update

@@ -536,7 +536,6 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
             if len(captures) >= capture_limit:
                 break
             request = pending[0]; url = request['source_url']; attempted.add(url)
-            capture_started = False
             try:
                 if resumed is not None:
                     from .normal_run_v3 import prepare_case
@@ -581,21 +580,27 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                             metric_ids=metrics, mixed_stale=mixed_stale)
                         need(checked == resumed,
                              'ORDINARY_REFRESH_RESUME_CHANGED_BEFORE_CAPTURE')
-                    capture_started = True
                     result = session.capture(company_id=company, url=url,
                         refresh_metadata=request['refresh_for_new_discovery'],
                         **({'source_only_c04': True} if c04_only or mixed_stale else {}),
                         **({'ordinary_prestate_root': state_root,
                             'ordinary_prestate_metric_ids': metrics}
-                            if mixed_stale else {}))
+                            if mixed_stale else {}),
+                        **({'resume_predecessor': {
+                            'previous_intent_id': resumed['prior_intent_id'],
+                            'counts': before,
+                            'ordinal': resumed['prior_ordinal'],
+                            'source_ledger_sha256': resumed['source_ledger_sha256']}}
+                            if resumed is not None and mixed_stale else {}))
                 captures.append({'company_id': company, 'source_url': url, 'result': result})
                 if result['status'] not in {'SUCCEEDED', 'EXISTING_VERIFIED_SOURCE_REUSED'}:
                     failed.add(url)
                 progressed = True
             except Exception as error:
-                if resumed is not None and not capture_started:
-                    # A changed predecessor is an admission failure. Do not
-                    # run ordinary updates after denying the next SEC claim.
+                if resumed is not None and mixed_stale:
+                    # A resumed capture cannot safely continue ordinary work
+                    # after either preclaim rejection or an unknown failure.
+                    # Its ledger remains the authority for any claimed slot.
                     raise
                 capture_error = True
                 errors.setdefault(company, []).append({'stage': 'CAPTURE', 'error_type': type(error).__name__, 'reason': str(error)})

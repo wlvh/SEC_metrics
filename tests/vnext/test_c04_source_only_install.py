@@ -59,6 +59,7 @@ class C04SourceOnlyInstallTest(unittest.TestCase):
             self.assertEqual('C04_REGISTRATION_FOUR_FORM_UPDATE_V1',
                              plan['source_only_processing_route'])
             self.assertNotIn('ordinary_pre_capture_state', plan)
+            self.assertNotIn('resume_predecessor', plan)
             with self.assertRaisesRegex(ValueError, 'Immutable receipt bytes differ'):
                 initialize_source_inputs(root=source, requirement=session.requirement)
             (source/'catalog/zero_ai_public_projection.json').write_bytes(b'{}\n')
@@ -109,6 +110,14 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
                                                 'UPDATE_ALREADY_RUNNING'):
                         with update._locked(root/'state/marriott_international'):
                             pass
+                    wrong = dict(kwargs['resume_predecessor'])
+                    wrong['counts'] = [0, 0, 0]
+                    with self.assertRaisesRegex(ValueError,
+                            'SEC_ACQUISITION_RESUME_LEDGER_CHANGED_BEFORE_CLAIM'):
+                        native_capture(**{**kwargs, 'resume_predecessor': wrong})
+                    with session.ledger.locked():
+                        self.assertEqual([0, 0, 1],
+                                         session.ledger.snapshot()['counts'])
                 captures.append(kwargs['url'])
                 session.response = bodies[kwargs['url']]
                 return native_capture(**kwargs)
@@ -165,6 +174,20 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
                 self.assertEqual([urls[0]], captures)
                 self.assertEqual(1, resume_checks[0])
                 (b01_root/'current.json').write_bytes(historical_pointer)
+                c04_current = (root/'state/marriott_international/metrics/'
+                    'C04-registration-v3/current.json')
+                prior_c04_pointer = c04_current.read_bytes()
+                with patch.object(session, 'capture',
+                                  side_effect=ValueError('INJECTED_PRECLAIM_REJECTION')):
+                    with self.assertRaisesRegex(ValueError,
+                            'INJECTED_PRECLAIM_REJECTION'):
+                        refresh.refresh_and_process(session=session,
+                            state_root=root/'state',
+                            company_ids=['marriott_international'],
+                            metric_ids=['B01', 'C04'], max_sec_requests=1,
+                            c04_successor=True, resume_from=prior)
+                self.assertEqual(prior_c04_pointer, c04_current.read_bytes())
+                self.assertEqual([urls[0]], captures)
                 resumed = refresh.refresh_and_process(session=session,
                     state_root=root/'state',
                     company_ids=['marriott_international'],

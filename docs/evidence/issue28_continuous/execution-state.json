@@ -2001,6 +2001,21 @@
       "tool_calls": 66,
       "result_path": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS_SINGLE_EXECUTOR_CONCURRENT_STATE_RACE_UNPROVEN"
+    },
+    {
+      "task_name": "review_c04lock_45cdbac",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py",
+        "requirements/issue_28_v14/baseline_manifest.json"
+      ],
+      "patch_sha": "45cdbacaa4c3b617194807b04d3dbd540650282c",
+      "spawned_at": "2026-09-27T19:38:38+00:00",
+      "ended_at": "2026-09-27T19:45:50+00:00",
+      "tool_calls": 39,
+      "result_path": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/independent-review-lock/conclusion.md",
+      "verdict": "NEEDS_FIX_PRECLAIM_CAPTURE_ABORT_AND_ATOMIC_LEDGER_PREDECESSOR"
     }
   ],
   "ci_capacity_20260922": {
@@ -4859,7 +4874,9 @@
     }
   },
   "c04_resume_same_root_lock_guard_20260928": {
-    "status": "LOCAL_TESTED_NEW_SHA_INDEPENDENT_REVIEW_PENDING",
+    "status": "LOCAL_TESTED_INDEPENDENT_REVIEW_NEEDS_FIX",
+    "patch_sha": "45cdbacaa4c3b617194807b04d3dbd540650282c",
+    "independent_review": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/independent-review-lock/conclusion.md",
     "scope_paths": [
       "scripts/vnext/ordinary_refresh_cycle.py",
       "tests/vnext/test_c04_source_only_install.py",
@@ -4883,6 +4900,40 @@
       "v14_binding_changed": true,
       "compatibility_evidence": "14 short tests; affected recorded material pass; old default routes and original installed historical package evidence reused",
       "potential_downstream_impact": "#47 stacked branch may need its own dependent V14 rebind after integrating this PR43 head; #28 did not touch #47 files or runtime."
+    }
+  },
+  "c04_resume_atomic_predecessor_20260928": {
+    "status": "LOCAL_TESTED_NEW_SHA_INDEPENDENT_REVIEW_PENDING",
+    "scope_paths": [
+      "scripts/vnext/continuous_sec_acquisition.py",
+      "scripts/vnext/ordinary_refresh_cycle.py",
+      "tests/vnext/test_ordinary_refresh_cycle.py",
+      "tests/vnext/test_c04_source_only_install.py"
+    ],
+    "v13_closure": "sha256:ec31f48a31739cd4754a9eac7184b5be1d96d23e59567bb56c503118b0eefacd",
+    "v14_closure": "sha256:96c78c9a0e4432cb85d63ddab7c79019c118007d3f5b82e92f110617a483337c",
+    "short_tests": "14_PASS",
+    "default_c04_source_only": "1_PASS_NO_RESUME_PREDECESSOR_FIELD",
+    "recorded_material": "1_PASS_423_802_SECONDS",
+    "fast_suite": "132_SELECTORS_PASS_215_1_SECONDS_LOCAL_ONLY",
+    "preclaim_rejection_changes_c04_history": false,
+    "incorrect_predecessor_claims_new_sec_slot": false,
+    "cross_version_history_write_proven": false,
+    "real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/README.md",
+    "shared_with_47": {
+      "files_and_functions": [
+        "scripts/vnext/continuous_sec_acquisition.py:SecAcquisitionSession.capture",
+        "scripts/vnext/ordinary_refresh_cycle.py:refresh_and_process"
+      ],
+      "capture_new_optional_parameter": "resume_predecessor",
+      "default_value": null,
+      "default_plan_return_and_record_types_changed": false,
+      "ordinary_default_route_changed": false,
+      "v13_binding_changed": true,
+      "v14_binding_changed": true,
+      "compatibility_evidence": "default C04 recorded route and original installed historical package evidence; current V13/V14 load and wiring validation",
+      "potential_downstream_impact": "#47 stacked branch must rebind its own dependent snapshot if it integrates this PR43 head; no #47 files, ledger or runtime touched."
     }
   }
 }
