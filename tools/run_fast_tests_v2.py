@@ -152,7 +152,7 @@ SOURCE_TIMEOUT_OVERRIDES = {
     "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 300,
     # Head 5e2a5ca9 shard1 ended the normal two-capture mixed-source case at
     # its 240.106s limit; the local two-case run passed in 377.591s.
-    "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 360,
+    "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 480,
     # Head 5e2a5ca9 shard0 ended this exact two-capture recovery case at the
     # 240.105s per-case limit (rc124); the local two-case run passed in
     # 377.591s. Keep the rest of the source suite and job deadline unchanged.
