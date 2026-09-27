@@ -72,7 +72,8 @@ COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 # tools/read_debt_to_equity.py, which imports none of the debt cascade.
 DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
 READINGS = (*CROSS_READINGS, LODGING, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
-            TEXT, *D01_READINGS, RPO, COMPENSATION, DEBT_TO_EQUITY, C02_COMPOSITION)
+            TEXT, *D01_READINGS, RPO, COMPENSATION, DEBT_TO_EQUITY, C02_COMPOSITION,
+            E01_CANDIDATES)
 # The readings key some positions by a label only. The label is what the
 # reading recorded, and this is the period each label names.
 PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",

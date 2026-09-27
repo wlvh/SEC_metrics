@@ -261,6 +261,10 @@ SOURCE_TESTS += ("tests.vnext.test_historical_semantic_routes",)
 # no longer describes the selection refused. Prepares ten text inputs; 70
 # seconds measured under a running batch.
 SOURCE_TESTS += ("tests.vnext.test_c02_board_reading",)
+# E01 under the content-confirmed definition: the one answer the reading can
+# grant (a window with no candidate item) recomputed from saved headers, and a
+# window with candidates must show them. About 10 seconds.
+SOURCE_TESTS += ("tests.vnext.test_e01_candidate_reading",)
 # The six financial metrics' open side: the ordinary resolver and the restated
 # one handed the same preparation, every returned field equal on the bank's
 # real latest filing; an earlier year's and an amended period's pinned

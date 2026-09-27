@@ -8222,6 +8222,83 @@
    "what_this_does_not_establish": "what is established is that this excerpt set is the set the approved source definition asks for in this filing, read in both directions. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_E01_CONTENT_CONFIRMED_ENPHASE_2025",
+   "accepted_value": "0",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+     "result_id": "sha256:78d5e68af5c48f62e664ea45b265e7f493595028211a58f0fd66d9b571a5b582",
+     "run_id": "run:historical-period:ce543969dafee62dca6f05a1773fd63547d5b205767443c8843dfc07a292617f"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-25-000014",
+     "0001463101-25-000054",
+     "0001463101-25-000075",
+     "0001463101-25-000090",
+     "0001463101-25-000099",
+     "0001463101-25-000111"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read.json",
+   "method": "under the owner's content-confirmed definition (catalog/r6/E01_content_confirmed_ma_v1.json), the window's 8-K and 8-K/A filings from the ledger's latest saved submissions index and each one's item codes from its own SEC header, by tools/read_e01_candidates.py, which calls none of the route's discovery, claim or item code; counted under both the filing date and the report date. Accepted only where the window holds no candidate item (1.01, 2.01, 8.01) under either basis and every header in it is saved: that answer needs no content confirmation.",
+   "metric_id": "E01",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "candidate_items_by_basis": {
+     "filing_date": 0,
+     "report_date": 0
+    },
+    "eight_k_filings_in_window": 6,
+    "item_codes": [
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "7.01",
+      "9.01"
+     ],
+     [
+      "5.02",
+      "5.07",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ],
+     [
+      "2.02",
+      "9.01"
+     ]
+    ],
+    "window": [
+     "2025-01-01",
+     "2025-12-31"
+    ]
+   },
+   "what_this_does_not_establish": "what is established is that no item the definition reads as a candidate was filed in the window, so zero needs no confirmation. It establishes nothing about a window with candidates, and does not establish that the candidate items are the right ones to read - a transaction announced only under 7.01 is outside them - nor that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_E01_ENPHASE_2025",
    "accepted_value": "0",
    "checked_identity": {
@@ -12449,7 +12526,8 @@
   "docs/evidence/issue47_history/content-acceptance/rpo-read.json",
   "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json",
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
-  "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json"
+  "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+  "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read.json"
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "not_here_and_why": {
@@ -12511,6 +12589,12 @@
    "acceptances_contributed": 4,
    "content_sha256": "sha256:c0c177821c68861f92e052619a457c402a7deb41df7317708372aae6e58651d2",
    "positions_examined": 4,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/e01-content-confirmed-read.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:b2adfbf9b11b5c44a65d2a5dc30318b4b3b6258efdaf2767ab569f56d9530b8a",
+   "positions_examined": 1,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/e01-eight-o-one-read.json": {
