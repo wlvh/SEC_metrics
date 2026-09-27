@@ -10,6 +10,7 @@ from vnext import c04_update_cycle as update
 from vnext import normal_run_v3 as normal
 from vnext.canonical import content_hash, strict_json_file
 from vnext.normal_source_authority import ROOT
+from vnext.ordinary_projection import render_ordinary_run
 from tools import vnext_normal_update
 
 
@@ -32,6 +33,10 @@ class C04UpdateCycleMaterialTest(unittest.TestCase):
             self.assertEqual(terminal['metrics']['C04']['publication'], 'PUBLISHED')
             self.assertEqual(terminal['metrics']['C04']['result_id'],
                 first['last_verified_candidate']['results']['C04']['result_id'])
+            rendered = render_ordinary_run(data_root=state/'attempts'/
+                first['successful_attempt']/'data', run_dir=state/'attempts'/
+                first['successful_attempt']/'runs/C04')
+            self.assertEqual(set(rendered), {'row', 'evidence', 'receipt', 'files'})
             configuration = strict_json_file(path=state/'configuration.json')
             self.assertEqual(configuration['route'], update.ROUTE)
 

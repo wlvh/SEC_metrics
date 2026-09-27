@@ -1,0 +1,21 @@
+{
+  "ordinary_closure": "sha256:7ff851292f26326a83dfaec46ee0a418163a8bfcd8b20ce032e5e7c8a9f8fed4",
+  "continuous_closure": "sha256:6372c5dbd59d2127227eb3c1ad1f34cd4a6742ba62d1cbd691f04cece8a3cf45",
+  "execution_authority_hash": "sha256:8946340d0d801fbf181a9fc1b3753b864e491051eb35d3a678e6d49931417350",
+  "files": {
+    "scripts/vnext/ordinary_projection.py": {
+      "sha256": "93b284eedbb6ba0d23425191320543a8624050642f9bbd1d2bb205c168f5b6f1",
+      "size": 14196
+    },
+    "scripts/vnext/ordinary_update_cycle.py": {
+      "sha256": "9e4be9402863ddbcbb86b586c0c55ca730d9f4b42b014f0a4e0b06128a193d00",
+      "size": 22631
+    }
+  },
+  "receipts": [
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json"
+  ],
+  "frozen_snapshots_changed": false
+}

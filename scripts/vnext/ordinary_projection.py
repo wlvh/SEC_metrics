@@ -51,7 +51,8 @@ def _claim_evidence(claim, observation, result, company, projection, indexes, fi
     return entry
 
 
-def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
+def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False,
+                        _return_replay_context=False):
     if frozen:
         manifest,records,_ = load_frozen_run(run_dir=run_dir,repo_root=data_root)
     else:
@@ -181,6 +182,11 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
                        source_checkpoint_id=case["admission"]["checkpoint_id"],
                        real_sec_credit=case["admission"]["real_sec_credit"],
                        selected_new_request_attempt_ids=case["admission"]["selected_new_request_attempt_ids"])
-    return {"row":row,"evidence":evidence,"receipt":{**receipt,"receipt_id":content_hash(value=receipt)},
+    rendered = {"row":row,"evidence":evidence,"receipt":{**receipt,"receipt_id":content_hash(value=receipt)},
         "files":{"metrics_matrix.csv":publication._csv_bytes(rows=[row],fieldnames=publication.METRIC_FIELDS),
                  "metric_evidence.csv":publication._csv_bytes(rows=evidence,fieldnames=publication.EVIDENCE_FIELDS)}}
+    if _return_replay_context:
+        # Same-operation callers can consume the Run/source replay already
+        # performed above. A later invocation still starts from disk.
+        rendered["replay_context"] = {"manifest":manifest,"records":records,"case":case}
+    return rendered
