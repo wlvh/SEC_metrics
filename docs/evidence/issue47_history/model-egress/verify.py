@@ -192,7 +192,11 @@ INJECTIONS = [
      [('    if prepared.metric_id == "D02":\n        from .historical_legal_review import',
        '    if False:\n        from .historical_legal_review import')]),
     ("A_D02_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN", EGRESS,
-     [('                               output=output, mode=ledger.mode)',
+     [('        return register_review(request=request, company_id=first.company_id,\n'
+       '                               period_selection_id=first.period_selection["selection_id"],\n'
+       '                               output=output, mode=ledger.mode)',
+       '        return register_review(request=request, company_id=first.company_id,\n'
+       '                               period_selection_id=first.period_selection["selection_id"],\n'
        '                               output=output, mode="LIVE")')]),
     # The three checks the review neutralized at once without any case failing.
     ("THE_SEND_DOES_NOT_RECHECK_ITS_RESERVATION", EGRESS,
@@ -422,6 +426,17 @@ def main():
     if sorted(names) != sorted(EXPECTED) or not set(EXPECTED.values()) <= set(ORDER):
         print("EVERY_INJECTION_NEEDS_ONE_EXPECTED_CLASS_THE_SUITE_DECLARES",
               sorted(set(names) ^ set(EXPECTED)), sorted(set(EXPECTED.values()) - set(ORDER)))
+        return 2
+    # Every edit must hit exactly once, checked before anything runs. The
+    # 2026-09-27 run found a target that was a substring of another line only
+    # at its 46th injection, three hours in, and stopped without a receipt; an
+    # edit that does not apply says nothing about the code, so it is refused
+    # here, where it costs nothing.
+    misses = [(name, path, text.count(old)) for name, path, edits in INJECTIONS
+              for text in [(ROOT / path).read_text(encoding="utf-8")]
+              for old, _ in edits if text.count(old) != 1]
+    if misses:
+        print("AN_INJECTION_EDIT_DOES_NOT_HIT_EXACTLY_ONCE", misses)
         return 2
     before = {path: _sha(path) for path in BOUND}
     snapshot = _snapshot()
