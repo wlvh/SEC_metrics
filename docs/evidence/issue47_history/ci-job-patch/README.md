@@ -22,6 +22,37 @@ this development container, and the nearest comparable job in that file uses 30.
 Until it is applied, `tests.vnext.test_historical_package_material` has local
 execution records only and must not be reported as a CI pass.
 
+## 2026-09-27: `0004` adds a third saved-source shard
+
+`0004-third-saved-source-shard.patch` changes three lines of the base's
+saved-source job: the matrix becomes `shard_index: [0, 1, 2]`, the command
+passes `--shard-count 3`, and the aggregate step's name stops saying "both".
+The aggregate still requires `needs.source_material_parts.result == success`,
+which GitHub reports only when every matrix leg succeeded, so a third leg is
+covered without any other change. Checked with `git apply --check` against
+`db61d793`, alone and after `0001`.
+
+Why a workflow change and not more test work, measured rather than argued:
+
+- At `ca9feec2` (run 36321956779) both shards were cancelled at 35 minutes
+  with every case they had reached passing. The split is no longer
+  round-robin: since `51e01521` it is heaviest-first into the lighter shard,
+  weighted by each case's measured CI seconds (`SOURCE_CI_SECONDS`), and
+  #47's modules stopped recomputing inputs they share.
+- The base then added three cases (the D03 set and two C04 mixed-source
+  captures, about 700 CI seconds together). With them the two shards weigh
+  4,739 and 4,709 CI seconds; at `--jobs 2` that is about 39 minutes per
+  shard, over the 35-minute cap even with a perfect split. Three shards weigh
+  3,130 / 3,159 / 3,159, about 26 minutes each.
+- #47's cases are 4,869 of the 9,448 seconds and the base's 4,579, so
+  neither branch alone fills a shard pair and each adds to it. More
+  memoization here would move the date the tier runs out again, not the fact.
+
+Until `0004` or something equivalent is applied, a `cancelled` saved-source
+leg on this PR is a cap, not a pass and not a failure; the only evidence
+for that tier is a local complete run. `0003` no longer applies (the base
+split the job itself) and is kept only as a record.
+
 ## The second one was retired, and the file is gone
 
 `0002-raise-capacity-native-runs-cap.patch` used to raise `timeout-minutes` on
