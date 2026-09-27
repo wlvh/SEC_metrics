@@ -839,11 +839,22 @@
    "root_cause": "text_business_candidates.board_composition_candidates labels a block 'committee information' when it names any committee anywhere and contains any of the committee_structure words anywhere ('chair of', 'members of', 'committee chair', 'serves as', 'member of', ...). The two are not required to relate, nor to describe this board: a director-compensation line ('Audit Committee Chair Retainer'), an equity plan's administrator clause, a biography's other-company committee and the audit committee's auditor pre-approval all qualify. Across the ten judged values 87 of the 94 excerpts outside board composition carry the committee label. The selector's bytes are frozen by the issue_28 generations and shared with the ordinary route, which carries the same behaviour.",
    "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
    "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "repair_state": "RULE_REPLACED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:0c995ab8bde8958c3be1b2e7dcd11441aa308d8da585c8e97ea99acc8578daf1",
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "run_id": "run:historical-period:3def68ce1da243a298b10417c98b105dfbd9cd20b2bb45bccf97f40ddf48f7de",
+     "public_row_hash": "sha256:13e176bad9cc025382714b86ad5d5fd63756c1eb44ea50de224711269908d28d",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+     "what_this_releases": "This result and no other: it is produced by scripts/vnext/historical_board_composition.py under the owner's composition-fact meaning (catalog/r6/C02_board_disclosures_v2.md), not by the frozen selector this entry is about, and its excerpts were read in both directions (docs/evidence/issue47_history/c02-composition-facts/). Any result from the frozen selector at this coordinate - including the ones the batches still hold - stays withdrawn.",
+     "what_it_does_not_assert": "that the selection rules generalise beyond the ten filings they were written and checked on - this is agreement with a reading of the material they were fitted on, not a held-out test - or that any batch has run under this version."
+    }
    ]
   },
   {
@@ -859,11 +870,22 @@
    "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
    "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
    "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "repair_state": "RULE_REPLACED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:e302eaf029dc0c6ce0fb1e667ff96b4bd8ed12b524698616a37c684de4ce7958",
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "run_id": "run:historical-period:022f151b65f49710896603f71715dbbd9a9a4e4bedecdb1463fae3149e082fa3",
+     "public_row_hash": "sha256:6b39db305a8a5d31e50aaddc1a56c765cfb55de219f62fab7c76db89b5a54944",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+     "what_this_releases": "This result and no other: it is produced by scripts/vnext/historical_board_composition.py under the owner's composition-fact meaning (catalog/r6/C02_board_disclosures_v2.md), not by the frozen selector this entry is about, and its excerpts were read in both directions (docs/evidence/issue47_history/c02-composition-facts/). Any result from the frozen selector at this coordinate - including the ones the batches still hold - stays withdrawn.",
+     "what_it_does_not_assert": "that the selection rules generalise beyond the ten filings they were written and checked on - this is agreement with a reading of the material they were fitted on, not a held-out test - or that any batch has run under this version."
+    }
    ]
   },
   {
@@ -879,11 +901,22 @@
    "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
    "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
    "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "repair_state": "RULE_REPLACED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:3c38e693676e5d33e202770b79c21e0b8aced565ec816dd9e8861318c2e9c485",
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "run_id": "run:historical-period:3bbfd0885958d23f9f4c5bc3f200bc845e648a3537edc3f64ec4eedcbd3d2b71",
+     "public_row_hash": "sha256:2111b14b9c869b303077571ac95349f18175df80505e206bf7f51255f458b140",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+     "what_this_releases": "This result and no other: it is produced by scripts/vnext/historical_board_composition.py under the owner's composition-fact meaning (catalog/r6/C02_board_disclosures_v2.md), not by the frozen selector this entry is about, and its excerpts were read in both directions (docs/evidence/issue47_history/c02-composition-facts/). Any result from the frozen selector at this coordinate - including the ones the batches still hold - stays withdrawn.",
+     "what_it_does_not_assert": "that the selection rules generalise beyond the ten filings they were written and checked on - this is agreement with a reading of the material they were fitted on, not a held-out test - or that any batch has run under this version."
+    }
    ]
   },
   {
@@ -899,11 +932,22 @@
    "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
    "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
    "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "repair_state": "RULE_REPLACED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:c4194729d00ebc35b128c53bae7c270819bc6e2b361c02e61c9f1cb716b63ee2",
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "run_id": "run:historical-period:4ee65ab88144d7d0e40951860950b4e6ec9634687d78b3d82bcdb78904940f6f",
+     "public_row_hash": "sha256:24fa9d6c8b0a67cd9644dde39c89e94fe27aa4a457cd67f1ce67ce83cb8808a4",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+     "what_this_releases": "This result and no other: it is produced by scripts/vnext/historical_board_composition.py under the owner's composition-fact meaning (catalog/r6/C02_board_disclosures_v2.md), not by the frozen selector this entry is about, and its excerpts were read in both directions (docs/evidence/issue47_history/c02-composition-facts/). Any result from the frozen selector at this coordinate - including the ones the batches still hold - stays withdrawn.",
+     "what_it_does_not_assert": "that the selection rules generalise beyond the ten filings they were written and checked on - this is agreement with a reading of the material they were fitted on, not a held-out test - or that any batch has run under this version."
+    }
    ]
   },
   {
@@ -919,11 +963,22 @@
    "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
    "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
    "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "repair_state": "RULE_REPLACED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:4f8ba7678a040cc358c02c6d1c5883194a68a43da24fa9a713d5d7b16617321f",
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "run_id": "run:historical-period:af2b9c880bb8e17e3a2b8cb5c31fc968c3f619d562a86c69227598b89b20907e",
+     "public_row_hash": "sha256:a4fd864f98f699f732c440ed63f701e14d737329213a496c32c0f42a5c2e57b8",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+     "what_this_releases": "This result and no other: it is produced by scripts/vnext/historical_board_composition.py under the owner's composition-fact meaning (catalog/r6/C02_board_disclosures_v2.md), not by the frozen selector this entry is about, and its excerpts were read in both directions (docs/evidence/issue47_history/c02-composition-facts/). Any result from the frozen selector at this coordinate - including the ones the batches still hold - stays withdrawn.",
+     "what_it_does_not_assert": "that the selection rules generalise beyond the ten filings they were written and checked on - this is agreement with a reading of the material they were fitted on, not a held-out test - or that any batch has run under this version."
+    }
    ]
   },
   {
@@ -939,11 +994,22 @@
    "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
    "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
    "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "repair_state": "RULE_REPLACED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:57bdcb8e41d759eb2427412418987c02e220c399b3fd9d0037e13f3036bdeb5e",
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "run_id": "run:historical-period:18c9e76bf91bc10aae04d6a82296d8e20287c4e3db701fffad63919ceb2b0d40",
+     "public_row_hash": "sha256:c2ab737fe26ce6a54683d47a64660dd8a08b9059e4df921751b5207d1b1b1b42",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+     "what_this_releases": "This result and no other: it is produced by scripts/vnext/historical_board_composition.py under the owner's composition-fact meaning (catalog/r6/C02_board_disclosures_v2.md), not by the frozen selector this entry is about, and its excerpts were read in both directions (docs/evidence/issue47_history/c02-composition-facts/). Any result from the frozen selector at this coordinate - including the ones the batches still hold - stays withdrawn.",
+     "what_it_does_not_assert": "that the selection rules generalise beyond the ten filings they were written and checked on - this is agreement with a reading of the material they were fitted on, not a held-out test - or that any batch has run under this version."
+    }
    ]
   },
   {
@@ -959,11 +1025,22 @@
    "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
    "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
    "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "repair_state": "RULE_REPLACED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:4a7367c8f783d6ca7b12858ac8772ddec834ba7cbdc0cfdccaea35af69ed71db",
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "run_id": "run:historical-period:43069bbe4a333d92c64f047beafe9e4519affa786032193f90276e8807dd485d",
+     "public_row_hash": "sha256:5333fb976bb1d34de59f0374f6797182b13b9d815e1894cdd67ea05a1f0cf6a5",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+     "what_this_releases": "This result and no other: it is produced by scripts/vnext/historical_board_composition.py under the owner's composition-fact meaning (catalog/r6/C02_board_disclosures_v2.md), not by the frozen selector this entry is about, and its excerpts were read in both directions (docs/evidence/issue47_history/c02-composition-facts/). Any result from the frozen selector at this coordinate - including the ones the batches still hold - stays withdrawn.",
+     "what_it_does_not_assert": "that the selection rules generalise beyond the ten filings they were written and checked on - this is agreement with a reading of the material they were fitted on, not a held-out test - or that any batch has run under this version."
+    }
    ]
   },
   {
@@ -979,11 +1056,22 @@
    "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
    "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
    "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "repair_state": "RULE_REPLACED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:aabb0b9f906e747eaac401fd2bef589cb8cfb517f2ca13e576a9748027b53032",
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "run_id": "run:historical-period:819f1c3d9fe24a02f2c3025f5e0d0adba9401e92bbb393bd3717f6d6025a551f",
+     "public_row_hash": "sha256:eb226a548e1d7785663e7a9d4a6e4577e6783e2d88849a0220fb886c89e229d0",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+     "what_this_releases": "This result and no other: it is produced by scripts/vnext/historical_board_composition.py under the owner's composition-fact meaning (catalog/r6/C02_board_disclosures_v2.md), not by the frozen selector this entry is about, and its excerpts were read in both directions (docs/evidence/issue47_history/c02-composition-facts/). Any result from the frozen selector at this coordinate - including the ones the batches still hold - stays withdrawn.",
+     "what_it_does_not_assert": "that the selection rules generalise beyond the ten filings they were written and checked on - this is agreement with a reading of the material they were fitted on, not a held-out test - or that any batch has run under this version."
+    }
    ]
   },
   {
@@ -999,11 +1087,22 @@
    "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
    "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
    "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "repair_state": "RULE_REPLACED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:61126f335c2d1348c5e61851f11a9f9bccc852437d05eecf86dcbea6349b3384",
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "run_id": "run:historical-period:71b200e24df137b5e7c9527e6a84c9b6e93fb2865305af637607b0bdf4bb9530",
+     "public_row_hash": "sha256:653862bfe8d82875ae159de91c13836f845d4f8a4bdd5bc382734ed589587e72",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+     "what_this_releases": "This result and no other: it is produced by scripts/vnext/historical_board_composition.py under the owner's composition-fact meaning (catalog/r6/C02_board_disclosures_v2.md), not by the frozen selector this entry is about, and its excerpts were read in both directions (docs/evidence/issue47_history/c02-composition-facts/). Any result from the frozen selector at this coordinate - including the ones the batches still hold - stays withdrawn.",
+     "what_it_does_not_assert": "that the selection rules generalise beyond the ten filings they were written and checked on - this is agreement with a reading of the material they were fitted on, not a held-out test - or that any batch has run under this version."
+    }
    ]
   },
   {
@@ -1019,11 +1118,22 @@
    "root_cause": "Same as C02_ENPHASE_2025_SELECTOR_ADMITS_TEXT_OUTSIDE_BOARD_COMPOSITION.",
    "scope_measured": "Ten C02 values (nine newest periods and Paramount's predecessor FY2024), 246 excerpts judged one by one against the definition: 82 composition facts, 51 composition policies or processes, 19 committee or board functions, 94 outside board composition. Every value holds at least three of the last kind. Whether the selector also misses composition statements was not read.",
    "found_by": "c02-board-read/excerpt-judgements.json, held to the route's own selection from the saved proxies by tools/read_c02_board_statements.py",
-   "repair_state": "ROOT_CAUSE_MEASURED_REPAIR_NOT_DESIGNED",
+   "repair_state": "RULE_REPLACED_RESULT_RECOMPUTED_AND_READ",
    "why_not_repaired_yet": "A repair is a successor selector, and its target is partly a meaning question: whether the definition's 'committee information' includes committee functions (19 excerpts) and composition policies (51). What is outside under every reading (94) can be removed without that answer, but a rule that removes it has to be held to these judgements first - the same measurement the D02 keyword proxy needed, where the obvious narrowing lost more correct text than wrong. See c02-board-read/README.md.",
    "evidence": [
     "docs/evidence/issue47_history/c02-board-read/excerpt-judgements.json",
     "docs/evidence/issue47_history/c02-board-read/c02-board-read.json"
+   ],
+   "released": [
+    {
+     "result_id": "sha256:0d2ecc45413f6a8426b5e8ab2cc6c898e0aa5ae63dffd91ad18f28d6c0293d9e",
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "run_id": "run:historical-period:17e5ab5e838f258c7c2727e8cb37952576907346f6ce77b50d631b0ef55040ad",
+     "public_row_hash": "sha256:dd956e50f34ba04c28674d3d465b6fcd3d7cb53f790988e536f7ce9d80a4e55c",
+     "read_by": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+     "what_this_releases": "This result and no other: it is produced by scripts/vnext/historical_board_composition.py under the owner's composition-fact meaning (catalog/r6/C02_board_disclosures_v2.md), not by the frozen selector this entry is about, and its excerpts were read in both directions (docs/evidence/issue47_history/c02-composition-facts/). Any result from the frozen selector at this coordinate - including the ones the batches still hold - stays withdrawn.",
+     "what_it_does_not_assert": "that the selection rules generalise beyond the ten filings they were written and checked on - this is agreement with a reading of the material they were fitted on, not a held-out test - or that any batch has run under this version."
+    }
    ]
   },
   {

@@ -30,9 +30,10 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
-from acceptance_readings import (COMPENSATION, CROSS, CROSS_READINGS, D01_READINGS,  # noqa: E402
-                                 DEBT_TO_EQUITY, E01_EIGHT_O_ONES, EVENT_READINGS, GOVERNANCE,
-                                 LODGING, READINGS, RPO, TEXT, load, positions)
+from acceptance_readings import (C02_COMPOSITION, COMPENSATION, CROSS, CROSS_READINGS,  # noqa: E402
+                                 D01_READINGS, DEBT_TO_EQUITY, E01_CANDIDATES, E01_EIGHT_O_ONES,
+                                 EVENT_READINGS, GOVERNANCE, LODGING, READINGS, RPO, TEXT, load,
+                                 positions)
 
 REGISTER = "docs/evidence/issue47_history/accepted_result_content.json"
 
@@ -137,6 +138,40 @@ TEXT_LIMIT = (
  "definition asks for in this filing, read in both directions. It does not "
  "establish " + COMMON)
 
+E01_CANDIDATES_METHOD = (
+ "under the owner's content-confirmed definition "
+ "(catalog/r6/E01_content_confirmed_ma_v1.json), the window's 8-K and 8-K/A "
+ "filings from the ledger's latest saved submissions index and each one's item "
+ "codes from its own SEC header, by tools/read_e01_candidates.py, which calls "
+ "none of the route's discovery, claim or item code; counted under both the "
+ "filing date and the report date. Accepted only where the window holds no "
+ "candidate item (1.01, 2.01, 8.01) under either basis and every header in it "
+ "is saved: that answer needs no content confirmation.")
+E01_CANDIDATES_LIMIT = (
+ "what is established is that no item the definition reads as a candidate was "
+ "filed in the window, so zero needs no confirmation. It establishes nothing "
+ "about a window with candidates, and does not establish that the candidate "
+ "items are the right ones to read - a transaction announced only under 7.01 "
+ "is outside them - nor " + COMMON)
+C02_COMPOSITION_METHOD = (
+ "the governance document's blocks read in both directions by readers who had "
+ "not seen the rules (docs/evidence/issue47_history/c02-composition-facts/"
+ "judgements/): every selected block judged against the owner's composition-"
+ "fact meaning, and a pool of every block naming directors or committees read "
+ "for facts the selection missed; two classes where readers split decided by "
+ "the recorded adjudication. tools/read_c02_composition.py recomputes today's "
+ "selection and accepts only where no selected block is judged outside the "
+ "meaning, no judged fact is missed, the Run's candidate hash is the one "
+ "recomputed and its excerpts are the selected blocks' texts in order. The "
+ "value is named by digest because it is the whole text payload.")
+C02_COMPOSITION_LIMIT = (
+ "what is established is that this excerpt set states the composition facts "
+ "the reading found in this document and nothing the reading judged outside "
+ "the meaning. The selection rules were written on these same ten filings, so "
+ "this is agreement with a reading of the material they were fitted on, not a "
+ "held-out test; the readers are agents of one model family and their "
+ "judgements were not sampled by a person. It does not establish " + COMMON)
+
 HEADINGS_LIMIT = (
  "what is established is that this heading set is the set the approved source "
  "definition asks for in this filing, read in both directions and item by "
@@ -163,6 +198,15 @@ def _read_from(position):
                 "eight_k_filings_in_window": case["eight_ks_in_window"]["filing_date"],
                 "item_codes": [f["items"] for f in case["filings"]["filing_date"]],
                 "counted_under": ["filing_date", "report_date"]}
+    if path == E01_CANDIDATES:
+        return {"window": case["window"], "eight_k_filings_in_window": len(case["filings_in_window"]),
+                "item_codes": [f["items"] for f in case["filings"]["filing_date"]],
+                "candidate_items_by_basis": case["candidate_items_by_basis"]}
+    if path == C02_COMPOSITION:
+        return {"governance_document": case["governance_document"],
+                "reading": case["reading"], "reading_sha256": case["reading_sha256"],
+                "counts": case["counts"], "adjudicated_blocks": case["adjudicated_blocks"],
+                "published_excerpts": case["published_excerpts"]}
     if path == E01_EIGHT_O_ONES:
         return {"window": case["window"],
                 "direct_item_claims": case["direct_item_claims"],
@@ -202,6 +246,10 @@ def _method_and_limit(position):
         return EVENT_METHOD, EVENT_LIMIT
     if path == E01_EIGHT_O_ONES:
         return E01_METHOD, E01_LIMIT
+    if path == E01_CANDIDATES:
+        return E01_CANDIDATES_METHOD, E01_CANDIDATES_LIMIT
+    if path == C02_COMPOSITION:
+        return C02_COMPOSITION_METHOD, C02_COMPOSITION_LIMIT
     if path == GOVERNANCE:
         return GOVERNANCE_METHOD[metric], GOVERNANCE_LIMIT[metric]
     if path == TEXT:
@@ -277,6 +325,10 @@ def _acceptance_id(position):
         return "CONTENT_B12_SALESFORCE_2026"
     if position["reading"] == COMPENSATION:
         return "CONTENT_C03_PARAMOUNT_2025"
+    if position["reading"] == E01_CANDIDATES:
+        # A different definition's acceptance: its own name, so it can never be
+        # read as the item-code definition's entry at the same coordinate.
+        return "CONTENT_E01_CONTENT_CONFIRMED_" + position["label"].upper().replace("-", "_")
     return ("CONTENT_" + position["metric_id"] + "_"
             + position["label"].upper().replace("-", "_"))
 

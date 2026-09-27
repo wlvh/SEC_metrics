@@ -41,6 +41,14 @@ EVENT_READINGS = (EVENTS, EVENTS_PARAMOUNT_PREDECESSOR)
 # of header item codes cannot check. Every 8.01 in the E01 windows is read here
 # by tools/read_e01_eight_o_ones.py, under each reading of that confirmation.
 E01_EIGHT_O_ONES = EVIDENCE + "e01-eight-o-one-read.json"
+# E01 under the owner's content-confirmed definition (a successor route with
+# its own Spec): tools/read_e01_candidates.py reads each window's candidate
+# items off their headers, and can accept only a window with none.
+E01_CANDIDATES = EVIDENCE + "e01-content-confirmed-read.json"
+# C02 under the owner's composition-fact meaning: the two-direction reading of
+# c02-composition-facts/, compared with the published results by
+# tools/read_c02_composition.py.
+C02_COMPOSITION = EVIDENCE + "c02-composition-read.json"
 GOVERNANCE = EVIDENCE + "governance-read.json"
 TEXT = EVIDENCE + "d02-both-directions-read.json"
 # D01 is read off each filing's bytes by tools/read_d01_headings.py, which
@@ -63,8 +71,8 @@ COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 # B06 read off each filing's balance sheet and lease note by
 # tools/read_debt_to_equity.py, which imports none of the debt cascade.
 DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
-READINGS = (*CROSS_READINGS, LODGING, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE, TEXT, *D01_READINGS,
-            RPO, COMPENSATION, DEBT_TO_EQUITY)
+READINGS = (*CROSS_READINGS, LODGING, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
+            TEXT, *D01_READINGS, RPO, COMPENSATION, DEBT_TO_EQUITY, C02_COMPOSITION)
 # The readings key some positions by a label only. The label is what the
 # reading recorded, and this is the period each label names.
 PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
@@ -202,7 +210,7 @@ def positions(*, repo_root: Path, path: str, body):
                     published=row["published"], verdict=row["verdict"],
                     filings=listed, window=case["window"],
                     filings_are_the_whole_set=True, case=case))
-    elif path == E01_EIGHT_O_ONES:
+    elif path in (E01_EIGHT_O_ONES, E01_CANDIDATES):
         for label, case in sorted(body["per_position"].items()):
             found.append(_position(
                 reading=path, label=label, slot=case, company_id=case["company_id"],
@@ -247,6 +255,15 @@ def positions(*, repo_root: Path, path: str, body):
                 metric_id="D01", period_end=case["period_end"],
                 published=case["value_sha256"], verdict=case["verdict"],
                 filings=[case["accession"]] if case.get("accession") else []))
+    elif path == C02_COMPOSITION:
+        # The value is the whole text payload, named by digest; the filing
+        # named is the governance document whose blocks were judged.
+        for label, case in sorted(body["per_position"].items()):
+            found.append(_position(
+                reading=path, label=label, slot=case, company_id=case["company_id"],
+                metric_id="C02", period_end=case["period_end"],
+                published=case["value_sha256"], verdict=case["verdict"],
+                filings=[case["governance_accession"]]))
     elif path == DEBT_TO_EQUITY:
         for label, case in sorted(body["per_position"].items()):
             if case.get("published") is None:

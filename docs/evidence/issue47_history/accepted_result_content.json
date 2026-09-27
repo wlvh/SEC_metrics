@@ -6010,6 +6010,584 @@
    "what_this_does_not_establish": "what is established is that this many filings in the window carry the declared item codes. C01 is named 'CEO / CFO changes' and its approved definition asks for an event list keyed by accession, so an 8-K/A amending an earlier filing's same event is its own entry - Marriott's 2025 window has one. Whether counting filings answers the metric's name is a question about the definition. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_C02_ENPHASE_2025",
+   "accepted_value": "sha256:46f3581e28d5ce657cbb5a9df31e3759f6cf117c31921a0756f547e97d608277",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "result_id": "sha256:0c995ab8bde8958c3be1b2e7dcd11441aa308d8da585c8e97ea99acc8578daf1",
+     "run_id": "run:historical-period:3def68ce1da243a298b10417c98b105dfbd9cd20b2bb45bccf97f40ddf48f7de"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-26-000013",
+     "0001463101-26-000026"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+   "method": "the governance document's blocks read in both directions by readers who had not seen the rules (docs/evidence/issue47_history/c02-composition-facts/judgements/): every selected block judged against the owner's composition-fact meaning, and a pool of every block naming directors or committees read for facts the selection missed; two classes where readers split decided by the recorded adjudication. tools/read_c02_composition.py recomputes today's selection and accepts only where no selected block is judged outside the meaning, no judged fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "adjudicated_blocks": [],
+    "counts": {
+     "found_outside_the_selection": 44,
+     "resting_on_adjudication": 0,
+     "selected": 35,
+     "selected_fact": 23,
+     "selected_mixed": 12
+    },
+    "governance_document": "evidence/accession_materials/enphase_energy_1463101_000146310126000026/enph-20260401.htm",
+    "published_excerpts": 35,
+    "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/enphase_energy-2025-12-31.json",
+    "reading_sha256": "sha256:b74e836cee982965499d7875351da30aeba05168fd95e527b80900caa5afaaab"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C02_FORD_2025",
+   "accepted_value": "sha256:276b9551d51bb24704c923b45dc4696999d5bd10d1e5500a6ed6a7121bcb9949",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "result_id": "sha256:e302eaf029dc0c6ce0fb1e667ff96b4bd8ed12b524698616a37c684de4ce7958",
+     "run_id": "run:historical-period:022f151b65f49710896603f71715dbbd9a9a4e4bedecdb1463fae3149e082fa3"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "37996"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000037996-26-000015",
+     "0001552781-26-000164"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "ford_motor_company",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+   "method": "the governance document's blocks read in both directions by readers who had not seen the rules (docs/evidence/issue47_history/c02-composition-facts/judgements/): every selected block judged against the owner's composition-fact meaning, and a pool of every block naming directors or committees read for facts the selection missed; two classes where readers split decided by the recorded adjudication. tools/read_c02_composition.py recomputes today's selection and accepts only where no selected block is judged outside the meaning, no judged fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "adjudicated_blocks": [
+     944,
+     945
+    ],
+    "counts": {
+     "found_outside_the_selection": 119,
+     "resting_on_adjudication": 2,
+     "selected": 80,
+     "selected_fact": 71,
+     "selected_mixed": 7
+    },
+    "governance_document": "evidence/accession_materials/ford_motor_company_37996_000155278126000164/e26003_f-def14a.htm",
+    "published_excerpts": 80,
+    "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/ford_motor_company-2025-12-31.json",
+    "reading_sha256": "sha256:452c5bdd85fa54b9963e5c8ffedda84f2dd16689fd7eff01a4ec84a12648f01a"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C02_LUMEN_2025",
+   "accepted_value": "sha256:08f1c79a02f980d096df7b4f828984a7a27ce056e7a80533f25a0a6161403f22",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "result_id": "sha256:3c38e693676e5d33e202770b79c21e0b8aced565ec816dd9e8861318c2e9c485",
+     "run_id": "run:historical-period:3bbfd0885958d23f9f4c5bc3f200bc845e648a3537edc3f64ec4eedcbd3d2b71"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "18926"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000018926-26-000014",
+     "0000018926-26-000024"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "lumen_technologies",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+   "method": "the governance document's blocks read in both directions by readers who had not seen the rules (docs/evidence/issue47_history/c02-composition-facts/judgements/): every selected block judged against the owner's composition-fact meaning, and a pool of every block naming directors or committees read for facts the selection missed; two classes where readers split decided by the recorded adjudication. tools/read_c02_composition.py recomputes today's selection and accepts only where no selected block is judged outside the meaning, no judged fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "adjudicated_blocks": [
+     577,
+     598,
+     633,
+     648,
+     673,
+     690,
+     712,
+     734,
+     760
+    ],
+    "counts": {
+     "found_outside_the_selection": 58,
+     "resting_on_adjudication": 9,
+     "selected": 98,
+     "selected_fact": 86,
+     "selected_mixed": 12
+    },
+    "governance_document": "evidence/accession_materials/lumen_technologies_18926_000001892626000024/lumn-20260401.htm",
+    "published_excerpts": 98,
+    "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/lumen_technologies-2025-12-31.json",
+    "reading_sha256": "sha256:b88ac305f7e567301fdc6e7a1a82b5b4de4570a915f1aa5bf04f0f672360683c"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C02_MACYS_2026",
+   "accepted_value": "sha256:38d3eb226e507c4b36abcdd7648c3d571853f332b71f3c57108582f41396c762",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "result_id": "sha256:c4194729d00ebc35b128c53bae7c270819bc6e2b361c02e61c9f1cb716b63ee2",
+     "run_id": "run:historical-period:4ee65ab88144d7d0e40951860950b4e6ec9634687d78b3d82bcdb78904940f6f"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001104659-26-037752",
+     "0001628280-26-021721"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-02",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+   "method": "the governance document's blocks read in both directions by readers who had not seen the rules (docs/evidence/issue47_history/c02-composition-facts/judgements/): every selected block judged against the owner's composition-fact meaning, and a pool of every block naming directors or committees read for facts the selection missed; two classes where readers split decided by the recorded adjudication. tools/read_c02_composition.py recomputes today's selection and accepts only where no selected block is judged outside the meaning, no judged fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "adjudicated_blocks": [
+     521,
+     561,
+     594,
+     632,
+     671,
+     704,
+     743,
+     783,
+     849
+    ],
+    "counts": {
+     "found_outside_the_selection": 23,
+     "resting_on_adjudication": 9,
+     "selected": 97,
+     "selected_fact": 84,
+     "selected_mixed": 4
+    },
+    "governance_document": "evidence/accession_materials/macy_s_794367_000110465926037752/m-20260515xdef14a.htm",
+    "published_excerpts": 97,
+    "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/macys-2026-01-31.json",
+    "reading_sha256": "sha256:383933801a851a6ee947e10ecf20657bc3f74526158becbc0f1bd774def1e89e"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C02_MARRIOTT_2025",
+   "accepted_value": "sha256:cf2d7eb404b10188e93e6f256d6f18030619d23cdcb720e5747a54b24114aac4",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "result_id": "sha256:4f8ba7678a040cc358c02c6d1c5883194a68a43da24fa9a713d5d7b16617321f",
+     "run_id": "run:historical-period:af2b9c880bb8e17e3a2b8cb5c31fc968c3f619d562a86c69227598b89b20907e"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1048286"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001048286-26-000007",
+     "0001140361-26-011590"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "marriott_international",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+   "method": "the governance document's blocks read in both directions by readers who had not seen the rules (docs/evidence/issue47_history/c02-composition-facts/judgements/): every selected block judged against the owner's composition-fact meaning, and a pool of every block naming directors or committees read for facts the selection missed; two classes where readers split decided by the recorded adjudication. tools/read_c02_composition.py recomputes today's selection and accepts only where no selected block is judged outside the meaning, no judged fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "adjudicated_blocks": [
+     1155
+    ],
+    "counts": {
+     "found_outside_the_selection": 91,
+     "resting_on_adjudication": 1,
+     "selected": 96,
+     "selected_fact": 84,
+     "selected_mixed": 12
+    },
+    "governance_document": "evidence/accession_materials/marriott_international_1048286_000114036126011590/ny20062722x771_def14a.htm",
+    "published_excerpts": 96,
+    "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/marriott_international-2025-12-31.json",
+    "reading_sha256": "sha256:fadb64bbc23f64a8787d4e4465839224991f7768cdba177fc25df54aab30facc"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C02_PARAMOUNT_2024",
+   "accepted_value": "sha256:b3d51af28dd8d26f069b11c222458a0bc2dd71e77ca3ec54513c254e7bc3f9bd",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "result_id": "sha256:57bdcb8e41d759eb2427412418987c02e220c399b3fd9d0037e13f3036bdeb5e",
+     "run_id": "run:historical-period:18c9e76bf91bc10aae04d6a82296d8e20287c4e3db701fffad63919ceb2b0d40"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "813828"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000813828-25-000005",
+     "0001140361-25-021135"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+   "method": "the governance document's blocks read in both directions by readers who had not seen the rules (docs/evidence/issue47_history/c02-composition-facts/judgements/): every selected block judged against the owner's composition-fact meaning, and a pool of every block naming directors or committees read for facts the selection missed; two classes where readers split decided by the recorded adjudication. tools/read_c02_composition.py recomputes today's selection and accepts only where no selected block is judged outside the meaning, no judged fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2024-12-31",
+   "read_from": {
+    "adjudicated_blocks": [],
+    "counts": {
+     "found_outside_the_selection": 39,
+     "resting_on_adjudication": 0,
+     "selected": 68,
+     "selected_fact": 63,
+     "selected_mixed": 5
+    },
+    "governance_document": "evidence/accession_materials/paramount_skydance_paramount_global_813828_000114036125021135/ny20047871x1_def14a.htm",
+    "published_excerpts": 68,
+    "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/paramount_skydance_paramount_global-2024-12-31.json",
+    "reading_sha256": "sha256:b6331fa29ce55d6517e65b68eb3ae8a761f7e03c18937a85ab1041bcef7b33e6"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C02_PARAMOUNT_2025",
+   "accepted_value": "sha256:b413322597d82d1f3dee748a7bdf5af1f1e507f761cd1c47569c62d7d248459c",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "result_id": "sha256:4a7367c8f783d6ca7b12858ac8772ddec834ba7cbdc0cfdccaea35af69ed71db",
+     "run_id": "run:historical-period:43069bbe4a333d92c64f047beafe9e4519affa786032193f90276e8807dd485d"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "2041610"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001140361-26-016758",
+     "0002041610-26-000011"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+   "method": "the governance document's blocks read in both directions by readers who had not seen the rules (docs/evidence/issue47_history/c02-composition-facts/judgements/): every selected block judged against the owner's composition-fact meaning, and a pool of every block naming directors or committees read for facts the selection missed; two classes where readers split decided by the recorded adjudication. tools/read_c02_composition.py recomputes today's selection and accepts only where no selected block is judged outside the meaning, no judged fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "adjudicated_blocks": [
+     89,
+     97,
+     105,
+     113,
+     122,
+     129,
+     138,
+     146,
+     155,
+     162
+    ],
+    "counts": {
+     "found_outside_the_selection": 25,
+     "resting_on_adjudication": 10,
+     "selected": 54,
+     "selected_fact": 50,
+     "selected_mixed": 4
+    },
+    "governance_document": "evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm",
+    "published_excerpts": 54,
+    "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/paramount_skydance_paramount_global-2025-12-31.json",
+    "reading_sha256": "sha256:a8f1bac0781a3647d5ff7fde3f8883ee70917930bd8181e06c3c6b4f28d44a4e"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C02_PFIZER_2025",
+   "accepted_value": "sha256:05133944727af7a277455cd4d4ec0708f1d1635ae7aeec318d9e0151a31d2cc2",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "result_id": "sha256:aabb0b9f906e747eaac401fd2bef589cb8cfb517f2ca13e576a9748027b53032",
+     "run_id": "run:historical-period:819f1c3d9fe24a02f2c3025f5e0d0adba9401e92bbb393bd3717f6d6025a551f"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "78003"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000078003-26-000026",
+     "0000078003-26-000033"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "pfizer",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+   "method": "the governance document's blocks read in both directions by readers who had not seen the rules (docs/evidence/issue47_history/c02-composition-facts/judgements/): every selected block judged against the owner's composition-fact meaning, and a pool of every block naming directors or committees read for facts the selection missed; two classes where readers split decided by the recorded adjudication. tools/read_c02_composition.py recomputes today's selection and accepts only where no selected block is judged outside the meaning, no judged fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "adjudicated_blocks": [],
+    "counts": {
+     "found_outside_the_selection": 61,
+     "resting_on_adjudication": 0,
+     "selected": 79,
+     "selected_fact": 66,
+     "selected_mixed": 13
+    },
+    "governance_document": "evidence/accession_materials/pfizer_78003_000007800326000033/pfe-20260312.htm",
+    "published_excerpts": 79,
+    "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/pfizer-2025-12-31.json",
+    "reading_sha256": "sha256:86ed22d5f825db2239c4b7a5f0557da26637ed08e48839c575d35e88bc3f3282"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C02_SALESFORCE_2026",
+   "accepted_value": "sha256:c0f1fa6717cabf804bdbe1f9ab55ebe46b5a99752f50d350c56cfcad6469103c",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "result_id": "sha256:61126f335c2d1348c5e61851f11a9f9bccc852437d05eecf86dcbea6349b3384",
+     "run_id": "run:historical-period:71b200e24df137b5e7c9527e6a84c9b6e93fb2865305af637607b0bdf4bb9530"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1108524"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-26-000060",
+     "0001108524-26-000085"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "salesforce",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+   "method": "the governance document's blocks read in both directions by readers who had not seen the rules (docs/evidence/issue47_history/c02-composition-facts/judgements/): every selected block judged against the owner's composition-fact meaning, and a pool of every block naming directors or committees read for facts the selection missed; two classes where readers split decided by the recorded adjudication. tools/read_c02_composition.py recomputes today's selection and accepts only where no selected block is judged outside the meaning, no judged fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2026-01-31",
+   "read_from": {
+    "adjudicated_blocks": [
+     1129,
+     1157,
+     1158,
+     1162,
+     1202,
+     1238,
+     1284,
+     1314,
+     1315,
+     1321,
+     1361,
+     1400,
+     1430,
+     1431,
+     1437,
+     1473,
+     1514,
+     1560,
+     1595,
+     1596,
+     1602
+    ],
+    "counts": {
+     "found_outside_the_selection": 102,
+     "resting_on_adjudication": 21,
+     "selected": 63,
+     "selected_fact": 41,
+     "selected_mixed": 14
+    },
+    "governance_document": "evidence/accession_materials/salesforce_1108524_000110852426000085/crm-20260416.htm",
+    "published_excerpts": 63,
+    "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/salesforce-2026-01-31.json",
+    "reading_sha256": "sha256:920e6a6da790b02ea65f1e01bc920e19e542ac39574e06e1a5dd10e352f03444"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_C02_SOUTHWEST_2025",
+   "accepted_value": "sha256:acad685022ad8ea053b6decf602b1e9f41c1b3fc1978808430b7427c914883f8",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:41dace7141fc0580fe7b17351a39aca40e1ce81bfc92750587d3c312ba0ea4b9",
+     "result_id": "sha256:0d2ecc45413f6a8426b5e8ab2cc6c898e0aa5ae63dffd91ad18f28d6c0293d9e",
+     "run_id": "run:historical-period:17e5ab5e838f258c7c2727e8cb37952576907346f6ce77b50d631b0ef55040ad"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "92380"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000092380-26-000004",
+     "0001193125-26-127237"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+    "spec_closure_hash": "sha256:9075321f8a0b76d5ddbb18742019ecf4bdb673247cb324499de11fe991b23c47",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "southwest_airlines",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json",
+   "method": "the governance document's blocks read in both directions by readers who had not seen the rules (docs/evidence/issue47_history/c02-composition-facts/judgements/): every selected block judged against the owner's composition-fact meaning, and a pool of every block naming directors or committees read for facts the selection missed; two classes where readers split decided by the recorded adjudication. tools/read_c02_composition.py recomputes today's selection and accepts only where no selected block is judged outside the meaning, no judged fact is missed, the Run's candidate hash is the one recomputed and its excerpts are the selected blocks' texts in order. The value is named by digest because it is the whole text payload.",
+   "metric_id": "C02",
+   "period_end": "2025-12-31",
+   "read_from": {
+    "adjudicated_blocks": [],
+    "counts": {
+     "found_outside_the_selection": 69,
+     "resting_on_adjudication": 0,
+     "selected": 95,
+     "selected_fact": 85,
+     "selected_mixed": 10
+    },
+    "governance_document": "evidence/accession_materials/southwest_airlines_92380_000119312526127237/d121727ddef14a.htm",
+    "published_excerpts": 95,
+    "reading": "docs/evidence/issue47_history/c02-composition-facts/judgements/southwest_airlines-2025-12-31.json",
+    "reading_sha256": "sha256:6e0ec5d23bbf66cc07daff0dc58dfe0f4c3e748443f659aff8cbe6599d82acc6"
+   },
+   "what_this_does_not_establish": "what is established is that this excerpt set states the composition facts the reading found in this document and nothing the reading judged outside the meaning. The selection rules were written on these same ten filings, so this is agreement with a reading of the material they were fitted on, not a held-out test; the readers are agents of one model family and their judgements were not sampled by a person. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_C03_ENPHASE_2025",
    "accepted_value": "9601958",
    "checked_identity": {
@@ -11870,7 +12448,8 @@
   "docs/evidence/issue47_history/content-acceptance/d01-paramount-predecessor-2024-read.json",
   "docs/evidence/issue47_history/content-acceptance/rpo-read.json",
   "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json",
-  "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json"
+  "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
+  "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json"
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
  "not_here_and_why": {
@@ -11886,6 +12465,12 @@
  },
  "purpose": "The third delivery layer. A frozen Run with a public row says the route computed something and the bytes are bound; it does not say the number is right. This is where a reading that did not come from the route says so, for one value at a time.",
  "readings": {
+  "docs/evidence/issue47_history/content-acceptance/c02-composition-read.json": {
+   "acceptances_contributed": 10,
+   "content_sha256": "sha256:69030611b2bd430688071a4622bd65e2998f87a93d79380b2d3b0e41e9d6365a",
+   "positions_examined": 10,
+   "positions_examined_is_null_because": null
+  },
   "docs/evidence/issue47_history/content-acceptance/cross-source-read.json": {
    "acceptances_contributed": 75,
    "content_sha256": "sha256:6e0c92a580f2f9f42c91227dc7eefd051efec295dd9685e8a2415eff947ebb57",

@@ -29,8 +29,19 @@ Two further inputs refine a reading and are reported as such:
   its rule and reason and is bound to the block's text; the answer lists every
   position whose agreement rests on one.
 
+Against published results, the same reading becomes an acceptance reading.
+With ``--runs-root`` and ``--closure`` each judged position's result is taken
+from the named Runs, and the position is a match only when the reading agrees
+with today's selection and the result is that selection: the Run's candidate
+hash is the one recomputed here, and its excerpts are the selected blocks'
+texts in the selected order. The value is named by digest, because it is the
+whole text payload, and the identity of the result it was read against is
+recorded at reading time.
+
 Usage:
     python3 tools/read_c02_composition.py [--position <company>:<report_end>] [--output PATH]
+    python3 tools/read_c02_composition.py --runs-root <root> [--runs-root <root>] \
+        --closure sha256:<closure> --acceptance-output <path>
 """
 from __future__ import annotations
 
@@ -172,11 +183,91 @@ def read_position(*, document, chosen, reading, adjudications=None):
             "adjudicated_blocks": sorted(used)}
 
 
+def governance_accession(*, run_dir: Path, document):
+    """The filing the judged governance document was read from, from the Run's own records."""
+    sys.path.insert(0, str(REPO / "tools"))
+    from acceptance_readings import accession_of_document
+    records = [json.loads(line) for line in
+               (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    references = {r["source_reference_id"]: r for r in records
+                  if r.get("record_type") == "SOURCE_REFERENCE"}
+    blobs = {r["raw_asset_id"]: r for r in records if r.get("record_type") == "RAW_BLOB"}
+    reference = references.get(document["source_reference_id"])
+    if reference is None:
+        raise SystemExit("C02_GOVERNANCE_DOCUMENT_NOT_IN_THE_RUN:" + str(run_dir))
+    storage = blobs[reference["raw_asset_id"]]["storage_uri"]
+    raw = (REPO / storage).read_bytes()
+    if "sha256:" + hashlib.sha256(raw).hexdigest() != reference["raw_asset_id"]:
+        raise SystemExit("SAVED_DOCUMENT_BYTES_CHANGED:" + storage)
+    return accession_of_document(repo_root=REPO, document=storage)[0], storage
+
+
+def accepted_position(*, index, closure, company_id, report_end, answer, document, chosen,
+                      candidate):
+    """One position compared with its published result, and the identity it was read against."""
+    sys.path.insert(0, str(REPO / "tools"))
+    from bind_acceptance_readings import identity_for
+    from vnext.historical_coverage import select_receipt
+    selection = select_receipt(found=index.get((company_id, "C02", report_end), []),
+                               closure=closure)
+    if selection["result"] is None:
+        raise SystemExit("NO_RESULT:" + company_id + ":" + report_end + ":"
+                         + str(selection["ambiguity"]))
+    result, receipt = selection["result"], selection["receipt"]
+    run_dir = Path(receipt["_runs_root"]) / receipt["run_directory_name"]
+    run_result = next(json.loads(line) for line in
+                      (run_dir / "records.jsonl").read_text(encoding="utf-8").splitlines()
+                      if line.strip() and json.loads(line).get("record_type") == "METRIC_RESULT"
+                      and json.loads(line).get("result_id") == result["result_id"])
+    payload = run_result["text_payload"]
+    published = [item["text"] for item in sorted(payload["items"], key=lambda i: i["order"])]
+    selected = [document["blocks"][block]["text"] for block in chosen]
+    accession, storage = governance_accession(run_dir=run_dir, document=document)
+    position = {
+        "company_id": company_id, "period_end": report_end,
+        "governance_accession": accession, "governance_document": storage,
+        "reading_verdict": answer["verdict"], "counts": answer["counts"],
+        "adjudicated_blocks": answer["adjudicated_blocks"],
+        "result_candidate_hash_is_the_recomputed_one":
+            payload["candidate_hash"] == candidate["candidate_hash"],
+        "published_excerpts_are_the_selected_blocks_in_order": published == selected,
+        "published_excerpts": len(published),
+        "value_sha256": "sha256:" + hashlib.sha256(str(result["value"]).encode("utf-8")).hexdigest()}
+    position["verdict"] = ("MATCH" if answer["verdict"] == "READING_AGREES"
+                           and position["result_candidate_hash_is_the_recomputed_one"]
+                           and position["published_excerpts_are_the_selected_blocks_in_order"]
+                           else "DIFFERS")
+    identity, refusal = identity_for(
+        position={"company_id": company_id, "metric_id": "C02", "period_end": report_end,
+                  "published": position["value_sha256"], "reading_filings": [accession],
+                  "reading_window": None, "filings_are_the_whole_set": False},
+        index=index, closure=closure)
+    if refusal is not None:
+        raise SystemExit("IDENTITY_NOT_RECORDED:" + company_id + ":" + report_end + ":" + refusal)
+    identity["established_by"] = "RECORDED_AT_READING_TIME"
+    position["checked_identity"] = identity
+    return position
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--position", action="append", default=[])
     parser.add_argument("--output")
+    parser.add_argument("--runs-root", action="append", type=Path, default=[])
+    parser.add_argument("--closure")
+    parser.add_argument("--acceptance-output")
     args = parser.parse_args(argv)
+    if bool(args.runs_root) != bool(args.closure) or bool(args.closure) != bool(args.acceptance_output):
+        raise SystemExit("RUNS_ROOT_CLOSURE_AND_ACCEPTANCE_OUTPUT_GO_TOGETHER")
+    index = None
+    if args.runs_root:
+        from vnext.historical_run_receipts import collect_run_receipts, index_receipts
+        receipts = []
+        for root in args.runs_root:
+            for receipt in collect_run_receipts(runs_root=root)["receipts"]:
+                receipts.append({**receipt, "_runs_root": str(root)})
+        index = index_receipts(receipts=receipts)
+    accepted = {}
     readings = sorted(READING_DIR.glob("*.json"))
     adjudications = load_adjudications()
     report = {}
@@ -192,9 +283,26 @@ def main(argv=None):
         answer["candidate_hash"] = candidate["candidate_hash"]
         answer["reading_sha256"] = "sha256:" + hashlib.sha256(path.read_bytes()).hexdigest()
         report[reading["position"]] = answer
+        if index is not None:
+            label = company_id.split("_")[0] + "-" + report_end[:4]
+            accepted[label] = {**accepted_position(
+                index=index, closure=args.closure, company_id=company_id, report_end=report_end,
+                answer=answer, document=document, chosen=chosen, candidate=candidate),
+                "reading": str(path.relative_to(REPO)), "reading_sha256": answer["reading_sha256"]}
+            print(label, accepted[label]["verdict"], flush=True)
     text = json.dumps(report, ensure_ascii=False, indent=1, sort_keys=True) + "\n"
     if args.output:
         Path(args.output).write_text(text, encoding="utf-8")
+    if args.acceptance_output:
+        body = {"record_type": "ISSUE_47_C02_COMPOSITION_READ", "reader": "tools/read_c02_composition.py",
+                "requirement_closure_hash": args.closure,
+                "adjudication": str(ADJUDICATION_PATH.relative_to(REPO)),
+                "adjudication_sha256": "sha256:" + hashlib.sha256(
+                    ADJUDICATION_PATH.read_bytes()).hexdigest(),
+                "per_position": accepted, "calls": {"provider": 0, "paid": 0, "sec": 0}}
+        (REPO / args.acceptance_output).write_text(
+            json.dumps(body, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+        return 0 if all(row["verdict"] == "MATCH" for row in accepted.values()) else 1
     sys.stdout.write(text)
     return 0 if all(value["verdict"] == "READING_AGREES" for value in report.values()) else 1
 
