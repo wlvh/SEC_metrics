@@ -18,9 +18,11 @@ from .sources import resolve_repository_file
 def build_acceptance(*, prepared, plan, response_body):
     request = strict_json_loads(text=prepared.request_bytes.decode())
     need(request['metric_id'] == 'B13', 'B13_NATIVE_ASSESSMENT_REQUIRED')
-    from .capacity_reference_contract import ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION, SCANNED_VERSION
+    from .capacity_reference_contract import (ASSERTION_SCOPED_VERSION,
+        CLAIM_CONTEXT_VERSION, MODEL_SPAN_VERSION, SCANNED_VERSION)
     need(request.get('source_reference_contract', {}).get('version') not in {
-         SCANNED_VERSION, ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION},
+         SCANNED_VERSION, ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION,
+         MODEL_SPAN_VERSION},
          'B13_TWO_STAGE_SCAN_EXECUTION_PROOF_REQUIRED')
     checked = validate_response(request=request, raw_response=response_body,source=strict_json_loads(text=prepared.source_bytes.decode()))
     return _build_acceptance(prepared=prepared, plan=plan, response_body=response_body, checked=checked,

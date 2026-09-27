@@ -15,6 +15,7 @@ RELEVANCE_VERSION = 'B13_REQUIRED_FIRST_RELEVANCE_V4'
 SCANNED_VERSION = 'B13_SCANNED_INTERPRETATION_V5'
 ASSERTION_SCOPED_VERSION = 'B13_ASSERTION_SCOPED_INTERPRETATION_V6'
 CLAIM_CONTEXT_VERSION = 'B13_CLAIM_CONTEXT_INTERPRETATION_V7'
+MODEL_SPAN_VERSION = 'B13_MODEL_SPAN_INTERPRETATION_V8'
 ROLE_LABELS = {
     'physical_capacity_context': 'CAPACITY_QUALITATIVE',
     'sales_or_shipments': 'SALES_OR_SHIPMENTS',
@@ -117,7 +118,8 @@ def restore_base_request(request):
     meta = request.get('source_reference_contract')
     if type(meta) is dict and meta.get('version') in {SCANNED_VERSION,
                                                      ASSERTION_SCOPED_VERSION,
-                                                     CLAIM_CONTEXT_VERSION}:
+                                                     CLAIM_CONTEXT_VERSION,
+                                                     MODEL_SPAN_VERSION}:
         from .capacity_two_stage import restore_prior_interpretation_request
         return restore_base_request(restore_prior_interpretation_request(request))
     need(type(meta) is dict and set(meta) == {'version', 'base_request_id'}

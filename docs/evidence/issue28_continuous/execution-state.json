@@ -1962,6 +1962,26 @@
         "web_calls": 2,
         "patch_operations": 2
       }
+    },
+    {
+      "task_name": "review_b13span_ab20519",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "scripts/vnext/capacity_reference_contract.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "scripts/vnext/native_unit_index.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json"
+      ],
+      "patch_sha": "ab2051939b3460c74c271a263920fb52346ecdc8",
+      "spawned_at": "2026-09-27T15:44:54.672835+00:00",
+      "ended_at": "2026-09-27T15:51:02.407311+00:00",
+      "tool_calls": 44,
+      "result_path": "docs/evidence/issue28_continuous/b13-model-spans-v8-offline-20260927/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_V8_SEMANTICS_PASS_WITH_BOUNDS_FAIL_CLOSED"
     }
   ],
   "ci_capacity_20260922": {
@@ -4635,7 +4655,7 @@
     "possible_downstream_impact": "#47 may need to rebind its own dependent current execution snapshot after #28 base moves; its executor owns that integration. #28 did not touch the #47 branch, snapshot, ledger, source or run root."
   },
   "ordinary_source_gap_census_20260927": {
-    "status": "READ_ONLY_WORKTREE_NOT_YET_PUSHED",
+    "status": "PUSHED_WITH_HEAD_9cf9314d",
     "evidence": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/source-gap-census.jsonl",
     "script": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/source-gap-census.py",
     "source_root": "ORIGINAL_FIXED_ISSUE28_SOURCE_INPUTS",
@@ -4653,7 +4673,7 @@
     "meaning": "Current source graph available does not establish all39 metric results or freshness; no basis yet to widen non-C04 capture or spend SEC on alternative-satisfied HTML."
   },
   "b06_ford_visible_balance_debt_20260927": {
-    "status": "READ_ONLY_WORKTREE_NOT_YET_PUSHED",
+    "status": "PUSHED_WITH_HEAD_9cf9314d",
     "evidence": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance.json",
     "script": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance-probe.py",
     "accession": "0000037996-26-000015",
@@ -4702,6 +4722,82 @@
       0
     ],
     "evidence": "docs/evidence/issue28_continuous/ci-mixed-resume-timeout-20260927/README.md",
-    "remaining": "PUSH_SCOPED_RESOURCE_FIX_THEN_NEW_HEAD_CI"
+    "remaining": "HEAD_9CF9314D_CI_36328893119_FAILED_C04_FAILED_COPY_RESUME_AT_360_SECONDS"
+  },
+  "b13_model_spans_v8_20260927": {
+    "patch_sha": "ab2051939b3460c74c271a263920fb52346ecdc8",
+    "review_record_sha": "9432fc0b",
+    "status": "OFFLINE_DIAGNOSTIC_NEEDS_FIX_LIVE_AND_NATIVE_SUSPENDED",
+    "v14_closure": "sha256:b1deaa8d7eff75728473fefb63cacfc7e93e81d1b146e09545d9c9db94b8684c",
+    "targeted_tests": "40_PASS_LOCAL_AFTER_BINDING",
+    "v7_request_bytes_unchanged": true,
+    "independent_review": "NEEDS_FIX_THREE_SPECIFIC_SEMANTIC_COUNTEREXAMPLES_FAIL_CLOSED",
+    "evidence": "docs/evidence/issue28_continuous/b13-model-spans-v8-offline-20260927/README.md",
+    "real_calls": [0, 0, 0],
+    "complete_company_result": false,
+    "new_live_permission": false
+  },
+  "ci_c04_resume_timing_20260927": {
+    "old_head": "9cf9314d2d74026c26b204719a2986648448af04",
+    "old_run": 36328893119,
+    "old_terminal": "FAILURE_SINGLE_C04_FAILED_COPY_RESUME_RC124_AT_360_063_SECONDS",
+    "local_full_material_seconds": 166.09,
+    "local_material_passed": true,
+    "local_c04_run_seconds_inclusive": 80.478,
+    "local_ordinary_run_seconds_inclusive": 32.15,
+    "new_case_timeout_seconds": 480,
+    "new_head": "f8679a1839cbdd4f120c7e39dc9a665398edac5f",
+    "new_run": 36331478871,
+    "new_run_status_last_checked": "TERMINAL_FAILURE_13_SUCCESS_2_FAILURE_SHARD1_AND_AGGREGATE",
+    "new_run_shard0": "SUCCESS_WITH_C04_FAILED_COPY_480_SECOND_CASE",
+    "new_run_shard1": "C04_MIXED_NORMAL_RESUME_RC124_AT_360_105_SECONDS",
+    "shard1_prior_head_same_case": "SUCCESS_335_469_SECONDS_WITH_360_SECOND_LIMIT",
+    "next_scoped_override_seconds": 480,
+    "next_scoped_override_commit": "150c1115ce46e02c13e37b533f8a85ed8d8a99c5",
+    "evidence": "docs/evidence/issue28_continuous/c04-resume-timing-20260927/README.md",
+    "real_calls": [0, 0, 0]
+  },
+  "c04_adjacent_year_rehearsal_20260927": {
+    "head": "1abe167e1a259f261cc91ab3ef82ebf0159247b9",
+    "status": "RECORDED_DERIVED_PRIOR_METADATA_OLD_INPUT_FAILED_CURRENT_2025_CANDIDATE_READY",
+    "old_failure": "C04_REGISTRATION_BASE_INPUT_UNRESOLVED",
+    "salesforce_prior_only_failure": "SAVED_SOURCE_MISSING_PRIOR_FY2025_BODY_IN_ISOLATED_BASELINE_TEST_ROOT_NOT_ORIGINAL_CUMULATIVE_ROOT",
+    "new_period_end": "2025-12-31",
+    "new_result_value": "0",
+    "repeat_status": "NO_SOURCE_CONTENT_CHANGE",
+    "authentic_cross_year_update_proven": false,
+    "complete_company_result_added": false,
+    "original_source_response_used_as_prior": false,
+    "evidence": "docs/evidence/issue28_continuous/c04-adjacent-year-rehearsal-20260927/README.md",
+    "real_calls": [0, 0, 0]
+  },
+  "b01_private_legacy_disabled_20260928": {
+    "patch_sha": "4e743c1adb425e2092545ea77694a512d8a018c1",
+    "status": "PRIVATE_B01_CREATED_AND_INDEPENDENTLY_READ_WITH_116_LEGACY_EXPORTS_DISABLED",
+    "company_id": "salesforce",
+    "value": "41525000000",
+    "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+    "public_row_sha256": "e82f95c6550dce0393c5ecdffe9f9754792d3427e12eaab501833a498d50e2d3",
+    "source_snapshot_id": "sha256:e2c606053cd84fbb703799fac4dadc495dec41fd934782fa2abd036ea89ec35e",
+    "independent_process_cold_read": true,
+    "old_entrypoints_formally_retired": false,
+    "all390_proven": false,
+    "real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/ordinary-b01-legacy-exit-20260928/README.md"
+  },
+  "c04_mixed_one_pass_recorded_20260928": {
+    "patch_sha": "870e4bb148fc4b6a8d0b0ff584715b41fe994f6d",
+    "status": "RECORDED_B01_C04_TWO_SOURCE_ONE_PASS_UPDATES_READY",
+    "company_id": "marriott_international",
+    "recorded_sec_captures": 2,
+    "manual_resume_report_used": false,
+    "b01_publication": "PUBLISHED",
+    "b01_value": "26186000000",
+    "c04_publication": "PUBLISHED",
+    "c04_value": "0",
+    "independent_process_cold_read": true,
+    "true_new_fiscal_year_update_proven": false,
+    "new_real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/c04-mixed-one-pass-20260928/README.md"
   }
 }
