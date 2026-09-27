@@ -4027,5 +4027,20 @@
       "self_authored_new_packet_creator_proven": false
     },
     "evidence": "docs/evidence/issue28_continuous/d03-material-timing-20260927/README.md"
+  },
+  "c04_adjacent_year_inventory_20260927": {
+    "status": "READ_ONLY_SAVED_BODY_INVENTORY_NOT_CROSS_YEAR_RUN",
+    "companies_checked": 10,
+    "same_cik_adjacent_annual_primary_bodies_in_source_log": [
+      "marriott_international:2024-12-31_to_2025-12-31",
+      "salesforce:2025-01-31_to_2026-01-31"
+    ],
+    "selected_saved_body_sha256_matches_request_log": true,
+    "pre_newer_annual_filing_submissions_snapshot_in_original_issue28_root_for_these_pairs": false,
+    "full_source_admission_or_http_transition_proven": false,
+    "new_fiscal_year_native_c04_run_created": false,
+    "real_new_calls": [0, 0, 0],
+    "issue47_source_or_permission_used": false,
+    "evidence": "docs/evidence/issue28_continuous/c04-adjacent-year-inventory-20260927/README.md"
   }
 }
