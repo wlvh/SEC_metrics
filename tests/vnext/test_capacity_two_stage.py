@@ -227,6 +227,89 @@ class CapacityTwoStageTest(unittest.TestCase):
         self.assertIn('B13_CLAIM_CURRENT_MARKED_HISTORICAL:' + ref,
             check(mislabeled)['original_validator_result']['unresolved'])
 
+    def test_claim_context_parallel_assertions_and_specific_ambiguity(self):
+        from tests.vnext.test_capacity_utilization_source import quantity_source
+        from vnext.capacity_program_roles import program_source
+        from vnext.capacity_semantic_review import requests_from_source
+        from vnext.capacity_two_stage import _claim_segments
+
+        def check(statement, labels):
+            source = program_source(quantity_source('<p>' + statement + '</p>')[0])
+            prior = upgrade_request(requests_from_source(source)[0], compact=True,
+                                    role_labels=True, relevance_scope=True)
+            block = source['units'][0]['payload']['blocks'][0]
+            ref = 'B' + str(block['block_index'])
+            scan_raw = canonical_json_bytes(value={
+                'units_reviewed': list(range(len(prior['units']))),
+                'candidate_refs': [ref], 'unresolved_refs': []})
+            scan_result = validate_scan(request=prior,
+                scan_request_value=scan_request(prior), raw_response=scan_raw)
+            request = interpretation_request(request=prior, scan_result=scan_result,
+                scan_raw_response=scan_raw, claim_contexts=True)
+            books = request['response_protocol']['classification_codebooks']
+            ranges = sorted(_claim_segments(block['text']))
+            response = {'units': [{'unit_index': index, 'reviewed': True,
+                'unresolved': [], 'calculation_limits': []}
+                for index in range(len(prior['units']))], 'findings': [
+                [kind, books['subject'].index(subject), books['timing'].index(timing),
+                 [ref], 'Bounded source assertion.',
+                 [[ref, *ranges[position], 0, len(block['text'])]]]
+                for kind, subject, timing, position in labels]}
+            result = validate_interpretation(request=prior, scan_result=scan_result,
+                scan_raw_response=scan_raw, interpretation=request,
+                raw_response=canonical_json_bytes(value=response), source=source)
+            return ranges, result['original_validator_result']['unresolved'], ref
+
+        parallel = ('Our contract manufacturers have production capacity for '
+                    'current demand and plan to add manufacturing capacity next year.')
+        ranges, unresolved, ref = check(parallel, [
+            ('physical_capacity_context', 'TARGET_REGISTRANT', 'CURRENT_REPORT', 0),
+            ('planned_physical_capacity', 'TARGET_REGISTRANT', 'CURRENT_REPORT', 1)])
+        self.assertEqual(2, len(ranges))
+        self.assertEqual(['B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED'], unresolved)
+        # Two capacity nouns sharing one predicate remain one assertion.
+        paired_nouns = ('Our production capacity and manufacturing capacity '
+                        'are available for current demand.')
+        ranges, _, _ = check(paired_nouns, [
+            ('physical_capacity_context', 'TARGET_REGISTRANT', 'CURRENT_REPORT', 0)])
+        self.assertEqual(1, len(ranges))
+
+        ambiguous = ('Our contract manufacturers operate plants; a supplier '
+                     'reported delays; they now have production capacity '
+                     'for current demand.')
+        for subject in ('TARGET_REGISTRANT', 'OTHER_ENTITY'):
+            _, unresolved, ref = check(ambiguous, [
+                ('physical_capacity_context' if subject == 'TARGET_REGISTRANT'
+                 else 'other_entity', subject, 'CURRENT_REPORT', 2)])
+            self.assertIn('B13_CLAIM_ANTECEDENT_AMBIGUOUS:' + ref, unresolved)
+            self.assertNotIn('B13_CLAIM_SUBJECT_CONFLICT:' + ref, unresolved)
+
+        _, unresolved, ref = check(
+            'Our contract manufacturers can provide production capacity '
+            'for anticipated demand.',
+            [('historical_statement', 'TARGET_REGISTRANT', 'HISTORICAL', 0)])
+        self.assertIn('B13_CLAIM_CURRENT_MARKED_HISTORICAL:' + ref, unresolved)
+        _, unresolved, _ = check(
+            'Our contract manufacturers can provide production capacity '
+            'for anticipated demand.',
+            [('physical_capacity_context', 'TARGET_REGISTRANT', 'CURRENT_REPORT', 0)])
+        self.assertEqual(['B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED'], unresolved)
+        _, unresolved, ref = check(
+            'Our contract manufacturers have production capacity '
+            'for anticipated demand.',
+            [('conditional_statement', 'TARGET_REGISTRANT', 'CONDITIONAL', 0)])
+        self.assertIn('B13_CLAIM_UNSUPPORTED_CONDITIONAL_TIME:' + ref, unresolved)
+        _, unresolved, ref = check(
+            'If demand rises, our contract manufacturers could provide '
+            'production capacity for anticipated demand.',
+            [('physical_capacity_context', 'TARGET_REGISTRANT', 'CURRENT_REPORT', 0)])
+        self.assertIn('B13_CLAIM_CONDITIONAL_MARKED_CURRENT:' + ref, unresolved)
+        _, unresolved, _ = check(
+            'If demand rises, our contract manufacturers could provide '
+            'production capacity for anticipated demand.',
+            [('conditional_statement', 'TARGET_REGISTRANT', 'CONDITIONAL', 0)])
+        self.assertEqual(['B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED'], unresolved)
+
     def test_assertion_scoped_successor_preserves_source_and_bounds_exclusions(self):
         from tests.vnext.test_capacity_utilization_source import quantity_source
         from vnext.capacity_program_roles import program_source

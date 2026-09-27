@@ -635,9 +635,26 @@ def _claim_segments(text):
     from .regulatory_investigation_candidates import _sentences
     segments = {}
     for sentence_start, sentence_end, sentence in _sentences(text):
-        boundaries = [0, *(match.start() for match in re.finditer(
-            r';|\bbut\b|\bwhereas\b', sentence, re.I)), len(sentence)]
-        separators = list(re.finditer(r';|\bbut\b|\bwhereas\b', sentence, re.I))
+        hard = list(re.finditer(r';|\bbut\b|\bwhereas\b', sentence, re.I))
+        separators = list(hard)
+        bounds = [0, *(match.start() for match in hard), len(sentence)]
+        for index in range(len(bounds) - 1):
+            start = bounds[index] if index == 0 else hard[index - 1].end()
+            end = bounds[index + 1]
+            for match in re.finditer(r'\band\b', sentence, re.I):
+                if not start <= match.start() < end:
+                    continue
+                joint = match.start()
+                left, right = sentence[start:joint], sentence[match.end():end]
+                # A conjunction of two capacity nouns is one assertion. Two
+                # separately predicated capacity statements may share the
+                # sentence for subject/period evidence without sharing scope.
+                if (_PHYSICAL_CAPACITY.search(left) and _PHYSICAL_CAPACITY.search(right)
+                        and (_CLAIM_PRESENT.search(left) or _CLAIM_PAST.search(left))
+                        and (_CLAIM_PRESENT.search(right) or _CLAIM_PAST.search(right))):
+                    separators.append(match)
+        separators.sort(key=lambda match: match.start())
+        boundaries = [0, *(match.start() for match in separators), len(sentence)]
         for index in range(len(boundaries) - 1):
             start = boundaries[index] if index == 0 else separators[index - 1].end()
             end = boundaries[index + 1]
@@ -710,7 +727,7 @@ def _claim_context_projection(*, response, request, scan_result, source):
 _CLAIM_SUBJECT = re.compile(
     r'\bour\s+contract\s+manufacturers?\b|\bour\s+(?:manufacturing|production)\s+'
     r'capacity\b|\bwe\b|\b(?:a|the|our)\s+suppliers?\b', re.I)
-_CLAIM_PRESENT = re.compile(r'\b(?:have|has|is|are|operate|maintain|plan|currently|now)\b', re.I)
+_CLAIM_PRESENT = re.compile(r'\b(?:have|has|is|are|operate|maintain|plan|currently|now|can)\b', re.I)
 _CLAIM_PAST = re.compile(r'\b(?:had|previously|used\s+to)\b', re.I)
 
 
@@ -723,8 +740,13 @@ def _claim_contradictions(*, row, claim, antecedent, books):
     timing = books['timing'][row[2]]
     kind = ROLE_LABELS[row[0]]
     local = list(_CLAIM_SUBJECT.finditer(claim[:physical.start()]))
-    markers = local or (list(_CLAIM_SUBJECT.finditer(antecedent))
-        if re.match(r'^\s*(?:they|we|currently|now)\b', claim, re.I) else [])
+    borrowing = (re.match(r'^\s*(?:they|it|these|those|this|such|currently|now)\b',
+                          claim, re.I)
+        or re.search(r'\band\s*$', antecedent, re.I)
+        and _CLAIM_PRESENT.match(claim.lstrip()))
+    earlier = list(_CLAIM_SUBJECT.finditer(antecedent)) if borrowing else []
+    ambiguous_antecedent = not local and len({m.group().casefold() for m in earlier}) > 1
+    markers = local or (earlier if not ambiguous_antecedent else [])
     owner = None
     if markers:
         label = markers[-1].group().lower()
@@ -732,7 +754,9 @@ def _claim_contradictions(*, row, claim, antecedent, books):
     present = bool(_CLAIM_PRESENT.search(claim))
     past = bool(_CLAIM_PAST.search(claim))
     unresolved = []
-    if owner is None:
+    if ambiguous_antecedent:
+        unresolved.append('B13_CLAIM_ANTECEDENT_AMBIGUOUS')
+    elif owner is None:
         unresolved.append('B13_CLAIM_SUBJECT_NOT_ESTABLISHED')
     elif subject != owner:
         unresolved.append('B13_CLAIM_SUBJECT_CONFLICT')
@@ -742,6 +766,17 @@ def _claim_contradictions(*, row, claim, antecedent, books):
         unresolved.append('B13_CLAIM_CURRENT_MARKED_HISTORICAL')
     elif timing == 'CURRENT_REPORT' and past and not present:
         unresolved.append('B13_CLAIM_PAST_MARKED_CURRENT')
+    conditional = bool(re.match(r'^\s*if\b', claim, re.I))
+    if conditional and timing == 'CURRENT_REPORT':
+        unresolved.append('B13_CLAIM_CONDITIONAL_MARKED_CURRENT')
+    if conditional and kind not in {'CONDITIONAL_OR_BOILERPLATE', 'OTHER_CONTEXT'}:
+        unresolved.append('B13_CLAIM_HYPOTHETICAL_RETAINED_AS_ACTUAL')
+    if (not conditional and present and not past
+            and re.search(r'\bcould\b', claim, re.I) is None):
+        if timing == 'CONDITIONAL':
+            unresolved.append('B13_CLAIM_UNSUPPORTED_CONDITIONAL_TIME')
+        if kind == 'CONDITIONAL_OR_BOILERPLATE':
+            unresolved.append('B13_CLAIM_UNSUPPORTED_CONDITIONAL_KIND')
     if (owner == 'TARGET_REGISTRANT' and present and not past
             and kind in {'OTHER_ENTITY', 'HISTORICAL_STATEMENT',
                          'OTHER_CONTEXT', 'SALES_OR_SHIPMENTS'}):

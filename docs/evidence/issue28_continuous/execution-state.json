@@ -35,7 +35,7 @@
   },
   "current_work": [
     "D04 ten companies retain complete real native candidates and independent cold reads; no formal adoption or production switch.",
-    "B13 historical190 success is preserved, 111 current reuse remains blocked, 191/192 failed and exhausted their group opportunities. V7 semantic review NEEDS_FIX and live/native acceptance remain suspended; no complete B13 company.",
+    "B13 historical190 success is preserved, 111 current reuse remains blocked, 191/192 failed and exhausted their group opportunities. V7 three known semantic counterexamples have a limited offline repair with 32 directed tests, but exact-SHA independent review is pending and live/native acceptance remains suspended; no complete B13 company.",
     "Marriott C04 real SEC193-194 same-year refresh preserves two private result versions; Southwest SEC195 acquired its exact missing FY2024 prior annual primary, and a FY2025 C04 PUBLISHED/0 private native Run and independent cold read succeeded. This is not an old-FY2024-Run to new-FY2025-Run automatic transition.",
     "Salesforce current FY2026 and prior FY2025 annuals are saved, but the frozen C04 v2 URL/document-name equality rejects one genuine legacy 0002.body request-log alias before native Run. Original proof remains unchanged; explicit compatible successor admission is still needed.",
     "D03 source-material duplicate rebuild reduction measured 116.660 to 80.409 seconds locally; final two original material tests 78.737 seconds and exact-SHA limited followup review PASS_WITH_BOUNDS. Head9fa84fc2 main CI36298137866 completed SUCCESS, all15 jobs including saved-source shard0 succeeded.",
@@ -750,11 +750,11 @@
     "material": "paramount-c04-source-inspection/registration-variants-real-material/",
     "current_metric_complete": false
   },
-  "latest_delivery_head": "06320e220611d1a7717a4c721ad56967c753bb37",
+  "latest_delivery_head": "227182efe31b7ce6364c866753ae1332afb41ea2",
   "current_applied_binding": {
-    "ordinary_V14": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+    "ordinary_V14": "sha256:d5655149260a8a4dfc81372fe484f2c2c8a4d959c06d81eabf732e762d418ab9",
     "continuous_V15": "sha256:fc4477f827c65cc252e944ce43719ea4a330b5ad037bfcf62e8c8d205dc4a307",
-    "provider_and_sec_wiring": "Current C04 resume deferred-set repair V14 authority and provider/SEC/refresh receipts verified offline; V13 ordinary parent unchanged, no second real GET yet."
+    "provider_and_sec_wiring": "V14 B13 explicit V7-only finite diagnostic bytes rebound; provider/SEC/ordinary-refresh receipts current and 95/50/50 evidence hashes verified offline. V13 default unchanged; real SEC195 separately counted."
   },
   "current_observed_call_totals": {
     "through_ordinal": 195,
@@ -4075,5 +4075,37 @@
     "production_authorized": false,
     "provider_calls": 0,
     "evidence": "docs/evidence/issue28_continuous/c04-southwest-prior-source-20260927/README.md"
+  },
+  "b13_v7_finite_claim_repair_20260927": {
+    "status": "OFFLINE_FINITE_COUNTEREXAMPLE_REPAIR_PENDING_EXACT_SHA_REVIEW",
+    "base_head": "227182efe31b7ce6364c866753ae1332afb41ea2",
+    "changed_function_scope": [
+      "scripts/vnext/capacity_two_stage.py:_claim_segments",
+      "scripts/vnext/capacity_two_stage.py:_claim_contradictions"
+    ],
+    "closed_counterexamples_targeted": [
+      "AND_JOINED_DISTINCT_CURRENT_AND_PLANNED_CLAIMS",
+      "MULTIPLE_ANTECEDENT_PRONOUN_AMBIGUITY",
+      "CAN_PRESENT_WRONGLY_HISTORICAL",
+      "EXPLICIT_HAVE_WRONGLY_CONDITIONAL",
+      "IF_COULD_WRONGLY_CURRENT"
+    ],
+    "targeted_tests": "32_PASS_FULL_RESPONSE_LEVEL_AND_LEGACY_REQUEST_CHECKS",
+    "v5_v6_request_and_v5_result_fixed_sample_unchanged": true,
+    "v7_request_fixed_sample_bytes_unchanged": true,
+    "v14_closure": "sha256:d5655149260a8a4dfc81372fe484f2c2c8a4d959c06d81eabf732e762d418ab9",
+    "provider_sec_refresh_receipts_validated": true,
+    "v13_default_modified": false,
+    "historical_v7_needs_fix_preserved": true,
+    "current_v7_native_and_live_acceptance_suspended": true,
+    "new_real_calls": [0, 0, 0],
+    "shared_with_47": {
+      "file": "scripts/vnext/capacity_two_stage.py",
+      "functions": ["_claim_segments", "_claim_contradictions"],
+      "default_request_bytes_changed": false,
+      "v13_default_modified": false,
+      "downstream_integration_by_47_executor_only": true
+    },
+    "evidence": "docs/evidence/issue28_continuous/b13-v7-finite-claim-repair-20260927/README.md"
   }
 }
