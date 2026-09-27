@@ -4278,5 +4278,33 @@
     "new_real_calls": [0, 0, 0],
     "independent_review_or_business_approval": false,
     "evidence": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/README.md"
+  },
+  "d03_current_input_census_20260927": {
+    "status": "TEN_COMPANIES_COMPLETE_SAVED_INPUTS_GROUPED_OFFLINE_NO_REAL_EXECUTION",
+    "tested_code_head": "5dcded2a7725cb613f2dab89a1e38234b7cfa6b6",
+    "request_context_format": "deepseek-v41-two-message-json-chat-1",
+    "tokenizers_version": "0.22.2",
+    "full_source_units": 448,
+    "current_group_count": 130,
+    "company_group_counts": {
+      "marriott_international": 5,
+      "southwest_airlines": 9,
+      "ford_motor_company": 15,
+      "pfizer": 16,
+      "jpmorgan_chase": 38,
+      "salesforce": 7,
+      "lumen_technologies": 11,
+      "macys": 7,
+      "paramount_skydance_paramount_global": 14,
+      "enphase_energy": 8
+    },
+    "source_statement_fact_group_count": 1,
+    "source_statement_fact_count": 1,
+    "every_group_output_and_semantics_proven": false,
+    "native_result_or_run_created": false,
+    "new_real_calls": [0, 0, 0],
+    "d03_real_requests_authorized": false,
+    "conditional_provider_shortfall_d03_only_if_one_call_per_group": 33,
+    "evidence": "docs/evidence/issue28_continuous/d03-current-input-census-20260927/README.md"
   }
 }

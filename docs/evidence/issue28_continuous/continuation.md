@@ -1,5 +1,7 @@
 # Issue28当前入口：D04十家公司完整真实候选，B13第1组修后仍截断
 
+**2026-09-27 D03完整输入资源核对：**固定`request_context_format`和tokenizers0.22.2在#28当前保存来源上把十家公司448单元分成130个可构造请求组，十家无输入构造失败；JPMorgan38组、Ford15组，逐公司数与来源ID见`d03-current-input-census-20260927/`。这再次支持旧“首轮130”的**当前输入组数**，并非模型能在4096输出内答完或语义通过。若每组一次且无有效复用，仅D03首轮就比目前97次provider/paid余额多33；仍无D03真实调用或增额授权。带旧确定性`source_statement_facts`的一组不能恢复错误的事实信用，完整原始响应保存、原生Result/Run和业务验收仍待做。零新调用。
+
 **2026-09-27 Ford B06 同范围来源核对：**只读遍历已准入FY2025主HTML和同申报XML的当期XBRL事实：`CompanyExcludingFordCreditMember`维度下有工业债务、融资租赁事实，但两份均无同维度权益/归母权益/净资产事实；无维度的合并归母权益事实确实存在，不能替代工业分母。当前普通B06重建21,919,000,000 USD工业债务**报告小计**，Result仍`WITHHELD/null`。此核对限于两份已保存原件的当期原生事实，不能证明其他来源也不披露；即使补齐权益，全部工业债务集合仍需独立证明。零新调用、无新Run或业务口径变更，见`b06-ford-equity-scope-20260927/`。
 
 **2026-09-27 Salesforce C04 原生接线：**后续源码核对发现已绑定的 `normal_annual_input_v2.py` 与 `config/normal_fiscal_year_labels_v1.json` 原本就允许采用唯一发行人定义的FY2026，同时保留DEI/Company Facts FY2025原值；先前把此事列为需新增口径批准是遗漏既有实现，现予纠正。显式C04后继新增经原请求证明的`0002.body`/真实SEC URL别名读法，不改冻结V2/更早`governance_signals.py`。Salesforce实际保存来源形成FY2026 `PUBLISHED/0`私有原生Run/公开行，禁网、禁子进程独立冷读通过；同源重复触发返回`NO_SOURCE_CONTENT_CHANGE`且不增第二个Result。Marriott旧结果/选择/绑定ID不变，Paramount仍WITHHELD，Macy’s FY2025不变。旧Southwest包用其已安装旧代码原身份冷读通过；以新代码根直接读旧包则被快照身份正确拒绝。现有390中的Salesforce/C04本来是FY2026数值0，新私有Result是同坐标新版本，新增完整坐标0。`15260ba5`限定独审`PASS_WITH_BOUNDS`，没有独立重跑长材料；新head`ed4dd057`主CI`36315612650`在本轮自然检查点仍运行，不能当作全绿。原账本仍143/143/52；不是正式采纳或真实跨年自动更新完成。证据见`c04-verified-alias-label-20260927/`。
