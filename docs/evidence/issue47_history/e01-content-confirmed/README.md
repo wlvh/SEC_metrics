@@ -74,7 +74,7 @@
 
 `tests/vnext/test_historical_event_items.py` 新增的 `ARegisteredConfirmationIsCountedAndCheckedAgain`（真实申报、合成回答，所以证明的是"检查过的回答 → 计数"这条路径，从不证明某份申报说了什么）：计数就是被确认的条目；全部被否定的窗口是 0；有无法判定的条目整个窗口按名扣留；批次默认 LIVE、从不消费记录模式的回答；回答另一个问题的登记不是这个窗口的；只有表格标题的 1.01 带着它共享的正文。两个窗口都要求组件带着登记记录，供数据根重建同一个答案。
 
-`fault_injections.py` 逐条破坏规则、要求对照先干净跑完两个套件，结果在 `fault-injections.json`。
+`fault_injections.py` 逐条破坏规则、要求对照先干净跑完两个套件，结果在 `fault-injections.json`：对照 42 例全过、没有夹具失败；15 个注错全部由各自点名的用例抓到。其中两个（`COUNT_EVERY_CANDIDATE_UNCONFIRMED`、`KEEP_THE_APPROVED_ROUTE`）同时让 `ARegisteredConfirmationIsCountedAndCheckedAgain` 的类夹具失败、那个类的 6 例没有运行（42 例只跑了 36 例）；判定仍是"抓到"，因为点名的用例在另一个类里真的失败了，而不是只在夹具处被拦。第一版脚本只看返回码与失败列表，把这两次记成"套件没跑起来"——现在分开记录失败用例、失败夹具与实际运行的用例数，只有点名用例失败才算抓到。
 
 ## 不在候选集里的
 

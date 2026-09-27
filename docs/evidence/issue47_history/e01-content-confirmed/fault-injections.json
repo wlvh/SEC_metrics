@@ -1,61 +1,172 @@
 {
  "record_type": "E01_CONTENT_CONFIRMED_FAULT_INJECTIONS",
- "suite": "tests.vnext.test_historical_event_items",
+ "suites": [
+  "tests.vnext.test_historical_event_items",
+  "tests.vnext.test_historical_ma_confirmation"
+ ],
  "control_failures": [],
- "control_tests_run": 18,
- "caught": 5,
- "total": 5,
+ "control_tests_run": 42,
+ "caught": 15,
+ "total": 15,
  "results": [
   {
    "injection": "COUNT_EVERY_CANDIDATE_UNCONFIRMED",
    "module": "historical_zero_ai_results.py",
    "expected": "test_a_window_with_a_candidate_is_withheld_by_name",
-   "result": "CAUGHT",
    "failed": [
     "test_a_window_with_a_candidate_is_withheld_by_name",
     "test_no_value_of_the_approved_definition_is_carried_over"
-   ]
+   ],
+   "fixtures_failed": [
+    "tests.vnext.test_historical_event_items.ARegisteredConfirmationIsCountedAndCheckedAgain"
+   ],
+   "ran": 36,
+   "result": "CAUGHT"
   },
   {
    "injection": "KEEP_THE_APPROVED_ROUTE",
    "module": "historical_zero_ai_results.py",
    "expected": "test_the_spec_is_the_successor_route_s",
-   "result": "CAUGHT",
    "failed": [
     "test_a_window_with_a_candidate_is_withheld_by_name",
     "test_a_window_with_no_candidate_is_answered_zero_by_the_route_s_matcher",
     "test_every_candidate_item_is_read_from_its_own_text",
     "test_no_value_of_the_approved_definition_is_carried_over",
-    "test_the_spec_is_the_successor_route_s"
-   ]
+    "test_the_spec_is_the_successor_route_s",
+    "test_the_successor_spec_is_a_document_the_route_generates"
+   ],
+   "fixtures_failed": [
+    "tests.vnext.test_historical_event_items.ARegisteredConfirmationIsCountedAndCheckedAgain"
+   ],
+   "ran": 36,
+   "result": "CAUGHT"
   },
   {
    "injection": "ACCEPT_A_SUCCESSOR_OF_ANOTHER_ROUTE",
    "module": "historical_event_items.py",
    "expected": "test_a_successor_written_against_another_route_is_refused",
-   "result": "CAUGHT",
    "failed": [
     "test_a_successor_written_against_another_route_is_refused"
-   ]
+   ],
+   "result": "CAUGHT"
   },
   {
    "injection": "READ_ONLY_THE_8_01_ITEMS",
    "module": "historical_event_items.py",
    "expected": "test_every_candidate_item_is_read_from_its_own_text",
-   "result": "CAUGHT",
    "failed": [
+    "test_a_caption_only_item_carries_the_body_it_shares",
+    "test_a_window_whose_candidates_are_all_declined_is_zero",
     "test_a_window_with_no_candidate_is_answered_zero_by_the_route_s_matcher",
-    "test_every_candidate_item_is_read_from_its_own_text"
-   ]
+    "test_every_candidate_item_is_read_from_its_own_text",
+    "test_the_count_is_the_items_the_answer_confirms"
+   ],
+   "result": "CAUGHT"
   },
   {
    "injection": "A_ZERO_WINDOW_NOT_BOUND_TO_ITS_READING",
    "module": "historical_zero_ai_results.py",
    "expected": "test_a_window_with_no_candidate_is_answered_zero_by_the_route_s_matcher",
-   "result": "CAUGHT",
    "failed": [
-    "test_a_window_with_no_candidate_is_answered_zero_by_the_route_s_matcher"
-   ]
+    "test_a_window_whose_candidates_are_all_declined_is_zero",
+    "test_a_window_with_no_candidate_is_answered_zero_by_the_route_s_matcher",
+    "test_the_count_is_the_items_the_answer_confirms"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_DECLINED_CANDIDATE_STILL_COUNTS",
+   "module": "historical_zero_ai_results.py",
+   "expected": "test_a_window_whose_candidates_are_all_declined_is_zero",
+   "failed": [
+    "test_a_window_whose_candidates_are_all_declined_is_zero",
+    "test_the_count_is_the_items_the_answer_confirms"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "AN_UNSETTLED_WINDOW_COUNTS_WHAT_IS_SETTLED",
+   "module": "historical_ma_confirmation.py",
+   "expected": "test_an_item_its_text_does_not_settle_withholds_the_window_by_name",
+   "failed": [
+    "test_an_item_its_text_does_not_settle_withholds_the_window",
+    "test_an_item_its_text_does_not_settle_withholds_the_window_by_name"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "THE_REGISTERED_ANSWER_IS_NOT_INSTALLED",
+   "module": "historical_zero_ai_results.py",
+   "expected": "test_the_count_is_the_items_the_answer_confirms",
+   "failed": [
+    "test_an_item_its_text_does_not_settle_withholds_the_window_by_name",
+    "test_the_count_is_the_items_the_answer_confirms"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_BATCH_CONSUMES_A_RECORDED_ANSWER",
+   "module": "historical_ma_confirmation.py",
+   "expected": "test_a_batch_never_consumes_a_recorded_answer",
+   "failed": [
+    "test_a_batch_never_consumes_a_recorded_answer"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "AN_ANSWER_TO_ANOTHER_QUESTION_IS_TAKEN",
+   "module": "historical_ma_confirmation.py",
+   "expected": "test_an_answer_to_another_question_is_not_this_window_s",
+   "failed": [
+    "test_an_answer_to_another_question_is_not_this_window_s"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_CAPTION_ONLY_ITEM_KEEPS_ONLY_ITS_CAPTION",
+   "module": "historical_event_items.py",
+   "expected": "test_a_caption_only_item_carries_the_body_it_shares",
+   "failed": [
+    "test_a_caption_only_item_carries_the_body_it_shares"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_QUOTE_NEED_NOT_BE_THE_ITEM_S_WORDS",
+   "module": "historical_ma_confirmation.py",
+   "expected": "test_a_quote_not_in_the_item_is_refused",
+   "failed": [
+    "test_a_quote_from_another_item_is_refused",
+    "test_a_quote_not_in_the_item_is_refused"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "A_RESEALED_COUNT_IS_ACCEPTED",
+   "module": "historical_ma_confirmation.py",
+   "expected": "test_an_edited_count_is_refused_even_when_resealed",
+   "failed": [
+    "test_an_edited_count_is_refused_even_when_resealed"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "THE_SPEC_DOCUMENT_IS_NOT_HELD_TO_THE_ROUTE",
+   "module": "historical_results.py",
+   "expected": "test_the_successor_spec_is_a_document_the_route_generates",
+   "failed": [
+    "test_the_successor_spec_is_a_document_the_route_generates"
+   ],
+   "result": "CAUGHT"
+  },
+  {
+   "injection": "AN_ITEM_MAY_GO_UNANSWERED",
+   "module": "historical_ma_confirmation.py",
+   "expected": "test_every_item_is_answered_exactly_once",
+   "failed": [
+    "test_every_item_is_answered_exactly_once"
+   ],
+   "result": "CAUGHT"
   }
  ]
 }
