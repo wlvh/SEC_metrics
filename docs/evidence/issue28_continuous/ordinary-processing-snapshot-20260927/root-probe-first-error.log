@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/tmp/issue28_processing_root_probe.py", line 16, in <module>
+    before={p:sha(old/p) for p in tracked}
+              ~~~^^^^^^^
+  File "/tmp/issue28_processing_root_probe.py", line 14, in sha
+    def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+                                        ~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/catalog/r5/C04_auditor_changes_v3.md'

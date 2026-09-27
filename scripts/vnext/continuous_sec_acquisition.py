@@ -49,9 +49,29 @@ def _journal():
     return path
 
 
-def initialize_source_inputs(*,root,requirement,c04_source_only=False):
+def _clone_or_copy_source(*, source, target):
+    """Use a private copy-on-write file where supported; never hardlink evidence."""
+    source, target = Path(source), Path(target)
+    need(not target.exists(), 'SEC_ACQUISITION_CLONE_TARGET_EXISTS')
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if os.uname().sysname == 'Darwin':
+        import ctypes
+        clone = getattr(ctypes.CDLL('/usr/lib/libSystem.B.dylib',
+                                   use_errno=True), 'clonefile', None)
+        if clone is not None:
+            clone.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint32]
+            clone.restype = ctypes.c_int
+            if clone(os.fsencode(source), os.fsencode(target), 0) == 0:
+                return
+            need(not target.exists(), 'SEC_ACQUISITION_CLONE_PARTIAL_TARGET')
+    _exclusive_write_bytes(path=target, content=source.read_bytes())
+
+
+def initialize_source_inputs(*,root,requirement,c04_source_only=False,
+                             clone_baseline=False):
     """Copy the finite existing source corpus once; never fetch duplicates."""
     need(type(c04_source_only) is bool,'SEC_ACQUISITION_SOURCE_MODE_INVALID')
+    need(type(clone_baseline) is bool,'SEC_ACQUISITION_BASELINE_COPY_MODE_INVALID')
     baseline=strict_json_file(path=ROOT/MANIFEST_PATH)
     existing=root.exists()
     if root.exists():
@@ -62,8 +82,12 @@ def initialize_source_inputs(*,root,requirement,c04_source_only=False):
         root.mkdir(parents=True)
         for relative in baseline['files']:
             _baseline_file(ROOT,relative,baseline)
-            raw=resolve_repository_file(repo_root=ROOT,repo_relative_path=relative).read_bytes()
-            _exclusive_write_bytes(path=root/relative,content=raw)
+            original=resolve_repository_file(repo_root=ROOT,repo_relative_path=relative)
+            if clone_baseline:
+                _clone_or_copy_source(source=original,target=root/relative)
+                _baseline_file(root,relative,baseline)
+            else:
+                _exclusive_write_bytes(path=root/relative,content=original.read_bytes())
         _exclusive_write_json(path=root/'source-baseline.json',value={'baseline_manifest_sha256':sha256_file(path=ROOT/MANIFEST_PATH)})
     # Source discovery also needs its installed fiscal-label policy. It is
     # a rule input, not a downloaded source or a reusable provider response.

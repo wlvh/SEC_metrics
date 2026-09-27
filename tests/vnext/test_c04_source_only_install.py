@@ -253,8 +253,8 @@ class C04MissingAnnualBootstrapFastTest(unittest.TestCase):
             self.assertEqual([annual_url], [item['url'] for item in captured])
             self.assertEqual([True], [item['source_only_c04'] for item in captured])
             self.assertEqual('UPDATES_INCOMPLETE', result['status'])
-            self.assertEqual('DISCOVERY', unrelated['companies'][0]
-                             ['acquisition_errors'][-1]['stage'])
+            self.assertTrue(any(error['stage'] == 'DISCOVERY' for error in
+                unrelated['companies'][0]['acquisition_errors']))
             with session.ledger.locked():
                 self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
 
@@ -323,8 +323,8 @@ class C04MissingAnnualBootstrapFastTest(unittest.TestCase):
             self.assertEqual([annual_url], [item['url'] for item in captured])
             self.assertEqual([True], [item['source_only_c04'] for item in captured])
             self.assertEqual('UPDATES_INCOMPLETE', result['status'])
-            self.assertEqual('DISCOVERY', unrelated['companies'][0]
-                             ['acquisition_errors'][-1]['stage'])
+            self.assertTrue(any(error['stage'] == 'DISCOVERY' for error in
+                unrelated['companies'][0]['acquisition_errors']))
             with session.ledger.locked():
                 self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
 

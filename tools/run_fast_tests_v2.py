@@ -129,6 +129,7 @@ SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallT
 SOURCE_TESTS += ("tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest",)
+SOURCE_TESTS += ("tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

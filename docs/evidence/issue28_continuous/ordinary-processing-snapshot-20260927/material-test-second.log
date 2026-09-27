@@ -1,0 +1,28 @@
+E
+======================================================================
+ERROR: test_stale_acquisition_rules_do_not_block_current_saved_source_cases (tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest.test_stale_acquisition_rules_do_not_block_current_saved_source_cases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ordinary_processing_source.py", line 49, in test_stale_acquisition_rules_do_not_block_current_saved_source_cases
+    case = prepare_case(data_root=first['data_root'],
+        company_id='salesforce', metric_id=metric, **options)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_run_v3.py", line 111, in prepare_case
+    case = prepare_c04_registration_case(repo_root=data_root,
+        company_id=company_id, event_forms=c04_event_forms)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 78, in prepare_c04_registration_case
+    _need(binding['metric_input_status']['C04'] == 'PREPARED'
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and not binding['history_alignment_conflicts']
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and 'c04' in base['resolver_inputs'],
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'C04_REGISTRATION_BASE_INPUT_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 34, in _need
+    raise ValueError(reason)
+ValueError: C04_REGISTRATION_BASE_INPUT_UNRESOLVED
+
+----------------------------------------------------------------------
+Ran 1 test in 9.232s
+
+FAILED (errors=1)

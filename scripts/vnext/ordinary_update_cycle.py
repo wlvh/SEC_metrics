@@ -258,12 +258,23 @@ def _recover(root,state,configuration):
     return state
 
 
-def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None):
+def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None,
+             source_identity_root=None):
     """Check one company's current input and keep a durable candidate history."""
-    root=normal._external(Path(state_root));source=Path(source_root).resolve()
+    root=normal._external(Path(state_root));source=(normal._external(Path(source_root))
+        if source_identity_root is not None else Path(source_root).resolve())
+    identity_source=(source if source_identity_root is None else
+                     normal._external(Path(source_identity_root)))
     _need(root!=source and root not in source.parents and source not in root.parents,'UPDATE_SOURCE_STATE_ROOTS_OVERLAP')
+    if source_identity_root is not None:
+        from .ordinary_processing_source import verify_processing_source
+        from .continuous_call_policy import REQUIREMENT_ID
+        processing_requirement=load_requirement_snapshot(
+            snapshot_dir=normal.ROOT/'requirements'/REQUIREMENT_ID)
+        verify_processing_source(acquisition_root=identity_source,
+            processing_root=source,requirement=processing_requirement)
     with _locked(root):
-        configuration=_config(root,source,company_id,metric_ids,native_assessment_mode);state=_recover(root,_state(root,configuration),configuration)
+        configuration=_config(root,identity_source,company_id,metric_ids,native_assessment_mode);state=_recover(root,_state(root,configuration),configuration)
         previous=None;successful_results={}
         if state['successful_attempt'] is not None:
             previous=_terminal(root,state['successful_attempt']);successful_results=_verify_candidate(root,previous,configuration)
@@ -302,6 +313,9 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
                 if status=='CANDIDATE_READY':
                     successful_results=_verify_candidate(root,{'status':status,'configuration_id':configuration['record_id'],
                         'attempt_id':identity,'input':descriptor,'metrics':metrics},configuration)
+            if source_identity_root is not None:
+                verify_processing_source(acquisition_root=identity_source,
+                    processing_root=source,requirement=processing_requirement)
         except Exception as failure:
             error={'error_type':type(failure).__name__,'reason':str(failure)}
             status='EXECUTION_FAILED' if descriptor is not None else 'INPUT_FAILED'
@@ -321,7 +335,8 @@ def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mo
             'new_candidate_created':bool(metrics),'terminal':terminal,'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
 
 
-def run_company(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None):
+def run_company(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None,
+                source_identity_root=None):
     """Keep each metric's candidate independent of other metric failures."""
     root=normal._external(Path(state_root));policy=normal._policy(normal.ROOT)
     _need(type(metric_ids) is list and metric_ids and len(metric_ids)==len(set(metric_ids))
@@ -334,7 +349,8 @@ def run_company(*,state_root,source_root,company_id,metric_ids,native_assessment
     for metric in sorted(metric_ids):
         try:
             outcome=run_once(state_root=root/'metrics'/metric,source_root=source_root,
-                             company_id=company_id,metric_ids=[metric],native_assessment_mode=native_assessment_mode,native_assessment_ledger=native_assessment_ledger)
+                             company_id=company_id,metric_ids=[metric],native_assessment_mode=native_assessment_mode,
+                             native_assessment_ledger=native_assessment_ledger,source_identity_root=source_identity_root)
         except Exception as error:
             outcome={'status':'UPDATE_BLOCKED','error_type':type(error).__name__,'reason':str(error),
                      'last_verified_candidate':None,'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
