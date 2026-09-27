@@ -34,6 +34,11 @@ Two more rules the filings need:
 Usage:
     python3 tools/read_statement_facts.py --runs-root <flat runs root> \
         --closure sha256:<closure the compared results ran under>
+
+    A position whose Runs ran under another closure is read on its own:
+    python3 tools/read_statement_facts.py --runs-root <root> --closure <closure> \
+        --case paramount-2024=paramount_skydance_paramount_global:2024-12-31 \
+        --output docs/evidence/issue47_history/content-acceptance/<name>.json
 """
 import argparse
 import json
@@ -279,6 +284,22 @@ def read_case(*, text, period, published):
             "needed_facts_not_read": unread, "metrics": rows}
 
 
+def _case(text):
+    """``label=company_id:report_end`` from the command line."""
+    label, _, rest = text.partition("=")
+    company_id, _, report_end = rest.partition(":")
+    if not (label and company_id and report_end):
+        raise SystemExit("CASE_NOT_LABEL_EQUALS_COMPANY_COLON_PERIOD:" + text)
+    return company_id, report_end, label
+
+
+def _fresh_body():
+    """A new reading, described the way the default one is - its method, none of its history."""
+    main = json.loads((REPO / OUT).read_text(encoding="utf-8"))
+    kept = ("record_type", "issue", "what_this_is", "production_authorized")
+    return {**{key: main[key] for key in kept if key in main}, "same_method_as": OUT}
+
+
 def _case_input(*, company_id, report_end):
     from vnext.historical_annual_input import prepare_historical_annual_input
     from vnext.normal_period_selection import resolve_period_selection
@@ -298,14 +319,24 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--runs-root", required=True, type=Path, action="append")
     parser.add_argument("--closure", required=True)
+    parser.add_argument("--case", action="append", type=_case,
+                        help="label=company_id:report_end; replaces the default cases")
+    parser.add_argument("--output", default=OUT)
     arguments = parser.parse_args()
+    # One reading compares its positions with results of one closure, so a
+    # position read under another closure is a reading of its own.
+    if arguments.case and arguments.output == OUT:
+        raise SystemExit("A_CASE_OF_ITS_OWN_IS_WRITTEN_TO_A_READING_OF_ITS_OWN")
+    cases = arguments.case or CASES
     receipts = []
     for root in arguments.runs_root:
         receipts.extend(collect_run_receipts(runs_root=root)["receipts"])
     index = index_receipts(receipts=receipts)
-    previous = json.loads((REPO / OUT).read_text(encoding="utf-8"))
+    output = REPO / arguments.output
+    previous = (json.loads(output.read_text(encoding="utf-8")) if output.exists()
+                else _fresh_body())
     positions = {}
-    for company_id, report_end, label in CASES:
+    for company_id, report_end, label in cases:
         document, period = _case_input(company_id=company_id, report_end=report_end)
         published = {}
         for metric in ("B01", "B02", "B03", "B04", "B05", "B07", "B08", "B09"):
@@ -353,8 +384,8 @@ def main():
         for metric in row["metrics"].values():
             verdicts[metric["verdict"]] = verdicts.get(metric["verdict"], 0) + 1
     body["result"] = dict(sorted(verdicts.items()))
-    (REPO / OUT).write_text(json.dumps(body, indent=1, sort_keys=True, ensure_ascii=False)
-                            + "\n", encoding="utf-8")
+    output.write_text(json.dumps(body, indent=1, sort_keys=True, ensure_ascii=False)
+                      + "\n", encoding="utf-8")
     print(body["result"])
     return 0
 

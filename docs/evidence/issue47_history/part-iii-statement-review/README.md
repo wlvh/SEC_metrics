@@ -63,3 +63,14 @@
 | | B02/B04/B05/B07 | 同上 | `ENTITY_CONTINUITY_NOT_COMPARABLE`（已批可比性限制，146 天首期） |
 
 **用例**：`tests/vnext/test_historical_part_iii_admission.py`（11 例）——两期在真实字节上全部条件成立；事件窗口的答案不问这份清单；未列出的修订拿政策原答案；字节被换、指标超出范围、第 15 项附件不同各自按名拒绝；清单指向另一份原件是错误而不是通过；记录本身声明错类别/可授权/空清单被拒；前身年份给出数值并写明原因，继任年份保留已批不可比限制。原先断言"政策拒绝"的五个测试模块改为在**没有这份清单**时问同一个问题（它们测的是政策本身），准入本身在新模块里测。
+
+## （四）原生 Run、冷读与内容核对
+
+上表是仓库树里的路线答案。原生 Run 在同步到提交的运行树里逐位置建成（`targeted-round-30a7934b/targeted_runs.py`，零调用），记录在 `statement-value-runs.json`（`record_statement_runs.py` 从批次矩阵与各 Run 自己的记录生成）：
+
+- **FY2024 前身**（闭包 `a50229e6…`）：8 个位置全部冻结出公共行，另一进程冷读同 run_id、同 result_id。B01/B03/B04/B05/B08/B09 发布数值，B07 发布 `NOT_MEANINGFUL/RATIO_NUMERATOR_NOT_POSITIVE`，B02 扣留，理由是上一期 accession 材料未保存（获取计划 A 类），不是修订问题。
+- **FY2025 继任**：B08/B09 在同一闭包下冻结发布。B02/B04/B05/B07 第一次以 `NOT_MEANINGFUL Result lacks evaluated inputs` 失败——`historical_run` 给接续主体的不可比答案重建主结果时没有带上已评估的输入，是实现缺陷（`1984fe16` 修复）；修复后的闭包 `5a2c6042…` 下重跑，四个位置冻结出公共行，冷读一致，答案为已批的 `ENTITY_CONTINUITY_NOT_COMPARABLE`（146 天首期）。失败的那次与重跑分行保留，不合并。
+
+内容核对（`../content-acceptance/part-iii-statement-read.json`，`tools/read_statement_facts.py --case`）：路线从 Company Facts 取值，这次读两份原件自己的 inline XBRL。8 个发布数值**全部 MATCH**；B07 读出的比率是 −6.13（营业亏损÷利息），与"分子非正所以无意义"一致。接受登记由 165 条增至 173 条。
+
+这些数值成立的前提仍是逐份准入的条件：换了字节、换了修订、或读到别的修订，准入按名失败，只阻断那份修订的位置。

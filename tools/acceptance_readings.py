@@ -26,6 +26,10 @@ from pathlib import Path
 
 EVIDENCE = "docs/evidence/issue47_history/content-acceptance/"
 CROSS = EVIDENCE + "cross-source-read.json"
+# Paramount's two Part III years, read the same way against the targeted Runs of
+# the closure that admitted their statement inputs (part-iii-statement-review/).
+CROSS_PARAMOUNT_PART_III = EVIDENCE + "part-iii-statement-read.json"
+CROSS_READINGS = (CROSS, CROSS_PARAMOUNT_PART_III)
 LODGING = EVIDENCE + "lodging-table-read.json"
 EVENTS = EVIDENCE + "event-count-read.json"
 # Paramount's predecessor year, read the same way against the targeted Runs of
@@ -59,7 +63,7 @@ COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 # B06 read off each filing's balance sheet and lease note by
 # tools/read_debt_to_equity.py, which imports none of the debt cascade.
 DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
-READINGS = (CROSS, LODGING, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE, TEXT, *D01_READINGS,
+READINGS = (*CROSS_READINGS, LODGING, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE, TEXT, *D01_READINGS,
             RPO, COMPENSATION, DEBT_TO_EQUITY)
 # The readings key some positions by a label only. The label is what the
 # reading recorded, and this is the period each label names.
@@ -157,7 +161,7 @@ def _position(*, reading, label, slot, company_id, metric_id, period_end, publis
 def positions(*, repo_root: Path, path: str, body):
     """Every position in this reading that compared a published value."""
     found = []
-    if path == CROSS:
+    if path in CROSS_READINGS:
         for label, case in sorted(body["per_position"].items()):
             if "error" in case:
                 continue

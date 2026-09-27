@@ -30,7 +30,7 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
-from acceptance_readings import (COMPENSATION, CROSS, D01_READINGS,  # noqa: E402
+from acceptance_readings import (COMPENSATION, CROSS, CROSS_READINGS, D01_READINGS,  # noqa: E402
                                  DEBT_TO_EQUITY, E01_EIGHT_O_ONES, EVENT_READINGS, GOVERNANCE,
                                  LODGING, READINGS, RPO, TEXT, load, positions)
 
@@ -152,7 +152,7 @@ def _read_from(position):
                 "debt_rows": case["balance_sheet"]["debt_rows"],
                 "equity_row": case["balance_sheet"]["equity_row"],
                 "finance_leases": case["finance_leases"]}
-    if path == CROSS:
+    if path in CROSS_READINGS:
         return {"document": case["document"], "concepts_that_answered": case["concepts_used"]}
     if path == LODGING:
         return {"document": case["document"], "table_ordinal": case["read"]["table_ordinal"],
@@ -194,7 +194,7 @@ def _method_and_limit(position):
     path, metric = position["reading"], position["metric_id"]
     if path == DEBT_TO_EQUITY:
         return DEBT_TO_EQUITY_METHOD, DEBT_TO_EQUITY_LIMIT
-    if path == CROSS:
+    if path in CROSS_READINGS:
         return STATEMENT_METHOD, STATEMENT_LIMIT
     if path == LODGING:
         return LODGING_METHOD, LODGING_LIMIT
