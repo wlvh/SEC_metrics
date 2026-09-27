@@ -81,7 +81,8 @@ def run_once(*, state_root, source_root, company_id):
                 and source not in root.parents, 'UPDATE_SOURCE_STATE_ROOTS_OVERLAP')
     with cycle._locked(root):
         configuration = _configuration(root, source, company_id)
-        state = cycle._recover(root, cycle._state(root, configuration), configuration)
+        state = cycle._recover(root, cycle._state(root, configuration),
+                               configuration, verify_candidate=_verify_candidate)
         previous = None
         successful_results = {}
         if state['successful_attempt'] is not None:

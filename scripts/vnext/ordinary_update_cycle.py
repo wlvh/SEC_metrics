@@ -202,8 +202,9 @@ def _terminal(root,identity):
     return value
 
 
-def _recover(root,state,configuration):
+def _recover(root,state,configuration,verify_candidate=None):
     """Reconcile the immutable journal before advancing a mutable reference."""
+    verifier = _verify_candidate if verify_candidate is None else verify_candidate
     intents={}
     for work in (root/'attempts').iterdir() if (root/'attempts').exists() else []:
         _attempt(root,work.name)
@@ -252,7 +253,7 @@ def _recover(root,state,configuration):
         _need(terminal['intent_id']==intent['record_id'] and terminal['configuration_id']==configuration['record_id'],
               'UPDATE_TERMINAL_INTENT_CHANGED')
         if terminal['status']=='CANDIDATE_READY':
-            _verify_candidate(root,terminal,configuration);state['successful_attempt']=identity
+            verifier(root,terminal,configuration);state['successful_attempt']=identity
         state['latest_attempt']=identity
     atomic_write_json(path=root/'current.json',value=state)
     return state
