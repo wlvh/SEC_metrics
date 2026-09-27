@@ -10,7 +10,8 @@ from pathlib import Path
 from git_workspace import first_symlink_in_path
 from sec_http import write_immutable_bytes
 
-from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_file
+from .canonical import (content_hash, sha256_bytes, sha256_file,
+                        strict_json_file, strict_json_loads)
 from .normal_source_authority import ROOT
 from .regulatory_fact_review import validate_candidate_response
 
@@ -20,6 +21,7 @@ _FILES = ('source.json', 'original-request.json', 'candidate-request.json',
 # The first version-1 offline packet keeps its original creator identity.
 # This read-only compatibility does not grant provider or native Run credit.
 _HISTORICAL_V1_MODULE_SHA256 = '89e46c2bf900ff14935969a784efeac6786cea4a88ce89e1659b51c54eac0785'
+_HISTORICAL_V1_PACKET_ID = 'sha256:4bac51a935deadda11f456ba39f6976647fe2d5cd05fe194f89fbc7ef7ce02d6'
 
 
 def _need(condition, reason):
@@ -100,7 +102,8 @@ def record_offline_response(*, output_root, source, original_request,
             'calls': [0, 0, 0], 'production_authorized': False}
 
 
-def replay_offline_response(*, packet_root, repo_root=ROOT):
+def replay_offline_response(*, packet_root, repo_root=ROOT,
+                            expected_packet_id=None):
     """Rebuild the source and response checks before returning any review data."""
     _need(Path(repo_root).resolve() == ROOT,
           'D03_RECORDED_PACKET_CODE_ROOT_CHANGED')
@@ -110,28 +113,37 @@ def replay_offline_response(*, packet_root, repo_root=ROOT):
           'D03_RECORDED_PACKET_INCOMPLETE_OR_EXTRA_FILE')
     packet = strict_json_file(path=root/'packet.json')
     body = {key: value for key, value in packet.items() if key != 'packet_id'}
+    _need(expected_packet_id is None or
+          (type(expected_packet_id) is str and packet['packet_id'] == expected_packet_id),
+          'D03_RECORDED_PACKET_EXPECTED_ID_CHANGED')
+    creator = packet['module_sha256']
     _need(packet['packet_id'] == content_hash(value=body)
           and packet['record_type'] == 'D03_OFFLINE_RECORDED_RESPONSE_PACKET'
           and packet['schema_version'] == 1
-          and packet['module_sha256'] in {
-              sha256_file(path=Path(__file__)), _HISTORICAL_V1_MODULE_SHA256}
+          and (creator == sha256_file(path=Path(__file__))
+               or (creator == _HISTORICAL_V1_MODULE_SHA256
+                   and packet['packet_id'] == _HISTORICAL_V1_PACKET_ID))
           and packet['provider_execution_credit'] == 'RECORDED_TEST_ONLY'
           and packet['native_result_created'] is False
           and packet['calls'] == [0, 0, 0]
           and packet['production_authorized'] is False
           and set(packet['files']) == set(_FILES),
           'D03_RECORDED_PACKET_IDENTITY_OR_CREDIT_CHANGED')
+    raw_files = {}
     for name in _FILES:
         path = root/name
-        _need(first_symlink_in_path(path=path) is None
-              and path.stat().st_size == packet['files'][name]['size']
-              and sha256_file(path=path) == packet['files'][name]['sha256'],
+        _need(first_symlink_in_path(path=path) is None,
               'D03_RECORDED_PACKET_FILE_CHANGED')
-    source = strict_json_file(path=root/'source.json')
-    original = strict_json_file(path=root/'original-request.json')
-    request = strict_json_file(path=root/'candidate-request.json')
-    raw = (root/'raw-response.bin').read_bytes()
-    saved_checked = strict_json_file(path=root/'checked.json')
+        raw_files[name] = path.read_bytes()
+        _need(len(raw_files[name]) == packet['files'][name]['size']
+              and sha256_bytes(content=raw_files[name]) ==
+                  packet['files'][name]['sha256'],
+              'D03_RECORDED_PACKET_FILE_CHANGED')
+    source = strict_json_loads(text=raw_files['source.json'].decode('utf-8'))
+    original = strict_json_loads(text=raw_files['original-request.json'].decode('utf-8'))
+    request = strict_json_loads(text=raw_files['candidate-request.json'].decode('utf-8'))
+    raw = raw_files['raw-response.bin']
+    saved_checked = strict_json_loads(text=raw_files['checked.json'].decode('utf-8'))
     _need(source['semantic_source_id'] == packet['source_id']
           and original['request_id'] == packet['original_request_id']
           and request['request_id'] == packet['candidate_request_id']

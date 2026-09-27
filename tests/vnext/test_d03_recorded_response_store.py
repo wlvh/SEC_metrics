@@ -10,7 +10,9 @@ from tests.vnext.test_normal_zero_ai_results import original_sources_only
 from vnext.canonical import content_hash
 from vnext.canonical import strict_json_file
 from vnext.d03_recorded_response_store import (
-    record_offline_response, replay_offline_response)
+    _HISTORICAL_V1_MODULE_SHA256, _HISTORICAL_V1_PACKET_ID,
+    record_offline_response,
+    replay_offline_response)
 from vnext.normal_source_authority import ROOT
 from vnext.r6_regulatory_semantics import (
     prepare_regulatory_semantic_source, requests_from_source)
@@ -62,7 +64,8 @@ class D03RecordedResponseStoreTest(unittest.TestCase):
             self.assertEqual(raw, (root/'raw-response.bin').read_bytes())
             self.assertFalse(saved['native_result_created'])
             self.assertEqual([0, 0, 0], saved['calls'])
-            read = replay_offline_response(packet_root=root)
+            read = replay_offline_response(packet_root=root,
+                expected_packet_id=saved['packet_id'])
             self.assertEqual(raw, read['raw_response_bytes'])
             self.assertTrue(read['checked']['unresolved'])
             self.assertFalse(read['native_result_created'])
@@ -72,10 +75,26 @@ class D03RecordedResponseStoreTest(unittest.TestCase):
                 self.assertFalse(destination.exists())
                 shutil.copytree(root, destination)
             original_packet = (root/'packet.json').read_bytes()
+            with self.assertRaisesRegex(ValueError,
+                    'D03_RECORDED_PACKET_EXPECTED_ID_CHANGED'):
+                replay_offline_response(packet_root=root,
+                    expected_packet_id='sha256:' + '0'*64)
             changed = json.loads(original_packet)
             changed['module_sha256'] = '0'*64
             changed['packet_id'] = content_hash(value={key: value
                 for key, value in changed.items() if key != 'packet_id'})
+            (root/'packet.json').write_text(json.dumps(changed)+'\n')
+            with self.assertRaisesRegex(ValueError,
+                    'D03_RECORDED_PACKET_IDENTITY_OR_CREDIT_CHANGED'):
+                replay_offline_response(packet_root=root)
+            changed = json.loads(original_packet)
+            changed['module_sha256'] = _HISTORICAL_V1_MODULE_SHA256
+            # The same byte-identical packet is the known historical packet;
+            # a different packet may not claim that old creator identity.
+            changed['diagnostic_marker'] = 'DIFFERENT_PACKET'
+            changed['packet_id'] = content_hash(value={key: value
+                for key, value in changed.items() if key != 'packet_id'})
+            self.assertNotEqual(_HISTORICAL_V1_PACKET_ID, changed['packet_id'])
             (root/'packet.json').write_text(json.dumps(changed)+'\n')
             with self.assertRaisesRegex(ValueError,
                     'D03_RECORDED_PACKET_IDENTITY_OR_CREDIT_CHANGED'):

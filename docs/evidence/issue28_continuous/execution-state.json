@@ -1736,6 +1736,28 @@
       "total_agent_time_cap_minutes": 90,
       "total_agent_message_cap": 3,
       "agent_exec_orchestrations": 20
+    },
+    {
+      "task_name": "review_d03perf_0af0f71",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_recorded_runtime",
+      "scope_paths": [
+        "scripts/vnext/regulatory_fact_review.py",
+        "scripts/vnext/d03_recorded_response_store.py",
+        "tests/vnext/test_regulatory_fact_review.py",
+        "tests/vnext/test_d03_recorded_response_store.py",
+        "docs/evidence/issue28_continuous/d03-material-timing-20260927/"
+      ],
+      "patch_sha": "0af0f717333a82ab104440859564e17077020e69",
+      "spawned_at": "2026-09-27T05:24:32Z",
+      "ended_at": "2026-09-27T05:31:25Z",
+      "tool_calls": 27,
+      "result_path": "docs/evidence/issue28_continuous/d03-material-timing-20260927/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_HISTORICAL_MODULE_HASH_SWAP_FAIL_CLOSED_PERFORMANCE_CORE_CONFIRMED",
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3,
+      "agent_exec_orchestrations": 11
     }
   ],
   "ci_capacity_20260922": {
@@ -3943,7 +3965,7 @@
     "evidence": "docs/evidence/issue28_continuous/b13-claim-context-v7-20260927/README.md"
   },
   "d03_recorded_material_runtime_repair_20260927": {
-    "status": "LOCAL_FULL_REAL_SOURCE_MATERIAL_PASS_INDEPENDENT_REVIEW_PENDING_REMOTE_CI_PENDING",
+    "status": "LOCAL_PERFORMANCE_PASS_FIRST_REVIEW_NEEDS_FIX_HISTORICAL_PACKET_IDENTITY_FOLLOWUP_IN_PROGRESS_REMOTE_CI_PENDING",
     "trigger_head": "c009ec97b9ac229c8202d1bd001bd1ea366d0c7d",
     "trigger_main_ci_run_id": 36279090167,
     "trigger_selector": "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",
@@ -3966,7 +3988,19 @@
     "native_result_created": false,
     "new_real_calls": [0, 0, 0],
     "real_ledger_last_ordinal": 194,
-    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "independent_review": "NEEDS_FIX_HISTORICAL_MODULE_HASH_SWAP_REPLAY_CREATOR_IDENTITY_NOT_ESTABLISHED",
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-material-timing-20260927/independent-review/conclusion.md",
+    "review_followup": {
+      "status": "LOCAL_FULL_MATERIAL_AND_HISTORICAL_EXPECTED_ID_COLD_READ_PASS_EXACT_SHA_REVIEW_PENDING",
+      "historical_sha_only_for_exact_old_packet_id": "sha256:4bac51a935deadda11f456ba39f6976647fe2d5cd05fe194f89fbc7ef7ce02d6",
+      "optional_external_expected_packet_id": true,
+      "each_file_hashed_and_parsed_from_same_byte_read": true,
+      "new_store_module_sha256": "76c4a229092f6212b507bdb2545eaf3211c879d2e2589809d54441be77643281",
+      "complete_material_tests": "PASS_2_TESTS_78_737_SECONDS",
+      "old_packet_expected_id_cold_read": "PASS_NETWORK_AND_SUBPROCESS_FORBIDDEN",
+      "first_followup_test_failure_preserved": "NEGATIVE_WAS_BYTE_IDENTICAL_TO_EXACT_HISTORICAL_PACKET",
+      "independent_review": "PENDING_EXACT_FOLLOWUP_SHA"
+    },
     "evidence": "docs/evidence/issue28_continuous/d03-material-timing-20260927/README.md"
   }
 }
