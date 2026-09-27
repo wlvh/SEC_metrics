@@ -17,6 +17,7 @@ from pathlib import Path
 
 from sec_urls import accession_document_url
 from tests.vnext.common import REPO_ROOT as ROOT
+from tests.vnext.test_historical_part_iii_admission import without_the_owner_s_listing
 from vnext.annual_amendment_scope import POLICY, AmendmentScopeError, inspect_annual_amendment_scope
 from vnext.annual_update import saved_source
 from vnext.historical_amendment_admission import AmendmentAdmissionError, amendment_admission
@@ -212,8 +213,11 @@ class TheAdmissionAsksIt(unittest.TestCase):
                                      event_metric_ids=EVENTS)
         self.assertTrue(record["admitted"])
         self.assertEqual([a["classification"] for a in record["amendments"]], [PART_III_CLASS])
+        # The policy's own answer; the owner's per-filing listing, which admits
+        # this period's statement values since 2026-09-27, is not asked here.
         with self.assertRaisesRegex(AmendmentAdmissionError,
-                                    "ORIGINAL_STATEMENT_VALUES:" + PART_III_CLASS):
+                                    "ORIGINAL_STATEMENT_VALUES:" + PART_III_CLASS), \
+                without_the_owner_s_listing():
             amendment_admission(repo_root=ROOT, company_id=PARAMOUNT, metric_ids=["B01"],
                                 prepared=prepared, event_metric_ids=EVENTS)
 

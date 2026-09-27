@@ -142,10 +142,16 @@ class HistoricalSourceAcquisitionTest(unittest.TestCase):
         self.assertIn("SAVED_SOURCE_MISSING", declared["limitations"][0]["reason"])
 
     def test_there_is_no_allowance_and_the_refusal_says_what_is_missing(self):
-        """A number in a document is not an ask; a described object is."""
-        self.assertFalse((ROOT / POLICY_PATH).exists())
-        with self.assertRaises(HistoricalAcquisitionError) as refused:
-            acquisition_allowance(repo_root=ROOT)
+        """A number in a document is not an ask; a described object is.
+
+        Asked of a tree that has no allowance, not of this checkout. The
+        previous version asserted that the checkout had none, which stops
+        being true the day the owner registers the approval and commits it -
+        a case that fails because the grant arrived tests the calendar.
+        """
+        with TemporaryDirectory(prefix="issue47-no-allowance-") as empty:
+            with self.assertRaises(HistoricalAcquisitionError) as refused:
+                acquisition_allowance(repo_root=Path(empty))
         reason = str(refused.exception)
         self.assertTrue(reason.startswith("ISSUE_47_SEC_ALLOWANCE_NOT_GRANTED:"))
         self.assertIn(POLICY_PATH, reason)

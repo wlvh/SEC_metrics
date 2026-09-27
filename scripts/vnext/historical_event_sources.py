@@ -79,7 +79,6 @@ def _pinned_period(*, repo_root, cik, candidate):
     start date comes from the document's own DEI context and not from the
     submissions row's report date.
     """
-    from .annual_update import saved_source
     from .normal_annual_input import annual_period
     filing = candidate["current_filing"]
     if filing is None:
@@ -87,9 +86,9 @@ def _pinned_period(*, repo_root, cik, candidate):
     accession = filing["accessionNumber"]
     url = accession_document_url(cik=int(cik), accession=accession,
                                  document_name=filing["primaryDocument"])
-    item = saved_source(repo_root=repo_root, url=url, accession=accession)
+    item, reason = _read_saved(repo_root=repo_root, url=url, accession=accession)
     if item is None:
-        return None, "SAVED_SOURCE_MISSING:" + url
+        return None, reason + ":" + url
     return annual_period(raw=item["raw"], cik=int(cik), filing=filing), None
 
 
@@ -150,9 +149,30 @@ def _filing_rows(*, cik, filing, consumers):
     ]
 
 
-def _read_saved(*, repo_root, url):
-    from .annual_update import saved_source
-    return saved_source(repo_root=repo_root, url=url, accession="")
+FAILED_LATEST = "LATEST_SOURCE_REQUEST_FAILED"
+
+
+def _read_saved(*, repo_root, url, accession=""):
+    """A saved source, or why there is none: never saved, or last fetch failed.
+
+    ``saved_source`` refuses a URL whose latest request failed, which is right
+    for a reader - an earlier success must not hide a later failure - but a
+    declaration that let that refusal escape crashed the whole frame. Measured:
+    a recorded acquisition answered a Marriott annual primary with a 404, and
+    the next pass's frame raised at that period instead of declaring the rest.
+    A failed fetch is a hole in this period's declaration, as an unsaved file
+    is, and it is reported as one with its own reason; any other refusal from
+    the reader still propagates, because it says something is wrong with what
+    is saved rather than that something is missing.
+    """
+    from .annual_update import AnnualUpdateError, saved_source
+    try:
+        item = saved_source(repo_root=repo_root, url=url, accession=accession)
+    except AnnualUpdateError as refusal:
+        if not str(refusal).startswith(FAILED_LATEST):
+            raise
+        return None, FAILED_LATEST
+    return (item, None) if item is not None else (None, "SAVED_SOURCE_MISSING")
 
 
 def event_filings(*, repo_root, cik, window):
@@ -163,10 +183,10 @@ def event_filings(*, repo_root, cik, window):
     "no filings there": it is a hole, and reporting it as an empty stretch is
     how a declaration silently shrinks.
     """
-    index = _read_saved(repo_root=repo_root, url=submissions_url(cik=int(cik)))
+    index, reason = _read_saved(repo_root=repo_root, url=submissions_url(cik=int(cik)))
     if index is None:
         return {"filings": [], "inventory_names": [], "unreadable": [
-            {"name": None, "reason": "SAVED_SOURCE_MISSING",
+            {"name": None, "reason": reason,
              "source_url": submissions_url(cik=int(cik))}]}
     payload = strict_json_loads(text=index["raw"].decode("utf-8"))
     found, names, unreadable = [], [None], []
@@ -174,10 +194,10 @@ def event_filings(*, repo_root, cik, window):
     for shard in _history_index(payload, str(cik)):
         if shard["filingFrom"] > window["period_end"] or shard["filingTo"] < window["period_start"]:
             continue
-        item = _read_saved(repo_root=repo_root,
-                           url=submissions_file_url(file_name=shard["name"]))
+        item, reason = _read_saved(repo_root=repo_root,
+                                   url=submissions_file_url(file_name=shard["name"]))
         if item is None:
-            unreadable.append({"name": shard["name"], "reason": "SAVED_SOURCE_MISSING",
+            unreadable.append({"name": shard["name"], "reason": reason,
                                "source_url": submissions_file_url(file_name=shard["name"])})
             continue
         sources.append((shard["name"], strict_json_loads(text=item["raw"].decode("utf-8"))))
@@ -244,6 +264,7 @@ def declare_event_sources(*, repo_root: Path, company_id: str, count: int = 5,
                                            consumers=consumers), "cik": str(cik)})
                 limitations.append({"report_date": label, "cik": str(cik),
                                     "kind": "EVENT_SUBMISSIONS_BLOCK_NOT_SAVED",
+                                    "reason": item["reason"],
                                     "source_url": item["source_url"],
                                     "history_name": item["name"]})
             for filing in found["filings"]:

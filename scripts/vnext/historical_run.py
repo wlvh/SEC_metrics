@@ -351,7 +351,23 @@ def replay_case(*, data_root, manifest, spec=None, binding_id=None, company_id=N
             # routes instead of a second hunk in a file fourteen generations
             # bind by bytes.
             "input_binding": {"component": rebuilt.get("component", {})},
+            # The same adapter for the approved comparability limit: run_store
+            # recognises a NOT_MEANINGFUL ENTITY_CONTINUITY_NOT_COMPARABLE result
+            # by the case's "selection", read the way the ordinary case reads
+            # it - the primary metric's selection from the component. Without
+            # it the limit could not be frozen at all; it had never been
+            # reached, because the successor's year was refused by the Part III
+            # policy until the owner admitted it on 2026-09-27.
+            "selection": _primary_selection(rebuilt),
             "observations": observations}
+
+
+def _primary_selection(rebuilt):
+    """The primary metric's selection, as ``normal_run_v3.replay_case`` derives it."""
+    detail = rebuilt.get("component") or {}
+    if "metrics" in detail:
+        detail = detail["metrics"].get(rebuilt["primary_metric_id"]) or {}
+    return detail.get("selection", detail.get("inspection"))
 
 
 def prepare_text_contexts(*, repo_root, manifest, records, compiled_specs, **unused):

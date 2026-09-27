@@ -71,7 +71,9 @@ def fixture_tree(directory, *, policy_overrides=None, body_overrides=None, comme
     text = json.dumps(body, sort_keys=True)
     comment = {"id": 1000000001, "html_url": URL,
                "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
-               "user": {"login": "wlvh"}, "body": text, **(comment_overrides or {})}
+               "user": {"login": "wlvh"}, "body": text,
+               "created_at": "2026-09-27T00:00:00Z", "updated_at": "2026-09-27T00:00:00Z",
+               **(comment_overrides or {})}
     policy["delegation_body_sha256"] = digest or sha256_bytes(content=text.encode("utf-8"))
     (root / Path(RECORD).parent).mkdir(parents=True, exist_ok=True)
     (root / RECORD).write_text(json.dumps(comment), encoding="utf-8")

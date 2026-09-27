@@ -11,6 +11,7 @@ from pathlib import Path
 import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
+from tests.vnext.test_historical_part_iii_admission import without_the_owner_s_listing
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
 from vnext.canonical import content_hash
 from vnext.historical_annual_input import prepare_historical_annual_input
@@ -748,8 +749,11 @@ class SuccessorRegistrantCompanyfactsTest(unittest.TestCase):
     def setUpClass(cls):
         cls.selection = resolve_period_selection(repo_root=ROOT, company_id=PARAMOUNT,
                                                  report_end=PARAMOUNT_FY2025_END)
-        cls.resolved = resolve_historical_companyfacts_metrics(
-            repo_root=ROOT, company_id=PARAMOUNT, period_selection=cls.selection)
+        # The policy's own answer: asked without the owner's per-filing
+        # listing, which since 2026-09-27 admits this period.
+        with without_the_owner_s_listing():
+            cls.resolved = resolve_historical_companyfacts_metrics(
+                repo_root=ROOT, company_id=PARAMOUNT, period_selection=cls.selection)
 
     @staticmethod
     def _answers(bundle):
@@ -783,19 +787,16 @@ class SuccessorRegistrantCompanyfactsTest(unittest.TestCase):
                 self.assertIn("ORIGINAL_STATEMENT_VALUES",
                               value["selection"]["amendment_policy_decision"])
 
-    def test_with_the_policy_question_set_aside_the_answers_are_the_ordinary_ones(self):
+    def test_with_the_owner_s_admission_the_answers_are_the_ordinary_ones(self):
         # Load-bearing. A port that invented its own successor treatment would
         # pass every other case here and fail this one: all eleven answers,
         # including two exact values, must equal what the ordinary chain says
-        # about this registrant. The stand-down is confined to this process and
-        # returns a probe-marked record; no policy file is touched.
-        from unittest.mock import patch
+        # about this registrant. This used to stand the policy question down in
+        # a probe; since the owner's per-filing admission of this amendment
+        # (2026-09-27) no stand-down is needed, so the route is asked as it runs.
         from vnext.normal_companyfacts_results import resolve_ordinary_companyfacts_metrics
-        probe = {"record_type": "PROBE_ONLY_AMENDMENT_ADMISSION", "admitted": True}
-        with patch("vnext.historical_amendment_admission.amendment_admission",
-                   return_value=probe):
-            historical = resolve_historical_companyfacts_metrics(
-                repo_root=ROOT, company_id=PARAMOUNT, period_selection=self.selection)
+        historical = resolve_historical_companyfacts_metrics(
+            repo_root=ROOT, company_id=PARAMOUNT, period_selection=self.selection)
         ordinary = resolve_ordinary_companyfacts_metrics(repo_root=ROOT, company_id=PARAMOUNT)
         self.assertEqual(self._answers(ordinary), self._answers(historical))
         values = [key for key, answer in self._answers(historical).items()

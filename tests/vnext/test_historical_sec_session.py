@@ -33,6 +33,7 @@ import unittest
 from vnext.canonical import content_hash, strict_json_file
 from vnext.continuous_sec_acquisition import validate_acquisition_checkpoint
 from vnext.annual_update import saved_source
+from vnext.historical_sec_session import HistoricalCallLedger as SESSION_LEDGER
 from vnext.historical_sec_session import (HistoricalSessionError,
                                           install_historical_source_inputs,
                                           live_historical_session,
@@ -161,8 +162,34 @@ class _Chain:
     @classmethod
     def copy(cls, destination):
         cls.build()
-        shutil.copytree(cls.root / "ledger", destination)
+        _copy_ledger(cls.root / "ledger", destination)
         return destination
+
+
+def _rewrite_log_row(log, index, row):
+    """Replace one request-log row, keeping the file's own header and line ends."""
+    import csv
+    import io
+    from sec_http import REQUEST_LOG_FIELDNAMES
+    text = log.read_text(encoding="utf-8")
+    rows = list(csv.DictReader(io.StringIO(text)))
+    rows[index] = row
+    out = io.StringIO()
+    writer = csv.DictWriter(out, fieldnames=REQUEST_LOG_FIELDNAMES,
+                            lineterminator="\r\n" if "\r\n" in text else "\n")
+    writer.writeheader()
+    writer.writerows(rows)
+    log.write_text(out.getvalue(), encoding="utf-8")
+
+
+def _copy_ledger(source, destination):
+    """A ledger and its initialization anchor, which lives beside it.
+
+    Copying only the directory leaves the anchor behind, and a ledger with a
+    binding and no anchor is refused as one whose anchor was removed.
+    """
+    shutil.copytree(source, destination)
+    shutil.copyfile(SESSION_LEDGER.anchor_path(source), SESSION_LEDGER.anchor_path(destination))
 
 
 class TheChainProducesASourceTheExistingReaderAccepts(unittest.TestCase):
@@ -379,11 +406,16 @@ class TheCountIsCumulativeAndCountsFailures(unittest.TestCase):
 class TheGrantedPathIsSeparateFromTheTestPath(unittest.TestCase):
     """Recorded work must not be able to write where a grant is counted."""
 
-    def test_live_refuses_while_issue_47_has_no_allowance_of_its_own(self):
-        self.assertFalse((ROOT / POLICY_PATH).exists(),
-                         "this case describes the current state; update it with the grant")
-        with self.assertRaises(HistoricalAcquisitionError) as caught:
-            live_historical_session()
+    def test_live_refuses_where_no_allowance_is_registered(self):
+        # Asked of a tree without an allowance rather than of this checkout,
+        # which will hold one once the owner registers the approval. The
+        # refusal must come from the gate, before any transport exists.
+        with tempfile.TemporaryDirectory(prefix="issue47-no-grant-") as empty:
+            with patch("vnext.historical_sec_session.ROOT", Path(empty)), \
+                    patch("vnext.historical_sec_session.SecHttpClient",
+                          side_effect=AssertionError("a transport was built")):
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    live_historical_session()
         self.assertIn("ISSUE_47_SEC_ALLOWANCE_NOT_GRANTED", str(caught.exception))
         self.assertIn(POLICY_PATH, str(caught.exception))
 
@@ -620,7 +652,8 @@ def _grant_tree(*, scope_overrides=None, body_overrides=None, digest=None, url=N
     login = approver or repository.split("/")[0]
     comment = {"html_url": comment_url, "body": body, "id": 1,
                "issue_url": "https://api.github.com/repos/" + repository + "/issues/47",
-               "user": {"login": login}}
+               "user": {"login": login}, "created_at": "2026-09-27T00:00:00Z",
+               "updated_at": "2026-09-27T00:00:00Z"}
     (root / "docs").mkdir(parents=True)
     (root / "docs/delegation.json").write_text(json.dumps(comment), encoding="utf-8")
     (root / "config").mkdir(parents=True)
@@ -773,10 +806,20 @@ class ATerminalFileIsNotAnOutcome(unittest.TestCase):
                   if k not in {"terminal_id", "status", "stop_reason"}}
         failed.update({"status": "FAILED_TERMINAL", "stop_reason": ""})
 
-        def both(slot):
+        def all_three(ledger):
+            # The logged row is the third record, and the one nothing in the
+            # slot can rewrite for itself. A known failure is a row that
+            # records one, so the row changes too and the receipt carries the
+            # changed row, exactly as the SEC client would have written it.
+            slot = ledger / "calls/0001"
             receipt = strict_json_file(path=slot / "sec-receipt.json")
+            log = ledger / "source-inputs/evidence/requests_log.csv"
+            index = receipt["ledger_row_index"]
+            row = {**receipt["ledger_row"], "status_code": "404",
+                   "error": "HTTP Error 404: Not Found"}
+            _rewrite_log_row(log, index, row)
             changed = {k: v for k, v in receipt.items() if k != "receipt_id"}
-            changed["status"] = "FAILED_TERMINAL"
+            changed.update({"status": "FAILED_TERMINAL", "ledger_row": row})
             resealed = _seal(changed, "receipt_id")
             (slot / "sec-receipt.json").write_text(json.dumps(resealed), encoding="utf-8")
             bound = {**failed, "sec_receipt_id": resealed["receipt_id"]}
@@ -784,9 +827,32 @@ class ATerminalFileIsNotAnOutcome(unittest.TestCase):
                 json.dumps(_seal(bound, "terminal_id")), encoding="utf-8")
 
         ledger = _Chain.copy(self.root / "known-failure")
-        both(ledger / "calls/0001")
+        all_three(ledger)
         session = recorded_historical_session(root=ledger, response=BODY)
         session.ledger.require_unblocked()
+
+    def test_a_failure_written_only_into_the_slot_is_not_a_known_failure(self):
+        # The previous form of the case above: receipt and terminal say the
+        # request failed while the row the client logged says it succeeded.
+        # Resolving that would let a slot's own records overrule the log.
+        sealed = strict_json_file(path=_Chain.root / "ledger/calls/0001/terminal.json")
+        failed = {k: v for k, v in sealed.items()
+                  if k not in {"terminal_id", "status", "stop_reason"}}
+        failed.update({"status": "FAILED_TERMINAL", "stop_reason": ""})
+        ledger = _Chain.copy(self.root / "slot-only-failure")
+        slot = ledger / "calls/0001"
+        receipt = strict_json_file(path=slot / "sec-receipt.json")
+        changed = {k: v for k, v in receipt.items() if k != "receipt_id"}
+        changed["status"] = "FAILED_TERMINAL"
+        resealed = _seal(changed, "receipt_id")
+        (slot / "sec-receipt.json").write_text(json.dumps(resealed), encoding="utf-8")
+        (slot / "terminal.json").write_text(json.dumps(_seal(
+            {**failed, "sec_receipt_id": resealed["receipt_id"]}, "terminal_id")),
+            encoding="utf-8")
+        session = recorded_historical_session(root=ledger, response=BODY)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            session.ledger.require_unblocked()
+        self.assertIn("TERMINAL_DISAGREES_WITH_THE_LOGGED_ROW:SUCCEEDED", str(caught.exception))
 
     def test_a_sealed_unknown_outcome_does_not_resolve_it(self):
         sealed = strict_json_file(
@@ -1065,11 +1131,22 @@ class TheApprovalIsReadGrantByGrant(unittest.TestCase):
         from vnext.normal_source_authority import ROOT as CHECKOUT
         issue_28 = json.loads((CHECKOUT / "config/issue28_continuous_calls_v1.json")
                               .read_text(encoding="utf-8"))["budget_root"]
+        # The last four are the spellings an independent review had accepted
+        # when the comparison was of strings: a leading "//", a symlink, a
+        # case variant (one directory on a case-insensitive filesystem) and an
+        # ancestor of the checkout.
+        aliases = Path(tempfile.mkdtemp(prefix="issue47-alias-"))
+        self.addCleanup(shutil.rmtree, aliases, ignore_errors=True)
+        (aliases / "to-28").symlink_to(issue_28)
         for root, reason in ((issue_28, "ISSUE_47_BUDGET_ROOT_OVERLAPS_ISSUE_28_S"),
                              (issue_28 + "/issue47", "ISSUE_47_BUDGET_ROOT_OVERLAPS_ISSUE_28_S"),
                              ("ledger/issue47", "ISSUE_47_BUDGET_ROOT_NOT_AN_ABSOLUTE_PATH"),
                              ("/tmp/a/../b", "ISSUE_47_BUDGET_ROOT_NOT_AN_ABSOLUTE_PATH"),
-                             (str(CHECKOUT / "ledger"), "ISSUE_47_BUDGET_ROOT_INSIDE_THE_CHECKOUT")):
+                             (str(CHECKOUT / "ledger"), "ISSUE_47_BUDGET_ROOT_INSIDE_THE_CHECKOUT"),
+                             ("/" + issue_28, "ISSUE_47_BUDGET_ROOT_NOT_AN_ABSOLUTE_PATH"),
+                             (str(aliases / "to-28"), "ISSUE_47_BUDGET_ROOT_OVERLAPS_ISSUE_28_S"),
+                             (issue_28.upper(), "ISSUE_47_BUDGET_ROOT_OVERLAPS_ISSUE_28_S"),
+                             (str(CHECKOUT.parent), "ISSUE_47_BUDGET_ROOT_CONTAINS_THE_CHECKOUT")):
             with self.subTest(root):
                 with self.assertRaises(HistoricalAcquisitionError) as caught:
                     _typed_budget_root(root)
@@ -1126,7 +1203,8 @@ class AGrantMustComeFromAnApprovalNotFromTwoLocalFiles(unittest.TestCase):
         acquisition_allowance(repo_root=root)  # consistent on its own
         elsewhere = {"html_url": json.loads((root / POLICY_PATH).read_text())["delegation_url"],
                      "id": 1, "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
-                     "user": {"login": "wlvh"}, "body": '{"record_type": "SOMETHING_ELSE"}'}
+                     "user": {"login": "wlvh"}, "body": '{"record_type": "SOMETHING_ELSE"}',
+                     "created_at": "2026-09-27T00:00:00Z", "updated_at": "2026-09-27T00:00:00Z"}
         with self.assertRaises(HistoricalAcquisitionError) as caught:
             acquisition_allowance(repo_root=root, delegation_reader=lambda path: elsewhere)
         self.assertIn("ISSUE_47_SAVED_DELEGATION_DIFFERS_FROM_THE_ONE_ON_GITHUB",
@@ -2090,3 +2168,731 @@ class ARecordedBodyMustBeTheOneAskedFor(unittest.TestCase):
         session = recorded_historical_session(root=self.root / "bytes", response=BODY)
         result = session.capture(company_id="marriott_international", url=DECLARED)
         self.assertEqual("SUCCEEDED", result["status"])
+
+
+# ---------------------------------------------------------------------------
+# Batch acquisition, export and approval registration.
+# ---------------------------------------------------------------------------
+
+from vnext import historical_sec_session as SESSION_MODULE  # noqa: E402
+from vnext import historical_source_export as EXPORT_MODULE  # noqa: E402
+from vnext.historical_source_acquisition import (APPROVED_BODY_PATH,  # noqa: E402
+                                                 APPROVED_BODY_SHA256,
+                                                 register_approval)
+
+_SCRIPTED_COMPANY = "marriott_international"
+
+
+def _scripted_row(url, dependency_class, due=True, consumers=("period:2024-12-31:B02",)):
+    return {"source_url": url, "dependency_class": dependency_class,
+            "new_acquisition_required": due, "consumers": list(consumers),
+            "media_type": "text/html", "accession": "", "acquisition_kind": "FIRST_ACQUISITION"}
+
+
+_BASE = "https://www.sec.gov/Archives/edgar/data/1048286/"
+_INDEX = "https://data.sec.gov/submissions/CIK0001048286.json"
+_SHARDS = ["https://data.sec.gov/submissions/CIK0001048286-submissions-001.json",
+           "https://data.sec.gov/submissions/CIK0001048286-submissions-002.json"]
+_OTHER = [_BASE + "000000000000000001/a.htm", _BASE + "000000000000000002/b.htm",
+          _BASE + "000000000000000003/c.htm"]
+
+
+class _ScriptedPasses:
+    """A real ledger under scripted frames and a scripted transport.
+
+    Only the pass logic is under test here - which rows a pass takes, in what
+    order, and when it stops - so the frame and the fetch are scripted and the
+    ledger's claim, terminal and block rules are the real ones. The real chain
+    has its own cases below.
+    """
+
+    def __init__(self, test, frames, statuses=None, **session_kwargs):
+        root = Path(tempfile.mkdtemp(prefix="issue47-passes-"))
+        test.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        self.root = root / "ledger"
+        self.session_kwargs = session_kwargs
+        self.frames = [rows if isinstance(rows, Exception) else
+                       dict(requirements=rows, target_report_dates=["2024-12-31"],
+                            company_id=_SCRIPTED_COMPANY) for rows in frames]
+        self.statuses = statuses or {}
+        self.fetched = []
+        self.frame_calls = 0
+        scripted = self
+        test_case = test
+
+        def frame(**kwargs):
+            scripted.frame_calls += 1
+            if isinstance(scripted.frames[0], Exception):
+                raise scripted.frames.pop(0)
+            chosen = scripted.frames.pop(0) if len(scripted.frames) > 1 else scripted.frames[0]
+            return copy.deepcopy(chosen)
+
+        def capture_one(session, *, company_id, url, dependency, admitted):
+            code = scripted.statuses.get(url, "200")
+            request = {"url": url}
+            plan = {"request": request, "scope_admission": admitted}
+            path, intent = session.ledger.claim(channel="SEC",
+                                                request_digest=content_hash(value=request),
+                                                plan_id=content_hash(value=plan),
+                                                purpose=admitted["purpose"])
+            (path / "sec-plan.json").write_text(json.dumps(plan), encoding="utf-8")
+            scripted.fetched.append(url)
+            status = ("SUCCEEDED" if code == "200" else
+                      "UNKNOWN_REMOTE_OUTCOME" if code == "0" else "FAILED_TERMINAL")
+            receipt = _seal({"intent_id": intent["intent_id"], "status": status,
+                             "stop_reason": "UNKNOWN_REMOTE_OUTCOME" if code == "0" else "",
+                             "execution_mode": session.ledger.mode,
+                             "ledger_row": {"status_code": code}}, "receipt_id")
+            (path / "sec-receipt.json").write_text(json.dumps(receipt), encoding="utf-8")
+            terminal = session.ledger.finish(path=path, intent=intent, receipt=receipt)
+            return receipt, terminal
+
+        for target, replacement in (
+                ("declared_frame", frame),
+                ("install_historical_source_inputs", lambda **kwargs: None)):
+            patcher = patch.object(SESSION_MODULE, target, replacement)
+            patcher.start()
+            test_case.addCleanup(patcher.stop)
+        # The scripted transport writes no request log, so there is no row to
+        # compare a receipt with; the real chain's cases compare them.
+        patcher = patch.object(SESSION_MODULE.HistoricalCallLedger, "_log_rows",
+                               lambda ledger: None)
+        patcher.start()
+        test_case.addCleanup(patcher.stop)
+        for name, replacement in (
+                ("_capture_one", capture_one),
+                ("_register_if_unregistered", lambda session: None),
+                ("register_checkpoint", lambda session: {"checkpoint_id": "sha256:scripted",
+                                                         "ledger_sha256": "scripted"})):
+            patcher = patch.object(SESSION_MODULE.HistoricalSecSession, name, replacement)
+            patcher.start()
+            test_case.addCleanup(patcher.stop)
+
+    def session(self):
+        return recorded_historical_session(root=self.root, response=BODY,
+                                           **self.session_kwargs)
+
+
+class APassTakesOneTierAndNeverClaimsAUrlTwice(unittest.TestCase):
+    """The batch path keeps every per-request rule and adds only the ordering.
+
+    ``capture`` recomputed the frame and replayed the checkpoint for every
+    request - 22 to 30 seconds each, growing - so a batch path was needed. The
+    risk in a batch path is that it quietly drops a rule the single capture
+    enforced; these cases hold it to the ones that matter: the submissions
+    index and shards first, because they change what the frame declares; no
+    URL claimed twice, because zero retries is the rule; and every stop by
+    name.
+    """
+
+    def test_the_index_then_the_shards_then_the_rest_each_in_its_own_pass(self):
+        index = _scripted_row(_INDEX, "SUBMISSIONS_INDEX", consumers=["historical_catalog"])
+        shards = [_scripted_row(url, "SUBMISSIONS_HISTORY", consumers=["historical_catalog"])
+                  for url in _SHARDS]
+        others = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER[:2]]
+        done = lambda row: {**row, "new_acquisition_required": False}  # noqa: E731
+        scripted = _ScriptedPasses(self, frames=[
+            [index, *shards, *others],
+            [done(index), *shards, *others],
+            [done(index), *map(done, shards), *others],
+            [done(index), *map(done, shards), *map(done, others)]])
+        summary = scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual([_INDEX, *_SHARDS, *_OTHER[:2]], scripted.fetched,
+                         "the index alone, then both shards together, then the rest")
+        self.assertEqual(4, summary["companies"][_SCRIPTED_COMPANY]["passes"])
+        self.assertIsNone(summary["stop"])
+
+    def test_a_failed_url_is_reported_and_not_claimed_again(self):
+        a, b = (_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER[:2])
+        scripted = _ScriptedPasses(self, frames=[[a, b]], statuses={_OTHER[0]: "404"})
+        summary = scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual([_OTHER[0], _OTHER[1]], scripted.fetched)
+        company = summary["companies"][_SCRIPTED_COMPANY]
+        self.assertEqual(2, company["passes"], "the second pass found nothing it may claim")
+        self.assertEqual([_OTHER[0], _OTHER[1]],
+                         sorted(item["source_url"] for item in company["already_claimed"]))
+        # A later invocation reads the claims from the ledger, not from memory.
+        later = scripted.session()
+        later.acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual(2, len(scripted.fetched), "a new session did not retry either")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            later.capture(company_id=_SCRIPTED_COMPANY, url=_OTHER[0])
+        self.assertIn("ISSUE_47_URL_ALREADY_CLAIMED_IN_THIS_LEDGER", str(caught.exception))
+
+    def test_an_sec_access_refusal_stops_everything_by_name(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER]
+        scripted = _ScriptedPasses(self, frames=[rows], statuses={_OTHER[1]: "429"})
+        summary = scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY,
+                                                          "ford_motor_company"])
+        self.assertEqual(_OTHER[:2], scripted.fetched)
+        self.assertEqual({"company_id": _SCRIPTED_COMPANY, "reason": "SEC_ACCESS_REFUSED:429"},
+                         summary["stop"])
+        self.assertNotIn("ford_motor_company", summary["companies"],
+                         "a fair-access refusal is not about one company")
+
+    def test_the_cap_stops_before_the_next_socket(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER]
+        scripted = _ScriptedPasses(self, frames=[rows], limits=(0, 0, 2))
+        session = scripted.session()
+        summary = session.acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual(_OTHER[:2], scripted.fetched, "the third was never sent")
+        self.assertTrue(summary["stop"]["reason"].startswith("ISSUE_47_CUMULATIVE_LIMIT_REACHED"))
+        self.assertEqual([0, 0, 2], session.ledger.snapshot()["counts"])
+
+    def test_an_unknown_outcome_stops_and_blocks_the_next_claim(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER]
+        scripted = _ScriptedPasses(self, frames=[rows], statuses={_OTHER[1]: "0"})
+        summary = scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual(_OTHER[:2], scripted.fetched)
+        self.assertEqual("UNKNOWN_REMOTE_OUTCOME", summary["stop"]["reason"])
+        self.assertTrue(summary["cumulative"]["blocked"])
+        with self.assertRaises(HistoricalSessionError) as caught:
+            scripted.session().capture_pending(company_id=_SCRIPTED_COMPANY)
+        self.assertIn("ISSUE_47_UNRESOLVED_TERMINAL_BLOCKS_THE_CHANNEL", str(caught.exception))
+
+    def test_a_row_outside_every_grant_is_listed_and_never_claimed(self):
+        inside = _scripted_row(_OTHER[0], "ACCESSION_INSTANCE_DISCOVERY")
+        outside = _scripted_row(_OTHER[1], "FISCAL_EVENT_FILING")
+        scripted = _ScriptedPasses(self, frames=[[inside, outside]],
+                                   dependency_classes=("ACCESSION_INSTANCE_DISCOVERY",))
+        summary = scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY])
+        self.assertEqual([_OTHER[0]], scripted.fetched)
+        listed = summary["companies"][_SCRIPTED_COMPANY]["outside_grants"]
+        self.assertEqual([_OTHER[1]], [item["source_url"] for item in listed])
+        self.assertIn("ISSUE_47_DEPENDENCY_CLASS_NOT_IN_SCOPE", listed[0]["reason"])
+
+    def test_max_captures_ends_the_invocation_by_name(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER]
+        scripted = _ScriptedPasses(self, frames=[rows])
+        summary = scripted.session().acquire(company_ids=[_SCRIPTED_COMPANY], max_captures=1)
+        self.assertEqual(_OTHER[:1], scripted.fetched)
+        self.assertEqual("MAX_CAPTURES_FOR_THIS_INVOCATION", summary["stop"]["reason"])
+
+    def test_a_planner_failure_is_reported_and_the_next_company_goes_ahead(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER[:1]]
+        scripted = _ScriptedPasses(self, frames=[RuntimeError("frame failed"), rows])
+        summary = scripted.session().acquire(company_ids=["ford_motor_company",
+                                                          _SCRIPTED_COMPANY])
+        self.assertEqual("RuntimeError",
+                         summary["companies"]["ford_motor_company"]["error"]["error_type"])
+        self.assertIsNone(summary["stop"], "a planner failure before any claim is not a stop")
+        self.assertEqual(_OTHER[:1], scripted.fetched)
+
+    def test_a_url_declared_twice_in_one_frame_is_refused(self):
+        row = _scripted_row(_OTHER[0], "ANNUAL_PERIOD_IDENTITY")
+        scripted = _ScriptedPasses(self, frames=[[row, dict(row)]])
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            scripted.session().capture_pending(company_id=_SCRIPTED_COMPANY)
+        self.assertIn("HISTORICAL_URL_IS_DECLARED_MORE_THAN_ONCE", str(caught.exception))
+        self.assertEqual([], scripted.fetched)
+
+
+class TheRealChainReachesAFixpointWithoutRetrying(unittest.TestCase):
+    """The batch path over the real planner, gate, ledger and frozen replay.
+
+    Every response is a 404, which exercises the one thing a recorded body
+    cannot: what the next pass's frame does with a period whose annual primary
+    was just fetched and failed. Measured before this case existed: the event
+    declaration let the reader's ``LATEST_SOURCE_REQUEST_FAILED`` escape and
+    the whole frame raised, so the second pass of a real acquisition would have
+    stopped at the first failed primary.
+    """
+
+    def test_every_due_url_is_claimed_once_and_the_second_pass_takes_nothing(self):
+        root = Path(tempfile.mkdtemp(prefix="issue47-fixpoint-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        due = sorted(row["source_url"] for row in _rows(_SCRIPTED_COMPANY)
+                     if row["new_acquisition_required"])
+        session = recorded_historical_session(root=root / "ledger", response=b"missing",
+                                              status=404)
+        summary = session.acquire(company_ids=[_SCRIPTED_COMPANY])
+        company = summary["companies"][_SCRIPTED_COMPANY]
+        self.assertIsNone(summary["stop"])
+        self.assertIsNone(company["error"])
+        self.assertEqual(2, company["passes"])
+        claimed = sorted(item["source_url"] for item in company["captured"])
+        self.assertEqual(due, claimed, "each due URL exactly once")
+        self.assertEqual(due, sorted(item["source_url"] for item in company["already_claimed"]))
+        self.assertEqual([0, 0, len(due)], summary["cumulative"]["counts"])
+        self.assertEqual(["checkpoint_id"], [item["when"] for item in summary["checkpoints"]],
+                         "registered once, after the pass that captured")
+        ledger = hashlib.sha256((session.data_root / "evidence/requests_log.csv")
+                                .read_bytes()).hexdigest()
+        checkpoint = strict_json_file(path=ROOT / ".git/ordinary-source-authority/acquired"
+                                      / (ledger + ".json"))
+        self.assertEqual(summary["checkpoints"][0]["checkpoint_id"], checkpoint["checkpoint_id"])
+        validate_acquisition_checkpoint(session.data_root, checkpoint,
+                                        strict_json_file(path=ROOT / MANIFEST_PATH))
+
+
+class _FakeResponse:
+    def __init__(self, body, status):
+        self.body, self.status = body, status
+        self.headers = {"Content-Type": "text/html"}
+
+    def read(self):
+        return self.body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+
+class ALiveCaptureIsOneRequestAndItsCheckpointReplays(unittest.TestCase):
+    """The LIVE branch, with the network replaced and nothing else.
+
+    Every other case runs the recorded branch, which persists a body directly.
+    The owner's run takes the other one - ``SecHttpClient.fetch`` - and a LIVE
+    checkpoint is a different record (``real_sec_credit`` true). If either did
+    not satisfy the frozen replay, the first sign would be a refusal after real
+    requests had been spent. So the LIVE branch runs here over a replaced
+    ``urlopen``, with the checkpoint journal redirected so that no LIVE record
+    about a stub reaches the real one.
+    """
+
+    def test_one_request_per_url_no_retry_and_the_frozen_replay_accepts_it(self):
+        import urllib.error
+        from email.message import Message
+        import sec_http
+        root = Path(tempfile.mkdtemp(prefix="issue47-live-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        rows = [row for row in _rows(_SCRIPTED_COMPANY)
+                if row["new_acquisition_required"]
+                and row["dependency_class"] == "ACCESSION_INSTANCE_DISCOVERY"][:2]
+        self.assertEqual(2, len(rows))
+        opened = []
+
+        def fake_urlopen(request, timeout):
+            opened.append(request.full_url)
+            if request.full_url == rows[1]["source_url"]:
+                raise urllib.error.HTTPError(request.full_url, 503, "busy", Message(),
+                                             __import__("io").BytesIO(b"busy"))
+            return _FakeResponse(BODY, 200)
+
+        scope = {"purposes": ["ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"],
+                 "company_ids": [_SCRIPTED_COMPANY],
+                 "dependency_classes": ["ACCESSION_INSTANCE_DISCOVERY"],
+                 "earliest_report_end": "2021-12-31", "latest_report_end": "2026-01-31"}
+        scope["grants"] = [_whole_envelope(scope)]
+        allowance = {"requirement_id": "issue_47_v1", "budget_root": str(root / "ledger"),
+                     "maximum_additional_provider_paid_sec_calls": [0, 0, 5], "scope": scope}
+        ledger = SESSION_MODULE._allowance_ledger(allowance=allowance, root=root / "ledger",
+                                                  live=True)
+        session = SESSION_MODULE.HistoricalSecSession(factory=SESSION_MODULE._FACTORY,
+                                                      allowance=allowance, ledger=ledger)
+        journal = root / "journal"
+        paced = []
+        real_pace = sec_http.SecHttpClient._pace_request
+
+        def pace(client):
+            paced.append(id(client))
+            return real_pace(client)
+
+        frame = {"requirements": copy.deepcopy(rows), "company_id": _SCRIPTED_COMPANY,
+                 "target_report_dates": ["2021-12-31", "2022-12-31", "2023-12-31",
+                                         "2024-12-31", "2025-12-31"]}
+        with patch.object(sec_http, "urlopen", fake_urlopen), \
+                patch.object(sec_http.SecHttpClient, "_pace_request", pace), \
+                patch("vnext.continuous_sec_acquisition._journal", lambda: journal), \
+                patch.object(SESSION_MODULE, "declared_frame",
+                             lambda **kwargs: copy.deepcopy(frame)), \
+                patch.object(socket.socket, "connect",
+                             side_effect=AssertionError("a socket was opened")):
+            result = session.capture_pending(company_id=_SCRIPTED_COMPANY)
+        self.assertEqual([row["source_url"] for row in sorted(rows, key=lambda r: r["source_url"])],
+                         opened, "one attempt per URL, the 503 included")
+        self.assertEqual(["SUCCEEDED", "FAILED_TERMINAL"],
+                         [item["status"] for item in sorted(
+                             result["captured"], key=lambda i: i["source_url"] != rows[0]["source_url"])])
+        self.assertEqual(1, len(set(paced)), "one client, so its pacing spans the requests")
+        log = parse_request_log_rows_for(session.data_root)
+        appended = log[-2:]
+        self.assertEqual({"ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"}, {r["purpose"] for r in appended})
+        self.assertEqual({"0"}, {r["retry_attempt"] for r in appended})
+        checkpoint = strict_json_file(path=next(journal.iterdir()))
+        self.assertEqual("LIVE", checkpoint["execution_mode"])
+        self.assertIs(True, checkpoint["real_sec_credit"])
+        validate_acquisition_checkpoint(session.data_root, checkpoint,
+                                        strict_json_file(path=ROOT / MANIFEST_PATH))
+        # A LIVE ledger is exported only beside the grant that spent it.
+        with patch("vnext.continuous_sec_acquisition._journal", lambda: journal):
+            with self.assertRaises(HistoricalAcquisitionError) as caught:
+                EXPORT_MODULE.export_acquisition(ledger_root=root / "ledger",
+                                                 out_dir=root / "export",
+                                                 policy_root=root / "no-policy")
+            self.assertIn("ISSUE_47_EXPORT_LIVE_LEDGER_WITHOUT_ALLOWANCE",
+                          str(caught.exception))
+            granted = root / "granted"
+            (granted / "config").mkdir(parents=True)
+            (granted / POLICY_PATH).write_text(json.dumps({
+                "delegation_url": "u", "delegation_body_sha256": "d",
+                "delegation_record_path": "r", "budget_root": str(root / "elsewhere"),
+                "maximum_additional_provider_paid_sec_calls": [0, 0, 5]}), encoding="utf-8")
+            with self.assertRaises(HistoricalAcquisitionError) as caught:
+                EXPORT_MODULE.export_acquisition(ledger_root=root / "ledger",
+                                                 out_dir=root / "export", policy_root=granted)
+            self.assertIn("ISSUE_47_EXPORT_LEDGER_IS_NOT_THE_GRANTED_ROOT",
+                          str(caught.exception))
+
+
+def parse_request_log_rows_for(data_root):
+    from sec_http import parse_request_log_rows
+    return parse_request_log_rows(
+        text=(data_root / "evidence/requests_log.csv").read_text(encoding="utf-8"))
+
+
+class AnExportCarriesExactlyWhatTheReplayAccepts(unittest.TestCase):
+    """The acquired sources reach another checkout, and nothing else does.
+
+    The ledger root is on the owner's machine and the journal the frozen
+    reader trusts is in that checkout's ``.git``; neither is pushed. So an
+    export is checked where it is made - the ledger must be registered and the
+    replay must accept it - and again where it is restored, and a restore that
+    reads a changed byte, a changed index or an archive the index does not
+    name is refused.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.root = Path(tempfile.mkdtemp(prefix="issue47-export-"))
+        atexit.register(shutil.rmtree, cls.root, ignore_errors=True)
+        rows = [row for row in _rows(_SCRIPTED_COMPANY)
+                if row["new_acquisition_required"]
+                and row["dependency_class"] == "ACCESSION_INSTANCE_DISCOVERY"]
+        cls.rows = sorted(rows, key=lambda row: row["source_url"])[:4]
+        cls.session = recorded_historical_session(root=cls.root / "ledger", response=BODY)
+        cls.frame = {"requirements": copy.deepcopy(cls.rows[:3]),
+                     "company_id": _SCRIPTED_COMPANY,
+                     "target_report_dates": ["2021-12-31", "2022-12-31", "2023-12-31",
+                                             "2024-12-31", "2025-12-31"]}
+        with patch.object(SESSION_MODULE, "declared_frame",
+                          lambda **kwargs: copy.deepcopy(cls.frame)):
+            cls.session.capture_pending(company_id=_SCRIPTED_COMPANY)
+        with patch.object(EXPORT_MODULE, "CHUNK_ROWS", 2):
+            cls.first = EXPORT_MODULE.export_acquisition(ledger_root=cls.root / "ledger",
+                                                         out_dir=cls.root / "export")
+            cls.again = EXPORT_MODULE.export_acquisition(ledger_root=cls.root / "ledger",
+                                                         out_dir=cls.root / "export-again")
+
+    def _copy(self, name):
+        target = Path(tempfile.mkdtemp(prefix="issue47-export-copy-")) / name
+        self.addCleanup(shutil.rmtree, target.parent, ignore_errors=True)
+        shutil.copytree(self.root / "export", target)
+        return target
+
+    def test_the_export_is_grouped_and_deterministic(self):
+        names = sorted(path.name for path in (self.root / "export").iterdir())
+        self.assertEqual(2, self.first["row_archives"])
+        self.assertEqual(sorted(names), sorted(path.name for path in
+                                               (self.root / "export-again").iterdir()))
+        for name in names:
+            self.assertEqual((self.root / "export" / name).read_bytes(),
+                             (self.root / "export-again" / name).read_bytes(), name)
+
+    def test_a_restore_replays_and_the_unchanged_reader_accepts_the_root(self):
+        target = Path(tempfile.mkdtemp(prefix="issue47-restore-")) / "restored"
+        self.addCleanup(shutil.rmtree, target.parent, ignore_errors=True)
+        restored = EXPORT_MODULE.restore_acquisition(export_dir=self.root / "export",
+                                                     out_root=target)
+        self.assertEqual("RESTORED", restored["status"])
+        self.assertEqual(3, restored["rows"])
+        checkpoint, paths = checkpoint_installation(source_root=Path(restored["data_root"]))
+        self.assertTrue(paths, "the restored successes are installable sources")
+        record = strict_json_file(path=target / "import-record.json")
+        self.assertIn("not_established_here", record)
+        with self.assertRaises(HistoricalAcquisitionError):
+            EXPORT_MODULE.restore_acquisition(export_dir=self.root / "export",
+                                              out_root=target)
+
+    def test_a_changed_archive_byte_is_refused(self):
+        copied = self._copy("flipped")
+        archive = sorted(copied.glob("rows-*.tar.gz"))[0]
+        data = bytearray(archive.read_bytes())
+        data[len(data) // 2] ^= 0x01
+        archive.write_bytes(bytes(data))
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            EXPORT_MODULE.restore_acquisition(export_dir=copied,
+                                              out_root=copied.parent / "out")
+        self.assertIn("ISSUE_47_EXPORT_ARCHIVE_CHANGED", str(caught.exception))
+
+    def test_a_changed_index_is_refused(self):
+        copied = self._copy("index")
+        index = json.loads((copied / "export.json").read_text(encoding="utf-8"))
+        index["exported_row_count"] += 1
+        (copied / "export.json").write_text(json.dumps(index), encoding="utf-8")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            EXPORT_MODULE.restore_acquisition(export_dir=copied,
+                                              out_root=copied.parent / "out")
+        self.assertIn("ISSUE_47_EXPORT_RECORD_CHANGED:export_id", str(caught.exception))
+
+    def test_member_paths_cannot_leave_the_root(self):
+        for name in ("../evidence/x", "/etc/passwd", "a/../../b", "./a"):
+            with self.subTest(name):
+                with self.assertRaises(HistoricalAcquisitionError):
+                    EXPORT_MODULE._safe_member(name)
+
+    def test_an_unregistered_ledger_is_not_exported(self):
+        root = Path(tempfile.mkdtemp(prefix="issue47-unregistered-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        session = recorded_historical_session(root=root / "ledger", response=BODY)
+        with patch.object(SESSION_MODULE, "declared_frame",
+                          lambda **kwargs: copy.deepcopy(self.frame)):
+            session.capture_pending(company_id=_SCRIPTED_COMPANY, max_captures=1,
+                                    register=False)
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            EXPORT_MODULE.export_acquisition(ledger_root=root / "ledger", out_dir=root / "x")
+        self.assertIn("ISSUE_47_EXPORT_LEDGER_NOT_REGISTERED", str(caught.exception))
+        # What a process that died before registering leaves behind. The next
+        # pass registers before it plans, which is what lets it plan at all.
+        with patch.object(SESSION_MODULE, "declared_frame",
+                          lambda **kwargs: copy.deepcopy(self.frame)):
+            healed = session.capture_pending(company_id=_SCRIPTED_COMPANY, max_captures=0)
+        self.assertTrue(healed["registered_before_planning"])
+        self.assertEqual("EXPORTED", EXPORT_MODULE.export_acquisition(
+            ledger_root=root / "ledger", out_dir=root / "x")["status"])
+
+    def test_a_longer_ledger_rewrites_only_the_last_group(self):
+        root = Path(tempfile.mkdtemp(prefix="issue47-grow-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        _copy_ledger(self.root / "ledger", root / "ledger")
+        shutil.copytree(self.root / "export", root / "export")
+        before = {path.name: path.read_bytes() for path in (root / "export").glob("rows-*")}
+        session = recorded_historical_session(root=root / "ledger", response=BODY)
+        frame = {**self.frame, "requirements": copy.deepcopy(self.rows)}
+        with patch.object(SESSION_MODULE, "declared_frame", lambda **kwargs: copy.deepcopy(frame)):
+            session.capture_pending(company_id=_SCRIPTED_COMPANY)
+        with patch.object(EXPORT_MODULE, "CHUNK_ROWS", 2):
+            EXPORT_MODULE.export_acquisition(ledger_root=root / "ledger", out_dir=root / "export")
+        after = {path.name: path.read_bytes() for path in (root / "export").glob("rows-*")}
+        first = sorted(before)[0]
+        self.assertEqual(before[first], after[first], "a closed group is not rewritten")
+        self.assertNotIn(sorted(before)[-1], after, "the open group was replaced, not kept")
+        self.assertEqual(2, len(after))
+
+
+class AnApprovalIsRegisteredOnlyFromTheApprovedBytes(unittest.TestCase):
+    """What the owner approved, read back from GitHub, and nothing written otherwise.
+
+    Nothing here posts. Registration reads a comment through a reader, and a
+    comment is admitted only if its bytes are the approved text pinned by
+    digest, its author is the approver and it is on this issue. A refusal
+    writes neither the policy nor the record.
+    """
+
+    URL = "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5800000001"
+
+    def _comment(self, **changes):
+        comment = {"id": 5800000001, "html_url": self.URL,
+                   "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
+                   "user": {"login": "wlvh", "id": 30534800, "type": "User"},
+                   "author_association": "OWNER", "created_at": "2026-09-27T00:00:00Z",
+                   "updated_at": "2026-09-27T00:00:00Z",
+                   "body": (ROOT / APPROVED_BODY_PATH).read_text(encoding="utf-8")}
+        comment.update(changes)
+        return comment
+
+    def _tree(self):
+        root = Path(tempfile.mkdtemp(prefix="issue47-register-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        target = root / APPROVED_BODY_PATH
+        target.parent.mkdir(parents=True)
+        shutil.copyfile(ROOT / APPROVED_BODY_PATH, target)
+        return root
+
+    def test_the_committed_body_is_the_approved_text(self):
+        body = (ROOT / APPROVED_BODY_PATH).read_bytes()
+        self.assertEqual(APPROVED_BODY_SHA256, hashlib.sha256(body).hexdigest())
+        proposal = strict_json_file(path=ROOT / "docs/evidence/issue47_history/"
+                                    "acquisition-wiring/proposed-allowance.json")
+        self.assertEqual(proposal["the_comment_body_as_text"].encode("utf-8"), body)
+
+    def test_the_approved_comment_registers_and_the_gate_accepts_it(self):
+        root = self._tree()
+        comment = self._comment()
+        result = register_approval(repo_root=root, comment_url=self.URL,
+                                   reader=lambda path: copy.deepcopy(comment))
+        self.assertEqual("APPROVAL_REGISTERED", result["status"])
+        self.assertEqual([0, 0, 1354], result["limits"])
+        allowance = acquisition_allowance(repo_root=root,
+                                          delegation_reader=lambda path: copy.deepcopy(comment))
+        self.assertIs(True, allowance["approved_delegation"]["provenance_verified_against_github"])
+        again = register_approval(repo_root=root, comment_url=self.URL,
+                                  reader=lambda path: copy.deepcopy(comment))
+        self.assertEqual(result, again, "registering the same approval twice changes nothing")
+
+    def test_a_body_that_differs_by_one_byte_registers_nothing(self):
+        root = self._tree()
+        comment = self._comment()
+        comment["body"] = comment["body"].replace("1354", "1355")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            register_approval(repo_root=root, comment_url=self.URL,
+                              reader=lambda path: comment)
+        self.assertIn("ISSUE_47_POSTED_BODY_IS_NOT_THE_APPROVED_TEXT", str(caught.exception))
+        self.assertFalse((root / POLICY_PATH).exists())
+
+    def test_a_footer_appended_to_the_body_registers_nothing(self):
+        # What this environment's posting path would do to the body, which is
+        # why the owner posts it: an appended attribution line is a different
+        # text, and the gate parses the body as the approval record.
+        root = self._tree()
+        comment = self._comment()
+        comment["body"] += "\n\n---\n_Generated by [Claude Code](https://claude.ai/code)_"
+        with self.assertRaises(HistoricalAcquisitionError):
+            register_approval(repo_root=root, comment_url=self.URL,
+                              reader=lambda path: comment)
+        self.assertFalse((root / POLICY_PATH).exists())
+
+    def test_another_author_registers_nothing(self):
+        root = self._tree()
+        comment = self._comment(user={"login": "someone-else", "id": 1, "type": "User"})
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            register_approval(repo_root=root, comment_url=self.URL,
+                              reader=lambda path: comment)
+        self.assertIn("ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER", str(caught.exception))
+        self.assertFalse((root / POLICY_PATH).exists())
+
+    def test_a_comment_on_another_issue_or_repository_registers_nothing(self):
+        root = self._tree()
+        for url in ("https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5800000001",
+                    "https://github.com/other/SEC_metrics/issues/47#issuecomment-5800000001"):
+            with self.subTest(url):
+                with self.assertRaises(HistoricalAcquisitionError):
+                    register_approval(repo_root=root, comment_url=url,
+                                      reader=lambda path: self._comment(html_url=url))
+        self.assertFalse((root / POLICY_PATH).exists())
+
+    def test_a_policy_that_already_says_something_else_is_not_overwritten(self):
+        root = self._tree()
+        (root / POLICY_PATH).parent.mkdir(parents=True, exist_ok=True)
+        (root / POLICY_PATH).write_text("{}\n", encoding="utf-8")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            register_approval(repo_root=root, comment_url=self.URL,
+                              reader=lambda path: self._comment())
+        self.assertIn("ISSUE_47_ALLOWANCE_ALREADY_REGISTERED_DIFFERENTLY", str(caught.exception))
+        self.assertEqual("{}\n", (root / POLICY_PATH).read_text(encoding="utf-8"))
+
+
+class ALedgerCannotBeResetByDeletingIt(unittest.TestCase):
+    """What an independent review found, on the SEC ledger an allowance is spent on.
+
+    Every count used to be rebuilt from whichever slot directories existed, so
+    deleting a stopped slot released the stop and deleting the root released
+    the cap. Issue #28's ledger refuses both; these cases hold this one to the
+    same, and to the two further gaps the review named: a stop hidden by
+    rewriting a slot's self-sealed records, and a root reached through a
+    symlink.
+    """
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-reset-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+
+    def _state(self, ledger_root):
+        session = recorded_historical_session(root=ledger_root, response=BODY)
+        with session.ledger.locked():
+            return session.ledger.snapshot()
+
+    def test_a_deleted_slot_is_a_refusal_not_a_smaller_count(self):
+        ledger = _Chain.copy(self.root / "ledger")
+        self.assertEqual([0, 0, 1], self._state(ledger)["counts"])
+        shutil.rmtree(ledger / "calls/0001")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._state(ledger)
+        self.assertIn("ISSUE_47_LEDGER_CLAIM_SET_CHANGED", str(caught.exception))
+
+    def test_a_deleted_root_is_a_refusal_not_a_fresh_start(self):
+        ledger = _Chain.copy(self.root / "ledger")
+        shutil.rmtree(ledger)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._state(ledger)
+        self.assertIn("ISSUE_47_LEDGER_BINDING_MISSING_OR_RESET", str(caught.exception))
+
+    def test_a_same_request_claimed_again_is_a_redraw(self):
+        ledger = _Chain.copy(self.root / "ledger")
+        session = recorded_historical_session(root=ledger, response=BODY)
+        intent = strict_json_file(path=ledger / "calls/0001/intent.json")
+        with session.ledger.locked():
+            with self.assertRaises(HistoricalSessionError) as caught:
+                session.ledger.claim(channel="SEC", request_digest=intent["request_digest"],
+                                     plan_id="sha256:" + "0" * 64,
+                                     purpose=intent["purpose"])
+        self.assertIn("ISSUE_47_UNCHANGED_REQUEST_REDRAW_FORBIDDEN", str(caught.exception))
+
+    def test_a_root_reached_through_a_symlink_is_refused(self):
+        ledger = _Chain.copy(self.root / "ledger")
+        alias = self.root / "alias"
+        alias.symlink_to(ledger)
+        session = recorded_historical_session(root=ledger, response=BODY)
+        aliased = SESSION_MODULE._allowance_ledger(allowance=session.allowance, root=alias,
+                                                   live=False)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            with aliased.locked():
+                pass
+        self.assertIn("ISSUE_47_LEDGER_PATH_ALIAS", str(caught.exception))
+
+    def test_a_stop_hidden_by_rewriting_the_slot_s_own_records_is_found(self):
+        # An unknown outcome, then its receipt and terminal rewritten and
+        # resealed as an ordinary failure. Both are self-sealed, so only the
+        # request log row they name can tell.
+        ledger = self.root / "unknown"
+        session = recorded_historical_session(root=ledger, response=BODY, status=0)
+        result = session.capture(company_id="marriott_international", url=DECLARED)
+        self.assertEqual("UNKNOWN_REMOTE_OUTCOME", result["status"])
+        slot = ledger / "calls/0001"
+        receipt = strict_json_file(path=slot / "sec-receipt.json")
+        forged = _seal({**{k: v for k, v in receipt.items() if k != "receipt_id"},
+                        "status": "FAILED_TERMINAL", "stop_reason": ""}, "receipt_id")
+        terminal = strict_json_file(path=slot / "terminal.json")
+        forged_terminal = _seal({**{k: v for k, v in terminal.items() if k != "terminal_id"},
+                                 "status": "FAILED_TERMINAL", "stop_reason": "",
+                                 "sec_receipt_id": forged["receipt_id"]}, "terminal_id")
+        (slot / "sec-receipt.json").write_text(json.dumps(forged), encoding="utf-8")
+        (slot / "terminal.json").write_text(json.dumps(forged_terminal), encoding="utf-8")
+        with session.ledger.locked():
+            blocked = session.ledger.snapshot()["blocked"]
+        self.assertEqual(["TERMINAL_DISAGREES_WITH_THE_LOGGED_ROW:UNKNOWN_REMOTE_OUTCOME/"
+                          "UNKNOWN_REMOTE_OUTCOME"], [item["reason"] for item in blocked])
+
+
+class AnApprovalMustBeReadAsWrittenAndUnedited(unittest.TestCase):
+    """The approval the owner read is the one enforced, and it was not changed later.
+
+    Both were accepted before an independent review: plain ``json.loads``
+    kept the last of two duplicate keys, so a body showing one limit and
+    carrying a larger one later was enforced at the larger; and a comment
+    edited after it was posted still authorized.
+    """
+
+    def setUp(self):
+        self.made = []
+        self.addCleanup(lambda: [shutil.rmtree(p, ignore_errors=True)
+                                 for pair in self.made for p in pair])
+
+    def test_a_duplicate_key_is_a_refusal_not_the_last_value(self):
+        root, budget = _grant_tree()
+        self.made.append((root, budget))
+        record = json.loads((root / "docs/delegation.json").read_text())
+        policy = json.loads((root / POLICY_PATH).read_text())
+        body = record["body"]
+        doubled = body[:-1] + ', "maximum_additional_provider_paid_sec_calls": [0, 0, 8000]}'
+        record["body"] = doubled
+        policy["maximum_additional_provider_paid_sec_calls"] = [0, 0, 8000]
+        policy["delegation_body_sha256"] = hashlib.sha256(doubled.encode()).hexdigest()
+        (root / "docs/delegation.json").write_text(json.dumps(record), encoding="utf-8")
+        (root / POLICY_PATH).write_text(json.dumps(policy), encoding="utf-8")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root)
+        self.assertIn("ISSUE_47_DELEGATION_BODY_IS_NOT_A_RECORD", str(caught.exception))
+
+    def test_an_edited_comment_is_not_the_approval(self):
+        root, budget = _grant_tree()
+        self.made.append((root, budget))
+        acquisition_allowance(repo_root=root)  # the unedited one is accepted
+        record = json.loads((root / "docs/delegation.json").read_text())
+        record["updated_at"] = "2026-09-28T00:00:00Z"
+        (root / "docs/delegation.json").write_text(json.dumps(record), encoding="utf-8")
+        with self.assertRaises(HistoricalAcquisitionError) as caught:
+            acquisition_allowance(repo_root=root)
+        self.assertIn("ISSUE_47_DELEGATION_COMMENT_WAS_EDITED", str(caught.exception))

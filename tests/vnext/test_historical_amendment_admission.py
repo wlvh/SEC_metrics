@@ -19,6 +19,7 @@ import unittest
 from pathlib import Path
 
 from tests.vnext.common import REPO_ROOT as ROOT
+from tests.vnext.test_historical_part_iii_admission import without_the_owner_s_listing
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
 from vnext.historical_amendment_admission import (NOT_COVERED_METRIC_IDS,
                                                   AmendmentAdmissionError,
@@ -43,7 +44,9 @@ def _prepared(company_id):
 
 
 def _admit(company_id, metric_ids, prepared):
-    with original_sources_only():
+    # The approved policy's own answer: the owner's per-filing listing, which
+    # since 2026-09-27 admits Paramount's two periods, is not asked here.
+    with original_sources_only(), without_the_owner_s_listing():
         return amendment_admission(repo_root=ROOT, company_id=company_id,
                                    metric_ids=metric_ids, prepared=prepared,
                                    event_metric_ids=EVENT_METRICS)

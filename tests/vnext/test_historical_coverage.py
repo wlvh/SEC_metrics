@@ -1244,7 +1244,11 @@ class HistoricalCoverageTest(unittest.TestCase):
         from vnext.normal_period_selection import resolve_period_selection
 
         company = "paramount_skydance_paramount_global"
-        with original_sources_only():
+        from tests.vnext.test_historical_part_iii_admission import without_the_owner_s_listing
+        # The first state is the approved policy's refusal, so it is asked
+        # without the owner's per-filing listing, which admits this period
+        # since 2026-09-27.
+        with original_sources_only(), without_the_owner_s_listing():
             selection = resolve_period_selection(repo_root=ROOT, company_id=company,
                                                  report_end="2025-12-31")
             facts = resolve_historical_companyfacts_metrics(repo_root=ROOT,

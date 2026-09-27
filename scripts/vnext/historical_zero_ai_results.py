@@ -243,14 +243,15 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     # Asked after the income input, because that input is the narrower proof
     # for exactly this case and the ordinary route uses it in place of the
     # family question. Every other shape still asks the family question first.
-    amendment_refusal = None
+    amendment_refusal, per_filing = None, []
     if prepared["amendments"] and income_input is None:
         from .historical_amendment_admission import (AmendmentAdmissionError,
-                                                     amendment_admission)
+                                                     amendment_admission,
+                                                     per_filing_admissions)
         try:
-            amendment_admission(repo_root=repo_root, company_id=company_id,
-                                metric_ids=[metric_id], prepared=prepared,
-                                event_metric_ids=EVENT_METRICS)
+            per_filing = per_filing_admissions(amendment_admission(
+                repo_root=repo_root, company_id=company_id, metric_ids=[metric_id],
+                prepared=prepared, event_metric_ids=EVENT_METRICS))
         except AmendmentAdmissionError as error:
             # A decided answer, carried as this metric's withheld result with
             # its own reason code and category - the way the Company Facts
@@ -484,6 +485,11 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
             dependency_result, dependency_trace = withheld_metric_result(
                 compiled_spec=dependency, target=target, reason_code=result["reason_code"])
             dependency_records.extend([dependency_trace, dependency_result])
+    if per_filing:
+        # A result that relied on the owner's per-filing admission says so,
+        # with the conditions that held; one the policy alone decided is
+        # unchanged.
+        selection = {**selection, "amendment_per_filing_admission": per_filing}
     if income_input is not None and observations:
         # The same check the ordinary route runs: the observations must be the
         # ones the income proof is about, so an admitted proof cannot stand

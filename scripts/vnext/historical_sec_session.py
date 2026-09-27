@@ -53,7 +53,8 @@ import os
 from sec_http import (SecHttpClient, parse_request_log_rows, request_log_attempt_id,
                       validate_official_sec_url, validate_request_log_manifest)
 from .batch_workflow import validate_request_attempt_binding
-from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_file
+from .canonical import (canonical_json_bytes, content_hash, sha256_bytes, sha256_file,
+                        strict_json_file, strict_json_loads)
 from .historical_source_acquisition import (POLICY_PATH, REQUIREMENT_ID,
                                             HistoricalAcquisitionError,
                                             acquisition_allowance, declared_frame,
@@ -206,9 +207,44 @@ def install_historical_source_inputs(*, root: Path):
 
 
 RESOLVED = {"SUCCEEDED", "FAILED_TERMINAL"}
+# A capture of these can change what the frame declares: an index or a shard
+# decides which periods exist and which filings serve them. A batch pass ends
+# after one, so the next pass plans against what was actually fetched.
+FRAME_CHANGING_CLASSES = ("SUBMISSIONS_INDEX", "SUBMISSIONS_HISTORY")
+# The SEC's fair-access refusals. Sending more requests into one is not
+# something a batch should do on its own; the pass stops and says so.
+SEC_ACCESS_REFUSED = ("403", "429")
+INDEX_TIER, SHARD_TIER, OTHER_TIER = "SUBMISSIONS_INDEX", "SUBMISSIONS_HISTORY", "OTHER"
+PASS_TIERS = (INDEX_TIER, SHARD_TIER, OTHER_TIER)
 
 
-def _terminal_block_reason(*, slot, intent, mode):
+def _tier(row):
+    return row["dependency_class"] if row["dependency_class"] in FRAME_CHANGING_CLASSES \
+        else OTHER_TIER
+
+
+def _listed(row):
+    """What a pass reports about a row: enough to find it, nothing it decided."""
+    return {"source_url": row["source_url"], "dependency_class": row["dependency_class"],
+            "consumers": list(row.get("consumers", []))}
+
+
+def _row_outcome(row):
+    """The status and stop a request log row itself records.
+
+    Read from the row the SEC client appended, not from the slot's own
+    records, which are self-sealed: an independent review showed a stop
+    hidden by rewriting a terminal and its receipt together. The row is the
+    one the frozen replay also binds every receipt to.
+    """
+    if row["status_code"] == "200" and not row["error"]:
+        return "SUCCEEDED", ""
+    if row["status_code"] == "0":
+        return "UNKNOWN_REMOTE_OUTCOME", "UNKNOWN_REMOTE_OUTCOME"
+    return "FAILED_TERMINAL", "HTTP_402" if row["status_code"] == "402" else ""
+
+
+def _terminal_block_reason(*, slot, intent, mode, rows=None):
     """Why this slot still blocks the channel, or None when it is resolved.
 
     The previous version asked only whether ``terminal.json`` existed. Measured
@@ -264,6 +300,13 @@ def _terminal_block_reason(*, slot, intent, mode):
         return "RECEIPT_AND_TERMINAL_DISAGREE:" + str(receipt.get("status"))
     if receipt.get("execution_mode") != mode:
         return "RECEIPT_MODE_DIFFERS"
+    if rows is not None:
+        index = receipt.get("ledger_row_index")
+        if type(index) is not int or not 0 <= index < len(rows) \
+                or rows[index] != receipt.get("ledger_row"):
+            return "RECEIPT_ROW_IS_NOT_THE_LOGGED_ROW"
+        if _row_outcome(rows[index]) != (status, terminal.get("stop_reason")):
+            return "TERMINAL_DISAGREES_WITH_THE_LOGGED_ROW:" + "/".join(_row_outcome(rows[index]))
     return None
 
 
@@ -285,46 +328,162 @@ class HistoricalCallLedger:
         self.binding = binding
         self.live = live
         self._locked = False
+        # The session's request log, whose rows every receipt names. Set by
+        # the session; while it is None the rows are not compared.
+        self.request_log = None
+        # Slots found resolved while this process holds the lock. Every slot
+        # file is written exclusively and never rewritten, and only a lock
+        # holder writes at all, so a slot resolved under the lock stays
+        # resolved until the lock is released. Without this a pass re-read
+        # every earlier slot at every claim - quadratic in the ledger, about
+        # half a second per claim by the end of a full allowance. Cleared on
+        # every acquire and release, so nothing is carried across two holds.
+        self._resolved = {}
+
+    @staticmethod
+    def anchor_path(root):
+        """Where the initialization anchor of a ledger at ``root`` lives: beside it."""
+        root = Path(root)
+        return root.parent / ("." + root.name + ".initialized.json")
 
     @contextmanager
     def locked(self):
-        """Hold the root's lock for one capture, so two processes cannot claim."""
-        self.root.mkdir(parents=True, exist_ok=True)
-        handle = os.open(str(self.root / ".lock"), os.O_CREAT | os.O_RDWR, 0o600)
+        """Hold the root's lock, and refuse a ledger that was reset or moved under us.
+
+        What an independent review found against the previous version: every
+        count was rebuilt from whichever slot directories still existed, so
+        deleting a stopped slot released the stop, and deleting the root
+        released the cap. Issue #28's ledger refuses both and this one now does
+        the same: the lock is on the directory, not on a file inside it; the
+        root and its parents may not be symlinks; a binding written on first
+        use must still be there and unchanged, with a copy of it beside the
+        root that a deleted root does not take with it; and every claim is
+        also appended to a log that the slots must match.
+        """
+        _need(self.root.is_absolute()
+              and not any(path.is_symlink() for path in [self.root, *self.root.parents]),
+              "ISSUE_47_LEDGER_PATH_ALIAS:" + str(self.root))
+        self.root.mkdir(parents=True, exist_ok=True, mode=0o700)
+        handle = os.open(str(self.root), os.O_RDONLY)
         try:
             fcntl.flock(handle, fcntl.LOCK_EX)
+            self._resolved = {}
             self._locked = True
+            self._check_binding()
             yield self
         finally:
             self._locked = False
+            self._resolved = {}
             fcntl.flock(handle, fcntl.LOCK_UN)
             os.close(handle)
 
+    def _check_binding(self):
+        binding_path, anchor = self.root / "binding.json", self.anchor_path(self.root)
+        if not binding_path.exists():
+            # A new ledger. Only the installed source root may already be
+            # here, because a session can install before it first claims; a
+            # slot, a claim log or an anchor without a binding is a ledger
+            # that was reset, and is refused rather than restarted.
+            present = sorted(path.name for path in self.root.iterdir())
+            _need(not anchor.exists() and set(present) <= {"source-inputs"},
+                  "ISSUE_47_LEDGER_BINDING_MISSING_OR_RESET:" + ",".join(present))
+            _exclusive_write_json(path=anchor, value=self.binding)
+            _exclusive_write_json(path=binding_path, value=self.binding)
+        _need(anchor.is_file(), "ISSUE_47_LEDGER_INITIALIZATION_ANCHOR_MISSING:" + str(anchor))
+        _need(strict_json_file(path=anchor) == self.binding,
+              "ISSUE_47_LEDGER_INITIALIZATION_ANCHOR_CHANGED")
+        _need(strict_json_file(path=binding_path) == self.binding,
+              "ISSUE_47_LEDGER_BINDING_CHANGED")
+
+    def _claims(self):
+        path = self.root / "claims.jsonl"
+        if not path.exists():
+            return []
+        _need(path.is_file() and not path.is_symlink(), "ISSUE_47_LEDGER_CLAIM_LOG_UNSAFE")
+        return [strict_json_loads(text=line)
+                for line in path.read_text(encoding="utf-8").splitlines()]
+
+    def _log_rows(self):
+        """The request log's rows, or None when this ledger has no log to compare."""
+        if self.request_log is None:
+            return None
+        _need(Path(self.request_log).is_file(), "ISSUE_47_LEDGER_REQUEST_LOG_MISSING")
+        return parse_request_log_rows(text=Path(self.request_log).read_text(encoding="utf-8"))
+
     def snapshot(self):
-        """Counts consumed so far and any channel a lost terminal blocks."""
+        """Counts consumed so far and any channel a lost terminal blocks.
+
+        The slots must be exactly the claim log: as many, in sequence, each
+        equal to its logged claim, each naming the one before it and this
+        ledger's binding. A missing slot, a missing claim or a slot in the
+        wrong place is a refusal, not a smaller count.
+        """
         calls = self.root / "calls"
         counts = [0, 0, 0]
         blocked = []
         slots = sorted(calls.iterdir()) if calls.is_dir() else []
-        for slot in slots:
+        claims = self._claims()
+        _need(len(slots) == len(claims), "ISSUE_47_LEDGER_CLAIM_SET_CHANGED:"
+              + str(len(slots)) + " slots, " + str(len(claims)) + " claims")
+        _need([slot.name for slot in slots] == ["%04d" % (i + 1) for i in range(len(slots))],
+              "ISSUE_47_LEDGER_SEQUENCE_CHANGED")
+        rows = self._log_rows() if slots else None
+        previous, digests = None, set()
+        for slot, claim in zip(slots, claims):
+            if self._locked and slot.name in self._resolved:
+                index, previous, digest = self._resolved[slot.name]
+                counts[index] += 1
+                digests.add(digest)
+                continue
+            _need(slot.is_dir() and not slot.is_symlink(), "ISSUE_47_LEDGER_SLOT_UNSAFE:" + slot.name)
             intent = strict_json_file(path=slot / "intent.json")
             _check_seal(intent, "intent_id")
+            _need(intent == claim, "ISSUE_47_LEDGER_CLAIM_CHANGED:" + slot.name)
             _need(intent["requirement_id"] == REQUIREMENT_ID,
                   "ISSUE_47_LEDGER_SLOT_IS_FOR_ANOTHER_REQUIREMENT:" + slot.name)
             _need(intent["execution_mode"] == self.mode,
                   "ISSUE_47_LEDGER_MODE_CHANGED:" + slot.name)
+            _need(intent["ordinal"] == int(slot.name)
+                  and intent["previous_intent_id"] == previous
+                  and intent["allowance_binding_id"] == self.binding["binding_id"],
+                  "ISSUE_47_LEDGER_INTENT_BINDING_CHANGED:" + slot.name)
+            _need(intent["request_digest"] not in digests,
+                  "ISSUE_47_LEDGER_DUPLICATE_REQUEST:" + slot.name)
+            digests.add(intent["request_digest"])
+            previous = intent["intent_id"]
             index = {"PROVIDER": 0, "PAID": 1, SEC: 2}[intent["channel"]]
             counts[index] += 1
-            reason = _terminal_block_reason(slot=slot, intent=intent, mode=self.mode)
+            reason = _terminal_block_reason(slot=slot, intent=intent, mode=self.mode, rows=rows)
             if reason is not None:
                 blocked.append({"slot": slot.name, "channel": intent["channel"],
                                 "reason": reason})
+            elif self._locked:
+                self._resolved[slot.name] = (index, previous, intent["request_digest"])
         return {"counts": counts, "limits": list(self.binding["limits"]),
-                "blocked": blocked, "slot_count": len(slots)}
+                "blocked": blocked, "slot_count": len(slots),
+                "previous_intent_id": previous, "request_digests": digests}
 
     @property
     def mode(self):
         return "LIVE" if self.live else "RECORDED_TEST_ONLY"
+
+    def claimed_urls(self):
+        """Every URL a slot in this ledger has claimed, whatever its outcome.
+
+        Read from the plans the slots wrote before their sockets, not from this
+        process's memory, so an earlier invocation's claims count too. A slot
+        without a plan is one whose claim was interrupted before it; such a slot
+        has no terminal either, so ``require_unblocked`` refuses before this is
+        asked - and if it is asked anyway, the answer is a refusal rather than
+        a set that silently omits it.
+        """
+        calls = self.root / "calls"
+        urls = set()
+        for slot in (sorted(calls.iterdir()) if calls.is_dir() else []):
+            plan = slot / "sec-plan.json"
+            _need(plan.is_file(), "ISSUE_47_SLOT_HAS_NO_PLAN:" + slot.name)
+            urls.add(strict_json_file(path=plan)["request"]["url"])
+        return urls
 
     def require_unblocked(self):
         """Refuse while any claim lacks a terminal, and return the state.
@@ -356,16 +515,35 @@ class HistoricalCallLedger:
                   zip(state["counts"], delta, self.binding["limits"])),
               "ISSUE_47_CUMULATIVE_LIMIT_REACHED:" + channel + ":"
               + str(state["counts"]) + " of " + str(self.binding["limits"]))
+        # The same request twice is a redraw, and zero retries forbids it.
+        _need(request_digest not in state["request_digests"],
+              "ISSUE_47_UNCHANGED_REQUEST_REDRAW_FORBIDDEN")
         ordinal = state["slot_count"] + 1
         path = self.root / "calls" / ("%04d" % ordinal)
         intent = _sealed({"record_type": "ISSUE_47_HISTORICAL_CALL_INTENT",
                           "requirement_id": REQUIREMENT_ID, "channel": channel,
                           "ordinal": ordinal, "execution_mode": self.mode,
                           "allowance_binding_id": self.binding["binding_id"],
+                          "previous_intent_id": state["previous_intent_id"],
                           "request_digest": request_digest, "plan_id": plan_id,
                           "purpose": purpose, "automatic_retry_count": 0,
                           "counts_before": state["counts"],
                           "production_authorized": False}, "intent_id")
+        # The claim is logged before its slot exists, append-only and synced,
+        # so a removed slot - the last one included - disagrees with the log,
+        # and a crash between the two writes refuses before the next socket.
+        handle = os.open(str(self.root / "claims.jsonl"),
+                         os.O_WRONLY | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW, 0o600)
+        try:
+            line = canonical_json_bytes(value=intent).rstrip(b"\n") + b"\n"
+            written = 0
+            while written < len(line):
+                count = os.write(handle, line[written:])
+                _need(count > 0, "ISSUE_47_LEDGER_CLAIM_WRITE_FAILED")
+                written += count
+            os.fsync(handle)
+        finally:
+            os.close(handle)
         _exclusive_write_json(path=path / "intent.json", value=intent)
         return path, intent
 
@@ -413,6 +591,8 @@ class HistoricalSecSession:
         self.response = recorded_response
         self.response_status = recorded_status
         self.data_root = ledger.root / "source-inputs"
+        ledger.request_log = self.data_root / "evidence/requests_log.csv"
+        self._sec_client = None
         # What this session claimed, so a caller never has to infer it from the
         # shared ledger's total. Two snapshots around a capture are not taken
         # under the same lock, so another process finishing a request between
@@ -470,63 +650,291 @@ class HistoricalSecSession:
                 return {"status": "EXISTING_VERIFIED_SOURCE_REUSED",
                         "source": dependency, "calls": [0, 0, 0],
                         "acquisition_kind": dependency.get("acquisition_kind")}
-            log = self.data_root / "evidence/requests_log.csv"
-            validate_request_log_manifest(log_path=log)
-            before = log.read_bytes()
-            old_rows = parse_request_log_rows(text=before.decode("utf-8"))
-            client = SecHttpClient(workdir=self.data_root,
-                                   config_path=ROOT / "config/sec_config.json",
-                                   log_path=log)
-            client.config = {**client.config, "max_retries": 0}
-            request = {"url": url, "method": "GET", "automatic_retry_count": 0,
-                       "sec_configuration_sha256": sha256_file(
-                           path=ROOT / "config/sec_config.json")}
-            plan = {"company_id": company_id, "requirement_id": REQUIREMENT_ID,
-                    "source_dependency": dependency, "request": request,
-                    "source_ledger_before_sha256": sha256_bytes(content=before),
-                    "source_row_count_before": len(old_rows)}
-            # Both halves, and in both modes. A URL being a real dependency is
-            # not the same as this grant allowing it to be fetched; and a scope
-            # check only the live path runs is a check nothing ever exercises,
-            # so the recorded session carries a scope too and is held to it.
+            _need(url not in self.ledger.claimed_urls(),
+                  "ISSUE_47_URL_ALREADY_CLAIMED_IN_THIS_LEDGER:" + url)
             purpose = self.allowance["scope"]["purposes"][0]
             admitted = request_is_in_scope(allowance=self.allowance,
                                            company_id=company_id,
                                            dependency=dependency, purpose=purpose,
                                            frame_report_dates=frame["target_report_dates"])
-            plan["scope_admission"] = admitted
-            path, intent = self.ledger.claim(
-                channel=SEC, request_digest=content_hash(value=request),
-                plan_id=content_hash(value=plan), purpose=purpose)
-            self.claimed_slots.append({"intent_id": intent["intent_id"],
-                                       "ordinal": intent["ordinal"],
-                                       "channel": intent["channel"]})
-            _exclusive_write_json(path=path / "sec-plan.json", value=plan)
-            document_name = Path(urlsplit(url).path).name
-            _need(bool(document_name), "ISSUE_47_DOCUMENT_NAME_MISSING")
-            target = (self.data_root / "evidence/issue47-historical"
-                      / ("%04d" % intent["ordinal"]) / document_name)
-            if self.ledger.live:
-                # Re-checked immediately before the only socket in this module.
-                self._check()
-                result = client.fetch(url=url, purpose=LIVE_PURPOSE, local_path=target)
-            else:
-                result = client._persist_result(
-                    url=url, status_code=self.response_status,
-                    body=self._recorded_body(url=url),
-                    headers={"Content-Type": dependency["media_type"]},
-                    local_path=target,
-                    error="" if self.response_status == 200 else "RECORDED_HTTP_FAILURE")
-                client._append_log_row(result=result, purpose=RECORDED_PURPOSE, attempt=0)
-            receipt = self._receipt(intent=intent, path=path, log=log, before=before,
-                                    old_rows=old_rows, url=url, result=result,
-                                    dependency=dependency, company_id=company_id)
-            terminal = self.ledger.finish(path=path, intent=intent, receipt=receipt)
+            receipt, terminal = self._capture_one(company_id=company_id, url=url,
+                                                  dependency=dependency,
+                                                  admitted=admitted)
             checkpoint = self.register_checkpoint()
             return {"status": receipt["status"], "receipt": receipt, "terminal": terminal,
                     "checkpoint_id": checkpoint["checkpoint_id"],
                     "calls": [0, 0, int(self.ledger.live)],
                     "production_authorized": False}
+
+    def capture_pending(self, *, company_id, years=5, max_captures=None, register=True):
+        """One pass over one company's due dependencies inside the grants.
+
+        ``capture`` recomputes the whole frame and replays the whole checkpoint
+        for every request. Measured on an installed root: 22 to 30 seconds per
+        request, growing by two to three seconds with each capture, so the
+        1,354 requests the allowance covers would take days. Every check that
+        matters per request stays - an official SEC URL, declared by a frame
+        this session computed itself under its own lock, due by the planner,
+        never claimed before in this ledger, inside a grant, a slot claimed
+        before the socket and closed by a terminal - but the frame is computed
+        once per pass and the checkpoint is registered once at its end.
+
+        A pass takes the first tier that has anything to fetch: the
+        submissions index, then the history shards, then everything else. The
+        first two decide which periods and filings exist, so a pass that
+        captures from either ends there and the next pass plans against what
+        was fetched; shards do not list other shards, so all the shards one
+        index declares go in one pass. Capturing an annual primary can also
+        make new event and proxy rows declarable, which is why the caller
+        repeats passes until one captures nothing.
+
+        Zero automatic retries means a URL this ledger has claimed is never
+        claimed again by a pass, whatever the planner says about it next: a
+        failed fetch stays failed and is reported, and a refresh whose new
+        bytes still conflict is reported rather than fetched in a loop.
+
+        A pass stops early, by name, when the cumulative cap refuses a claim
+        (before any socket), when a receipt carries a stop reason or an
+        unknown outcome (which also blocks the ledger), when the SEC refuses
+        access (403 or 429 - a fair-access refusal is not something to keep
+        sending into), or at ``max_captures``. Dependencies outside every
+        grant are listed and never claimed.
+
+        The ledger is registered at the end of every pass that captured, and
+        at the start of a pass that finds it unregistered. Both are needed.
+        The planner reads saved sources through the frozen reader, which
+        trusts an extended ledger only through a registered checkpoint, so a
+        pass that left its rows unregistered made the next pass's frame raise
+        ``ORDINARY_SOURCE_UNREGISTERED_LEDGER`` - measured, when registration
+        was deferred to the end of a company to save the replay's cost. And a
+        process that died between its last capture and its registration left
+        the same state for the next invocation, which could then never plan
+        again; registering first is what lets it continue.
+
+        ``register=False`` is for callers that register themselves.
+        """
+        self._check()
+        result = {"company_id": company_id, "captured": [], "outside_grants": [],
+                  "already_claimed": [], "stop": None, "tier": None,
+                  "frame_may_have_changed": False, "checkpoint_id": None}
+        with self.ledger.locked():
+            self.ledger.require_unblocked()
+            install_historical_source_inputs(root=self.data_root)
+            if register:
+                result["registered_before_planning"] = self._register_if_unregistered()
+            frame = declared_frame(repo_root=self.data_root, company_id=company_id,
+                                   years=years)
+            urls = [row["source_url"] for row in frame["requirements"]]
+            duplicated = sorted({url for url in urls if urls.count(url) > 1})
+            _need(not duplicated,
+                  "HISTORICAL_URL_IS_DECLARED_MORE_THAN_ONCE:" + ",".join(duplicated))
+            claimed = self.ledger.claimed_urls()
+            due = []
+            for row in frame["requirements"]:
+                if not row["new_acquisition_required"]:
+                    continue
+                if row["source_url"] in claimed:
+                    result["already_claimed"].append(_listed(row))
+                    continue
+                due.append(row)
+            purpose = self.allowance["scope"]["purposes"][0]
+            for tier in PASS_TIERS:
+                rows = sorted((row for row in due if _tier(row) == tier),
+                              key=lambda row: row["source_url"])
+                admitted_rows = []
+                for dependency in rows:
+                    try:
+                        admitted = request_is_in_scope(
+                            allowance=self.allowance, company_id=company_id,
+                            dependency=dependency, purpose=purpose,
+                            frame_report_dates=frame["target_report_dates"])
+                    except HistoricalSessionError:
+                        raise
+                    except HistoricalAcquisitionError as refusal:
+                        result["outside_grants"].append(
+                            {**_listed(dependency), "reason": str(refusal)})
+                        continue
+                    admitted_rows.append((dependency, admitted))
+                if not admitted_rows:
+                    continue
+                result["tier"] = tier
+                for dependency, admitted in admitted_rows:
+                    if max_captures is not None and len(result["captured"]) >= max_captures:
+                        result["stop"] = "MAX_CAPTURES_FOR_THIS_INVOCATION"
+                        break
+                    try:
+                        receipt, _ = self._capture_one(
+                            company_id=company_id, url=dependency["source_url"],
+                            dependency=dependency, admitted=admitted)
+                    except HistoricalSessionError as refusal:
+                        if not str(refusal).startswith("ISSUE_47_CUMULATIVE_LIMIT_REACHED"):
+                            raise
+                        result["stop"] = str(refusal)
+                        break
+                    status_code = receipt["ledger_row"]["status_code"]
+                    result["captured"].append({**_listed(dependency),
+                                               "status": receipt["status"],
+                                               "status_code": status_code,
+                                               "grants": admitted["grants"]})
+                    if receipt["status"] not in RESOLVED or receipt["stop_reason"]:
+                        result["stop"] = receipt["stop_reason"] or receipt["status"]
+                        break
+                    if status_code in SEC_ACCESS_REFUSED:
+                        result["stop"] = "SEC_ACCESS_REFUSED:" + status_code
+                        break
+                result["frame_may_have_changed"] = tier != OTHER_TIER
+                break
+            if result["captured"] and register:
+                result["checkpoint_id"] = self.register_checkpoint()["checkpoint_id"]
+        result["calls"] = self.calls_this_session()
+        return result
+
+    def _register_if_unregistered(self):
+        """Register the ledger as it stands if nothing has; the lock is the caller's.
+
+        Returns the checkpoint ID when it registered, else None - including
+        for a ledger with no slots, whose rows are the trusted baseline and
+        need no checkpoint.
+        """
+        from .continuous_sec_acquisition import _journal
+        _need(self.ledger._locked, "ISSUE_47_LEDGER_LOCK_REQUIRED")
+        if not (self.ledger.root / "calls").is_dir():
+            return None
+        ledger = sha256_file(path=self.data_root / "evidence/requests_log.csv")
+        if (_journal() / (ledger + ".json")).is_file():
+            return None
+        return self.register_checkpoint()["checkpoint_id"]
+
+    def acquire(self, *, company_ids, years=5, max_captures=None):
+        """Passes over each company until one captures nothing, or a stop.
+
+        A company's declaration grows as its sources arrive: the shards make
+        periods discoverable, an annual primary makes its event window and its
+        proxy declarable. So a company is done only when a pass over the frame
+        its own captures produced has nothing left to take; that terminates
+        because a pass that captures consumes at least one slot and no URL is
+        claimed twice. A stop is global - the cap, an unknown outcome and a
+        fair-access refusal are about the ledger and the SEC, not about one
+        company - so it ends the whole acquisition, and the summary says where.
+
+        A company whose frame cannot be computed is reported with the error
+        and the next company goes ahead, but only while the ledger has no
+        unresolved slot: a planner failure happens before any claim, and is a
+        development gap for that company rather than a reason to stop the
+        others. If the ledger is blocked, the acquisition stops, because
+        nothing may be claimed past an unresolved slot.
+        """
+        summary = {"record_type": "ISSUE_47_HISTORICAL_ACQUISITION_SUMMARY",
+                   "requirement_id": REQUIREMENT_ID, "execution_mode": self.ledger.mode,
+                   "companies": {}, "stop": None, "checkpoints": [],
+                   "production_authorized": False}
+        remaining = max_captures
+        for company_id in company_ids:
+            passes, error = [], None
+            while True:
+                try:
+                    result = self.capture_pending(company_id=company_id, years=years,
+                                                  max_captures=remaining)
+                except Exception as failure:  # noqa: BLE001 - reported, and the ledger decides
+                    error = {"error_type": type(failure).__name__, "error": str(failure)[:2000]}
+                    break
+                passes.append(result)
+                for key in ("registered_before_planning", "checkpoint_id"):
+                    if result.get(key):
+                        summary["checkpoints"].append({"company_id": company_id,
+                                                       "when": key,
+                                                       "checkpoint_id": result[key]})
+                if remaining is not None:
+                    remaining -= len(result["captured"])
+                if result["stop"] is not None:
+                    summary["stop"] = {"company_id": company_id, "reason": result["stop"]}
+                    break
+                if not result["captured"]:
+                    break
+            captured = [item for result in passes for item in result["captured"]]
+            summary["companies"][company_id] = {
+                "passes": len(passes), "captured": captured, "error": error,
+                "outside_grants": passes[-1]["outside_grants"] if passes else [],
+                "already_claimed": passes[-1]["already_claimed"] if passes else []}
+            if error is not None and self.ledger.snapshot()["blocked"]:
+                summary["stop"] = {"company_id": company_id,
+                                   "reason": "LEDGER_BLOCKED_AFTER_ERROR"}
+            if summary["stop"] is not None:
+                break
+        summary["calls_this_session"] = self.calls_this_session()
+        summary["cumulative"] = self.ledger.snapshot()
+        return summary
+
+    def _capture_one(self, *, company_id, url, dependency, admitted):
+        """Claim, fetch, prove and close one request. The lock is the caller's.
+
+        Everything from the claim to the terminal happens here and nowhere
+        else, so ``capture`` and ``capture_pending`` cannot drift apart on the
+        part that spends the allowance. The scope admission is the caller's
+        because the caller holds the frame it was computed against; it is
+        still bound into the plan the slot claims, so a slot never exists
+        without the grant that let it be claimed.
+        """
+        _need(self.ledger._locked, "ISSUE_47_LEDGER_LOCK_REQUIRED")
+        validate_official_sec_url(url=url)
+        _need(admitted.get("company_id") == company_id
+              and admitted.get("dependency_class") == dependency["dependency_class"]
+              and admitted.get("grants"), "ISSUE_47_ADMISSION_IS_FOR_ANOTHER_REQUEST")
+        log = self.data_root / "evidence/requests_log.csv"
+        validate_request_log_manifest(log_path=log)
+        before = log.read_bytes()
+        old_rows = parse_request_log_rows(text=before.decode("utf-8"))
+        # One client per session, so its pacing applies across requests. A new
+        # client per request starts from a zero timestamp and never waits,
+        # which turns the configured rate into no rate at all once requests
+        # follow each other without a frame computation between them.
+        if self._sec_client is None:
+            self._sec_client = SecHttpClient(workdir=self.data_root,
+                                             config_path=ROOT / "config/sec_config.json",
+                                             log_path=log)
+            self._sec_client.config = {**self._sec_client.config, "max_retries": 0}
+        client = self._sec_client
+        _need(client.config["max_retries"] == 0, "ISSUE_47_AUTOMATIC_RETRY_ENABLED")
+        request = {"url": url, "method": "GET", "automatic_retry_count": 0,
+                   "sec_configuration_sha256": sha256_file(
+                       path=ROOT / "config/sec_config.json")}
+        plan = {"company_id": company_id, "requirement_id": REQUIREMENT_ID,
+                "source_dependency": dependency, "request": request,
+                "source_ledger_before_sha256": sha256_bytes(content=before),
+                "source_row_count_before": len(old_rows),
+                # Both halves, and in both modes. A URL being a real dependency
+                # is not the same as this grant allowing it to be fetched; and a
+                # scope check only the live path runs is a check nothing ever
+                # exercises, so the recorded session carries a scope too.
+                "scope_admission": admitted}
+        path, intent = self.ledger.claim(
+            channel=SEC, request_digest=content_hash(value=request),
+            plan_id=content_hash(value=plan), purpose=admitted["purpose"])
+        self.claimed_slots.append({"intent_id": intent["intent_id"],
+                                   "ordinal": intent["ordinal"],
+                                   "channel": intent["channel"]})
+        _exclusive_write_json(path=path / "sec-plan.json", value=plan)
+        document_name = Path(urlsplit(url).path).name
+        _need(bool(document_name), "ISSUE_47_DOCUMENT_NAME_MISSING")
+        target = (self.data_root / "evidence/issue47-historical"
+                  / ("%04d" % intent["ordinal"]) / document_name)
+        if self.ledger.live:
+            # Re-checked immediately before the only socket in this module.
+            self._check()
+            result = client.fetch(url=url, purpose=LIVE_PURPOSE, local_path=target)
+        else:
+            result = client._persist_result(
+                url=url, status_code=self.response_status,
+                body=self._recorded_body(url=url),
+                headers={"Content-Type": dependency["media_type"]},
+                local_path=target,
+                error="" if self.response_status == 200 else "RECORDED_HTTP_FAILURE")
+            client._append_log_row(result=result, purpose=RECORDED_PURPOSE, attempt=0)
+        receipt = self._receipt(intent=intent, path=path, log=log, before=before,
+                                old_rows=old_rows, url=url, result=result,
+                                dependency=dependency, company_id=company_id)
+        terminal = self.ledger.finish(path=path, intent=intent, receipt=receipt)
+        return receipt, terminal
 
     def calls_this_session(self):
         """What this session actually claimed, by channel.
@@ -665,6 +1073,10 @@ REQUIRED_WIRING_EVIDENCE = (
     # declaration the gate admits from has to be pinned by the same receipt as
     # the gate.
     "scripts/vnext/historical_governance_sources.py",
+    # What carries an acquisition from the owner's machine to a checkout, and
+    # what rebuilds and registers it there. Both ends are part of the path a
+    # grant is spent on, so the receipt pins them with the rest.
+    "scripts/vnext/historical_source_export.py",
     "tests/vnext/test_historical_sec_session.py",
     "tools/vnext_historical_sec.py",
     "tools/vnext_historical_wiring.py",
@@ -815,9 +1227,11 @@ def _verify_case_accounting(*, run):
 
 
 def _allowance_ledger(*, allowance, root, live):
+    # The location is not in the binding: the live session separately requires
+    # the ledger to be the granted root, and a binding that named its own path
+    # would make an intact ledger unreadable wherever it was copied for review.
     body = {"record_type": LEDGER_TYPE, "requirement_id": REQUIREMENT_ID,
-            "root": str(root), "limits": list(
-                allowance["maximum_additional_provider_paid_sec_calls"]),
+            "limits": list(allowance["maximum_additional_provider_paid_sec_calls"]),
             "purposes": list(allowance["scope"]["purposes"]),
             "execution_mode": "LIVE" if live else "RECORDED_TEST_ONLY"}
     return HistoricalCallLedger(factory=_FACTORY, root=root,

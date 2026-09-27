@@ -119,9 +119,28 @@ def amendment_admission(*, repo_root: Path, company_id: str, metric_ids: Sequenc
         raise AmendmentAdmissionError(
             "HISTORICAL_AMENDMENT_MIXED_INPUT_CLASSES:" + ",".join(sorted(required)))
     required = required.pop()
-    scopes = [_scope(repo_root=repo_root, company_id=company_id, prepared=prepared,
-                     amendment=amendment) for amendment in prepared["amendments"]]
-    blocked = [scope for scope in scopes if required not in scope["unchanged_input_classes"]]
+    sources = [(_read_source(repo_root=repo_root, company_id=company_id, prepared=prepared,
+                             filing=prepared["filing"]),
+                _read_source(repo_root=repo_root, company_id=company_id, prepared=prepared,
+                             filing=amendment)) for amendment in prepared["amendments"]]
+    scopes = [_scope(company_id=company_id, prepared=prepared, original=original,
+                     source=source) for original, source in sources]
+    # The owner's per-filing admission, asked only where the policy left the
+    # class uncleared and only for statement values. An amendment it does not
+    # list gets the policy's answer unchanged; a listed one whose evidence no
+    # longer holds stays refused, with the failed conditions named.
+    per_filing = [None] * len(scopes)
+    if required == STATEMENT_INPUT_CLASS:
+        from .historical_part_iii_admission import statement_values_admission
+        for index, (scope, (original, source)) in enumerate(zip(scopes, sources)):
+            if required not in scope["unchanged_input_classes"]:
+                per_filing[index] = statement_values_admission(
+                    repo_root=repo_root, input_class=required, company_id=company_id,
+                    cik=prepared["entity"], original=original, amendment=source,
+                    metric_ids=metric_ids)
+    blocked = [(scope, admission) for scope, admission in zip(scopes, per_filing)
+               if required not in scope["unchanged_input_classes"]
+               and not (admission is not None and admission["admitted"])]
     record = {"record_type": "HISTORICAL_AMENDMENT_ADMISSION", "schema_version": 1,
               "company_id": company_id, "metric_ids": metric_ids,
               "required_input_class": required,
@@ -130,7 +149,10 @@ def amendment_admission(*, repo_root: Path, company_id: str, metric_ids: Sequenc
                               "classification": scope["classification"],
                               "issues": scope["issues"],
                               "unchanged_input_classes": scope["unchanged_input_classes"],
-                              "scope_id": scope["scope_id"]} for scope in scopes],
+                              "scope_id": scope["scope_id"],
+                              **({"per_filing_admission": admission}
+                                 if admission is not None else {})}
+                             for scope, admission in zip(scopes, per_filing)],
               "policy_hash": scopes[0]["policy_hash"] if scopes else None,
               "admitted": not blocked, "production_authorized": False}
     if blocked:
@@ -139,35 +161,51 @@ def amendment_admission(*, repo_root: Path, company_id: str, metric_ids: Sequenc
             + ",".join(sorted({scope["classification"]
                                + ("(" + ";".join(scope["issues"]) + ")"
                                   if scope["classification"] == "UNCLASSIFIED" else "")
-                               for scope in blocked})))
+                               + ("[PER_FILING_ADMISSION_FAILED:" + ";".join(admission["failed"])
+                                  + "]" if admission is not None else "")
+                               for scope, admission in blocked})))
     return record
 
 
-def _scope(*, repo_root: Path, company_id: str, prepared, amendment):
-    """One amendment's classification, proved from the saved originals."""
+def per_filing_admissions(record) -> list:
+    """The per-filing admissions a decision relied on, for the result to carry.
+
+    Empty when the policy alone decided, which is every period but the listed
+    ones - so a result that did not rely on one is unchanged by this module.
+    """
+    return [{"amendment_accession": item["accession"],
+             "admission_id": item["per_filing_admission"]["admission_id"],
+             "conditions": item["per_filing_admission"]["conditions"]}
+            for item in record["amendments"]
+            if item.get("per_filing_admission", {}).get("admitted")]
+
+
+def _read_source(*, repo_root: Path, company_id: str, prepared, filing):
+    """One saved filing read as the classifier and the note reader take it."""
     from .annual_update import saved_source
     from .sources import raw_blob_record, source_reference_record
     from sec_urls import accession_document_url
+    url = accession_document_url(cik=int(prepared["entity"]),
+                                 accession=filing["accessionNumber"],
+                                 document_name=filing["primaryDocument"])
+    saved = saved_source(repo_root=repo_root, url=url, accession=filing["accessionNumber"])
+    if saved is None:
+        raise AmendmentAdmissionError("HISTORICAL_AMENDMENT_SOURCE_NOT_SAVED:" + url)
+    proof = saved["proof"]
+    blob = raw_blob_record(repo_root=repo_root,
+                           repo_relative_path=proof["request_repo_relative_path"],
+                           media_type="text/html")
+    reference = source_reference_record(
+        raw_blob=blob, company_id=company_id, source_url=url,
+        accession=filing["accessionNumber"], document_name=filing["primaryDocument"],
+        source_role="annual_source_identity",
+        request_attempt_id=proof["request_attempt_id"])
+    return {"raw": saved["raw"], "blob": blob, "reference": reference, "filing": filing}
 
-    def read(filing):
-        url = accession_document_url(cik=int(prepared["entity"]),
-                                     accession=filing["accessionNumber"],
-                                     document_name=filing["primaryDocument"])
-        saved = saved_source(repo_root=repo_root, url=url, accession=filing["accessionNumber"])
-        if saved is None:
-            raise AmendmentAdmissionError("HISTORICAL_AMENDMENT_SOURCE_NOT_SAVED:" + url)
-        proof = saved["proof"]
-        blob = raw_blob_record(repo_root=repo_root,
-                               repo_relative_path=proof["request_repo_relative_path"],
-                               media_type="text/html")
-        reference = source_reference_record(
-            raw_blob=blob, company_id=company_id, source_url=url,
-            accession=filing["accessionNumber"], document_name=filing["primaryDocument"],
-            source_role="annual_source_identity",
-            request_attempt_id=proof["request_attempt_id"])
-        return {"raw": saved["raw"], "blob": blob, "reference": reference, "filing": filing}
 
-    original, source = read(prepared["filing"]), read(amendment)
+def _scope(*, company_id: str, prepared, original, source):
+    """One amendment's classification, proved from the saved originals."""
+    amendment = source["filing"]
     try:
         return inspect_annual_amendment_scope(original=original, amendment=source,
                                               company_id=company_id, cik=prepared["entity"])

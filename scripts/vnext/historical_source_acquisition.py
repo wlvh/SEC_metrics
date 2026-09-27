@@ -32,9 +32,11 @@ allowance record before any request, and ``acquisition_allowance`` names
 exactly what is missing rather than failing vaguely.
 """
 import json
+import os
 import re
 from pathlib import Path, PurePosixPath
 
+from .canonical import CanonicalError, strict_json_loads
 from .normal_history_plan import plan_historical_sources
 from .normal_source_authority import ROOT
 
@@ -309,14 +311,30 @@ def _typed_budget_root(budget_root):
     from .continuous_call_policy import POLICY_PATH as ISSUE_28_POLICY
     from .canonical import strict_json_file
     root = PurePosixPath(budget_root)
-    _need(root.is_absolute() and ".." not in root.parts,
+    _need(root.is_absolute() and ".." not in root.parts and not budget_root.startswith("//")
+          and os.path.normpath(budget_root) == budget_root,
           "ISSUE_47_BUDGET_ROOT_NOT_AN_ABSOLUTE_PATH:" + budget_root[:80])
-    issue_28 = PurePosixPath(strict_json_file(path=ROOT / ISSUE_28_POLICY)["budget_root"])
-    _need(root != issue_28 and issue_28 not in root.parents and root not in issue_28.parents,
+    # Compared as the directories they are, not as strings. An independent
+    # review had these accepted: #28's root spelled with a leading "//", a
+    # symlink to it, a case variant of it (one directory on a case-insensitive
+    # filesystem), and /tmp, an ancestor of the checkout. Real paths, compared
+    # casefolded and in both directions, refuse all four.
+    def real(path):
+        return PurePosixPath(os.path.realpath(str(path)).casefold())
+
+    def overlap(a, b):
+        return a == b or a in b.parents or b in a.parents
+
+    issue_28 = strict_json_file(path=ROOT / ISSUE_28_POLICY)["budget_root"]
+    _need(not overlap(real(budget_root), real(issue_28))
+          and not overlap(PurePosixPath(budget_root.casefold()),
+                          PurePosixPath(str(issue_28).casefold())),
           "ISSUE_47_BUDGET_ROOT_OVERLAPS_ISSUE_28_S:" + budget_root[:80])
-    checkout = PurePosixPath(str(ROOT))
-    _need(root != checkout and checkout not in root.parents,
+    ledger, checkout = real(budget_root), real(ROOT)
+    _need(ledger != checkout and checkout not in ledger.parents,
           "ISSUE_47_BUDGET_ROOT_INSIDE_THE_CHECKOUT:" + budget_root[:80])
+    _need(ledger not in checkout.parents,
+          "ISSUE_47_BUDGET_ROOT_CONTAINS_THE_CHECKOUT:" + budget_root[:80])
 
 
 def _typed_grants(scope):
@@ -356,8 +374,18 @@ def github_comment_reader(path):
     a different reader without the production path ever having a default that
     returns a local file.
     """
-    from .annual_candidate import _github
-    return _github(path)
+    from .annual_candidate import AnnualCandidateError, _github
+    # A read that cannot happen is a refusal with a name, not a traceback: the
+    # owner runs this on their own machine, and "gh is missing" and "gh is not
+    # signed in" are the two things most likely to be wrong there.
+    try:
+        return _github(path)
+    except FileNotFoundError:
+        raise HistoricalAcquisitionError(
+            "ISSUE_47_GITHUB_CLI_NOT_FOUND: install gh and run 'gh auth login'")
+    except AnnualCandidateError:
+        raise HistoricalAcquisitionError(
+            "ISSUE_47_GITHUB_READ_FAILED:" + path + " (is gh signed in to github.com?)")
 
 
 def _provenance(*, comment, policy, where):
@@ -372,6 +400,13 @@ def _provenance(*, comment, policy, where):
     _need(comment.get("user", {}).get("login") == policy["approver_login"],
           "ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER:" + where + ":"
           + str(comment.get("user", {}).get("login")))
+    # An approval is what was posted, not what the comment says now. Issue
+    # #28's comment check requires an unedited comment; this one did not, and
+    # an edited approval was accepted in an independent review. An edit is a
+    # new decision and needs a new comment.
+    _need(type(comment.get("created_at")) is str and comment.get("created_at")
+          and comment.get("created_at") == comment.get("updated_at"),
+          "ISSUE_47_DELEGATION_COMMENT_WAS_EDITED:" + where)
 
 
 def _delegation(*, repo_root: Path, policy, reader=None):
@@ -408,10 +443,16 @@ def _delegation(*, repo_root: Path, policy, reader=None):
         _provenance(comment=fetched, policy=policy, where="fetched")
         _need(fetched.get("body") == comment["body"],
               "ISSUE_47_SAVED_DELEGATION_DIFFERS_FROM_THE_ONE_ON_GITHUB")
+    # Strict JSON: a duplicate key is a refusal, not "the last one wins".
+    # Measured in an independent review against plain json.loads: a body
+    # showing one limit with a later duplicate key carrying a hundred times
+    # more was accepted as the larger one on the GitHub-verified path - the
+    # approval the owner read and the one enforced were different.
     try:
-        approved = json.loads(comment["body"])
-    except ValueError:
+        approved = strict_json_loads(text=comment["body"])
+    except CanonicalError:
         raise HistoricalAcquisitionError("ISSUE_47_DELEGATION_BODY_IS_NOT_A_RECORD")
+    _need(type(approved) is dict, "ISSUE_47_DELEGATION_BODY_IS_NOT_A_RECORD")
     _need(approved.get("record_type") == DELEGATION_TYPE,
           "ISSUE_47_DELEGATION_RECORD_TYPE_CHANGED:" + str(approved.get("record_type")))
     _need(approved.get("requirement_id") == REQUIREMENT_ID,
@@ -446,7 +487,12 @@ def acquisition_allowance(*, repo_root: Path, delegation_reader=None):
     _need(path.is_file() and not path.is_symlink(),
           "ISSUE_47_SEC_ALLOWANCE_NOT_GRANTED:" + POLICY_PATH + ":needs "
           + ",".join(REQUIRED_POLICY_FIELDS))
-    policy = json.loads(path.read_text(encoding="utf-8"))
+    try:
+        policy = strict_json_loads(text=path.read_text(encoding="utf-8"))
+    except CanonicalError:
+        raise HistoricalAcquisitionError("ISSUE_47_SEC_ALLOWANCE_IS_NOT_STRICT_JSON:"
+                                         + POLICY_PATH)
+    _need(type(policy) is dict, "ISSUE_47_SEC_ALLOWANCE_IS_NOT_STRICT_JSON:" + POLICY_PATH)
     missing = [field for field in REQUIRED_POLICY_FIELDS if field not in policy]
     _need(not missing, "ISSUE_47_SEC_ALLOWANCE_INCOMPLETE:" + ",".join(missing))
     _need(policy["requirement_id"] == REQUIREMENT_ID,
@@ -456,6 +502,82 @@ def acquisition_allowance(*, repo_root: Path, delegation_reader=None):
     policy["approved_delegation"] = _delegation(repo_root=repo_root, policy=policy,
                                                 reader=delegation_reader)
     return policy
+
+
+# What the owner approved, byte for byte. The delegation names the text as the
+# proposal's ``the_comment_body_as_text`` at commit 92da6f2f and this digest;
+# the file below holds those bytes, and registration requires the comment on
+# GitHub to be the same bytes. A digest pinned here rather than read from the
+# proposal is the point: a proposal edited after the approval must not move
+# what the approval means.
+APPROVED_BODY_SHA256 = "71439c2ecaa5d936b8b4e0b14f612c1b1cee2bd3cc99113d14dbd264862e8394"
+APPROVED_BODY_PATH = ("docs/evidence/issue47_history/acquisition-wiring/"
+                      "approval-comment-body.json")
+APPROVAL_RECORD_PATH = "docs/evidence/issue47_history/acquisition-wiring/approval-comment.json"
+WIRING_RECEIPT_PATH = ("docs/evidence/issue47_history/acquisition-wiring/"
+                       "offline-wiring-receipt.json")
+# The fields of a fetched comment the record keeps: the ones the provenance
+# check reads, the body, and when it was written and edited.
+_RECORD_FIELDS = ("id", "html_url", "issue_url", "author_association", "created_at",
+                  "updated_at", "body")
+
+
+def register_approval(*, repo_root: Path, comment_url, reader):
+    """Write the allowance from an approval comment that is already on GitHub.
+
+    Nothing here writes to GitHub. The comment is read through ``reader``; its
+    body must be the approved bytes (pinned above, and equal to the committed
+    body file), its author the trusted approver and its place this issue. Then
+    the record and the policy are written from what was read, and the result is
+    put through ``acquisition_allowance`` with the same reader, so the file that
+    grants is checked by the gate that will read it, not by this function's
+    own idea of it. Registering the same approval again is a no-op; a policy
+    that already says something else is refused rather than overwritten.
+    """
+    from .canonical import sha256_bytes
+    repo_root = Path(repo_root)
+    match = _comment_url(repository=TRUSTED_REPOSITORY).match(str(comment_url))
+    _need(match is not None, "ISSUE_47_APPROVAL_URL_IS_NOT_THIS_ISSUE_S_COMMENT:"
+          + str(comment_url)[:120])
+    approved = (repo_root / APPROVED_BODY_PATH).read_bytes()
+    _need(sha256_bytes(content=approved) == APPROVED_BODY_SHA256,
+          "ISSUE_47_APPROVED_BODY_FILE_CHANGED:" + APPROVED_BODY_PATH)
+    fetched = reader("repos/" + TRUSTED_REPOSITORY + "/issues/comments/" + match[1])
+    _need(type(fetched) is dict and type(fetched.get("body")) is str,
+          "ISSUE_47_DELEGATION_FETCH_DID_NOT_RETURN_A_COMMENT")
+    _need(fetched["body"].encode("utf-8") == approved,
+          "ISSUE_47_POSTED_BODY_IS_NOT_THE_APPROVED_TEXT:sha256="
+          + sha256_bytes(content=fetched["body"].encode("utf-8")))
+    body = json.loads(approved.decode("utf-8"))
+    policy = {"requirement_id": body["requirement_id"], "repository": TRUSTED_REPOSITORY,
+              "approver_login": TRUSTED_APPROVER, "delegation_url": fetched.get("html_url"),
+              "delegation_body_sha256": APPROVED_BODY_SHA256,
+              "delegation_record_path": APPROVAL_RECORD_PATH,
+              "budget_root": body["budget_root"],
+              "maximum_additional_provider_paid_sec_calls":
+                  body["maximum_additional_provider_paid_sec_calls"],
+              "scope": body["scope"], "sec_wiring_receipt_path": WIRING_RECEIPT_PATH}
+    _provenance(comment=fetched, policy=policy, where="fetched")
+    record = {field: fetched.get(field) for field in _RECORD_FIELDS}
+    record["user"] = {key: fetched.get("user", {}).get(key) for key in ("login", "id", "type")}
+    outputs = {POLICY_PATH: policy, APPROVAL_RECORD_PATH: record}
+    for relative, value in outputs.items():
+        data = (json.dumps(value, ensure_ascii=False, indent=1, sort_keys=True)
+                + "\n").encode("utf-8")
+        path = repo_root / relative
+        if path.exists():
+            _need(path.read_bytes() == data,
+                  "ISSUE_47_ALLOWANCE_ALREADY_REGISTERED_DIFFERENTLY:" + relative)
+            continue
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("xb") as handle:
+            handle.write(data)
+    allowance = acquisition_allowance(repo_root=repo_root, delegation_reader=reader)
+    return {"status": "APPROVAL_REGISTERED", "delegation_url": allowance["delegation_url"],
+            "delegation_body_sha256": allowance["delegation_body_sha256"],
+            "budget_root": allowance["budget_root"],
+            "limits": allowance["maximum_additional_provider_paid_sec_calls"],
+            "written": sorted(outputs), "calls": [0, 0, 0]}
 
 
 def request_is_in_scope(*, allowance, company_id, dependency, purpose,

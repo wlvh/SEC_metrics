@@ -137,6 +137,11 @@ NEW_RULE_FILES = (
     # from the target filing's own inline facts. It decides whether a B03 value
     # is published or withheld by name, so both roots check it.
     "scripts/vnext/historical_da_scope_candidate.py",
+    # The owner's per-filing admission of two Part III amendments for statement
+    # values, and the record that lists them. They decide whether a listed
+    # period's statement metrics resolve at all, so both roots check them.
+    "scripts/vnext/historical_part_iii_admission.py",
+    "config/issue47_part_iii_statement_admission_v1.json",
 )
 
 # One module the parent's authority does not name although its own named code

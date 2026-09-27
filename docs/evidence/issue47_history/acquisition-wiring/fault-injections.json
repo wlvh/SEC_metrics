@@ -194,6 +194,188 @@
     "TheInstallerCarriesTheRuleInputsItClaims.test_the_presentation_path_under_config_is_excluded"
    ],
    "why_they_could_not": "both ask whether something needed is present or something excluded is absent; extra code is neither"
+  },
+  {
+   "id": "RETRY_A_URL_THIS_LEDGER_CLAIMED",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the claimed-URL skip removed from a pass",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_failed_url_is_reported_and_not_claimed_again"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 9 tests in 0.080s FAILED (failures=1)",
+   "why_it_matters": "zero automatic retries is the rule; a pass that re-planned a failed URL as due would fetch it again every pass until the cap",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "TAKE_EVERY_TIER_IN_ONE_PASS",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the end of a pass after a frame-changing tier removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_the_index_then_the_shards_then_the_rest_each_in_its_own_pass"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 9 tests in 0.079s FAILED (failures=1)",
+   "why_it_matters": "an index or shard changes what the frame declares; spending on rows planned against the old one can spend on rows the new frame no longer declares",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "KEEP_SENDING_AFTER_A_429",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the stop on a 403 or 429 removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_an_sec_access_refusal_stops_everything_by_name"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 9 tests in 0.106s FAILED (failures=1)",
+   "why_it_matters": "a fair-access refusal is the SEC saying stop; sending into it is not a decision a batch makes",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "ACCEPT_A_BODY_THAT_ONLY_STARTS_WITH_THE_APPROVAL",
+   "round": "batch-acquisition-export-registration",
+   "edit": "registration compares the fetched body by prefix instead of equality",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_footer_appended_to_the_body_registers_nothing"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 7 tests in 0.011s FAILED (failures=1)",
+   "why_it_matters": "a body with anything appended - a footer, an edit - is a different text from the one approved",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "EXPORT_A_LEDGER_NOBODY_REGISTERED",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the export takes the newest journal entry when the ledger's own is missing",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_an_unregistered_ledger_is_not_exported"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 7 tests in 35.058s FAILED (failures=1)",
+   "why_it_matters": "an export is only ever of what the frozen replay accepted on the machine that made it",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "RESTORE_WITHOUT_CHECKING_THE_ARCHIVE_DIGEST",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the restore's archive digest check removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_changed_archive_byte_is_refused"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 7 tests in 36.751s FAILED (failures=1)",
+   "why_it_matters": "a changed archive must be refused as changed, not decompressed and reinterpreted",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "PLAN_BEFORE_REGISTERING_WHAT_A_DEAD_PROCESS_LEFT",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the start-of-pass registration removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_an_unregistered_ledger_is_not_exported"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 7 tests in 37.077s FAILED (errors=1)",
+   "why_it_matters": "a process that died after capturing and before registering leaves a ledger the planner cannot read; without this the next invocation can never plan again",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "COUNT_WHATEVER_SLOTS_EXIST",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the claim-log check replaced by trusting whichever slots exist",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_deleted_slot_is_a_refusal_not_a_smaller_count"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 5 tests in 49.220s FAILED (failures=1)",
+   "why_it_matters": "deleting a stopped slot released the stop in an independent review; the log is what makes the deletion visible",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "RESTART_A_LEDGER_WHOSE_ROOT_WAS_DELETED",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the anchor removed and the root restarted when its binding is missing",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_deleted_root_is_a_refusal_not_a_fresh_start"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 5 tests in 48.157s FAILED (failures=1)",
+   "why_it_matters": "deleting the root reset the cap to zero in an independent review; the anchor beside it is what a deletion leaves behind",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "TRUST_THE_SLOT_S_OWN_RECORDS",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the comparison of receipt and terminal with the logged row removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_stop_hidden_by_rewriting_the_slot_s_own_records_is_found"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 5 tests in 48.063s FAILED (failures=1)",
+   "why_it_matters": "a slot's receipt and terminal are self-sealed, so a stop can be rewritten away unless they must agree with the row the client appended",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "ALLOW_A_SAME_REQUEST_REDRAW",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the ledger-level refusal of a request digest already claimed removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_same_request_claimed_again_is_a_redraw"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 5 tests in 49.010s FAILED (failures=1)",
+   "why_it_matters": "zero retries holds at the ledger, not only in the pass that plans",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "LOCK_A_ROOT_THROUGH_A_SYMLINK",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the no-symlink check on the root and its parents removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_root_reached_through_a_symlink_is_refused"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 5 tests in 49.123s FAILED (failures=1)",
+   "why_it_matters": "a symlink made #47's lock file land inside #28's root in an independent review",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "PARSE_THE_APPROVAL_LEAVING_THE_LAST_DUPLICATE_KEY",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the approval body parsed with plain json.loads again",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_duplicate_key_is_a_refusal_not_the_last_value"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 2 tests in 0.005s FAILED (failures=1)",
+   "why_it_matters": "a body showing one limit and carrying a larger duplicate key was enforced at the larger one in an independent review",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "ACCEPT_AN_EDITED_APPROVAL",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the unedited-comment requirement removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_an_edited_comment_is_not_the_approval"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 2 tests in 0.006s FAILED (failures=1)",
+   "why_it_matters": "an approval is what was posted; an edit is a new decision and needs a new comment",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
   }
  ],
  "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py, scripts/vnext/historical_event_sources.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",

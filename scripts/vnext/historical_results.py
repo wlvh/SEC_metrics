@@ -82,13 +82,18 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
     applicable = sorted(metric_id for metric_id, route in routes.items()
                         if metric_is_applicable(applicability=route["applicability"],
                                                 traits=traits))
-    amendment_error = None
+    amendment_error, per_filing = None, []
     if prepared["amendments"] and applicable:
         from .historical_amendment_admission import (AmendmentAdmissionError,
-                                                     amendment_admission)
+                                                     amendment_admission,
+                                                     per_filing_admissions)
         try:
-            amendment_admission(repo_root=repo_root, company_id=company_id,
-                                metric_ids=applicable, prepared=prepared)
+            # A result that relied on the owner's per-filing admission says so,
+            # with the conditions that held; one the policy alone decided is
+            # unchanged.
+            per_filing = per_filing_admissions(amendment_admission(
+                repo_root=repo_root, company_id=company_id, metric_ids=applicable,
+                prepared=prepared))
         except AmendmentAdmissionError as error:
             # Carried per metric rather than raised for the family: the
             # metrics it does reach still report it, and it is the same
@@ -107,6 +112,28 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
                      if prepared["subject_policy"]["mode"] != "CONTINUOUS_PRIMARY" else None)
     period = prepared["table_input"]["target_period"]
     registry = next(r for r in _registry_rows(repo_root=repo_root) if r["company_id"] == company_id)
+    # The frozen graph asks the registry row whether a REQUIRE_CONTINUOUS
+    # metric's period is comparable. That row describes the company now - a
+    # successor and its predecessor - and the ordinary route only ever asks it
+    # about the successor's own year, where the answer is right. A predecessor's
+    # own year is a different question: its subject policy is that registrant's
+    # CONTINUOUS_PRIMARY, and its prior is that registrant's own prior. Measured
+    # on Paramount Global's FY2024, once its statement inputs were admitted:
+    # reported net income, free cash flow and interest coverage all came back
+    # ENTITY_CONTINUITY_NOT_COMPARABLE for a full, single-registrant year. That
+    # is a non-answer where a value exists. So the period's own continuity is
+    # asked of the period's subject policy, and said in the result's detail;
+    # the successor's year and every continuous company are unchanged.
+    period_continuity = None
+    if (prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY"
+            and registry["entity_continuity_status"] != "continuous"):
+        period_continuity = {"company_registry_status": registry["entity_continuity_status"],
+                             "period_subject_policy": prepared["subject_policy"]["mode"],
+                             "period_registrant_cik": prepared["subject_policy"]["selected_cik"],
+                             "cross_entity_combination_authorized": False}
+        _need(prepared["subject_policy"].get("cross_entity_combination_authorized") is False,
+              "HISTORICAL_COMPANYFACTS_PERIOD_CONTINUITY_WITH_COMBINATION")
+        registry = {**registry, "entity_continuity_status": "continuous"}
     reader = _Sources(repo_root, company_id, prepared["entity"])
     inventory = reader.read(submissions_url(cik=int(prepared["entity"])),
                             role="sec_submissions_inventory", media_type="application/json")
@@ -232,6 +259,10 @@ def resolve_historical_companyfacts_metrics(*, repo_root: Path, company_id: str,
                     graph = _deterministic_metric_graph(context=context, company_id=company_id,
                                                         metric_id=metric_id)
                     result, trace = graph["result"], graph["trace"]
+                if per_filing:
+                    detail = {**(detail or {}), "amendment_per_filing_admission": per_filing}
+                if period_continuity is not None and route["continuity_policy"] == "REQUIRE_CONTINUOUS":
+                    detail = {**(detail or {}), "period_continuity": period_continuity}
             except (*_SOURCE_ERRORS, NormalCompanyfactsError, DecimalException) as error:
                 graph = {"claims": [], "projection_claims": [], "observation": None}
                 # An approved policy refusal and an unresolved route are two

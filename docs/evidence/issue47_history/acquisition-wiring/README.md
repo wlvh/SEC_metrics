@@ -1,5 +1,102 @@
 # Issue #47's acquisition chain, exercised before it is authorized
 
+## 2026-09-27: what the owner runs, and why it has to be the owner
+
+The owner approved the `[0, 0, 1354]` cap and its grants as proposed
+(`../owner-decisions-2026-09-27/decisions.json`). Two things this session
+cannot do, both environmental rather than a question about the decision:
+
+- **Post the approval byte for byte.** Every comment posted from this
+  environment ends with an attribution footer. The gate parses the comment
+  body as the approval record and pins its SHA-256, so a body with a footer
+  is not the approved text - a test here requires registration to refuse it.
+- **Hold the ledger.** The approved ledger root is
+  `/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-sec-v1`, on
+  the owner's machine. A cumulative ceiling is only as good as the count's
+  durability; a cloud container is reclaimed, and a count that vanishes with
+  it would let the same allowance be spent twice.
+
+So, from an up-to-date checkout of this branch on that machine (the Python
+that ran Issue #28's SEC tools there, and `gh` signed in to github.com):
+
+```
+gh issue comment 47 --repo wlvh/SEC_metrics \
+  --body-file docs/evidence/issue47_history/acquisition-wiring/approval-comment-body.json
+python3 tools/vnext_historical_sec.py run --approval-url <the URL gh printed>
+git add config/issue47_historical_calls_v1.json \
+  docs/evidence/issue47_history/acquisition-wiring/approval-comment.json evidence/issue47_acquired
+git commit -m "Record the Issue #47 SEC acquisition" && git push
+```
+
+`run` reads the comment back from GitHub and registers it only if the body is
+exactly the approved bytes (`approval-comment-body.json`, SHA-256
+`71439c2e…8394`), the author is the owner and the comment is on issue 47; it
+then acquires company by company inside the grants and writes the registered
+acquisition to `evidence/issue47_acquired/` (row archives plus a sealed
+index). It stops by name at the cap, at an unknown outcome, at a 403 or 429,
+or if a company's frame cannot be computed while the ledger is blocked, and it
+never claims the same URL twice. Run again after any stop and it continues
+from the ledger; the count carries over. `acquire --max-captures 5` is a
+smaller first run if wanted. Exit code 3 means it stopped or a company
+reported an error; the summary is kept in `<ledger root>/runs/`.
+
+On the other side, `restore --export evidence/issue47_acquired --out <new dir>`
+rebuilds a data root from the trusted baseline plus the export, runs the
+frozen replay over it and registers it in that checkout's journal. What that
+proves and what it does not is written into the restored `import-record.json`.
+
+### What the batch path is, and the two defects building it found
+
+`capture` recomputed the whole frame and replayed the whole checkpoint for
+every request (22-30 s each, growing). `capture_pending` takes one pass per
+tier - the submissions index, then the history shards, then everything else,
+because the first two change what the frame declares - and `acquire` repeats
+passes per company until one takes nothing. Every per-request check stays.
+
+Running it over the real planner with every response a 404 found two defects
+the single-capture path could never reach: the event declaration let the
+reader's `LATEST_SOURCE_REQUEST_FAILED` escape, so the second pass's frame
+raised at the first failed annual primary instead of declaring the rest
+(`historical_event_sources._read_saved` now reports it as a named hole); and
+deferring registration to the end of a company left the next pass's planner
+reading an unregistered ledger (`ORDINARY_SOURCE_UNREGISTERED_LEDGER`), so
+every capturing pass registers, and a pass that finds the ledger unregistered
+- what a process that died before registering leaves - registers first.
+
+The LIVE branch (`SecHttpClient.fetch`, a LIVE checkpoint with
+`real_sec_credit: true`) runs in a test over a replaced `urlopen` with the
+journal redirected: one attempt per URL including a 503, one client so the
+configured pacing spans requests, and the frozen replay accepts the result.
+Nothing in this environment has sent a request to sec.gov.
+
+### What the independent review of the model path changed here
+
+An independent review of the D04 egress patch
+(`../model-egress/independent-review-2026-09-27/`) found three weaknesses that
+this ledger and gate shared, and they are fixed before the owner spends the
+SEC allowance rather than after:
+
+- **A deleted slot or root reset the count.** The ledger now carries Issue
+  #28's protections: a binding written on first use and an initialization
+  anchor beside the root, an append-only `claims.jsonl` the slots must match
+  one for one, a `previous_intent_id` chain, a lock on the directory itself,
+  no symlink in the root or its parents, and a refusal to claim the same
+  request twice. A stop can no longer be hidden by rewriting a slot's
+  self-sealed receipt and terminal: both must agree with the request-log row
+  they name.
+- **Duplicate JSON keys and edited comments were accepted.** The approval body
+  and the policy are read with the repository's strict parser, and a comment
+  whose `updated_at` differs from its `created_at` is not the approval.
+- **The ledger root was compared as a string.** `//`, symlinked and case-variant
+  spellings of #28's root and an ancestor of the checkout are now refused by
+  comparing real paths both ways.
+
+Each is held by a case that fails when the protection is removed
+(`batch-injections.json`). What none of this changes, and the review says
+plainly, is what an approval comment proves: that it was posted by the
+owner's account. The owner delegated posting under that account knowing the
+agent can post as it; the approved bytes are pinned by digest either way.
+
 `tools/vnext_historical_sec.py capture` used to refuse with
 `ISSUE_47_SEC_EXECUTION_NOT_WIRED` **even when an allowance existed**, because
 the execution path did not exist. It was the plainest counter-example to a

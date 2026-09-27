@@ -13,6 +13,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT as ROOT
+from tests.vnext.test_historical_part_iii_admission import without_the_owner_s_listing
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
 from vnext import historical_amendment_admission as admission
 from vnext import historical_debt_results as debt
@@ -235,7 +236,7 @@ class AnAmendmentTheClassifierRefusesOnItsMarkupTest(unittest.TestCase):
                                                            period_selection=chosen)
 
     def _admit(self, metric_ids):
-        with original_sources_only():
+        with original_sources_only(), without_the_owner_s_listing():
             return admission.amendment_admission(repo_root=ROOT, company_id=PARAMOUNT,
                                                  metric_ids=metric_ids, prepared=self.prepared,
                                                  event_metric_ids=("C01", "E01"))
@@ -290,7 +291,8 @@ class AnApprovedRefusalIsAWithheldResultOnEveryRouteTest(unittest.TestCase):
     The Company Facts route carries an approved policy refusal as the metric's
     withheld result; the zero-AI route used to fail the attempt instead, so
     FY2024 had withheld public rows for B04 and no row at all for B01 or C01
-    for the same refusal. Both routes are asked here for one year.
+    for the same refusal. Both routes are asked here for one year, without the
+    owner's per-filing listing, which since 2026-09-27 admits this year.
     """
 
     @classmethod
@@ -298,7 +300,7 @@ class AnApprovedRefusalIsAWithheldResultOnEveryRouteTest(unittest.TestCase):
         from vnext.historical_results import resolve_historical_companyfacts_metrics
         from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
         chosen = _select(PARAMOUNT, report_end="2024-12-31")
-        with original_sources_only():
+        with original_sources_only(), without_the_owner_s_listing():
             cls.zero_ai = {metric: resolve_historical_zero_ai_metric(
                 repo_root=ROOT, company_id=PARAMOUNT, metric_id=metric,
                 period_selection=chosen) for metric in ("B01", "C01")}
@@ -331,7 +333,7 @@ class AnApprovedRefusalIsAWithheldResultOnEveryRouteTest(unittest.TestCase):
         failed the attempt on an incomplete dependency set."""
         from vnext.historical_zero_ai_results import resolve_historical_zero_ai_metric
         chosen = _select(PARAMOUNT, report_end="2024-12-31")
-        with original_sources_only():
+        with original_sources_only(), without_the_owner_s_listing():
             ratio = resolve_historical_zero_ai_metric(repo_root=ROOT, company_id=PARAMOUNT,
                                                       metric_id="B03", period_selection=chosen)
         results = {record["metric_id"]: record for record in ratio["records"]
