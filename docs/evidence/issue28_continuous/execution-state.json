@@ -4754,6 +4754,9 @@
     "shard1_prior_head_same_case": "SUCCESS_335_469_SECONDS_WITH_360_SECOND_LIMIT",
     "next_scoped_override_seconds": 480,
     "next_scoped_override_commit": "150c1115ce46e02c13e37b533f8a85ed8d8a99c5",
+    "scoped_override_green_head": "9fe1b34ef961d107bd18740d1a0cdad929a78189",
+    "scoped_override_green_run": 36334148033,
+    "scoped_override_green_jobs": "15_OF_15_SUCCESS_BOTH_SOURCE_SHARDS_AND_AGGREGATE",
     "evidence": "docs/evidence/issue28_continuous/c04-resume-timing-20260927/README.md",
     "real_calls": [0, 0, 0]
   },
@@ -4799,5 +4802,40 @@
     "true_new_fiscal_year_update_proven": false,
     "new_real_calls": [0, 0, 0],
     "evidence": "docs/evidence/issue28_continuous/c04-mixed-one-pass-20260928/README.md"
+  },
+  "c04_historical_b01_prestate_20260928": {
+    "status": "LOCAL_FINAL_CODE_TESTED_SCOPED_INDEPENDENT_REVIEW_PENDING",
+    "scope_paths": [
+      "scripts/vnext/ordinary_refresh_cycle.py",
+      "scripts/vnext/continuous_sec_acquisition.py",
+      "tests/vnext/test_ordinary_refresh_cycle.py",
+      "tests/vnext/test_c04_source_only_install.py"
+    ],
+    "v13_closure": "sha256:697c0216fc2099e2c18c2946d4a654f7bd0fe716ed8b2767fa82b1df0433dfa8",
+    "v14_closure": "sha256:1dff7e0e859bda416c94267680aa8b3d60552df4344cda0b5ac993e2f4c96456",
+    "short_tests": "14_PASS_FINAL",
+    "fast_suite": "132_SELECTORS_PASS_176_360_SECONDS_FINAL",
+    "historical_b01_positive_and_pointer_tamper": "1_PASS_255_934_SECONDS_FINAL",
+    "old_mixed_c04_material_regressions": "2_PASS_652_851_SECONDS_FINAL",
+    "default_c04_source_only": "1_PASS_NO_PRESTATE_FIELD",
+    "default_sec_acquisition": "1_PASS_118_382_SECONDS_SEC_MODULE_UNCHANGED_AFTER_TEST",
+    "historical_old_b01_installed_package_read": "PASS_WITH_OLD_INSTALLED_RUNTIME_NOT_CURRENT_CHECKOUT",
+    "same_history_continuation_across_v13_code_versions_proven": false,
+    "real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/README.md",
+    "shared_with_47": {
+      "file": "scripts/vnext/continuous_sec_acquisition.py",
+      "function": "SecAcquisitionSession.capture",
+      "new_parameters": ["ordinary_prestate_root", "ordinary_prestate_metric_ids"],
+      "default_value": null,
+      "default_plan_extra_fields": false,
+      "return_and_record_types_changed": false,
+      "v13_execution_binding_changed": true,
+      "v14_execution_binding_changed": true,
+      "normal_run_v3_binding_function_changed": false,
+      "normal_binding_bytes_change_with_v13_closure": true,
+      "historical_installed_readback_proven_on_current_host": true,
+      "potential_downstream_impact": "#47 stacked branch must rebind its own current dependent snapshot if it integrates this PR43 head; #28 did not touch #47 files or runtime."
+    }
   }
 }

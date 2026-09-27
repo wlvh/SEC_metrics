@@ -148,10 +148,14 @@ class SecAcquisitionSession:
                      'SEC_ACQUISITION_OFFLINE_EVIDENCE_CHANGED')
 
     def capture(self,*,company_id,url,refresh_metadata=False,control_id=None,
-                source_only_c04=False):
+                source_only_c04=False,ordinary_prestate_root=None,
+                ordinary_prestate_metric_ids=None):
         """Capture one declared dependency; no loop or automatic retry."""
         need(type(source_only_c04) is bool and not (source_only_c04 and control_id is not None),
              'SEC_ACQUISITION_C04_SOURCE_MODE_INVALID')
+        need((ordinary_prestate_root is None)==(ordinary_prestate_metric_ids is None)
+             and (ordinary_prestate_root is None or source_only_c04),
+             'SEC_ACQUISITION_ORDINARY_PRESTATE_SCOPE_INVALID')
         from .normal_source_requirements import discover_saved_source_requirements
         self._check();validate_official_sec_url(url=url)
         with self.ledger.locked():
@@ -182,6 +186,11 @@ class SecAcquisitionSession:
                 'source_ledger_before_sha256':sha256_bytes(content=before),'source_row_count_before':len(old_rows)}
             if source_only_c04:
                 plan['source_only_processing_route']='C04_REGISTRATION_FOUR_FORM_UPDATE_V1'
+            if ordinary_prestate_root is not None:
+                from .ordinary_refresh_cycle import _ordinary_pre_capture_state
+                plan['ordinary_pre_capture_state'] = _ordinary_pre_capture_state(
+                    state_root=ordinary_prestate_root, company_id=company_id,
+                    metric_ids=ordinary_prestate_metric_ids)
             if control_id is not None:
                 plan['historical_semantic_control_id']=control_id
                 plan['historical_source_scope']=discovery['scope']

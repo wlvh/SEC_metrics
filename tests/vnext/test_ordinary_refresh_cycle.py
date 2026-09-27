@@ -19,6 +19,44 @@ import io
 
 
 class OrdinaryRefreshBoundaryTest(unittest.TestCase):
+    def test_c04_precapture_state_binds_prior_pointer_and_attempt_inventory(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            args = {'state_root': root, 'company_id': 'marriott_international',
+                    'metric_ids': ['B01', 'C04']}
+            first = refresh._ordinary_pre_capture_state(**args)
+            metric = root/'marriott_international/metrics/B01'
+            metric.mkdir(parents=True)
+            (metric/'configuration.json').write_bytes(b'{}\n')
+            configured = refresh._ordinary_pre_capture_state(**args)
+            self.assertNotEqual(first['prestate_id'], configured['prestate_id'])
+            (metric/'current.json').write_bytes(b'{"latest_attempt":null}\n')
+            historical = refresh._ordinary_pre_capture_state(**args)
+            self.assertNotEqual(configured['prestate_id'], historical['prestate_id'])
+            work = metric/'attempts'/('a'*32)
+            work.mkdir(parents=True)
+            (work/'intent.json').write_bytes(b'{}\n')
+            attempted = refresh._ordinary_pre_capture_state(**args)
+            self.assertNotEqual(historical['prestate_id'], attempted['prestate_id'])
+            (work/'terminal.json').write_bytes(b'{}\n')
+            self.assertNotEqual(attempted['prestate_id'],
+                                refresh._ordinary_pre_capture_state(**args)['prestate_id'])
+            (metric/'other.json').symlink_to(metric/'current.json')
+            (metric/'current.json').unlink()
+            (metric/'current.json').symlink_to(metric/'other.json')
+            with self.assertRaisesRegex(ValueError,
+                    'ORDINARY_REFRESH_PRESTATE_PATH_ALIAS'):
+                refresh._ordinary_pre_capture_state(**args)
+
+    def test_c04_precapture_scope_does_not_extend_other_acquisition_modes(self):
+        session = object.__new__(SecAcquisitionSession)
+        with self.assertRaisesRegex(ValueError,
+                'SEC_ACQUISITION_ORDINARY_PRESTATE_SCOPE_INVALID'):
+            session.capture(company_id='marriott_international',
+                url='https://data.sec.gov/submissions/CIK0001048286.json',
+                ordinary_prestate_root=Path('/unexecuted-state'),
+                ordinary_prestate_metric_ids=['B01', 'C04'])
+
     def test_config_written_before_failed_state_read_is_not_an_attempt(self):
         from vnext import ordinary_update_cycle as update
         with tempfile.TemporaryDirectory() as temporary:

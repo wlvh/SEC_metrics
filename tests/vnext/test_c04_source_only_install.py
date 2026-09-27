@@ -58,6 +58,7 @@ class C04SourceOnlyInstallTest(unittest.TestCase):
             plan = strict_json_file(path=root/'ledger/calls/0001/sec-plan.json')
             self.assertEqual('C04_REGISTRATION_FOUR_FORM_UPDATE_V1',
                              plan['source_only_processing_route'])
+            self.assertNotIn('ordinary_pre_capture_state', plan)
             with self.assertRaisesRegex(ValueError, 'Immutable receipt bytes differ'):
                 initialize_source_inputs(root=source, requirement=session.requirement)
             (source/'catalog/zero_ai_public_projection.json').write_bytes(b'{}\n')
@@ -67,6 +68,90 @@ class C04SourceOnlyInstallTest(unittest.TestCase):
 
 
 class C04MixedSourceRouteMaterialTest(unittest.TestCase):
+    def test_historical_b01_pointer_without_new_attempt_can_resume(self):
+        from vnext import ordinary_update_cycle as update
+        from vnext.ordinary_processing_source import current_processing_source
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
+            source = session.data_root
+            with session.ledger.locked():
+                initialize_source_inputs(root=source, requirement=session.requirement)
+            (source/'config/issue28_normal_results_v2.json').write_bytes(
+                b'{"historical_processing_copy":true}\n')
+            (source/'config/ordinary_public_projection_v1.json').write_bytes(
+                b'{"historical_processing_copy":true}\n')
+            (source/'catalog/r5/C04_auditor_changes_v3.md').unlink()
+            with session.ledger.locked():
+                processing = current_processing_source(acquisition_root=source,
+                    output_parent=root/'initial-processing',
+                    requirement=session.requirement)
+            b01 = update.run_company(state_root=root/'state/marriott_international',
+                source_root=processing['data_root'], source_identity_root=source,
+                company_id='marriott_international', metric_ids=['B01'],
+                native_assessment_mode='RECORDED_TEST_ONLY',
+                native_assessment_ledger=session.ledger)
+            self.assertEqual('CANDIDATE_READY', b01['metrics'][0]['status'])
+            b01_root = root/'state/marriott_international/metrics/B01'
+            historical_pointer = (b01_root/'current.json').read_bytes()
+            urls = [submissions_url(cik=1048286), companyfacts_url(cik=1048286)]
+            with (ROOT/'evidence/requests_log.csv').open(newline='') as handle:
+                rows = [row for row in csv.DictReader(handle)
+                        if row['status_code'] == '200' and row['source_url'] in urls]
+            bodies = {url: (ROOT/next(row['repo_relative_path']
+                       for row in reversed(rows) if row['source_url'] == url)).read_bytes()
+                      for url in urls}
+            captures = []
+            native_capture = session.capture
+            def capture(**kwargs):
+                captures.append(kwargs['url'])
+                session.response = bodies[kwargs['url']]
+                return native_capture(**kwargs)
+            with patch.object(socket.socket, 'connect',
+                              side_effect=AssertionError('NETWORK_FORBIDDEN')), \
+                 patch.object(socket, 'getaddrinfo',
+                              side_effect=AssertionError('DNS_FORBIDDEN')), \
+                 patch('sec_http.urlopen',
+                       side_effect=AssertionError('HTTP_FORBIDDEN')), \
+                 patch.object(session, 'capture', side_effect=capture):
+                with patch('vnext.ordinary_processing_source.current_processing_source',
+                           side_effect=ValueError('INJECTED_PRIVATE_COPY_FAILURE')):
+                    first = refresh.refresh_and_process(session=session,
+                        state_root=root/'state',
+                        company_ids=['marriott_international'],
+                        metric_ids=['B01', 'C04'], max_sec_requests=1,
+                        c04_successor=True)
+                self.assertEqual('FAILED', first['current_processing_source_status'])
+                self.assertEqual(['UPDATE_BLOCKED', 'CANDIDATE_READY'],
+                    [row['status'] for row in first['companies'][0]['updates']['metrics']])
+                self.assertEqual(historical_pointer,
+                    (b01_root/'current.json').read_bytes())
+                prior = root/'prior-report.json'
+                prior.write_text(json.dumps(first, ensure_ascii=False)+'\n')
+                changed = json.loads(historical_pointer)
+                changed['latest_attempt'] = '0'*32
+                (b01_root/'current.json').write_text(json.dumps(changed)+'\n')
+                with self.assertRaisesRegex(ValueError,
+                        'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED'):
+                    refresh.refresh_and_process(session=session,
+                        state_root=root/'state',
+                        company_ids=['marriott_international'],
+                        metric_ids=['B01', 'C04'], max_sec_requests=1,
+                        c04_successor=True, resume_from=prior)
+                self.assertEqual([urls[0]], captures)
+                (b01_root/'current.json').write_bytes(historical_pointer)
+                resumed = refresh.refresh_and_process(session=session,
+                    state_root=root/'state',
+                    company_ids=['marriott_international'],
+                    metric_ids=['B01', 'C04'], max_sec_requests=1,
+                    c04_successor=True, resume_from=prior)
+            self.assertEqual(urls, captures)
+            self.assertEqual('UPDATES_READY', resumed['status'])
+            self.assertIn(resumed['companies'][0]['updates']['metrics'][0]['status'],
+                          {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'})
+            with session.ledger.locked():
+                self.assertEqual([0, 0, 2], session.ledger.snapshot()['counts'])
+
     def test_mixed_old_root_resumes_current_rule_metric_and_c04(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary).resolve()
