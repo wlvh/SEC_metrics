@@ -62,6 +62,16 @@ class RegulatoryFactReviewTest(unittest.TestCase):
         raw = canonical_json_bytes(value=response)
         checked = validate_candidate_response(original_request=original, source=source,
             request=successor, raw_response=raw)
+        checked_once, authenticated = validate_candidate_response(
+            original_request=original, source=source, raw_response=raw,
+            return_authenticated_request=True)
+        self.assertEqual(checked, checked_once)
+        self.assertEqual(successor, authenticated)
+        with self.assertRaisesRegex(ValueError,
+                'D03_ANCHOR_AUTHENTICATED_RETURN_FLAG_INVALID'):
+            validate_candidate_response(original_request=original, source=source,
+                request=successor, raw_response=raw,
+                return_authenticated_request='yes')
         self.assertFalse(checked['source_fact_current_status_proven_by_program'])
         self.assertFalse(checked['native_result_created'])
         self.assertFalse(checked['raw_provider_response_preserved_separately'])

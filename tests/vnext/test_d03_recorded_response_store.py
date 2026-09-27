@@ -73,6 +73,14 @@ class D03RecordedResponseStoreTest(unittest.TestCase):
                 shutil.copytree(root, destination)
             original_packet = (root/'packet.json').read_bytes()
             changed = json.loads(original_packet)
+            changed['module_sha256'] = '0'*64
+            changed['packet_id'] = content_hash(value={key: value
+                for key, value in changed.items() if key != 'packet_id'})
+            (root/'packet.json').write_text(json.dumps(changed)+'\n')
+            with self.assertRaisesRegex(ValueError,
+                    'D03_RECORDED_PACKET_IDENTITY_OR_CREDIT_CHANGED'):
+                replay_offline_response(packet_root=root)
+            changed = json.loads(original_packet)
             changed['provider_execution_credit'] = 'LIVE'
             changed['packet_id'] = content_hash(value={key: value
                 for key, value in changed.items() if key != 'packet_id'})

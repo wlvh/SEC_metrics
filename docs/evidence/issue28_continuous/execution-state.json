@@ -3941,5 +3941,32 @@
       "downstream_integration_owned_by_other_executor": true
     },
     "evidence": "docs/evidence/issue28_continuous/b13-claim-context-v7-20260927/README.md"
+  },
+  "d03_recorded_material_runtime_repair_20260927": {
+    "status": "LOCAL_FULL_REAL_SOURCE_MATERIAL_PASS_INDEPENDENT_REVIEW_PENDING_REMOTE_CI_PENDING",
+    "trigger_head": "c009ec97b9ac229c8202d1bd001bd1ea366d0c7d",
+    "trigger_main_ci_run_id": 36279090167,
+    "trigger_selector": "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",
+    "trigger_result": "TIMEOUT_300_109_SECONDS_RETURN_124_NO_SEMANTIC_ASSERTION_TERMINAL",
+    "measured_before_seconds": 116.66,
+    "measured_after_seconds": 80.409,
+    "source_rebuild_count_before_after": [6, 4],
+    "saved_source_rebuild_in_record_before_after": [2, 1],
+    "independent_source_rebuild_in_replay_before_after": [2, 1],
+    "record_packet_seconds_before_after": [37.655, 19.055],
+    "cold_replay_seconds_before_after": [36.909, 18.686],
+    "final_two_material_tests": "PASS_80_510_SECONDS_WITH_UNKNOWN_MODULE_HASH_NEGATIVE",
+    "historical_packet_id": "sha256:4bac51a935deadda11f456ba39f6976647fe2d5cd05fe194f89fbc7ef7ce02d6",
+    "historical_packet_original_module_sha256": "89e46c2bf900ff14935969a784efeac6786cea4a88ce89e1659b51c54eac0785",
+    "historical_packet_cold_read": "PASS_NETWORK_AND_SUBPROCESS_FORBIDDEN_ORIGINAL_ID_AND_UNRESOLVED_PRESERVED",
+    "new_store_module_sha256": "cf071c031a63a3773877d36024496132ae9528dfdd007ab38c2357fccfebda8c",
+    "new_review_module_sha256": "5e65082202f443a3e62b4aa51cb2941dcc5d236bacbde49037f1850afa09d3bf",
+    "default_validator_output_shape_changed": false,
+    "old_offline_packet_re_signed": false,
+    "native_result_created": false,
+    "new_real_calls": [0, 0, 0],
+    "real_ledger_last_ordinal": 194,
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "evidence": "docs/evidence/issue28_continuous/d03-material-timing-20260927/README.md"
   }
 }
