@@ -13,6 +13,7 @@ from .canonical import (canonical_json_bytes, content_hash, sha256_bytes,
                         sha256_file, strict_json_file, strict_json_loads)
 from .capacity_reference_contract import (ASSERTION_SCOPED_VERSION,
                                           CLAIM_CONTEXT_VERSION,
+                                          MODEL_SPAN_VERSION,
                                           RELEVANCE_VERSION, SCANNED_VERSION,
                                           ROLE_LABELS, _owners,
                                           restore_base_request)
@@ -74,6 +75,19 @@ CLAIM_CONTEXT_SUFFIX = (
     'classification. If a clause has no provable subject or period, leave its '
     'reference unresolved instead of borrowing a label from another claim.'
 )
+MODEL_SPAN_SUFFIX = (
+    ' For each visible-block finding, return one exact '
+    '[typed_reference,claim_start,claim_end,context_start,context_end] '
+    'range for every cited B reference; offsets count Unicode characters '
+    'in the supplied original block. Select a contiguous source span for '
+    'one capacity assertion, even when two assertions share an and-clause. '
+    'The context range is the complete original sentence containing the '
+    'claim and may be shared without duplicating a finding. Give distinct '
+    'physical-capacity assertions nonoverlapping claim ranges. If actor, '
+    'period, or a distinct assertion cannot be established from original '
+    'context, retain that reference unresolved. Never replace a second '
+    'assertion with background or infer it from an adjacent claim.'
+)
 _PHYSICAL_CAPACITY = re.compile(
     r'\b(?:manufacturing|production)\s+(?:capacity|capabilities)\b', re.I)
 
@@ -95,7 +109,7 @@ def _assertion_protocol(base):
     return protocol
 
 
-def _claim_context_protocol(base):
+def _claim_context_protocol(base, *, model_spans=False):
     protocol = deepcopy(base)
     item = protocol['json_schema']['properties']['findings']['items']
     item['prefixItems'].append({'type': 'array', 'items': {
@@ -106,7 +120,8 @@ def _claim_context_protocol(base):
         'minItems': 5, 'maxItems': 5, 'items': False}})
     item['minItems'] = item['maxItems'] = 6
     protocol['json_schema']['properties']['findings']['maxItems'] = MAX_ASSERTION_SCOPED_FINDINGS
-    protocol['claim_context_scope'] = ('The sixth finding field gives exact '
+    protocol['model_span_scope' if model_spans else 'claim_context_scope'] = (
+        'The sixth finding field gives exact '
         '[B-reference,claim_start,claim_end,context_start,context_end] ranges. '
         'Claim ranges identify distinct assertions; sentence context may overlap. '
         'Unclear attribution remains unresolved. At most 28 findings.')
@@ -395,7 +410,8 @@ def build_interpretation_acceptance(*, prepared, plan, response_body,
     from .capacity_native_assessment import _build_acceptance
     interpretation = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
     _need(interpretation.get('source_reference_contract', {}).get('version')
-          not in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION},
+          not in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION,
+                  MODEL_SPAN_VERSION},
           'B13_ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED')
     original = saved_scan_stage(prepared=prepared, scan_path=scan_path)
     link = interpretation['two_stage_contract']
@@ -487,7 +503,8 @@ def build_registered_interpretation_acceptance(*, prepared, plan,
     from .capacity_native_assessment import _build_acceptance
     request = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
     _need(request.get('source_reference_contract', {}).get('version')
-          not in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION},
+          not in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION,
+                  MODEL_SPAN_VERSION},
           'B13_ASSERTION_SCOPE_ACCEPTANCE_SUSPENDED')
     stage = validate_registered_scan_stage(prepared=prepared,
                                           stage_record=stage_record)
@@ -506,21 +523,23 @@ def build_registered_interpretation_acceptance(*, prepared, plan,
 
 def interpretation_request(*, request, scan_result, scan_raw_response,
                            scan_execution_proof=None, assertion_scopes=False,
-                           claim_contexts=False):
+                           claim_contexts=False, model_spans=False):
     """Carry the full original source and the exact validated scan proposal."""
     _base(request)
     _need(type(scan_result) is dict and type(scan_raw_response) is bytes
           and scan_result == validate_scan(request=request,
               scan_request_value=scan_request(request), raw_response=scan_raw_response),
           'B13_SCAN_RESULT_NOT_BOUND')
-    _need(type(assertion_scopes) is bool and type(claim_contexts) is bool
-          and not (assertion_scopes and claim_contexts),
+    _need(all(type(value) is bool for value in
+              (assertion_scopes, claim_contexts, model_spans))
+          and sum((assertion_scopes, claim_contexts, model_spans)) <= 1,
           'B13_ASSERTION_SCOPE_SELECTION_INVALID')
-    if assertion_scopes or claim_contexts:
+    if assertion_scopes or claim_contexts or model_spans:
         _need(len(scan_result['response']['candidate_refs']) <= MAX_ASSERTION_SCOPED_REFS,
               'B13_ASSERTION_SCOPE_CANDIDATE_CAP_EXCEEDED')
     body = {key: deepcopy(value) for key, value in request.items() if key != 'request_id'}
-    version = (CLAIM_CONTEXT_VERSION if claim_contexts else
+    version = (MODEL_SPAN_VERSION if model_spans else
+               CLAIM_CONTEXT_VERSION if claim_contexts else
                ASSERTION_SCOPED_VERSION if assertion_scopes else ASSESS_VERSION)
     link = {'version': version, 'prior_request_id': request['request_id']}
     if scan_execution_proof is not None:
@@ -535,14 +554,16 @@ def interpretation_request(*, request, scan_result, scan_raw_response,
               'B13_SCAN_EXECUTION_PROOF_NOT_BOUND')
         link['scan_execution_proof'] = deepcopy(scan_execution_proof)
     body.update(system_prompt=body['system_prompt'] + ASSESS_SUFFIX +
-                (CLAIM_CONTEXT_SUFFIX if claim_contexts else
+                (MODEL_SPAN_SUFFIX if model_spans else
+                 CLAIM_CONTEXT_SUFFIX if claim_contexts else
                  ASSERTION_SUFFIX if assertion_scopes else ''),
                 two_stage_scan=deepcopy(scan_result),
                 two_stage_contract=link)
     body['source_reference_contract']['version'] = version
-    if assertion_scopes or claim_contexts:
-        body['response_protocol'] = (_claim_context_protocol(body['response_protocol'])
-            if claim_contexts else _assertion_protocol(body['response_protocol']))
+    if assertion_scopes or claim_contexts or model_spans:
+        body['response_protocol'] = (_claim_context_protocol(body['response_protocol'],
+            model_spans=model_spans) if claim_contexts or model_spans
+            else _assertion_protocol(body['response_protocol']))
     return {**body, 'request_id': content_hash(value=body)}
 
 
@@ -554,9 +575,10 @@ def restore_prior_interpretation_request(request):
     link = request.get('two_stage_contract')
     version = link.get('version') if type(link) is dict else None
     _need(version in {ASSESS_VERSION, ASSERTION_SCOPED_VERSION,
-                      CLAIM_CONTEXT_VERSION},
+                      CLAIM_CONTEXT_VERSION, MODEL_SPAN_VERSION},
           'B13_TWO_STAGE_CONTRACT_CHANGED')
-    suffix = ASSESS_SUFFIX + (CLAIM_CONTEXT_SUFFIX if version == CLAIM_CONTEXT_VERSION
+    suffix = ASSESS_SUFFIX + (MODEL_SPAN_SUFFIX if version == MODEL_SPAN_VERSION
+        else CLAIM_CONTEXT_SUFFIX if version == CLAIM_CONTEXT_VERSION
         else ASSERTION_SUFFIX if version == ASSERTION_SCOPED_VERSION else '')
     _need(type(link) is dict and set(link) in (
               {'version', 'prior_request_id'},
@@ -569,7 +591,8 @@ def restore_prior_interpretation_request(request):
             if key not in {'request_id', 'two_stage_scan', 'two_stage_contract'}}
     body['system_prompt'] = body['system_prompt'][:-len(suffix)]
     body['source_reference_contract']['version'] = RELEVANCE_VERSION
-    if version in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION}:
+    if version in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION,
+                   MODEL_SPAN_VERSION}:
         item = body['response_protocol']['json_schema']['properties']['findings']['items']
         _need(item.get('minItems') == 6 and item.get('maxItems') == 6
               and len(item.get('prefixItems', [])) == 6,
@@ -578,14 +601,17 @@ def restore_prior_interpretation_request(request):
         item['minItems'] = item['maxItems'] = 5
         body['response_protocol']['json_schema']['properties']['findings'].pop('maxItems')
         body['response_protocol'].pop('assertion_scope' if version ==
-            ASSERTION_SCOPED_VERSION else 'claim_context_scope', None)
+            ASSERTION_SCOPED_VERSION else 'model_span_scope' if version ==
+            MODEL_SPAN_VERSION else 'claim_context_scope', None)
     prior = {**body, 'request_id': content_hash(value=body)}
     _need(prior['request_id'] == link['prior_request_id'],
           'B13_TWO_STAGE_PRIOR_REQUEST_CHANGED')
     _base(prior)
-    if version in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION}:
+    if version in {ASSERTION_SCOPED_VERSION, CLAIM_CONTEXT_VERSION,
+                   MODEL_SPAN_VERSION}:
         expected = (_assertion_protocol(prior['response_protocol']) if version ==
-            ASSERTION_SCOPED_VERSION else _claim_context_protocol(prior['response_protocol']))
+            ASSERTION_SCOPED_VERSION else _claim_context_protocol(
+                prior['response_protocol'], model_spans=version==MODEL_SPAN_VERSION))
         _need(request['response_protocol'] == expected,
               'B13_ASSERTION_SCOPE_PROTOCOL_CHANGED')
     scan = request.get('two_stage_scan')
@@ -668,8 +694,9 @@ def _claim_segments(text):
     return segments
 
 
-def _claim_context_projection(*, response, request, scan_result, source):
-    """Keep V7 claim ownership separate from overlapping sentence context."""
+def _claim_context_projection(*, response, request, scan_result, source,
+                              model_spans=False):
+    """Bind distinct original spans without treating shared context as a duplicate."""
     _need(type(response) is dict and set(response) == {'units', 'findings'}
           and type(response['findings']) is list,
           'B13_CLAIM_RESPONSE_FIELDS_CHANGED')
@@ -699,13 +726,28 @@ def _claim_context_projection(*, response, request, scan_result, source):
                   and item[0] not in seen,
                   'B13_CLAIM_RANGE_INVALID')
             ref, start, end, context_start, context_end = item
-            segments = _claim_segments(visible[ref])
-            _need(segments.get((start, end)) == (context_start, context_end),
-                  'B13_CLAIM_NOT_COMPLETE_SEGMENT_OR_CONTEXT')
+            if model_spans:
+                from .regulatory_investigation_candidates import _sentences
+                original = visible[ref]
+                sentences = {(begin, finish) for begin, finish, _ in
+                             _sentences(original)}
+                _need((context_start, context_end) in sentences
+                      and bool(original[start:end].strip())
+                      and not (start and original[start-1].isalnum()
+                               and original[start].isalnum())
+                      and not (end < len(original) and original[end-1].isalnum()
+                               and original[end].isalnum()),
+                      'B13_MODEL_SPAN_NOT_SOURCE_BOUND')
+            else:
+                segments = _claim_segments(visible[ref])
+                _need(segments.get((start, end)) == (context_start, context_end),
+                      'B13_CLAIM_NOT_COMPLETE_SEGMENT_OR_CONTEXT')
             seen.add(ref)
             ranges_by_ref.setdefault(ref, []).append((start, end))
-            scopes.append((row, ref, visible[ref][start:end],
-                           visible[ref][context_start:start]))
+            scope = (row, ref, visible[ref][start:end],
+                     visible[ref][context_start:start])
+            scopes.append((*scope, visible[ref][end:context_end])
+                          if model_spans else scope)
         _need(seen == cited, 'B13_CLAIM_VISIBLE_REFERENCE_UNSCOPED')
         row.pop()
     unresolved = []
@@ -731,7 +773,8 @@ _CLAIM_PRESENT = re.compile(r'\b(?:have|has|is|are|operate|maintain|plan|current
 _CLAIM_PAST = re.compile(r'\b(?:had|previously|used\s+to)\b', re.I)
 
 
-def _claim_contradictions(*, row, claim, antecedent, books):
+def _claim_contradictions(*, row, claim, antecedent, books,
+                          role_based_antecedent=False):
     """Abstain on a plainly conflicting claim, without borrowing whole-block labels."""
     physical = _PHYSICAL_CAPACITY.search(claim)
     if physical is None:
@@ -745,7 +788,11 @@ def _claim_contradictions(*, row, claim, antecedent, books):
         or re.search(r'\band\s*$', antecedent, re.I)
         and _CLAIM_PRESENT.match(claim.lstrip()))
     earlier = list(_CLAIM_SUBJECT.finditer(antecedent)) if borrowing else []
-    ambiguous_antecedent = not local and len({m.group().casefold() for m in earlier}) > 1
+    antecedent_roles = {('OTHER_ENTITY' if 'supplier' in m.group().casefold()
+                         else 'TARGET_REGISTRANT') for m in earlier}
+    ambiguous_antecedent = not local and (len(antecedent_roles) > 1
+        if role_based_antecedent else
+        len({m.group().casefold() for m in earlier}) > 1)
     markers = local or (earlier if not ambiguous_antecedent else [])
     owner = None
     if markers:
@@ -847,18 +894,19 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
     version = interpretation.get('source_reference_contract', {}).get('version')
     scoped = version == ASSERTION_SCOPED_VERSION
     claim_contexts = version == CLAIM_CONTEXT_VERSION
+    model_spans = version == MODEL_SPAN_VERSION
     _need(interpretation == interpretation_request(
               request=request, scan_result=scan_result,
               scan_raw_response=scan_raw_response,
               scan_execution_proof=interpretation.get('two_stage_contract', {}).get(
                   'scan_execution_proof'), assertion_scopes=scoped,
-              claim_contexts=claim_contexts),
+              claim_contexts=claim_contexts, model_spans=model_spans),
           'B13_TWO_STAGE_INTERPRETATION_CHANGED')
     _need(type(raw_response) is bytes, 'B13_TWO_STAGE_RESPONSE_BYTES_REQUIRED')
     value = strict_json_loads(text=raw_response.decode('utf-8'))
     _need(type(value) is dict and type(value.get('findings')) is list
           and type(value.get('units')) is list, 'B13_TWO_STAGE_RESPONSE_INVALID')
-    if scoped or claim_contexts:
+    if scoped or claim_contexts or model_spans:
         _need(len(value['findings']) <= MAX_ASSERTION_SCOPED_FINDINGS,
               'B13_ASSERTION_SCOPE_FINDING_CAP_EXCEEDED')
         from .capacity_semantic_review import review_policy_path
@@ -866,9 +914,10 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
         _need(len(raw_response) <= strict_json_file(
               path=ROOT / review_policy_path(interpretation))['max_response_bytes'],
               'B13_RESPONSE_TOO_LARGE')
-        if claim_contexts:
+        if claim_contexts or model_spans:
             projected, claim_scopes, scope_unresolved = _claim_context_projection(
-                response=value, request=request, scan_result=scan_result, source=source)
+                response=value, request=request, scan_result=scan_result,
+                source=source, model_spans=model_spans)
         else:
             projected, assertion_scopes, scope_unresolved = _scoped_projection(
                 response=value, request=request, scan_result=scan_result, source=source)
@@ -944,6 +993,23 @@ def validate_interpretation(*, request, scan_result, scan_raw_response,
         # V7 remains an offline diagnostic until its native chain and limited
         # review establish acceptance; request construction is no call grant.
         checked['unresolved'].append('B13_CLAIM_CONTEXT_VALIDATION_SUSPENDED')
+        checked['request_id'] = interpretation['request_id']
+        checked['response'] = strict_json_loads(text=raw_response.decode('utf-8'))
+    elif model_spans:
+        books = interpretation['response_protocol']['classification_codebooks']
+        for row, ref, claim, antecedent, trailing in claim_scopes:
+            checked['unresolved'].extend(code + ':' + ref for code in
+                _claim_contradictions(row=row, claim=claim,
+                    antecedent=antecedent, books=books,
+                    role_based_antecedent=True))
+            if (books['timing'][row[2]] == 'CURRENT_REPORT'
+                    and re.search(r'\bif\b', trailing, re.I)):
+                checked['unresolved'].append(
+                    'B13_MODEL_SPAN_TRAILING_CONDITION_REQUIRES_REVIEW:' + ref)
+        checked['unresolved'].extend(scope_unresolved)
+        # Exact spans prove source ownership, not model interpretation. Live
+        # execution and native credit remain closed pending bounded review.
+        checked['unresolved'].append('B13_MODEL_SPAN_VALIDATION_SUSPENDED')
         checked['request_id'] = interpretation['request_id']
         checked['response'] = strict_json_loads(text=raw_response.decode('utf-8'))
     else:
