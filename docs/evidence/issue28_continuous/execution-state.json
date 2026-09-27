@@ -2035,6 +2035,21 @@
       "tool_calls": 42,
       "result_path": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/independent-review-atomic/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS_C04_MIXED_RESUME_ATOMIC_CLAIM"
+    },
+    {
+      "task_name": "review_d03prep_8c6b2fb",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "scripts/vnext/d03_native_preparation.py",
+        "tests/vnext/test_d03_native_preparation.py",
+        "tools/run_fast_tests_v2.py"
+      ],
+      "patch_sha": "8c6b2fb0b96a6bf08462dd52f8fd4fa1c64befbf",
+      "spawned_at": "2026-09-27T20:25:03+00:00",
+      "ended_at": "2026-09-27T20:28:58+00:00",
+      "tool_calls": 18,
+      "result_path": "docs/evidence/issue28_continuous/d03-native-preparation-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_OFFLINE_REQUEST_SELECTION_ONLY_MUTABLE_OUTPUT_NOT_CREDIT"
     }
   ],
   "ci_capacity_20260922": {
@@ -4958,7 +4973,9 @@
     }
   },
   "d03_native_preparation_20260928": {
-    "status": "LOCAL_TESTED_LIMITED_INDEPENDENT_REVIEW_PENDING",
+    "status": "COMMITTED_LIMITED_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS",
+    "patch_sha": "8c6b2fb0b96a6bf08462dd52f8fd4fa1c64befbf",
+    "independent_review": "docs/evidence/issue28_continuous/d03-native-preparation-20260928/independent-review/conclusion.md",
     "scope_paths": [
       "scripts/vnext/d03_native_preparation.py",
       "tests/vnext/test_d03_native_preparation.py",
@@ -4970,6 +4987,7 @@
     "final_tests": "2_PASS_149_225_SECONDS",
     "provider_execution_bound": false,
     "native_result_or_run_created": false,
+    "returned_input_is_native_credit_certificate": false,
     "d03_metric_spec_created": false,
     "all_ten_companies_native_preparation_verified": false,
     "real_calls": [0, 0, 0],
