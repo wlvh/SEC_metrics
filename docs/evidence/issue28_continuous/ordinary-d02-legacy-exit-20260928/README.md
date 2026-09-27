@@ -5,3 +5,5 @@
 `probe.py`与`run.log`记录Marriott FY2025 D02结果`PUBLISHED`，原生TEXT_V1文本4933字符；创建与独立冷读得到相同Result ID `sha256:00c0a01a9bc96f6902fd836f7c6532e32bd31c8af257e679acf41f5a1f05e263`、文本SHA `9790935036bcf418e1f1ef40848c67811891ce7bdfd1acf1c6d9ae583f5ff277`及公共行SHA `6fd70d01a2fc626d967e683bd967bb9ece539e1cb46182fdb9a322d33c587b56`。当前来源副本ID为`sha256:89fb5dcac9b82dbee900915a7a5203ed3a7a22b75fbd435d7c3cd1824b2aca66`，V14闭包为`sha256:96c78c9a0e4432cb85d63ddab7c79019c118007d3f5b82e92f110617a483337c`。`index-comparison.json`只读对照既有390索引，原文本字节SHA与长度相同；这**不是新增390坐标**。
 
 通过范围是当前保存来源、D02文字路由、同一台主机的临时私有根及上述116个明确登记的旧语义导出；它没有证明所有39指标、整个旧模块不可导入、真实新财报在线更新或正式旧入口退出。既有索引本身未在本次全量重验，本文的字节相同结论限于确切D02文字字段。真实provider/paid/SEC调用0/0/0，active指针与原账本哈希未变，无Ready、采纳、部署或生产切换。
+
+精确`391a957b`的[限定独审](independent-review/conclusion.md)为`PASS_WITH_BOUNDS`。审阅者复算旧索引的D02文字SHA，指出旧索引Result ID `sha256:8cbb2504e5bcfa24ab3b235989b6531e23e1f6af7c612417ebd2317109ec5ced`与本次私有Result ID**不同**；本文仅主张文字字段相同，不改签旧结果。该次前后字节比较只覆盖claims、请求日志及active三份文件，没有保存原来源整棵树的前后哈希；审阅未亲自重跑长演练，也未验证全部旧入口。

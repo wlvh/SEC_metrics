@@ -2065,6 +2065,21 @@
       "tool_calls": 23,
       "result_path": "docs/evidence/issue28_continuous/d03-complete-interpretation-20260928/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS_COMPLETE_RESPONSE_PROPOSAL_NO_NATIVE_CREDIT"
+    },
+    {
+      "task_name": "review_d02exit_391a957",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/ordinary-d02-legacy-exit-20260928/probe.py",
+        "docs/evidence/issue28_continuous/ordinary-d02-legacy-exit-20260928/compare_index.py",
+        "docs/evidence/issue28_continuous/ordinary-d02-legacy-exit-20260928/README.md"
+      ],
+      "patch_sha": "391a957bd34bd002a5b000e1f685827ee1c64497",
+      "spawned_at": "2026-09-27T20:59:45+00:00",
+      "ended_at": "2026-09-27T21:04:38+00:00",
+      "tool_calls": 43,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-d02-legacy-exit-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_D02_TEXT_ONLY_NO_FORMAL_OLD_EXIT"
     }
   ],
   "ci_capacity_20260922": {
@@ -5031,7 +5046,9 @@
     "evidence": "docs/evidence/issue28_continuous/d03-complete-interpretation-20260928/README.md"
   },
   "ordinary_d02_legacy_exit_20260928": {
-    "status": "PRIVATE_TEXT_RUN_AND_COLD_READ_LIMITED_REVIEW_PENDING",
+    "status": "PRIVATE_TEXT_RUN_AND_COLD_READ_LIMITED_REVIEW_PASS_WITH_BOUNDS",
+    "patch_sha": "391a957bd34bd002a5b000e1f685827ee1c64497",
+    "independent_review": "docs/evidence/issue28_continuous/ordinary-d02-legacy-exit-20260928/independent-review/conclusion.md",
     "company_id": "marriott_international",
     "metric_id": "D02",
     "source_snapshot_id": "sha256:89fb5dcac9b82dbee900915a7a5203ed3a7a22b75fbd435d7c3cd1824b2aca66",
@@ -5043,6 +5060,8 @@
     "old_semantic_exports_disabled": 116,
     "independent_process_cold_read": true,
     "same_value_bytes_as_existing_390_index": true,
+    "same_result_id_as_existing_390_index": false,
+    "original_source_entire_tree_before_after_hashed": false,
     "new_complete_390_coordinate_count": 0,
     "original_ledger_source_log_and_active_bytes_unchanged": true,
     "all390_proven": false,
