@@ -1801,6 +1801,30 @@
       "ordinary_messages_observed": 5,
       "message_cap_exceeded": true,
       "followup_task_sent_only_for_call_tally_after_review": true
+    },
+    {
+      "task_name": "review_c04alias_15260ba",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "c04_verified_alias_label",
+      "scope_paths": [
+        "scripts/vnext/c04_registration_successor.py",
+        "scripts/vnext/c04_verified_document_alias.py",
+        "tests/vnext/test_c04_registration_successor.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json",
+        "docs/evidence/issue28_continuous/c04-verified-alias-label-20260927/"
+      ],
+      "patch_sha": "15260ba5fead08d6cdd0e6cc66c344b5aea06aa5",
+      "spawned_at": "2026-09-27T11:14:38Z",
+      "ended_at": "2026-09-27T11:23:14Z",
+      "tool_calls": 28,
+      "result_path": "docs/evidence/issue28_continuous/c04-verified-alias-label-20260927/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_C04_ALIAS_LABEL_PRIVATE_RUN_SOURCE_BINDING",
+      "ordinary_messages_observed": 1,
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -4222,7 +4246,8 @@
     "old_390_salesforce_result_retained": true,
     "new_complete_390_coordinate_count": 0,
     "cross_year_automatic_update_proven": false,
-    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "limited_independent_review": "PASS_WITH_BOUNDS_15260ba5",
+    "limited_independent_review_result": "docs/evidence/issue28_continuous/c04-verified-alias-label-20260927/independent-review/conclusion.md",
     "new_head_ci": "PENDING_AFTER_PUSH",
     "new_real_calls": [0, 0, 0],
     "formal_adoption_or_production_authorized": false,
