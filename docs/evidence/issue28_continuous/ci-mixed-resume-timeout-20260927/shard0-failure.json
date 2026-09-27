@@ -1,0 +1,28 @@
+{
+  "record_type": "ISSUE28_CI_MIXED_RESUME_SINGLE_SELECTOR_TIMEOUT",
+  "head": "5e2a5ca9da25419e155f4325140a57236461a0ab",
+  "run_id": 36326213320,
+  "job_id": 108639357090,
+  "job": "vNext saved-source material (shard 0)",
+  "suite_status": "FAILED",
+  "suite_duration_seconds": 1213.016,
+  "selector_count": 40,
+  "passed_selector_count": 39,
+  "failed": [
+    {
+      "duration_seconds": 240.105,
+      "return_code": 124,
+      "stderr_tail": "\nSOURCE_MATERIAL_TIMEOUT_SECONDS=240",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",
+      "timeout_seconds": 240
+    }
+  ],
+  "source": "COMPLETED_GITHUB_JOB_RAW_LOG",
+  "business_assertion_failure_observed": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

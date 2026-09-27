@@ -1,0 +1,17 @@
+F
+======================================================================
+FAIL: test_mixed_old_root_resumes_current_rule_metric_and_c04 (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 132, in test_mixed_old_root_resumes_current_rule_metric_and_c04
+    self.assertEqual('UPDATES_INCOMPLETE', resumed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'UPDATES_INCOMPLETE' != 'UPDATES_READY'
+- UPDATES_INCOMPLETE
++ UPDATES_READY
+
+
+----------------------------------------------------------------------
+Ran 1 test in 193.869s
+
+FAILED (failures=1)

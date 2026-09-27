@@ -67,7 +67,7 @@ class C04SourceOnlyInstallTest(unittest.TestCase):
 
 
 class C04MixedSourceRouteMaterialTest(unittest.TestCase):
-    def test_mixed_old_root_refreshes_only_c04_and_blocks_other_metrics(self):
+    def test_mixed_old_root_resumes_current_rule_metric_and_c04(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary).resolve()
             session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
@@ -106,6 +106,29 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
                     c04_successor=True)
                 prior = root/'prior-report.json'
                 prior.write_text(json.dumps(result, ensure_ascii=False)+'\n')
+                changed = json.loads(prior.read_text())
+                changed['companies'][0]['updates']['metrics'][0]['attempt_id'] = '0'*32
+                tampered = root/'tampered-report.json'
+                tampered.write_text(json.dumps(changed, ensure_ascii=False)+'\n')
+                with self.assertRaisesRegex(ValueError,
+                        'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED'):
+                    refresh.refresh_and_process(session=session,
+                        state_root=root/'state', company_ids=['marriott_international'],
+                        metric_ids=['B01', 'C04'], max_sec_requests=1,
+                        c04_successor=True, resume_from=tampered)
+                changed = json.loads(prior.read_text())
+                changed['companies'][0]['updates']['metrics'][0] = {
+                    'metric_id': 'B01', 'status': 'UPDATE_BLOCKED',
+                    'last_verified_candidate': None,
+                    'production_authorized': False}
+                downgraded = root/'downgraded-report.json'
+                downgraded.write_text(json.dumps(changed, ensure_ascii=False)+'\n')
+                with self.assertRaisesRegex(ValueError,
+                        'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED'):
+                    refresh.refresh_and_process(session=session,
+                        state_root=root/'state', company_ids=['marriott_international'],
+                        metric_ids=['B01', 'C04'], max_sec_requests=1,
+                        c04_successor=True, resume_from=downgraded)
                 resumed = refresh.refresh_and_process(session=session,
                     state_root=root/'state', company_ids=['marriott_international'],
                     metric_ids=['B01', 'C04'], max_sec_requests=1,
@@ -119,19 +142,95 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
             self.assertTrue(resumed['c04_mixed_source_only'])
             self.assertEqual({'provider': 0, 'paid': 0, 'sec': 0}, result['calls'])
             self.assertEqual({'provider': 0, 'paid': 0, 'sec': 0}, resumed['calls'])
-            self.assertEqual('UPDATES_INCOMPLETE', resumed['status'])
+            self.assertEqual('UPDATES_READY', resumed['status'])
             self.assertEqual([], resumed['companies'][0]['source_refresh']
                              ['deferred_source_urls'])
-            self.assertEqual(['UPDATE_BLOCKED', 'NO_SOURCE_CONTENT_CHANGE'],
+            self.assertEqual(['NO_SOURCE_CONTENT_CHANGE', 'NO_SOURCE_CONTENT_CHANGE'],
                 [row['status'] for row in resumed['companies'][0]['updates']['metrics']])
             company, = result['companies']
-            self.assertEqual('UPDATES_PARTIAL', company['updates']['status'])
-            self.assertEqual(['UPDATE_BLOCKED', 'CANDIDATE_READY'],
+            self.assertEqual('UPDATES_READY', company['updates']['status'])
+            self.assertEqual(['CANDIDATE_READY', 'CANDIDATE_READY'],
                 [row['status'] for row in company['updates']['metrics']])
-            self.assertEqual('SOURCE_SCOPE', company['acquisition_errors'][0]['stage'])
+            self.assertEqual([], company['acquisition_errors'])
+            self.assertTrue(result['current_processing_source_snapshot_id'])
             plan = strict_json_file(path=root/'ledger/calls/0001/sec-plan.json')
             self.assertEqual('C04_REGISTRATION_FOUR_FORM_UPDATE_V1',
                              plan['source_only_processing_route'])
+            with session.ledger.locked():
+                self.assertEqual([0, 0, 2], session.ledger.snapshot()['counts'])
+
+    def test_failed_processing_copy_preserves_recorded_capture_for_resume(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            session = recorded_sec_session(root=root/'ledger', response=b'RECORDED_ONLY')
+            source = session.data_root
+            with session.ledger.locked():
+                initialize_source_inputs(root=source, requirement=session.requirement)
+            (source/'config/issue28_normal_results_v2.json').write_bytes(
+                b'{"historical_processing_copy":true}\n')
+            (source/'catalog/r5/C04_auditor_changes_v3.md').unlink()
+            from vnext import ordinary_update_cycle as update
+            b01_root = root/'state/marriott_international/metrics/B01'
+            update._config(b01_root, source, 'marriott_international',
+                           ['B01'], 'RECORDED_TEST_ONLY')
+            self.assertTrue((b01_root/'configuration.json').is_file())
+            self.assertFalse((b01_root/'current.json').exists())
+            self.assertFalse((b01_root/'attempts').exists())
+            urls = [submissions_url(cik=1048286), companyfacts_url(cik=1048286)]
+            with (ROOT/'evidence/requests_log.csv').open(newline='') as handle:
+                rows = [row for row in csv.DictReader(handle)
+                        if row['status_code'] == '200' and row['source_url'] in urls]
+            bodies = {url: (ROOT/next(row['repo_relative_path']
+                       for row in reversed(rows) if row['source_url'] == url)).read_bytes()
+                      for url in urls}
+            captures = []
+            native_capture = session.capture
+            def capture(**kwargs):
+                captures.append(kwargs['url'])
+                session.response = bodies[kwargs['url']]
+                return native_capture(**kwargs)
+            with patch.object(socket.socket, 'connect',
+                              side_effect=AssertionError('NETWORK_FORBIDDEN')), \
+                 patch.object(socket, 'getaddrinfo',
+                              side_effect=AssertionError('DNS_FORBIDDEN')), \
+                 patch('sec_http.urlopen',
+                       side_effect=AssertionError('HTTP_FORBIDDEN')), \
+                 patch.object(session, 'capture', side_effect=capture):
+                with patch('vnext.ordinary_processing_source.current_processing_source',
+                           side_effect=ValueError('INJECTED_PRIVATE_COPY_FAILURE')):
+                    first = refresh.refresh_and_process(session=session,
+                        state_root=root/'state', company_ids=['marriott_international'],
+                        metric_ids=['B01', 'C04'], max_sec_requests=1,
+                        c04_successor=True)
+                self.assertEqual('FAILED', first['current_processing_source_status'])
+                self.assertNotIn('current_processing_source_snapshot_id', first)
+                self.assertEqual('SUCCEEDED', first['captures'][0]['result']['status'])
+                self.assertEqual(['UPDATE_BLOCKED', 'CANDIDATE_READY'],
+                    [row['status'] for row in first['companies'][0]['updates']['metrics']])
+                self.assertEqual('PROCESSING_SOURCE',
+                    first['companies'][0]['acquisition_errors'][0]['stage'])
+                prior = root/'failed-copy-report.json'
+                prior.write_text(json.dumps(first, ensure_ascii=False)+'\n')
+                forged = json.loads(prior.read_text())
+                forged['companies'][0]['acquisition_errors'][0]['stage'] = 'SOURCE_SCOPE'
+                bad = root/'forged-copy-report.json'
+                bad.write_text(json.dumps(forged, ensure_ascii=False)+'\n')
+                with self.assertRaisesRegex(ValueError,
+                        'ORDINARY_REFRESH_RESUME_PROCESSING_FAILURE_INVALID'):
+                    refresh.refresh_and_process(session=session,
+                        state_root=root/'state', company_ids=['marriott_international'],
+                        metric_ids=['B01', 'C04'], max_sec_requests=1,
+                        c04_successor=True, resume_from=bad)
+                self.assertEqual([urls[0]], captures)
+                resumed = refresh.refresh_and_process(session=session,
+                    state_root=root/'state', company_ids=['marriott_international'],
+                    metric_ids=['B01', 'C04'], max_sec_requests=1,
+                    c04_successor=True, resume_from=prior)
+            self.assertEqual(urls, captures)
+            self.assertEqual('READY', resumed['current_processing_source_status'])
+            self.assertEqual('UPDATES_READY', resumed['status'])
+            self.assertEqual(['CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'],
+                [row['status'] for row in resumed['companies'][0]['updates']['metrics']])
             with session.ledger.locked():
                 self.assertEqual([0, 0, 2], session.ledger.snapshot()['counts'])
 
@@ -253,8 +352,8 @@ class C04MissingAnnualBootstrapFastTest(unittest.TestCase):
             self.assertEqual([annual_url], [item['url'] for item in captured])
             self.assertEqual([True], [item['source_only_c04'] for item in captured])
             self.assertEqual('UPDATES_INCOMPLETE', result['status'])
-            self.assertEqual('DISCOVERY', unrelated['companies'][0]
-                             ['acquisition_errors'][-1]['stage'])
+            self.assertTrue(any(error['stage'] == 'DISCOVERY' for error in
+                unrelated['companies'][0]['acquisition_errors']))
             with session.ledger.locked():
                 self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
 
@@ -323,8 +422,8 @@ class C04MissingAnnualBootstrapFastTest(unittest.TestCase):
             self.assertEqual([annual_url], [item['url'] for item in captured])
             self.assertEqual([True], [item['source_only_c04'] for item in captured])
             self.assertEqual('UPDATES_INCOMPLETE', result['status'])
-            self.assertEqual('DISCOVERY', unrelated['companies'][0]
-                             ['acquisition_errors'][-1]['stage'])
+            self.assertTrue(any(error['stage'] == 'DISCOVERY' for error in
+                unrelated['companies'][0]['acquisition_errors']))
             with session.ledger.locked():
                 self.assertEqual([0, 0, 0], session.ledger.snapshot()['counts'])
 

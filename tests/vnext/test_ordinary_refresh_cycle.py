@@ -19,6 +19,22 @@ import io
 
 
 class OrdinaryRefreshBoundaryTest(unittest.TestCase):
+    def test_config_written_before_failed_state_read_is_not_an_attempt(self):
+        from vnext import ordinary_update_cycle as update
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()/'marriott'
+            with patch.object(update, '_state',
+                              side_effect=ValueError('INJECTED_STATE_READ_FAILURE')):
+                outcome = update.run_company(state_root=root,
+                    source_root=refresh.ROOT, company_id='marriott_international',
+                    metric_ids=['B01'], native_assessment_mode='RECORDED_TEST_ONLY')
+            row, = outcome['metrics']
+            self.assertEqual('UPDATE_BLOCKED', row['status'])
+            self.assertNotIn('attempt_id', row)
+            self.assertTrue((root/'metrics/B01/configuration.json').is_file())
+            self.assertFalse((root/'metrics/B01/current.json').exists())
+            self.assertFalse((root/'metrics/B01/attempts').exists())
+
     def test_unbound_live_coordinator_never_enters_the_sec_session(self):
         session = object.__new__(SecAcquisitionSession)
         session.ledger = SimpleNamespace(live=True, root=Path('/unexecuted-test-ledger'))
@@ -160,10 +176,14 @@ class OrdinaryRefreshBoundaryTest(unittest.TestCase):
     def test_resume_requires_only_c04_and_one_finite_sec_request(self):
         session = object.__new__(SecAcquisitionSession)
         session.ledger = SimpleNamespace(live=False)
+        session.data_root = Path('/unexecuted-source')
+        session.requirement = {}
         for metrics, maximum, successor in [(['B01'], 1, False),
                                             (['B01', 'C04'], 1, True),
                                             (['C04'], 2, True)]:
             with self.subTest(metrics=metrics, maximum=maximum), \
+                 patch.object(refresh, '_historical_c04_processing_copies',
+                              return_value=False), \
                  self.assertRaisesRegex(ValueError,
                      'ORDINARY_REFRESH_RESUME_C04_ONE_REQUEST_REQUIRED'):
                 refresh_and_process(session=session, state_root=Path('/unexecuted-state'),

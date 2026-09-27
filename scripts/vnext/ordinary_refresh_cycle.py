@@ -231,18 +231,126 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
          and {item['metric_id'] for item in rows} == set(metric_ids),
          'ORDINARY_REFRESH_RESUME_METRIC_SCOPE_CHANGED')
     row, = [item for item in rows if item['metric_id'] == 'C04']
-    expected_errors = ([{'stage': 'SOURCE_SCOPE',
-        'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_OTHER_METRICS_BLOCKED'}]
-        if mixed_stale else [])
+    snapshot_id = report.get('current_processing_source_snapshot_id')
+    processing_status = report.get('current_processing_source_status')
+    need(not mixed_stale or processing_status in (None, 'READY', 'FAILED'),
+         'ORDINARY_REFRESH_RESUME_PROCESSING_STATUS_INVALID')
+    def no_ordinary_attempt(item):
+        metric = item['metric_id']
+        metric_root = state_root/company_id/'metrics'/metric
+        attempts = metric_root/'attempts'
+        basic = (item['status'] == 'UPDATE_BLOCKED'
+            and item.get('attempt_id') is None
+            and item.get('last_verified_candidate') is None
+            and item.get('production_authorized') is False
+            and 'terminal' not in item
+            and not (metric_root/'current.json').exists()
+            and not attempts.exists())
+        if not basic:
+            return False
+        if (metric_root/'configuration.json').exists():
+            # Configuration precedes intent creation; its presence alone is
+            # not evidence that this refresh made an ordinary attempt.
+            try:
+                cycle._config(metric_root, session.data_root, company_id,
+                              [metric], expected_mode)
+            except ValueError:
+                return False
+        return True
+    if mixed_stale and snapshot_id is not None:
+        from .ordinary_processing_source import verify_processing_source
+        need(processing_status in (None, 'READY')
+             and type(snapshot_id) is str and snapshot_id.startswith('sha256:')
+             and len(snapshot_id) == 71,
+             'ORDINARY_REFRESH_RESUME_PROCESSING_ID_INVALID')
+        verified = verify_processing_source(
+            acquisition_root=session.data_root,
+            processing_root=state_root/'_processing_sources'/snapshot_id[7:],
+            requirement=session.requirement)
+        need(verified['snapshot_id'] == snapshot_id,
+             'ORDINARY_REFRESH_RESUME_PROCESSING_SOURCE_CHANGED')
+        expected_errors = []
+        for item in rows:
+            metric = item['metric_id']
+            if metric == 'C04':
+                continue
+            if metric not in update_metric_ids():
+                need(item['status'] == 'UPDATE_NOT_IMPLEMENTED'
+                     and item.get('last_verified_candidate') is None
+                     and item.get('production_authorized') is False,
+                     'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED')
+            elif item['status'] == 'UPDATE_BLOCKED':
+                need(no_ordinary_attempt(item),
+                     'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED')
+            else:
+                metric_root = state_root/company_id/'metrics'/metric
+                need((metric_root/'configuration.json').is_file(),
+                     'ORDINARY_REFRESH_RESUME_OTHER_METRIC_STATE_MISSING')
+                metric_configuration = cycle._config(metric_root,
+                    session.data_root, company_id, [metric], expected_mode)
+                metric_state = cycle._state(metric_root, metric_configuration)
+                need(metric_state['latest_attempt'] == item['attempt_id'],
+                     'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED')
+                metric_terminal = cycle._terminal(metric_root, item['attempt_id'])
+                need(metric_state['successful_attempt'] == item['successful_attempt']
+                     and item['latest_attempt'] == item['attempt_id']
+                     and metric_terminal == item['terminal']
+                     and metric_terminal['status'] == item['status']
+                     and item['calls'] == {'provider': 0, 'paid': 0, 'sec': 0}
+                     and item['production_authorized'] is False
+                     and item['new_candidate_created'] == bool(metric_terminal['metrics'])
+                     and item['previous_successful_attempt'] ==
+                         cycle._intent(metric_root, item['attempt_id'])['previous_successful_attempt']
+                     and (item['last_verified_candidate'] is None) ==
+                         (metric_state['successful_attempt'] is None)
+                     and (item['last_verified_candidate'] is None or
+                          item['last_verified_candidate']['attempt_id'] ==
+                          metric_state['successful_attempt']),
+                     'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED')
+    elif mixed_stale and processing_status == 'FAILED':
+        # The prior SEC capture is real even if current-rule copying failed.
+        # Rebuild a verified copy before authorizing another capture, and only
+        # accept a report that made no ordinary attempt in that failed pass.
+        need(snapshot_id is None,
+             'ORDINARY_REFRESH_RESUME_PROCESSING_ID_INVALID')
+        previous_errors = report['companies'][0]['acquisition_errors']
+        need(type(previous_errors) is list and len(previous_errors) == 1
+             and set(previous_errors[0]) == {'stage', 'error_type', 'reason'}
+             and previous_errors[0]['stage'] == 'PROCESSING_SOURCE'
+             and type(previous_errors[0]['error_type']) is str
+             and type(previous_errors[0]['reason']) is str,
+             'ORDINARY_REFRESH_RESUME_PROCESSING_FAILURE_INVALID')
+        need(all((item['status'] == 'UPDATE_NOT_IMPLEMENTED'
+                  if item['metric_id'] not in update_metric_ids()
+                  else no_ordinary_attempt(item) and
+                       item.get('reason') ==
+                       'ORDINARY_REFRESH_CURRENT_PROCESSING_INPUT_REQUIRED')
+                 for item in rows if item['metric_id'] != 'C04'),
+             'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED')
+        from .ordinary_processing_source import current_processing_source
+        with session.ledger.locked():
+            current_processing_source(acquisition_root=session.data_root,
+                output_parent=state_root/'_processing_sources',
+                requirement=session.requirement)
+        expected_errors = previous_errors
+    else:
+        # Old reports remain readable under their original blocked-metric
+        # contract; their absence of a processing snapshot grants no new Run.
+        need(processing_status is None,
+             'ORDINARY_REFRESH_RESUME_PROCESSING_STATUS_INVALID')
+        expected_errors = ([{'stage': 'SOURCE_SCOPE',
+            'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_OTHER_METRICS_BLOCKED'}]
+            if mixed_stale else [])
+        need(not mixed_stale or all((no_ordinary_attempt(item)
+             if item['metric_id'] in update_metric_ids()
+             else item['status'] == 'UPDATE_NOT_IMPLEMENTED')
+             for item in rows if item['metric_id'] != 'C04'),
+             'ORDINARY_REFRESH_RESUME_C04_HISTORY_CHANGED')
     need(row['metric_id'] == 'C04'
          and state['latest_attempt'] == row['attempt_id']
          and state['successful_attempt'] == row['successful_attempt']
          and cycle._terminal(root, row['attempt_id']) == row['terminal']
-         and report['companies'][0]['acquisition_errors'] == expected_errors
-         and (not mixed_stale or all(item['status'] ==
-              ('UPDATE_BLOCKED' if item['metric_id'] in update_metric_ids()
-               else 'UPDATE_NOT_IMPLEMENTED')
-              for item in rows if item['metric_id'] != 'C04')),
+         and report['companies'][0]['acquisition_errors'] == expected_errors,
          'ORDINARY_REFRESH_RESUME_C04_HISTORY_CHANGED')
     allowed = report['companies'][0]['source_refresh']['deferred_source_urls']
     need(type(allowed) is list and bool(allowed)
@@ -314,9 +422,7 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
     failed = _failed_urls(session.data_root)
     attempted = ({resumed['prior_source_url']} if resumed is not None else set())
     captures, discoveries = [], {}
-    errors = ({company: [{'stage': 'SOURCE_SCOPE',
-        'reason': 'ORDINARY_REFRESH_MIXED_STALE_PROCESSING_ROOT_OTHER_METRICS_BLOCKED'}]
-        for company in selected} if mixed_stale else {})
+    errors = {}
     capture_error = False
     capture_limit = max_sec_requests
     # One request per company per pass keeps an unrelated company progressing
@@ -397,8 +503,21 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
             if progressed and len(captures) < capture_limit:
                 continue
         break
+    processing_source = None
     with session.ledger.locked():
         after = session.ledger.snapshot()['counts']
+        if mixed_stale:
+            try:
+                from .ordinary_processing_source import current_processing_source
+                processing_source = current_processing_source(
+                    acquisition_root=session.data_root,
+                    output_parent=state_root/'_processing_sources',
+                    requirement=session.requirement)
+            except Exception as error:
+                for company in selected:
+                    errors.setdefault(company, []).append({
+                        'stage': 'PROCESSING_SOURCE',
+                        'error_type': type(error).__name__, 'reason': str(error)})
     accounting = _call_accounting(captures, before, after, session.ledger.live, capture_error)
     supported = set(update_metric_ids())
     results = [];native_attempts=[];provider_attempts=0;provider_stopped=False
@@ -436,7 +555,7 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                             'error_type':type(error).__name__,'reason':str(error)}
                 native_attempts.append(native)
         ordinary = [metric for metric in requested if not (c04_successor and metric == 'C04')]
-        if mixed_stale:
+        if mixed_stale and processing_source is None:
             updates = {'status': 'UPDATES_INCOMPLETE', 'metrics': [{
                 'metric_id': metric, 'status': 'UPDATE_BLOCKED',
                 'reason': 'ORDINARY_REFRESH_CURRENT_PROCESSING_INPUT_REQUIRED',
@@ -444,9 +563,13 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                 for metric in ordinary]}
         else:
             try:
-                updates = run_company(state_root=Path(state_root) / company, source_root=session.data_root,
+                updates = run_company(state_root=Path(state_root) / company,
+                    source_root=(processing_source['data_root'] if mixed_stale
+                                 else session.data_root),
                     company_id=company, metric_ids=ordinary,
-                    native_assessment_mode='LIVE' if session.ledger.live else 'RECORDED_TEST_ONLY',native_assessment_ledger=session.ledger) if ordinary else {'metrics': [], 'status': 'UPDATES_INCOMPLETE'}
+                    native_assessment_mode='LIVE' if session.ledger.live else 'RECORDED_TEST_ONLY',
+                    native_assessment_ledger=session.ledger,
+                    **({'source_identity_root': session.data_root} if mixed_stale else {})) if ordinary else {'metrics': [], 'status': 'UPDATES_INCOMPLETE'}
             except Exception as error:
                 updates = {'status': 'UPDATE_BLOCKED', 'metrics': [], 'error_type': type(error).__name__, 'reason': str(error)}
         if c04_successor and 'C04' in requested:
@@ -486,6 +609,10 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
             accounting['calls'][key]=(None if unknown else sum(r['counts'][i] for r in native_attempts)) if session.ledger.live else 0
     return {'record_type': 'ORDINARY_BOUNDED_REFRESH_AND_UPDATE', 'schema_version': 1,
         **({'c04_mixed_source_only': True} if mixed_stale else {}),
+        **({'current_processing_source_status':
+            'READY' if processing_source is not None else 'FAILED'} if mixed_stale else {}),
+        **({'current_processing_source_snapshot_id':
+            processing_source['snapshot_id']} if processing_source is not None else {}),
         **({'resumed_c04_source': {key: value for key, value in resumed.items()
             if key not in {'source_ledger_sha256', 'allowed_next_urls',
                            'prior_intent_id'}}}

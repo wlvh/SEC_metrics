@@ -1,0 +1,29 @@
+E
+======================================================================
+ERROR: test_stale_acquisition_rules_do_not_block_current_saved_source_cases (tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest.test_stale_acquisition_rules_do_not_block_current_saved_source_cases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ordinary_processing_source.py", line 57, in test_stale_acquisition_rules_do_not_block_current_saved_source_cases
+    mixed = refresh_and_process(session=session,
+        state_root=root/'update-state',
+        company_ids=['salesforce'], metric_ids=['B01', 'C04'],
+        max_sec_requests=0, max_provider_requests=0,
+        c04_successor=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_refresh_cycle.py", line 305, in refresh_and_process
+    with session.ledger.locked():
+         ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_ledger.py", line 60, in locked
+    need(not anchor.exists() and not list(self.root.iterdir()),
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'CONTINUOUS_LEDGER_BINDING_MISSING_OR_RESET')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_policy.py", line 15, in need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_LEDGER_BINDING_MISSING_OR_RESET
+
+----------------------------------------------------------------------
+Ran 1 test in 9.725s
+
+FAILED (errors=1)

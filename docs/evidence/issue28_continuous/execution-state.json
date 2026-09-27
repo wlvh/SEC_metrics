@@ -34,17 +34,18 @@
     "unknown": 0
   },
   "current_work": [
+    "Current ordinary mixed refresh uses authenticated saved sources with current-rule private processing. Three exact-SHA limited reviews retain NEEDS_FIX histories; the final config-only patch aed8c1cc passed 12 short and two recorded material tests (377.591s), with PASS_WITH_BOUNDS limited review. Head5e2a5ca9 main CI completed failure: only source-material shard0, shard1 and their aggregator failed; the three selectors hit 240s per-case limits without business assertion failure, while 12 other jobs including JPMorgan succeeded. Scoped runner-only timeout repair is committed locally and not yet pushed. Historical prior pointers without pre-state proof remain fail-closed. Real ledger143/143/52 unchanged.",
     "D04 ten companies retain complete real native candidates and independent cold reads; no formal adoption or production switch.",
     "B13 historical190 success is preserved, 111 current reuse remains blocked, 191/192 failed and exhausted their group opportunities. The V7 exact-SHA followup review of the 32-test limited repair remains NEEDS_FIX due three additional bounded counterexamples; live/native acceptance remains suspended and no complete B13 company exists.",
     "Marriott C04 real SEC193-194 same-year refresh preserves two private result versions; Southwest SEC195 acquired its exact missing FY2024 prior annual primary, and a FY2025 C04 PUBLISHED/0 private native Run and independent cold read succeeded. This is not an old-FY2024-Run to new-FY2025-Run automatic transition.",
     "Salesforce current period ending2026-01-31 and prior annuals are saved. The explicit C04 successor binds the original 0002.body GET proof without changing frozen v2, and reuses the existing issuer-label policy to preserve FY2026 while retaining DEI/Company Facts FY2025. Private PUBLISHED/0 native Run/public row, independent cold read and unchanged-input reuse passed; old FY2026 390 Result remains a separate historical version, not a new complete coordinate or formal adoption. Patch15260ba5 limited review PASS_WITH_BOUNDS; head ed4dd057 main CI36315612650 15/15 SUCCESS.",
     "D03 source-material duplicate rebuild reduction measured 116.660 to 80.409 seconds locally; final two original material tests 78.737 seconds and exact-SHA limited followup review PASS_WITH_BOUNDS. Head9fa84fc2 main CI36298137866 completed SUCCESS, all15 jobs including saved-source shard0 succeeded.",
     "Heads f5e7bc0d and 2ab35195 main CI failed only because C04RefreshResumeMaterialTest in saved-source shard1 hit its 240-second per-case limit. The measured scoped360-second override at head084ed601 passed main CI36313170912, all15 jobs. Subsequent C04 alias/label head ed4dd057 also passed main CI36315612650, all15 jobs.",
-    "Ford FY2025 saved primary/XML contain no CompanyExcludingFordCredit equity fact while consolidated equity exists; industrial debt21919m remains a subtotal and B06 WITHHELD. D03 current complete source forms130 groups across ten companies; an offline full-set raw response store has two targeted tests passing but still requires new limited review and never creates native Result/Run. D03 real provider execution is forbidden. Complete390 and old-entry retirement remain; Paramount C04 lacks same-registrant prior auditor comparison facts."
+    "Ford FY2025 primary/XML contain no CompanyExcludingFordCredit equity XBRL fact; the visible segment table separately reports industrial assets130934m and liabilities109758m, whose residual21176m is not proved attributable equity. Note18 industrial debt current5550m+long16369m=21919m includes finance leases136m+754m; no extra lease addition. B06 remains WITHHELD pending approved denominator relationship. D03 current complete source forms130 groups across ten companies; an offline full-set raw response store has two targeted tests passing and exact-SHA limited review PASS_WITH_BOUNDS and never creates native Result/Run. D03 real provider execution is forbidden. Complete390 and old-entry retirement remain; Paramount C04 lacks same-registrant prior auditor comparison facts."
   ],
   "next": [
-    "Preserve head ed4dd057 main CI36315612650 all15 SUCCESS for the C04 alias/label code, with separate exact-SHA limited review; do not extend this to all390 or cross-year automatic update. New D03 offline packet code must receive exact-SHA limited review and current-head CI after push.",
-    "Use the newly saved Southwest prior annual in the private C04 native Run chain; keep the 195 real source and cold read. Cross-year automatic transition remains unproven until an authentic earlier submissions/Run version exists; do not fabricate an old HTTP response.",
+    "Head5e2a5ca9 CI completed failure with 12 successful jobs and source-material shards failing only measured per-case limits. Push appended e4dbbf8d timeout repair plus c922223e read-only source/B06 audits, then inspect exact new-head CI once and continue independent Issue28 work. Do not rerun passed local long materials or issue real D03/B13 calls.",
+    "Read-only ten-company current source discovery found no unresolved saved-source URL; five missing prior-primary HTML files are satisfied by verified same-filing native alternatives. Do not widen SEC capture or fetch the five merely for form completeness. A full metadata refresh has 29 listed URLs versus current SEC remainder28 before reuse/necessity review. Continue normal update, D03/B06 and 390 acceptance on actual gaps.",
     "Salesforce C04 now has a private FY2026 Run using the existing issuer-label policy and original 0002.body proof; preserve original request identity and old FY2026 Result. Continue normal update/cross-year and 390 acceptance without counting the new version as a second coordinate or formal adoption.",
     "Keep B13 V7 closed. The exact-SHA review of 9d04d65 found adjacent-and scope, trailing-if classification and clear-pronoun false rejection; a local followup experiment failed the original role validator, so no unreviewed source patch was retained. Do not resample191/192 or treat pause code as semantic diagnosis. D03 stays no-call: the recorded full-set stores bytes but cannot prove content correctness or generate a native result; build the necessary semantic/native chain without reviving the old source-fact override. Continue B06/390/exit preparation independently.",
     "No Ready, merge, adoption, deployment, active switch, long-running production, #47 interaction or new provider permission."
@@ -1846,6 +1847,121 @@
       "total_agent_tool_call_cap": 80,
       "total_agent_time_cap_minutes": 90,
       "total_agent_message_cap": 3
+    },
+    {
+      "task_name": "review_normsrc_40bff45",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_processing_source",
+      "scope_paths": [
+        "scripts/vnext/ordinary_processing_source.py",
+        "scripts/vnext/continuous_sec_acquisition.py",
+        "scripts/vnext/ordinary_update_cycle.py",
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tests/vnext/test_ordinary_processing_source.py",
+        "tests/vnext/test_ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "requirements/issue_28_v14/transfer_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/"
+      ],
+      "patch_sha": "40bff4570776f04d2ee9b562d23ee33c05f8a429",
+      "spawned_at": "2026-09-27T13:24:22.774032Z",
+      "ended_at": "2026-09-27T13:27:58.195622Z",
+      "tool_calls": 37,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_MIXED_STALE_RESUME_HISTORY_CHECK",
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3,
+      "ordinary_messages_observed": 3,
+      "tool_call_count_detail": {
+        "outer_exec": 14,
+        "nested_commands": 21,
+        "patch_operations": 2
+      }
+    },
+    {
+      "task_name": "review_normresume_134dcf4",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_processing_resume",
+      "scope_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py",
+        "tools/run_fast_tests_v2.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/"
+      ],
+      "patch_sha": "134dcf4fc1630ef6e45fae012909eb7e6410e5e0",
+      "spawned_at": "2026-09-27T13:46:24.763777Z",
+      "ended_at": "2026-09-27T13:52:48.056344Z",
+      "tool_calls": 38,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review-followup/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_DOWNGRADED_BLOCKED_ROW_AND_PROCESSING_SOURCE_FAILURE_RECOVERY",
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3,
+      "ordinary_messages_observed": 3,
+      "tool_call_count_detail": {
+        "outer_exec": 12,
+        "nested_commands": 24,
+        "patch_operations": 2
+      }
+    },
+    {
+      "task_name": "review_normrecovery_8ce178a",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_processing_recovery",
+      "scope_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py",
+        "tools/run_fast_tests_v2.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/"
+      ],
+      "patch_sha": "8ce178a5a70db21cd80f39e33b6a446e3bd9d620",
+      "spawned_at": "2026-09-27T14:06:41.422222Z",
+      "ended_at": "2026-09-27T14:12:51.420149Z",
+      "tool_calls": 55,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review-recovery/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_BLOCKED_WITH_EXISTING_CONFIGURATION_NO_ATTEMPT",
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3,
+      "ordinary_messages_observed": 1,
+      "tool_call_count_detail": {
+        "outer_exec": 14,
+        "nested_commands": 39,
+        "patch_operations": 2
+      }
+    },
+    {
+      "task_name": "review_normconfig_aed8c1c",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_config_only_resume",
+      "scope_paths": [
+        "scripts/vnext/ordinary_refresh_cycle.py",
+        "tests/vnext/test_ordinary_refresh_cycle.py",
+        "tests/vnext/test_c04_source_only_install.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/"
+      ],
+      "patch_sha": "aed8c1ccf66728b6e9dbc1faa5f9ece5ccc87c8c",
+      "spawned_at": "2026-09-27T14:23:57.230155Z",
+      "ended_at": "2026-09-27T14:30:11.598936Z",
+      "tool_calls": 60,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review-config-only/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS_CONFIG_ONLY_NO_ATTEMPT_RESUME",
+      "total_agent_tool_call_cap": 80,
+      "total_agent_time_cap_minutes": 90,
+      "total_agent_message_cap": 3,
+      "ordinary_messages_observed": 3,
+      "tool_call_count_detail": {
+        "outer_exec": 18,
+        "nested_commands": 38,
+        "web_calls": 2,
+        "patch_operations": 2
+      }
     }
   ],
   "ci_capacity_20260922": {
@@ -4347,5 +4463,245 @@
     "limited_independent_review": "PASS_WITH_BOUNDS_065cbb87",
     "limited_independent_review_result": "docs/evidence/issue28_continuous/d03-complete-recorded-set-20260927/independent-review/conclusion.md",
     "evidence": "docs/evidence/issue28_continuous/d03-complete-recorded-set-20260927/README.md"
+  },
+  "c04_legacy_independent_replay_20260927": {
+    "status": "ONE_PRIVATE_C04_NATIVE_RUN_READ_WITH_116_OLD_SEMANTIC_EXPORTS_DISABLED",
+    "company_id": "salesforce",
+    "metric_id": "C04",
+    "fiscal_year": 2026,
+    "private_result_id": "sha256:96553cca7232ec4860d878158cc1a01dc9bdac82b14effc0fef8c707aae688b1",
+    "private_run_id": "run:ordinary-integrated:b9aee93c890b69b0265c882a6d0b00bc1f490c46c0a81ec2fd781576cb9f13b5",
+    "legacy_semantic_exports_disabled_in_disposable_process": 116,
+    "old_export_control_rejected": true,
+    "current_c04_native_result_and_public_rows_replayed": true,
+    "active_pointer_ledger_and_run_bytes_unchanged": true,
+    "complete_390_graph_or_formal_old_exit_proven": false,
+    "new_real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/c04-legacy-independent-replay-20260927/README.md"
+  },
+  "ordinary_processing_snapshot_20260927": {
+    "status": "FOURTH_CONFIG_ONLY_LIMITED_REVIEW_PASS_WITH_BOUNDS_CI_PENDING",
+    "reason": "Authenticated fixed #28 source root contains old ordinary rule copies, preventing current B01 before business input evaluation in explicit C04 mixed refresh.",
+    "evidence": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/README.md",
+    "current_parent_v13_closure": "sha256:bcdbd50d5a5aa0c23edc5ee5cd61d7f39a2d846570b23fccba565b2e3d5abfe0",
+    "current_child_v14_closure": "sha256:d6ba0de4c9bec5e535375c21189fdd8840354964fda02700f9c8dd4d5081e8b4",
+    "execution_authority_hash": "sha256:c412b6b0cff4182d8a704f0272fe54bb1f74566d9151cd58aeb5adba40930b61",
+    "real_ledger_before_after": [
+      143,
+      143,
+      52
+    ],
+    "real_new_calls": [
+      0,
+      0,
+      0
+    ],
+    "private_saved_source_mixed": {
+      "company": "salesforce",
+      "B01": "CANDIDATE_READY",
+      "C04": "CANDIDATE_READY",
+      "overall": "UPDATES_INCOMPLETE",
+      "repeat": "NO_SOURCE_CONTENT_CHANGE_FOR_BOTH",
+      "bound_to_prior_current_rule_closure": true
+    },
+    "final_current_rule_material": {
+      "recorded_baseline_B01": "CANDIDATE_READY",
+      "missing_C04_extra_source": "REJECTED",
+      "mixed_overall": "UPDATES_INCOMPLETE",
+      "private_rule_tamper": "REJECTED",
+      "source_ledger_advance": "NEW_SNAPSHOT_SAME_B01_SUCCESS_NO_DUPLICATE"
+    },
+    "tests": {
+      "fast": "132/132_PASS_80.621_SECONDS",
+      "material": "1_PASS_49.451_SECONDS",
+      "ordinary_refresh": "11_PASS",
+      "C04_source_only_boundaries": "2_PASS",
+      "SEC_default": "1_PASS_100.237_SECONDS",
+      "resume_recorded_material": "1_PASS_195.651_SECONDS",
+      "resume_old_refresh_short": "11_PASS_2.481_SECONDS",
+      "resume_fast_fixed_tokenizers": "132/132_PASS_118.048_SECONDS",
+      "resume_fast_system_python": "FAILED_ONLY_TOKENIZER_DEPENDENCY_UNAVAILABLE",
+      "third_resume_recorded_material": "2_PASS_377.258_SECONDS",
+      "third_resume_old_refresh_short": "11_PASS_2.601_SECONDS",
+      "third_resume_fast": "132/132_PASS_118.568_SECONDS",
+      "fourth_config_only_material": "2_PASS_377.591_SECONDS",
+      "fourth_config_only_short": "12_PASS_3.899_SECONDS"
+    },
+    "remaining": [
+      "CURRENT_HEAD_MAIN_CI",
+      "NON_C04_FRESH_SOURCE_CAPTURE_NOT_YET_WIDENED",
+      "HISTORICAL_POINTER_RESUME_WITHOUT_PRESTATE_PROOF_FAIL_CLOSED",
+      "NO_CROSS_YEAR_REAL_ONLINE_UPDATE_CREDIT",
+      "NO_FULL390_ACCEPTANCE"
+    ],
+    "first_limited_review": {
+      "patch_sha": "40bff4570776f04d2ee9b562d23ee33c05f8a429",
+      "verdict": "NEEDS_FIX_P2_MIXED_REPORT_RESUME_HISTORY",
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review/conclusion.md",
+      "scope": "new processing source, ledger/copy identity, ordinary update, explicit mixed refresh and current binding; long material chain not rerun independently"
+    },
+    "resume_followup": {
+      "implementation": "NEW_SNAPSHOT_REPORT_VERIFIES_ORIGINAL_LEDGER_COPY_AND_EACH_PERSISTED_ORDINARY_ATTEMPT;OLD_REPORT_SHAPE_PRESERVED",
+      "first_recorded_material_run": "FAILED_OBSOLETE_EXPECTED_OVERALL_STATUS_AFTER_SECOND_CAPTURE_REAL_RESULT_UPDATES_READY_193.869_SECONDS",
+      "corrected_recorded_material_run": "1_PASS_195.651_SECONDS_TAMPER_REJECTED_BEFORE_CAPTURE_TWO_RECORDED_SOURCE_CAPTURES_B01_C04_COMPLETE",
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "second_limited_review": {
+      "patch_sha": "134dcf4fc1630ef6e45fae012909eb7e6410e5e0",
+      "verdict": "NEEDS_FIX_P2_DOWNGRADED_BLOCKED_ROW_AND_PROCESSING_SOURCE_FAILURE_RECOVERY",
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review-followup/conclusion.md",
+      "scope": "new report resume, current binding, short tests and saved long logs; no long run independently repeated"
+    },
+    "third_resume_followup": {
+      "scope": "DISALLOW_DOWNGRADING_PERSISTED_ORDINARY_ATTEMPT_TO_BLOCKED;EXPLICIT_FAILED_PROCESSING_COPY_REPORT_CAN_RESUME_ONLY_AFTER_COPY_REVERIFICATION",
+      "short_tests": "11_PASS_2.601_SECONDS",
+      "recorded_material": "2_PASS_377.258_SECONDS_NORMAL_AND_FAILED_COPY_RECOVERY",
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ],
+      "fast": "132/132_PASS_118.568_SECONDS_FIXED_TOKENIZERS"
+    },
+    "third_limited_review": {
+      "patch_sha": "8ce178a5a70db21cd80f39e33b6a446e3bd9d620",
+      "verdict": "NEEDS_FIX_P2_BLOCKED_WITH_EXISTING_CONFIGURATION_NO_ATTEMPT",
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review-recovery/conclusion.md",
+      "scope": "prior two P2 closed, new config-only blocked path; long material only read"
+    },
+    "fourth_config_only_followup": {
+      "scope": "ALLOW_MATCHED_CONFIGURATION_WITHOUT_CURRENT_POINTER_OR_ATTEMPT;REAL_ATTEMPT_DOWNGRADE_STILL_REJECTED",
+      "short_tests": "12_PASS_3.899_SECONDS",
+      "recorded_material": "2_PASS_377.591_SECONDS_EXISTING_CONFIG_WITHOUT_ATTEMPT_AND_DOWNGRADE_REJECTION",
+      "existing_history_pointer_without_prestate_proof": "FAIL_CLOSED_FOR_RESUME",
+      "new_real_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "fourth_limited_review": {
+      "patch_sha": "aed8c1ccf66728b6e9dbc1faa5f9ece5ccc87c8c",
+      "verdict": "PASS_WITH_BOUNDS_CONFIG_ONLY_NO_ATTEMPT_RESUME",
+      "result_path": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/independent-review-config-only/conclusion.md",
+      "scope": "config-only blocked resume, identity and current V14 binding; long material logs read, not rerun"
+    }
+  },
+  "shared_with_issue47_20260927": {
+    "status": "EXPLICIT_ISSUE28_PATH_ONLY_BACKWARD_COMPATIBLE",
+    "commit_marker": "[shared-with-#47]",
+    "files_functions": {
+      "scripts/vnext/continuous_sec_acquisition.py": [
+        "initialize_source_inputs(clone_baseline=False)",
+        "_clone_or_copy_source(new)"
+      ],
+      "scripts/vnext/ordinary_update_cycle.py": [
+        "run_once(source_identity_root=None)",
+        "run_company(source_identity_root=None)"
+      ],
+      "scripts/vnext/ordinary_refresh_cycle.py": [
+        "refresh_and_process explicit c04_successor+mixed_stale branch",
+        "_resume_one_c04_source explicit new processing-snapshot report and legacy blocked-report verification"
+      ],
+      "scripts/vnext/ordinary_processing_source.py": [
+        "current_processing_source(new)",
+        "verify_processing_source(new)"
+      ],
+      "tools/run_fast_tests_v2.py": [
+        "SOURCE_TIMEOUT_OVERRIDES for three measured #28 material selectors only; runner functions and all other defaults unchanged"
+      ]
+    },
+    "bindings": [
+      "requirements/issue_28_v13/baseline_manifest.json",
+      "requirements/issue_28_v14/baseline_manifest.json",
+      "requirements/issue_28_v14/transfer_manifest.json",
+      "provider/SEC/ordinary-refresh current wiring receipts",
+      "followup current V14 closure sha256:155a4e9af8c1b9bf583726736f40f24460460a15efbc545b49a0e731313b3063; V13 parent closure unchanged",
+      "third current V14 closure sha256:6f1adf3663ba7573658f44d9e4a44d231ae42585d83cbee6dc1df7667129d2d8; V13 parent unchanged",
+      "fourth current V14 closure sha256:d6ba0de4c9bec5e535375c21189fdd8840354964fda02700f9c8dd4d5081e8b4; V13 parent unchanged"
+    ],
+    "compatibility_evidence": [
+      "existing SEC default initializer 1 recorded material test PASS",
+      "old ordinary refresh tests 11 PASS",
+      "fast suite 132/132 PASS",
+      "head5e2 source shards failed only three named 240s per-case timeouts; scoped 360/360/300 limits add no new tests or source semantics",
+      "source identity root optional default preserves old configuration and results",
+      "old frozen V12 bytes unchanged"
+    ],
+    "possible_downstream_impact": "#47 may need to rebind its own dependent current execution snapshot after #28 base moves; its executor owns that integration. #28 did not touch the #47 branch, snapshot, ledger, source or run root."
+  },
+  "ordinary_source_gap_census_20260927": {
+    "status": "READ_ONLY_WORKTREE_NOT_YET_PUSHED",
+    "evidence": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/source-gap-census.jsonl",
+    "script": "docs/evidence/issue28_continuous/ordinary-processing-snapshot-20260927/source-gap-census.py",
+    "source_root": "ORIGINAL_FIXED_ISSUE28_SOURCE_INPUTS",
+    "company_count": 10,
+    "unresolved_source_dependency_count": 0,
+    "missing_prior_primary_html_count_with_verified_native_alternative": 5,
+    "metadata_refresh_urls_listed": 29,
+    "current_sec_remainder": 28,
+    "resource_difference_if_all_29_UNREUSED_urls_required": 1,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "meaning": "Current source graph available does not establish all39 metric results or freshness; no basis yet to widen non-C04 capture or spend SEC on alternative-satisfied HTML."
+  },
+  "b06_ford_visible_balance_debt_20260927": {
+    "status": "READ_ONLY_WORKTREE_NOT_YET_PUSHED",
+    "evidence": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance.json",
+    "script": "docs/evidence/issue28_continuous/b06-ford-equity-scope-20260927/visible-debt-balance-probe.py",
+    "accession": "0000037996-26-000015",
+    "period_end": "2025-12-31",
+    "reported_unit": "USD_MILLIONS",
+    "industrial_assets": 130934,
+    "industrial_liabilities": 109758,
+    "same_scope_net_assets_residual": 21176,
+    "industrial_attributable_equity_proven": false,
+    "debt_current": 5550,
+    "debt_noncurrent": 16369,
+    "debt_total": 21919,
+    "finance_lease_current_included": 136,
+    "finance_lease_noncurrent_included": 754,
+    "finance_lease_total_included": 890,
+    "ratio_result_created": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "business_boundary": "No industrial allocation of consolidated noncontrolling interest and no approved conversion of same-column net assets into industrial attributable equity; retain WITHHELD."
+  },
+  "ci_mixed_resume_timeout_20260927": {
+    "status": "HEAD5E2_MAIN_FAILURE_ONLY_TWO_SOURCE_SHARDS_AND_AGGREGATOR",
+    "head": "5e2a5ca9da25419e155f4325140a57236461a0ab",
+    "run_id": 36326213320,
+    "shard0_job_id": 108639357090,
+    "shard0": "39_OF_40_PASS_NEW_C04_FAILED_COPY_RESUME_RC124_AT_240.105_SECONDS",
+    "shard1_job_id": 108639357083,
+    "shard1": "37_OF_39_PASS_NEW_C04_NORMAL_RESUME_RC124_240.106_AND_D03_COMPLETE_SET_RC124_240.107",
+    "prior_green_d03_duration_seconds": 216.596,
+    "local_recorded_c04_two_cases": "2_PASS_377.591_SECONDS",
+    "runner_only_override_seconds": {
+      "new_c04_normal_resume": 360,
+      "new_c04_failed_copy_resume": 360,
+      "d03_complete_recorded_set": 300
+    },
+    "job_timeout_minutes_unchanged": 35,
+    "business_assertion_failure_observed": false,
+    "old_head_terminal": "docs/evidence/issue28_continuous/ci-mixed-resume-timeout-20260927/old-head-ci-terminal.json",
+    "old_head_jobs": "12_SUCCESS_3_FAILURE_TWO_SOURCE_SHARDS_PLUS_AGGREGATOR",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence": "docs/evidence/issue28_continuous/ci-mixed-resume-timeout-20260927/README.md",
+    "remaining": "PUSH_SCOPED_RESOURCE_FIX_THEN_NEW_HEAD_CI"
   }
 }

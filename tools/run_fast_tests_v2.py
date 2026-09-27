@@ -354,6 +354,9 @@ SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallT
 SOURCE_TESTS += ("tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest",)
+SOURCE_TESTS += ("tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest",)
+SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04",)
+SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
@@ -427,6 +430,16 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # passed locally in 119.135s and CI at 163.194s, then twice hit 240s under
     # concurrent source-shard load without a business assertion failure.
     "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest": 360,
+    # D03 full-set storage passed prior head b686 shard1 in 216.596s, then
+    # hit this head's 240.107s limit under a new concurrent source shard.
+    "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 300,
+    # Head 5e2a5ca9 shard1 ended the normal two-capture mixed-source case at
+    # its 240.106s limit; the local two-case run passed in 377.591s.
+    "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 360,
+    # Head 5e2a5ca9 shard0 ended this exact two-capture recovery case at the
+    # 240.105s per-case limit (rc124); the local two-case run passed in
+    # 377.591s. Keep the rest of the source suite and job deadline unchanged.
+    "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 360,
 }
 
 
