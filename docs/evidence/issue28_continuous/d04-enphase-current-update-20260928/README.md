@@ -10,6 +10,8 @@
 
 `reconcile.py`只读原Enphase真实完成/冷读摘要及本次Run、独立冷读和重复收据，`reconciliation.json`交叉核对原173—178序号、原Run与当前Run不同身份、**同一个Result ID**、当前V14闭包、公开行字节与FY2025期间。原Result仍`WITHHELD / D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE`，当前公开行为`TEXT_QUAL`的限定来源结论，不能解释为财务健康保证。它也核对零新增provider/paid/SEC。原保存材料与旧Run未被重签。
 
+初次限定独审指出：相同Result ID和序号摘要尚不足以**逐条证明当前Run消费原173—178响应字节**。补充的`verify-raw-identity.py`从当前Run输入绑定定位安装的schema2登记，逐条对照原固定账本中173—178的`source.json`、`semantic-request.json`、`wire/assistant-output.bin`、原始响应哈希、intent、terminal和wire记录，并与原批次`calls.json`的请求ID/摘要核对；六条全部通过，`raw-identity.json`保留各字节SHA及原acceptance receipt ID。当前登记`input_record_id`随需求闭包变化，与原登记ID不同；来源ID、六个请求/响应原字节及原序号不因此改签。此补充仍**不能追溯证明本轮更新执行前后每份原调用文件及旧私有Run整树逐字未变**；已做的计数、调用目录和五份哨兵不扩大为那个结论。
+
 本项增加的是**当前正常更新入口复用既有真实公司结果、持久化冷读与重复触发幂等**的限定证据；D04原来的10/10公司候选数量不变，不构成正式采纳、生产切换、跨财年新报表在线更新或390统一验收。实际新增provider/paid/SEC为0/0/0，#47/PR52的分支、来源及账本未使用。
 
 执行所用代码head `b868ac42` 的主CI [`36354613173`](https://github.com/wlvh/SEC_metrics/actions/runs/36354613173) 已整体SUCCESS（15/15作业，含保存来源两片和汇总）。CI覆盖的是该head的既有测试，不独立重跑本目录1150.446秒的真实既有响应普通更新；两者的证据范围不能互换。
