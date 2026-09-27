@@ -138,6 +138,11 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # The saved JPM D03 packet passed on the prior runner in 227.163s but
     # reached the 240s per-case bound while two complete CI shards ran.
     "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": 300,
+    # One C04 test runs an initial source capture and a separately authenticated
+    # continuation plus three rejection branches. The same unchanged entry
+    # passed locally in 119.135s and CI at 163.194s, then twice hit 240s under
+    # concurrent source-shard load without a business assertion failure.
+    "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest": 360,
 }
 
 
