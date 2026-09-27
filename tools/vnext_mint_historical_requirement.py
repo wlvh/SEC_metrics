@@ -155,6 +155,11 @@ NEW_RULE_FILES = (
     # period's statement metrics resolve at all, so both roots check them.
     "scripts/vnext/historical_part_iii_admission.py",
     "config/issue47_part_iii_statement_admission_v1.json",
+    # D02's Item 8 review: the request every Item 8 block D02 could admit
+    # makes, the checks an answer must pass, and what a checked, registered
+    # answer counts. It decides which Item 8 blocks a reviewed D02 set holds,
+    # so both roots check it.
+    "scripts/vnext/historical_legal_review.py",
 )
 
 # One module the parent's authority does not name although its own named code

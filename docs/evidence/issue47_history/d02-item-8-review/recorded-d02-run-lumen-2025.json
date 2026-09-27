@@ -1,0 +1,93 @@
+{
+ "added": [],
+ "answer_is": "synthetic: every must-decide block out except the named ones, the added blocks counted, the named blocks left undecided; the test's answer, not a model's and not a reading",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "cold_read_matches": true,
+ "company_id": "lumen_technologies",
+ "default_item_8_blocks": [
+  1670,
+  3382,
+  3383
+ ],
+ "default_run": {
+  "new_calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "publication": "PUBLISHED",
+  "quality": "EXACT",
+  "reason_code": "PASS",
+  "requirement_closure_hash": "sha256:3d1c84cc7912eebf6fbc1a39570cde2eb2daccae4c8fe8d827200be7c913f0e3",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:38de68e71db270b03797ed9ee3330731c04a3589709772b177df2bb8b07b74ae",
+  "run_id": "run:historical-period:f86bc3158e7cd5aa342d55b4ebfda062d1e0c148359af13f58f6891d23745259",
+  "status": "FROZEN"
+ },
+ "in": [
+  "b3382",
+  "b3383"
+ ],
+ "item_8_is_what_the_review_counts": true,
+ "production_authorized": false,
+ "public_row": {
+  "evidence_count": 41,
+  "notes": "Verbatim legal disclosures retain their source periods. No current aggregate litigation liability or case count is inferred. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS. Pinned historical period; values come only from the sources named in the evidence, as selected for this period. No latest-restated view is applied. Source classifications use recorded test responses; no real model execution credit.",
+  "period_end": "2025-12-31",
+  "row_hash": "sha256:ac65014cb17ba9b7dc1844bdcd20786568bf85f5f2a712851b0207f9033a6a20",
+  "semantic_assessment_mode": "RECORDED_TEST_ONLY",
+  "status": "TEXT_QUAL"
+ },
+ "recorded_mode_marked": true,
+ "registration": {
+  "blocks": 1369,
+  "input_record_id": "sha256:0469288314feca7956ef5927a02892a3aa826d70766195e335aed41a49f667ee",
+  "mode": "RECORDED_TEST_ONLY",
+  "must_decide": 39,
+  "request_id": "sha256:9d73ac4466c8919a808fd2190fc26ab21c581e30f31fd71672aa8138289c077c",
+  "reviewed": {
+   "in_scope": [
+    "b3382",
+    "b3383"
+   ],
+   "unsettled": [],
+   "withheld_reason": null
+  }
+ },
+ "report_end": "2025-12-31",
+ "reviewed_item_8_blocks": [
+  3382,
+  3383
+ ],
+ "run": {
+  "new_calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "publication": "PUBLISHED",
+  "quality": "EXACT",
+  "reason_code": "PASS",
+  "requirement_closure_hash": "sha256:3d1c84cc7912eebf6fbc1a39570cde2eb2daccae4c8fe8d827200be7c913f0e3",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:37efb7f6836600a3eae057f28c890398572f47ca4a5b6478c31ed1724cd87710",
+  "run_id": "run:historical-period:7d01efe2bc3d57786ddf18deaf281175fc5dbfcd4d9ae6415fbbe07c354c2e4b",
+  "status": "FROZEN"
+ },
+ "runtime_tree": "/tmp/claude-0/native/rt-egress5",
+ "separate_process_cold_read": {
+  "publication": "PUBLISHED",
+  "quality": "EXACT",
+  "reason_code": "PASS",
+  "records": 52,
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:37efb7f6836600a3eae057f28c890398572f47ca4a5b6478c31ed1724cd87710",
+  "run_id": "run:historical-period:7d01efe2bc3d57786ddf18deaf281175fc5dbfcd4d9ae6415fbbe07c354c2e4b",
+  "status": "FROZEN"
+ },
+ "undecided": []
+}

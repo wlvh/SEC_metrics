@@ -64,16 +64,25 @@ ANNUAL_ONLY_TEXT_METRICS = ("D01", "D02")
 
 
 def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, metric_id: str,
-                                           period_selection):
+                                           period_selection, review_mode=None,
+                                           _without_reviews=False):
     """Admit the target filing's own text for a pinned annual period.
 
     The 10-K is chosen by ``historical_metadata_context`` on the pinned
     period's own end date and checked against the selection's filing, so the
     text comes from the year that was asked for rather than from whatever was
     filed last - including when that year's row is in a history shard.
+
+    D02 also carries the Item 8 reviews registered for this position, if any
+    (``historical_legal_review``); which of them answers today's request is
+    decided where the request is rebuilt. ``review_mode`` selects them as
+    E01's and D04's modes do: None means the installed copy's in a data root
+    and LIVE otherwise.
     """
     _need(metric_id in SUPPORTED_METRICS,
           "HISTORICAL_TEXT_INPUT_METRIC_NOT_WIRED:" + metric_id, "IMPLEMENTATION_GAP")
+    _need(review_mode is None or metric_id == "D02",
+          "HISTORICAL_TEXT_REVIEW_MODE_WITHOUT_REVIEW:" + metric_id, "IMPLEMENTATION_GAP")
     root = Path(repo_root)
     ledger_sha = sha256_file(path=root / "evidence/requests_log.csv")
     prepared = prepare_historical_annual_input(repo_root=root, company_id=company_id,
@@ -157,6 +166,26 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
         "target": target, "source_references": text_sources, "raw_blobs": blobs,
         "raw_bytes_by_id": raw,
         **({} if metric_id == "D01" else {"source_filings": filings})}
+    review = None
+    if metric_id == "D02" and text_args is not None and not _without_reviews:
+        from .historical_legal_review import load_registered_reviews, select_registered_review
+        reviews = load_registered_reviews(
+            data_root=root, company_id=company_id,
+            period_selection_id=period_selection["selection_id"],
+            raw_asset_id=text_sources[0]["raw_asset_id"], mode=review_mode)
+        if reviews:
+            # Which review answers is decided against today's request, which
+            # needs the filing read - so only where a review exists, and here
+            # rather than later, so a source root holding an outdated review
+            # beside the current one binds the same single record the data
+            # root is given. One that answers no current request is refused by
+            # name; it is never read as "unreviewed".
+            from .historical_text_results import _prepare_corrected_sources, legal_review_request
+            review = select_registered_review(records=reviews, request=legal_review_request(
+                prepared=_prepare_corrected_sources(metric_id="D02", **text_args),
+                source_arguments=text_args))
+            # Only where there is one, so an unreviewed position keeps its bytes.
+            text_args["legal_review"] = [review]
     _need(sha256_file(path=root / "evidence/requests_log.csv") == ledger_sha,
           "HISTORICAL_TEXT_INPUT_LEDGER_CHANGED_DURING_PREPARATION")
     # The amendment flag belongs to the annual-only text metrics, not to D02
@@ -182,8 +211,33 @@ def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, 
             "current_latest_verified": False, "latest_restated_values_used": False,
             "execution": "NOT_EXECUTED", "production_authorized": False,
             "business_calls": [0, 0, 0]}
+    if review is not None:
+        body["registered_item_8_review"] = {key: review[key] for key in (
+            "input_record_id", "request_id", "mode")}
     binding = {**body, "input_binding_id": content_hash(value=body)}
     return {"prepared_input": prepared, "input_binding": binding, "input_status": status,
             "records": records, "source_references": references, "source_set_manifests": [],
             "source_proofs": proofs, "admission": admission, "text_arguments": text_args,
             "target_period": period, "business_calls": [0, 0, 0]}
+
+
+def d02_review_request(*, repo_root: Path, company_id: str, period_selection):
+    """D02's Item 8 review request at a pinned period, and the source proofs it was built from.
+
+    Built by the route's own reading of the pinned filing - the same prepared
+    input, section boundaries and Item 8 pool the route checks an answer
+    against - so the question a model is asked is the one a registration must
+    answer. Registered reviews are not consulted: the question is the same
+    whether an answer exists or not.
+    """
+    from .historical_text_results import _prepare_corrected_sources, legal_review_request
+    prepared = prepare_historical_business_text_input(
+        repo_root=repo_root, company_id=company_id, metric_id="D02",
+        period_selection=period_selection, _without_reviews=True)
+    _need(prepared["input_status"] != "BLOCKED",
+          "HISTORICAL_D02_REVIEW_INPUT_BLOCKED:" + str(prepared["input_binding"]["limitations"])[:200],
+          "SOURCE_INTEGRITY_ERROR")
+    arguments = prepared["text_arguments"]
+    request = legal_review_request(prepared=_prepare_corrected_sources(metric_id="D02", **arguments),
+                                   source_arguments=arguments)
+    return request, prepared["source_proofs"]

@@ -337,20 +337,27 @@ TEXT_SPEC_PATHS = {"C02": "catalog/r6/C02_board_disclosures_v2.md",
                    "D02": "catalog/r6/D02_legal_disclosures_v2.md"}
 
 
-def _historical_text_run_input(*, repo_root, company_id, metric_id, period_selection):
+def _historical_text_run_input(*, repo_root, company_id, metric_id, period_selection,
+                               assessment_mode=None):
     """Assemble the text case's identity without its raw bytes.
 
     ``text_arguments`` carries the filing's bytes, which cannot enter a binding
     that has to be JSON and content-addressed. The binding therefore records
     which sources were admitted, and the Run factory re-prepares the same input
     from the data root to obtain the bytes again.
+
+    A D02 position with a registered Item 8 review answering today's request
+    carries it as its registered assessment, so the installer places it in the
+    data root the Run is built in.
     """
     from .historical_text_input import prepare_historical_business_text_input
     prepared = prepare_historical_business_text_input(
         repo_root=repo_root, company_id=company_id, metric_id=metric_id,
-        period_selection=period_selection)
+        period_selection=period_selection,
+        **({"review_mode": assessment_mode} if metric_id == "D02" else {}))
     _need(prepared["input_status"] != "BLOCKED",
           "HISTORICAL_TEXT_RUN_INPUT_BLOCKED:" + str(prepared["input_binding"]["limitations"]))
+    review = (prepared["text_arguments"].get("legal_review") or [None])[0]
     spec_path = TEXT_SPEC_PATHS[metric_id]
     spec = compile_historical_spec_file(repo_root=repo_root, repo_relative_path=spec_path,
                                         dependency_specs={})
@@ -370,6 +377,8 @@ def _historical_text_run_input(*, repo_root, company_id, metric_id, period_selec
             "component": prepared["input_binding"], "kind": "TEXT",
             "calls": {"provider": 0, "paid": 0, "sec": 0},
             "native_run_status": "NOT_CREATED", "production_authorized": False}
+    if review is not None:
+        body["registered_assessment"] = review
     body = exact_json_value(body)
     return {**body, "input_id": content_hash(value=body)}
 
@@ -550,8 +559,9 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     from .historical_event_items import SUCCESSOR_EVENT_ROUTES
     # E01's content confirmation is a registered model answer too, selected the
     # same way: None means the installed copy's mode, and LIVE otherwise.
+    # D02's registered Item 8 review is selected the same way again.
     _need(assessment_mode is None or metric_id in SEMANTIC_METRICS
-          or metric_id in SUCCESSOR_EVENT_ROUTES,
+          or metric_id in SUCCESSOR_EVENT_ROUTES or metric_id == "D02",
           "HISTORICAL_RUN_ASSESSMENT_MODE_WITHOUT_ASSESSMENT")
     from .historical_accession_results import resolve_historical_accession_metrics
     # Revenue and the 8-K event windows share one adapter, as they do in the
@@ -576,7 +586,8 @@ def prepare_historical_run_input(*, repo_root: Path, company_id: str, metric_id:
     if metric_id in TEXT_METRICS:
         return _historical_text_run_input(repo_root=repo_root, company_id=company_id,
                                           metric_id=metric_id,
-                                          period_selection=period_selection)
+                                          period_selection=period_selection,
+                                          assessment_mode=assessment_mode)
     # D04 is read by a model, and its Run consumes the registered review of
     # every unit of the pinned source. Its Spec is not in the ordinary set, so
     # this answers before that set is consulted.

@@ -345,6 +345,13 @@ FAST_TESTS += ("tests.vnext.test_source_tier_split",)
 FAST_TESTS += ("tests.vnext.test_historical_board_composition",)
 # C02 composition facts on the ten saved governance filings, both directions.
 SOURCE_TESTS += ("tests.vnext.test_historical_board_composition_filings",)
+# D02's Item 8 review: the contract on synthetic documents (no filing, well
+# under a second), then what a registered answer changes on Lumen's 10-K.
+FAST_TESTS += ("tests.vnext.test_historical_legal_review.TheRequestIsTheBlocksAndWhichMustBeDecided",
+               "tests.vnext.test_historical_legal_review.TheAnswerIsHeldToItsForm",
+               "tests.vnext.test_historical_legal_review.WhatACheckedAnswerCounts",
+               "tests.vnext.test_historical_legal_review.ARegistrationIsCheckedAgainUnderTheCurrentCode")
+SOURCE_TESTS += ("tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes",)
 SOURCE_TESTS += ("tests.vnext.test_regulatory_fact_review",)
 SOURCE_TESTS += ("tests.vnext.test_c04_registration_successor",)
 SOURCE_TESTS += ("tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",)
@@ -387,6 +394,9 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Seven cases that recompute ten positions through the historical route;
     # measured at 202 seconds alone.
     "tests.vnext.test_historical_board_composition_filings": 600,
+    # Lumen's 10-K prepared once and reviewed eight ways; 179 seconds with the
+    # synthetic classes beside a batch.
+    "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes": 480,
     # Fourteen cases over nine filings' full 10-K bytes, three of which parse
     # the same document twice to hold the successor parser to the frozen one.
     # Measured at 187 seconds, too close to the 240 default to survive a
@@ -539,6 +549,8 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_historical_semantic_routes": 167,
     "tests.vnext.test_historical_d02_marks": 164,
     "tests.vnext.test_historical_board_composition_filings": 154,
+    # Estimated from its local time under load; not yet run on CI.
+    "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes": 180,
     "tests.vnext.test_historical_event_items": 132,
     "tests.vnext.test_historical_shared_sources": 118,
     "tests.vnext.test_historical_predecessor_periods": 110,

@@ -749,6 +749,132 @@ def _width(scope):
     return scope["end_block_exclusive"] - scope["start_block"]
 
 
+def item_8_review_pool(*, document, raw_bytes, proposal):
+    """The Item 8 blocks D02 could admit, and the part of them the keyword admits.
+
+    The same exclusions `referenced_note_candidates` applies to Item 8 - a
+    block another scope owns, page furniture and the running header, the
+    auditor's report - and the same two ways in, a substantive block or a
+    hyperlinked sentence. What is left out is only the keyword, so this is
+    exactly what a reviewer has to read for the Item 8 part of the set to be
+    complete in both directions: the keyword's admissions, and every block it
+    never admitted. `apply_legal_review` requires the keyword part to equal the
+    Item 8 excerpts of the proposal, so the two readings cannot drift apart.
+    """
+    ranges = proposal["checked_ranges"]
+    item_8 = [scope for scope in ranges if scope["section_id"] == "ITEM_8"]
+    _need(len(item_8) == 1, "HISTORICAL_D02_REVIEW_NEEDS_ONE_ITEM_8_RANGE")
+    scope = item_8[0]
+    owner = {}
+    for candidate in ranges:
+        for index in range(candidate["start_block"], candidate["end_block_exclusive"]):
+            held = owner.get(index)
+            if held is None or _width(candidate) < _width(held):
+                owner[index] = candidate
+    audit = audit_report_spans(document=document, ranges=ranges)
+    audited = {index for span in audit["spans"]
+               for index in range(span["start_block"], span["end_block_exclusive"])}
+    start, stop = scope["start_block"], scope["end_block_exclusive"]
+    furniture = set(scope.get("repeated_furniture_blocks", ()))
+    running_header = set()
+    if "repeated_furniture_blocks" not in scope:
+        repeated = Counter(_normalized(document["blocks"][index]["text"])
+                           for index in range(start, stop))
+        running_header = set(_page_furniture(blocks=document["blocks"], start=start, stop=stop,
+                                             repeated=repeated))
+    pool, keyword = [], []
+    for index in range(start, stop):
+        if (owner[index] is not scope or index in furniture or index in running_header
+                or index in audited):
+            continue
+        block = document["blocks"][index]
+        if _substantive(document, block) or _hyperlinked_sentence(document=document, block=block):
+            pool.append(index)
+            if _d02_section("ITEM_8", block["text"]):
+                keyword.append(index)
+    return pool, keyword
+
+
+def _d02_parts(prepared):
+    _need(len(prepared["documents"]) == 1, "HISTORICAL_D02_REVIEW_EXPECTS_ONE_DOCUMENT")
+    reference_id = next(iter(prepared["documents"]))
+    return reference_id, prepared["documents"][reference_id], prepared["proposals"][reference_id]
+
+
+def legal_review_request(*, prepared, source_arguments):
+    """D02's Item 8 review request for a prepared filing, built from the route's own reading."""
+    from .historical_legal_review import review_request
+    _, document, proposal = _d02_parts(prepared)
+    pool, keyword = item_8_review_pool(
+        document=document, raw_bytes=source_arguments["raw_bytes_by_id"][document["raw_asset_id"]],
+        proposal=proposal)
+    admitted = sorted(candidate["block_index"] for candidate in proposal["D02"]["candidates"]
+                      if candidate["section_id"] == "ITEM_8")
+    _need(admitted == keyword, "HISTORICAL_D02_REVIEW_POOL_DISAGREES_WITH_THE_PROPOSAL")
+    target = source_arguments["target"]
+    return review_request(company_id=target["company_id"], target_cik=target["entity"],
+                          period_end=target["period_end"], document=document, pool=pool,
+                          keyword_admitted=keyword)
+
+
+def apply_legal_review(*, prepared, legal_review, source_arguments):
+    """The prepared D02 sources with Item 8 chosen by a registered review, when one answers.
+
+    Only the Item 8 excerpts change. Item 3 and the incorporated notes are the
+    filing's own pointers and stay as the route read them; in Item 8 the
+    keyword's admissions are replaced by the blocks the review counts, in
+    document order and in the scope's place. No review for the position leaves
+    the preparation exactly as it was. A review that answers another request
+    is refused by name, and one that leaves a block undecided withholds the
+    filing by name.
+    """
+    from .historical_legal_review import (REVIEW_LABEL, LegalReviewUnsettled,
+                                          select_registered_review)
+    if not legal_review:
+        return prepared
+    reference_id, document, proposal = _d02_parts(prepared)
+    request = legal_review_request(prepared=prepared, source_arguments=source_arguments)
+    record = select_registered_review(records=legal_review, request=request)
+    reviewed = record["reviewed"]
+    if reviewed["withheld_reason"] is not None:
+        raise LegalReviewUnsettled(reviewed["withheld_reason"] + ":"
+                                   + ",".join(reviewed["unsettled"])[:200])
+    counted = sorted(int(identity[1:]) for identity in reviewed["in_scope"])
+    old = proposal["D02"]["candidates"]
+    candidates = []
+    for scope in proposal["checked_ranges"]:
+        if scope["section_id"] == "ITEM_8":
+            candidates.extend(_excerpt(document, document["blocks"][index], "ITEM_8", [REVIEW_LABEL])
+                              for index in counted)
+        else:
+            candidates.extend(candidate for candidate in old
+                              if candidate["section_id"] == scope["section_id"])
+    _need(len([c for c in old if c["section_id"] != "ITEM_8"])
+          == len([c for c in candidates if c["section_id"] != "ITEM_8"]),
+          "HISTORICAL_D02_REVIEW_MOVED_A_NON_ITEM_8_EXCERPT")
+    keyword = {c["block_index"] for c in old if c["section_id"] == "ITEM_8"}
+    selection = {"method": "REGISTERED_REVIEW", "contract": record["contract"],
+                 "input_record_id": record["input_record_id"], "request_id": record["request_id"],
+                 "mode": record["mode"], "counted_blocks": counted,
+                 "keyword_admissions_left_out": sorted(keyword - set(counted)),
+                 "counted_without_the_keyword": sorted(set(counted) - keyword)}
+    body = {key: value for key, value in proposal.items() if key not in ("policy_hash", "proposal_id")}
+    body["D02"] = {**body["D02"], "candidates": candidates,
+                   "finding_status": "SOURCE_EXCERPTS_FOUND" if candidates
+                   else "NO_SUPPORTED_SOURCE_LANGUAGE"}
+    body["item_8_selection"] = selection
+    reviewed_proposal = {**body, "policy_hash": proposal["policy_hash"],
+                         "proposal_id": content_hash(value={**body,
+                                                            "policy_hash": proposal["policy_hash"]})}
+    coverage = {key: value for key, value in prepared["coverages"][reference_id].items()
+                if key != "coverage_hash"}
+    coverage["item_8_selection"] = selection
+    coverage["coverage_hash"] = content_hash(value=coverage)
+    return {**prepared,
+            "coverages": {**prepared["coverages"], reference_id: coverage},
+            "proposals": {**prepared["proposals"], reference_id: reviewed_proposal}}
+
+
 # One execution prepares the same source set twice: once to build the candidate
 # and once to rebuild it inside build_text_evidence. Counted by (parser, source
 # bytes, parameters), that is six of the ten parse calls a D02 position makes -
@@ -822,14 +948,27 @@ def _preparation_key(*, metric_id, source_arguments):
     return content_hash(value={"metric_id": metric_id, **keyed})
 
 
-def prepare_business_text_sources(*, metric_id, **source_arguments):
+def prepare_business_text_sources(*, metric_id, legal_review=None, **source_arguments):
     """The frozen source preparation with the located ranges corrected.
 
     The frozen function owns source identity, period, the reported fact
     inventory and every other check. This re-runs only the excerpt scan, and
     only when a boundary actually falls inside a located range, so a filing
     without one returns the frozen record set unchanged.
+
+    ``legal_review`` is D02's registered Item 8 reviews for the position
+    (``historical_legal_review.load_registered_reviews``), applied after the
+    shared preparation so the key stays the frozen arguments; none leaves the
+    preparation as the keyword made it.
     """
+    _need(legal_review is None or metric_id == "D02",
+          "HISTORICAL_TEXT_LEGAL_REVIEW_IS_D02_ONLY:" + str(metric_id))
+    prepared = _prepare_corrected_sources(metric_id=metric_id, **source_arguments)
+    return apply_legal_review(prepared=prepared, legal_review=legal_review,
+                              source_arguments=source_arguments)
+
+
+def _prepare_corrected_sources(*, metric_id, **source_arguments):
     _need(metric_id in SUPPORTED_METRICS,
           "HISTORICAL_TEXT_BOUNDARY_METRIC_NOT_WIRED:" + str(metric_id))
     shared = _SHARED_SOURCES.get()
