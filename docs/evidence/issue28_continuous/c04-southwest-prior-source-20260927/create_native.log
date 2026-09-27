@@ -1,0 +1,6 @@
+{"company_id": "southwest_airlines", "metric_status": "EXECUTION_FAILED", "new_calls": {"paid": 0, "provider": 0, "sec": 0}, "new_candidate_created": false, "production_authorized": false, "publication": null, "result_id": null, "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs", "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/private-c04-southwest-20260927", "status": "UPDATES_INCOMPLETE", "successful_attempt": null, "value": null}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/c04-southwest-prior-source-20260927/create_native.py", line 39, in <module>
+    assert result['status'] == 'UPDATES_READY' and row['status'] == 'CANDIDATE_READY'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/c04-southwest-prior-source-20260927/prepare_saved.py", line 20, in <module>
+    'value': result.get('value'), 'target': case['targets']['C04'],
+                                            ~~~~^^^^^^^^^^^
+KeyError: 'targets'
