@@ -4,6 +4,7 @@ The existing acquisition session owns transport, provenance and the cumulative
 ledger. The existing update cycle owns candidate history. No resident loop or
 publication action is introduced here.
 """
+from contextlib import ExitStack
 from pathlib import Path
 
 from sec_http import parse_request_log_rows, validate_request_log_manifest
@@ -535,6 +536,7 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
             if len(captures) >= capture_limit:
                 break
             request = pending[0]; url = request['source_url']; attempted.add(url)
+            capture_started = False
             try:
                 if resumed is not None:
                     from .normal_run_v3 import prepare_case
@@ -561,17 +563,40 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                     need(sha256_file(path=session.data_root/'evidence/requests_log.csv')
                          == resumed['source_ledger_sha256'],
                          'ORDINARY_REFRESH_RESUME_SOURCE_CHANGED_BEFORE_CAPTURE')
-                result = session.capture(company_id=company, url=url,
-                    refresh_metadata=request['refresh_for_new_discovery'],
-                    **({'source_only_c04': True} if c04_only or mixed_stale else {}),
-                    **({'ordinary_prestate_root': state_root,
-                        'ordinary_prestate_metric_ids': metrics}
-                        if mixed_stale else {}))
+                with ExitStack() as resume_locks:
+                    if resumed is not None and mixed_stale:
+                        # Ordinary B01 and C04 writers use these same locks.
+                        # Recheck the predecessor while both are held, then
+                        # retain them through the SEC claim and capture.
+                        from . import ordinary_update_cycle as cycle
+                        company_root = state_root/company
+                        resume_locks.enter_context(cycle._locked(company_root))
+                        resume_locks.enter_context(cycle._locked(
+                            company_root/'metrics/C04-registration-v3'))
+                        with session.ledger.locked():
+                            locked_snapshot = session.ledger.snapshot()
+                        checked = _resume_one_c04_source(session=session,
+                            state_root=state_root, company_id=company,
+                            snapshot=locked_snapshot, report_path=resume_from,
+                            metric_ids=metrics, mixed_stale=mixed_stale)
+                        need(checked == resumed,
+                             'ORDINARY_REFRESH_RESUME_CHANGED_BEFORE_CAPTURE')
+                    capture_started = True
+                    result = session.capture(company_id=company, url=url,
+                        refresh_metadata=request['refresh_for_new_discovery'],
+                        **({'source_only_c04': True} if c04_only or mixed_stale else {}),
+                        **({'ordinary_prestate_root': state_root,
+                            'ordinary_prestate_metric_ids': metrics}
+                            if mixed_stale else {}))
                 captures.append({'company_id': company, 'source_url': url, 'result': result})
                 if result['status'] not in {'SUCCEEDED', 'EXISTING_VERIFIED_SOURCE_REUSED'}:
                     failed.add(url)
                 progressed = True
             except Exception as error:
+                if resumed is not None and not capture_started:
+                    # A changed predecessor is an admission failure. Do not
+                    # run ordinary updates after denying the next SEC claim.
+                    raise
                 capture_error = True
                 errors.setdefault(company, []).append({'stage': 'CAPTURE', 'error_type': type(error).__name__, 'reason': str(error)})
                 # An interrupted or unaccounted capture must stop new requests;

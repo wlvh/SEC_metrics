@@ -104,6 +104,11 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
             captures = []
             native_capture = session.capture
             def capture(**kwargs):
+                if len(captures) == 1:
+                    with self.assertRaisesRegex(update.OrdinaryUpdateError,
+                                                'UPDATE_ALREADY_RUNNING'):
+                        with update._locked(root/'state/marriott_international'):
+                            pass
                 captures.append(kwargs['url'])
                 session.response = bodies[kwargs['url']]
                 return native_capture(**kwargs)
@@ -139,6 +144,26 @@ class C04MixedSourceRouteMaterialTest(unittest.TestCase):
                         metric_ids=['B01', 'C04'], max_sec_requests=1,
                         c04_successor=True, resume_from=prior)
                 self.assertEqual([urls[0]], captures)
+                (b01_root/'current.json').write_bytes(historical_pointer)
+                original_resume = refresh._resume_one_c04_source
+                resume_checks = [0]
+                def mutate_after_first_check(**kwargs):
+                    verified = original_resume(**kwargs)
+                    resume_checks[0] += 1
+                    if resume_checks[0] == 1:
+                        (b01_root/'current.json').write_text(json.dumps(changed)+'\n')
+                    return verified
+                with patch.object(refresh, '_resume_one_c04_source',
+                                  side_effect=mutate_after_first_check):
+                    with self.assertRaisesRegex(ValueError,
+                            'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED'):
+                        refresh.refresh_and_process(session=session,
+                            state_root=root/'state',
+                            company_ids=['marriott_international'],
+                            metric_ids=['B01', 'C04'], max_sec_requests=1,
+                            c04_successor=True, resume_from=prior)
+                self.assertEqual([urls[0]], captures)
+                self.assertEqual(1, resume_checks[0])
                 (b01_root/'current.json').write_bytes(historical_pointer)
                 resumed = refresh.refresh_and_process(session=session,
                     state_root=root/'state',

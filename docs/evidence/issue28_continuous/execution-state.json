@@ -4823,7 +4823,8 @@
     "evidence": "docs/evidence/issue28_continuous/c04-mixed-one-pass-20260928/README.md"
   },
   "c04_historical_b01_prestate_20260928": {
-    "status": "LOCAL_FINAL_CODE_TESTED_SCOPED_INDEPENDENT_REVIEW_PENDING",
+    "status": "PUSHED_SCOPED_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS_SINGLE_EXECUTOR",
+    "patch_sha": "b968a15ff5b2f3da62dcfcff2b5a7b745d8e680c",
     "scope_paths": [
       "scripts/vnext/ordinary_refresh_cycle.py",
       "scripts/vnext/continuous_sec_acquisition.py",
@@ -4855,6 +4856,33 @@
       "normal_binding_bytes_change_with_v13_closure": true,
       "historical_installed_readback_proven_on_current_host": true,
       "potential_downstream_impact": "#47 stacked branch must rebind its own current dependent snapshot if it integrates this PR43 head; #28 did not touch #47 files or runtime."
+    }
+  },
+  "c04_resume_same_root_lock_guard_20260928": {
+    "status": "LOCAL_TESTED_NEW_SHA_INDEPENDENT_REVIEW_PENDING",
+    "scope_paths": [
+      "scripts/vnext/ordinary_refresh_cycle.py",
+      "tests/vnext/test_c04_source_only_install.py",
+      "requirements/issue_28_v14/baseline_manifest.json"
+    ],
+    "v13_closure_unchanged": "sha256:697c0216fc2099e2c18c2946d4a654f7bd0fe716ed8b2767fa82b1df0433dfa8",
+    "v14_closure": "sha256:902d27bdeebf08f8ac00bed4b3f3486d7261be160187eeef9a1d665d51cf0914",
+    "short_tests": "14_PASS_FINAL",
+    "recorded_material": "1_PASS_355_183_SECONDS_FINAL",
+    "first_regression_failure_preserved": "PRECLAIM_REJECTION_CONTINUED_TO_C04_UPDATE_322_258_SECONDS",
+    "same_root_cooperative_update_lock_recheck": true,
+    "cross_version_history_write_proven": false,
+    "real_calls": [0, 0, 0],
+    "evidence": "docs/evidence/issue28_continuous/c04-historical-prestate-20260928/README.md",
+    "shared_with_47": {
+      "file": "scripts/vnext/ordinary_refresh_cycle.py",
+      "function": "refresh_and_process",
+      "changed_route": "EXPLICIT_C04_MIXED_RESUME_ONLY",
+      "default_parameters_return_and_record_types_changed": false,
+      "v13_binding_changed": false,
+      "v14_binding_changed": true,
+      "compatibility_evidence": "14 short tests; affected recorded material pass; old default routes and original installed historical package evidence reused",
+      "potential_downstream_impact": "#47 stacked branch may need its own dependent V14 rebind after integrating this PR43 head; #28 did not touch #47 files or runtime."
     }
   }
 }
