@@ -34,13 +34,13 @@
     "unknown": 0
   },
   "current_work": [
-    "Pushed 29b401d7 includes reviewed D03 lossless request bytes; its main CI 36382080314 completed SUCCESS, as did prior b5b2a91b CI 36380074529. These CI outcomes do not establish D03 company results or full Issue acceptance.",
-    "Committed e1865d7e D03 recorded-only native unit path creates and replays one source-bound Candidate/Evidence from real Marriott source; unresolved response fails. JPM old-fact successor also traverses recorded WB-3 with synthetic response, preserving no-program-fact credit. This is 0 real calls and no company Result/Run. Final-code Marriott 3/3 including live-root substitution rejection and V14 binding pass; B13 replay/acceptance 2/2 passed after D03 Evidence-name adjustment; old public D03 source-fact checker 2/2 passed before the D03-only label/ledger-guard changes. First fast failed 134/135 on unchanged C04 30s timeout, targeted C04 passed, single full retry fast135/135 passed before those D03-only final changes. Exact-SHA limited independent review PASS_WITH_BOUNDS and independent short log3/3; push pending.",
+    "Pushed 5425d51a D03 recorded-only one-request native Candidate/Evidence and disk replay; exact e1865d7e limited review PASS_WITH_BOUNDS. Main CI 36389326801 remains in_progress at latest natural checkpoint; prior 29b401d7 main CI 36382080314 completed SUCCESS. Neither establishes a D03 company result or full Issue acceptance.",
+    "Committed d06c99db D03 collector reads every current request identity against an already initialized recorded ledger and replays each successful Candidate/Evidence. One Marriott success leaves four missing; one failed response remains explicit. Five saved-source groups with synthetic recorded answers return COMPLETE_RECORDED_SET_REQUIRES_NATIVE_REVIEW, even with a synthetic current proposal; no Result/Run/public row. First test exposed a request-index TypeError and remains saved; corrected directed3/3, complete material1/1, fast135/135, existing D04 feasibility compat1/1 and V14 binding pass. Exact-SHA limited review PASS_WITH_BOUNDS with independent 4/4 short log; real calls0; push pending.",
     "D04 retains 10/10 real private candidates, B13 V8 lexical route remains suspended after two NEEDS_FIX reviews, C04 cross-fiscal-year online update and full390/legacy exit remain unproven. Ledger still provider/paid/SEC 143/143/52."
   ],
   "next": [
-    "Append-only push reviewed D03 recorded-only native unit path and observe new-head CI at a natural checkpoint. Preserve 653/635/295/248-second JPM timing evidence; do not rerun the long anchor test absent a relevant change.",
-    "Continue D03 full authentic group receipt collection, native Review and Result/Run chain within no-call/offline authority; one recorded request is not a company result. D03 real calls and resources remain separate decisions.",
+    "Append-only push independently reviewed D03 complete recorded collector and observe new-head CI. Do not repeat already reviewed 248-second JPM anchor without a relevant change.",
+    "Continue D03 authenticated semantic Review and company Result/Run/public-row chain within no-call/offline authority; a complete synthetic recorded set is not a business conclusion. D03 real calls and resources remain separate decisions.",
     "Continue independent B06 source-completeness, C04 normal cross-year, 390 reconciliation and old semantic-entry exit where existing source and authority allow; keep B13 V8 stopped and #47 isolated."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
@@ -161,7 +161,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:5553beca91ced749f70f8365d597e88489c84dd96688655a5f69459cd2ccee32",
+  "current_v15_development_closure": "sha256:b0a5faafd51d666ee2c86cd269d6dea0631f360c955a354935043eca60aad4f1",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -2316,6 +2316,25 @@
       "ended_at": "2026-09-28T06:58:53Z",
       "tool_calls": 44,
       "result_path": "docs/evidence/issue28_continuous/d03-recorded-native-unit-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
+    },
+    {
+      "task_name": "review_d03collect_d06c99d",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_complete_recorded_collection",
+      "scope_paths": [
+        "scripts/vnext/d03_native_assessment.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "tests/vnext/test_d03_native_assessment.py",
+        "tools/run_fast_tests_v2.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/d03-complete-recorded-20260928/"
+      ],
+      "patch_sha": "d06c99db7ddfe4f85c321ec157f4983f7d823b05",
+      "spawned_at": "2026-09-28T07:23:53Z",
+      "ended_at": "2026-09-28T07:30:46Z",
+      "tool_calls": 50,
+      "result_path": "docs/evidence/issue28_continuous/d03-complete-recorded-20260928/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS"
     }
   ],
@@ -5831,7 +5850,7 @@
     }
   },
   "d03_recorded_native_unit_20260928": {
-    "status": "RECORDED_ONE_REQUEST_NATIVE_CANDIDATE_EVIDENCE_AND_DISK_REPLAY_PASS_FULL_COMPANY_UNIMPLEMENTED",
+    "status": "REVIEWED_RECORDED_ONE_REQUEST_NATIVE_CANDIDATE_EVIDENCE_PUSHED_5425D51A_FULL_COMPANY_UNIMPLEMENTED",
     "evidence": "docs/evidence/issue28_continuous/d03-recorded-native-unit-20260928/README.md",
     "development_spec": "catalog/r6/D03_regulatory_investigations_assessment_v1.md",
     "marriott_saved_source_positive_and_unresolved_negative": "PASS_3_TESTS_FINAL_CODE_31_870_SECONDS_WITH_LIVE_ROOT_SUBSTITUTION_REFUSED",
@@ -5867,6 +5886,43 @@
         "scripts/vnext/regulatory_fact_review.py": ["_authenticated_original", "validate_candidate_response"]
       },
       "effect": "D03 explicit recorded-only successor; B13/D04 and other shared defaults remain unchanged",
+      "downstream_issue47_branch_operated": false
+    }
+  },
+  "d03_complete_recorded_collection_20260928": {
+    "status": "FIVE_OF_FIVE_RECORDED_MARRIOTT_SOURCE_GROUPS_REVALIDATED_NATIVE_REVIEW_REQUIRED",
+    "evidence": "docs/evidence/issue28_continuous/d03-complete-recorded-20260928/README.md",
+    "first_failure": "SEMANTIC_REQUEST_OBJECT_INDEXED_AS_DICTIONARY_TYPE_ERROR_PRESERVED",
+    "corrected_partial_and_failed_tests": "PASS_3_OF_3_57_859_SECONDS",
+    "all_background_complete_test": "PASS_1_39_968_SECONDS_REVIEW_STILL_REQUIRED",
+    "synthetic_current_complete_test": "PASS_1_38_911_SECONDS_REVIEW_STILL_REQUIRED",
+    "recorded_marriott_required_groups": 5,
+    "recorded_marriott_successful_groups": 5,
+    "recorded_test_ledger_counts": [5, 5, 0],
+    "source_partition_complete": true,
+    "missing_or_failed_does_not_become_absence": true,
+    "complete_empty_does_not_become_absence": true,
+    "synthetic_current_finding_does_not_become_result": true,
+    "real_provider_execution_credit": false,
+    "native_review_result_run_or_public_row_created": false,
+    "real_d03_calls_authorized": false,
+    "v14_closure": "sha256:b0a5faafd51d666ee2c86cd269d6dea0631f360c955a354935043eca60aad4f1",
+    "current_provider_sec_refresh_wiring": "PASS",
+    "ci_source_selector": "D03_NATIVE_COLLECTION_MARRIOTT_MATERIAL_APPENDED_ONLY",
+    "fast": "PASS_135_OF_135_199_695_SECONDS",
+    "existing_d04_feasibility_compatibility": "PASS_1_13_622_SECONDS",
+    "limited_independent_review": "PASS_WITH_BOUNDS_50_TOOL_CALLS_INDEPENDENT_SHORT_LOG_4_OF_4",
+    "independent_review_patch_sha": "d06c99db7ddfe4f85c321ec157f4983f7d823b05",
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-complete-recorded-20260928/independent-review/conclusion.md",
+    "real_ledger_claims": 195,
+    "real_ledger_provider_paid_sec": [143, 143, 52],
+    "new_real_calls": [0, 0, 0],
+    "shared_with_issue47": {
+      "files_and_functions": {
+        "scripts/vnext/continuous_semantic_calls.py": ["_require_d03_recorded_ledger", "execute_d03_recorded_assessment"],
+        "scripts/vnext/d03_native_assessment.py": ["collect_recorded_assessments"]
+      },
+      "effect": "D03-only recorded read path; existing shared default arguments and behavior unchanged",
       "downstream_issue47_branch_operated": false
     }
   }
