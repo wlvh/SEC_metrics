@@ -15,6 +15,7 @@
 | N7（低） | 已计费调用之后传输自述与发送字节不符时直接抛错，已付费的原始响应丢失 | 记为 `TRANSPORT_OBSERVATION_CHANGED` 并保留响应，加入停止集合 | `test_a_transport_account_that_disagrees_stops_with_the_response_kept` | `AN_OBSERVATION_MISMATCH_IS_RAISED_PAST_THE_RESPONSE`、`AN_OBSERVATION_MISMATCH_DOES_NOT_STOP` |
 | M1 残余 | 同时删掉 `calls/` 和 `claims.jsonl`、保留绑定与锚点，账本读作未用过（2 次上限下认领了 4 次）；截掉最后一个槽位和最后一行日志，停止被解除 | 每次认领先追加（并同步）到**根目录旁边**的日志副本，再写根内日志；根内日志必须与副本逐行相同。SEC 账本同样处理，导出时也核对 | 模型：`test_emptying_the_root_…`、`test_truncating_the_last_claim_…`、`test_removing_the_copy_beside_the_root_refuses`；SEC：`test_an_emptied_root_…`、`test_a_truncated_last_claim_…`、`test_a_claim_log_that_is_not_its_copy_is_not_exported` | `THE_CLAIM_LOG_HAS_NO_COPY_BESIDE_THE_ROOT`；SEC 两个记在 `../../acquisition-wiring/fault-injections.json` |
 | M1 未测子检查 | 前驱链、`binding.json` 比较、锚点比较各自去掉时没有用例失败 | 各补一个只违反这一条的用例 | `test_the_claims_must_name_each_other_in_order`、`test_an_edited_binding_or_anchor_is_refused` | `THE_CLAIMS_NEED_NOT_CHAIN`、`AN_EDITED_BINDING_IS_ACCEPTED`、`AN_EDITED_ANCHOR_IS_ACCEPTED` |
+| M1 修复后锚点的位置 | 日志副本加上之后，把初始化锚点挪进根目录的注错不再被抓：删根时副本仍在根外、单凭副本就拒绝，锚点放在哪里只在根与副本一起被删时才有区别，而没有用例删这两样 | 补用例：删掉根与副本，只剩根外的锚点，仍须拒绝 | `test_deleting_the_root_and_its_copy_is_still_refused_by_the_anchor` | 原有 `THE_ANCHOR_IS_INSIDE_THE_ROOT` 现在由它抓住 |
 | M2 | 严格 JSON 的两个用例只"按消息"失败（复述检查本来就会拒） | 重做成第一轮复审的原场景：后出现的重复值恰好与其余文件一致，只有严格读取能拒 | 两个单元用例与两个出口用例 | 原有 `THE_POLICY_IS_READ_LAST_KEY_WINS`、`THE_APPROVAL_IS_READ_LAST_KEY_WINS` 现在是承重的 |
 | L2 | 只在发送点修了；直接构造适配器传输仍能把 #47 请求送到连接器，无槽位、无 WB-3 | 适配器的载荷钩子只在**本线程正在进行的计数发送**持有该请求、槽位仍开着、WB-3 标记已写时才交出字节，无论谁调用传输 | `test_the_adapter_releases_no_bytes_outside_a_counted_send` | `THE_HOOK_RELEASES_BYTES_WITHOUT_A_COUNTED_SEND` |
 | 发送点子条件 | 除标记数外的五个子条件一起去掉，实时类全绿 | 抽成函数，每个子条件各有一个只违反它的断言 | `test_the_send_holds_each_part_of_the_reservation_on_its_own` | 六个 `THE_SEND_…` |
@@ -30,11 +31,12 @@
 3. **能写运行树或账本父目录的人**：日志副本把"清空根目录"变成要同时改两处，但两处一起截断仍然能重置——任何本地账本都做不到防住有写权限的人，外部兜底是服务商账户本身。
 4. **#28 的 `CallLedger` 形状相同**（复审顺带指出）：那是 #28 的代码，记录在此供整合时参考，#47 不改。
 
-**修复后的验证自身又查出的四处**（都在封存之前、由测试或注错跑出来）：
+**修复后的验证自身又查出的五处**（都在封存之前、由测试或注错跑出来）：
 
 1. **验证脚本让一个不是运行器的进程去发请求**。`verify.py` 把 SEC 获取套件里的 GH 读取测试类与出口测试放在同一个进程；那个测试模块导入了来源发现模块（`normal_source_requirements.py`）等调用路径从不导入的检出代码，于是每个实时用例都以 `ISSUE_47_MODEL_UNBOUND_CODE_LOADED` 被拒。检查做对了——它检查的正是发请求的那个进程——错在验证脚本。另测：生产的审批回读导入链（`historical_source_acquisition`）不加载它。改为每个测试模块一个进程（`verify._by_module`），这也是每个套件各自作为自己的运行器。
 2. **测试进程的导入顺序与所有者的不同**。运行器在加载时把 `sys.pycache_prefix` 换成本进程新建的目录；测试模块却先导入 `tests.vnext.common` 与一批检出模块、后加载运行器，先导入的模块编译在旧目录，16 个实时用例以 `ISSUE_47_MODEL_CODE_READ_FROM_THE_CHECKOUT_S_BYTECODE` 被拒。生产里运行器是入口、最先执行，不受影响；测试改为第一件事加载运行器，已有检出代码被别的模块带进本进程时以 `ISSUE_47_EGRESS_SUITE_NEEDS_A_PROCESS_OF_ITS_OWN` 具名拒绝，而不是冒出一串误导性的字节码错误。于是"运行器在导入任何检出代码之前设好私有缓存"由套件本身担保，新增注错 `THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE`（把设缓存那行挪到导入之后）应被 socket 类抓到。
 3. **一个位置跑完之后，下一个位置的发送会再检查同一个进程**：运行器用例在调用、登记、读回一个位置之后再调一次 `loaded_code_holds`，登记与读回途中加载的代码若未绑定，两个位置的运行会在第二个位置被拒，这里先抓到。
 4. **L2 修复之后有两个旧用例没跟上**：`test_the_adapter_hands_bytes_only_to_the_named_type` 仍断言直接调用钩子能拿到字节，`test_the_transport_refuses_outside_wb3` 仍断言先碰到 #28 适配器自己的出口令牌检查；修复后钩子在计数发送之外先按 `ISSUE_47_MODEL_TRANSPORT_WITHOUT_A_COUNTED_SEND` 拒绝。修 L2 之后我只按类跑了与它直接相关的几类，恰好没跑这两个用例所在的类；是完整运行的第一步（全量套件）查出来的，而"套件不全绿就停"让这次只花了套件的时间、没有带着两个红用例跑几个小时的注错。用例改为 L2 之后的真实行为：类型不符仍返回 `None` 或按名拒绝，#47 的类型只在计数发送里拿到字节——那由实时用例看着字节到达连接器来证明。
+5. **一个修复让另一条注错失效**：M1 残余的修法（每次认领先写根目录旁边的日志副本）使删掉整个根目录也能被副本拒绝，于是把初始化锚点挪进根目录的注错 `THE_ANCHOR_IS_INSIDE_THE_ROOT` 在它的类里不再被抓——两条机制现在覆盖同一个场景，锚点的位置只在根与副本一起被删时才承重。第一次封存运行在第六个注错处回退到整套，按顺序跑下去要约八小时才会以「没抓到」结束、不封存；停下后在三份验证树副本里并行做了预检（`../preflight.py`，只跑各注错的预期类，结果 `../preflight-2026-09-28.json`）：78 个里 76 个被预期类抓到、1 个在类夹具处被抓（`THE_CONTROLLER_BRANCH_IS_ABSENT`，已知的钝捕获）、只有这一个没被抓到。补的用例删掉根与副本、只留根外的锚点，要求仍然拒绝；注错随即由它抓到。
 
 **尚未完成**：修后的完整离线验证（`verify.py`）需要在应用了新补丁的运行树里从头跑一遍并封存，完成后本文件补上结果；在那之前已提交的 `offline-verification.json` 是旧的，实时路径会因为它不绑定当前代码而拒绝（失败即关闭）。

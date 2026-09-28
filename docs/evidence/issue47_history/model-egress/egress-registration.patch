@@ -1,5 +1,5 @@
 diff --git a/scripts/vnext/ai_adapter.py b/scripts/vnext/ai_adapter.py
-index 9fdfe8a8..2256a407 100644
+index 9fdfe8a..2256a40 100644
 --- a/scripts/vnext/ai_adapter.py
 +++ b/scripts/vnext/ai_adapter.py
 @@ -1061,6 +1061,10 @@ def _scoped_transport_payload(*, policy: TransportPolicy, prepared_request: obje
@@ -15,7 +15,7 @@ index 9fdfe8a8..2256a407 100644
          return None
 diff --git a/scripts/vnext/historical_model_egress.py b/scripts/vnext/historical_model_egress.py
 new file mode 100644
-index 00000000..04e2878a
+index 0000000..04e2878
 --- /dev/null
 +++ b/scripts/vnext/historical_model_egress.py
 @@ -0,0 +1,426 @@
@@ -446,7 +446,7 @@ index 00000000..04e2878a
 +    write_immutable_bytes(path=path, content=registered_export_bytes(record))
 +    return record, path
 diff --git a/scripts/vnext/invocation_control.py b/scripts/vnext/invocation_control.py
-index 78294a49..2201dbe6 100644
+index 78294a4..2201dbe 100644
 --- a/scripts/vnext/invocation_control.py
 +++ b/scripts/vnext/invocation_control.py
 @@ -232,6 +232,16 @@ def _prepare_successor_invocation_authority_from_requirement(
@@ -477,10 +477,10 @@ index 78294a49..2201dbe6 100644
  def _decimal_observation(*, value: object, label: str) -> Optional[str]:
 diff --git a/tests/vnext/test_historical_model_egress.py b/tests/vnext/test_historical_model_egress.py
 new file mode 100644
-index 00000000..8cfd4053
+index 0000000..361d5ce
 --- /dev/null
 +++ b/tests/vnext/test_historical_model_egress.py
-@@ -0,0 +1,1664 @@
+@@ -0,0 +1,1683 @@
 +"""Issue #47's model egress, verified offline in a tree where the registration patch is applied.
 +
 +This suite is part of the patch for independent security review
@@ -1992,6 +1992,25 @@ index 00000000..8cfd4053
 +            with ledger.locked():
 +                pass
 +
++    def test_deleting_the_root_and_its_copy_is_still_refused_by_the_anchor(self):
++        """The anchor beside the root is the third marker, and the only one left here.
++
++        Once every claim was also appended to a copy beside the root, deleting
++        the root no longer depended on the anchor: the copy refused it. So the
++        verification's injection that moves the anchor inside the root went
++        uncaught by this class - the anchor's place is load-bearing only when
++        the copy goes with the root. With both gone, the anchor alone must
++        refuse; inside the root it would have gone too, and the ledger would
++        start again at zero.
++        """
++        ledger, _ = self.stopped("no-root-no-copy")
++        shutil.rmtree(ledger.root)
++        calls.HistoricalModelLedger.mirror_path(ledger.root).unlink()
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_LEDGER_BINDING_MISSING_OR_RESET"):
++            with ledger.locked():
++                pass
++
 +    def test_a_resealed_terminal_that_drops_its_stop_is_refused(self):
 +        ledger, path = self.stopped("resealed")
 +        terminal = strict_json_loads(text=(path / "terminal.json").read_text())
@@ -2146,7 +2165,7 @@ index 00000000..8cfd4053
 +if __name__ == "__main__":
 +    unittest.main()
 diff --git a/tools/check_provider_egress.py b/tools/check_provider_egress.py
-index 3ee81a39..6d67ea67 100644
+index 3ee81a3..6d67ea6 100644
 --- a/tools/check_provider_egress.py
 +++ b/tools/check_provider_egress.py
 @@ -66,9 +66,11 @@ ALLOWED_REPOSITORY_TRANSPORT_FACTORIES = {
@@ -2163,7 +2182,7 @@ index 3ee81a39..6d67ea67 100644
          "scripts/vnext/ai_adapter.py",
 diff --git a/tools/vnext_historical_model.py b/tools/vnext_historical_model.py
 new file mode 100644
-index 00000000..c9179895
+index 0000000..c917989
 --- /dev/null
 +++ b/tools/vnext_historical_model.py
 @@ -0,0 +1,181 @@
@@ -2349,7 +2368,7 @@ index 00000000..c9179895
 +if __name__ == "__main__":
 +    sys.exit(main())
 diff --git a/tools/vnext_mint_historical_requirement.py b/tools/vnext_mint_historical_requirement.py
-index a5ae1fcd..d6d86a04 100644
+index a5ae1fc..d6d86a0 100644
 --- a/tools/vnext_mint_historical_requirement.py
 +++ b/tools/vnext_mint_historical_requirement.py
 @@ -261,6 +261,15 @@ RE_RECORDED_FROM_TREE = (
