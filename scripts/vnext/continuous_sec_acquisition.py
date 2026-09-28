@@ -148,10 +148,28 @@ class SecAcquisitionSession:
                      'SEC_ACQUISITION_OFFLINE_EVIDENCE_CHANGED')
 
     def capture(self,*,company_id,url,refresh_metadata=False,control_id=None,
-                source_only_c04=False):
+                source_only_c04=False,ordinary_prestate_root=None,
+                ordinary_prestate_metric_ids=None,resume_predecessor=None):
         """Capture one declared dependency; no loop or automatic retry."""
         need(type(source_only_c04) is bool and not (source_only_c04 and control_id is not None),
              'SEC_ACQUISITION_C04_SOURCE_MODE_INVALID')
+        need((ordinary_prestate_root is None)==(ordinary_prestate_metric_ids is None)
+             and (ordinary_prestate_root is None or source_only_c04),
+             'SEC_ACQUISITION_ORDINARY_PRESTATE_SCOPE_INVALID')
+        need(resume_predecessor is None or (
+             source_only_c04 and ordinary_prestate_root is not None
+             and type(resume_predecessor) is dict
+             and set(resume_predecessor) == {'previous_intent_id', 'counts',
+                 'ordinal', 'source_ledger_sha256'}
+             and type(resume_predecessor['previous_intent_id']) is str
+             and type(resume_predecessor['counts']) is list
+             and len(resume_predecessor['counts']) == 3
+             and all(type(value) is int and value >= 0
+                     for value in resume_predecessor['counts'])
+             and type(resume_predecessor['ordinal']) is int
+             and resume_predecessor['ordinal'] > 0
+             and type(resume_predecessor['source_ledger_sha256']) is str),
+             'SEC_ACQUISITION_RESUME_PREDECESSOR_SCOPE_INVALID')
         from .normal_source_requirements import discover_saved_source_requirements
         self._check();validate_official_sec_url(url=url)
         with self.ledger.locked():
@@ -168,6 +186,18 @@ class SecAcquisitionSession:
             selected=rows[0]
             need(not refresh_metadata or selected['refresh_for_new_discovery'],
                  'SEC_ACQUISITION_ORIGINAL_CANNOT_BE_REFRESHED_AS_METADATA')
+            if resume_predecessor is not None:
+                log = self.data_root/'evidence/requests_log.csv'
+                validate_request_log_manifest(log_path=log)
+                current = self.ledger.snapshot()
+                need(current['previous_intent_id'] ==
+                         resume_predecessor['previous_intent_id']
+                     and current['counts'] == resume_predecessor['counts']
+                     and len(current['rows']) == resume_predecessor['ordinal'],
+                     'SEC_ACQUISITION_RESUME_LEDGER_CHANGED_BEFORE_CLAIM')
+                need(sha256_file(path=log) ==
+                     resume_predecessor['source_ledger_sha256'],
+                     'SEC_ACQUISITION_RESUME_SOURCE_CHANGED_BEFORE_CLAIM')
             if selected['saved_status']=='VERIFIED_SAVED_SOURCE' and not refresh_metadata:
                 return {'status':'EXISTING_VERIFIED_SOURCE_REUSED','source':selected,'calls':[0,0,0]}
             log=self.data_root/'evidence/requests_log.csv';validate_request_log_manifest(log_path=log)
@@ -182,6 +212,17 @@ class SecAcquisitionSession:
                 'source_ledger_before_sha256':sha256_bytes(content=before),'source_row_count_before':len(old_rows)}
             if source_only_c04:
                 plan['source_only_processing_route']='C04_REGISTRATION_FOUR_FORM_UPDATE_V1'
+            if ordinary_prestate_root is not None:
+                from .ordinary_refresh_cycle import _ordinary_pre_capture_state
+                plan['ordinary_pre_capture_state'] = _ordinary_pre_capture_state(
+                    state_root=ordinary_prestate_root, company_id=company_id,
+                    metric_ids=ordinary_prestate_metric_ids)
+            if resume_predecessor is not None:
+                plan['resume_predecessor'] = {
+                    'previous_intent_id': resume_predecessor['previous_intent_id'],
+                    'counts': list(resume_predecessor['counts']),
+                    'ordinal': resume_predecessor['ordinal'],
+                    'source_ledger_sha256': resume_predecessor['source_ledger_sha256']}
             if control_id is not None:
                 plan['historical_semantic_control_id']=control_id
                 plan['historical_source_scope']=discovery['scope']

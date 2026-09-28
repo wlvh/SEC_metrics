@@ -1,0 +1,12 @@
+# 391a957 D02 旧语义出口限定独立审阅
+
+**结论：PASS_WITH_BOUNDS。** 对比基线 `2fcc1d5b99383d379b2c5b25583648c6e9da4ec0`，精确补丁 `391a957bd34bd002a5b000e1f685827ee1c64497` 的证据支持：Marriott D02 在登记的 116 个旧语义生产导出临时封锁时，仍能从 #28 已保存的 SEC 来源创建私有 OPEN Run，并由另一个 Python 进程重读出同一 Result、文字和公开行预览。本结论只覆盖这条保存来源的文字路线；没有新增 390 坐标信用或正式生产采纳。
+
+## 核对事实
+
+1. 复用的 `ordinary-b01-legacy-exit-20260928/probe.py` 在基线和补丁中的 Git blob 均为 `e7bd378074cec4e4431a12b367bef7b8028b4a90`，本审阅不重审其未变实现。它从冻结清单取得 116 个唯一语义生产导出名，覆盖 39 项指标；本次另行计数一致。D02 的 `probe.py` 在两个子进程内、导入 `normal_run_v3` 前进入该封锁作用域。封锁替换 `sec_pipeline` 的登记导出，并以首个导出调用作为生效对照；两阶段日志各报告封锁数 116。此证据证明该作用域的登记导出被替换，不证明逐一实际调用了 116 个函数，也不证明所有可能的旧入口或预先保存的函数引用均已退出。
+2. 创建阶段调用 `install_normal_inputs`、`create_normal_run`；后者在写入后机械重读 OPEN Run，并确认返回 Result 存在于存储记录。冷读阶段是单独的 `subprocess.run` Python 进程，从 Run 记录机械重放、重建输入，再调用同一公开行渲染器。渲染器要求恰好一个主指标 Result，以该 Result 生成一条 CSV 行；文字投影还核对 Result 文本与其文字载荷一致。`run.log` 两阶段均为 Result ID `sha256:00c0a01a9bc96f6902fd836f7c6532e32bd31c8af257e679acf41f5a1f05e263`、4933 字符、文字 SHA-256 `9790935036bcf418e1f1ef40848c67811891ce7bdfd1acf1c6d9ae583f5ff277`、公开行 CSV SHA-256 `6fd70d01a2fc626d967e683bd967bb9ece539e1cb46182fdb9a322d33c587b56`，与 `result.json` 一致。Result 的 `publication=PUBLISHED` 属于这个私有 OPEN Run；渲染收据为 `VERIFIED_OPEN_PREVIEW`，不等于正式发布。
+3. 来源准备调用未变的 B01 辅助函数，锁住 #28 原账本，并用当前 V14 规则从原来源建立临时处理副本。所查复制实现使用 macOS 写时复制或另写目标文件，不建立硬链接；Run 输入继续安装进另一临时根。补丁没有改动 `requirements/`、`config/`、`catalog/`、`scripts/`、`tools/` 或 `outputs/`。演练在前后比较了原账本 `claims.jsonl`、来源 `requests_log.csv` 和 active 指针三份文件的 SHA-256；退出码为 0，故该次执行的三份文件前后相同。日志没有保留前后摘要，也没有对原来源整棵文件树做前后哈希；“原账本/来源未改”只能按这三份直接比较和已检查的只读复制路径理解。运行子进程封锁网络、DNS、SEC HTTP 和非本地 Git 子进程；来源准备路径为本地读取和复制。本次没有观察到新的 provider、paid 或 SEC 请求。
+4. 获准的短命令 `python3 docs/evidence/issue28_continuous/ordinary-d02-legacy-exit-20260928/compare_index.py` 复算成功，`index-comparison.json` 未改变。既有 `current-390.json` 的 SHA-256 为 `f8ff1a2d5964b5ed8b402568dd2b9c278c1f2a7754d0c64aa8fb09df51ed4210`；其唯一 Marriott D02 行的文字同为 4933 字符和上述文字 SHA。旧索引 Result ID 是 `sha256:8cbb2504e5bcfa24ab3b235989b6531e23e1f6af7c612417ebd2317109ec5ced`，与本次私有 Result ID 不同。比较脚本只核对 D02 文字字段的长度和 UTF-8 摘要，没有核对期间、整行、来源证明或旧 Result 身份；因此相同文字不能转写成一次新增的 390 坐标完成。
+
+`README.md`、`continuation.md` 和提交中的 `execution-state.json` 均保留了私有演练、零新增坐标、零真实调用、全 390 未证和旧入口未正式退出的界限。当前工作树另有执行状态登记的未提交改动；本审阅以上述精确提交的文件字节为准。长演练仅检查已保存的 `run.log`、`run.exit` 和代码，未重跑，也未发送真实请求。D02 文本的业务含义、全部旧生产入口退出、真实新财年自动更新和正式 active 切换仍须各自验收。

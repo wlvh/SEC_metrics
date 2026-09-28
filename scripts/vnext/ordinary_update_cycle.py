@@ -16,7 +16,6 @@ from .canonical import atomic_write_json,content_hash,sha256_file,strict_json_fi
 from .normal_annual_input import _registry_rows
 from .ordinary_projection import render_ordinary_run
 from .requirements import load_requirement_snapshot
-from .run_store import _mechanically_replay_open_run
 
 
 class OrdinaryUpdateError(ValueError):
@@ -148,11 +147,12 @@ def _verify_candidate(root,terminal,configuration):
     _need(set(terminal['metrics'])==set(configuration['metric_ids']),'UPDATE_SUCCESS_METRIC_SET_CHANGED')
     for metric in configuration['metric_ids']:
         run=work/'runs'/metric
-        manifest,records,_=_mechanically_replay_open_run(run_dir=run,repo_root=data,require_complete_results=True)
-        cases[metric]=normal.replay_case(data_root=data,manifest=manifest)
+        rendered=render_ordinary_run(data_root=data,run_dir=run,
+                                     _return_replay_context=True)
+        replay=rendered['replay_context'];records=replay['records']
+        cases[metric]=replay['case']
         result=next(r for r in records if r['record_type']=='METRIC_RESULT' and r['metric_id']==metric)
         _need(result['result_id']==terminal['metrics'][metric]['result_id'], 'UPDATE_SUCCESS_RESULT_CHANGED')
-        rendered=render_ordinary_run(data_root=data,run_dir=run)
         _need(_completed_result(metric=metric,result=result,case=cases[metric],rendered=rendered,data_root=data),
               'UPDATE_SUCCESS_RESULT_CHANGED')
         for name,raw in rendered['files'].items():
@@ -202,8 +202,9 @@ def _terminal(root,identity):
     return value
 
 
-def _recover(root,state,configuration):
+def _recover(root,state,configuration,verify_candidate=None):
     """Reconcile the immutable journal before advancing a mutable reference."""
+    verifier = _verify_candidate if verify_candidate is None else verify_candidate
     intents={}
     for work in (root/'attempts').iterdir() if (root/'attempts').exists() else []:
         _attempt(root,work.name)
@@ -252,7 +253,7 @@ def _recover(root,state,configuration):
         _need(terminal['intent_id']==intent['record_id'] and terminal['configuration_id']==configuration['record_id'],
               'UPDATE_TERMINAL_INTENT_CHANGED')
         if terminal['status']=='CANDIDATE_READY':
-            _verify_candidate(root,terminal,configuration);state['successful_attempt']=identity
+            verifier(root,terminal,configuration);state['successful_attempt']=identity
         state['latest_attempt']=identity
     atomic_write_json(path=root/'current.json',value=state)
     return state

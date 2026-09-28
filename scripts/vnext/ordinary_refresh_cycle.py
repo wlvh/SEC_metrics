@@ -4,6 +4,7 @@ The existing acquisition session owns transport, provenance and the cumulative
 ledger. The existing update cycle owns candidate history. No resident loop or
 publication action is introduced here.
 """
+from contextlib import ExitStack
 from pathlib import Path
 
 from sec_http import parse_request_log_rows, validate_request_log_manifest
@@ -147,6 +148,51 @@ def _historical_c04_processing_copies(root, requirement):
     return False
 
 
+def _ordinary_pre_capture_state(*, state_root, company_id, metric_ids):
+    """Read only the ordinary journal identities before a C04 source capture."""
+    from . import ordinary_update_cycle as cycle
+    need(type(metric_ids) is list and len(metric_ids) == len(set(metric_ids))
+         and 'C04' in metric_ids and type(company_id) is str,
+         'ORDINARY_REFRESH_PRESTATE_SCOPE_INVALID')
+    state_root = Path(state_root)
+    need(state_root.is_absolute() and first_symlink_in_path(path=state_root) is None,
+         'ORDINARY_REFRESH_PRESTATE_ROOT_INVALID')
+
+    def identity(path):
+        need(not path.is_symlink() and first_symlink_in_path(path=path) is None,
+             'ORDINARY_REFRESH_PRESTATE_PATH_ALIAS')
+        if not path.exists():
+            return None
+        need(path.is_file(), 'ORDINARY_REFRESH_PRESTATE_FILE_INVALID')
+        return {'sha256': sha256_file(path=path), 'size': path.stat().st_size}
+
+    states = {}
+    for metric in sorted(set(metric_ids) & set(update_metric_ids()) - {'C04'}):
+        root = state_root/company_id/'metrics'/metric
+        need(not root.is_symlink() and first_symlink_in_path(path=root) is None
+             and (not root.exists() or root.is_dir()),
+             'ORDINARY_REFRESH_PRESTATE_METRIC_ROOT_INVALID')
+        attempts = root/'attempts'
+        need(not attempts.is_symlink() and first_symlink_in_path(path=attempts) is None
+             and (not attempts.exists() or attempts.is_dir()),
+             'ORDINARY_REFRESH_PRESTATE_ATTEMPTS_INVALID')
+        rows = {}
+        if attempts.exists():
+            for work in sorted(attempts.iterdir()):
+                cycle._attempt(root, work.name)
+                need(work.is_dir() and not work.is_symlink(),
+                     'ORDINARY_REFRESH_PRESTATE_ATTEMPT_INVALID')
+                rows[work.name] = {'intent': identity(work/'intent.json'),
+                                   'terminal': identity(work/'terminal.json')}
+        states[metric] = {'configuration': identity(root/'configuration.json'),
+                          'current': identity(root/'current.json'),
+                          'attempts': rows}
+    body = {'record_type': 'ORDINARY_C04_PRE_CAPTURE_STATE_V1',
+            'state_root': str(state_root), 'company_id': company_id,
+            'metric_ids': sorted(metric_ids), 'ordinary_metrics': states}
+    return {**body, 'prestate_id': content_hash(value=body)}
+
+
 def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
                            report_path, metric_ids, mixed_stale):
     """Carry one authenticated prior SEC capture into a finite next pass."""
@@ -184,6 +230,20 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
     receipt = strict_json_file(path=call/'sec-receipt.json')
     terminal = strict_json_file(path=call/'terminal.json')
     plan = strict_json_file(path=call/'sec-plan.json')
+    prestate = plan.get('ordinary_pre_capture_state')
+    if prestate is not None:
+        intent = strict_json_file(path=call/'intent.json')
+        need(intent['intent_id'] == snapshot['previous_intent_id']
+             and intent['plan_id'] == content_hash(value=plan)
+             and type(prestate) is dict
+             and prestate.get('prestate_id') == content_hash(value={
+                 key: value for key, value in prestate.items()
+                 if key != 'prestate_id'})
+             and prestate.get('record_type') == 'ORDINARY_C04_PRE_CAPTURE_STATE_V1'
+             and prestate.get('state_root') == str(state_root)
+             and prestate.get('company_id') == company_id
+             and prestate.get('metric_ids') == sorted(metric_ids),
+             'ORDINARY_REFRESH_RESUME_PRESTATE_NOT_BOUND')
     need(receipt == result['receipt'] and terminal == result['terminal']
          and plan['company_id'] == company_id
          and plan['source_only_processing_route'] ==
@@ -243,9 +303,7 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
             and item.get('attempt_id') is None
             and item.get('last_verified_candidate') is None
             and item.get('production_authorized') is False
-            and 'terminal' not in item
-            and not (metric_root/'current.json').exists()
-            and not attempts.exists())
+            and 'terminal' not in item)
         if not basic:
             return False
         if (metric_root/'configuration.json').exists():
@@ -256,6 +314,24 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
                               [metric], expected_mode)
             except ValueError:
                 return False
+        if not (metric_root/'current.json').exists() and not attempts.exists():
+            return True
+        if (prestate is None or not (metric_root/'current.json').is_file()
+                or not (metric_root/'configuration.json').is_file()):
+            return False
+        current = _ordinary_pre_capture_state(state_root=state_root,
+            company_id=company_id, metric_ids=metric_ids)
+        before_metric = prestate.get('ordinary_metrics', {}).get(metric)
+        after_metric = current['ordinary_metrics'].get(metric)
+        if (before_metric is None or before_metric['configuration'] is None
+                or before_metric != after_metric):
+            return False
+        try:
+            configuration = cycle._config(metric_root, session.data_root,
+                company_id, [metric], expected_mode)
+            cycle._state(metric_root, configuration)
+        except ValueError:
+            return False
         return True
     if mixed_stale and snapshot_id is not None:
         from .ordinary_processing_source import verify_processing_source
@@ -486,14 +562,46 @@ def refresh_and_process(*, session, state_root, company_ids=None, metric_ids=Non
                     need(sha256_file(path=session.data_root/'evidence/requests_log.csv')
                          == resumed['source_ledger_sha256'],
                          'ORDINARY_REFRESH_RESUME_SOURCE_CHANGED_BEFORE_CAPTURE')
-                result = session.capture(company_id=company, url=url,
-                    refresh_metadata=request['refresh_for_new_discovery'],
-                    **({'source_only_c04': True} if c04_only or mixed_stale else {}))
+                with ExitStack() as resume_locks:
+                    if resumed is not None and mixed_stale:
+                        # Ordinary B01 and C04 writers use these same locks.
+                        # Recheck the predecessor while both are held, then
+                        # retain them through the SEC claim and capture.
+                        from . import ordinary_update_cycle as cycle
+                        company_root = state_root/company
+                        resume_locks.enter_context(cycle._locked(company_root))
+                        resume_locks.enter_context(cycle._locked(
+                            company_root/'metrics/C04-registration-v3'))
+                        with session.ledger.locked():
+                            locked_snapshot = session.ledger.snapshot()
+                        checked = _resume_one_c04_source(session=session,
+                            state_root=state_root, company_id=company,
+                            snapshot=locked_snapshot, report_path=resume_from,
+                            metric_ids=metrics, mixed_stale=mixed_stale)
+                        need(checked == resumed,
+                             'ORDINARY_REFRESH_RESUME_CHANGED_BEFORE_CAPTURE')
+                    result = session.capture(company_id=company, url=url,
+                        refresh_metadata=request['refresh_for_new_discovery'],
+                        **({'source_only_c04': True} if c04_only or mixed_stale else {}),
+                        **({'ordinary_prestate_root': state_root,
+                            'ordinary_prestate_metric_ids': metrics}
+                            if mixed_stale else {}),
+                        **({'resume_predecessor': {
+                            'previous_intent_id': resumed['prior_intent_id'],
+                            'counts': before,
+                            'ordinal': resumed['prior_ordinal'],
+                            'source_ledger_sha256': resumed['source_ledger_sha256']}}
+                            if resumed is not None and mixed_stale else {}))
                 captures.append({'company_id': company, 'source_url': url, 'result': result})
                 if result['status'] not in {'SUCCEEDED', 'EXISTING_VERIFIED_SOURCE_REUSED'}:
                     failed.add(url)
                 progressed = True
             except Exception as error:
+                if resumed is not None and mixed_stale:
+                    # A resumed capture cannot safely continue ordinary work
+                    # after either preclaim rejection or an unknown failure.
+                    # Its ledger remains the authority for any claimed slot.
+                    raise
                 capture_error = True
                 errors.setdefault(company, []).append({'stage': 'CAPTURE', 'error_type': type(error).__name__, 'reason': str(error)})
                 # An interrupted or unaccounted capture must stop new requests;

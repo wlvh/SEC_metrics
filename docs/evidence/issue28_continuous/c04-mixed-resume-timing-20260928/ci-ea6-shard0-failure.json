@@ -1,0 +1,18 @@
+{
+  "run_id": 36352338999,
+  "job_id": 108713287339,
+  "head": "ea6ac14e8afc8464eeeca6f004b2016d1678ce40",
+  "suite_status": "FAILED",
+  "suite_seconds": 1541.263,
+  "failed_selectors": [
+    {
+      "test": "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest",
+      "return_code": 124,
+      "duration_seconds": 240.106,
+      "timeout_seconds": 240,
+      "stderr_tail": "usage: python3 -m unittest [-h] [--data-root DATA_ROOT] [--discover-sources]\n                           [--company COMPANY] [--process]\n                           [--state-root STATE_ROOT] [--metric METRIC]\n                           [--output OUTPUT]\npython3 -m unittest: error: Metrics must be unique configured values\n\nSOURCE_MATERIAL_TIMEOUT_SECONDS=240"
+    }
+  ],
+  "passed_selector_count": 39,
+  "main_ci_terminal_at_capture": false
+}

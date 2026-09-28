@@ -1,0 +1,6 @@
+{"status": "PASS_INDEPENDENT_INSTALLED_RUNTIME_COLD_READ", "result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b", "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE", "history_file_count": 930, "history_bytes_unchanged": false, "seconds": 162.578}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d04-enphase-current-update-20260928/cold-read.py", line 75, in <module>
+    assert before == after and not network_attempts
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
