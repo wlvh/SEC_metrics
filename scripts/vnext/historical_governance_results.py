@@ -366,9 +366,18 @@ def resolve_historical_governance_metric(*, repo_root: Path, company_id: str,
         event_input, manifests = _event_input(
             reader=reader, cik=cik, company_id=company_id, period=period,
             selection=selection, inventories=inventories, files=files)
+        # The target is the chain's first filing - the latest amendment when
+        # there is one - because ``resolve_c04`` reads ``current_filings`` as
+        # "target, then the original-report fallback" and refuses
+        # C04_FILED_TARGET_MUST_BE_FIRST otherwise. The ordinary route passes
+        # the same (normal_governance_input). This port first passed the
+        # original 10-K's accession, so every period with a 10-K/A stopped at
+        # that check: the batch withheld Southwest FY2025, where the ordinary
+        # route publishes 0, and Paramount FY2025, where it names
+        # C04_COMPARABLE_AUDITOR_FACTS_MISSING.
         resolution = resolve_c04(
             current_filings=chain, prior_filings=prior_chain, prior_sources=[],
-            target_accession=selection["ordinary"]["accessionNumber"],
+            target_accession=selection["current_filing_chain"][0]["accessionNumber"],
             prior_period_end=(selection["prior_ordinary"]["reportDate"]
                               if selection["prior_ordinary"] else ""),
             target=target, expected_cik=cik, compiled_spec=spec, event_input=event_input)

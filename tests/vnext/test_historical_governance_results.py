@@ -89,6 +89,39 @@ class HistoricalGovernanceResultsTest(unittest.TestCase):
         self.assertEqual(DELIVERS, prepared["target_period"]["period_end"])
         self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, prepared["calls"])
 
+    def test_a_period_with_an_amendment_answers_as_the_ordinary_route_does(self):
+        """The target is the chain's first filing, not the original 10-K.
+
+        Southwest FY2025 and Paramount FY2025 each have a 10-K/A, so their
+        chain is [10-K/A, 10-K]. Naming the original as the target stopped both
+        at C04_FILED_TARGET_MUST_BE_FIRST - a withhold about this port, not
+        about the filings. The ordinary route answers one with a published flag
+        and the other with a named missing-facts reason; a port that still
+        names the original fails both halves, and one that invented a flag for
+        Paramount fails the second.
+        """
+        from vnext.normal_candidates import _governance_resolution
+        from vnext.normal_governance_input import prepare_saved_governance_input
+        fields = ("value", "quality", "publication", "reason_code", "period_start", "period_end")
+        answers = {}
+        for company_id in ("southwest_airlines", PARAMOUNT):
+            with original_sources_only():
+                prepared = prepare_saved_governance_input(repo_root=ROOT, company_id=company_id)
+                _, ordinary = _governance_resolution(data_root=ROOT, preparation=prepared,
+                                                     metric_id="C04")
+            chain = prepared["input_binding"]["selection"]["current_filing_chain"]
+            self.assertEqual(["10-K/A", "10-K"], [filing["form"] for filing in chain])
+            pinned = _resolve(company_id, chain[-1]["reportDate"])
+            self.assertIsNone(pinned["limitation"])
+            self.assertEqual({field: ordinary["result"][field] for field in fields},
+                             {field: pinned["result"][field] for field in fields})
+            answers[company_id] = pinned["result"]
+        self.assertEqual(("0", "EXACT", "PASS"),
+                         tuple(answers["southwest_airlines"][field]
+                               for field in ("value", "quality", "reason_code")))
+        self.assertEqual(("WITHHELD", "C04_COMPARABLE_AUDITOR_FACTS_MISSING"),
+                         (answers[PARAMOUNT]["publication"], answers[PARAMOUNT]["reason_code"]))
+
     def test_an_unwired_governance_metric_is_refused_by_name(self):
         """C03 used to be the example here; now C02 is, and for a real reason.
 
