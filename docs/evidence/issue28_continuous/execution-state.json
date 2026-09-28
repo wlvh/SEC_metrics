@@ -35,11 +35,11 @@
   },
   "current_work": [
     "Pushed 5425d51a D03 recorded-only one-request native Candidate/Evidence and disk replay; exact e1865d7e limited review PASS_WITH_BOUNDS. Main CI 36389326801 remains in_progress at latest natural checkpoint; prior 29b401d7 main CI 36382080314 completed SUCCESS. Neither establishes a D03 company result or full Issue acceptance.",
-    "Current uncommitted D03 collector reads every current request identity against an already initialized recorded ledger and replays each successful Candidate/Evidence. One Marriott success leaves four missing; one failed response remains explicit. Five saved-source groups with synthetic recorded answers return COMPLETE_RECORDED_SET_REQUIRES_NATIVE_REVIEW, even with a synthetic current proposal; no Result/Run/public row. First test exposed a request-index TypeError and remains saved; corrected directed3/3, complete material1/1, fast135/135, existing D04 feasibility compat1/1 and V14 binding pass. Exact-SHA review pending; real calls0.",
+    "Committed d06c99db D03 collector reads every current request identity against an already initialized recorded ledger and replays each successful Candidate/Evidence. One Marriott success leaves four missing; one failed response remains explicit. Five saved-source groups with synthetic recorded answers return COMPLETE_RECORDED_SET_REQUIRES_NATIVE_REVIEW, even with a synthetic current proposal; no Result/Run/public row. First test exposed a request-index TypeError and remains saved; corrected directed3/3, complete material1/1, fast135/135, existing D04 feasibility compat1/1 and V14 binding pass. Exact-SHA limited review PASS_WITH_BOUNDS with independent 4/4 short log; real calls0; push pending.",
     "D04 retains 10/10 real private candidates, B13 V8 lexical route remains suspended after two NEEDS_FIX reviews, C04 cross-fiscal-year online update and full390/legacy exit remain unproven. Ledger still provider/paid/SEC 143/143/52."
   ],
   "next": [
-    "Finish exact-SHA limited review of the D03 complete recorded collector, then append-only push and observe new-head CI. Do not repeat already reviewed 248-second JPM anchor without a relevant change.",
+    "Append-only push independently reviewed D03 complete recorded collector and observe new-head CI. Do not repeat already reviewed 248-second JPM anchor without a relevant change.",
     "Continue D03 authenticated semantic Review and company Result/Run/public-row chain within no-call/offline authority; a complete synthetic recorded set is not a business conclusion. D03 real calls and resources remain separate decisions.",
     "Continue independent B06 source-completeness, C04 normal cross-year, 390 reconciliation and old semantic-entry exit where existing source and authority allow; keep B13 V8 stopped and #47 isolated."
   ],
@@ -2316,6 +2316,25 @@
       "ended_at": "2026-09-28T06:58:53Z",
       "tool_calls": 44,
       "result_path": "docs/evidence/issue28_continuous/d03-recorded-native-unit-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
+    },
+    {
+      "task_name": "review_d03collect_d06c99d",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_complete_recorded_collection",
+      "scope_paths": [
+        "scripts/vnext/d03_native_assessment.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "tests/vnext/test_d03_native_assessment.py",
+        "tools/run_fast_tests_v2.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/d03-complete-recorded-20260928/"
+      ],
+      "patch_sha": "d06c99db7ddfe4f85c321ec157f4983f7d823b05",
+      "spawned_at": "2026-09-28T07:23:53Z",
+      "ended_at": "2026-09-28T07:30:46Z",
+      "tool_calls": 50,
+      "result_path": "docs/evidence/issue28_continuous/d03-complete-recorded-20260928/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS"
     }
   ],
@@ -5892,7 +5911,9 @@
     "ci_source_selector": "D03_NATIVE_COLLECTION_MARRIOTT_MATERIAL_APPENDED_ONLY",
     "fast": "PASS_135_OF_135_199_695_SECONDS",
     "existing_d04_feasibility_compatibility": "PASS_1_13_622_SECONDS",
-    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "limited_independent_review": "PASS_WITH_BOUNDS_50_TOOL_CALLS_INDEPENDENT_SHORT_LOG_4_OF_4",
+    "independent_review_patch_sha": "d06c99db7ddfe4f85c321ec157f4983f7d823b05",
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-complete-recorded-20260928/independent-review/conclusion.md",
     "real_ledger_claims": 195,
     "real_ledger_provider_paid_sec": [143, 143, 52],
     "new_real_calls": [0, 0, 0],
