@@ -70,6 +70,13 @@ class TheDefectWithdrawsTheCoordinateTest(unittest.TestCase):
         at all. The repair withholds the coordinate by name, and the entry now
         releases that one result under the version that produced it - so what
         is held here is that the release can never cover a published value.
+
+        A later version that reproduces the same withheld result gets its own
+        release, named for that version (the register's rule, applied by
+        native-run-batch-2026-09-27/name_version_releases.py), so the list can
+        grow; what it may never hold is another result. The first version of
+        this case compared the whole list and failed when the full-frame batch
+        reproduced the repair under its own closure.
         """
         defects = json.loads((ROOT / DEFECTS).read_text(encoding="utf-8"))["defects"]
         entry = next(d for d in defects if d["defect_id"]
@@ -82,9 +89,10 @@ class TheDefectWithdrawsTheCoordinateTest(unittest.TestCase):
         withheld, published = row["targeted"]["results"]["B03"], row["batch"]["results"]["B03"]
         self.assertEqual(("WITHHELD", None), (withheld["publication"], withheld["value"]))
         self.assertEqual("PUBLISHED", published["publication"])
-        self.assertEqual([(withheld["result_id"], runs["targeted_closure"])],
-                         [(r["result_id"], r["requirement_closure_hash"])
-                          for r in entry["released"]])
+        released = [(r["result_id"], r["requirement_closure_hash"]) for r in entry["released"]]
+        self.assertIn((withheld["result_id"], runs["targeted_closure"]), released)
+        self.assertEqual({withheld["result_id"]}, {result_id for result_id, _ in released})
+        self.assertEqual(len(released), len(set(released)))
         self.assertNotIn(published["result_id"], [r["result_id"] for r in entry["released"]])
 
 
