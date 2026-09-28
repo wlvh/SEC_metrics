@@ -1,0 +1,26 @@
+E
+======================================================================
+ERROR: test_saved_source_recorded_candidate_replays_but_is_not_company_result (tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_native_assessment.py", line 57, in test_saved_source_recorded_candidate_replays_but_is_not_company_result
+    prepared = prepare_d03_replay_only_requests(
+        company_id='marriott_international')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 388, in prepare_d03_replay_only_requests
+    with request_construction_session(requirement):
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/native_request_construction.py", line 121, in request_construction_session
+    current=_Construction(requirement);token=_ACTIVE.set(current)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/native_request_construction.py", line 55, in __init__
+    self.check()
+    ~~~~~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/native_request_construction.py", line 75, in check
+    raise OfflineSessionError('NATIVE_REQUEST_CONSTRUCTION_RULE_CHANGED:'+binding.path)
+vnext.offline_execution_session.OfflineSessionError: NATIVE_REQUEST_CONSTRUCTION_RULE_CHANGED:scripts/vnext/d03_native_assessment.py
+
+----------------------------------------------------------------------
+Ran 1 test in 1.173s
+
+FAILED (errors=1)
