@@ -34,6 +34,7 @@
     "unknown": 0
   },
   "current_work": [
+    "Current worktree CI source-material shard repair: ba7b5f88 shard1 cancelled at 35-minute job cap after 5m56s checkout and 29m14s test, no final selector JSON or business assertion failure; shard0 and program-role succeeded. Earlier f415bd3e successful run timed 82 selectors, current 88: known current two-shard elapsed sums 1527/3161s; proposed three-shard known sums 1668/1405/1615s, with two untimed new selectors per shard. Workflow only changes source matrix to 3, shard-count to3 and aggregate label, keeping tests/limits/jobs2. Exact-once current 88-selector partition and YAML parse pass. One new evidence directory ci-source-material-three-shards-20260929/. Limited review and new-head CI pending; no calls, #47 untouched.",
     "Committed 869df6aa D03 recorded-only company ReviewUnit input: explicit complete-set selection binds every saved group Candidate/Evidence, source-unit identities, raw-source proofs, company/period and response digests to a pending ReviewUnit. Missing/failed groups reject; synthetic current finding and two unresolved groups remain pending, SYSTEM decision is ineligible, and no Result/Run or real call is created. Final binding and three receipts pass; incomplete-set 1/1, complete-set final 1/1 (54.638s), prior intermediate both cases 2/2 (99.928s); fast141/141 (93.215s) was before final helper guard/context changes and is not exact-final-tree full evidence. Exact-SHA limited independent review PASS_LIMITED (single incomplete-set test run; complete-set and fast logs read-only); new-head CI pending. Evidence d03-company-review-input-20260929/.",
     "Committed 08915a83 Ford FY2025 B03 source-scope correction: selected 15974000000 USD depreciation/tooling amortization total in authenticated annual segment table sums five visible components, including 8235 million USD marked (g); adjacent original (g) footnote explicitly includes about 8.1 billion impairment-related depreciation. Approved B03 excludes impairment, so Ford historical Result remains but current credit is withdrawn in a second one-coordinate delta; no approximate subtraction or new EBITDA value. Explicit V14 guard and same-operation replay optimization are implemented, final V14 closure and three receipts pass. Directed6/6, Ford update1/1 22s, Southwest positive1/1 68s, split Salesforce current1/1 46s and legacy recovery1/1 55s, B03+C04 recorded two-source/cold replay pass, fast141/141 in96s. Initial test-mock red failure and profiler overhead preserved. Exact-SHA limited review PASS_LIMITED (source bytes/fact relation and B03 replay; long tests read-only); new-head CI pending; real calls0/0/0, #47 untouched.",
     "Local evidence-only B03+C04 recorded mixed-resume integration: original #28 saved Salesforce bodies authenticated by the original source log; two missing historical source bodies added as recorded captures, six other required URLs reused from verified baseline. With historical B03 pointer retained and current B03 credit withheld, first metadata capture gave C04 CANDIDATE_READY and second metadata capture gave C04 NO_SOURCE_CONTENT_CHANGE; forged B03 current-credit report rejected before the second capture. Independent Python process replayed installed B03 historical Result and C04 PUBLISHED/0 while confirming B03 current scope conflict; selected log/pointer hashes unchanged across cold read. Recorded SEC slots4, actual provider/paid/SEC0/0/0, original live ledger read195 claims/143/143/52. Overall UPDATES_INCOMPLETE because B03 is unresolved; authentic future new filing, corrected Salesforce EBITDA and full390 remain unproven. Evidence worktree not yet pushed; current 96351f76 main CI still in_progress at 2026-09-28T17:18Z.",
@@ -48,6 +49,7 @@
     "B13 V8 lexical route remains suspended after two NEEDS_FIX reviews; C04 cross-fiscal-year online update, B06 five source relationships and full390/legacy exit remain unproven. Original ledger last checked at provider/paid/SEC 143/143/52, 195 slots."
   ],
   "next": [
+    "Commit the bounded source-material CI three-shard workflow change with its single evidence directory, obtain exact-SHA limited review of 88-selector coverage and aggregate gate, then append-only push together with already reviewed D03 company pending ReviewUnit commits to Draft PR43. Check new-head CI at natural checkpoints; do not infer business success from scheduling or automatically increase timeouts.",
     "D03 pending company ReviewUnit input committed at 869df6aa with exact-SHA limited review PASS_LIMITED. Append-only push to Draft PR43 and read new-head CI once. A future D03 Result/Run must reject recorded_only/provider_execution_unverified even after a HUMAN decision. This patch does not complete D03 business Review, Result/Run, or real-call permission; continue actual company result path after review without promoting synthetic responses.",
     "The Ford B03 correction and single evidence directory are committed at 08915a83; exact-SHA limited independent review PASS_LIMITED. Append-only push to Draft PR43 after review receipt, then read new-head CI once. Prior 96351f76 main CI 36454551078 ended CANCELLED: saved-source shard0 Salesforce/Southwest B03 selectors each returned124 at240 seconds, fast succeeded; program-role job separately hit its 30-minute job limit after 12-minute checkout and 18-minute unfinished test. The new selectors are shorter locally; read only the new-head CI once after push and diagnose any remaining job-specific failure without automatic global timeout increase.",
     "At a natural checkpoint read the actual terminal of 96351f76 main CI 36454551078; do not trigger duplicate CI or misread queued/in_progress as success. Append-only push the locally committed recorded-resume evidence when appropriate, reading the new-head CI once. Continue D03 company Review/Run and other independent remaining responsibility; recorded B03+C04 success is a control-flow result, not a corrected B03 company coordinate.",
@@ -6598,5 +6600,50 @@
       "downstream_impact": "stacked consumer may need to refresh its own current V14 closure if it consumes this head"
     },
     "future_result_guard": "ANY_D03_RESULT_OR_RUN_MUST_REJECT_RECORDED_ONLY_OR_PROVIDER_EXECUTION_UNVERIFIED_EVEN_IF_HUMAN_DECISION_EXISTS"
+  },
+  "ci_three_source_shards_20260929": {
+    "status": "WORKTREE_PARTITION_VERIFIED_LIMITED_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/ci-source-material-three-shards-20260929/README.md",
+    "old_run": 36466326739,
+    "old_shard1_job": 109077198596,
+    "old_shard1_terminal": "CANCELLED_JOB_35_MINUTES_AFTER_CHECKOUT_5M56S_AND_TEST_29M14S_NO_ASSERTION_RESULT",
+    "prior_successful_timing_run": 36433946153,
+    "current_source_selector_count": 88,
+    "known_prior_timed_selector_count": 82,
+    "old_two_known_process_seconds": [
+      1527.183,
+      3160.866
+    ],
+    "new_three_known_process_seconds": [
+      1668.386,
+      1404.762,
+      1614.901
+    ],
+    "new_untimed_selectors_per_shard": [
+      2,
+      2,
+      2
+    ],
+    "exact_once_partition_verified": true,
+    "job_timeout_minutes_unchanged": 35,
+    "per_selector_timeout_unchanged": true,
+    "runner_body_unchanged": true,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "file": ".github/workflows/vnext-fast.yml",
+      "functions_or_steps": [
+        "source_material_parts matrix",
+        "Run complete saved-source material tests",
+        "source-material aggregate gate label"
+      ],
+      "compatibility": "all 88 current selectors selected once; test runner source and default code unchanged",
+      "downstream_impact": "stacked PR may inherit third source-material CI job; no #47 branch, ledger, snapshot or PR operated"
+    }
   }
 }
