@@ -106,6 +106,8 @@ FAST_TESTS += ("tests.vnext.test_c04_refresh_resume.C04ResumeBudgetBoundaryTest"
 FAST_TESTS += ("tests.vnext.test_d03_native_preparation.D03NativePreparationTest.test_successor_cannot_drop_original_units_or_required_items",)
 FAST_TESTS += ("tests.vnext.test_d03_complete_interpretation.D03CompleteInterpretationTest.test_complete_empty_proposal_never_becomes_negative_result",)
 FAST_TESTS += ("tests.vnext.test_d03_complete_interpretation.D03CompleteInterpretationTest.test_recorded_bridge_maps_original_to_effective_ids_without_credit",)
+FAST_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_actual_company_and_period_literals_remain_rejected",)
+FAST_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_same_line_exemption_does_not_hide_another_literal",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)
 SOURCE_TESTS += ("tests.vnext.test_r6_semantic_verification",)
@@ -137,6 +139,7 @@ SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMa
 SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",)
 SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_source_grammar_and_authorization_provenance_are_not_business_literals",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

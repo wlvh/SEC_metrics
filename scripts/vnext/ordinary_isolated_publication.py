@@ -12,7 +12,7 @@ from pathlib import Path
 from git_workspace import first_symlink_in_path
 from . import ordinary_release_preparation as preparation
 from . import publication as pub, projector
-from .annual_publication import _scalability_snapshot
+from .ordinary_scalability_audit import successor_scalability_snapshot
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, sha256_file, strict_json_file
 from .ratchet_release import _copy_exact_tree, _tree_files
 from .records import ANNUAL_PUBLICATION_MANIFEST_TYPE, validate_record
@@ -27,6 +27,7 @@ META = 'internal/ordinary_publication.json'
 FACTS = 'internal/ordinary_complete_version.json'
 REQUIREMENT = 'issue_28_v14'
 IMPLEMENTATION = ('scripts/vnext/ordinary_isolated_publication.py',
+                  'scripts/vnext/ordinary_scalability_audit.py',
                   'scripts/vnext/ordinary_release_preparation.py',
                   'scripts/vnext/publication.py', 'scripts/vnext/records.py',
                   'scripts/vnext/publication_results.py')
@@ -194,7 +195,7 @@ def _compose(snapshot, meta):
         'full390_acceptance': False, 'publication_credit': CREDIT}, 'batch_manifest_id')
     from tools.check_vnext_semantics import run_audit
     scans = {'semantic': run_audit(repo_root=ROOT, secret_roots=[], secret_token=''),
-             'scalability': _scalability_snapshot(ROOT)}
+             'scalability': successor_scalability_snapshot(ROOT)}
     pub._semantic_gate_evidence(receipt=scans['semantic'], repo_root=None)
     need(not any(row['allowed'] not in {'1', 'true', 'True'} for row in scans['scalability']),
          'ORDINARY_PUBLICATION_SCALABILITY_FAILED')
