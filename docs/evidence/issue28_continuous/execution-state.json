@@ -6728,6 +6728,30 @@
       "new_complete_business_coordinates": 0,
       "new_fiscal_year_update_proven": false
     },
+    "legacy_disabled_fresh_36_creation": {
+      "status": "COMPLETED_PRIVATE_36_CREATION_WITH_OLD_PRODUCERS_DISABLED_PASS",
+      "process_session_id": 80566,
+      "evidence": "docs/evidence/issue28_continuous/ordinary-marriott-current-36-20260929/legacy-create/README.md",
+      "private_root": "/private/tmp/issue28-marriott-36-no-legacy-20260929",
+      "scope": "fresh create all 36 ordinary Marriott Runs with 116 old semantic producer exports disabled; compare deterministic Result IDs to prior private run",
+      "candidate_ready_count": 36,
+      "same_result_id_count": 36,
+      "original_claims_source_and_active_unchanged": true,
+      "new_installation_independent_cold_read": false,
+      "new_real_calls": [0, 0, 0],
+      "result_credit": "LIMITED_FRESH_CREATION_ONLY_NO_NEW_BUSINESS_COORDINATE"
+    },
+    "ci_a728b6c7_20260929": {
+      "run_id": 36480879088,
+      "head": "a728b6c7aa6e1f77dfe01431c0408b7a2687ddeb",
+      "status": "completed",
+      "conclusion": "success",
+      "fast_job": "success",
+      "saved_source_material_shards": ["success", "success", "success"],
+      "source_material_aggregate": "success",
+      "source": "https://github.com/wlvh/SEC_metrics/actions/runs/36480879088",
+      "business_acceptance_from_ci_alone": false
+    },
     "per_metric_intent_to_terminal_seconds_sum": 2431.446,
     "direct_c04_route": "HISTORICAL_DEFAULT_NOT_CURRENT_SUCCESSOR",
     "new_fiscal_year_update_proven": false,
@@ -6737,7 +6761,7 @@
     "private_root": "/private/tmp/issue28-marriott-current-36-20260929"
   },
   "ci_fast_checkout_timeout_20260929": {
-    "status": "LOCAL_PATCH_LIMITED_REVIEW_PASS_NEW_HEAD_CI_PENDING",
+    "status": "LIMITED_REVIEW_PASS_REMOTE_A728B6C7_CI_SUCCESS",
     "evidence": "docs/evidence/issue28_continuous/ci-fast-checkout-timeout-20260929/README.md",
     "cancelled_run": 36478405174,
     "cancelled_job": 109117765903,
