@@ -90,7 +90,6 @@ MODEL_SPAN_SUFFIX = (
 )
 _PHYSICAL_CAPACITY = re.compile(
     r'\b(?:manufacturing|production)\s+(?:capacity|capabilities)\b', re.I)
-_CAPACITY_NOUN = re.compile(r'\b(?:capacity|capabilities)\b', re.I)
 
 
 def _assertion_protocol(base):
@@ -757,26 +756,12 @@ def _claim_context_projection(*, response, request, scan_result, source,
             continue
         text = visible[ref]
         ranges = sorted(ranges_by_ref.get(ref, []))
-        mentions = list(_PHYSICAL_CAPACITY.finditer(text))
-        if model_spans:
-            from .regulatory_investigation_candidates import _sentences
-            # In a sentence already anchored by a physical-capacity phrase,
-            # a later coordinated assertion can shorten the noun to just
-            # "capacity". The source span still owns that second mention.
-            mentions = [match for begin, finish, sentence in _sentences(text)
-                if _PHYSICAL_CAPACITY.search(sentence)
-                for match in _CAPACITY_NOUN.finditer(text, begin, finish)]
-        if model_spans and any(sum(start <= match.start() and match.end() <= end
-                for match in mentions) > 1 for start, end in ranges):
-            # One model range covering two capacity mentions is not proof
-            # that both underlying assertions received a distinct judgment.
-            unresolved.append('B13_MODEL_SPAN_MULTI_CAPACITY_ASSERTION:' + ref)
         if any(ranges[index - 1][1] > ranges[index][0]
                for index in range(1, len(ranges))):
             unresolved.append('B13_CLAIM_OVERLAPPING_RANGES:' + ref)
         if any(not any(start <= match.start() and match.end() <= end
                        for start, end in ranges)
-               for match in mentions):
+               for match in _PHYSICAL_CAPACITY.finditer(text)):
             unresolved.append('B13_CLAIM_UNCOVERED_PHYSICAL_SOURCE:' + ref)
     return projected, scopes, unresolved
 
@@ -792,58 +777,31 @@ def _claim_contradictions(*, row, claim, antecedent, books,
                           role_based_antecedent=False):
     """Abstain on a plainly conflicting claim, without borrowing whole-block labels."""
     physical = _PHYSICAL_CAPACITY.search(claim)
-    if (physical is None and role_based_antecedent
-            and _PHYSICAL_CAPACITY.search(antecedent)):
-        # A coordinated continuation may omit "manufacturing" while still
-        # referring to the physical capacity established just before it.
-        physical = _CAPACITY_NOUN.search(claim)
     if physical is None:
         return []
     subject = books['subject'][row[1]]
     timing = books['timing'][row[2]]
     kind = ROLE_LABELS[row[0]]
-    # A comma-delimited relative clause describes the lead noun; its own
-    # subject does not own the capacity predicate outside that clause.
-    owner_prefix = claim[:physical.start()]
-    if role_based_antecedent:
-        owner_prefix = re.sub(r',\s*(?:which|that)\b[^,]*,', ' ',
-                              owner_prefix, flags=re.I)
-    local = list(_CLAIM_SUBJECT.finditer(owner_prefix))
-    local_roles = {('OTHER_ENTITY' if 'supplier' in m.group().casefold()
-                    else 'TARGET_REGISTRANT') for m in local}
-    ambiguous_local = role_based_antecedent and len(local_roles) > 1
+    local = list(_CLAIM_SUBJECT.finditer(claim[:physical.start()]))
     borrowing = (re.match(r'^\s*(?:they|it|these|those|this|such|currently|now)\b',
                           claim, re.I)
         or re.search(r'\band\s*$', antecedent, re.I)
-        and (role_based_antecedent or _CLAIM_PRESENT.match(claim.lstrip())))
+        and _CLAIM_PRESENT.match(claim.lstrip()))
     earlier = list(_CLAIM_SUBJECT.finditer(antecedent)) if borrowing else []
     antecedent_roles = {('OTHER_ENTITY' if 'supplier' in m.group().casefold()
                          else 'TARGET_REGISTRANT') for m in earlier}
     ambiguous_antecedent = not local and (len(antecedent_roles) > 1
         if role_based_antecedent else
         len({m.group().casefold() for m in earlier}) > 1)
-    markers = ([] if ambiguous_local else
-               local or (earlier if not ambiguous_antecedent else []))
+    markers = local or (earlier if not ambiguous_antecedent else [])
     owner = None
     if markers:
         label = markers[-1].group().lower()
         owner = 'OTHER_ENTITY' if 'supplier' in label else 'TARGET_REGISTRANT'
     present = bool(_CLAIM_PRESENT.search(claim))
     past = bool(_CLAIM_PAST.search(claim))
-    # A subjectless coordinated plan can inherit an explicit present frame
-    # from the preceding assertion. "Next year" then locates the plan in the
-    # current report even if this predicate uses a verb absent from the
-    # bounded present-verb check. This is only a necessary conflict guard.
-    current_plan_frame = bool(role_based_antecedent
-        and re.search(r'\band\s*$', antecedent, re.I)
-        and re.search(r'\bnext\s+year\b', claim, re.I)
-        and _CLAIM_PRESENT.search(antecedent)
-        and not _CLAIM_PAST.search(antecedent)
-        and not past)
     unresolved = []
-    if ambiguous_local:
-        unresolved.append('B13_CLAIM_SUBJECT_AMBIGUOUS')
-    elif ambiguous_antecedent:
+    if ambiguous_antecedent:
         unresolved.append('B13_CLAIM_ANTECEDENT_AMBIGUOUS')
     elif owner is None:
         unresolved.append('B13_CLAIM_SUBJECT_NOT_ESTABLISHED')
@@ -851,7 +809,7 @@ def _claim_contradictions(*, row, claim, antecedent, books,
         unresolved.append('B13_CLAIM_SUBJECT_CONFLICT')
     if present and past:
         unresolved.append('B13_CLAIM_MIXED_TIME_UNRESOLVED')
-    elif timing == 'HISTORICAL' and (present or current_plan_frame):
+    elif timing == 'HISTORICAL' and present:
         unresolved.append('B13_CLAIM_CURRENT_MARKED_HISTORICAL')
     elif timing == 'CURRENT_REPORT' and past and not present:
         unresolved.append('B13_CLAIM_PAST_MARKED_CURRENT')
@@ -866,7 +824,7 @@ def _claim_contradictions(*, row, claim, antecedent, books,
             unresolved.append('B13_CLAIM_UNSUPPORTED_CONDITIONAL_TIME')
         if kind == 'CONDITIONAL_OR_BOILERPLATE':
             unresolved.append('B13_CLAIM_UNSUPPORTED_CONDITIONAL_KIND')
-    if (owner == 'TARGET_REGISTRANT' and (present or current_plan_frame) and not past
+    if (owner == 'TARGET_REGISTRANT' and present and not past
             and kind in {'OTHER_ENTITY', 'HISTORICAL_STATEMENT',
                          'OTHER_CONTEXT', 'SALES_OR_SHIPMENTS'}):
         unresolved.append('B13_CLAIM_TARGET_CAPACITY_EXCLUDED')

@@ -2220,9 +2220,20 @@
       "patch_sha": "7676f49d37c02e6bfe597d44ba333cfc4222daab",
       "spawned_at": "2026-09-28T02:55:16Z",
       "ended_at": "2026-09-28T03:03:04Z",
-      "tool_calls": null,
+      "tool_calls": 41,
       "result_path": "docs/evidence/issue28_continuous/b13-model-span-claim-ownership-20260928/independent-review/conclusion.md",
-      "verdict": "NEEDS_FIX_TWO_ADJACENT_COUNTEREXAMPLES"
+      "verdict": "NEEDS_FIX_TWO_ADJACENT_COUNTEREXAMPLES",
+      "followup_reviews": [
+        {
+          "patch_sha": "8990fb9d401e8d9d843ecd122d74bebb15fe7e46",
+          "started_at": "2026-09-28T03:28:50Z",
+          "ended_at": "2026-09-28T03:33:41Z",
+          "additional_tool_calls": 18,
+          "cumulative_tool_calls": 59,
+          "result_path": "docs/evidence/issue28_continuous/b13-model-span-claim-ownership-20260928/independent-review/conclusion.md",
+          "verdict": "NEEDS_FIX_SECOND_ROUND_LEXICAL_ROUTE_STOP"
+        }
+      ]
     }
   ],
   "ci_capacity_20260922": {
@@ -5473,10 +5484,10 @@
     "execution_code_head": "120e0e2be51c243556623f81556879c76bbfe071"
   },
   "d03_recorded_interpretation_bridge_20260928": {
-    "status": "LOCAL_D03_JPM_COMPLETE_SYNTHETIC_RECORDED_AND_COLD_PASS_INCREMENT_REVIEW_PASS_WITH_BOUNDS_PUSH_PENDING",
+    "status": "EXPERIMENT_STOPPED_RESTORED_BA56_BYTES_V8_LIVE_NATIVE_SUSPENDED",
     "patch_sha": "8a49b5ab566c755d3d60a9db7bb5ef24f5a55ac0",
     "evidence": "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/README.md",
-    "independent_review": "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/independent-review/conclusion.md",
+    "independent_review": "TWO_EXACT_SHA_REVIEWS_NEEDS_FIX_ROUTE_STOPPED",
     "scope_paths": [
       "scripts/vnext/d03_complete_interpretation.py",
       "tests/vnext/test_d03_complete_interpretation.py",
@@ -5528,7 +5539,19 @@
       0,
       0
     ],
-    "production_authorized": false
+    "production_authorized": false,
+    "second_patch_sha": "8990fb9d401e8d9d843ecd122d74bebb15fe7e46",
+    "current_six_files_equal": "ba56a51fb069ff53c4b9a831b901c4323c06d534",
+    "v14_closure": "sha256:6372c5dbd59d2127227eb3c1ad1f34cd4a6742ba62d1cbd691f04cece8a3cf45",
+    "fast_suite": "HISTORICAL_EXPERIMENT_134_OF_135_TWICE_CURRENT_CODE_RESTORED",
+    "unresolved_review_findings": [
+      "future doubling can be swallowed by current capacity span",
+      "storage capacity false positive",
+      "correct supplier exclusion false positive"
+    ],
+    "new_live_permission": false,
+    "native_acceptance_enabled": false,
+    "complete_company_result": false
   },
   "b13_v8_claim_followup_20260928": {
     "status": "LOCAL_FINITE_COUNTEREXAMPLES_REPAIRED_V8_LIVE_AND_NATIVE_STILL_SUSPENDED",

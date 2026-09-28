@@ -30,4 +30,10 @@
 
 本次回修只在**已出现明确物理产能短语的同一句**，把后续省略修饰词的 `capacity` 也纳入范围覆盖；若一条模型范围罩住两次产能提及，保留具体未决。第二阶段的短范围若只写 `plan to add capacity`，在同句前项有物理产能锚点时继续核对主体、期间和类别；错误历史/背景分类有具体未决，正确分开的扩产类别不因该项误拦。对同一产能谓词前供应商与申报主体线索相冲突、又没有足够结构证据的表达，保留 `B13_CLAIM_SUBJECT_AMBIGUOUS`，不靠最后一个词面主体给确定信用。这是已知反例的有限安全边界，不证明所有“capacity”都指生产产能。
 
-回修后 `followup-module-final.log` 为 36 项通过，`followup-v7-identity.log` 保持旧请求字节；`rebind-followup.py` 只更新未冻结 V14 中该模块身份，`followup-binding.log` 核验执行权限和三份当前接线，闭包 `sha256:ad3c189d7be270bfdeb2ff0049eb20015f405d2d23479077de81a94cc4a14441`。首次在短命命令会话里从外层直接后台启动未留下进程，`followup-fast-launch-empty.log` 为 0 字节、没有退出文件，**不算测试执行**。改用内层 `nohup` 加持久命令会话等待后，最终六文件哈希 `followup-fast-tree-before.json` 未变；单作业 `followup-fast.log`/`.exit` 实际执行448.859秒，135项中134项通过，唯一 `test_invocation_control` 的子进程 `join(timeout=10)` 后仍无退出码，套件如实**FAILED**。`invocation-exact-isolated.log` 又独立复现同一断言失败；`invocation-historical-root-timing.log` 测得该子进程会重复建立的历史权限根单项需约6.8秒。测试夹具的独立修复另行处理，不把上述失败改写为 B13 通过。新 B13 提交增量仍需同一名限定审阅者复核；V8 真实与原生接受门继续关闭。
+回修后 `followup-module-final.log` 为 36 项通过，`followup-v7-identity.log` 保持旧请求字节；`rebind-followup.py` 只更新未冻结 V14 中该模块身份，`followup-binding.log` 核验执行权限和三份当前接线，闭包 `sha256:ad3c189d7be270bfdeb2ff0049eb20015f405d2d23479077de81a94cc4a14441`。首次在短命命令会话里从外层直接后台启动未留下进程，`followup-fast-launch-empty.log` 为 0 字节、没有退出文件，**不算测试执行**。改用内层 `nohup` 加持久命令会话等待后，最终六文件哈希 `followup-fast-tree-before.json` 未变；单作业 `followup-fast.log`/`.exit` 实际执行448.859秒，135项中134项通过，唯一 `test_invocation_control` 的子进程 `join(timeout=10)` 后仍无退出码，套件如实**FAILED**。`invocation-exact-isolated.log` 又独立复现同一断言失败；`invocation-historical-root-timing.log` 测得该子进程会重复建立的历史权限根单项需约6.8秒。测试夹具的独立修复另行处理，不把上述失败改写为 B13 通过。该 B13 增量后来已经同一名限定审阅者复核，结论见下；V8 真实与原生接受门继续关闭。
+
+## 停止该 V8 词面路线，并恢复当前文件
+
+同一审阅者对精确 `8990fb9d` 增量追加的结论仍为 `NEEDS_FIX`：`plan to double it next year` 可被一条现有产能范围吞并；新增的普通 `capacity` 计数会误拦储存能力；供应商的正确排除标签也会被主体歧义分支挡下。两轮审阅累计59次底层工具调用，结论与反例原样保留在 `independent-review/conclusion.md`。继续补写词面变体不能证明断言关系完整，还会增加合法输入误拦，因此此路线到此停止；不再为这两项补丁申请真实执行或原生结果信用。
+
+当前源码、完整响应测试、未冻结 V14 manifest 和三份当前接线收据以**追加恢复提交**还原为此前已推送 `ba56a51f` 的确切六份字节。`verify-restored-bytes.py`、`restore-verification.log` 逐份核对并重验当前 V14 执行身份和三份接线，恢复后的闭包为 `sha256:6372c5dbd59d2127227eb3c1ad1f34cd4a6742ba62d1cbd691f04cece8a3cf45`。上面的红测、定向通过和两次快速套件失败属于**已停止实验的历史证据**，不再描述当前 B13 源码。原 V8 仍暂停，`ba56a51f` 主 CI 已终态15/15成功；后续追加提交的 CI 须按其自己的终态判断。
