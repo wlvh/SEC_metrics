@@ -1,0 +1,20 @@
+test_late_processing_failure_cannot_recredit_old_success (tests.vnext.test_b03_depreciation_scope_update.B03HistoricalRecoveryVerifierTest.test_late_processing_failure_cannot_recredit_old_success) ... FAIL
+test_only_source_scope_conflict_can_retain_a_historical_terminal (tests.vnext.test_b03_depreciation_scope_update.B03HistoricalRecoveryVerifierTest.test_only_source_scope_conflict_can_retain_a_historical_terminal) ... ok
+test_exclusion_footnote_cannot_trigger_inclusion_guard (tests.vnext.test_b03_depreciation_scope.B03ImpairmentSourceMaterialTest.test_exclusion_footnote_cannot_trigger_inclusion_guard) ... ok
+test_ford_total_includes_footnoted_impairment_depreciation (tests.vnext.test_b03_depreciation_scope.B03ImpairmentSourceMaterialTest.test_ford_total_includes_footnoted_impairment_depreciation) ... ok
+test_saved_salesforce_subset_and_competing_scope_block_current_credit (tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest.test_saved_salesforce_subset_and_competing_scope_block_current_credit) ... ok
+test_unflagged_direct_and_composed_inputs_keep_their_prior_path (tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest.test_unflagged_direct_and_composed_inputs_keep_their_prior_path) ... ok
+
+======================================================================
+FAIL: test_late_processing_failure_cannot_recredit_old_success (tests.vnext.test_b03_depreciation_scope_update.B03HistoricalRecoveryVerifierTest.test_late_processing_failure_cannot_recredit_old_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b03_depreciation_scope_update.py", line 251, in test_late_processing_failure_cannot_recredit_old_success
+    self.assertEqual(2, postcheck.call_count)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 6 tests in 15.427s
+
+FAILED (failures=1)

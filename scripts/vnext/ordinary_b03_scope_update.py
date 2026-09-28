@@ -11,7 +11,7 @@ from uuid import uuid4
 from . import normal_run_v3 as normal
 from . import ordinary_update_cycle as inherited
 from .b03_depreciation_scope import assess_direct_depreciation_scope
-from .canonical import atomic_write_json, sha256_file, strict_json_file
+from .canonical import atomic_write_json, sha256_file
 from .normal_annual_input import _registry_rows
 from .ordinary_projection import render_ordinary_run
 from .requirements import load_requirement_snapshot
@@ -25,30 +25,57 @@ def _need(condition, reason):
 class B03CurrentScopeConflict(ValueError):
     """A mechanically valid historical success lacks current B03 credit."""
 
+    def __init__(self, reason, historical_result):
+        super().__init__(reason)
+        self.historical_result = historical_result
+
 
 def _verify_candidate(root, terminal, configuration):
-    """Validate old-format records, then withhold a narrow B03 source."""
-    result = inherited._verify_candidate(root, terminal, configuration)
+    """Replay the ordinary records once, then check the B03 source scope."""
+    inherited._need(terminal['status'] == 'CANDIDATE_READY'
+                    and terminal['configuration_id'] == configuration['record_id'],
+                    'UPDATE_SUCCESS_REFERENCE_INVALID')
+    inherited._need(set(terminal['metrics']) ==
+                    set(configuration['metric_ids']) == {'B03'},
+                    'UPDATE_SUCCESS_METRIC_SET_CHANGED')
     work = inherited._attempt(root, terminal['attempt_id'])
     data = work/'data'
-    manifest = strict_json_file(path=work/'runs/B03/manifest.json')
-    case = normal.replay_case(data_root=data, manifest=manifest)
+    rendered = render_ordinary_run(data_root=data, run_dir=work/'runs/B03',
+                                   _return_replay_context=True)
+    replay = rendered['replay_context']
+    manifest, records, case = (replay[key] for key in
+                               ('manifest', 'records', 'case'))
+    result = next(row for row in records if row['record_type'] ==
+                  'METRIC_RESULT' and row['metric_id'] == 'B03')
+    inherited._need(result['result_id'] ==
+                    terminal['metrics']['B03']['result_id']
+                    and inherited._completed_result(metric='B03',
+                        result=result, case=case, rendered=rendered,
+                        data_root=data), 'UPDATE_SUCCESS_RESULT_CHANGED')
+    for name, raw in rendered['files'].items():
+        path = work/'rows/B03'/name
+        inherited._need(path.read_bytes() == raw and sha256_file(path=path)
+                        == terminal['metrics']['B03']['files'][name],
+                        'UPDATE_SUCCESS_ROW_CHANGED')
+    inherited._need(inherited._descriptor({'B03': case}, configuration)
+                    == terminal['input'], 'UPDATE_SUCCESS_INPUT_CHANGED')
     _need(case['primary_metric_id'] == 'B03'
           and manifest['company_id'] == configuration['company_id'],
           'B03_CURRENT_SUCCESS_METRIC_OR_COMPANY_CHANGED')
     scope = assess_direct_depreciation_scope(case=case, data_root=data)
     if scope['blocked']:
         raise B03CurrentScopeConflict(
-            'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED:' + scope['status'])
-    return result
+            'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED:' + scope['status'],
+            {'B03': result})
+    return {'B03': result}
 
 
 def _verify_historical_candidate(root, terminal, configuration):
     """Recover an old terminal without restoring its current business credit."""
     try:
         return _verify_candidate(root, terminal, configuration)
-    except B03CurrentScopeConflict:
-        return inherited._verify_candidate(root, terminal, configuration)
+    except B03CurrentScopeConflict as conflict:
+        return conflict.historical_result
 
 
 def _run_once_b03(*, state_root, source_root, company_id,
@@ -128,7 +155,7 @@ def _run_once_b03(*, state_root, source_root, company_id,
                     run_dir=work/'runs/B03', company_id=company_id,
                     metric_id='B03')
                 rendered = render_ordinary_run(data_root=work/'data',
-                                               run_dir=work/'runs/B03')
+                    run_dir=work/'runs/B03', _return_replay_context=True)
                 hashes = {}
                 for name, raw in rendered['files'].items():
                     path = work/'rows/B03'/name
@@ -144,8 +171,7 @@ def _run_once_b03(*, state_root, source_root, company_id,
                     'evidence/requests_log.csv') == ledger,
                     'UPDATE_SOURCE_CHANGED_DURING_EXECUTION')
                 if created['result']['publication'] == 'PUBLISHED':
-                    case = normal.replay_case(data_root=work/'data',
-                                              manifest=created['manifest'])
+                    case = rendered['replay_context']['case']
                     scope = assess_direct_depreciation_scope(
                         case=case, data_root=work/'data')
                     _need(not scope['blocked'],
