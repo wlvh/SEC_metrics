@@ -17,7 +17,7 @@ from .continuous_sec_acquisition import (C04_SOURCE_ONLY_STALE_RULE_PATHS,
 from .normal_source_authority import ROOT
 from .normal_source_requirements import discover_saved_source_requirements, source_dependency_satisfied
 from .normal_annual_input import _registry_rows
-from .ordinary_update_cycle import run_company
+from .ordinary_b03_scope_update import run_company
 from .normal_run_v3 import update_metric_ids
 from .sources import resolve_repository_file
 
@@ -193,6 +193,25 @@ def _ordinary_pre_capture_state(*, state_root, company_id, metric_ids):
     return {**body, 'prestate_id': content_hash(value=body)}
 
 
+def _ordinary_current_candidate_present(*, metric, metric_root, state,
+                                        configuration):
+    """Separate a saved success pointer from current B03 business credit."""
+    pointer = state['successful_attempt']
+    if pointer is None:
+        return False
+    if metric != 'B03':
+        return True
+    from . import ordinary_update_cycle as cycle
+    from .ordinary_b03_scope_update import (B03CurrentScopeConflict,
+                                            _verify_candidate)
+    try:
+        _verify_candidate(metric_root, cycle._terminal(metric_root, pointer),
+                          configuration)
+    except B03CurrentScopeConflict:
+        return False
+    return True
+
+
 def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
                            report_path, metric_ids, mixed_stale):
     """Carry one authenticated prior SEC capture into a finite next pass."""
@@ -365,6 +384,9 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
                 metric_configuration = cycle._config(metric_root,
                     session.data_root, company_id, [metric], expected_mode)
                 metric_state = cycle._state(metric_root, metric_configuration)
+                current_candidate = _ordinary_current_candidate_present(
+                    metric=metric, metric_root=metric_root, state=metric_state,
+                    configuration=metric_configuration)
                 need(metric_state['latest_attempt'] == item['attempt_id'],
                      'ORDINARY_REFRESH_RESUME_OTHER_METRIC_CHANGED')
                 metric_terminal = cycle._terminal(metric_root, item['attempt_id'])
@@ -378,7 +400,9 @@ def _resume_one_c04_source(*, session, state_root, company_id, snapshot,
                      and item['previous_successful_attempt'] ==
                          cycle._intent(metric_root, item['attempt_id'])['previous_successful_attempt']
                      and (item['last_verified_candidate'] is None) ==
-                         (metric_state['successful_attempt'] is None)
+                         (not current_candidate)
+                     and (current_candidate or item['status'] not in {
+                         'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'})
                      and (item['last_verified_candidate'] is None or
                           item['last_verified_candidate']['attempt_id'] ==
                           metric_state['successful_attempt']),

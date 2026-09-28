@@ -116,6 +116,8 @@ FAST_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityA
 FAST_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_same_line_exemption_does_not_hide_another_literal",)
 FAST_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_review_counterexamples_are_reported_without_exact_approval",)
 FAST_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_exact_policy_rejects_a_changed_approved_source",)
+FAST_TESTS += ("tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeTest",)
+FAST_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03HistoricalRecoveryVerifierTest",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)
 SOURCE_TESTS += ("tests.vnext.test_r6_semantic_verification",)
@@ -233,7 +235,9 @@ SOURCE_TESTS += ("tests.vnext.test_e01_eight_o_one_reading",)
 # B03's D&A census: the chain's first concept found where Salesforce tags it on
 # fixed-asset depreciation only, and the nine filings' direct candidates
 # disagreeing at that one filing and no other. Reads nine 10-K documents.
-SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope",)
+# (Renamed from test_b03_depreciation_scope when the base added a file of that name
+# for the ordinary route's current-credit guard; both now run.)
+SOURCE_TESTS += ("tests.vnext.test_historical_b03_depreciation_scope",)
 # The statement reading behind 75 acceptances, committed in place of one that
 # was not and that skipped every value int() could not parse. Each rule on
 # the filing that needs it, and the committed reading re-derived from the
@@ -378,6 +382,9 @@ SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMa
 SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",)
+SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03SouthwestUpdateMaterialTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

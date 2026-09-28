@@ -1,100 +1,137 @@
-"""B03's D&A, read for what each filing says it covers.
-
-The approved chain takes the first direct D&A concept a filing carries. These
-cases hold the census that found Salesforce's first concept tagged on
-fixed-asset depreciation only, so a census that stopped seeing that fact - the
-way the earlier reading did not see it - fails on the filing.
-"""
-import importlib.util
+"""A narrow B03 source fact must not enter current update or release credit."""
+from contextlib import redirect_stdout
+from io import StringIO
 import json
-import unittest
+from pathlib import Path
+import socket
+import tempfile
+from unittest import TestCase
+from unittest.mock import patch
 
-from tests.vnext.common import REPO_ROOT as ROOT
-
-FINDING = "docs/evidence/issue47_history/b03-depreciation-scope/finding.json"
-DEFECTS = "docs/evidence/issue47_history/known_result_defects.json"
-TARGETED = "docs/evidence/issue47_history/b03-depreciation-scope/targeted-runs.json"
-SALESFORCE = ("evidence/accession_materials/salesforce_1108524_000110852426000060/"
-              "crm-20260131.htm")
-
-
-def _census():
-    spec = importlib.util.spec_from_file_location(
-        "da_census", ROOT / "docs/evidence/issue47_history/b03-depreciation-scope/da_census.py")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+from tests.vnext.test_normal_zero_ai_results import original_sources_only
+from tools import vnext_normal_update
+from vnext import ordinary_release_preparation as release
+from vnext.b03_depreciation_scope import (
+    _nearest_da_label, assess_direct_depreciation_scope)
+from vnext.normal_run_v3 import (create_normal_run, install_normal_inputs,
+                                 prepare_case)
+from vnext.normal_source_authority import ROOT
+from vnext.ordinary_projection import render_ordinary_run
 
 
-class TheSubtotalIsInThePrimaryDocumentTest(unittest.TestCase):
-
-    def test_salesforce_tags_fixed_asset_depreciation_with_the_chain_s_first_concept(self):
-        facts = _census().census(document=SALESFORCE, period_start="2025-02-01",
-                                 period_end="2026-01-31")
-        direct = {(f["concept"], f["value"]) for f in facts}
-        self.assertIn(("DepreciationDepletionAndAmortization", "1200000000.0"), direct)
-        self.assertIn(("DepreciationAndAmortization", "3631000000"), direct)
-        taken = next(f for f in facts if f["concept"] == "DepreciationDepletionAndAmortization")
-        self.assertIn("Depreciation and amortization of fixed assets totaled", taken["text_before"])
+class B03DepreciationScopeTest(TestCase):
+    def test_nearby_narrow_row_does_not_taint_a_later_generic_label(self):
+        self.assertFalse(_nearest_da_label(
+            'Depreciation and amortization of fixed assets 1.2 '
+            'Total depreciation and amortization ')['narrow'])
+        self.assertTrue(_nearest_da_label(
+            'Total depreciation and amortization of fixed assets ')['narrow'])
 
 
-class OnlyOneFilingsDirectCandidatesDisagreeTest(unittest.TestCase):
+class B03DepreciationScopeMaterialTest(TestCase):
+    def test_current_update_cli_selects_guard_without_request_or_success(self):
+        self.enterContext(original_sources_only())
+        with tempfile.TemporaryDirectory(prefix='b03-current-cli-') as tmp:
+            output = StringIO()
+            with redirect_stdout(output):
+                code = vnext_normal_update.main(['--process',
+                    '--state-root', tmp, '--company', 'salesforce',
+                    '--metric', 'B03'])
+            report = json.loads(output.getvalue())
+            self.assertEqual(2, code)
+            self.assertEqual('UPDATES_INCOMPLETE',
+                report['companies'][0]['status'])
+            self.assertEqual('EXECUTION_FAILED',
+                report['companies'][0]['metrics'][0]['status'])
+            self.assertEqual({'provider':0,'paid':0,'sec':0},
+                report['calls'])
+            state = (Path(tmp)/'salesforce/metrics/B03/current.json')
+            self.assertIsNone(json.loads(state.read_text())[
+                'successful_attempt'])
 
-    def test_the_committed_finding_re_derives_and_names_one_filing(self):
-        census = _census()
-        finding = json.loads((ROOT / FINDING).read_text(encoding="utf-8"))
-        chain = ("DepreciationDepletionAndAmortization", "DepreciationAmortizationAndAccretionNet",
-                 "DepreciationAndAmortization")
-        reading = json.loads((ROOT / "docs/evidence/issue47_history/content-acceptance/"
-                              "cross-source-read.json").read_text(encoding="utf-8"))["per_position"]
-        disagreeing = []
-        for label, row in finding["per_position"].items():
-            identity = reading[label]["metrics"]["B03"]["checked_identity"]
-            facts = census.census(document=reading[label]["document"],
-                                  period_start=identity["period_start"],
-                                  period_end=identity["period_end"])
-            values = {f["value"] for f in facts if f["concept"] in chain}
-            with self.subTest(label):
-                self.assertEqual(row["direct_candidates_agree"], len(values) <= 1)
-            if len(values) > 1:
-                disagreeing.append(label)
-        self.assertEqual(["salesforce-2026"], disagreeing)
+    def test_saved_salesforce_subset_and_competing_scope_block_current_credit(self):
+        self.enterContext(original_sources_only())
+        case = prepare_case(data_root=ROOT, company_id='salesforce',
+                            metric_id='B03')
+        self.assertEqual('PUBLISHED', case['results']['B03']['publication'])
+        assessment = assess_direct_depreciation_scope(case=case,
+            data_root=ROOT)
+        self.assertEqual('NARROW_SELECTED_AND_COMPETING_SCOPE',
+                         assessment['status'])
+        self.assertTrue(assessment['blocked'])
+        self.assertEqual('1200000000', assessment['selected_fact']['value'])
+        self.assertIn('fixed assets', assessment['selected_label'])
+        self.assertIn(('3631000000', 'us-gaap:DepreciationAndAmortization'),
+            [(row['value'], row['concept'])
+             for row in assessment['competing_facts']])
+        with patch.object(release.normal, 'replay_case', return_value=case):
+            with self.assertRaisesRegex(ValueError,
+                    'ORDINARY_RELEASE_B03_DEPRECIATION_SCOPE_UNRESOLVED'):
+                release._result_selection_basis(data_root=ROOT, manifest={},
+                    result=case['results']['B03'], rendered={})
+
+    def test_unflagged_direct_and_composed_inputs_keep_their_prior_path(self):
+        self.enterContext(original_sources_only())
+        southwest = prepare_case(data_root=ROOT,
+            company_id='southwest_airlines', metric_id='B03')
+        assessment = assess_direct_depreciation_scope(case=southwest,
+            data_root=ROOT)
+        self.assertEqual('NO_EXPLICIT_NARROW_SCOPE_FOUND',
+                         assessment['status'])
+        self.assertFalse(assessment['blocked'])
+        self.assertFalse(assessment['complete_depreciation_scope_proven'])
+        with patch.object(release.normal, 'replay_case',
+                          return_value=southwest):
+            self.assertEqual('NATIVE_PUBLISHED_RESULT',
+                release._result_selection_basis(data_root=ROOT,
+                    manifest={}, result=southwest['results']['B03'],
+                    rendered={}))
+        marriott = prepare_case(data_root=ROOT,
+            company_id='marriott_international', metric_id='B03')
+        self.assertEqual('NO_DIRECT_DEPRECIATION_SELECTION',
+            assess_direct_depreciation_scope(case=marriott,
+                data_root=ROOT)['status'])
+
+    def test_altered_original_source_proof_is_rejected(self):
+        self.enterContext(original_sources_only())
+        case = prepare_case(data_root=ROOT, company_id='salesforce',
+                            metric_id='B03')
+        accession = next(row['source_binding']['accession']
+            for row in case['observations'] if row['semantic_role'] ==
+            'depreciation_and_amortization')
+        proofs = [{**proof, 'content_sha256': '0' * 64}
+            if proof.get('accession') == accession and
+            proof.get('document_name', '').endswith('.htm') else proof
+            for proof in case['source_proofs']]
+        with self.assertRaisesRegex(ValueError,
+                'B03_SCOPE_PRIMARY_BYTES_CHANGED'):
+            assess_direct_depreciation_scope(case={**case,
+                'source_proofs': proofs}, data_root=ROOT)
 
 
-class TheDefectWithdrawsTheCoordinateTest(unittest.TestCase):
-
-    def test_registered_and_released_only_on_the_withheld_result(self):
-        """The published 0.2295 stays withdrawn; the release names the withheld repair only.
-
-        Until the route was repaired this case asserted the entry had no release
-        at all. The repair withholds the coordinate by name, and the entry now
-        releases that one result under the version that produced it - so what
-        is held here is that the release can never cover a published value.
-
-        A later version that reproduces the same withheld result gets its own
-        release, named for that version (the register's rule, applied by
-        native-run-batch-2026-09-27/name_version_releases.py), so the list can
-        grow; what it may never hold is another result. The first version of
-        this case compared the whole list and failed when the full-frame batch
-        reproduced the repair under its own closure.
-        """
-        defects = json.loads((ROOT / DEFECTS).read_text(encoding="utf-8"))["defects"]
-        entry = next(d for d in defects if d["defect_id"]
-                     == "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL")
-        self.assertEqual(("salesforce", "B03", "2026-01-31", None),
-                         (entry["company_id"], entry["metric_id"], entry["period_end"],
-                          entry["result_id"]))
-        runs = json.loads((ROOT / TARGETED).read_text(encoding="utf-8"))
-        row = next(r for r in runs["rows"] if r["position"] == "salesforce-2026")
-        withheld, published = row["targeted"]["results"]["B03"], row["batch"]["results"]["B03"]
-        self.assertEqual(("WITHHELD", None), (withheld["publication"], withheld["value"]))
-        self.assertEqual("PUBLISHED", published["publication"])
-        released = [(r["result_id"], r["requirement_closure_hash"]) for r in entry["released"]]
-        self.assertIn((withheld["result_id"], runs["targeted_closure"]), released)
-        self.assertEqual({withheld["result_id"]}, {result_id for result_id, _ in released})
-        self.assertEqual(len(released), len(set(released)))
-        self.assertNotIn(published["result_id"], [r["result_id"] for r in entry["released"]])
-
-
-if __name__ == "__main__":
-    unittest.main()
+    def test_real_saved_salesforce_run_cannot_enter_unified_release(self):
+        self.enterContext(patch.object(socket.socket, 'connect',
+            side_effect=AssertionError('NETWORK_FORBIDDEN')))
+        self.enterContext(patch.object(socket, 'getaddrinfo',
+            side_effect=AssertionError('DNS_FORBIDDEN')))
+        self.enterContext(patch('sec_http.urlopen',
+            side_effect=AssertionError('HTTP_FORBIDDEN')))
+        with tempfile.TemporaryDirectory(prefix='b03-scope-current-') as tmp:
+            data = Path(tmp)/'data'
+            run = Path(tmp)/'run'
+            install_normal_inputs(data_root=data, company_id='salesforce',
+                metric_id='B03')
+            created = create_normal_run(data_root=data, run_dir=run,
+                company_id='salesforce', metric_id='B03')
+            self.assertEqual('PUBLISHED', created['result']['publication'])
+            rendered = render_ordinary_run(data_root=data, run_dir=run,
+                _return_replay_context=True)
+            result = next(row for row in rendered['replay_context']['records']
+                if row['record_type'] == 'METRIC_RESULT'
+                and row['metric_id'] == 'B03')
+            self.assertEqual(created['result'], result)
+            with self.assertRaisesRegex(ValueError,
+                    'ORDINARY_RELEASE_B03_DEPRECIATION_SCOPE_UNRESOLVED'):
+                release._result_selection_basis(data_root=data,
+                    manifest=created['manifest'], result=result,
+                    rendered=rendered)

@@ -1,0 +1,30 @@
+Patch: 74c36fbc1a71fd967781b24a3e7c7d94f3326930
+Parent: f415bd3ef2a95c65b51a0464e1f66681a6c3aa1f
+Review date: 2026-09-28
+
+INDEPENDENT EXECUTION
+PYTHONPATH=scripts /private/tmp/issue28_py314_venv/bin/python -m unittest tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeTest -v
+Ran 5 tests in 13.712s: OK
+
+Read-only load_requirement_snapshot(issue_28_v14), validate_execution_authority,
+validate_semantic_rule_bindings, validate_wiring_receipt:
+PASS_V14_EXECUTION_AND_WIRING
+requirement_closure_hash=sha256:faa0d7f84c3a21c240226c982e269d2c1ab2358f41085244aea32b10180f4917
+
+Read-only prepare_case and assess_direct_depreciation_scope for Salesforce B03:
+target=FY2026 2025-02-01..2026-01-31
+selected=USD 1200000000 us-gaap:DepreciationDepletionAndAmortization
+assessment=NARROW_SELECTED_AND_COMPETING_SCOPE
+selected inline ordinal=809 context=c-1 unit=usd
+competing inline ordinal=337 context=c-1 unit=usd value=3631000000
+primary SHA=d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25
+
+git diff f415bd3e 74c36fbc --check: PASS
+git diff f415bd3e 74c36fbc -- requirements/issue_28_v13/baseline_manifest.json scripts/vnext/normal_run_v3.py scripts/vnext/ordinary_update_cycle.py: empty
+
+COMMITTED LOGS READ, NOT RERUN
+update.log: 1/1 OK, 152.752s
+material.log: 1/1 OK, 18.877s
+current-boundary.log: 20/20 OK
+fast.log + fast.exit: 140/140 PASSED, exit 0, 109.371s
+binding.log: PASS_CURRENT_V14_B03_SCOPE_BINDING, V13 unchanged, three receipts

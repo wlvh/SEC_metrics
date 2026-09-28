@@ -105,7 +105,7 @@ class D03NativeAssessmentTest(unittest.TestCase):
                         'NATIVE_SAVED_REQUEST_OR_SOURCE_CHANGED'):
                     replay_native_response(prepared=selected, path=path)
 
-    def test_unresolved_recorded_group_fails_and_live_shape_cannot_claim(self):
+    def test_unresolved_recorded_group_is_retained_without_company_credit(self):
         with patch.object(socket.socket, 'connect',
                           side_effect=AssertionError('NETWORK_FORBIDDEN')), \
              patch.object(socket, 'getaddrinfo',
@@ -143,17 +143,35 @@ class D03NativeAssessmentTest(unittest.TestCase):
                 path, outcome = execute_d03_recorded_assessment(
                     prepared=selected, ledger=ledger,
                     recorded_wire=_wire(_response(request, unresolved=True)))
-                self.assertEqual('FAILED_TERMINAL', outcome['terminal']['status'])
-                self.assertFalse(outcome['native_candidate_evidence_created'])
+                self.assertEqual('SUCCEEDED', outcome['terminal']['status'])
+                self.assertTrue(outcome['native_candidate_evidence_created'])
                 self.assertFalse(outcome['native_result_created'])
+                replay = replay_native_response(prepared=selected, path=path)
+                accepted = replay['success']['acceptance_receipt']
+                self.assertTrue(accepted['candidate_record'][
+                    'unresolved_competing_claims'])
+                self.assertIn('D03_UNRESOLVED_RETAINED_FOR_COMPANY_REVIEW',
+                    [row['check'] for row in accepted['evidence_record']['checks']])
                 with ledger.locked():
                     self.assertEqual([1, 1, 0], ledger.snapshot()['counts'])
                 collection = collect_recorded_assessments(
                     company_id='marriott_international', ledger=ledger)
-                self.assertEqual([], collection['completed'])
-                self.assertEqual(1, len(collection['failed_requests']))
+                self.assertEqual(1, len(collection['completed']))
+                self.assertEqual([], collection['failed_requests'])
+                self.assertEqual([request['request_id']],
+                                 collection['unresolved_request_ids'])
                 self.assertEqual('INCOMPLETE_ASSESSMENT_NOT_NONDISCLOSURE',
                                  collection['proposed_branch'])
+                self.assertFalse(collection['native_result_or_run_created'])
+            with tempfile.TemporaryDirectory(prefix='d03-native-malformed-') as temporary:
+                invalid = recorded_ledger(root=Path(temporary) / 'ledger')
+                answer = _response(request)
+                answer['request_id'] = 'changed-request'
+                path, outcome = execute_d03_recorded_assessment(
+                    prepared=selected, ledger=invalid,
+                    recorded_wire=_wire(answer))
+                self.assertEqual('FAILED_TERMINAL', outcome['terminal']['status'])
+                self.assertFalse(outcome['native_candidate_evidence_created'])
                 with self.assertRaisesRegex(ValueError,
                         'NATIVE_SUCCESSFUL_ORIGINAL_TERMINAL_REQUIRED'):
                     replay_native_response(prepared=selected, path=path)
@@ -244,7 +262,7 @@ class D03NativeAnchorMaterialTest(unittest.TestCase):
 
 
 class D03NativeCollectionMaterialTest(unittest.TestCase):
-    def test_complete_recorded_marriott_still_requires_native_review(self):
+    def test_complete_recorded_marriott_retains_uncertainty_and_requires_review(self):
         with patch.object(socket.socket, 'connect',
                           side_effect=AssertionError('NETWORK_FORBIDDEN')), \
              patch.object(socket, 'getaddrinfo',
@@ -261,6 +279,23 @@ class D03NativeCollectionMaterialTest(unittest.TestCase):
                         request = strict_json_loads(
                             text=selected.request_bytes.decode())
                         response = _response(request)
+                        if group_index == 2:
+                            response['units'][0]['unresolved'] = [
+                                'Synthetic recorded ambiguity; no current conclusion.']
+                        if group_index == 1:
+                            reference = request['required_candidate_assessments'][0]
+                            unit = next(row for row in response['units']
+                                if row['unit_id'] == reference['unit_id'])
+                            unit['context_only_source_indices'].remove(
+                                reference['source_index'])
+                            unit['findings'] = [{
+                                'kind': 'UNRESOLVED',
+                                'subject': 'UNRESOLVED',
+                                'event_dates': [],
+                                'reported_status': 'UNRESOLVED',
+                                'evidence': [{'kind': reference['kind'],
+                                    'source_index': reference['source_index']}],
+                                'reason': 'Synthetic target identity is undecided.'}]
                         if group_index == 0:
                             # Deliberately model-shaped, not a certified
                             # reading of this source. A current proposal must
@@ -282,15 +317,20 @@ class D03NativeCollectionMaterialTest(unittest.TestCase):
                             prepared=selected, ledger=ledger,
                             recorded_wire=_wire(response))
                         self.assertEqual('SUCCEEDED',
-                                         outcome['terminal']['status'])
+                                         outcome['terminal']['status'],
+                                         msg={'group_index': group_index,
+                                              'terminal': outcome['terminal']})
                 collection = collect_recorded_assessments(
                     company_id='marriott_international', ledger=ledger)
                 self.assertEqual(5, len(collection['completed']))
                 self.assertEqual([], collection['missing_request_ids'])
                 self.assertEqual([], collection['failed_requests'])
+                self.assertEqual([strict_json_loads(text=row.request_bytes.decode())[
+                    'request_id'] for row in prepared[1:3]],
+                    collection['unresolved_request_ids'])
                 self.assertEqual(1,
                                  len(collection['proposed_current_findings']))
-                self.assertEqual('COMPLETE_RECORDED_SET_REQUIRES_NATIVE_REVIEW',
+                self.assertEqual('UNRESOLVED_REQUIRES_NATIVE_REVIEW',
                                  collection['proposed_branch'])
                 self.assertFalse(collection['semantic_correctness_verified'])
                 self.assertFalse(collection['native_review_complete'])

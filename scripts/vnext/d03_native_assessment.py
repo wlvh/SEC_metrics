@@ -101,6 +101,7 @@ def collect_recorded_assessments(*, company_id, ledger):
     from .continuous_semantic_calls import (
         _require_d03_recorded_ledger, prepare_d03_replay_only_requests)
     from .native_assessment_replay import replay_native_response
+    from .capacity_native_assessment import d03_review_blockers
     from .native_request_construction import request_construction_session
     from .requirements import load_requirement_snapshot
     from .sources import resolve_repository_file
@@ -158,7 +159,8 @@ def collect_recorded_assessments(*, company_id, ledger):
             response_body = success['response_body']
             checked = _validate_bound_response(request=request,
                 raw_response=response_body)
-            need(not checked['unresolved']
+            blockers = d03_review_blockers(checked)
+            need(accepted['candidate_record']['unresolved_competing_claims'] == blockers
                  and accepted['candidate_record']['selected'][
                      'source_assessment']['findings'] == checked['findings'],
                  'D03_RECORDED_REPLAYED_MEANING_CHANGED')
@@ -170,12 +172,15 @@ def collect_recorded_assessments(*, company_id, ledger):
                 'response_sha256': sha256_bytes(content=response_body),
                 'candidate': accepted['candidate_record'],
                 'evidence': accepted['evidence_record'],
+                'review_blockers': blockers,
                 'candidate_reviews': checked.get('candidate_reviews', []),
                 'source_revalidation': replay['revalidation']}
         missing = [request['request_id'] for request in expected
                    if request['request_id'] not in completed]
         rows = [completed[request['request_id']] for request in expected
                 if request['request_id'] in completed]
+        unresolved_request_ids = [row['request_id'] for row in rows
+            if row['review_blockers']]
         proposed = [finding for row in rows for finding in row['candidate'][
             'selected']['source_assessment']['findings']
             if finding['kind'] == 'CURRENT_REGULATORY_ACTION'
@@ -187,9 +192,12 @@ def collect_recorded_assessments(*, company_id, ledger):
             'complete_source_unit_ids': source['required_unit_ids'],
             'completed': rows, 'missing_request_ids': missing,
             'failed_requests': failures,
+            'unresolved_request_ids': unresolved_request_ids,
             'proposed_current_findings': proposed,
             'proposed_branch': ('INCOMPLETE_ASSESSMENT_NOT_NONDISCLOSURE'
-                if missing else 'COMPLETE_RECORDED_SET_REQUIRES_NATIVE_REVIEW'),
+                if missing else 'UNRESOLVED_REQUIRES_NATIVE_REVIEW'
+                if unresolved_request_ids else
+                'COMPLETE_RECORDED_SET_REQUIRES_NATIVE_REVIEW'),
             'recorded_execution_revalidated': True,
             'semantic_correctness_verified': False,
             'native_review_complete': False,

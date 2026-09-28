@@ -1,0 +1,20 @@
+test_complete_recorded_marriott_retains_uncertainty_and_requires_review (tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest.test_complete_recorded_marriott_retains_uncertainty_and_requires_review) ... FAIL
+
+======================================================================
+FAIL: test_complete_recorded_marriott_retains_uncertainty_and_requires_review (tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest.test_complete_recorded_marriott_retains_uncertainty_and_requires_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_native_assessment.py", line 319, in test_complete_recorded_marriott_retains_uncertainty_and_requires_review
+    self.assertEqual('SUCCEEDED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+                     outcome['terminal']['status'])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'SUCCEEDED' != 'FAILED_TERMINAL'
+- SUCCEEDED
++ FAILED_TERMINAL
+
+
+----------------------------------------------------------------------
+Ran 1 test in 18.373s
+
+FAILED (failures=1)

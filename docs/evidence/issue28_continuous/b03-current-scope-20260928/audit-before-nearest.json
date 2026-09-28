@@ -1,0 +1,153 @@
+{
+  "record_type": "B03_CURRENT_SOURCE_SCOPE_AUDIT",
+  "source": "ISSUE28_SAVED_ORIGINALS_ONLY",
+  "current_result_adoption_credit": false,
+  "unflagged_means_complete_scope_proven": false,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "rows": [
+    {
+      "company_id": "marriott_international",
+      "historical_native_result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+      "historical_native_publication": "PUBLISHED",
+      "scope_check": {
+        "status": "NO_DIRECT_DEPRECIATION_SELECTION",
+        "blocked": false
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "historical_native_result_id": "sha256:ada9703572318e4e183b5db1e9cb4ac103fde3487151180512254f22149216d8",
+      "historical_native_publication": "PUBLISHED",
+      "scope_check": {
+        "status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+        "blocked": false,
+        "primary_source_sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+        "selected_fact_ordinals": [
+          183,
+          318
+        ],
+        "complete_depreciation_scope_proven": false
+      }
+    },
+    {
+      "company_id": "ford_motor_company",
+      "historical_native_result_id": "sha256:1829d73dac66a195a590ab84ea1f1d1800a77fae60d828b6f37d5cbeec2abd30",
+      "historical_native_publication": "PUBLISHED",
+      "scope_check": {
+        "status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+        "blocked": false,
+        "primary_source_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+        "selected_fact_ordinals": [
+          3180
+        ],
+        "complete_depreciation_scope_proven": false
+      }
+    },
+    {
+      "company_id": "pfizer",
+      "historical_native_result_id": "sha256:b6d0e8c0f7decc22cbe4598de6ceff4f59820258b30bd6012af06e7c4cb0799b",
+      "historical_native_publication": "PUBLISHED",
+      "scope_check": {
+        "status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+        "blocked": false,
+        "primary_source_sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+        "selected_fact_ordinals": [
+          484,
+          2983
+        ],
+        "complete_depreciation_scope_proven": false
+      }
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "historical_native_result_id": "sha256:d9e2eb8fa5e51152d021c21f11b05a820db98693b6e08a1cea3b6034b0aba988",
+      "historical_native_publication": "PUBLISHED",
+      "scope_check": {
+        "status": "NO_PUBLISHED_B03_VALUE",
+        "blocked": false
+      }
+    },
+    {
+      "company_id": "salesforce",
+      "historical_native_result_id": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120",
+      "historical_native_publication": "PUBLISHED",
+      "scope_check": {
+        "status": "NARROW_SELECTED_AND_COMPETING_SCOPE",
+        "blocked": true,
+        "primary_source_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+        "selected_fact": {
+          "ordinal": 809,
+          "concept": "us-gaap:DepreciationDepletionAndAmortization",
+          "value": "1200000000",
+          "context_ref": "c-1"
+        },
+        "selected_label": "ent, gross 6,823 6,918 Less accumulated depreciation and amortization ( 3,703 ) ( 3,682 ) Property and equipment, net $ 3,120 $ 3,236 Depreciation and amortization of fixed assets totaled $",
+        "competing_facts": [
+          {
+            "ordinal": 337,
+            "concept": "us-gaap:DepreciationAndAmortization",
+            "value": "3631000000",
+            "context_ref": "c-1",
+            "label": ", 2026 2025 2024 Operating activities: Net income $ 7,457 $ 6,197 $ 4,136 Adjustments to reconcile net income to net cash provided by operating activities: Depreciation and amortization (1)"
+          }
+        ]
+      }
+    },
+    {
+      "company_id": "lumen_technologies",
+      "historical_native_result_id": "sha256:1afee89f9ee092a0d0f273792907462b349a4f793aa82bd1a5119e775aae167e",
+      "historical_native_publication": "PUBLISHED",
+      "scope_check": {
+        "status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+        "blocked": false,
+        "primary_source_sha256": "87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+        "selected_fact_ordinals": [
+          268
+        ],
+        "complete_depreciation_scope_proven": false
+      }
+    },
+    {
+      "company_id": "macys",
+      "historical_native_result_id": "sha256:bcdc08b42abf6fc78d7c2ff9df8dbc99265b28e674b1ddd9c3cda930906c5899",
+      "historical_native_publication": "PUBLISHED",
+      "scope_check": {
+        "status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+        "blocked": false,
+        "primary_source_sha256": "47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+        "selected_fact_ordinals": [
+          285,
+          1606
+        ],
+        "complete_depreciation_scope_proven": false
+      }
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "historical_native_result_id": "sha256:1a7fdb5c4509dcba0293ec0eef1a4abc44e55089362f6d6106ed86c2a7c493d7",
+      "historical_native_publication": "PUBLISHED",
+      "scope_check": {
+        "status": "NO_PUBLISHED_B03_VALUE",
+        "blocked": false
+      }
+    },
+    {
+      "company_id": "enphase_energy",
+      "historical_native_result_id": "sha256:fdde35ac1d5f380e3ab3d2c474108fb24f736ba3972f057126a0d9912f60930e",
+      "historical_native_publication": "PUBLISHED",
+      "scope_check": {
+        "status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+        "blocked": false,
+        "primary_source_sha256": "7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+        "selected_fact_ordinals": [
+          313
+        ],
+        "complete_depreciation_scope_proven": false
+      }
+    }
+  ]
+}
