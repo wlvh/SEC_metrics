@@ -5,7 +5,7 @@ patch, after applying this directory's egress-registration.patch and minting:
 
     git apply docs/evidence/issue47_history/model-egress/egress-registration.patch
     python3 tools/vnext_mint_historical_requirement.py
-    python3 docs/evidence/issue47_history/model-egress/verify.py
+    python3 docs/evidence/issue47_history/model-egress/verify.py [--copies N]
 
 It never runs in the repository checkout: the patch is not applied there, and
 the controller refuses issue_47_v1 there (which the repository's own
@@ -14,8 +14,23 @@ tests/vnext/test_historical_model_calls.py asserts). Steps, each recorded:
 1. the patch is the one applied here (``git apply -R --check``) and the
    snapshot is minted for these bytes;
 2. the repository's egress gate passes and names the one new caller;
-3. the verification suite passes (every case, network refused);
-4. every fault injection is caught, and by which case. Each injection names
+3. the verification suite passes (every case, network refused), and leaves
+   this tree as it found it, file for file;
+4. every fault injection is caught, and by which case - in worker copies of
+   this tree, never in the tree itself. The owner approved running them in
+   parallel as a contract change (Issue #47 comment 5870869079,
+   docs/evidence/issue47_history/owner-decisions-2026-09-28/): N copies
+   (``--copies``, default 3) are made after the suite has passed, and each
+   must match one manifest of this tree - every file's path, size and
+   SHA-256, ``.git`` included and ``__pycache__`` left out - when it is made
+   and again when the last injection has run; this tree must still match it
+   too. Each injection runs once, in its own process, in whichever copy is
+   free, and is judged exactly as it was when they ran one after another. A
+   copy that differs, a worker that fails or stops, or an injection that did
+   not run exactly once blocks the seal. The receipt names the copies, the
+   manifest's digest, where each injection ran and how long it took; the
+   change is accepted when the same injections are caught by the same named
+   cases as the sequential run. Each injection names
    the class written to catch it; that class runs first, fail-fast, and a
    failing case there is recorded as the catch. Only when it does not catch
    does the whole suite run, fail-fast in the fixed order, so a catch
@@ -38,18 +53,21 @@ tests/vnext/test_historical_model_calls.py asserts). Steps, each recorded:
 6. the tree is back where it started: the patch still applies in reverse, the
    snapshot still matches, and every bound file has the bytes it had before;
 7. the creator journal (``.git/issue47-historical-assessments``) holds the
-   files it held when the run began - after the suite and after every
-   injection, so a registration a case left behind stops the run by name
-   instead of failing whatever case reads that source next.
+   files it held when the run began - after the suite, and after every
+   injection in the copy that ran it, so a registration a case left behind
+   stops the run by name instead of failing whatever case reads that source
+   next.
 
 Only if all of that holds is ``offline-verification.json`` sealed. Zero calls.
 """
 import json
 import os
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 ROOT = Path.cwd().resolve()
@@ -497,6 +515,11 @@ EXPECTED = {
     "NO_PRIVATE_BYTECODE_CACHE_IS_REQUIRED": SOCKET,
     "THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE": SOCKET,
 }
+# Dispatch order only: injections whose expected class ran longest in the
+# 2026-09-28 pre-flight start first, so the last to start is a short one. It
+# changes where and when an injection runs, never how it is judged.
+SLOW_FIRST = (LIVE, SOCKET, COMPLETE, COUNTED, D02, LEDGER, NAMED)
+COPIES_PREFIX = ".verify-copies-"
 
 
 def _run(arguments, **kwargs):
@@ -572,11 +595,18 @@ def _suite(fail_fast, classes=ORDER):
         # beside a batch, and a timeout here would stop the harness without a
         # receipt. The suite compiles the checkout into a private cache, as
         # the owner's runner does: the call path refuses a socket in a process
-        # that read the checkout's own __pycache__.
-        private = tempfile.mkdtemp(prefix="issue47-verify-bytecode-")
+        # that read the checkout's own __pycache__. The process also gets a
+        # temporary directory of its own, removed with it: the runner makes
+        # its bytecode cache there and never removes it, and so do the cases'
+        # fixture roots when a process is ended early - 216 such directories
+        # (1.5 GB) had piled up in the system's one before this was added.
+        private = Path(tempfile.mkdtemp(prefix="issue47-verify-suite-"))
+        (private / "bytecode").mkdir()
+        (private / "tmp").mkdir()
         try:
             run = _run([sys.executable, "-m", "unittest", *(["-f"] if fail_fast else []), *names],
-                       timeout=14400, env={**os.environ, "PYTHONPYCACHEPREFIX": private})
+                       timeout=14400, env={**os.environ, "PYTHONPYCACHEPREFIX": str(private / "bytecode"),
+                                           "TMPDIR": str(private / "tmp")})
         finally:
             shutil.rmtree(private, ignore_errors=True)
         lines = run.stderr.strip().splitlines()
@@ -667,7 +697,208 @@ def _moved_generations():
     return moved
 
 
+def _file_sha256(path):
+    import hashlib
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _manifest(root):
+    """Every entry under ``root`` but bytecode caches, sorted by path: size and SHA-256, or link target.
+
+    What proves a worker copy is this tree. ``.git`` is in it - the creator
+    journal lives there - and ``__pycache__`` is left out on both sides: the
+    suite compiles into a private cache outside the tree, and the call path
+    refuses to run code read from a checkout's own cache.
+    """
+    rows = []
+    for directory, subdirectories, files in os.walk(root):
+        here = Path(directory)
+        for name in list(subdirectories):
+            if name == "__pycache__" or (here / name).is_symlink():
+                subdirectories.remove(name)
+                if name != "__pycache__":
+                    rows.append([(here / name).relative_to(root).as_posix(), "link",
+                                 os.readlink(here / name)])
+        for name in files:
+            path = here / name
+            relative = path.relative_to(root).as_posix()
+            if path.is_symlink():
+                rows.append([relative, "link", os.readlink(path)])
+            elif path.is_file():
+                rows.append([relative, path.stat().st_size, _file_sha256(path)])
+            else:
+                rows.append([relative, "special", ""])
+    return sorted(rows)
+
+
+def _manifest_digest(rows):
+    import hashlib
+    return "sha256:" + hashlib.sha256(json.dumps(rows, ensure_ascii=False, separators=(",", ":"))
+                                      .encode("utf-8")).hexdigest()
+
+
+def _manifest_differences(expected, actual, limit=20):
+    mine, theirs = ({row[0]: row[1:] for row in rows} for rows in (expected, actual))
+    return {"missing": sorted(set(mine) - set(theirs))[:limit],
+            "added": sorted(set(theirs) - set(mine))[:limit],
+            "changed": sorted(path for path in set(mine) & set(theirs)
+                              if mine[path] != theirs[path])[:limit]}
+
+
+def _order():
+    """Injection indices, slow expected classes first; ties keep the list's order."""
+    rank = {name: position for position, name in enumerate(SLOW_FIRST)}
+    return sorted(range(len(INJECTIONS)),
+                  key=lambda index: (rank.get(EXPECTED[INJECTIONS[index][0]], len(SLOW_FIRST)), index))
+
+
+def _inject(name, path, edits, *, snapshot, journal, recorded):
+    """Break one check in this tree, run the class written to catch it, and put everything back.
+
+    Returns the injection's row; a row with ``stopped`` means this tree did
+    not come back - its snapshot or its creator journal - and nothing more
+    may run in it.
+    """
+    target = ROOT / path
+    original = target.read_bytes()
+    text = original.decode("utf-8")
+    for old, _ in edits:
+        assert text.count(old) == 1, (name, old[:60], text.count(old))
+    for old, new in edits:
+        text = text.replace(old, new)
+    row = {"id": name, "file": path, "minted_for_the_injection": path in recorded}
+    try:
+        compile(text, path, "exec")
+    except SyntaxError as error:
+        row.update(outcome="INJECTION_DOES_NOT_COMPILE", error=str(error))
+        return row
+    try:
+        target.write_text(text, encoding="utf-8")
+        if row["minted_for_the_injection"]:
+            assert _mint().returncode == 0, name
+        expected = EXPECTED[name]
+        code_i, failures_i, summary_i, _ = _suite(fail_fast=True, classes=(expected,))
+        row.update(expected_class=expected,
+                   expected_class_outcome=_outcome(code_i, failures_i))
+        if row["expected_class_outcome"] in ("NOT_CAUGHT", "FAILED_OUTSIDE_ANY_CASE"):
+            # The class written for it did not catch it; the whole suite
+            # still might, and a catch there is recorded as one elsewhere.
+            code_i, failures_i, summary_i, _ = _suite(fail_fast=True)
+            row["whole_suite_run"] = True
+    finally:
+        target.write_bytes(original)
+        if row["minted_for_the_injection"]:
+            _mint()
+    if _snapshot() != snapshot:
+        row["stopped"] = "SNAPSHOT_DID_NOT_COME_BACK"
+        return row
+    moved_journal = _journal_moved(journal)
+    if any(moved_journal.values()):
+        row.update(stopped="CREATOR_JOURNAL_DID_NOT_COME_BACK", journal=moved_journal)
+        return row
+    row.update(outcome=_outcome(code_i, failures_i),
+               first_caught_by=[failure["case"] for failure in failures_i],
+               failures=failures_i, suite_result=summary_i)
+    return row
+
+
+def _worker(result, index, sealing_tree):
+    """Run one injection in this copy and write its row - never in the sealing tree itself."""
+    if ROOT == Path(sealing_tree).resolve() or COPIES_PREFIX not in ROOT.parent.name:
+        print("A_WORKER_RUNS_ONLY_IN_A_COPY:" + str(ROOT))
+        return 2
+    name, path, edits = INJECTIONS[index]
+    row = _inject(name, path, edits, snapshot=_snapshot(), journal=_journal(),
+                  recorded=_recorded_by_the_snapshot())
+    Path(result).write_text(json.dumps(row), encoding="utf-8")
+    return 2 if row.get("stopped") else 0
+
+
+def _make_copies(count):
+    """``count`` real copies of this tree beside it. Real copies: the saved SEC evidence refuses
+    a hard-linked file (``st_nlink != 1``), and a file an injection edits in place must not be
+    shared with any other tree."""
+    parent = Path(tempfile.mkdtemp(prefix=ROOT.name + COPIES_PREFIX, dir=ROOT.parent))
+    roots = []
+    for index in range(count):
+        destination = parent / ("copy-%d" % index)
+        shutil.copytree(ROOT, destination, symlinks=True, ignore=shutil.ignore_patterns("__pycache__"))
+        roots.append(destination)
+    return parent, roots
+
+
+def _stop_worker(process):
+    """End a worker and everything it started; it leads its own process group."""
+    if process.poll() is not None:
+        return
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+        process.wait(timeout=60)
+    except ProcessLookupError:
+        return
+    except subprocess.TimeoutExpired:
+        os.killpg(process.pid, signal.SIGKILL)
+        process.wait()
+
+
+def _dispatch(roots, order, results):
+    """Run each injection once, in whichever copy is free, and stop everything at the first stop.
+
+    Returns (rows by injection index, None), or (the rows so far, what stopped it).
+    """
+    pending, free, running, rows = list(order), list(range(len(roots))), {}, {}
+    try:
+        while pending or running:
+            while free and pending:
+                copy, index = free.pop(0), pending.pop(0)
+                result = results / ("%03d.json" % index)
+                with (results / ("%03d.err" % index)).open("w", encoding="utf-8") as errors:
+                    process = subprocess.Popen(
+                        [sys.executable, HERE + "/verify.py", "--worker", str(result), str(index),
+                         str(ROOT)], cwd=roots[copy], stdout=subprocess.DEVNULL, stderr=errors,
+                        start_new_session=True)
+                running[copy] = (process, index, time.monotonic(), result)
+            time.sleep(2)
+            for copy, (process, index, started, result) in list(running.items()):
+                if process.poll() is None:
+                    continue
+                del running[copy]
+                row = json.loads(result.read_text(encoding="utf-8")) if result.is_file() else None
+                if process.returncode != 0 or row is None or row.get("stopped"):
+                    tail = (results / ("%03d.err" % index)).read_text(encoding="utf-8", errors="replace")
+                    return rows, {"injection": INJECTIONS[index][0], "copy": copy,
+                                  "returncode": process.returncode, "row": row,
+                                  "stderr_tail": tail[-2000:]}
+                row.update(copy=copy, seconds=round(time.monotonic() - started, 1))
+                rows[index] = row
+                print(json.dumps(row), flush=True)
+                free.append(copy)
+        return rows, None
+    finally:
+        for process, *_ in running.values():
+            _stop_worker(process)
+
+
+def _terminated(signum, frame):
+    """A terminated run unwinds like an interrupted one, so its workers and copies are removed."""
+    raise KeyboardInterrupt("terminated by signal " + str(signum))
+
+
 def main():
+    arguments = sys.argv[1:]
+    if arguments[:1] == ["--worker"]:
+        return _worker(arguments[1], int(arguments[2]), arguments[3])
+    copies = 3
+    if arguments[:1] == ["--copies"] and len(arguments) >= 2 and arguments[1].isdigit():
+        copies, arguments = int(arguments[1]), arguments[2:]
+    if arguments or copies < 1:
+        print("usage: verify.py [--copies N], N >= 1")
+        return 2
+    started = time.monotonic()
     sys.path.insert(0, str(ROOT / "scripts"))
     sys.path.insert(0, str(ROOT / "tools"))
     applied = _run(["git", "apply", "-R", "--check", PATCH])
@@ -715,10 +946,13 @@ def main():
     before = {path: _sha(path) for path in BOUND}
     snapshot = _snapshot()
     journal = _journal()
-    recorded = _recorded_by_the_snapshot()
+    tree_before = _manifest(ROOT)
     from check_provider_egress import check_provider_egress
     gate = check_provider_egress(repo_root=ROOT)
+    seconds = {}
+    phase = time.monotonic()
     code, failures, summary, ran = _suite(fail_fast=False)
+    seconds["suite"] = round(time.monotonic() - phase, 1)
     suite = {"returncode": code, "failed": [row["case"] for row in failures],
              "summary": summary, "ran": ran}
     print("suite", suite, flush=True)
@@ -734,57 +968,50 @@ def main():
         print("THE_SUITE_DOES_NOT_PASS_SO_NO_INJECTION_IS_EVIDENCE",
               json.dumps(failures, indent=1), flush=True)
         return 2
-    injections = []
-    for name, path, edits in INJECTIONS:
-        target = ROOT / path
-        original = target.read_bytes()
-        text = original.decode("utf-8")
-        for old, _ in edits:
-            assert text.count(old) == 1, (name, old[:60], text.count(old))
-        for old, new in edits:
-            text = text.replace(old, new)
-        row = {"id": name, "file": path, "minted_for_the_injection": path in recorded}
-        try:
-            compile(text, path, "exec")
-        except SyntaxError as error:
-            row.update(outcome="INJECTION_DOES_NOT_COMPILE", error=str(error))
-            injections.append(row)
-            print(json.dumps(row), flush=True)
-            continue
-        try:
-            target.write_text(text, encoding="utf-8")
-            if row["minted_for_the_injection"]:
-                assert _mint().returncode == 0, name
-            expected = EXPECTED[name]
-            code_i, failures_i, summary_i, _ = _suite(fail_fast=True, classes=(expected,))
-            row.update(expected_class=expected,
-                       expected_class_outcome=_outcome(code_i, failures_i))
-            if row["expected_class_outcome"] in ("NOT_CAUGHT", "FAILED_OUTSIDE_ANY_CASE"):
-                # The class written for it did not catch it; the whole suite
-                # still might, and a catch there is recorded as one elsewhere.
-                code_i, failures_i, summary_i, _ = _suite(fail_fast=True)
-                row["whole_suite_run"] = True
-        finally:
-            target.write_bytes(original)
-            if row["minted_for_the_injection"]:
-                _mint()
-        if _snapshot() != snapshot:
-            print(json.dumps({"id": name, "stopped": "SNAPSHOT_DID_NOT_COME_BACK"}))
+    # The copies are made from this tree after the suite, so the suite must
+    # have left it as it found it - every file, not only the journal and the
+    # bound files - or the copies would carry what the suite left behind.
+    tree = _manifest(ROOT)
+    if tree != tree_before:
+        print("THE_SUITE_DID_NOT_LEAVE_THE_TREE_AS_IT_FOUND_IT",
+              json.dumps(_manifest_differences(tree_before, tree)), flush=True)
+        return 2
+    digest = _manifest_digest(tree)
+    for number in (signal.SIGTERM, signal.SIGHUP):
+        signal.signal(number, _terminated)
+    parent, roots, rows = None, [], {}
+    results = Path(tempfile.mkdtemp(prefix="issue47-verify-results-"))
+    try:
+        phase = time.monotonic()
+        parent, roots = _make_copies(copies)
+        at_start = [_manifest(root) == tree for root in roots]
+        seconds["copies"] = round(time.monotonic() - phase, 1)
+        if not all(at_start):
+            print("A_COPY_DIFFERS_FROM_THE_SEALING_TREE", json.dumps(
+                {str(index): _manifest_differences(tree, _manifest(root))
+                 for index, root in enumerate(roots) if not at_start[index]}), flush=True)
             return 2
-        moved_journal = _journal_moved(journal)
-        if any(moved_journal.values()):
-            print(json.dumps({"id": name, "stopped": "CREATOR_JOURNAL_DID_NOT_COME_BACK",
-                              **moved_journal}))
+        phase = time.monotonic()
+        rows, stop = _dispatch(roots, _order(), results)
+        seconds["injections"] = round(time.monotonic() - phase, 1)
+        if stop is not None:
+            print("AN_INJECTION_STOPPED_THE_RUN", json.dumps(stop), flush=True)
             return 2
-        row.update(outcome=_outcome(code_i, failures_i),
-                   first_caught_by=[failure["case"] for failure in failures_i],
-                   failures=failures_i, suite_result=summary_i)
-        injections.append(row)
-        print(json.dumps(row), flush=True)
+        phase = time.monotonic()
+        at_end = [_manifest(root) == tree for root in roots]
+        sealing_at_end = _manifest(ROOT) == tree
+        seconds["final_manifests"] = round(time.monotonic() - phase, 1)
+        copy_names = [parent.name + "/" + root.name for root in roots]
+    finally:
+        if parent is not None:
+            shutil.rmtree(parent, ignore_errors=True)
+        shutil.rmtree(results, ignore_errors=True)
+    injections = [rows[index] for index in sorted(rows)]
     moved = _moved_generations()
     restored = (_run(["git", "apply", "-R", "--check", PATCH]).returncode == 0
                 and _mint(check=True).returncode == 0 and _snapshot() == snapshot
                 and {path: _sha(path) for path in BOUND} == before)
+    seconds["total"] = round(time.monotonic() - started, 1)
     checks = {"patch_is_applied_here": applied.returncode == 0,
               "every_declared_class_ran": local == _declared_classes(),
               "snapshot_minted_for_these_bytes": minted.returncode == 0,
@@ -792,10 +1019,15 @@ def main():
               # "OK (skipped=N)" is not a pass: a fixture that refuses to
               # start skips its class, and those cases would have run nothing.
               "suite_passes": code == 0 and summary == "OK",
+              "suite_left_the_tree_as_found": tree == tree_before,
+              "every_injection_ran_exactly_once": [row["id"] for row in injections] == names,
               "every_injection_compiles": all(
                   r["outcome"] != "INJECTION_DOES_NOT_COMPILE" for r in injections),
               "every_injection_caught": all(
                   r["outcome"] in ("CAUGHT", "CAUGHT_AT_FIXTURE") for r in injections),
+              "every_copy_was_the_sealing_tree_when_made": all(at_start),
+              "every_copy_was_the_sealing_tree_after_the_last_injection": all(at_end),
+              "the_sealing_tree_is_unchanged_by_the_injections": sealing_at_end,
               "tree_restored_after_injections": restored,
               "creator_journal_as_found": _journal() == journal}
     body = {"record_type": "ISSUE_47_MODEL_EGRESS_OFFLINE_VERIFICATION",
@@ -806,6 +1038,17 @@ def main():
                 "egress_capability_references": gate["egress_capability_references"],
                 "gate_receipt_id": gate["gate_receipt_id"]},
             "fault_injections": injections,
+            "execution": {
+                "mode": "PARALLEL_WORKER_COPIES",
+                "contract": "docs/evidence/issue47_history/owner-decisions-2026-09-28/decisions.json",
+                "copies": copy_names,
+                "manifest": {"entries": len(tree), "digest": digest,
+                             "scope": "every file and link under the tree, .git included, "
+                                      "__pycache__ directories left out"},
+                "order": "slow expected classes first (" + ", ".join(SLOW_FIRST) + "), then the "
+                         "rest in list order; each injection ran once, in its own process, in "
+                         "whichever copy was free - 'copy' in each row names it",
+                "seconds": seconds},
             "creator_journal_at_start": journal,
             "generations_that_record_the_boundary_files": moved,
             "generation_manifests_measured": _generation_manifests(),
@@ -827,4 +1070,9 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except KeyboardInterrupt as interrupted:
+        # The workers were stopped and the copies removed on the way out.
+        print("INTERRUPTED_NO_RECEIPT:", interrupted, flush=True)
+        sys.exit(2)
