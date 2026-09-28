@@ -75,6 +75,34 @@ checkout. Whether that fits is for the next run's progress lines to say; the
 tier measures about 10,635 s in all, so if a shard is still cancelled the
 remedy left is a fourth shard, which is again a workflow change.
 
+## 2026-09-28 (later): three shards pass, but not reliably - `0005` adds a fourth
+
+Two runs after the re-weighing. `1c42db79` (run 36485856267): shards 1 and 2
+passed; shard 0 passed all 43 of its cases and was cancelled 10 ms after the
+runner printed PASSED, because that runner's checkout took 1m52s and its
+cases 33.1 minutes. `d9ddb3f8` (run 36485982390): all 17 checks green, the
+three shards' cases taking 26.8, 32.4 and 33.6 minutes.
+
+The weights are no longer what goes wrong. The same case ran 0.80 to 1.13
+times as long as in the run the weights came from, depending on the runner it
+landed on, so weights from one run carry that run's runners into the split.
+`SOURCE_CI_SECONDS` is now the mean of the three runs
+(`saved-source-timings-2026-09-28.json` holds every case's seconds per run and
+the resulting `weights`, which the table equals). By that mean the three
+shards carry 3,658 / 3,586 / 3,585 seconds - about 30 minutes each at
+`--jobs 2`, about 34 on a runner 13% slower, over the 35-minute cap once a
+slow checkout is added. The tier measured 10,502, 10,724 and 11,106 seconds
+across the three runs.
+
+`0005-fourth-saved-source-shard.patch` changes the matrix to
+`shard_index: [0, 1, 2, 3]` and the command to `--shard-count 4`; nothing
+else, since the aggregate step already requires every leg. It passes
+`git apply --check` against the workflow as of `a728b6c7`. By the same mean
+four shards carry about 2,700 seconds each - 22.5 minutes, 25.5 on a slow
+runner. Applying it is a workflow change, for the owner or whoever maintains
+the base's workflow; until then a cancelled saved-source leg is a cap, not a
+pass and not a failure.
+
 ## The second one was retired, and the file is gone
 
 `0002-raise-capacity-native-runs-cap.patch` used to raise `timeout-minutes` on
