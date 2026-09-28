@@ -103,6 +103,37 @@ runner. Applying it is a workflow change, for the owner or whoever maintains
 the base's workflow; until then a cancelled saved-source leg is a cap, not a
 pass and not a failure.
 
+## 2026-09-28 (night): two more runs - the split holds, the runners do not
+
+Two runs of the mean-weighted split, recorded in
+`saved-source-timings-2026-09-28.json` under `out_of_sample_runs` and not
+averaged into the table. `9f11abb9` (run 36492046303): all 17 checks green,
+the three saved-source jobs taking 31m52s, 32m57s and 17m56s. `6e512978`
+(run 36492131767, the same tree): all three saved-source shards passed
+(19m51s, 33m14s, 24m19s). That run is still reported as cancelled, by a job
+that is not this tier's: the base's `vNext remaining source Runs
+(jpmorgan_chase)` reached its 45-minute cap after a 6m08s checkout. Its test
+step takes 1,840 to 2,436 seconds on this PR's runs and on the base's own, and
+the base's run 36478405174 (`16a6e897`) was cancelled the same way after a
+7m02s checkout. It is the base's job and the base's cap; nothing this issue
+changes runs in it.
+
+How much runners differ, measured by comparing each case with itself across
+the four runs that reached every case (`runner_factors` in the same file): the
+twelve shard instances ran at 0.69 to 1.31 times each case's typical seconds,
+a spread of 1.9. The same shard-0 cases summed 3,720 seconds on one runner and
+2,241 on another; the whole tier 8,958 to 11,106 across five runs. Balancing
+cannot absorb that: a shard of about 30 minutes on a typical runner is about
+39 on the slowest one seen, so three shards pass when the runners are kind.
+The weights are left as they are, because re-balancing moves minutes while
+runners move ten.
+
+With `0005` the four shards carry about 22.5 minutes each on a typical
+runner, about 29.5 on the slowest seen, plus checkout - under the cap unless
+the slowest runner and a six-minute checkout land on the same shard. That is
+still the only remedy found; it is a workflow change for the owner or the
+base.
+
 ## The second one was retired, and the file is gone
 
 `0002-raise-capacity-native-runs-cap.patch` used to raise `timeout-minutes` on
