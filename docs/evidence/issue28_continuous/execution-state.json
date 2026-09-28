@@ -5644,5 +5644,39 @@
       0,
       0
     ]
+  },
+  "d03_output_capacity_20260928": {
+    "status": "OFFLINE_RESPONSE_SHAPE_CENSUS_COMPLETE_NO_MODEL_SEMANTIC_CREDIT",
+    "evidence": "docs/evidence/issue28_continuous/d03-output-capacity-20260928/README.md",
+    "tested_code_head": "cf23ab3d0785ec2f3e3ef8483a05825951193b85",
+    "prior_input_census": "docs/evidence/issue28_continuous/d03-current-input-census-20260927/census.json",
+    "all_source_ids_and_group_counts_match_prior": true,
+    "company_count": 10,
+    "group_count": 130,
+    "unique_request_ids": 130,
+    "required_candidate_references": 178,
+    "max_required_per_group": 33,
+    "max_required_per_unit": 23,
+    "scenario_token_maximums_after_successor_field": {
+      "bare_structure": 468,
+      "all_required_context": 468,
+      "one_minimal_finding_per_required": 2132
+    },
+    "groups_above_4096_in_these_scenarios": 0,
+    "jpm_successor_extra_candidate_review_measured": true,
+    "actual_model_output_tested": false,
+    "semantic_correctness_proven": false,
+    "native_result_or_run_created": false,
+    "independent_review": "NOT_CLAIMED_FOR_PARENT_EXECUTED_RESOURCE_ANALYSIS",
+    "real_ledger_claims_before_after": [
+      195,
+      195
+    ],
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
+    "d03_live_permission_added": false
   }
 }
