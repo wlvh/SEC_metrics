@@ -427,6 +427,10 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Nine cases, six parses of the bank's full 10-K; 130 seconds measured
     # while a batch held three of four cores.
     "tests.vnext.test_historical_financial_results": 480,
+    # 24 cases; 204 seconds in CI, and 226 seconds alone on 2026-09-28 while
+    # the egress verification and two source shards held the other cores - it
+    # timed out at the 240 default in the shard it shared with them.
+    "tests.vnext.test_historical_period_results": 480,
     # Copies a 480 MB recorded root before its first case; 42 seconds measured
     # with a warm page cache, which a fresh runner will not have.
     "tests.vnext.test_historical_block_inputs": 480,
