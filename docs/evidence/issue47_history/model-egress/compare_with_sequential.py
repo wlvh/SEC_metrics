@@ -10,10 +10,19 @@ the outcome, the expected class's outcome, whether the whole suite had to run,
 and the cases that caught it; the fields that only a parallel row has - which
 copy ran it and how long it took - are not compared.
 
+It also checks which tree the 12 ran in, instead of leaving that to a
+sentence. The completion started in the verification tree at the same minute
+as the parallel seal, so its last look at that tree found the seal's suite
+fixtures there and it recorded ``tree_unchanged: false``: it only reads that
+tree (a manifest and a copy), and what its injections ran in is its copy. So
+the check that says something is that its copy was the tree when made and
+after its last injection, and that the manifest it was made from is the one
+this receipt's copies were proven against - the sealed tree.
+
     python3 docs/evidence/issue47_history/model-egress/compare_with_sequential.py [<out.json>]
 
-Exits 0 only if every injection has exactly one row on each side and every row
-agrees.
+Exits 0 only if every injection has exactly one row on each side, every row
+agrees, and the completion's copy was the sealed tree.
 """
 import json
 import sys
@@ -32,12 +41,31 @@ def main():
     baseline = interrupted + completion["rows"]
     parallel = receipt["fault_injections"]
     names = [row["id"] for row in parallel]
+    sealed = receipt["execution"]["manifest"]["digest"]
+    completion_checks = {
+        "the_completion_stopped_nowhere": completion.get("stop") is None,
+        "its_copy_was_the_tree_when_made": completion.get("copy_was_the_tree_when_made") is True,
+        "its_copy_was_the_tree_after_its_last_injection":
+            completion.get("copy_was_the_tree_after_the_last_injection") is True,
+        "the_tree_its_copy_was_made_from_is_the_sealed_tree": completion.get("manifest_digest") == sealed}
     report = {"record_type": "ISSUE_47_EGRESS_PARALLEL_VERSUS_SEQUENTIAL",
               "receipt_id": receipt["receipt_id"],
               "baseline": {"sequential_interrupted_rows": len(interrupted),
-                           "sequential_completion_rows": len(completion["rows"])},
+                           "sequential_completion_rows": len(completion["rows"]),
+                           "completion_manifest_digest": completion.get("manifest_digest"),
+                           "sealed_manifest_digest": sealed,
+                           "completion_checks": completion_checks,
+                           "completion_tree_unchanged_as_recorded": completion.get("tree_unchanged"),
+                           "why_that_is_not_required": (
+                               "the completion only read the verification tree; this receipt's seal ran "
+                               "its suite in that tree at the same time, and its own checks prove the tree "
+                               "came back to the manifest above (the_sealing_tree_is_unchanged_by_the_"
+                               "injections, suite_left_the_tree_as_found)")},
               "compared_fields": list(COMPARED), "rows": [], "calls": {"provider": 0, "paid": 0, "sec": 0}}
-    problems = []
+    problems = [name for name, held in completion_checks.items() if not held]
+    if not (receipt["checks"].get("suite_left_the_tree_as_found")
+            and receipt["checks"].get("the_sealing_tree_is_unchanged_by_the_injections")):
+        problems.append("THE_RECEIPT_DOES_NOT_PROVE_THE_SEALED_TREE_CAME_BACK")
     if sorted(names) != sorted(row["id"] for row in baseline) or len(set(names)) != len(names) \
             or len(baseline) != len({row["id"] for row in baseline}):
         problems.append("THE_TWO_SIDES_DO_NOT_HOLD_THE_SAME_INJECTIONS_ONCE_EACH")
