@@ -11,3 +11,5 @@
 前段手工捕获对照的`preflight-repeat-wrong-assertion.log`和退出1保留：该测试错误地要求整个`current.json`不变，从而误拒了正常的新`latest_attempt`；只读`preflight-repeat-reconciliation.json`证明成功指针保持、最新尝试确为`NO_SOURCE_CONTENT_CHANGE`。最终自动选路演练的`repeat-auto.py`按这一状态模型检查，退出0；没有为修正测试再重跑前段长链。
 
 `reconciliation.json`把两期年报来源URL、实际期间、Result/Run身份、前驱、自动选择的申报清单URL、录制响应哈希、两次安装冷读和重复状态对账为`PASS_RECORDED_AUTO_METADATA_REFRESH_TWO_FISCAL_RUNS`。两个年度的**B01局部候选**成立；总体`source_refresh`仍为`REFRESH_INCOMPLETE`、`refresh_and_process`为`UPDATES_INCOMPLETE`，因为本轮上限只允许一次录制刷新，其它已知来源待办没有被一并完成。因此不称为十家公司或39指标的完整自动更新。缺少真实旧时点清单与实际后来新年报的在线时间序列，也不称为真实新财年在线更新。历史390索引、正式发布和旧入口状态不改；原#28账本仍143/143/52，本项新增真实调用0/0/0，#47/PR52未操作。
+
+精确补丁`c0e95d3a`的[限定独立复核](independent-review/conclusion.md)为`PASS_WITH_BOUNDS`。审阅者只运行短对账并逐项读取录制SEC收据、两期安装包及来源字节，确认真实保存的Company Facts中两期USD收入事实与公开行一致；未重跑长时录制/冷读。完整私有运行根没有入库，异机不能仅靠本目录重做完整冷读；此项仍是有界离线录制证据，不扩大为真实在线或生产验收。

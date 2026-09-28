@@ -2152,6 +2152,21 @@
       "tool_calls": 38,
       "result_path": "docs/evidence/issue28_continuous/d04-paramount-current-update-20260928/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS"
+    },
+    {
+      "task_name": "review_b01crossyear_c0e95d3",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_b01_crossyear_recorded",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/",
+        "docs/evidence/issue28_continuous/c04-adjacent-year-rehearsal-20260927/rehearse.py"
+      ],
+      "patch_sha": "c0e95d3ac6adc8dd0f5034898a06bd2b1cc18f1b",
+      "spawned_at": "2026-09-28T00:47:21.734515+00:00",
+      "ended_at": "2026-09-28T00:53:43+00:00",
+      "tool_calls": 32,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
     }
   ],
   "ci_capacity_20260922": {
@@ -5349,8 +5364,10 @@
     "current_execution_code_head_ci": "b868ac42/36354613173 SUCCESS 15/15"
   },
   "ordinary_b01_crossyear_recorded_20260928": {
-    "status": "LOCAL_RECORDED_AUTO_CROSS_YEAR_B01_PASS_INDEPENDENT_REVIEW_PENDING",
+    "status": "LOCAL_RECORDED_AUTO_CROSS_YEAR_B01_PASS_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS_PUSH_PENDING",
+    "patch_sha": "c0e95d3ac6adc8dd0f5034898a06bd2b1cc18f1b",
     "evidence": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/README.md",
+    "independent_review": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
     "company_id": "marriott_international",
     "metric_id": "B01",
     "derived_old_submissions_sha256": "5b542458aa0fa1c759eb2ff6d40b9f03520521103253ebbfaab7c5c132a2b8aa",
