@@ -1,0 +1,24 @@
+test_complete_recorded_marriott_retains_uncertainty_and_requires_review (tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest.test_complete_recorded_marriott_retains_uncertainty_and_requires_review) ... FAIL
+
+======================================================================
+FAIL: test_complete_recorded_marriott_retains_uncertainty_and_requires_review (tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest.test_complete_recorded_marriott_retains_uncertainty_and_requires_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_native_assessment.py", line 319, in test_complete_recorded_marriott_retains_uncertainty_and_requires_review
+    self.assertEqual('SUCCEEDED',
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+                     outcome['terminal']['status'],
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     msg={'group_index': group_index,
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          'terminal': outcome['terminal']})
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'SUCCEEDED' != 'FAILED_TERMINAL'
+- SUCCEEDED
++ FAILED_TERMINAL
+ : {'group_index': 1, 'terminal': {'record_type': 'CONTINUOUS_CALL_TERMINAL', 'intent_id': 'sha256:a22d21ef0d597dadfd834a202289fb1801d0df0d33147f8d0db52f98ac11a898', 'status': 'FAILED_TERMINAL', 'stop_reason': '', 'counts': [1, 1, 0], 'counts_kind': 'RECORDED_TEST_SIMULATION', 'execution_receipt_id': 'sha256:19d4802af19439ac766ab7bf9335320b89ee8d261ea23b911afbb044b608785b', 'evidence': {'intent.json': '59cf8199ccc5ca24ab3230ea36f1c793a6bd435c740f5bfeb0b1b4a099c16781', 'source.json': 'ea1f044446dc422a7dbece4211c3c344406bd32e64b302bbe8f878ff409c560c', 'execution-rules.tar.gz': '3cf225668e3ca2a5e27c8bac22a9c1438848b8a8d2912f8cfcee5ef4314dac2f', 'semantic-request.json': 'ddf3a4fb0010e5f4634b025793cfa15c49028e3c87fed32b2b01a0c17d21db52', 'execution-rules.json': 'c3f9f93c64a72729a8ca80d189b557e39b9ac80a0221aa3688127d71b9a8d98a', 'wire/raw-response.bin': '991e4f73c4148d5647cccfe90552c9f780da4199c8bf4917bfb1c3439a521022', 'wire/assistant-output.bin': 'dd70c6a07f0fcd31d1745a6ca65158109446ec79a3cc3f534192387074a88216', 'wire/journal.json': 'b21a1e85bc77b6acf0d9c29aee9849712fca26e049a6238860644f9c62dd4338', 'invocation_control/plans/4801b0f6dfe8f74db70ab7f8bb103c727b8632bb7e5221ada44c275f988d2b35.json': '49db4c526a43f85c0c55388abf1599cdc9f616dae6466f806af59373eaa2db99', 'invocation_control/requests/c2a7ddfcf26ca569dc9eb2bbb3f7efc06b34520168455601730fdd7bf79b799c.bin': 'c99bed6a09640173ee48634a73474f696dcbd58a072f275ee9208c3a29b5d00f', 'invocation_control/executions/8b5fafe3759602c4306944d05d97303b713223d6c85e7a5c99fda50ed51d27be.json': 'ff0a27ab4de45316cf4e1f3a724f58acab6b990d399ddb84737b5176f61e05fa', 'invocation_control/attempts/8b5fafe3759602c4306944d05d97303b713223d6c85e7a5c99fda50ed51d27be/01_af8e6a98bab8dcc3dd1d17c2e663fec49c1bf9070d047e6f131e7884166de225.json': '0281cbdc0826578feaa000c720551e0caa6000c7129a6518d3e5b9d0347a34eb', 'invocation_control/reservation_archive/c2a7ddfcf26ca569dc9eb2bbb3f7efc06b34520168455601730fdd7bf79b799c/8b5fafe3759602c4306944d05d97303b713223d6c85e7a5c99fda50ed51d27be.json': 'eb860312e980a2c54c02704ce8779e912130a60ed16cca95a07d86ef47ec5e2f', 'invocation_control/egress/8b5fafe3759602c4306944d05d97303b713223d6c85e7a5c99fda50ed51d27be/01.json': 'bd8a707db10cedcbd85c171e15b172709b2266a5aa4071b707a2a3f8af4f8504'}, 'terminal_id': 'sha256:c4187fa5cf419fa3cc20b91e9c7ee4f0f25b6ec6f983d91016bc878d26ceabae'}}
+
+----------------------------------------------------------------------
+Ran 1 test in 18.502s
+
+FAILED (failures=1)

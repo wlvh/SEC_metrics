@@ -36,19 +36,15 @@ def _build_acceptance(*, prepared, plan, response_body, checked, metric_id, grou
     request = strict_json_loads(text=prepared.request_bytes.decode())
     source = strict_json_loads(text=prepared.source_bytes.decode())
     if metric_id == 'D03':
-        # Background and a reported process may legitimately have no known
-        # investigation target or current status. They are retained as input
-        # for whole-company Review, not promoted to a current D03 finding.
-        unreviewed = checked['unresolved'] or any(
-            f['kind'] == 'UNRESOLVED' or
-            (f['kind'] in {'CURRENT_REGULATORY_ACTION', 'NO_ACTION_DECLARATION'}
-             and (f['subject'] == 'UNRESOLVED' or f['timing'] == 'UNRESOLVED'))
-            for f in checked['findings'])
+        # A complete answer may correctly leave the action, subject or period
+        # unresolved. Preserve it for company Review; this one-request
+        # Candidate/Evidence does not establish a metric Result.
+        unresolved = d03_review_blockers(checked)
     else:
-        unreviewed = checked['unresolved'] or any(
+        unresolved = checked['unresolved'] or any(
             f['kind'] == 'UNRESOLVED' or f['subject'] == 'UNRESOLVED'
             or f['timing'] == 'UNRESOLVED' for f in checked['findings'])
-    need(not unreviewed, metric_id + '_SOURCE_ASSESSMENT_UNRESOLVED')
+        need(not unresolved, metric_id + '_SOURCE_ASSESSMENT_UNRESOLVED')
     document = next(d for d in source['documents']
                     if d['document_id'] == request['document_context']['document_id'])
     source_ids = [document['source_reference']['source_reference_id']]
@@ -57,7 +53,8 @@ def _build_acceptance(*, prepared, plan, response_body, checked, metric_id, grou
             'selected': {'source_assessment': {
                 'request_id': request['request_id'], 'unit_ids': [u['unit_id'] for u in request['units']],
                 'findings': checked['findings'], 'calculation_limits': checked.get('calculation_limits', [])}},
-            'competing_candidates': [], 'unresolved_competing_claims': []}
+            'competing_candidates': [],
+            'unresolved_competing_claims': unresolved if metric_id == 'D03' else []}
     if 'program_quantity_contract' in checked:
         body['selected']['source_assessment']['program_quantity_contract']=checked['program_quantity_contract']
     if stage_proof is not None:
@@ -81,6 +78,9 @@ def _build_acceptance(*, prepared, plan, response_body, checked, metric_id, grou
                                   '_ORIGINAL_SOURCE_REFERENCES_AND_ROLES'), 'status': 'PASS',
              'findings': checked['findings']}],
         'reason_codes': [], 'identity_constraints': []}
+    if metric_id == 'D03' and unresolved:
+        evidence_body['checks'].append({'check': 'D03_UNRESOLVED_RETAINED_FOR_COMPANY_REVIEW',
+            'status': 'PASS', 'unresolved': unresolved})
     if 'program_quantity_contract' in checked:
         evidence_body['checks'].append({'check':'B13_PROGRAM_OWNED_ORIGINAL_QUANTITY_ROLES','status':'PASS',
             'program_quantity_contract':checked['program_quantity_contract']})
@@ -101,6 +101,21 @@ def _build_acceptance(*, prepared, plan, response_body, checked, metric_id, grou
             'module': sha256_file(path=validator_path),
             'policy': request['policy_sha256']}),
         'validator_semantic_version': metric_id + '_REQUEST_SOURCE_ASSESSMENT_V1'}
+
+
+def d03_review_blockers(checked):
+    """Keep explicit uncertainty and uncertain current/negative classifications."""
+    blockers = list(checked['unresolved'])
+    for index, finding in enumerate(checked['findings']):
+        if (finding['kind'] == 'UNRESOLVED' or
+                (finding['kind'] in {'CURRENT_REGULATORY_ACTION',
+                                     'NO_ACTION_DECLARATION'} and
+                 (finding['subject'] == 'UNRESOLVED' or
+                  finding['timing'] == 'UNRESOLVED'))):
+            blockers.append({'unit_id': finding['unit_id'],
+                             'finding_index': index,
+                             'reason': 'D03_FINDING_SCOPE_OR_MEANING_UNRESOLVED'})
+    return blockers
 
 
 def collect_native_assessments(*, prepared_requests, ledger):
