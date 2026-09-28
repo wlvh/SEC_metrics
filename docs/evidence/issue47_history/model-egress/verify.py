@@ -845,8 +845,18 @@ def _stop_worker(process):
         process.wait()
 
 
-def _dispatch(roots, order, results):
+def _elapsed(since):
+    """Whole seconds since ``since``. The receipt's content hash refuses binary floats: the first
+    parallel seal (2026-09-28) ran all 78 injections and then failed when it hashed a receipt whose
+    timings were floats, so every timing the receipt carries comes from here."""
+    return round(time.monotonic() - since)
+
+
+def _dispatch(roots, order, results, receipt_check=None):
     """Run each injection once, in whichever copy is free, and stop everything at the first stop.
+
+    ``receipt_check`` is called on every row as it arrives, so a row the receipt could not hold
+    stops the run at the first injection instead of at sealing, hours later.
 
     Returns (rows by injection index, None), or (the rows so far, what stopped it).
     """
@@ -873,9 +883,11 @@ def _dispatch(roots, order, results):
                     return rows, {"injection": INJECTIONS[index][0], "copy": copy,
                                   "returncode": process.returncode, "row": row,
                                   "stderr_tail": tail[-2000:]}
-                row.update(copy=copy, seconds=round(time.monotonic() - started, 1))
+                row.update(copy=copy, seconds=_elapsed(started))
                 rows[index] = row
                 print(json.dumps(row), flush=True)
+                if receipt_check is not None:
+                    receipt_check(row)
                 free.append(copy)
         return rows, None
     finally:
@@ -901,6 +913,10 @@ def main():
     started = time.monotonic()
     sys.path.insert(0, str(ROOT / "scripts"))
     sys.path.insert(0, str(ROOT / "tools"))
+    from vnext.canonical import content_hash
+    # The number type every timing in the receipt has, checked before the hours it would
+    # otherwise take to find out that the receipt cannot be hashed.
+    content_hash(value={"seconds": _elapsed(started)})
     applied = _run(["git", "apply", "-R", "--check", PATCH])
     minted = _mint(check=True)
     if applied.returncode or minted.returncode:
@@ -952,7 +968,7 @@ def main():
     seconds = {}
     phase = time.monotonic()
     code, failures, summary, ran = _suite(fail_fast=False)
-    seconds["suite"] = round(time.monotonic() - phase, 1)
+    seconds["suite"] = _elapsed(phase)
     suite = {"returncode": code, "failed": [row["case"] for row in failures],
              "summary": summary, "ran": ran}
     print("suite", suite, flush=True)
@@ -985,22 +1001,23 @@ def main():
         phase = time.monotonic()
         parent, roots = _make_copies(copies)
         at_start = [_manifest(root) == tree for root in roots]
-        seconds["copies"] = round(time.monotonic() - phase, 1)
+        seconds["copies"] = _elapsed(phase)
         if not all(at_start):
             print("A_COPY_DIFFERS_FROM_THE_SEALING_TREE", json.dumps(
                 {str(index): _manifest_differences(tree, _manifest(root))
                  for index, root in enumerate(roots) if not at_start[index]}), flush=True)
             return 2
         phase = time.monotonic()
-        rows, stop = _dispatch(roots, _order(), results)
-        seconds["injections"] = round(time.monotonic() - phase, 1)
+        rows, stop = _dispatch(roots, _order(), results,
+                               receipt_check=lambda row: content_hash(value=row))
+        seconds["injections"] = _elapsed(phase)
         if stop is not None:
             print("AN_INJECTION_STOPPED_THE_RUN", json.dumps(stop), flush=True)
             return 2
         phase = time.monotonic()
         at_end = [_manifest(root) == tree for root in roots]
         sealing_at_end = _manifest(ROOT) == tree
-        seconds["final_manifests"] = round(time.monotonic() - phase, 1)
+        seconds["final_manifests"] = _elapsed(phase)
         copy_names = [parent.name + "/" + root.name for root in roots]
     finally:
         if parent is not None:
@@ -1011,7 +1028,7 @@ def main():
     restored = (_run(["git", "apply", "-R", "--check", PATCH]).returncode == 0
                 and _mint(check=True).returncode == 0 and _snapshot() == snapshot
                 and {path: _sha(path) for path in BOUND} == before)
-    seconds["total"] = round(time.monotonic() - started, 1)
+    seconds["total"] = _elapsed(started)
     checks = {"patch_is_applied_here": applied.returncode == 0,
               "every_declared_class_ran": local == _declared_classes(),
               "snapshot_minted_for_these_bytes": minted.returncode == 0,
@@ -1030,6 +1047,9 @@ def main():
               "the_sealing_tree_is_unchanged_by_the_injections": sealing_at_end,
               "tree_restored_after_injections": restored,
               "creator_journal_as_found": _journal() == journal}
+    # In the log before anything else can fail: the first parallel seal lost these when the
+    # receipt could not be hashed.
+    print("checks", json.dumps(checks), flush=True)
     body = {"record_type": "ISSUE_47_MODEL_EGRESS_OFFLINE_VERIFICATION",
             "requirement_id": "issue_47_v1", "all_checks_passed": all(checks.values()),
             "checks": checks, "calls": {"provider": 0, "paid": 0, "sec": 0},
@@ -1058,7 +1078,6 @@ def main():
                 "patch applied, so the patch cannot be applied beside them unchanged"),
             "bound_files": {path: _sha(path) for path in BOUND},
             "production_authorized": False, "live_call_authorized": False}
-    from vnext.canonical import content_hash
     receipt = {**body, "receipt_id": content_hash(value=body)}
     if not receipt["all_checks_passed"]:
         print(json.dumps(checks, indent=1))
