@@ -21,6 +21,7 @@ from vnext.native_assessment_replay import replay_native_response
 from vnext.native_request_construction import request_construction_session
 from vnext.normal_source_authority import ROOT
 from vnext.requirements import load_requirement_snapshot
+from vnext.d03_native_assessment import collect_recorded_assessments
 
 
 def _response(request, *, unresolved=False):
@@ -91,6 +92,14 @@ class D03NativeAssessmentTest(unittest.TestCase):
                 self.assertFalse(replay['revalidation']['new_provider_execution'])
                 with ledger.locked():
                     self.assertEqual([1, 1, 0], ledger.snapshot()['counts'])
+                collection = collect_recorded_assessments(
+                    company_id='marriott_international', ledger=ledger)
+                self.assertEqual(1, len(collection['completed']))
+                self.assertEqual(len(prepared)-1,
+                                 len(collection['missing_request_ids']))
+                self.assertEqual('INCOMPLETE_ASSESSMENT_NOT_NONDISCLOSURE',
+                                 collection['proposed_branch'])
+                self.assertFalse(collection['native_result_or_run_created'])
                 (path/'semantic-request.json').write_bytes(b'{}')
                 with self.assertRaisesRegex(ValueError,
                         'NATIVE_SAVED_REQUEST_OR_SOURCE_CHANGED'):
@@ -109,17 +118,22 @@ class D03NativeAssessmentTest(unittest.TestCase):
             with tempfile.TemporaryDirectory(prefix='d03-native-rejected-') as temporary:
                 ledger = recorded_ledger(root=Path(temporary) / 'ledger')
                 with self.assertRaisesRegex(ValueError,
-                        'D03_NATIVE_RECORDED_LEDGER_AND_WIRE_REQUIRED'):
+                        'D03_NATIVE_RECORDED_LEDGER_REQUIRED'):
                     execute_d03_recorded_assessment(
                         prepared=selected, ledger=object(),
                         recorded_wire=_wire(_response(request)))
                 with patch.object(ledger, 'root', Path(selected.requirement[
                         'policy']['budget_root'])):
                     with self.assertRaisesRegex(ValueError,
-                            'D03_NATIVE_RECORDED_LEDGER_AND_WIRE_REQUIRED'):
+                            'D03_NATIVE_RECORDED_LEDGER_REQUIRED'):
                         execute_d03_recorded_assessment(
                             prepared=selected, ledger=ledger,
                             recorded_wire=_wire(_response(request)))
+                    with self.assertRaisesRegex(ValueError,
+                            'D03_NATIVE_RECORDED_LEDGER_REQUIRED'):
+                        collect_recorded_assessments(
+                            company_id='marriott_international',
+                            ledger=ledger)
                 with self.assertRaisesRegex(ValueError,
                         'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE'):
                     execute_feasibility(prepared=selected, ledger=ledger,
@@ -134,6 +148,12 @@ class D03NativeAssessmentTest(unittest.TestCase):
                 self.assertFalse(outcome['native_result_created'])
                 with ledger.locked():
                     self.assertEqual([1, 1, 0], ledger.snapshot()['counts'])
+                collection = collect_recorded_assessments(
+                    company_id='marriott_international', ledger=ledger)
+                self.assertEqual([], collection['completed'])
+                self.assertEqual(1, len(collection['failed_requests']))
+                self.assertEqual('INCOMPLETE_ASSESSMENT_NOT_NONDISCLOSURE',
+                                 collection['proposed_branch'])
                 with self.assertRaisesRegex(ValueError,
                         'NATIVE_SUCCESSFUL_ORIGINAL_TERMINAL_REQUIRED'):
                     replay_native_response(prepared=selected, path=path)
@@ -221,6 +241,62 @@ class D03NativeAnchorMaterialTest(unittest.TestCase):
                 'recorded_execute_seconds': round(executed_at-prepared_at, 3),
                 'independent_replay_seconds': round(replayed_at-executed_at, 3)}),
                 flush=True)
+
+
+class D03NativeCollectionMaterialTest(unittest.TestCase):
+    def test_complete_recorded_marriott_still_requires_native_review(self):
+        with patch.object(socket.socket, 'connect',
+                          side_effect=AssertionError('NETWORK_FORBIDDEN')), \
+             patch.object(socket, 'getaddrinfo',
+                          side_effect=AssertionError('DNS_FORBIDDEN')):
+            with tempfile.TemporaryDirectory(prefix='d03-complete-native-') as temporary:
+                ledger = recorded_ledger(root=Path(temporary)/'ledger')
+                requirement = load_requirement_snapshot(
+                    snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
+                with request_construction_session(requirement):
+                    prepared = prepare_d03_replay_only_requests(
+                        company_id='marriott_international')
+                    self.assertEqual(5, len(prepared))
+                    for group_index, selected in enumerate(prepared):
+                        request = strict_json_loads(
+                            text=selected.request_bytes.decode())
+                        response = _response(request)
+                        if group_index == 0:
+                            # Deliberately model-shaped, not a certified
+                            # reading of this source. A current proposal must
+                            # still stop before company Result creation.
+                            reference = request['required_candidate_assessments'][0]
+                            unit = next(row for row in response['units']
+                                if row['unit_id'] == reference['unit_id'])
+                            unit['context_only_source_indices'].remove(
+                                reference['source_index'])
+                            unit['findings'] = [{
+                                'kind': 'CURRENT_REGULATORY_ACTION',
+                                'subject': 'TARGET_REGISTRANT',
+                                'event_dates': [],
+                                'reported_status': 'ONGOING_AS_REPORTED',
+                                'evidence': [{'kind': reference['kind'],
+                                    'source_index': reference['source_index']}],
+                                'reason': 'Synthetic recorded proposal; native Review required.'}]
+                        _, outcome = execute_d03_recorded_assessment(
+                            prepared=selected, ledger=ledger,
+                            recorded_wire=_wire(response))
+                        self.assertEqual('SUCCEEDED',
+                                         outcome['terminal']['status'])
+                collection = collect_recorded_assessments(
+                    company_id='marriott_international', ledger=ledger)
+                self.assertEqual(5, len(collection['completed']))
+                self.assertEqual([], collection['missing_request_ids'])
+                self.assertEqual([], collection['failed_requests'])
+                self.assertEqual(1,
+                                 len(collection['proposed_current_findings']))
+                self.assertEqual('COMPLETE_RECORDED_SET_REQUIRES_NATIVE_REVIEW',
+                                 collection['proposed_branch'])
+                self.assertFalse(collection['semantic_correctness_verified'])
+                self.assertFalse(collection['native_review_complete'])
+                self.assertFalse(collection['native_result_or_run_created'])
+                with ledger.locked():
+                    self.assertEqual([5, 5, 0], ledger.snapshot()['counts'])
 
 
 if __name__ == '__main__':

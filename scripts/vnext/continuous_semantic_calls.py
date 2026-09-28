@@ -803,19 +803,26 @@ def execute_d04_assessment(*, prepared, ledger, recorded_wire=None):
                              native_assessment=True)
 
 
-def execute_d03_recorded_assessment(*, prepared, ledger, recorded_wire):
-    """Prove the native request chain offline without opening D03 live calls."""
+def _require_d03_recorded_ledger(ledger):
+    """Reject a live or relabelled budget root before any D03 read or claim."""
     from .continuous_call_ledger import CallLedger, _FACTORY as ledger_factory
-    request = strict_json_loads(text=prepared.request_bytes.decode())
     live_root = Path(strict_json_file(path=ROOT/
         'config/issue28_continuous_calls_v1.json')['budget_root']).resolve()
     need(type(ledger) is CallLedger and ledger._factory is ledger_factory
-         and not ledger.live and type(recorded_wire) is bytes
+         and not ledger.live
          and ledger.root == ledger.root.resolve()
          and ledger.root != live_root and live_root not in ledger.root.parents
          and ledger.binding.get('execution_mode') == 'RECORDED_TEST_ONLY'
          and ledger.binding.get('root') == str(ledger.root),
-         'D03_NATIVE_RECORDED_LEDGER_AND_WIRE_REQUIRED')
+         'D03_NATIVE_RECORDED_LEDGER_REQUIRED')
+
+
+def execute_d03_recorded_assessment(*, prepared, ledger, recorded_wire):
+    """Prove the native request chain offline without opening D03 live calls."""
+    request = strict_json_loads(text=prepared.request_bytes.decode())
+    _require_d03_recorded_ledger(ledger)
+    need(type(recorded_wire) is bytes,
+         'D03_NATIVE_RECORDED_WIRE_REQUIRED')
     need(prepared.replay_only and prepared.data_root == ROOT
          and request.get('record_type') == 'D03_INTERPRETATION_REQUEST'
          and request.get('metric_id') == 'D03'

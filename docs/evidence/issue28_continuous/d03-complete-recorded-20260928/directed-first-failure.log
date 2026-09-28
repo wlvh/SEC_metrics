@@ -1,0 +1,32 @@
+test_anchor_candidate_changes_business_digest (tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest) ... ok
+test_saved_source_recorded_candidate_replays_but_is_not_company_result (tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result) ... ERROR
+test_unresolved_recorded_group_fails_and_live_shape_cannot_claim (tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_fails_and_live_shape_cannot_claim) ... ERROR
+
+======================================================================
+ERROR: test_saved_source_recorded_candidate_replays_but_is_not_company_result (tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_native_assessment.py", line 95, in test_saved_source_recorded_candidate_replays_but_is_not_company_result
+    collection = collect_recorded_assessments(
+        company_id='marriott_international', ledger=ledger)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d03_native_assessment.py", line 122, in collect_recorded_assessments
+    by_id = {row['request_id']: (row, original)
+             ~~~^^^^^^^^^^^^^^
+TypeError: 'SemanticRequest' object is not subscriptable
+
+======================================================================
+ERROR: test_unresolved_recorded_group_fails_and_live_shape_cannot_claim (tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_fails_and_live_shape_cannot_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_native_assessment.py", line 151, in test_unresolved_recorded_group_fails_and_live_shape_cannot_claim
+    collection = collect_recorded_assessments(
+        company_id='marriott_international', ledger=ledger)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d03_native_assessment.py", line 122, in collect_recorded_assessments
+    by_id = {row['request_id']: (row, original)
+             ~~~^^^^^^^^^^^^^^
+TypeError: 'SemanticRequest' object is not subscriptable
+
+----------------------------------------------------------------------
+Ran 3 tests in 53.381s
+
+FAILED (errors=2)
