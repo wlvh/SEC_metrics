@@ -3,7 +3,9 @@ from copy import deepcopy
 from dataclasses import replace
 import json
 import socket
+import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
@@ -11,6 +13,7 @@ from vnext import d03_native_preparation as native
 from vnext import continuous_semantic_calls as calls
 from vnext.canonical import canonical_json_bytes
 from vnext.continuous_call_policy import configured_transport_policy
+from vnext.continuous_call_ledger import recorded_ledger
 from vnext.normal_source_authority import ROOT
 
 
@@ -45,9 +48,24 @@ class D03NativePreparationTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,
                     'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE'):
                 calls.execute_feasibility(prepared=selected, ledger=object())
+            with tempfile.TemporaryDirectory() as temporary:
+                ledger = recorded_ledger(root=Path(temporary) / 'ledger')
+                with self.assertRaisesRegex(ValueError,
+                        'D03_SOURCE_ANCHOR_EXECUTION_NOT_AUTHORIZED'):
+                    calls.execute_feasibility(
+                        prepared=replace(selected, replay_only=False),
+                        ledger=ledger)
+                with ledger.locked():
+                    self.assertEqual([0, 0, 0], ledger.snapshot()['counts'])
             changed = deepcopy(request)
             changed['source_fact_review_contract']['original_request_id'] = \
                 'sha256:' + '0' * 64
+            with self.assertRaisesRegex(ValueError,
+                    'D03_SOURCE_ANCHOR_REQUEST_NOT_IN_CURRENT_SOURCE'):
+                replace(selected, request_bytes=canonical_json_bytes(
+                    value=changed)).validate(policy)
+            changed = deepcopy(request)
+            changed['source_fact_review_contract'] = None
             with self.assertRaisesRegex(ValueError,
                     'D03_SOURCE_ANCHOR_REQUEST_NOT_IN_CURRENT_SOURCE'):
                 replace(selected, request_bytes=canonical_json_bytes(

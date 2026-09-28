@@ -38,6 +38,7 @@ SEMANTIC_RULE_PATHS = (
     'catalog/r6/regulatory_semantic_verification_v1.json','catalog/r6/regulatory_semantic_verification_v2.json',
     'scripts/vnext/r6_historical_controls.py','config/r6_historical_control_sources_v1.json',
     'scripts/vnext/regulatory_statement_facts.py',
+    'scripts/vnext/regulatory_fact_review.py',
     'scripts/vnext/capacity_semantic_source.py', 'scripts/vnext/capacity_semantic_review.py',
     'scripts/vnext/capacity_two_stage.py',
     'catalog/r5/capacity_semantic_review_v1.json', 'catalog/r5/capacity_semantic_review_v2.json',
@@ -263,9 +264,12 @@ class SemanticRequest:
         if request not in original_requests:
             if 'source_fact_review_contract' in request:
                 from .regulatory_fact_review import candidate_request
+                contract = request['source_fact_review_contract']
+                need(type(contract) is dict and
+                     type(contract.get('original_request_id')) is str,
+                     'D03_SOURCE_ANCHOR_REQUEST_NOT_IN_CURRENT_SOURCE')
                 originals = [original for original in original_requests
-                    if original['request_id'] == request[
-                        'source_fact_review_contract'].get('original_request_id')
+                    if original['request_id'] == contract['original_request_id']
                     and original.get('source_statement_facts')]
                 need(source['metric_id'] == 'D03' and len(originals) == 1
                      and candidate_request(originals[0], source=source) == request,
@@ -805,6 +809,10 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
                            and (ledger.root/'batch33-authorization.json').exists())),
              'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED')
     need(not prepared.replay_only, 'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
+    # The D03 source-fact successor is a diagnostic request identity only.
+    # A copied dataclass with replay_only=False cannot turn it into a call.
+    need('source_fact_review_contract' not in request_fields,
+         'D03_SOURCE_ANCHOR_EXECUTION_NOT_AUTHORIZED')
     if prepared.source_ledger is not None:
         need(prepared.source_ledger.live==ledger.live and prepared.source_ledger.root==ledger.root,
              'CONTINUOUS_SOURCE_EXECUTION_LEDGER_CHANGED')
