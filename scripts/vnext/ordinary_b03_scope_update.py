@@ -95,6 +95,7 @@ def _run_once_b03(*, state_root, source_root, company_id,
             'previous_successful_attempt': state['successful_attempt']})
         descriptor = None
         metrics = {}
+        candidate_results = None
         status = 'INPUT_FAILED'
         error = None
         try:
@@ -151,17 +152,18 @@ def _run_once_b03(*, state_root, source_root, company_id,
                           'B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:' +
                           scope['status'])
                     status = 'CANDIDATE_READY'
-                    successful_results = _verify_candidate(root, {
+                    candidate_results = _verify_candidate(root, {
                         'status': status,
                         'configuration_id': configuration['record_id'],
                         'attempt_id': identity, 'input': descriptor,
                         'metrics': metrics}, configuration)
-                    previous_scope_conflict = False
                 else:
                     status = 'CANDIDATE_WITHHELD'
             if source_identity_root is not None:
                 verify_processing_source(acquisition_root=identity_source,
                     processing_root=source, requirement=processing_requirement)
+            if status == 'CANDIDATE_READY':
+                successful_results = candidate_results
         except Exception as failure:
             error = {'error_type': type(failure).__name__,
                      'reason': str(failure)}
@@ -178,6 +180,7 @@ def _run_once_b03(*, state_root, source_root, company_id,
         if status == 'CANDIDATE_READY':
             state['successful_attempt'] = identity
             previous = terminal
+            previous_scope_conflict = False
         state['latest_attempt'] = identity
         atomic_write_json(path=root/'current.json', value=state)
         return {'status': status, 'attempt_id': identity,

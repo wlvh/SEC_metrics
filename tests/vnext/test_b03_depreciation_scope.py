@@ -27,6 +27,8 @@ class B03DepreciationScopeTest(TestCase):
         self.assertTrue(_nearest_da_label(
             'Total depreciation and amortization of fixed assets ')['narrow'])
 
+
+class B03DepreciationScopeMaterialTest(TestCase):
     def test_current_update_cli_selects_guard_without_request_or_success(self):
         self.enterContext(original_sources_only())
         with tempfile.TemporaryDirectory(prefix='b03-current-cli-') as tmp:
@@ -107,7 +109,6 @@ class B03DepreciationScopeTest(TestCase):
                 'source_proofs': proofs}, data_root=ROOT)
 
 
-class B03DepreciationScopeMaterialTest(TestCase):
     def test_real_saved_salesforce_run_cannot_enter_unified_release(self):
         self.enterContext(patch.object(socket.socket, 'connect',
             side_effect=AssertionError('NETWORK_FORBIDDEN')))

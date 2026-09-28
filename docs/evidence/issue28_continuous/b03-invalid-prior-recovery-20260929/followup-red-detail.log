@@ -1,0 +1,16 @@
+test_late_processing_failure_cannot_recredit_old_success (tests.vnext.test_b03_depreciation_scope_update.B03HistoricalRecoveryVerifierTest.test_late_processing_failure_cannot_recredit_old_success) ... FAIL
+
+======================================================================
+FAIL: test_late_processing_failure_cannot_recredit_old_success (tests.vnext.test_b03_depreciation_scope_update.B03HistoricalRecoveryVerifierTest.test_late_processing_failure_cannot_recredit_old_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b03_depreciation_scope_update.py", line 215, in test_late_processing_failure_cannot_recredit_old_success
+    self.assertEqual(2, postcheck.call_count)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (failures=1)
+postcheck-test EXECUTION_FAILED {'error_type': 'KeyError', 'reason': "'status'"} 1 1
