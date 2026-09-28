@@ -1,0 +1,11 @@
+# Fast CI job cancelled during checkout, before any test
+
+The [16a6e897 main CI](https://github.com/wlvh/SEC_metrics/actions/runs/36478405174) fast job (109117765903) was cancelled during checkout at about its configured **10-minute job limit**. GitHub's completed job record shows checkout from 20:19:50 to 20:29:49 UTC (599 seconds); Python setup and `Run fast suite` were skipped. The original job log enters `git fetch` of the PR merge ref, then prints `The operation was canceled.` Timing, configuration and step state support the limit attribution; the log does not provide a separate server-side reason code. No fast test result, pass or assertion failure exists for this head. `comparison.json` holds the job-step timing; `fetch-excerpt.log` holds only those two original fetch/cancellation lines.
+
+The immediately preceding [b300f5a9 main CI](https://github.com/wlvh/SEC_metrics/actions/runs/36471768000) succeeded. Its fast job checked out in 24 seconds and ran the unchanged fast command in 174 seconds. This comparison identifies an intermittent checkout/fetch duration, not a change in test logic. It also does not prove that any finite timeout will repair a persistent network stall.
+
+The patch changes only `jobs.fast.timeout-minutes` from **10 to 20** in `.github/workflows/vnext-fast.yml`. This accommodates the observed ten-minute fetch and leaves time for the measured approximately three-minute fast suite; it does not change the source-material jobs, fast selectors, two-worker execution, 30-second per-selector limit, assertions, application code or budgets. The cancelled run remains cancelled. The new head must actually complete checkout and pass its fast job before the repair is considered verified remotely.
+
+No provider/paid/SEC request, production operation or #47/PR52 action was made. This shared workflow change is registered in #28 for the stacked consumer to evaluate independently.
+
+The exact `36362a2945222b8a773cc866172e4ac5efcf931e` diff received a [limited independent review](independent-review/conclusion.md): `PASS_LIMITED` for the one-line timeout change and its evidence. The reviewer did not run the new-head CI or revalidate business results.

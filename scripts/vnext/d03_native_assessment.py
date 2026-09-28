@@ -7,8 +7,8 @@ route, and separate live-call authority before it can answer the metric.
 from pathlib import Path
 
 from .capacity_utilization_source import need
-from .canonical import (content_hash, sha256_bytes, strict_json_file,
-                        strict_json_loads)
+from .canonical import (canonical_json_bytes, content_hash, sha256_bytes,
+                        strict_json_file, strict_json_loads)
 from .normal_source_authority import ROOT
 
 SPEC_PATH = 'catalog/r6/D03_regulatory_investigations_assessment_v1.md'
@@ -90,7 +90,115 @@ def _records(*, prepared, plan, response_body, checked):
         validator_path=Path(__file__))
 
 
-def collect_recorded_assessments(*, company_id, ledger):
+def _recorded_company_review(*, source, assessment):
+    """Bind a complete recorded set to a pending native ReviewUnit only."""
+    from .records import validate_record
+    from .review import build_review_unit
+    from .specs import compile_spec_file
+
+    need(source['semantic_source_id'] == content_hash(value={key: value
+             for key, value in source.items() if key != 'semantic_source_id'})
+         and assessment['assessment_set_id'] == content_hash(value={key: value
+             for key, value in assessment.items() if key != 'assessment_set_id'})
+         and source['company_id'] == assessment['company_id']
+         and assessment['semantic_correctness_verified'] is False
+         and assessment['native_result_or_run_created'] is False
+         and assessment['recorded_execution_revalidated'] is True
+         and assessment['source_id'] == source['semantic_source_id']
+         and assessment['complete_source_unit_ids'] == source['required_unit_ids']
+         and not assessment['missing_request_ids']
+         and not assessment['failed_requests']
+         and len(assessment['completed']) == len(assessment['required_request_ids'])
+         and [row['request_id'] for row in assessment['completed']] ==
+             assessment['required_request_ids'],
+         'D03_COMPANY_REVIEW_COMPLETE_SET_REQUIRED')
+    references = [document['source_reference'] for document in source['documents']]
+    need(len({row['source_reference_id'] for row in references}) == len(references),
+         'D03_COMPANY_REVIEW_SOURCE_SET_CHANGED')
+    completed = []
+    assets = set()
+    for row in assessment['completed']:
+        candidate = validate_record(record=row['candidate'])
+        evidence = validate_record(record=row['evidence'])
+        need(evidence['candidate_hash'] == candidate['candidate_hash']
+             and evidence['status'] == 'PASS'
+             and candidate['assistant_output_sha256'] == row['response_sha256']
+             and set(candidate['source_reference_ids']).issubset(
+                 {ref['source_reference_id'] for ref in references})
+             and candidate['selected']['source_assessment']['request_id'] ==
+                 row['request_id'],
+             'D03_COMPANY_REVIEW_GROUP_EVIDENCE_CHANGED')
+        assets.update(candidate['derived_asset_ids'])
+        completed.append({'request_id': row['request_id'],
+            'terminal_id': row['terminal_id'],
+            'candidate_hash': candidate['candidate_hash'],
+            'evidence_check_id': evidence['evidence_check_id'],
+            'response_sha256': row['response_sha256'],
+            'findings': candidate['selected']['source_assessment']['findings'],
+            'review_blockers': row['review_blockers']})
+    selected = {'complete_assessment': {
+        'assessment_set_id': assessment['assessment_set_id'],
+        'source_id': source['semantic_source_id'],
+        'company_id': source['company_id'],
+        'target_period': source['prepared_annual_input']['table_input'][
+            'target_period'],
+        'required_unit_ids': source['required_unit_ids'],
+        'completed': completed, 'recorded_only': True,
+        'provider_execution_verified': False}}
+    pending = [{'reason': 'D03_RECORDED_SEMANTICS_NOT_VERIFIED'}]
+    pending.extend({'request_id': row['request_id'], 'blockers': row['review_blockers']}
+                   for row in completed if row['review_blockers'])
+    body = {'disclosure_group': GROUP,
+        'source_reference_ids': [row['source_reference_id'] for row in references],
+        'derived_asset_ids': sorted(assets), 'selected': selected,
+        'competing_candidates': [], 'unresolved_competing_claims': pending}
+    candidate = validate_record(record={'record_type': 'OBSERVATION_CANDIDATE',
+        **body, 'candidate_hash': content_hash(value=body),
+        'attempt_id': 'regulatory-company-recorded:' +
+            assessment['assessment_set_id'][7:],
+        'assistant_output_sha256': sha256_bytes(content=canonical_json_bytes(
+            value=[row['response_sha256'] for row in completed])),
+        'status': 'REVIEW_REQUIRED'})
+    spec = compile_spec_file(path=ROOT/SPEC_PATH, dependency_specs={})
+    scope = spec['compiled']['required_claims']
+    evidence_body = {'candidate_hash': candidate['candidate_hash'],
+        'status': 'PASS', 'normalized_values': selected,
+        'checks': [{'check': 'D03_ALL_RECORDED_GROUPS_AND_SOURCE_UNITS',
+            'status': 'PASS', 'assessment_set_id': assessment['assessment_set_id'],
+            'request_ids': assessment['required_request_ids'],
+            'unit_ids': source['required_unit_ids']}],
+        'reason_codes': [], 'identity_constraints': [],
+        'normalized_scope': {}, 'unresolved_scope_dimensions': list(scope),
+        'system_approval_eligible': False}
+    evidence = validate_record(record={'record_type': 'EVIDENCE_CHECK',
+        **evidence_body, 'evidence_check_id': content_hash(value=evidence_body)})
+    context = {'record_type': 'D03_RECORDED_COMPANY_REVIEW_CONTEXT',
+        'source_binding': {'semantic_source_id': source['semantic_source_id'],
+            'source_proofs': source['source_proofs'],
+            'required_unit_ids': source['required_unit_ids'],
+            'unit_hashes': [{'unit_id': unit['unit_id'],
+                'content_hash': content_hash(value=unit)}
+                for unit in source['units']]},
+        'candidate': candidate, 'evidence': evidence,
+        'recorded_only': True, 'semantic_correctness_verified': False}
+    context_bytes = canonical_json_bytes(value=context)
+    rendered_bytes = (b'# D03 recorded company review\n\n'
+        b'Recorded answers are test input, not accepted company findings.\n\n'
+        + context_bytes)
+    unit = build_review_unit(candidate=candidate, evidence_check=evidence,
+        source_bindings=references, compiled_spec=spec,
+        review_context_hash=sha256_bytes(content=context_bytes),
+        rendered_review_hash=sha256_bytes(content=rendered_bytes),
+        renderer_semantic_version='D03_RECORDED_COMPANY_REVIEW_V1')
+    return {'candidate_record': candidate, 'evidence_record': evidence,
+        'review_unit': unit, 'review_context_text': context_bytes.decode('utf-8'),
+        'rendered_review_text': rendered_bytes.decode('utf-8'),
+        'review_decision_created': False, 'native_result_or_run_created': False,
+        'recorded_only': True}
+
+
+def collect_recorded_assessments(*, company_id, ledger,
+                                 include_company_review=False):
     """Read the exact complete current request set; grant no company result.
 
     This collection is a point-in-time view of an already initialized test
@@ -106,6 +214,8 @@ def collect_recorded_assessments(*, company_id, ledger):
     from .requirements import load_requirement_snapshot
     from .sources import resolve_repository_file
 
+    need(type(include_company_review) is bool,
+         'D03_COMPANY_REVIEW_SELECTION_INVALID')
     _require_d03_recorded_ledger(ledger)
     need((ledger.root/'binding.json').is_file(),
          'D03_RECORDED_LEDGER_NOT_INITIALIZED')
@@ -203,4 +313,8 @@ def collect_recorded_assessments(*, company_id, ledger):
             'native_review_complete': False,
             'native_result_or_run_created': False,
             'production_authorized': False}
-        return {**body, 'assessment_set_id': content_hash(value=body)}
+        assessment = {**body, 'assessment_set_id': content_hash(value=body)}
+        if include_company_review:
+            assessment['company_review'] = _recorded_company_review(
+                source=source, assessment=assessment)
+        return assessment

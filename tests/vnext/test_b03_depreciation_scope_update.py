@@ -41,6 +41,18 @@ class B03CurrentUpdateMaterialTest(TestCase):
             self.assertEqual({'provider':0,'paid':0,'sec':0},
                              salesforce['calls'])
 
+
+
+class B03LegacyRecoveryMaterialTest(TestCase):
+    def test_old_success_has_no_current_credit_but_new_input_can_attempt(self):
+        self.enterContext(patch.object(socket.socket, 'connect',
+            side_effect=AssertionError('NETWORK_FORBIDDEN')))
+        self.enterContext(patch.object(socket, 'getaddrinfo',
+            side_effect=AssertionError('DNS_FORBIDDEN')))
+        self.enterContext(patch('sec_http.urlopen',
+            side_effect=AssertionError('HTTP_FORBIDDEN')))
+        with tempfile.TemporaryDirectory(prefix='b03-old-success-') as tmp:
+            root = Path(tmp).resolve()
             # Preserve an old candidate's disk history but refuse to grant it
             # current credit through the new entry when the source conflicts.
             earlier = inherited_run_company(state_root=root/'salesforce',
@@ -137,18 +149,43 @@ class B03SouthwestUpdateMaterialTest(TestCase):
                 configuration=southwest_configuration))
 
 
+class B03FordUpdateMaterialTest(TestCase):
+    def test_footnoted_impairment_cannot_become_current_b03(self):
+        self.enterContext(patch.object(socket.socket, 'connect',
+            side_effect=AssertionError('NETWORK_FORBIDDEN')))
+        self.enterContext(patch.object(socket, 'getaddrinfo',
+            side_effect=AssertionError('DNS_FORBIDDEN')))
+        self.enterContext(patch('sec_http.urlopen',
+            side_effect=AssertionError('HTTP_FORBIDDEN')))
+        with tempfile.TemporaryDirectory(prefix='b03-ford-impairment-') as tmp:
+            root = Path(tmp).resolve()
+            outcome = run_company(state_root=root/'ford', source_root=ROOT,
+                company_id='ford_motor_company', metric_ids=['B03'])
+            row, = outcome['metrics']
+            self.assertEqual('UPDATES_INCOMPLETE', outcome['status'])
+            self.assertEqual('EXECUTION_FAILED', row['status'])
+            self.assertIn('B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:'
+                          'SELECTED_DEPRECIATION_INCLUDES_IMPAIRMENT',
+                          row['terminal']['error']['reason'])
+            self.assertIsNone(row['last_verified_candidate'])
+            self.assertIsNone(strict_json_file(
+                path=root/'ford/metrics/B03/current.json')[
+                    'successful_attempt'])
+            self.assertEqual({'provider':0,'paid':0,'sec':0}, outcome['calls'])
+
+
 class B03HistoricalRecoveryVerifierTest(TestCase):
     def test_only_source_scope_conflict_can_retain_a_historical_terminal(self):
         old_rows = {'B03': {'result_id': 'historical-only'}}
         with (patch.object(successor, '_verify_candidate',
                            side_effect=successor.B03CurrentScopeConflict(
-                               'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED')),
+                               'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED',
+                               old_rows)),
               patch.object(successor.inherited, '_verify_candidate',
                            return_value=old_rows) as mechanical):
             self.assertEqual(old_rows, successor._verify_historical_candidate(
                 'root', 'terminal', 'configuration'))
-            mechanical.assert_called_once_with('root', 'terminal',
-                                               'configuration')
+            mechanical.assert_not_called()
         with (patch.object(successor, '_verify_candidate',
                            side_effect=ValueError('UPDATE_SUCCESS_ROW_CHANGED')),
               patch.object(successor.inherited, '_verify_candidate') as mechanical):
@@ -197,9 +234,9 @@ class B03HistoricalRecoveryVerifierTest(TestCase):
                 made = stack.enter_context(patch.object(successor.normal,
                     'create_normal_run', return_value=created))
                 rendered = stack.enter_context(patch.object(successor,
-                    'render_ordinary_run', return_value={'files': {}}))
-                replayed = stack.enter_context(patch.object(successor.normal,
-                    'replay_case', return_value={'primary_metric_id': 'B03'}))
+                    'render_ordinary_run', return_value={'files': {},
+                        'replay_context': {'case': {
+                            'primary_metric_id': 'B03'}}}))
                 scoped = stack.enter_context(patch.object(successor,
                     'assess_direct_depreciation_scope',
                     return_value={'blocked': False,
@@ -216,7 +253,8 @@ class B03HistoricalRecoveryVerifierTest(TestCase):
                 verifier = stack.enter_context(patch.object(successor,
                     '_verify_candidate', side_effect=[
                         successor.B03CurrentScopeConflict(
-                            'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED'),
+                            'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED',
+                            {'B03': {'result_id': 'historical-only'}}),
                         {'B03': {'result_id': 'new-result'}}]))
                 outcome = successor._run_once_b03(
                     state_root=root/'state', source_root=root/'processing',
@@ -224,10 +262,9 @@ class B03HistoricalRecoveryVerifierTest(TestCase):
                     company_id='salesforce')
             self.assertEqual(2, postcheck.call_count)
             self.assertEqual(2, verifier.call_count)
-            self.assertEqual((1, 1, 1, 1, 1),
+            self.assertEqual((1, 1, 1, 1),
                              (installed.call_count, made.call_count,
-                              rendered.call_count, replayed.call_count,
-                              scoped.call_count))
+                              rendered.call_count, scoped.call_count))
             self.assertEqual('EXECUTION_FAILED', outcome['status'])
             self.assertEqual('POSTCHECK_SOURCE_CHANGED',
                              outcome['terminal']['error']['reason'])

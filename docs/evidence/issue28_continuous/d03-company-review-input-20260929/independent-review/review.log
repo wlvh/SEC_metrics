@@ -1,0 +1,12 @@
+.
+----------------------------------------------------------------------
+Ran 1 test in 44.780s
+
+OK
+
+Static review of 869df6aadd93b3f1011e4b281ec0e28fc80f2814 against its parent:
+- Changed D03 source file SHA-256 and size match the V14 baseline manifest: 87f76c842dbed32d0c1aee3bcac4ad9db11b0a88e784501f57e06a8dd1980078 / 17510.
+- Provider, SEC and ordinary-refresh receipts name the same V14 execution authority sha256:d6dd39cd36125b4b4bbdba72cbc156e1146e9cc4dc3d9b4f1378b215f481a5d0; provider receipt names closure sha256:1d5b1d29a385e607362620e5c004a09379ad6c7376e337a54c171ccce00bbf8e and zero calls.
+- git diff --check on the reviewed paths passed.
+- Complete Marriott material, incomplete-set material, source/context material and fast-suite logs were read as executing-parent evidence; this reviewer did not rerun them.
+- This reviewer ran only the single named 44.780 s saved-source recorded test above, with the test's network and DNS prohibitions.

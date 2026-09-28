@@ -21,6 +21,8 @@ from vnext.native_assessment_replay import replay_native_response
 from vnext.native_request_construction import request_construction_session
 from vnext.normal_source_authority import ROOT
 from vnext.requirements import load_requirement_snapshot
+from vnext.review import (create_system_review_decision,
+                          effective_review_decision)
 from vnext.d03_native_assessment import collect_recorded_assessments
 
 
@@ -100,6 +102,11 @@ class D03NativeAssessmentTest(unittest.TestCase):
                 self.assertEqual('INCOMPLETE_ASSESSMENT_NOT_NONDISCLOSURE',
                                  collection['proposed_branch'])
                 self.assertFalse(collection['native_result_or_run_created'])
+                with self.assertRaisesRegex(ValueError,
+                        'D03_COMPANY_REVIEW_COMPLETE_SET_REQUIRED'):
+                    collect_recorded_assessments(
+                        company_id='marriott_international', ledger=ledger,
+                        include_company_review=True)
                 (path/'semantic-request.json').write_bytes(b'{}')
                 with self.assertRaisesRegex(ValueError,
                         'NATIVE_SAVED_REQUEST_OR_SOURCE_CHANGED'):
@@ -335,6 +342,43 @@ class D03NativeCollectionMaterialTest(unittest.TestCase):
                 self.assertFalse(collection['semantic_correctness_verified'])
                 self.assertFalse(collection['native_review_complete'])
                 self.assertFalse(collection['native_result_or_run_created'])
+                with_review = collect_recorded_assessments(
+                    company_id='marriott_international', ledger=ledger,
+                    include_company_review=True)
+                self.assertEqual(collection['assessment_set_id'],
+                    with_review['assessment_set_id'])
+                review = with_review['company_review']
+                self.assertEqual('REVIEW_REQUIRED',
+                    review['candidate_record']['status'])
+                self.assertEqual('PASS', review['evidence_record']['status'])
+                self.assertEqual('PENDING', review['review_unit']['status'])
+                self.assertFalse(review['review_unit'][
+                    'system_approval_eligible'])
+                self.assertFalse(review['review_decision_created'])
+                self.assertFalse(review['native_result_or_run_created'])
+                self.assertTrue(review['recorded_only'])
+                with self.assertRaisesRegex(ValueError,
+                        'SYSTEM review requires exact enum scope evidence'):
+                    create_system_review_decision(
+                        review_unit=review['review_unit'],
+                        required_claims=review['review_unit']['required_claims'],
+                        decided_at_utc='2026-09-29T00:00:00Z',
+                        requirement=requirement)
+                with self.assertRaisesRegex(ValueError,
+                        'Review unit has no decision'):
+                    effective_review_decision(
+                        review_unit=review['review_unit'], decisions=[])
+                context = strict_json_loads(text=review['review_context_text'])
+                self.assertEqual(17, len(context['source_binding'][
+                    'unit_hashes']))
+                self.assertEqual(collection['source_id'],
+                    context['source_binding']['semantic_source_id'])
+                self.assertEqual(5, len(context['candidate']['selected'][
+                    'complete_assessment']['completed']))
+                self.assertEqual(collection['unresolved_request_ids'],
+                    [row['request_id'] for row in context['candidate'][
+                        'selected']['complete_assessment']['completed']
+                     if row['review_blockers']])
                 with ledger.locked():
                     self.assertEqual([5, 5, 0], ledger.snapshot()['counts'])
 

@@ -1,5 +1,6 @@
 """A narrow B03 source fact must not enter current update or release credit."""
 from contextlib import redirect_stdout
+from copy import deepcopy
 from io import StringIO
 import json
 from pathlib import Path
@@ -13,6 +14,7 @@ from tools import vnext_normal_update
 from vnext import ordinary_release_preparation as release
 from vnext.b03_depreciation_scope import (
     _nearest_da_label, assess_direct_depreciation_scope)
+from vnext.canonical import sha256_bytes
 from vnext.normal_run_v3 import (create_normal_run, install_normal_inputs,
                                  prepare_case)
 from vnext.normal_source_authority import ROOT
@@ -135,3 +137,59 @@ class B03DepreciationScopeMaterialTest(TestCase):
                 release._result_selection_basis(data_root=data,
                     manifest=created['manifest'], result=result,
                     rendered=rendered)
+
+
+class B03ImpairmentSourceMaterialTest(TestCase):
+    def test_ford_total_includes_footnoted_impairment_depreciation(self):
+        self.enterContext(original_sources_only())
+        case = prepare_case(data_root=ROOT,
+                            company_id='ford_motor_company', metric_id='B03')
+        self.assertEqual('PUBLISHED', case['results']['B03']['publication'])
+        checked = assess_direct_depreciation_scope(case=case, data_root=ROOT)
+        self.assertEqual('SELECTED_DEPRECIATION_INCLUDES_IMPAIRMENT',
+                         checked['status'])
+        self.assertTrue(checked['blocked'])
+        proof = checked['impairment_inclusion_proof']
+        self.assertEqual('15974', proof['visible_component_sum'])
+        self.assertEqual('15,974', proof['selected_visible_total'])
+        self.assertEqual('8,235',
+                         proof['included_component']['visible_value'])
+        self.assertEqual('g', proof['included_component']['marker'])
+        self.assertIn('depreciation related to the Model e asset impairment',
+                      proof['footnote']['text'])
+        with patch.object(release.normal, 'replay_case', return_value=case):
+            with self.assertRaisesRegex(ValueError,
+                    'ORDINARY_RELEASE_B03_DEPRECIATION_SCOPE_UNRESOLVED'):
+                release._result_selection_basis(data_root=ROOT, manifest={},
+                    result=case['results']['B03'], rendered={})
+
+    def test_exclusion_footnote_cannot_trigger_inclusion_guard(self):
+        self.enterContext(original_sources_only())
+        case = prepare_case(data_root=ROOT,
+                            company_id='ford_motor_company', metric_id='B03')
+        proof = next(row for row in case['source_proofs']
+            if row.get('accession') == '0000037996-26-000015'
+            and row.get('document_name') == 'f-20251231.htm')
+        raw = (ROOT/proof['request_repo_relative_path']).read_bytes()
+        text = raw.decode('utf-8')
+        anchor = text.index('Model e asset impairment (see Note')
+        include = text.rfind('Includes', 0, anchor)
+        self.assertLess(anchor-include, 300)
+        changed = (text[:include] + 'Excludes' +
+                   text[include+len('Includes'):]).encode('utf-8')
+        with tempfile.TemporaryDirectory(prefix='b03-footnote-negative-') as tmp:
+            root = Path(tmp).resolve()
+            target = root/proof['request_repo_relative_path']
+            target.parent.mkdir(parents=True)
+            target.write_bytes(changed)
+            altered = deepcopy(case)
+            altered['source_proofs'] = [
+                {**row, 'content_sha256': sha256_bytes(content=changed)}
+                if row == proof else row for row in case['source_proofs']]
+            # This synthetic text change checks only the local source-role
+            # relation. It has no SEC request-log or business credit.
+            checked = assess_direct_depreciation_scope(case=altered,
+                                                        data_root=root)
+            self.assertFalse(checked['blocked'])
+            self.assertEqual('NO_EXPLICIT_NARROW_SCOPE_FOUND',
+                             checked['status'])

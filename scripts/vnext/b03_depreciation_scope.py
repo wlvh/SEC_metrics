@@ -2,17 +2,21 @@
 
 Company Facts supplies an approved concept and amount, but its name does not
 prove that an inline fact represents all depreciation and amortization. This
-check only recognizes an explicit fixed-asset subset in the selected fact's
-original annual text. It never substitutes a competing number or certifies
-that an unflagged result has complete EBITDA coverage.
+check only recognizes an explicit fixed-asset subset or an impairment-related
+depreciation component in the selected fact's original annual text. It never
+substitutes a competing number or certifies that an unflagged result has
+complete EBITDA coverage.
 """
 from html.parser import HTMLParser
 from pathlib import Path
 import re
 
 from .canonical import sha256_bytes
+from .composite_scope import index_source_structure
+from .constraints import parse_numeric_claim
 from .deterministic_router import (
     _numeric_xbrl_value, parse_accession_xbrl_source)
+from .financial_structured import _InlineTableIndex, _fact_cells
 from .sources import resolve_repository_file
 
 
@@ -25,6 +29,13 @@ _DA_CONCEPTS = {
     'us-gaap:DepreciationAmortizationAndAccretionNet',
     'us-gaap:DepreciationAndAmortization',
 }
+_NUMBER = re.compile(r'\(?[0-9][0-9,]*(?:\.[0-9]+)?\)?')
+_MARKER = re.compile(r'\(([a-z0-9]{1,2})\)', re.I)
+_FOOTNOTE = re.compile(r'^\(([a-z0-9]{1,2})\)\s*(.+)$', re.I)
+_IMPAIRMENT_DEPRECIATION = re.compile(
+    r'^\([a-z0-9]{1,2}\)\s*includes?\b.{0,180}\bdepreciation\b'
+    r'.{0,100}\b(?:related to|due to|associated with|from)\b'
+    r'.{0,90}\bimpairment\b', re.I)
 
 
 def _nearest_da_label(prefix):
@@ -69,6 +80,107 @@ class _VisibleFactText(HTMLParser):
     def handle_data(self, data):
         if data.strip():
             self._append(data)
+
+
+def _linked_footnotes(structure, table_order):
+    """Read only the numbered block directly following the selected table."""
+    table = structure['tables'][table_order]
+    next_table = min((row['start_byte'] for row in structure['tables']
+        if row['start_byte'] >= table['end_byte']),
+        default=structure['source_size'])
+    notes = {}
+    started = False
+    for block in structure['blocks']:
+        if block['inside_table'] or block['start_byte'] < table['end_byte']:
+            continue
+        if block['start_byte'] >= next_table:
+            break
+        text = ' '.join(block['visible_text'].split())
+        if not started and re.fullmatch(r'[_\-—]{3,}', text):
+            continue
+        match = _FOOTNOTE.match(text)
+        if match is None:
+            break
+        notes.setdefault(match.group(1).casefold(), []).append(block)
+        started = True
+    return notes
+
+
+def _selected_impairment_inclusion(raw, parsed, selected_rows):
+    """Prove that a selected visible total sums a footnoted impairment item.
+
+    A nearby impairment mention is insufficient: the marker must belong to a
+    numeric component of the selected row, the visible components must sum to
+    its selected total, and the adjacent original footnote must explicitly say
+    that impairment-related depreciation is included.
+    """
+    ordinals = {row['ordinal'] for row in selected_rows}
+    index = _InlineTableIndex(raw)
+    index.feed(raw.decode('utf-8'))
+    index.close()
+    cells = _fact_cells(index, parsed, ordinals)
+    structure = index_source_structure(source_bytes=raw)
+    for selected in selected_rows:
+        pair = cells.get(selected['ordinal'])
+        if pair is None:
+            continue
+        table, selected_cell = pair
+        order = table['order']
+        source_table = structure['tables'][order]
+        position = index.fact_positions[selected['ordinal']]
+        if not (source_table['start_byte'] <= position < source_table['end_byte']):
+            continue
+        row = [cell for cell in table['rows'][selected_cell['row_index']]
+               ['cells'] if cell['is_origin']]
+        numbers = [(cell, parse_numeric_claim(raw_value=cell['text'],
+                    reported_unit='USD')) for cell in row
+                   if _NUMBER.fullmatch(cell['text'].strip())]
+        if not numbers or numbers[-1][0] != selected_cell:
+            continue
+        components = numbers[:-1]
+        if len(components) < 2 or sum(value for _, value in components) != numbers[-1][1]:
+            continue
+        if not any(re.search(r'\bdepreciation\b.*\bamortization\b',
+                             cell['text'], re.I)
+                   for cell in row if cell['column_index'] < components[0][0]['column_index']):
+            continue
+        footnotes = _linked_footnotes(structure, order)
+        for marker_cell in row:
+            match = _MARKER.fullmatch(marker_cell['text'].strip())
+            if match is None or marker_cell['column_index'] >= selected_cell['column_index']:
+                continue
+            earlier = [(cell, value) for cell, value in components
+                       if cell['column_index'] < marker_cell['column_index']]
+            if not earlier:
+                continue
+            component, amount = earlier[-1]
+            later = [cell for cell, _ in components
+                     if component['column_index'] < cell['column_index']
+                     < marker_cell['column_index']]
+            if later:
+                continue
+            notes = footnotes.get(match.group(1).casefold(), [])
+            if len(notes) != 1:
+                continue
+            note = notes[0]
+            text = ' '.join(note['visible_text'].split())
+            if (not _IMPAIRMENT_DEPRECIATION.search(text)
+                    or sha256_bytes(content=raw[note['start_byte']:
+                        note['end_byte']]) != note['span_sha256']):
+                continue
+            return {'selected_fact': selected,
+                'table_id': table['table_id'],
+                'table_grid_sha256': table['grid_sha256'],
+                'selected_visible_total': selected_cell['text'],
+                'visible_component_sum': str(sum(value for _, value in components)),
+                'included_component': {'visible_value': component['text'],
+                    'column_index': component['column_index'],
+                    'marker': match.group(1).casefold()},
+                'footnote': {'text': note['visible_text'],
+                    'start_byte': note['start_byte'],
+                    'end_byte': note['end_byte'],
+                    'span_sha256': note['span_sha256']}}
+    return None
 
 
 def assess_direct_depreciation_scope(*, case, data_root):
@@ -156,6 +268,11 @@ def assess_direct_depreciation_scope(*, case, data_root):
             'competing_facts': [{**fact,
                 'label': labels[fact['ordinal']][-190:]}
                 for fact in competitors]}
+    impairment = _selected_impairment_inclusion(raw, parsed, selected_rows)
+    if impairment is not None:
+        return {'status': 'SELECTED_DEPRECIATION_INCLUDES_IMPAIRMENT',
+            'blocked': True, 'primary_source_sha256': proof['content_sha256'],
+            'impairment_inclusion_proof': impairment}
     return {'status': 'NO_EXPLICIT_NARROW_SCOPE_FOUND', 'blocked': False,
         'primary_source_sha256': proof['content_sha256'],
         'selected_fact_ordinals': sorted(selected_ordinals),
