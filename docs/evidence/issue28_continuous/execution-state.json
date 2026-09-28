@@ -35,11 +35,11 @@
   },
   "current_work": [
     "Pushed 29b401d7 includes reviewed D03 lossless request bytes; its main CI 36382080314 completed SUCCESS, as did prior b5b2a91b CI 36380074529. These CI outcomes do not establish D03 company results or full Issue acceptance.",
-    "Current uncommitted D03 recorded-only native unit path creates and replays one source-bound Candidate/Evidence from real Marriott source; unresolved response fails. JPM old-fact successor also traverses recorded WB-3 with synthetic response, preserving no-program-fact credit. This is 0 real calls and no company Result/Run. Final-code Marriott 3/3 including live-root substitution rejection and V14 binding pass; B13 replay/acceptance 2/2 passed after D03 Evidence-name adjustment; old public D03 source-fact checker 2/2 passed before the D03-only label/ledger-guard changes. First fast failed 134/135 on unchanged C04 30s timeout, targeted C04 passed, single full retry fast135/135 passed before those D03-only final changes. Exact-SHA limited review pending.",
+    "Committed e1865d7e D03 recorded-only native unit path creates and replays one source-bound Candidate/Evidence from real Marriott source; unresolved response fails. JPM old-fact successor also traverses recorded WB-3 with synthetic response, preserving no-program-fact credit. This is 0 real calls and no company Result/Run. Final-code Marriott 3/3 including live-root substitution rejection and V14 binding pass; B13 replay/acceptance 2/2 passed after D03 Evidence-name adjustment; old public D03 source-fact checker 2/2 passed before the D03-only label/ledger-guard changes. First fast failed 134/135 on unchanged C04 30s timeout, targeted C04 passed, single full retry fast135/135 passed before those D03-only final changes. Exact-SHA limited independent review PASS_WITH_BOUNDS and independent short log3/3; push pending.",
     "D04 retains 10/10 real private candidates, B13 V8 lexical route remains suspended after two NEEDS_FIX reviews, C04 cross-fiscal-year online update and full390/legacy exit remain unproven. Ledger still provider/paid/SEC 143/143/52."
   ],
   "next": [
-    "Finish exact-SHA limited review of the D03 recorded-only native unit path, then append-only push and observe new-head CI at a natural checkpoint. Preserve 653/635/295/248-second JPM timing evidence; do not rerun the long anchor test absent a relevant change.",
+    "Append-only push reviewed D03 recorded-only native unit path and observe new-head CI at a natural checkpoint. Preserve 653/635/295/248-second JPM timing evidence; do not rerun the long anchor test absent a relevant change.",
     "Continue D03 full authentic group receipt collection, native Review and Result/Run chain within no-call/offline authority; one recorded request is not a company result. D03 real calls and resources remain separate decisions.",
     "Continue independent B06 source-completeness, C04 normal cross-year, 390 reconciliation and old semantic-entry exit where existing source and authority allow; keep B13 V8 stopped and #47 isolated."
   ],
@@ -2293,6 +2293,29 @@
       "ended_at": "2026-09-28T05:25:38Z",
       "tool_calls": 46,
       "result_path": "docs/evidence/issue28_continuous/d03-lossless-wire-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
+    },
+    {
+      "task_name": "review_d03native_e1865d7",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_recorded_native_unit",
+      "scope_paths": [
+        "scripts/vnext/d03_native_assessment.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "scripts/vnext/native_request_construction.py",
+        "scripts/vnext/regulatory_fact_review.py",
+        "catalog/r6/D03_regulatory_investigations_assessment_v1.md",
+        "tests/vnext/test_d03_native_assessment.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/d03-recorded-native-unit-20260928/"
+      ],
+      "patch_sha": "e1865d7e883aa215077c285e4198e53eef03fef3",
+      "spawned_at": "2026-09-28T06:49:37Z",
+      "ended_at": "2026-09-28T06:58:53Z",
+      "tool_calls": 44,
+      "result_path": "docs/evidence/issue28_continuous/d03-recorded-native-unit-20260928/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS"
     }
   ],
@@ -5827,7 +5850,9 @@
     "v14_closure": "sha256:5553beca91ced749f70f8365d597e88489c84dd96688655a5f69459cd2ccee32",
     "current_provider_sec_refresh_wiring": "PASS",
     "fast": "FIRST_FAILED_C04_30_SECOND_TIMEOUT_134_OF_135_TARGETED_C04_PASS_FINAL_RETRY_PASS_135_OF_135_307_920_SECONDS",
-    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "limited_independent_review": "PASS_WITH_BOUNDS_44_TOOL_CALLS_INDEPENDENT_SHORT_LOG_3_OF_3",
+    "independent_review_patch_sha": "e1865d7e883aa215077c285e4198e53eef03fef3",
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-recorded-native-unit-20260928/independent-review/conclusion.md",
     "real_ledger_claims": 195,
     "real_ledger_provider_paid_sec": [143, 143, 52],
     "new_real_calls": [0, 0, 0],
