@@ -34,13 +34,13 @@
     "unknown": 0
   },
   "current_work": [
-    "Pushed head c1e96fe4 main CI 36365013124 remains in_progress at the latest natural checkpoint; fast and most native jobs succeeded, saved-source shard1 and JPMorgan had no terminal. Earlier 120e0e2b main CI 36361943184 SUCCESS 15/15.",
+    "Pushed head c1e96fe4 main CI 36365013124 completed SUCCESS 15/15 at 2026-09-28T01:55:01Z, including both saved-source shards and JPMorgan. Local D03 bridge patch 8a49b5ab and later JPM recorded evidence have not been pushed; neither inherits that CI terminal.",
     "Marriott B01 has a reviewed recorded FY2024-to-FY2025 two-source update path with old metadata explicitly derived, new saved submissions/Company Facts automatically selected, new period Run and independent cold reads. It proves offline single-metric control flow, not authentic online historical source timing or complete390. Original real ledger remains 143/143/52.",
-    "D03 new offline bridge replays a complete saved raw-response packet, binds original request IDs to current effective request IDs, and returns a complete interpretation proposal with no provider or native credit. Marriott five saved groups remain unresolved; wrong packet ID is rejected. Full module3 and fast135 passed; limited review/current-head CI pending. B13 V8 NEEDS_FIX, D03 real calls forbidden, B06 remaining relations and full390/legacy exit unresolved."
+    "D03 offline bridge replays complete saved raw-response packets, binds original to effective request IDs, and returns a complete proposal without provider/native credit. Marriott5 groups and JPMorgan38 groups (one actual source-anchor successor) remain unresolved. JPM synthetic full packet and separate-process cold read retained identical identities and 40 packet files; 812.504s plus 507.22s locally. Module3/fast135 and exact code patch limited review passed; the JPM evidence increment still needs scoped review. B13 V8 NEEDS_FIX, D03 real calls forbidden, B06 relationships and full390/legacy exit unresolved."
   ],
   "next": [
-    "Complete exact-SHA limited independent review of D03 recorded-interpretation bridge. Keep its packet-origin and no-native-credit boundary; do not grant real calls or company conclusion.",
-    "Read c1e96fe4 main CI terminal at a natural checkpoint before pushing next code head; then push append-only and update Issue28 section3/PR43 in place. Do not repeat unchanged long materials.",
+    "Review only the new JPMorgan full synthetic recorded/cold evidence on its exact SHA; reuse the prior 8a49b5ab code review and do not rerun the 812s/507s chain. Keep packet-origin and no-native-credit boundaries.",
+    "c1e96fe4 main CI is terminal SUCCESS. Push the bounded D03 bridge and JPM evidence append-only after incremental review, observe new-head CI once, and update Issue28 section3/PR43 in place.",
     "Continue D03 native Candidate/Review/Run preparation, B13 known semantic error repair, B06 source relationship work, and 390/legacy exit only where existing source/authority permit; business and resource choices remain distinct."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
@@ -2178,6 +2178,23 @@
           "verdict": "PASS_WITH_BOUNDS"
         }
       ]
+    },
+    {
+      "task_name": "review_d03bridge_8a49b5a",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_recorded_interpretation_bridge",
+      "scope_paths": [
+        "scripts/vnext/d03_complete_interpretation.py",
+        "tests/vnext/test_d03_complete_interpretation.py",
+        "tools/run_fast_tests_v2.py",
+        "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/"
+      ],
+      "patch_sha": "8a49b5ab566c755d3d60a9db7bb5ef24f5a55ac0",
+      "spawned_at": "2026-09-28T01:41:07.220388+00:00",
+      "ended_at": "2026-09-28T01:44:53+00:00",
+      "tool_calls": 35,
+      "result_path": "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
     }
   ],
   "ci_capacity_20260922": {
@@ -5428,8 +5445,10 @@
     "execution_code_head": "120e0e2be51c243556623f81556879c76bbfe071"
   },
   "d03_recorded_interpretation_bridge_20260928": {
-    "status": "LOCAL_D03_RECORDED_COMPLETE_INTERPRETATION_BRIDGE_PASS_INDEPENDENT_REVIEW_PENDING",
+    "status": "LOCAL_D03_JPM_COMPLETE_SYNTHETIC_RECORDED_AND_COLD_PASS_INCREMENT_REVIEW_PENDING",
+    "patch_sha": "8a49b5ab566c755d3d60a9db7bb5ef24f5a55ac0",
     "evidence": "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/README.md",
+    "independent_review": "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/independent-review/conclusion.md",
     "scope_paths": [
       "scripts/vnext/d03_complete_interpretation.py",
       "tests/vnext/test_d03_complete_interpretation.py",
@@ -5437,6 +5456,16 @@
     ],
     "recorded_packet_id": "sha256:198ade1a29070ec2737f8372618415e1e1da6b5155b507ea748d5f5550029162",
     "bridge_record_id": "sha256:598ab808a7027b26456a1dd568cf5fbe8e420462d7365f80ff7c6eff87c6c9b6",
+    "jpm_recorded_packet_id": "sha256:72536bbfb017dacb048a8549dd93a56f53c6604f4841d26c52324d48a8946972",
+    "jpm_bridge_record_id": "sha256:bd5eaf873ddfa2cefde9ed1c1cf3896370800eb4ccf645e85d038624ad07cdba",
+    "jpm_group_count": 38,
+    "jpm_actual_source_anchor_successor_group_count": 1,
+    "jpm_unresolved_group_count": 38,
+    "jpm_synthetic_recorded_not_model_output": true,
+    "jpm_record_and_bridge_seconds": 812.504,
+    "jpm_independent_process_cold_seconds": 507.22,
+    "jpm_packet_files_unchanged": 40,
+    "jpm_incremental_review_pending": true,
     "company_id": "marriott_international",
     "group_count": 5,
     "unresolved_group_indices": [
