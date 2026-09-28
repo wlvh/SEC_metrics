@@ -80,7 +80,7 @@ def _json(value):
 
 def _source_json(value):
     """Keep native source/request strings exact; legacy semantic JSON is unchanged."""
-    if value.get('metric_id') in {'B13', 'D04'}:
+    if value.get('metric_id') in {'B13', 'D03', 'D04'}:
         from .native_unit_index import evidence_json_bytes
         return evidence_json_bytes(value)
     return _json(value)
@@ -88,7 +88,7 @@ def _source_json(value):
 
 def validate_source_unit_bytes(source):
     """Reject a lossy source packet before any request can claim a paid slot."""
-    if source.get('metric_id') not in {'B13', 'D04'}:
+    if source.get('metric_id') not in {'B13', 'D03', 'D04'}:
         return
     from .r6_semantic_source import _bytes
     for unit in source['units']:
@@ -103,7 +103,7 @@ def request_body(request, policy):
     payload = {k:v for k,v in request.items() if k not in
         {'system_prompt','provider_request_sent','provider_tokens_measured','production_authorized'}}
     from .native_unit_index import evidence_json_bytes
-    encode = evidence_json_bytes if request.get('metric_id') in {'B13', 'D04'} else _json
+    encode = evidence_json_bytes if request.get('metric_id') in {'B13', 'D03', 'D04'} else _json
     return encode({'model':policy.model,'messages':[
         {'role':'system','content':request['system_prompt']},
         {'role':'user','content':json.dumps(payload,ensure_ascii=False,sort_keys=True,separators=(',',':'))}],

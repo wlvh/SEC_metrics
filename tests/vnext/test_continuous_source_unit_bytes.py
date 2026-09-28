@@ -7,9 +7,9 @@ from vnext.r6_semantic_source import _seal_unit
 from vnext.continuous_semantic_calls import validate_source_unit_bytes,_json,_source_json,request_body,SemanticRequest,_FACTORY
 
 class SourceUnitBytesTest(unittest.TestCase):
-    def source(self,text):
+    def source(self,text,metric_id='D04'):
         unit=_seal_unit('sha256:'+'a'*64,'VISIBLE_TEXT',{'blocks':[{'block_index':1,'text':text}]},0)
-        value={'metric_id':'D04','units':[unit]};value['semantic_source_id']=content_hash(value=value);return value
+        value={'metric_id':metric_id,'units':[unit]};value['semantic_source_id']=content_hash(value=value);return value
     def test_unchanged_ascii_and_exact_original_unicode_are_valid(self):
         validate_source_unit_bytes(self.source('A business risk; no assessment.'))
         validate_source_unit_bytes(self.source('A business risk\u037e no assessment.'))
@@ -40,3 +40,28 @@ class SourceUnitBytesTest(unittest.TestCase):
             self.assertEqual(_bytes(decoded['units'][0]['payload']),_bytes(source['units'][0]['payload']))
         self.assertEqual(_source_json(self.source('Plain; unchanged')),_json(self.source('Plain; unchanged')))
         self.assertNotEqual(_source_json(self.source('Original\u037e')),_json(self.source('Original\u037e')))
+
+    def test_d03_source_request_and_wire_keep_original_source_bytes(self):
+        import json
+        from vnext.r6_semantic_source import _bytes
+        for text in ['Reported inquiry\u037e still pending.', 'Reported inquiry; still pending.']:
+            source=self.source(text,metric_id='D03')
+            stored=_source_json(source)
+            decoded=strict_json_loads(text=stored.decode())
+            self.assertEqual(source,decoded)
+            validate_source_unit_bytes(decoded)
+            request={**source,'system_prompt':'Review exact original source.'}
+            request_bytes=_source_json(request)
+            wire=request_body(request,SimpleNamespace(model='deepseek-flash'))
+            sent=json.loads(json.loads(wire)['messages'][1]['content'])
+            self.assertEqual(request_bytes.decode().strip(),
+                             json.dumps(request,ensure_ascii=False,sort_keys=True,separators=(',',':')))
+            self.assertEqual(sent['units'][0]['payload']['blocks'][0]['text'],text)
+            self.assertEqual(_bytes(sent['units'][0]['payload']),_bytes(source['units'][0]['payload']))
+        lossy=strict_json_loads(text=_json(self.source('Inquiry\u037e',metric_id='D03')).decode())
+        with self.assertRaisesRegex(ValueError,'SOURCE_UNIT_SERIALIZATION_CHANGED'):
+            validate_source_unit_bytes(lossy)
+        copied=SemanticRequest(_FACTORY,_json(self.source('Inquiry\u037e',metric_id='D03')),
+                               b'{}',b'{}',b'{}',{},SimpleNamespace(_check=lambda:None))
+        with self.assertRaisesRegex(ValueError,'SOURCE_UNIT_SERIALIZATION_CHANGED'):
+            copied.validate(None)

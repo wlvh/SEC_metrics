@@ -34,12 +34,12 @@
     "unknown": 0
   },
   "current_work": [
-    "Pushed cf23ab3d main CI 36375571134 completed SUCCESS 15/15 at 2026-09-28T04:36:39Z. Local f6e9e886 D03 output census, 23243375 replay-only factory and reviewed 1d017b8f follow-up remain unpushed; first factory review NEEDS_FIX, exact follow-up PASS_WITH_BOUNDS.",
-    "D03 current saved inputs remain 130 complete groups. Replay-only SemanticRequest factory now carries all 38 JPMorgan groups, including one old-source-fact successor, through current request/source identity validation; focused 168.866s test and fast135/135 pass. No D03 execution, Candidate, Review, Result or Run credit.",
+    "Pushed b5b2a91b preserves D03 output census and reviewed replay-only factory; first factory review NEEDS_FIX, exact follow-up PASS_WITH_BOUNDS. Prior cf23ab3d main CI 36375571134 completed SUCCESS 15/15. b5b2a91b main CI 36380074529 was in_progress at the latest read; no current-head green claim.",
+    "Current uncommitted D03 lossless-source repair preserves four U+037E characters in saved Paramount source/request/would-be wire and rejects a lossy copy before claim. Current V14 execution and three wiring receipts revalidated; focused tests and fast135/135 pass, exact-SHA review remains pending. No D03 execution, Candidate, Evidence, Review, Result or Run credit.",
     "D04 retains 10/10 real private candidates, B13 V8 lexical route remains suspended after two NEEDS_FIX reviews, C04 cross-fiscal-year online update and full390/legacy exit remain unproven. Ledger still provider/paid/SEC 143/143/52."
   ],
   "next": [
-    "Complete exact-SHA limited review of the new D03 replay-only request factory, preserve reviewed byte-stable evidence, and push only append-only after necessary correction. Observe new-head CI without rerunning long JPM packet cold-read.",
+    "Complete limited exact-SHA review and append-only push of D03 lossless source/request/wire repair; check new-head CI at a natural checkpoint without repeating the long JPM packet cold-read.",
     "Continue the D03 native positive Candidate/Evidence/Review/Result/Run chain within no-call/offline authority; original or synthetic responses do not acquire live or business credit. D03 real calls and resources remain separate decisions.",
     "Continue independent B06 source-completeness, C04 normal cross-year, 390 reconciliation and old semantic-entry exit where existing source and authority allow; keep B13 V8 stopped and #47 isolated."
   ],
@@ -161,7 +161,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:568ab1eb52f4f44721e94a871efe78caf389862213a9c9278201c31b7e67c8d2",
+  "current_v15_development_closure": "sha256:aa37c0be3a268a4203f7f69fca7de224658ee9afad1a6f931d80ede699244858",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -5708,7 +5708,7 @@
     "d03_live_permission_added": false
   },
   "d03_replay_only_factory_20260928": {
-    "status": "REVIEWED_REPLAY_ONLY_FACTORY_PASS_WITH_BOUNDS_PUSH_PENDING",
+    "status": "REVIEWED_REPLAY_ONLY_FACTORY_PASS_WITH_BOUNDS_PUSHED_B5B2A91B",
     "scope_paths": [
       "scripts/vnext/continuous_semantic_calls.py",
       "tests/vnext/test_d03_native_preparation.py",
@@ -5760,5 +5760,31 @@
     "followup_patch_sha": "1d017b8f1f4b712aa93c068519a54e4a09e002b4",
     "independent_review_path": "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/independent-review/conclusion.md",
     "review_tool_calls_cumulative": 70
+  },
+  "d03_lossless_wire_20260928": {
+    "status": "ACTUAL_SOURCE_WIRING_AND_FAST_PASS_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/d03-lossless-wire-20260928/README.md",
+    "actual_source_company_id": "paramount_skydance_paramount_global",
+    "actual_source_units": 51,
+    "actual_request_groups": 14,
+    "u037e_exact_in_source_request_wire": [4, 4, 4],
+    "lossy_source_rejected_before_claim": true,
+    "selected_request_context_tokens": 194092,
+    "focused_source_unit_tests": "PASS_5_OF_5",
+    "compatibility_tests": "PASS_2_OF_2",
+    "fast_selectors": "PASS_135_OF_135_197_916_SECONDS",
+    "v14_closure": "sha256:aa37c0be3a268a4203f7f69fca7de224658ee9afad1a6f931d80ede699244858",
+    "provider_sec_refresh_wiring": "PASS",
+    "canonical_hash_algorithm_changed": false,
+    "old_v13_or_historical_package_rewritten": false,
+    "d03_live_permission_added": false,
+    "native_result_created": false,
+    "real_calls": [0, 0, 0],
+    "shared_with_issue47": {
+      "file": "scripts/vnext/continuous_semantic_calls.py",
+      "functions": ["_source_json", "validate_source_unit_bytes", "request_body"],
+      "effect": "D03 joins existing B13/D04 lossless source handling; existing B13/D04 and other default serialization branches stay unchanged",
+      "downstream_issue47_branch_operated": false
+    }
   }
 }
