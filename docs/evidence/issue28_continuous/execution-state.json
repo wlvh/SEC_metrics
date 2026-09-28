@@ -35,11 +35,11 @@
   },
   "current_work": [
     "Pushed b5b2a91b preserves D03 output census and reviewed replay-only factory; first factory review NEEDS_FIX, exact follow-up PASS_WITH_BOUNDS. Prior cf23ab3d main CI 36375571134 completed SUCCESS 15/15. b5b2a91b main CI 36380074529 was in_progress at the latest read; no current-head green claim.",
-    "Current uncommitted D03 lossless-source repair preserves four U+037E characters in saved Paramount source/request/would-be wire and rejects a lossy copy before claim. Current V14 execution and three wiring receipts revalidated; focused tests and fast135/135 pass, exact-SHA review remains pending. No D03 execution, Candidate, Evidence, Review, Result or Run credit.",
+    "D03 lossless-source repair bf1b1fd2 preserves four U+037E characters in saved Paramount source/request/would-be wire and rejects a lossy copy before claim. Current V14 execution and three wiring receipts revalidated; focused tests and fast135/135 pass, exact-SHA review PASS_WITH_BOUNDS. No D03 execution, Candidate, Evidence, Review, Result or Run credit.",
     "D04 retains 10/10 real private candidates, B13 V8 lexical route remains suspended after two NEEDS_FIX reviews, C04 cross-fiscal-year online update and full390/legacy exit remain unproven. Ledger still provider/paid/SEC 143/143/52."
   ],
   "next": [
-    "Complete limited exact-SHA review and append-only push of D03 lossless source/request/wire repair; check new-head CI at a natural checkpoint without repeating the long JPM packet cold-read.",
+    "Push the independently reviewed D03 lossless source/request/wire repair by append-only commit and check new-head CI at a natural checkpoint without repeating the long JPM packet cold-read.",
     "Continue the D03 native positive Candidate/Evidence/Review/Result/Run chain within no-call/offline authority; original or synthetic responses do not acquire live or business credit. D03 real calls and resources remain separate decisions.",
     "Continue independent B06 source-completeness, C04 normal cross-year, 390 reconciliation and old semantic-entry exit where existing source and authority allow; keep B13 V8 stopped and #47 isolated."
   ],
@@ -2277,6 +2277,23 @@
           "verdict": "PASS_WITH_BOUNDS"
         }
       ]
+    },
+    {
+      "task_name": "review_d03lossless_bf1b1fd",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_lossless_wire",
+      "scope_paths": [
+        "scripts/vnext/continuous_semantic_calls.py",
+        "tests/vnext/test_continuous_source_unit_bytes.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/d03-lossless-wire-20260928/"
+      ],
+      "patch_sha": "bf1b1fd250e64e175e67f00f85e50726d5f2e6dc",
+      "spawned_at": "2026-09-28T05:17:51Z",
+      "ended_at": "2026-09-28T05:25:38Z",
+      "tool_calls": 46,
+      "result_path": "docs/evidence/issue28_continuous/d03-lossless-wire-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
     }
   ],
   "ci_capacity_20260922": {
@@ -5762,7 +5779,7 @@
     "review_tool_calls_cumulative": 70
   },
   "d03_lossless_wire_20260928": {
-    "status": "ACTUAL_SOURCE_WIRING_AND_FAST_PASS_REVIEW_PENDING",
+    "status": "ACTUAL_SOURCE_WIRING_FAST_AND_LIMITED_REVIEW_PASS",
     "evidence": "docs/evidence/issue28_continuous/d03-lossless-wire-20260928/README.md",
     "actual_source_company_id": "paramount_skydance_paramount_global",
     "actual_source_units": 51,
@@ -5773,6 +5790,9 @@
     "focused_source_unit_tests": "PASS_5_OF_5",
     "compatibility_tests": "PASS_2_OF_2",
     "fast_selectors": "PASS_135_OF_135_197_916_SECONDS",
+    "independent_review_patch_sha": "bf1b1fd250e64e175e67f00f85e50726d5f2e6dc",
+    "independent_review": "PASS_WITH_BOUNDS_46_TOOL_CALLS_WITH_INDEPENDENT_SHORT_LOGS",
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-lossless-wire-20260928/independent-review/conclusion.md",
     "v14_closure": "sha256:aa37c0be3a268a4203f7f69fca7de224658ee9afad1a6f931d80ede699244858",
     "provider_sec_refresh_wiring": "PASS",
     "canonical_hash_algorithm_changed": false,
