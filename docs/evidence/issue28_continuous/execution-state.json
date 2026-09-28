@@ -34,7 +34,7 @@
     "unknown": 0
   },
   "current_work": [
-    "Current worktree D03-only native acceptance repair: a complete source-valid uncertain answer is preserved in per-request Candidate/Evidence instead of FAILED_TERMINAL; five Marriott synthetic recorded groups can complete with two unresolved requests, but still produce no semantic Review, Result/Run or business conclusion. Directed 3/3, full material 1/1 and B13/D04 compatibility 3/3 passed; first missing V14 rebind and an invalid synthetic current-action category remain in failure logs. V14 execution and three current wiring receipts rebound, V13/canonical unchanged. Exact-SHA limited review and new-head CI pending; no real calls.",
+    "Committed be73ef94 D03-only native acceptance repair: a complete source-valid uncertain answer is preserved in per-request Candidate/Evidence instead of FAILED_TERMINAL; five Marriott synthetic recorded groups can complete with two unresolved requests, but still produce no semantic Review, Result/Run or business conclusion. Directed 3/3, full material 1/1, B13/D04 compatibility 3/3 and local fast139/139 passed; first missing V14 rebind and an invalid synthetic current-action category remain in failure logs. V14 execution and three current wiring receipts rebound, V13/canonical unchanged. Exact-SHA limited review PASS_WITH_BOUNDS; new-head CI not yet triggered pending push. Real ledger read 195 claims/143/143/52; no new real calls.",
     "Pushed a863f722 D03 complete recorded collector and exact d06c99db limited review PASS_WITH_BOUNDS; five Marriott saved-source groups with synthetic recorded answers still require company semantic Review, not Result/Run. Earlier 5425d51a main CI 36389326801 completed SUCCESS; a863f722 main CI 36392170319 completed SUCCESS 15/15 at 2026-09-28T08:08:38Z. Real calls remain 0 for these changes.",
     "Attempted private unified release preparation using existing Enphase and Paramount D04 real-response ordinary Runs under current a863f722 code. The two input Runs share old V14 baseline 345712f3..., while current baseline is 8258cf4e...; _mechanically_replay_open_run rejected the old installed snapshot before matrix composition. prepare.exit=1 and complete traceback retained in d04-unified-release-20260928/. No prepared version, cold read, new coordinate or production credit. Prior D04 10/10 candidates remain intact; old Run trees were not sampled before and after this attempt.",
     "Using the original Enphase173-178 real responses under the then-current V14 closure b0a5faaf..., a new private ordinary Run retained original Result ID 7bf9ea83..., old success package and real ledger bytes unchanged. The current-bound Run entered one-coordinate complete-version preparation; selected TEXT_QUAL row and 1714-file independent cold read passed. Private stage then failed only at the repository scalability audit: five native fact reference prefix F literals and two authorization user_instruction_date literals were incorrectly reported as business hardcodes. Initial successor scanner 652a2505 removed the seven false positives but its exact-SHA limited review was NEEDS_FIX: a marker dictionary used in a ticker comparison, or an authorization-date dictionary used for period_end, could be hidden. The 35-call independent finding and short log are retained; full fast attempts remain FAILED due distinct 30-second selector timeouts, both isolated checks passed.",
@@ -42,7 +42,7 @@
     "B13 V8 lexical route remains suspended after two NEEDS_FIX reviews; C04 cross-fiscal-year online update, B06 five source relationships and full390/legacy exit remain unproven. Original ledger last checked at provider/paid/SEC 143/143/52, 195 slots."
   ],
   "next": [
-    "Read db5a23fd main CI 36429557390 at a natural checkpoint. Complete the current D03 uncertain-response fast run and exact-SHA limited review; then append-only push to the same Draft PR43 and read its actual main workflow once. Retain all original D03 recorded failures, the db5 D04 private-stage failures and the passed 4679-second release proof; do not repeat unchanged long chains.",
+    "db5a23fd main CI 36429557390 was still in_progress at the latest natural checkpoint, with no failed completed job. Append-only push reviewed be73ef94 and its limited-review receipt to the same Draft PR43, then read the new head's actual main workflow once. Retain original D03 recorded failures, the db5 D04 private-stage failures and the passed 4679-second release proof; do not repeat unchanged long chains.",
     "Continue D03 source-bound cross-group semantic Review and explicit company Result/Run/public-row path within no-call authority. A complete synthetic recorded set, even with unresolved correctly retained, is not a business conclusion; actual D03 model calls and resources remain separate decisions.",
     "Continue independent B06/C04/390/legacy-exit work. D04 already passed one-coordinate private release under current V14; this does not complete 390 or formal adoption. Keep B13 V8 suspended and #47 isolated."
   ],
@@ -828,6 +828,25 @@
     "shared_changes": []
   },
   "subagent_register": [
+    {
+      "task_name": "review_d03uncertain_be73ef9",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_unresolved_native",
+      "scope_paths": [
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/d03_native_assessment.py",
+        "tests/vnext/test_d03_native_assessment.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/d03-unresolved-native-20260928/"
+      ],
+      "patch_sha": "be73ef942d6ddce1c7143e2a59de88171f5ba8cd",
+      "spawned_at": "2026-09-28T14:01:46Z",
+      "ended_at": "2026-09-28T14:07:06Z",
+      "tool_calls": 31,
+      "tool_calls_reported_as_approximate": true,
+      "result_path": "docs/evidence/issue28_continuous/d03-unresolved-native-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
+    },
     {
       "task_name": "review_b13_references_7d903ba",
       "requested_label": "review-b13_references-7d903ba",
@@ -6214,7 +6233,7 @@
     }
   },
   "d03_unresolved_native_20260928": {
-    "status": "WORKTREE_D03_RECORDED_UNCERTAINTY_PRESERVED_COMPANY_REVIEW_STILL_MISSING",
+    "status": "COMMITTED_D03_RECORDED_UNCERTAINTY_PRESERVED_COMPANY_REVIEW_STILL_MISSING",
     "evidence": "docs/evidence/issue28_continuous/d03-unresolved-native-20260928/README.md",
     "change": "D03 complete uncertain per-request response now creates source-bound Candidate/Evidence with unresolved_competing_claims; the collector independently rechecks blockers and distinguishes complete-with-unresolved from missing or failed groups",
     "directed": "PASS_3_OF_3_69_797_SECONDS",
@@ -6223,12 +6242,15 @@
     "first_binding_failure_preserved": true,
     "invalid_synthetic_current_action_failure_preserved": true,
     "fast": "PASS_139_OF_139_198_036_SECONDS_AFTER_INITIAL_DETACHED_LAUNCH_WITHOUT_EXIT_RECORD",
-    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "limited_independent_review": "PASS_WITH_BOUNDS_EXACT_BE73EF94_SHORT_D03_3_OF_3_B13_D04_3_OF_3",
+    "independent_review_patch_sha": "be73ef942d6ddce1c7143e2a59de88171f5ba8cd",
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-unresolved-native-20260928/independent-review/conclusion.md",
     "current_v14_closure": "sha256:8d8d2d677f05a98a1bf65802fbedbfe66349dc4356069b697480959ad1dd8597",
     "v13_and_canonical_unchanged": true,
     "native_company_review_result_run_or_public_row_created": false,
     "real_d03_calls_authorized": false,
     "new_real_calls": [0, 0, 0],
+    "real_ledger_read_after_change": {"claims": 195, "provider_paid_sec": [143, 143, 52]},
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
       "files_and_functions": {
