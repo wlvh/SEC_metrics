@@ -16,6 +16,14 @@ It seals nothing and proves nothing on its own: the receipt is verify.py's,
 which runs every injection again in one tree. What this answers is which
 injections the class written for them misses, in hours rather than a
 sequential run that falls back to the whole suite for each miss.
+
+The creator journal must come back after each injection as well. The first
+pre-flight did not check it: an injection that dropped E01's "LIVE needs
+counted calls" check let a case register LIVE and fail before any cleanup,
+and every later case in that copy that read the window met the record - so
+catches there after it may have been the leftover's, not the injection's. The
+suite now puts the journal back after every case (``_Isolated.setUp``); a
+run whose journal does not come back stops by name.
 """
 import importlib.util
 import json
@@ -32,6 +40,7 @@ out = Path(sys.argv[1])
 indices = [int(i) for i in sys.argv[2:]]
 snapshot = verify._snapshot()
 recorded = verify._recorded_by_the_snapshot()
+journal = verify._journal()
 for index in indices:
     name, path, edits = verify.INJECTIONS[index]
     target = ROOT / path
@@ -64,6 +73,10 @@ for index in indices:
                 verify._mint()
         if verify._snapshot() != snapshot:
             row["stopped"] = "SNAPSHOT_DID_NOT_COME_BACK"
+        moved_journal = verify._journal_moved(journal)
+        if any(moved_journal.values()):
+            row["stopped"] = "CREATOR_JOURNAL_DID_NOT_COME_BACK"
+            row["journal"] = moved_journal
     row["seconds"] = round(time.time() - started, 1)
     with out.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(row) + "\n")

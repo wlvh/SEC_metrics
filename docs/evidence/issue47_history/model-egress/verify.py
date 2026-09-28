@@ -36,7 +36,11 @@ tests/vnext/test_historical_model_calls.py asserts). Steps, each recorded:
 5. which frozen generations record the three boundary files, and so would be
    moved by applying the patch - measured from their manifests, not assumed;
 6. the tree is back where it started: the patch still applies in reverse, the
-   snapshot still matches, and every bound file has the bytes it had before.
+   snapshot still matches, and every bound file has the bytes it had before;
+7. the creator journal (``.git/issue47-historical-assessments``) holds the
+   files it held when the run began - after the suite and after every
+   injection, so a registration a case left behind stops the run by name
+   instead of failing whatever case reads that source next.
 
 Only if all of that holds is ``offline-verification.json`` sealed. Zero calls.
 """
@@ -596,6 +600,33 @@ def _mint(check=False):
                  *(["--check"] if check else [])])
 
 
+JOURNAL = ".git/issue47-historical-assessments"
+
+
+def _journal():
+    """Every file in the creator journal, with its digest.
+
+    It is in ``.git``, where no other check here looks. The first sealing run
+    after the re-review stopped at its own suite: an injection in a pre-flight
+    an hour earlier had dropped E01's "LIVE needs counted calls" check, a case
+    registered LIVE and failed on that line before its cleanup, and the record
+    stayed for the next case that read the window. The suite now puts the
+    journal back after every case; this check is what would say it did not.
+    """
+    root = ROOT / JOURNAL
+    if not root.is_dir():
+        return {}
+    return {path.relative_to(root).as_posix(): _sha(path.relative_to(ROOT).as_posix())["sha256"]
+            for path in sorted(root.rglob("*")) if not path.is_dir()}
+
+
+def _journal_moved(journal):
+    """What the journal gained, lost or changed since ``journal``; empty when it came back."""
+    now = _journal()
+    return {"added": sorted(set(now) - set(journal)), "removed": sorted(set(journal) - set(now)),
+            "changed": sorted(p for p in set(now) & set(journal) if now[p] != journal[p])}
+
+
 def _snapshot():
     return {path.relative_to(ROOT).as_posix(): path.read_bytes()
             for path in sorted((ROOT / "requirements/issue_47_v1").glob("*")) if path.is_file()}
@@ -683,6 +714,7 @@ def main():
         return 2
     before = {path: _sha(path) for path in BOUND}
     snapshot = _snapshot()
+    journal = _journal()
     recorded = _recorded_by_the_snapshot()
     from check_provider_egress import check_provider_egress
     gate = check_provider_egress(repo_root=ROOT)
@@ -690,6 +722,11 @@ def main():
     suite = {"returncode": code, "failed": [row["case"] for row in failures],
              "summary": summary, "ran": ran}
     print("suite", suite, flush=True)
+    moved_journal = _journal_moved(journal)
+    if any(moved_journal.values()):
+        print("THE_SUITE_DID_NOT_LEAVE_THE_CREATOR_JOURNAL_AS_IT_FOUND_IT",
+              json.dumps(moved_journal), flush=True)
+        return 2
     if not (code == 0 and summary == "OK"):
         # An injection "caught" by a suite that already fails says nothing
         # about the injection, and the injections take hours: stop here,
@@ -734,6 +771,11 @@ def main():
         if _snapshot() != snapshot:
             print(json.dumps({"id": name, "stopped": "SNAPSHOT_DID_NOT_COME_BACK"}))
             return 2
+        moved_journal = _journal_moved(journal)
+        if any(moved_journal.values()):
+            print(json.dumps({"id": name, "stopped": "CREATOR_JOURNAL_DID_NOT_COME_BACK",
+                              **moved_journal}))
+            return 2
         row.update(outcome=_outcome(code_i, failures_i),
                    first_caught_by=[failure["case"] for failure in failures_i],
                    failures=failures_i, suite_result=summary_i)
@@ -754,7 +796,8 @@ def main():
                   r["outcome"] != "INJECTION_DOES_NOT_COMPILE" for r in injections),
               "every_injection_caught": all(
                   r["outcome"] in ("CAUGHT", "CAUGHT_AT_FIXTURE") for r in injections),
-              "tree_restored_after_injections": restored}
+              "tree_restored_after_injections": restored,
+              "creator_journal_as_found": _journal() == journal}
     body = {"record_type": "ISSUE_47_MODEL_EGRESS_OFFLINE_VERIFICATION",
             "requirement_id": "issue_47_v1", "all_checks_passed": all(checks.values()),
             "checks": checks, "calls": {"provider": 0, "paid": 0, "sec": 0},
@@ -763,6 +806,7 @@ def main():
                 "egress_capability_references": gate["egress_capability_references"],
                 "gate_receipt_id": gate["gate_receipt_id"]},
             "fault_injections": injections,
+            "creator_journal_at_start": journal,
             "generations_that_record_the_boundary_files": moved,
             "generation_manifests_measured": _generation_manifests(),
             "what_applying_the_patch_moves": (

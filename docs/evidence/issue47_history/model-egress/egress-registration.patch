@@ -477,10 +477,10 @@ index 78294a4..2201dbe 100644
  def _decimal_observation(*, value: object, label: str) -> Optional[str]:
 diff --git a/tests/vnext/test_historical_model_egress.py b/tests/vnext/test_historical_model_egress.py
 new file mode 100644
-index 0000000..361d5ce
+index 0000000..e7762bd
 --- /dev/null
 +++ b/tests/vnext/test_historical_model_egress.py
-@@ -0,0 +1,1683 @@
+@@ -0,0 +1,1782 @@
 +"""Issue #47's model egress, verified offline in a tree where the registration patch is applied.
 +
 +This suite is part of the patch for independent security review
@@ -650,15 +650,88 @@ index 0000000..361d5ce
 +    case wrote a LIVE registration; the record and the fixture allowance stayed
 +    in the tree. A Run no longer reads such a record - no approval was
 +    registered for a fixture's ledger (historical_counted_calls) - but the
-+    tree should not keep it: the runner case's ``finally`` removes it, and the
-+    exit hook below removes the fixtures, once the signal unwinds the stack.
-+    Only SIGKILL still leaves them, and then the next run refuses to start.
++    tree should not keep it: every case's cleanup puts the creator journal
++    back (``_Isolated.setUp``), and the exit hooks below put back the journal
++    of a case a signal ended and remove the fixtures, once the signal unwinds
++    the stack. Only SIGKILL still leaves them, and then the next run refuses
++    to start.
 +    """
 +    raise KeyboardInterrupt("terminated by signal " + str(signum))
 +
 +
++# The creator journal every registration path writes - D04's, E01's and D02's
++# alike (historical_semantic_results.JOURNAL). It lives in ``.git``, outside
++# the fixtures' removal and outside every tree check of the verification. A
++# pre-flight injection that dropped E01's "LIVE needs counted calls" check let
++# a case register LIVE and fail on that very line, before any cleanup; the
++# record stayed, and an hour later the sealed verification's own suite failed
++# on it in a case that reads that window. Cases clean what they write when
++# they pass; under an injection they fail first, so the fixture does it.
++JOURNAL_ROOT = ROOT / semantic.JOURNAL
++_OPEN_CASE = {}
++
++
++def journal_state():
++    """The creator journal as it stands: whether it exists, and every file's bytes."""
++    if not JOURNAL_ROOT.is_dir():
++        return {"exists": False, "files": {}, "directories": set()}
++    files, directories = {}, set()
++    for path in JOURNAL_ROOT.rglob("*"):
++        relative = path.relative_to(JOURNAL_ROOT).as_posix()
++        if path.is_dir() and not path.is_symlink():
++            directories.add(relative)
++        else:
++            files[relative] = path.read_bytes()
++    return {"exists": True, "files": files, "directories": directories}
++
++
++def restore_journal(before):
++    """Put the journal back as ``before`` found it; returns the files a case changed.
++
++    A file the case added is removed, whatever it is: a registration written
++    under an injection is exactly what must not stay. A file that was there
++    before and now differs or is gone is written back, and named, because no
++    case writes over a registration it did not make.
++    """
++    now = journal_state()
++    for relative in sorted(set(now["files"]) - set(before["files"])):
++        (JOURNAL_ROOT / relative).unlink()
++    changed = sorted(relative for relative, raw in before["files"].items()
++                     if now["files"].get(relative) != raw)
++    for relative in changed:
++        target = JOURNAL_ROOT / relative
++        target.parent.mkdir(parents=True, exist_ok=True)
++        target.write_bytes(before["files"][relative])
++    for relative in sorted(now["directories"] - before["directories"],
++                           key=lambda value: value.count("/"), reverse=True):
++        directory = JOURNAL_ROOT / relative
++        if directory.is_dir() and not any(directory.iterdir()):
++            directory.rmdir()
++    if not before["exists"] and JOURNAL_ROOT.is_dir() and not any(JOURNAL_ROOT.iterdir()):
++        JOURNAL_ROOT.rmdir()
++    return changed
++
++
++def live_registrations_for(*, metric_id, company_id, period_selection_id):
++    """LIVE records in this tree's journal for one position, and any LIVE file that does not read."""
++    found = []
++    for record_path in sorted((JOURNAL_ROOT / "LIVE" / metric_id).rglob("*")):
++        if record_path.is_dir():
++            continue
++        try:
++            record = json.loads(record_path.read_text(encoding="utf-8"))
++        except (UnicodeDecodeError, ValueError):
++            found.append(record_path)
++            continue
++        if (record.get("company_id"), record.get("period_selection_id")) == (company_id,
++                                                                            period_selection_id):
++            found.append(record_path)
++    return found
++
++
 +signal.signal(signal.SIGTERM, _terminated)
 +atexit.register(lambda: remove_allowance() if _WRITTEN else None)
++atexit.register(lambda: restore_journal(_OPEN_CASE["journal"]) if "journal" in _OPEN_CASE else None)
 +
 +
 +def fixture_receipt():
@@ -729,6 +802,20 @@ index 0000000..361d5ce
 +
 +    @classmethod
 +    def setUpClass(cls):
++        metric, company, period = cls.CASE
++        # The cases read this position's LIVE registrations and expect none: a
++        # test's RECORDED one must not be read by a batch, and the runner
++        # registers LIVE here and removes it. A tree whose journal already
++        # holds a LIVE registration for it is not one they can run in, and
++        # says so here rather than failing whichever case reads it first.
++        existing = live_registrations_for(
++            metric_id=metric, company_id=company,
++            period_selection_id=resolve_period_selection(repo_root=ROOT, company_id=company,
++                                                         report_end=period)["selection_id"])
++        if existing:
++            raise unittest.SkipTest("REFUSED: the creator journal already holds a LIVE registration for "
++                                    + metric + " " + company + " " + period + ": "
++                                    + ", ".join(str(p.relative_to(ROOT)) for p in existing))
 +        cls._guards = [patch.object(socket, "getaddrinfo", side_effect=AssertionError("DNS_FORBIDDEN")),
 +                       patch.object(socket, "create_connection",
 +                                    side_effect=AssertionError("SOCKET_FORBIDDEN")),
@@ -769,6 +856,17 @@ index 0000000..361d5ce
 +        shutil.rmtree(cls.temporary, ignore_errors=True)
 +        for guard in cls._guards:
 +            guard.stop()
++
++    def setUp(self):
++        before = journal_state()
++        _OPEN_CASE["journal"] = before
++        self.addCleanup(self._leave_the_journal_as_found, before)
++
++    def _leave_the_journal_as_found(self, before):
++        changed = restore_journal(before)
++        _OPEN_CASE.pop("journal", None)
++        if changed:
++            raise AssertionError("A_CASE_CHANGED_A_REGISTRATION_IT_DID_NOT_WRITE:" + ",".join(changed))
 +
 +    def recorded(self, name):
 +        return calls.recorded_model_ledger(root=self.temporary / name, allowance=self.allowance)
@@ -1143,6 +1241,7 @@ index 0000000..361d5ce
 +    """The live path's fixture: a key, a GitHub reader, the granted ledger reset; no cases."""
 +
 +    def setUp(self):
++        super().setUp()
 +        self.opened = []
 +        self.reply = None
 +        self.environment = patch.dict(os.environ, {"DEEPSEEK_API_KEY": "offline-test-not-a-secret"})
