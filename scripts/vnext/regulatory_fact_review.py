@@ -34,14 +34,14 @@ def _need(condition, reason):
 
 
 def _authenticated_original(*, original, source, repo_root):
-    from .r6_regulatory_semantics import (prepare_regulatory_semantic_source,
-                                          requests_from_source)
+    from .r6_regulatory_semantics import prepare_regulatory_semantic_source
+    from .continuous_semantic_calls import source_requests
     _need(type(source) is dict and type(source.get('company_id')) is str,
           'D03_ANCHOR_AUTHENTIC_SOURCE_REQUIRED')
     rebuilt = prepare_regulatory_semantic_source(repo_root=repo_root,
         company_id=source['company_id'],
         request_context_format=source.get('request_context_format'))
-    _need(source == rebuilt and original in requests_from_source(rebuilt),
+    _need(source == rebuilt and original in source_requests(rebuilt),
           'D03_ANCHOR_AUTHENTIC_ORIGINAL_REQUIRED')
 
 
@@ -143,7 +143,18 @@ def validate_candidate_response(*, original_request, source, raw_response,
                                       repo_root=repo_root)
     _need(request is None or request == authenticated,
           'D03_ANCHOR_REQUEST_NOT_SOURCE_BOUND')
-    request = authenticated
+    result = _validate_bound_candidate_response(
+        request=authenticated, raw_response=raw_response)
+    return (result, authenticated) if return_authenticated_request else result
+
+
+def _validate_bound_candidate_response(*, request, raw_response):
+    """Check one already authenticated request inside one recorded operation.
+
+    This private function does not prove source authority. Its caller must
+    first run SemanticRequest.validate() against current source bytes; the
+    public validate_candidate_response() retains its independent recheck.
+    """
     from .r6_regulatory_semantics import POLICY_PATH
     _need(type(raw_response) is bytes and len(raw_response) <=
           strict_json_file(path=ROOT / POLICY_PATH)['max_response_bytes'],
@@ -214,4 +225,4 @@ def validate_candidate_response(*, original_request, source, raw_response,
             'raw_provider_response_preserved_separately': False,
             'source_fact_current_status_proven_by_program': False,
             'native_result_created': False}
-    return (result, authenticated) if return_authenticated_request else result
+    return result
