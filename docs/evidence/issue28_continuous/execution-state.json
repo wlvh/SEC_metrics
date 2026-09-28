@@ -34,6 +34,7 @@
     "unknown": 0
   },
   "current_work": [
+    "Current worktree CI fast-job checkout repair: 16a6e897 run36478405174 fast job109117765903 cancelled after599s Git fetch under 10-minute job limit; Python setup and fast tests skipped, no assertion result. Prior b300f5a9 successful fast job checkout24s and tests174s. Only jobs.fast.timeout-minutes raised 10 to20, preserving source jobs/selector limits/code. YAML parse passes. Exact-SHA limited review and new-head CI pending; real calls0/0/0, #47 untouched.",
     "Private Marriott FY2025 current saved-source 36 ordinary metric update completed from authenticated #28 cumulative source via current-rule processing copy sha256:2758b48c...: UPDATES_READY, 36/36 CANDIDATE_READY (21 PASS, 14 trait N_A, one B06 DENOMINATOR_NONPOSITIVE). Original source log and claims hashes unchanged, network disabled, real calls0/0/0. Twenty-one Result IDs match old 390 index; fifteen differ while value/unit/period/reason/quality/applicability are equal. Per-metric intent-to-terminal sum2431.446s; independent process replays A01/B01/B03/B06/C04/D02/E01 7/7. Direct coordinator used historical default C04, not successor automatic selection; D03/B13/D04 excluded. No new business coordinate or new-fiscal-year arrival claimed. Evidence ordinary-marriott-current-36-20260929/.",
     "Committed 1d458a46 CI source-material shard repair: ba7b5f88 shard1 cancelled at 35-minute job cap after 5m56s checkout and 29m14s test, no final selector JSON or business assertion failure; shard0 and program-role succeeded. Earlier f415bd3e successful run timed 82 selectors, current 88: known current two-shard elapsed sums 1527/3161s; proposed three-shard known sums 1668/1405/1615s, with two untimed new selectors per shard. Workflow only changes source matrix to 3, shard-count to3 and aggregate label, keeping tests/limits/jobs2. Exact-once current 88-selector partition and YAML parse pass. One new evidence directory ci-source-material-three-shards-20260929/. Exact-SHA limited review PASS_LIMITED; b300f5a9 main CI 36471768000 SUCCESS, all three saved-source shards and aggregate succeeded; no calls, #47 untouched.",
     "Committed 869df6aa D03 recorded-only company ReviewUnit input: explicit complete-set selection binds every saved group Candidate/Evidence, source-unit identities, raw-source proofs, company/period and response digests to a pending ReviewUnit. Missing/failed groups reject; synthetic current finding and two unresolved groups remain pending, SYSTEM decision is ineligible, and no Result/Run or real call is created. Final binding and three receipts pass; incomplete-set 1/1, complete-set final 1/1 (54.638s), prior intermediate both cases 2/2 (99.928s); fast141/141 (93.215s) was before final helper guard/context changes and is not exact-final-tree full evidence. Exact-SHA limited independent review PASS_LIMITED (single incomplete-set test run; complete-set and fast logs read-only); new-head CI pending. Evidence d03-company-review-input-20260929/.",
@@ -50,6 +51,7 @@
     "B13 V8 lexical route remains suspended after two NEEDS_FIX reviews; C04 cross-fiscal-year online update, B06 five source relationships and full390/legacy exit remain unproven. Original ledger last checked at provider/paid/SEC 143/143/52, 195 slots."
   ],
   "next": [
+    "Commit bounded CI fast checkout timeout repair with its one evidence directory, obtain exact-SHA limited review of workflow-only change and old/new job timestamps, then append-only push with the independent old-semantic-exit cold-read evidence when that bounded process finishes. The cancelled fast job has no test conclusion; verify new-head fast execution rather than rerunning old CI.",
     "Archive and commit the one-directory Marriott 36 ordinary private integration evidence, then continue full #28 responsibilities. The actual #28 CLI already explicitly selects C04 successor; this direct-coordinator exercise did not test it. Do not repeat the 40-minute run solely for status. D03 company Result/Run still needs provider-bound semantic Review and an explicit recorded_only rejection even after HUMAN decision; B13 remains suspended pending a viable model task and authorization.",
     "The CI three-shard change is committed at 1d458a46 with exact-SHA limited review PASS_LIMITED. Append-only push with already reviewed D03 pending ReviewUnit commits to Draft PR43. Check new-head CI at natural checkpoints; do not infer business success from scheduling or automatically increase timeouts.",
     "D03 pending company ReviewUnit input committed at 869df6aa with exact-SHA limited review PASS_LIMITED. Append-only push to Draft PR43 and read new-head CI once. A future D03 Result/Run must reject recorded_only/provider_execution_unverified even after a HUMAN decision. This patch does not complete D03 business Review, Result/Run, or real-call permission; continue actual company result path after review without promoting synthetic responses.",
@@ -6704,5 +6706,34 @@
     "all390_acceptance": false,
     "formal_adoption": false,
     "private_root": "/private/tmp/issue28-marriott-current-36-20260929"
+  },
+  "ci_fast_checkout_timeout_20260929": {
+    "status": "WORKTREE_DIAGNOSED_LIMITED_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/ci-fast-checkout-timeout-20260929/README.md",
+    "cancelled_run": 36478405174,
+    "cancelled_job": 109117765903,
+    "cancelled_stage": "CHECKOUT_GIT_FETCH_AFTER_599_SECONDS_FAST_TEST_SKIPPED",
+    "prior_success_run": 36471768000,
+    "prior_success_job": 109095515598,
+    "prior_checkout_seconds": 24,
+    "prior_fast_test_seconds": 174,
+    "old_job_timeout_minutes": 10,
+    "new_job_timeout_minutes": 20,
+    "per_selector_timeout_changed": false,
+    "source_material_job_changed": false,
+    "tests_or_product_code_changed": false,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "file": ".github/workflows/vnext-fast.yml",
+      "function_or_job": "jobs.fast.timeout-minutes",
+      "compatibility": "workflow job timeout only; selector list, commands and product defaults unchanged",
+      "downstream_impact": "stacked PR may inherit a 20-minute fast-job ceiling; no #47 branch/worktree/ledger/snapshot/PR operated"
+    }
   }
 }
