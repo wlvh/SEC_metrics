@@ -34,14 +34,14 @@
     "unknown": 0
   },
   "current_work": [
-    "Code head b868ac42 main CI 36354613173 SUCCESS 15/15. Evidence head 77f00461 main CI 36358029813 SUCCESS 15/15 (completed 2026-09-27T23:44:49Z). Current Paramount D04 evidence runs on unchanged code and current V14 closure; next evidence head CI needs its own result.",
-    "D04 has 10/10 historical complete real native candidates. Enphase and Paramount original real responses separately pass current normal-update creation, installed cold read, raw response identity audit and no-source-change repeat in private state roots. This adds zero complete companies/390 coordinates and zero real calls; it does not prove cross-fiscal-year online update or formal adoption.",
-    "C04 current private routes and recorded update/recovery results remain; true old-to-new fiscal year online update and cross-code-version state write are not proven. B13 no complete company and V8 NEEDS_FIX; live gate closed. D03 offline only with no real calls or native company Run. Ford B06 same-scope industrial attributable equity unresolved. Full 390 and legacy exit not accepted."
+    "Pushed b5b2a91b preserves D03 output census and reviewed replay-only factory; first factory review NEEDS_FIX, exact follow-up PASS_WITH_BOUNDS. Prior cf23ab3d main CI 36375571134 completed SUCCESS 15/15. b5b2a91b main CI 36380074529 was in_progress at the latest read; no current-head green claim.",
+    "D03 lossless-source repair bf1b1fd2 preserves four U+037E characters in saved Paramount source/request/would-be wire and rejects a lossy copy before claim. Current V14 execution and three wiring receipts revalidated; focused tests and fast135/135 pass, exact-SHA review PASS_WITH_BOUNDS. No D03 execution, Candidate, Evidence, Review, Result or Run credit.",
+    "D04 retains 10/10 real private candidates, B13 V8 lexical route remains suspended after two NEEDS_FIX reviews, C04 cross-fiscal-year online update and full390/legacy exit remain unproven. Ledger still provider/paid/SEC 143/143/52."
   ],
   "next": [
-    "Finish limited review of the exact Paramount D04 current-update evidence patch, push append-only, and observe the new-head CI once. Preserve old call and Run identities.",
-    "Advance an independent normal-update gap with original #28 saved sources: cross-fiscal-year source and result version transition, or a specifically identified missing input/permission. Do not present same-year refresh or constructed metadata as a real new-filing online update.",
-    "Continue bounded D03 native offline chain, B06 scope, B13 known semantic repair, 390/legacy exit prep only where source and authority permit; leave B13/D03 real calls, C04 business definition changes, budget expansion and production actions for explicit decisions."
+    "Push the independently reviewed D03 lossless source/request/wire repair by append-only commit and check new-head CI at a natural checkpoint without repeating the long JPM packet cold-read.",
+    "Continue the D03 native positive Candidate/Evidence/Review/Result/Run chain within no-call/offline authority; original or synthetic responses do not acquire live or business credit. D03 real calls and resources remain separate decisions.",
+    "Continue independent B06 source-completeness, C04 normal cross-year, 390 reconciliation and old semantic-entry exit where existing source and authority allow; keep B13 V8 stopped and #47 isolated."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
   "remaining_review_dependency": "D03 source-fact original6e5 and three bounded repairs all failed exact-SHA limited review; rule route suspended, code/binding restored to b897. Real D03 remains uncalled pending a different defensible validation path, separate integration review and resource decision.",
@@ -161,7 +161,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:568ab1eb52f4f44721e94a871efe78caf389862213a9c9278201c31b7e67c8d2",
+  "current_v15_development_closure": "sha256:aa37c0be3a268a4203f7f69fca7de224658ee9afad1a6f931d80ede699244858",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -2151,6 +2151,148 @@
       "ended_at": "2026-09-28T00:20:32+00:00",
       "tool_calls": 38,
       "result_path": "docs/evidence/issue28_continuous/d04-paramount-current-update-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
+    },
+    {
+      "task_name": "review_b01crossyear_c0e95d3",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_b01_crossyear_recorded",
+      "scope_paths": [
+        "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/",
+        "docs/evidence/issue28_continuous/c04-adjacent-year-rehearsal-20260927/rehearse.py"
+      ],
+      "patch_sha": "c0e95d3ac6adc8dd0f5034898a06bd2b1cc18f1b",
+      "spawned_at": "2026-09-28T00:47:21.734515+00:00",
+      "ended_at": "2026-09-28T00:53:43+00:00",
+      "tool_calls": 32,
+      "result_path": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS",
+      "followup_reviews": [
+        {
+          "patch_sha": "ea557935ccae7ad01fcaab5042ef4dedbc4b288d",
+          "started_at": "2026-09-28T01:05:21+00:00",
+          "ended_at": "2026-09-28T01:09:31+00:00",
+          "additional_tool_calls": 15,
+          "cumulative_tool_calls": 47,
+          "result_path": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
+          "verdict": "PASS_WITH_BOUNDS"
+        }
+      ]
+    },
+    {
+      "task_name": "review_d03bridge_8a49b5a",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_recorded_interpretation_bridge",
+      "scope_paths": [
+        "scripts/vnext/d03_complete_interpretation.py",
+        "tests/vnext/test_d03_complete_interpretation.py",
+        "tools/run_fast_tests_v2.py",
+        "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/"
+      ],
+      "patch_sha": "8a49b5ab566c755d3d60a9db7bb5ef24f5a55ac0",
+      "spawned_at": "2026-09-28T01:41:07.220388+00:00",
+      "ended_at": "2026-09-28T01:44:53+00:00",
+      "tool_calls": 35,
+      "result_path": "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS",
+      "followup_reviews": [
+        {
+          "patch_sha": "0533a62f51208042d3b6f4dd5b227640b3e9892c",
+          "started_at": "2026-09-28T02:15:03+00:00",
+          "ended_at": "2026-09-28T02:17:55+00:00",
+          "additional_tool_calls": 21,
+          "cumulative_tool_calls": 56,
+          "result_path": "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/independent-review/conclusion.md",
+          "verdict": "PASS_WITH_BOUNDS"
+        }
+      ]
+    },
+    {
+      "task_name": "review_b13claim_7676f49",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "b13_v8_claim_followup",
+      "scope_paths": [
+        "scripts/vnext/capacity_two_stage.py",
+        "tests/vnext/test_capacity_two_stage.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b13-model-span-claim-ownership-20260928/"
+      ],
+      "patch_sha": "7676f49d37c02e6bfe597d44ba333cfc4222daab",
+      "spawned_at": "2026-09-28T02:55:16Z",
+      "ended_at": "2026-09-28T03:03:04Z",
+      "tool_calls": 41,
+      "result_path": "docs/evidence/issue28_continuous/b13-model-span-claim-ownership-20260928/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_TWO_ADJACENT_COUNTEREXAMPLES",
+      "followup_reviews": [
+        {
+          "patch_sha": "8990fb9d401e8d9d843ecd122d74bebb15fe7e46",
+          "started_at": "2026-09-28T03:28:50Z",
+          "ended_at": "2026-09-28T03:33:41Z",
+          "additional_tool_calls": 18,
+          "cumulative_tool_calls": 59,
+          "result_path": "docs/evidence/issue28_continuous/b13-model-span-claim-ownership-20260928/independent-review/conclusion.md",
+          "verdict": "NEEDS_FIX_SECOND_ROUND_LEXICAL_ROUTE_STOP"
+        }
+      ]
+    },
+    {
+      "task_name": "review_invocation_ab76536",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "fast_invocation_child_root",
+      "scope_paths": [
+        "tests/vnext/test_invocation_control.py",
+        "docs/evidence/issue28_continuous/fast-invocation-child-root-20260928/"
+      ],
+      "patch_sha": "ab765369b1c07ca19231ae9ce26146081a842700",
+      "spawned_at": "2026-09-28T03:48:24Z",
+      "ended_at": "2026-09-28T03:53:00Z",
+      "tool_calls": 31,
+      "result_path": "docs/evidence/issue28_continuous/fast-invocation-child-root-20260928/independent-review/conclusion.md",
+      "verdict": "PASS_WITH_BOUNDS"
+    },
+    {
+      "task_name": "review_d03factory_2324337",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_replay_factory",
+      "scope_paths": [
+        "scripts/vnext/continuous_semantic_calls.py",
+        "tests/vnext/test_d03_native_preparation.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/"
+      ],
+      "patch_sha": "23243375ddf9143eb2f25405b16527ead330a0cb",
+      "spawned_at": "2026-09-28T04:33:41Z",
+      "ended_at": "2026-09-28T04:39:20Z",
+      "tool_calls": 55,
+      "result_path": "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_REPLAY_FLAG_AND_UNBOUND_DEPENDENCY",
+      "followup_reviews": [
+        {
+          "patch_sha": "1d017b8f1f4b712aa93c068519a54e4a09e002b4",
+          "started_at": "2026-09-28T04:54:55Z",
+          "ended_at": "2026-09-28T04:58:46Z",
+          "additional_tool_calls": 15,
+          "cumulative_tool_calls": 70,
+          "result_path": "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/independent-review/conclusion.md",
+          "verdict": "PASS_WITH_BOUNDS"
+        }
+      ]
+    },
+    {
+      "task_name": "review_d03lossless_bf1b1fd",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d03_lossless_wire",
+      "scope_paths": [
+        "scripts/vnext/continuous_semantic_calls.py",
+        "tests/vnext/test_continuous_source_unit_bytes.py",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/d03-lossless-wire-20260928/"
+      ],
+      "patch_sha": "bf1b1fd250e64e175e67f00f85e50726d5f2e6dc",
+      "spawned_at": "2026-09-28T05:17:51Z",
+      "ended_at": "2026-09-28T05:25:38Z",
+      "tool_calls": 46,
+      "result_path": "docs/evidence/issue28_continuous/d03-lossless-wire-20260928/independent-review/conclusion.md",
       "verdict": "PASS_WITH_BOUNDS"
     }
   ],
@@ -5295,7 +5437,7 @@
     "evidence_head_ci": "77f00461/36358029813 SUCCESS 15/15"
   },
   "d04_paramount_current_normal_update_20260928": {
-    "status": "LOCAL_REAL_ORIGINAL_REUSE_CURRENT_NORMAL_UPDATE_AND_COLD_READ_PASS_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS_PUSH_PENDING",
+    "status": "PUSHED_REAL_ORIGINAL_REUSE_CURRENT_NORMAL_UPDATE_AND_COLD_READ_PASS_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS",
     "patch_sha": "3e1ba8b2c79d2be44b41e360772dd028b6906840",
     "evidence": "docs/evidence/issue28_continuous/d04-paramount-current-update-20260928/README.md",
     "independent_review": "docs/evidence/issue28_continuous/d04-paramount-current-update-20260928/independent-review/conclusion.md",
@@ -5347,5 +5489,322 @@
     "new_fiscal_year_online_update_proven": false,
     "formal_adoption": false,
     "current_execution_code_head_ci": "b868ac42/36354613173 SUCCESS 15/15"
+  },
+  "ordinary_b01_crossyear_recorded_20260928": {
+    "status": "PUSHED_RECORDED_AUTO_TWO_SOURCE_CROSS_YEAR_B01_PASS_INCREMENT_REVIEW_PASS_WITH_BOUNDS_CI_RUNNING",
+    "patch_sha": "c0e95d3ac6adc8dd0f5034898a06bd2b1cc18f1b",
+    "evidence": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/README.md",
+    "independent_review": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
+    "company_id": "marriott_international",
+    "metric_id": "B01",
+    "derived_old_submissions_sha256": "5b542458aa0fa1c759eb2ff6d40b9f03520521103253ebbfaab7c5c132a2b8aa",
+    "authentic_current_submissions_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+    "old_metadata_authentic_sec_response": false,
+    "old_fiscal_year": "2024",
+    "new_fiscal_year": "2025",
+    "old_result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+    "new_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+    "old_run_id": "run:ordinary-integrated:4e799f11b2c85ebb989e699c0ee1afab7ca561f5e94a3864ef4cf20e0e456020",
+    "new_run_id": "run:ordinary-integrated:bd73b6e9401b64f7550643a8d3360a47b02508defce8034d120ec65fc20f824d",
+    "auto_selected_metadata_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+    "recorded_sec_calls": [
+      0,
+      0,
+      2
+    ],
+    "two_source_recorded_sec_calls": [
+      0,
+      0,
+      3
+    ],
+    "two_source_auto_selected_urls": [
+      "https://data.sec.gov/submissions/CIK0001048286.json",
+      "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+    ],
+    "two_source_new_step_status": "UPDATES_READY/REFRESH_CHECK_COMPLETED/B01_CANDIDATE_READY",
+    "two_source_evidence": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/reconciliation-two.json",
+    "two_source_patch_sha": "ea557935ccae7ad01fcaab5042ef4dedbc4b288d",
+    "two_source_independent_review": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
+    "two_source_cold_reads": "PASS_1281_FILES_UNCHANGED_EACH",
+    "two_source_repeat_status": "NO_SOURCE_CONTENT_CHANGE_SUCCESS_POINTER_RETAINED",
+    "old_companyfacts_authentic_prefiling_snapshot": false,
+    "real_new_calls": [
+      0,
+      0,
+      0
+    ],
+    "old_success_package_unchanged": true,
+    "two_installed_cold_reads": "PASS_1280_FILES_UNCHANGED_EACH",
+    "repeat_status": "NO_SOURCE_CONTENT_CHANGE_SUCCESS_POINTER_RETAINED_LATEST_ATTEMPT_ADVANCED",
+    "preflight_failed_whole_pointer_unchanged_assertion_retained": true,
+    "overall_source_refresh": "UPDATES_INCOMPLETE",
+    "authentic_online_cross_year_update_proven": false,
+    "new_complete_390_coordinate_count": 0,
+    "formal_adoption": false,
+    "execution_code_head": "120e0e2be51c243556623f81556879c76bbfe071"
+  },
+  "d03_recorded_interpretation_bridge_20260928": {
+    "status": "EXPERIMENT_STOPPED_RESTORED_BA56_BYTES_V8_LIVE_NATIVE_SUSPENDED",
+    "patch_sha": "8a49b5ab566c755d3d60a9db7bb5ef24f5a55ac0",
+    "evidence": "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/README.md",
+    "independent_review": "TWO_EXACT_SHA_REVIEWS_NEEDS_FIX_ROUTE_STOPPED",
+    "scope_paths": [
+      "scripts/vnext/d03_complete_interpretation.py",
+      "tests/vnext/test_d03_complete_interpretation.py",
+      "tools/run_fast_tests_v2.py"
+    ],
+    "recorded_packet_id": "sha256:198ade1a29070ec2737f8372618415e1e1da6b5155b507ea748d5f5550029162",
+    "bridge_record_id": "sha256:598ab808a7027b26456a1dd568cf5fbe8e420462d7365f80ff7c6eff87c6c9b6",
+    "jpm_recorded_packet_id": "sha256:72536bbfb017dacb048a8549dd93a56f53c6604f4841d26c52324d48a8946972",
+    "jpm_bridge_record_id": "sha256:bd5eaf873ddfa2cefde9ed1c1cf3896370800eb4ccf645e85d038624ad07cdba",
+    "jpm_group_count": 38,
+    "jpm_actual_source_anchor_successor_group_count": 1,
+    "jpm_unresolved_group_count": 38,
+    "jpm_synthetic_recorded_not_model_output": true,
+    "jpm_record_and_bridge_seconds": 812.504,
+    "jpm_independent_process_cold_seconds": 507.22,
+    "jpm_packet_files_unchanged": 40,
+    "jpm_incremental_review_pending": false,
+    "jpm_incremental_review_patch_sha": "0533a62f51208042d3b6f4dd5b227640b3e9892c",
+    "company_id": "marriott_international",
+    "group_count": 5,
+    "unresolved_group_indices": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "proposal_branch": "UNRESOLVED_REQUIRES_REVIEW",
+    "wrong_packet_id_rejected": true,
+    "module_test_count_passed": 3,
+    "fast_selectors_passed": 135,
+    "live_execution_bound": false,
+    "provider_execution_identity_verified": false,
+    "native_candidate_evidence_result_run_created": false,
+    "real_ledger_counts_before_after": [
+      [
+        143,
+        143,
+        52
+      ],
+      [
+        143,
+        143,
+        52
+      ]
+    ],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "production_authorized": false,
+    "second_patch_sha": "8990fb9d401e8d9d843ecd122d74bebb15fe7e46",
+    "current_six_files_equal": "ba56a51fb069ff53c4b9a831b901c4323c06d534",
+    "v14_closure": "sha256:6372c5dbd59d2127227eb3c1ad1f34cd4a6742ba62d1cbd691f04cece8a3cf45",
+    "fast_suite": "HISTORICAL_EXPERIMENT_134_OF_135_TWICE_CURRENT_CODE_RESTORED",
+    "unresolved_review_findings": [
+      "future doubling can be swallowed by current capacity span",
+      "storage capacity false positive",
+      "correct supplier exclusion false positive"
+    ],
+    "new_live_permission": false,
+    "native_acceptance_enabled": false,
+    "complete_company_result": false
+  },
+  "b13_v8_claim_followup_20260928": {
+    "status": "LOCAL_FINITE_COUNTEREXAMPLES_REPAIRED_V8_LIVE_AND_NATIVE_STILL_SUSPENDED",
+    "scope_paths": [
+      "scripts/vnext/capacity_two_stage.py",
+      "tests/vnext/test_capacity_two_stage.py",
+      "requirements/issue_28_v14/baseline_manifest.json"
+    ],
+    "evidence": "docs/evidence/issue28_continuous/b13-model-span-claim-ownership-20260928/README.md",
+    "prior_review": "docs/evidence/issue28_continuous/b13-model-spans-v8-offline-20260927/independent-review/conclusion.md",
+    "addressed_counterexamples": [
+      "one model range covering current capacity and later expansion",
+      "supplier relative-clause subject ownership",
+      "subjectless coordinated expect-to-add capacity"
+    ],
+    "additional_conflict_checks": [
+      "wrong historical timing on coordinated current plan",
+      "planned capacity mislabelled other_context"
+    ],
+    "targeted_tests": "36_PASS_FINAL_WORKTREE",
+    "fast_suite": "FINAL_FOLLOWUP_TREE_134_OF_135_SELECTORS_PASS_INVOCATION_TEST_ASSERTION_FAILURE",
+    "invocation_standalone": "25_PASS_19_458_SECONDS",
+    "v7_request_bytes_unchanged": true,
+    "v14_closure": "sha256:ad3c189d7be270bfdeb2ff0049eb20015f405d2d23479077de81a94cc4a14441",
+    "current_provider_sec_refresh_wiring": "PASS_LOCAL_FINAL_WORKTREE",
+    "independent_review": "FOLLOWUP_PATCH_REVIEW_PENDING",
+    "live_permission_added": false,
+    "native_acceptance_enabled": false,
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
+    "complete_company_result": false,
+    "first_patch_sha": "7676f49d37c02e6bfe597d44ba333cfc4222daab",
+    "first_patch_review": "NEEDS_FIX_TWO_ADJACENT_COUNTEREXAMPLES",
+    "invocation_exact_isolated": "SAME_EXITCODE_NONE_ASSERTION_FAILURE",
+    "historical_root_separate_timing_seconds": 6.81
+  },
+  "ci_ba56a51f_20260928": {
+    "head": "ba56a51fb069ff53c4b9a831b901c4323c06d534",
+    "run_id": 36369387881,
+    "status": "completed",
+    "conclusion": "success",
+    "jobs_success": 15,
+    "jobs_failed": 0,
+    "updated_at_utc": "2026-09-28T03:01:05Z",
+    "scope": "prior_d03_bridge_head_not_current_test_fix",
+    "independent_review": "PASS_WITH_BOUNDS_EXACT_AB765369",
+    "review_result_path": "docs/evidence/issue28_continuous/fast-invocation-child-root-20260928/independent-review/conclusion.md",
+    "independent_fast_selector": "PASS_25_OF_25_8_06_SECONDS",
+    "cleanup_boundary": "THREE_TARGETS_ABSENT_NO_INDEPENDENT_FULL_TREE_DELETE_AUDIT"
+  },
+  "fast_invocation_child_root_20260928": {
+    "status": "TARGETED_FAST_SELECTOR_PASS_FULL_LOCAL_FAST_ENOSPC",
+    "evidence": "docs/evidence/issue28_continuous/fast-invocation-child-root-20260928/README.md",
+    "scope_paths": [
+      "tests/vnext/test_invocation_control.py"
+    ],
+    "baseline_exact_test": "FAIL_EXITCODE_NONE_AFTER_10_SECOND_JOIN",
+    "baseline_historical_root_build_seconds": 6.81,
+    "after_exact_test": "PASS_1_OF_1_9_39_SECONDS",
+    "after_module": "PASS_25_OF_25_16_98_SECONDS",
+    "full_fast": "FAILED_12_OF_135_SELECTORS_ALL_WITH_ENOSPC",
+    "removed_current_test_temp_copies": 3,
+    "disk_available_gib_before_after": [
+      1.3,
+      5.0
+    ],
+    "after_cleanup_fast_selector": "PASS_25_OF_25_14_712_SECONDS_WITH_30_SECOND_LIMIT",
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "production_invocation_control_changed": false,
+    "real_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "d03_output_capacity_20260928": {
+    "status": "OFFLINE_RESPONSE_SHAPE_CENSUS_COMPLETE_NO_MODEL_SEMANTIC_CREDIT",
+    "evidence": "docs/evidence/issue28_continuous/d03-output-capacity-20260928/README.md",
+    "tested_code_head": "cf23ab3d0785ec2f3e3ef8483a05825951193b85",
+    "prior_input_census": "docs/evidence/issue28_continuous/d03-current-input-census-20260927/census.json",
+    "all_source_ids_and_group_counts_match_prior": true,
+    "company_count": 10,
+    "group_count": 130,
+    "unique_request_ids": 130,
+    "required_candidate_references": 178,
+    "max_required_per_group": 33,
+    "max_required_per_unit": 23,
+    "scenario_token_maximums_after_successor_field": {
+      "bare_structure": 468,
+      "all_required_context": 468,
+      "one_minimal_finding_per_required": 2132
+    },
+    "groups_above_4096_in_these_scenarios": 0,
+    "jpm_successor_extra_candidate_review_measured": true,
+    "actual_model_output_tested": false,
+    "semantic_correctness_proven": false,
+    "native_result_or_run_created": false,
+    "independent_review": "NOT_CLAIMED_FOR_PARENT_EXECUTED_RESOURCE_ANALYSIS",
+    "real_ledger_claims_before_after": [
+      195,
+      195
+    ],
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
+    "d03_live_permission_added": false
+  },
+  "d03_replay_only_factory_20260928": {
+    "status": "REVIEWED_REPLAY_ONLY_FACTORY_PASS_WITH_BOUNDS_PUSHED_B5B2A91B",
+    "scope_paths": [
+      "scripts/vnext/continuous_semantic_calls.py",
+      "tests/vnext/test_d03_native_preparation.py",
+      "requirements/issue_28_v14/baseline_manifest.json"
+    ],
+    "evidence": "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/README.md",
+    "jpm_complete_group_count": 38,
+    "jpm_source_anchor_successor_groups": 1,
+    "focused_real_saved_source_test": "PASS_188_363_SECONDS_WITH_RECORDED_LEDGER_ZERO_CLAIM",
+    "short_negative_test": "PASS_1",
+    "fast_selectors": "PASS_135_OF_135_200_057_SECONDS",
+    "v14_closure": "sha256:9563d906e54e5f5cdd9e1dda138c5db49db204cb69de6f4eac680b6f5169a4f1",
+    "current_provider_sec_refresh_wiring": "PASS",
+    "original_prepare_requests_function_body_changed": false,
+    "new_factory_replay_only": true,
+    "tampered_original_request_id_rejected": true,
+    "execute_feasibility_rejected_before_claim": true,
+    "independent_review": "FIRST_NEEDS_FIX_FOLLOWUP_PASS_WITH_BOUNDS",
+    "native_candidate_evidence_review_result_run_created": false,
+    "real_ledger_claims_before_after": [
+      195,
+      195
+    ],
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
+    "d03_live_permission_added": false,
+    "shared_compatibility_note": "New explicit factory and D03-only source_fact_review_contract branch; existing prepare_requests signature and default path unchanged; no #47 files operated.",
+    "shared_with_issue47": {
+      "file": "scripts/vnext/continuous_semantic_calls.py",
+      "functions": [
+        "SemanticRequest.validate",
+        "prepare_d03_replay_only_requests"
+      ],
+      "effect": "explicit D03-only replay-only path; original prepare_requests body and defaults unchanged",
+      "old_request_byte_identity_remeasured": false,
+      "downstream_issue47_branch_operated": false
+    },
+    "first_patch_sha": "23243375ddf9143eb2f25405b16527ead330a0cb",
+    "first_patch_independent_review": "NEEDS_FIX_REPLAY_FLAG_AND_UNBOUND_DEPENDENCY",
+    "first_review_path": "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/independent-review/conclusion.md",
+    "regulatory_fact_review_in_execution_authority": true,
+    "regulatory_fact_review_in_semantic_rule_bindings": true,
+    "approved_rule_paths_unchanged": true,
+    "d03_contract_level_execute_guard": true,
+    "malformed_contract_rejected_with_value_error": true,
+    "followup_patch_sha": "1d017b8f1f4b712aa93c068519a54e4a09e002b4",
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/independent-review/conclusion.md",
+    "review_tool_calls_cumulative": 70
+  },
+  "d03_lossless_wire_20260928": {
+    "status": "ACTUAL_SOURCE_WIRING_FAST_AND_LIMITED_REVIEW_PASS",
+    "evidence": "docs/evidence/issue28_continuous/d03-lossless-wire-20260928/README.md",
+    "actual_source_company_id": "paramount_skydance_paramount_global",
+    "actual_source_units": 51,
+    "actual_request_groups": 14,
+    "u037e_exact_in_source_request_wire": [4, 4, 4],
+    "lossy_source_rejected_before_claim": true,
+    "selected_request_context_tokens": 194092,
+    "focused_source_unit_tests": "PASS_5_OF_5",
+    "compatibility_tests": "PASS_2_OF_2",
+    "fast_selectors": "PASS_135_OF_135_197_916_SECONDS",
+    "independent_review_patch_sha": "bf1b1fd250e64e175e67f00f85e50726d5f2e6dc",
+    "independent_review": "PASS_WITH_BOUNDS_46_TOOL_CALLS_WITH_INDEPENDENT_SHORT_LOGS",
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-lossless-wire-20260928/independent-review/conclusion.md",
+    "v14_closure": "sha256:aa37c0be3a268a4203f7f69fca7de224658ee9afad1a6f931d80ede699244858",
+    "provider_sec_refresh_wiring": "PASS",
+    "canonical_hash_algorithm_changed": false,
+    "old_v13_or_historical_package_rewritten": false,
+    "d03_live_permission_added": false,
+    "native_result_created": false,
+    "real_calls": [0, 0, 0],
+    "shared_with_issue47": {
+      "file": "scripts/vnext/continuous_semantic_calls.py",
+      "functions": ["_source_json", "validate_source_unit_bytes", "request_body"],
+      "effect": "D03 joins existing B13/D04 lossless source handling; existing B13/D04 and other default serialization branches stay unchanged",
+      "downstream_issue47_branch_operated": false
+    }
   }
 }

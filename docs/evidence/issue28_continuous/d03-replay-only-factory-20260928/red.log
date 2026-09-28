@@ -1,0 +1,13 @@
+======================================================================
+ERROR: test_jpm_successor_has_current_factory_identity_but_cannot_execute (tests.vnext.test_d03_native_preparation.D03NativePreparationTest.test_jpm_successor_has_current_factory_identity_but_cannot_execute)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_native_preparation.py", line 26, in test_jpm_successor_has_current_factory_identity_but_cannot_execute
+    prepared = calls.prepare_d03_replay_only_requests(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'vnext.continuous_semantic_calls' has no attribute 'prepare_d03_replay_only_requests'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

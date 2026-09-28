@@ -1,15 +1,76 @@
 """D03's future native input is complete and never revives old fact credit."""
 from copy import deepcopy
+from dataclasses import replace
+import json
 import socket
+import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
 from vnext import d03_native_preparation as native
+from vnext import continuous_semantic_calls as calls
+from vnext.canonical import canonical_json_bytes
+from vnext.continuous_call_policy import configured_transport_policy
+from vnext.continuous_call_ledger import recorded_ledger
 from vnext.normal_source_authority import ROOT
 
 
 class D03NativePreparationTest(unittest.TestCase):
+    def test_jpm_successor_has_current_factory_identity_but_cannot_execute(self):
+        self.enterContext(original_sources_only())
+        with patch.object(socket.socket, 'connect',
+                          side_effect=AssertionError('NETWORK_FORBIDDEN')), \
+             patch.object(socket, 'getaddrinfo',
+                          side_effect=AssertionError('DNS_FORBIDDEN')), \
+             patch('sec_http.urlopen',
+                   side_effect=AssertionError('HTTP_FORBIDDEN')):
+            prepared = calls.prepare_d03_replay_only_requests(
+                company_id='jpmorgan_chase')
+            self.assertEqual(38, len(prepared))
+            source = json.loads(prepared[0].source_bytes)
+            self.assertEqual(source['required_unit_ids'], [unit['unit_id']
+                for selected in prepared for unit in
+                json.loads(selected.request_bytes)['units']])
+            self.assertTrue(all(selected.replay_only for selected in prepared))
+            successors = [selected for selected in prepared if
+                'source_fact_review_contract' in json.loads(selected.request_bytes)]
+            self.assertEqual(1, len(successors))
+            selected = successors[0]
+            request = json.loads(selected.request_bytes)
+            self.assertNotIn('source_statement_facts', request)
+            self.assertNotEqual(request['request_id'],
+                request['source_fact_review_contract']['original_request_id'])
+            policy = configured_transport_policy(
+                requirement=selected.requirement, repo_root=ROOT)
+            self.assertEqual(request, selected.validate(policy))
+            with self.assertRaisesRegex(ValueError,
+                    'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE'):
+                calls.execute_feasibility(prepared=selected, ledger=object())
+            with tempfile.TemporaryDirectory() as temporary:
+                ledger = recorded_ledger(root=Path(temporary) / 'ledger')
+                with self.assertRaisesRegex(ValueError,
+                        'D03_SOURCE_ANCHOR_EXECUTION_NOT_AUTHORIZED'):
+                    calls.execute_feasibility(
+                        prepared=replace(selected, replay_only=False),
+                        ledger=ledger)
+                with ledger.locked():
+                    self.assertEqual([0, 0, 0], ledger.snapshot()['counts'])
+            changed = deepcopy(request)
+            changed['source_fact_review_contract']['original_request_id'] = \
+                'sha256:' + '0' * 64
+            with self.assertRaisesRegex(ValueError,
+                    'D03_SOURCE_ANCHOR_REQUEST_NOT_IN_CURRENT_SOURCE'):
+                replace(selected, request_bytes=canonical_json_bytes(
+                    value=changed)).validate(policy)
+            changed = deepcopy(request)
+            changed['source_fact_review_contract'] = None
+            with self.assertRaisesRegex(ValueError,
+                    'D03_SOURCE_ANCHOR_REQUEST_NOT_IN_CURRENT_SOURCE'):
+                replace(selected, request_bytes=canonical_json_bytes(
+                    value=changed)).validate(policy)
+
     def test_saved_jpm_source_uses_anchor_successor_without_losing_groups(self):
         self.enterContext(original_sources_only())
         with patch.object(socket.socket, 'connect',

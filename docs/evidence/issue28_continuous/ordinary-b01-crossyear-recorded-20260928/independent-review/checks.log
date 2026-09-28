@@ -1,0 +1,8 @@
+PASS recorded slot 0001: mode=RECORDED_TEST_ONLY egress=0 body=5b542458aa0fa1c759eb2ff6d40b9f03520521103253ebbfaab7c5c132a2b8aa url=https://data.sec.gov/submissions/CIK0001048286.json
+PASS recorded slot 0002: mode=RECORDED_TEST_ONLY egress=0 body=e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8 url=https://data.sec.gov/submissions/CIK0001048286.json
+PASS archived scripts equal executed private copies
+PASS FY2024: original source hashes, Revenues USD=25100000000, Result=sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0, Run=run:ordinary-integrated:4e799f11b2c85ebb989e699c0ee1afab7ca561f5e94a3864ef4cf20e0e456020, archived installed cold read=PASS
+PASS FY2025: original source hashes, Revenues USD=26186000000, Result=sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc, Run=run:ordinary-integrated:bd73b6e9401b64f7550643a8d3360a47b02508defce8034d120ec65fc20f824d, archived installed cold read=PASS
+PASS predecessor, repeat pointer/terminal, incomplete overall status, and preserved test-only failure
+BOUNDARY derived old metadata; saved current sources; 2 recorded SEC slots; 0 real calls evidenced by receipts; no live year transition, production, or 390 acceptance
+PASS saved current submissions request log: HTTP 200, annual_update_submissions, 2026-09-08T15:06:43.720509+00:00, matching body SHA

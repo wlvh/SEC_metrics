@@ -1,0 +1,6 @@
+{"record_type": "ISSUE28_MARRIOTT_B01_CROSS_YEAR_REPEAT", "report_status": "UPDATES_INCOMPLETE", "metric_status": "NO_SOURCE_CONTENT_CHANGE", "old_success_package_unchanged": true, "new_success_package_unchanged": true, "current_pointer_unchanged": false, "ledger_counts_before_after": [[0, 0, 2], [0, 0, 2]], "new_candidate_created": false, "seconds": 19.534, "real_calls": [0, 0, 0], "production_authorized": false}
+Traceback (most recent call last):
+  File "/private/tmp/issue28-b01-crossyear-repeat.py", line 69, in <module>
+    assert out['current_pointer_unchanged']
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

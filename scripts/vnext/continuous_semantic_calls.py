@@ -38,6 +38,7 @@ SEMANTIC_RULE_PATHS = (
     'catalog/r6/regulatory_semantic_verification_v1.json','catalog/r6/regulatory_semantic_verification_v2.json',
     'scripts/vnext/r6_historical_controls.py','config/r6_historical_control_sources_v1.json',
     'scripts/vnext/regulatory_statement_facts.py',
+    'scripts/vnext/regulatory_fact_review.py',
     'scripts/vnext/capacity_semantic_source.py', 'scripts/vnext/capacity_semantic_review.py',
     'scripts/vnext/capacity_two_stage.py',
     'catalog/r5/capacity_semantic_review_v1.json', 'catalog/r5/capacity_semantic_review_v2.json',
@@ -79,7 +80,7 @@ def _json(value):
 
 def _source_json(value):
     """Keep native source/request strings exact; legacy semantic JSON is unchanged."""
-    if value.get('metric_id') in {'B13', 'D04'}:
+    if value.get('metric_id') in {'B13', 'D03', 'D04'}:
         from .native_unit_index import evidence_json_bytes
         return evidence_json_bytes(value)
     return _json(value)
@@ -87,7 +88,7 @@ def _source_json(value):
 
 def validate_source_unit_bytes(source):
     """Reject a lossy source packet before any request can claim a paid slot."""
-    if source.get('metric_id') not in {'B13', 'D04'}:
+    if source.get('metric_id') not in {'B13', 'D03', 'D04'}:
         return
     from .r6_semantic_source import _bytes
     for unit in source['units']:
@@ -102,7 +103,7 @@ def request_body(request, policy):
     payload = {k:v for k,v in request.items() if k not in
         {'system_prompt','provider_request_sent','provider_tokens_measured','production_authorized'}}
     from .native_unit_index import evidence_json_bytes
-    encode = evidence_json_bytes if request.get('metric_id') in {'B13', 'D04'} else _json
+    encode = evidence_json_bytes if request.get('metric_id') in {'B13', 'D03', 'D04'} else _json
     return encode({'model':policy.model,'messages':[
         {'role':'system','content':request['system_prompt']},
         {'role':'user','content':json.dumps(payload,ensure_ascii=False,sort_keys=True,separators=(',',':'))}],
@@ -261,7 +262,19 @@ class SemanticRequest:
             source_equivalence(current=current,original=source)
         original_requests = source_requests(source)
         if request not in original_requests:
-            if request.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST':
+            if 'source_fact_review_contract' in request:
+                from .regulatory_fact_review import candidate_request
+                contract = request['source_fact_review_contract']
+                need(type(contract) is dict and
+                     type(contract.get('original_request_id')) is str,
+                     'D03_SOURCE_ANCHOR_REQUEST_NOT_IN_CURRENT_SOURCE')
+                originals = [original for original in original_requests
+                    if original['request_id'] == contract['original_request_id']
+                    and original.get('source_statement_facts')]
+                need(source['metric_id'] == 'D03' and len(originals) == 1
+                     and candidate_request(originals[0], source=source) == request,
+                     'D03_SOURCE_ANCHOR_REQUEST_NOT_IN_CURRENT_SOURCE')
+            elif request.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST':
                 from .capacity_reference_contract import upgrade_request as reference_request
                 from .capacity_two_stage import scan_request
                 need(source['metric_id'] == 'B13' and
@@ -356,6 +369,42 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     raw = _source_json(source)
     return [SemanticRequest(_FACTORY,raw,_source_json(request),request_body(request,policy),
         _json(request['response_protocol']),requirement,authority,data_root,source_ledger) for request in source_requests(source)]
+
+
+def prepare_d03_replay_only_requests(*, company_id):
+    """Carry the current complete D03 successor set into the real factory.
+
+    These objects can be identity-checked and planned, but replay_only keeps
+    both recorded and live execution closed. No old source fact is treated as
+    a compelled answer, and no response or native Result is created here.
+    """
+    originals = prepare_requests(company_id=company_id, metric_id='D03',
+                                 reference_context=True)
+    need(bool(originals) and all(p.source_bytes == originals[0].source_bytes
+        for p in originals), 'D03_REPLAY_ONLY_COMPLETE_SOURCE_REQUIRED')
+    source = strict_json_loads(text=originals[0].source_bytes.decode('utf-8'))
+    from .regulatory_fact_review import candidate_request
+    policy = configured_transport_policy(requirement=originals[0].requirement,
+                                         repo_root=ROOT)
+    selected = []
+    for prepared in originals:
+        original = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
+        request = (candidate_request(original, source=source)
+                   if original.get('source_statement_facts') else original)
+        need(request['source_id'] == source['semantic_source_id']
+             and request['units'] == original['units']
+             and request['required_candidate_assessments'] ==
+                 original['required_candidate_assessments'],
+             'D03_REPLAY_ONLY_SOURCE_OR_REQUIRED_SET_CHANGED')
+        selected.append(replace(prepared, request_bytes=_source_json(request),
+            provider_request_body_bytes=request_body(request, policy),
+            output_schema_bytes=_json(request['response_protocol']),
+            replay_only=True))
+    need([unit['unit_id'] for prepared in selected
+          for unit in strict_json_loads(text=prepared.request_bytes.decode('utf-8'))['units']]
+         == source['required_unit_ids'],
+         'D03_REPLAY_ONLY_SOURCE_UNIT_COVERAGE_CHANGED')
+    return selected
 
 
 def select_native_request_variants(*, prepared_requests, ledger, source_references=False,
@@ -760,6 +809,10 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
                            and (ledger.root/'batch33-authorization.json').exists())),
              'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED')
     need(not prepared.replay_only, 'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
+    # The D03 source-fact successor is a diagnostic request identity only.
+    # A copied dataclass with replay_only=False cannot turn it into a call.
+    need('source_fact_review_contract' not in request_fields,
+         'D03_SOURCE_ANCHOR_EXECUTION_NOT_AUTHORIZED')
     if prepared.source_ledger is not None:
         need(prepared.source_ledger.live==ledger.live and prepared.source_ledger.root==ledger.root,
              'CONTINUOUS_SOURCE_EXECUTION_LEDGER_CHANGED')

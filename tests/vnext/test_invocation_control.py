@@ -488,10 +488,13 @@ def operator_arguments(
 
 def crash_after_egress(
     *, workspace_dir: Path, invocation_plan: Mapping[str, object],
-    execution_id: str,
+    execution_id: str, historical_root: Path,
 ) -> None:
     """Run one child execution that dies inside provider send."""
-    invocation_control._REPOSITORY_ROOT = historical_test_root()
+    # The parent has already built and checked this immutable test authority.
+    # Rebuilding its large copied tree in a spawned child can consume the
+    # ten-second death window before the child reaches the mock egress.
+    invocation_control._REPOSITORY_ROOT = historical_root
     execute_invocation(
         workspace_dir=workspace_dir,
         plan=invocation_plan,
@@ -1443,6 +1446,8 @@ class InvocationControlTest(unittest.TestCase):
         self,
     ) -> None:
         """Derive UNKNOWN_REMOTE_OUTCOME from a dead owner's disk state."""
+        from tests.vnext.historical_authority_support import historical_test_root
+
         with tempfile.TemporaryDirectory() as directory:
             workspace = Path(directory)
             invocation_plan = plan()
@@ -1457,6 +1462,7 @@ class InvocationControlTest(unittest.TestCase):
                     "workspace_dir": workspace,
                     "invocation_plan": invocation_plan,
                     "execution_id": execution_id,
+                    "historical_root": historical_test_root(),
                 },
             )
             process.start()

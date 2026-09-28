@@ -1,0 +1,11 @@
+# bf1b1fd D03 无损请求补丁：限定独立审阅
+
+审阅对象：`bf1b1fd250e64e175e67f00f85e50726d5f2e6dc` 相对父提交在 `continuous_semantic_calls.py`、`test_continuous_source_unit_bytes.py`、V14 baseline manifest 和三份当前接线收据中的新增差异。**结论：PASS_WITH_BOUNDS；在该限定范围内未发现阻断问题。** 本结论只确认保存来源的字符表示、申领前拒绝和绑定兼容，不确认 D03 语义判断、原生结果或真实调用资格。
+
+代码的三处选择条件将 D03 纳入已有无损 JSON 路径：`_source_json()` 保存来源和请求，`request_body()` 形成拟发送的请求体，`validate_source_unit_bytes()` 按原先封存的 payload 字节长度、SHA 和 unit ID 复核。`canonical.py` 和语义哈希算法未改，因此补丁保留旧语义身份，同时避免把 U+037E 希腊问号写成 ASCII 分号。`SemanticRequest.validate()` 在 `build_plan()` 和 `ledger.claim()` 之前执行来源复核；当前 `prepare_d03_replay_only_requests()` 产生的对象还在执行入口的申领前被 `replay_only` 守卫拒绝。
+
+独立执行的短测为 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. /private/tmp/issue28_py314_venv/bin/python -m unittest tests.vnext.test_continuous_source_unit_bytes -v`，5 项全部通过，原始合并输出见本目录 `unit.log`。独立执行仓库已保存的离线实源检查 `validate_actual.py`，原始合并输出见本目录 `actual.log`；在脚本禁用 socket 连接和 DNS 的条件下，Paramount 来源产生 14 组、51 个单元；一个含特殊字符的组在 source/request/拟发送 HTTP body 中各保留 4 个 U+037E；将 source 换成旧的有损序列化后，`build_plan()` 在申领前以 `CONTINUOUS_SOURCE_UNIT_SERIALIZATION_CHANGED` 拒绝。该组估算输入 194,092/200,000 tokens。这里验证的是解析后来源单元在 JSON 与请求体中的原字符，并非整份 SEC 原件文件逐字节相同，也未执行模型请求。现有 `compat.log` 记录 D04 mock opener/controller 与 D03 分组负例 2/2 通过；只读解析 `fast.log` 显示 135 个 fast 入口均返回 0、状态 `PASSED`，本审阅未重跑长测试。
+
+我另以父提交的原始文件重算绑定：模块 SHA/大小由 `eb3f19ff03bd107984df1286cd7cb4c09d85342a8824496bed7fa9384dd202fc`/60494 变为 `c05e6232372222d28522d085b916043b5ea912adf8bcc4ff8fc23e3334b0fd88`/60515；V14 manifest 只更新该模块在 `new_rule_files` 与 `execution_authority.files` 的两处身份。当前 Requirement closure 为 `sha256:aa37c0be3a268a4203f7f69fca7de224658ee9afad1a6f931d80ede699244858`，execution authority 为 `sha256:5a76383ad6e67d7ec6a966946f4bea94a65bc44fb54d98a0d858fb048ab8ceb9`。`validate_execution_authority()`、`validate_semantic_rule_bindings()` 与 provider `validate_wiring_receipt()` 均通过。三份收据除预期的 authority/closure 字段外与父提交相同，其所指 95/50/50 份证据的 SHA 均与当前文件相符。V13 manifest、`canonical.py`、`native_unit_index.py` 和 `r6_semantic_source.py` 与父提交逐字节相同；提交也未改旧调用包或账本。B13/D04 原有分支及其他指标默认分支的选择条件没有改变。
+
+边界：离线实源检查只选取一个含 U+037E 的请求组核对拟发送字节，没有逐组验证全部 14 个请求的语义；保存的兼容/fast 日志是本次只读证据，不等于本审阅重跑。历史安装包未做独立冷读，未发生 provider/SEC 请求、账本申领、Candidate/Evidence/Review/Result/Run 或生产采纳。本补丁可作为 D03 请求表示修复承接，D03 完整业务验收仍需另行完成。

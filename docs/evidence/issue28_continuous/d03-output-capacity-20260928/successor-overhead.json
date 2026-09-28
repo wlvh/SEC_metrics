@@ -1,0 +1,27 @@
+{
+  "record_type": "D03_SINGLE_SUCCESSOR_RESPONSE_FIELD_OVERHEAD",
+  "company_id": "jpmorgan_chase",
+  "source_id": "sha256:0b642fe60ede2df84638c2eba1e8b5ad2cf5deaab756d4041582344d46731240",
+  "group_index": 0,
+  "request_id": "sha256:7e7b9f44f5b01dea1b721c73caad7550ad9b50bfd8e2ae5ee00c67410c39cc40",
+  "source_fact_candidate_count": 1,
+  "prior_scenario_tokens_without_extra_field": {
+    "bare_structure": 253,
+    "all_required_context": 313,
+    "one_minimal_finding_per_required": 2032
+  },
+  "scenario_tokens_with_candidate_reviews_field": {
+    "bare_structure": 260,
+    "all_required_context": 320,
+    "one_minimal_finding_per_required": 2132
+  },
+  "output_token_limit": 4096,
+  "bare_and_context_scenarios_are_schema_floor_not_accepted_answers": true,
+  "one_finding_scenario_is_synthetic_not_semantically_approved": true,
+  "actual_model_output_observed": false,
+  "real_calls": [
+    0,
+    0,
+    0
+  ]
+}
