@@ -1,0 +1,79 @@
+{
+  "record_type": "ORDINARY_SCALABILITY_EXACT_SOURCE_EXEMPTIONS",
+  "schema_version": 1,
+  "scope": "private ordinary release; no company or fiscal-result credit",
+  "entries": [
+    {
+      "file": "scripts/vnext/capacity_reference_contract.py",
+      "line": 147,
+      "literal": "F",
+      "type": "ticker",
+      "source_sha256": "19d31c6ad78decefe1823f63cc39e85a5cf029adbaf3399db2d5263c34293424",
+      "source_size": 20482,
+      "context_kind": "NATIVE_FACT_REFERENCE_PREFIX"
+    },
+    {
+      "file": "scripts/vnext/capacity_reference_contract.py",
+      "line": 257,
+      "literal": "F",
+      "type": "ticker",
+      "source_sha256": "19d31c6ad78decefe1823f63cc39e85a5cf029adbaf3399db2d5263c34293424",
+      "source_size": 20482,
+      "context_kind": "NATIVE_FACT_REFERENCE_PREFIX"
+    },
+    {
+      "file": "scripts/vnext/capacity_two_stage.py",
+      "line": 209,
+      "literal": "F",
+      "type": "ticker",
+      "source_sha256": "bb2e7c851c3ca048f800130ccd3874761c5b618f069f661924694aee81a2ae83",
+      "source_size": 56821,
+      "context_kind": "NATIVE_FACT_REFERENCE_PREFIX"
+    },
+    {
+      "file": "scripts/vnext/capacity_two_stage.py",
+      "line": 221,
+      "literal": "F",
+      "type": "ticker",
+      "source_sha256": "bb2e7c851c3ca048f800130ccd3874761c5b618f069f661924694aee81a2ae83",
+      "source_size": 56821,
+      "context_kind": "NATIVE_FACT_REFERENCE_PREFIX"
+    },
+    {
+      "file": "scripts/vnext/capacity_two_stage.py",
+      "line": 238,
+      "literal": "F",
+      "type": "ticker",
+      "source_sha256": "bb2e7c851c3ca048f800130ccd3874761c5b618f069f661924694aee81a2ae83",
+      "source_size": 56821,
+      "context_kind": "NATIVE_FACT_REFERENCE_PREFIX"
+    },
+    {
+      "file": "scripts/vnext/continuous_batch33.py",
+      "line": 121,
+      "literal": "2026-09-23",
+      "type": "fixed_fiscal_date",
+      "source_sha256": "0cbaf9c994b30c93eaac86af5ba0d309459fc05e69fdf9f8473a7db4c921c81b",
+      "source_size": 47601,
+      "context_kind": "AUTHORIZATION_TRANSCRIPTION_DATE"
+    },
+    {
+      "file": "scripts/vnext/continuous_recovery_172.py",
+      "line": 78,
+      "literal": "2026-09-24",
+      "type": "fixed_fiscal_date",
+      "source_sha256": "474f54bc100275b1e7d9d52b8aa89313b129df73585d8a5bf7e7d44ac084176b",
+      "source_size": 12602,
+      "context_kind": "AUTHORIZATION_TRANSCRIPTION_DATE"
+    },
+    {
+      "file": "scripts/vnext/ordinary_scalability_audit.py",
+      "line": 20,
+      "literal": "F",
+      "type": "ticker",
+      "source_sha256": "ff37dda6ed0496cc665d212060acb52fb438054f4cc932252d9429708828b34f",
+      "source_size": 8633,
+      "context_kind": "NATIVE_FACT_REFERENCE_PREFIX"
+    }
+  ]
+}

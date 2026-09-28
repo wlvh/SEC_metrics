@@ -10,7 +10,9 @@ import ast
 from sec_pipeline import (audit_python_literal, folded_ast_literal_value,
     literal_value_matches_identity, load_company_registry_from_path)
 
+from .canonical import sha256_file, strict_json_file
 from .normal_source_authority import ROOT
+from .sources import resolve_repository_file
 
 
 _SOURCE_MARKERS = {
@@ -18,6 +20,46 @@ _SOURCE_MARKERS = {
     'NATIVE_FACT': 'F',
     'NATIVE_SUPPLEMENT': 'S',
 }
+POLICY_PATH = 'config/ordinary_scalability_exemptions_v1.json'
+
+
+def _approved_exemptions(runtime_root):
+    """An exception is valid only for the exact reviewed source-file bytes."""
+    path = runtime_root / POLICY_PATH
+    if not path.exists():
+        return {}
+    policy = strict_json_file(path=resolve_repository_file(
+        repo_root=runtime_root, repo_relative_path=POLICY_PATH))
+    if (set(policy) != {'record_type', 'schema_version', 'scope', 'entries'}
+            or policy['record_type'] != 'ORDINARY_SCALABILITY_EXACT_SOURCE_EXEMPTIONS'
+            or policy['schema_version'] != 1 or type(policy['entries']) is not list):
+        raise ValueError('ORDINARY_SCALABILITY_EXEMPTION_POLICY_INVALID')
+    approved = {}
+    for row in policy['entries']:
+        if (type(row) is not dict or set(row) != {'file', 'line', 'literal',
+                'type', 'source_sha256', 'source_size', 'context_kind'}
+                or type(row['file']) is not str
+                or not row['file'].startswith(('scripts/', 'tools/'))
+                or not row['file'].endswith('.py')
+                or type(row['line']) is not int or row['line'] < 1
+                or type(row['literal']) is not str
+                or row['type'] not in {'ticker', 'fixed_fiscal_date'}
+                or row['context_kind'] not in {'NATIVE_FACT_REFERENCE_PREFIX',
+                                               'AUTHORIZATION_TRANSCRIPTION_DATE'}
+                or type(row['source_sha256']) is not str
+                or len(row['source_sha256']) != 64
+                or type(row['source_size']) is not int or row['source_size'] < 1):
+            raise ValueError('ORDINARY_SCALABILITY_EXEMPTION_FIELDS_INVALID')
+        source = resolve_repository_file(repo_root=runtime_root,
+                                         repo_relative_path=row['file'])
+        if (sha256_file(path=source) != row['source_sha256']
+                or source.stat().st_size != row['source_size']):
+            raise ValueError('ORDINARY_SCALABILITY_APPROVED_SOURCE_CHANGED')
+        key = (row['file'], row['line'], row['literal'], row['type'])
+        if key in approved:
+            raise ValueError('ORDINARY_SCALABILITY_EXEMPTION_DUPLICATE')
+        approved[key] = row['context_kind']
+    return approved
 
 
 def _parents(tree):
@@ -74,6 +116,8 @@ def _authorization_date(node, parents):
 
 def successor_scalability_snapshot(runtime_root):
     """Audit current code without treating source grammar as company routing."""
+    approved = _approved_exemptions(runtime_root)
+    used = set()
     registry = load_company_registry_from_path(
         path=runtime_root / 'config/company_registry.csv')
     identities = []
@@ -98,7 +142,10 @@ def successor_scalability_snapshot(runtime_root):
                     continue
                 marker = _source_reference_prefix(node, parents)
                 for forbidden, kind in identities:
-                    if (kind == 'ticker' and marker and literal == forbidden):
+                    key = (relative.as_posix(), node.lineno, forbidden, kind)
+                    if (kind == 'ticker' and marker and literal == forbidden
+                            and approved.get(key) == 'NATIVE_FACT_REFERENCE_PREFIX'):
+                        used.add(key)
                         continue
                     if literal_value_matches_identity(literal_value=literal,
                             forbidden_literal=forbidden, literal_type=kind):
@@ -111,7 +158,14 @@ def successor_scalability_snapshot(runtime_root):
                         line_number=node.lineno, literal_value=literal):
                     if row['type'] not in {'accession', 'fixed_fiscal_date'}:
                         continue
-                    if row['type'] == 'fixed_fiscal_date' and _authorization_date(node, parents):
+                    key = (relative.as_posix(), node.lineno,
+                           row['literal'], row['type'])
+                    if (row['type'] == 'fixed_fiscal_date'
+                            and _authorization_date(node, parents)
+                            and approved.get(key) == 'AUTHORIZATION_TRANSCRIPTION_DATE'):
+                        used.add(key)
                         continue
                     rows.append(row)
+    if used != set(approved):
+        raise ValueError('ORDINARY_SCALABILITY_EXEMPTION_NOT_PRESENT_OR_NOT_PROVEN')
     return rows

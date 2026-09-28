@@ -20,13 +20,17 @@ class OrdinaryScalabilityAuditTest(unittest.TestCase):
             (root / 'scripts/example.py').write_text(source)
             return successor_scalability_snapshot(root)
 
-    def test_current_source_grammar_and_authorization_provenance_are_not_business_literals(self):
+    def test_current_exact_reviewed_sources_only_have_no_business_literals(self):
         rows = successor_scalability_snapshot(ROOT)
         self.assertEqual([], rows)
         source = ("markers={'NATIVE_FACT':'F'}\n"
                   "ref='F'+str(index) if kind=='NATIVE_FACT' else ''\n"
                   "approved['delegation_source']=={'user_instruction_date':'2026-09-23'}\n")
-        self.assertEqual([], self.audit(source))
+        unapproved = self.audit(source)
+        self.assertEqual(2, sum(row['type'] == 'ticker' and row['literal'] == 'F'
+                                for row in unapproved))
+        self.assertEqual(1, sum(row['type'] == 'fixed_fiscal_date'
+                                for row in unapproved))
 
     def test_actual_company_and_period_literals_remain_rejected(self):
         source = ("ticker='F'\n"
@@ -47,10 +51,40 @@ class OrdinaryScalabilityAuditTest(unittest.TestCase):
                   "approved['delegation_source']=={'user_instruction_date':'2026-09-23',"
                   "'period_end':'2026-09-23'}\n")
         rows = self.audit(source)
+        self.assertEqual(2, sum(row['type'] == 'ticker' and row['literal'] == 'F'
+                                for row in rows))
+        self.assertEqual(2, sum(row['type'] == 'fixed_fiscal_date'
+                                and row['literal'] == '2026-09-23' for row in rows))
+
+    def test_review_counterexamples_are_reported_without_exact_approval(self):
+        source = ("if row['ticker'] == {'NATIVE_FACT':'F'}['NATIVE_FACT']: pass\n"
+                  "if row['period_end'] == {'user_instruction_date':'2026-09-23',"
+                  "'delegation_source':'policy'}['user_instruction_date']: pass\n")
+        rows = self.audit(source)
         self.assertEqual(1, sum(row['type'] == 'ticker' and row['literal'] == 'F'
                                 for row in rows))
         self.assertEqual(1, sum(row['type'] == 'fixed_fiscal_date'
                                 and row['literal'] == '2026-09-23' for row in rows))
+
+    def test_exact_policy_rejects_a_changed_approved_source(self):
+        import json
+        with tempfile.TemporaryDirectory(prefix='ordinary-scalability-bound-') as temp:
+            root = Path(temp).resolve()
+            policy = json.loads((ROOT / 'config/ordinary_scalability_exemptions_v1.json').read_text())
+            for relative in ['config/company_registry.csv',
+                             'config/ordinary_scalability_exemptions_v1.json',
+                             *{row['file'] for row in policy['entries']}]:
+                target = root / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / relative, target)
+            (root / 'tools').mkdir()
+            self.assertEqual([], successor_scalability_snapshot(root))
+            changed = root / 'scripts/vnext/capacity_two_stage.py'
+            with changed.open('a') as handle:
+                handle.write("\nif row['ticker'] == {'NATIVE_FACT':'F'}['NATIVE_FACT']: pass\n")
+            with self.assertRaisesRegex(ValueError,
+                    'ORDINARY_SCALABILITY_APPROVED_SOURCE_CHANGED'):
+                successor_scalability_snapshot(root)
 
 
 if __name__ == '__main__':
