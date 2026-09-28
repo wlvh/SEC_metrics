@@ -756,6 +756,12 @@ def _claim_context_projection(*, response, request, scan_result, source,
             continue
         text = visible[ref]
         ranges = sorted(ranges_by_ref.get(ref, []))
+        if model_spans and any(len(list(_PHYSICAL_CAPACITY.finditer(
+                text[start:end]))) > 1 for start, end in ranges):
+            # An exact quote may still fuse present capacity and an expansion
+            # plan. Require separate model spans instead of crediting one
+            # label merely because it covers both capacity mentions.
+            unresolved.append('B13_MODEL_SPAN_MULTI_CAPACITY_ASSERTION:' + ref)
         if any(ranges[index - 1][1] > ranges[index][0]
                for index in range(1, len(ranges))):
             unresolved.append('B13_CLAIM_OVERLAPPING_RANGES:' + ref)
@@ -782,11 +788,17 @@ def _claim_contradictions(*, row, claim, antecedent, books,
     subject = books['subject'][row[1]]
     timing = books['timing'][row[2]]
     kind = ROLE_LABELS[row[0]]
-    local = list(_CLAIM_SUBJECT.finditer(claim[:physical.start()]))
+    # A comma-delimited relative clause describes the lead noun; its own
+    # subject does not own the capacity predicate outside that clause.
+    owner_prefix = claim[:physical.start()]
+    if role_based_antecedent:
+        owner_prefix = re.sub(r',\s*(?:which|that)\b[^,]*,', ' ',
+                              owner_prefix, flags=re.I)
+    local = list(_CLAIM_SUBJECT.finditer(owner_prefix))
     borrowing = (re.match(r'^\s*(?:they|it|these|those|this|such|currently|now)\b',
                           claim, re.I)
         or re.search(r'\band\s*$', antecedent, re.I)
-        and _CLAIM_PRESENT.match(claim.lstrip()))
+        and (role_based_antecedent or _CLAIM_PRESENT.match(claim.lstrip())))
     earlier = list(_CLAIM_SUBJECT.finditer(antecedent)) if borrowing else []
     antecedent_roles = {('OTHER_ENTITY' if 'supplier' in m.group().casefold()
                          else 'TARGET_REGISTRANT') for m in earlier}
@@ -800,6 +812,16 @@ def _claim_contradictions(*, row, claim, antecedent, books,
         owner = 'OTHER_ENTITY' if 'supplier' in label else 'TARGET_REGISTRANT'
     present = bool(_CLAIM_PRESENT.search(claim))
     past = bool(_CLAIM_PAST.search(claim))
+    # A subjectless coordinated plan can inherit an explicit present frame
+    # from the preceding assertion. "Next year" then locates the plan in the
+    # current report even if this predicate uses a verb absent from the
+    # bounded present-verb check. This is only a necessary conflict guard.
+    current_plan_frame = bool(role_based_antecedent
+        and re.search(r'\band\s*$', antecedent, re.I)
+        and re.search(r'\bnext\s+year\b', claim, re.I)
+        and _CLAIM_PRESENT.search(antecedent)
+        and not _CLAIM_PAST.search(antecedent)
+        and not past)
     unresolved = []
     if ambiguous_antecedent:
         unresolved.append('B13_CLAIM_ANTECEDENT_AMBIGUOUS')
@@ -809,7 +831,7 @@ def _claim_contradictions(*, row, claim, antecedent, books,
         unresolved.append('B13_CLAIM_SUBJECT_CONFLICT')
     if present and past:
         unresolved.append('B13_CLAIM_MIXED_TIME_UNRESOLVED')
-    elif timing == 'HISTORICAL' and present:
+    elif timing == 'HISTORICAL' and (present or current_plan_frame):
         unresolved.append('B13_CLAIM_CURRENT_MARKED_HISTORICAL')
     elif timing == 'CURRENT_REPORT' and past and not present:
         unresolved.append('B13_CLAIM_PAST_MARKED_CURRENT')
@@ -824,7 +846,7 @@ def _claim_contradictions(*, row, claim, antecedent, books,
             unresolved.append('B13_CLAIM_UNSUPPORTED_CONDITIONAL_TIME')
         if kind == 'CONDITIONAL_OR_BOILERPLATE':
             unresolved.append('B13_CLAIM_UNSUPPORTED_CONDITIONAL_KIND')
-    if (owner == 'TARGET_REGISTRANT' and present and not past
+    if (owner == 'TARGET_REGISTRANT' and (present or current_plan_frame) and not past
             and kind in {'OTHER_ENTITY', 'HISTORICAL_STATEMENT',
                          'OTHER_CONTEXT', 'SALES_OR_SHIPMENTS'}):
         unresolved.append('B13_CLAIM_TARGET_CAPACITY_EXCLUDED')

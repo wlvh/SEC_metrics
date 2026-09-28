@@ -5512,5 +5512,39 @@
       0
     ],
     "production_authorized": false
+  },
+  "b13_v8_claim_followup_20260928": {
+    "status": "LOCAL_FINITE_COUNTEREXAMPLES_REPAIRED_V8_LIVE_AND_NATIVE_STILL_SUSPENDED",
+    "scope_paths": [
+      "scripts/vnext/capacity_two_stage.py",
+      "tests/vnext/test_capacity_two_stage.py",
+      "requirements/issue_28_v14/baseline_manifest.json"
+    ],
+    "evidence": "docs/evidence/issue28_continuous/b13-model-span-claim-ownership-20260928/README.md",
+    "prior_review": "docs/evidence/issue28_continuous/b13-model-spans-v8-offline-20260927/independent-review/conclusion.md",
+    "addressed_counterexamples": [
+      "one model range covering current capacity and later expansion",
+      "supplier relative-clause subject ownership",
+      "subjectless coordinated expect-to-add capacity"
+    ],
+    "additional_conflict_checks": [
+      "wrong historical timing on coordinated current plan",
+      "planned capacity mislabelled other_context"
+    ],
+    "targeted_tests": "36_PASS_FINAL_WORKTREE",
+    "fast_suite": "134_OF_135_SELECTORS_PASS_FINAL_WORKTREE_ONE_UNRELATED_INVOCATION_SELECTOR_RC124_AT_30_SECONDS",
+    "invocation_standalone": "25_PASS_19_458_SECONDS",
+    "v7_request_bytes_unchanged": true,
+    "v14_closure": "sha256:79958e52a5cc0869f4610eb8bf6d49082a32749276d13f3936bb7de22abfefa8",
+    "current_provider_sec_refresh_wiring": "PASS_LOCAL_FINAL_WORKTREE",
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "live_permission_added": false,
+    "native_acceptance_enabled": false,
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
+    "complete_company_result": false
   }
 }
