@@ -12,3 +12,15 @@
 **证据边界：** 第一次清单和录制调用不证明真实在线时间序列；两期所需原年报及 Company Facts 都来自已保存材料。`real_calls=[0,0,0]` 还由录制收据的零外发及禁网脚本支持，不作为真实调用成功信用。两期 B01 局部候选均成立，但总体 `source_refresh=REFRESH_INCOMPLETE`、报告 `UPDATES_INCOMPLETE`；没有完整常态刷新、390 坐标验收、正式采纳或生产权限的结论。完整私有运行根位于 `/private/tmp/issue28-b01-crossyear-auto-20260928`，未随补丁入库；异机重跑 `reconcile.py` 需要这份运行根，本次审阅结论绑定于此机保存的原件。未改业务代码、未发真实 provider/SEC 请求、未操作其他 Issue/PR 或分支。
 
 审阅使用 **32 次底层工具调用**，未触及 80 次和 90 分钟上限。
+
+## `ea557935ccae7ad01fcaab5042ef4dedbc4b288d` 增量审阅
+
+**增量结论：PASS_WITH_BOUNDS。** 此节只审相对 `c0e95d3ac6adc8dd0f5034898a06bd2b1cc18f1b` 新增的 `*two*` 演练、`README.md` 增量、`reconcile-two.py` 与相应本机收据；上文对原补丁的字节与结论直接复用，没有重审。必要短命令 `PYTHONDONTWRITEBYTECODE=1 python3 -B docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/reconcile-two.py` 退出 0，输出 `PASS_RECORDED_AUTO_TWO_SOURCE_REFRESH_TWO_FISCAL_RUNS`，提交的 `reconciliation-two.json` 运行前后 SHA-256 均为 `d13b0758041e1c141f1ad8b655d728bd65c25f0af8918f4998c44e5fdfa45f1f`。独立的只读核对见 [checks-two.log](checks-two.log)；没有重跑较长的录制与安装冷读。
+
+- `run-auto-two.py` 为新期安装一个仅按控制器给出的 `url` 选择保存响应字节的录制路由；未知 URL 立即拒绝。路由随后调用事先保存的原 `session.capture(**kwargs)`，没有替代 `refresh_and_process` 的来源发现、请求计划、收据、来源登记或 Run。运行副本与入库脚本哈希一致。第二轮只传公司、B01 和 `max_sec_requests=2`，由控制器先后选出申报清单与 Company Facts URL；三个槽位各有含 `discovery_id` 的计划、真实执行的录制会话收据与终态。三个收据均为 `RECORDED_TEST_ONLY`、`actual_sec_egress_count=0`；槽 1 是构造旧清单，槽 2/3 分别是已保存清单 `e3eeefe3...` 和 Company Facts `af2fea71...` 原字节。
+- 新期报告 `UPDATES_READY`、`REFRESH_CHECK_COMPLETED`，B01 为 `CANDIDATE_READY`；旧期报告仍为 `UPDATES_INCOMPLETE`。两期 Result ID 为 `c51c10da...` 与 `e279b28d...`；本次各自独立的 Run ID 为 `d0ff5340...` 与 `2d564ed7...`。两份安装包的原年报、清单和 Company Facts 来源哈希均与 Run 绑定；原始 `us-gaap:Revenues` 的期间、accession、USD 事实分别支持 25,100,000,000 与 26,186,000,000。新 intent 指向旧成功；保存的两次安装冷读均退出 0、状态 `PASS` 且报告历史字节未变。本审阅核对保存输出、安装包和原件哈希，未亲自重跑冷读。
+- 同源重复后，成功指针仍为 FY2025 尝试，新增 `latest_attempt` 的终态为 `NO_SOURCE_CONTENT_CHANGE`，没有新候选，录制账本保持 `[0,0,3]`。重复轮设 `max_sec_requests=0`，总体如实回到 `UPDATES_INCOMPLETE`；因此新期的 `UPDATES_READY` 是**两项来源检查获准执行的这一轮**的状态，不能描述成以后任何无刷新轮次也保持总体 Ready。
+
+**新增边界：** 第三槽 Company Facts 的响应哈希与请求计划中刷新前已知的来源哈希相同，它证明按控制器选择完成一次录制来源检查，未证明发现新的 Company Facts 内容。旧期录制根使用的是 FY2025 年报提交后保存的 Company Facts；只凭程序能选 FY2024 事实，不能推断旧时点曾真实持有该响应。旧清单仍为构造值，新期两项虽复制了真实保存字节，本轮并无 SEC 在线外发。`UPDATES_READY` 限于单公司 B01、已保存材料的两项录制刷新，不等于真实在线跨财年更新、十公司 39 指标验收或生产采纳。完整新运行根仍在 `/private/tmp/issue28-b01-crossyear-auto-two-20260928`，未随补丁入库；异机单靠提交无法重跑此对账。本轮只追加本节和一份短日志，未改业务代码。
+
+增量审阅 **15 次底层工具调用**，两轮累计 **47 次**；均低于 80 次及 90 分钟上限。

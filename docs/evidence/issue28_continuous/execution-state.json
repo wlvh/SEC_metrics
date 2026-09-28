@@ -34,13 +34,13 @@
     "unknown": 0
   },
   "current_work": [
-    "Current 120e0e2b main CI 36361943184 remains in_progress at the latest natural checkpoint; saved-source shards and aggregate already passed, but program-role/current-instant/JPMorgan jobs had not all terminated. Prior 77f00461 evidence head CI 36358029813 SUCCESS 15/15.",
+    "Previous pushed head 120e0e2b main CI 36361943184 completed SUCCESS 15/15 at 2026-09-28T01:02:45Z, including both saved-source shards and JPMorgan. Current local B01 recorded evidence changes do not modify product code; the next pushed evidence head still needs its own CI terminal.",
     "Marriott B01 recorded cross-fiscal-year auto-refresh: constructed old metadata plus authentic #28 FY2024/2025 annual bodies and saved current metadata produced two private native candidates. A one-capture run was overall incomplete; a separate two-capture run automatically selected submissions then Company Facts and returned UPDATES_READY. Its two installed cold reads, predecessor and repeat pointer passed. Old metadata and old Company Facts were not authentic pre-filing snapshots; no real online transition credit.",
     "D04 ten complete real candidates remain; Enphase and Paramount current normal-update reuse/cold/repeat passed with exact-SHA bounded review, zero additional real calls. B13 V8 remains NEEDS_FIX and live gate closed; D03 is offline only, no native company result/real calls; Ford B06 industrial attributable equity remains unresolved. Full 390 and legacy exit remain unaccepted."
   ],
   "next": [
     "Obtain limited incremental independent review of the exact Marriott B01 two-source recorded refresh evidence, reusing the earlier c0e95d3a limited review. Retain the preflight false assertion and synthetic-old-source boundary; do not count recorded input as real online new-filing acceptance.",
-    "At the next natural checkpoint obtain terminal status for 120e0e2b main CI before pushing another evidence head, then push append-only and update Issue28 section3/PR43 in place.",
+    "120e0e2b main CI is terminal SUCCESS. Push appended B01 recorded evidence commits once bounded incremental review is registered, inspect the new head CI once, and update Issue28 section3/PR43 in place.",
     "Continue an independent meaningful gap: authentic new-filing source sequence when available, D03 native offline chain, B13 bounded semantic repair, B06 same-scope evidence, or 390/legacy exit work; no new B13/D03 real requests, business-definition change, budget expansion or production action."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
@@ -2166,7 +2166,18 @@
       "ended_at": "2026-09-28T00:53:43+00:00",
       "tool_calls": 32,
       "result_path": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
-      "verdict": "PASS_WITH_BOUNDS"
+      "verdict": "PASS_WITH_BOUNDS",
+      "followup_reviews": [
+        {
+          "patch_sha": "ea557935ccae7ad01fcaab5042ef4dedbc4b288d",
+          "started_at": "2026-09-28T01:05:21+00:00",
+          "ended_at": "2026-09-28T01:09:31+00:00",
+          "additional_tool_calls": 15,
+          "cumulative_tool_calls": 47,
+          "result_path": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
+          "verdict": "PASS_WITH_BOUNDS"
+        }
+      ]
     }
   ],
   "ci_capacity_20260922": {
@@ -5364,7 +5375,7 @@
     "current_execution_code_head_ci": "b868ac42/36354613173 SUCCESS 15/15"
   },
   "ordinary_b01_crossyear_recorded_20260928": {
-    "status": "LOCAL_RECORDED_AUTO_TWO_SOURCE_CROSS_YEAR_B01_PASS_INCREMENT_REVIEW_PENDING",
+    "status": "LOCAL_RECORDED_AUTO_TWO_SOURCE_CROSS_YEAR_B01_PASS_INCREMENT_REVIEW_PASS_WITH_BOUNDS_PUSH_PENDING",
     "patch_sha": "c0e95d3ac6adc8dd0f5034898a06bd2b1cc18f1b",
     "evidence": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/README.md",
     "independent_review": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
@@ -5396,6 +5407,8 @@
     ],
     "two_source_new_step_status": "UPDATES_READY/REFRESH_CHECK_COMPLETED/B01_CANDIDATE_READY",
     "two_source_evidence": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/reconciliation-two.json",
+    "two_source_patch_sha": "ea557935ccae7ad01fcaab5042ef4dedbc4b288d",
+    "two_source_independent_review": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
     "two_source_cold_reads": "PASS_1281_FILES_UNCHANGED_EACH",
     "two_source_repeat_status": "NO_SOURCE_CONTENT_CHANGE_SUCCESS_POINTER_RETAINED",
     "old_companyfacts_authentic_prefiling_snapshot": false,
