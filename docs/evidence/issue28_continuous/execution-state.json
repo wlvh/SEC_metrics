@@ -34,6 +34,7 @@
     "unknown": 0
   },
   "current_work": [
+    "Current worktree B03 successor recovery repair: a historical B03 success that passes old mechanical replay but has the known current depreciation-scope conflict no longer prevents a changed source from starting a new attempt. Same old source records PREVIOUS_INPUT_WITHHELD with no current candidate; unrelated row/source errors still fail. Authentic saved Salesforce/Southwest material 1/1 in 155.370s, synthetic changed-descriptor control-flow stop, focused verifier 1/1, fast141/141 in107.492s, V14 and three receipts pass. No corrected Salesforce filing or new B03 value; exact-SHA review and new-head CI pending. Real calls0/0/0; #47 untouched.",
     "Committed 74c36fbc B03 source-scope correction: Salesforce FY2026 selected 1200000000 USD inline fact is expressly fixed-asset D&A, while same current 10-K separately reports 3631000000 USD broader D&A containing right-of-use impairment. No amount was substituted. Exact current original source and all-ten bounded scan find this one explicit conflict; prior Salesforce B03 historical Result identity is retained but current credit is withdrawn in a one-coordinate delta. Frozen V13 ordinary_update_cycle and normal_run_v3 default binding stay exact. Explicit V14 current update route records an EXECUTION_FAILED B03 attempt before a success pointer, blocks old false-success reuse, lets B01 proceed and keeps Southwest B03 positive/idempotent; V14 private release gate rejects the internally PUBLISHED Salesforce Run. Current V14 binding and three receipts pass, directed5/5, update material1/1 at152.752s, release material1/1 at18.877s, boundary20/20 and final fast140/140 at109.371s pass. Exact-SHA limited independent review PASS_WITH_BOUNDS; new-head CI pending push. No real calls or #47 operation.",
     "Committed be73ef94 D03-only native acceptance repair: a complete source-valid uncertain answer is preserved in per-request Candidate/Evidence instead of FAILED_TERMINAL; five Marriott synthetic recorded groups can complete with two unresolved requests, but still produce no semantic Review, Result/Run or business conclusion. Directed 3/3, full material 1/1, B13/D04 compatibility 3/3 and local fast139/139 passed; first missing V14 rebind and an invalid synthetic current-action category remain in failure logs. V14 execution and three current wiring receipts rebound, V13/canonical unchanged. Exact-SHA limited review PASS_WITH_BOUNDS; new-head CI not yet triggered pending push. Real ledger read 195 claims/143/143/52; no new real calls.",
     "Pushed a863f722 D03 complete recorded collector and exact d06c99db limited review PASS_WITH_BOUNDS; five Marriott saved-source groups with synthetic recorded answers still require company semantic Review, not Result/Run. Earlier 5425d51a main CI 36389326801 completed SUCCESS; a863f722 main CI 36392170319 completed SUCCESS 15/15 at 2026-09-28T08:08:38Z. Real calls remain 0 for these changes.",
@@ -43,6 +44,7 @@
     "B13 V8 lexical route remains suspended after two NEEDS_FIX reviews; C04 cross-fiscal-year online update, B06 five source relationships and full390/legacy exit remain unproven. Original ledger last checked at provider/paid/SEC 143/143/52, 195 slots."
   ],
   "next": [
+    "Finish exact-SHA limited independent review of the B03 invalid-prior recovery delta, append-only push to Draft PR43, and read new-head main CI once. a984001f main CI 36447346962 remained in_progress at the 2026-09-28T16:14 natural checkpoint; prior f415bd3e and db5a23fd CI completed SUCCESS. Keep Salesforce B03 current credit withdrawn until complete impairment-free D&A is actually proved.",
     "db5a23fd main CI 36429557390 and f415bd3e main CI 36433946153 both completed SUCCESS; they do not cover committed 74c36fbc. Its exact-SHA B03 limited independent review PASS_WITH_BOUNDS is complete. Append-only push to the same Draft PR43, then read the actual new-head main workflow once. Retain original D03 recorded failures and the passed prior D04 private release without needlessly rerunning it under every V14 edit.",
     "Salesforce B03 current business credit is withdrawn for explicit source scope conflict, not replaced by the larger 3631000000 USD cash-flow row because that row includes impairment. The current successor stops false update/release credit and preserves history; finding an impairment-free complete D&A amount from approved source and proving normal-update failure/recovery remain subsequent B03 responsibilities. Other nine scanned statuses are not scope-completeness endorsements.",
     "Continue D03 source-bound cross-group semantic Review and explicit company Result/Run/public-row path within no-call authority. A complete synthetic recorded set, even with unresolved correctly retained, is not a business conclusion; actual D03 model calls and resources remain separate decisions.",
@@ -6321,6 +6323,33 @@
       "binding": "unfrozen issue_28_v14 execution includes current B03 guard/update/CLI plus affected V14 files; three current wiring receipts updated; issue_28_v13 and frozen ordinary_update_cycle bytes unchanged",
       "compatibility_evidence": "B01 independent positive, Southwest B03 positive/idempotent, direct old normal_run_v3 historical Run shape retained; other metric forwarding and V14 boundary checks pass",
       "downstream_impact": "#47 stacked consumer may need to refresh its own parent V14 closure if it consumes this head; no #47 files, branch, ledger, source or PR operated"
+    }
+  },
+  "b03_invalid_prior_recovery_20260929": {
+    "status": "WORKTREE_TESTED_EXACT_SHA_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/b03-invalid-prior-recovery-20260929/README.md",
+    "scope": "explicit V14 B03 current-update successor only; old V13 controller and normal_run_v3 defaults unchanged",
+    "changed_functions": ["_verify_candidate", "_verify_historical_candidate", "_run_once_b03"],
+    "historical_success_preserved": true,
+    "historical_current_credit_restored": false,
+    "same_source_status": "PREVIOUS_INPUT_WITHHELD_NO_CURRENT_CANDIDATE",
+    "changed_source_test": "SYNTHETIC_DESCRIPTOR_REACHES_INSTALL_THEN_DELIBERATE_EXECUTION_FAILED; DOES_NOT_PROVE_CORRECTED_REAL_INPUT",
+    "material": "PASS_1_OF_1_155_370_SECONDS_AUTHENTIC_SALESFORCE_AND_SOUTHWEST_SAVED_SOURCES",
+    "directed": "PASS_1_OF_1_SCOPE_CONFLICT_ONLY_FALLBACK_AND_TAMPER_PROPAGATION",
+    "fast": "PASS_141_OF_141_107_492_SECONDS",
+    "current_v14_closure": "sha256:377018aa27b4b50450f2a3f567bc0b619f253ef0b71137f8a4ccec45f93a3cdf",
+    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "new_real_calls": [0, 0, 0],
+    "correct_salesforce_b03_value_proven": false,
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "files_functions": {
+        "scripts/vnext/ordinary_b03_scope_update.py": ["_verify_candidate", "_verify_historical_candidate", "_run_once_b03"],
+        "tools/run_fast_tests_v2.py": ["one selector appended to FAST_TESTS; runner function body unchanged"]
+      },
+      "binding": "unfrozen issue_28_v14 execution identity for ordinary_b03_scope_update.py and three current receipts only; V13 files unchanged",
+      "compatibility_evidence": "saved Salesforce old result remains historical but not current; B01 independent positive; Southwest B03 positive and idempotent; unrelated historical verifier errors propagate",
+      "downstream_impact": "stacked consumer may refresh its own current V14 closure if it consumes this head; no #47 artifacts or authority used"
     }
   }
 }

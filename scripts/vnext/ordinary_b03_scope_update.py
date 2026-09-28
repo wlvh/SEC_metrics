@@ -22,6 +22,10 @@ def _need(condition, reason):
         raise ValueError(reason)
 
 
+class B03CurrentScopeConflict(ValueError):
+    """A mechanically valid historical success lacks current B03 credit."""
+
+
 def _verify_candidate(root, terminal, configuration):
     """Validate old-format records, then withhold a narrow B03 source."""
     result = inherited._verify_candidate(root, terminal, configuration)
@@ -33,9 +37,18 @@ def _verify_candidate(root, terminal, configuration):
           and manifest['company_id'] == configuration['company_id'],
           'B03_CURRENT_SUCCESS_METRIC_OR_COMPANY_CHANGED')
     scope = assess_direct_depreciation_scope(case=case, data_root=data)
-    _need(not scope['blocked'],
-          'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED:' + scope['status'])
+    if scope['blocked']:
+        raise B03CurrentScopeConflict(
+            'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED:' + scope['status'])
     return result
+
+
+def _verify_historical_candidate(root, terminal, configuration):
+    """Recover an old terminal without restoring its current business credit."""
+    try:
+        return _verify_candidate(root, terminal, configuration)
+    except B03CurrentScopeConflict:
+        return inherited._verify_candidate(root, terminal, configuration)
 
 
 def _run_once_b03(*, state_root, source_root, company_id,
@@ -61,13 +74,17 @@ def _run_once_b03(*, state_root, source_root, company_id,
         configuration = inherited._config(root, identity_source, company_id,
                                           ['B03'], native_assessment_mode)
         state = inherited._recover(root, inherited._state(root, configuration),
-            configuration, verify_candidate=_verify_candidate)
+            configuration, verify_candidate=_verify_historical_candidate)
         previous = None
+        previous_scope_conflict = False
         successful_results = {}
         if state['successful_attempt'] is not None:
             previous = inherited._terminal(root, state['successful_attempt'])
-            successful_results = _verify_candidate(root, previous,
-                                                   configuration)
+            try:
+                successful_results = _verify_candidate(root, previous,
+                                                       configuration)
+            except B03CurrentScopeConflict:
+                previous_scope_conflict = True
         identity = uuid4().hex
         work = inherited._attempt(root, identity)
         intent = inherited._record(work/'intent.json', {
@@ -88,7 +105,8 @@ def _run_once_b03(*, state_root, source_root, company_id,
                     previous['input']['targets']['B03']['period_end'],
                     'UPDATE_SOURCE_PERIOD_REGRESSED')
             if previous and descriptor == previous['input']:
-                status = 'NO_SOURCE_CONTENT_CHANGE'
+                status = ('PREVIOUS_INPUT_WITHHELD' if previous_scope_conflict
+                          else 'NO_SOURCE_CONTENT_CHANGE')
             elif state['latest_attempt']:
                 prior = inherited._terminal(root, state['latest_attempt'])
                 if (prior['input'] == descriptor and
@@ -138,6 +156,7 @@ def _run_once_b03(*, state_root, source_root, company_id,
                         'configuration_id': configuration['record_id'],
                         'attempt_id': identity, 'input': descriptor,
                         'metrics': metrics}, configuration)
+                    previous_scope_conflict = False
                 else:
                     status = 'CANDIDATE_WITHHELD'
             if source_identity_root is not None:
@@ -165,7 +184,8 @@ def _run_once_b03(*, state_root, source_root, company_id,
             'latest_attempt': identity,
             'successful_attempt': state['successful_attempt'],
             'previous_successful_attempt': intent['previous_successful_attempt'],
-            'last_verified_candidate': None if previous is None else {
+            'last_verified_candidate': None if previous is None or
+                previous_scope_conflict else {
                 'attempt_id': previous['attempt_id'],
                 'targets': previous['input']['targets'],
                 'current_input_matches': descriptor == previous['input'],
