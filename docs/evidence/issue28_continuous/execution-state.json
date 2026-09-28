@@ -34,6 +34,7 @@
     "unknown": 0
   },
   "current_work": [
+    "Local evidence-only B03+C04 recorded mixed-resume integration: original #28 saved Salesforce bodies authenticated by the original source log; two missing historical source bodies added as recorded captures, six other required URLs reused from verified baseline. With historical B03 pointer retained and current B03 credit withheld, first metadata capture gave C04 CANDIDATE_READY and second metadata capture gave C04 NO_SOURCE_CONTENT_CHANGE; forged B03 current-credit report rejected before the second capture. Independent Python process replayed installed B03 historical Result and C04 PUBLISHED/0 while confirming B03 current scope conflict; selected log/pointer hashes unchanged across cold read. Recorded SEC slots4, actual provider/paid/SEC0/0/0, original live ledger read195 claims/143/143/52. Overall UPDATES_INCOMPLETE because B03 is unresolved; authentic future new filing, corrected Salesforce EBITDA and full390 remain unproven. Evidence worktree not yet pushed; current 96351f76 main CI still in_progress at 2026-09-28T17:18Z.",
     "B03 e1a668f exact independent review CHANGES_REQUIRED found two P2 paths: late processing-source failure could combine an old no-credit pointer with new failed results; C04 mixed resume rejected the legal old-pointer/no-current-candidate shape. Committed 81b927c follow-up delays B03 result publication until final postcheck, makes C04 replay the B03 pointer under the precise current scope guard, and splits two CI-timed-out B03 tests without changing their assertions. Directed2/2, affected saved-source selectors Salesforce103s/Southwest87s/source33s, existing C04 mixed resume passed, final fast141/141 in95.739s, V14 closure and three receipts pass. First followup combined test path-alias error and old a984 main CI failure retained. Exact-81b927c limited independent review PASS_WITH_BOUNDS; new-head CI pending push. Full B03+C04 two-capture combination not executed; real calls0/0/0, #47 untouched.",
     "Current worktree B03 successor recovery repair: a historical B03 success that passes old mechanical replay but has the known current depreciation-scope conflict no longer prevents a changed source from starting a new attempt. Same old source records PREVIOUS_INPUT_WITHHELD with no current candidate; unrelated row/source errors still fail. Authentic saved Salesforce/Southwest material 1/1 in 155.370s, synthetic changed-descriptor control-flow stop, focused verifier 1/1, fast141/141 in107.492s, V14 and three receipts pass. No corrected Salesforce filing or new B03 value; exact-SHA review and new-head CI pending. Real calls0/0/0; #47 untouched.",
     "Committed 74c36fbc B03 source-scope correction: Salesforce FY2026 selected 1200000000 USD inline fact is expressly fixed-asset D&A, while same current 10-K separately reports 3631000000 USD broader D&A containing right-of-use impairment. No amount was substituted. Exact current original source and all-ten bounded scan find this one explicit conflict; prior Salesforce B03 historical Result identity is retained but current credit is withdrawn in a one-coordinate delta. Frozen V13 ordinary_update_cycle and normal_run_v3 default binding stay exact. Explicit V14 current update route records an EXECUTION_FAILED B03 attempt before a success pointer, blocks old false-success reuse, lets B01 proceed and keeps Southwest B03 positive/idempotent; V14 private release gate rejects the internally PUBLISHED Salesforce Run. Current V14 binding and three receipts pass, directed5/5, update material1/1 at152.752s, release material1/1 at18.877s, boundary20/20 and final fast140/140 at109.371s pass. Exact-SHA limited independent review PASS_WITH_BOUNDS; new-head CI pending push. No real calls or #47 operation.",
@@ -45,6 +46,7 @@
     "B13 V8 lexical route remains suspended after two NEEDS_FIX reviews; C04 cross-fiscal-year online update, B06 five source relationships and full390/legacy exit remain unproven. Original ledger last checked at provider/paid/SEC 143/143/52, 195 slots."
   ],
   "next": [
+    "At a natural checkpoint read the actual terminal of 96351f76 main CI 36454551078; do not trigger duplicate CI or misread queued/in_progress as success. Append-only push the locally committed recorded-resume evidence when appropriate, reading the new-head CI once. Continue D03 company Review/Run and other independent remaining responsibility; recorded B03+C04 success is a control-flow result, not a corrected B03 company coordinate.",
     "a984001f main CI 36447346962 completed FAILURE: B03 source class hit 30-second fast selector limit and B03 combined material hit 240-second source selector limit; saved-source aggregate failure was consequent, with no reported B03 business assertion failure. The 81b927c split preserved assertions and passed locally; its exact-SHA limited review PASS_WITH_BOUNDS is complete. Push append-only to Draft PR43, then read new-head main CI once. Keep e1a668f CHANGES_REQUIRED as historical review and do not restore Salesforce B03 current credit.",
     "Finish exact-SHA limited independent review of the B03 invalid-prior recovery delta, append-only push to Draft PR43, and read new-head main CI once. a984001f main CI 36447346962 remained in_progress at the 2026-09-28T16:14 natural checkpoint; prior f415bd3e and db5a23fd CI completed SUCCESS. Keep Salesforce B03 current credit withdrawn until complete impairment-free D&A is actually proved.",
     "db5a23fd main CI 36429557390 and f415bd3e main CI 36433946153 both completed SUCCESS; they do not cover committed 74c36fbc. Its exact-SHA B03 limited independent review PASS_WITH_BOUNDS is complete. Append-only push to the same Draft PR43, then read the actual new-head main workflow once. Retain original D03 recorded failures and the passed prior D04 private release without needlessly rerunning it under every V14 edit.",
@@ -6364,6 +6366,25 @@
       "compatibility_evidence": "B01 independent positive, Southwest B03 positive/idempotent, direct old normal_run_v3 historical Run shape retained; other metric forwarding and V14 boundary checks pass",
       "downstream_impact": "#47 stacked consumer may need to refresh its own parent V14 closure if it consumes this head; no #47 files, branch, ledger, source or PR operated"
     }
+  },
+  "b03_c04_recorded_resume_20260929": {
+    "status": "LOCAL_EVIDENCE_COMMIT_PENDING_PUSH_RECORDED_TWO_SOURCE_AND_COLD_READ_PASS",
+    "evidence": "docs/evidence/issue28_continuous/b03-c04-recorded-resume-20260929/README.md",
+    "company_id": "salesforce",
+    "recorded_source_setup": "2_NEW_RECORDED_SOURCE_CAPTURES_6_VERIFIED_BASELINE_REUSES_FROM_8_AUTHENTIC_ISSUE28_SAVED_URLS",
+    "first_pass": "B03_PREVIOUS_INPUT_WITHHELD_C04_CANDIDATE_READY_REFRESH_INCOMPLETE",
+    "forged_current_credit": "REJECTED_BEFORE_SECOND_RECORDED_CAPTURE",
+    "second_pass": "B03_PREVIOUS_INPUT_WITHHELD_C04_NO_SOURCE_CONTENT_CHANGE_REFRESH_CHECK_COMPLETED",
+    "overall_status": "UPDATES_INCOMPLETE_B03_CURRENT_BUSINESS_RESULT_MISSING",
+    "cold_read": "PASS_C04_PUBLISHED_ZERO_AND_B03_OLD_RESULT_HISTORICAL_ONLY_SELECTED_STATE_HASHES_UNCHANGED",
+    "recorded_sec_slots": 4,
+    "new_real_calls": [0, 0, 0],
+    "actual_ledger_after_read": [143, 143, 52],
+    "new_complete_company_results": 0,
+    "new_current_390_coordinates": 0,
+    "authentic_online_new_filing_proven": false,
+    "independent_agent_review": "NOT_REQUESTED_EVIDENCE_ONLY_NO_PRODUCTION_SOURCE_CHANGE",
+    "issue47_operated": false
   },
   "b03_invalid_prior_recovery_20260929": {
     "status": "E1A668F_REVIEW_CHANGES_REQUIRED_FOLLOWUP_81B927C_PASS_WITH_BOUNDS_PENDING_PUSH",
