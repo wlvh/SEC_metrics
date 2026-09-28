@@ -1,0 +1,15 @@
+REVIEW_SHA=36362a2945222b8a773cc866172e4ac5efcf931e
+SCOPE=.github/workflows/vnext-fast.yml docs/evidence/issue28_continuous/ci-fast-checkout-timeout-20260929/
+METHOD=direct Git diff and YAML execution; read GitHub job API and original job logs
+git diff parent..patch -- .github/workflows/vnext-fast.yml: one line, jobs.fast.timeout-minutes 10 -> 20
+git diff --check parent..patch: exit 0
+ruby YAML.load_file fast timeout == 20: PASS
+run 36478405174 head=16a6e897650d98eab3349b862f739674c2b7fb14; job 109117765903 conclusion=cancelled
+job 109117765903 checkout 2026-09-28T20:19:50Z .. 20:29:49Z (599s); Python/setup/install/fast skipped
+original job log: git fetch PR43 merge ref at 20:19:50.8617973Z; The operation was canceled at 20:29:49.5553415Z
+run 36471768000 head=b300f5a92d651b7db23001feb2cda46233bca6e0 conclusion=success; job 109095515598 conclusion=success
+job 109095515598 checkout 19:22:26Z .. 19:22:50Z (24s); fast 19:22:56Z .. 19:25:50Z (174s), success
+original prior log: Run python3 tools/run_fast_tests_v2.py --jobs 2; summary status PASSED
+git diff b300f5a9..16a6e897 -- .github/workflows/vnext-fast.yml: empty
+LIMIT=no new-head CI result; cancellation reason inferred from exact cap timing and not separately encoded
+VERDICT=PASS_LIMITED

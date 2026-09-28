@@ -2530,6 +2530,21 @@
       "tool_calls": 19,
       "result_path": "docs/evidence/issue28_continuous/ci-source-material-three-shards-20260929/independent-review/conclusion.md",
       "verdict": "PASS_LIMITED"
+    },
+    {
+      "task_name": "review_cifast_36362a2",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ci_fast_checkout_timeout",
+      "scope_paths": [
+        ".github/workflows/vnext-fast.yml",
+        "docs/evidence/issue28_continuous/ci-fast-checkout-timeout-20260929/"
+      ],
+      "patch_sha": "36362a2945222b8a773cc866172e4ac5efcf931e",
+      "spawned_at": "2026-09-28T20:34:19Z",
+      "ended_at": "2026-09-28T20:39:00Z",
+      "tool_calls": 16,
+      "result_path": "docs/evidence/issue28_continuous/ci-fast-checkout-timeout-20260929/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED"
     }
   ],
   "ci_capacity_20260922": {
@@ -6668,7 +6683,7 @@
     "current_main_ci_run": 36471768000
   },
   "ordinary_marriott_current_36_20260929": {
-    "status": "LOCAL_PRIVATE_36_OF_36_CURRENT_SAVED_SOURCE_CANDIDATES_SEVEN_COLD_REPLAY_PASS",
+    "status": "LOCAL_PRIVATE_36_OF_36_CURRENT_SAVED_SOURCE_CANDIDATES_ALL_36_LEGACY_DISABLED_COLD_REPLAY_PASS",
     "evidence": "docs/evidence/issue28_continuous/ordinary-marriott-current-36-20260929/README.md",
     "source_snapshot_id": "sha256:2758b48cba3a4b2a5deac013872e3e0243b7f55549a75f0ccc4e3f487a44b8fb",
     "company_id": "marriott_international",
@@ -6699,6 +6714,9 @@
       "E01"
     ],
     "independent_process_replay_pass_count": 7,
+    "legacy_disabled_cold_replay_pass_count": 36,
+    "legacy_disabled_old_semantic_exports": 116,
+    "legacy_disabled_cold_replay_evidence": "docs/evidence/issue28_continuous/ordinary-marriott-current-36-20260929/legacy-cold.json",
     "per_metric_intent_to_terminal_seconds_sum": 2431.446,
     "direct_c04_route": "HISTORICAL_DEFAULT_NOT_CURRENT_SUCCESSOR",
     "new_fiscal_year_update_proven": false,
@@ -6708,7 +6726,7 @@
     "private_root": "/private/tmp/issue28-marriott-current-36-20260929"
   },
   "ci_fast_checkout_timeout_20260929": {
-    "status": "WORKTREE_DIAGNOSED_LIMITED_REVIEW_PENDING",
+    "status": "LOCAL_PATCH_LIMITED_REVIEW_PASS_NEW_HEAD_CI_PENDING",
     "evidence": "docs/evidence/issue28_continuous/ci-fast-checkout-timeout-20260929/README.md",
     "cancelled_run": 36478405174,
     "cancelled_job": 109117765903,
@@ -6727,7 +6745,7 @@
       0,
       0
     ],
-    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "limited_independent_review": "PASS_LIMITED_36362a2945222b8a773cc866172e4ac5efcf931e",
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
       "file": ".github/workflows/vnext-fast.yml",
