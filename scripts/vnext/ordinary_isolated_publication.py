@@ -30,6 +30,7 @@ IMPLEMENTATION = ('scripts/vnext/ordinary_isolated_publication.py',
                   'scripts/vnext/ordinary_scalability_audit.py',
                   'config/ordinary_scalability_exemptions_v1.json',
                   'scripts/vnext/ordinary_release_preparation.py',
+                  'scripts/vnext/b03_depreciation_scope.py',
                   'scripts/vnext/publication.py', 'scripts/vnext/records.py',
                   'scripts/vnext/publication_results.py')
 _FACTORY = object()

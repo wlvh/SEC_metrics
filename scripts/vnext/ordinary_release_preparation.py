@@ -49,6 +49,14 @@ def _result_selection_basis(*, data_root, manifest, result, rendered):
     A WITHHELD label alone never establishes a public source statement.
     """
     if result['publication'] == 'PUBLISHED':
+        if result['metric_id'] == 'B03':
+            from .b03_depreciation_scope import assess_direct_depreciation_scope
+            case = normal.replay_case(data_root=data_root, manifest=manifest)
+            scope = assess_direct_depreciation_scope(case=case,
+                data_root=data_root)
+            _need(not scope['blocked'],
+                  'ORDINARY_RELEASE_B03_DEPRECIATION_SCOPE_UNRESOLVED:' +
+                  scope['status'])
         return 'NATIVE_PUBLISHED_RESULT'
     allowed = {
         'D04': ('D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE', 'TEXT_QUAL'),

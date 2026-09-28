@@ -17,7 +17,7 @@ from .continuous_sec_acquisition import (C04_SOURCE_ONLY_STALE_RULE_PATHS,
 from .normal_source_authority import ROOT
 from .normal_source_requirements import discover_saved_source_requirements, source_dependency_satisfied
 from .normal_annual_input import _registry_rows
-from .ordinary_update_cycle import run_company
+from .ordinary_b03_scope_update import run_company
 from .normal_run_v3 import update_metric_ids
 from .sources import resolve_repository_file
 

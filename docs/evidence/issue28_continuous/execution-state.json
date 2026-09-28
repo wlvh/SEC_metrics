@@ -34,6 +34,7 @@
     "unknown": 0
   },
   "current_work": [
+    "Current worktree B03 source-scope correction: Salesforce FY2026 selected 1200000000 USD inline fact is expressly fixed-asset D&A, while same current 10-K separately reports 3631000000 USD broader D&A containing right-of-use impairment. No amount was substituted. Exact current original source and all-ten bounded scan find this one explicit conflict; prior Salesforce B03 historical Result identity is retained but current credit is withdrawn in a one-coordinate delta. Frozen V13 ordinary_update_cycle and normal_run_v3 default binding stay exact. Explicit V14 current update route records an EXECUTION_FAILED B03 attempt before a success pointer, blocks old false-success reuse, lets B01 proceed and keeps Southwest B03 positive/idempotent; V14 private release gate rejects the internally PUBLISHED Salesforce Run. Current V14 binding and three receipts pass, directed5/5, update material1/1 at152.752s, release material1/1 at18.877s, boundary20/20 and final fast140/140 at109.371s pass. Limited review and new-head CI pending. No real calls or #47 operation.",
     "Committed be73ef94 D03-only native acceptance repair: a complete source-valid uncertain answer is preserved in per-request Candidate/Evidence instead of FAILED_TERMINAL; five Marriott synthetic recorded groups can complete with two unresolved requests, but still produce no semantic Review, Result/Run or business conclusion. Directed 3/3, full material 1/1, B13/D04 compatibility 3/3 and local fast139/139 passed; first missing V14 rebind and an invalid synthetic current-action category remain in failure logs. V14 execution and three current wiring receipts rebound, V13/canonical unchanged. Exact-SHA limited review PASS_WITH_BOUNDS; new-head CI not yet triggered pending push. Real ledger read 195 claims/143/143/52; no new real calls.",
     "Pushed a863f722 D03 complete recorded collector and exact d06c99db limited review PASS_WITH_BOUNDS; five Marriott saved-source groups with synthetic recorded answers still require company semantic Review, not Result/Run. Earlier 5425d51a main CI 36389326801 completed SUCCESS; a863f722 main CI 36392170319 completed SUCCESS 15/15 at 2026-09-28T08:08:38Z. Real calls remain 0 for these changes.",
     "Attempted private unified release preparation using existing Enphase and Paramount D04 real-response ordinary Runs under current a863f722 code. The two input Runs share old V14 baseline 345712f3..., while current baseline is 8258cf4e...; _mechanically_replay_open_run rejected the old installed snapshot before matrix composition. prepare.exit=1 and complete traceback retained in d04-unified-release-20260928/. No prepared version, cold read, new coordinate or production credit. Prior D04 10/10 candidates remain intact; old Run trees were not sampled before and after this attempt.",
@@ -42,7 +43,8 @@
     "B13 V8 lexical route remains suspended after two NEEDS_FIX reviews; C04 cross-fiscal-year online update, B06 five source relationships and full390/legacy exit remain unproven. Original ledger last checked at provider/paid/SEC 143/143/52, 195 slots."
   ],
   "next": [
-    "db5a23fd main CI 36429557390 was still in_progress at the latest natural checkpoint, with no failed completed job. Append-only push reviewed be73ef94 and its limited-review receipt to the same Draft PR43, then read the new head's actual main workflow once. Retain original D03 recorded failures, the db5 D04 private-stage failures and the passed 4679-second release proof; do not repeat unchanged long chains.",
+    "db5a23fd main CI 36429557390 and f415bd3e main CI 36433946153 both completed SUCCESS; they do not cover the current B03 worktree. Finish the exact-SHA limited independent review of the B03 source and current-update/release gates, append-only push to the same Draft PR43, then read the actual new-head main workflow once. Retain original D03 recorded failures and the passed prior D04 private release without needlessly rerunning it under every V14 edit.",
+    "Salesforce B03 current business credit is withdrawn for explicit source scope conflict, not replaced by the larger 3631000000 USD cash-flow row because that row includes impairment. The current successor stops false update/release credit and preserves history; finding an impairment-free complete D&A amount from approved source and proving normal-update failure/recovery remain subsequent B03 responsibilities. Other nine scanned statuses are not scope-completeness endorsements.",
     "Continue D03 source-bound cross-group semantic Review and explicit company Result/Run/public-row path within no-call authority. A complete synthetic recorded set, even with unresolved correctly retained, is not a business conclusion; actual D03 model calls and resources remain separate decisions.",
     "Continue independent B06/C04/390/legacy-exit work. D04 already passed one-coordinate private release under current V14; this does not complete 390 or formal adoption. Keep B13 V8 suspended and #47 isolated."
   ],
@@ -6260,6 +6262,42 @@
       "binding_change": "unfrozen issue_28_v14 execution and semantic-rule identities for the two changed files; three current wiring receipts updated; V13 unchanged",
       "default_compatibility": "B13/D04 unresolved handling and shared signatures unchanged; targeted B13 native replay and D04 category checks passed",
       "possible_downstream_impact": "#47 stacked consumer may need to refresh its own parent requirement binding if it loads this changed V14 closure; no #47 artifact or branch operated"
+    }
+  },
+  "b03_current_scope_20260928": {
+    "status": "WORKTREE_KNOWN_SALESFORCE_B03_SCOPE_CONFLICT_BLOCKED_CURRENT_UPDATE_AND_PRIVATE_RELEASE",
+    "evidence": "docs/evidence/issue28_continuous/b03-current-scope-20260928/README.md",
+    "selected_source": "Salesforce FY2026 selected 1200000000 USD DepreciationDepletionAndAmortization inline fact explicitly says fixed assets",
+    "competing_source": "same annual primary separately reports 3631000000 USD DepreciationAndAmortization; footnote includes right-of-use impairment, so no automatic substitution",
+    "current_390_delta": "docs/evidence/issue28_continuous/b03-current-scope-20260928/delta.json",
+    "current_credit": "REVOKED_PENDING_DEPRECIATION_SCOPE_RESOLUTION",
+    "historical_result_id_unchanged": true,
+    "ten_saved_source_audit_blocked": ["salesforce"],
+    "other_nine_complete_scope_proven": false,
+    "directed": "PASS_5_OF_5_CURRENT_B03_SCOPE_AND_CLI",
+    "update_material": "PASS_1_OF_1_152_752_SECONDS_SALESFORCE_B01_CONTINUES_B03_FAILURE_RECORDED_OLD_FALSE_SUCCESS_NOT_REUSED_SOUTHWEST_POSITIVE_AND_IDEMPOTENT",
+    "release_material": "PASS_1_OF_1_18_877_SECONDS_INTERNAL_PUBLISHED_RUN_REJECTED_BY_V14_SELECTION",
+    "refresh_and_private_boundary": "PASS_20_OF_20",
+    "fast": "PASS_140_OF_140_109_371_SECONDS_FINAL_TREE; EARLIER_WRAPPER_PASS_140_OF_140_108_098_SECONDS_RETAINED_SEPARATELY",
+    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "frozen_v13_ordinary_update_cycle_unchanged": true,
+    "default_normal_run_v3_binding_unchanged": true,
+    "new_real_calls": [0, 0, 0],
+    "full_current_390_acceptance": false,
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "files_functions": {
+        "scripts/vnext/b03_depreciation_scope.py": ["assess_direct_depreciation_scope"],
+        "scripts/vnext/ordinary_b03_scope_update.py": ["_run_once_b03", "run_company"],
+        "scripts/vnext/ordinary_refresh_cycle.py": ["run_company import selects explicit B03 successor"],
+        "tools/vnext_normal_update.py": ["main selects explicit B03 successor"],
+        "scripts/vnext/ordinary_release_preparation.py": ["_result_selection_basis rejects source-conflicted B03"],
+        "scripts/vnext/ordinary_isolated_publication.py": ["IMPLEMENTATION binds B03 source guard"],
+        "tools/run_fast_tests_v2.py": ["B03 fast and source-material selectors appended; runner functions unchanged"]
+      },
+      "binding": "unfrozen issue_28_v14 execution includes current B03 guard/update/CLI plus affected V14 files; three current wiring receipts updated; issue_28_v13 and frozen ordinary_update_cycle bytes unchanged",
+      "compatibility_evidence": "B01 independent positive, Southwest B03 positive/idempotent, direct old normal_run_v3 historical Run shape retained; other metric forwarding and V14 boundary checks pass",
+      "downstream_impact": "#47 stacked consumer may need to refresh its own parent V14 closure if it consumes this head; no #47 files, branch, ledger, source or PR operated"
     }
   }
 }

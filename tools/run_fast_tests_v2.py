@@ -110,6 +110,7 @@ FAST_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityA
 FAST_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_same_line_exemption_does_not_hide_another_literal",)
 FAST_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_review_counterexamples_are_reported_without_exact_approval",)
 FAST_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_exact_policy_rejects_a_changed_approved_source",)
+FAST_TESTS += ("tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeTest",)
 SOURCE_TESTS += ("tests.vnext.test_continuous_semantic_calls",)
 SOURCE_TESTS += ("tests.vnext.test_r6_regulatory_semantics",)
 SOURCE_TESTS += ("tests.vnext.test_r6_semantic_verification",)
@@ -142,6 +143,7 @@ SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMa
 SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",)
+SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.
