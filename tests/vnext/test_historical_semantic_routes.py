@@ -169,10 +169,15 @@ class ARegisteredAssessmentTravelsToATextResultTest(unittest.TestCase):
                 prepare_historical_run_input(
                     repo_root=ROOT, company_id="marriott_international", metric_id="D04",
                     period_selection=self.selection)
-            # A mode means nothing to a route without an assessment.
+            # A mode means nothing to a route without an assessment. This case
+            # named D02 until D02 took a registered Item 8 review (f9933a2e);
+            # then the mode was meaningful there and nothing was raised. D01
+            # takes none - asserted, so wiring one names why this case moved.
+            from vnext.historical_event_items import SUCCESSOR_EVENT_ROUTES
+            self.assertNotIn("D01", {*semantic.SUPPORTED_METRICS, *SUCCESSOR_EVENT_ROUTES, "D02"})
             with self.assertRaisesRegex(ValueError, "ASSESSMENT_MODE_WITHOUT_ASSESSMENT"):
                 prepare_historical_run_input(
-                    repo_root=ROOT, company_id="marriott_international", metric_id="D02",
+                    repo_root=ROOT, company_id="marriott_international", metric_id="D01",
                     period_selection=self.selection, assessment_mode="RECORDED_TEST_ONLY")
         self.assertEqual("TEXT", prepared["kind"])
         self.assertEqual(self.record, prepared["registered_assessment"])
