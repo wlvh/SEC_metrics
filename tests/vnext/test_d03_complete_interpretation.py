@@ -1,7 +1,9 @@
 """D03 complete-response checking remains a proposal without Result credit."""
 from copy import deepcopy
 import json
+from pathlib import Path
 import socket
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -102,6 +104,72 @@ class D03CompleteInterpretationTest(unittest.TestCase):
             interpretation.validate_complete_interpretation(
                 prepared_input=prepared, response_bytes_by_request={},
                 repo_root=ROOT.parent)
+
+    def test_recorded_bridge_maps_original_to_effective_ids_without_credit(self):
+        packet_id = 'sha256:' + 'a'*64
+        prepared = {'company_id': 'marriott_international',
+            'source_id': 'sha256:' + 'b'*64, 'input_id': 'sha256:' + 'c'*64,
+            'groups': [
+                {'group_index': 0, 'source_anchor_successor': False,
+                 'original_request_id': 'old-0',
+                 'effective_request_id': 'old-0'},
+                {'group_index': 1, 'source_anchor_successor': True,
+                 'original_request_id': 'old-1',
+                 'effective_request_id': 'successor-1'}]}
+        packet = {'packet_id': packet_id, 'request_count': 2,
+            'raw_response_bytes': {'old-0': b'first', 'old-1': b'second'},
+            'calls': [0, 0, 0], 'native_result_created': False}
+        proposal = {'proposal_id': 'sha256:' + 'd'*64,
+            'source_id': prepared['source_id'],
+            'input_id': prepared['input_id'],
+            'unresolved_group_indices': [1],
+            'proposed_branch': 'UNRESOLVED_REQUIRES_REVIEW',
+            'provider_execution_identity_verified': False,
+            'native_candidate_or_evidence_created': False,
+            'native_result_or_run_created': False}
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            (root/'packet.json').write_text(json.dumps({
+                'packet_id': packet_id,
+                'company_id': 'marriott_international',
+                'source_id': prepared['source_id']}))
+            with patch('vnext.d03_recorded_response_set.replay_offline_set',
+                       return_value=packet) as replay, patch.object(
+                       interpretation, 'prepare_native_input',
+                       return_value=prepared), patch.object(
+                       interpretation, 'validate_complete_interpretation',
+                       return_value=proposal) as validate:
+                result = interpretation.replay_recorded_complete_interpretation(
+                    packet_root=root, expected_packet_id=packet_id,
+                    company_id='marriott_international')
+                self.assertEqual({'old-0': b'first', 'successor-1': b'second'},
+                    validate.call_args.kwargs['response_bytes_by_request'])
+                self.assertEqual(packet_id, replay.call_args.kwargs[
+                    'expected_packet_id'])
+                self.assertEqual(2, result['group_count'])
+                self.assertEqual([('old-0', 'old-0'),
+                                  ('old-1', 'successor-1')], [
+                    (row['original_request_id'], row['effective_request_id'])
+                    for row in result['request_mapping']])
+                self.assertEqual([1], result['unresolved_group_indices'])
+                self.assertFalse(result['provider_execution_identity_verified'])
+                self.assertFalse(result['native_result_or_run_created'])
+                self.assertEqual([0, 0, 0], result['calls'])
+                with self.assertRaisesRegex(ValueError,
+                        'D03_RECORDED_INTERPRETATION_PACKET_OR_REQUEST_CHANGED'):
+                    replay.return_value = {**packet,
+                        'raw_response_bytes': {'old-0': b'first'}}
+                    interpretation.replay_recorded_complete_interpretation(
+                        packet_root=root, expected_packet_id=packet_id,
+                        company_id='marriott_international')
+                replay.return_value = packet
+                with self.assertRaisesRegex(ValueError,
+                        'D03_RECORDED_INTERPRETATION_CREDIT_CHANGED'):
+                    validate.return_value = {**proposal,
+                        'native_result_or_run_created': True}
+                    interpretation.replay_recorded_complete_interpretation(
+                        packet_root=root, expected_packet_id=packet_id,
+                        company_id='marriott_international')
 
 
 if __name__ == '__main__':

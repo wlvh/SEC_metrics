@@ -34,14 +34,14 @@
     "unknown": 0
   },
   "current_work": [
-    "Previous pushed head 120e0e2b main CI 36361943184 completed SUCCESS 15/15 at 2026-09-28T01:02:45Z, including both saved-source shards and JPMorgan. Current local B01 recorded evidence changes do not modify product code; the next pushed evidence head still needs its own CI terminal.",
-    "Marriott B01 recorded cross-fiscal-year auto-refresh: constructed old metadata plus authentic #28 FY2024/2025 annual bodies and saved current metadata produced two private native candidates. A one-capture run was overall incomplete; a separate two-capture run automatically selected submissions then Company Facts and returned UPDATES_READY. Its two installed cold reads, predecessor and repeat pointer passed. Old metadata and old Company Facts were not authentic pre-filing snapshots; no real online transition credit.",
-    "D04 ten complete real candidates remain; Enphase and Paramount current normal-update reuse/cold/repeat passed with exact-SHA bounded review, zero additional real calls. B13 V8 remains NEEDS_FIX and live gate closed; D03 is offline only, no native company result/real calls; Ford B06 industrial attributable equity remains unresolved. Full 390 and legacy exit remain unaccepted."
+    "Pushed head c1e96fe4 main CI 36365013124 remains in_progress at the latest natural checkpoint; fast and most native jobs succeeded, saved-source shard1 and JPMorgan had no terminal. Earlier 120e0e2b main CI 36361943184 SUCCESS 15/15.",
+    "Marriott B01 has a reviewed recorded FY2024-to-FY2025 two-source update path with old metadata explicitly derived, new saved submissions/Company Facts automatically selected, new period Run and independent cold reads. It proves offline single-metric control flow, not authentic online historical source timing or complete390. Original real ledger remains 143/143/52.",
+    "D03 new offline bridge replays a complete saved raw-response packet, binds original request IDs to current effective request IDs, and returns a complete interpretation proposal with no provider or native credit. Marriott five saved groups remain unresolved; wrong packet ID is rejected. Full module3 and fast135 passed; limited review/current-head CI pending. B13 V8 NEEDS_FIX, D03 real calls forbidden, B06 remaining relations and full390/legacy exit unresolved."
   ],
   "next": [
-    "Obtain limited incremental independent review of the exact Marriott B01 two-source recorded refresh evidence, reusing the earlier c0e95d3a limited review. Retain the preflight false assertion and synthetic-old-source boundary; do not count recorded input as real online new-filing acceptance.",
-    "120e0e2b main CI is terminal SUCCESS. Push appended B01 recorded evidence commits once bounded incremental review is registered, inspect the new head CI once, and update Issue28 section3/PR43 in place.",
-    "Continue an independent meaningful gap: authentic new-filing source sequence when available, D03 native offline chain, B13 bounded semantic repair, B06 same-scope evidence, or 390/legacy exit work; no new B13/D03 real requests, business-definition change, budget expansion or production action."
+    "Complete exact-SHA limited independent review of D03 recorded-interpretation bridge. Keep its packet-origin and no-native-credit boundary; do not grant real calls or company conclusion.",
+    "Read c1e96fe4 main CI terminal at a natural checkpoint before pushing next code head; then push append-only and update Issue28 section3/PR43 in place. Do not repeat unchanged long materials.",
+    "Continue D03 native Candidate/Review/Run preparation, B13 known semantic error repair, B06 source relationship work, and 390/legacy exit only where existing source/authority permit; business and resource choices remain distinct."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
   "remaining_review_dependency": "D03 source-fact original6e5 and three bounded repairs all failed exact-SHA limited review; rule route suspended, code/binding restored to b897. Real D03 remains uncalled pending a different defensible validation path, separate integration review and resource decision.",
@@ -5321,7 +5321,7 @@
     "evidence_head_ci": "77f00461/36358029813 SUCCESS 15/15"
   },
   "d04_paramount_current_normal_update_20260928": {
-    "status": "LOCAL_REAL_ORIGINAL_REUSE_CURRENT_NORMAL_UPDATE_AND_COLD_READ_PASS_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS_PUSH_PENDING",
+    "status": "PUSHED_REAL_ORIGINAL_REUSE_CURRENT_NORMAL_UPDATE_AND_COLD_READ_PASS_INDEPENDENT_REVIEW_PASS_WITH_BOUNDS",
     "patch_sha": "3e1ba8b2c79d2be44b41e360772dd028b6906840",
     "evidence": "docs/evidence/issue28_continuous/d04-paramount-current-update-20260928/README.md",
     "independent_review": "docs/evidence/issue28_continuous/d04-paramount-current-update-20260928/independent-review/conclusion.md",
@@ -5375,7 +5375,7 @@
     "current_execution_code_head_ci": "b868ac42/36354613173 SUCCESS 15/15"
   },
   "ordinary_b01_crossyear_recorded_20260928": {
-    "status": "LOCAL_RECORDED_AUTO_TWO_SOURCE_CROSS_YEAR_B01_PASS_INCREMENT_REVIEW_PASS_WITH_BOUNDS_PUSH_PENDING",
+    "status": "PUSHED_RECORDED_AUTO_TWO_SOURCE_CROSS_YEAR_B01_PASS_INCREMENT_REVIEW_PASS_WITH_BOUNDS_CI_RUNNING",
     "patch_sha": "c0e95d3ac6adc8dd0f5034898a06bd2b1cc18f1b",
     "evidence": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/README.md",
     "independent_review": "docs/evidence/issue28_continuous/ordinary-b01-crossyear-recorded-20260928/independent-review/conclusion.md",
@@ -5426,5 +5426,50 @@
     "new_complete_390_coordinate_count": 0,
     "formal_adoption": false,
     "execution_code_head": "120e0e2be51c243556623f81556879c76bbfe071"
+  },
+  "d03_recorded_interpretation_bridge_20260928": {
+    "status": "LOCAL_D03_RECORDED_COMPLETE_INTERPRETATION_BRIDGE_PASS_INDEPENDENT_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/d03-recorded-interpretation-bridge-20260928/README.md",
+    "scope_paths": [
+      "scripts/vnext/d03_complete_interpretation.py",
+      "tests/vnext/test_d03_complete_interpretation.py",
+      "tools/run_fast_tests_v2.py"
+    ],
+    "recorded_packet_id": "sha256:198ade1a29070ec2737f8372618415e1e1da6b5155b507ea748d5f5550029162",
+    "bridge_record_id": "sha256:598ab808a7027b26456a1dd568cf5fbe8e420462d7365f80ff7c6eff87c6c9b6",
+    "company_id": "marriott_international",
+    "group_count": 5,
+    "unresolved_group_indices": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "proposal_branch": "UNRESOLVED_REQUIRES_REVIEW",
+    "wrong_packet_id_rejected": true,
+    "module_test_count_passed": 3,
+    "fast_selectors_passed": 135,
+    "live_execution_bound": false,
+    "provider_execution_identity_verified": false,
+    "native_candidate_evidence_result_run_created": false,
+    "real_ledger_counts_before_after": [
+      [
+        143,
+        143,
+        52
+      ],
+      [
+        143,
+        143,
+        52
+      ]
+    ],
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "production_authorized": false
   }
 }

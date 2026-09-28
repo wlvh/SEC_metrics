@@ -195,3 +195,7 @@ C04跨年演练的只读原件盘点覆盖#28十家公司当前累计来源根�
 两来源增量`ea557935`已获同一限定审阅者追加`PASS_WITH_BOUNDS`，两轮累计47次底层工具调用；审阅者确认录制路由只按控制器给出的URL选原字节，再执行原会话capture与账本，三槽实际SEC外发均为0。第三槽Company Facts内容哈希与刷新前已知来源相同：证明自动**检查**该来源，而非发现新的事实。新期有2来源额度时总体`UPDATES_READY`；之后零来源额度的重复轮总体回`UPDATES_INCOMPLETE`但B01`NO_SOURCE_CONTENT_CHANGE`，不能把一次Ready状态说成无条件持续Ready。真实在线时间序列仍缺，原账本不变。
 
 自然检查点回读：先前推送head`120e0e2b`的主CI`36361943184`最终于2026-09-28T01:02:45Z整体**SUCCESS 15/15**，含两片保存来源、汇总及JPMorgan；此前记录的`in_progress`只是当时观察。新B01录制证据的后继提交尚未推送，不能继承此CI终态。
+
+后续B01录制跨财年增量及两轮限定独审已推送到`c1e96fe4`，原账本直接冷读仍143/143/52、195槽。该head主CI`36365013124`最近自然检查点尚在运行，不记全绿；Issue第3节与PR43已原位同步。此后对尚未完成的三个B06坐标做只读当前规则准备：从#28认证来源经现有`current_processing_source`生成私有副本（`snapshot_id`尾`5d492c5b...`，账本前后143/143/52），Southwest/Pfizer/JPMorgan三家公司都能进入当前B06准备入口，但结果仍`WITHHELD/null`，无新坐标信用。Southwest当前卡在`SupplierFinanceProgramObligationCurrent`标记的24,000,000 USD“Deferred supplier credits”性质未证，Pfizer旧披露解析先报`DebtDisclosureTextBlock`缺失/歧义（现有组合借款组件只证明小计，融资租赁完整性仍无依据），JPMorgan银行资金路线留`BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED`。这是父会话只读诊断，不是三家公司全部债务关系独审或结果修复；未借这些拒绝宣称B06完成。
+
+D03离线输入接线新增`d03_complete_interpretation.replay_recorded_complete_interpretation()`：原整组录制包先按外部期望ID完整重放，再将包内原请求ID一一映射到当前有效请求ID，送入现有完整解释复验；返回绑定包/输入/提案ID及显式映射，但provider执行身份、Candidate/Evidence/Result/Run均为false。Marriott原真实保存来源五组私有包的最终禁网执行37.45秒通过，五组仍全部未决，错误包ID拒绝；原账本前后143/143/52、195行，包身份哈希不变。合成后继组短测和同模块3项通过，fast135/135本机229.959秒通过；V14既有执行权限与provider接线核验通过，新增D03桥接模块仍不在live权限文件集合。证据`d03-recorded-interpretation-bridge-20260928/`。这不是D03原生结果或真实语义能力；精确补丁独审、新head CI仍待做，D03真实调用继续禁止。

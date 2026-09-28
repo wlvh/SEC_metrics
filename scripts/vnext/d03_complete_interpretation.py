@@ -6,7 +6,7 @@ provider execution, business conclusion, or native Run.
 """
 from pathlib import Path
 
-from .canonical import content_hash, sha256_bytes
+from .canonical import content_hash, sha256_bytes, strict_json_loads
 from .d03_native_preparation import prepare_native_input
 from .normal_source_authority import ROOT
 from .r6_regulatory_semantics import requests_from_source, validate_response
@@ -14,6 +14,7 @@ from .regulatory_fact_review import validate_candidate_response
 
 
 VERSION = 'D03_COMPLETE_INTERPRETATION_PROPOSAL_V1'
+RECORDED_BRIDGE_VERSION = 'D03_RECORDED_COMPLETE_INTERPRETATION_V1'
 
 
 def _need(condition, reason):
@@ -87,3 +88,65 @@ def validate_complete_interpretation(*, prepared_input, response_bytes_by_reques
         'native_result_or_run_created': False,
         'production_authorized': False}
     return {**body, 'proposal_id': content_hash(value=body)}
+
+
+def replay_recorded_complete_interpretation(*, packet_root, expected_packet_id,
+                                            company_id, repo_root=ROOT):
+    """Bind an authenticated offline response set to the complete proposal.
+
+    The packet indexes raw bytes by original request ID. Current preparation
+    may use a distinct successor request for a group with old source facts, so
+    the one-to-one mapping is rechecked before interpretation. This is never a
+    provider receipt or native Candidate/Result/Run.
+    """
+    from .d03_recorded_response_set import replay_offline_set
+
+    _need(Path(repo_root).resolve() == ROOT and type(company_id) is str
+          and bool(company_id) and type(expected_packet_id) is str
+          and bool(expected_packet_id),
+          'D03_RECORDED_INTERPRETATION_INPUT_INVALID')
+    packet = replay_offline_set(packet_root=packet_root,
+                                expected_packet_id=expected_packet_id)
+    metadata = strict_json_loads(text=(Path(packet_root) / 'packet.json')
+                                 .read_text(encoding='utf-8'))
+    prepared = prepare_native_input(company_id=company_id)
+    groups = prepared['groups']
+    original_ids = [row['original_request_id'] for row in groups]
+    effective_ids = [row['effective_request_id'] for row in groups]
+    _need(metadata['packet_id'] == packet['packet_id'] == expected_packet_id
+          and metadata['company_id'] == company_id
+          and metadata['source_id'] == prepared['source_id']
+          and packet['request_count'] == len(groups)
+          and len(set(original_ids)) == len(original_ids)
+          and len(set(effective_ids)) == len(effective_ids)
+          and set(packet['raw_response_bytes']) == set(original_ids),
+          'D03_RECORDED_INTERPRETATION_PACKET_OR_REQUEST_CHANGED')
+    responses = {group['effective_request_id']:
+                 packet['raw_response_bytes'][group['original_request_id']]
+                 for group in groups}
+    checked = validate_complete_interpretation(prepared_input=prepared,
+        response_bytes_by_request=responses)
+    _need(checked['source_id'] == prepared['source_id']
+          and checked['input_id'] == prepared['input_id']
+          and checked['provider_execution_identity_verified'] is False
+          and checked['native_candidate_or_evidence_created'] is False
+          and checked['native_result_or_run_created'] is False
+          and packet['calls'] == [0, 0, 0]
+          and packet['native_result_created'] is False,
+          'D03_RECORDED_INTERPRETATION_CREDIT_CHANGED')
+    body = {'record_type': RECORDED_BRIDGE_VERSION,
+        'recorded_packet_id': expected_packet_id,
+        'company_id': company_id, 'source_id': prepared['source_id'],
+        'prepared_input_id': prepared['input_id'],
+        'request_mapping': [{key: group[key] for key in (
+            'group_index', 'original_request_id', 'effective_request_id',
+            'source_anchor_successor')} for group in groups],
+        'interpretation_proposal_id': checked['proposal_id'],
+        'group_count': len(groups),
+        'unresolved_group_indices': checked['unresolved_group_indices'],
+        'proposed_branch': checked['proposed_branch'],
+        'provider_execution_identity_verified': False,
+        'native_result_or_run_created': False,
+        'calls': [0, 0, 0], 'production_authorized': False}
+    return {**body, 'record_id': content_hash(value=body),
+            'interpretation': checked}
