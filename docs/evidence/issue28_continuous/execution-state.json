@@ -34,14 +34,14 @@
     "unknown": 0
   },
   "current_work": [
-    "Pushed head c1e96fe4 main CI 36365013124 completed SUCCESS 15/15 at 2026-09-28T01:55:01Z, including both saved-source shards and JPMorgan. Local D03 bridge patch 8a49b5ab and later JPM recorded evidence have not been pushed; neither inherits that CI terminal.",
-    "Marriott B01 has a reviewed recorded FY2024-to-FY2025 two-source update path with old metadata explicitly derived, new saved submissions/Company Facts automatically selected, new period Run and independent cold reads. It proves offline single-metric control flow, not authentic online historical source timing or complete390. Original real ledger remains 143/143/52.",
-    "D03 offline bridge replays complete saved raw-response packets, binds original to effective request IDs, and returns a complete proposal without provider/native credit. Marriott5 groups and JPMorgan38 groups (one actual source-anchor successor) remain unresolved. JPM synthetic full packet and separate-process cold read retained identical identities and 40 packet files; 812.504s plus 507.22s locally. Module3/fast135 and both exact code/evidence limited reviews passed. B13 V8 NEEDS_FIX, D03 real calls forbidden, B06 relationships and full390/legacy exit unresolved."
+    "Pushed cf23ab3d main CI 36375571134 remained in_progress at the last natural checkpoint (14 success, 1 active, 0 failed). Local f6e9e886 D03 output-shape census is committed but not pushed; this new D03 replay-only factory increment is still local until exact-SHA review.",
+    "D03 current saved inputs remain 130 complete groups. Replay-only SemanticRequest factory now carries all 38 JPMorgan groups, including one old-source-fact successor, through current request/source identity validation; focused 168.866s test and fast135/135 pass. No D03 execution, Candidate, Review, Result or Run credit.",
+    "D04 retains 10/10 real private candidates, B13 V8 lexical route remains suspended after two NEEDS_FIX reviews, C04 cross-fiscal-year online update and full390/legacy exit remain unproven. Ledger still provider/paid/SEC 143/143/52."
   ],
   "next": [
-    "D03 code and JPM evidence exact-SHA limited reviews have passed with stated bounds; push the reviewed additions append-only, observe new-head CI once, and update Issue28 section3/PR43 in place. Do not rerun the 812s/507s chain.",
-    "Continue the next material D03 native Candidate/Review/Run gap only within approved no-call/offline scope, or choose an independent B13/B06/390/legacy gap; retain old response and packet identities.",
-    "Continue D03 native Candidate/Review/Run preparation, B13 known semantic error repair, B06 source relationship work, and 390/legacy exit only where existing source/authority permit; business and resource choices remain distinct."
+    "Complete exact-SHA limited review of the new D03 replay-only request factory, preserve reviewed byte-stable evidence, and push only append-only after necessary correction. Observe new-head CI without rerunning long JPM packet cold-read.",
+    "Continue the D03 native positive Candidate/Evidence/Review/Result/Run chain within no-call/offline authority; original or synthetic responses do not acquire live or business credit. D03 real calls and resources remain separate decisions.",
+    "Continue independent B06 source-completeness, C04 normal cross-year, 390 reconciliation and old semantic-entry exit where existing source and authority allow; keep B13 V8 stopped and #47 isolated."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
   "remaining_review_dependency": "D03 source-fact original6e5 and three bounded repairs all failed exact-SHA limited review; rule route suspended, code/binding restored to b897. Real D03 remains uncalled pending a different defensible validation path, separate integration review and resource decision.",
@@ -5678,5 +5678,48 @@
       0
     ],
     "d03_live_permission_added": false
+  },
+  "d03_replay_only_factory_20260928": {
+    "status": "LOCAL_FACTORY_AND_IDENTITY_TEST_PASS_REPLAY_ONLY_LIVE_NATIVE_CLOSED",
+    "scope_paths": [
+      "scripts/vnext/continuous_semantic_calls.py",
+      "tests/vnext/test_d03_native_preparation.py",
+      "requirements/issue_28_v14/baseline_manifest.json"
+    ],
+    "evidence": "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/README.md",
+    "jpm_complete_group_count": 38,
+    "jpm_source_anchor_successor_groups": 1,
+    "focused_real_saved_source_test": "PASS_168_866_SECONDS",
+    "short_negative_test": "PASS_1",
+    "fast_selectors": "PASS_135_OF_135_201_743_SECONDS",
+    "v14_closure": "sha256:2731935de44d0f123a76f301a1744cc9fb7f83a08e4e89f44f654004207c4168",
+    "current_provider_sec_refresh_wiring": "PASS",
+    "original_prepare_requests_function_body_changed": false,
+    "new_factory_replay_only": true,
+    "tampered_original_request_id_rejected": true,
+    "execute_feasibility_rejected_before_claim": true,
+    "independent_review": "PENDING_EXACT_PATCH_SHA",
+    "native_candidate_evidence_review_result_run_created": false,
+    "real_ledger_claims_before_after": [
+      195,
+      195
+    ],
+    "real_calls": [
+      0,
+      0,
+      0
+    ],
+    "d03_live_permission_added": false,
+    "shared_compatibility_note": "New explicit factory and D03-only source_fact_review_contract branch; existing prepare_requests signature and default path unchanged; no #47 files operated.",
+    "shared_with_issue47": {
+      "file": "scripts/vnext/continuous_semantic_calls.py",
+      "functions": [
+        "SemanticRequest.validate",
+        "prepare_d03_replay_only_requests"
+      ],
+      "effect": "explicit D03-only replay-only path; original prepare_requests body and defaults unchanged",
+      "old_request_byte_identity_remeasured": false,
+      "downstream_issue47_branch_operated": false
+    }
   }
 }

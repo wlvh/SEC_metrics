@@ -261,7 +261,16 @@ class SemanticRequest:
             source_equivalence(current=current,original=source)
         original_requests = source_requests(source)
         if request not in original_requests:
-            if request.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST':
+            if 'source_fact_review_contract' in request:
+                from .regulatory_fact_review import candidate_request
+                originals = [original for original in original_requests
+                    if original['request_id'] == request[
+                        'source_fact_review_contract'].get('original_request_id')
+                    and original.get('source_statement_facts')]
+                need(source['metric_id'] == 'D03' and len(originals) == 1
+                     and candidate_request(originals[0], source=source) == request,
+                     'D03_SOURCE_ANCHOR_REQUEST_NOT_IN_CURRENT_SOURCE')
+            elif request.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST':
                 from .capacity_reference_contract import upgrade_request as reference_request
                 from .capacity_two_stage import scan_request
                 need(source['metric_id'] == 'B13' and
@@ -356,6 +365,42 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     raw = _source_json(source)
     return [SemanticRequest(_FACTORY,raw,_source_json(request),request_body(request,policy),
         _json(request['response_protocol']),requirement,authority,data_root,source_ledger) for request in source_requests(source)]
+
+
+def prepare_d03_replay_only_requests(*, company_id):
+    """Carry the current complete D03 successor set into the real factory.
+
+    These objects can be identity-checked and planned, but replay_only keeps
+    both recorded and live execution closed. No old source fact is treated as
+    a compelled answer, and no response or native Result is created here.
+    """
+    originals = prepare_requests(company_id=company_id, metric_id='D03',
+                                 reference_context=True)
+    need(bool(originals) and all(p.source_bytes == originals[0].source_bytes
+        for p in originals), 'D03_REPLAY_ONLY_COMPLETE_SOURCE_REQUIRED')
+    source = strict_json_loads(text=originals[0].source_bytes.decode('utf-8'))
+    from .regulatory_fact_review import candidate_request
+    policy = configured_transport_policy(requirement=originals[0].requirement,
+                                         repo_root=ROOT)
+    selected = []
+    for prepared in originals:
+        original = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
+        request = (candidate_request(original, source=source)
+                   if original.get('source_statement_facts') else original)
+        need(request['source_id'] == source['semantic_source_id']
+             and request['units'] == original['units']
+             and request['required_candidate_assessments'] ==
+                 original['required_candidate_assessments'],
+             'D03_REPLAY_ONLY_SOURCE_OR_REQUIRED_SET_CHANGED')
+        selected.append(replace(prepared, request_bytes=_source_json(request),
+            provider_request_body_bytes=request_body(request, policy),
+            output_schema_bytes=_json(request['response_protocol']),
+            replay_only=True))
+    need([unit['unit_id'] for prepared in selected
+          for unit in strict_json_loads(text=prepared.request_bytes.decode('utf-8'))['units']]
+         == source['required_unit_ids'],
+         'D03_REPLAY_ONLY_SOURCE_UNIT_COVERAGE_CHANGED')
+    return selected
 
 
 def select_native_request_variants(*, prepared_requests, ledger, source_references=False,
