@@ -37,6 +37,10 @@ def _acceptor(request, path):
             scan_path=path.parent / ('%04d' % ordinal), **kwargs)
     if request['metric_id'] == 'B13':
         from .capacity_native_assessment import build_acceptance
+    elif request['metric_id'] == 'D03':
+        need(request['record_type'] == 'D03_INTERPRETATION_REQUEST',
+             'D03_NATIVE_RECORDED_REQUEST_REQUIRED')
+        from .d03_native_assessment import _build_bound_acceptance as build_acceptance
     else:
         need(request['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST', 'NATIVE_DIAGNOSTIC_UPGRADE_FORBIDDEN')
         from .d04_native_assessment import build_acceptance
@@ -130,9 +134,18 @@ def _captured_policy_view(*, root, prepared, plan):
 
 def replay_native_response(*, prepared, path):
     """Verify saved origin and current meaning, without opening a model socket."""
+    request = strict_json_loads(text=prepared.request_bytes.decode())
+    if request.get('metric_id') == 'D03':
+        from .native_request_construction import request_construction_session
+        with request_construction_session(prepared.requirement):
+            return _replay_native_response(prepared=prepared, path=path,
+                                           request=request)
+    return _replay_native_response(prepared=prepared, path=path, request=request)
+
+
+def _replay_native_response(*, prepared, path, request):
     from .continuous_semantic_calls import build_plan
     from . import invocation_control as control
-    request = strict_json_loads(text=prepared.request_bytes.decode())
     need((path / 'semantic-request.json').read_bytes() == prepared.request_bytes
          and (path / 'source.json').read_bytes() == prepared.source_bytes,
          'NATIVE_SAVED_REQUEST_OR_SOURCE_CHANGED')
@@ -148,7 +161,8 @@ def replay_native_response(*, prepared, path):
          and intent['requirement_id'] == REQUIREMENT_ID
          and intent['intent_id'] == content_hash(value={k:v for k,v in intent.items() if k != 'intent_id'}),
          'NATIVE_ORIGINAL_INTENT_CHANGED')
-    _, current_plan = build_plan(prepared)
+    _, current_plan = build_plan(prepared,
+        d03_native_assessment=request.get('metric_id') == 'D03')
     plan = strict_json_file(path=resolve_repository_file(repo_root=path,
         repo_relative_path='invocation_control/plans/' + intent['plan_id'][7:] + '.json'))
     need(plan['ai_invocation_plan_id'] == intent['plan_id']

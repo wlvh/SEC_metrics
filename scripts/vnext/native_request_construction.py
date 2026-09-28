@@ -131,6 +131,7 @@ def reuse_source_requests(source,construct):
     from .continuous_request_context import FORMAT_VERSION
     scope=_ACTIVE.get()
     if scope is None or source.get('request_context_format')!=FORMAT_VERSION or source.get('record_type') not in {
-        'D04_NATIVE_COMPLETE_SEMANTIC_SOURCE','B13_COMPLETE_SEMANTIC_SOURCE','D04_NATIVE_HISTORICAL_CONTROL_SOURCE'}:
+        'D04_NATIVE_COMPLETE_SEMANTIC_SOURCE','B13_COMPLETE_SEMANTIC_SOURCE',
+        'D04_NATIVE_HISTORICAL_CONTROL_SOURCE','D03_COMPLETE_SEMANTIC_SOURCE'}:
         return construct(source)
     return scope.get(source,construct)

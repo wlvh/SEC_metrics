@@ -1,8 +1,8 @@
-"""Bound D03/D04 feasibility requests through the existing provider opener/WB-3.
+"""Bound semantic requests through the existing provider opener/WB-3.
 
 Saved source authenticity is replayed, never relabelled as new acquisition.
-These executions retain original wire and a terminal but deliberately confer
-no native Evidence, qualification, publication or semantic acceptance credit.
+Feasibility responses have no native credit. An explicit D03 recorded-only
+entry can create one source-bound Candidate/Evidence, never a company Result.
 """
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
@@ -39,6 +39,8 @@ SEMANTIC_RULE_PATHS = (
     'scripts/vnext/r6_historical_controls.py','config/r6_historical_control_sources_v1.json',
     'scripts/vnext/regulatory_statement_facts.py',
     'scripts/vnext/regulatory_fact_review.py',
+    'scripts/vnext/d03_native_assessment.py',
+    'catalog/r6/D03_regulatory_investigations_assessment_v1.md',
     'scripts/vnext/capacity_semantic_source.py', 'scripts/vnext/capacity_semantic_review.py',
     'scripts/vnext/capacity_two_stage.py',
     'catalog/r5/capacity_semantic_review_v1.json', 'catalog/r5/capacity_semantic_review_v2.json',
@@ -130,6 +132,9 @@ def request_digest(request, policy):
             'prior_assistant_output_sha256':request['prior_assistant_output_sha256']}
     if request.get('source_statement_facts'):
         body['source_statement_facts'] = request['source_statement_facts']
+    if 'source_fact_candidates' in request:
+        body['source_fact_candidates'] = request['source_fact_candidates']
+        body['source_fact_review_contract'] = request['source_fact_review_contract']
     if 'shared_source_dictionaries' in request:
         body['shared_source_dictionaries'] = request['shared_source_dictionaries']
     if request.get('metric_id') == 'B13':
@@ -378,33 +383,36 @@ def prepare_d03_replay_only_requests(*, company_id):
     both recorded and live execution closed. No old source fact is treated as
     a compelled answer, and no response or native Result is created here.
     """
-    originals = prepare_requests(company_id=company_id, metric_id='D03',
-                                 reference_context=True)
-    need(bool(originals) and all(p.source_bytes == originals[0].source_bytes
-        for p in originals), 'D03_REPLAY_ONLY_COMPLETE_SOURCE_REQUIRED')
-    source = strict_json_loads(text=originals[0].source_bytes.decode('utf-8'))
-    from .regulatory_fact_review import candidate_request
-    policy = configured_transport_policy(requirement=originals[0].requirement,
-                                         repo_root=ROOT)
-    selected = []
-    for prepared in originals:
-        original = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
-        request = (candidate_request(original, source=source)
-                   if original.get('source_statement_facts') else original)
-        need(request['source_id'] == source['semantic_source_id']
-             and request['units'] == original['units']
-             and request['required_candidate_assessments'] ==
-                 original['required_candidate_assessments'],
-             'D03_REPLAY_ONLY_SOURCE_OR_REQUIRED_SET_CHANGED')
-        selected.append(replace(prepared, request_bytes=_source_json(request),
-            provider_request_body_bytes=request_body(request, policy),
-            output_schema_bytes=_json(request['response_protocol']),
-            replay_only=True))
-    need([unit['unit_id'] for prepared in selected
-          for unit in strict_json_loads(text=prepared.request_bytes.decode('utf-8'))['units']]
-         == source['required_unit_ids'],
-         'D03_REPLAY_ONLY_SOURCE_UNIT_COVERAGE_CHANGED')
-    return selected
+    from .native_request_construction import request_construction_session
+    requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
+    with request_construction_session(requirement):
+        originals = prepare_requests(company_id=company_id, metric_id='D03',
+                                     reference_context=True)
+        need(bool(originals) and all(p.source_bytes == originals[0].source_bytes
+            for p in originals), 'D03_REPLAY_ONLY_COMPLETE_SOURCE_REQUIRED')
+        source = strict_json_loads(text=originals[0].source_bytes.decode('utf-8'))
+        from .regulatory_fact_review import candidate_request
+        policy = configured_transport_policy(requirement=originals[0].requirement,
+                                             repo_root=ROOT)
+        selected = []
+        for prepared in originals:
+            original = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
+            request = (candidate_request(original, source=source)
+                       if original.get('source_statement_facts') else original)
+            need(request['source_id'] == source['semantic_source_id']
+                 and request['units'] == original['units']
+                 and request['required_candidate_assessments'] ==
+                     original['required_candidate_assessments'],
+                 'D03_REPLAY_ONLY_SOURCE_OR_REQUIRED_SET_CHANGED')
+            selected.append(replace(prepared, request_bytes=_source_json(request),
+                provider_request_body_bytes=request_body(request, policy),
+                output_schema_bytes=_json(request['response_protocol']),
+                replay_only=True))
+        need([unit['unit_id'] for prepared in selected
+              for unit in strict_json_loads(text=prepared.request_bytes.decode('utf-8'))['units']]
+             == source['required_unit_ids'],
+             'D03_REPLAY_ONLY_SOURCE_UNIT_COVERAGE_CHANGED')
+        return selected
 
 
 def select_native_request_variants(*, prepared_requests, ledger, source_references=False,
@@ -570,11 +578,14 @@ def usage_error(raw, *, expected_prompt_tokens=None, enforce_total_context=False
     return ''
 
 
-def build_plan(prepared):
+def build_plan(prepared, *, d03_native_assessment=False):
     requirement = prepared.requirement
     policy = configured_transport_policy(requirement=requirement,repo_root=ROOT)
     request = prepared.validate(policy)
     metric_id = request.get('metric_id','D04')
+    need(not d03_native_assessment or
+         (metric_id == 'D03' and prepared.replay_only),
+         'D03_NATIVE_PLAN_SCOPE_CHANGED')
     runtime = load_provider_runtime_authority(repo_root=ROOT,provider=policy.provider,model=policy.model,api=policy.api)
     from .continuous_request_context import measure_request
     context = measure_request(prepared.provider_request_body_bytes,
@@ -582,7 +593,8 @@ def build_plan(prepared):
     plan = control.build_successor_ai_invocation_plan(repo_root=ROOT,requirement_id=REQUIREMENT_ID,
         authority=prepared.authority,
         release_input_plan_id=content_hash(value={'purpose':metric_id+('_SOURCE_ASSESSMENT' if metric_id == 'B13'
-            or request.get('native_evidence_requested') is True else '_FEASIBILITY'),'source':request['source_id']}),
+            or request.get('native_evidence_requested') is True or d03_native_assessment
+            else '_FEASIBILITY'),'source':request['source_id']}),
         source_identity_hash=request['source_id'],selected_representation_hash=request['request_id'],
         task_contract_hash=content_hash(value={'metric':metric_id,'prompt':request['system_prompt']}),
         output_schema_hash=content_hash(value=request['response_protocol']),serialization_version='continuous-'+metric_id.lower()+'-chat-v1',
@@ -791,8 +803,34 @@ def execute_d04_assessment(*, prepared, ledger, recorded_wire=None):
                              native_assessment=True)
 
 
+def execute_d03_recorded_assessment(*, prepared, ledger, recorded_wire):
+    """Prove the native request chain offline without opening D03 live calls."""
+    from .continuous_call_ledger import CallLedger, _FACTORY as ledger_factory
+    request = strict_json_loads(text=prepared.request_bytes.decode())
+    live_root = Path(strict_json_file(path=ROOT/
+        'config/issue28_continuous_calls_v1.json')['budget_root']).resolve()
+    need(type(ledger) is CallLedger and ledger._factory is ledger_factory
+         and not ledger.live and type(recorded_wire) is bytes
+         and ledger.root == ledger.root.resolve()
+         and ledger.root != live_root and live_root not in ledger.root.parents
+         and ledger.binding.get('execution_mode') == 'RECORDED_TEST_ONLY'
+         and ledger.binding.get('root') == str(ledger.root),
+         'D03_NATIVE_RECORDED_LEDGER_AND_WIRE_REQUIRED')
+    need(prepared.replay_only and prepared.data_root == ROOT
+         and request.get('record_type') == 'D03_INTERPRETATION_REQUEST'
+         and request.get('metric_id') == 'D03'
+         and not request.get('source_statement_facts'),
+         'D03_NATIVE_REPLAY_ONLY_CURRENT_REQUEST_REQUIRED')
+    from .native_request_construction import request_construction_session
+    with request_construction_session(prepared.requirement):
+        return _execute_semantic(prepared=prepared, ledger=ledger,
+            recorded_wire=recorded_wire, native_assessment=True,
+            d03_recorded_native=True)
+
+
 def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
-                      scan_stage=False, two_stage_scan=None):
+                      scan_stage=False, two_stage_scan=None,
+                      d03_recorded_native=False):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
     need(not scan_stage or (native_assessment and not ledger.live
@@ -801,6 +839,13 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
     need(two_stage_scan is None or (native_assessment and not ledger.live
          and request_fields.get('metric_id') == 'B13'),
          'B13_TWO_STAGE_EXECUTION_SCOPE_CHANGED')
+    need(not d03_recorded_native or (native_assessment and not ledger.live
+         and type(recorded_wire) is bytes and prepared.replay_only
+         and prepared.data_root == ROOT
+         and request_fields.get('record_type') == 'D03_INTERPRETATION_REQUEST'
+         and request_fields.get('metric_id') == 'D03'
+         and not request_fields.get('source_statement_facts')),
+         'D03_NATIVE_RECORDED_SCOPE_CHANGED')
     if request_fields.get('metric_id') == 'B13':
         from .capacity_reference_contract import ROLE_VERSION, RELEVANCE_VERSION
         need(not (ledger.live and request_fields.get('source_reference_contract', {}).get('version')
@@ -808,21 +853,29 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
                   and not (getattr(ledger, 'root', None) is not None
                            and (ledger.root/'batch33-authorization.json').exists())),
              'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED')
-    need(not prepared.replay_only, 'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
+    need(not prepared.replay_only or d03_recorded_native,
+         'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
     # The D03 source-fact successor is a diagnostic request identity only.
     # A copied dataclass with replay_only=False cannot turn it into a call.
-    need('source_fact_review_contract' not in request_fields,
+    need('source_fact_review_contract' not in request_fields or d03_recorded_native,
          'D03_SOURCE_ANCHOR_EXECUTION_NOT_AUTHORIZED')
     if prepared.source_ledger is not None:
         need(prepared.source_ledger.live==ledger.live and prepared.source_ledger.root==ledger.root,
              'CONTINUOUS_SOURCE_EXECUTION_LEDGER_CHANGED')
     need(not native_assessment or request_fields.get('metric_id') == 'B13'
-         or request_fields['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST',
+         or request_fields['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST'
+         or d03_recorded_native,
          'NATIVE_DIAGNOSTIC_UPGRADE_FORBIDDEN')
     if request_fields['record_type']=='D03_SEMANTIC_VERIFICATION_REQUEST':
         from .r6_semantic_verification import validate_response
     elif request_fields.get('metric_id')=='D03':
-        from .r6_regulatory_semantics import validate_response
+        if d03_recorded_native:
+            from .d03_native_assessment import _validate_bound_response
+            def validate_response(*, request, raw_response):
+                return _validate_bound_response(request=request,
+                                                raw_response=raw_response)
+        else:
+            from .r6_regulatory_semantics import validate_response
     elif scan_stage:
         from .capacity_two_stage import prior_for_scan, validate_scan
         prior = prior_for_scan(source=strict_json_loads(text=prepared.source_bytes.decode()),
@@ -846,7 +899,8 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
                 source=strict_json_loads(text=prepared.source_bytes.decode()))
     elif request_fields['record_type'] == 'D04_NATIVE_INTERPRETATION_REQUEST':
         from .d04_native_assessment import validate_response
-    policy,plan = build_plan(prepared)
+    policy,plan = build_plan(prepared,
+        d03_native_assessment=d03_recorded_native)
     digest = request_digest(request_fields, policy)
     batch_group_id = None
     repair189 = None
@@ -881,6 +935,8 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
                         scan_path=two_stage_scan[0])
             elif request_fields.get('metric_id') == 'B13':
                 from .capacity_native_assessment import build_acceptance
+            elif d03_recorded_native:
+                from .d03_native_assessment import _build_bound_acceptance as build_acceptance
             else:
                 from .d04_native_assessment import build_acceptance
             try:
@@ -955,6 +1011,9 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
                     raw_response=output.read_bytes())
             except (ValueError,KeyError,TypeError) as error:
                 result['response_check_error'] = str(error)
-        filename = ('capacity-assessment.json' if request_fields.get('metric_id') == 'B13' else 'd04-assessment.json')
-        control._exclusive_write_json(path=path/(filename if native_assessment else 'feasibility.json'),value=result)
+        filename = ({'B13': 'capacity-assessment.json',
+                     'D03': 'd03-assessment.json',
+                     'D04': 'd04-assessment.json'}[request_fields['metric_id']]
+                    if native_assessment else 'feasibility.json')
+        control._exclusive_write_json(path=path/filename,value=result)
         return path,result

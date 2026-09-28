@@ -35,9 +35,20 @@ def _build_acceptance(*, prepared, plan, response_body, checked, metric_id, grou
     """Shared native records; each metric's wrapper owns its source checks."""
     request = strict_json_loads(text=prepared.request_bytes.decode())
     source = strict_json_loads(text=prepared.source_bytes.decode())
-    need(not checked['unresolved'] and not any(
-        f['kind'] == 'UNRESOLVED' or f['subject'] == 'UNRESOLVED' or f['timing'] == 'UNRESOLVED'
-        for f in checked['findings']), metric_id + '_SOURCE_ASSESSMENT_UNRESOLVED')
+    if metric_id == 'D03':
+        # Background and a reported process may legitimately have no known
+        # investigation target or current status. They are retained as input
+        # for whole-company Review, not promoted to a current D03 finding.
+        unreviewed = checked['unresolved'] or any(
+            f['kind'] == 'UNRESOLVED' or
+            (f['kind'] in {'CURRENT_REGULATORY_ACTION', 'NO_ACTION_DECLARATION'}
+             and (f['subject'] == 'UNRESOLVED' or f['timing'] == 'UNRESOLVED'))
+            for f in checked['findings'])
+    else:
+        unreviewed = checked['unresolved'] or any(
+            f['kind'] == 'UNRESOLVED' or f['subject'] == 'UNRESOLVED'
+            or f['timing'] == 'UNRESOLVED' for f in checked['findings'])
+    need(not unreviewed, metric_id + '_SOURCE_ASSESSMENT_UNRESOLVED')
     document = next(d for d in source['documents']
                     if d['document_id'] == request['document_context']['document_id'])
     source_ids = [document['source_reference']['source_reference_id']]
@@ -56,14 +67,18 @@ def _build_acceptance(*, prepared, plan, response_body, checked, metric_id, grou
              'B13_TWO_STAGE_ACCEPTANCE_SCOPE_CHANGED')
         body['selected']['source_assessment']['scan_stage_proof'] = stage_proof
     candidate = validate_record(record={'record_type': 'OBSERVATION_CANDIDATE', **body,
-        'candidate_hash': content_hash(value=body), 'attempt_id': ('capacity:' if metric_id == 'B13' else 'going-concern:') + plan['ai_invocation_plan_id'][7:],
+        'candidate_hash': content_hash(value=body), 'attempt_id': {
+            'B13': 'capacity:', 'D03': 'regulatory:', 'D04': 'going-concern:'
+        }[metric_id] + plan['ai_invocation_plan_id'][7:],
         'assistant_output_sha256': sha256_bytes(content=response_body), 'status': 'CANDIDATE'})
     evidence_body = {'candidate_hash': candidate['candidate_hash'], 'status': 'PASS',
         'normalized_values': candidate['selected'],
         'checks': [
             {'check': metric_id + '_COMPLETE_REQUEST_UNIT_RESPONSE', 'status': 'PASS',
              'request_id': request['request_id'], 'unit_ids': [u['unit_id'] for u in request['units']]},
-            {'check': metric_id + '_ORIGINAL_SOURCE_REFERENCES_AND_ROLES', 'status': 'PASS',
+            {'check': metric_id + ('_ORIGINAL_SOURCE_REFERENCES_AND_FORMAT'
+                                  if metric_id == 'D03' else
+                                  '_ORIGINAL_SOURCE_REFERENCES_AND_ROLES'), 'status': 'PASS',
              'findings': checked['findings']}],
         'reason_codes': [], 'identity_constraints': []}
     if 'program_quantity_contract' in checked:

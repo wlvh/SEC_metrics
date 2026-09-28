@@ -34,13 +34,13 @@
     "unknown": 0
   },
   "current_work": [
-    "Pushed b5b2a91b preserves D03 output census and reviewed replay-only factory; first factory review NEEDS_FIX, exact follow-up PASS_WITH_BOUNDS. Prior cf23ab3d main CI 36375571134 completed SUCCESS 15/15. b5b2a91b main CI 36380074529 was in_progress at the latest read; no current-head green claim.",
-    "D03 lossless-source repair bf1b1fd2 preserves four U+037E characters in saved Paramount source/request/would-be wire and rejects a lossy copy before claim. Current V14 execution and three wiring receipts revalidated; focused tests and fast135/135 pass, exact-SHA review PASS_WITH_BOUNDS. No D03 execution, Candidate, Evidence, Review, Result or Run credit.",
+    "Pushed 29b401d7 includes reviewed D03 lossless request bytes; its main CI 36382080314 completed SUCCESS, as did prior b5b2a91b CI 36380074529. These CI outcomes do not establish D03 company results or full Issue acceptance.",
+    "Current uncommitted D03 recorded-only native unit path creates and replays one source-bound Candidate/Evidence from real Marriott source; unresolved response fails. JPM old-fact successor also traverses recorded WB-3 with synthetic response, preserving no-program-fact credit. This is 0 real calls and no company Result/Run. Final-code Marriott 3/3 including live-root substitution rejection and V14 binding pass; B13 replay/acceptance 2/2 passed after D03 Evidence-name adjustment; old public D03 source-fact checker 2/2 passed before the D03-only label/ledger-guard changes. First fast failed 134/135 on unchanged C04 30s timeout, targeted C04 passed, single full retry fast135/135 passed before those D03-only final changes. Exact-SHA limited review pending.",
     "D04 retains 10/10 real private candidates, B13 V8 lexical route remains suspended after two NEEDS_FIX reviews, C04 cross-fiscal-year online update and full390/legacy exit remain unproven. Ledger still provider/paid/SEC 143/143/52."
   ],
   "next": [
-    "Push the independently reviewed D03 lossless source/request/wire repair by append-only commit and check new-head CI at a natural checkpoint without repeating the long JPM packet cold-read.",
-    "Continue the D03 native positive Candidate/Evidence/Review/Result/Run chain within no-call/offline authority; original or synthetic responses do not acquire live or business credit. D03 real calls and resources remain separate decisions.",
+    "Finish exact-SHA limited review of the D03 recorded-only native unit path, then append-only push and observe new-head CI at a natural checkpoint. Preserve 653/635/295/248-second JPM timing evidence; do not rerun the long anchor test absent a relevant change.",
+    "Continue D03 full authentic group receipt collection, native Review and Result/Run chain within no-call/offline authority; one recorded request is not a company result. D03 real calls and resources remain separate decisions.",
     "Continue independent B06 source-completeness, C04 normal cross-year, 390 reconciliation and old semantic-entry exit where existing source and authority allow; keep B13 V8 stopped and #47 isolated."
   ],
   "review_coverage": "resume-2026-09-13/review-coverage.json",
@@ -161,7 +161,7 @@
     "full_390_acceptance": false,
     "material": "ordinary-special-debt-scope/"
   },
-  "current_v15_development_closure": "sha256:aa37c0be3a268a4203f7f69fca7de224658ee9afad1a6f931d80ede699244858",
+  "current_v15_development_closure": "sha256:5553beca91ced749f70f8365d597e88489c84dd96688655a5f69459cd2ccee32",
   "ordinary_history_identity": {
     "material": "ordinary-history-identities/",
     "jpm_event_native_restored": 6,
@@ -5804,6 +5804,44 @@
       "file": "scripts/vnext/continuous_semantic_calls.py",
       "functions": ["_source_json", "validate_source_unit_bytes", "request_body"],
       "effect": "D03 joins existing B13/D04 lossless source handling; existing B13/D04 and other default serialization branches stay unchanged",
+      "downstream_issue47_branch_operated": false
+    }
+  },
+  "d03_recorded_native_unit_20260928": {
+    "status": "RECORDED_ONE_REQUEST_NATIVE_CANDIDATE_EVIDENCE_AND_DISK_REPLAY_PASS_FULL_COMPANY_UNIMPLEMENTED",
+    "evidence": "docs/evidence/issue28_continuous/d03-recorded-native-unit-20260928/README.md",
+    "development_spec": "catalog/r6/D03_regulatory_investigations_assessment_v1.md",
+    "marriott_saved_source_positive_and_unresolved_negative": "PASS_3_TESTS_FINAL_CODE_31_870_SECONDS_WITH_LIVE_ROOT_SUBSTITUTION_REFUSED",
+    "jpm_old_fact_successor_recorded_native": "PASS_1_MATERIAL_TEST_248_022_SECONDS_LOCAL_ONLY",
+    "jpm_material_prior_durations_seconds": [653.731, 634.585, 294.797],
+    "jpm_final_factory_execute_replay_seconds": [86.728, 80.79, 80.477],
+    "jpm_old_fact_program_current_credit": false,
+    "synthetic_recorded_response_semantic_business_credit": false,
+    "candidate_evidence_created_per_request": true,
+    "complete_group_set_accepted": false,
+    "native_review_result_run_or_public_row_created": false,
+    "d03_live_entry_enabled": false,
+    "ci_source_selector": "MARRIOTT_ONLY_ANCHOR_LONG_MATERIAL_LOCAL_ONLY",
+    "b13_native_and_existing_replay_compatibility": "PASS_2_TESTS_FINAL_CODE_26_813_SECONDS",
+    "old_d03_source_fact_public_validator_compatibility": "PASS_2_TESTS_69_100_SECONDS_BEFORE_D03_ONLY_EVIDENCE_LABEL_CHANGE",
+    "v14_closure": "sha256:5553beca91ced749f70f8365d597e88489c84dd96688655a5f69459cd2ccee32",
+    "current_provider_sec_refresh_wiring": "PASS",
+    "fast": "FIRST_FAILED_C04_30_SECOND_TIMEOUT_134_OF_135_TARGETED_C04_PASS_FINAL_RETRY_PASS_135_OF_135_307_920_SECONDS",
+    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "real_ledger_claims": 195,
+    "real_ledger_provider_paid_sec": [143, 143, 52],
+    "new_real_calls": [0, 0, 0],
+    "approved_rule_paths_unchanged": true,
+    "v13_and_canonical_bytes_unchanged": true,
+    "shared_with_issue47": {
+      "files_and_functions": {
+        "scripts/vnext/continuous_semantic_calls.py": ["request_digest", "build_plan", "prepare_d03_replay_only_requests", "execute_d03_recorded_assessment", "_execute_semantic"],
+        "scripts/vnext/capacity_native_assessment.py": ["_build_acceptance"],
+        "scripts/vnext/native_assessment_replay.py": ["_acceptor", "replay_native_response"],
+        "scripts/vnext/native_request_construction.py": ["reuse_source_requests"],
+        "scripts/vnext/regulatory_fact_review.py": ["_authenticated_original", "validate_candidate_response"]
+      },
+      "effect": "D03 explicit recorded-only successor; B13/D04 and other shared defaults remain unchanged",
       "downstream_issue47_branch_operated": false
     }
   }

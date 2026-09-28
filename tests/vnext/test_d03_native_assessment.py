@@ -1,0 +1,227 @@
+"""D03's real saved source reaches recorded WB-3 without company credit."""
+from copy import deepcopy
+import json
+from pathlib import Path
+import socket
+import tempfile
+import time
+from types import SimpleNamespace
+import unittest
+from unittest.mock import patch
+
+from vnext.canonical import (canonical_json_bytes, content_hash,
+                             strict_json_file, strict_json_loads)
+from vnext.continuous_call_ledger import recorded_ledger
+from vnext.continuous_call_policy import REQUIREMENT_ID
+from vnext.continuous_semantic_calls import (
+    execute_d03_recorded_assessment, execute_feasibility,
+    prepare_d03_replay_only_requests, request_digest,
+)
+from vnext.native_assessment_replay import replay_native_response
+from vnext.native_request_construction import request_construction_session
+from vnext.normal_source_authority import ROOT
+from vnext.requirements import load_requirement_snapshot
+
+
+def _response(request, *, unresolved=False):
+    units = []
+    for unit in request['units']:
+        indices = sorted({row['source_index'] for row in
+            request['required_candidate_assessments']
+            if row['unit_id'] == unit['unit_id']})
+        units.append({'unit_id': unit['unit_id'], 'reviewed': True,
+            'findings': [], 'context_only_source_indices': indices,
+            'unresolved': (['Needs source relationship review.']
+                           if unresolved else [])})
+    return {'request_id': request['request_id'], 'units': units}
+
+
+def _wire(response):
+    return canonical_json_bytes(value={
+        'id': 'recorded-d03-native-unit', 'model': 'deepseek-flash',
+        'choices': [{'message': {'role': 'assistant',
+            'content': json.dumps(response, ensure_ascii=False)},
+            'finish_reason': 'stop'}],
+        'usage': {'prompt_tokens': 100, 'completion_tokens': 100,
+                  'total_tokens': 200, 'prompt_cache_hit_tokens': 0,
+                  'prompt_cache_miss_tokens': 100}})
+
+
+class D03NativeAssessmentTest(unittest.TestCase):
+    def test_saved_source_recorded_candidate_replays_but_is_not_company_result(self):
+        with patch.object(socket.socket, 'connect',
+                          side_effect=AssertionError('NETWORK_FORBIDDEN')), \
+             patch.object(socket, 'getaddrinfo',
+                          side_effect=AssertionError('DNS_FORBIDDEN')):
+            prepared = prepare_d03_replay_only_requests(
+                company_id='marriott_international')
+            selected = next(row for row in prepared if
+                strict_json_loads(text=row.request_bytes.decode())[
+                    'required_candidate_assessments'])
+            request = strict_json_loads(text=selected.request_bytes.decode())
+            with tempfile.TemporaryDirectory(prefix='d03-native-recorded-') as temporary:
+                ledger = recorded_ledger(root=Path(temporary) / 'ledger')
+                path, outcome = execute_d03_recorded_assessment(
+                    prepared=selected, ledger=ledger,
+                    recorded_wire=_wire(_response(request)))
+                self.assertEqual('SUCCEEDED', outcome['terminal']['status'])
+                self.assertTrue(outcome['native_candidate_evidence_created'])
+                self.assertFalse(outcome['native_result_created'])
+                self.assertEqual('ONE_REQUEST_SOURCE_ASSESSMENT_NOT_COMPLETE_METRIC',
+                                 outcome['acceptance_scope'])
+                saved = strict_json_file(path=path/'d03-assessment.json')
+                self.assertEqual(outcome, saved)
+                replay = replay_native_response(prepared=selected, path=path)
+                self.assertEqual(content_hash(value={
+                    'purpose': 'D03_SOURCE_ASSESSMENT',
+                    'source': request['source_id']}),
+                    replay['plan']['release_input_plan_id'])
+                accepted = replay['success']['acceptance_receipt']
+                self.assertEqual('D03_REQUEST_SOURCE_ASSESSMENT_V1',
+                                 accepted['validator_semantic_version'])
+                self.assertEqual('OBSERVATION_CANDIDATE',
+                                 accepted['candidate_record']['record_type'])
+                self.assertEqual('EVIDENCE_CHECK',
+                                 accepted['evidence_record']['record_type'])
+                self.assertEqual('PASS', accepted['evidence_record']['status'])
+                self.assertIn('D03_ORIGINAL_SOURCE_REFERENCES_AND_FORMAT',
+                    [row['check'] for row in accepted['evidence_record']['checks']])
+                self.assertEqual(12, len(accepted['candidate_record']['selected'][
+                    'source_assessment']['findings']))
+                self.assertFalse(replay['revalidation']['new_provider_execution'])
+                with ledger.locked():
+                    self.assertEqual([1, 1, 0], ledger.snapshot()['counts'])
+                (path/'semantic-request.json').write_bytes(b'{}')
+                with self.assertRaisesRegex(ValueError,
+                        'NATIVE_SAVED_REQUEST_OR_SOURCE_CHANGED'):
+                    replay_native_response(prepared=selected, path=path)
+
+    def test_unresolved_recorded_group_fails_and_live_shape_cannot_claim(self):
+        with patch.object(socket.socket, 'connect',
+                          side_effect=AssertionError('NETWORK_FORBIDDEN')), \
+             patch.object(socket, 'getaddrinfo',
+                          side_effect=AssertionError('DNS_FORBIDDEN')):
+            selected = next(row for row in prepare_d03_replay_only_requests(
+                company_id='marriott_international') if
+                strict_json_loads(text=row.request_bytes.decode())[
+                    'required_candidate_assessments'])
+            request = strict_json_loads(text=selected.request_bytes.decode())
+            with tempfile.TemporaryDirectory(prefix='d03-native-rejected-') as temporary:
+                ledger = recorded_ledger(root=Path(temporary) / 'ledger')
+                with self.assertRaisesRegex(ValueError,
+                        'D03_NATIVE_RECORDED_LEDGER_AND_WIRE_REQUIRED'):
+                    execute_d03_recorded_assessment(
+                        prepared=selected, ledger=object(),
+                        recorded_wire=_wire(_response(request)))
+                with patch.object(ledger, 'root', Path(selected.requirement[
+                        'policy']['budget_root'])):
+                    with self.assertRaisesRegex(ValueError,
+                            'D03_NATIVE_RECORDED_LEDGER_AND_WIRE_REQUIRED'):
+                        execute_d03_recorded_assessment(
+                            prepared=selected, ledger=ledger,
+                            recorded_wire=_wire(_response(request)))
+                with self.assertRaisesRegex(ValueError,
+                        'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE'):
+                    execute_feasibility(prepared=selected, ledger=ledger,
+                        recorded_wire=_wire(_response(request)))
+                with ledger.locked():
+                    self.assertEqual([0, 0, 0], ledger.snapshot()['counts'])
+                path, outcome = execute_d03_recorded_assessment(
+                    prepared=selected, ledger=ledger,
+                    recorded_wire=_wire(_response(request, unresolved=True)))
+                self.assertEqual('FAILED_TERMINAL', outcome['terminal']['status'])
+                self.assertFalse(outcome['native_candidate_evidence_created'])
+                self.assertFalse(outcome['native_result_created'])
+                with ledger.locked():
+                    self.assertEqual([1, 1, 0], ledger.snapshot()['counts'])
+                with self.assertRaisesRegex(ValueError,
+                        'NATIVE_SUCCESSFUL_ORIGINAL_TERMINAL_REQUIRED'):
+                    replay_native_response(prepared=selected, path=path)
+
+    def test_anchor_candidate_changes_business_digest(self):
+        request = {
+            'record_type': 'D03_INTERPRETATION_REQUEST', 'metric_id': 'D03',
+            'system_prompt': 'Review source candidates.',
+            'target_cik': '0000000001', 'target_period': {'fiscal_year': 2025},
+            'fiscal_label_context': {'selected_fiscal_year': 2025},
+            'document_context': {'filing': {'accessionNumber': 'accession'}},
+            'units': [], 'response_protocol': {}, 'category_definitions': {},
+            'required_candidate_assessments': [],
+            'source_fact_candidates': [{'candidate_id': 'candidate-a'}],
+            'source_fact_review_contract': {'version': 'D03_SOURCE_ANCHOR_REVIEW_V1',
+                                            'original_request_id': 'original-a'},
+        }
+        changed = deepcopy(request)
+        changed['source_fact_candidates'][0]['candidate_id'] = 'candidate-b'
+        policy = SimpleNamespace(model='deepseek-flash')
+        self.assertNotEqual(request_digest(request, policy),
+                            request_digest(changed, policy))
+
+
+class D03NativeAnchorMaterialTest(unittest.TestCase):
+    def test_saved_jpm_anchor_reaches_recorded_native_without_old_fact_credit(self):
+        started = time.perf_counter()
+        with patch.object(socket.socket, 'connect',
+                          side_effect=AssertionError('NETWORK_FORBIDDEN')), \
+             patch.object(socket, 'getaddrinfo',
+                          side_effect=AssertionError('DNS_FORBIDDEN')):
+            with tempfile.TemporaryDirectory(prefix='d03-anchor-recorded-') as temporary:
+                ledger = recorded_ledger(root=Path(temporary) / 'ledger')
+                requirement = load_requirement_snapshot(
+                    snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
+                # One complete company update may share only the current
+                # construction scope. The following replay starts a new one.
+                with request_construction_session(requirement):
+                    selected = next(row for row in prepare_d03_replay_only_requests(
+                        company_id='jpmorgan_chase') if
+                        'source_fact_review_contract' in strict_json_loads(
+                            text=row.request_bytes.decode()))
+                    prepared_at = time.perf_counter()
+                    request = strict_json_loads(text=selected.request_bytes.decode())
+                    anchors = request['source_fact_candidates']
+                    self.assertEqual(1, len(anchors))
+                    anchor = anchors[0]
+                    response = {'request_id': request['request_id'], 'units': [],
+                        'candidate_reviews': [{'candidate_id': anchor['candidate_id'],
+                            'unit_id': anchor['unit_id'], 'finding_indices': [0]}]}
+                    for unit in request['units']:
+                        required = sorted({row['source_index'] for row in
+                            request['required_candidate_assessments']
+                            if row['unit_id'] == unit['unit_id']})
+                        finding = ({'kind': 'CURRENT_REGULATORY_ACTION',
+                            'subject': 'TARGET_REGISTRANT', 'event_dates': [],
+                            'reported_status': 'ONGOING_AS_REPORTED',
+                            'evidence': [{'kind': 'VISIBLE_BLOCK',
+                                          'source_index': anchor['block_index']}],
+                            'reason': 'Recorded protocol path only; native Review still required.'}
+                            if unit['unit_id'] == anchor['unit_id'] else None)
+                        response['units'].append({'unit_id': unit['unit_id'],
+                            'reviewed': True, 'findings': [finding] if finding else [],
+                            'context_only_source_indices': [index for index in required
+                                if finding is None or index != anchor['block_index']],
+                            'unresolved': []})
+                    path, outcome = execute_d03_recorded_assessment(
+                        prepared=selected, ledger=ledger,
+                        recorded_wire=_wire(response))
+                    executed_at = time.perf_counter()
+                self.assertEqual('SUCCEEDED', outcome['terminal']['status'])
+                self.assertTrue(outcome['native_candidate_evidence_created'])
+                self.assertFalse(outcome['native_result_created'])
+                self.assertFalse(outcome['response_check'][
+                    'source_fact_current_status_proven_by_program'])
+                replay = replay_native_response(prepared=selected, path=path)
+                replayed_at = time.perf_counter()
+                self.assertEqual('D03_REQUEST_SOURCE_ASSESSMENT_V1',
+                    replay['success']['acceptance_receipt'][
+                        'validator_semantic_version'])
+                self.assertEqual(33, len(request['required_candidate_assessments']))
+                with ledger.locked():
+                    self.assertEqual([1, 1, 0], ledger.snapshot()['counts'])
+            print(json.dumps({'factory_seconds': round(prepared_at-started, 3),
+                'recorded_execute_seconds': round(executed_at-prepared_at, 3),
+                'independent_replay_seconds': round(replayed_at-executed_at, 3)}),
+                flush=True)
+
+
+if __name__ == '__main__':
+    unittest.main()
