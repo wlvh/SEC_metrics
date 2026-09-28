@@ -32,7 +32,7 @@ from tests.vnext.common import REPO_ROOT as ROOT
 from vnext import ai_adapter as adapter
 from vnext import historical_model_calls as calls
 from vnext import invocation_control as control
-from vnext.canonical import content_hash, sha256_bytes
+from vnext.canonical import canonical_json_bytes, content_hash, sha256_bytes
 
 URL = "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-1000000001"
 RECORD = "docs/evidence/issue47_history/model-egress/test-fixture/delegation.json"
@@ -79,7 +79,8 @@ def fixture_tree(directory, *, policy_overrides=None, body_overrides=None, comme
     text = json.dumps(body, sort_keys=True)
     comment = {"id": 1000000001, "html_url": URL,
                "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
-               "user": {"login": "wlvh"}, "body": text,
+               "user": {"login": "wlvh", "id": 30534800, "type": "User"},
+               "author_association": "OWNER", "performed_via_github_app": None, "body": text,
                "created_at": "2026-09-27T00:00:00Z", "updated_at": "2026-09-27T00:00:00Z",
                **(comment_overrides or {})}
     policy["delegation_body_sha256"] = digest or sha256_bytes(content=text.encode("utf-8"))
@@ -167,19 +168,27 @@ class TheAllowanceIsVerifiedNotMerelyPresent(unittest.TestCase):
                 calls.model_allowance(repo_root=Path(directory))
 
     def test_a_duplicate_key_is_refused_not_resolved_last_wins(self):
-        """An independent review had [4,4,0] followed by a duplicate [400,400,0] granted as the larger."""
+        """The first review's case: [4,4,0] shown first, a duplicate [400,400,0] granted as the larger.
+
+        Built so that last-key-wins reading would accept it - the later value
+        is the one the rest of the files agree with - which makes the strict
+        reading the only thing that refuses. The previous version of this case
+        appended a value the restatement check refused anyway, and a re-review
+        found it passed with the strict reading removed.
+        """
         with tempfile.TemporaryDirectory() as directory:
             fixture_tree(directory)
             path = Path(directory) / calls.ALLOWANCE_PATH
             text = path.read_text(encoding="utf-8")
-            path.write_text(text[:-1] + ', "maximum_additional_provider_paid_sec_calls": [400, 400, 0]}',
+            path.write_text('{"maximum_additional_provider_paid_sec_calls": [400, 400, 0], ' + text[1:],
                             encoding="utf-8")
             with self.assertRaisesRegex(calls.HistoricalModelCallError,
                                         "ISSUE_47_MODEL_ALLOWANCE_NOT_STRICT_JSON"):
                 calls.model_allowance(repo_root=Path(directory))
         with tempfile.TemporaryDirectory() as directory:
-            comment = fixture_tree(directory)
-            body = comment["body"][:-1] + ', "maximum_additional_provider_paid_sec_calls": [400, 400, 0]}'
+            comment = fixture_tree(directory, policy_overrides={
+                "maximum_additional_provider_paid_sec_calls": [400, 400, 0]})
+            body = '{"maximum_additional_provider_paid_sec_calls": [4, 4, 0], ' + comment["body"][1:]
             (Path(directory) / RECORD).write_text(json.dumps({**comment, "body": body}), encoding="utf-8")
             policy_path = Path(directory) / calls.ALLOWANCE_PATH
             policy = json.loads(policy_path.read_text(encoding="utf-8"))
@@ -227,6 +236,28 @@ class TheAllowanceIsVerifiedNotMerelyPresent(unittest.TestCase):
                      body_overrides={"production_authorized": True})
         self.refused("ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER",
                      comment_overrides={"user": {"login": "someone-else"}})
+
+    def test_the_approval_is_the_approver_s_own_post(self):
+        """An independent review found only the login was read: another account's, a bot's or an app's passed."""
+        for overrides, reason in (
+                ({"user": {"login": "wlvh", "id": 1, "type": "User"}},
+                 "ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER"),
+                ({"user": {"login": "wlvh", "id": 30534800, "type": "Bot"}},
+                 "ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER"),
+                ({"author_association": "NONE"}, "ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER"),
+                ({"performed_via_github_app": {"slug": "claude"}},
+                 "ISSUE_47_MODEL_APPROVAL_WAS_POSTED_THROUGH_AN_APP")):
+            with self.subTest(overrides=overrides):
+                self.refused(reason, comment_overrides=overrides)
+        # A record that does not say how it was posted says nothing about it.
+        with tempfile.TemporaryDirectory() as directory:
+            fixture_tree(directory)
+            record = Path(directory) / RECORD
+            saved = json.loads(record.read_text(encoding="utf-8"))
+            del saved["performed_via_github_app"]
+            record.write_text(json.dumps(saved), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "ISSUE_47_MODEL_APPROVAL_WAS_POSTED_THROUGH_AN_APP"):
+                calls.model_allowance(repo_root=Path(directory))
 
     def test_a_grant_names_the_requests_it_allows(self):
         """A grant by position alone let any request built for that position through."""
@@ -333,6 +364,12 @@ class TheApprovalIsRegisteredFromWhatWasPosted(unittest.TestCase):
         allowance = calls.model_allowance(repo_root=self.root, delegation_reader=lambda path: self.comment)
         self.assertTrue(allowance["provenance_verified_against_github"])
         self.assertEqual(self.register(self.comment)["written"], registered["written"])
+        # The ledger a Run accepts LIVE registrations from is written here, from
+        # the verified allowance, and nowhere else.
+        from vnext import historical_counted_calls as counted
+        self.assertIn(counted.GRANTED_LEDGER_PATH, registered["written"])
+        self.assertEqual(counted.granted_ledger_record(allowance), json.loads(
+            (self.root / counted.GRANTED_LEDGER_PATH).read_text(encoding="utf-8")))
 
     def test_a_post_that_is_not_the_proposal_is_refused(self):
         changed = {**self.comment, "body": self.comment["body"] + " "}
@@ -345,7 +382,9 @@ class TheApprovalIsRegisteredFromWhatWasPosted(unittest.TestCase):
         for overrides, reason in (({"user": {"login": "someone-else"}},
                                    "ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER"),
                                   ({"updated_at": "2026-09-28T00:00:00Z"},
-                                   "ISSUE_47_DELEGATION_COMMENT_WAS_EDITED")):
+                                   "ISSUE_47_DELEGATION_COMMENT_WAS_EDITED"),
+                                  ({"performed_via_github_app": {"slug": "claude"}},
+                                   "ISSUE_47_MODEL_APPROVAL_WAS_POSTED_THROUGH_AN_APP")):
             with self.subTest(reason=reason), self.assertRaisesRegex(ValueError, reason):
                 self.register({**self.comment, **overrides})
         self.assertFalse((self.root / calls.ALLOWANCE_PATH).exists())
@@ -433,7 +472,12 @@ class TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount(unittest.TestC
                 self.claim("sha256:" + "2" * 64)
 
     def test_every_stop_reason_stops(self):
-        for reason in sorted(calls.STOPS):
+        # Named here rather than read from STOPS: a re-review removed a reason
+        # from STOPS and this case, iterating STOPS, could not notice.
+        expected = {"HTTP_402", "UNKNOWN_REMOTE_OUTCOME", "SOURCE_AUTHENTICITY_FAILED", "USAGE_UNKNOWN",
+                    "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT", "TRANSPORT_OBSERVATION_CHANGED"}
+        self.assertEqual(expected, set(calls.STOPS))
+        for reason in sorted(expected):
             with self.subTest(reason=reason):
                 ledger = calls.recorded_model_ledger(
                     root=Path(self.directory.name) / ("ledger-" + reason), allowance=self.allowance)
@@ -475,8 +519,59 @@ class TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount(unittest.TestC
         self.stopped()
         (self.ledger.root / "claims.jsonl").unlink()
         with self.ledger.locked(), self.assertRaisesRegex(
-                calls.HistoricalModelCallError, "ISSUE_47_MODEL_LEDGER_CLAIM_SET_CHANGED"):
+                calls.HistoricalModelCallError, "ISSUE_47_MODEL_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR"):
             self.ledger.snapshot()
+
+    def test_emptying_the_root_refuses_rather_than_resetting_the_count(self):
+        """A re-review removed the slots and the claim log together, kept binding and anchor: [0, 0, 0]."""
+        import shutil
+        self.stopped()
+        shutil.rmtree(self.ledger.root / "calls")
+        (self.ledger.root / "claims.jsonl").unlink()
+        with self.ledger.locked(), self.assertRaisesRegex(
+                calls.HistoricalModelCallError,
+                "ISSUE_47_MODEL_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR:0 in the root, 1 beside it"):
+            self.ledger.snapshot()
+
+    def reseal(self, path, intent, **changes):
+        """Rewrite one claim everywhere it is recorded - slot, log and its copy - under a new seal."""
+        body = {**{key: value for key, value in intent.items() if key != "intent_id"}, **changes}
+        changed = {**body, "intent_id": content_hash(value=body)}
+        (path / "intent.json").chmod(0o600)
+        (path / "intent.json").write_bytes(canonical_json_bytes(value=changed))
+        line = canonical_json_bytes(value=changed).rstrip(b"\n") + b"\n"
+        for log in (self.ledger.root / "claims.jsonl",
+                    calls.HistoricalModelLedger.mirror_path(self.ledger.root)):
+            lines = log.read_bytes().splitlines(keepends=True)
+            lines[intent["ordinal"] - 1] = line
+            log.write_bytes(b"".join(lines))
+        return changed
+
+    def test_the_claims_must_name_each_other_in_order(self):
+        """A claim rewritten to follow another - consistently in all three places - breaks the chain."""
+        with self.ledger.locked():
+            self.finish(*self.claim("sha256:" + "1" * 64))
+            path, intent = self.claim("sha256:" + "2" * 64)
+        self.reseal(path, intent, previous_intent_id="sha256:" + "0" * 64)
+        with self.ledger.locked(), self.assertRaisesRegex(
+                calls.HistoricalModelCallError, "ISSUE_47_MODEL_LEDGER_SLOT_CHANGED:0002"):
+            self.ledger.snapshot()
+
+    def test_an_edited_binding_or_anchor_is_refused(self):
+        self.stopped()
+        for path, reason in ((self.ledger.root / "binding.json", "ISSUE_47_MODEL_LEDGER_BINDING_CHANGED"),
+                             (calls.HistoricalModelLedger.anchor_path(self.ledger.root),
+                              "ISSUE_47_MODEL_LEDGER_INITIALIZATION_ANCHOR_CHANGED")):
+            with self.subTest(file=path.name):
+                saved = path.read_bytes()
+                path.chmod(0o600)
+                path.write_bytes(canonical_json_bytes(value={**json.loads(saved), "limits": [99, 99, 0]}))
+                try:
+                    with self.assertRaisesRegex(calls.HistoricalModelCallError, reason):
+                        with self.ledger.locked():
+                            pass
+                finally:
+                    path.write_bytes(saved)
 
     def test_deleting_the_root_refuses_rather_than_resetting_the_count(self):
         """The anchor beside the root is what deleting the root does not take with it."""
@@ -590,15 +685,20 @@ class NothingHereReachesAProvider(unittest.TestCase):
         # What it binds that this tree has unchanged is exactly what the
         # repository carries: this module, the SEC module whose approval checks
         # it imports and that module's tests (the gh reader's case runs in the
-        # harness), the harness and the patch itself. Everything else is
-        # either new in the patch or changed by it.
+        # harness), the counted-call checks a LIVE registration's consumer
+        # makes, this file and the D04 answer helper the suite imports, the
+        # harness and the patch itself. Everything else is either new in the
+        # patch or changed by it.
         same = sorted(relative for relative, binding in receipt["bound_files"].items()
                       if (ROOT / relative).is_file()
                       and {"sha256": sha256_bytes(content=(ROOT / relative).read_bytes()),
                            "size": (ROOT / relative).stat().st_size} == binding)
         self.assertEqual(sorted(["scripts/vnext/historical_model_calls.py",
                                  "scripts/vnext/historical_source_acquisition.py",
+                                 "scripts/vnext/historical_counted_calls.py",
                                  "tests/vnext/test_historical_source_acquisition.py",
+                                 "tests/vnext/test_historical_model_calls.py",
+                                 "tests/vnext/d04_synthetic_output.py",
                                  "docs/evidence/issue47_history/model-egress/verify.py",
                                  "docs/evidence/issue47_history/model-egress/"
                                  "egress-registration.patch"]), same)

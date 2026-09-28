@@ -234,13 +234,14 @@ def _rewrite_log_row(log, index, row):
 
 
 def _copy_ledger(source, destination):
-    """A ledger and its initialization anchor, which lives beside it.
+    """A ledger with its initialization anchor and its claim-log copy, which live beside it.
 
-    Copying only the directory leaves the anchor behind, and a ledger with a
-    binding and no anchor is refused as one whose anchor was removed.
+    Copying only the directory leaves them behind, and a ledger with a binding
+    and no anchor, or no copy of its claim log, is refused as one reset.
     """
     shutil.copytree(source, destination)
     shutil.copyfile(SESSION_LEDGER.anchor_path(source), SESSION_LEDGER.anchor_path(destination))
+    shutil.copyfile(SESSION_LEDGER.mirror_path(source), SESSION_LEDGER.mirror_path(destination))
 
 
 class TheChainProducesASourceTheExistingReaderAccepts(unittest.TestCase):
@@ -703,7 +704,8 @@ def _grant_tree(*, scope_overrides=None, body_overrides=None, digest=None, url=N
     login = approver or repository.split("/")[0]
     comment = {"html_url": comment_url, "body": body, "id": 1,
                "issue_url": "https://api.github.com/repos/" + repository + "/issues/47",
-               "user": {"login": login}, "created_at": "2026-09-27T00:00:00Z",
+               "user": {"login": login, "id": 30534800, "type": "User"},
+               "author_association": "OWNER", "created_at": "2026-09-27T00:00:00Z",
                "updated_at": "2026-09-27T00:00:00Z"}
     (root / "docs").mkdir(parents=True)
     (root / "docs/delegation.json").write_text(json.dumps(comment), encoding="utf-8")
@@ -1254,7 +1256,8 @@ class AGrantMustComeFromAnApprovalNotFromTwoLocalFiles(unittest.TestCase):
         acquisition_allowance(repo_root=root)  # consistent on its own
         elsewhere = {"html_url": json.loads((root / POLICY_PATH).read_text())["delegation_url"],
                      "id": 1, "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
-                     "user": {"login": "wlvh"}, "body": '{"record_type": "SOMETHING_ELSE"}',
+                     "user": {"login": "wlvh", "id": 30534800, "type": "User"},
+                     "author_association": "OWNER", "body": '{"record_type": "SOMETHING_ELSE"}',
                      "created_at": "2026-09-27T00:00:00Z", "updated_at": "2026-09-27T00:00:00Z"}
         with self.assertRaises(HistoricalAcquisitionError) as caught:
             acquisition_allowance(repo_root=root, delegation_reader=lambda path: elsewhere)
@@ -2684,6 +2687,19 @@ class AnExportCarriesExactlyWhatTheReplayAccepts(unittest.TestCase):
                 with self.assertRaises(HistoricalAcquisitionError):
                     EXPORT_MODULE._safe_member(name)
 
+    def test_a_claim_log_that_is_not_its_copy_is_not_exported(self):
+        """A log truncated with its last slot is not an export of what was claimed."""
+        mirror = SESSION_LEDGER.mirror_path(self.root / "ledger")
+        saved = mirror.read_bytes()
+        mirror.write_bytes(b"".join(saved.splitlines(keepends=True)[:-1]))
+        try:
+            with self.assertRaises(HistoricalAcquisitionError) as caught:
+                EXPORT_MODULE.export_acquisition(ledger_root=self.root / "ledger",
+                                                 out_dir=self.root / "export-from-a-truncated-copy")
+            self.assertIn("ISSUE_47_EXPORT_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR", str(caught.exception))
+        finally:
+            mirror.write_bytes(saved)
+
     def test_an_unregistered_ledger_is_not_exported(self):
         root = Path(tempfile.mkdtemp(prefix="issue47-unregistered-"))
         self.addCleanup(shutil.rmtree, root, ignore_errors=True)
@@ -2804,6 +2820,19 @@ class AnApprovalIsRegisteredOnlyFromTheApprovedBytes(unittest.TestCase):
         self.assertIn("ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER", str(caught.exception))
         self.assertFalse((root / POLICY_PATH).exists())
 
+    def test_the_approver_s_login_alone_is_not_the_approver(self):
+        """A re-review found only the login was read: another account of that name, a bot, a non-owner."""
+        for change in ({"user": {"login": "wlvh", "id": 1, "type": "User"}},
+                       {"user": {"login": "wlvh", "id": 30534800, "type": "Bot"}},
+                       {"author_association": "NONE"}):
+            with self.subTest(change=change):
+                root = self._tree()
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    register_approval(repo_root=root, comment_url=self.URL,
+                                      reader=lambda path: self._comment(**change))
+                self.assertIn("ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER", str(caught.exception))
+                self.assertFalse((root / POLICY_PATH).exists())
+
     def test_a_comment_on_another_issue_or_repository_registers_nothing(self):
         root = self._tree()
         for url in ("https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5800000001",
@@ -2852,6 +2881,25 @@ class ALedgerCannotBeResetByDeletingIt(unittest.TestCase):
         with self.assertRaises(HistoricalSessionError) as caught:
             self._state(ledger)
         self.assertIn("ISSUE_47_LEDGER_CLAIM_SET_CHANGED", str(caught.exception))
+
+    def test_an_emptied_root_is_a_refusal_not_a_fresh_start(self):
+        """The slots and the claim log removed together, binding and anchor kept: not [0, 0, 0]."""
+        ledger = _Chain.copy(self.root / "ledger")
+        shutil.rmtree(ledger / "calls")
+        (ledger / "claims.jsonl").unlink()
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._state(ledger)
+        self.assertIn("ISSUE_47_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR:0 in the root, 1 beside it",
+                      str(caught.exception))
+
+    def test_a_truncated_last_claim_is_a_refusal_not_a_released_slot(self):
+        ledger = _Chain.copy(self.root / "ledger")
+        shutil.rmtree(ledger / "calls/0001")
+        log = ledger / "claims.jsonl"
+        log.write_text("".join(log.read_text().splitlines(keepends=True)[:-1]))
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._state(ledger)
+        self.assertIn("ISSUE_47_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR", str(caught.exception))
 
     def test_a_deleted_root_is_a_refusal_not_a_fresh_start(self):
         ledger = _Chain.copy(self.root / "ledger")

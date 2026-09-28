@@ -18,6 +18,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT as ROOT
+from tests.vnext.d04_synthetic_output import synthetic_output
 from tests.vnext.test_normal_zero_ai_results import original_sources_only
 from vnext import capacity_semantic_source as frozen_capacity
 from vnext import capacity_text_results
@@ -26,60 +27,13 @@ from vnext import historical_model_session as session_module
 from vnext import historical_semantic_results as semantic
 from vnext import historical_semantic_source as pinned
 from vnext import r6_semantic_source as frozen_semantic
-from vnext.capacity_semantic_review import _restore_units
 from vnext.canonical import content_hash
 from vnext.continuous_request_context import FORMAT_VERSION
-from vnext.d04_native_assessment import source_statement_relations
 from vnext.normal_period_selection import resolve_period_selection
-from vnext.r6_semantic_review import _source_items
-from vnext.regulatory_investigation_candidates import _self_aliases
 
 
 def _selection(company_id, report_end):
     return resolve_period_selection(repo_root=ROOT, company_id=company_id, report_end=report_end)
-
-
-def synthetic_output(request):
-    """A response the frozen checker accepts: its own relations, nothing else.
-
-    Every relation the checker proves is reported as that relation; every
-    required candidate it cannot relate is reported as another meaning. This is
-    the checker's expected answer, which is exactly what a plumbing fixture
-    should be and exactly why it proves nothing about a filing.
-    """
-    units = _restore_units(request["units"], request["shared_source_dictionaries"])
-    blocks = [b for u in units if u["kind"] == "VISIBLE_TEXT" for b in u["payload"]["blocks"]]
-    binding = request["document_context"]["registrant_name_binding"]
-    aliases = _self_aliases({"registrant_names": binding.get("accepted_source_names", []),
-                             "blocks": blocks,
-                             "text_document_id": request["document_context"]["document_id"],
-                             "raw_asset_id": None, "source_reference_id": None})
-    names = [a["text"] for a in aliases if a["text"].casefold() != "we"]
-    required = {(r["unit_id"], r["kind"], r["source_index"])
-                for r in request["required_candidate_assessments"]}
-    rows = []
-    for unit in units:
-        kind, items = _source_items(unit)
-        findings = []
-        for index, item in items.items():
-            text = item["raw_xml"] if kind == "NATIVE_SUPPLEMENT" else item["text"]
-            proven = [r for r in source_statement_relations(
-                text=text, names=names, period=request["target_period"],
-                quoted=item.get("html_quotation_context", False)) if r["reason"] is None]
-            for relation in proven:
-                findings.append({"kind": relation["kind"],
-                                 "subject": relation["subject"] or "TARGET_REGISTRANT",
-                                 "timing": relation["timing"] or "CURRENT_REPORT",
-                                 "evidence": [{"kind": kind, "source_index": index}],
-                                 "reason": "synthetic fixture: the checker's own relation"})
-            if not proven and (unit["unit_id"], kind, index) in required:
-                findings.append({"kind": "VALUATION_OR_OTHER_MEANING",
-                                 "subject": "TARGET_REGISTRANT", "timing": "CURRENT_REPORT",
-                                 "evidence": [{"kind": kind, "source_index": index}],
-                                 "reason": "synthetic fixture: an unrelated required candidate"})
-        rows.append({"unit_id": unit["unit_id"], "reviewed": True, "findings": findings,
-                     "unresolved": []})
-    return json.dumps({"request_id": request["request_id"], "units": rows}).encode("utf-8")
 
 
 class ThePinnedSourceIsTheFrozenBuildersOutputTest(unittest.TestCase):
@@ -254,6 +208,18 @@ class ARegisteredAssessmentTravelsToATextResultTest(unittest.TestCase):
             export.write_bytes(semantic.registered_export_bytes(live))
             with self.assertRaisesRegex(ValueError, "HISTORICAL_LIVE_ASSESSMENT_NOT_IN_CREATOR_JOURNAL"):
                 semantic.load_historical_assessment(data_root=root, source=self.source)
+
+    def test_a_live_record_without_the_calls_that_answered_it_is_refused(self):
+        """An independent re-review registered LIVE with no call, and the default loader read it (N1)."""
+        with self.assertRaisesRegex(ValueError, "HISTORICAL_LIVE_ASSESSMENT_WITHOUT_COUNTED_CALLS"):
+            semantic.registered_record(source=self.source, period_selection=self.selection,
+                                       outputs=self.outputs, mode="LIVE")
+        # Written straight into a record, as the review did: its consumer refuses it.
+        live = {**{k: v for k, v in self.record.items() if k != "input_record_id"}, "mode": "LIVE",
+                "assessment": {**self.record["assessment"], "mode": "LIVE"}}
+        live["input_record_id"] = content_hash(value=live)
+        with self.assertRaisesRegex(ValueError, "ISSUE_47_LIVE_REGISTRATION_WITHOUT_COUNTED_CALLS"):
+            semantic.validate_registered_record(record=live, source=self.source, mode="LIVE")
 
     def test_another_issues_registration_is_refused(self):
         other = {**{k: v for k, v in self.record.items() if k != "input_record_id"},

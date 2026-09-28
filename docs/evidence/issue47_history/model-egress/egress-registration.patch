@@ -15,10 +15,10 @@ index 9fdfe8a8..2256a407 100644
          return None
 diff --git a/scripts/vnext/historical_model_egress.py b/scripts/vnext/historical_model_egress.py
 new file mode 100644
-index 00000000..9d047c61
+index 00000000..04e2878a
 --- /dev/null
 +++ b/scripts/vnext/historical_model_egress.py
-@@ -0,0 +1,363 @@
+@@ -0,0 +1,426 @@
 +"""Issue #47's model egress: the one transport and the one execution entry.
 +
 +This file is new code inside the registration patch for independent security
@@ -52,8 +52,8 @@ index 00000000..9d047c61
 +from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_loads
 +from .historical_model_calls import (_FACTORY as CALLS_FACTORY, PURPOSE, HistoricalModelLedger,
 +                                     HistoricalSemanticRequest, _read, build_plan,
-+                                     model_allowance, request_in_scope, transport_policy,
-+                                     verify_model_wiring)
++                                     loaded_code_holds, model_allowance, request_in_scope,
++                                     sending, transport_policy, verify_model_wiring)
 +from .normal_source_authority import ROOT
 +
 +
@@ -74,6 +74,22 @@ index 00000000..9d047c61
 +    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 +
 +
++def _reservation_is_this_send_s(*, reservation, markers, plan, execution_id, owner_token,
++                                transport_kind):
++    """WB-3 reserved this plan for this process, owner and execution, and marked it once.
++
++    Each part on its own: a re-review removed every part but the marker count
++    together and no case noticed, so each is now a condition a case breaks by
++    itself.
++    """
++    return (reservation["owner_process_id"] == os.getpid()
++            and reservation["owner_token_hash"] == content_hash(value=owner_token)
++            and reservation["execution_id"] == execution_id
++            and len(markers) == 1
++            and markers[0]["ai_invocation_plan_id"] == plan["ai_invocation_plan_id"]
++            and markers[0]["transport_kind"] == transport_kind)
++
++
 +class _Transport:
 +    """The one #47 caller the registration patch adds to the egress gate's exact set."""
 +
@@ -90,7 +106,7 @@ index 00000000..9d047c61
 +    def send(self, *, request_body, plan, execution_id, attempt_ordinal):
 +        from . import ai_adapter as adapter
 +        from . import invocation_control as control
-+        from .continuous_semantic_calls import usage_error, usage_observation
++        from .continuous_semantic_calls import usage_error
 +        from .historical_source_acquisition import github_comment_reader
 +        from .sources import resolve_repository_file
 +        # The slot this send is counted in: claimed, logged, open and this
@@ -110,11 +126,9 @@ index 00000000..9d047c61
 +                + plan["provider_request_identity"].split(":")[1] + ".json").read_text()),
 +            plan=plan)
 +        markers = control._egress_markers_for_execution(root=root, execution_id=execution_id)
-+        _need(reservation["owner_process_id"] == os.getpid()
-+              and reservation["owner_token_hash"] == content_hash(value=self.owner_token)
-+              and reservation["execution_id"] == execution_id and len(markers) == 1
-+              and markers[0]["ai_invocation_plan_id"] == plan["ai_invocation_plan_id"]
-+              and markers[0]["transport_kind"] == self.transport_kind,
++        _need(_reservation_is_this_send_s(reservation=reservation, markers=markers, plan=plan,
++                                          execution_id=execution_id, owner_token=self.owner_token,
++                                          transport_kind=self.transport_kind),
 +              "ISSUE_47_MODEL_WB3_RESERVATION_OWNER_REQUIRED")
 +
 +        def source_check():
@@ -131,16 +145,23 @@ index 00000000..9d047c61
 +                _need(self.recorded_wire is None, "ISSUE_47_MODEL_RECORDED_BYTES_CANNOT_RUN_LIVE")
 +                source_check()
 +                model_allowance(repo_root=ROOT, delegation_reader=github_comment_reader)
-+                result = adapter._build_repository_transport(policy=self.policy).complete(
-+                    prepared_request=self.prepared,
-+                    egress_capability=adapter._RESERVATION_OWNER_EGRESS_CAPABILITY,
-+                    before_socket_open=source_check)
++                with sending(prepared=self.prepared, ledger=self.ledger, path=self.path,
++                             intent=self.intent, execution_id=execution_id):
++                    result = adapter._build_repository_transport(policy=self.policy).complete(
++                        prepared_request=self.prepared,
++                        egress_capability=adapter._RESERVATION_OWNER_EGRESS_CAPABILITY,
++                        before_socket_open=source_check)
 +                raw, output = result.raw_response_bytes, result.response_bytes
 +                request_id = result.provider_request_id
-+                _need(adapter.transport_observation_mismatch(
-+                    policy=self.policy, observation=result.observation,
-+                    request_bytes=request_body) is None,
-+                    "ISSUE_47_MODEL_TRANSPORT_OBSERVATION_CHANGED")
++                # After the charge, so a disagreement is recorded with the
++                # response rather than raised past it: an independent review
++                # read that raising here dropped the raw response of a call
++                # already paid for. The disagreement stops the channel.
++                mismatch = adapter.transport_observation_mismatch(
++                    policy=self.policy, observation=result.observation, request_bytes=request_body)
++                if mismatch is not None:
++                    error_class = "TRANSPORT_OBSERVATION_CHANGED"
++                    error_detail = str(mismatch)[:400]
 +            else:
 +                _need(type(self.recorded_wire) is bytes, "ISSUE_47_MODEL_RECORDED_WIRE_REQUIRED")
 +                raw = self.recorded_wire
@@ -154,7 +175,14 @@ index 00000000..9d047c61
 +            error_detail = str(error)
 +        except SourceAuthenticityFailure as error:
 +            error_class, status_code, error_detail = "SOURCE_AUTHENTICITY_FAILED", 0, str(error)
-+        usage = usage_observation(raw)
++        except RecursionError as error:
++            # A response nested past the parser's depth. An independent review
++            # sent one and the error left the call path with the slot open, so
++            # the channel stopped as UNKNOWN; it is a response that was received
++            # and could not be read, recorded here with unknown usage - which
++            # stops the channel by the ledger's own rule, with a terminal.
++            error_class, error_detail = "RESPONSE_UNPARSEABLE", "RecursionError: " + str(error)[:200]
++        usage = _usage(raw)
 +        if not error_class and self.ledger.live:
 +            # The plan counted the exact outgoing body with the pinned
 +            # reference tokenizer before the socket (execute refuses any other
@@ -169,7 +197,9 @@ index 00000000..9d047c61
 +        if not error_class:
 +            # Recorded usage is synthetic and is not evidence about the
 +            # reference tokenizer, so only the live path compares it.
-+            error_class = usage_error(raw, enforce_total_context=self.ledger.live)
++            error_class = ("USAGE_UNKNOWN" if usage["input_tokens"] is None
++                           or usage["output_tokens"] is None
++                           else usage_error(raw, enforce_total_context=self.ledger.live))
 +        for name, data in (("raw-response.bin", raw), ("assistant-output.bin", output)):
 +            if data is not None:
 +                control._exclusive_write_bytes(path=self.path / "wire" / name, content=data)
@@ -190,6 +220,15 @@ index 00000000..9d047c61
 +        return {"status_code": status_code, "error_class": error_class,
 +                "response_body": output if output is not None else raw or b"",
 +                "provider_request_id": request_id, "usage": usage}
++
++
++def _usage(raw):
++    """The service's usage, or unknown usage when its response is nested past the parser's depth."""
++    from .continuous_semantic_calls import usage_observation
++    try:
++        return usage_observation(raw)
++    except RecursionError:
++        return usage_observation(None)
 +
 +
 +def execute_historical_semantic(*, prepared, ledger, recorded_wire=None, purpose=PURPOSE):
@@ -229,6 +268,11 @@ index 00000000..9d047c61
 +    else:
 +        _need(type(recorded_wire) is bytes, "ISSUE_47_MODEL_RECORDED_WIRE_REQUIRED")
 +    policy, plan, request = build_plan(prepared)
++    if ledger.live:
++        # Planning has imported what the call runs (the pinned tokenizer
++        # among it), so what this process loaded is checked here, before a
++        # claim, and again at the socket.
++        loaded_code_holds(prepared.authority)
 +    digest = ledger_digest(request, policy)
 +    # A grant covers a request only by naming its digest: the exact requests
 +    # the owner approved, not any request built for an approved position.
@@ -245,17 +289,20 @@ index 00000000..9d047c61
 +          "ISSUE_47_MODEL_RECORDED_SOURCE_CANNOT_RUN_LIVE")
 +    check_response, accept = _contract(prepared=prepared, request=request_fields, plan=plan)
 +
++    # An answer nested past the parser's depth is an answer outside the
++    # contract, like any other: a failed call with a terminal, not an error
++    # that leaves the slot open.
 +    def response_validator(**kwargs):
 +        try:
 +            check_response(kwargs["response_body"])
-+        except (ValueError, KeyError, TypeError) as error:
-+            raise control.SchemaViolationError(str(error)) from error
++        except (ValueError, KeyError, TypeError, RecursionError) as error:
++            raise control.SchemaViolationError(str(error)[:400]) from error
 +
 +    def evidence_validator(**kwargs):
 +        try:
 +            return accept(kwargs["response_body"])
-+        except (ValueError, KeyError, TypeError) as error:
-+            raise control.EvidenceFailureError(str(error)) from error
++        except (ValueError, KeyError, TypeError, RecursionError) as error:
++            raise control.EvidenceFailureError(str(error)[:400]) from error
 +
 +    with ledger.locked():
 +        path, intent = ledger.claim(
@@ -321,6 +368,7 @@ index 00000000..9d047c61
 +    it registers. The registration takes the ledger's mode, never a caller's.
 +    """
 +    from sec_http import write_immutable_bytes
++    from .historical_counted_calls import counted_calls
 +    from .historical_model_calls import ledger_digest
 +    from .historical_semantic_results import (journal_directory, pinned_native_source,
 +                                              registered_export_bytes, registered_record)
@@ -337,8 +385,15 @@ index 00000000..9d047c61
 +                                   metric_id=first.metric_id,
 +                                   period_selection=first.period_selection)
 +              if first.metric_id == "D04" else None)
-+    ledger.snapshot()
-+    outputs = {}
++    ledger.granted()
++    # Read under the lock, which is what checks the binding, its anchor and
++    # the claim log's copy; a caller already holding it is not locked twice.
++    if ledger._locked:
++        ledger.snapshot()
++    else:
++        with ledger.locked():
++            ledger.snapshot()
++    outputs, calls = {}, []
 +    for prepared, slot in zip(prepared_requests, slots):
 +        slot = Path(slot)
 +        _need(slot.parent == ledger.root / "calls", "ISSUE_47_MODEL_SLOT_IS_NOT_THIS_LEDGER_S")
@@ -358,6 +413,14 @@ index 00000000..9d047c61
 +              "ISSUE_47_MODEL_SLOT_OUTPUT_CHANGED")
 +        _need(request["request_id"] not in outputs, "ISSUE_47_MODEL_REQUEST_ANSWERED_TWICE")
 +        outputs[request["request_id"]] = output
++        calls.append({"request_id": request["request_id"], "intent": intent, "terminal": terminal,
++                      "wire": wire})
++    # The calls travel with the registration, so a consumer can check them
++    # without this ledger: a LIVE registration is accepted only with the
++    # counted calls that answered it, from the ledger the registered approval
++    # granted (historical_counted_calls).
++    counted = counted_calls(ledger_binding=ledger.binding, transport=first.allowance["transport"],
++                            mode=ledger.mode, calls=calls)
 +    if first.metric_id == "D02":
 +        # One request per filing; its checked answer is the registration.
 +        from .historical_legal_review import register_review
@@ -365,7 +428,7 @@ index 00000000..9d047c61
 +        request = strict_json_loads(text=first.request_bytes.decode("utf-8"))
 +        return register_review(request=request, company_id=first.company_id,
 +                               period_selection_id=first.period_selection["selection_id"],
-+                               output=output, mode=ledger.mode)
++                               output=output, mode=ledger.mode, counted=counted)
 +    if first.metric_id == "E01":
 +        # One request per window; its checked answer is the registration.
 +        from .historical_ma_confirmation import register_confirmation
@@ -373,9 +436,9 @@ index 00000000..9d047c61
 +        request = strict_json_loads(text=first.request_bytes.decode("utf-8"))
 +        return register_confirmation(request=request,
 +                                     period_selection_id=first.period_selection["selection_id"],
-+                                     output=output, mode=ledger.mode)
++                                     output=output, mode=ledger.mode, counted=counted)
 +    record = registered_record(source=source, period_selection=first.period_selection,
-+                               outputs=outputs, mode=ledger.mode)
++                               outputs=outputs, mode=ledger.mode, counted=counted)
 +    directory = journal_directory(mode=ledger.mode, metric_id=first.metric_id,
 +                                  source_id=record["source_id"])
 +    directory.mkdir(parents=True, exist_ok=True)
@@ -414,10 +477,10 @@ index 78294a49..2201dbe6 100644
  def _decimal_observation(*, value: object, label: str) -> Optional[str]:
 diff --git a/tests/vnext/test_historical_model_egress.py b/tests/vnext/test_historical_model_egress.py
 new file mode 100644
-index 00000000..033603e2
+index 00000000..8cfd4053
 --- /dev/null
 +++ b/tests/vnext/test_historical_model_egress.py
-@@ -0,0 +1,1276 @@
+@@ -0,0 +1,1664 @@
 +"""Issue #47's model egress, verified offline in a tree where the registration patch is applied.
 +
 +This suite is part of the patch for independent security review
@@ -435,36 +498,58 @@ index 00000000..033603e2
 +registration made here proves the path from a counted call to the creator
 +journal, never a filing's content.
 +"""
++import atexit
 +import dataclasses
 +import io
 +import json
 +import os
 +import shutil
++import signal
 +import socket
++import sys
 +import tempfile
 +import unittest
 +from pathlib import Path
 +from unittest.mock import patch
 +from urllib.error import HTTPError
-+
-+from tests.vnext.common import REPO_ROOT as ROOT
-+from tests.vnext.test_historical_semantic_routes import synthetic_output
-+from vnext import ai_adapter as adapter
-+from vnext import historical_model_calls as calls
-+from vnext import historical_model_egress as egress
-+from vnext import historical_semantic_results as semantic
-+from vnext import invocation_control as control
-+from vnext.canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_loads
-+from vnext.historical_event_items import CONFIRMATION_REASON
-+from vnext.historical_zero_ai_results import e01_confirmation_request, resolve_historical_zero_ai_metric
-+from vnext.historical_text_input import d02_review_request, prepare_historical_business_text_input
-+from vnext.normal_period_selection import resolve_period_selection
-+
 +import importlib.util as _importlib_util
++
++# The owner's runner comes first, before anything of the checkout's, as it
++# does when the owner runs it: it makes this process's private bytecode cache,
++# and the call path refuses a socket in a process that compiled checkout code
++# anywhere else (historical_model_calls.loaded_code_holds). Loaded after the
++# imports below, it found them compiled into the harness's cache, and every
++# live case was refused - what a runner that imported the checkout before
++# making its cache would meet. So a process that already holds checkout code,
++# because another suite ran in it first, is refused here by name.
++_CHECKOUT = Path(__file__).resolve().parents[2]
++_ALREADY = sorted(
++    relative for module in list(sys.modules.values())
++    for where in [getattr(module, "__file__", None)] if where
++    for real in [Path(os.path.realpath(where))] if _CHECKOUT in real.parents
++    for relative in [real.relative_to(_CHECKOUT).as_posix()] if not relative.startswith("tests/"))
++if _ALREADY:
++    raise ImportError("ISSUE_47_EGRESS_SUITE_NEEDS_A_PROCESS_OF_ITS_OWN:" + ",".join(_ALREADY[:8]))
 +_RUNNER_SPEC = _importlib_util.spec_from_file_location(
-+    "vnext_historical_model", ROOT / "tools" / "vnext_historical_model.py")
++    "vnext_historical_model", _CHECKOUT / "tools" / "vnext_historical_model.py")
 +runner = _importlib_util.module_from_spec(_RUNNER_SPEC)
 +_RUNNER_SPEC.loader.exec_module(runner)
++
++from tests.vnext.common import REPO_ROOT as ROOT  # noqa: E402 - after the runner, see above
++from tests.vnext.d04_synthetic_output import synthetic_output  # noqa: E402
++from vnext import ai_adapter as adapter  # noqa: E402
++from vnext import historical_model_calls as calls  # noqa: E402
++from vnext import historical_model_egress as egress  # noqa: E402
++from vnext import historical_semantic_results as semantic  # noqa: E402
++from vnext import invocation_control as control  # noqa: E402
++from vnext.canonical import (canonical_json_bytes, content_hash, sha256_bytes,  # noqa: E402
++                             strict_json_loads)
++from vnext.historical_event_items import CONFIRMATION_REASON  # noqa: E402
++from vnext.historical_zero_ai_results import (e01_confirmation_request,  # noqa: E402
++                                              resolve_historical_zero_ai_metric)
++from vnext.historical_text_input import (d02_review_request,  # noqa: E402
++                                         prepare_historical_business_text_input)
++from vnext.normal_period_selection import resolve_period_selection  # noqa: E402
 +
 +COMPANY, PERIOD, OTHER_PERIOD = "marriott_international", "2023-12-31", "2024-12-31"
 +FIXTURE_DIR = "docs/evidence/issue47_history/model-egress/test-fixture"
@@ -504,7 +589,8 @@ index 00000000..033603e2
 +    text = json.dumps(body, sort_keys=True)
 +    comment = {"id": 1000000001, "html_url": URL,
 +               "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
-+               "user": {"login": "wlvh"}, "body": text,
++               "user": {"login": "wlvh", "id": 30534800, "type": "User"},
++               "author_association": "OWNER", "performed_via_github_app": None, "body": text,
 +               "created_at": "2026-09-27T00:00:00Z", "updated_at": "2026-09-27T00:00:00Z"}
 +    policy["delegation_body_sha256"] = sha256_bytes(content=text.encode("utf-8"))
 +    # A real allowance in this tree is never overwritten: the suite refuses to
@@ -531,9 +617,10 @@ index 00000000..033603e2
 +
 +
 +def reset_ledger(root):
-+    """Start a test ledger afresh: its root and the initialization anchor beside it."""
++    """Start a test ledger afresh: its root, and the anchor and claim-log copy beside it."""
 +    shutil.rmtree(root, ignore_errors=True)
 +    calls.HistoricalModelLedger.anchor_path(root).unlink(missing_ok=True)
++    calls.HistoricalModelLedger.mirror_path(root).unlink(missing_ok=True)
 +
 +
 +def _need_ours(path, relative):
@@ -554,6 +641,24 @@ index 00000000..033603e2
 +        receipt.unlink()
 +    if (ROOT / FIXTURE_DIR).is_dir() and not any((ROOT / FIXTURE_DIR).iterdir()):
 +        (ROOT / FIXTURE_DIR).rmdir()
++
++
++def _terminated(signum, frame):
++    """A terminated suite unwinds like an interrupted one, so its cleanups run.
++
++    An independent review ended the suite with SIGTERM right after the runner
++    case wrote a LIVE registration; the record and the fixture allowance stayed
++    in the tree. A Run no longer reads such a record - no approval was
++    registered for a fixture's ledger (historical_counted_calls) - but the
++    tree should not keep it: the runner case's ``finally`` removes it, and the
++    exit hook below removes the fixtures, once the signal unwinds the stack.
++    Only SIGKILL still leaves them, and then the next run refuses to start.
++    """
++    raise KeyboardInterrupt("terminated by signal " + str(signum))
++
++
++signal.signal(signal.SIGTERM, _terminated)
++atexit.register(lambda: remove_allowance() if _WRITTEN else None)
 +
 +
 +def fixture_receipt():
@@ -729,11 +834,17 @@ index 00000000..033603e2
 +                    authority=other, allowance=self.allowance, data_root=ROOT)
 +
 +    def test_the_adapter_hands_bytes_only_to_the_named_type(self):
++        """A lookalike type is handed nothing; the named type only inside a counted send.
++
++        Before the re-review's L2 the named type was handed its bytes by any
++        caller; now the hook refuses outside the send that claimed its slot,
++        and the live cases are where the bytes are seen reaching the opener.
++        """
 +        policy = calls.transport_policy(allowance=self.allowance)
 +        prepared = self.smallest()
-+        self.assertEqual((prepared.request_bytes, prepared.provider_request_body_bytes,
-+                          prepared.output_schema_bytes),
-+                         adapter._scoped_transport_payload(policy=policy, prepared_request=prepared))
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_TRANSPORT_WITHOUT_A_COUNTED_SEND"):
++            adapter._scoped_transport_payload(policy=policy, prepared_request=prepared)
 +        lookalike = type("HistoricalSemanticRequest", (), {"__module__": "tests.lookalike"})()
 +        self.assertIsNone(adapter._scoped_transport_payload(policy=policy, prepared_request=lookalike))
 +        with self.assertRaisesRegex(calls.HistoricalModelCallError,
@@ -819,9 +930,13 @@ index 00000000..033603e2
 +            transport.send(request_body=prepared.provider_request_body_bytes,
 +                           plan={"ai_invocation_plan_id": "x"}, execution_id="e",
 +                           attempt_ordinal=1)
++        # The adapter's own transport, built directly: for #47's request type the
++        # payload hook refuses before the adapter's egress-capability check is
++        # reached - there is no counted send holding the request (re-review L2).
 +        live = adapter._build_repository_transport(policy=calls.transport_policy(
 +            allowance=self.allowance))
-+        with self.assertRaisesRegex(adapter.AIAdapterError, "RESERVATION_OWNER_EGRESS_REQUIRED"):
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_TRANSPORT_WITHOUT_A_COUNTED_SEND"):
 +            with patch.dict(os.environ, {"DEEPSEEK_API_KEY": "offline-test-not-a-secret"}):
 +                live.complete(prepared_request=prepared)
 +
@@ -957,8 +1072,75 @@ index 00000000..033603e2
 +            forged.validate(calls.transport_policy(allowance=widened))
 +
 +
-+class TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener(_Isolated):
-+    """The real transport, the real opener check, a controlled opener in place of the network."""
++class AMappingIsNotAnAllowanceAndALedgerIsNotAGrant(_Isolated):
++    """The allowance a call is bound to is the file's; the ledger it counts in is the one it grants.
++
++    An independent review passed a mapping that differed from the allowance
++    only in its ledger root, with a fresh ledger there: a request the granted
++    ledger had stopped at HTTP 402 went out again, counted nowhere that
++    mattered.
++    """
++
++    LIMITS = (2, 2, 0)
++
++    def claim(self, ledger):
++        name = self.allowance["scope"]["grants"][0]["grant"]
++        return ledger.claim(request_digest=self.planned[0], plan_id="p", purpose=calls.PURPOSE,
++                            grants=[name], request_identity="r",
++                            authority_files_hash="sha256:" + "0" * 64)
++
++    def test_a_mapping_that_moves_the_ledger_root_is_refused(self):
++        moved = {**self.allowance, "budget_root": str(self.temporary / "a-fresh-root")}
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_ALLOWANCE_IS_NOT_THE_ONE_THE_AUTHORITY_BOUND"):
++            calls.prepare_historical_requests(
++                company_id=COMPANY, metric_id="D04", period_selection=self.selection,
++                authority=self.authority, allowance=moved, data_root=ROOT)
++        forged = dataclasses.replace(self.smallest(), allowance=moved)
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_ALLOWANCE_IS_NOT_THE_ONE_THE_AUTHORITY_BOUND"):
++            forged.validate(calls.transport_policy(allowance=moved))
++
++    def test_a_mapping_that_differs_anywhere_is_refused(self):
++        """A field no decision hash covers is still the file's or nothing."""
++        renamed = {**self.allowance, "model_wiring_receipt_path": "somewhere/else.json"}
++        forged = dataclasses.replace(self.smallest(), allowance=renamed)
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_ALLOWANCE_IS_NOT_THE_ONE_THE_AUTHORITY_BOUND"):
++            forged.validate(calls.transport_policy(allowance=renamed))
++
++    def refused_before_anything_is_written(self, ledger):
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_LEDGER_IS_NOT_THE_GRANTED_ONE"):
++            with ledger.locked():
++                self.claim(ledger)
++        self.assertFalse(ledger.root.exists() and any(ledger.root.iterdir()))
++        self.assertFalse(calls.HistoricalModelLedger.anchor_path(ledger.root).exists())
++
++    def test_a_live_ledger_a_mapping_described_claims_nothing(self):
++        """At the granted root, with the mapping's own limits: still not the granted ledger."""
++        wider = {**self.allowance, "maximum_additional_provider_paid_sec_calls": [99, 99, 0]}
++        self.refused_before_anything_is_written(
++            calls._ledger(allowance=wider, root=Path(self.allowance["budget_root"]), live=True))
++
++    def test_a_live_ledger_away_from_the_granted_root_claims_nothing(self):
++        self.refused_before_anything_is_written(
++            calls._ledger(allowance=self.allowance, root=self.temporary / "elsewhere", live=True))
++
++    def test_a_digest_covers_every_byte_a_call_sends(self):
++        """D04's digest was Issue #28's, which leaves out sent fields: the document's id among them."""
++        policy = calls.transport_policy(allowance=self.allowance)
++        request = strict_json_loads(text=self.smallest().request_bytes.decode("utf-8"))
++        moved = {**request, "document_context": {**request["document_context"],
++                                                 "document_id": "another-document"}}
++        self.assertNotEqual(calls.ledger_digest(request, policy), calls.ledger_digest(moved, policy))
++        from vnext.continuous_semantic_calls import request_body
++        self.assertEqual("sha256:" + sha256_bytes(content=request_body(request, policy)),
++                         calls.ledger_digest(request, policy))
++
++
++class _LiveOpener(_Isolated):
++    """The live path's fixture: a key, a GitHub reader, the granted ledger reset; no cases."""
 +
 +    def setUp(self):
 +        self.opened = []
@@ -989,6 +1171,10 @@ index 00000000..033603e2
 +        allowance, ledger = calls.live_model_ledger()
 +        self.assertTrue(allowance["provenance_verified_against_github"])
 +        return ledger
++
++
++class TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener(_LiveOpener):
++    """The real transport, the real opener check, a controlled opener in place of the network."""
 +
 +    def test_the_planned_bytes_go_out_once_and_count_as_charged(self):
 +        prepared = self.smallest()
@@ -1150,6 +1336,12 @@ index 00000000..033603e2
 +            self.assertEqual((0, len(self.requests)), (second["called"], second["already_claimed"]))
 +            self.assertEqual(row["registered"], second["registered"])
 +            self.assertEqual([len(self.requests), len(self.requests), 0], again["cumulative_calls"])
++            self.check_the_live_registration(ROOT / row["registered"]["path"])
++            # The next position's first send checks this process again: what
++            # calling, registering and reading this position loaded must be
++            # code the call is bound to, or a run of two positions would be
++            # refused at the second.
++            calls.loaded_code_holds(self.authority)
 +        finally:
 +            for path in sorted(journal.rglob("*"), reverse=True) if journal.exists() else []:
 +                path.unlink() if path.is_file() else path.rmdir()
@@ -1158,6 +1350,45 @@ index 00000000..033603e2
 +                    break
 +                parent.rmdir()
 +        self.assertFalse(journal.exists() and any(journal.iterdir()))
++
++    def check_the_live_registration(self, path):
++        """What a LIVE record carries, and why a batch still does not read this one.
++
++        It carries the counted calls that answered it, and they hold. But the
++        ledger they were counted in is this suite's fixture, and no approval
++        was registered from GitHub for it - the review killed the suite here
++        and the default loader read the left-over record.
++        """
++        from vnext import historical_counted_calls as counted_calls
++        record = strict_json_loads(text=path.read_text(encoding="utf-8"))
++        source = strict_json_loads(text=self.requests[0].source_bytes.decode("utf-8"))
++        requests = [strict_json_loads(text=p.request_bytes.decode("utf-8")) for p in self.requests]
++        outputs = {row["request_id"]: row["assistant_output"].encode("utf-8")
++                   for row in record["native_requests"]}
++        answered = [(request, outputs[request["request_id"]]) for request in requests]
++        counted = record["counted_calls"]
++        counted_calls.check_counted_calls(counted=counted, answered=answered, mode="LIVE")
++        with self.assertRaisesRegex(counted_calls.CountedCallError,
++                                    "ISSUE_47_LIVE_REGISTRATION_WITHOUT_A_REGISTERED_APPROVAL"):
++            semantic.load_historical_assessment(data_root=ROOT, source=source)
++        with tempfile.TemporaryDirectory() as directory:
++            granted = Path(directory) / counted_calls.GRANTED_LEDGER_PATH
++            granted.parent.mkdir(parents=True)
++            granted.write_text(json.dumps(counted_calls.granted_ledger_record(self.allowance)))
++            counted_calls.check_live_registration(counted=counted, answered=answered,
++                                                  repo_root=Path(directory))
++            other = counted_calls.granted_ledger_record(
++                {**self.allowance, "budget_root": str(self.temporary / "another-granted-root")})
++            granted.write_text(json.dumps(other))
++            with self.assertRaisesRegex(
++                    counted_calls.CountedCallError,
++                    "ISSUE_47_LIVE_REGISTRATION_IS_FROM_A_LEDGER_NO_REGISTERED_APPROVAL_GRANTED"):
++                counted_calls.check_live_registration(counted=counted, answered=answered,
++                                                      repo_root=Path(directory))
++        swapped = [(request, output + b" ") for request, output in answered]
++        with self.assertRaisesRegex(counted_calls.CountedCallError,
++                                    "ISSUE_47_COUNTED_CALL_DID_NOT_ANSWER_WITH_THIS_OUTPUT"):
++            counted_calls.check_counted_calls(counted=counted, answered=swapped, mode="LIVE")
 +
 +    def test_the_runner_stops_at_a_stop_and_registers_nothing(self):
 +        replies = self.replies()
@@ -1263,6 +1494,99 @@ index 00000000..033603e2
 +        self.assertEqual(original, runner_path.read_bytes())
 +
 +
++class ASocketOpensOnlyForTheCountedSendItBelongsTo(_LiveOpener):
++    """The re-review's socket findings, each held where the bytes leave.
++
++    A small class of its own so that a fault injection against one of these
++    checks is decided without running the whole live class.
++    """
++
++    def test_the_adapter_releases_no_bytes_outside_a_counted_send(self):
++        """The review built the adapter's transport directly: the opener got the bytes, no slot, no plan."""
++        prepared = self.smallest()
++        transport = adapter._TRANSPORT_FACTORIES["deepseek"](
++            policy=calls.transport_policy(allowance=self.allowance))
++        with patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++            with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                        "ISSUE_47_MODEL_TRANSPORT_WITHOUT_A_COUNTED_SEND"):
++                transport.complete(prepared_request=prepared,
++                                   egress_capability=getattr(adapter, "_RESERVATION_OWNER_"
++                                                             "EGRESS_CAPABILITY"))
++        self.assertEqual([], self.opened)
++
++    def test_an_unbound_checkout_module_is_refused_before_a_claim(self):
++        """A file shadowing the pinned tokenizer passed every hash; the review's plan said 4,097 tokens."""
++        import types
++        shadow = types.ModuleType("issue47_review_shadow")
++        shadow.__file__ = str(ROOT / "scripts" / "tokenizers.py")
++        ledger = self.live()
++        with patch.dict(sys.modules, {"issue47_review_shadow": shadow}), \
++                patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++            with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                        "ISSUE_47_MODEL_UNBOUND_CODE_LOADED:scripts/tokenizers.py"):
++                egress.execute_historical_semantic(prepared=self.smallest(), ledger=ledger)
++        self.assertEqual(([], []), (self.opened, self.slots(ledger)))
++
++    def test_code_read_from_the_checkout_s_bytecode_is_refused(self):
++        """A changed .pyc beside an unchanged source ran code no hash described."""
++        import importlib.machinery
++        import types
++        source = ROOT / "scripts" / "vnext" / "canonical.py"
++        stale = types.ModuleType("issue47_review_bytecode")
++        stale.__file__ = str(source)
++        stale.__spec__ = importlib.machinery.ModuleSpec("issue47_review_bytecode", None,
++                                                        origin=str(source))
++        stale.__spec__.cached = str(source.parent / "__pycache__" / "canonical.cpython-311.pyc")
++        with patch.dict(sys.modules, {"issue47_review_bytecode": stale}):
++            with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                        "ISSUE_47_MODEL_CODE_READ_FROM_THE_CHECKOUT_S_BYTECODE"):
++                calls.loaded_code_holds(self.authority)
++        with patch.object(sys, "pycache_prefix", None):
++            with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                        "ISSUE_47_MODEL_CALL_WITHOUT_A_PRIVATE_BYTECODE_CACHE"):
++                calls.loaded_code_holds(self.authority)
++        calls.loaded_code_holds(self.authority)
++
++    def test_the_send_holds_each_part_of_the_reservation_on_its_own(self):
++        """A re-review removed every part but the marker count at once and the live class stayed green."""
++        seen = []
++        real = egress._reservation_is_this_send_s
++
++        def recorded(**arguments):
++            seen.append(arguments)
++            return real(**arguments)
++
++        prepared = self.smallest()
++        self.reply = wire(self.output(prepared), prompt_tokens=reference_prompt_tokens(prepared))
++        with patch.object(egress, "_reservation_is_this_send_s", side_effect=recorded), \
++                patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++            _, outcome = egress.execute_historical_semantic(prepared=prepared, ledger=self.live())
++        self.assertEqual("SUCCEEDED", outcome["status"])
++        (arguments,) = seen
++        self.assertTrue(real(**arguments))
++        marker = arguments["markers"][0]
++        for part, change in (("owner process", {"reservation": {**arguments["reservation"],
++                                                                 "owner_process_id": -1}}),
++                             ("owner token", {"owner_token": "another-owner"}),
++                             ("execution", {"execution_id": "another-execution"}),
++                             ("one marker", {"markers": [marker, marker]}),
++                             ("marker plan", {"markers": [{**marker, "ai_invocation_plan_id": "p"}]}),
++                             ("transport kind", {"transport_kind": "MOCK"})):
++            with self.subTest(part=part):
++                self.assertFalse(real(**{**arguments, **change}))
++
++    def test_a_transport_account_that_disagrees_stops_with_the_response_kept(self):
++        """A re-review read that raising here, after the charge, dropped the paid response."""
++        prepared = self.smallest()
++        self.reply = wire(self.output(prepared), prompt_tokens=reference_prompt_tokens(prepared))
++        with patch.object(adapter, "transport_observation_mismatch", return_value="request bytes differ"), \
++                patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++            path, outcome = egress.execute_historical_semantic(prepared=prepared, ledger=self.live())
++        self.assertEqual("TRANSPORT_OBSERVATION_CHANGED", outcome["stop_reason"])
++        self.assertEqual(self.reply, (path / "wire" / "raw-response.bin").read_bytes())
++        self.assertEqual(1, len(self.opened))
++
++
 +class ACompleteAssessmentRegistersOnlyFromItsOwnSlots(_Isolated):
 +    """Counted calls to the creator journal, in the ledger's own mode."""
 +
@@ -1299,6 +1623,17 @@ index 00000000..033603e2
 +                if parent.name == "RECORDED_TEST_ONLY" or any(parent.iterdir()):
 +                    break
 +                parent.rmdir()
++
++    def test_a_live_assessment_needs_the_counted_calls_that_answered_it(self):
++        source = semantic.pinned_native_source(repo_root=ROOT, company_id=COMPANY, metric_id="D04",
++                                               period_selection=self.selection)
++        outputs = {}
++        for prepared in self.requests:
++            request = strict_json_loads(text=prepared.request_bytes.decode("utf-8"))
++            outputs[request["request_id"]] = self.output(prepared)
++        with self.assertRaisesRegex(ValueError, "HISTORICAL_LIVE_ASSESSMENT_WITHOUT_COUNTED_CALLS"):
++            semantic.registered_record(source=source, period_selection=self.selection,
++                                       outputs=outputs, mode="LIVE")
 +
 +    def test_a_failed_slot_cannot_complete_an_assessment(self):
 +        ledger = self.recorded("with-a-failure")
@@ -1377,6 +1712,80 @@ index 00000000..033603e2
 +                                    "ISSUE_47_MODEL_SLOT_DID_NOT_SUCCEED"):
 +            egress.register_from_slots(prepared_requests=self.requests, ledger=ledger, slots=[path])
 +
++    def test_an_edited_request_or_source_is_refused_before_a_slot(self):
++        """A re-review removed either comparison and an edited E01 or D02 request validated."""
++        from vnext.continuous_semantic_calls import request_body
++        from vnext.native_unit_index import evidence_json_bytes
++        (prepared,) = self.requests
++        policy = calls.transport_policy(allowance=self.allowance)
++        request = strict_json_loads(text=prepared.request_bytes.decode("utf-8"))
++        first = request["items"][0]
++        edited = {**request, "items": [{**first, "text": first["text"] + " and more"}] + request["items"][1:]}
++        edited["request_id"] = content_hash(value={k: v for k, v in edited.items() if k != "request_id"})
++        forged = dataclasses.replace(prepared, request_bytes=evidence_json_bytes(edited),
++                                     provider_request_body_bytes=request_body(edited, policy))
++        with self.assertRaisesRegex(calls.HistoricalModelCallError, "ISSUE_47_MODEL_REQUEST_NOT_IN_ITS_SOURCE"):
++            forged.validate(policy)
++        source = strict_json_loads(text=prepared.source_bytes.decode("utf-8"))
++        resourced = dataclasses.replace(
++            forged, source_bytes=evidence_json_bytes({**source, "request": edited}))
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_SOURCE_DOES_NOT_REBUILD_FROM_THE_FILING"):
++            resourced.validate(policy)
++        ledger = self.recorded("e01-edited")
++        for bad in (forged, resourced):
++            with self.assertRaises(calls.HistoricalModelCallError):
++                egress.execute_historical_semantic(prepared=bad, ledger=ledger,
++                                                   recorded_wire=wire(self.output(prepared)))
++        self.assertEqual([], self.slots(ledger))
++
++    def test_a_live_confirmation_needs_the_counted_call_that_answered_it(self):
++        """The review registered LIVE with no call, and a withheld window was published as 3."""
++        from vnext.historical_ma_confirmation import register_confirmation
++        (prepared,) = self.requests
++        request = strict_json_loads(text=prepared.request_bytes.decode("utf-8"))
++        with self.assertRaisesRegex(ValueError, "E01_LIVE_CONFIRMATION_WITHOUT_COUNTED_CALLS"):
++            register_confirmation(request=request, period_selection_id=self.selection["selection_id"],
++                                  output=self.output(prepared), mode="LIVE")
++        # A recorded ledger's calls do not make a LIVE registration either.
++        ledger = self.recorded("e01-recorded-as-live")
++        path, _ = egress.execute_historical_semantic(prepared=prepared, ledger=ledger,
++                                                     recorded_wire=wire(self.output(prepared)))
++        from vnext import historical_counted_calls as counted_calls
++        slot = {name: strict_json_loads(text=(path / name).read_text())
++                for name in ("intent.json", "terminal.json")}
++        counted = counted_calls.counted_calls(
++            ledger_binding=ledger.binding, transport=self.allowance["transport"], mode="LIVE",
++            calls=[{"request_id": request["request_id"], "intent": slot["intent.json"],
++                    "terminal": slot["terminal.json"],
++                    "wire": strict_json_loads(text=(path / "wire" / "journal.json").read_text())}])
++        with self.assertRaisesRegex(counted_calls.CountedCallError, "ISSUE_47_COUNTED_CALLS_LEDGER_CHANGED"):
++            register_confirmation(request=request, period_selection_id=self.selection["selection_id"],
++                                  output=self.output(prepared), mode="LIVE", counted=counted)
++
++    def test_an_answer_nested_past_the_parser_is_a_failed_call_with_a_terminal(self):
++        """The review's nested answer left the call path with the slot open, and the channel stopped."""
++        (prepared,) = self.requests
++        ledger = self.recorded("e01-nested-answer")
++        nested = ("[" * 200000 + "]" * 200000).encode("utf-8")
++        path, outcome = egress.execute_historical_semantic(prepared=prepared, ledger=ledger,
++                                                           recorded_wire=wire(nested))
++        self.assertEqual(("FAILED_TERMINAL", ""), (outcome["status"], outcome["stop_reason"]))
++        self.assertTrue((path / "terminal.json").is_file())
++        with ledger.locked():
++            self.assertEqual(([1, 1, 0], []), (ledger.snapshot()["counts"], ledger.snapshot()["stopped"]))
++
++    def test_a_response_nested_past_the_parser_is_counted_and_stops_with_a_terminal(self):
++        (prepared,) = self.requests
++        ledger = self.recorded("e01-nested-response")
++        nested = ("[" * 200000 + "]" * 200000).encode("utf-8")
++        path, outcome = egress.execute_historical_semantic(prepared=prepared, ledger=ledger,
++                                                           recorded_wire=nested)
++        self.assertEqual("USAGE_UNKNOWN", outcome["stop_reason"])
++        self.assertTrue((path / "terminal.json").is_file())
++        self.assertEqual("RESPONSE_UNPARSEABLE",
++                         strict_json_loads(text=(path / "wire" / "journal.json").read_text())["error_class"])
++
 +    def test_a_request_is_held_to_its_own_metric_s_contract(self):
 +        (prepared,) = self.requests
 +        ledger = self.recorded("e01-under-d04")
@@ -1452,6 +1861,15 @@ index 00000000..033603e2
 +        with self.assertRaisesRegex(egress.HistoricalModelEgressError,
 +                                    "ISSUE_47_MODEL_SLOT_DID_NOT_SUCCEED"):
 +            egress.register_from_slots(prepared_requests=self.requests, ledger=ledger, slots=[path])
++
++    def test_a_live_review_needs_the_counted_call_that_answered_it(self):
++        from vnext.historical_legal_review import register_review
++        (prepared,) = self.requests
++        request = strict_json_loads(text=prepared.request_bytes.decode("utf-8"))
++        with self.assertRaisesRegex(ValueError, "D02_LIVE_REVIEW_WITHOUT_COUNTED_CALLS"):
++            register_review(request=request, company_id=self.CASE[1],
++                            period_selection_id=self.selection["selection_id"],
++                            output=self.output(prepared), mode="LIVE")
 +
 +    def test_a_request_is_held_to_its_own_metric_s_contract(self):
 +        (prepared,) = self.requests
@@ -1547,6 +1965,33 @@ index 00000000..033603e2
 +            with ledger.locked():
 +                pass
 +
++    def test_emptying_the_root_but_its_binding_refuses_rather_than_resetting(self):
++        """The review's residual: slots and claim log removed, binding and anchor kept, read as unused."""
++        ledger, _ = self.stopped("emptied")
++        shutil.rmtree(ledger.root / "calls")
++        (ledger.root / "claims.jsonl").unlink()
++        with ledger.locked(), self.assertRaisesRegex(
++                calls.HistoricalModelCallError,
++                "ISSUE_47_MODEL_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR:0 in the root, 1 beside it"):
++            ledger.snapshot()
++
++    def test_truncating_the_last_claim_refuses_rather_than_releasing_its_stop(self):
++        ledger, path = self.stopped("truncated")
++        shutil.rmtree(path)
++        log = ledger.root / "claims.jsonl"
++        log.write_text("".join(log.read_text().splitlines(keepends=True)[:-1]))
++        with ledger.locked(), self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                                     "ISSUE_47_MODEL_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR"):
++            ledger.snapshot()
++
++    def test_removing_the_copy_beside_the_root_refuses(self):
++        ledger, _ = self.stopped("no-mirror")
++        calls.HistoricalModelLedger.mirror_path(ledger.root).unlink()
++        with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                    "ISSUE_47_MODEL_LEDGER_CLAIM_MIRROR_MISSING"):
++            with ledger.locked():
++                pass
++
 +    def test_a_resealed_terminal_that_drops_its_stop_is_refused(self):
 +        ledger, path = self.stopped("resealed")
 +        terminal = strict_json_loads(text=(path / "terminal.json").read_text())
@@ -1595,8 +2040,9 @@ index 00000000..033603e2
 +        _WRITTEN[relative] = sha256_bytes(content=saved)
 +
 +    def test_a_duplicate_key_in_the_policy_is_refused(self):
++        """Last-key-wins would read the fixture's own limits here, so only the strict read refuses."""
 +        text = (ROOT / calls.ALLOWANCE_PATH).read_text(encoding="utf-8")
-+        doubled = text[:-1] + ', "maximum_additional_provider_paid_sec_calls": [400, 400, 0]}'
++        doubled = '{"maximum_additional_provider_paid_sec_calls": [400, 400, 0], ' + text[1:]
 +        saved = self.rewrite(calls.ALLOWANCE_PATH, doubled.encode("utf-8"))
 +        try:
 +            with self.assertRaisesRegex(calls.HistoricalModelCallError,
@@ -1606,9 +2052,14 @@ index 00000000..033603e2
 +            self.restore(calls.ALLOWANCE_PATH, saved)
 +
 +    def test_a_duplicate_key_in_the_approval_body_is_refused(self):
++        """The first review's case exactly: the body shows the granted limits first and a larger
++        duplicate last, and the policy says the larger - so last-key-wins would accept it."""
 +        record = strict_json_loads(text=(ROOT / RECORD_PATH).read_text(encoding="utf-8"))
-+        body = record["body"][:-1] + ', "maximum_additional_provider_paid_sec_calls": [400, 400, 0]}'
++        shown = json.dumps(list(self.LIMITS))
++        body = ('{"maximum_additional_provider_paid_sec_calls": ' + shown + ", "
++                + record["body"][1:].replace(shown, "[400, 400, 0]"))
 +        policy = strict_json_loads(text=(ROOT / calls.ALLOWANCE_PATH).read_text(encoding="utf-8"))
++        policy["maximum_additional_provider_paid_sec_calls"] = [400, 400, 0]
 +        policy["delegation_body_sha256"] = sha256_bytes(content=body.encode("utf-8"))
 +        saved_record = self.rewrite(RECORD_PATH, json.dumps({**record, "body": body}).encode("utf-8"))
 +        saved_policy = self.rewrite(calls.ALLOWANCE_PATH, json.dumps(policy).encode("utf-8"))
@@ -1712,10 +2163,10 @@ index 3ee81a39..6d67ea67 100644
          "scripts/vnext/ai_adapter.py",
 diff --git a/tools/vnext_historical_model.py b/tools/vnext_historical_model.py
 new file mode 100644
-index 00000000..32392e1f
+index 00000000..c9179895
 --- /dev/null
 +++ b/tools/vnext_historical_model.py
-@@ -0,0 +1,174 @@
+@@ -0,0 +1,181 @@
 +#!/usr/bin/env python3
 +"""Run Issue #47's granted model calls, one counted request at a time.
 +
@@ -1750,8 +2201,15 @@ index 00000000..32392e1f
 +import argparse
 +import json
 +import sys
++import tempfile
 +from pathlib import Path
 +
++# Before anything of the checkout's is imported: compile it into a private cache
++# this process just made, never reading the checkout's own __pycache__. The call
++# path refuses a socket otherwise (historical_model_calls.loaded_code_holds): an
++# independent review ran changed bytecode beside unchanged sources, and every
++# hash - receipt, approval, controller - still matched, because all hash sources.
++sys.pycache_prefix = tempfile.mkdtemp(prefix="issue47-model-bytecode-")
 +ROOT = Path(__file__).resolve().parents[1]
 +sys.path.insert(0, str(ROOT / "scripts"))
 +
@@ -1891,10 +2349,10 @@ index 00000000..32392e1f
 +if __name__ == "__main__":
 +    sys.exit(main())
 diff --git a/tools/vnext_mint_historical_requirement.py b/tools/vnext_mint_historical_requirement.py
-index 4f141fb4..05f6154f 100644
+index a5ae1fcd..d6d86a04 100644
 --- a/tools/vnext_mint_historical_requirement.py
 +++ b/tools/vnext_mint_historical_requirement.py
-@@ -256,6 +256,15 @@ RE_RECORDED_FROM_TREE = (
+@@ -261,6 +261,15 @@ RE_RECORDED_FROM_TREE = (
      "scripts/vnext/calculator.py",
      "scripts/vnext/constraints.py",
      "scripts/vnext/projector.py",

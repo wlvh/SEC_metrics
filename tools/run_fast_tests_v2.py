@@ -331,6 +331,10 @@ FAST_TESTS += ("tests.vnext.test_acceptance_identity",)
 # egress patch is not applied: nothing here can reach a provider, which is
 # asserted rather than assumed. It reads no source material; about 3 seconds.
 FAST_TESTS += ("tests.vnext.test_historical_model_calls",)
+# A LIVE registration only with the counted calls that answered it (the
+# re-review's N1), held where CI runs: the fix is in the repository while the
+# suite making real counted calls needs the egress patch. No filing; milliseconds.
+FAST_TESTS += ("tests.vnext.test_historical_counted_calls",)
 # E01's content-confirmation contract on synthetic candidates: the request, the
 # answer's form and the count. Reads no filing; well under a second.
 FAST_TESTS += ("tests.vnext.test_historical_ma_confirmation",)

@@ -30,7 +30,9 @@ git commit -m "Record the Issue #47 SEC acquisition" && git push
 
 `run` reads the comment back from GitHub and registers it only if the body is
 exactly the approved bytes (`approval-comment-body.json`, SHA-256
-`71439c2e…8394`), the author is the owner and the comment is on issue 47; it
+`71439c2e…8394`), the author is the owner - login, numeric account id,
+account type and the account's association with the repository are each
+checked, and an edited comment is refused - and the comment is on issue 47; it
 then acquires company by company inside the grants and writes the registered
 acquisition to `evidence/issue47_acquired/` (row archives plus a sealed
 index). It stops by name at the cap, at an unknown outcome, at a 403 or 429,

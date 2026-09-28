@@ -42,7 +42,8 @@ from .canonical import (canonical_json_bytes, content_hash, sha256_bytes, sha256
                         strict_json_file, strict_json_loads)
 from .historical_source_acquisition import (POLICY_PATH, REQUIREMENT_ID,
                                             HistoricalAcquisitionError)
-from .historical_sec_session import ATTRIBUTION_TYPE, install_historical_source_inputs
+from .historical_sec_session import (ATTRIBUTION_TYPE, HistoricalCallLedger,
+                                     install_historical_source_inputs)
 from .normal_source_authority import MANIFEST_PATH, ROOT
 
 EXPORT_TYPE = "ISSUE_47_HISTORICAL_ACQUISITION_EXPORT"
@@ -218,11 +219,17 @@ def export_acquisition(*, ledger_root, out_dir=None, policy_root=None):
     state["ledger/acquisition-attribution/" + ledger_sha + ".json"] = \
         attribution_path.read_bytes()
     # The claim log and the binding travel with the slots, so the restoring
-    # side can check the chain the ledger itself was held to.
+    # side can check the chain the ledger itself was held to. The log must be
+    # the copy the ledger keeps beside its root: a log truncated together with
+    # its last slot is not an export of what was claimed.
     for name in ("claims.jsonl", "binding.json"):
         path = ledger_root / name
         _need(path.is_file() and not path.is_symlink(), "ISSUE_47_EXPORT_LEDGER_FILE_MISSING:" + name)
         state["ledger/" + name] = path.read_bytes()
+    mirror = HistoricalCallLedger.mirror_path(ledger_root)
+    _need(mirror.is_file() and not mirror.is_symlink()
+          and mirror.read_bytes() == state["ledger/claims.jsonl"],
+          "ISSUE_47_EXPORT_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR")
     state[CHECKPOINT_MEMBER] = canonical_json_bytes(value=checkpoint)
     out_dir.mkdir(parents=True, exist_ok=True)
     written = {}

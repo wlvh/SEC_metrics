@@ -376,6 +376,40 @@
    "suite_result": "Ran 2 tests in 0.006s FAILED (failures=1)",
    "why_it_matters": "an approval is what was posted; an edit is a new decision and needs a new comment",
    "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "caught_by": [
+    "ALedgerCannotBeResetByDeletingIt.test_a_truncated_last_claim_is_a_refusal_not_a_released_slot",
+    "ALedgerCannotBeResetByDeletingIt.test_an_emptied_root_is_a_refusal_not_a_fresh_start"
+   ],
+   "edit": "HistoricalCallLedger._claims() no longer compares the claim log with its copy beside the root",
+   "id": "THE_SEC_CLAIM_LOG_HAS_NO_COPY_BESIDE_THE_ROOT",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=2) of 7",
+   "why_it_matters": "an independent re-review of the model ledger, which has this ledger's shape, emptied the root but for its binding and anchor and the ledger read as unused - count, stops and no-redraw all started again; truncating the last claim with its slot released a stop",
+   "run": "2026-09-27, main checkout, tests.vnext.test_historical_sec_session.ALedgerCannotBeResetByDeletingIt"
+  },
+  {
+   "caught_by": [
+    "AnExportCarriesExactlyWhatTheReplayAccepts.test_a_claim_log_that_is_not_its_copy_is_not_exported"
+   ],
+   "edit": "export_acquisition() no longer requires the claim log to equal its copy beside the root",
+   "id": "THE_SEC_EXPORT_READS_A_CLAIM_LOG_THAT_IS_NOT_ITS_COPY",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1) of 8",
+   "why_it_matters": "a log truncated together with its last slot is not an export of what was claimed",
+   "run": "2026-09-27, main checkout, tests.vnext.test_historical_sec_session.AnExportCarriesExactlyWhatTheReplayAccepts"
+  },
+  {
+   "caught_by": [
+    "AnApprovalIsRegisteredOnlyFromTheApprovedBytes.test_the_approver_s_login_alone_is_not_the_approver"
+   ],
+   "edit": "_provenance() reads the author's login only, not the account id, type or association",
+   "id": "THE_APPROVER_IS_A_LOGIN_ONLY",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=3 subtests) of 8",
+   "why_it_matters": "the re-review found a comment by another account of the approver's name, by a bot or by a non-owner was accepted: a login can be renamed and re-registered; the id cannot",
+   "run": "2026-09-27, main checkout, tests.vnext.test_historical_sec_session.AnApprovalIsRegisteredOnlyFromTheApprovedBytes"
   }
  ],
  "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py, scripts/vnext/historical_event_sources.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",

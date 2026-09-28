@@ -240,19 +240,25 @@ def review_key(*, company_id, period_selection_id, raw_asset_id):
                                "raw_asset_id": raw_asset_id})
 
 
-def registered_review(*, request, company_id, period_selection_id, output, mode):
+def registered_review(*, request, company_id, period_selection_id, output, mode, counted=None):
     """A registration: one filing's answer, checked, and what it counts.
 
     The record names the request by id, so a changed block, pool or prompt is a
     different request this record does not answer. It keeps the assistant
     output itself, so every consumer can check the answer again under its own
-    code.
+    code. A LIVE one carries the counted call that answered it
+    (``historical_counted_calls``): an independent review registered a LIVE
+    review with no call at all, and the batch's default loader read it.
     """
+    from .historical_counted_calls import check_counted_calls
     _need(mode in MODES, "D02_REVIEW_MODE_INVALID")
     _need(request["company_id"] == company_id, "D02_REVIEW_IS_FOR_ANOTHER_COMPANY")
     raw = output if isinstance(output, bytes) else output.encode("utf-8")
+    _need(mode != "LIVE" or counted is not None, "D02_LIVE_REVIEW_WITHOUT_COUNTED_CALLS")
+    if counted is not None:
+        check_counted_calls(counted=counted, answered=[(request, raw)], mode=mode)
     decisions, added = validate_answer(request=request, raw_output=raw)
-    counted, reason, unsettled = reviewed_blocks(request=request, decisions=decisions, added=added)
+    in_scope, reason, unsettled = reviewed_blocks(request=request, decisions=decisions, added=added)
     body = {"record_type": RECORD_TYPE, "schema_version": 1, "metric_id": "D02",
             "company_id": company_id, "period_selection_id": period_selection_id,
             "review_key": review_key(company_id=company_id, period_selection_id=period_selection_id,
@@ -260,8 +266,10 @@ def registered_review(*, request, company_id, period_selection_id, output, mode)
             "source_id": request["source_id"], "request_id": request["request_id"],
             "contract": CONTRACT, "requirement_id": REQUIREMENT_ID, "mode": mode,
             "assistant_output": raw.decode("utf-8"), "decisions": decisions, "added": added,
-            "reviewed": {"in_scope": counted, "withheld_reason": reason, "unsettled": unsettled},
+            "reviewed": {"in_scope": in_scope, "withheld_reason": reason, "unsettled": unsettled},
             "new_call_authority": False, "production_authorized": False}
+    if counted is not None:
+        body["counted_calls"] = counted
     return {**body, "input_record_id": content_hash(value=body)}
 
 
@@ -290,8 +298,15 @@ def select_registered_review(*, records, request):
           and record["mode"] in MODES, "D02_REVIEW_REGISTRATION_CHANGED")
     again = registered_review(request=request, company_id=record["company_id"],
                               period_selection_id=record["period_selection_id"],
-                              output=record["assistant_output"], mode=record["mode"])
+                              output=record["assistant_output"], mode=record["mode"],
+                              counted=record.get("counted_calls"))
     _need(again == record, "D02_REVIEW_DOES_NOT_RE_DERIVE")
+    if record["mode"] == "LIVE":
+        from .historical_counted_calls import check_live_registration
+        from .normal_source_authority import ROOT
+        check_live_registration(counted=record.get("counted_calls"),
+                                answered=[(request, record["assistant_output"].encode("utf-8"))],
+                                repo_root=ROOT)
     return record
 
 
@@ -352,12 +367,13 @@ def load_registered_reviews(*, data_root, company_id, period_selection_id, raw_a
     return records
 
 
-def register_review(*, request, company_id, period_selection_id, output, mode):
+def register_review(*, request, company_id, period_selection_id, output, mode, counted=None):
     """Write a checked review into the creator journal; the same bytes again is a no-op."""
     from sec_http import write_immutable_bytes
     from .native_unit_index import evidence_json_bytes
     record = registered_review(request=request, company_id=company_id,
-                               period_selection_id=period_selection_id, output=output, mode=mode)
+                               period_selection_id=period_selection_id, output=output, mode=mode,
+                               counted=counted)
     directory = journal_directory(mode=mode, key=record["review_key"])
     directory.mkdir(parents=True, exist_ok=True)
     path = directory / (record["input_record_id"][len("sha256:"):] + ".json")

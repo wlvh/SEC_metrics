@@ -346,6 +346,19 @@ class HistoricalCallLedger:
         root = Path(root)
         return root.parent / ("." + root.name + ".initialized.json")
 
+    @staticmethod
+    def mirror_path(root):
+        """Where the claim log's copy outside the root lives: beside it, with the anchor.
+
+        An independent review of the model ledger, which has this ledger's
+        shape, deleted the slots and the claim log together, kept the binding
+        and the anchor, and the ledger read as unused. Every claim is appended
+        here first, and the log inside the root must be this copy, so emptying
+        the root - or truncating its last claim - no longer empties the ledger.
+        """
+        root = Path(root)
+        return root.parent / ("." + root.name + ".claims.jsonl")
+
     @contextmanager
     def locked(self):
         """Hold the root's lock, and refuse a ledger that was reset or moved under us.
@@ -379,29 +392,49 @@ class HistoricalCallLedger:
 
     def _check_binding(self):
         binding_path, anchor = self.root / "binding.json", self.anchor_path(self.root)
+        mirror = self.mirror_path(self.root)
         if not binding_path.exists():
             # A new ledger. Only the installed source root may already be
             # here, because a session can install before it first claims; a
-            # slot, a claim log or an anchor without a binding is a ledger
-            # that was reset, and is refused rather than restarted.
+            # slot, a claim log, an anchor or a mirror without a binding is a
+            # ledger that was reset, and is refused rather than restarted.
             present = sorted(path.name for path in self.root.iterdir())
-            _need(not anchor.exists() and set(present) <= {"source-inputs"},
+            _need(not anchor.exists() and not mirror.exists() and set(present) <= {"source-inputs"},
                   "ISSUE_47_LEDGER_BINDING_MISSING_OR_RESET:" + ",".join(present))
             _exclusive_write_json(path=anchor, value=self.binding)
+            os.close(os.open(str(mirror), os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600))
             _exclusive_write_json(path=binding_path, value=self.binding)
         _need(anchor.is_file(), "ISSUE_47_LEDGER_INITIALIZATION_ANCHOR_MISSING:" + str(anchor))
+        _need(mirror.is_file() and not mirror.is_symlink(),
+              "ISSUE_47_LEDGER_CLAIM_MIRROR_MISSING:" + str(mirror))
         _need(strict_json_file(path=anchor) == self.binding,
               "ISSUE_47_LEDGER_INITIALIZATION_ANCHOR_CHANGED")
         _need(strict_json_file(path=binding_path) == self.binding,
               "ISSUE_47_LEDGER_BINDING_CHANGED")
 
     def _claims(self):
+        """The claim log inside the root, which must be its copy beside the root line for line.
+
+        A ledger nothing has initialized - no binding, no log and no copy - has
+        no claims; any one of them present means it was initialized, and then
+        the copy must be there. (Initializing, and refusing a ledger whose
+        binding went while its anchor stayed, is the lock's.)
+        """
         path = self.root / "claims.jsonl"
-        if not path.exists():
+        mirror = self.mirror_path(self.root)
+        if not ((self.root / "binding.json").exists() or path.exists() or mirror.exists()):
             return []
-        _need(path.is_file() and not path.is_symlink(), "ISSUE_47_LEDGER_CLAIM_LOG_UNSAFE")
-        return [strict_json_loads(text=line)
-                for line in path.read_text(encoding="utf-8").splitlines()]
+        claims = []
+        if path.exists():
+            _need(path.is_file() and not path.is_symlink(), "ISSUE_47_LEDGER_CLAIM_LOG_UNSAFE")
+            claims = [strict_json_loads(text=line)
+                      for line in path.read_text(encoding="utf-8").splitlines()]
+        _need(mirror.is_file() and not mirror.is_symlink(),
+              "ISSUE_47_LEDGER_CLAIM_MIRROR_MISSING:" + str(mirror))
+        copy = [strict_json_loads(text=line) for line in mirror.read_text(encoding="utf-8").splitlines()]
+        _need(copy == claims, "ISSUE_47_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR:"
+              + str(len(claims)) + " in the root, " + str(len(copy)) + " beside it")
+        return claims
 
     def _log_rows(self):
         """The request log's rows, or None when this ledger has no log to compare."""
@@ -529,21 +562,23 @@ class HistoricalCallLedger:
                           "purpose": purpose, "automatic_retry_count": 0,
                           "counts_before": state["counts"],
                           "production_authorized": False}, "intent_id")
-        # The claim is logged before its slot exists, append-only and synced,
-        # so a removed slot - the last one included - disagrees with the log,
-        # and a crash between the two writes refuses before the next socket.
-        handle = os.open(str(self.root / "claims.jsonl"),
-                         os.O_WRONLY | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW, 0o600)
-        try:
-            line = canonical_json_bytes(value=intent).rstrip(b"\n") + b"\n"
-            written = 0
-            while written < len(line):
-                count = os.write(handle, line[written:])
-                _need(count > 0, "ISSUE_47_LEDGER_CLAIM_WRITE_FAILED")
-                written += count
-            os.fsync(handle)
-        finally:
-            os.close(handle)
+        # The claim is logged before its slot exists, append-only and synced -
+        # beside the root first, then inside it - so a removed slot, the last
+        # one included, disagrees with the log, an emptied root disagrees with
+        # the copy beside it, and a crash between any two writes refuses
+        # before the next socket.
+        line = canonical_json_bytes(value=intent).rstrip(b"\n") + b"\n"
+        for log in (self.mirror_path(self.root), self.root / "claims.jsonl"):
+            handle = os.open(str(log), os.O_WRONLY | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW, 0o600)
+            try:
+                written = 0
+                while written < len(line):
+                    count = os.write(handle, line[written:])
+                    _need(count > 0, "ISSUE_47_LEDGER_CLAIM_WRITE_FAILED")
+                    written += count
+                os.fsync(handle)
+            finally:
+                os.close(handle)
         _exclusive_write_json(path=path / "intent.json", value=intent)
         return path, intent
 

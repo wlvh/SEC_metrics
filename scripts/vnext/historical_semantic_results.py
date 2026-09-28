@@ -37,7 +37,12 @@ supplied; it proves the plumbing from a response to a Run and never a filing's
 content, and it is consumed only when the caller asks for it by name. LIVE is
 the only mode a batch uses by default, and a LIVE record is consumed only if it
 is the creator's own journal record - a data directory cannot enroll its own
-responses. There is no way to register LIVE today.
+responses - and carries the counted calls that answered it, from the ledger the
+owner's registered approval granted (``historical_counted_calls``). An earlier
+version said here that there was no way to register LIVE; an independent
+review registered one with a single function call and no call at all, and the
+default loader read it. A LIVE registration exists only where calls were made
+under a registered approval, and none has been.
 
 Every consumer re-derives, from the registered assistant outputs and under the
 current code, each request's Candidate and Evidence and the assembled
@@ -197,7 +202,7 @@ def _accepted_rows(*, source, requests, outputs):
     return rows
 
 
-def registered_record(*, source, period_selection, outputs, mode):
+def registered_record(*, source, period_selection, outputs, mode, counted=None):
     """A complete registration: every request answered and accepted.
 
     ``outputs`` maps each request id to the assistant output bytes. A set that
@@ -207,12 +212,20 @@ def registered_record(*, source, period_selection, outputs, mode):
     The record names the Requirement it is for, not the closure it was made
     under: every consumer re-derives the acceptance under its own code, so the
     rules that decide are always the current ones, and a registration they no
-    longer re-derive is refused rather than trusted.
+    longer re-derive is refused rather than trusted. A LIVE one carries the
+    counted calls that answered it (``historical_counted_calls``), one per
+    request in the source's order: an independent review registered a LIVE
+    assessment with no call at all, and the default loader read it.
     """
+    from .historical_counted_calls import check_counted_calls
     _need(mode in MODES, "HISTORICAL_ASSESSMENT_MODE_INVALID")
     requests = pinned_requests(source)
     _need(set(outputs) == {r["request_id"] for r in requests},
           "HISTORICAL_ASSESSMENT_OUTPUT_SET_DIFFERS_FROM_REQUEST_SET")
+    _need(mode != "LIVE" or counted is not None, "HISTORICAL_LIVE_ASSESSMENT_WITHOUT_COUNTED_CALLS")
+    if counted is not None:
+        check_counted_calls(counted=counted, mode=mode,
+                            answered=[(r, outputs[r["request_id"]]) for r in requests])
     rows = _accepted_rows(source=source, requests=requests, outputs=outputs)
     assessment = assemble_assessment(source=source, requests=requests, rows=rows, mode=mode)
     body = {"record_type": RECORD_TYPE, "schema_version": 1, "metric_id": source["metric_id"],
@@ -226,6 +239,8 @@ def registered_record(*, source, period_selection, outputs, mode):
                                  "assistant_output": outputs[r["request_id"]].decode("utf-8")}
                                 for r in requests],
             "new_call_authority": False, "production_authorized": False}
+    if counted is not None:
+        body["counted_calls"] = counted
     return {**body, "input_record_id": content_hash(value=body)}
 
 
@@ -273,6 +288,14 @@ def validate_registered_record(*, record, source, mode):
           and all(row["binding"] == request_binding(r) for row, r in zip(native, requests)),
           "HISTORICAL_ASSESSMENT_REQUEST_SET_CHANGED")
     outputs = {row["request_id"]: row["assistant_output"].encode("utf-8") for row in native}
+    answered = [(r, outputs[r["request_id"]]) for r in requests]
+    counted = record.get("counted_calls")
+    if mode == "LIVE":
+        from .historical_counted_calls import check_live_registration
+        check_live_registration(counted=counted, answered=answered, repo_root=ROOT)
+    elif counted is not None:
+        from .historical_counted_calls import check_counted_calls
+        check_counted_calls(counted=counted, answered=answered, mode=mode)
     rows = _accepted_rows(source=source, requests=requests, outputs=outputs)
     _need(rows == record["assessment"]["completed"],
           "HISTORICAL_ASSESSMENT_ACCEPTANCE_DOES_NOT_RE_DERIVE")

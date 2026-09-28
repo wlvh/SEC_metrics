@@ -41,8 +41,11 @@ tests/vnext/test_historical_model_calls.py asserts). Steps, each recorded:
 Only if all of that holds is ``offline-verification.json`` sealed. Zero calls.
 """
 import json
+import os
+import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path.cwd().resolve()
@@ -59,12 +62,19 @@ GH_READER = "tests.vnext.test_historical_source_acquisition.TheGithubReaderPasse
 ORDER = ("TheEgressGateNamesExactlyOneNewCaller", "TheFixturesNeverTouchAnAllowanceTheyDidNotWrite",
          GH_READER, "OnlyIssue47sOwnAuthorityReachesTheCallPath",
          "TheApprovalIsReadStrictly", "TheLedgerCannotBeResetByDeletingIt",
-         "TheLimitIsCumulativeAndTheAllowanceIsTheAuthoritys", "OnlyTheRequestsTheApprovalNamesAreClaimed",
+         "TheLimitIsCumulativeAndTheAllowanceIsTheAuthoritys",
+         "AMappingIsNotAnAllowanceAndALedgerIsNotAGrant", "OnlyTheRequestsTheApprovalNamesAreClaimed",
          "EveryCallIsCountedOnceAndStopsWhereTheCountCannotBeTrusted",
+         "ASocketOpensOnlyForTheCountedSendItBelongsTo",
          "TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener",
          "ACompleteAssessmentRegistersOnlyFromItsOwnSlots",
          "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
-         "AD02ReviewIsOneCountedCallOnTheSamePath")
+         "AD02ReviewIsOneCountedCallOnTheSamePath",
+         # The repository's own unit classes for the ledger and the approval,
+         # which hold the checks a re-review found no egress case broke alone.
+         "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount",
+         "tests.vnext.test_historical_model_calls.TheAllowanceIsVerifiedNotMerelyPresent",
+         "tests.vnext.test_historical_model_calls.TheApprovalIsRegisteredFromWhatWasPosted")
 BOUNDARY = ("scripts/vnext/invocation_control.py", "scripts/vnext/ai_adapter.py",
             "tools/check_provider_egress.py")
 BOUND = ("scripts/vnext/historical_model_calls.py", "scripts/vnext/historical_model_egress.py",
@@ -74,7 +84,12 @@ BOUND = ("scripts/vnext/historical_model_calls.py", "scripts/vnext/historical_mo
          # The generation's snapshot: the live path requires the receipt to
          # bind it (historical_model_calls.CALL_PATH_FILES).
          "requirements/issue_47_v1/baseline_manifest.json",
-         "tests/vnext/test_historical_source_acquisition.py", HERE + "/verify.py", PATCH)
+         "tests/vnext/test_historical_source_acquisition.py", HERE + "/verify.py", PATCH,
+         # What a LIVE registration must carry and the ledger it must come
+         # from; and the D04 answer the suite registers, kept apart so the
+         # suite loads no checkout code the call is not bound to.
+         "scripts/vnext/historical_counted_calls.py", "tests/vnext/d04_synthetic_output.py",
+         "tests/vnext/test_historical_model_calls.py")
 CALLS = "scripts/vnext/historical_model_calls.py"
 EGRESS = "scripts/vnext/historical_model_egress.py"
 SEC = "scripts/vnext/historical_source_acquisition.py"
@@ -88,8 +103,8 @@ INJECTIONS = [
     ("HTTP_402_DOES_NOT_STOP", CALLS,
      [('STOPS = frozenset({"HTTP_402", ', 'STOPS = frozenset({')]),
     ("UNKNOWN_USAGE_DOES_NOT_STOP", CALLS,
-     [('"USAGE_UNKNOWN", "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT"})',
-       '"CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT"})'),
+     [('                   "USAGE_UNKNOWN", "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT",\n',
+       '                   "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT",\n'),
       ('        stop = stop or "USAGE_UNKNOWN"\n', "        pass\n")]),
     # From here, one per finding of the independent security review
     # (independent-review-2026-09-27/README.md), each broken on its own.
@@ -147,7 +162,8 @@ INJECTIONS = [
        '        _need(True or evidence_json_bytes(rebuilt) == self.source_bytes,')]),
     # L4: a context overrun, a missing tokenizer, the order of the two checks.
     ("A_CONTEXT_OVERRUN_DOES_NOT_STOP", CALLS,
-     [('"CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT"})', '"CONTEXT_REFERENCE_MISMATCH"})')]),
+     [('"USAGE_UNKNOWN", "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT",\n',
+       '"USAGE_UNKNOWN", "CONTEXT_REFERENCE_MISMATCH",\n')]),
     ("A_LIVE_CALL_MAY_BE_PLANNED_WITHOUT_THE_REFERENCE_TOKENIZER", EGRESS,
      [('    _need(not ledger.live or plan["observability"]["estimator_method"] == "PINNED_REFERENCE_CHAT_FORMAT",',
        '    _need(True or not ledger.live or plan["observability"]["estimator_method"] == "PINNED_REFERENCE_CHAT_FORMAT",')]),
@@ -182,8 +198,8 @@ INJECTIONS = [
      [('    if prepared.metric_id == "D04":\n        from .d04_native_assessment import',
        '    if True:\n        from .d04_native_assessment import')]),
     ("AN_E01_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN", EGRESS,
-     [('                                     output=output, mode=ledger.mode)',
-       '                                     output=output, mode="LIVE")')]),
+     [('                                     output=output, mode=ledger.mode, counted=counted)',
+       '                                     output=output, mode="LIVE", counted=counted)')]),
     ("THE_RUNNER_REGISTERS_AN_INCOMPLETE_POSITION", "tools/vnext_historical_model.py",
      [('        if not row["unsuccessful"]:\n', '        if True:\n')]),
     # D02 on the same path: its own response contract, and its registration in
@@ -194,14 +210,29 @@ INJECTIONS = [
     ("A_D02_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN", EGRESS,
      [('        return register_review(request=request, company_id=first.company_id,\n'
        '                               period_selection_id=first.period_selection["selection_id"],\n'
-       '                               output=output, mode=ledger.mode)',
+       '                               output=output, mode=ledger.mode, counted=counted)',
        '        return register_review(request=request, company_id=first.company_id,\n'
        '                               period_selection_id=first.period_selection["selection_id"],\n'
-       '                               output=output, mode="LIVE")')]),
-    # The three checks the review neutralized at once without any case failing.
-    ("THE_SEND_DOES_NOT_RECHECK_ITS_RESERVATION", EGRESS,
-     [('        _need(reservation["owner_process_id"] == os.getpid()',
-       '        _need(True or reservation["owner_process_id"] == os.getpid()')]),
+       '                               output=output, mode="LIVE", counted=counted)')]),
+    # The send's reservation check, part by part: a re-review removed every
+    # part but the marker count at once and no case failed.
+    ("THE_SEND_DOES_NOT_ASK_WHICH_PROCESS_RESERVED", EGRESS,
+     [('    return (reservation["owner_process_id"] == os.getpid()\n'
+       '            and reservation["owner_token_hash"]',
+       '    return (True\n            and reservation["owner_token_hash"]')]),
+    ("THE_SEND_DOES_NOT_ASK_WHICH_OWNER_RESERVED", EGRESS,
+     [('            and reservation["owner_token_hash"] == content_hash(value=owner_token)\n', '')]),
+    ("THE_SEND_DOES_NOT_ASK_WHICH_EXECUTION_RESERVED", EGRESS,
+     [('            and reservation["execution_id"] == execution_id\n            and len(markers) == 1\n',
+       '            and len(markers) == 1\n')]),
+    ("THE_SEND_ACCEPTS_MORE_THAN_ONE_MARKER", EGRESS,
+     [('            and len(markers) == 1\n            and markers[0]["ai_invocation_plan_id"]',
+       '            and len(markers) >= 1\n            and markers[0]["ai_invocation_plan_id"]')]),
+    ("THE_SEND_DOES_NOT_ASK_WHICH_PLAN_WAS_MARKED", EGRESS,
+     [('            and markers[0]["ai_invocation_plan_id"] == plan["ai_invocation_plan_id"]\n', '')]),
+    ("THE_SEND_DOES_NOT_ASK_WHICH_TRANSPORT_WAS_MARKED", EGRESS,
+     [('            and markers[0]["transport_kind"] == transport_kind)',
+       '            )')]),
     ("A_LIVE_LEDGER_MAY_BE_ANYWHERE", EGRESS,
      [('        _need(ledger.root == Path(prepared.allowance["budget_root"]),',
        '        _need(True or ledger.root == Path(prepared.allowance["budget_root"]),')]),
@@ -211,9 +242,15 @@ INJECTIONS = [
     ("NO_CUMULATIVE_LIMIT", CALLS,
      [('        _need(state["counts"][0] + 1 <= self.binding["limits"][0]\n',
        '        _need(True or state["counts"][0] + 1 <= self.binding["limits"][0]\n')]),
+    # A caller's mapping is held twice - to the authority's decision hashes and,
+    # field for field, to the allowance file - so the property breaks only when
+    # both checks go; each alone is the other's redundancy.
     ("A_CALLERS_ALLOWANCE_IS_TRUSTED", CALLS,
      [('    _need(all(policy[key] == value for key, value in _allowance_hashes(allowance).items()),',
-       '    _need(True or all(policy[key] == value for key, value in _allowance_hashes(allowance).items()),')]),
+       '    _need(True or all(policy[key] == value for key, value in _allowance_hashes(allowance).items()),'),
+      ('          "ISSUE_47_MODEL_ALLOWANCE_IS_NOT_THE_ONE_THE_AUTHORITY_BOUND")\n'
+       '    allowance_is_the_file_s(allowance)\n',
+       '          "ISSUE_47_MODEL_ALLOWANCE_IS_NOT_THE_ONE_THE_AUTHORITY_BOUND")\n')]),
     ("THE_ADAPTER_MATCHES_THE_CLASS_NAME_ONLY", "scripts/vnext/ai_adapter.py",
      [('    if (type(prepared_request).__module__ == __package__ + ".historical_model_calls"\n'
        '            and type(prepared_request).__name__ == "HistoricalSemanticRequest"):',
@@ -234,8 +271,8 @@ INJECTIONS = [
        '    if False:\n'
        '        _adapter._build_repository_transport(policy=None)\n')]),
     ("REGISTRATION_TAKES_A_MODE_OF_ITS_OWN", EGRESS,
-     [("                               outputs=outputs, mode=ledger.mode)",
-       '                               outputs=outputs, mode="LIVE")')]),
+     [("                               outputs=outputs, mode=ledger.mode, counted=counted)",
+       '                               outputs=outputs, mode="LIVE", counted=counted)')]),
     ("A_FAILED_SLOT_MAY_BE_REGISTERED", EGRESS,
      [('_need(terminal["intent_id"] == intent["intent_id"] and terminal["status"] == "SUCCEEDED"\n'
        '              and terminal["stop_reason"] == "", "ISSUE_47_MODEL_SLOT_DID_NOT_SUCCEED")',
@@ -246,6 +283,126 @@ INJECTIONS = [
     ("PLANS_MAY_NOT_KEEP_AN_UNAVAILABLE_PRICE", "scripts/vnext/invocation_control.py",
      [('.get("requirement_id") in {"issue_28_v14", "issue_47_v1"})',
        '.get("requirement_id") in {"issue_28_v14"})')]),
+    # From here, one per finding of the independent security re-review
+    # (independent-review-2026-09-27-rereview/), each broken on its own.
+    # A: a mapping that differs from the file only where no decision hash looks.
+    ("A_MAPPING_IS_NOT_HELD_TO_THE_FILE", CALLS,
+     [('    allowance_is_the_file_s(allowance)\n\n\ndef prepare_historical_requests',
+       '\n\ndef prepare_historical_requests')]),
+    ("A_LEDGER_A_MAPPING_DESCRIBED_MAY_CLAIM", CALLS,
+     [('        _need(self.root == root\n'
+       '              and self.binding == _ledger(allowance=allowance, root=root, live=True).binding,',
+       '        _need(True or self.root == root\n'
+       '              and self.binding == _ledger(allowance=allowance, root=root, live=True).binding,')]),
+    # The digest an approval names covers every byte a call sends.
+    ("THE_DIGEST_IS_ISSUE_28_S_SEMANTIC_ONE", CALLS,
+     [('    from .continuous_semantic_calls import request_body\n'
+       '    return "sha256:" + sha256_bytes(content=request_body(request, policy))\n',
+       '    from .continuous_semantic_calls import request_digest\n'
+       '    return "sha256:" + request_digest(request, policy)\n')]),
+    # B: the adapter's hook released #47's bytes to any caller of the transport.
+    ("THE_HOOK_RELEASES_BYTES_WITHOUT_A_COUNTED_SEND", CALLS,
+     [('    held = _SENDING.get(threading.get_ident())\n'
+       '    _need(held is not None and held[0] is request, "ISSUE_47_MODEL_TRANSPORT_WITHOUT_A_COUNTED_SEND")\n',
+       '    held = _SENDING.get(threading.get_ident())\n'
+       '    if held is None or held[0] is not request:\n'
+       '        request.validate(policy)\n'
+       '        return request.request_bytes, request.provider_request_body_bytes, request.output_schema_bytes\n')]),
+    # C: emptying the root, or truncating its last claim, reset the ledger.
+    ("THE_CLAIM_LOG_HAS_NO_COPY_BESIDE_THE_ROOT", CALLS,
+     [('        _need(copy == claims, "ISSUE_47_MODEL_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR:"',
+       '        _need(True or copy == claims, "ISSUE_47_MODEL_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR:"')]),
+    # D: a LIVE registration without the counted calls that answered it.
+    ("A_LIVE_CONFIRMATION_NEEDS_NO_CALLS", "scripts/vnext/historical_ma_confirmation.py",
+     [('    _need(mode != "LIVE" or counted is not None, "E01_LIVE_CONFIRMATION_WITHOUT_COUNTED_CALLS")\n',
+       '')]),
+    ("A_LIVE_REVIEW_NEEDS_NO_CALLS", "scripts/vnext/historical_legal_review.py",
+     [('    _need(mode != "LIVE" or counted is not None, "D02_LIVE_REVIEW_WITHOUT_COUNTED_CALLS")\n',
+       '')]),
+    ("A_LIVE_ASSESSMENT_NEEDS_NO_CALLS", "scripts/vnext/historical_semantic_results.py",
+     [('    _need(mode != "LIVE" or counted is not None, "HISTORICAL_LIVE_ASSESSMENT_WITHOUT_COUNTED_CALLS")\n',
+       '')]),
+    ("A_COUNTED_CALL_NEED_NOT_BE_LIVE", "scripts/vnext/historical_counted_calls.py",
+     [('          and binding.get("execution_mode") == mode, "ISSUE_47_COUNTED_CALLS_LEDGER_CHANGED")',
+       '          , "ISSUE_47_COUNTED_CALLS_LEDGER_CHANGED")')]),
+    ("A_COUNTED_CALL_NEED_NOT_HAVE_ANSWERED_WITH_THIS_OUTPUT", "scripts/vnext/historical_counted_calls.py",
+     [('              and evidence.get("wire/assistant-output.bin") == sha256_bytes(content=output),\n',
+       '              and True,\n'),
+      ('              and wire["assistant_output_sha256"] == sha256_bytes(content=output),\n',
+       '              and True,\n')]),
+    # E: a test's LIVE leftovers read by a batch.
+    ("A_LIVE_REGISTRATION_NEEDS_NO_REGISTERED_APPROVAL", "scripts/vnext/historical_counted_calls.py",
+     [('    check_counted_calls(counted=counted, answered=answered, mode="LIVE")\n'
+       '    return check_granted(counted=counted, repo_root=repo_root)\n',
+       '    return check_counted_calls(counted=counted, answered=answered, mode="LIVE")\n')]),
+    # H: a response nested past the parser's depth left the slot open.
+    ("A_NESTED_ANSWER_ESCAPES_THE_CALL_PATH", EGRESS,
+     [('        except (ValueError, KeyError, TypeError, RecursionError) as error:\n'
+       '            raise control.SchemaViolationError(str(error)[:400]) from error\n',
+       '        except (ValueError, KeyError, TypeError) as error:\n'
+       '            raise control.SchemaViolationError(str(error)[:400]) from error\n')]),
+    ("A_NESTED_RESPONSE_ESCAPES_THE_CALL_PATH", EGRESS,
+     [('        except RecursionError as error:\n', '        except ZeroDivisionError as error:\n')]),
+    # N7: a transport account that disagrees, after the charge.
+    ("AN_OBSERVATION_MISMATCH_IS_RAISED_PAST_THE_RESPONSE", EGRESS,
+     [('                if mismatch is not None:\n'
+       '                    error_class = "TRANSPORT_OBSERVATION_CHANGED"\n'
+       '                    error_detail = str(mismatch)[:400]\n',
+       '                _need(mismatch is None, "ISSUE_47_MODEL_TRANSPORT_OBSERVATION_CHANGED")\n')]),
+    ("AN_OBSERVATION_MISMATCH_DOES_NOT_STOP", CALLS,
+     [('"CONTEXT_LIMIT",\n'
+       '                   # The transport\'s own account of the call disagrees with the\n'
+       '                   # bytes it was given: what was sent cannot be trusted.\n'
+       '                   "TRANSPORT_OBSERVATION_CHANGED"})',
+       '"CONTEXT_LIMIT"})')]),
+    # L3 for E01 and D02: each of the two comparisons on its own.
+    ("AN_E01_OR_D02_SOURCE_IS_NOT_REBUILT", CALLS,
+     [('    _need(evidence_json_bytes(rebuilt) == self.source_bytes,\n'
+       '          "ISSUE_47_MODEL_SOURCE_DOES_NOT_REBUILD_FROM_THE_FILING")\n'
+       '    request = strict_json_loads(text=self.request_bytes.decode("utf-8"))\n'
+       '    _need(request == rebuilt["request"]',
+       '    request = strict_json_loads(text=self.request_bytes.decode("utf-8"))\n'
+       '    _need(request == rebuilt["request"]')]),
+    ("AN_E01_OR_D02_REQUEST_IS_NOT_COMPARED", CALLS,
+     [('    _need(request == rebuilt["request"] and request["company_id"] == self.company_id',
+       '    _need(request["company_id"] == self.company_id')]),
+    # M1's sub-checks a re-review found no case broke alone.
+    ("THE_CLAIMS_NEED_NOT_CHAIN", CALLS,
+     [('                  and intent["previous_intent_id"] == previous,\n',
+       '                  and True,\n')]),
+    ("AN_EDITED_BINDING_IS_ACCEPTED", CALLS,
+     [('        _need(strict_json_file(path=binding_path) == self.binding, "ISSUE_47_MODEL_LEDGER_BINDING_CHANGED")',
+       '        _need(True or strict_json_file(path=binding_path) == self.binding, "ISSUE_47_MODEL_LEDGER_BINDING_CHANGED")')]),
+    ("AN_EDITED_ANCHOR_IS_ACCEPTED", CALLS,
+     [('        _need(strict_json_file(path=anchor) == self.binding,',
+       '        _need(True or strict_json_file(path=anchor) == self.binding,')]),
+    # M3, the parts code can hold about who posted the approval.
+    ("THE_APPROVER_IS_A_LOGIN_ONLY", SEC,
+     [('    _need(user.get("login") == policy["approver_login"] and user.get("id") == TRUSTED_APPROVER_ID\n'
+       '          and user.get("type") == "User" and comment.get("author_association") == "OWNER",',
+       '    _need(user.get("login") == policy["approver_login"],')]),
+    ("A_MODEL_APPROVAL_MAY_BE_POSTED_THROUGH_AN_APP", CALLS,
+     [('    _need("performed_via_github_app" in comment and comment["performed_via_github_app"] is None,',
+       '    _need(True or "performed_via_github_app" in comment and comment["performed_via_github_app"] is None,')]),
+    # K and P: unbound checkout code, and checkout bytecode, ran before a socket.
+    ("UNBOUND_CHECKOUT_CODE_MAY_RUN", CALLS,
+     [('    _need(not unbound, "ISSUE_47_MODEL_UNBOUND_CODE_LOADED:" + ",".join(sorted(unbound)[:8]))\n',
+       '')]),
+    ("CHECKOUT_BYTECODE_MAY_RUN", CALLS,
+     [('    _need(not cached_in_the_checkout, "ISSUE_47_MODEL_CODE_READ_FROM_THE_CHECKOUT_S_BYTECODE:"\n'
+       '          + ",".join(sorted(cached_in_the_checkout)[:8]))\n', '')]),
+    ("NO_PRIVATE_BYTECODE_CACHE_IS_REQUIRED", CALLS,
+     [('    _need(prefix is not None and Path(prefix).is_absolute() and Path(prefix).is_dir()',
+       '    _need(True or prefix is not None and Path(prefix).is_absolute() and Path(prefix).is_dir()')]),
+    # The runner makes its cache after importing the call path: what it
+    # imported is compiled wherever the process's cache was, not into its own.
+    # The suite loads the runner before any checkout code, as the owner does,
+    # so this is seen - found when the suite first loaded it too late.
+    ("THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE", "tools/vnext_historical_model.py",
+     [('sys.pycache_prefix = tempfile.mkdtemp(prefix="issue47-model-bytecode-")\n', ''),
+      ('from vnext import historical_model_egress as egress  # noqa: E402\n',
+       'from vnext import historical_model_egress as egress  # noqa: E402\n'
+       'sys.pycache_prefix = tempfile.mkdtemp(prefix="issue47-model-bytecode-")\n')]),
     # The caller is listed in both exact sets; each is broken on its own, so a
     # gate that checked only one of them is seen.
     ("THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER", "tools/check_provider_egress.py",
@@ -276,6 +433,10 @@ D02 = "AD02ReviewIsOneCountedCallOnTheSamePath"
 COMPLETE = "ACompleteAssessmentRegistersOnlyFromItsOwnSlots"
 FIXTURES_CLASS = "TheFixturesNeverTouchAnAllowanceTheyDidNotWrite"
 GATE = "TheEgressGateNamesExactlyOneNewCaller"
+GRANTED = "AMappingIsNotAnAllowanceAndALedgerIsNotAGrant"
+SOCKET = "ASocketOpensOnlyForTheCountedSendItBelongsTo"
+LEDGER_UNIT = "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount"
+ALLOWANCE_UNIT = "tests.vnext.test_historical_model_calls.TheAllowanceIsVerifiedNotMerelyPresent"
 EXPECTED = {
     "A_REQUEST_MAY_BE_REDRAWN": COUNTED, "A_SLOT_WITHOUT_A_TERMINAL_DOES_NOT_STOP": COUNTED,
     "HTTP_402_DOES_NOT_STOP": LIVE, "UNKNOWN_USAGE_DOES_NOT_STOP": COUNTED,
@@ -297,7 +458,20 @@ EXPECTED = {
     "AN_E01_ANSWER_IS_HELD_TO_D04_S_CONTRACT": E01, "AN_E01_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN": E01,
     "THE_RUNNER_REGISTERS_AN_INCOMPLETE_POSITION": LIVE,
     "A_D02_ANSWER_IS_HELD_TO_E01_S_CONTRACT": D02, "A_D02_REGISTRATION_TAKES_A_MODE_OF_ITS_OWN": D02,
-    "THE_SEND_DOES_NOT_RECHECK_ITS_RESERVATION": LIVE, "A_LIVE_LEDGER_MAY_BE_ANYWHERE": LIVE,
+    "A_LIVE_LEDGER_MAY_BE_ANYWHERE": LIVE,
+    "THE_SEND_DOES_NOT_ASK_WHICH_PROCESS_RESERVED": SOCKET,
+    "THE_SEND_DOES_NOT_ASK_WHICH_OWNER_RESERVED": SOCKET,
+    "THE_SEND_DOES_NOT_ASK_WHICH_EXECUTION_RESERVED": SOCKET,
+    "THE_SEND_ACCEPTS_MORE_THAN_ONE_MARKER": SOCKET,
+    "THE_SEND_DOES_NOT_ASK_WHICH_PLAN_WAS_MARKED": SOCKET,
+    "THE_SEND_DOES_NOT_ASK_WHICH_TRANSPORT_WAS_MARKED": SOCKET,
+    "AN_OBSERVATION_MISMATCH_IS_RAISED_PAST_THE_RESPONSE": SOCKET,
+    "AN_OBSERVATION_MISMATCH_DOES_NOT_STOP": SOCKET,
+    "AN_E01_OR_D02_SOURCE_IS_NOT_REBUILT": E01, "AN_E01_OR_D02_REQUEST_IS_NOT_COMPARED": E01,
+    "THE_CLAIMS_NEED_NOT_CHAIN": LEDGER_UNIT, "AN_EDITED_BINDING_IS_ACCEPTED": LEDGER_UNIT,
+    "AN_EDITED_ANCHOR_IS_ACCEPTED": LEDGER_UNIT,
+    "THE_APPROVER_IS_A_LOGIN_ONLY": ALLOWANCE_UNIT,
+    "A_MODEL_APPROVAL_MAY_BE_POSTED_THROUGH_AN_APP": ALLOWANCE_UNIT,
     "A_LEDGER_FOR_ANOTHER_ALLOWANCE_IS_USED": LEDGER, "NO_CUMULATIVE_LIMIT": LIMIT,
     "A_CALLERS_ALLOWANCE_IS_TRUSTED": LIMIT, "THE_ADAPTER_MATCHES_THE_CLASS_NAME_ONLY": AUTHORITY,
     "NO_SOURCE_CHECK_AT_THE_SOCKET": LIVE, "NO_GITHUB_RECHECK_BEFORE_THE_SOCKET": LIVE,
@@ -306,6 +480,18 @@ EXPECTED = {
     "THE_CONTROLLER_BRANCH_IS_ABSENT": AUTHORITY, "PLANS_MAY_NOT_KEEP_AN_UNAVAILABLE_PRICE": LIMIT,
     "THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER": GATE,
     "THE_GATE_DOES_NOT_LIST_THE_CAPABILITY_REFERENCE": GATE,
+    "A_MAPPING_IS_NOT_HELD_TO_THE_FILE": GRANTED, "A_LEDGER_A_MAPPING_DESCRIBED_MAY_CLAIM": GRANTED,
+    "THE_DIGEST_IS_ISSUE_28_S_SEMANTIC_ONE": GRANTED,
+    "THE_HOOK_RELEASES_BYTES_WITHOUT_A_COUNTED_SEND": SOCKET,
+    "THE_CLAIM_LOG_HAS_NO_COPY_BESIDE_THE_ROOT": LEDGER,
+    "A_LIVE_CONFIRMATION_NEEDS_NO_CALLS": E01, "A_LIVE_REVIEW_NEEDS_NO_CALLS": D02,
+    "A_LIVE_ASSESSMENT_NEEDS_NO_CALLS": COMPLETE, "A_COUNTED_CALL_NEED_NOT_BE_LIVE": E01,
+    "A_COUNTED_CALL_NEED_NOT_HAVE_ANSWERED_WITH_THIS_OUTPUT": LIVE,
+    "A_LIVE_REGISTRATION_NEEDS_NO_REGISTERED_APPROVAL": LIVE,
+    "A_NESTED_ANSWER_ESCAPES_THE_CALL_PATH": E01, "A_NESTED_RESPONSE_ESCAPES_THE_CALL_PATH": E01,
+    "UNBOUND_CHECKOUT_CODE_MAY_RUN": SOCKET, "CHECKOUT_BYTECODE_MAY_RUN": SOCKET,
+    "NO_PRIVATE_BYTECODE_CACHE_IS_REQUIRED": SOCKET,
+    "THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE": SOCKET,
 }
 
 
@@ -349,20 +535,60 @@ def _declared_classes():
     tree = ast.parse((ROOT / TESTS).read_text(encoding="utf-8"))
     return sorted(node.name for node in tree.body if isinstance(node, ast.ClassDef)
                   and not node.name.startswith("_")
-                  and any(getattr(base, "id", getattr(base, "attr", "")) in ("_Isolated", "TestCase")
+                  and any(getattr(base, "id", getattr(base, "attr", ""))
+                          in ("_Isolated", "_LiveOpener", "TestCase")
                           for base in node.bases))
 
 
+def _by_module(classes):
+    """The classes' dotted names, one group per test module, each group in ``classes``' order."""
+    groups = {}
+    for name in classes:
+        dotted = name if name.startswith("tests.") else SUITE + "." + name
+        groups.setdefault(dotted.rsplit(".", 1)[0], []).append(dotted)
+    return list(groups.values())
+
+
 def _suite(fail_fast, classes=ORDER):
-    names = [name if name.startswith("tests.") else SUITE + "." + name for name in classes]
-    # Generous on purpose: the whole suite ran 880 s alone and far longer beside
-    # a batch, and a timeout here would stop the harness without a receipt.
-    run = _run([sys.executable, "-m", "unittest", *(["-f"] if fail_fast else []), *names],
-               timeout=14400)
-    lines = run.stderr.strip().splitlines()
-    failures = _failures(lines)
-    return run.returncode, failures, (lines[-1] if lines else ""), next(
-        (line for line in lines if line.startswith("Ran ")), "")
+    """Run ``classes``, one process per test module, and report them as one run.
+
+    One process per module because the call path checks the process it sends
+    from: every checkout module that process loaded must be one the call's
+    authority binds (historical_model_calls.loaded_code_holds). A test module
+    loads what it imports, and the SEC acquisition suite imports the source
+    discovery module and another suite's helpers, which no call path imports.
+    The first run after that check existed put the gh reader's class in the
+    egress suite's process, and every live case was refused for a module the
+    owner's runner never loads - the check doing its job on a process no
+    runner is. Each module in its own process is each suite as its own runner.
+    """
+    codes, failures, summaries, ran = [], [], [], 0
+    for names in _by_module(classes):
+        # Generous on purpose: the whole suite ran 880 s alone and far longer
+        # beside a batch, and a timeout here would stop the harness without a
+        # receipt. The suite compiles the checkout into a private cache, as
+        # the owner's runner does: the call path refuses a socket in a process
+        # that read the checkout's own __pycache__.
+        private = tempfile.mkdtemp(prefix="issue47-verify-bytecode-")
+        try:
+            run = _run([sys.executable, "-m", "unittest", *(["-f"] if fail_fast else []), *names],
+                       timeout=14400, env={**os.environ, "PYTHONPYCACHEPREFIX": private})
+        finally:
+            shutil.rmtree(private, ignore_errors=True)
+        lines = run.stderr.strip().splitlines()
+        codes.append(run.returncode)
+        failures.extend(_failures(lines))
+        summaries.append(lines[-1] if lines else "")
+        counted = next((line for line in lines if line.startswith("Ran ")), "")
+        ran += int(counted.split()[1]) if counted else 0
+        if fail_fast and run.returncode:
+            break
+    # "OK" only if every process said exactly that; "OK (skipped=N)" stays
+    # itself, since a skipped class ran nothing.
+    summary = "OK" if summaries and all(line == "OK" for line in summaries) else "; ".join(
+        line for line in summaries if line != "OK")
+    return (next((code for code in codes if code), 0), failures, summary,
+            "Ran %d tests in %d processes, one per test module" % (ran, len(codes)))
 
 
 def _mint(check=False):
@@ -429,7 +655,8 @@ def main():
         return 2
     # Every edit must hit exactly once, checked before anything runs. The
     # 2026-09-27 run found a target that was a substring of another line only
-    # at its 46th injection, three hours in, and stopped without a receipt; an
+    # at its 31st injection, after the suite and 30 injections had run, and
+    # stopped without a receipt; an
     # edit that does not apply says nothing about the code, so it is refused
     # here, where it costs nothing.
     misses = [(name, path, text.count(old)) for name, path, edits in INJECTIONS
@@ -437,6 +664,22 @@ def main():
               for old, _ in edits if text.count(old) != 1]
     if misses:
         print("AN_INJECTION_EDIT_DOES_NOT_HIT_EXACTLY_ONCE", misses)
+        return 2
+    # And every edited file must still compile: an injection that does not
+    # compile breaks the import, not the check it names. The first sealing
+    # attempt after the re-review's fixes found two such, where a removed line
+    # left the line before it without its comma.
+    broken = []
+    for name, path, edits in INJECTIONS:
+        text = (ROOT / path).read_text(encoding="utf-8")
+        for old, new in edits:
+            text = text.replace(old, new)
+        try:
+            compile(text, path, "exec")
+        except SyntaxError as error:
+            broken.append((name, path, str(error)))
+    if broken:
+        print("AN_INJECTION_DOES_NOT_COMPILE", broken)
         return 2
     before = {path: _sha(path) for path in BOUND}
     snapshot = _snapshot()
@@ -447,6 +690,13 @@ def main():
     suite = {"returncode": code, "failed": [row["case"] for row in failures],
              "summary": summary, "ran": ran}
     print("suite", suite, flush=True)
+    if not (code == 0 and summary == "OK"):
+        # An injection "caught" by a suite that already fails says nothing
+        # about the injection, and the injections take hours: stop here,
+        # with no receipt, and let the failures be fixed first.
+        print("THE_SUITE_DOES_NOT_PASS_SO_NO_INJECTION_IS_EVIDENCE",
+              json.dumps(failures, indent=1), flush=True)
+        return 2
     injections = []
     for name, path, edits in INJECTIONS:
         target = ROOT / path
@@ -497,7 +747,9 @@ def main():
               "every_declared_class_ran": local == _declared_classes(),
               "snapshot_minted_for_these_bytes": minted.returncode == 0,
               "egress_gate_passes": gate["status"] == "PASS",
-              "suite_passes": code == 0,
+              # "OK (skipped=N)" is not a pass: a fixture that refuses to
+              # start skips its class, and those cases would have run nothing.
+              "suite_passes": code == 0 and summary == "OK",
               "every_injection_compiles": all(
                   r["outcome"] != "INJECTION_DOES_NOT_COMPILE" for r in injections),
               "every_injection_caught": all(

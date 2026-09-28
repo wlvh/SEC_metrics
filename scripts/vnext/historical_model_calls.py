@@ -52,6 +52,8 @@ import fcntl
 import json
 import os
 import re
+import sys
+import threading
 
 from .canonical import (canonical_json_bytes, content_hash, sha256_bytes, sha256_file,
                         strict_json_file, strict_json_loads)
@@ -74,17 +76,19 @@ SINGLE_REQUEST_SOURCE_TYPES = {"E01": "ISSUE_47_E01_CONFIRMATION_REQUEST_SOURCE"
 
 
 def ledger_digest(request, policy):
-    """What the ledger's no-redraw rule is keyed on, for each contract.
+    """What an approval names and the no-redraw rule is keyed on: the exact bytes a call sends.
 
-    D04's is Issue #28's request digest over the model and the request's
-    semantic content. An E01 or D02 request is its own content hash - the
-    texts, the definition and the prompt - so its digest is that id with the
-    model.
+    The provider body - model, messages, decoding settings - hashed as it goes
+    out, the same for every contract. An independent review found D04's
+    previous digest, Issue #28's request digest over the request's semantic
+    content, left out fields that are sent: the company, the document context
+    beyond the filing, each unit's ids, ordinal and payload hash. An approval
+    naming it did not pin what would go out. Now a request whose bytes differ
+    in any way is a different digest, which an approval that never saw it does
+    not name.
     """
-    if request.get("record_type") in (REQUEST_TYPES["E01"], REQUEST_TYPES["D02"]):
-        return content_hash(value={"model": policy.model, "request_id": request["request_id"]})
-    from .continuous_semantic_calls import request_digest
-    return request_digest(request, policy)
+    from .continuous_semantic_calls import request_body
+    return "sha256:" + sha256_bytes(content=request_body(request, policy))
 
 
 def _single_request_source(*, data_root, company_id, metric_id, period_selection):
@@ -121,9 +125,8 @@ SCOPE_FIELDS = ("purposes", "metric_ids", "company_ids", "earliest_report_end",
                 "latest_report_end", "grants")
 GRANT_FIELDS = ("grant", "metric_ids", "company_ids", "earliest_report_end",
                 "latest_report_end", "request_digests")
-# A ledger digest as the ledger records it: Issue #28's request digest for D04
-# (bare hex), an E01 request's content hash (prefixed).
-_LEDGER_DIGEST = re.compile(r"^(sha256:)?[0-9a-f]{64}$")
+# A ledger digest as the ledger records it: the SHA-256 of the provider body.
+_LEDGER_DIGEST = re.compile(r"^sha256:[0-9a-f]{64}$")
 # The provider identity #47 may be granted. The endpoint host is compared with
 # the adapter's own constant, not written here: provider hosts live in
 # ai_adapter.py and nowhere else, which the egress gate enforces.
@@ -134,7 +137,11 @@ FIXED_RETRY_POLICY = {"kind": "TRANSPORT_RETRY_POLICY", "automatic_retry_count":
                       "http_402_automatic_retry_count": 0, "http_402_stops_execution": True,
                       "http_402_stops_batch": True, "actual_usage_required": True,
                       "context_ceiling_tokens": 200000}
-LEDGER_TYPE = "ISSUE_47_HISTORICAL_MODEL_ALLOWANCE"
+# The ledger binding's formula lives with the checks a LIVE registration's
+# consumer makes, so the ledger a call is counted in and the ledger a consumer
+# accepts are described by one function.
+from .historical_counted_calls import (GRANTED_LEDGER_PATH, LEDGER_TYPE,  # noqa: E402
+                                       granted_ledger_record, ledger_binding)
 # Where a registered approval lives, and the proposal the owner posts. The
 # proposal's bytes are what the posted comment must be; nothing here pins its
 # digest, because the proposal names the sealed verification receipt, which
@@ -149,7 +156,10 @@ WIRING_RECEIPT_PATH = "docs/evidence/issue47_history/model-egress/offline-verifi
 # the estimate that admitted it was wrong, which an independent review found
 # was answered as a plain failure rather than a stop.
 STOPS = frozenset({"HTTP_402", "UNKNOWN_REMOTE_OUTCOME", "SOURCE_AUTHENTICITY_FAILED",
-                   "USAGE_UNKNOWN", "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT"})
+                   "USAGE_UNKNOWN", "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT",
+                   # The transport's own account of the call disagrees with the
+                   # bytes it was given: what was sent cannot be trusted.
+                   "TRANSPORT_OBSERVATION_CHANGED"})
 # Files a call executes that the Requirement's authority does not already list.
 # The files a live call runs through that the controller's authority does not
 # already bind. The allowance's approval checks - the comment URL, its
@@ -337,11 +347,13 @@ def model_allowance(*, repo_root: Path = ROOT, delegation_reader=None):
           and sha256_bytes(content=comment["body"].encode("utf-8"))
           == policy["delegation_body_sha256"], "ISSUE_47_MODEL_DELEGATION_BODY_DOES_NOT_MATCH")
     _provenance(comment=comment, policy=policy, where="saved_record")
+    _posted_by_the_approver_directly(comment, where="saved_record")
     if delegation_reader is not None:
         number = _comment_url(repository=policy["repository"]).match(policy["delegation_url"])[1]
         fetched = delegation_reader("repos/" + policy["repository"] + "/issues/comments/" + number)
         _need(type(fetched) is dict, "ISSUE_47_MODEL_DELEGATION_FETCH_DID_NOT_RETURN_A_COMMENT")
         _provenance(comment=fetched, policy=policy, where="fetched")
+        _posted_by_the_approver_directly(fetched, where="fetched")
         _need(fetched.get("body") == comment["body"],
               "ISSUE_47_MODEL_SAVED_DELEGATION_DIFFERS_FROM_GITHUB")
     try:
@@ -357,6 +369,21 @@ def model_allowance(*, repo_root: Path = ROOT, delegation_reader=None):
     _need(approved.get("production_authorized") is False,
           "ISSUE_47_MODEL_DELEGATION_MUST_NOT_AUTHORIZE_PRODUCTION")
     return {**policy, "provenance_verified_against_github": delegation_reader is not None}
+
+
+def _posted_by_the_approver_directly(comment, *, where):
+    """A model approval posted by the approver's own hand, not by an app acting as them.
+
+    An independent review found an approval proved only that the comment was
+    posted as the approver's account. A GitHub App acting for the approver -
+    the channel an agent working in this repository posts through - writes
+    comments under that account too; GitHub marks them with the app. A model
+    approval is the one decision here that spends money on requests an agent
+    prepared, so it must come without that mark. The saved record must carry
+    the field, as fetched, so an offline read can hold it too.
+    """
+    _need("performed_via_github_app" in comment and comment["performed_via_github_app"] is None,
+          "ISSUE_47_MODEL_APPROVAL_WAS_POSTED_THROUGH_AN_APP:" + where)
 
 
 def register_model_approval(*, repo_root: Path, comment_url, reader):
@@ -400,12 +427,33 @@ def register_model_approval(*, repo_root: Path, comment_url, reader):
               "model_wiring_receipt_path": WIRING_RECEIPT_PATH,
               **{field: body.get(field) for field in RESTATED_BY_THE_COMMENT}}
     _provenance(comment=fetched, policy=policy, where="fetched")
+    _posted_by_the_approver_directly(fetched, where="fetched")
     record = {field: fetched.get(field) for field in _RECORD_FIELDS}
     record["user"] = {key: fetched.get("user", {}).get(key) for key in ("login", "id", "type")}
+    record["performed_via_github_app"] = fetched["performed_via_github_app"]
     outputs = {ALLOWANCE_PATH: policy, APPROVAL_RECORD_PATH: record}
+    _write_registered(repo_root, outputs)
+    allowance = model_allowance(repo_root=repo_root, delegation_reader=reader)
+    # The ledger this approval grants, for the consumers of LIVE registrations,
+    # written only once the gate that will read the allowance has accepted it.
+    # This is the only place it is written, so a test's fixture ledger - which
+    # never comes through here - is never one a Run accepts.
+    granted = {GRANTED_LEDGER_PATH: granted_ledger_record(allowance)}
+    _write_registered(repo_root, granted)
+    outputs.update(granted)
+    return {"status": "MODEL_APPROVAL_REGISTERED", "delegation_url": allowance["delegation_url"],
+            "delegation_body_sha256": allowance["delegation_body_sha256"],
+            "budget_root": allowance["budget_root"],
+            "limits": allowance["maximum_additional_provider_paid_sec_calls"],
+            "model_wiring_receipt_id": allowance["model_wiring_receipt_id"],
+            "written": sorted(outputs), "calls": [0, 0, 0]}
+
+
+def _write_registered(repo_root, outputs):
+    """Write each record once; the same bytes again is a no-op, different bytes a refusal."""
     for relative, value in outputs.items():
         data = (json.dumps(value, ensure_ascii=False, indent=1, sort_keys=True) + "\n").encode("utf-8")
-        path = repo_root / relative
+        path = Path(repo_root) / relative
         if path.exists():
             _need(path.read_bytes() == data,
                   "ISSUE_47_MODEL_ALLOWANCE_ALREADY_REGISTERED_DIFFERENTLY:" + relative)
@@ -413,13 +461,6 @@ def register_model_approval(*, repo_root: Path, comment_url, reader):
         path.parent.mkdir(parents=True, exist_ok=True)
         with path.open("xb") as handle:
             handle.write(data)
-    allowance = model_allowance(repo_root=repo_root, delegation_reader=reader)
-    return {"status": "MODEL_APPROVAL_REGISTERED", "delegation_url": allowance["delegation_url"],
-            "delegation_body_sha256": allowance["delegation_body_sha256"],
-            "budget_root": allowance["budget_root"],
-            "limits": allowance["maximum_additional_provider_paid_sec_calls"],
-            "model_wiring_receipt_id": allowance["model_wiring_receipt_id"],
-            "written": sorted(outputs), "calls": [0, 0, 0]}
 
 
 def request_in_scope(*, allowance, metric_id, company_id, report_end, purpose=PURPOSE,
@@ -483,14 +524,40 @@ def transport_policy(*, allowance, repo_root: Path = ROOT):
 
 
 def _allowance_hashes(allowance):
-    """The three decision hashes an issue_47_v1 plan carries, from the allowance."""
+    """The three decision hashes an issue_47_v1 plan carries, from the allowance.
+
+    The ledger root and the verified code are bound with the grant: an
+    independent review passed a mapping that differed from the allowance only
+    in its ledger root, with a fresh ledger there, and a request the granted
+    ledger had stopped at HTTP 402 went out again.
+    """
     return {"provider_transport_decision_hash": content_hash(value=allowance["transport"]),
             "transport_retry_decision_hash": content_hash(value=allowance["retry_policy"]),
             "live_call_bound_decision_hash": content_hash(value={
                 "delegation_url": allowance["delegation_url"],
                 "delegation_body_sha256": allowance["delegation_body_sha256"],
                 "limits": allowance["maximum_additional_provider_paid_sec_calls"],
-                "scope": allowance["scope"]})}
+                "scope": allowance["scope"], "budget_root": allowance["budget_root"],
+                "model_wiring_receipt_id": allowance["model_wiring_receipt_id"]})}
+
+
+def _as_granted(allowance):
+    """An allowance mapping without the one field that says how it was read."""
+    return {key: value for key, value in allowance.items()
+            if key != "provenance_verified_against_github"}
+
+
+def allowance_is_the_file_s(allowance):
+    """The caller's allowance mapping is the allowance file's, field for field.
+
+    Every consumer that is handed a mapping - a prepared request, a ledger, a
+    registration - asks this, so no field of a mapping the file does not hold
+    reaches a check, whatever that check compares.
+    """
+    _need(type(allowance) is dict
+          and _as_granted(allowance) == _as_granted(model_allowance(repo_root=ROOT)),
+          "ISSUE_47_MODEL_ALLOWANCE_IS_NOT_THE_ONE_THE_AUTHORITY_BOUND")
+    return allowance
 
 
 def invocation_authority_fields(*, requirement, repo_root: Path):
@@ -638,6 +705,7 @@ def _authority_is_issue_47(authority, allowance):
           "ISSUE_47_MODEL_AUTHORITY_IS_FOR_ANOTHER_REQUIREMENT")
     _need(all(policy[key] == value for key, value in _allowance_hashes(allowance).items()),
           "ISSUE_47_MODEL_ALLOWANCE_IS_NOT_THE_ONE_THE_AUTHORITY_BOUND")
+    allowance_is_the_file_s(allowance)
 
 
 def prepare_historical_requests(*, company_id, metric_id, period_selection, authority,
@@ -679,16 +747,102 @@ def prepare_historical_requests(*, company_id, metric_id, period_selection, auth
             for request in pinned_requests(source)]
 
 
+def loaded_code_holds(authority):
+    """What this process runs is the checkout's bound source, compiled from source.
+
+    Two findings of an independent review, answered at the last point before a
+    socket. An unbound file placed in ``scripts/`` shadowed the pinned
+    tokenizer's package; every hash still verified, since nothing names a file
+    nobody bound, and a request of about 423,000 tokens was planned as 4,097
+    and sent. And a changed bytecode file beside an unchanged source ran code
+    the approval never saw, because the receipt, the approval and the
+    controller all hash sources. So every module this process loaded from the
+    checkout must be a file the controller's authority binds - the test
+    package, which the runner never imports, excepted - and must have been
+    compiled into a private cache outside the checkout (``sys.pycache_prefix``,
+    which the runner sets before it imports anything of the checkout's), never
+    read from the checkout's own ``__pycache__``.
+    """
+    root = Path(authority.root)
+    prefix = sys.pycache_prefix
+    _need(prefix is not None and Path(prefix).is_absolute() and Path(prefix).is_dir()
+          and root not in Path(os.path.realpath(prefix)).parents
+          and Path(os.path.realpath(prefix)) != root,
+          "ISSUE_47_MODEL_CALL_WITHOUT_A_PRIVATE_BYTECODE_CACHE")
+    private = os.path.realpath(prefix) + os.sep
+    bound = set(strict_json_loads(text=authority._files.decode("utf-8")))
+    unbound, cached_in_the_checkout = [], []
+    for module in list(sys.modules.values()):
+        where = getattr(module, "__file__", None)
+        if not where:
+            continue
+        real = Path(os.path.realpath(where))
+        if root not in real.parents:
+            continue
+        relative = real.relative_to(root).as_posix()
+        if relative.startswith("tests/"):
+            continue
+        if relative not in bound:
+            unbound.append(relative)
+        spec = getattr(module, "__spec__", None)
+        cached = getattr(spec, "cached", None)
+        if cached and not os.path.realpath(cached).startswith(private):
+            cached_in_the_checkout.append(relative)
+    _need(not unbound, "ISSUE_47_MODEL_UNBOUND_CODE_LOADED:" + ",".join(sorted(unbound)[:8]))
+    _need(not cached_in_the_checkout, "ISSUE_47_MODEL_CODE_READ_FROM_THE_CHECKOUT_S_BYTECODE:"
+          + ",".join(sorted(cached_in_the_checkout)[:8]))
+
+
+# The request each thread's counted send is sending right now, with its slot. The
+# adapter's payload hook returns bytes for #47's request type only while that
+# send holds it: an independent review built the adapter's transport directly,
+# passed the egress capability it reached by attribute lookup and a prepared
+# request, and the bytes reached the opener with no slot and no WB-3 plan - the
+# egress gate's exact caller set is a static scan, which a lookup by name
+# passes. Checked at the hook itself, every socket for #47 needs a counted
+# claim whose WB-3 marker already exists, whoever called the transport.
+_SENDING = {}
+
+
+@contextmanager
+def sending(*, prepared, ledger, path, intent, execution_id):
+    """Hold ``prepared`` as this thread's one counted send, for the duration of the socket."""
+    _need(type(prepared) is HistoricalSemanticRequest and prepared._factory is _FACTORY
+          and type(ledger) is HistoricalModelLedger and ledger._factory is _FACTORY
+          and ledger.claimed_slot(path=path, intent=intent),
+          "ISSUE_47_MODEL_SEND_WITHOUT_A_COUNTED_SLOT")
+    key = threading.get_ident()
+    _need(key not in _SENDING, "ISSUE_47_MODEL_SEND_ALREADY_IN_PROGRESS")
+    _SENDING[key] = (prepared, ledger, Path(path), intent, execution_id)
+    try:
+        yield
+    finally:
+        _SENDING.pop(key, None)
+
+
 def transport_payload(*, request, policy):
     """What the adapter's scoped-payload hook returns for #47's request type.
 
     Only ``ai_adapter._scoped_transport_payload`` calls this (registration
-    patch), immediately before it builds the socket request. The request is
-    rebuilt from the saved filing first, so bytes that no longer rebuild never
-    reach the wire.
+    patch), immediately before it builds the socket request. The request must
+    be the one this thread's counted send holds - its slot still open and its
+    WB-3 egress marker written - and it is rebuilt from the saved filing, so
+    bytes that no longer rebuild never reach the wire.
     """
+    from . import invocation_control as control
     _need(type(request) is HistoricalSemanticRequest, "ISSUE_47_MODEL_REQUEST_TYPE_REQUIRED")
-    request.validate(policy)
+    held = _SENDING.get(threading.get_ident())
+    _need(held is not None and held[0] is request, "ISSUE_47_MODEL_TRANSPORT_WITHOUT_A_COUNTED_SEND")
+    prepared, ledger, path, intent, execution_id = held
+    loaded_code_holds(prepared.authority)
+    markers = control._egress_markers_for_execution(root=path / "invocation_control",
+                                                    execution_id=execution_id)
+    _need(ledger.claimed_slot(path=path, intent=intent) and len(markers) == 1
+          and markers[0]["ai_invocation_plan_id"] == intent["plan_id"],
+          "ISSUE_47_MODEL_TRANSPORT_WITHOUT_A_COUNTED_SEND")
+    fields, _ = request.validate(policy)
+    _need(ledger_digest(fields, policy) == intent["request_digest"],
+          "ISSUE_47_MODEL_TRANSPORT_WITHOUT_A_COUNTED_SEND")
     return request.request_bytes, request.provider_request_body_bytes, request.output_schema_bytes
 
 
@@ -821,8 +975,22 @@ class HistoricalModelLedger:
         root = Path(root)
         return root.parent / ("." + root.name + ".initialized.json")
 
+    @staticmethod
+    def mirror_path(root):
+        """Where the claim log's copy outside the root lives: beside it, with the anchor.
+
+        An independent review deleted the slots and the claim log together,
+        kept the binding and the anchor, and the ledger read as unused: the
+        count, the stops and the no-redraw rule all started again. Every claim
+        is now appended here first, and the log inside the root must be this
+        copy, so emptying the root no longer empties the ledger.
+        """
+        root = Path(root)
+        return root.parent / ("." + root.name + ".claims.jsonl")
+
     @contextmanager
     def locked(self):
+        self.granted()
         _need(self.root.is_absolute()
               and not any(path.is_symlink() for path in [self.root, *self.root.parents]),
               "ISSUE_47_MODEL_LEDGER_PATH_ALIAS:" + str(self.root))
@@ -840,26 +1008,48 @@ class HistoricalModelLedger:
 
     def _check_binding(self):
         binding_path, anchor = self.root / "binding.json", self.anchor_path(self.root)
+        mirror = self.mirror_path(self.root)
         if not binding_path.exists():
-            # A new ledger. A slot, a claim log or an anchor without a binding
-            # is a ledger that was reset, and is refused rather than restarted.
+            # A new ledger. A slot, a claim log, an anchor or a mirror without
+            # a binding is a ledger that was reset, and is refused rather than
+            # restarted.
             present = sorted(path.name for path in self.root.iterdir())
-            _need(not anchor.exists() and not present,
+            _need(not anchor.exists() and not mirror.exists() and not present,
                   "ISSUE_47_MODEL_LEDGER_BINDING_MISSING_OR_RESET:" + ",".join(present))
             _write_once(anchor, self.binding)
+            os.close(os.open(str(mirror), os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600))
             _write_once(binding_path, self.binding)
         _need(anchor.is_file() and not anchor.is_symlink(),
               "ISSUE_47_MODEL_LEDGER_INITIALIZATION_ANCHOR_MISSING:" + str(anchor))
+        _need(mirror.is_file() and not mirror.is_symlink(),
+              "ISSUE_47_MODEL_LEDGER_CLAIM_MIRROR_MISSING:" + str(mirror))
         _need(strict_json_file(path=anchor) == self.binding,
               "ISSUE_47_MODEL_LEDGER_INITIALIZATION_ANCHOR_CHANGED")
         _need(strict_json_file(path=binding_path) == self.binding, "ISSUE_47_MODEL_LEDGER_BINDING_CHANGED")
 
     def _claims(self):
+        """The claim log inside the root, which must be its copy beside the root line for line.
+
+        A ledger nothing has initialized - no binding, no log and no copy - has
+        no claims; any one of them present means it was initialized, and then
+        the copy must be there. (Initializing, and refusing a ledger whose
+        binding went while its anchor stayed, is the lock's.)
+        """
         path = self.root / "claims.jsonl"
-        if not path.exists():
+        mirror = self.mirror_path(self.root)
+        if not ((self.root / "binding.json").exists() or path.exists() or mirror.exists()):
             return []
-        _need(path.is_file() and not path.is_symlink(), "ISSUE_47_MODEL_LEDGER_CLAIM_LOG_UNSAFE")
-        return [strict_json_loads(text=line) for line in path.read_text(encoding="utf-8").splitlines()]
+        claims = []
+        if path.exists():
+            _need(path.is_file() and not path.is_symlink(), "ISSUE_47_MODEL_LEDGER_CLAIM_LOG_UNSAFE")
+            claims = [strict_json_loads(text=line)
+                      for line in path.read_text(encoding="utf-8").splitlines()]
+        _need(mirror.is_file() and not mirror.is_symlink(),
+              "ISSUE_47_MODEL_LEDGER_CLAIM_MIRROR_MISSING:" + str(mirror))
+        copy = [strict_json_loads(text=line) for line in mirror.read_text(encoding="utf-8").splitlines()]
+        _need(copy == claims, "ISSUE_47_MODEL_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR:"
+              + str(len(claims)) + " in the root, " + str(len(copy)) + " beside it")
+        return claims
 
     def snapshot(self):
         """Counts, stops and claimed requests: the slots, checked against the claim log.
@@ -916,10 +1106,31 @@ class HistoricalModelLedger:
         return {"counts": counts, "limits": list(self.binding["limits"]), "stopped": stopped,
                 "requests": sorted(requests), "rows": rows, "previous_intent_id": previous}
 
+    def granted(self):
+        """A live ledger is the one the allowance file grants, not one a mapping described.
+
+        A ledger built from a caller's mapping carries that mapping's limits,
+        request list and root: an independent review built one at a fresh root
+        and a request the granted ledger had stopped went out again. So a live
+        ledger's binding is derived again from the allowance file itself, at
+        the file's root, before the lock creates anything and before each
+        claim. A recorded ledger opens no socket and registers nothing a Run
+        reads by default, so it is not held to the grant.
+        """
+        if not self.live:
+            return self
+        allowance = model_allowance(repo_root=ROOT)
+        root = Path(allowance["budget_root"])
+        _need(self.root == root
+              and self.binding == _ledger(allowance=allowance, root=root, live=True).binding,
+              "ISSUE_47_MODEL_LEDGER_IS_NOT_THE_GRANTED_ONE")
+        return self
+
     def claim(self, *, request_digest, plan_id, purpose, grants, request_identity,
               authority_files_hash):
         """Write the counted intent before any socket; refuses when a stop or limit holds."""
         _need(self._locked, "ISSUE_47_MODEL_LEDGER_LOCK_REQUIRED")
+        self.granted()
         _need(purpose in self.binding["purposes"], "ISSUE_47_MODEL_PURPOSE_NOT_IN_ALLOWANCE")
         state = self.snapshot()
         _need(not state["stopped"], "ISSUE_47_MODEL_CHANNEL_STOPPED:" + ",".join(state["stopped"]))
@@ -948,21 +1159,14 @@ class HistoricalModelLedger:
                           "counts_before": state["counts"], "counts_claimed": [1, 1, 0],
                           "automatic_retry_count": 0, "production_authorized": False},
                          "intent_id")
-        # The claim is logged before its slot exists, append-only and synced,
-        # so a removed slot - the last one included - disagrees with the log,
-        # and a crash between the two writes refuses before the next socket.
-        handle = os.open(str(self.root / "claims.jsonl"),
-                         os.O_WRONLY | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW, 0o600)
-        try:
-            line = canonical_json_bytes(value=intent).rstrip(b"\n") + b"\n"
-            written = 0
-            while written < len(line):
-                count = os.write(handle, line[written:])
-                _need(count > 0, "ISSUE_47_MODEL_LEDGER_CLAIM_WRITE_FAILED")
-                written += count
-            os.fsync(handle)
-        finally:
-            os.close(handle)
+        # The claim is logged before its slot exists, append-only and synced -
+        # beside the root first, then inside it - so a removed slot, the last
+        # one included, disagrees with the log, an emptied root disagrees with
+        # the copy beside it, and a crash between any two writes refuses
+        # before the next socket.
+        line = canonical_json_bytes(value=intent).rstrip(b"\n") + b"\n"
+        for log in (self.mirror_path(self.root), self.root / "claims.jsonl"):
+            _append_synced(log, line)
         path.mkdir(parents=True, exist_ok=False)
         _write_once(path / "intent.json", intent)
         return path, intent
@@ -997,23 +1201,28 @@ class HistoricalModelLedger:
         return terminal
 
 
+def _append_synced(path, line):
+    """Append one line to a log that may not be a symlink, and sync it before returning."""
+    handle = os.open(str(path), os.O_WRONLY | os.O_CREAT | os.O_APPEND | os.O_NOFOLLOW, 0o600)
+    try:
+        written = 0
+        while written < len(line):
+            count = os.write(handle, line[written:])
+            _need(count > 0, "ISSUE_47_MODEL_LEDGER_CLAIM_WRITE_FAILED")
+            written += count
+        os.fsync(handle)
+    finally:
+        os.close(handle)
+
+
 def _write_once(path, value):
     from .invocation_control import _exclusive_write_json
     _exclusive_write_json(path=path, value=value)
 
 
 def _ledger(*, allowance, root, live):
-    binding = _sealed({"record_type": LEDGER_TYPE, "requirement_id": REQUIREMENT_ID,
-                       "root": str(root),
-                       "limits": list(allowance["maximum_additional_provider_paid_sec_calls"]),
-                       "purposes": list(allowance["scope"]["purposes"]),
-                       "request_digests_by_grant": {
-                           grant["grant"]: sorted(grant["request_digests"])
-                           for grant in allowance["scope"]["grants"]},
-                       "delegation_url": allowance["delegation_url"],
-                       "delegation_body_sha256": allowance["delegation_body_sha256"],
-                       "execution_mode": "LIVE" if live else "RECORDED_TEST_ONLY"}, "binding_id")
-    return HistoricalModelLedger(factory=_FACTORY, root=root, binding=binding, live=live)
+    return HistoricalModelLedger(factory=_FACTORY, root=root,
+                                 binding=ledger_binding(allowance, root=root, live=live), live=live)
 
 
 def live_model_ledger():

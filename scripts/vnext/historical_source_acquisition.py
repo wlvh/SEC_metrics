@@ -85,6 +85,11 @@ ISSUE_NUMBER = 47
 # be that repository's owner.
 TRUSTED_REPOSITORY = "wlvh/SEC_metrics"
 TRUSTED_APPROVER = TRUSTED_REPOSITORY.split("/")[0]
+# The approver's numeric GitHub account id. A login can be renamed and then
+# registered by someone else; the id cannot. An independent review found the
+# approval check read the login alone, so a comment by another account of that
+# name - or by a bot or an app's account - was accepted.
+TRUSTED_APPROVER_ID = 30534800
 # Not every declared dependency serves one named period, and requiring that it
 # does refused the majority of the real declaration. Measured on the planner's
 # own rows: a submissions index and the history shards carry
@@ -415,9 +420,12 @@ def _provenance(*, comment, policy, where):
           and str(comment.get("id")) == match[1]
           and comment.get("issue_url") == issue_api,
           "ISSUE_47_DELEGATION_IS_NOT_ON_THIS_ISSUE:" + where)
-    _need(comment.get("user", {}).get("login") == policy["approver_login"],
+    user = comment.get("user") or {}
+    _need(user.get("login") == policy["approver_login"] and user.get("id") == TRUSTED_APPROVER_ID
+          and user.get("type") == "User" and comment.get("author_association") == "OWNER",
           "ISSUE_47_DELEGATION_AUTHOR_IS_NOT_THE_APPROVER:" + where + ":"
-          + str(comment.get("user", {}).get("login")))
+          + str(user.get("login")) + ":" + str(user.get("id")) + ":" + str(user.get("type"))
+          + ":" + str(comment.get("author_association")))
     # An approval is what was posted, not what the comment says now. Issue
     # #28's comment check requires an unedited comment; this one did not, and
     # an edited approval was accepted in an independent review. An edit is a

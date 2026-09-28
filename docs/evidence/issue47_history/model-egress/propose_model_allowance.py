@@ -113,17 +113,17 @@ def _covering_grant(metric, company, end):
     return covering[0]
 
 
-def _planned(calls, content_hash, resolve_period_selection, transport, measured, e01, d02,
+def _planned(calls, resolve_period_selection, transport, measured, e01, d02,
              positions):
     """Every proposed request's ledger digest, computed now and held to what was measured."""
+    # Every measurement records the digest of the exact bytes each request
+    # sends (historical_model_calls.ledger_digest), for all three contracts.
     recorded_by_metric = {
-        "D04": {key: sorted(request["request_digest"] for request in row["requests"])
+        "D04": {key: sorted(request["ledger_digest"] for request in row["requests"])
                 for key, row in measured["positions"].items()},
-        "E01": {row["company_id"] + ":" + row["report_end"]:
-                [content_hash(value={"model": transport["model"], "request_id": row["request_id"]})]
-                for row in e01["windows"] if "request_id" in row},
-        "D02": {row["company_id"] + ":" + row["report_end"]:
-                [content_hash(value={"model": transport["model"], "request_id": row["request_id"]})]
+        "E01": {row["company_id"] + ":" + row["report_end"]: [row["ledger_digest"]]
+                for row in e01["windows"] if "ledger_digest" in row},
+        "D02": {row["company_id"] + ":" + row["report_end"]: [row["ledger_digest"]]
                 for row in d02["positions"]}}
     planned = {}
     for metric, company, end in positions:
@@ -145,7 +145,6 @@ def _planned(calls, content_hash, resolve_period_selection, transport, measured,
 def main():
     from vnext import historical_model_calls as calls
     from vnext.ai_adapter import _DEEPSEEK_ENDPOINT_HOST
-    from vnext.canonical import content_hash
     from vnext.historical_source_acquisition import (APPROVED_BODY_PATH, POLICY_PATH,
                                                      TRUSTED_APPROVER)
     from vnext.normal_period_selection import resolve_period_selection
@@ -165,7 +164,7 @@ def main():
     if not receipt.get("all_checks_passed"):
         raise SystemExit("THE_OFFLINE_VERIFICATION_IS_NOT_SEALED_AS_PASSING")
     transport = {**TRANSPORT, "endpoint_host": _DEEPSEEK_ENDPOINT_HOST}
-    planned = _planned(calls, content_hash, resolve_period_selection, transport, measured, e01, d02,
+    planned = _planned(calls, resolve_period_selection, transport, measured, e01, d02,
                        positions)
     if sum(len(digests) for digests in planned.values()) != total:
         raise SystemExit("THE_PLANNED_REQUESTS_ARE_NOT_THE_CAP")

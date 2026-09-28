@@ -9,13 +9,13 @@
  "checkpoint_validated_by": "continuous_sec_acquisition.validate_acquisition_checkpoint, frozen under issue_28_v14 and not editable from this issue",
  "downstream_reader_accepted": true,
  "evidence": {
-  "docs/evidence/issue47_history/acquisition-wiring/fault-injections.json": "cc597dc565876739e118265495bcd5a07cf53ee85a403dda1c8a3a78ca905025",
+  "docs/evidence/issue47_history/acquisition-wiring/fault-injections.json": "8b154453f662c0f6d0fa9b27c431fe7ae2bc0c859dc58d0b7729cc4ec5ece7a8",
   "scripts/vnext/historical_event_sources.py": "9385f14317a7c6878feb85be42bd2d94ccd8ff31841f50e08cd12644b60be404",
   "scripts/vnext/historical_governance_sources.py": "3f359126422b684b434a59c9e9be514419db3a696a2a5d35c3438896d6b73cd3",
-  "scripts/vnext/historical_sec_session.py": "4b761814ca602ed0e2363a41309cd03733c24709c70084c9854b9753ef07ad44",
-  "scripts/vnext/historical_source_acquisition.py": "e004d02aac0ac5042190c5fe0321136ca9db274575219d719a14aa45c81c1275",
-  "scripts/vnext/historical_source_export.py": "6e32e285f2550af0428e32d2b1b69b0a12d23514af807bc9a8ef80260dacebca",
-  "tests/vnext/test_historical_sec_session.py": "64560ad764d1dede2e0d126f2ec60daf282902297eca6eb98ebe091d52da67ba",
+  "scripts/vnext/historical_sec_session.py": "639ddb110427d4e6c98420b98d3ece180b96c420f45848b5f10889cc84294678",
+  "scripts/vnext/historical_source_acquisition.py": "aee66b2f72f281238f1b02d8e21716554fd6d18e31c2776e733e20bb67fba585",
+  "scripts/vnext/historical_source_export.py": "8e501138608992a990d5268fbaa171310112438fe88b4e8d2eef9d7ca96b33d8",
+  "tests/vnext/test_historical_sec_session.py": "e6019cc6871195f3d1b87ef55478d65788a8a17f948c5b4ba706a293b892a983",
   "tools/vnext_historical_sec.py": "295b84f21150a5535e7b244a6a46ad690d6bbbafa70bb9196d06c60b264d02bb",
   "tools/vnext_historical_wiring.py": "5cf7934b76782080ae11cb81f539c525db76d99355f8d7ff8b927640da6ff536"
  },
@@ -24,7 +24,7 @@
  "installed_source_paths": 2,
  "production_authorized": false,
  "real_sec_credit": false,
- "receipt_id": "sha256:825e39fcbb9d894c66d2a3ded06f20114f9b1cbc5180694ef38305ce08c1ffb4",
+ "receipt_id": "sha256:48185876df7aeb9bf34c69d517ed79b2cf083ebbeb32611c3d411c5735ad25a7",
  "record_type": "ISSUE_47_SEC_ACQUISITION_OFFLINE_WIRING",
  "requirement_id": "issue_47_v1",
  "schema_version": 2,
@@ -108,7 +108,7 @@
   "how_the_set_was_chosen": "read from tests.vnext.test_historical_sec_session by enumerating the TestCase subclasses it declares, minus the receipt-dependent names, so an added test is covered without editing any list",
   "passed": true,
   "return_code": 0,
-  "tests_run": 124,
+  "tests_run": 128,
   "why_excluded": "they read the receipt this run produces, so running them inside the run that produces it would make the evidence circular; they run afterwards against the installed file"
  },
  "what_that_validator_does_not_prove": "that the grant is valid, that the request is in scope, that the cumulative count is intact, that an unknown outcome stops the channel, or that a stale snapshot is refreshed - those are this module's own checks"

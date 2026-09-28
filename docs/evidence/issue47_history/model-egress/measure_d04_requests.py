@@ -39,7 +39,8 @@ def main():
     arguments = parser.parse_args()
     from vnext.ai_adapter import _DEEPSEEK_ENDPOINT_HOST, TransportPolicy
     from vnext.continuous_request_context import OUTPUT_RESERVE, measure_request
-    from vnext.continuous_semantic_calls import request_body, request_digest
+    from vnext.continuous_semantic_calls import request_body
+    from vnext.historical_model_calls import ledger_digest
     from vnext.historical_semantic_results import pinned_native_source, pinned_requests
     from vnext.normal_period_selection import resolve_period_selection
     policy = TransportPolicy.from_mapping(value={**TRANSPORT_FIELDS,
@@ -59,7 +60,9 @@ def main():
             # a measurement that fell back to a byte bound would describe a
             # plan the live path would not make.
             measured = measure_request(body, require_reference=True)
-            requests.append({"request_digest": request_digest(request, policy),
+            # What an approval names: the exact bytes the call sends
+            # (historical_model_calls.ledger_digest), not #28's semantic digest.
+            requests.append({"ledger_digest": ledger_digest(request, policy),
                              "units": len(request["units"]),
                              "required_candidate_assessments": len(
                                  request.get("required_candidate_assessments") or ()),

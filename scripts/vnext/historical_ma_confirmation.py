@@ -182,16 +182,23 @@ EXPORT_PATH = "config/issue47_historical_ma_confirmation.json"
 JOURNAL = ".git/issue47-historical-assessments"
 
 
-def registered_confirmation(*, request, period_selection_id, output, mode):
+def registered_confirmation(*, request, period_selection_id, output, mode, counted=None):
     """A registration: the answer to one window's request, checked, and what it counts.
 
     The record names the request it answers by id, so a changed text, a changed
     definition or a changed prompt is a different request and this record does
     not answer it. It keeps the assistant output itself, so every consumer can
-    check the answer again under its own code.
+    check the answer again under its own code. A LIVE one carries the counted
+    call that answered it (``historical_counted_calls``): an independent review
+    registered a LIVE confirmation with no call at all, and the batch published
+    a withheld window as 3.
     """
+    from .historical_counted_calls import check_counted_calls
     _need(mode in MODES, "E01_CONFIRMATION_MODE_INVALID")
     raw = output if isinstance(output, bytes) else output.encode("utf-8")
+    _need(mode != "LIVE" or counted is not None, "E01_LIVE_CONFIRMATION_WITHOUT_COUNTED_CALLS")
+    if counted is not None:
+        check_counted_calls(counted=counted, answered=[(request, raw)], mode=mode)
     decisions = validate_answer(request=request, raw_output=raw)
     value, reason, items = confirmed_count(request=request, decisions=decisions)
     body = {"record_type": RECORD_TYPE, "schema_version": 1, "metric_id": "E01",
@@ -201,6 +208,8 @@ def registered_confirmation(*, request, period_selection_id, output, mode):
             "assistant_output": raw.decode("utf-8"), "decisions": decisions,
             "counted": {"value": value, "withheld_reason": reason, "items": items},
             "new_call_authority": False, "production_authorized": False}
+    if counted is not None:
+        body["counted_calls"] = counted
     return {**body, "input_record_id": content_hash(value=body)}
 
 
@@ -216,8 +225,15 @@ def validate_registered(*, record, request, period_selection_id, mode):
     _need(record["request_id"] == request["request_id"],
           "E01_CONFIRMATION_REGISTERED_FOR_ANOTHER_REQUEST")
     again = registered_confirmation(request=request, period_selection_id=period_selection_id,
-                                    output=record["assistant_output"], mode=mode)
+                                    output=record["assistant_output"], mode=mode,
+                                    counted=record.get("counted_calls"))
     _need(again == record, "E01_CONFIRMATION_DOES_NOT_RE_DERIVE")
+    if mode == "LIVE":
+        from .historical_counted_calls import check_live_registration
+        from .normal_source_authority import ROOT
+        check_live_registration(counted=record.get("counted_calls"),
+                                answered=[(request, record["assistant_output"].encode("utf-8"))],
+                                repo_root=ROOT)
     return record
 
 
@@ -281,12 +297,12 @@ def load_registered_confirmation(*, data_root, request, period_selection_id, mod
                                period_selection_id=period_selection_id, mode=mode)
 
 
-def register_confirmation(*, request, period_selection_id, output, mode):
+def register_confirmation(*, request, period_selection_id, output, mode, counted=None):
     """Write a checked confirmation into the creator journal; the same bytes again is a no-op."""
     from sec_http import write_immutable_bytes
     from .native_unit_index import evidence_json_bytes
     record = registered_confirmation(request=request, period_selection_id=period_selection_id,
-                                     output=output, mode=mode)
+                                     output=output, mode=mode, counted=counted)
     directory = journal_directory(mode=mode, source_id=request["source_id"])
     directory.mkdir(parents=True, exist_ok=True)
     path = directory / (record["input_record_id"][len("sha256:"):] + ".json")

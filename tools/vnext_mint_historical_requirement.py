@@ -160,6 +160,11 @@ NEW_RULE_FILES = (
     # answer counts. It decides which Item 8 blocks a reviewed D02 set holds,
     # so both roots check it.
     "scripts/vnext/historical_legal_review.py",
+    # What a LIVE registration of E01, D02 or D04 must carry - the counted calls
+    # that answered it - and the ledger a consumer accepts them from: the one the
+    # owner's registered approval granted. It decides whether a Run reads a
+    # registered model answer at all, so both roots check it.
+    "scripts/vnext/historical_counted_calls.py",
 )
 
 # One module the parent's authority does not name although its own named code
