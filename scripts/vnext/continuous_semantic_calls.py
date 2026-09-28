@@ -250,8 +250,12 @@ class SemanticRequest:
         else:
             from .ordinary_source_authority import verify_ordinary_source_proofs
             historical = source['record_type'] in {'D04_HISTORICAL_PRIMARY_CONTROL_SOURCE', 'D04_NATIVE_HISTORICAL_CONTROL_SOURCE'}
-            ordinary = (registered_source and allowed_registered and source['record_type'] in {
-                'B13_COMPLETE_SEMANTIC_SOURCE','D04_NATIVE_COMPLETE_SEMANTIC_SOURCE'})
+            ordinary = (registered_source and allowed_registered and (
+                source['record_type'] in {'B13_COMPLETE_SEMANTIC_SOURCE',
+                    'D04_NATIVE_COMPLETE_SEMANTIC_SOURCE'} or
+                source['record_type'] == 'D03_COMPLETE_SEMANTIC_SOURCE'
+                and self.replay_only and source.get('external_replay_only') is True
+                and request.get('external_replay_only') is True))
             need(historical and source['normal_update_input'] is False or ordinary,
                  'CONTINUOUS_CONTROL_SOURCE_SCOPE_REQUIRED')
             admission=verify_ordinary_source_proofs(data_root=self.data_root,proofs=source['source_proofs'])
@@ -302,7 +306,8 @@ class SemanticRequest:
 
 
 def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,control_id=None, native=False,
-                     reference_context=False, complete_response_contract=False, source_root=None, source_ledger=None, program_quantity_roles=False):
+                     reference_context=False, complete_response_contract=False, source_root=None, source_ledger=None, program_quantity_roles=False,
+                     d03_replay_only_external=False):
     from .r6_semantic_source import prepare_d04_semantic_source
     from .requirement_profile import validate_execution_authority
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
@@ -312,6 +317,10 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     policy = configured_transport_policy(requirement=requirement,repo_root=ROOT)
     authority = control.prepare_successor_invocation_authority(repo_root=ROOT,requirement_id=REQUIREMENT_ID)
     need(metric_id in {'B13','D03','D04'},'CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
+    need(type(d03_replay_only_external) is bool and
+         (not d03_replay_only_external or (metric_id == 'D03' and source_root is not None
+          and reference_context and not native and prior_call_ordinal is None)),
+         'D03_EXTERNAL_REPLAY_ONLY_SCOPE_REQUIRED')
     need(not native or (metric_id == 'D04' and prior_call_ordinal is None),
          'D04_NATIVE_REQUIRES_CURRENT_COMPLETE_SOURCE')
     need(type(complete_response_contract) is bool and (not complete_response_contract or native),
@@ -324,8 +333,10 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     if source_root is not None:
         from .continuous_call_ledger import CallLedger, _FACTORY as ledger_factory
         data_root=Path(source_root).resolve()
-        need(control_id is None and prior_call_ordinal is None and metric_id in {'B13','D04'}
-             and (metric_id=='B13' or native), 'CONTINUOUS_ORDINARY_SOURCE_ROUTE_REQUIRED')
+        need(control_id is None and prior_call_ordinal is None
+             and (metric_id == 'B13' or metric_id == 'D04' and native
+                  or metric_id == 'D03' and d03_replay_only_external),
+             'CONTINUOUS_ORDINARY_SOURCE_ROUTE_REQUIRED')
         need(type(source_ledger) is CallLedger and source_ledger._factory is ledger_factory,
              'CONTINUOUS_ORDINARY_SOURCE_LEDGER_REQUIRED')
         fixed=Path(requirement['policy']['budget_root'])/'source-inputs'
@@ -348,7 +359,8 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
         source=prepare_verification_source(company_id=company_id,prior_call_ordinal=prior_call_ordinal)
     elif metric_id=='D03':
         from .r6_regulatory_semantics import prepare_regulatory_semantic_source
-        source = prepare_regulatory_semantic_source(repo_root=ROOT,company_id=company_id,request_context_format=context_format)
+        source = prepare_regulatory_semantic_source(repo_root=data_root,company_id=company_id,
+            request_context_format=context_format,ordinary_registered=data_root!=ROOT)
     elif metric_id == 'B13':
         from .capacity_semantic_source import prepare_capacity_semantic_source
         source = prepare_capacity_semantic_source(repo_root=data_root,company_id=company_id,request_context_format=context_format,ordinary_registered=data_root!=ROOT)
@@ -373,10 +385,11 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
         verify_ordinary_source_proofs(data_root=data_root,proofs=source['source_proofs'])
     raw = _source_json(source)
     return [SemanticRequest(_FACTORY,raw,_source_json(request),request_body(request,policy),
-        _json(request['response_protocol']),requirement,authority,data_root,source_ledger) for request in source_requests(source)]
+        _json(request['response_protocol']),requirement,authority,data_root,source_ledger,
+        replay_only=d03_replay_only_external) for request in source_requests(source)]
 
 
-def prepare_d03_replay_only_requests(*, company_id):
+def prepare_d03_replay_only_requests(*, company_id, source_root=None, source_ledger=None):
     """Carry the current complete D03 successor set into the real factory.
 
     These objects can be identity-checked and planned, but replay_only keeps
@@ -384,10 +397,18 @@ def prepare_d03_replay_only_requests(*, company_id):
     a compelled answer, and no response or native Result is created here.
     """
     from .native_request_construction import request_construction_session
+    need((source_root is None) == (source_ledger is None),
+         'D03_REPLAY_ONLY_EXTERNAL_SOURCE_AND_LEDGER_REQUIRED')
+    if source_root is not None:
+        from .continuous_call_ledger import CallLedger, _FACTORY as ledger_factory
+        need(type(source_ledger) is CallLedger and source_ledger._factory is ledger_factory
+             and Path(source_root).resolve() == source_ledger.root/'source-inputs',
+             'D03_REPLAY_ONLY_EXTERNAL_SOURCE_NOT_LEDGER_OWNED')
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
     with request_construction_session(requirement):
         originals = prepare_requests(company_id=company_id, metric_id='D03',
-                                     reference_context=True)
+            reference_context=True, source_root=source_root, source_ledger=source_ledger,
+            d03_replay_only_external=source_root is not None)
         need(bool(originals) and all(p.source_bytes == originals[0].source_bytes
             for p in originals), 'D03_REPLAY_ONLY_COMPLETE_SOURCE_REQUIRED')
         source = strict_json_loads(text=originals[0].source_bytes.decode('utf-8'))
@@ -823,7 +844,10 @@ def execute_d03_recorded_assessment(*, prepared, ledger, recorded_wire):
     _require_d03_recorded_ledger(ledger)
     need(type(recorded_wire) is bytes,
          'D03_NATIVE_RECORDED_WIRE_REQUIRED')
-    need(prepared.replay_only and prepared.data_root == ROOT
+    external = (prepared.source_ledger is ledger and
+                prepared.data_root == ledger.root/'source-inputs')
+    need(prepared.replay_only and (prepared.data_root == ROOT or external)
+         and (not external or request.get('external_replay_only') is True)
          and request.get('record_type') == 'D03_INTERPRETATION_REQUEST'
          and request.get('metric_id') == 'D03'
          and not request.get('source_statement_facts'),
@@ -840,6 +864,16 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
                       d03_recorded_native=False):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
+    if request_fields.get('metric_id') == 'D03':
+        source_fields = strict_json_loads(text=prepared.source_bytes.decode())
+        if (prepared.data_root != ROOT or source_fields.get('external_replay_only')
+                or request_fields.get('external_replay_only')):
+            need(d03_recorded_native and prepared.replay_only
+                 and source_fields.get('external_replay_only') is True
+                 and request_fields.get('external_replay_only') is True
+                 and prepared.source_ledger is ledger
+                 and prepared.data_root == ledger.root/'source-inputs',
+                 'D03_EXTERNAL_REPLAY_EXECUTION_NOT_AUTHORIZED')
     need(not scan_stage or (native_assessment and not ledger.live
          and request_fields.get('record_type') == 'B13_REFERENCE_SCAN_REQUEST'),
          'B13_SCAN_STAGE_EXECUTION_SCOPE_CHANGED')
@@ -848,7 +882,8 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
          'B13_TWO_STAGE_EXECUTION_SCOPE_CHANGED')
     need(not d03_recorded_native or (native_assessment and not ledger.live
          and type(recorded_wire) is bytes and prepared.replay_only
-         and prepared.data_root == ROOT
+         and (prepared.data_root == ROOT or
+              prepared.source_ledger is ledger and prepared.data_root == ledger.root/'source-inputs')
          and request_fields.get('record_type') == 'D03_INTERPRETATION_REQUEST'
          and request_fields.get('metric_id') == 'D03'
          and not request_fields.get('source_statement_facts')),

@@ -6788,5 +6788,43 @@
       "compatibility": "workflow job timeout only; selector list, commands and product defaults unchanged",
       "downstream_impact": "stacked PR may inherit a 20-minute fast-job ceiling; no #47 branch/worktree/ledger/snapshot/PR operated"
     }
+  },
+  "d03_current_source_replay_20260929": {
+    "status": "LOCAL_RECORDED_CURRENT_SOURCE_PATH_PASS_LIMITED_REVIEW_AND_NEW_HEAD_CI_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/d03-current-source-replay-20260929/README.md",
+    "requirement_closure_hash": "sha256:7cf19f62e7c84656dc2d1fb2f06cbcaa7a1d501b90d9e9dd372c54a7148f6a5c",
+    "source_root": "LEDGER_OWNED_EXTERNAL_RECORDED_SOURCE_INPUTS",
+    "source_and_request_external_replay_marker_bound": true,
+    "default_root_parameters_response_shape_preserved": true,
+    "default_current_v14_source_identity_changed": true,
+    "prior_marriott_source_id": "sha256:bf4aa118cc3af2d82723e4ffdb84a51d2969b2366e63b054b7033ea7a1a866ab",
+    "current_marriott_source_id": "sha256:e9ee4912fd17edc2069f7570bbe979ddde2a687b1acb3ef18cd42219619ecbe6",
+    "recorded_one_group_native_candidate_evidence": true,
+    "recorded_collection_missing_groups_retained": true,
+    "copied_object_live_execution_rejected_before_claim": true,
+    "altered_original_source_rejected": true,
+    "recorded_test_counts": [1, 1, 0],
+    "new_real_calls": [0, 0, 0],
+    "native_company_result_or_run_created": false,
+    "tests": {
+      "directed_material": "1/1_PASS_40.345_SECONDS",
+      "default_compatibility": "5/5_PASS_107.381_SECONDS_BEFORE_FINAL_EXTERNAL_COPY_GUARD",
+      "default_material_compatibility": "3/3_PASS_157.970_SECONDS_ON_FINAL_PRODUCT_CODE",
+      "fast_final_tree": "141/141_PASS_95.828_SECONDS",
+      "source_selector_shards": [30, 30, 29]
+    },
+    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "files_and_functions": [
+        "scripts/vnext/continuous_semantic_calls.py:prepare_requests",
+        "scripts/vnext/continuous_semantic_calls.py:prepare_d03_replay_only_requests",
+        "scripts/vnext/continuous_semantic_calls.py:execute_d03_recorded_assessment",
+        "scripts/vnext/r6_regulatory_semantics.py:prepare_regulatory_semantic_source",
+        "scripts/vnext/d03_native_assessment.py:collect_recorded_assessments"
+      ],
+      "compatibility": "new parameters retain default root, response shape and record types; current V14 D03 source/request IDs advance with bound module SHA, while old packets retain original installed identity; external D03 path remains replay-only",
+      "downstream_impact": "current unfrozen V14 execution and rule hashes advance; stacked consumer may need its own rebind; no Issue47 branch, ledger, snapshot or PR touched"
+    }
   }
 }

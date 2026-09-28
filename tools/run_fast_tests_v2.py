@@ -150,6 +150,7 @@ SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03SouthwestUpd
 SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope.B03ImpairmentSourceMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03FordUpdateMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest",)
+SOURCE_TESTS += ("tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # This single case includes acquisition, native installation and cold replay.

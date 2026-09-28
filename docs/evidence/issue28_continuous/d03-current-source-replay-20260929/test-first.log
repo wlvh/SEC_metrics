@@ -1,0 +1,30 @@
+test_registered_source_replays_one_group_without_live_credit (tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest.test_registered_source_replays_one_group_without_live_credit) ... ERROR
+
+======================================================================
+ERROR: test_registered_source_replays_one_group_without_live_credit (tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest.test_registered_source_replays_one_group_without_live_credit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_d03_current_source_replay.py", line 38, in test_registered_source_replays_one_group_without_live_credit
+    prepared = prepare_d03_replay_only_requests(
+        company_id='marriott_international', source_root=source_root,
+        source_ledger=ledger)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 409, in prepare_d03_replay_only_requests
+    originals = prepare_requests(company_id=company_id, metric_id='D03',
+        reference_context=True, source_root=source_root, source_ledger=source_ledger,
+        d03_replay_only_external=source_root is not None)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 362, in prepare_requests
+    source = prepare_regulatory_semantic_source(repo_root=data_root,company_id=company_id,
+        request_context_format=context_format,ordinary_registered=data_root!=ROOT)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r6_regulatory_semantics.py", line 47, in prepare_regulatory_semantic_source
+    _need(strict_json_file(path=repo_root/POLICY_PATH)==policy,'D03_INSTALLED_POLICY_CHANGED')
+          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 213, in strict_json_file
+    raise CanonicalError(
+        "JSON input must be a regular file: {}".format(path)
+    )
+vnext.canonical.CanonicalError: JSON input must be a regular file: /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/d03-current-source-replay-cx2_1q1i/ledger/source-inputs/catalog/r6/regulatory_semantic_review_v6.json
+
+----------------------------------------------------------------------
+Ran 1 test in 9.195s
+
+FAILED (errors=1)
