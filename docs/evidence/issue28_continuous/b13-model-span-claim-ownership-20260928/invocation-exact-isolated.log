@@ -1,0 +1,17 @@
+======================================================================
+FAIL: test_process_death_after_egress_recovers_unknown_without_call (tests.vnext.test_invocation_control.InvocationControlTest.test_process_death_after_egress_recovers_unknown_without_call)
+Derive UNKNOWN_REMOTE_OUTCOME from a dead owner's disk state.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_invocation_control.py", line 1464, in test_process_death_after_egress_recovers_unknown_without_call
+    self.assertEqual(73, process.exitcode)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 73 != None
+
+----------------------------------------------------------------------
+Ran 1 test in 15.457s
+
+FAILED (failures=1)
+real 23.13
+user 1.17
+sys 12.12

@@ -229,6 +229,39 @@ class CapacityTwoStageTest(unittest.TestCase):
         self.assertIn('B13_MODEL_SPAN_MULTI_CAPACITY_ASSERTION:' + ref,
                       unresolved)
 
+        abbreviated = ('Our contract manufacturers have production capacity '
+                       'for current demand and plan to add capacity next year.')
+        unresolved, ref = check(abbreviated, [
+            ('physical_capacity_context', 'TARGET_REGISTRANT',
+             'CURRENT_REPORT', 'One range swallows an unmodified capacity noun.',
+             0, len(abbreviated))])
+        self.assertIn('B13_MODEL_SPAN_MULTI_CAPACITY_ASSERTION:' + ref,
+                      unresolved)
+        abbreviated_first_end = abbreviated.index(' and plan')
+        abbreviated_second_start = abbreviated.index('plan to add')
+        wrong_exclusion, ref = check(abbreviated, [
+            ('physical_capacity_context', 'TARGET_REGISTRANT',
+             'CURRENT_REPORT', 'Existing capacity.', 0,
+             abbreviated_first_end),
+            ('other_context', 'TARGET_REGISTRANT', 'HISTORICAL',
+             'Incorrectly excluded current expansion plan.',
+             abbreviated_second_start, len(abbreviated))])
+        self.assertIn('B13_CLAIM_CURRENT_MARKED_HISTORICAL:' + ref,
+                      wrong_exclusion)
+        self.assertIn('B13_CLAIM_TARGET_CAPACITY_EXCLUDED:' + ref,
+                      wrong_exclusion)
+        correct_plan, ref = check(abbreviated, [
+            ('physical_capacity_context', 'TARGET_REGISTRANT',
+             'CURRENT_REPORT', 'Existing capacity.', 0,
+             abbreviated_first_end),
+            ('planned_physical_capacity', 'TARGET_REGISTRANT',
+             'CURRENT_REPORT', 'Current expansion plan.',
+             abbreviated_second_start, len(abbreviated))])
+        self.assertNotIn('B13_MODEL_SPAN_MULTI_CAPACITY_ASSERTION:' + ref,
+                         correct_plan)
+        self.assertNotIn('B13_CLAIM_SUBJECT_NOT_ESTABLISHED:' + ref,
+                         correct_plan)
+
         supplier = ('A supplier, which we selected, has production capacity '
                     'for current demand.')
         unresolved, ref = check(supplier, [
@@ -241,6 +274,16 @@ class CapacityTwoStageTest(unittest.TestCase):
              'CURRENT_REPORT', 'The supplier owns this capacity.',
              0, len(supplier))])
         self.assertNotIn('B13_CLAIM_SUBJECT_CONFLICT:' + ref, permitted)
+        for supplier_without_commas in (
+                'A supplier that we selected has production capacity '
+                'for current demand.',
+                'A supplier we selected has production capacity '
+                'for current demand.'):
+            unresolved, ref = check(supplier_without_commas, [
+                ('physical_capacity_context', 'TARGET_REGISTRANT',
+                 'CURRENT_REPORT', 'This is the supplier capacity.',
+                 0, len(supplier_without_commas))])
+            self.assertIn('B13_CLAIM_SUBJECT_AMBIGUOUS:' + ref, unresolved)
 
         coordinated = ('Our contract manufacturers have production capacity '
                        'for current demand and expect to add manufacturing '

@@ -22,4 +22,12 @@
 
 `red-test.log`、`red-time-kind.log` 保存新增回归在修复前的失败。`fast-pre-final.*` 和 `fast-before-time-kind-fix.*` 是中间树通过记录，均不作为最终快速套件证据。`rebind.py` 与前后身份记录保留可复算关系；没有重生成旧 MANIFEST 或打包旧材料。
 
-待做：指定提交 SHA 的新增差异限定独审；若审阅发现问题则按差异修复。V8 真实模型表现、完整原生公司链、190 的混合复用和新路线调用权限仍未获证或未获准。
+`7676f49d` 的指定差异独审见下节；其 `NEEDS_FIX` 结论保留。V8 真实模型表现、完整原生公司链、190 的混合复用和新路线调用权限仍未获证或未获准。
+
+## `7676f49d` 审阅发现后的同目录回修
+
+`independent-review/conclusion.md` 对原提交为 `NEEDS_FIX`，复现两个相邻漏口：后项把 `manufacturing` 省掉只写 `capacity` 时，单范围仍能吞两项；无逗号的供应商关系从句里，`we` 仍会夺取供应商产能主体。原审阅结论保留，不改成通过。`red-followup.log` 记录新增完整响应级反例在回修前实际失败。
+
+本次回修只在**已出现明确物理产能短语的同一句**，把后续省略修饰词的 `capacity` 也纳入范围覆盖；若一条模型范围罩住两次产能提及，保留具体未决。第二阶段的短范围若只写 `plan to add capacity`，在同句前项有物理产能锚点时继续核对主体、期间和类别；错误历史/背景分类有具体未决，正确分开的扩产类别不因该项误拦。对同一产能谓词前供应商与申报主体线索相冲突、又没有足够结构证据的表达，保留 `B13_CLAIM_SUBJECT_AMBIGUOUS`，不靠最后一个词面主体给确定信用。这是已知反例的有限安全边界，不证明所有“capacity”都指生产产能。
+
+回修后 `followup-module-final.log` 为 36 项通过，`followup-v7-identity.log` 保持旧请求字节；`rebind-followup.py` 只更新未冻结 V14 中该模块身份，`followup-binding.log` 核验执行权限和三份当前接线，闭包 `sha256:ad3c189d7be270bfdeb2ff0049eb20015f405d2d23479077de81a94cc4a14441`。首次在短命命令会话里从外层直接后台启动未留下进程，`followup-fast-launch-empty.log` 为 0 字节、没有退出文件，**不算测试执行**。改用内层 `nohup` 加持久命令会话等待后，最终六文件哈希 `followup-fast-tree-before.json` 未变；单作业 `followup-fast.log`/`.exit` 实际执行448.859秒，135项中134项通过，唯一 `test_invocation_control` 的子进程 `join(timeout=10)` 后仍无退出码，套件如实**FAILED**。`invocation-exact-isolated.log` 又独立复现同一断言失败；`invocation-historical-root-timing.log` 测得该子进程会重复建立的历史权限根单项需约6.8秒。测试夹具的独立修复另行处理，不把上述失败改写为 B13 通过。新 B13 提交增量仍需同一名限定审阅者复核；V8 真实与原生接受门继续关闭。
