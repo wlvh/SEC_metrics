@@ -53,6 +53,28 @@ leg on this PR is a cap, not a pass and not a failure; the only evidence
 for that tier is a local complete run. `0003` no longer applies (the base
 split the job itself) and is kept only as a record.
 
+## 2026-09-28: the base made the same change; `0004` no longer applies
+
+The base split the tier into three shards itself (`1d458a46`, "Balance
+saved-source CI across three shards"): the same matrix and `--shard-count 3`,
+with the aggregate step named "Require all complete source shards". `0004`
+now fails `git apply --check` for that reason and, like `0003`, is kept only
+as a record.
+
+The projection above did not hold. On the first three-shard run of this PR
+(run 36479470727, `ef959052` merged with the base at `16a6e897`) shard 0
+finished in 24.5 minutes and shards 1 and 2 were cancelled at 35 minutes,
+every case they had reached passing. Summed from the per-case progress lines
+the shards carried 2,931 / 4,113+ / 3,457+ seconds, against the 3,130 /
+3,159 / 3,159 projected: the weight table had gone stale (the cases it gave
+3,179 s in shard 1 took 4,113 s, and the base's newer B03/D03 cases had no
+weight). `1c42db79` re-weighs the table from that run's 118 reached cases
+(the other 10, timed locally, each take under half a minute): 3,564 / 3,538 /
+3,533 measured seconds, about 29.6 minutes per shard at `--jobs 2` before
+checkout. Whether that fits is for the next run's progress lines to say; the
+tier measures about 10,635 s in all, so if a shard is still cancelled the
+remedy left is a fourth shard, which is again a workflow change.
+
 ## The second one was retired, and the file is gone
 
 `0002-raise-capacity-native-runs-cap.patch` used to raise `timeout-minutes` on
