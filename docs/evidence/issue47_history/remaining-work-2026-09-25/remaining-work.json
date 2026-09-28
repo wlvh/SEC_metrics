@@ -323,5 +323,219 @@
    "what": "B06's divisor is the parent's stockholders' equity (Paramount 11,693 rather than 12,887 including noncontrolling interests)"
   }
  ],
+ "state_2026_09_28": {
+  "blocked_elsewhere": [
+   {
+    "item": "B13 applicable branch (Ford, Enphase)",
+    "waits_on": "#28 accepting the request contract"
+   },
+   {
+    "item": "D03",
+    "waits_on": "no native Run route in the ordinary chain to port (the base has request mapping only, without result credit)"
+   },
+   {
+    "item": "1,482 of 1,950 positions",
+    "waits_on": "acquisition (1,287 missing originals, 117 JPMorgan periods not discovered, 78 metadata-blocked)"
+   }
+  ],
+  "fixed_this_round": [
+   {
+    "item": "C04 for a period with a 10-K/A",
+    "now": "Southwest FY2025 publishes 0 and Paramount FY2025 withholds with the ordinary route's reason; a differential case catches the old target",
+    "was": "the port named the original 10-K as the target; the frozen resolver requires the chain's first filing"
+   }
+  ],
+  "full_frame_batch": {
+   "attempted": 454,
+   "batch_commit": "51e01521",
+   "delivery_layer_counts": {
+    "content_acceptance": 180,
+    "native_run": 440,
+    "public_row": 440
+   },
+   "evidence": "docs/evidence/issue47_history/native-run-batch-2026-09-27/",
+   "failures": 14,
+   "frozen_and_read_back": 440,
+   "ran_without_a_value": {
+    "a_named_material_or_implementation_gap": 40,
+    "a_named_method_limit": 2,
+    "an_answer_about_the_company": 12,
+    "an_approved_policy_refusing_an_input_class": 0,
+    "awaiting_an_owner_decision_on_model_calls": 7
+   },
+   "requirement_closure_hash": [
+    "sha256:ad81126d9d4bf2aec666d3e521683892cceafc41487c28e56b6b2cbc8700718f"
+   ],
+   "withdrawn_by_open_defects": [
+    "lumen_technologies:D02:2025-12-31",
+    "paramount_skydance_paramount_global:D02:2024-12-31",
+    "paramount_skydance_paramount_global:D02:2025-12-31",
+    "pfizer:D02:2025-12-31",
+    "pfizer:E01:2025-12-31"
+   ]
+  },
+  "later_closure_checks": [
+   {
+    "closures": {
+     "batch": [
+      "sha256:ad81126d9d4bf2aec666d3e521683892cceafc41487c28e56b6b2cbc8700718f"
+     ],
+     "re_run": [
+      "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080"
+     ]
+    },
+    "differ": [
+     "paramount-2025:C04",
+     "southwest-2025:C04"
+    ],
+    "evidence": "docs/evidence/issue47_history/native-run-batch-2026-09-27/later-closure-check.json",
+    "identical": 92,
+    "positions": 94
+   },
+   {
+    "closures": {
+     "batch": [
+      "sha256:ad81126d9d4bf2aec666d3e521683892cceafc41487c28e56b6b2cbc8700718f"
+     ],
+     "re_run": [
+      "sha256:62a5d959dbbb6e925e3aeea65fb3469ace22c88c8ba2066f7a39dc26ea7911fc"
+     ]
+    },
+    "differ": [
+     "paramount-2025:C04",
+     "southwest-2025:C04"
+    ],
+    "evidence": "docs/evidence/issue47_history/native-run-batch-2026-09-27/later-closure-check-62a5d959.json",
+    "identical": 92,
+    "positions": 94
+   },
+   {
+    "closures": {
+     "batch": [
+      "sha256:ad81126d9d4bf2aec666d3e521683892cceafc41487c28e56b6b2cbc8700718f"
+     ],
+     "re_run": [
+      "sha256:87b63c3da4f716b99355b57f89010bf3ef876927a3716288abc13e2bb9fd139f"
+     ]
+    },
+    "differ": [],
+    "evidence": "docs/evidence/issue47_history/native-run-batch-2026-09-27/later-closure-check-87b63c3d.json",
+    "identical": 22,
+    "positions": 22
+   }
+  ],
+  "model_egress": {
+   "contract_change": {
+    "evidence": "docs/evidence/issue47_history/owner-decisions-2026-09-28/decisions.json",
+    "issue_comment": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5870869079",
+    "parallel_sealing": "implemented and used for this seal",
+    "profile_then_cache": "profiled; no business-path cache added (model-egress/live-class-profile-2026-09-28/)",
+    "reseal_when": "a receipt-bound file other than the snapshot changes, or a reviewer or the owner asks"
+   },
+   "offline_verification": {
+    "all_checks_passed": true,
+    "injections": {
+     "CAUGHT": 77,
+     "CAUGHT_AT_FIXTURE": 1
+    },
+    "receipt_id": "sha256:7dd330d2f3cacf8e2c1facd5faa104ca8036bc31c263657ab63a453ac8cd3cec",
+    "suite": {
+     "failed": [],
+     "ran": "Ran 121 tests in 3 processes, one per test module",
+     "returncode": 0,
+     "summary": "OK"
+    }
+   },
+   "preflight": {
+    "counts_before_the_fix": {
+     "CAUGHT": 76,
+     "CAUGHT_AT_FIXTURE": 1,
+     "NOT_CAUGHT": 1
+    },
+    "evidence": "model-egress/preflight-2026-09-28.json"
+   },
+   "rereview_findings": "all fixed in code (N1, N2, M1 residual, N3, N4, N5, N6, N7, M2, L2-L4, L6, the code-side part of M3)",
+   "reviews": [
+    "independent-review-2026-09-27/",
+    "independent-review-2026-09-27-rereview/"
+   ],
+   "sealing": {
+    "compared_with_the_sequential_baseline": {
+     "baseline": "66 rows of the sequential run the container restart ended, and the other 12 run one after another in one copy",
+     "evidence": "model-egress/parallel-versus-sequential-2026-09-28.json",
+     "of": 78,
+     "same": 78,
+     "trees": {
+      "sequential_completion": {
+       "bound_files_that_differ": [
+        "docs/evidence/issue47_history/model-egress/verify.py",
+        "requirements/issue_47_v1/baseline_manifest.json"
+       ],
+       "commit": "1a3071e5",
+       "recorded_files_that_differ_inside_the_snapshot": [
+        "scripts/vnext/capacity_native_assessment.py"
+       ]
+      },
+      "sequential_interrupted": {
+       "bound_files_that_differ": [
+        "docs/evidence/issue47_history/model-egress/verify.py",
+        "requirements/issue_47_v1/baseline_manifest.json"
+       ],
+       "commit": "33ee27d1",
+       "recorded_files_that_differ_inside_the_snapshot": [
+        "scripts/vnext/capacity_native_assessment.py",
+        "scripts/vnext/continuous_semantic_calls.py"
+       ]
+      }
+     }
+    },
+    "copies": 3,
+    "first_parallel_attempt": {
+     "commit": "1a3071e5",
+     "log": "model-egress/parallel-unsealed-2026-09-28.log",
+     "outcome": "all 78 injections ran and matched the sequential baseline; no receipt - the receipt's timings were binary floats, which the canonical content hash refuses"
+    },
+    "for_commit": "8c1fcf18",
+    "manifest": {
+     "digest": "sha256:08171beb96457b6119c05354ef27f5e9c6eea1e97f51d85aa4f9d18fa5017cb1",
+     "entries": 12264,
+     "scope": "every file and link under the tree, .git included, __pycache__ directories left out"
+    },
+    "mode": "PARALLEL_WORKER_COPIES",
+    "seconds": {
+     "copies": 54,
+     "final_manifests": 28,
+     "injections": 6125,
+     "suite": 4755,
+     "total": 10982
+    }
+   }
+  },
+  "owner_actions": [
+   {
+    "item": "SEC acquisition under the approved [0, 0, 1354]",
+    "steps": "docs/evidence/issue47_history/acquisition-wiring/README.md (top)",
+    "why_the_owner": "the approval body must be posted byte for byte (comments posted from this environment carry an attribution footer) and the ledger root is on the owner's machine"
+   },
+   {
+    "decisions": [
+     "which grants",
+     "approval method (posted by the owner directly; a comment posted through a GitHub App is refused)",
+     "latest-year D04: wait for #28 or re-review",
+     "apply the egress patch only in #47's runtime tree",
+     "E01 exhibits",
+     "accept the remaining part of M3 or choose an offline signature"
+    ],
+    "evidence": "docs/evidence/issue47_history/model-egress/call-application.md",
+    "item": "model-call application: D04 16, E01 7, D02 12, cap [35, 35, 0]"
+   },
+   {
+    "item": "CI third saved-source shard",
+    "patch": "docs/evidence/issue47_history/ci-job-patch/0004-third-saved-source-shard.patch",
+    "why": "two 35-minute shards cannot hold the tier; after merging 5425d51a it ran locally in three shards: 120 entries, 118 passed under load and the 2 that hit their time limits passed when re-run alone"
+   }
+  ],
+  "owner_decisions": "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json"
+ },
  "supersedes": "docs/evidence/issue47_history/remaining-implementation.json, which counted unwired metrics and chose C04 as the next route; C04, C02, C03, B06, B10, B11, D01 and B13's out-of-scope branch have been wired since"
 }
