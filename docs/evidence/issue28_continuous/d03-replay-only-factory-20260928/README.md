@@ -14,4 +14,4 @@
 
 执行绑定方面，`SEMANTIC_RULE_PATHS`现在要求`regulatory_fact_review.py`哈希，当前V14 `execution_authority.files`也新增该模块。第一次尝试把它加进`new_rule_files`，在`followup-binding-first-failure.log`被已批准策略的精确`rule_paths`集合检查拒绝；该失败保留。最终只在执行文件集合加入依赖，`new_rule_files`、`config/issue28_continuous_calls_v1.json`、V13父级及旧授权字节不变。`followup-binding.log`核验当前V14、语义文件和三份离线接线，闭包`sha256:9563d906e54e5f5cdd9e1dda138c5db49db204cb69de6f4eac680b6f5169a4f1`。固定六文件哈希`followup-fast-tree-before.json`下，本地单作业fast **135/135 selector、200.057秒通过**。它仍不替代新head远端CI。
 
-真实账本仍为195槽、provider/paid/SEC **143/143/52**，本轮新调用0/0/0；V13与历史包不改签，#47分支与运行根未操作。修后源码差异需新的精确SHA限定复审。下一阶段要接D03原生正向路径，仍须证明实际执行身份、完整跨组语义、有效Review及公司Result/Run；这项回修没有授予这些信用。
+真实账本仍为195槽、provider/paid/SEC **143/143/52**，本轮新调用0/0/0；V13与历史包不改签，#47分支与运行根未操作。精确`1d017b8f`的[限定增量复审](independent-review/conclusion.md)为`PASS_WITH_BOUNDS`，仅确认上述控制器禁令、显式错误和当前执行/语义绑定；首轮`NEEDS_FIX`原结论保留，两轮累计70次底层工具调用。下一阶段要接D03原生正向路径，仍须证明实际执行身份、完整跨组语义、有效Review及公司Result/Run；这项回修没有授予这些信用。

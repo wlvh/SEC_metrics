@@ -34,7 +34,7 @@
     "unknown": 0
   },
   "current_work": [
-    "Pushed cf23ab3d main CI 36375571134 completed SUCCESS 15/15 at 2026-09-28T04:36:39Z. Local f6e9e886 D03 output-shape census and 23243375 replay-only factory remain unpushed; the factory follow-up fixes exact review blockers and awaits a new SHA review.",
+    "Pushed cf23ab3d main CI 36375571134 completed SUCCESS 15/15 at 2026-09-28T04:36:39Z. Local f6e9e886 D03 output census, 23243375 replay-only factory and reviewed 1d017b8f follow-up remain unpushed; first factory review NEEDS_FIX, exact follow-up PASS_WITH_BOUNDS.",
     "D03 current saved inputs remain 130 complete groups. Replay-only SemanticRequest factory now carries all 38 JPMorgan groups, including one old-source-fact successor, through current request/source identity validation; focused 168.866s test and fast135/135 pass. No D03 execution, Candidate, Review, Result or Run credit.",
     "D04 retains 10/10 real private candidates, B13 V8 lexical route remains suspended after two NEEDS_FIX reviews, C04 cross-fiscal-year online update and full390/legacy exit remain unproven. Ledger still provider/paid/SEC 143/143/52."
   ],
@@ -2263,9 +2263,20 @@
       "patch_sha": "23243375ddf9143eb2f25405b16527ead330a0cb",
       "spawned_at": "2026-09-28T04:33:41Z",
       "ended_at": "2026-09-28T04:39:20Z",
-      "tool_calls": null,
+      "tool_calls": 55,
       "result_path": "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/independent-review/conclusion.md",
-      "verdict": "NEEDS_FIX_REPLAY_FLAG_AND_UNBOUND_DEPENDENCY"
+      "verdict": "NEEDS_FIX_REPLAY_FLAG_AND_UNBOUND_DEPENDENCY",
+      "followup_reviews": [
+        {
+          "patch_sha": "1d017b8f1f4b712aa93c068519a54e4a09e002b4",
+          "started_at": "2026-09-28T04:54:55Z",
+          "ended_at": "2026-09-28T04:58:46Z",
+          "additional_tool_calls": 15,
+          "cumulative_tool_calls": 70,
+          "result_path": "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/independent-review/conclusion.md",
+          "verdict": "PASS_WITH_BOUNDS"
+        }
+      ]
     }
   ],
   "ci_capacity_20260922": {
@@ -5697,7 +5708,7 @@
     "d03_live_permission_added": false
   },
   "d03_replay_only_factory_20260928": {
-    "status": "LOCAL_FOLLOWUP_TARGETED_AND_FAST_PASS_REVIEW_PENDING_LIVE_NATIVE_CLOSED",
+    "status": "REVIEWED_REPLAY_ONLY_FACTORY_PASS_WITH_BOUNDS_PUSH_PENDING",
     "scope_paths": [
       "scripts/vnext/continuous_semantic_calls.py",
       "tests/vnext/test_d03_native_preparation.py",
@@ -5715,7 +5726,7 @@
     "new_factory_replay_only": true,
     "tampered_original_request_id_rejected": true,
     "execute_feasibility_rejected_before_claim": true,
-    "independent_review": "FOLLOWUP_EXACT_SHA_PENDING",
+    "independent_review": "FIRST_NEEDS_FIX_FOLLOWUP_PASS_WITH_BOUNDS",
     "native_candidate_evidence_review_result_run_created": false,
     "real_ledger_claims_before_after": [
       195,
@@ -5745,6 +5756,9 @@
     "regulatory_fact_review_in_semantic_rule_bindings": true,
     "approved_rule_paths_unchanged": true,
     "d03_contract_level_execute_guard": true,
-    "malformed_contract_rejected_with_value_error": true
+    "malformed_contract_rejected_with_value_error": true,
+    "followup_patch_sha": "1d017b8f1f4b712aa93c068519a54e4a09e002b4",
+    "independent_review_path": "docs/evidence/issue28_continuous/d03-replay-only-factory-20260928/independent-review/conclusion.md",
+    "review_tool_calls_cumulative": 70
   }
 }
