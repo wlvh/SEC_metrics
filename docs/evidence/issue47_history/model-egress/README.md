@@ -80,13 +80,13 @@ M1、M2、L1 同样描述 SEC 路径，在所有者花 SEC 额度之前已先在
 
 1. 本补丁就是这里应用的那一份（`git apply -R --check`），snapshot 为这些字节 mint 过；
 2. 出口扫描器通过，且两份 #47 模块里恰好只有 `_Transport.send` 一处调用传输工厂、一处引用出口令牌；
-3. 跑完整套件：每个测试模块一个进程（调用路径检查的正是发请求的那个进程，别的套件导入的代码不该出现在里面），全程拒绝 DNS、原始 socket 与 SEC，唯一的服务商连接器换成受控的一个；**套件不全绿就停下、不跑注错也不封存**——一个已经失败的套件“抓到”注错不说明任何事；
-4. 逐个注错：每个注错点名写来抓它的用例类，先只跑那个类（遇失败即停），失败就记为被它抓到；只有它没抓到时才按固定顺序跑整套（同样遇失败即停），在别处被抓到就如实记为别处。最初几版对每个注错都跑整套，按 47 个注错、62 例算要大半天，而答不出更多：抓到就是抓到，点名的预期类让读者能核对抓到它的是不是为它写的那条用例（无论哪种做法，`first_caught_by` 都不是所有能抓到它的用例的全集）。注错编辑必须恰好命中一次、编辑后必须能编译，两样都在跑任何东西之前检查；落在 snapshot 按字节记录的文件上的注错先 mint 再跑，跑完恢复并逐字节核对；只在类夹具里失败的如实记为钝的捕获；
+3. 跑完整套件：每个测试模块一个进程（调用路径检查的正是发请求的那个进程，别的套件导入的代码不该出现在里面），全程拒绝 DNS、原始 socket 与 SEC，唯一的服务商连接器换成受控的一个；**套件不全绿就停下、不跑注错也不封存**——一个已经失败的套件“抓到”注错不说明任何事；套件跑完，封存树必须逐文件回到套件之前（副本从这时的树做成，套件留下的东西会被带进每一份）；每个测试进程有自己的临时目录、随进程删掉；
+4. 逐个注错：每个注错点名写来抓它的用例类，先只跑那个类（遇失败即停），失败就记为被它抓到；只有它没抓到时才按固定顺序跑整套（同样遇失败即停），在别处被抓到就如实记为别处。最初几版对每个注错都跑整套，按 47 个注错、62 例算要大半天，而答不出更多：抓到就是抓到，点名的预期类让读者能核对抓到它的是不是为它写的那条用例（无论哪种做法，`first_caught_by` 都不是所有能抓到它的用例的全集）。注错编辑必须恰好命中一次、编辑后必须能编译，两样都在跑任何东西之前检查；落在 snapshot 按字节记录的文件上的注错先 mint 再跑，跑完恢复并逐字节核对；只在类夹具里失败的如实记为钝的捕获；注错在封存树的 N 个副本里跑（`--copies N`，默认 3），不在封存树本身里跑：副本在套件之后做成，开始时与最后一个注错之后都要与封存树的同一份清单（每个文件的路径、大小、SHA-256，含 `.git`、不含 `__pycache__`）相同，封存树也不能变；每个注错在空闲的副本里、在自己的进程里跑一次，判定代码与顺序跑时相同，收据记下它在哪个副本、跑了多久；
 5. 从各世代自己的清单读出哪些世代按字节记录了三个边界文件；
 6. 树回到起点；
 7. 创建者日志（`.git/issue47-historical-assessments`）在套件之后、每个注错之后都逐文件回到起点——用例在注错下会写出平时不写的登记，这里是它们留下来时按名停下的地方。
 
-全部成立才封存 `offline-verification.json`。**重新封存进行中**：在合并 `5425d51a` 之后的“HEAD + 两个补丁”运行树里 2026-09-28 07:22 UTC 启动，套件 121 例全过；截至 13:14 UTC 已跑 60/78 个注错，59 个由为它写的用例抓到、1 个在类夹具处（`THE_CONTROLLER_BRANCH_IS_ABSENT`，已知的钝捕获），没有一个退回去跑整套。完成之前，仓库里的 `offline-verification.json` 仍是 2026-09-26 那张，它不绑定当前的调用路径文件集合，实时路径会拒绝它（失败即关闭），`tests.vnext.test_historical_model_calls` 的收据用例也因此失败，直到新收据提交。
+全部成立才封存 `offline-verification.json`。**重新封存进行中**：2026-09-28 07:22 UTC 启动的顺序封存在 66/78 时被容器重启结束，没有产出收据（日志留作 `docs/evidence/issue47_history/model-egress/sequential-interrupted-2026-09-28.log`）；按合同变更，14:04 UTC 起在提交 `1a3071e5` 的“HEAD + 两个补丁”运行树里用 3 个副本并行重封，缺的 12 个在一个副本里顺序补跑，作为逐个比对的顺序基线。完成之前，仓库里的 `offline-verification.json` 仍是 2026-09-26 那张，它不绑定当前的调用路径文件集合，实时路径会拒绝它（失败即关闭），`tests.vnext.test_historical_model_calls` 的收据用例也因此失败，直到新收据提交。
 
 历次运行的教训保留在这里，因为它们决定了上面每一步为什么存在：第一次运行把"返回码非零"当成抓到（一个注错让文件本身 `IndentationError`、边界文件注错被字节绑定"抓到"、门禁注错的目标串出现两次），在封存前停下；第二次运行所在的运行树落后于仓库，收据会绑定旧的铸造工具，也在封存前停下。复审修复之后的第一次封存运行（2026-09-28）套件全过，但在第六个注错 `THE_ANCHOR_IS_INSIDE_THE_ROOT` 处回退到整套：M1 残余的修法（根目录旁的日志副本）让删掉整个根目录单凭副本就被拒绝，锚点挪进根目录因此不再被它的类看见。按顺序跑下去要约八小时才会以没抓到结束，所以停下，改在三份验证树副本里并行预检（`preflight.py`，只跑各注错的预期类，结果 `preflight-2026-09-28.json`）：78 个里 76 个被预期类抓到、1 个在类夹具处被抓（已知的钝捕获）、只有这一个没被抓到；补了"删根与副本、只留根外锚点仍须拒绝"的用例、重生成补丁之后才开始封存运行。预检不封存任何东西，收据仍是 `verify.py` 在一棵树里把每个注错再跑一遍的结果。
 
@@ -116,7 +116,7 @@ M1、M2、L1 同样描述 SEC 路径，在所有者花 SEC 额度之前已先在
 6. **账本**（`historical_model_calls.HistoricalModelLedger`）：认领在 socket 之前写意图、永不删除；不能靠删除重置；停止从证据重算。
 7. **许可本身**（`historical_model_calls.model_allowance`）：严格 JSON、未编辑的评论、按授予的 scope、收据编号、真实路径比较的账本根。
 
-**复现**：在当前 HEAD 的一份副本里依次 `git apply docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch`、`git apply docs/evidence/issue47_history/model-egress/egress-registration.patch`、`python3 tools/vnext_mint_historical_requirement.py`，然后 `python3 docs/evidence/issue47_history/model-egress/verify.py`。收据的 `bound_files` 与 `generation_manifests_measured` 可用来确认复现的是同一棵树。
+**复现**：在当前 HEAD 的一份副本里依次 `git apply docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch`、`git apply docs/evidence/issue47_history/model-egress/egress-registration.patch`、`python3 tools/vnext_mint_historical_requirement.py`，然后 `python3 docs/evidence/issue47_history/model-egress/verify.py --copies 3`（副本放在运行树旁边，每份与运行树一样大，约 3.3 GB；`--copies 1` 就是顺序跑）。收据的 `bound_files` 与 `generation_manifests_measured` 可用来确认复现的是同一棵树。
 
 ## 不覆盖
 
