@@ -10,4 +10,6 @@
 
 `repeat-existing-real.py`在同一私有状态根重复触发，实际`repeat.log`返回`UPDATES_READY / NO_SOURCE_CONTENT_CHANGE`，耗时723.996秒。重复尝试有自己的终态，但成功指针仍指向第一次当前Run，`new_candidate_created=false`；该成功包前后整树哈希不变，Result ID不变，总账计数仍143/143/52、195行。`reconcile.py`只读原完成与原冷读摘要及本次更新、冷读、逐条原始身份、重复触发收据，`reconciliation.json`对账通过：原Run与当前Run身份不同，Result ID相同；原第179—188次无新增调用信用。此处没有通过重复触发创建第三个Run或购买回答。
 
+精确补丁`3e1ba8b2`的[限定独立复核](independent-review/conclusion.md)为`PASS_WITH_BOUNDS`：审阅者复核了十条原始身份与综合对账短命令，二者均退出0；没有重跑长时间普通更新或冷读。独审同样指出，账本前后计数、目录名及哨兵不等于旧调用目录与旧Run整树执行前后字节证明。所用执行代码head`b868ac42`的主CI`36354613173`已整体SUCCESS 15/15；本目录证据的后继提交主CI另待实际终态。
+
 本项新增的是**第二家已有真实D04公司结果进入当前普通更新入口**的限定证据；D04原10/10候选数量、390当前坐标信用均不增加，不证明新财年在线更新、正式采纳、生产切换或全部旧入口退出。原账本在本次首次更新前后均为143/143/52、195行，调用目录名及binding、claims、来源请求日志、active指针哨兵哈希不变；新增真实provider/paid/SEC为0/0/0。#47/PR52的分支、运行根、账本和权限没有使用。
