@@ -11,3 +11,13 @@
 **后续当前绑定的正向路径（`070f1c4e`，私有发布审查前）：** `rebuild_current_enphase.py`确实从原第173—178次响应在当时当前V14闭包`sha256:b0a5faaf…`形成Enphase FY2025 `UPDATES_READY/CANDIDATE_READY`新Run；Result ID仍为`sha256:7bf9ea83…`，原成功包整树、账本195槽/143/143/52、来源日志和正式active前后字节不变，768.009秒，`current-enphase.exit=0`。该Run进入现有完整版本准备器，选中基础为`NATIVE_REVIEWED_DEFINED_SCOPE_STATEMENT`，公开`TEXT_QUAL`行，准备ID`sha256:8821edf8…`，前驱矩阵327行、未选389坐标；准备退出0。另一个独立进程重算准备包并核对1714文件前后字节完全相同，`cold-current.exit=0`。它新增的是一条现有真实D04结果进入统一私有版本**准备**的可复核路径，不增加D04公司数或390完成数。
 
 继续使用仓库现有私有发布测试时，`stage()`在规模审查以`ORDINARY_PUBLICATION_SCALABILITY_FAILED`退出1，960.034秒，未走发布/回退/恢复；原失败见`publication-current.log`。具体七条误报及不放宽真实硬编码审查的显式后继修复见[相邻证据](../ordinary-scalability-audit-20260928/README.md)。该修复改变V14执行闭包，上述正向Run与准备包仍按**修补前**身份解释，不能直接写成修后私有发布通过；需要在修后闭包完成受影响的重验。没有新真实模型或SEC调用，正式生产指针未切换。
+
+## 修后V14闭包下的完整私有发布链
+
+`dea6e4a0`的限定后继扫描器已获[精确增量独审](../ordinary-scalability-audit-20260928/independent-review-followup/conclusion.md)`PASS_WITH_BOUNDS`；旧`652a2505`的`NEEDS_FIX`和第一次私有发布失败均保留。修后V14闭包为`sha256:1876c014…`。`rebuild_current_enphase_followup.py`只读第173—178次原真实响应与当前保存来源，用同一普通更新入口生成新的私有Enphase D04 Run `run:ordinary-integrated:275c6e31…`（878.605秒）。原Result ID仍为`sha256:7bf9ea83…`；旧成功包整树、账本195槽/143/143/52、来源日志和正式active指针均在执行前后字节一致，无新provider/paid/SEC申领。
+
+新Run经现有版本准备器形成准备ID`sha256:e425bf77…`，选中依据`NATIVE_REVIEWED_DEFINED_SCOPE_STATEMENT`，FY2025公开行为`TEXT_QUAL`、空数值；327行矩阵只选此一坐标，另389个十公司指标坐标未选。独立进程从保存的准备包重算，1716个文件前后SHA完全相同，`cold-current-followup.exit=0`。这不是390项当前验收，也不增加D04十家完整真实候选的数量。
+
+同一准备包进入**新建隔离根**的既有`OrdinaryIsolatedPublicationMaterialTest`，`publication-current-followup.exit=0`，实际1项完整测试4679.413秒通过。`publication-private-summary.json`来自私有根原总结：候选Publication `publication_2ede5655…`、前驱`publication_24bf8f16…`；测试依次通过stage、私有publish/read-back、rollback、restore、指针写入中断后的recover、损坏镜像修复，最终总结`PASS`、信用`NONE_ISOLATED_ORDINARY_VERSION`。另一个独立Python进程重新打开私有候选并核对准备ID、矩阵/证据哈希、Enphase D04 FY2025 `TEXT_QUAL`行、所选包文件及**正式**active指针前后SHA，`publication-cold.exit=0`。最后只读原账本仍195槽，正式active仍为前驱ID；没有Ready、合并、正式采纳、部署或生产切换。
+
+这条路径让一个已有真实D04结果进入**共同版本准备与私有发布/回退/恢复链**，无需人工填数或再次购买模型回答。完整私有发布测试约78分钟，主要成本属于重复完整包重放；本轮没有优化它，也不把一次通过称为日常更新吞吐或十家公司×39项生产验收。`publication-profile.txt`是运行中一次1秒CPU采样，仅支持当时进程在JSON编码路径工作，不用它推断全程耗时根因。此前旧版本Run被当前加载器拒绝的原件、首版扫描器未通过独审及两次fast超时均保持历史原义。

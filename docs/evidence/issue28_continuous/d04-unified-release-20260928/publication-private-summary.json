@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "staged": {
+    "publication_id": "publication_2ede565540ef5444620fd1940623f691bfb8f8343e83c45753a0f7e2c035b2b1",
+    "preparation_id": "sha256:e425bf77d864aadcc7043f23b39aaf96267764e896c62a4064c9827beb4f3aa7",
+    "credit": "NONE_ISOLATED_ORDINARY_VERSION",
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "predecessor_read_back": {
+    "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+    "credit": "NONE_ISOLATED_ORDINARY_VERSION",
+    "matrix_sha256": "c0aa1c7dcf1e7fc3f9b14703af915a07b9a1d940b0d8b9130b2ee2cef37efa62",
+    "evidence_sha256": "eb6527b97203fa69fb3809be06360e18e73373eae97d4bf9faeb65f69f961e59"
+  },
+  "candidate_read_back": {
+    "publication_id": "publication_2ede565540ef5444620fd1940623f691bfb8f8343e83c45753a0f7e2c035b2b1",
+    "credit": "NONE_ISOLATED_ORDINARY_VERSION",
+    "matrix_sha256": "35ebd105ecb1f30b84efcc8470f6bac6089fb2ffe6fccb4c862ec8d31a2909d1",
+    "evidence_sha256": "ebd9fe8aa0ba960f26cb9eb1d96b5c6aa3b7fea7d8b1855c6444e9d99c77baaa"
+  },
+  "checks": [
+    "stage",
+    "publish",
+    "read-back",
+    "rollback",
+    "restore",
+    "post-pointer-interruption-recovery",
+    "damaged-mirror-repair",
+    "official-pointer-unchanged"
+  ],
+  "credit": "NONE_ISOLATED_ORDINARY_VERSION",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
