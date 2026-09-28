@@ -1,0 +1,25 @@
+{
+ "record_type": "ISSUE_47_OWNER_DECISIONS",
+ "schema_version": 1,
+ "recorded_by": "the executor, transcribing; not a GitHub comment by the owner",
+ "source": "the owner's reply in the Claude Code session on 2026-09-28 (UTC), approving three proposals the executor made in the same session",
+ "issue_comment": {
+  "url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5870869079",
+  "posted_by": "the executor through this session's GitHub integration, as the owner asked ('你要写入issues里面'); it says in its own text that it is a transcription"
+ },
+ "what_this_record_is_not": "a model-call or SEC allowance, a security-review pass, or a grant of Ready, merge, adoption, deployment or active switch. No gate reads it.",
+ "decisions": {
+  "EGRESS_VERIFICATION_CONTRACT": {
+   "decided": "approve all three changes to how the model-egress offline verification runs and when it is re-sealed; record them in issue 47 as a contract change",
+   "excerpt": "3条变快的建议我都批准。但你要写入issues里面，这属于合同变更。",
+   "changes": {
+    "PARALLEL_SEALING": "verify.py may run the injections across N copies proven file-identical to the sealing tree by one path+SHA-256 manifest before and after; any copy that differs, fails or does not finish blocks the seal; the receipt names the copies, the manifest digest and where each injection ran; accepted when the same 78 injections are caught by the same named cases as the sequential run",
+    "PROFILE_THEN_CACHE": "profile the LIVE class step by step first; cache only pure computations keyed by digests of all their input bytes, within one process, never across processes or injections or on disk; no injected check is skipped or answered from a cache; a cache in a business module needs its own injection; accepted when all 78 are still caught by the same named cases",
+    "RESEAL_WHEN": "re-seal when any receipt-bound file other than this generation's snapshot changes, or when a reviewer or the owner asks; a base merge that only moves the snapshot does not by itself trigger a re-seal. The receipt still binds the snapshot, the live path still refuses a stale receipt, and the owner still re-seals before any real call; documents say which commit a receipt is for"
+   },
+   "unchanged": "the injection list and how each is judged; the tree, snapshot and creator-journal restore checks; zero network, model and SEC requests; the patch applies only in #47's runtime tree; the call application's decisions stay with the owner"
+  }
+ },
+ "unchanged_boundaries": "#28's workspace, ledger, allowance and runtime packages stay separate; PR 52 does not merge into task/b06-new-source; no Ready, merge, adoption, deployment or active switch; the CI workflow patches stay shelved",
+ "production_authorized": false
+}
