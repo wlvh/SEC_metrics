@@ -40,8 +40,8 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
 OUT = "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json"
-POSITIONS = ("enphase_energy:2025-12-31", "macys:2026-01-31",
-             "paramount_skydance_paramount_global:2025-12-31", "salesforce:2026-01-31")
+from acceptance_readings import reading_cases  # noqa: E402
+POSITIONS = tuple(company + ":" + end for company, end, _ in reading_cases("debt_to_equity"))
 getcontext().prec = 28
 _TABLE = re.compile(r"<table\b.*?</table>", re.S | re.I)
 _ROW = re.compile(r"<tr\b.*?</tr>", re.S | re.I)

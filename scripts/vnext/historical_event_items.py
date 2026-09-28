@@ -8,7 +8,8 @@ here - that brief is the program's own sentence ``"8-K item 8.01 parsed from
 hdr.sgml"``, so no 8.01 was ever read. The router is frozen by every
 ``issue_28`` generation and the ordinary route uses it unchanged.
 
-The owner's 2026-09-27 decision replaced the meaning for the historical route:
+The owner's decision (recorded with the other owner decisions under
+docs/evidence/issue47_history/) replaced the meaning for the historical route:
 E01 counts content-confirmed M&A announcements - an item counts when its own
 text reports a merger, acquisition, disposition or business combination the
 registrant or a subsidiary is party to, whichever candidate code it is filed

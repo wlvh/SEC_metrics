@@ -38,14 +38,8 @@ sys.path.insert(0, str(REPO / "tools"))
 
 OUT = "docs/evidence/issue47_history/content-acceptance/governance-read.json"
 EVENTS = "docs/evidence/issue47_history/content-acceptance/event-count-read.json"
-CASES = [("marriott_international", "2025-12-31", "marriott-2025"),
-         ("ford_motor_company", "2025-12-31", "ford-2025"),
-         ("pfizer", "2025-12-31", "pfizer-2025"),
-         ("lumen_technologies", "2025-12-31", "lumen-2025"),
-         ("enphase_energy", "2025-12-31", "enphase-2025"),
-         ("southwest_airlines", "2025-12-31", "southwest-2025"),
-         ("salesforce", "2026-01-31", "salesforce-2026"),
-         ("macys", "2026-01-31", "macys-2026")]
+from acceptance_readings import reading_cases  # noqa: E402
+CASES = reading_cases("governance_facts")
 UNREAD = []
 
 

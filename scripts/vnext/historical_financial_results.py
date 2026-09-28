@@ -51,8 +51,10 @@ What no position exercises today, measured rather than assumed:
   to both.
 * The source set is discovered from the registrant's main submissions
   document, as in the ordinary route and the pinned accession route. JPMorgan's
-  main document lists only filings from 2025-08-15 to 2026-08-17 - its FY2024
-  10-K row sits in history block 004 - so once its catalog is repaired, four of
+  main document lists only about its latest year of filings - its FY2024 10-K
+  row sits in a history block (the dates are in
+  docs/evidence/issue47_history/financial-route/) - so once its catalog is
+  repaired, four of
   its five target years would still fail discovery here with
   ``Source-set references differ from submissions discovery``. That is a named
   cross-route limit, not a disclosure gap.

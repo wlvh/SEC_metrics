@@ -1,0 +1,102 @@
+{
+ "record_type": "ISSUE_47_READING_POSITIONS",
+ "what": "The company periods each committed reading covers. The reading tools read them here, so no company or period is written in their code: tools/ is scanned as production Python for identity literals and fixed dates, and a list of positions is data. A label names one company period; each reading lists its labels in the order its committed output lists them.",
+ "labels": {
+  "marriott-2025": {
+   "company_id": "marriott_international",
+   "report_end": "2025-12-31"
+  },
+  "marriott-2024": {
+   "company_id": "marriott_international",
+   "report_end": "2024-12-31"
+  },
+  "marriott-2023": {
+   "company_id": "marriott_international",
+   "report_end": "2023-12-31"
+  },
+  "ford-2025": {
+   "company_id": "ford_motor_company",
+   "report_end": "2025-12-31"
+  },
+  "pfizer-2025": {
+   "company_id": "pfizer",
+   "report_end": "2025-12-31"
+  },
+  "lumen-2025": {
+   "company_id": "lumen_technologies",
+   "report_end": "2025-12-31"
+  },
+  "enphase-2025": {
+   "company_id": "enphase_energy",
+   "report_end": "2025-12-31"
+  },
+  "southwest-2025": {
+   "company_id": "southwest_airlines",
+   "report_end": "2025-12-31"
+  },
+  "salesforce-2026": {
+   "company_id": "salesforce",
+   "report_end": "2026-01-31"
+  },
+  "macys-2026": {
+   "company_id": "macys",
+   "report_end": "2026-01-31"
+  },
+  "paramount-2025": {
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2025-12-31"
+  },
+  "paramount-2024": {
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31"
+  },
+  "jpmorgan-2025": {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2025-12-31"
+  }
+ },
+ "readings": {
+  "statement_facts": [
+   "marriott-2025",
+   "marriott-2024",
+   "marriott-2023",
+   "ford-2025",
+   "pfizer-2025",
+   "lumen-2025",
+   "enphase-2025",
+   "southwest-2025",
+   "salesforce-2026",
+   "macys-2026"
+  ],
+  "governance_facts": [
+   "marriott-2025",
+   "ford-2025",
+   "pfizer-2025",
+   "lumen-2025",
+   "enphase-2025",
+   "southwest-2025",
+   "salesforce-2026",
+   "macys-2026"
+  ],
+  "event_counts": [
+   "marriott-2025",
+   "ford-2025",
+   "pfizer-2025",
+   "lumen-2025",
+   "enphase-2025",
+   "southwest-2025",
+   "macys-2026"
+  ],
+  "lodging_table": [
+   "marriott-2025",
+   "marriott-2024",
+   "marriott-2023"
+  ],
+  "debt_to_equity": [
+   "enphase-2025",
+   "macys-2026",
+   "paramount-2025",
+   "salesforce-2026"
+  ]
+ }
+}

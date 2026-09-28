@@ -45,6 +45,7 @@ relabelled live: the mode is fixed by the factory and re-checked by the frozen
 validator.
 """
 from contextlib import contextmanager
+from datetime import date
 from pathlib import Path
 from urllib.parse import urlsplit
 import fcntl
@@ -76,11 +77,12 @@ LIVE_PURPOSE = "ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"
 RECORDED_PURPOSE = "ISSUE47_RECORDED_SOURCE_TEST"
 LEDGER_TYPE = "ISSUE_47_HISTORICAL_CALL_ALLOWANCE"
 SEC = "SEC"
-# One declared dependency, taken from the planner's own output: the prior
-# annual accession index that B02 reads for Marriott's 2021 target.
+# One declared dependency, taken from the planner's own output when the chain
+# runs: the prior annual accession index that B02 reads for the company's
+# earliest target (_wiring_url). Spelling its URL here named a CIK and an
+# accession in production Python, which the scalability audit rejects.
 WIRING_COMPANY = "marriott_international"
-WIRING_URL = ("https://www.sec.gov/Archives/edgar/data/1048286/"
-              "000162828021002433/index.json")
+WIRING_ROLE = "prior_annual_primary_accession_index"
 
 
 class HistoricalSessionError(HistoricalAcquisitionError):
@@ -1119,6 +1121,23 @@ REQUIRED_WIRING_EVIDENCE = (
 )
 
 
+def _wiring_url(*, repo_root):
+    """The one dependency the recorded chain captures, read from the declaration.
+
+    The prior annual accession index the planner declares for the wiring
+    company's earliest target: exactly one row, still to be acquired.
+    """
+    from .historical_source_acquisition import declared_frame
+    frame = declared_frame(repo_root=Path(repo_root), company_id=WIRING_COMPANY, years=5)
+    earliest = frame["target_report_dates"][0]
+    rows = [row for row in frame["requirements"] if WIRING_ROLE in row["source_roles"]
+            and any(consumer.startswith("period:" + earliest + ":")
+                    for consumer in row["consumers"])]
+    _need(len(rows) == 1 and rows[0]["new_acquisition_required"],
+          "ISSUE_47_OFFLINE_WIRING_DEPENDENCY_NOT_DECLARED_ONCE:" + str(len(rows)))
+    return rows[0]["source_url"]
+
+
 def execute_recorded_chain(*, root, response):
     """Drive the acquisition chain offline once and report what happened.
 
@@ -1137,7 +1156,9 @@ def execute_recorded_chain(*, root, response):
     """
     from .ordinary_source_authority import checkpoint_installation
     session = recorded_historical_session(root=Path(root), response=response)
-    captured = session.capture(company_id=WIRING_COMPANY, url=WIRING_URL)
+    # The declaration over the checkout's saved materials, which the session's
+    # baseline copies; its own source root holds nothing before the first capture.
+    captured = session.capture(company_id=WIRING_COMPANY, url=_wiring_url(repo_root=ROOT))
     _need(captured["status"] == "SUCCEEDED", "ISSUE_47_OFFLINE_WIRING_CAPTURE_FAILED")
     checkpoint, paths = checkpoint_installation(source_root=session.data_root)
     _need(checkpoint["checkpoint_id"] == captured["checkpoint_id"] and bool(paths),
@@ -1311,8 +1332,8 @@ def recorded_historical_session(*, root, response, status=200, limits=(0, 0, 80)
                                                     "GOVERNANCE_DISCLOSURE_FILING",
                                                     "SUBMISSIONS_HISTORY",
                                                     "SUBMISSIONS_INDEX"),
-                                earliest_report_end="2000-01-01",
-                                latest_report_end="2099-12-31",
+                                earliest_report_end=date.min.isoformat(),
+                                latest_report_end=date.max.isoformat(),
                                 allowance_root=None):
     """Offline tests only; no conversion of this session into production.
 

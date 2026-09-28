@@ -48,7 +48,7 @@
 ## 调用路径已经做到什么（离线，受控连接器）
 
 - **两次独立安全审阅**（全新上下文的同族子代理，不是人）。第一次（`independent-review-2026-09-27/`）结论 PASS_WITH_FINDINGS，要求授予任何模型许可之前修好 M1–M3：M1、M2、L1–L4、L6、L7 已修，每一条都有用例与注错；M3 中代码能承载的部分已实现，其余是下面的决定 2。修复与 E01、D02 扩展之后的复审（`independent-review-2026-09-27-rereview/`）结论仍是 PASS_WITH_FINDINGS，并写明只凭所有者决定 M3 不能授予真实调用：先修 N1、N2，M1 残余、N3、N4 修掉或由所有者接受。**全部已修**，没有一条留给所有者接受：N1（调用方传 `mode="LIVE"` 就能写出 LIVE 登记）现在要求 LIVE 登记携带回答它的计数调用记录、且记在所有者登记的批准所授予的账本里；N2（换账本根绕过上限）现在许可映射须与许可文件逐字段相同、账本根并入决策哈希；N3/N4 发请求的进程只能加载被授权绑定、编译进本进程私有字节码缓存的检出代码；N5 批准点名实际发送字节的摘要；N6/N7 与 M1 残余各有终态或日志副本。每条一个具名用例、一个注错；N1 另有仓库侧 8 例与 13 个注错（CI 跑得到）。
-- **离线验证收据** `offline-verification.json`：2026-09-28 封存，套件 121 例全过（每个测试模块一个进程，共 3 个），跑完封存树逐文件回到起点；78 个注错全部被抓到，77 个由为它写的类里的具名用例抓到、1 个在类夹具处（`THE_CONTROLLER_BRANCH_IS_ABSENT`，已知的钝捕获）、没有一个退回去跑整套；注错分到 3 个副本，每份做成时与最后一个注错之后都与封存树的同一份清单逐文件相同（12264 个条目），封存树本身未变，创建者日志每次都回到起点；与顺序基线逐个比对 78/78 相同（结果、预期类的结果、抓到它的用例；顺序封存在 66/78 时被容器重启打断，前 66 行所在的那棵树已删除；其余 12 个在一个副本里顺序补跑；按提交计算，基线与封存树之间收据绑定的文件只有 `baseline_manifest.json`、`verify.py` 不同，快照里不同的记录文件为 `capacity_native_assessment.py`、`continuous_semantic_calls.py`）；注错阶段墙钟 102 分钟（各注错时间相加 5.1 小时），全程 183 分钟；补丁会移动的世代 13 个（`issue_28_v2`–`issue_28_v14`）；收据绑定 16 个文件，编号 `sha256:7dd330d2…`，对应提交 `8c1fcf18`。批准正文点名这个编号；代码、本世代快照或任何规则文件再变，实时路径都会拒绝它，所有者真实调用前在本机重封（`verify.py --copies N`），批准点名新编号。
+- **离线验证收据** `offline-verification.json`：2026-09-28 封存，套件 121 例全过（每个测试模块一个进程，共 3 个），跑完封存树逐文件回到起点；78 个注错全部被抓到，77 个由为它写的类里的具名用例抓到、1 个在类夹具处（`THE_CONTROLLER_BRANCH_IS_ABSENT`，已知的钝捕获）、没有一个退回去跑整套；注错分到 3 个副本，每份做成时与最后一个注错之后都与封存树的同一份清单逐文件相同（12264 个条目），封存树本身未变，创建者日志每次都回到起点；与顺序基线逐个比对 78/78 相同（结果、预期类的结果、抓到它的用例；顺序封存在 66/78 时被容器重启打断，前 66 行所在的那棵树已删除；其余 12 个在一个副本里顺序补跑；按提交计算，基线与封存树之间收据绑定的文件只有 `baseline_manifest.json`、`verify.py` 不同，快照里不同的记录文件为 `capacity_native_assessment.py`、`continuous_semantic_calls.py`）；注错阶段墙钟 102 分钟（各注错时间相加 5.1 小时），全程 183 分钟；补丁会移动的世代 13 个（`issue_28_v2`–`issue_28_v14`）；收据绑定 16 个文件，编号 `sha256:7dd330d2…`，对应提交 `8c1fcf18`。批准正文点名这个编号；代码、本世代快照或任何规则文件再变，实时路径都会拒绝它，所有者真实调用前在本机重封（`verify.py --copies N`），批准点名新编号。**快照其后已经移动**：为清掉 base 新增的字面量扫描器报出的日期，四个规则文件的文档字符串改了措辞（行为不变），快照随之移动，所以这张收据现在就会被实时路径拒绝（失败即关闭）；按合同只因快照移动不单独重封。已按这张收据生成的批准正文 `approval-comment-body.json` 是预览：授予、上限 `[35,35,0]` 与 35 个请求摘要不随重封改变（提案脚本每次都用当前代码重算摘要并要求等于三份计量），只有收据编号会变——所有者在本机重封后用 `propose_model_allowance.py` 重新生成再发布，下面的步骤已包含这两步。
 - **执行器** `tools/vnext_historical_model.py`（补丁内）：`--metric D04|E01|D02`；导入任何检出代码之前先建本进程私有的字节码缓存；只循环调用既有闸门，遇停止即停、不绕过；某个请求失败但未触发停止时，该位置不登记、其余照跑；已认领的请求不再发。
 
 ## 结果怎么用、怎么验收
@@ -80,6 +80,8 @@
 git apply docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch
 git apply docs/evidence/issue47_history/model-egress/egress-registration.patch
 python3 tools/vnext_mint_historical_requirement.py
+python3 docs/evidence/issue47_history/model-egress/verify.py --copies 3      # 本机重封：收据绑定快照
+python3 docs/evidence/issue47_history/model-egress/propose_model_allowance.py  # 按新收据编号重新生成批准正文
 gh issue comment 47 --repo wlvh/SEC_metrics \
   --body-file docs/evidence/issue47_history/model-egress/approval-comment-body.json
 python3 tools/vnext_historical_model.py register-approval --approval-url <gh 打印的 URL>

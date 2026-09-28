@@ -135,8 +135,11 @@ def main():
         return None if result is None or result.get("value") is None else str(result["value"])
 
     rpo = json.loads((REPO / RPO).read_text(encoding="utf-8"))
-    document = ("evidence/accession_materials/salesforce_1108524_000110852426000060/"
-                + rpo["read_from"]["document"])
+    # The one saved accession directory holding the document the reading names.
+    found = sorted(REPO.glob("evidence/accession_materials/*/" + rpo["read_from"]["document"]))
+    if len(found) != 1:
+        raise SystemExit("RPO_DOCUMENT_NOT_FOUND_EXACTLY_ONCE:" + str(len(found)))
+    document = found[0].relative_to(REPO).as_posix()
     value, not_taken = read_instant_fact(
         text=(REPO / document).read_text(encoding="utf-8-sig", errors="replace"),
         concept="us-gaap:RevenueRemainingPerformanceObligation", period_end=rpo["period_end"])

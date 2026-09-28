@@ -28,9 +28,8 @@ sys.path.insert(0, str(REPO / "tools"))
 
 OUT = "docs/evidence/issue47_history/content-acceptance/lodging-table-read.json"
 SCOPE = "Comparable Systemwide Properties"
-CASES = [("marriott_international", "2025-12-31", "marriott-2025"),
-         ("marriott_international", "2024-12-31", "marriott-2024"),
-         ("marriott_international", "2023-12-31", "marriott-2023")]
+from acceptance_readings import reading_cases  # noqa: E402
+CASES = reading_cases("lodging_table")
 _TABLE = re.compile(r"<table\b.*?</table>", re.S | re.I)
 _ROW = re.compile(r"<tr\b.*?</tr>", re.S | re.I)
 

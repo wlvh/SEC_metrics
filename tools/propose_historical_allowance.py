@@ -19,8 +19,8 @@ REPO = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 from vnext.canonical import sha256_bytes
 from vnext.historical_source_acquisition import (POLICY_PATH, REQUIRED_POLICY_FIELDS,
-                                                 TRUSTED_APPROVER, TRUSTED_REPOSITORY,
-                                                 acquisition_allowance)
+                                                 TRUSTED_APPROVER, TRUSTED_APPROVER_ID,
+                                                 TRUSTED_REPOSITORY, acquisition_allowance)
 
 # Every value below is measured, not chosen: the companies from the registry,
 # the dependency classes and the window from what the frame's declaration
@@ -40,6 +40,8 @@ WINDOW = (_DATES[0], _DATES[-1])
 PLAN = json.loads((REPO / "docs/evidence/issue47_history/acquisition-plan.json").read_text())
 CAP = PLAN["cumulative_cap"]["requested"]
 BUDGET_ROOT = PLAN["revision_4"]["ledger"]["proposed_budget_root"]
+# The windows of the grants named for one company are the plan's decisions.
+NAMED_WINDOWS = PLAN["named_grant_windows"]["windows"]
 EVERYONE = COMPANIES
 BANK = "jpmorgan_chase"
 OTHERS = [company for company in COMPANIES if company != BANK]
@@ -58,13 +60,13 @@ GRANTS = [
      "earliest_report_end": WINDOW[0], "latest_report_end": WINDOW[1]},
     {"grant": "B_JPMORGAN_FY2025_KNOWN_HEADER", "company_ids": [BANK],
      "dependency_classes": ["FISCAL_EVENT_FILING"],
-     "earliest_report_end": "2025-12-31", "latest_report_end": "2025-12-31"},
+     **NAMED_WINDOWS["B_JPMORGAN_FY2025_KNOWN_HEADER"]},
     {"grant": "G_GOVERNANCE_PROXIES", "company_ids": OTHERS,
      "dependency_classes": ["GOVERNANCE_DISCLOSURE_FILING"],
      "earliest_report_end": WINDOW[0], "latest_report_end": WINDOW[1]},
     {"grant": "G_JPMORGAN_FY2024_PROXY", "company_ids": [BANK],
      "dependency_classes": ["GOVERNANCE_DISCLOSURE_FILING"],
-     "earliest_report_end": "2024-12-31", "latest_report_end": "2024-12-31"},
+     **NAMED_WINDOWS["G_JPMORGAN_FY2024_PROXY"]},
 ]
 GRANTED_CLASSES = sorted({value for grant in GRANTS for value in grant["dependency_classes"]})
 
@@ -101,9 +103,16 @@ policy = {
     "sec_wiring_receipt_path": "docs/evidence/issue47_history/acquisition-wiring/"
                                "offline-wiring-receipt.json",
 }
+# The saved record as the owner's own post would come back from GitHub: the
+# approver's numeric account id, a user account, the owner association and an
+# unedited comment - every field the gate checks since the re-review's fixes.
+# With only a login, this check went on writing a proposal whose own acceptance
+# had failed, and its widening negative was refused for the author, not the scope.
 record = {"html_url": policy["delegation_url"], "id": COMMENT_ID,
           "issue_url": "https://api.github.com/repos/" + TRUSTED_REPOSITORY + "/issues/47",
-          "user": {"login": TRUSTED_APPROVER}, "body": body}
+          "user": {"login": TRUSTED_APPROVER, "id": TRUSTED_APPROVER_ID, "type": "User"},
+          "author_association": "OWNER", "created_at": "2026-09-27T00:00:00Z",
+          "updated_at": "2026-09-27T00:00:00Z", "body": body}
 
 checks = {}
 with tempfile.TemporaryDirectory() as directory:
@@ -232,6 +241,15 @@ if stated != not_yet_declarable:
                      + json.dumps(stated, sort_keys=True) + " gate "
                      + json.dumps(not_yet_declarable, sort_keys=True))
 checks["not_yet_declarable_matches_the_plan"] = True
+# The proposal is written only if the gate accepted it and refused the widened
+# policy for widening: a check that fails, or a negative refused for any other
+# reason, says nothing about this proposal.
+if checks.get("accepted_offline") is not True:
+    raise SystemExit("THE_GATE_DID_NOT_ACCEPT_THE_PROPOSAL: " + str(checks.get("refusal")))
+if not str(checks.get("a_policy_that_grants_more_than_the_comment")).startswith(
+        "ISSUE_47_ALLOWANCE_WIDENS_THE_APPROVED_GRANT"):
+    raise SystemExit("THE_WIDENED_POLICY_WAS_NOT_REFUSED_FOR_WIDENING: "
+                     + str(checks.get("a_policy_that_grants_more_than_the_comment")))
 
 out = {"record_type": "ISSUE_47_PROPOSED_SEC_ALLOWANCE",
        "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

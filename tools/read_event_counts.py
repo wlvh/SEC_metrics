@@ -26,7 +26,7 @@ its own rather than into this one, whose positions all compare results of one
 closure:
 
     python3 tools/read_event_counts.py --runs-root <root> --closure sha256:<...> \
-        --case paramount-2024=paramount_skydance_paramount_global:2024-12-31 \
+        --case <label>=<company_id>:<report_end> \
         --output docs/evidence/issue47_history/content-acceptance/<name>.json
 """
 import argparse
@@ -42,13 +42,8 @@ sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "tools"))
 
 OUT = "docs/evidence/issue47_history/content-acceptance/event-count-read.json"
-CASES = [("marriott_international", "2025-12-31", "marriott-2025"),
-         ("ford_motor_company", "2025-12-31", "ford-2025"),
-         ("pfizer", "2025-12-31", "pfizer-2025"),
-         ("lumen_technologies", "2025-12-31", "lumen-2025"),
-         ("enphase_energy", "2025-12-31", "enphase-2025"),
-         ("southwest_airlines", "2025-12-31", "southwest-2025"),
-         ("macys", "2026-01-31", "macys-2026")]
+from acceptance_readings import reading_cases  # noqa: E402
+CASES = reading_cases("event_counts")
 
 
 def _routes():

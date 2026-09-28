@@ -1,0 +1,223 @@
+{
+ "budget_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-model-v1",
+ "maximum_additional_provider_paid_sec_calls": [
+  35,
+  35,
+  0
+ ],
+ "model_wiring_receipt_id": "sha256:7dd330d2f3cacf8e2c1facd5faa104ca8036bc31c263657ab63a453ac8cd3cec",
+ "production_authorized": false,
+ "record_type": "ISSUE_47_HISTORICAL_MODEL_DELEGATION",
+ "requirement_id": "issue_47_v1",
+ "retry_policy": {
+  "actual_usage_required": true,
+  "automatic_retry_count": 0,
+  "context_ceiling_tokens": 200000,
+  "http_402_automatic_retry_count": 0,
+  "http_402_stops_batch": true,
+  "http_402_stops_execution": true,
+  "kind": "TRANSPORT_RETRY_POLICY",
+  "unknown_remote_outcome_retry_allowed": false
+ },
+ "scope": {
+  "company_ids": [
+   "enphase_energy",
+   "ford_motor_company",
+   "lumen_technologies",
+   "macys",
+   "marriott_international",
+   "paramount_skydance_paramount_global",
+   "pfizer",
+   "salesforce",
+   "southwest_airlines"
+  ],
+  "earliest_report_end": "2023-12-31",
+  "grants": [
+   {
+    "company_ids": [
+     "marriott_international"
+    ],
+    "earliest_report_end": "2023-12-31",
+    "grant": "D04_MARRIOTT_FY2023_FY2024",
+    "latest_report_end": "2024-12-31",
+    "metric_ids": [
+     "D04"
+    ],
+    "request_digests": [
+     "sha256:5bf8a1a8430691550caed3fcea08a1c2dd6807fe1aa3088db6ed76b9306daa73",
+     "sha256:7fbda556d87bfacb395e1b27c3f02a5006ca9c460f82c13ddbd5017e907d2fec",
+     "sha256:9b383bd3f96810ef7afec75ac566ecb01e85c5f19ba88047c348fe92b5b2b372",
+     "sha256:adf1c359d831c5ee44cb7e0d28f9d2ef347633d75af684729683dec34b88bfab",
+     "sha256:b917c1c78a45ba1cdc07f912c26f6b4db24fd55abcdfc218ae0478e3e69c610b",
+     "sha256:e977df5218ad3b163e4f16c08d5bf75b6eeebdef5c7e112b760a3076ef9be2e0",
+     "sha256:fbaba8d0c117ec8c3acffb4d5dbf397deb15fad488111e473b38a160f316082a",
+     "sha256:fef8634ae2c981b4df5fefe3fa60e1c030b84a07e7d13c5d7535476405d6a139"
+    ]
+   },
+   {
+    "company_ids": [
+     "paramount_skydance_paramount_global"
+    ],
+    "earliest_report_end": "2024-12-31",
+    "grant": "D04_PARAMOUNT_PREDECESSOR_FY2024",
+    "latest_report_end": "2024-12-31",
+    "metric_ids": [
+     "D04"
+    ],
+    "request_digests": [
+     "sha256:6645309d8f0d3056908749cfd18a3836f1056055de432f2927a511a85da6f4a0",
+     "sha256:82fb079c844b2de1a0d6d02173a2b54c0e8cc4addc7bb0ccc7384171c9c9892e",
+     "sha256:8fd86306701745313c0c405ddba93018d6fee5234e217193fee021828fd5e94b",
+     "sha256:9451d60a51bb51fecab8125423b5ae070581291c55a9246c2e796fd4ba0f9150",
+     "sha256:a1cb96c1637ab1ce77f31809516bb575876c48b05fc91aa0dd6890caeddbff2d",
+     "sha256:c46221544c221ad74ed7fd25e099ab84c16219d9fd32cfba5fe9e42a8b028e5d",
+     "sha256:cc791f2b4e873fdaaa9067aa9e90e8256acda7a4164ab824942851f85155c463",
+     "sha256:e250b9bdc5b5546ef17fd98c1aa55af6310f9f5696626054c5ba9d6697f4852a"
+    ]
+   },
+   {
+    "company_ids": [
+     "ford_motor_company",
+     "lumen_technologies",
+     "marriott_international",
+     "pfizer",
+     "southwest_airlines"
+    ],
+    "earliest_report_end": "2025-12-31",
+    "grant": "E01_FY2025_CALENDAR_WINDOWS",
+    "latest_report_end": "2025-12-31",
+    "metric_ids": [
+     "E01"
+    ],
+    "request_digests": [
+     "sha256:01e2446cb97c68f34962b6b24b39136fd2f45ed1cd45d5a0df12a76bf6afbb4b",
+     "sha256:5111af6c7cdf60e9bc6fc94f3370041f78104a2964de83edb624b9ea5be5dfb8",
+     "sha256:7e521f10bf6f474f63fa9937e8fc9e678011dac0ed44988564751cdf5e9a084f",
+     "sha256:87c5f4dc3d20ee8e8d78d9c26943e1ca52048e91188832734626c15add7938eb",
+     "sha256:ba93585478a7d23961b87210ad7864d0b681ac5d55abd875e6f2d69e6db34c49"
+    ]
+   },
+   {
+    "company_ids": [
+     "macys"
+    ],
+    "earliest_report_end": "2026-01-31",
+    "grant": "E01_MACYS_FY2025",
+    "latest_report_end": "2026-01-31",
+    "metric_ids": [
+     "E01"
+    ],
+    "request_digests": [
+     "sha256:15a30b067e8bb799e513deb78552c6011483dae4602b63d9ab99076106c49962"
+    ]
+   },
+   {
+    "company_ids": [
+     "paramount_skydance_paramount_global"
+    ],
+    "earliest_report_end": "2024-12-31",
+    "grant": "E01_PARAMOUNT_PREDECESSOR_FY2024",
+    "latest_report_end": "2024-12-31",
+    "metric_ids": [
+     "E01"
+    ],
+    "request_digests": [
+     "sha256:11f9f8deeecc0691ed326daa2f2d65817d65bf24c90a32e16b5df07d5cf65554"
+    ]
+   },
+   {
+    "company_ids": [
+     "enphase_energy",
+     "ford_motor_company",
+     "lumen_technologies",
+     "marriott_international",
+     "paramount_skydance_paramount_global",
+     "pfizer",
+     "southwest_airlines"
+    ],
+    "earliest_report_end": "2025-12-31",
+    "grant": "D02_FY2025_CALENDAR",
+    "latest_report_end": "2025-12-31",
+    "metric_ids": [
+     "D02"
+    ],
+    "request_digests": [
+     "sha256:17aefe2ce1f1e736ccfde8c88699a1dbe03469c7d3f2bed87e702224778fffab",
+     "sha256:39524c19ec29e4162984e633751742386d211bff3b6afe2ebea02cff500529a1",
+     "sha256:40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad",
+     "sha256:5e6ba3ba06bed5315e9ec73f51fd35e588e2ea07d2c094d88f30318eaad95be4",
+     "sha256:75002feb7f3f2dc04c419e1bcce60866fa115dbef4d12522f1de83e72a2d8233",
+     "sha256:e2a8c212763757425560bcc4ea40bba5d4cf1b81b5619a4cc2a05bc4430b1a66",
+     "sha256:f81847d3472ce45e7d7b8624bd05c82046e6211537adb9e1d5618030280b4e6b"
+    ]
+   },
+   {
+    "company_ids": [
+     "macys",
+     "salesforce"
+    ],
+    "earliest_report_end": "2026-01-31",
+    "grant": "D02_FISCAL_JANUARY_2026",
+    "latest_report_end": "2026-01-31",
+    "metric_ids": [
+     "D02"
+    ],
+    "request_digests": [
+     "sha256:95432daf4c59c0f39246dd5996b728acfd31acc10c582a943c5507bf862bfd70",
+     "sha256:a5ab17965b54a2f753eba496e9c80926f97d48c23f9d72143e8265fe0e282b25"
+    ]
+   },
+   {
+    "company_ids": [
+     "marriott_international"
+    ],
+    "earliest_report_end": "2023-12-31",
+    "grant": "D02_MARRIOTT_FY2023_FY2024",
+    "latest_report_end": "2024-12-31",
+    "metric_ids": [
+     "D02"
+    ],
+    "request_digests": [
+     "sha256:33ea0f80b92f00a1e8a62d91347105e24cdc59e413da7602bdc12689c109f356",
+     "sha256:df0e5864cc60147194a6deef9439599164ec4faf37b2dfbfa2f9c7c0fa6b8931"
+    ]
+   },
+   {
+    "company_ids": [
+     "paramount_skydance_paramount_global"
+    ],
+    "earliest_report_end": "2024-12-31",
+    "grant": "D02_PARAMOUNT_PREDECESSOR_FY2024",
+    "latest_report_end": "2024-12-31",
+    "metric_ids": [
+     "D02"
+    ],
+    "request_digests": [
+     "sha256:6781306ba0ec67cf2bc307500fc8cb9d60c3287042dcb2a00ba30c93c831bfb6"
+    ]
+   }
+  ],
+  "latest_report_end": "2026-01-31",
+  "metric_ids": [
+   "D02",
+   "D04",
+   "E01"
+  ],
+  "purposes": [
+   "ISSUE47_HISTORICAL_SEMANTIC_ASSESSMENT"
+  ]
+ },
+ "transport": {
+  "api": "chat_completions",
+  "data_use": "provider-managed; no training or data-use guarantee",
+  "endpoint_host": "api.deepseek.com",
+  "filing_egress_policy": "PUBLIC_SEC_FILING_CONTENT_ONLY",
+  "maximum_payload_bytes": 8388608,
+  "model": "deepseek-flash",
+  "provider": "deepseek",
+  "region": "provider-managed-no-residency-guarantee",
+  "retention": "provider-managed; no zero-retention claim",
+  "retry_count": 0,
+  "timeout_seconds": 120
+ }
+}

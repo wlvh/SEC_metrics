@@ -146,7 +146,7 @@ def main():
     from vnext import historical_model_calls as calls
     from vnext.ai_adapter import _DEEPSEEK_ENDPOINT_HOST
     from vnext.historical_source_acquisition import (APPROVED_BODY_PATH, POLICY_PATH,
-                                                     TRUSTED_APPROVER)
+                                                     TRUSTED_APPROVER, TRUSTED_APPROVER_ID)
     from vnext.normal_period_selection import resolve_period_selection
     measured = json.loads((REPO / MEASUREMENT).read_text(encoding="utf-8"))
     e01 = json.loads((REPO / E01_MEASUREMENT).read_text(encoding="utf-8"))
@@ -188,10 +188,15 @@ def main():
             "production_authorized": False}
     text = json.dumps(body, ensure_ascii=False, indent=1, sort_keys=True)
     url = "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-1000000001"
+    # The comment as the owner's own post would come back from GitHub: the
+    # approver's numeric account id, a user account, the owner association,
+    # unedited, and not posted through a GitHub App - every field the gate
+    # checks since the re-review's M3 fixes. (This fixture carried id 0 until
+    # the first run after those fixes, which the gate refused by name.)
     comment = {"id": 1000000001, "html_url": url,
                "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
-               "user": {"login": TRUSTED_APPROVER, "id": 0, "type": "User"},
-               "author_association": "OWNER", "body": text,
+               "user": {"login": TRUSTED_APPROVER, "id": TRUSTED_APPROVER_ID, "type": "User"},
+               "author_association": "OWNER", "performed_via_github_app": None, "body": text,
                "created_at": "2026-09-27T00:00:00Z", "updated_at": "2026-09-27T00:00:00Z"}
     with tempfile.TemporaryDirectory() as directory:
         root = Path(directory)
@@ -210,13 +215,26 @@ def main():
             allowance=allowance, metric_id=metric, company_id=company, report_end=end,
             request_digest=digest) for digest in planned[(metric, company, end)]}
             for metric, company, end in positions}
-        # A request of one granted position asked at the next one, and a digest
-        # no grant names asked at every granted position: both must be refused.
+        # What the scope decides: a request some other grant names, asked at a
+        # position, and a digest no grant names, asked at every position - both
+        # must be refused. Within one grant the scope admits any digest the grant
+        # names at any of its positions; which position a request belongs to is
+        # decided before a claim by HistoricalSemanticRequest.validate, which
+        # rebuilds the request from that position's own saved filing (the sealed
+        # verification's AN_E01_OR_D02_REQUEST_IS_NOT_COMPARED and
+        # THE_SOURCE_IS_NOT_REBUILT_FROM_THE_FILING injections break it). The first
+        # version of this asked the next position's request whatever its grant,
+        # which only a scope bound per position could refuse.
         order = list(planned)
+        grant_of = {position: _covering_grant(*position) for position in order}
         unnamed = "sha256:" + "f" * 64
         refused_requests = {}
         for index, (metric, company, end) in enumerate(order):
-            other = order[(index + 1) % len(order)]
+            others = [position for position in order[index + 1:] + order[:index]
+                      if grant_of[position] != grant_of[(metric, company, end)]]
+            if not others:
+                raise SystemExit("EVERY_POSITION_IS_IN_ONE_GRANT")
+            other = others[0]
             for label, digest in (("REQUEST_OF_" + ":".join(other), planned[other][0]),
                                   ("UNNAMED_DIGEST", unnamed)):
                 try:
@@ -249,6 +267,11 @@ def main():
                 "model_wiring_receipt_id": receipt["receipt_id"],
                 "checked_by_the_real_gate_in_a_temporary_tree": {
                     "registered": registered["status"], "requests_inside_a_grant": inside,
+                    "what_the_scope_does_not_decide": (
+                        "within one grant the scope admits any digest the grant names at any "
+                        "of its positions; the request's own position is enforced before a "
+                        "claim by HistoricalSemanticRequest.validate, which rebuilds it from "
+                        "that position's saved filing"),
                     "neighbouring_positions_refused": refused,
                     "requests_no_grant_names_refused": refused_requests},
                 "calls": {"provider": 0, "paid": 0, "sec": 0}}

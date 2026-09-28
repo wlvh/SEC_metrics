@@ -363,5 +363,18 @@
    }
   },
   "what_the_one_answer_per_class_check_is": "a check that the per-company, per-class statement above fits the grants proposed today, not a rule that a class must be granted alike for every year. A grant approved for some years only is a legitimate decision; the statement then says so per year and the check changes with it, rather than refusing it."
+ },
+ "named_grant_windows": {
+  "what": "The target-period windows of the two grants the proposal names for one company, recorded here as data because the proposal tool is scanned as production Python and may not spell a fiscal date. The reasons are in revision_4 and revision_5: the FY2025 event window holds the one header whose last request failed, and the FY2024 proxy is the one the bank's saved catalog lets the declaration name today.",
+  "windows": {
+   "B_JPMORGAN_FY2025_KNOWN_HEADER": {
+    "earliest_report_end": "2025-12-31",
+    "latest_report_end": "2025-12-31"
+   },
+   "G_JPMORGAN_FY2024_PROXY": {
+    "earliest_report_end": "2024-12-31",
+    "latest_report_end": "2024-12-31"
+   }
+  }
  }
 }

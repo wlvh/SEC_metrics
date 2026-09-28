@@ -717,6 +717,24 @@ alike for every year: a grant approved for some years only is a legitimate
 decision, and the statement would then say so per year, with the check
 changing to match rather than refusing it.
 
+**The proposal's own acceptance check had stopped holding, and the tool went
+on writing** (found 2026-09-28). The re-review's fixes (`9f3f4d95`) made the
+gate check a saved approval record's numeric account id, account type, owner
+association and that the comment is unedited. This tool's fixture record
+carried only a login, so from then on its `accepted_offline` was false and its
+widened-cap negative was refused for the author rather than for widening - and
+it still exited 0 and wrote a proposal saying so in a field nobody read. The
+committed proposal (from `a0f51ddc`, before those fixes) was not affected. The
+fixture now carries every field the gate checks, and the tool writes nothing
+unless the gate accepted the proposal and refused the widened policy for
+widening. Re-run on the current code, the proposal is byte-identical to the
+committed one, and `not_yet_declarable_injections.py` passes again. The owner's
+path is unaffected: a posted comment is read back from GitHub with its real id.
+The two grants named for JPMorgan now take their windows from
+`acquisition-plan.json` (`named_grant_windows`): the tool is scanned as
+production Python by the base's scalability audit and may not spell a fiscal
+date. The approval body did not change.
+
 **The injections are now judged, not printed** (review of `a0f51ddc`). The
 three injections above were read by a person: the script printed each run's
 exit status, last line and whether the proposal bytes changed, and exited 0

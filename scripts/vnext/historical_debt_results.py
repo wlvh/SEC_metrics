@@ -94,8 +94,9 @@ def historical_b06_preparation(*, repo_root: Path, company_id: str, prepared, re
     frozen `_prepare_b06` reads `normal_annual_input`, whose fiscal year is
     derived from the report end, while `normal_annual_input_v2` overwrites that
     label with the issuer's own.  The two agree for a calendar-year filer and
-    disagree for Salesforce, whose year ending 2026-01-31 the first calls 2025
-    and the second calls 2026.  The guard downstream re-derives the period from
+    disagree for one whose year ends in January: the first names that year by
+    the calendar year before, the second by the year it ends in.  The guard
+    downstream re-derives the period from
     the filing's own bytes and compares, so handing it the relabelled input
     fails on exactly those issuers and on no one else.
     """

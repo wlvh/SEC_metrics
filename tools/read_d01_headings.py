@@ -28,7 +28,7 @@ per filing below; it is the part a program cannot supply.
 
 Usage:
     python3 tools/read_d01_headings.py --runs-root <root> --closure sha256:<closure> \
-        --company marriott_international --period-end 2025-12-31 [...]
+        --company <company_id> --period-end <report_end> [...]
 """
 import argparse
 import collections

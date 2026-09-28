@@ -74,15 +74,20 @@ DEBT_TO_EQUITY = EVIDENCE + "debt-to-equity-read.json"
 READINGS = (*CROSS_READINGS, LODGING, *EVENT_READINGS, E01_EIGHT_O_ONES, GOVERNANCE,
             TEXT, *D01_READINGS, RPO, COMPENSATION, DEBT_TO_EQUITY, C02_COMPOSITION,
             E01_CANDIDATES)
+# The company periods the readings cover are data, not code: tools/ is scanned
+# as production Python for identity literals and fixed dates.
+POSITIONS = "docs/evidence/issue47_history/reading-producers/positions.json"
+_POSITIONS = json.loads((Path(__file__).resolve().parent.parent / POSITIONS)
+                        .read_text(encoding="utf-8"))
 # The readings key some positions by a label only. The label is what the
 # reading recorded, and this is the period each label names.
-PERIODS = {"marriott-2025": "2025-12-31", "marriott-2024": "2024-12-31",
-           "marriott-2023": "2023-12-31", "ford-2025": "2025-12-31",
-           "pfizer-2025": "2025-12-31", "lumen-2025": "2025-12-31",
-           "enphase-2025": "2025-12-31", "southwest-2025": "2025-12-31",
-           "salesforce-2026": "2026-01-31", "macys-2026": "2026-01-31",
-           "paramount-2025": "2025-12-31", "paramount-2024": "2024-12-31",
-           "jpmorgan-2025": "2025-12-31"}
+PERIODS = {label: row["report_end"] for label, row in _POSITIONS["labels"].items()}
+
+
+def reading_cases(reading):
+    """The (company_id, report_end, label) positions one reading covers, in its order."""
+    return [(_POSITIONS["labels"][label]["company_id"], _POSITIONS["labels"][label]["report_end"],
+             label) for label in _POSITIONS["readings"][reading]]
 _ACCESSION_DIRECTORY = re.compile(r"_(\d+)_(\d{10})(\d{2})(\d{6})\Z")
 _ARCHIVE_URL = re.compile(r"/Archives/edgar/data/(\d+)/(\d{10})(\d{2})(\d{6})/")
 

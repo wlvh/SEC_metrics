@@ -9,9 +9,9 @@ latest annual period that condition is nearly always satisfied, so the refusal
 is invisible; for an earlier pinned period it is not.
 
 Measured on this repository's saved submissions indexes: the refusal reaches
-Salesforce's 2019-01-31 through 2023-01-31 periods, JPMorgan's 2024-12-31 and
-Pfizer's 2018-12-31 through 2020-12-31 - thirteen company periods, three of
-them inside the five-year frame. Five Salesforce 10-K rows and one JPMorgan
+Salesforce's fiscal years ending January 2019 through January 2023, JPMorgan's
+2024 year and Pfizer's 2018 through 2020 years - thirteen company periods,
+three of them inside the five-year frame. Five Salesforce 10-K rows and one JPMorgan
 10-K row are themselves in a history shard rather than in ``recent``, so no
 recent-only scan can find them at all. This is a consumer limitation and not a
 material one: fetching those primary documents does not remove it.
