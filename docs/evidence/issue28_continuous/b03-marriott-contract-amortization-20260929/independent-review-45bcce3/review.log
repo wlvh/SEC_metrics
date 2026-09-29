@@ -1,0 +1,23 @@
+review_subject=45bcce3d99083736277728223c48b43e98205733
+review_parent=186a0c3a66b3ff7fd68ff12c223d1d1f79d447a6
+review_status=PASS_WITH_BOUNDS
+review_date=2026-09-29
+review_tool_count=19 functions.exec calls; 55 nested exec_command calls; 1 nested apply_patch call
+
+Read Issue #28 live; inspected exact git parent, changed product files, tests, V14 manifest, three wiring receipts, and bounded evidence directory. Initial checkout HEAD equaled review_subject; the only pre-existing worktree modification was docs/evidence/issue28_continuous/execution-state.json. This review did not edit it.
+
+Independent short test:
+  PYTHONPATH=scripts /private/tmp/issue28_py314_venv/bin/python -m unittest -q tests.vnext.test_b03_contract_amortization_scope
+  exit=0; Ran 2 tests in 18.800s; OK.
+
+Independent read-only verification:
+  Loaded issue_28_v14 Requirement; validate_execution_authority, validate_semantic_rule_bindings, validate_wiring_receipt all passed.
+  Four changed/new execution files matched manifest bytes; three wiring receipts matched execution_authority sha256:843b9b150d7461cf38aab93077f496c6c035d958132aaa2c050d90a0924004b6.
+  Compared b03_depreciation_scope.py, ordinary_update_cycle.py, normal_run_v3.py, and issue_28_v13/baseline_manifest.json to parent Git blobs; all unchanged.
+  Independently hashed saved Marriott HTML and XML against audit.json, parsed 2025 XML facts 145/313/135/213/599 million USD, read original HTML text for contract investment amortization and its accounting location, and checked 145+313=458 and 599-458-135=6.
+  Checked audit.json tested_runtime_sha256 against current files; all five matched.
+
+Execution evidence inspected, not rerun:
+  audit.py/json/log, exercise.py/json/log, cold.py/json/log, positive.py/json/log, rebind.py/binding.log, directed.log, fast.log/exit and first-failure log/exit.
+  Current author fast log says 142/142 in 96.268s with the supplied Python environment; the initial failure log shows one stale mock target and two missing-tokenizers modules under system Python. No long material or full fast suite was rerun here.
+  Private update and independent-process cold read were inspected as saved evidence only. No private publication, production acceptance, live provider/SEC, #47 or PR52 operation was run.
