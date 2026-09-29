@@ -20,8 +20,11 @@ positions, 43 reached the heading scan with 26 to 68 headings, and Enphase
 FY2021 is the only one over 64 (Enphase's other four years have 60 to 62).
 Five JPMorgan originals are not saved, and Macy's FY2022 and FY2021 stopped
 before the scan on their fiscal-year label (`../fiscal-label-forms/`). The
-same script under the revised route, for Enphase and those two Macy's years,
-is recorded separately when it completes.
+same script under the revised route (`measured-revised.json`, the tree of
+`fbded78a`): Enphase FY2021's 68 headings are selected, its other years
+unchanged, and with the fiscal-label repair Macy's FY2022 and FY2021 reach the
+scan with 35 and 39. All 45 positions whose original is saved now have 26 to
+68 headings and a candidate.
 
 ## Verification
 
