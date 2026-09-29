@@ -219,8 +219,10 @@ def _successor_income_input(*, repo_root: Path, company_id: str, metric_id: str,
     if (metric_id not in INCOME_STATEMENT_METRICS
             or prepared["subject_policy"]["mode"] != "SUCCESSOR_REGISTRANT_ONLY"):
         return None
-    from .ordinary_income_input import prepare_current_income_input
-    income_input = prepare_current_income_input(repo_root=repo_root, company_id=company_id)
+    from . import ordinary_income_input
+    from .historical_dei import release_aware
+    income_input = release_aware(ordinary_income_input).prepare_current_income_input(
+        repo_root=repo_root, company_id=company_id)
     proved = income_input["annual_input"]["filing"]["accessionNumber"]
     if proved != prepared["filing"]["accessionNumber"]:
         return None

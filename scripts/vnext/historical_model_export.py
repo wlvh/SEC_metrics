@@ -75,7 +75,7 @@ def _started(ledger):
 
 def export_model_ledger(*, ledger, out_dir):
     """Write ``ledger`` - checked by its own snapshot first - into ``out_dir``, only forward."""
-    from .historical_source_export import _archive, _binding, _replace, _sealed, _source_commit
+    from .historical_source_export import _archive, _binding, _publish, _sealed, _source_commit
     # Checked before the lock: taking it on a root where nothing was begun
     # initialises a ledger.
     _need(_started(ledger), "ISSUE_47_MODEL_EXPORT_OF_A_LEDGER_NEVER_STARTED_HERE:" + str(ledger.root))
@@ -122,8 +122,9 @@ def export_model_ledger(*, ledger, out_dir):
             "the start marker on GitHub. The container's egress proxy re-terminates TLS."),
         "production_authorized": False}, "export_id")
     out_dir.mkdir(parents=True, exist_ok=True)
-    _replace(out_dir / ARCHIVE_NAME, data)
-    _replace(out_dir / MODEL_EXPORT_INDEX, canonical_json_bytes(value=index))
+    # The archive and then its index, nothing replaced until both are written.
+    _publish(out_dir=out_dir, files={ARCHIVE_NAME: data}, index_name=MODEL_EXPORT_INDEX,
+             index_bytes=canonical_json_bytes(value=index))
     return {"status": "EXPORTED", "export_id": index["export_id"], "out_dir": str(out_dir),
             "counts": state["counts"], "slots": len(state["rows"]), "bytes": len(data),
             "calls": [0, 0, 0]}

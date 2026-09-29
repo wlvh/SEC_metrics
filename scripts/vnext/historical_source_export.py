@@ -269,12 +269,10 @@ def export_acquisition(*, ledger_root, out_dir=None, policy_root=None):
             "re-terminates TLS, as the executor's container's egress proxy does, the "
             "client verified the proxy's certificate rather than SEC's."),
         "production_authorized": False}, "export_id")
-    for stale in out_dir.iterdir():
-        if _CHUNK_NAME.match(stale.name) and stale.name not in written:
-            stale.unlink()
-    for name, data in written.items():
-        _replace(out_dir / name, data)
-    _replace(out_dir / INDEX_NAME, canonical_json_bytes(value=index))
+    stale = sorted(path.name for path in out_dir.iterdir()
+                   if _CHUNK_NAME.match(path.name) and path.name not in written)
+    _publish(out_dir=out_dir, files=written, index_name=INDEX_NAME,
+             index_bytes=canonical_json_bytes(value=index), remove=stale)
     return {"status": "EXPORTED", "export_id": index["export_id"], "out_dir": str(out_dir),
             "execution_mode": mode, "rows": index["exported_row_count"],
             "row_archives": len(chunks),
@@ -309,6 +307,38 @@ def _replace(path, data):
     with temporary.open("wb") as handle:
         handle.write(data)
     os.replace(temporary, path)
+
+
+def _write_temporary(path, data):
+    with path.open("wb") as handle:
+        handle.write(data)
+
+
+def _publish(*, out_dir, files, index_name, index_bytes, remove=()):
+    """Put ``files`` and then the index in place; remove ``remove`` only after the index.
+
+    Everything new is written to temporary files first, so a write that fails -
+    the first live acquisition ran the container's disk full in the middle of
+    an export - leaves the export already there untouched. The previous order
+    removed the stale row archives and replaced the files one by one before
+    writing the index, and that failure left an index naming an archive it had
+    just deleted. Renames take no space; the index is renamed last, and a stale
+    archive is removed only once the index that no longer names it is in place.
+    """
+    staged = []
+    try:
+        for name, data in [*sorted(files.items()), (index_name, index_bytes)]:
+            temporary = out_dir / ("." + name + ".tmp")
+            staged.append((temporary, out_dir / name))
+            _write_temporary(temporary, data)
+    except BaseException:
+        for temporary, _ in staged:
+            temporary.unlink(missing_ok=True)
+        raise
+    for temporary, target in staged:
+        os.replace(temporary, target)
+    for name in remove:
+        (out_dir / name).unlink()
 
 
 def _read_archive(path, binding):

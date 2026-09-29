@@ -79,7 +79,7 @@ def _native_instance_alternative(reader, repo_root, filing, cik):
     file_set = reader.file_sets[-1]
     if file_set["primary_saved"] or not file_set["expected_xml_documents"]:
         return {"status": "NOT_APPLICABLE"}
-    from .normal_annual_input import annual_period
+    from .historical_dei import annual_period
     try:
         periods = [annual_period(raw=item["raw_bytes"], cik=cik, filing=filing)
                    for item in sources]

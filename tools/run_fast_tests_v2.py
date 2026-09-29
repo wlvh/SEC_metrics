@@ -309,6 +309,9 @@ SOURCE_TESTS += ("tests.vnext.test_historical_amendment_note",)
 # withheld by name with its B01 carried, two filings whose result equals the
 # result with the check off, and four constructed shapes; 44 seconds measured.
 SOURCE_TESTS += ("tests.vnext.test_historical_da_scope_route",)
+# The DEI reader with the taxonomy releases before 2022 accepted: it parses ten
+# saved annual reports and constructed older-release copies, about 30 seconds.
+SOURCE_TESTS += ("tests.vnext.test_historical_dei",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and

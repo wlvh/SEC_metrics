@@ -63,8 +63,13 @@ from __future__ import annotations
 import re
 
 from .canonical import content_hash, sha256_bytes
+from .historical_dei import release_aware
 from .text_coverage import (TextCoverageError, _Blocks, _byte_offsets,
                             build_text_document)
+
+# The frozen readers this module calls, answering the DEI namespace question
+# for every taxonomy release (historical_dei).
+build_text_document = release_aware(build_text_document)
 
 _WEIGHT = re.compile(r"(?:^|;)\s*font-weight\s*:\s*([^;]+)", re.I)
 _DECORATION = re.compile(r"(?:^|;)\s*text-decoration[^:]*:\s*([^;]+)", re.I)

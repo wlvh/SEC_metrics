@@ -26,7 +26,8 @@ from .calculator import metric_is_applicable, withheld_metric_result
 from .canonical import content_hash, sha256_file
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_filing_inventory import filing_inventory
-from .normal_annual_input import annual_period, _registry_rows
+from .historical_dei import annual_period
+from .normal_annual_input import _registry_rows
 from .normal_companyfacts_results import (CATALOG_PATH, NormalCompanyfactsError,
                                           _SOURCE_ERRORS, _authority, _filing_source,
                                           _prior_filing)

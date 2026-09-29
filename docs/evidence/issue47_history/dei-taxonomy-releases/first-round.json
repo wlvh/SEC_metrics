@@ -1,0 +1,232 @@
+{
+ "record_type": "ISSUE_47_FIRST_ACQUISITION_ROUND",
+ "source": "the acquire CLI's printed summary for each company, as the driver logged it; the full per-run summaries are in the ledger root's runs/ on the host that ran them, and every capture is in evidence/issue47_acquired/",
+ "companies": [
+  {
+   "finished_at": "2026-09-29T08:53:11Z",
+   "company_id": "enphase_energy",
+   "cli_exit": 3,
+   "captured": 8,
+   "failed": 0,
+   "outside_grants": 0,
+   "already_claimed": 0,
+   "passes": 1,
+   "stopped_at": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+   "cumulative_after": [
+    0,
+    0,
+    9
+   ],
+   "limits": [
+    0,
+    0,
+    1354
+   ],
+   "stop": null
+  },
+  {
+   "finished_at": "2026-09-29T08:56:46Z",
+   "company_id": "ford_motor_company",
+   "cli_exit": 3,
+   "captured": 9,
+   "failed": 0,
+   "outside_grants": 0,
+   "already_claimed": 0,
+   "passes": 1,
+   "stopped_at": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+   "cumulative_after": [
+    0,
+    0,
+    18
+   ],
+   "limits": [
+    0,
+    0,
+    1354
+   ],
+   "stop": null
+  },
+  {
+   "finished_at": "2026-09-29T09:15:03Z",
+   "company_id": "jpmorgan_chase",
+   "cli_exit": 3,
+   "captured": 77,
+   "failed": 0,
+   "outside_grants": 4,
+   "already_claimed": 5,
+   "passes": 3,
+   "stopped_at": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+   "cumulative_after": [
+    0,
+    0,
+    95
+   ],
+   "limits": [
+    0,
+    0,
+    1354
+   ],
+   "stop": null
+  },
+  {
+   "finished_at": "2026-09-29T09:21:29Z",
+   "company_id": "lumen_technologies",
+   "cli_exit": 3,
+   "captured": 9,
+   "failed": 0,
+   "outside_grants": 0,
+   "already_claimed": 0,
+   "passes": 1,
+   "stopped_at": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+   "cumulative_after": [
+    0,
+    0,
+    104
+   ],
+   "limits": [
+    0,
+    0,
+    1354
+   ],
+   "stop": null
+  },
+  {
+   "finished_at": "2026-09-29T09:28:17Z",
+   "company_id": "macys",
+   "cli_exit": 3,
+   "captured": 9,
+   "failed": 0,
+   "outside_grants": 0,
+   "already_claimed": 0,
+   "passes": 1,
+   "stopped_at": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+   "cumulative_after": [
+    0,
+    0,
+    113
+   ],
+   "limits": [
+    0,
+    0,
+    1354
+   ],
+   "stop": null
+  },
+  {
+   "finished_at": "2026-09-29T09:42:14Z",
+   "company_id": "marriott_international",
+   "cli_exit": 3,
+   "captured": 51,
+   "failed": 0,
+   "outside_grants": 0,
+   "already_claimed": 0,
+   "passes": 1,
+   "stopped_at": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+   "cumulative_after": [
+    0,
+    0,
+    164
+   ],
+   "limits": [
+    0,
+    0,
+    1354
+   ],
+   "stop": null
+  },
+  {
+   "finished_at": "2026-09-29T09:56:39Z",
+   "company_id": "paramount_skydance_paramount_global",
+   "cli_exit": 3,
+   "captured": 26,
+   "failed": 0,
+   "outside_grants": 0,
+   "already_claimed": 0,
+   "passes": 1,
+   "stopped_at": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+   "cumulative_after": [
+    0,
+    0,
+    190
+   ],
+   "limits": [
+    0,
+    0,
+    1354
+   ],
+   "stop": null
+  },
+  {
+   "finished_at": "2026-09-29T10:05:02Z",
+   "company_id": "pfizer",
+   "cli_exit": 3,
+   "captured": 9,
+   "failed": 0,
+   "outside_grants": 0,
+   "already_claimed": 0,
+   "passes": 1,
+   "stopped_at": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+   "cumulative_after": [
+    0,
+    0,
+    199
+   ],
+   "limits": [
+    0,
+    0,
+    1354
+   ],
+   "stop": null
+  },
+  {
+   "finished_at": "2026-09-29T10:15:00Z",
+   "company_id": "salesforce",
+   "cli_exit": 3,
+   "captured": 10,
+   "failed": 0,
+   "outside_grants": 0,
+   "already_claimed": 0,
+   "passes": 1,
+   "stopped_at": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+   "cumulative_after": [
+    0,
+    0,
+    209
+   ],
+   "limits": [
+    0,
+    0,
+    1354
+   ],
+   "stop": null
+  },
+  {
+   "finished_at": "2026-09-29T10:27:28Z",
+   "company_id": "southwest_airlines",
+   "cli_exit": 3,
+   "captured": 9,
+   "failed": 0,
+   "outside_grants": 0,
+   "already_claimed": 0,
+   "passes": 1,
+   "stopped_at": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+   "cumulative_after": [
+    0,
+    0,
+    218
+   ],
+   "limits": [
+    0,
+    0,
+    1354
+   ],
+   "stop": null
+  }
+ ],
+ "captured_total": 217,
+ "failed_total": 0,
+ "every_company_stopped_at": [
+  "DEI_MISSING_OR_AMBIGUOUS:DocumentType"
+ ],
+ "note": "the first Enphase capture ran on its own before the driver (the CLI summary defect recorded in acquisition-wiring/live-start-2026-09-29.json), so Enphase's driver row shows 8 of its 9"
+}

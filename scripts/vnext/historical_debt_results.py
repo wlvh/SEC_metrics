@@ -40,6 +40,7 @@ from .canonical import (canonical_json_bytes, content_hash, sha256_bytes, sha256
 from .constraints import evaluate_expression
 from .deterministic_router import parse_accession_xbrl_source
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_dei import release_aware
 from .normal_annual_input import _registry_rows
 from .normal_companyfacts_results import _SOURCE_ERRORS
 from .normal_annual_input_v2 import exact_json_value
@@ -62,6 +63,14 @@ from . import ordinary_special_debt_scope as special
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from sec_urls import accession_document_url, companyfacts_url, submissions_url  # noqa: E402
+
+# The frozen readers this module calls, answering the DEI namespace question
+# for every taxonomy release (historical_dei).
+inspect_annual_amendment_scope = release_aware(inspect_annual_amendment_scope)
+inspect_current_debt_amendment = release_aware(inspect_current_debt_amendment)
+_rebuild_equity = release_aware(_rebuild_equity)
+bond, inclusive, note, special = (release_aware(bond), release_aware(inclusive),
+                                  release_aware(note), release_aware(special))
 
 
 class HistoricalDebtError(Exception):

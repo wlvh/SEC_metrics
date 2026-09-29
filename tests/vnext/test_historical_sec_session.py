@@ -2834,6 +2834,47 @@ class AnExportCarriesExactlyWhatTheReplayAccepts(unittest.TestCase):
         self.assertNotIn(sorted(before)[-1], after, "the open group was replaced, not kept")
         self.assertEqual(2, len(after))
 
+    def test_a_write_that_fails_leaves_the_export_already_there(self):
+        """The first live acquisition filled the container's disk in the middle of an export.
+
+        The export then in place had lost a row archive and its state archive
+        was already replaced, so its index named what was no longer there.
+        Nothing is replaced now until everything new is written.
+        """
+        root = Path(tempfile.mkdtemp(prefix="issue47-full-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        _copy_ledger(self.root / "ledger", root / "ledger")
+        shutil.copytree(self.root / "export", root / "export")
+        before = {path.name: path.read_bytes() for path in (root / "export").iterdir()}
+        session = recorded_historical_session(root=root / "ledger", response=BODY)
+        frame = {**self.frame, "requirements": copy.deepcopy(self.rows)}
+        with patch.object(SESSION_MODULE, "declared_frame", lambda **kwargs: copy.deepcopy(frame)):
+            session.capture_pending(company_id=_SCRIPTED_COMPANY)
+        writes = []
+        real = EXPORT_MODULE._write_temporary
+
+        def fills_up(path, data):
+            writes.append(path.name)
+            if len(writes) == 2:
+                with path.open("wb") as handle:
+                    handle.write(data[:len(data) // 2])
+                raise OSError(28, "No space left on device")
+            real(path, data)
+
+        with patch.object(EXPORT_MODULE, "CHUNK_ROWS", 2), \
+                patch.object(EXPORT_MODULE, "_write_temporary", fills_up):
+            with self.assertRaises(OSError):
+                EXPORT_MODULE.export_acquisition(ledger_root=root / "ledger",
+                                                 out_dir=root / "export")
+        self.assertEqual(2, len(writes), "the failure came part way through the new files")
+        after = {path.name: path.read_bytes() for path in (root / "export").iterdir()}
+        self.assertEqual(before, after, "the export already there is untouched, no file left over")
+        with patch.object(EXPORT_MODULE, "CHUNK_ROWS", 2):
+            self.assertEqual("EXPORTED", EXPORT_MODULE.export_acquisition(
+                ledger_root=root / "ledger", out_dir=root / "export")["status"])
+        self.assertFalse([path for path in (root / "export").iterdir()
+                          if path.name.endswith(".tmp")])
+
 
 class AnApprovalIsRegisteredOnlyFromTheApprovedBytes(unittest.TestCase):
     """What the owner approved, read back from GitHub, and nothing written otherwise.

@@ -18,11 +18,11 @@ from pathlib import Path
 from sec_urls import (accession_document_url, companyfacts_url, submissions_file_url,
                       submissions_url)
 
-from . import fiscal_year_labels
 from .annual_update import saved_source
 from .canonical import content_hash, sha256_file, strict_json_file, strict_json_loads
+from .historical_dei import annual_period, inspect_prepared_fiscal_year_labels
 from .normal_annual_input import (NormalAnnualInputError, _cik, _registry_rows,
-                                  _subject_policy, annual_period)
+                                  _subject_policy)
 from .normal_annual_input_v2 import (POLICY_PATH as FISCAL_LABEL_POLICY_PATH,
                                      _choose_fiscal_year, exact_json_value)
 from .normal_period_selection import (check_selected_label, check_selected_period,
@@ -163,7 +163,7 @@ def prepare_historical_annual_input(*, repo_root: Path, company_id: str, period_
     original = prepare_original_historical_input(repo_root=repo_root, company_id=company_id,
                                                  period_selection=period_selection)
     verify_ordinary_source_proofs(data_root=repo_root, proofs=original["source_proofs"])
-    report = fiscal_year_labels._inspect_prepared_input(repo_root=repo_root, prepared=original)
+    report = inspect_prepared_fiscal_year_labels(repo_root=repo_root, prepared=original)
     inspected = report["inspection"]
     year, basis = _choose_fiscal_year(inspected)
     period = {**original["table_input"]["target_period"], "fiscal_year": year}

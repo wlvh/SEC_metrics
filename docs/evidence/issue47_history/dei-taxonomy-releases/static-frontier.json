@@ -1,0 +1,43 @@
+{
+ "record_type": "ISSUE_47_DEI_QUESTION_STATIC_FRONTIER",
+ "measured_on": "the tree before the views: layer 1 and 2 successors only",
+ "method": "static reachability over every vnext function: a call is any function object a function's code names directly, as an attribute of a module it names, or by a function-local import; over-approximated. A site is a function whose code holds one of the two frozen DEI namespace patterns.",
+ "frozen_modules_asking_the_question": [
+  "annual_amendment_scope",
+  "c04_verified_document_alias",
+  "financial_relationships",
+  "fiscal_year_labels",
+  "going_concern_source",
+  "governance_compensation_table",
+  "governance_signals",
+  "instant_balance_amendment",
+  "normal_annual_input",
+  "text_business_candidates",
+  "text_coverage"
+ ],
+ "historical_functions_calling_into_it": 23,
+ "frozen_functions_they_call_that_reach_it": [
+  "annual_amendment_scope:_source",
+  "annual_amendment_scope:inspect_annual_amendment_scope",
+  "b06_current_input:inspect_current_debt_amendment",
+  "b06_guarded_result_v3:_rebuild_equity",
+  "b06_note_carrying:inspect_note_carrying",
+  "financial_results:_fact",
+  "going_concern_source:inspect_going_concern_source",
+  "governance_compensation_table:resolve_compensation_table",
+  "governance_signals:resolve_c03",
+  "governance_signals:resolve_c04",
+  "lodging_table_source:inspect_lodging_table_source",
+  "normal_text_input_v2:_part_iii_proof",
+  "ordinary_income_input:prepare_current_income_input",
+  "ordinary_special_debt_scope:inspect_special_scope",
+  "run_store:_mechanically_replay_open_run",
+  "run_store:load_frozen_run",
+  "run_store:validate_and_freeze_run",
+  "text_coverage:build_text_document",
+  "text_results:prepare_text_sources",
+  "text_results_v2:prepare_business_text_sources"
+ ],
+ "count": 20,
+ "maintained_check": "tests.vnext.test_historical_dei.EveryHistoricalReferenceGoesThroughAView - historical_dei.unviewed_references over #47's own modules; after the views only run_store's three entries remain, by name"
+}

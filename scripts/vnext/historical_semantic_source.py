@@ -36,6 +36,7 @@ from . import going_concern_source as frozen_going_concern
 from . import r6_semantic_source as frozen_semantic
 from .annual_update import saved_source
 from .canonical import content_hash, sha256_file, strict_json_file
+from .historical_dei import release_aware
 from .historical_annual_input import (prepare_historical_annual_input,
                                       prepare_original_historical_input)
 from .normal_annual_input_v2 import exact_json_value
@@ -103,7 +104,7 @@ def prepare_historical_going_concern_source(*, repo_root: Path, company_id: str,
             request_attempt_id=proof["request_attempt_id"])
         raw = resolve_repository_file(repo_root=root,
                                       repo_relative_path=proof["request_repo_relative_path"]).read_bytes()
-        components.append(frozen_going_concern.inspect_going_concern_source(
+        components.append(release_aware(frozen_going_concern).inspect_going_concern_source(
             raw_bytes=raw, raw_blob=blob, source_reference=reference, company_id=company_id,
             cik=prepared["entity"], filing=filing))
     return frozen_going_concern._seal({

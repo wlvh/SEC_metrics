@@ -50,7 +50,12 @@ from datetime import datetime
 
 from .annual_amendment_scope import POLICY, AmendmentScopeError, _source, _words
 from .canonical import content_hash
+from .historical_dei import release_aware
 from .normal_annual_input_v2 import exact_json_value
+
+# The frozen readers this module calls, answering the DEI namespace question
+# for every taxonomy release (historical_dei).
+_source = release_aware(_source)
 
 PART_III_CLASS = "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS"
 NOTE_PARAGRAPH_BOUND = 8

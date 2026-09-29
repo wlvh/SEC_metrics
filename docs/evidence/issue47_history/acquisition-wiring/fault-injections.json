@@ -696,6 +696,28 @@
    "suite_result": "Ran 11 tests in 0.020s FAILED (errors=1)",
    "why_it_matters": "registration would accept a CRLF body the gate then refuses, leaving a written policy that never grants",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
+  },
+  {
+   "id": "THE_OLD_ORDER_REMOVE_THEN_REPLACE_IN_PLACE",
+   "edit": "_publish() removes the stale archives first and writes every file in place",
+   "caught_by": [
+    "test_a_write_that_fails_leaves_the_export_already_there"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 10 tests in 1319.571s FAILED (failures=1)",
+   "why_it_matters": "the order the disk-full export used: a failed write leaves an index naming an archive already removed, or a half-written archive in place",
+   "run": "2026-09-29, main checkout, export_publish_injections.py; failed cases test_a_write_that_fails_leaves_the_export_already_there"
+  },
+  {
+   "id": "A_FAILED_STAGING_LEAVES_ITS_FILES",
+   "edit": "_publish() no longer removes what it staged when a write fails",
+   "caught_by": [
+    "test_a_write_that_fails_leaves_the_export_already_there"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 10 tests in 48.807s FAILED (failures=1)",
+   "why_it_matters": "staged files left behind by a failed export would sit in the directory the branch carries",
+   "run": "2026-09-29, main checkout, export_publish_injections.py; failed cases test_a_write_that_fails_leaves_the_export_already_there"
   }
  ],
  "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py, scripts/vnext/historical_event_sources.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",

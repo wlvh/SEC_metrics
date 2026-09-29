@@ -169,6 +169,11 @@ NEW_RULE_FILES = (
     # owner's registered approval granted. It decides whether a Run reads a
     # registered model answer at all, so both roots check it.
     "scripts/vnext/historical_counted_calls.py",
+    # Which DEI taxonomy releases a pinned filing's cover facts are read under.
+    # The frozen reader accepts dei/ and four digits only; annual reports filed
+    # in 2021 and 2022 declare dei/2020-01-31 or dei/2021q4, so it decides
+    # whether an earlier period resolves at all, and both roots check it.
+    "scripts/vnext/historical_dei.py",
 )
 
 # One module the parent's authority does not name although its own named code

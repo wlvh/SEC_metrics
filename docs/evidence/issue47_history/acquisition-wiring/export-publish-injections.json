@@ -1,0 +1,34 @@
+{
+ "record_type": "ISSUE_47_EXPORT_PUBLISH_FAULT_INJECTIONS",
+ "results": [
+  {
+   "id": "THE_OLD_ORDER_REMOVE_THEN_REPLACE_IN_PLACE",
+   "file": "scripts/vnext/historical_source_export.py",
+   "edit": "_publish() removes the stale archives first and writes every file in place",
+   "why_it_matters": "the order the disk-full export used: a failed write leaves an index naming an archive already removed, or a half-written archive in place",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_write_that_fails_leaves_the_export_already_there",
+   "failed_cases": [
+    "test_a_write_that_fails_leaves_the_export_already_there"
+   ],
+   "suite_result": "Ran 10 tests in 1319.571s FAILED (failures=1)"
+  },
+  {
+   "id": "A_FAILED_STAGING_LEAVES_ITS_FILES",
+   "file": "scripts/vnext/historical_source_export.py",
+   "edit": "_publish() no longer removes what it staged when a write fails",
+   "why_it_matters": "staged files left behind by a failed export would sit in the directory the branch carries",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_write_that_fails_leaves_the_export_already_there",
+   "failed_cases": [
+    "test_a_write_that_fails_leaves_the_export_already_there"
+   ],
+   "suite_result": "Ran 10 tests in 48.807s FAILED (failures=1)"
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

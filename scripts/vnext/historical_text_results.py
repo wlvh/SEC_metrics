@@ -68,6 +68,7 @@ from .text_business_candidates import (_ACTION, _AUTHORITY, _LEGAL, _NEGATION, _
                                        _ranges, _substantive)
 from . import text_results_v2 as frozen
 from .historical_board_composition import board_composition_facts
+from .historical_dei import release_aware
 from .text_results_v2 import TextResultV2Error, build_text_review_unit
 
 SECTION_BOUNDARY_POLICY = "FORM_UNNUMBERED_PART_I_ITEM_V1"
@@ -979,7 +980,8 @@ def _prepare_corrected_sources(*, metric_id, **source_arguments):
         # structures and the caller owns what it is handed, so returning the
         # stored object would let one caller's edit reach the next one.
         return copy.deepcopy(shared[key])
-    prepared = frozen.prepare_business_text_sources(metric_id=metric_id, **source_arguments)
+    prepared = release_aware(frozen).prepare_business_text_sources(metric_id=metric_id,
+                                                                   **source_arguments)
     if metric_id == "C02":
         return _remember(shared=shared, key=key, prepared=_composition_facts(prepared))
     _need(len(prepared["documents"]) == 1, "HISTORICAL_TEXT_BOUNDARY_EXPECTS_ONE_DOCUMENT")

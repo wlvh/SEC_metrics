@@ -79,7 +79,7 @@ def _pinned_period(*, repo_root, cik, candidate):
     start date comes from the document's own DEI context and not from the
     submissions row's report date.
     """
-    from .normal_annual_input import annual_period
+    from .historical_dei import annual_period
     filing = candidate["current_filing"]
     if filing is None:
         return None, "NO_ORIGINAL_ANNUAL_IN_SAVED_SUBMISSIONS"

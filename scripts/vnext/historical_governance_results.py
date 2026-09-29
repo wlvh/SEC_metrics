@@ -38,6 +38,7 @@ from .governance_compensation_table import (SPEC_PATH as SCT_SPEC_PATH,
 from .governance_signals import (C03_SPEC_PATH, C04_V2_SPEC_PATH, GovernanceSignalError,
                                  resolve_c03, resolve_c04)
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_dei import release_aware
 from .historical_governance_input import (HistoricalGovernanceError,
                                           select_historical_governance_metadata)
 from .normal_annual_input import _registry_rows
@@ -48,6 +49,11 @@ from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .deterministic_router import source_set_manifest
 from .specs import compile_spec_file
+
+# The frozen readers this module calls, answering the DEI namespace question
+# for every taxonomy release (historical_dei).
+resolve_compensation_table = release_aware(resolve_compensation_table)
+resolve_c03, resolve_c04 = release_aware(resolve_c03), release_aware(resolve_c04)
 
 RECORD_TYPE = "HISTORICAL_GOVERNANCE_COMPONENT"
 # C03's path is the stage that answered, not a constant: the ordinary route

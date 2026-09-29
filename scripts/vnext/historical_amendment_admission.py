@@ -43,6 +43,11 @@ from typing import Mapping, Sequence
 
 from .annual_amendment_scope import POLICY, AmendmentScopeError, inspect_annual_amendment_scope
 from .canonical import content_hash
+from .historical_dei import release_aware
+
+# The frozen readers this module calls, answering the DEI namespace question
+# for every taxonomy release (historical_dei).
+inspect_annual_amendment_scope = release_aware(inspect_annual_amendment_scope)
 
 # Which input class each metric family needs left unchanged. Statement values
 # are what a Company Facts or reported-figure metric reads; the event window is

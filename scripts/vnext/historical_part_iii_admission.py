@@ -117,7 +117,9 @@ def statement_values_admission(*, repo_root: Path, input_class: str, company_id:
         None when the amendment is not listed. Otherwise a record of every
         condition checked and whether all held, with the failures named.
     """
-    from .annual_amendment_scope import _item15, _source
+    from . import annual_amendment_scope
+    from .annual_amendment_scope import _item15
+    from .historical_dei import release_aware
     from .historical_amendment_note import AmendmentNoteError, read_part_iii_note
     entry = _entry(repo_root=repo_root, input_class=input_class, company_id=company_id,
                    cik=cik, original=original, amendment=amendment)
@@ -139,7 +141,7 @@ def statement_values_admission(*, repo_root: Path, input_class: str, company_id:
     # declaration, governance-only native facts and the unchanged fiscal
     # window, and raises on the first that fails.
     conditions["NOTE_READS_AS_THE_APPROVED_PART_III_CLASS"] = note is not None
-    source = _source(**amendment, company_id=company_id, cik=cik,
+    source = release_aware(annual_amendment_scope)._source(**amendment, company_id=company_id, cik=cik,
                      period_end=original["filing"]["reportDate"])
     lines = [block["text"] for block in _item15(source["document"])["blocks"]]
     exhibits = sorted(set(_EXHIBIT.findall("\n".join(lines))))

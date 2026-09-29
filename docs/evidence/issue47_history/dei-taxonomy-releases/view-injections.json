@@ -1,0 +1,183 @@
+{
+ "control": {
+  "returncode": 0,
+  "failed_cases": [],
+  "seconds": 62,
+  "tail": [
+   "OK"
+  ]
+ },
+ "faults": [
+  {
+   "fault": "NO_WIDENING",
+   "file": "scripts/vnext/historical_dei.py",
+   "expected_case": "test_a_dated_or_quarterly_release_is_read_as_the_same_period",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_a_dated_or_quarterly_release_is_read_as_the_same_period",
+    "test_a_reader_reached_through_a_local_import_is_viewed",
+    "test_every_release_form_is_a_dei_namespace",
+    "test_readers_reached_as_module_globals_are_viewed",
+    "test_the_fiscal_label_scan_finds_the_same_dei_spans",
+    "test_the_text_document_is_built_with_the_same_blocks"
+   ],
+   "seconds": 60,
+   "tail": [
+    "FAILED (failures=10, errors=4)"
+   ]
+  },
+  {
+   "fault": "WIDEN_EVERYTHING",
+   "file": "scripts/vnext/historical_dei.py",
+   "expected_case": "test_anything_else_is_refused",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_a_namespace_that_is_not_a_release_is_still_refused",
+    "test_anything_else_is_refused"
+   ],
+   "seconds": 64,
+   "tail": [
+    "FAILED (failures=9)"
+   ]
+  },
+  {
+   "fault": "NAMESPACE_READ_ONCE",
+   "file": "scripts/vnext/historical_dei.py",
+   "expected_case": "test_a_patch_of_the_frozen_module_is_seen_through_the_view",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_a_patch_of_the_frozen_module_is_seen_through_the_view"
+   ],
+   "seconds": 66,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "fault": "CALLEES_NOT_VIEWED",
+   "file": "scripts/vnext/historical_dei.py",
+   "expected_case": "test_readers_reached_as_module_globals_are_viewed",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_readers_reached_as_module_globals_are_viewed"
+   ],
+   "seconds": 62,
+   "tail": [
+    "FAILED (errors=1)"
+   ]
+  },
+  {
+   "fault": "NO_IMPORT_HOOK",
+   "file": "scripts/vnext/historical_dei.py",
+   "expected_case": "test_a_reader_reached_through_a_local_import_is_viewed",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_a_reader_reached_through_a_local_import_is_viewed"
+   ],
+   "seconds": 62,
+   "tail": [
+    "FAILED (errors=1)"
+   ]
+  },
+  {
+   "fault": "NO_CLASS_VIEW",
+   "file": "scripts/vnext/historical_dei.py",
+   "expected_case": "test_the_fiscal_label_scan_finds_the_same_dei_spans",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_the_fiscal_label_scan_finds_the_same_dei_spans"
+   ],
+   "seconds": 65,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "fault": "DEFAULTS_NOT_REFUSED",
+   "file": "scripts/vnext/historical_dei.py",
+   "expected_case": "test_a_default_argument_on_the_frozen_path_is_refused",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_a_default_argument_on_the_frozen_path_is_refused"
+   ],
+   "seconds": 63,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "fault": "QUESTION_OTHER_WAYS_ANSWERED_FROZEN",
+   "file": "scripts/vnext/historical_dei.py",
+   "expected_case": "test_the_question_asked_any_other_way_is_refused",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_the_question_asked_any_other_way_is_refused"
+   ],
+   "seconds": 65,
+   "tail": [
+    "FAILED (failures=8, errors=2)"
+   ]
+  },
+  {
+   "fault": "ATTRIBUTE_CHAINS_NOT_FOLLOWED",
+   "file": "scripts/vnext/historical_dei.py",
+   "expected_case": "test_a_direct_reference_is_listed_and_a_view_is_not",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_a_direct_reference_is_listed_and_a_view_is_not"
+   ],
+   "seconds": 64,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  },
+  {
+   "fault": "SUPER_CELL_TREATED_AS_A_CALL",
+   "file": "scripts/vnext/historical_dei.py",
+   "expected_case": "test_the_fiscal_label_scan_finds_the_same_dei_spans",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_the_fiscal_label_scan_finds_the_same_dei_spans"
+   ],
+   "seconds": 63,
+   "tail": [
+    "FAILED (errors=1)"
+   ]
+  },
+  {
+   "fault": "A_CALL_SITE_LEFT_ON_THE_FROZEN_READER",
+   "file": "scripts/vnext/historical_governance_results.py",
+   "expected_case": "test_no_historical_function_reaches_the_question_without_a_view",
+   "caught": true,
+   "caught_by_its_case": true,
+   "returncode": 1,
+   "failed_cases": [
+    "test_no_historical_function_reaches_the_question_without_a_view"
+   ],
+   "seconds": 65,
+   "tail": [
+    "FAILED (failures=1)"
+   ]
+  }
+ ]
+}

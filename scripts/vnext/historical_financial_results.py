@@ -71,6 +71,7 @@ from .financial_results import (RESOLVER, SPEC_PATHS, _ROLES, FinancialResultErr
                                 _actual_period, _fact, _failure_classification,
                                 _installed_rule, _need)
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_dei import release_aware
 from .historical_filing_inventory import filing_inventory
 from .normal_annual_input_v2 import exact_json_value
 from .normal_source_authority import ROOT, NormalSourceAuthorityError
@@ -79,6 +80,10 @@ from .ordinary_source_authority import (OrdinarySourceAuthorityError,
                                         verify_ordinary_source_proofs)
 from .sources import raw_blob_record, resolve_repository_file, source_reference_record
 from .traits import repository_company_traits
+
+# The frozen readers this module calls, answering the DEI namespace question
+# for every taxonomy release (historical_dei).
+_fact = release_aware(_fact)
 
 RECORD_TYPE = "HISTORICAL_FINANCIAL_COMPONENT"
 SUPPORTED_METRICS = tuple(sorted(SPEC_PATHS))

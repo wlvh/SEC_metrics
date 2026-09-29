@@ -36,6 +36,7 @@ from sec_urls import companyfacts_url, submissions_url
 
 from .canonical import content_hash, sha256_file
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_dei import release_aware
 from .historical_metadata_context import (check_historical_metadata_scope,
                                           historical_metadata_context)
 from .normal_governance_input import _Sources
@@ -43,6 +44,10 @@ from .normal_text_input_v2 import _need, _source_plan
 from .ordinary_text_input import _part_iii_proof
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .text_results_v2 import SCOPES
+
+# The frozen readers this module calls, answering the DEI namespace question
+# for every taxonomy release (historical_dei).
+_part_iii_proof = release_aware(_part_iii_proof)
 
 RECORD_TYPE = "HISTORICAL_BUSINESS_TEXT_INPUT_BINDING"
 SUPPORTED_METRICS = ("C02", "D01", "D02")

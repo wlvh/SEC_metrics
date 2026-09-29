@@ -42,6 +42,7 @@ from .calculator import (calculate_observation_metric, metric_is_applicable,
 from .canonical import content_hash, sha256_file
 from .historical_amendment_admission import AmendmentAdmissionError, amendment_admission
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_dei import release_aware
 from .lodging_table_source import (POLICY_PATH, LodgingSourceError,
                                    inspect_lodging_table_source)
 from .normal_lodging_results import SPEC_PATHS as ORDINARY_SPEC_PATHS, _spec as _ordinary_spec
@@ -53,6 +54,10 @@ from .ordinary_source_authority import verify_ordinary_source_proofs
 from .sources import raw_blob_record, resolve_repository_file
 from .specs import compile_spec_file
 from .traits import repository_company_traits
+
+# The frozen readers this module calls, answering the DEI namespace question
+# for every taxonomy release (historical_dei).
+inspect_lodging_table_source = release_aware(inspect_lodging_table_source)
 
 RECORD_TYPE = "HISTORICAL_LODGING_COMPONENT"
 # The deterministic Specs the ordinary route uses, not the historical AI ones
