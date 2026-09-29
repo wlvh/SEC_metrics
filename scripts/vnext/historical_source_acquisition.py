@@ -37,7 +37,7 @@ import re
 from pathlib import Path, PurePosixPath
 
 from .canonical import CanonicalError, strict_json_loads
-from .normal_history_plan import plan_historical_sources
+from .normal_history_plan import checkpoint_replayed_once, plan_historical_sources
 from .normal_source_authority import ROOT
 
 RECORD_TYPE = "ISSUE_47_HISTORICAL_SOURCE_DEPENDENCY"
@@ -142,7 +142,17 @@ def declared_frame(*, repo_root: Path, company_id: str, years: int = 5):
     make the target periods discoverable at all, and Company Facts answers
     several metrics across every period. Those carry no ``period:`` consumer,
     and the target window they serve is the frame's.
+
+    The three declarations each verify saved proofs, and on a root whose
+    ledger extends the baseline every check replays the whole acquisition
+    checkpoint; the block replays it once per ledger state for the whole frame
+    (``normal_history_plan.checkpoint_replayed_once``).
     """
+    with checkpoint_replayed_once():
+        return _declared_frame(repo_root=repo_root, company_id=company_id, years=years)
+
+
+def _declared_frame(*, repo_root: Path, company_id: str, years: int):
     # Imported here because that module imports this one's error type; the
     # declaration is a successor to the planner, not a layer above it.
     from .historical_event_sources import declare_event_sources

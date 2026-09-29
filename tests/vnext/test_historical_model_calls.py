@@ -804,9 +804,11 @@ class TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts(unittest.TestCase):
         started = calls.start_model_ledger(allowance=model_allowance,
                                            reader=self._reader([sec_marker]), checkout=self.root)
         # And the model marker does not stand in for the SEC start.
+        # This checkout holds no SEC export and neither does the branch it
+        # stands for, so the export check passes and the start check decides.
         with self.assertRaisesRegex(ValueError, "ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED"):
             session.require_published_start(
-                allowance=sec_allowance,
+                allowance=sec_allowance, branch_export_index=None, checkout=self.root,
                 reader=self._reader([self._comment(started["marker_comment_body"])]))
         # A start record of the other ledger's kind at a root is not this one's.
         with self.assertRaisesRegex(calls.HistoricalModelCallError,

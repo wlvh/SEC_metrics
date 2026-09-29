@@ -1,0 +1,66 @@
+{
+ "all_identical": true,
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "captures_in_the_checkpoint": 288,
+ "code_files": {
+  "scripts/vnext/continuous_sec_acquisition.py": "c5e9b4d9723254ee35d9907b3dec5715c4ff75e1fdcb50a55c1a1716e022c7bc",
+  "scripts/vnext/historical_event_sources.py": "aaf5457a16b1c0ccc90ff51a8941817dd632761a09000b6ea4e7921406b7644e",
+  "scripts/vnext/historical_governance_sources.py": "3f359126422b684b434a59c9e9be514419db3a696a2a5d35c3438896d6b73cd3",
+  "scripts/vnext/historical_source_acquisition.py": "a54c3ede3ec533eaafd965a0ca75e59e22a632a1650bf238bd2ee5ff2c8605c9",
+  "scripts/vnext/normal_history_plan.py": "661dcd5227b28f9fbbd2f06f1190b6087e4137ffd1b83b5238e78da05977fdc0",
+  "scripts/vnext/ordinary_source_authority.py": "153b8eeea1233d3ce33209ba352ef1265eca13ae82326125f9adf1acd793c795"
+ },
+ "code_files_moved": [],
+ "data_root": "restored from the export at 288 captures (scratch; not committed)",
+ "not_established": "that frames at other ledger states agree - a frame is compared at one state; the per-state key is what the unit cases check",
+ "record_type": "ISSUE_47_PLANNER_REPLAY_ONCE_MEASUREMENT",
+ "rows": [
+  {
+   "code_files_moved_during_the_run": [],
+   "company_id": "ford_motor_company",
+   "difference_count": 0,
+   "differences": [],
+   "frames_identical": true,
+   "frozen": {
+    "checkpoint_replays": 65,
+    "frame_sha256": "sha256:7311919f4459ff71ee69efd990daa369d8631db2501ad262ee6022d38e77f066",
+    "requirements": 273,
+    "seconds": 1905,
+    "verified_saved": 49
+   },
+   "replay_once": {
+    "checkpoint_replays": 1,
+    "frame_sha256": "sha256:7311919f4459ff71ee69efd990daa369d8631db2501ad262ee6022d38e77f066",
+    "requirements": 273,
+    "seconds": 138,
+    "verified_saved": 49
+   }
+  },
+  {
+   "code_files_moved_during_the_run": [],
+   "company_id": "macys",
+   "difference_count": 0,
+   "differences": [],
+   "frames_identical": true,
+   "frozen": {
+    "checkpoint_replays": 57,
+    "frame_sha256": "sha256:ba5fc46a1f6fb5e776a07ad07ea39b68fed37a42c3bb841f1e14f86e7e8ee70d",
+    "requirements": 157,
+    "seconds": 1650,
+    "verified_saved": 41
+   },
+   "replay_once": {
+    "checkpoint_replays": 1,
+    "frame_sha256": "sha256:ba5fc46a1f6fb5e776a07ad07ea39b68fed37a42c3bb841f1e14f86e7e8ee70d",
+    "requirements": 157,
+    "seconds": 104,
+    "verified_saved": 41
+   }
+  }
+ ],
+ "what_this_is": "each company's frame planned twice over the same root restored from the export at 288 captures - once inside the replay-once block, once on the frozen path - in separate processes running at the same time, with nothing else reading the checkout; every field of the two frames compared"
+}

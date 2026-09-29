@@ -312,6 +312,16 @@ SOURCE_TESTS += ("tests.vnext.test_historical_da_scope_route",)
 # The DEI reader with the taxonomy releases before 2022 accepted: it parses ten
 # saved annual reports and constructed older-release copies, about 30 seconds.
 SOURCE_TESTS += ("tests.vnext.test_historical_dei",)
+# Four modules the tier did not run although their records said it did or would:
+# the approved amendment policy asked of two saved 10-K/A filings (38 seconds
+# alone), the two Part III filings' statement-input admission re-verified from
+# saved bytes (244 seconds beside four busy processes), the fiscal-year
+# definition forms older annual reports use (18 seconds), and the checkpoint
+# replayed once per ledger state over a recorded root (127 seconds).
+SOURCE_TESTS += ("tests.vnext.test_historical_amendment_admission",)
+SOURCE_TESTS += ("tests.vnext.test_historical_part_iii_admission",)
+SOURCE_TESTS += ("tests.vnext.test_historical_fiscal_labels",)
+SOURCE_TESTS += ("tests.vnext.test_historical_plan_replay",)
 # This one reads no source material at all - it hashes the nineteen rule files the
 # issue_47_v1 snapshot records - so it belongs in the 30s tier. It is registered
 # because the snapshot has already drifted twice behind a rule-file change, and
@@ -465,6 +475,11 @@ SOURCE_TIMEOUT_OVERRIDES = {
     # Copies a 480 MB recorded root before its first case; 42 seconds measured
     # with a warm page cache, which a fresh runner will not have.
     "tests.vnext.test_historical_block_inputs": 480,
+    # 244 seconds measured beside four busy processes: past the 240 default.
+    "tests.vnext.test_historical_part_iii_admission": 600,
+    # Installs the baseline corpus into a recorded root and plans a company
+    # twice, once with the frozen replay on every check; 127 seconds alone.
+    "tests.vnext.test_historical_plan_replay": 480,
     # Copies the baseline corpus into a recorded root, then resolves three route
     # families on both roots; 52 seconds measured beside a running sweep.
     "tests.vnext.test_historical_filing_inventory": 480,
@@ -613,6 +628,10 @@ SOURCE_CI_SECONDS = {
     "tests.vnext.test_historical_structural_results": 33,
     "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_explicit_subsidiaries_keep_their_original_definition": 31,
     "tests.vnext.test_fiscal_year_labels": 31,
+    # Local measurements, not CI means: registered after the three runs above.
+    "tests.vnext.test_historical_part_iii_admission": 150,
+    "tests.vnext.test_historical_plan_replay": 130,
+    "tests.vnext.test_historical_amendment_admission": 40,
 }
 SOURCE_DEFAULT_CI_SECONDS = 30
 

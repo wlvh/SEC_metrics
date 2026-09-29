@@ -1,0 +1,46 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "frozen_profile_at_288_captures": {
+  "attempt_id_comprehension": {
+   "attempt_ids": 367896,
+   "calls": 288,
+   "cumulative_seconds": 10.1
+  },
+  "parse_request_log_rows": {
+   "calls": 579,
+   "cumulative_seconds": 12.7
+  },
+  "per_capture_locator_checks_seconds": 3.3,
+  "request_log_prefix_bytes": {
+   "calls": 577,
+   "cumulative_seconds": 11.6
+  },
+  "seconds_under_the_profiler": 40.9,
+  "validate_request_log_manifest": {
+   "calls": 289,
+   "cumulative_seconds": 7.4
+  }
+ },
+ "prototype_result": {
+  "captures": 288,
+  "frozen_digest": [
+   "67952df21974a6656a913b23a059ebd4ab78cd1c21277db1fbe24835a3784047",
+   "1623bf0c46359a905b2ad25e4b1bc1912789d2b519904769eb4409ba9798e574"
+  ],
+  "frozen_seconds": 26.1,
+  "memo_digest": [
+   "67952df21974a6656a913b23a059ebd4ab78cd1c21277db1fbe24835a3784047",
+   "1623bf0c46359a905b2ad25e4b1bc1912789d2b519904769eb4409ba9798e574"
+  ],
+  "memo_seconds": 11.2,
+  "same_answer": true
+ },
+ "record_type": "ISSUE_47_RUN_CREATION_REPLAY_PROTOTYPE",
+ "status": "PROTOTYPE_NOT_WIRED",
+ "what_this_is": "one frozen checkpoint replay on the root restored at 288 captures, timed plain and inside a block that memoizes the replay's pure log helpers (helper_memo_prototype.py); the two answers compared",
+ "why_it_matters": "creating a historical Run checks each saved source through the same frozen verifier, and the batch installs a fresh data root per position with every captured attempt in it, so each position pays at least two whole replays"
+}

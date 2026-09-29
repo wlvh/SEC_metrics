@@ -883,6 +883,8 @@ Requirement 接缝成本实测：`python3 tools/vnext_requirement_seam.py --data
 
 留给 #28 采纳后结果的位置：`tests.vnext.test_historical_coverage.PositionsLeftToIssue28AreCountedApartTest`（7 个用例，约 4 秒）；注错 `python3 docs/evidence/issue47_history/awaiting-issue-28/injections.py <out.json>`（5 个，每个由点名用例抓到）。
 
+**规划时检查点每个账本状态只重放一次（2026-09-29）**：`tests.vnext.test_historical_plan_replay`（saved-source 层，15 例，单独约 150 秒）在一个录制根上（基线语料加两次正文不同、已登记的录制获取）核对：一帧、一次规划各只重放一次，冻结路径产出的帧逐字节相同；改动获取 A 的文件而检查获取 B 的证明——B 自己的逐条检查看不见这种改动——同尺寸改写并把修改时间放回、多一个硬链接、旁边多一个形似头文件的目录、注册表改一个字节、`config/` 换成符号链接，每一种都重新重放并与冻结代码一样拒绝；代码树清单是状态的一部分；拒绝不被记住；答案给副本；出块后冻结函数放回；嵌套沿用外层备忘；另一个线程打开块被拒。注错 `python3 docs/evidence/issue47_history/planner-replay-once/injections.py <out.json>`（14 个各对应一条点名用例，另有 1 个拿掉链接数、应当没有用例抓得到——多一个硬链接同时推进变更时间；**这一版还没跑**，获取停下后在安静检出里跑，第一版那次运行留作 `injections-first-version.json`）；**它在所在检出里原地改代码，运行期间别的任何作业都不得从这个检出导入或读取，获取也不得在跑**——第一次注错与一次测量重叠，而规划器在计划结束时哈希自己的文件，注错就成了两份帧之间并不存在的差异。同时补登记进 saved-source 层的还有三个此前从未进层、记录却说在层里的模块：`test_historical_amendment_admission`、`test_historical_part_iii_admission`、`test_historical_fiscal_labels`。
+
 内容接受层（同一文件，`ContentAcceptanceIsBoundToTheValueTest`）：默认跑构造输入，
 不需要任何批次；要连带验证它接到覆盖表上，设 `HISTORICAL_RUNS_ROOT=/absolute/runs/root`
 指向一批冻结 Run，否则该用例按名跳过并说明原因。承重的一条是

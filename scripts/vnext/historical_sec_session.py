@@ -1227,6 +1227,14 @@ WIRING_TYPE = "ISSUE_47_SEC_ACQUISITION_OFFLINE_WIRING"
 REQUIRED_WIRING_EVIDENCE = (
     "scripts/vnext/historical_sec_session.py",
     "scripts/vnext/historical_source_acquisition.py",
+    # The planner. It is a rule file, bound by the Requirement closure, but the
+    # live path checks this receipt and not the closure, and the planner now
+    # holds the block that answers checkpoint replays from a memo while a frame
+    # is computed: a weakened memo would weaken every saved-source check the
+    # frame makes, and nothing on the live path would notice. An independent
+    # review found that gap; a declaration the gate admits from is pinned by
+    # the same receipt as the gate, and so is what verifies what it declares.
+    "scripts/vnext/normal_history_plan.py",
     # The event declaration. It lives outside the Requirement closure because
     # the planner it extends is a rule file, and that is exactly why its bytes
     # belong here: a declaration the gate admits from must be pinned by the

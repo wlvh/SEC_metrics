@@ -12,6 +12,10 @@ whose sources and reading had not changed at all.
 Nothing here fetches anything. Producing a plan spends no SEC or model business
 call and authorizes none.
 """
+import contextlib
+import copy
+import os
+import threading
 from pathlib import Path
 
 from sec_urls import (accession_directory_url, accession_document_url,
@@ -97,6 +101,114 @@ def _native_instance_alternative(reader, repo_root, filing, cik):
             "source_acquisition_credit": False}
 
 
+def _replay_state(data_root, checkpoint, baseline):
+    """Everything the frozen checkpoint replay reads, by content or by identity.
+
+    The replay reads the root's request log and its manifest, the registry
+    file it checks against the baseline, every attempt file and header
+    sidecar the captures name (listing their directories to find the
+    sidecars), and the code tree's baseline manifest; it also refuses a
+    symlinked path component and an attempt file with more than one link.
+    The log, its manifest and the registry are read here the way the replay
+    reads them (``resolve_repository_file``, which refuses a symlinked
+    component) and taken by content, as are the code manifest, the checkpoint
+    and the baseline. Every directory and every entry under the root's
+    evidence directory is also taken by its own status - kind, size, link
+    count, device, inode, and modification and change times - so a link
+    created, a byte rewritten or a time put back changes the state.
+
+    What this cannot see: a change that leaves every one of those as it was,
+    which the change time does not allow an ordinary writer to do.
+    """
+    from .normal_source_authority import MANIFEST_PATH, ROOT
+    from .sources import resolve_repository_file
+    root = Path(data_root).resolve()
+    entries = []
+    for directory, directories, names in os.walk(root / "evidence"):
+        for path in [Path(directory)] + [Path(directory) / name
+                                         for name in directories + names]:
+            status = path.lstat()
+            entries.append((str(path.relative_to(root)), status.st_mode, status.st_size,
+                            status.st_nlink, status.st_dev, status.st_ino,
+                            status.st_mtime_ns, status.st_ctime_ns))
+
+    def content(relative):
+        return sha256_file(path=resolve_repository_file(repo_root=root,
+                                                        repo_relative_path=relative))
+    return (str(root), content("evidence/requests_log.csv"),
+            content("evidence/requests_log_manifest.json"),
+            content("config/company_registry.csv"),
+            sha256_file(path=ROOT / MANIFEST_PATH),
+            content_hash(value=checkpoint), content_hash(value=baseline),
+            tuple(sorted(set(entries))))
+
+
+def _replayed_once(frozen):
+    """The frozen replay, run again only when the state it reads has changed.
+
+    A change made while the replay runs needs no second reading of the state:
+    the change time of anything under ``evidence/`` only moves forward, so the
+    state the answer is stored under is never seen again once a file there
+    changes, and a change to a file keyed by content outside it - the registry
+    or the code manifest - makes the frozen replay refuse, which stores
+    nothing. (Measured: a second reading after the replay was tried and no
+    case could tell it from none.)
+    """
+    memo = {"key": None, "answer": None}
+
+    def validate(data_root, checkpoint, baseline):
+        key = _replay_state(data_root, checkpoint, baseline)
+        if memo["key"] != key:
+            # A replay that raises leaves nothing behind: the next call runs
+            # it again and raises again, as the frozen code would.
+            memo.update(key=None, answer=None)
+            answer = frozen(data_root, checkpoint, baseline)
+            memo.update(key=key, answer=answer)
+        return copy.deepcopy(memo["answer"])
+    validate.replayed_once = True
+    validate.thread = threading.get_ident()
+    return validate
+
+
+@contextlib.contextmanager
+def checkpoint_replayed_once():
+    """Replay the acquisition checkpoint once per ledger state inside this block.
+
+    The frozen proof verifier (``ordinary_source_authority``) replays the whole
+    acquisition checkpoint - every capture bound again against the whole
+    request log - on every call. A plan calls it once per saved dependency
+    through ``_saved_state``, as do the event and governance declarations,
+    and the governance declaration's annual inputs call it again per period.
+    Measured on a root restored at 288 captures: 42 seconds a call, and one
+    replay grows with the square of the captures, so a frame's cost grew
+    with their cube (docs/evidence/issue47_history/planner-replay-once/).
+
+    The verifier looks its replay up in its own module at call time, so for
+    the length of this block that name holds the same frozen replay behind a
+    memo keyed on the state it reads (``_replay_state``, which says what the
+    key does not see), and is put back on the way out whatever happens. A
+    block inside another keeps the outer memo. Every proof is still checked by
+    the frozen code against the replay's answer, and the answer is handed out
+    as a copy.
+
+    The name is swapped for the whole process, so a block is for one thread:
+    one entered from another thread while a block is open is refused rather
+    than sharing a memo it did not open.
+    """
+    from . import ordinary_source_authority as authority
+    current = authority._validate_checkpoint
+    if getattr(current, "replayed_once", False) is True:
+        _need(current.thread == threading.get_ident(),
+              "HISTORY_PLAN_CHECKPOINT_BLOCK_OPEN_IN_ANOTHER_THREAD")
+        yield
+        return
+    try:
+        authority._validate_checkpoint = _replayed_once(current)
+        yield
+    finally:
+        authority._validate_checkpoint = current
+
+
 def _saved_state(reader, repo_root, item):
     """Classify one declared dependency against the saved request ledger."""
     from .annual_update import AnnualUpdateError
@@ -130,6 +242,12 @@ def plan_historical_sources(*, repo_root: Path, company_id: str, count=5):
     total is estimated: what index discovery has not yet revealed is reported
     as not yet known, not as a count.
     """
+    with checkpoint_replayed_once():
+        return _plan_historical_sources(repo_root=repo_root, company_id=company_id,
+                                        count=count)
+
+
+def _plan_historical_sources(*, repo_root: Path, company_id: str, count):
     # Issue #47 section 7.3: a registered predecessor's years are part of the
     # window, read from its own catalog, where the successor filed nothing.
     candidates, history, predecessor_histories = frame_period_candidates(
