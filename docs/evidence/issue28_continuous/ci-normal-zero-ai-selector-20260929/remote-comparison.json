@@ -1,0 +1,33 @@
+{
+  "record_type": "ISSUE28_NORMAL_ZERO_AI_REMOTE_SHARD0_PAIRED_DIAGNOSIS",
+  "prior": {
+    "head": "698b9a457e5fe03f7b52146b68b5ff79e8cb4bfc",
+    "run_id": 36558015325,
+    "job_id": 109371774337,
+    "status": "PASSED",
+    "duration_seconds": 1296.18,
+    "selector_seconds": 226.062,
+    "selector_return_code": 0,
+    "log_sha256": "68e7c20807016de6304339fe91da384ff431368b9dc06ba5a7cd47e72136af68"
+  },
+  "failed": {
+    "head": "c3cda0b107e98dc2d244c873dd84c3752298fe9c",
+    "run_id": 36567437194,
+    "job_id": 109402753242,
+    "status": "FAILED",
+    "duration_seconds": 1342.631,
+    "selector_seconds": 240.117,
+    "selector_return_code": 124,
+    "selector_timeout_seconds": 240,
+    "log_sha256": "9367ffcd6146d1d6b7ac42864f8f989828e2e2a24da9d7cdf72beb14edd6e31c"
+  },
+  "other_selectors_over_10_seconds_delta": [],
+  "all_product_and_test_code_between_heads_unchanged": true,
+  "changed_file_count": 23,
+  "business_assertion_failure_reported_for_target": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

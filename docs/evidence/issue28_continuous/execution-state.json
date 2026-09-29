@@ -6636,6 +6636,31 @@
       "downstream_impact": "stacked consumer may refresh its own current V14 closure if it consumes this head; no #47 branch/worktree/ledger/snapshot/PR operated"
     }
   },
+  "ci_normal_zero_ai_selector_20260929": {
+    "status": "MEASURED_SINGLE_SOURCE_SELECTOR_TIMEOUT_300_LOCAL_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/ci-normal-zero-ai-selector-20260929/README.md",
+    "prior_same_product_source_head": "698b9a457e5fe03f7b52146b68b5ff79e8cb4bfc",
+    "prior_job_id": 109371774337,
+    "prior_target_selector_seconds": 226.062,
+    "failed_evidence_only_head": "c3cda0b107e98dc2d244c873dd84c3752298fe9c",
+    "failed_job_id": 109402753242,
+    "failed_target_selector_seconds": 240.117,
+    "failed_target_return_code": 124,
+    "other_selector_duration_shift_ge_10_seconds": false,
+    "local_original_class_tests": {"prototype_seconds": 69.499, "additional_routes_seconds": 14.812, "both_pass": true},
+    "new_target_timeout_seconds": 300,
+    "default_source_timeout_seconds": 240,
+    "source_selectors_unchanged": true,
+    "fast_selectors_unchanged": true,
+    "test_assertions_and_product_code_unchanged": true,
+    "new_real_calls": [0, 0, 0],
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "file_function": "tools/run_fast_tests_v2.py:SOURCE_TIMEOUT_OVERRIDES",
+      "compatibility": "source and fast selector lists, all other limits and runner functions unchanged",
+      "downstream_impact": "stacked consumer inherits a 300-second limit for the same unchanged source-material module; no #47 artifact operated"
+    }
+  },
   "b03_salesforce_exact_amount_census_20260929": {
     "status": "BOUNDED_AUTHENTIC_SOURCE_CHECK_NO_EXACT_IMPAIRMENT_FREE_DA_TOTAL",
     "evidence": "docs/evidence/issue28_continuous/b03-salesforce-exact-amount-census-20260929/README.md",

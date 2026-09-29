@@ -155,6 +155,11 @@ SOURCE_TESTS += ("tests.vnext.test_d03_current_source_replay.D03CurrentSourceRep
 SOURCE_TESTS += ("tests.vnext.test_b03_exact_impairment_relation.B03ExactImpairmentRelationTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
+    # The unchanged full original-source module passed on head 698b9a45 in
+    # 226.062s, then alone reached 240.117s/rc124 on c3cda0b1. Both original
+    # test classes pass separately without assertion changes; keep the same
+    # selector and job deadline while allowing a measured 60-second margin.
+    "tests.vnext.test_normal_zero_ai_results": 300,
     # This single case includes acquisition, native installation and cold replay.
     "tests.vnext.test_continuous_sec_acquisition": 480,
     # One complete C04 source refresh passed locally in 227.794s; the prior
