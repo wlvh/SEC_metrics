@@ -108,7 +108,7 @@ class B03LegacyRecoveryMaterialTest(TestCase):
                               side_effect=successor.B03CurrentScopeConflict(
                                   'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED',
                                   historical)), \
-                 patch.object(successor, 'assess_direct_depreciation_scope',
+                 patch.object(successor, 'assess_current_b03_scope',
                               return_value={'blocked': False,
                                             'status': 'NO_DIRECT_DEPRECIATION_SELECTION'}), \
                  patch.object(successor.normal, 'install_normal_inputs',
@@ -261,7 +261,7 @@ class B03HistoricalRecoveryVerifierTest(TestCase):
                         'replay_context': {'case': {
                             'primary_metric_id': 'B03'}}}))
                 scoped = stack.enter_context(patch.object(successor,
-                    'assess_direct_depreciation_scope',
+                    'assess_current_b03_scope',
                     return_value={'blocked': False,
                                   'status': 'NO_EXPLICIT_NARROW_SCOPE_FOUND'}))
                 stack.enter_context(patch.object(successor,

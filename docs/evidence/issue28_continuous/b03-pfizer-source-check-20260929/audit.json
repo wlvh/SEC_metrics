@@ -1,0 +1,129 @@
+{
+  "all390_acceptance": false,
+  "current_result": {
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "publication": "PUBLISHED",
+    "quality": "APPROX",
+    "reason_code": "PASS",
+    "result_id": "sha256:b6d0e8c0f7decc22cbe4598de6ceff4f59820258b30bd6012af06e7c4cb0799b",
+    "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+    "unit": "ratio",
+    "value": "0.3329551446971028619824541779"
+  },
+  "formal_adoption": false,
+  "native_current_annual_undimensioned_facts": {
+    "pfe:assetwriteoffsandassetimpairmentcharges": [
+      {
+        "context_ref": "c-1",
+        "ordinal": 487,
+        "value_usd": "5270000000"
+      }
+    ],
+    "us-gaap:depreciationdepletionandamortization": [
+      {
+        "context_ref": "c-1",
+        "ordinal": 484,
+        "value_usd": "6592000000"
+      },
+      {
+        "context_ref": "c-1",
+        "ordinal": 2983,
+        "value_usd": "6592000000"
+      }
+    ],
+    "us-gaap:incomelossfromcontinuingoperationsbeforeincometaxesextraordinaryitemsnoncontrollinginterest": [
+      {
+        "context_ref": "c-1",
+        "ordinal": 166,
+        "value_usd": "7520000000"
+      },
+      {
+        "context_ref": "c-1",
+        "ordinal": 1044,
+        "value_usd": "7520000000"
+      },
+      {
+        "context_ref": "c-1",
+        "ordinal": 2980,
+        "value_usd": "7520000000"
+      }
+    ],
+    "us-gaap:othernonoperatingincomeexpense": [
+      {
+        "context_ref": "c-1",
+        "ordinal": 163,
+        "value_usd": "-6724000000"
+      },
+      {
+        "context_ref": "c-1",
+        "ordinal": 971,
+        "value_usd": "-6724000000"
+      }
+    ],
+    "us-gaap:revenues": [
+      {
+        "context_ref": "c-1",
+        "ordinal": 142,
+        "value_usd": "62579000000"
+      },
+      {
+        "context_ref": "c-1",
+        "ordinal": 2977,
+        "value_usd": "62579000000"
+      },
+      {
+        "context_ref": "c-1",
+        "ordinal": 3053,
+        "value_usd": "62579000000"
+      },
+      {
+        "context_ref": "c-1",
+        "ordinal": 3084,
+        "value_usd": "62579000000"
+      }
+    ]
+  },
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "original_protected_hashes_unchanged": true,
+  "previous_cold_read_sha256": "a7f1e5dce30d7c2e711f88d629004724494c14fab648d0a4902f88c7e81a4db0",
+  "previous_result_business_fields_equal": true,
+  "previous_result_id": "sha256:b6d0e8c0f7decc22cbe4598de6ceff4f59820258b30bd6012af06e7c4cb0799b",
+  "processing_copy_reused": true,
+  "processing_snapshot_id": "sha256:a1aea4b15f7b741708c172ac11e08e54e846322bfbad551fc2680d191d0b4eff",
+  "record_type": "ISSUE28_PFIZER_B03_BOUND_CURRENT_SOURCE_CHECK",
+  "reported_presentation": {
+    "cash_flow_adjacent_row_start_char": 462650,
+    "cash_flow_reported_da_million_usd": 6592,
+    "cash_flow_separately_reported_writeoffs_impairments_million_usd": 5270,
+    "normalized_text_sha256": "c8d5cfd7b86e634158ffaf57d6ccc5c5c0897d8c58db30ee33137fa4ee8483ac",
+    "segment_da_components_million_usd": [
+      1379,
+      305,
+      4874,
+      -4,
+      38
+    ],
+    "segment_da_total_million_usd": 6592,
+    "segment_table_start_char": 688253
+  },
+  "source_references": [
+    {
+      "content_sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+      "repo_relative_path": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+      "status_code": "200"
+    },
+    {
+      "content_sha256": "41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+      "repo_relative_path": "evidence/request_attempts/41/41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09/pfe-20251231_htm.xml",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231_htm.xml",
+      "status_code": "200"
+    }
+  ],
+  "tested_code_head": "438d2c0e71c29662af24fa293a7c184bf66327dc"
+}

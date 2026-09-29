@@ -1,0 +1,27 @@
+{
+  "record_type": "ISSUE28_NORMAL_ZERO_AI_SELECTOR_CLASS_TIMING",
+  "source_module_unchanged": true,
+  "shard0_prior_remote_pass_seconds": 226.062,
+  "shard0_later_remote_timeout_seconds": 240.117,
+  "remote_timeout_seconds": 240,
+  "classes": [
+    {
+      "selector": "tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiPrototypeTest",
+      "exit_code": 0,
+      "elapsed_seconds": 69.499,
+      "log": "OrdinaryZeroAiPrototypeTest.log"
+    },
+    {
+      "selector": "tests.vnext.test_normal_zero_ai_results.OrdinaryZeroAiAdditionalRoutesTest",
+      "exit_code": 0,
+      "elapsed_seconds": 14.812,
+      "log": "OrdinaryZeroAiAdditionalRoutesTest.log"
+    }
+  ],
+  "test_assertions_modified": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

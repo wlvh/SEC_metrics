@@ -1,0 +1,175 @@
+{
+  "all390_acceptance": false,
+  "formal_adoption": false,
+  "full_b03_semantic_acceptance": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_result_or_run": false,
+  "processing_snapshot_id": "sha256:517bd322204016d11ec0694654852148538b3e9c3b10138ada4041eacf97b382",
+  "record_type": "ISSUE28_B03_FOUR_DIRECT_SOURCE_RELATION_CHECKS",
+  "rows": [
+    {
+      "company_id": "southwest_airlines",
+      "complete_da_scope_proven_by_guard": false,
+      "current_source_guard": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+      "distinct_reported_item": "Impairment of long-lived assets 8",
+      "formal_adoption": false,
+      "inline_original_facts": [
+        {
+          "context_ref": "c-1",
+          "ordinal": 183,
+          "value_usd": "1560000000"
+        },
+        {
+          "context_ref": "c-1",
+          "ordinal": 318,
+          "value_usd": "1560000000"
+        }
+      ],
+      "paired_visible_statement_sha256": "fcbc2fdafeb0740475288265cd6c814f3bf5903c5d7596ae2da20e3a5c1ddc4f",
+      "paired_visible_statement_start_char": 385800,
+      "prior_cold_read_sha256": "0dc234a2287eae613e146f472a47f3b4fb94ad3aa11f35285771cd5d6c2959e3",
+      "result_id_matches_prior_cold_read": "sha256:ada9703572318e4e183b5db1e9cb4ac103fde3487151180512254f22149216d8",
+      "selected_da_observation_id": "sha256:3a7d3cdb9db0610d725f792b399be1878a3c204151eeaef1c8fe9ea9092edd0a",
+      "selected_da_usd": "1560000000",
+      "source_log_row": {
+        "content_sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+        "repo_relative_path": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+        "status_code": "200"
+      },
+      "source_reference": {
+        "accession": "0000092380-26-000004",
+        "company_id": "southwest_airlines",
+        "document_name": "luv-20251231.htm",
+        "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092",
+        "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm"
+      }
+    },
+    {
+      "company_id": "lumen_technologies",
+      "complete_da_scope_proven_by_guard": false,
+      "current_source_guard": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+      "distinct_reported_item": "Goodwill impairment 628",
+      "formal_adoption": false,
+      "inline_original_facts": [
+        {
+          "context_ref": "c-1",
+          "ordinal": 268,
+          "value_usd": "2749000000"
+        }
+      ],
+      "paired_visible_statement_sha256": "04e617a6b0624c545dccc41c34feb6d6c45c9f77df31da0828364339014e29b3",
+      "paired_visible_statement_start_char": 300408,
+      "prior_cold_read_sha256": "4075a19bfdadca81a6f85991bc83df4e9ce8039f0c6a760a9876617be6e0a88b",
+      "result_id_matches_prior_cold_read": "sha256:1afee89f9ee092a0d0f273792907462b349a4f793aa82bd1a5119e775aae167e",
+      "selected_da_observation_id": "sha256:c79cd18a17e80a58e3471d8d699707f0ec2574150135bd47909dcbc71b35ca9b",
+      "selected_da_usd": "2749000000",
+      "source_log_row": {
+        "content_sha256": "87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+        "repo_relative_path": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm",
+        "status_code": "200"
+      },
+      "source_reference": {
+        "accession": "0000018926-26-000014",
+        "company_id": "lumen_technologies",
+        "document_name": "lumn-20251231.htm",
+        "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+        "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm"
+      }
+    },
+    {
+      "company_id": "macys",
+      "complete_da_scope_proven_by_guard": false,
+      "current_source_guard": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+      "distinct_reported_item": "Impairment, restructuring and other costs 230",
+      "formal_adoption": false,
+      "inline_original_facts": [
+        {
+          "context_ref": "c-1",
+          "ordinal": 285,
+          "value_usd": "894000000"
+        },
+        {
+          "context_ref": "c-1",
+          "ordinal": 1606,
+          "value_usd": "894000000"
+        }
+      ],
+      "paired_visible_statement_sha256": "18651e76ccbbd00dd6610840d3fb06fd577174b220cb40f2df975fbc5e474093",
+      "paired_visible_statement_start_char": 194090,
+      "prior_cold_read_sha256": "c76e0a692a84486f9720198e90b85e54d8ab11c250c6c41c2961b89f61ba93fb",
+      "result_id_matches_prior_cold_read": "sha256:bcdc08b42abf6fc78d7c2ff9df8dbc99265b28e674b1ddd9c3cda930906c5899",
+      "selected_da_observation_id": "sha256:4ffb01b3d0a19a02df17544b3f395bcea7ae732b3f6aaa15ea037add190a2de5",
+      "selected_da_usd": "894000000",
+      "source_log_row": {
+        "content_sha256": "47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+        "repo_relative_path": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm",
+        "status_code": "200"
+      },
+      "source_reference": {
+        "accession": "0001628280-26-021721",
+        "company_id": "macys",
+        "document_name": "m-20260131.htm",
+        "raw_asset_id": "sha256:47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf",
+        "source_reference_id": "sha256:ca1e56ece9708a8e150c00ef57fc0b09f3b2d3da66c45ce29221919e6cab8250",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm"
+      }
+    },
+    {
+      "company_id": "enphase_energy",
+      "complete_da_scope_proven_by_guard": false,
+      "current_source_guard": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+      "distinct_reported_item": "Asset impairment 3,114",
+      "formal_adoption": false,
+      "inline_original_facts": [
+        {
+          "context_ref": "c-1",
+          "ordinal": 313,
+          "value_usd": "80645000"
+        }
+      ],
+      "paired_visible_statement_sha256": "a8145cfe9d04d25bb6cc402cd9a2834abb90d7207a800372f473d6362d155f2b",
+      "paired_visible_statement_start_char": 342208,
+      "prior_cold_read_sha256": "87644101a4e3a5e3557a40b6952e3e2ae43825db051ba713bf7f0cabbf06d549",
+      "result_id_matches_prior_cold_read": "sha256:fdde35ac1d5f380e3ab3d2c474108fb24f736ba3972f057126a0d9912f60930e",
+      "selected_da_observation_id": "sha256:cc27349d642f6a23953e803f18787c5532ea7d70edfebe3b7c1aa8f9689bb8bf",
+      "selected_da_usd": "80645000",
+      "source_log_row": {
+        "content_sha256": "7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+        "repo_relative_path": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+        "status_code": "200"
+      },
+      "source_reference": {
+        "accession": "0001463101-26-000013",
+        "company_id": "enphase_energy",
+        "document_name": "enph-20251231.htm",
+        "raw_asset_id": "sha256:7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:b9ebac29d66992383ca6314bc260daa68608e2f34424768305f50622c0871ffd",
+        "source_reference_id": "sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm"
+      }
+    }
+  ],
+  "source_log_claims_and_active_unchanged": true,
+  "tested_git_head": "969de88b748ac6a82e194a797f5443c2c2a90e20"
+}
