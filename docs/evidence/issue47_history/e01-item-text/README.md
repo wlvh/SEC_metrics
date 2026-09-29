@@ -77,3 +77,5 @@ Pfizer 在两种读法下都是 1，但路线不做内容判断就无法知道�
 ## 不主张
 
 E01 的正式匹配语义（待决定）；附件是否属于 8.01 正文；本帧其他期间（往年 8-K 正文未保存）；Paramount 与 JPMorgan 的 E01：前身 FY2024 的 Part III 修订现已按整段说明读成已批类别，事件窗口清除后 E01 因两份 8.01 正文带 "Transaction" 按名扣留（`../part-iii-statement-review/targeted-runs.json`）；继任 FY2025 仍缺 9 份前身 8-K 正文；JPMorgan 被期间选择与一份失败头文件挡住。零新增调用。
+
+**2026-09-29 字节码隔离后的重跑**：`fault_injections.py` 的 9 个注错里，4 个的目标是 629f1ed8 用内容确认替换掉的关键词分支（被编辑的文本已不存在），无法重跑，原记录描述当时的代码；其余 5 个在隔离字节码后重跑全部被抓到（`fault-injections-rerun-2026-09-29.json`），`visibility_injections.py` 的 9 个结论与抓到它的用例逐一相同。见 `../injection-bytecode-isolation/`。

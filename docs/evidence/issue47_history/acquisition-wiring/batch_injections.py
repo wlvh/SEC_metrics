@@ -50,8 +50,10 @@ INJECTIONS = [
      "classes": [SCRIPTED],
      "expect": "test_an_sec_access_refusal_stops_everything_by_name"},
     {"id": "ACCEPT_A_BODY_THAT_ONLY_STARTS_WITH_THE_APPROVAL", "file": GATE,
-     "old": '    _need(fetched["body"].encode("utf-8") == approved,\n',
-     "new": '    _need(fetched["body"].encode("utf-8").startswith(approved),\n',
+     # The comparison forgives a browser's line breaks since 3e8598bf
+     # (posted_text); the prefix comparison is still what this breaks.
+     "old": '    _need(posted_text(fetched["body"]).encode("utf-8") == approved,\n',
+     "new": '    _need(posted_text(fetched["body"]).encode("utf-8").startswith(approved),\n',
      "classes": [REGISTER],
      "expect": "test_a_footer_appended_to_the_body_registers_nothing"},
     {"id": "EXPORT_A_LEDGER_NOBODY_REGISTERED", "file": CARRY,
@@ -85,8 +87,11 @@ INJECTIONS = [
      "classes": [RESET],
      "expect": "test_a_deleted_slot_is_a_refusal_not_a_smaller_count"},
     {"id": "RESTART_A_LEDGER_WHOSE_ROOT_WAS_DELETED", "file": SESSION,
-     "old": '            _need(not anchor.exists() and set(present) <= {"source-inputs"},\n',
-     "new": '            anchor.unlink(missing_ok=True)\n            _need(set(present) <= {"source-inputs"},\n',
+     # Since the claim-log copy beside the root (the re-review's M1 residual)
+     # both files beside the root refuse a restart; restarting means dropping both.
+     "old": '            _need(not anchor.exists() and not mirror.exists() and set(present) <= {"source-inputs"},\n',
+     "new": ('            anchor.unlink(missing_ok=True)\n            mirror.unlink(missing_ok=True)\n'
+             '            _need(set(present) <= {"source-inputs"},\n'),
      "classes": [RESET],
      "expect": "test_a_deleted_root_is_a_refusal_not_a_fresh_start"},
     {"id": "TRUST_THE_SLOT_S_OWN_RECORDS", "file": SESSION,
@@ -105,8 +110,8 @@ INJECTIONS = [
      "classes": [RESET],
      "expect": "test_a_root_reached_through_a_symlink_is_refused"},
     {"id": "PARSE_THE_APPROVAL_LEAVING_THE_LAST_DUPLICATE_KEY", "file": GATE,
-     "old": '        approved = strict_json_loads(text=comment["body"])\n',
-     "new": '        approved = json.loads(comment["body"])\n',
+     "old": '        approved = strict_json_loads(text=posted_text(comment["body"]))\n',
+     "new": '        approved = json.loads(posted_text(comment["body"]))\n',
      "classes": [SUITE + ".AnApprovalMustBeReadAsWrittenAndUnedited"],
      "expect": "test_a_duplicate_key_is_a_refusal_not_the_last_value"},
     {"id": "ACCEPT_AN_EDITED_APPROVAL", "file": GATE,

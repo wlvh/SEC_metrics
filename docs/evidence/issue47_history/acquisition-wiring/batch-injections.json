@@ -9,7 +9,7 @@
    "failed_cases": [
     "test_a_failed_url_is_reported_and_not_claimed_again"
    ],
-   "suite_result": "Ran 9 tests in 0.080s FAILED (failures=1)"
+   "suite_result": "Ran 9 tests in 0.076s FAILED (failures=1)"
   },
   {
    "id": "TAKE_EVERY_TIER_IN_ONE_PASS",
@@ -19,7 +19,7 @@
    "failed_cases": [
     "test_the_index_then_the_shards_then_the_rest_each_in_its_own_pass"
    ],
-   "suite_result": "Ran 9 tests in 0.079s FAILED (failures=1)"
+   "suite_result": "Ran 9 tests in 0.098s FAILED (failures=1)"
   },
   {
    "id": "KEEP_SENDING_AFTER_A_429",
@@ -29,7 +29,7 @@
    "failed_cases": [
     "test_an_sec_access_refusal_stops_everything_by_name"
    ],
-   "suite_result": "Ran 9 tests in 0.106s FAILED (failures=1)"
+   "suite_result": "Ran 9 tests in 0.102s FAILED (failures=1)"
   },
   {
    "id": "ACCEPT_A_BODY_THAT_ONLY_STARTS_WITH_THE_APPROVAL",
@@ -39,7 +39,7 @@
    "failed_cases": [
     "test_a_footer_appended_to_the_body_registers_nothing"
    ],
-   "suite_result": "Ran 7 tests in 0.011s FAILED (failures=1)"
+   "suite_result": "Ran 11 tests in 0.034s FAILED (failures=1)"
   },
   {
    "id": "EXPORT_A_LEDGER_NOBODY_REGISTERED",
@@ -49,7 +49,7 @@
    "failed_cases": [
     "test_an_unregistered_ledger_is_not_exported"
    ],
-   "suite_result": "Ran 7 tests in 35.058s FAILED (failures=1)"
+   "suite_result": "Ran 8 tests in 29.153s FAILED (failures=1)"
   },
   {
    "id": "RESTORE_WITHOUT_CHECKING_THE_ARCHIVE_DIGEST",
@@ -59,7 +59,7 @@
    "failed_cases": [
     "test_a_changed_archive_byte_is_refused"
    ],
-   "suite_result": "Ran 7 tests in 36.751s FAILED (failures=1)"
+   "suite_result": "Ran 8 tests in 30.506s FAILED (failures=1)"
   },
   {
    "id": "PLAN_BEFORE_REGISTERING_WHAT_A_DEAD_PROCESS_LEFT",
@@ -69,7 +69,7 @@
    "failed_cases": [
     "test_an_unregistered_ledger_is_not_exported"
    ],
-   "suite_result": "Ran 7 tests in 37.077s FAILED (errors=1)"
+   "suite_result": "Ran 8 tests in 30.484s FAILED (errors=1)"
   },
   {
    "id": "COUNT_WHATEVER_SLOTS_EXIST",
@@ -79,7 +79,7 @@
    "failed_cases": [
     "test_a_deleted_slot_is_a_refusal_not_a_smaller_count"
    ],
-   "suite_result": "Ran 5 tests in 49.220s FAILED (failures=1)"
+   "suite_result": "Ran 7 tests in 32.261s FAILED (failures=1)"
   },
   {
    "id": "RESTART_A_LEDGER_WHOSE_ROOT_WAS_DELETED",
@@ -89,7 +89,7 @@
    "failed_cases": [
     "test_a_deleted_root_is_a_refusal_not_a_fresh_start"
    ],
-   "suite_result": "Ran 5 tests in 48.157s FAILED (failures=1)"
+   "suite_result": "Ran 7 tests in 31.748s FAILED (failures=1)"
   },
   {
    "id": "TRUST_THE_SLOT_S_OWN_RECORDS",
@@ -99,7 +99,7 @@
    "failed_cases": [
     "test_a_stop_hidden_by_rewriting_the_slot_s_own_records_is_found"
    ],
-   "suite_result": "Ran 5 tests in 48.063s FAILED (failures=1)"
+   "suite_result": "Ran 7 tests in 31.174s FAILED (failures=1)"
   },
   {
    "id": "ALLOW_A_SAME_REQUEST_REDRAW",
@@ -109,7 +109,7 @@
    "failed_cases": [
     "test_a_same_request_claimed_again_is_a_redraw"
    ],
-   "suite_result": "Ran 5 tests in 49.010s FAILED (failures=1)"
+   "suite_result": "Ran 7 tests in 31.368s FAILED (failures=1)"
   },
   {
    "id": "LOCK_A_ROOT_THROUGH_A_SYMLINK",
@@ -119,7 +119,7 @@
    "failed_cases": [
     "test_a_root_reached_through_a_symlink_is_refused"
    ],
-   "suite_result": "Ran 5 tests in 49.123s FAILED (failures=1)"
+   "suite_result": "Ran 7 tests in 31.268s FAILED (failures=1)"
   },
   {
    "id": "PARSE_THE_APPROVAL_LEAVING_THE_LAST_DUPLICATE_KEY",
@@ -129,7 +129,7 @@
    "failed_cases": [
     "test_a_duplicate_key_is_a_refusal_not_the_last_value"
    ],
-   "suite_result": "Ran 2 tests in 0.005s FAILED (failures=1)"
+   "suite_result": "Ran 2 tests in 0.009s FAILED (failures=1)"
   },
   {
    "id": "ACCEPT_AN_EDITED_APPROVAL",
@@ -139,7 +139,7 @@
    "failed_cases": [
     "test_an_edited_comment_is_not_the_approval"
    ],
-   "suite_result": "Ran 2 tests in 0.006s FAILED (failures=1)"
+   "suite_result": "Ran 2 tests in 0.008s FAILED (failures=1)"
   }
  ],
  "calls": [

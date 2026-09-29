@@ -855,3 +855,5 @@ root or anything inside it, and anything inside the repository checkout
 owner confirms or replaces it when posting the comment; the proposal remains a
 proposal until then (`provenance_verified_against_github` is `null`), and no
 real request is sent before it.
+
+**2026-09-29 字节码隔离后的重跑**：`vm_start_injections.py` 的 21 个与 `batch_injections.py` 的 14 个注错在新克隆里重跑，结论与抓到它的用例逐一相同；batch 的 3 个注错改指当前代码（批准比较与解析用 `posted_text`，重开账本要同时丢掉根目录旁的两个文件），`batch-injections.json` 是这次重跑的原始结果，收据绑定的 `fault-injections.json` 不变。见 `../injection-bytecode-isolation/`。

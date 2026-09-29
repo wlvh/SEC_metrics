@@ -1,0 +1,162 @@
+{
+ "record_type": "ISSUE_47_INJECTION_RERUN_WITH_ISOLATED_BYTECODE",
+ "why": "a restored C02 reader ran an injection's pattern in the next ordinary test run: the interpreter trusts a cached compile whose recorded source size and whole-second modification time match the file, and one injection had the original's size and was restored within the second. The ten in-place injection scripts now give every injected run a fresh PYTHONPYCACHEPREFIX. Inside one run of a script, injection k's stale bytecode could have run under injection k+1's tests, so the nine older scripts were re-run to check their recorded verdicts.",
+ "where": "a fresh clone of commit 6923b19e (git clone --shared), one script after another; zero SEC or model calls",
+ "scripts_rerun_as_they_are": {
+  "model_start": {
+   "committed": 9,
+   "rerun": 9,
+   "same": 9,
+   "differ": {},
+   "not_rerun": [],
+   "only_in_rerun": []
+  },
+  "vm_start": {
+   "committed": 21,
+   "rerun": 21,
+   "same": 21,
+   "differ": {},
+   "not_rerun": [],
+   "only_in_rerun": []
+  },
+  "visibility": {
+   "committed": 9,
+   "rerun": 9,
+   "same": 9,
+   "differ": {},
+   "not_rerun": [],
+   "only_in_rerun": []
+  },
+  "block": {
+   "committed": 8,
+   "rerun": 8,
+   "same": 8,
+   "differ": {},
+   "not_rerun": [],
+   "only_in_rerun": []
+  },
+  "part_iii": {
+   "committed": 8,
+   "rerun": 8,
+   "same": 8,
+   "differ": {},
+   "not_rerun": [],
+   "only_in_rerun": []
+  },
+  "b03": {
+   "committed": 8,
+   "rerun": 8,
+   "same": 8,
+   "differ": {},
+   "not_rerun": [],
+   "only_in_rerun": []
+  },
+  "b03_route": {
+   "committed": 7,
+   "rerun": 7,
+   "same": 7,
+   "differ": {},
+   "not_rerun": [],
+   "only_in_rerun": []
+  }
+ },
+ "batch_injections_py": {
+  "retargeted": {
+   "ACCEPT_A_BODY_THAT_ONLY_STARTS_WITH_THE_APPROVAL": "registration compares posted_text(body) since 3e8598bf",
+   "RESTART_A_LEDGER_WHOSE_ROOT_WAS_DELETED": "a restart now has to drop both files beside the root (the anchor and, since the re-review's M1 residual, the claim-log copy)",
+   "PARSE_THE_APPROVAL_LEAVING_THE_LAST_DUPLICATE_KEY": "the approval is parsed from posted_text(body) since 3e8598bf"
+  },
+  "result": {
+   "written_by_the_rerun": true,
+   "committed": 14,
+   "rerun": 14,
+   "same": 14,
+   "differ": {},
+   "not_rerun": [],
+   "only_in_rerun": []
+  },
+  "raw_results": "acquisition-wiring/batch-injections.json now holds this re-run, the one its script produces; fault-injections.json (bound by the SEC wiring receipt) keeps the original rows, whose outcome and catching cases this re-run reproduces"
+ },
+ "e01_item_text_fault_injections_py": {
+  "READ_THE_BRIEF_NOT_THE_ITEM": {
+   "rerun": false,
+   "why": "its target is the keyword branch 629f1ed8 replaced with content confirmation; the text it edits no longer exists"
+  },
+  "READ_ONLY_THE_FROZEN_BRIEF_WINDOW": {
+   "rerun": false,
+   "why": "its target is the keyword branch 629f1ed8 replaced with content confirmation; the text it edits no longer exists"
+  },
+  "READ_TO_THE_END_OF_THE_DOCUMENT": {
+   "rerun": true,
+   "same_outcome": true,
+   "outcome": "CAUGHT",
+   "catching_cases_identical": false,
+   "catchers_no_longer_catching": [],
+   "catchers_added": [
+    "test_a_cross_reference_that_looks_like_the_next_heading_is_refused",
+    "test_every_saved_candidate_reads_the_text_it_read_before"
+   ]
+  },
+  "PUBLISH_THE_DIRECT_COUNT_WHEN_AN_ALIAS_IS_THERE": {
+   "rerun": false,
+   "why": "its target is the keyword branch 629f1ed8 replaced with content confirmation; the text it edits no longer exists"
+  },
+  "ANY_LOWERCASE_WORD_MAKES_A_REFERENCE": {
+   "rerun": true,
+   "same_outcome": true,
+   "outcome": "CAUGHT",
+   "catching_cases_identical": false,
+   "catchers_no_longer_catching": [
+    "test_a_window_where_one_carries_an_alias_is_withheld_by_name",
+    "test_every_keyword_item_in_the_window_is_read"
+   ],
+   "catchers_added": [
+    "test_a_window_with_a_candidate_is_withheld_by_name",
+    "test_every_candidate_item_is_read_from_its_own_text",
+    "test_every_saved_candidate_reads_the_text_it_read_before",
+    "test_hidden_text_outside_the_item_is_not_this_item_s"
+   ]
+  },
+  "A_QUOTE_DOES_NOT_MAKE_A_REFERENCE": {
+   "rerun": true,
+   "same_outcome": true,
+   "outcome": "CAUGHT",
+   "catching_cases_identical": true,
+   "catchers_no_longer_catching": [],
+   "catchers_added": []
+  },
+  "EACH_SUB_ITEM_HEADING_IS_ITS_OWN_ITEM": {
+   "rerun": true,
+   "same_outcome": true,
+   "outcome": "CAUGHT",
+   "catching_cases_identical": true,
+   "catchers_no_longer_catching": [],
+   "catchers_added": []
+  },
+  "TAKE_THE_FIRST_OF_TWO_HEADINGS": {
+   "rerun": true,
+   "same_outcome": true,
+   "outcome": "CAUGHT",
+   "catching_cases_identical": true,
+   "catchers_no_longer_catching": [],
+   "catchers_added": []
+  },
+  "DIRECT_ONLY_ROUTES_ARE_READ_TOO": {
+   "rerun": false,
+   "why": "its target is the keyword branch 629f1ed8 replaced with content confirmation; the text it edits no longer exists"
+  }
+ },
+ "totals": {
+  "injections_recorded": 93,
+  "rerun": 89,
+  "same_outcome": 89,
+  "same_catching_cases": 87,
+  "differing_catching_cases_explained": "READ_TO_THE_END_OF_THE_DOCUMENT and ANY_LOWERCASE_WORD_MAKES_A_REFERENCE: the E01 item test file changed in 629f1ed8, 9c8c28a9 and 5f75a937; the two catchers no longer catching were renamed away in 629f1ed8, and every added catcher did not exist at 08faddd1",
+  "not_rerunnable": 4
+ },
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}
