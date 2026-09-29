@@ -93,6 +93,10 @@ NEW_RULE_FILES = (
     # is bold only - so both roots check them.
     "scripts/vnext/historical_text_emphasis.py",
     "scripts/vnext/historical_risk_results.py",
+    # D01's bound revision: a filing with more emphasized Item 1A headings
+    # than the frozen 64 has no result at all, so these bytes decide whether
+    # one exists.
+    "catalog/r6/D01_risk_factor_headings_v2.md",
     # Which metrics a company's traits put outside their own gate. Its bytes
     # decide whether a position gets a structural non-applicability or an
     # implementation gap, so both roots check it.
@@ -174,6 +178,11 @@ NEW_RULE_FILES = (
     # in 2021 and 2022 declare dei/2020-01-31 or dei/2021q4, so it decides
     # whether an earlier period resolves at all, and both roots check it.
     "scripts/vnext/historical_dei.py",
+    # The fiscal-year label of a pinned period, where older annual reports
+    # write their definition in a form the frozen scan does not read. It
+    # decides whether such a period has an annual input at all, and which
+    # label it carries, so both roots check it.
+    "scripts/vnext/historical_fiscal_labels.py",
 )
 
 # One module the parent's authority does not name although its own named code
@@ -239,6 +248,11 @@ AUTHORITY_ADDITIONS = (
     # at module scope; its other imports sit in functions this path skips).
     "scripts/vnext/capacity_run.py",
     "scripts/vnext/capacity_assessment_input.py",
+    # B03's contract-cost amortization check, asked by the historical route of
+    # a composed D&A exactly as #28's current path asks it. It is a V14 file,
+    # not the parent's, so a change #28 makes to it moves this generation's
+    # closure, as a parent change does.
+    "scripts/vnext/b03_contract_amortization_scope.py",
 )
 
 # Three files the parent already binds, whose bytes a historical Run needs to be

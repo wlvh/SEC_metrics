@@ -20,7 +20,8 @@ from sec_urls import (accession_document_url, companyfacts_url, submissions_file
 
 from .annual_update import saved_source
 from .canonical import content_hash, sha256_file, strict_json_file, strict_json_loads
-from .historical_dei import annual_period, inspect_prepared_fiscal_year_labels
+from .historical_dei import annual_period
+from .historical_fiscal_labels import inspect_prepared_fiscal_year_labels
 from .normal_annual_input import (NormalAnnualInputError, _cik, _registry_rows,
                                   _subject_policy)
 from .normal_annual_input_v2 import (POLICY_PATH as FISCAL_LABEL_POLICY_PATH,

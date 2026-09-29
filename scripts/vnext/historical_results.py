@@ -334,7 +334,7 @@ TEXT_METRICS = ("C02", "D01", "D02")
 # a filing that prints each committee member in its own block states more
 # facts than 64 blocks hold (up to 85 measured on the ten saved filings).
 TEXT_SPEC_PATHS = {"C02": "catalog/r6/C02_board_disclosures_v2.md",
-                   "D01": "catalog/r6/D01_risk_factor_headings.md",
+                   "D01": "catalog/r6/D01_risk_factor_headings_v2.md",
                    "D02": "catalog/r6/D02_legal_disclosures_v2.md"}
 
 

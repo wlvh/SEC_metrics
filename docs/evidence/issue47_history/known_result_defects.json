@@ -1649,6 +1649,61 @@
    "evidence": [
     "docs/evidence/issue47_history/d02-content-read/italic-note-labels.json"
    ]
+  },
+  {
+   "defect_id": "B03_FORD_2025_SELECTED_TOTAL_INCLUDES_IMPAIRMENT_RELATED_DEPRECIATION",
+   "company_id": "ford_motor_company",
+   "metric_id": "B03",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Published 0.0363384899635280108080975292 and accepted (CONTENT_B03_FORD_2025, result sha256:1829d73dac66a195a590ab84ea1f1d1800a77fae60d828b6f37d5cbeec2abd30). The D&A it adds is DepreciationDepletionAndAmortization 15,974,000,000, the segment table's total, whose Model e column (8,235) carries footnote (g): 'Includes $8.1 billion of depreciation related to the Model e asset impairment (see Note 13).' The cash-flow statement tags the split: 7,834 million of depreciation and tooling amortization and 8,140 million of depreciation included in the asset impairment. The approved definition does not add impairment back.",
+   "root_cause": "The approved chain takes the first direct concept that carries a candidate; nothing asked what the filer's total covers. The cross-source reading that accepted it followed the same chain over the filing's own facts, so it read the same total.",
+   "scope_measured": "#28's check asked of every B03 the historical route resolves over every saved annual report, on the data root restored from the branch's export (b03-impairment-inclusion/measured.json). This is the only one it flags.",
+   "found_by": "Issue #28's ordinary route (b03_depreciation_scope, commit 08915a83, [shared-with-#47]); the same result id is the historical route's, computed from the same Company Facts for the same accession.",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "evidence": [
+    "docs/evidence/issue47_history/b03-impairment-inclusion/README.md",
+    "docs/evidence/issue47_history/b03-impairment-inclusion/measured.json",
+    "docs/evidence/issue47_history/b03-impairment-inclusion/injections.json"
+   ],
+   "repair": "The historical route asks a kept or retaken direct D&A total whether the filing itself says it includes impairment-related depreciation (#28's _selected_impairment_inclusion, through historical_zero_ai_results.impairment_included) and withholds it by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN, still carrying B01. That is the standing rule, not a new decision. The exact exclusion is #28's successor Spec, still a private candidate there, and is not ported."
+  },
+  {
+   "defect_id": "B03_MARRIOTT_2025_COMPOSED_DA_BESIDE_CONTRACT_COST_AMORTIZATION",
+   "company_id": "marriott_international",
+   "metric_id": "B03",
+   "period_end": "2025-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Published 0.1756281982738868097456656229 and accepted (CONTENT_B03_MARRIOTT_2025, result sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a). Its D&A is the approved composition, depreciation 145,000,000 plus intangible-asset amortization 313,000,000. The same filing reports CapitalizedContractCostAmortization 135,000,000 for the year on its fee-services member, a separate line the composition neither adds nor is shown to include, so the value is not provably the whole D&A.",
+   "root_cause": "The approved composition takes Depreciation plus AmortizationOfIntangibleAssets and never asks whether the filing states another amortization apart from both. The cross-source reading that accepted it followed the same composition over the filing's own facts, so it read the same two components.",
+   "scope_measured": "Of the B03 results the historical route resolves on the saved annual reports, only Marriott's FY2025 and FY2024 take the composition (b03-impairment-inclusion/measured.json, base_scope_status NO_DIRECT_DEPRECIATION_SELECTION); both report the amortization.",
+   "found_by": "Issue #28's ordinary route (b03_contract_amortization_scope, commit 45bcce3d, [shared-with-#47]; bounded independent review 969de88b, PASS_WITH_BOUNDS); the historical route composes B03 the same way for the same accession.",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "evidence": [
+    "docs/evidence/issue47_history/b03-impairment-inclusion/README.md",
+    "docs/evidence/issue47_history/b03-impairment-inclusion/injections.json"
+   ],
+   "repair": "The historical route asks a kept composition #28's own question (b03_contract_amortization_scope._unreconciled_contract_amortization, through historical_zero_ai_results.contract_amortization_unreconciled, with the pinned input's source proofs) and withholds it by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN, still carrying B01. Whether the definition adds contract-cost amortization back is not decided here; the withhold neither adds it nor recomputes anything."
+  },
+  {
+   "defect_id": "B03_MARRIOTT_2024_COMPOSED_DA_BESIDE_CONTRACT_COST_AMORTIZATION",
+   "company_id": "marriott_international",
+   "metric_id": "B03",
+   "period_end": "2024-12-31",
+   "result_id": null,
+   "same_cause_as": [],
+   "summary": "Published 0.1653386454183266932270916335 and accepted (CONTENT_B03_MARRIOTT_2024, result sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783). Its D&A is the approved composition, depreciation 128,000,000 plus intangible-asset amortization 255,000,000. The same filing reports CapitalizedContractCostAmortization 103,000,000 for the year on its fee-services member, a separate line the composition neither adds nor is shown to include, so the value is not provably the whole D&A.",
+   "root_cause": "The approved composition takes Depreciation plus AmortizationOfIntangibleAssets and never asks whether the filing states another amortization apart from both. The cross-source reading that accepted it followed the same composition over the filing's own facts, so it read the same two components.",
+   "scope_measured": "Of the B03 results the historical route resolves on the saved annual reports, only Marriott's FY2025 and FY2024 take the composition (b03-impairment-inclusion/measured.json, base_scope_status NO_DIRECT_DEPRECIATION_SELECTION); both report the amortization.",
+   "found_by": "Issue #28's ordinary route (b03_contract_amortization_scope, commit 45bcce3d, [shared-with-#47]; bounded independent review 969de88b, PASS_WITH_BOUNDS); the historical route composes B03 the same way for the same accession.",
+   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "evidence": [
+    "docs/evidence/issue47_history/b03-impairment-inclusion/README.md",
+    "docs/evidence/issue47_history/b03-impairment-inclusion/injections.json"
+   ],
+   "repair": "The historical route asks a kept composition #28's own question (b03_contract_amortization_scope._unreconciled_contract_amortization, through historical_zero_ai_results.contract_amortization_unreconciled, with the pinned input's source proofs) and withholds it by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN, still carrying B01. Whether the definition adds contract-cost amortization back is not decided here; the withhold neither adds it nor recomputes anything."
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

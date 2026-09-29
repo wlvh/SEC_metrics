@@ -451,10 +451,14 @@ class TheFrozenModulesAreUnchanged(unittest.TestCase):
         self.assertIs(frozen_labels._MetadataSpans.handle_starttag.__globals__["re"], re)
 
     def test_historical_callers_read_the_views(self):
-        from vnext import historical_annual_input, historical_results
+        from vnext import historical_annual_input, historical_fiscal_labels, historical_results
         self.assertIs(historical_dei.annual_period, historical_annual_input.annual_period)
-        self.assertIs(historical_dei.inspect_prepared_fiscal_year_labels,
+        # The pinned input's label inspection is the widened one, and what it
+        # widens is the view's: the frozen scan is read through the view first.
+        self.assertIs(historical_fiscal_labels.inspect_prepared_fiscal_year_labels,
                       historical_annual_input.inspect_prepared_fiscal_year_labels)
+        self.assertIs(historical_dei.inspect_prepared_fiscal_year_labels,
+                      historical_fiscal_labels._frozen_inspection)
         self.assertIs(historical_dei.annual_period, historical_results.annual_period)
         self.assertIs(frozen.annual_period, historical_dei.annual_period.release_aware_view_of)
 

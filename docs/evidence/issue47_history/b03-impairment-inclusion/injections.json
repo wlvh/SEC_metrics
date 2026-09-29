@@ -1,0 +1,101 @@
+{
+ "record_type": "ISSUE_47_B03_IMPAIRMENT_INCLUSION_FAULT_INJECTIONS",
+ "results": [
+  {
+   "id": "THE_KEPT_TOTAL_IS_NOT_ASKED",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "edit": "depreciation_scope() never asks a kept direct total about impairment",
+   "why_it_matters": "the total the filing says includes impairment-related depreciation would be published",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.AKeptTotalTheFilingSaysIncludesImpairment.test_it_is_withheld_by_name_and_still_carries_b01",
+   "failed_cases": [
+    "test_it_is_withheld_by_name_and_still_carries_b01"
+   ],
+   "suite_result": "Ran 1 test in 23.988s FAILED (failures=1)",
+   "seconds": 26
+  },
+  {
+   "id": "EVERY_KEPT_TOTAL_IS_WITHHELD",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "edit": "depreciation_scope() withholds every kept direct total, footnoted or not",
+   "why_it_matters": "a total the filing does not footnote would be lost for nothing",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.OnSavedFilings.test_where_the_filing_proves_the_input_the_result_is_the_chain_s",
+   "failed_cases": [
+    "test_where_the_filing_proves_the_input_the_result_is_the_chain_s"
+   ],
+   "suite_result": "Ran 1 test in 17.510s FAILED (failures=1)",
+   "seconds": 19
+  },
+  {
+   "id": "THE_RETAKEN_TOTAL_IS_NOT_ASKED",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "edit": "the route publishes a retaken total without asking it about impairment",
+   "why_it_matters": "the same footnoted total would pass through the retake branch",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.AKeptTotalTheFilingSaysIncludesImpairment.test_a_retaken_total_is_asked_too",
+   "failed_cases": [
+    "test_a_retaken_total_is_asked_too"
+   ],
+   "suite_result": "Ran 1 test in 43.545s FAILED (failures=1)",
+   "seconds": 45
+  },
+  {
+   "id": "ANOTHER_PERIOD_S_FACT_IS_ASKED",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "edit": "impairment_included() takes a fact of any period that carries the value",
+   "why_it_matters": "a year's total would be withheld for a footnote written about another year",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.AKeptTotalTheFilingSaysIncludesImpairment.test_the_proof_is_the_measured_period_s_fact",
+   "failed_cases": [
+    "test_the_proof_is_the_measured_period_s_fact"
+   ],
+   "suite_result": "Ran 1 test in 31.374s FAILED (failures=1)",
+   "seconds": 33
+  },
+  {
+   "id": "THE_COMPOSITION_IS_NOT_ASKED",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "edit": "the route publishes a kept composition without asking #28's question",
+   "why_it_matters": "a D&A the filing shows is not the whole of it would be published",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.AComposedTotalBesideAContractCostAmortization.test_it_is_withheld_by_name_and_still_carries_b01",
+   "failed_cases": [
+    "test_it_is_withheld_by_name_and_still_carries_b01"
+   ],
+   "suite_result": "Ran 1 test in 13.156s FAILED (failures=2)",
+   "seconds": 14
+  },
+  {
+   "id": "EVERY_KEPT_RESULT_IS_WITHHELD",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "edit": "the route withholds every kept B03, whatever #28's check answers",
+   "why_it_matters": "a direct total the question does not concern would be lost for nothing",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.AComposedTotalBesideAContractCostAmortization.test_a_direct_total_is_not_its_question",
+   "failed_cases": [
+    "test_a_direct_total_is_not_its_question"
+   ],
+   "suite_result": "Ran 1 test in 25.650s FAILED (failures=1)",
+   "seconds": 27
+  },
+  {
+   "id": "THE_ANSWER_IS_NOT_CARRIED",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "edit": "the withheld result drops #28's answer",
+   "why_it_matters": "the reader could not see which amortization, amount and fact withheld it",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_da_scope_route.AComposedTotalBesideAContractCostAmortization.test_it_is_the_answer_of_28_s_own_check",
+   "failed_cases": [
+    "test_it_is_the_answer_of_28_s_own_check"
+   ],
+   "suite_result": "Ran 1 test in 22.559s FAILED (errors=1)",
+   "seconds": 24
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

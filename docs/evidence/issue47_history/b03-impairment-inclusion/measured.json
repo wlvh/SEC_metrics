@@ -1,0 +1,869 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "how": "measure_b03_impairment.py over every company's five target periods on the data root restored from the branch's export at 288 SEC calls (evidence/issue47_acquired, commit cd50ded9), with the historical route of commit c984303f; network and DNS blocked. Run in two parts after a container restart stopped the first: the first part covers Marriott, Southwest, Ford, Pfizer, JPMorgan, Salesforce and Lumen, the second Macy's, Enphase and Paramount.",
+ "record_type": "ISSUE_47_B03_IMPAIRMENT_INCLUSION_MEASUREMENT",
+ "rows": [
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_DIRECT_DEPRECIATION_SELECTION",
+   "company_id": "marriott_international",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+   "selected_da": [],
+   "stage": "MEASURED",
+   "value": "0.1756281982738868097456656229"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_DIRECT_DEPRECIATION_SELECTION",
+   "company_id": "marriott_international",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+   "selected_da": [],
+   "stage": "MEASURED",
+   "value": "0.1653386454183266932270916335"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_PUBLISHED_B03_VALUE",
+   "company_id": "marriott_international",
+   "historical_scope": null,
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "ALL_BRANCHES_REJECTED",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:630ca52c14d29af635f4c685ede6ef116ce288a8b79d42a6c82c02ffc85f8fc3",
+   "selected_da": [],
+   "stage": "MEASURED",
+   "value": null
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_PUBLISHED_B03_VALUE",
+   "company_id": "marriott_international",
+   "historical_scope": null,
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "ALL_BRANCHES_REJECTED",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:d71d27f004b2711c94afaba3ce21e4ff3d18ff8fac1c98207eecc6661e498ad1",
+   "selected_da": [],
+   "stage": "MEASURED",
+   "value": null
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_PUBLISHED_B03_VALUE",
+   "company_id": "marriott_international",
+   "historical_scope": null,
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "ALL_BRANCHES_REJECTED",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:bafe01e1e307a3f33597024eb4da8f3ab94139278aa1c9dba97e3c4e04372e19",
+   "selected_da": [],
+   "stage": "MEASURED",
+   "value": null
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "southwest_airlines",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:ada9703572318e4e183b5db1e9cb4ac103fde3487151180512254f22149216d8",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationAndAmortization",
+     "value": "1560000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.07084060863058119231728610626"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "southwest_airlines",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:5b54dbd2fb4f023b4afe5ca8a5e90e7ca860850ed58e25012d8d19157eb618c6",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationAndAmortization",
+     "value": "1657000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.07197176436342466251864789142"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "southwest_airlines",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:b29679e35528ecd810903704963d8b79d37d34ab9b818d058db4611e8a8fab07",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationAndAmortization",
+     "value": "1522000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.06691962745774404967230079338"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "southwest_airlines",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:72a045b2af9608daff4ac93e31a4c8410de9d036d2ad3c1fe9169acdb9ebe2d1",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationAndAmortization",
+     "value": "1351000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.09943730578651213571848492483"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "southwest_airlines",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:7b9b5a7ab1ba19e8bafb825b4b24bf66f7cc9ac81827763b77559cb0bb88b40f",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationAndAmortization",
+     "value": "1272000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.1895503483217226092463584547"
+  },
+  {
+   "base_scope_blocked": true,
+   "base_scope_status": "SELECTED_DEPRECIATION_INCLUDES_IMPAIRMENT",
+   "company_id": "ford_motor_company",
+   "exact": {
+    "arithmetically_remaining_da_usd": "7834000000",
+    "exact_impairment_depreciation_usd": "8140000000",
+    "proof_id": "sha256:951c8c55a196e91d60b0b814541654d46255c8f016e8e554e9c36e9f27276300",
+    "selected_total_usd": "15974000000"
+   },
+   "historical_scope": "KEEP",
+   "inclusion": {
+    "footnote": "(g)Includes $8.1 billion of depreciation related to the Model e asset impairment (see Note 13).",
+    "included_component": {
+     "column_index": 28,
+     "marker": "g",
+     "visible_value": "8,235"
+    },
+    "selected_visible_total": "15,974"
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:1829d73dac66a195a590ab84ea1f1d1800a77fae60d828b6f37d5cbeec2abd30",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "15974000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.0363384899635280108080975292"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "ford_motor_company",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:e0d665e2e1d51c1e472d66cac848e4b05e2de8f3563ef56439b8d4d19141c494",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "7567000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.06911650233523611831862999481"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "ford_motor_company",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:569bc4ecec4551775480cd5f9761a72bdd460f0a20dd15aa9f23bf8f785d084f",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "7690000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.07462356192995101906453791624"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "ford_motor_company",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:4b3590d3cfc4532b55d983d4d42c703db328bfed710747654ec0a2faf6d298b5",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "7674000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.08825929886053765413743143296"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "ford_motor_company",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:7cd24f6425186e1b6ace1d2ced7924bc7ebfaa8d1785fc1be248fa1de3d821ea",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "7318000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.08684841683719497436574471362"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "pfizer",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "APPROX",
+   "reason_code": "PASS",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:b6d0e8c0f7decc22cbe4598de6ceff4f59820258b30bd6012af06e7c4cb0799b",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "6592000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.3329551446971028619824541779"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "pfizer",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "APPROX",
+   "reason_code": "PASS",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:0a32ee9a5d4e502fc080690ddc724e016191cd52a0a62f46e312e197235a9a16",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "7013000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.3052792053687899790969242617"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "pfizer",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "APPROX",
+   "reason_code": "PASS",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:d24a0f7683aa3425ac41fcc8cda5a3fbe948c769ae28f4f19a0e9b0001ded7ac",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "6290000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.1279215932749342027733040028"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "pfizer",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "APPROX",
+   "reason_code": "PASS",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:3025445d91f0c4d443381a2cedfbe40306ed8f3c6a5c42e5e85e1c2b63042a51",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "5064000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.3987840127578989335193860261"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "pfizer",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "APPROX",
+   "reason_code": "PASS",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:094a4cfa3127b43be1729122e5b502db82a6bc7735f5f30f77c09e7e3fed9ff3",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "5191000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.3029229406554472984942426926"
+  },
+  {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2025-12-31",
+   "stage": "ORIGINAL_NOT_SAVED"
+  },
+  {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2023-12-31",
+   "stage": "ORIGINAL_NOT_SAVED"
+  },
+  {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2022-12-31",
+   "stage": "ORIGINAL_NOT_SAVED"
+  },
+  {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2021-12-31",
+   "stage": "ORIGINAL_NOT_SAVED"
+  },
+  {
+   "company_id": "jpmorgan_chase",
+   "report_end": "2020-12-31",
+   "stage": "ORIGINAL_NOT_SAVED"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_PUBLISHED_B03_VALUE",
+   "company_id": "salesforce",
+   "historical_scope": "WITHHOLD",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+   "report_end": "2026-01-31",
+   "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
+   "selected_da": [],
+   "stage": "MEASURED",
+   "value": null
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_PUBLISHED_B03_VALUE",
+   "company_id": "salesforce",
+   "historical_scope": "WITHHOLD",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+   "report_end": "2025-01-31",
+   "result_id": "sha256:f193127f18c6d278fc30a48b8f1dad6cb935af2a61ae1681a1387aad4b96d3e9",
+   "selected_da": [],
+   "stage": "MEASURED",
+   "value": null
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_PUBLISHED_B03_VALUE",
+   "company_id": "salesforce",
+   "historical_scope": "WITHHOLD",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+   "report_end": "2024-01-31",
+   "result_id": "sha256:59bf82495eaf9a41baf1a8c14f78d068c5c667f22023be27685b715d1df9d142",
+   "selected_da": [],
+   "stage": "MEASURED",
+   "value": null
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_PUBLISHED_B03_VALUE",
+   "company_id": "salesforce",
+   "historical_scope": "WITHHOLD",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+   "report_end": "2023-01-31",
+   "result_id": "sha256:2d788df1df32d4fc251bf45ebf89f9a94dace9c4cbebf0021bb34d138c99cdb7",
+   "selected_da": [],
+   "stage": "MEASURED",
+   "value": null
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_PUBLISHED_B03_VALUE",
+   "company_id": "salesforce",
+   "historical_scope": "WITHHOLD",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+   "report_end": "2022-01-31",
+   "result_id": "sha256:857010c87b03c2835b0bb9f3adfc5cfa5efad4b777e4b9622ef0e5b96ed26c0f",
+   "selected_da": [],
+   "stage": "MEASURED",
+   "value": null
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "lumen_technologies",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:1afee89f9ee092a0d0f273792907462b349a4f793aa82bd1a5119e775aae167e",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "2749000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.1709469596681669755537904863"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "lumen_technologies",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:c2f651dc5a1f211139eb88efea9f6d22e159417aa36962d9b4aa37bea5f541b3",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "2956000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.2816390469123588094649187897"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "lumen_technologies",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:4a70d0731976ab4af9fe42fcce6411106f0533cdd64ef924db857dca5f91815f",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "2985000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "-0.4880556171880778048960875675"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "lumen_technologies",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:9824305aaa6f48b56cf66dd373bbf0a6172db698e9fca9bc131595c9b49842ce",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "3239000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.206977899180531412962503104"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "lumen_technologies",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:20240166bd982a0f7f00fe334c4a330aa465577e52b22ff849afefdf6a18719a",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "4019000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.4666479348131497611688676595"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "macys",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2026-01-31",
+   "result_id": "sha256:bcdc08b42abf6fc78d7c2ff9df8dbc99265b28e674b1ddd9c3cda930906c5899",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "894000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.08840286712001470317956258041"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "macys",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2025-02-01",
+   "result_id": "sha256:5fcad29c2cae30592518e3b665702415333057ccc842489a83ea1660f2d124ea",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "881000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.080294262773067779123491679"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "macys",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2024-02-03",
+   "result_id": "sha256:0ed6bbd8ad90242dc4c39c4f817c594d713988c49f9869ffac6539676b741035",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "897000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.05538714706391824008314567816"
+  },
+  {
+   "company_id": "macys",
+   "error": "NormalAnnualInputError:ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED",
+   "report_end": "2023-01-28",
+   "stage": "FAILED_AT_ROUTE",
+   "where": [
+    "<module>",
+    "resolve_historical_zero_ai_metric",
+    "prepare_historical_annual_input",
+    "_choose_fiscal_year"
+   ]
+  },
+  {
+   "company_id": "macys",
+   "error": "NormalAnnualInputError:ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED",
+   "report_end": "2022-01-29",
+   "stage": "FAILED_AT_ROUTE",
+   "where": [
+    "<module>",
+    "resolve_historical_zero_ai_metric",
+    "prepare_historical_annual_input",
+    "_choose_fiscal_year"
+   ]
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_PUBLISHED_B03_VALUE",
+   "company_id": "paramount_skydance_paramount_global",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "NOT_MEANINGFUL",
+   "reason_code": "ANNUAL_DURATION_OUT_OF_RANGE",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:1a7fdb5c4509dcba0293ec0eef1a4abc44e55089362f6d6106ed86c2a7c493d7",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationAndAmortization",
+     "value": "590000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": null
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "paramount_skydance_paramount_global",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:584734eb4f168ceba4d3f5d2105eb1f3dd4cb6aa8189afdb2664edf35688568b",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationAndAmortization",
+     "value": "392000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "-0.1669462225721425392804573306"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "paramount_skydance_paramount_global",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:ac192f2910285d6dfc6bd35fd91c024dcecfd975939d7c87208e74de23f6bd76",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationAndAmortization",
+     "value": "418000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "-0.001112909753136382031566167544"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "paramount_skydance_paramount_global",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:6eaaae501109edbd56267d5f8241cbc465a8b8243c90df00697505cac2a4f766",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationAndAmortization",
+     "value": "405000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.09109902500497446441599787756"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "paramount_skydance_paramount_global",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:59255ad50de3a563856cf0e05c21101bcf79d717cc19d20b29e18284565fe716",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationAndAmortization",
+     "value": "390000000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.2339256978940740222486531869"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "enphase_energy",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2025-12-31",
+   "result_id": "sha256:fdde35ac1d5f380e3ab3d2c474108fb24f736ba3972f057126a0d9912f60930e",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "80645000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.1616927531509146393208349033"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "enphase_energy",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2024-12-31",
+   "result_id": "sha256:9aee5bce81fc2c567c9e79909447f60c6443bf52020adb3b1f1c8c161fb33d73",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "81389000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.1192746750371885389395384637"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "enphase_energy",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2023-12-31",
+   "result_id": "sha256:8af04baace7dc72f79338da70de01015a77403a81308596825080f8196b6e2d3",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "74708000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.227192326127364144883022683"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "enphase_energy",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2022-12-31",
+   "result_id": "sha256:d50a0e3abc263116e6fbc8a7ed9911ccc671c08e0cdd4c1ac361981e0b27e9a1",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "58775000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.2175323797768456440624955757"
+  },
+  {
+   "base_scope_blocked": false,
+   "base_scope_status": "NO_EXPLICIT_NARROW_SCOPE_FOUND",
+   "company_id": "enphase_energy",
+   "historical_scope": "KEEP",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2021-12-31",
+   "result_id": "sha256:9b80019135245aeddf6683e611516a10590703c51f5f0228c45ce37e104c5149",
+   "selected_da": [
+    {
+     "concept": "us-gaap:DepreciationDepletionAndAmortization",
+     "value": "32439000"
+    }
+   ],
+   "stage": "MEASURED",
+   "value": "0.179639795694653373360857683"
+  }
+ ],
+ "seconds": {
+  "first_part": 5457,
+  "second_part": 3425
+ },
+ "summary": {
+  "failed_before_the_route_resolved_b03": [
+   {
+    "company_id": "macys",
+    "error": "NormalAnnualInputError:ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED",
+    "report_end": "2023-01-28"
+   },
+   {
+    "company_id": "macys",
+    "error": "NormalAnnualInputError:ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED",
+    "report_end": "2022-01-29"
+   }
+  ],
+  "measured": 43,
+  "original_not_saved": 5,
+  "positions": 50,
+  "selected_depreciation_includes_impairment": [
+   {
+    "company_id": "ford_motor_company",
+    "report_end": "2025-12-31"
+   }
+  ]
+ }
+}

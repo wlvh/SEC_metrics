@@ -132,6 +132,13 @@ def depreciation_scope(*, raw_bytes, period, observations):
     filing tags a direct total, is a disagreement between the two sources the
     route cannot settle, and it withholds as well.
 
+    A kept direct total is also asked whether the filing itself says it
+    includes impairment-related depreciation, which the definition does not add
+    back (``impairment_included``; the finding and the saved filing where it
+    applies are in docs/evidence/issue47_history/b03-impairment-inclusion/).
+    A total the filing says includes it is withheld by name; the exact
+    exclusion #28 computes with its own successor Spec is not ported here.
+
     Returns:
         ``{"status": "KEEP" | "RETAKE" | "WITHHOLD", ...}`` with the filing's
         answer and the chain's input beside it; ``RETAKE`` names the concept
@@ -164,7 +171,88 @@ def depreciation_scope(*, raw_bytes, period, observations):
     if not agree({"value": chain["value"], "decimals": "INF"}, selected):
         return {**body, "status": "WITHHOLD",
                 "why": "THE_CHAIN_S_VALUE_IS_NOT_THE_FILING_S_AT_ITS_PRECISION"}
+    included = impairment_included(raw_bytes=raw_bytes, period=period, observation=direct[0])
+    if included is not None:
+        return {**body, "status": "WITHHOLD", "impairment_inclusion": included,
+                "why": "THE_SELECTED_TOTAL_INCLUDES_IMPAIRMENT_RELATED_DEPRECIATION"}
     return {**body, "status": "KEEP", "why": answer["why"]}
+
+
+def impairment_included(*, raw_bytes, period, observation):
+    """The filing's own proof that the kept D&A total includes impairment-related depreciation, or None.
+
+    The same question #28's ordinary route asks after a Run
+    (``b03_depreciation_scope.assess_direct_depreciation_scope``), asked here
+    of the pinned filing's bytes before the result is published: the inline
+    facts that carry the selected concept and value for the target annual
+    period, undimensioned and for the observation's own entity, and then the
+    visible table row and footnote around them. The row test is #28's
+    (``_selected_impairment_inclusion``, bound here through the parent
+    generation's authority): the footnote marker must follow a numeric
+    component of the selected row, the visible components must sum to the
+    selected total, and the adjacent footnote must say the component includes
+    depreciation related to an impairment. A nearby mention of impairment is
+    not enough, and a prior year's column in the same table is its own fact.
+    """
+    from .b03_depreciation_scope import _DA_CONCEPTS, _selected_impairment_inclusion
+    from .deterministic_router import _numeric_xbrl_value, parse_accession_xbrl_source
+    binding = observation["source_binding"]
+    if binding["concept"] not in _DA_CONCEPTS:
+        return None
+    parsed = parse_accession_xbrl_source(raw_bytes=raw_bytes)
+    rows = []
+    for fact in parsed.facts:
+        if fact["qualified_name"] != binding["concept"]:
+            continue
+        context = parsed.contexts[fact["context_ref"]]
+        if (context["period_start"] != period["period_start"]
+                or context["period_end"] != period["period_end"]
+                or context["typed_dimension_count"] or context["dimensions"]
+                or str(int(context["entity_identifier"])) != str(int(binding["entity"]))):
+            continue
+        try:
+            value = str(_numeric_xbrl_value(text=fact["text"], scale=fact["scale"],
+                                            sign=fact["sign"]))
+        except (ValueError, TypeError):
+            continue
+        if value == str(observation["value"]):
+            rows.append({"ordinal": fact["ordinal"], "concept": fact["qualified_name"],
+                         "value": value, "context_ref": fact["context_ref"]})
+    proof = _selected_impairment_inclusion(raw_bytes, parsed, rows) if rows else None
+    if proof is None:
+        return None
+    return {"selected_fact": proof["selected_fact"], "table_id": proof["table_id"],
+            "table_grid_sha256": proof["table_grid_sha256"],
+            "selected_visible_total": proof["selected_visible_total"],
+            "included_component": proof["included_component"],
+            "footnote_text": " ".join(proof["footnote"]["text"].split()),
+            "footnote_span_sha256": proof["footnote"]["span_sha256"]}
+
+
+def contract_amortization_unreconciled(*, repo_root, prepared, period, observations):
+    """#28's answer on whether the filing reports an amortization a composed D&A does not take.
+
+    #28 found that an annual report can state, apart from the depreciation and
+    intangible-asset amortization the approved composition takes, a positive
+    amortization of capitalized contract costs on its own line, which the
+    composition neither adds nor is shown to include
+    (``b03_contract_amortization_scope``, ``[shared-with-#47]`` commit
+    ``45bcce3d``; docs/evidence/issue28_continuous/
+    b03-marriott-contract-amortization-20260929/). Until that relation is
+    proved or the definition is decided either way, a composed total is not
+    provably the whole D&A, so it is withheld by name - never added to and
+    never recomputed.
+
+    Asked with #28's own check, not a copy of it: the case it reads is the
+    pinned input's source proofs, the target period and the route's B03
+    observations, and it reads the same primary document the pinned input
+    admitted. A direct D&A total is not its question and gets None, as there.
+    """
+    from .b03_contract_amortization_scope import _unreconciled_contract_amortization
+    return _unreconciled_contract_amortization(
+        case={"observations": observations, "target_period": period,
+              "source_proofs": prepared["source_proofs"]},
+        data_root=Path(repo_root))
 
 
 def event_measurement_window(*, repo_root: Path, company_id: str, pinned, registered_event):
@@ -522,6 +610,14 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                                        period=period, observations=observations)
             if da_scope["status"] == "WITHHOLD":
                 raise _DepreciationScopeUnproven(da_scope)
+            if da_scope["status"] == "KEEP":
+                unreconciled = contract_amortization_unreconciled(
+                    repo_root=repo_root, prepared=prepared, period=period,
+                    observations=observations)
+                if unreconciled is not None:
+                    raise _DepreciationScopeUnproven({
+                        **da_scope, "status": "WITHHOLD", "contract_amortization": unreconciled,
+                        "why": "THE_FILING_REPORTS_AN_AMORTIZATION_THE_COMPOSITION_DOES_NOT_TAKE"})
             if da_scope["status"] == "RETAKE":
                 # The filing's own composition proves a later direct candidate;
                 # the frozen selector is asked again over a pool without the
@@ -532,6 +628,17 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                 result, trace, observations = calculate_metric(
                     compiled_spec=spec, target=execution_target, company_traits=traits,
                     structured_facts=facts, verified_observations=reusable)
+                # The retaken total is asked the question a kept one is.
+                retaken = [o for o in observations
+                           if o["semantic_role"] == "depreciation_and_amortization"]
+                included = (impairment_included(
+                    raw_bytes=reader.primary(prepared["filing"])["raw_bytes"], period=period,
+                    observation=retaken[0]) if result["publication"] == "PUBLISHED" and retaken
+                    else None)
+                if included is not None:
+                    raise _DepreciationScopeUnproven({
+                        **da_scope, "status": "WITHHOLD", "impairment_inclusion": included,
+                        "why": "THE_SELECTED_TOTAL_INCLUDES_IMPAIRMENT_RELATED_DEPRECIATION"})
         selection = {"source_candidate_count": len(facts),
                      "selected_fact_ids": [o["source_binding"]["fact_id"] for o in observations],
                      "source_reported_periods": sorted({(f["period_start"], f["period_end"])

@@ -118,17 +118,34 @@ class PinnedRiskHeadingsTest(unittest.TestCase):
                 self.assertEqual(_candidate(ordinary["text_arguments"], spec),
                                  _candidate(pinned["text_arguments"], spec))
 
-    def test_the_pinned_route_compiles_the_same_spec_the_ordinary_one_does(self):
-        """D01 declares the frozen bound, so the two compilers must agree.
+    def test_the_pinned_route_s_spec_is_the_ordinary_one_with_only_the_bound_raised(self):
+        """D01's pinned Spec is a bound revision of the ordinary one, and nothing else.
 
         The comparison above passes one compiled Spec to both sides, which
-        proves the inputs agree and says nothing about the Spec. D02's two
-        compilations differ - its successor declares 192 items where the frozen
-        compiler caps a declaration at 64 - so this is the assertion that D01
-        was not quietly given that revision along with the route.
+        proves the inputs agree and says nothing about the Spec. The ordinary
+        route compiles D01_risk_factor_headings.md through the frozen compiler,
+        which caps a declaration at 64; the pinned route compiles its v2
+        through historical_spec_revision, which proves v2 is that file with
+        only max_items moved. D01 reproduces every emphasized Item 1A heading
+        and never a subset, and Enphase's FY2021 Item 1A has more headings than
+        64 (d01-item-bound/measured.json), so the frozen bound left that year
+        with no result at all. Everything the ordinary Spec says about the
+        method, the sections and the rendering is asserted equal here, so the
+        route was not given any other revision along with the bound.
         """
-        self.assertEqual(compile_spec_file(path=ROOT / TEXT_SPEC_PATHS["D01"],
-                                           dependency_specs={}), _spec())
+        ordinary = compile_spec_file(path=ROOT / "catalog/r6/D01_risk_factor_headings.md",
+                                     dependency_specs={})
+        pinned = _spec()
+        self.assertEqual("catalog/r6/D01_risk_factor_headings_v2.md", TEXT_SPEC_PATHS["D01"])
+        self.assertEqual((64, 192), (ordinary["compiled"]["text_policy"]["max_items"],
+                                     pinned["compiled"]["text_policy"]["max_items"]))
+        self.assertEqual({k: v for k, v in ordinary["compiled"].items() if k != "text_policy"},
+                         {k: v for k, v in pinned["compiled"].items() if k != "text_policy"})
+        self.assertEqual({k: v for k, v in ordinary["compiled"]["text_policy"].items()
+                          if k != "max_items"},
+                         {k: v for k, v in pinned["compiled"]["text_policy"].items()
+                          if k != "max_items"})
+        self.assertNotEqual(ordinary["spec_closure_hash"], pinned["spec_closure_hash"])
 
     def test_an_earlier_year_reads_that_year_s_filing(self):
         """The point of pinning: the year asked for, not the year filed last.

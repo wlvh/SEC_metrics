@@ -287,6 +287,10 @@
     "sha256": "c782daf4ed1d49ef226adcf80d22dec9d72038f186931a67bc4e63638018096c",
     "size": 1965
    },
+   "catalog/r6/D01_risk_factor_headings_v2.md": {
+    "sha256": "522664bcc63e6de757e2d1b773cf305f46d39074f8942d0a966f14b7f5bcdf54",
+    "size": 3023
+   },
    "catalog/r6/D02_legal_disclosures_v1.md": {
     "sha256": "66e25bccd5235d13d5c5edc03a8eb52f20fd65875a2eadaef961915a192b188f",
     "size": 4532
@@ -735,6 +739,10 @@
     "sha256": "d3dd9567b9500e0af0768423663310c95df2342c2fa160b0d277208ae10cee16",
     "size": 25883
    },
+   "scripts/vnext/b03_contract_amortization_scope.py": {
+    "sha256": "698913e78daa66312710726a03169a8116d57ee57d31b9c40809b22b992e425a",
+    "size": 4980
+   },
    "scripts/vnext/b03_depreciation_scope.py": {
     "sha256": "bd15c9fd076ec1f571abccf3a4fdbf494b34e2540131addb22fad24868bc7868",
     "size": 12283
@@ -944,8 +952,8 @@
     "size": 13328
    },
    "scripts/vnext/historical_annual_input.py": {
-    "sha256": "41b9aebde738d3a181101b0763c2701aad33274bd5ae247e1d497648b07bbde7",
-    "size": 11347
+    "sha256": "4954f6d229b06de6cacb4e0c337164387707f54431d14590a8eda07cfab260c5",
+    "size": 11384
    },
    "scripts/vnext/historical_board_composition.py": {
     "sha256": "dd2438ce3863b1a9992edcbd0e0fff8905d3b7eb1a6e4976f47617f72bb2ecc9",
@@ -982,6 +990,10 @@
    "scripts/vnext/historical_financial_results.py": {
     "sha256": "6574cfdd02cba4ae4506af0d614c84e67a7ac1619d42566536f02ce09a0ea76d",
     "size": 20338
+   },
+   "scripts/vnext/historical_fiscal_labels.py": {
+    "sha256": "ae65c584f83ff1a10ddbaaf4e8ed00ed96bf96425a2ed51e79c0901b451b8c64",
+    "size": 9702
    },
    "scripts/vnext/historical_governance_input.py": {
     "sha256": "f49648b7c19afcb2ad5cbe533aa43007d118f608db1d03973bc772fc9740c809",
@@ -1020,8 +1032,8 @@
     "size": 23957
    },
    "scripts/vnext/historical_results.py": {
-    "sha256": "46cb4bed652b621e1a0848055f799c1b2c640e2af57ec31e19e85a4d1d00473c",
-    "size": 47689
+    "sha256": "353325c91fbee3e1984bfa01c480514af4a90e04cbdb5e57c8691e78629695f9",
+    "size": 47692
    },
    "scripts/vnext/historical_risk_results.py": {
     "sha256": "5f298545389ba183341577b43c32676fc7b74b39ff48c844dd0b1700024c98cb",
@@ -1040,8 +1052,8 @@
     "size": 13689
    },
    "scripts/vnext/historical_spec_revision.py": {
-    "sha256": "875d9266260a27a755656bc37e931dfdde9432e35a64cce5e85f60284be0a79d",
-    "size": 10742
+    "sha256": "7485c9256a5f140155153aa2ea5cc3fd453c6ced4d80fa68c65964a72fa76444",
+    "size": 10981
    },
    "scripts/vnext/historical_structural_results.py": {
     "sha256": "81d4d9fa93f6434f3ffb9dac9d5149095277a82f35426b438c3b5fa27d405906",
@@ -1064,8 +1076,8 @@
     "size": 65549
    },
    "scripts/vnext/historical_zero_ai_results.py": {
-    "sha256": "5cda4b805d3eb421d4c1384d4c3248b6448aae37ee141f6235355302423b51e2",
-    "size": 43055
+    "sha256": "89feb7fb569827691603f95266cf979d8740db605be384e4ad6ceaa11056f34d",
+    "size": 49415
    },
    "scripts/vnext/instant_balance_amendment.py": {
     "sha256": "dfc5b37f2bcf5c9ea22b130df96656542707b2f1195fcda5f9be2d92633abff5",
@@ -1787,6 +1799,10 @@
    "sha256": "da44dad5db368e78ad673b062955ae3dfaded3d83a94e8d2a9393c3ef5d75419",
    "size": 4969
   },
+  "catalog/r6/D01_risk_factor_headings_v2.md": {
+   "sha256": "522664bcc63e6de757e2d1b773cf305f46d39074f8942d0a966f14b7f5bcdf54",
+   "size": 3023
+  },
   "catalog/r6/D02_legal_disclosures_v2.md": {
    "sha256": "e38edb44d2f4887a97d849f5b532b796a09df03c75d85f743c883346c5738c3a",
    "size": 5944
@@ -1820,8 +1836,8 @@
    "size": 13328
   },
   "scripts/vnext/historical_annual_input.py": {
-   "sha256": "41b9aebde738d3a181101b0763c2701aad33274bd5ae247e1d497648b07bbde7",
-   "size": 11347
+   "sha256": "4954f6d229b06de6cacb4e0c337164387707f54431d14590a8eda07cfab260c5",
+   "size": 11384
   },
   "scripts/vnext/historical_board_composition.py": {
    "sha256": "dd2438ce3863b1a9992edcbd0e0fff8905d3b7eb1a6e4976f47617f72bb2ecc9",
@@ -1858,6 +1874,10 @@
   "scripts/vnext/historical_financial_results.py": {
    "sha256": "6574cfdd02cba4ae4506af0d614c84e67a7ac1619d42566536f02ce09a0ea76d",
    "size": 20338
+  },
+  "scripts/vnext/historical_fiscal_labels.py": {
+   "sha256": "ae65c584f83ff1a10ddbaaf4e8ed00ed96bf96425a2ed51e79c0901b451b8c64",
+   "size": 9702
   },
   "scripts/vnext/historical_governance_input.py": {
    "sha256": "f49648b7c19afcb2ad5cbe533aa43007d118f608db1d03973bc772fc9740c809",
@@ -1896,8 +1916,8 @@
    "size": 23957
   },
   "scripts/vnext/historical_results.py": {
-   "sha256": "46cb4bed652b621e1a0848055f799c1b2c640e2af57ec31e19e85a4d1d00473c",
-   "size": 47689
+   "sha256": "353325c91fbee3e1984bfa01c480514af4a90e04cbdb5e57c8691e78629695f9",
+   "size": 47692
   },
   "scripts/vnext/historical_risk_results.py": {
    "sha256": "5f298545389ba183341577b43c32676fc7b74b39ff48c844dd0b1700024c98cb",
@@ -1916,8 +1936,8 @@
    "size": 13689
   },
   "scripts/vnext/historical_spec_revision.py": {
-   "sha256": "875d9266260a27a755656bc37e931dfdde9432e35a64cce5e85f60284be0a79d",
-   "size": 10742
+   "sha256": "7485c9256a5f140155153aa2ea5cc3fd453c6ced4d80fa68c65964a72fa76444",
+   "size": 10981
   },
   "scripts/vnext/historical_structural_results.py": {
    "sha256": "81d4d9fa93f6434f3ffb9dac9d5149095277a82f35426b438c3b5fa27d405906",
@@ -1940,8 +1960,8 @@
    "size": 65549
   },
   "scripts/vnext/historical_zero_ai_results.py": {
-   "sha256": "5cda4b805d3eb421d4c1384d4c3248b6448aae37ee141f6235355302423b51e2",
-   "size": 43055
+   "sha256": "89feb7fb569827691603f95266cf979d8740db605be384e4ad6ceaa11056f34d",
+   "size": 49415
   },
   "scripts/vnext/normal_history_catalog.py": {
    "sha256": "b1fab9704294b5ee9678bca456c9580f3be702a1ac5a22e77e24f6f66d65a89e",
