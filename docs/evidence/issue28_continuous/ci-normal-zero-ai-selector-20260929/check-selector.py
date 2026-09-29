@@ -9,8 +9,9 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT/'tools'))
 import run_fast_tests_v2 as current
 
+PREVIOUS_HEAD = '357bae2452b29dc1ed9f0679f6591668c604e7c4'
 old_source = subprocess.check_output(['git', 'show',
-    'HEAD:tools/run_fast_tests_v2.py'], cwd=ROOT, text=True)
+    PREVIOUS_HEAD + ':tools/run_fast_tests_v2.py'], cwd=ROOT, text=True)
 previous = {'__name__': 'issue28_previous_runner',
             '__file__': str(ROOT/'tools/run_fast_tests_v2.py')}
 exec(compile(old_source, previous['__file__'], 'exec'), previous)
@@ -23,8 +24,7 @@ assert current.SOURCE_TESTS == previous['SOURCE_TESTS']
 assert current.FAST_TESTS == previous['FAST_TESTS']
 assert current.SOURCE_TESTS.count(target) == 1
 body = {'record_type': 'ISSUE28_NORMAL_ZERO_AI_ONLY_TIMEOUT_OVERRIDE',
-    'previous_head': subprocess.check_output(['git', 'rev-parse', 'HEAD'],
-        cwd=ROOT, text=True).strip(),
+    'previous_head': PREVIOUS_HEAD,
     'target_selector': target,
     'old_effective_timeout_seconds': current.SOURCE_TIMEOUT_SECONDS,
     'new_effective_timeout_seconds': now[target],

@@ -6,4 +6,4 @@
 
 配对远端日志的[机器摘要](remote-comparison.json)显示：`698b9a45` shard0 全部通过，该模块226.062秒；`c3cda0b1`同模块240.117秒返回124，其他选择器均未出现至少10秒的时长差。两head之间只变了证据文件，产品及测试源码字节不变。`OrdinaryZeroAiPrototypeTest`本地69.499秒、`OrdinaryZeroAiAdditionalRoutesTest`14.812秒各自通过（`timing.json`及原始短日志）；本机速度不是Ubuntu CI速度，故没有用其绝对时间宣称远端一定通过。
 
-最终只在`tools/run_fast_tests_v2.py`的现有**来源材料限时表**为原完整模块增加300秒单项上限，保留原240秒默认值、全部测试断言、选择器、两工作者和作业总限时。`check-selector.py`/`selector-identity.json`将本次源码与提交前HEAD逐项比较，证明测试列表及其它单项限时未改。这一额外列表之外的改动是对已有CI失败的单项资源修复，不改变产品运行、调用权限或业务Result。新head CI仍须按实际终态判断；不把本地测试或旧head成功写成全绿。
+最终只在`tools/run_fast_tests_v2.py`的现有**来源材料限时表**为原完整模块增加300秒单项上限，保留原240秒默认值、全部测试断言、选择器、两工作者和作业总限时。`check-selector.py`/`selector-identity.json`以固定修补前提交`357bae24`逐项比较，证明测试列表及其它单项限时未改。首份脚本在提交前运行时曾以当时`HEAD`作基线；提交后该写法不可稳定复跑，已在追加修补中固定基线并重新执行，不改初次检查结果。这一额外列表之外的改动是对已有CI失败的单项资源修复，不改变产品运行、调用权限或业务Result。新head CI仍须按实际终态判断；不把本地测试或旧head成功写成全绿。
