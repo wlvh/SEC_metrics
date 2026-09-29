@@ -27,7 +27,14 @@
 - 视图注错 11 个（`view_injections.py`，结果在 `view-injections.json`），全部被为它写的用例抓到。每次注错都在独立的字节码目录里跑；运行它的轻量副本与主检出的 `historical_dei.py` 逐字节相同。
 - 导出写入顺序的 2 个注错（`../acquisition-wiring/export_publish_injections.py`）都被 `test_a_write_that_fails_leaves_the_export_already_there` 抓到，已记入接线收据绑定的 `fault-injections.json`。
 - 规划器：在恢复的 Enphase/Ford 数据上（`evidence/issue47_acquired/` 的前 18 行加基线），修复前在更早年份的年报处报 `DEI_MISSING_OR_AMBIGUOUS:DocumentType`；修复后给出完整声明，其中事件窗口的 8-K 依赖 Enphase 66 行、Ford 220 行，代理材料各 4 行。这些正是第二轮要取的东西。
-- FY2021 的 Run 级探针（Enphase、Ford；每个指标走装入、建 Run、公共行、另起进程冷读，同时记录每一次 DEI 拒绝及其调用链）：结果见 `run-probe-fy2021.json`。
+- FY2021 的 Run 级探针（`run_probe.py`，汇总由 `summarize_probe.py` 生成在 `run-probe-fy2021.json`）：Enphase、Ford 各 39 个指标，每个指标走装入、建 Run、冻结、公共行、另起进程冷读，并在两个进程里都记录每一次 DEI 拒绝及其调用链，网络与 DNS 全程禁用。结果共 78 个位置，其中：
+  - 69 个出了公共行，冷读全部 FROZEN、结果编号相同；**DEI 拒绝总数为 0**。
+  - 19 个有数值：两家的 B01–B05、B07–B09、D02，以及 Ford 的 D01。
+  - 32 个是结构性不适用。
+  - 18 个按名扣留：12 个零 AI 事件、2 个 B06、2 个 C03、2 个 C04，都是缺事件 8-K、代理等来源，第二轮取数要补。
+  - 9 个失败，都与 DEI 无关：B13 需要语义审阅（2 个）；C02 缺当年代理（2 个，点名了缺的 URL）；D03 不在零 AI 集合（2 个）；D04 没有登记评估（2 个）；Enphase 的 D01 超出条数上限（1 个，见下）。
+
+  修复前，同样两家 FY2021 的每个位置都在装入这一步以 `DEI_MISSING_OR_AMBIGUOUS:DocumentType` 停下。
 
 ## 不保证什么
 
