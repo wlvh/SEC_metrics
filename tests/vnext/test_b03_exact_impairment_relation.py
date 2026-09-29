@@ -13,7 +13,7 @@ from vnext.normal_source_authority import ROOT
 
 
 class B03ExactImpairmentRelationTest(TestCase):
-    def test_saved_ford_exact_split_and_two_source_counterexamples(self):
+    def test_saved_ford_exact_split_and_three_source_counterexamples(self):
         self.enterContext(original_sources_only())
         case = prepare_case(data_root=ROOT, company_id='ford_motor_company',
                             metric_id='B03')
@@ -48,6 +48,9 @@ class B03ExactImpairmentRelationTest(TestCase):
              'B03_EXACT_COMPONENT_ARITHMETIC_FAILED'),
             (b'including depreciation of $<ix:nonFraction',
              b'excluding depreciation of $<ix:nonFraction',
+             'B03_EXACT_CASH_FLOW_LABELS_NOT_PROVEN'),
+            (b'including depreciation of $<ix:nonFraction',
+             b'not including depreciation of $<ix:nonFraction',
              'B03_EXACT_CASH_FLOW_LABELS_NOT_PROVEN'),
         ]
         for before, after, expected_error in changes:

@@ -1,7 +1,7 @@
 {
-  "parent_execution_authority_hash": "sha256:817c9f2644a44cc23bf7929b0e8f674fc681824e0f85f31d5d7f14955197635a",
-  "child_execution_authority_hash": "sha256:b945cf27c3cc986741936f85307c7efd440e1f6e252dd15077b8cc03635521e1",
-  "parent_requirement_closure_hash": "sha256:7ff851292f26326a83dfaec46ee0a418163a8bfcd8b20ce032e5e7c8a9f8fed4",
+  "parent_execution_authority_hash": "sha256:a3060552e4f834aace47310fbedd9ab0977ba660e0cbf921ccb3b6b2522da93e",
+  "child_execution_authority_hash": "sha256:3f3748c81e061009ff5c6d2503afa83336ed3b6c5be5d3e28c034c746b1c6e6b",
+  "parent_requirement_closure_hash": "sha256:eb4ffdd488321a13733be3e05ba2f3a039e7f4b7b16d8149118e46ee7468593f",
   "changed_paths": [
     "config/issue28_normal_results_v2.json",
     "catalog/r6/B03_impairment_excluded_v1.md",
@@ -13,16 +13,28 @@
   ],
   "old_bindings": {
     "config/issue28_normal_results_v2.json": {
-      "sha256": "deebcd3ec68e9a424ac35b7626ff2ce602d39cc69bdbc75a0e9213dca9d39897",
-      "size": 7296
+      "sha256": "33d0a8801220d51aacbeb1f73200ee0d9d19121ee60175d1c0b4ce0f2a7c21e2",
+      "size": 7547
     },
-    "catalog/r6/B03_impairment_excluded_v1.md": null,
-    "scripts/vnext/b03_depreciation_scope.py": null,
-    "scripts/vnext/b03_exact_impairment_relation.py": null,
-    "scripts/vnext/b03_impairment_adjusted_run.py": null,
+    "catalog/r6/B03_impairment_excluded_v1.md": {
+      "sha256": "c7cd1b462271b3aa1c5766a997fbb968d8e168650e412f6973c6e1dffa2116c6",
+      "size": 6250
+    },
+    "scripts/vnext/b03_depreciation_scope.py": {
+      "sha256": "bd15c9fd076ec1f571abccf3a4fdbf494b34e2540131addb22fad24868bc7868",
+      "size": 12283
+    },
+    "scripts/vnext/b03_exact_impairment_relation.py": {
+      "sha256": "6ca286ccbb19f08d5d98b97b0a16c0c4b25df6254ea17c07631f879103ace005",
+      "size": 6900
+    },
+    "scripts/vnext/b03_impairment_adjusted_run.py": {
+      "sha256": "db3114f9865db36cf0cf776d05738b38d6c45e42118f60e1175364ed7f100fb1",
+      "size": 6942
+    },
     "scripts/vnext/normal_run_v3.py": {
-      "sha256": "76871ebdbdc8395f30a2bc0e24d506f5592e8b2f3e91b7f23c6ea6271cfe0cdf",
-      "size": 26994
+      "sha256": "8bd99427e0029e9a56fbccb9756cab7dcb46581c07c2673c6ec37d73b573619f",
+      "size": 27402
     },
     "scripts/vnext/ordinary_b03_scope_update.py": null
   }

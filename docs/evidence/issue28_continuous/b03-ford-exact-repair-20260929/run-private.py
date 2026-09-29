@@ -31,7 +31,7 @@ originals = {'claims': ACQUIRED/'claims.jsonl',
 before = {key: digest(path) for key, path in originals.items()}
 processing = json.loads((HERE/'processing.json').read_text())
 source = Path(processing['processing_root'])
-state = PRIVATE/'state'
+state = PRIVATE/'state-repair'
 assert not state.exists()
 with (patch.object(socket.socket, 'connect',
                    side_effect=AssertionError('NETWORK_FORBIDDEN')),

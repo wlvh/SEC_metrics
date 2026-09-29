@@ -8,12 +8,12 @@
         {
           "metric_id": "B03",
           "status": "CANDIDATE_READY",
-          "attempt_id": "faf28631e76644b6814c089391e8e2a0",
-          "latest_attempt": "faf28631e76644b6814c089391e8e2a0",
-          "successful_attempt": "faf28631e76644b6814c089391e8e2a0",
+          "attempt_id": "1be9d3a3dff84470a787ef2c614dd366",
+          "latest_attempt": "1be9d3a3dff84470a787ef2c614dd366",
+          "successful_attempt": "1be9d3a3dff84470a787ef2c614dd366",
           "previous_successful_attempt": null,
           "last_verified_candidate": {
-            "attempt_id": "faf28631e76644b6814c089391e8e2a0",
+            "attempt_id": "1be9d3a3dff84470a787ef2c614dd366",
             "targets": {
               "B03": {
                 "fiscal_year": 2025,
@@ -41,22 +41,22 @@
                 "value": "-0.007128858795196163766173431518"
               }
             },
-            "rows_root": "/private/tmp/issue28-b03-ford-exact-20260929/state-repair/ford_motor_company/metrics/B03/attempts/faf28631e76644b6814c089391e8e2a0/rows"
+            "rows_root": "/private/tmp/issue28-b03-ford-exact-20260929/state/ford_motor_company/metrics/B03/attempts/1be9d3a3dff84470a787ef2c614dd366/rows"
           },
           "new_candidate_created": true,
           "terminal": {
             "record_type": "ORDINARY_UPDATE_TERMINAL",
-            "attempt_id": "faf28631e76644b6814c089391e8e2a0",
-            "configuration_id": "sha256:e5970de161ae78c44affff77fc9aff93c484097a0fc3308edbc3d91e5d707827",
-            "intent_id": "sha256:d2e9d07ff1db71934efd7c7ce2e669eb4db5a294c0757cd4a9a56cbbdac730d7",
+            "attempt_id": "1be9d3a3dff84470a787ef2c614dd366",
+            "configuration_id": "sha256:0235674b5efd23e9f1ecafda9d8b5c7f2774e02725e943defa1f4d60bec1ac0b",
+            "intent_id": "sha256:dd76c4045ee1553c329cb6586cd5829f6bcb5ec761d231d77666b00f848db965",
             "status": "CANDIDATE_READY",
-            "completed_at": "2026-09-29T10:24:52.119400+00:00",
+            "completed_at": "2026-09-29T09:15:31.472848+00:00",
             "input": {
               "company_id": "ford_motor_company",
               "metric_ids": [
                 "B03"
               ],
-              "requirement_closure_hash": "sha256:33ee286c21be8262e550939e2a94512775996635c569bcd12531efca2014ed83",
+              "requirement_closure_hash": "sha256:eb4ffdd488321a13733be3e05ba2f3a039e7f4b7b16d8149118e46ee7468593f",
               "targets": {
                 "B03": {
                   "fiscal_year": 2025,
@@ -90,7 +90,7 @@
                   "sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9"
                 }
               ],
-              "content_id": "sha256:35e51db9e695b1f50bb722f80cd216cef2204b0e917aae86d707df1345c13337"
+              "content_id": "sha256:0ca927f114b0d61ddf9ab88bbf9313cdb4dd82df66ffaa7224bacdc1719f2213"
             },
             "metrics": {
               "B03": {
@@ -110,7 +110,7 @@
               "sec": 0
             },
             "production_authorized": false,
-            "record_id": "sha256:0c0d47983b20a8c76020f4d9cdcf73d1c9ee83491ead6b5457c88d374d18f77c"
+            "record_id": "sha256:da927500ec26eb37600d16db4189e2910e5f9192a0c2e937860a42bff6ce8c64"
           },
           "calls": {
             "provider": 0,

@@ -30,7 +30,7 @@ before = {key: digest(path) for key, path in originals.items()}
 processing = json.loads((HERE/'processing.json').read_text())
 created = json.loads((HERE/'private-result.json').read_text())
 source = Path(processing['processing_root'])
-metric_root = PRIVATE/'state/ford_motor_company/metrics/B03'
+metric_root = PRIVATE/'state-repair/ford_motor_company/metrics/B03'
 with (patch.object(socket.socket, 'connect',
                    side_effect=AssertionError('NETWORK_FORBIDDEN')),
       patch.object(socket, 'getaddrinfo',

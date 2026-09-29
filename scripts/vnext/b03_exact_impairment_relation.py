@@ -18,8 +18,8 @@ from .sources import resolve_repository_file
 _DEPRECIATION_ROW = re.compile(
     r'\bdepreciation\b.{0,60}\bamortization\b', re.I)
 _IMPAIRMENT_COMPONENT = re.compile(
-    r'\basset impairment\b.{0,160}\bincluding depreciation of\s*\$?\s*'
-    r'(?P<amount>[0-9][0-9,]*)', re.I)
+    r'\basset impairment\b.{0,160}\(\s*including\s+depreciation\s+of\s*'
+    r'\$?\s*(?P<amount>[0-9][0-9,]*)\s*\)', re.I)
 
 
 def _need(condition, code):
