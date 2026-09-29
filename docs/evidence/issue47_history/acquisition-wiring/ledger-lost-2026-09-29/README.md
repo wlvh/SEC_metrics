@@ -102,6 +102,19 @@ ledger must not be behind the branch's export of it. Every later export
 carries the chain's public views (`ledger/resumes.jsonl`), and an export that
 would drop it is refused.
 
+## The resume as run
+
+`tools/vnext_historical_sec.py resume --in-flight-company ford_motor_company`
+ran from 17:42:08Z to 18:14:34Z at branch tip `8cb1036d`, with the owner's
+answer and its time as the decision. It restored the export at 288
+(`sha256:788aceca...`), charged 224 - 220 event filings and 4 proxies, none
+outside a grant, the same count as the two measurements above - and returned
+`LEDGER_RESUMED` with zero calls. The marker was posted as issue 47 comment
+5895989753 and read back through the live path's own reader: one marker,
+unedited, equal to the local chain's public view. The export that followed
+(`sha256:c6356dd9...`, still 288 rows) carries the chain, which the live path
+requires before any claim.
+
 ## What an independent review found, and what changed
 
 A separate agent with a fresh context (same model family, not a human)
