@@ -4,17 +4,25 @@ Purpose: The owner decided the model calls run in the executor's cloud
 container, and the ledger lives there too; the container's disk goes when it
 is reclaimed. After each run the ledger - every slot, the claim log, the
 binding, and the anchor and claim-log copy beside the root - is exported into
-``evidence/issue47_model_calls/`` and pushed, so what was spent and what came
-back survive the container. The export is checked by the ledger's own
-``snapshot`` before it is written, and again, from the archive alone, before
-anything is restored.
+the approval's own directory under ``evidence/issue47_model_calls/`` and
+pushed, so what was spent and what came back survive the container. The
+export is checked by the ledger's own ``snapshot`` before it is written, and
+again, from the archive alone, before anything is restored.
 
-What restoring does not do: it never writes the start record. A restored
-ledger is the record of what was spent; spending more from it is the owner's
-decision, and until a start is published for it the live path refuses
-(historical_ledger_start). And the start refuses once this checkout carries an
-export of the approval's ledger, so a deleted marker comment cannot start the
-allowance again from an empty ledger.
+An export only moves forward. It refuses a ledger that was never started at
+this root - exporting through the ledger would otherwise initialise an empty
+one and write a record of nothing over the record of what was spent (an
+independent review did exactly that) - and it refuses to replace an index
+whose claim log the new one does not begin with.
+
+What restoring does not do: it never writes the start record, and it refuses
+on a host that still holds one. A restored ledger is the record of what was
+spent; spending more from it is the owner's decision, and until a start is
+published for it the live path refuses (historical_ledger_start). A restore
+beside a surviving start record would be spendable at once - from an older
+export, from an undercount. And the start refuses once this checkout carries
+an export of the approval's ledger, so a deleted marker comment cannot start
+the allowance again from an empty ledger.
 
 Call relationships: ``tools/vnext_historical_model_export.py`` calls it, in a
 process of its own - never the one that sends requests, which may load only
@@ -24,9 +32,9 @@ import tempfile
 from pathlib import Path
 
 from .canonical import canonical_json_bytes, sha256_bytes, strict_json_file
-from .historical_model_calls import (MODEL_EXPORT_DIRECTORY, MODEL_EXPORT_INDEX,
-                                     REQUIREMENT_ID, HistoricalModelCallError,
-                                     HistoricalModelLedger, _FACTORY, _ledger, model_allowance)
+from .historical_model_calls import (MODEL_EXPORT_INDEX, REQUIREMENT_ID,
+                                     HistoricalModelCallError, HistoricalModelLedger, _FACTORY,
+                                     _ledger, _model_export_claims, model_allowance)
 from .normal_source_authority import ROOT
 
 EXPORT_TYPE = "ISSUE_47_HISTORICAL_MODEL_LEDGER_EXPORT"
@@ -58,15 +66,42 @@ def _state(ledger):
         return ledger.snapshot()
 
 
+def _started(ledger):
+    """The ledger was begun at this root: its binding, anchor and claim-log copy are all there."""
+    return ((ledger.root / "binding.json").is_file()
+            and all(where(ledger.root).is_file() and not where(ledger.root).is_symlink()
+                    for where in BESIDE.values()))
+
+
 def export_model_ledger(*, ledger, out_dir):
-    """Write ``ledger`` - checked by its own snapshot first - into ``out_dir``."""
+    """Write ``ledger`` - checked by its own snapshot first - into ``out_dir``, only forward."""
     from .historical_source_export import _archive, _binding, _replace, _sealed, _source_commit
-    state = _state(ledger)
-    members = _files(ledger.root)
-    for name, where in BESIDE.items():
-        path = where(ledger.root)
-        _need(path.is_file() and not path.is_symlink(), "ISSUE_47_MODEL_EXPORT_MISSING:" + name)
-        members[name] = path.read_bytes()
+    # Checked before the lock: taking it on a root where nothing was begun
+    # initialises a ledger.
+    _need(_started(ledger), "ISSUE_47_MODEL_EXPORT_OF_A_LEDGER_NEVER_STARTED_HERE:" + str(ledger.root))
+    with ledger.locked():
+        # The members are read under the same lock as the snapshot that checks
+        # them, so a claim cannot land between the two.
+        state = ledger.snapshot()
+        members = _files(ledger.root)
+        for name, where in BESIDE.items():
+            path = where(ledger.root)
+            _need(path.is_file() and not path.is_symlink(), "ISSUE_47_MODEL_EXPORT_MISSING:" + name)
+            members[name] = path.read_bytes()
+    out_dir = Path(out_dir)
+    previous = out_dir / MODEL_EXPORT_INDEX
+    if previous.exists() or previous.is_symlink():
+        try:
+            old = strict_json_file(path=previous)
+            old_log = _model_export_claims(old)
+            same = old.get("ledger_binding") == ledger.binding
+        except (OSError, ValueError, KeyError, TypeError):
+            old_log, same = None, False
+        log = members.get(ROOT_PREFIX + "claims.jsonl", b"")
+        _need(same and type(old_log) is dict and type(old_log.get("size")) is int
+              and len(log) >= old_log["size"]
+              and sha256_bytes(content=log[:old_log["size"]]) == old_log.get("sha256"),
+              "ISSUE_47_MODEL_EXPORT_WOULD_NOT_EXTEND_THE_EXPORT_THERE:" + str(previous))
     data = _archive(members)
     index = _sealed({
         "record_type": EXPORT_TYPE, "schema_version": 1, "requirement_id": REQUIREMENT_ID,
@@ -86,7 +121,6 @@ def export_model_ledger(*, ledger, out_dir):
             "receipt and the wire journal, and the origin rests on the host, the approval and "
             "the start marker on GitHub. The container's egress proxy re-terminates TLS."),
         "production_authorized": False}, "export_id")
-    out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     _replace(out_dir / ARCHIVE_NAME, data)
     _replace(out_dir / MODEL_EXPORT_INDEX, canonical_json_bytes(value=index))
@@ -124,6 +158,10 @@ def _write(members, root):
 
 def verify_model_export(*, export_dir):
     """The export, rebuilt in a scratch root, is a ledger whose own snapshot is the index's."""
+    return _verified(export_dir)[0]
+
+
+def _verified(export_dir):
     index, members = _read(export_dir)
     with tempfile.TemporaryDirectory(prefix="issue47-model-export-") as scratch:
         root = Path(scratch) / "ledger"
@@ -136,21 +174,30 @@ def verify_model_export(*, export_dir):
     _need([state["counts"], state["stopped"], state["requests"]]
           == [index["counts"], index["stopped"], index["requests"]],
           "ISSUE_47_MODEL_RESTORE_SNAPSHOT_DIFFERS_FROM_THE_INDEX")
-    return index
+    return index, members
 
 
 def restore_model_ledger(*, export_dir, repo_root=ROOT):
-    """Put a verified export of the granted LIVE ledger back at the granted root; never its start."""
-    index = verify_model_export(export_dir=export_dir)
+    """Put a verified export of the granted LIVE ledger back at the granted root; never its start.
+
+    Refused on a host that holds a start record for that root: there the
+    restored ledger would be spendable at once.
+    """
+    from .historical_ledger_start import start_record_path
+    index, members = _verified(export_dir)
     _need(index["execution_mode"] == "LIVE", "ISSUE_47_MODEL_RESTORE_ONLY_A_LIVE_LEDGER")
     allowance = model_allowance(repo_root=repo_root)
     root = Path(allowance["budget_root"])
     ledger = _ledger(allowance=allowance, root=root, live=True)
     _need(ledger.binding == index["ledger_binding"] and str(root) == index["ledger_root"],
           "ISSUE_47_MODEL_RESTORE_IS_NOT_THE_GRANTED_LEDGER")
+    start = start_record_path(root)
+    _need(not start.exists() and not start.is_symlink(),
+          "ISSUE_47_MODEL_RESTORE_BESIDE_A_START_RECORD:" + str(start))
     _need(not root.exists() and not any(where(root).exists() for where in BESIDE.values()),
           "ISSUE_47_MODEL_RESTORE_TARGET_EXISTS:" + str(root))
-    _, members = _read(export_dir)
+    # The members the verification rebuilt and checked, not a second read of
+    # the export.
     _write(members, root)
     state = _state(ledger)
     return {"status": "RESTORED", "root": str(root), "counts": state["counts"],

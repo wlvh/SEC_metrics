@@ -2670,6 +2670,28 @@ class AnExportCarriesExactlyWhatTheReplayAccepts(unittest.TestCase):
             self.assertEqual((self.root / "export" / name).read_bytes(),
                              (self.root / "export-again" / name).read_bytes(), name)
 
+    def test_an_export_replaces_only_its_own_shorter_self(self):
+        """One directory serves the SEC ledger; an export never goes backwards or across approvals."""
+        target = self._copy("forward")
+        with patch.object(EXPORT_MODULE, "CHUNK_ROWS", 2):
+            self.assertEqual("EXPORTED", EXPORT_MODULE.export_acquisition(
+                ledger_root=self.root / "ledger", out_dir=target)["status"])
+        index_path = target / EXPORT_MODULE.INDEX_NAME
+        original = json.loads(index_path.read_text(encoding="utf-8"))
+        longer = copy.deepcopy(original)
+        longer["state_archive"]["members"]["ledger/claims.jsonl"]["size"] += 1
+        other = {**copy.deepcopy(original), "approval": {"delegation_body_sha256": "b" * 64}}
+        for label, index in (("a longer export", longer), ("another approval's", other),
+                             ("unreadable", None)):
+            with self.subTest(label):
+                index_path.write_text("{" if index is None else json.dumps(index),
+                                      encoding="utf-8")
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    EXPORT_MODULE.export_acquisition(ledger_root=self.root / "ledger",
+                                                     out_dir=target)
+                self.assertIn("ISSUE_47_EXPORT_WOULD_NOT_EXTEND_THE_EXPORT_THERE",
+                              str(caught.exception))
+
     def test_a_restore_replays_and_the_unchanged_reader_accepts_the_root(self):
         target = Path(tempfile.mkdtemp(prefix="issue47-restore-")) / "restored"
         self.addCleanup(shutil.rmtree, target.parent, ignore_errors=True)
@@ -3114,10 +3136,13 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
 
     def _comment(self, record, *, association="OWNER", edited=False, when="2026-09-29T01:00:00Z",
                  body=None):
+        """A comment as the list returns it: on issue 47, by the owner's account unless named."""
         self.next_id += 1
         return {"id": self.next_id,
                 "html_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-"
                             + str(self.next_id),
+                "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
+                "user": {"login": "wlvh", "id": 30534800, "type": "User"},
                 "author_association": association, "created_at": when,
                 "updated_at": "2026-09-29T09:00:00Z" if edited else when,
                 "body": (body if body is not None
@@ -3137,7 +3162,14 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
         return read
 
     def _start(self):
-        return SESSION_MODULE.start_ledger(allowance=self.allowance, reader=self._reader([]))
+        """A start, with the full local record - random number included - as ``record``.
+
+        What a start returns and prints is the marker's public view; a case
+        that builds this host's marker needs the record the host keeps.
+        """
+        started = SESSION_MODULE.start_ledger(allowance=self.allowance, reader=self._reader([]))
+        return {**started, "view": started["record"], "record": strict_json_file(
+            path=SESSION_MODULE.start_record_path(self.root / "ledger"))}
 
     def _other_record(self):
         return {**self._start_record_shape(), "instance_nonce": "0" * 32}
@@ -3148,16 +3180,86 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                 "delegation_body_sha256": "a" * 64, "budget_root": str(self.root / "ledger"),
                 "created_at": "2026-09-29T00:00:00Z"}
 
-    def test_a_start_writes_the_local_record_and_the_marker_that_carries_it(self):
+    def test_a_start_writes_the_local_record_and_a_marker_that_does_not_carry_its_number(self):
+        from vnext.historical_ledger_start import marker_view
         started = self._start()
-        path = SESSION_MODULE.start_record_path(self.root / "ledger")
-        self.assertEqual(started["record"], strict_json_file(path=path))
         self.assertEqual(32, len(started["record"]["instance_nonce"]))
-        comment = self._comment(started["record"], body=started["marker_comment_body"] + self.FOOTER)
-        self.assertEqual(started["record"], SESSION_MODULE._marker_record(comment["body"]))
+        comment = self._comment(None, body=started["marker_comment_body"] + self.FOOTER)
+        published = SESSION_MODULE._marker_record(comment["body"])
+        self.assertEqual(marker_view(started["record"]), published)
+        self.assertEqual(published, started["view"])
+        self.assertNotIn(started["record"]["instance_nonce"], started["marker_comment_body"])
         verified = SESSION_MODULE.require_published_start(allowance=self.allowance,
                                                           reader=self._reader([comment]))
         self.assertEqual(comment["html_url"], verified["marker_url"])
+
+    def test_a_marker_copied_beside_an_empty_root_is_not_the_start(self):
+        """An independent review copied a marker that carried the record back beside an empty root.
+
+        The marker now shows the record without its random number, so what a
+        new host can write from it does not match the digest it also shows.
+        """
+        started = self._start()
+        marker = self._comment(None, body=started["marker_comment_body"])
+        path = SESSION_MODULE.start_record_path(self.root / "ledger")
+        path.unlink()
+        shown = SESSION_MODULE._marker_record(marker["body"])
+        for guess in ({k: v for k, v in shown.items() if k != "start_record_sha256"},
+                      {**{k: v for k, v in shown.items() if k != "start_record_sha256"},
+                       "instance_nonce": "0" * 32}):
+            with self.subTest(fields=sorted(guess)):
+                path.write_text(json.dumps(guess), encoding="utf-8")
+                with self.assertRaises(HistoricalSessionError) as caught:
+                    SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                                           reader=self._reader([marker]))
+                self.assertIn("ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE", str(caught.exception))
+
+    def test_a_marker_not_from_this_issue_or_account_does_not_count(self):
+        record = self._start()["record"]
+        for field, value in (("issue_url", "https://api.github.com/repos/wlvh/SEC_metrics/issues/28"),
+                             ("user", {"login": "wlvh", "id": 1, "type": "User"}),
+                             ("user", {"login": "wlvh", "id": 30534800, "type": "Bot"}),
+                             ("user", None)):
+            with self.subTest(field=field, value=value):
+                comment = {**self._comment(record), field: value}
+                with self.assertRaises(HistoricalSessionError) as caught:
+                    SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                                           reader=self._reader([comment]))
+                self.assertIn("ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED", str(caught.exception))
+
+    def test_a_ledger_behind_its_export_on_the_branch_is_refused(self):
+        """The export binds its claim log; this host's log must begin with exactly those bytes."""
+        import hashlib
+        record = self._start()["record"]
+        marker = self._reader([self._comment(record)])
+        checkout = self.root / "checkout"
+        index = checkout / "evidence/issue47_acquired/export.json"
+        index.parent.mkdir(parents=True)
+        claims = b'{"n":1}\n{"n":2}\n'
+        index.write_text(json.dumps({"execution_mode": "LIVE",
+                                     "approval": {"delegation_body_sha256": "a" * 64},
+                                     "state_archive": {"members": {"ledger/claims.jsonl": {
+                                         "sha256": hashlib.sha256(claims).hexdigest(),
+                                         "size": len(claims)}}}}), encoding="utf-8")
+        ledger = self.root / "ledger"
+        for held in (None, claims[:8], b'{"n":9}\n{"n":2}\n'):
+            with self.subTest(held=held):
+                if held is not None:
+                    ledger.mkdir(exist_ok=True)
+                    (ledger / "claims.jsonl").write_bytes(held)
+                with self.assertRaises(HistoricalSessionError) as caught:
+                    SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                                           reader=marker, checkout=checkout)
+                self.assertIn("ISSUE_47_SEC_LEDGER_BEHIND_ITS_EXPORT", str(caught.exception))
+        for held in (claims, claims + b'{"n":3}\n'):
+            (ledger / "claims.jsonl").write_bytes(held)
+            SESSION_MODULE.require_published_start(allowance=self.allowance, reader=marker,
+                                                   checkout=checkout)
+        index.write_text("{", encoding="utf-8")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            SESSION_MODULE.require_published_start(allowance=self.allowance, reader=marker,
+                                                   checkout=checkout)
+        self.assertIn("ISSUE_47_SEC_LEDGER_EXPORT_UNREADABLE", str(caught.exception))
 
     def test_nothing_is_requested_until_the_marker_is_on_github(self):
         self._start()
@@ -3301,7 +3403,9 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                 live_historical_session()
         self.assertIn("ISSUE_47_SEC_LEDGER_NOT_STARTED", str(caught.exception))
         # The same path with the start published builds the session.
-        record = SESSION_MODULE.start_ledger(allowance=allowance, reader=reader)["record"]
+        SESSION_MODULE.start_ledger(allowance=allowance, reader=reader)
+        record = strict_json_file(path=SESSION_MODULE.start_record_path(
+            Path(allowance["budget_root"])))
         published = self._reader([self._comment(record)])
         with patch.object(SESSION_MODULE, "acquisition_allowance",
                           lambda **kwargs: copy.deepcopy(allowance)), \

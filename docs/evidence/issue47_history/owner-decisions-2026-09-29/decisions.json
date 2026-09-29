@@ -43,5 +43,20 @@
   }
  },
  "unchanged_boundaries": "the SEC cap and grants; the approval is posted by the owner; no gate check is relaxed; #28's workspace, ledger, allowance and runtime packages stay separate; PR 52 does not merge into task/b06-new-source; no Ready, merge, adoption, deployment or active switch",
- "production_authorized": false
+ "production_authorized": false,
+ "corrections": [
+  {
+   "recorded": "2026-09-29, by the executor after an independent review of the VM change (docs/evidence/issue47_history/model-egress/independent-review-2026-09-29-vm/, findings F1, F2, F4, F10); the decisions above are unchanged, and the original text above is kept as it was written",
+   "what_was_overstated": [
+    "'the executor's own approval does not count' and the start marker's guarantee held for the executor's code path, not for the executor: in the VM the executor chooses the GitHub reader, the proxy and the CA bundle the read-back goes through, and holds the provider key; the reviewer made the gate accept a never-posted comment with a three-line fake gh",
+    "'a lost container, or a local ledger deleted together with the files beside it, cannot start the allowance again': the marker as first built carried the local number, so copying it back beside an empty root matched, and the same request was sent twice (reproduced end to end on the LIVE path)"
+   ],
+   "what_holds_now": [
+    "the marker carries only a digest of the local start record, so a new container cannot rebuild the start from it",
+    "once the branch carries this approval's export a start refuses, and the live path refuses a ledger behind that export; an export only moves forward and a restore refuses beside a surviving start record",
+    "before the first export is pushed, a lost container whose marker comment is deleted has no guard; the executor acts on GitHub as the owner's account and can delete it",
+    "the gates guard against accidents and make the owner's decision auditable; the controls that bind the executor are outside the code: a dedicated provider key with a provider-side credit limit, revoked after the run, and the committed exports compared with the provider's usage log (SEC: the cap is enforced by the executor's code path only; the exports and the SEC request log are what the owner can check)"
+   ]
+  }
+ ]
 }

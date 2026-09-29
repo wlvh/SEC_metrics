@@ -15,10 +15,10 @@ index 9fdfe8a8..2256a407 100644
          return None
 diff --git a/scripts/vnext/historical_model_egress.py b/scripts/vnext/historical_model_egress.py
 new file mode 100644
-index 00000000..7f78ac33
+index 00000000..2db0a771
 --- /dev/null
 +++ b/scripts/vnext/historical_model_egress.py
-@@ -0,0 +1,426 @@
+@@ -0,0 +1,443 @@
 +"""Issue #47's model egress: the one transport and the one execution entry.
 +
 +This file is new code inside the registration patch for independent security
@@ -59,6 +59,10 @@ index 00000000..7f78ac33
 +
 +class HistoricalModelEgressError(ValueError):
 +    """A model call this Issue may not make; the reason names which check refused it."""
++
++
++class ApprovalNotConfirmed(ValueError):
++    """The approval could not be confirmed on GitHub right before the socket; nothing was sent."""
 +
 +
 +class SourceAuthenticityFailure(ValueError):
@@ -137,6 +141,16 @@ index 00000000..7f78ac33
 +            except ValueError as error:
 +                raise SourceAuthenticityFailure(str(error)) from error
 +
++        def approval_check():
++            # Changed, gone or unreadable, the approval is not confirmed, and
++            # the call stops with a terminal that says so - no socket opened.
++            # An independent review found a failed read here left the slot
++            # without one, so the channel stopped as an unknown outcome.
++            try:
++                model_allowance(repo_root=ROOT, delegation_reader=live_github_reader())
++            except (ValueError, OSError) as error:
++                raise ApprovalNotConfirmed(str(error)) from error
++
 +        raw = output = None
 +        request_id = error_class = error_detail = ""
 +        status_code = 200
@@ -144,7 +158,7 @@ index 00000000..7f78ac33
 +            if self.ledger.live:
 +                _need(self.recorded_wire is None, "ISSUE_47_MODEL_RECORDED_BYTES_CANNOT_RUN_LIVE")
 +                source_check()
-+                model_allowance(repo_root=ROOT, delegation_reader=live_github_reader())
++                approval_check()
 +                with sending(prepared=self.prepared, ledger=self.ledger, path=self.path,
 +                             intent=self.intent, execution_id=execution_id):
 +                    result = adapter._build_repository_transport(policy=self.policy).complete(
@@ -175,6 +189,9 @@ index 00000000..7f78ac33
 +            error_detail = str(error)
 +        except SourceAuthenticityFailure as error:
 +            error_class, status_code, error_detail = "SOURCE_AUTHENTICITY_FAILED", 0, str(error)
++        except ApprovalNotConfirmed as error:
++            error_class, status_code, error_detail = ("APPROVAL_NOT_CONFIRMED_ON_GITHUB", 0,
++                                                      str(error)[:400])
 +        except RecursionError as error:
 +            # A response nested past the parser's depth. An independent review
 +            # sent one and the error left the call path with the slot open, so
@@ -477,10 +494,10 @@ index 78294a49..2201dbe6 100644
  def _decimal_observation(*, value: object, label: str) -> Optional[str]:
 diff --git a/tests/vnext/test_historical_model_egress.py b/tests/vnext/test_historical_model_egress.py
 new file mode 100644
-index 00000000..06bcc7af
+index 00000000..c58da0a9
 --- /dev/null
 +++ b/tests/vnext/test_historical_model_egress.py
-@@ -0,0 +1,1922 @@
+@@ -0,0 +1,1999 @@
 +"""Issue #47's model egress, verified offline in a tree where the registration patch is applied.
 +
 +This suite is part of the patch for independent security review
@@ -1240,9 +1257,11 @@ index 00000000..06bcc7af
 +
 +
 +def marker_comment(body, *, number=1000000101, created_at="2026-09-29T00:00:00Z"):
-+    """A start marker as GitHub returns it: the owner's, unedited."""
++    """A start marker as GitHub returns it: on issue 47, by the owner's account, unedited."""
 +    return {"id": number, "author_association": "OWNER", "body": body,
 +            "created_at": created_at, "updated_at": created_at,
++            "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
++            "user": {"login": "wlvh", "id": 30534800, "type": "User"},
 +            "html_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-" + str(number)}
 +
 +
@@ -1387,7 +1406,8 @@ index 00000000..06bcc7af
 +            egress.execute_historical_semantic(prepared=prepared, ledger=self.live())
 +        checkout = self.temporary / "export-checkout"
 +        self.addCleanup(shutil.rmtree, checkout, True)
-+        out = checkout / calls.MODEL_EXPORT_DIRECTORY
++        # The approval's own directory: the start reads that one.
++        out = checkout / calls.model_export_directory(self.allowance)
 +
 +        def tool(command):
 +            done = subprocess.run([sys.executable, str(ROOT / "tools/vnext_historical_model_export.py"),
@@ -1404,12 +1424,70 @@ index 00000000..06bcc7af
 +        with self.assertRaisesRegex(calls.HistoricalModelCallError,
 +                                    "ISSUE_47_MODEL_LEDGER_ALREADY_EXPORTED"):
 +            calls.start_model_ledger(allowance=self.allowance, reader=self.github, checkout=checkout)
++        # A new container that writes what the marker shows beside the empty
++        # root is not this ledger's start: the marker never carried the number
++        # (an independent review made exactly this copy when it did).
++        from vnext.historical_ledger_start import marker_record, start_record_path
++        shown = marker_record(calls._model_start(), marker_comment(self.started["marker_comment_body"])["body"])
++        start = start_record_path(self.budget)
++        self.markers = [marker_comment(self.started["marker_comment_body"])]
++        start.write_text(json.dumps({k: v for k, v in shown.items() if k != "start_record_sha256"}),
++                         encoding="utf-8")
++        with patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++            with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                        "ISSUE_47_MODEL_LEDGER_STARTED_ELSEWHERE"):
++                calls.live_model_ledger()
++        self.assertEqual(1, len(self.opened), "no second request")
++        # And a restore is refused beside a start record, which would make the
++        # restored record spendable at once.
++        code, refused = tool("restore")
++        self.assertEqual((1, "REFUSED"), (code, refused["status"]))
++        self.assertIn("ISSUE_47_MODEL_RESTORE_BESIDE_A_START_RECORD", refused["reason"])
++        start.unlink()
++        self.markers = []
 +        code, restored = tool("restore")
 +        self.assertEqual((0, "RESTORED", [1, 1, 0], False),
 +                         (code, restored["status"], restored["counts"], restored["start_restored"]))
++        self.assertFalse(start.exists(), "a restore never writes the start")
 +        with self.assertRaisesRegex(calls.HistoricalModelCallError,
 +                                    "ISSUE_47_MODEL_LEDGER_NOT_STARTED"):
 +            calls.live_model_ledger()
++
++    def test_a_ledger_behind_the_branch_s_export_sends_nothing(self):
++        # The same host kept its start record and lost its ledger, while the
++        # branch carries the export of what it spent: the live path refuses
++        # before a ledger exists, so nothing is claimed or sent again.
++        import subprocess
++        prepared = self.smallest()
++        self.reply = wire(self.output(prepared), prompt_tokens=reference_prompt_tokens(prepared))
++        with patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++            egress.execute_historical_semantic(prepared=prepared, ledger=self.live())
++        out = ROOT / calls.model_export_directory(self.allowance)
++        self.assertFalse(out.exists(), "the checkout carries no export of this fixture's approval")
++        parent_was_there = out.parent.exists()
++
++        def remove_the_fixture_s_export():
++            # Only what this case wrote: the fixture approval's directory, and
++            # the parent if the case created it.
++            shutil.rmtree(out, ignore_errors=True)
++            if not parent_was_there and out.parent.exists() and not any(out.parent.iterdir()):
++                out.parent.rmdir()
++
++        self.addCleanup(remove_the_fixture_s_export)
++        done = subprocess.run([sys.executable, str(ROOT / "tools/vnext_historical_model_export.py"),
++                               "export"], cwd=ROOT, capture_output=True, text=True, timeout=600)
++        self.assertEqual(0, done.returncode, done.stdout + done.stderr)
++        self.assertTrue((out / calls.MODEL_EXPORT_INDEX).is_file(), "the approval's own directory")
++        from vnext.historical_ledger_start import start_record_path
++        kept = start_record_path(self.budget).read_bytes()
++        reset_ledger(self.budget)
++        start_record_path(self.budget).write_bytes(kept)
++        with patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++            with self.assertRaisesRegex(calls.HistoricalModelCallError,
++                                        "ISSUE_47_MODEL_LEDGER_BEHIND_ITS_EXPORT"):
++                calls.live_model_ledger()
++        self.assertEqual(1, len(self.opened))
++        self.assertFalse(self.budget.exists(), "no ledger is begun behind its export")
 +
 +
 +class TheLivePathSendsThePlannedBytesOnceThroughTheControlledOpener(_LiveOpener):
@@ -1672,19 +1750,35 @@ index 00000000..06bcc7af
 +        self.assertEqual([], self.slots(ledger))
 +
 +    def test_the_approval_is_rechecked_on_github_before_the_socket(self):
-+        prepared = self.smallest()
-+        self.reply = wire(self.output(prepared))
-+        ledger = self.live()
++        # Changed on GitHub, or not readable there: no socket, and a terminal
++        # that names why and stops the channel. An independent review found the
++        # unreadable case left the slot without a terminal, read as unknown.
++        from vnext.historical_source_acquisition import HistoricalAcquisitionError
 +        changed = {**self.comment, "body": self.comment["body"].replace("12", "13")}
-+        with patch("vnext.historical_source_acquisition.live_github_reader",
-+                   return_value=lambda path: changed), \
-+                patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
-+            with self.assertRaisesRegex(calls.HistoricalModelCallError,
-+                                        "ISSUE_47_MODEL_SAVED_DELEGATION_DIFFERS_FROM_GITHUB"):
-+                egress.execute_historical_semantic(prepared=prepared, ledger=ledger)
-+        self.assertEqual([], self.opened)
-+        with ledger.locked():
-+            self.assertEqual(["0001=UNKNOWN_PENDING_RECONCILIATION"], ledger.snapshot()["stopped"])
++
++        def unreadable(path):
++            raise HistoricalAcquisitionError("ISSUE_47_GITHUB_READ_FAILED:" + path)
++
++        for label, reader, detail in (
++                ("changed", lambda path: changed, "ISSUE_47_MODEL_SAVED_DELEGATION_DIFFERS_FROM_GITHUB"),
++                ("unreadable", unreadable, "ISSUE_47_GITHUB_READ_FAILED")):
++            with self.subTest(label):
++                self.fresh_ledger()
++                prepared = self.smallest()
++                self.reply = wire(self.output(prepared))
++                ledger = self.live()
++                with patch("vnext.historical_source_acquisition.live_github_reader",
++                           return_value=reader), \
++                        patch.object(adapter._DEEPSEEK_OPENER, "open", side_effect=self.open):
++                    path, outcome = egress.execute_historical_semantic(prepared=prepared,
++                                                                       ledger=ledger)
++                self.assertEqual("APPROVAL_NOT_CONFIRMED_ON_GITHUB", outcome["stop_reason"])
++                self.assertEqual([], self.opened)
++                self.assertIn(detail, strict_json_loads(
++                    text=(path / "wire" / "journal.json").read_text())["error_detail"])
++                with ledger.locked():
++                    self.assertEqual(["0001=APPROVAL_NOT_CONFIRMED_ON_GITHUB"],
++                                     ledger.snapshot()["stopped"])
 +
 +    def test_a_request_that_stops_rebuilding_never_reaches_the_opener(self):
 +        prepared = self.smallest()

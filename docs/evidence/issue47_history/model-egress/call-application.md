@@ -5,14 +5,17 @@
 所有者决定 #47 的全部执行都在执行者的云端虚拟机里进行，包括模型调用，DeepSeek 密钥在执行者需要时提供（Issue #47 评论 5882788074，执行者转录；`../owner-decisions-2026-09-29/`）。对这份申请的影响：
 
 1. **决定 2 与决定 4 已由这个决定回答**：批准仍是所有者亲手发布的评论（网页或所有者本人登录的 `gh`），补丁只应用在虚拟机里的 #47 运行树。仍需所有者决定的是 **1（批哪几组）、3（最新年份 D04）、5（E01 读不读附件）**。
-2. **M3 的缓解要改写**。下文“本环境既无密钥也无账本根，代理即使发出一条批准也发不出调用”不再成立：执行者会同时持有密钥、账本和发送进程。现在挡住“执行者给自己批准”的是另一条，已实测：这台虚拟机调用 GitHub 的身份就是所有者账号经 Claude GitHub 应用授权，它发出的每条评论都带应用标记，而批准门禁拒绝带应用标记的评论（模型侧原本就这样要求，SEC 侧 2026-09-29 补上）。所以执行者造不出一条会被门禁接受的批准。这道防线的前提是执行者拿不到所有者的其他 GitHub 凭据：不要把个人访问令牌之类交给执行者。
-3. **账本根移进虚拟机**（拟议 `/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1`），并像 SEC 账本一样加一次性开跑标记、每次运行后把账本导出到分支。开跑标记只防容器意外丢失，防不了有人删除标记评论；执行者以所有者账号行事，也删得掉。导出到分支是第二道防线。这部分正在实现，实现并重封离线验证之后，才生成新的批准正文。现有 `approval-comment-body.json` 只是预览：它点名的账本根在所有者 Mac 上，收据也已失效。
-4. **密钥怎么给**：所有者在本会话标题栏的云环境菜单里选 Edit，把密钥加到 API credentials（没有这一栏就加成环境变量），变量名 `DEEPSEEK_API_KEY`。不要把密钥贴进对话。环境变量在新会话里才生效，所以调用在拿到密钥的那个会话里，从“登记批准—开跑—调用—导出”一次做完，账本不跨容器。执行者准备好时会告知；在那之前不需要操作。
-5. **所有者要做的事因此只有三件**：对 1、3、5 作决定；执行者重封并生成新批准正文后，亲手发布那条评论；执行者告知时把密钥加进环境设置。其余步骤（打补丁、重铸、重封、登记、开跑、调用、导出、提交）都由执行者在虚拟机里完成。
+2. **更正：在虚拟机里，门禁约束的是执行者的代码路径，不是执行者本人**（2026-09-29 独立审阅 F1，`independent-review-2026-09-29-vm/`）。本节此前写“执行者造不出一条会被门禁接受的批准”，**这句话不成立**：读回 GitHub 评论用哪个程序、经哪个代理、信任哪个证书，都由执行者决定——审阅者用一个三行的假 `gh` 脚本返回一条从未发布的评论，门禁就接受了；执行者还持有 DeepSeek 密钥，可以完全不经过这套代码直接调用。应用标记检查挡住的是执行者**发出**的批准评论，挡不住它**伪造读回**的内容。所以这些门禁在虚拟机里的作用是防事故（调错位置、重发、超上限、在过期代码上跑）并让所有者的决定事后可核对。**真正约束执行者的控制在代码之外**：
+   - 为这次运行**单独建一个 DeepSeek 密钥**，在 DeepSeek 账户侧给它**设消费上限**（按下文的 token 量核算），跑完**吊销**；
+   - 每次运行后账本导出到分支，列出 35 个请求里发了哪些、各用了多少 token；所有者**用 DeepSeek 控制台的用量记录核对**这份导出。
+3. **代理看得到什么**（审阅 F10）：虚拟机的出站代理对所有主机重新终止 TLS（先解密再转发），所以 DeepSeek 密钥、发出的提示与收到的回答、从 GitHub 读回的评论都经过它；文中“已与 GitHub 核对”的意思是“按代理转交的内容核对”。虚拟机里的每个进程都能以所有者账号操作 GitHub——不要把个人访问令牌之类的其他凭据交给执行者。
+4. **账本在虚拟机里，靠开跑标记和导出延续**（已实现，并按审阅 F2–F9 修复）。账本根 `/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1`，随容器回收而消失。开跑时在账本根旁写一份本地开跑记录（含一个不公开的随机数），执行者把它的公开视图作为标记评论发到 Issue #47；标记只带本地记录的摘要，所以新容器照抄标记拼不出开跑记录（审阅复现的“照抄标记、从零再花一遍”已关闭）。开跑记录还写明读 GitHub 用的程序、代理与证书包摘要。每次运行后账本导出到分支上本批准自己的目录；分支一旦带有本批准的导出，再次开跑被拒，实时路径也拒绝比导出落后的账本。导出只向前（不能用空账本覆盖已花费的记录）；恢复不写开跑记录，也拒绝在仍有开跑记录的主机上恢复。重新批准（例如重封之后）不能点名早先批准的导出已认领的请求：开跑会拒绝，提案工具也不写出。**仍然防不住的**：第一次导出推到分支之前，容器丢失而标记评论又被删除（执行者以所有者账号行事，删得掉），就没有东西能发现——这一段只靠上面第 2 条的外部控制。
+5. **密钥怎么给**：所有者在本会话标题栏的云环境菜单里选 Edit，把密钥加到 API credentials（没有这一栏就加成环境变量），变量名 `DEEPSEEK_API_KEY`。不要把密钥贴进对话。环境变量在新会话里才生效，所以调用在拿到密钥的那个会话里，从“登记批准—开跑—调用—导出”一次做完。执行者准备好时会告知；在那之前不需要操作。
+6. **所有者要做的事**：对 1、3、5 作决定；执行者重封离线验证并生成新批准正文后，亲手发布那条评论；执行者告知时，建专用密钥、在 DeepSeek 账户侧设好额度上限、加进环境设置；跑完吊销密钥，并用 DeepSeek 的用量记录核对分支上的导出。其余步骤（打补丁、重铸、重封、登记、开跑、发标记、调用、导出、提交）都由执行者在虚拟机里完成。现有 `approval-comment-body.json` 只是预览（它点名的收据已失效），重封后重新生成。
 
 ## 一句话
 
-一份申请、三组互不借用的授予：**D04 16 次**（3 个往年期间的持续经营疑虑披露审阅）、**E01 7 次**（7 个窗口的并购公告内容确认）与 **D02 12 次**（12 份已存年报 Item 8 的诉讼披露审阅，两个方向都覆盖），合计上限 `[35, 35, 0]`，只在所有者本机、用所有者的 API 密钥与账本根执行。本环境没有密钥、没有账本根、没有发出任何调用。
+一份申请、三组互不借用的授予：**D04 16 次**（3 个往年期间的持续经营疑虑披露审阅）、**E01 7 次**（7 个窗口的并购公告内容确认）与 **D02 12 次**（12 份已存年报 Item 8 的诉讼披露审阅，两个方向都覆盖），合计上限 `[35, 35, 0]`，按 2026-09-29 的决定在执行者虚拟机里执行。目前虚拟机里没有密钥，没有发出任何调用。
 
 ## 两个授予
 
@@ -32,7 +35,7 @@
 
 **批准点名到具体请求**：每个授予列出它放行的每个请求的账本摘要，共 35 个。三种合同的摘要都是**实际发送的请求体字节**（模型、消息、解码设置，按发出去的样子）的 SHA-256（`ledger_digest`）；独立复审发现 D04 原先用的是 #28 的语义摘要，漏掉了实际发送的若干字段，批准点名它并不能钉住发出去的内容。摘要由 `planned_request_digests` 算出——钉定来源、它分出的请求与 `ledger_digest`，正是认领时用的同一组函数——并且必须等于三份计量文件记下的摘要，否则提案工具不写出批准正文。落在授予的位置之内但没被点名的请求（例如提示词、合同或来源字节变了，请求就是另一个摘要）在两处被拒：发送前的范围检查（`ISSUE_47_MODEL_REQUEST_DIGEST_NOT_GRANTED:<指标>:<公司>:<期末>:<摘要>`）与账本自己的认领（同名理由，只带摘要），所以绕过其中一处也花不出额度。这样批准的是"这 35 个请求"，不是"这些位置上将来建出的任何请求"。
 
-两个授予共用：传输 deepseek / deepseek-flash / Chat Completions（temperature 0、thinking 关闭、max_tokens 4096、零自动重试）、一个账本根（提案 `/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-model-v1`，与 #28、#47 SEC 的根都不重叠、不嵌套，由门禁核对）、一个累计上限。仓库不做金额预检或金额上限（D-36）；按上面的 token 量由所有者在账户侧核算。
+两个授予共用：传输 deepseek / deepseek-flash / Chat Completions（temperature 0、thinking 关闭、max_tokens 4096、零自动重试）、一个账本根（提案 `/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1`，在虚拟机里；与 #28、#47 SEC 的根都不重叠、不嵌套，由门禁核对）、一个累计上限。仓库不做金额预检或金额上限（D-36）；按上面的 token 量由所有者在账户侧核算。
 
 ## 为什么是这些，不是更多
 
@@ -58,7 +61,7 @@
 ## 调用路径已经做到什么（离线，受控连接器）
 
 - **两次独立安全审阅**（全新上下文的同族子代理，不是人）。第一次（`independent-review-2026-09-27/`）结论 PASS_WITH_FINDINGS，要求授予任何模型许可之前修好 M1–M3：M1、M2、L1–L4、L6、L7 已修，每一条都有用例与注错；M3 中代码能承载的部分已实现，其余是下面的决定 2。修复与 E01、D02 扩展之后的复审（`independent-review-2026-09-27-rereview/`）结论仍是 PASS_WITH_FINDINGS，并写明只凭所有者决定 M3 不能授予真实调用：先修 N1、N2，M1 残余、N3、N4 修掉或由所有者接受。**全部已修**，没有一条留给所有者接受：N1（调用方传 `mode="LIVE"` 就能写出 LIVE 登记）现在要求 LIVE 登记携带回答它的计数调用记录、且记在所有者登记的批准所授予的账本里；N2（换账本根绕过上限）现在许可映射须与许可文件逐字段相同、账本根并入决策哈希；N3/N4 发请求的进程只能加载被授权绑定、编译进本进程私有字节码缓存的检出代码；N5 批准点名实际发送字节的摘要；N6/N7 与 M1 残余各有终态或日志副本。每条一个具名用例、一个注错；N1 另有仓库侧 8 例与 13 个注错（CI 跑得到）。
-- **离线验证收据** `offline-verification.json`：2026-09-28 封存，套件 121 例全过（每个测试模块一个进程，共 3 个），跑完封存树逐文件回到起点；78 个注错全部被抓到，77 个由为它写的类里的具名用例抓到、1 个在类夹具处（`THE_CONTROLLER_BRANCH_IS_ABSENT`，已知的钝捕获）、没有一个退回去跑整套；注错分到 3 个副本，每份做成时与最后一个注错之后都与封存树的同一份清单逐文件相同（12264 个条目），封存树本身未变，创建者日志每次都回到起点；与顺序基线逐个比对 78/78 相同（结果、预期类的结果、抓到它的用例；顺序封存在 66/78 时被容器重启打断，前 66 行所在的那棵树已删除；其余 12 个在一个副本里顺序补跑；按提交计算，基线与封存树之间收据绑定的文件只有 `baseline_manifest.json`、`verify.py` 不同，快照里不同的记录文件为 `capacity_native_assessment.py`、`continuous_semantic_calls.py`）；注错阶段墙钟 102 分钟（各注错时间相加 5.1 小时），全程 183 分钟；补丁会移动的世代 13 个（`issue_28_v2`–`issue_28_v14`）；收据绑定 16 个文件，编号 `sha256:7dd330d2…`，对应提交 `8c1fcf18`。批准正文点名这个编号；代码、本世代快照或任何规则文件再变，实时路径都会拒绝它，所有者真实调用前在本机重封（`verify.py --copies N`），批准点名新编号。**快照其后已经移动**：为清掉 base 新增的字面量扫描器报出的日期，四个规则文件的文档字符串改了措辞（行为不变），快照随之移动，所以这张收据现在就会被实时路径拒绝（失败即关闭）；按合同只因快照移动不单独重封。已按这张收据生成的批准正文 `approval-comment-body.json` 是预览：授予、上限 `[35,35,0]` 与 35 个请求摘要不随重封改变（提案脚本每次都用当前代码重算摘要并要求等于三份计量），只有收据编号会变——所有者在本机重封后用 `propose_model_allowance.py` 重新生成再发布，下面的步骤已包含这两步。
+- **离线验证收据** `offline-verification.json`（下面是 2026-09-28 那一次封存；虚拟机改动与审阅修复改了收据绑定的文件，要重封，新收据的数字重封后写在这里）：2026-09-28 封存，套件 121 例全过（每个测试模块一个进程，共 3 个），跑完封存树逐文件回到起点；78 个注错全部被抓到，77 个由为它写的类里的具名用例抓到、1 个在类夹具处（`THE_CONTROLLER_BRANCH_IS_ABSENT`，已知的钝捕获）、没有一个退回去跑整套；注错分到 3 个副本，每份做成时与最后一个注错之后都与封存树的同一份清单逐文件相同（12264 个条目），封存树本身未变，创建者日志每次都回到起点；与顺序基线逐个比对 78/78 相同（结果、预期类的结果、抓到它的用例；顺序封存在 66/78 时被容器重启打断，前 66 行所在的那棵树已删除；其余 12 个在一个副本里顺序补跑；按提交计算，基线与封存树之间收据绑定的文件只有 `baseline_manifest.json`、`verify.py` 不同，快照里不同的记录文件为 `capacity_native_assessment.py`、`continuous_semantic_calls.py`）；注错阶段墙钟 102 分钟（各注错时间相加 5.1 小时），全程 183 分钟；补丁会移动的世代 13 个（`issue_28_v2`–`issue_28_v14`）；收据绑定 16 个文件，编号 `sha256:7dd330d2…`，对应提交 `8c1fcf18`。批准正文点名这个编号；代码、本世代快照或任何规则文件再变，实时路径都会拒绝它，真实调用前重封（`verify.py --copies N`，2026-09-29 起由执行者在虚拟机里做），批准点名新编号。**快照其后已经移动**：为清掉 base 新增的字面量扫描器报出的日期，四个规则文件的文档字符串改了措辞（行为不变），快照随之移动，所以这张收据现在就会被实时路径拒绝（失败即关闭）；按合同只因快照移动不单独重封。已按这张收据生成的批准正文 `approval-comment-body.json` 是预览：授予、上限 `[35,35,0]` 与 35 个请求摘要不随重封改变（提案脚本每次都用当前代码重算摘要并要求等于三份计量），只有收据编号会变——重封后用 `propose_model_allowance.py` 重新生成、由所有者发布，下面的步骤已包含这两步。
 - **执行器** `tools/vnext_historical_model.py`（补丁内）：`--metric D04|E01|D02`；导入任何检出代码之前先建本进程私有的字节码缓存；只循环调用既有闸门，遇停止即停、不绕过；某个请求失败但未触发停止时，该位置不登记、其余照跑；已认领的请求不再发。
 
 ## 结果怎么用、怎么验收
@@ -69,7 +72,7 @@
 
 ## 已知风险与未解决项
 
-- **M3（批准人身份）**：GitHub 评论只能证明"由 wlvh 账号发出"，执行代理在本环境里也能以该账号发评论。缓解：批准正文点名验证收据 id（代码变了就要新批准；收据绑定本世代的快照，所以任何规则文件变了也要新批准）、逐个点名 35 个请求摘要（请求字节变了就不在批准里）；登记批准时要求评论由数字账号 30534800、类型 `User`、关联 `OWNER` 发出，且**不是经 GitHub App 代发**（`performed_via_github_app` 为空；本环境的代理经 App 发评论），否则以 `ISSUE_47_MODEL_APPROVAL_WAS_POSTED_THROUGH_AN_APP` 拒绝；真实调用只能在所有者本机、用所有者的密钥、由所有者运行命令发出——本环境既无密钥也无账本根，代理即使发出一条"批准"也发不出调用。更强的做法是离线签名（固定公钥、代理拿不到私钥），需要另外实现与密钥管理。
+- **M3（批准人身份）**：GitHub 评论只能证明“由 wlvh 账号发出”。登记批准时要求评论由数字账号 30534800、类型 `User`、关联 `OWNER` 发出，且**不是经 GitHub App 代发**（`performed_via_github_app` 为空；执行者经 App 发评论），否则以 `ISSUE_47_MODEL_APPROVAL_WAS_POSTED_THROUGH_AN_APP` 拒绝；批准正文点名验证收据 id（代码或本世代快照变了就要新批准）并逐个点名 35 个请求摘要（请求字节变了就不在批准里）。在虚拟机里这些都只防事故：读回评论的程序由执行者选（见上方 2026-09-29 更新第 2 条），不是对执行者的边界。约束执行者的是专用密钥的额度上限、跑完吊销与用量核对。更强的做法是离线签名（固定公钥、执行者拿不到私钥），需要另外实现与密钥管理，而且执行者仍持有调用密钥，所以同样离不开额度上限。
 - **L5（既有）**：出口扫描器只按名字匹配调用方；由"唯一发送点在打开连接前再核预约、令牌与标记"兜住，不由扫描器兜住。
 - **合同的语义正确性**：D04 用的是 #28 的请求合同，#28 登记了语义未验收，同样的限制适用于这里。E01 的合同是新的，从没被真实模型回答过；它的形式检查挡得住答非所问与编造引文，挡不住"读错了意思"——那是内容验收的事。
 - **截断与失败**：输出上限 4096；#28 的 B13 请求曾在 4096 处截断。E01 最大的请求（Lumen，15 个条目）按每条引文上限 600 字符算，回答不超过约 2,700 token。任何失败都是计数的终态、不重抽；修复后要另行申请修后补验，不是重试。
@@ -77,42 +80,34 @@
 ## 需要所有者决定的
 
 1. 是否批准 D04 `[16, 16, 0]`（D04 × {Marriott FY2023–FY2024；Paramount 前身 FY2024}）、E01 `[7, 7, 0]`（E01 × 上表 7 个窗口）与 D02 `[12, 12, 0]`（D02 × 上表 12 个位置），合计 `[35, 35, 0]`；也可以只批其中一组或两组。
-2. 批准方式：GitHub 评论（推荐，理由见上：执行只在所有者本机），由所有者本人用 `gh`（本人登录）或网页发布——经 GitHub App 代发的评论会被拒；还是离线签名。
+2. ~~批准方式~~：已由 2026-09-29 的决定回答——所有者本人在网页或本人登录的 `gh` 发布评论（经 GitHub App 代发的评论会被拒）。
 3. 最新年份 D04：等 #28 采纳后引用（推荐，不重复付费），还是 #47 自己复审（+66 次）。
-4. 出口补丁只在所有者本机的 #47 运行树应用（推荐；应用在同一检出会让 13 个 #28 世代的执行授权失效）。
+4. ~~出口补丁在哪里应用~~：已由 2026-09-29 的决定回答——只在执行者虚拟机里的 #47 运行树应用（应用在同一检出会让 13 个 #28 世代的执行授权失效）。
 5. E01 读附件：只按条目自身文字确认（推荐先这样跑，已知至少一个窗口会按名扣留），还是另行申请取回相关 8-K 的 EX-99 附件。
 
-## 批准后所有者在本机做的事
+## 批准前后的步骤（2026-09-29 起在执行者虚拟机里；所有者只发评论、给密钥）
 
-（以验证时的 HEAD 为准；运行树即带注册补丁的 #47 运行树）
+以下由执行者在虚拟机里做，除非写明“所有者”。运行树是带注册补丁与出口补丁的 #47 运行树，与检出分开。
 
 ```
+# 执行者，批准之前：在运行树里重封离线验证，在检出里按新收据生成批准正文
 git apply docs/evidence/issue47_history/native-run-2026-09-18/0001-register-issue47-v1.patch
 git apply docs/evidence/issue47_history/model-egress/egress-registration.patch
 python3 tools/vnext_mint_historical_requirement.py
-python3 docs/evidence/issue47_history/model-egress/verify.py --copies 3      # 本机重封：收据绑定快照
-python3 docs/evidence/issue47_history/model-egress/propose_model_allowance.py  # 按新收据编号重新生成批准正文
-gh issue comment 47 --repo wlvh/SEC_metrics \
-  --body-file docs/evidence/issue47_history/model-egress/approval-comment-body.json
-python3 tools/vnext_historical_model.py register-approval --approval-url <gh 打印的 URL>
-DEEPSEEK_API_KEY=... python3 tools/vnext_historical_model.py run --metric D04 \
-  --position marriott_international:2023-12-31 --position marriott_international:2024-12-31 \
-  --position paramount_skydance_paramount_global:2024-12-31
-DEEPSEEK_API_KEY=... python3 tools/vnext_historical_model.py run --metric E01 \
-  --position ford_motor_company:2025-12-31 --position lumen_technologies:2025-12-31 \
-  --position macys:2026-01-31 --position marriott_international:2025-12-31 \
-  --position paramount_skydance_paramount_global:2024-12-31 --position pfizer:2025-12-31 \
-  --position southwest_airlines:2025-12-31
-DEEPSEEK_API_KEY=... python3 tools/vnext_historical_model.py run --metric D02 \
-  --position enphase_energy:2025-12-31 --position ford_motor_company:2025-12-31 \
-  --position lumen_technologies:2025-12-31 --position macys:2026-01-31 \
-  --position marriott_international:2023-12-31 --position marriott_international:2024-12-31 \
-  --position marriott_international:2025-12-31 \
-  --position paramount_skydance_paramount_global:2024-12-31 \
-  --position paramount_skydance_paramount_global:2025-12-31 --position pfizer:2025-12-31 \
-  --position salesforce:2026-01-31 --position southwest_airlines:2025-12-31
+python3 docs/evidence/issue47_history/model-egress/verify.py --copies 3
+python3 docs/evidence/issue47_history/model-egress/propose_model_allowance.py   # 在检出里
+
+# 所有者：把 approval-comment-body.json 的正文原样发布为 Issue #47 的评论
+#         （网页粘贴，或本人登录的 gh issue comment 47 --body-file ...）
+
+# 执行者，在拿到密钥的新会话里（运行树）
+python3 tools/vnext_historical_model.py register-approval --approval-url <评论 URL>
+python3 tools/vnext_historical_model.py start     # 打印标记评论正文；执行者把它发到 Issue #47
+python3 tools/vnext_historical_model.py run --metric D04 --position marriott_international:2023-12-31 ...
+python3 tools/vnext_historical_model.py run --metric E01 --position ...
+python3 tools/vnext_historical_model.py run --metric D02 --position ...
+python3 tools/vnext_historical_model_export.py export   # 写到 evidence/issue47_model_calls/<批准摘要前 16 位>/
+# 执行者：把导出目录复制回检出，提交并推送；之后按普通历史 Run 建原生 Run 与公共行
 ```
 
-`gh issue comment` 必须由所有者本人登录的 `gh` 发出（或在网页上粘贴同一正文）；`register-approval` 从 GitHub 读回评论，核对作者、未编辑、未经 App 代发与正文摘要，然后写出许可、批准记录与 `granted-model-ledger.json`——只有记在这份记录所授予账本里的计数调用，其 LIVE 登记才会被 Run 读取。
-
-`run` 遇停止以退出码 3 结束并说明原因；再次运行从账本继续，已认领的请求不会再发。
+各组的完整位置见上表。`register-approval` 从 GitHub 读回评论，核对作者、未编辑、未经 App 代发与正文摘要，然后写出许可、批准记录与 `granted-model-ledger.json`——只有记在这份记录所授予账本里的计数调用，其 LIVE 登记才会被 Run 读取。`run` 遇停止以退出码 3 结束并说明原因；再次运行从账本继续，已认领的请求不会再发。每次运行后都导出并推送，不等全部跑完。

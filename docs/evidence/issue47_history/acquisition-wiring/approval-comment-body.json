@@ -1,9 +1,10 @@
 {
  "budget_root": "/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1",
  "execution": {
-  "durability": "the ledger root is lost with the container; a start marker on issue 47 makes a second start of this allowance refuse, and the ledger and the acquired sources are exported to the branch after each company",
+  "durability": "the ledger root and the start record beside it are lost with the container. The start marker on issue 47 carries only a digest of the local record, so a new container cannot rebuild the start from it; once the branch carries this approval's export a start refuses and the live path refuses a ledger behind that export. Before the first export is pushed nothing guards a lost container whose marker comment is deleted, so the first run is one capture followed at once by an export and a push; after that the ledger and the acquired sources are exported to the branch after each company",
   "host": "the executor's Claude Code cloud container, by the owner's decision of 2026-09-29 (issue 47 comment 5882788074)",
-  "transport": "HTTPS through the container's egress proxy, which re-terminates TLS: the client verifies the proxy's certificate, not SEC's. Each receipt records the proxy and the CA bundle the request used"
+  "transport": "HTTPS through the container's egress proxy, which re-terminates TLS: the client verifies the proxy's certificate, not SEC's. Each receipt records the proxy and the CA bundle the request used. 'Verified against GitHub' means as the proxy relayed it; the start record names the reader, the proxy and the CA bundle's digest",
+  "what_the_gates_bind": "the executor's code path, not the executor: in the container the executor chooses the GitHub reader, the proxy and the CA bundle the read-back goes through, and could send requests without this code. The gates guard against accidents and make the owner's decision auditable; what the owner can check is what the branch carries - the exported ledger, the SEC request log and the acquired sources"
  },
  "maximum_additional_provider_paid_sec_calls": [
   0,

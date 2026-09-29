@@ -39,12 +39,14 @@ START = SUITE + ".AStartMustBePublishedBeforeAnyRequest"
 TRANSPORT = SUITE + ".AReceiptSaysWhichWayItsBytesCame"
 READER = "tests.vnext.test_historical_source_acquisition.TheRestReaderReadsOnlyThisIssuesComments"
 REGISTER = SUITE + ".AnApprovalIsRegisteredOnlyFromTheApprovedBytes"
+EXPORTS = SUITE + ".AnExportCarriesExactlyWhatTheReplayAccepts"
 GRANT = SUITE + ".AGrantMustComeFromAnApprovalNotFromTwoLocalFiles"
 SESSION = "scripts/vnext/historical_sec_session.py"
 GATE = "scripts/vnext/historical_source_acquisition.py"
 # The start's logic moved into a module the model ledger shares; the SEC
 # ledger's cases still run it through the SEC session's names.
 START_MODULE = "scripts/vnext/historical_ledger_start.py"
+EXPORT_MODULE = "scripts/vnext/historical_source_export.py"
 
 INJECTIONS = [
     {"id": "THE_LIVE_PATH_SKIPS_THE_START", "file": SESSION,
@@ -53,8 +55,8 @@ INJECTIONS = [
      "classes": [START],
      "expect": "test_the_live_path_checks_the_start_before_any_transport"},
     {"id": "ANY_MARKER_WILL_DO", "file": START_MODULE,
-     "old": '    _need(kind, first["record"] == record, "STARTED_ELSEWHERE:"',
-     "new": '    _need(kind, any(item["record"] == record for item in markers), "STARTED_ELSEWHERE:"',
+     "old": '    _need(kind, first["record"] == marker_view(record),\n',
+     "new": '    _need(kind, any(item["record"] == marker_view(record) for item in markers),\n',
      "classes": [START],
      "expect": "test_the_earliest_marker_decides_not_the_latest"},
     {"id": "THE_LATEST_MARKER_DECIDES", "file": START_MODULE,
@@ -160,6 +162,39 @@ INJECTIONS = [
      "new": '    return body\n',
      "classes": [REGISTER],
      "expect": "test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"},
+    # The VM-delta review (model-egress/independent-review-2026-09-29-vm/): the
+    # marker carried the whole start record, so a copy of it beside an empty
+    # root was the start; nothing asked whether the branch's export was ahead
+    # of the ledger; a marker's own issue and account were not checked; the
+    # export could go backwards; and a redirected read was trusted.
+    {"id": "THE_MARKER_CARRIES_THE_WHOLE_RECORD", "file": START_MODULE,
+     "old": '            + json.dumps(marker_view(record), indent=1, sort_keys=True) + "\\n```\\n")',
+     "new": '            + json.dumps(record, indent=1, sort_keys=True) + "\\n```\\n")',
+     "also": [('    _need(kind, first["record"] == marker_view(record),\n',
+               '    _need(kind, first["record"] == record,\n')],
+     "classes": [START],
+     "expect": "test_a_marker_copied_beside_an_empty_root_is_not_the_start"},
+    {"id": "A_LEDGER_MAY_BE_BEHIND_ITS_EXPORT", "file": START_MODULE,
+     "old": "    require_not_behind_export(kind, allowance=allowance, checkout=checkout)\n",
+     "new": "",
+     "classes": [START],
+     "expect": "test_a_ledger_behind_its_export_on_the_branch_is_refused"},
+    {"id": "A_MARKER_FROM_ANYWHERE_COUNTS", "file": START_MODULE,
+     "old": ('                    and comment.get("issue_url") == issue_api and type(user) is dict\n'
+             '                    and user.get("id") == kind.owner_id and user.get("type") == "User"\n'),
+     "new": "",
+     "classes": [START],
+     "expect": "test_a_marker_not_from_this_issue_or_account_does_not_count"},
+    {"id": "AN_EXPORT_MAY_GO_BACKWARDS", "file": EXPORT_MODULE,
+     "old": '    _need(same and type(old_log) is dict and type(old_log.get("size")) is int\n',
+     "new": '    _need(True or same and type(old_log) is dict and type(old_log.get("size")) is int\n',
+     "classes": [EXPORTS],
+     "expect": "test_an_export_replaces_only_its_own_shorter_self"},
+    {"id": "A_REDIRECTED_READ_IS_TRUSTED", "file": GATE,
+     "old": '    _need(final == url, "ISSUE_47_GITHUB_READ_WAS_REDIRECTED:" + str(final)[:160])\n',
+     "new": "",
+     "classes": [READER],
+     "expect": "test_a_redirected_read_is_refused"},
     {"id": "THE_DIGEST_IS_OVER_THE_RAW_BODY", "file": GATE,
      "old": '    _need(sha256_bytes(content=posted_text(comment["body"]).encode("utf-8"))\n'
             '          == policy["delegation_body_sha256"],\n',
@@ -196,11 +231,15 @@ def main():
         path = REPO / injection["file"]
         original = path.read_bytes()
         text = original.decode("utf-8")
-        found = text.count(injection["old"])
-        if found != 1:
-            print("INJECTION_DID_NOT_APPLY", injection["id"], found)
-            return 2
-        edited = text.replace(injection["old"], injection["new"])
+        # An injection may need more than one edit to stay one coherent change
+        # (the whole-record marker is written and compared in two places).
+        edited = text
+        for old, new in [(injection["old"], injection["new"])] + injection.get("also", []):
+            found = edited.count(old)
+            if found != 1:
+                print("INJECTION_DID_NOT_APPLY", injection["id"], found)
+                return 2
+            edited = edited.replace(old, new)
         try:
             compile(edited, str(path), "exec")
         except SyntaxError as error:

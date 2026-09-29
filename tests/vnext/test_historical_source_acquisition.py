@@ -234,8 +234,11 @@ class TheRestReaderReadsOnlyThisIssuesComments(unittest.TestCase):
     "approval" as easily as at this one.
     """
 
-    def _response(self, text):
+    def _response(self, text, final):
         class Response:
+            def geturl(self):
+                return final
+
             def read(self):
                 return text.encode("utf-8")
 
@@ -271,7 +274,8 @@ class TheRestReaderReadsOnlyThisIssuesComments(unittest.TestCase):
 
         def urlopen(request, timeout):
             seen.append((request.full_url, request.get_header("Accept")))
-            return self._response('{"id": 1}' if "comments/1" in request.full_url else "[]")
+            return self._response('{"id": 1}' if "comments/1" in request.full_url else "[]",
+                                  request.full_url)
 
         with mock.patch("urllib.request.urlopen", urlopen):
             self.assertEqual({"id": 1},
@@ -288,10 +292,24 @@ class TheRestReaderReadsOnlyThisIssuesComments(unittest.TestCase):
         from vnext.historical_source_acquisition import (HistoricalAcquisitionError,
                                                          github_rest_reader)
         with mock.patch("urllib.request.urlopen",
-                        lambda request, timeout: self._response('{"id": 1, "id": 2}')), \
+                        lambda request, timeout: self._response('{"id": 1, "id": 2}',
+                                                                request.full_url)), \
                 self.assertRaises(HistoricalAcquisitionError) as caught:
             github_rest_reader("repos/wlvh/SEC_metrics/issues/comments/1")
         self.assertIn("ISSUE_47_GITHUB_READ_NOT_STRICT_JSON", str(caught.exception))
+
+    def test_a_redirected_read_is_refused(self):
+        # urlopen follows redirects; a reply from anywhere else is not this
+        # issue's comment, whatever it says.
+        from unittest import mock
+        from vnext.historical_source_acquisition import (HistoricalAcquisitionError,
+                                                         github_rest_reader)
+        elsewhere = "https://api.github.com/repos/other/SEC_metrics/issues/comments/1"
+        with mock.patch("urllib.request.urlopen",
+                        lambda request, timeout: self._response('{"id": 1}', elsewhere)), \
+                self.assertRaises(HistoricalAcquisitionError) as caught:
+            github_rest_reader("repos/wlvh/SEC_metrics/issues/comments/1")
+        self.assertIn("ISSUE_47_GITHUB_READ_WAS_REDIRECTED", str(caught.exception))
 
     def test_a_failed_read_is_a_named_refusal(self):
         import urllib.error

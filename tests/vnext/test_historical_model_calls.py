@@ -350,6 +350,11 @@ class TheApprovalIsRegisteredFromWhatWasPosted(unittest.TestCase):
         comment = fixture_tree(self.directory.name)
         (self.root / calls.ALLOWANCE_PATH).unlink()
         (self.root / RECORD).unlink()
+        # Laid out over many lines, as the real proposal is, so a browser's
+        # line breaks land inside the record and not only after it (an
+        # independent review found these cases ran on a one-line body).
+        comment = {**comment, "body": json.dumps(json.loads(comment["body"]), indent=1,
+                                                 sort_keys=True)}
         (self.root / calls.APPROVAL_BODY_PATH).parent.mkdir(parents=True, exist_ok=True)
         (self.root / calls.APPROVAL_BODY_PATH).write_text(comment["body"], encoding="utf-8")
         self.comment = comment
@@ -386,6 +391,7 @@ class TheApprovalIsRegisteredFromWhatWasPosted(unittest.TestCase):
 
     def test_a_proposal_pasted_into_the_web_page_registers(self):
         """A browser may send CRLF line breaks and a trailing newline; the record is the same."""
+        self.assertGreater(self.comment["body"].count("\n"), 5, "line breaks inside the record")
         pasted = {**self.comment, "body": self.comment["body"].replace("\n", "\r\n") + "\r\n"}
         registered = self.register(pasted)
         self.assertEqual("MODEL_APPROVAL_REGISTERED", registered["status"])
@@ -489,7 +495,8 @@ class TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount(unittest.TestC
         # Named here rather than read from STOPS: a re-review removed a reason
         # from STOPS and this case, iterating STOPS, could not notice.
         expected = {"HTTP_402", "UNKNOWN_REMOTE_OUTCOME", "SOURCE_AUTHENTICITY_FAILED", "USAGE_UNKNOWN",
-                    "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT", "TRANSPORT_OBSERVATION_CHANGED"}
+                    "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT", "TRANSPORT_OBSERVATION_CHANGED",
+                    "APPROVAL_NOT_CONFIRMED_ON_GITHUB"}
         self.assertEqual(expected, set(calls.STOPS))
         for reason in sorted(expected):
             with self.subTest(reason=reason):
@@ -741,7 +748,9 @@ class TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts(unittest.TestCase):
         self.addCleanup(lambda: __import__("shutil").rmtree(self.root, ignore_errors=True))
         self.allowance = {"requirement_id": calls.REQUIREMENT_ID,
                           "budget_root": str(self.root / "ledger"),
-                          "delegation_url": self.URL, "delegation_body_sha256": "c" * 64}
+                          "delegation_url": self.URL, "delegation_body_sha256": "c" * 64,
+                          "scope": {"grants": [{"grant": "G1", "request_digests": [
+                              "sha256:" + "a" * 64, "sha256:" + "b" * 64]}]}}
         self.patch = patch
 
     @staticmethod
@@ -750,12 +759,27 @@ class TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts(unittest.TestCase):
 
     @staticmethod
     def _comment(body, *, number=5900000101):
+        """A marker as the comment list returns it: on issue 47, by the owner's account, unedited."""
         return {"id": number, "author_association": "OWNER", "created_at": "2026-09-29T01:00:00Z",
                 "updated_at": "2026-09-29T01:00:00Z", "body": body,
+                "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
+                "user": {"login": "wlvh", "id": 30534800, "type": "User"},
                 "html_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-"
                             + str(number)}
 
-    def test_a_model_start_writes_a_model_record_and_its_marker_verifies(self):
+    def _export(self, digest, *, requests=(), claims=b""):
+        """An export index of approval ``digest`` in its own directory, claiming ``requests``."""
+        directory = self.root / calls.MODEL_EXPORT_DIRECTORY / digest[:16]
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / calls.MODEL_EXPORT_INDEX).write_text(json.dumps({
+            "execution_mode": "LIVE", "approval": {"delegation_body_sha256": digest},
+            "requests": list(requests),
+            "archive": {"members": {"root/claims.jsonl": {
+                "sha256": __import__("hashlib").sha256(claims).hexdigest(), "size": len(claims)}}}}),
+            encoding="utf-8")
+        return directory
+
+    def test_the_model_start_writes_a_model_record_and_its_marker_verifies(self):
         started = calls.start_model_ledger(allowance=self.allowance, reader=self._reader([]),
                                            checkout=self.root)
         self.assertEqual("ISSUE_47_MODEL_LEDGER_START", started["record"]["record_type"])
@@ -792,10 +816,7 @@ class TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts(unittest.TestCase):
 
     def test_only_the_model_export_blocks_a_model_start(self):
         from vnext import historical_sec_session as session
-        index = self.root / calls.MODEL_EXPORT_DIRECTORY / calls.MODEL_EXPORT_INDEX
-        index.parent.mkdir(parents=True)
-        index.write_text(json.dumps({"execution_mode": "LIVE", "approval": {
-            "delegation_body_sha256": "c" * 64}}), encoding="utf-8")
+        self._export("c" * 64)
         with self.assertRaisesRegex(calls.HistoricalModelCallError,
                                     "ISSUE_47_MODEL_LEDGER_ALREADY_EXPORTED"):
             calls.start_model_ledger(allowance=self.allowance, reader=self._reader([]),
@@ -829,6 +850,107 @@ class TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts(unittest.TestCase):
         self.assertTrue(asked and all("/issues/47/comments?" in path for path in asked))
 
 
+    def test_the_marker_does_not_carry_what_the_local_record_needs(self):
+        """A marker copied back beside an empty root is not this host's start.
+
+        An independent review copied a marker that carried the whole record,
+        random number included, back beside an empty root on a new host, and
+        the start matched. The marker now carries the record without its
+        number and a digest of the whole.
+        """
+        from vnext.historical_ledger_start import marker_record, start_record_path
+        started = calls.start_model_ledger(allowance=self.allowance, reader=self._reader([]),
+                                           checkout=self.root)
+        marker = self._comment(started["marker_comment_body"])
+        published = marker_record(calls._model_start(), marker["body"])
+        local = json.loads(start_record_path(self.root / "ledger").read_text(encoding="utf-8"))
+        self.assertNotIn("instance_nonce", published)
+        self.assertNotIn("instance_nonce", started["record"])
+        self.assertNotIn(local["instance_nonce"], started["marker_comment_body"])
+        # The new host writes what the marker shows, and adds any number: no match.
+        start_record_path(self.root / "ledger").unlink()
+        copied = {**{k: v for k, v in published.items() if k != "start_record_sha256"},
+                  "instance_nonce": "0" * 32}
+        start_record_path(self.root / "ledger").write_text(json.dumps(copied), encoding="utf-8")
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_LEDGER_STARTED_ELSEWHERE"):
+            calls.require_published_model_start(allowance=self.allowance,
+                                                 reader=self._reader([marker]), checkout=self.root)
+
+    def test_a_ledger_behind_its_export_is_refused(self):
+        """The branch's export says more was claimed than this ledger holds: not the exported ledger."""
+        from vnext.historical_ledger_start import start_record_path
+        started = calls.start_model_ledger(allowance=self.allowance, reader=self._reader([]),
+                                           checkout=self.root)
+        marker = self._comment(started["marker_comment_body"])
+        claims = b'{"n":1}\n{"n":2}\n'
+        self._export("c" * 64, requests=["sha256:" + "a" * 64], claims=claims)
+        ledger = self.root / "ledger"
+        for held in (None, claims[:8]):
+            with self.subTest(held=held):
+                if held is not None:
+                    ledger.mkdir(exist_ok=True)
+                    (ledger / "claims.jsonl").write_bytes(held)
+                with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                            "ISSUE_47_MODEL_LEDGER_BEHIND_ITS_EXPORT"):
+                    calls.require_published_model_start(
+                        allowance=self.allowance, reader=self._reader([marker]),
+                        checkout=self.root)
+        # The exported log, and one that goes on past it, are this ledger.
+        for held in (claims, claims + b'{"n":3}\n'):
+            (ledger / "claims.jsonl").write_bytes(held)
+            self.assertTrue(start_record_path(ledger).is_file())
+            self.assertEqual(marker["html_url"], calls.require_published_model_start(
+                allowance=self.allowance, reader=self._reader([marker]),
+                checkout=self.root)["marker_url"])
+        # A log that begins otherwise is not.
+        (ledger / "claims.jsonl").write_bytes(b'{"n":9}\n{"n":2}\n{"n":3}\n')
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_LEDGER_BEHIND_ITS_EXPORT"):
+            calls.require_published_model_start(allowance=self.allowance,
+                                                 reader=self._reader([marker]), checkout=self.root)
+
+    def test_a_marker_not_from_this_issue_or_account_does_not_count(self):
+        started = calls.start_model_ledger(allowance=self.allowance, reader=self._reader([]),
+                                           checkout=self.root)
+        marker = self._comment(started["marker_comment_body"])
+        for field, value in (("issue_url", "https://api.github.com/repos/wlvh/SEC_metrics/issues/28"),
+                             ("user", {"login": "wlvh", "id": 1, "type": "User"}),
+                             ("user", {"login": "wlvh", "id": 30534800, "type": "Bot"})):
+            with self.subTest(field=field, value=value):
+                with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                            "ISSUE_47_MODEL_LEDGER_START_NOT_PUBLISHED"):
+                    calls.require_published_model_start(
+                        allowance=self.allowance, reader=self._reader([{**marker, field: value}]),
+                        checkout=self.root)
+
+    def test_a_re_approval_cannot_start_over_requests_another_approval_claimed(self):
+        """A re-approval is not a redraw: requests an earlier approval's export claimed stay claimed."""
+        self._export("d" * 64, requests=["sha256:" + "b" * 64])
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_LEDGER_GRANTS_REQUESTS_ANOTHER_APPROVAL_CLAIMED:"
+                                    "sha256:" + "b" * 64):
+            calls.start_model_ledger(allowance=self.allowance, reader=self._reader([]),
+                                     checkout=self.root)
+        # An unreadable export of another approval is not evidence nothing was claimed.
+        (self.root / calls.MODEL_EXPORT_DIRECTORY / ("d" * 16) / calls.MODEL_EXPORT_INDEX
+         ).write_text("{", encoding="utf-8")
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_LEDGER_ANOTHER_APPROVAL_S_EXPORT_UNREADABLE"):
+            calls.start_model_ledger(allowance=self.allowance, reader=self._reader([]),
+                                     checkout=self.root)
+        # Requests the earlier approval never claimed can be granted again.
+        self._export("d" * 64, requests=["sha256:" + "e" * 64])
+        self.assertEqual("LEDGER_START_WRITTEN", calls.start_model_ledger(
+            allowance=self.allowance, reader=self._reader([]), checkout=self.root)["status"])
+
+    def test_each_approval_exports_into_its_own_directory(self):
+        self.assertEqual(calls.MODEL_EXPORT_DIRECTORY + "/" + "c" * 16,
+                         calls.model_export_directory(self.allowance))
+        self.assertNotEqual(calls.model_export_directory(self.allowance),
+                            calls.model_export_directory({"delegation_body_sha256": "d" * 64}))
+
+
 class TheModelLedgerTravelsToTheBranchAndBack(unittest.TestCase):
     """An export of the model ledger is the ledger, checked by its own snapshot, or nothing.
 
@@ -853,6 +975,7 @@ class TheModelLedgerTravelsToTheBranchAndBack(unittest.TestCase):
                      "scope": {"purposes": [calls.PURPOSE], "grants": [self.GRANT]},
                      "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-1",
                      "delegation_body_sha256": "d" * 64}
+        self.allowance = allowance
         self.ledger = calls.recorded_model_ledger(root=self.tmp / "ledger", allowance=allowance)
         with self.ledger.locked():
             self.ledger.claim(request_digest=self.GRANT["request_digests"][0], plan_id="plan-1",
@@ -919,6 +1042,40 @@ class TheModelLedgerTravelsToTheBranchAndBack(unittest.TestCase):
         with self.assertRaisesRegex(calls.HistoricalModelCallError,
                                     "ISSUE_47_MODEL_RESTORE_ONLY_A_LIVE_LEDGER"):
             self.export.restore_model_ledger(export_dir=self.out)
+
+    def test_an_export_of_a_ledger_never_started_here_is_refused(self):
+        """Exporting through a ledger on an empty root would begin one, and write a record of nothing.
+
+        An independent review exported on a host whose ledger was gone: the
+        lock initialised a fresh ledger and the export over the record of what
+        was spent said [0, 0, 0], and verified.
+        """
+        fresh = calls.recorded_model_ledger(root=self.tmp / "gone", allowance=self.allowance)
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_EXPORT_OF_A_LEDGER_NEVER_STARTED_HERE"):
+            self.export.export_model_ledger(ledger=fresh, out_dir=self.out)
+        self.assertFalse((self.tmp / "gone").exists(), "nothing is begun at the root")
+        self.assertEqual([1, 1, 0], self.export.verify_model_export(export_dir=self.out)["counts"])
+
+    def test_an_export_only_moves_forward(self):
+        # The same ledger again: its log begins with the exported one, so it may replace it.
+        self.assertEqual([1, 1, 0], self.export.export_model_ledger(
+            ledger=self.ledger, out_dir=self.out)["counts"])
+        # A ledger begun again with the same binding and a claim of its own:
+        # its log does not begin with the exported one.
+        again = calls.recorded_model_ledger(root=self.tmp / "again", allowance=self.allowance)
+        with again.locked():
+            again.claim(request_digest=self.GRANT["request_digests"][0], plan_id="plan-1",
+                        purpose=calls.PURPOSE, grants=["G1"], request_identity="request-1",
+                        authority_files_hash="sha256:" + "e" * 64)
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_EXPORT_WOULD_NOT_EXTEND_THE_EXPORT_THERE"):
+            self.export.export_model_ledger(ledger=again, out_dir=self.out)
+        # An unreadable index there is not one to write over either.
+        (self.out / calls.MODEL_EXPORT_INDEX).write_text("{", encoding="utf-8")
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_EXPORT_WOULD_NOT_EXTEND_THE_EXPORT_THERE"):
+            self.export.export_model_ledger(ledger=self.ledger, out_dir=self.out)
 
     def test_an_export_never_carries_the_start(self):
         """The start stays with the host that made it; a restore is a record, not a resumption."""

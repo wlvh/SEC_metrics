@@ -394,5 +394,21 @@
   },
   "what_the_owner_does": "posts the regenerated approval body on issue 47, byte for byte, with gh or the web editor; everything else - registering it, starting the ledger, acquiring and exporting - runs in the executor's container",
   "what_the_start_marker_does_not_guard": "a deleted marker comment. The owner's account can delete it, and so can the executor, which acts on GitHub as that account (measured: the container's GitHub API calls carry the owner's account through the Claude GitHub App); the comments API shows no trace of a deleted comment. The marker guards a lost container, not a deliberate reset by the party that holds the count, which the owner accepted in deciding the executor holds it. The second guard is the export pushed after each company: start refuses once the checkout carries an export of this approval's ledger, so before the first export the marker is the only guard, and the first run is one capture followed at once by an export and a push"
+ },
+ "revision_7": {
+  "date": "2026-09-29",
+  "why": "an independent review of the VM change (docs/evidence/issue47_history/model-egress/independent-review-2026-09-29-vm/, findings F1, F2 and F10; the SEC ledger starts through the same module as the model ledger) found revision 6's execution statement overstated two guarantees. The approval body the owner posts carries that statement, so it is corrected before the owner posts it",
+  "what_revision_6_overstated": [
+   "ledger.durability and execution.durability: the marker as first built carried the local start record with its random number, so a copy of it beside an empty root matched, and the same request was sent twice (reproduced on the model ledger's LIVE path); 'a lost container ... cannot start the allowance again' did not hold",
+   "nothing said that the gates bind the executor's code path, not the executor: in the container the executor chooses the GitHub reader, the proxy and the CA bundle the read-back goes through, and could send requests without this code"
+  ],
+  "execution": {
+   "host": "the executor's Claude Code cloud container, by the owner's decision of 2026-09-29 (issue 47 comment 5882788074)",
+   "what_the_gates_bind": "the executor's code path, not the executor: in the container the executor chooses the GitHub reader, the proxy and the CA bundle the read-back goes through, and could send requests without this code. The gates guard against accidents and make the owner's decision auditable; what the owner can check is what the branch carries - the exported ledger, the SEC request log and the acquired sources",
+   "transport": "HTTPS through the container's egress proxy, which re-terminates TLS: the client verifies the proxy's certificate, not SEC's. Each receipt records the proxy and the CA bundle the request used. 'Verified against GitHub' means as the proxy relayed it; the start record names the reader, the proxy and the CA bundle's digest",
+   "durability": "the ledger root and the start record beside it are lost with the container. The start marker on issue 47 carries only a digest of the local record, so a new container cannot rebuild the start from it; once the branch carries this approval's export a start refuses and the live path refuses a ledger behind that export. Before the first export is pushed nothing guards a lost container whose marker comment is deleted, so the first run is one capture followed at once by an export and a push; after that the ledger and the acquired sources are exported to the branch after each company"
+  },
+  "what_changed": "the approval body's execution statement only. The cap, the grants, the classes, the window, the ledger root and the counting and stopping rules are unchanged",
+  "what_the_owner_does": "posts the regenerated approval body on issue 47, byte for byte, with gh or the web editor; everything else - registering it, starting the ledger, acquiring and exporting - runs in the executor's container"
  }
 }

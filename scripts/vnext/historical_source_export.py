@@ -233,6 +233,7 @@ def export_acquisition(*, ledger_root, out_dir=None, policy_root=None):
           and mirror.read_bytes() == state["ledger/claims.jsonl"],
           "ISSUE_47_EXPORT_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR")
     state[CHECKPOINT_MEMBER] = canonical_json_bytes(value=checkpoint)
+    _only_forward(out_dir=out_dir, approval=approval, log=state["ledger/claims.jsonl"])
     out_dir.mkdir(parents=True, exist_ok=True)
     written = {}
     state_bytes = _archive(state)
@@ -278,6 +279,29 @@ def export_acquisition(*, ledger_root, out_dir=None, policy_root=None):
             "execution_mode": mode, "rows": index["exported_row_count"],
             "row_archives": len(chunks),
             "bytes": sum(len(data) for data in written.values()), "calls": [0, 0, 0]}
+
+
+def _only_forward(*, out_dir, approval, log):
+    """An export replaces only an export of the same approval whose claim log this one begins with.
+
+    One directory serves the SEC ledger; an export of another approval, or of
+    a shorter ledger - a reset one, or one restored from an older export - is
+    not written over the record of what was spent (an independent review found
+    the model ledger's export could be).
+    """
+    previous = Path(out_dir) / INDEX_NAME
+    if not previous.exists() and not previous.is_symlink():
+        return
+    try:
+        old = strict_json_file(path=previous)
+        old_log = old["state_archive"]["members"]["ledger/claims.jsonl"]
+        same = old.get("approval") == approval
+    except (OSError, ValueError, KeyError, TypeError):
+        old_log, same = None, False
+    _need(same and type(old_log) is dict and type(old_log.get("size")) is int
+          and len(log) >= old_log["size"]
+          and sha256_bytes(content=log[:old_log["size"]]) == old_log.get("sha256"),
+          "ISSUE_47_EXPORT_WOULD_NOT_EXTEND_THE_EXPORT_THERE:" + str(previous))
 
 
 def _replace(path, data):

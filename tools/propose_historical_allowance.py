@@ -43,7 +43,9 @@ CAP = PLAN["cumulative_cap"]["requested"]
 # executor's container, so the ledger root is there and the body says how the
 # run is made and kept - the owner approves the execution, not only the cap.
 BUDGET_ROOT = PLAN["revision_6"]["ledger"]["proposed_budget_root"]
-EXECUTION = PLAN["revision_6"]["execution"]
+# Revision 7 corrects revision 6's execution statement after the independent
+# review of the VM change; the ledger root and everything else stay as they were.
+EXECUTION = PLAN["revision_7"]["execution"]
 # The windows of the grants named for one company are the plan's decisions.
 NAMED_WINDOWS = PLAN["named_grant_windows"]["windows"]
 EVERYONE = COMPANIES

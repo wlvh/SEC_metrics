@@ -1325,16 +1325,25 @@ def _sec_ledger_paths(root):
     return (HistoricalCallLedger.anchor_path(root), HistoricalCallLedger.mirror_path(root))
 
 
+def _sec_export_claims(index):
+    """The claim log an SEC export carries, as bound by its state archive."""
+    return index["state_archive"]["members"]["ledger/claims.jsonl"]
+
+
 def _sec_start():
     from .historical_ledger_start import LedgerKind
-    from .historical_source_acquisition import ISSUE_NUMBER, TRUSTED_REPOSITORY
+    from .historical_source_acquisition import (ISSUE_NUMBER, TRUSTED_APPROVER_ID,
+                                                TRUSTED_REPOSITORY)
     from .historical_source_export import EXPORT_DIRECTORY, INDEX_NAME
+    # One SEC approval, one export directory: the export refuses to replace
+    # another approval's index (historical_source_export).
     return LedgerKind(record_type=START_TYPE, prefix="ISSUE_47_SEC_LEDGER",
                       title="Issue #47 SEC ledger", error=HistoricalSessionError,
                       ledger_paths=_sec_ledger_paths,
-                      export_index=EXPORT_DIRECTORY + "/" + INDEX_NAME,
+                      export_index=lambda allowance: EXPORT_DIRECTORY + "/" + INDEX_NAME,
+                      export_claims=_sec_export_claims,
                       repository=TRUSTED_REPOSITORY, issue_number=ISSUE_NUMBER,
-                      requirement_id=REQUIREMENT_ID)
+                      requirement_id=REQUIREMENT_ID, owner_id=TRUSTED_APPROVER_ID)
 
 
 START_TYPE = "ISSUE_47_SEC_LEDGER_START"
@@ -1376,10 +1385,11 @@ def start_ledger(*, allowance, reader, now=None, checkout=None):
                  checkout=ROOT if checkout is None else checkout)
 
 
-def require_published_start(*, allowance, reader):
-    """The SEC ledger was started here and its start is on GitHub, or a named refusal."""
+def require_published_start(*, allowance, reader, checkout=None):
+    """The SEC ledger was started here, its start is on GitHub and it is not behind its export."""
     from .historical_ledger_start import require_published_start as require
-    return require(_sec_start(), allowance=allowance, reader=reader)
+    return require(_sec_start(), allowance=allowance, reader=reader,
+                   checkout=ROOT if checkout is None else checkout)
 
 
 def _allowance_ledger(*, allowance, root, live):

@@ -433,15 +433,19 @@ def github_rest_reader(path):
     from urllib.request import Request, urlopen
     _need(_GITHUB_READABLE.match(str(path)) is not None,
           "ISSUE_47_GITHUB_READ_PATH_NOT_ALLOWED:" + str(path)[:120])
-    request = Request(GITHUB_API_ORIGIN + path,
-                      headers={"Accept": "application/vnd.github+json",
-                               "User-Agent": "sec-metrics-issue47-reader"})
+    url = GITHUB_API_ORIGIN + path
+    request = Request(url, headers={"Accept": "application/vnd.github+json",
+                                    "User-Agent": "sec-metrics-issue47-reader"})
     try:
         with urlopen(request, timeout=30) as response:
+            # urlopen follows redirects; what was read must be what was asked
+            # for, or it is not this issue's comment (an independent review).
+            final = response.geturl()
             text = response.read().decode("utf-8")
     except (OSError, UnicodeDecodeError) as error:
         raise HistoricalAcquisitionError("ISSUE_47_GITHUB_READ_FAILED:" + path + ":"
                                          + str(error)[:160])
+    _need(final == url, "ISSUE_47_GITHUB_READ_WAS_REDIRECTED:" + str(final)[:160])
     try:
         return strict_json_loads(text=text)
     except ValueError:
@@ -609,16 +613,20 @@ def acquisition_allowance(*, repo_root: Path, delegation_reader=None):
     return policy
 
 
-# What the owner approved, byte for byte. The first delegation named the
+# What the owner approves, byte for byte. The first delegation named the
 # proposal's ``the_comment_body_as_text`` at commit 92da6f2f (digest 71439c2e...),
 # whose ledger root was on the owner's machine. The owner then decided the
 # acquisition runs in the executor's container, so the body was regenerated
-# with that ledger root and an ``execution`` statement, the cap and every grant
-# unchanged; this is its digest. The file below holds those bytes, and
-# registration requires the comment on GitHub to be the same bytes. A digest
-# pinned here rather than read from the proposal is the point: a proposal
-# edited after the approval must not move what the approval means.
-APPROVED_BODY_SHA256 = "1c537bc30860b644c60e03ff7e023f019d430d6927472e17833e2b48d6f7b684"
+# with that ledger root and an ``execution`` statement (digest 1c537bc3...); an
+# independent review of that change then found the statement overstated what
+# the start marker guards and did not say the gates bind the executor's code
+# path rather than the executor, so it was corrected before the owner posted
+# it (plan revision 7), the cap and every grant unchanged; this is its digest.
+# The file below holds those bytes, and registration requires the comment on
+# GitHub to be the same bytes. A digest pinned here rather than read from the
+# proposal is the point: a proposal edited after the approval must not move
+# what the approval means.
+APPROVED_BODY_SHA256 = "131a720ad1b8c573c0094c25905760151da6804ea6b00f32e3ea0f9346ed02f0"
 APPROVED_BODY_PATH = ("docs/evidence/issue47_history/acquisition-wiring/"
                       "approval-comment-body.json")
 APPROVAL_RECORD_PATH = "docs/evidence/issue47_history/acquisition-wiring/approval-comment.json"

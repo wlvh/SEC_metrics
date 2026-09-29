@@ -123,12 +123,15 @@ BOUND = ("scripts/vnext/historical_model_calls.py", "scripts/vnext/historical_mo
          # The start that outlives the container (bound by the call path too),
          # and the export and restore the executor runs beside it.
          "scripts/vnext/historical_ledger_start.py", "scripts/vnext/historical_model_export.py",
-         "tools/vnext_historical_model_export.py")
+         "tools/vnext_historical_model_export.py",
+         # The export's archive helpers, restore's path checks among them.
+         "scripts/vnext/historical_source_export.py")
 CALLS = "scripts/vnext/historical_model_calls.py"
 EGRESS = "scripts/vnext/historical_model_egress.py"
 SEC = "scripts/vnext/historical_source_acquisition.py"
 TESTS = "tests/vnext/test_historical_model_egress.py"
 START = "scripts/vnext/historical_ledger_start.py"
+EXPORT = "scripts/vnext/historical_model_export.py"
 INJECTIONS = [
     ("A_REQUEST_MAY_BE_REDRAWN", CALLS,
      [('        _need(request_digest not in state["requests"],\n'
@@ -294,8 +297,11 @@ INJECTIONS = [
      [("                source_check()\n", ""),
       ("                    before_socket_open=source_check)", "                    )")]),
     ("NO_GITHUB_RECHECK_BEFORE_THE_SOCKET", EGRESS,
-     [("                model_allowance(repo_root=ROOT, delegation_reader=live_github_reader())\n",
-       "")]),
+     [("                approval_check()\n", "")]),
+    # A failed re-check is a named, counted stop with a terminal, not an
+    # exception that leaves the slot open (VM-delta review F6).
+    ("A_FAILED_RECHECK_LEAVES_THE_SLOT_OPEN", EGRESS,
+     [("                raise ApprovalNotConfirmed(str(error)) from error\n", "                raise\n")]),
     ("RECORDED_BYTES_ARE_ONLY_REFUSED_AFTER_THE_CLAIM", EGRESS,
      [('        _need(recorded_wire is None, "ISSUE_47_MODEL_RECORDED_BYTES_CANNOT_RUN_LIVE")\n'
        '        _need(ledger.root', '        _need(ledger.root')]),
@@ -385,11 +391,7 @@ INJECTIONS = [
        '                    error_detail = str(mismatch)[:400]\n',
        '                _need(mismatch is None, "ISSUE_47_MODEL_TRANSPORT_OBSERVATION_CHANGED")\n')]),
     ("AN_OBSERVATION_MISMATCH_DOES_NOT_STOP", CALLS,
-     [('"CONTEXT_LIMIT",\n'
-       '                   # The transport\'s own account of the call disagrees with the\n'
-       '                   # bytes it was given: what was sent cannot be trusted.\n'
-       '                   "TRANSPORT_OBSERVATION_CHANGED"})',
-       '"CONTEXT_LIMIT"})')]),
+     [('                   "TRANSPORT_OBSERVATION_CHANGED",\n', '')]),
     # L3 for E01 and D02: each of the two comparisons on its own.
     ("AN_E01_OR_D02_SOURCE_IS_NOT_REBUILT", CALLS,
      [('    _need(evidence_json_bytes(rebuilt) == self.source_bytes,\n'
@@ -453,11 +455,50 @@ INJECTIONS = [
     ("THE_LATEST_START_MARKER_COUNTS", START,
      [("    first = markers[0]\n", "    first = markers[-1]\n")]),
     ("THE_START_MARKER_NEED_NOT_BE_THIS_HOST_S", START,
-     [('    _need(kind, first["record"] == record, "STARTED_ELSEWHERE:"',
-       '    _need(kind, True, "STARTED_ELSEWHERE:"')]),
-    ("A_LOST_START_IS_NOT_NOTICED", START,
-     [('        _need(kind, not markers, "STARTED_ELSEWHERE:"',
-       '        _need(kind, True, "STARTED_ELSEWHERE:"')]),
+     [('    _need(kind, first["record"] == marker_view(record),\n',
+       "    _need(kind, True,\n")]),
+    # Retargeted after the review found the old edit only changed the refusal's
+    # name: a host that meets this approval's marker must not start it again.
+    ("A_STARTED_APPROVAL_STARTS_AGAIN_ON_A_NEW_HOST", START,
+     [("    _need(kind, not start_markers(kind, allowance=allowance, reader=reader),\n",
+       "    _need(kind, True,\n")]),
+    # VM-delta review F2: the marker carried the whole record, and a copy of it
+    # beside an empty root was the start; the live path never asked whether the
+    # branch's export was ahead of the ledger.
+    ("THE_MARKER_CARRIES_THE_WHOLE_RECORD", START,
+     [("            + json.dumps(marker_view(record), indent=1, sort_keys=True) + \"\\n```\\n\")",
+       "            + json.dumps(record, indent=1, sort_keys=True) + \"\\n```\\n\")"),
+      ('    _need(kind, first["record"] == marker_view(record),\n',
+       '    _need(kind, first["record"] == record,\n')]),
+    ("A_LEDGER_MAY_BE_BEHIND_ITS_EXPORT", START,
+     [("    require_not_behind_export(kind, allowance=allowance, checkout=checkout)\n", "")]),
+    # VM-delta review F9: a marker must come from this issue and the owner's account.
+    ("A_MARKER_FROM_ANYWHERE_COUNTS", START,
+     [('                    and comment.get("issue_url") == issue_api and type(user) is dict\n'
+       '                    and user.get("id") == kind.owner_id and user.get("type") == "User"\n',
+       "")]),
+    # VM-delta review F3 and F4: an export only moves forward; a restore never
+    # lands beside a start record.
+    ("AN_EXPORT_BEGINS_A_LEDGER", EXPORT,
+     [('    _need(_started(ledger), "ISSUE_47_MODEL_EXPORT_OF_A_LEDGER_NEVER_STARTED_HERE:" + str(ledger.root))\n',
+       "")]),
+    ("AN_EXPORT_MAY_GO_BACKWARDS", EXPORT,
+     [('        _need(same and type(old_log) is dict and type(old_log.get("size")) is int\n',
+       '        _need(True or same and type(old_log) is dict and type(old_log.get("size")) is int\n')]),
+    ("A_RESTORE_MAY_LAND_BESIDE_A_START", EXPORT,
+     [("    _need(not start.exists() and not start.is_symlink(),\n",
+       "    _need(True or not start.exists() and not start.is_symlink(),\n")]),
+    # VM-delta review F5: a re-approval is not a redraw, and approvals do not
+    # share one export.
+    ("A_RE_APPROVAL_REDRAWS_CLAIMED_REQUESTS", CALLS,
+     [('    _need(not again, "ISSUE_47_MODEL_LEDGER_GRANTS_REQUESTS_ANOTHER_APPROVAL_CLAIMED:"\n',
+       '    _need(True, "ISSUE_47_MODEL_LEDGER_GRANTS_REQUESTS_ANOTHER_APPROVAL_CLAIMED:"\n')]),
+    ("ALL_APPROVALS_SHARE_ONE_EXPORT", CALLS,
+     [('    return MODEL_EXPORT_DIRECTORY + "/" + digest[:16]\n',
+       "    return MODEL_EXPORT_DIRECTORY\n")]),
+    # VM-delta review F9: a read that was redirected is not this issue's comment.
+    ("A_REDIRECTED_READ_IS_TRUSTED", SEC,
+     [('    _need(final == url, "ISSUE_47_GITHUB_READ_WAS_REDIRECTED:" + str(final)[:160])\n', "")]),
     ("THE_START_IGNORES_THE_EXPORT", START,
      [("    _need(kind, not exported_here(kind, allowance=allowance, checkout=checkout),\n",
        "    _need(kind, True,\n")]),
@@ -504,6 +545,7 @@ LEDGER_UNIT = "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaim
 ALLOWANCE_UNIT = "tests.vnext.test_historical_model_calls.TheAllowanceIsVerifiedNotMerelyPresent"
 START_CLASS = "TheLiveLedgerNeedsItsPublishedStart"
 START_UNIT = "tests.vnext.test_historical_model_calls.TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts"
+TRAVEL_UNIT = "tests.vnext.test_historical_model_calls.TheModelLedgerTravelsToTheBranchAndBack"
 EXPECTED = {
     "A_REQUEST_MAY_BE_REDRAWN": COUNTED, "A_SLOT_WITHOUT_A_TERMINAL_DOES_NOT_STOP": COUNTED,
     "HTTP_402_DOES_NOT_STOP": LIVE, "UNKNOWN_USAGE_DOES_NOT_STOP": COUNTED,
@@ -561,7 +603,14 @@ EXPECTED = {
     "THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE": SOCKET,
     "THE_LIVE_LEDGER_SKIPS_THE_START": START_CLASS, "AN_EDITED_START_MARKER_COUNTS": START_CLASS,
     "A_STRANGERS_START_MARKER_COUNTS": START_CLASS, "THE_LATEST_START_MARKER_COUNTS": START_CLASS,
-    "THE_START_MARKER_NEED_NOT_BE_THIS_HOST_S": START_CLASS, "A_LOST_START_IS_NOT_NOTICED": START_CLASS,
+    "THE_START_MARKER_NEED_NOT_BE_THIS_HOST_S": START_CLASS,
+    "A_STARTED_APPROVAL_STARTS_AGAIN_ON_A_NEW_HOST": START_CLASS,
+    "A_FAILED_RECHECK_LEAVES_THE_SLOT_OPEN": LIVE,
+    "THE_MARKER_CARRIES_THE_WHOLE_RECORD": START_CLASS, "A_LEDGER_MAY_BE_BEHIND_ITS_EXPORT": START_CLASS,
+    "A_MARKER_FROM_ANYWHERE_COUNTS": START_UNIT, "AN_EXPORT_BEGINS_A_LEDGER": TRAVEL_UNIT,
+    "AN_EXPORT_MAY_GO_BACKWARDS": TRAVEL_UNIT, "A_RESTORE_MAY_LAND_BESIDE_A_START": START_CLASS,
+    "A_RE_APPROVAL_REDRAWS_CLAIMED_REQUESTS": START_UNIT, "ALL_APPROVALS_SHARE_ONE_EXPORT": START_UNIT,
+    "A_REDIRECTED_READ_IS_TRUSTED": REST_READER,
     "THE_START_IGNORES_THE_EXPORT": START_CLASS, "THE_EXPORT_NAMES_NO_APPROVAL": START_CLASS,
     "THE_MODEL_START_IS_THE_SEC_START": START_UNIT, "THE_REST_READER_READS_ANY_PATH": REST_READER,
 }

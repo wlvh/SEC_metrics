@@ -54,12 +54,62 @@ INJECTIONS = [
      "class": START,
      "expect": "test_an_sec_marker_neither_starts_nor_blocks_the_model_ledger",
      "why": "an SEC marker for the same approval digest would stand in for the model ledger's start"},
-    {"id": "THE_MODEL_EXPORT_IS_THE_SEC_EXPORT",
-     "old": 'MODEL_EXPORT_DIRECTORY = "evidence/issue47_model_calls"\n',
-     "new": 'MODEL_EXPORT_DIRECTORY = "evidence/issue47_acquired"\n',
+    # Retargeted after the model exports moved into one directory per approval:
+    # pointing the model directory at the SEC one no longer collides, so this
+    # points the model start at the SEC index instead.
+    {"id": "THE_MODEL_START_READS_THE_SEC_EXPORT",
+     "old": ('                      export_index=lambda allowance: (model_export_directory(allowance) + "/"\n'
+             '                                                      + MODEL_EXPORT_INDEX),\n'),
+     "new": '                      export_index=lambda allowance: "evidence/issue47_acquired/export.json",\n',
      "class": START,
      "expect": "test_only_the_model_export_blocks_a_model_start",
-     "why": "one ledger's export would block the other ledger's start"},
+     "why": "one ledger's export would block the other ledger's start, and its own would not"},
+    # The VM-delta review (independent-review-2026-09-29-vm/).
+    {"id": "THE_MARKER_CARRIES_THE_WHOLE_RECORD", "file": "scripts/vnext/historical_ledger_start.py",
+     "old": '            + json.dumps(marker_view(record), indent=1, sort_keys=True) + "\\n```\\n")',
+     "new": '            + json.dumps(record, indent=1, sort_keys=True) + "\\n```\\n")',
+     "also": [('    _need(kind, first["record"] == marker_view(record),\n',
+               '    _need(kind, first["record"] == record,\n')],
+     "class": START,
+     "expect": "test_the_marker_does_not_carry_what_the_local_record_needs",
+     "why": "a marker that carries the record can be copied back beside an empty root and be the start (F2)"},
+    {"id": "A_LEDGER_MAY_BE_BEHIND_ITS_EXPORT", "file": "scripts/vnext/historical_ledger_start.py",
+     "old": "    require_not_behind_export(kind, allowance=allowance, checkout=checkout)\n",
+     "new": "",
+     "class": START,
+     "expect": "test_a_ledger_behind_its_export_is_refused",
+     "why": "a host that lost or reset its ledger would count from less than was spent (F2)"},
+    {"id": "A_MARKER_FROM_ANYWHERE_COUNTS", "file": "scripts/vnext/historical_ledger_start.py",
+     "old": ('                    and comment.get("issue_url") == issue_api and type(user) is dict\n'
+             '                    and user.get("id") == kind.owner_id and user.get("type") == "User"\n'),
+     "new": "",
+     "class": START,
+     "expect": "test_a_marker_not_from_this_issue_or_account_does_not_count",
+     "why": "a comment from another issue or account would stand in for the start (F9)"},
+    {"id": "A_RE_APPROVAL_REDRAWS_CLAIMED_REQUESTS",
+     "old": '    _need(not again, "ISSUE_47_MODEL_LEDGER_GRANTS_REQUESTS_ANOTHER_APPROVAL_CLAIMED:"\n',
+     "new": '    _need(True, "ISSUE_47_MODEL_LEDGER_GRANTS_REQUESTS_ANOTHER_APPROVAL_CLAIMED:"\n',
+     "class": START,
+     "expect": "test_a_re_approval_cannot_start_over_requests_another_approval_claimed",
+     "why": "a re-approval would send again the requests an earlier approval already paid for (F5)"},
+    {"id": "ALL_APPROVALS_SHARE_ONE_EXPORT",
+     "old": '    return MODEL_EXPORT_DIRECTORY + "/" + digest[:16]\n',
+     "new": "    return MODEL_EXPORT_DIRECTORY\n",
+     "class": START,
+     "expect": "test_each_approval_exports_into_its_own_directory",
+     "why": "a second approval's export would overwrite the first one's record (F5)"},
+    {"id": "AN_EXPORT_BEGINS_A_LEDGER", "file": EXPORT,
+     "old": '    _need(_started(ledger), "ISSUE_47_MODEL_EXPORT_OF_A_LEDGER_NEVER_STARTED_HERE:" + str(ledger.root))\n',
+     "new": "",
+     "class": TRAVEL,
+     "expect": "test_an_export_of_a_ledger_never_started_here_is_refused",
+     "why": "exporting on a host whose ledger is gone would begin an empty one and record nothing (F3)"},
+    {"id": "AN_EXPORT_MAY_GO_BACKWARDS", "file": EXPORT,
+     "old": '        _need(same and type(old_log) is dict and type(old_log.get("size")) is int\n',
+     "new": '        _need(True or same and type(old_log) is dict and type(old_log.get("size")) is int\n',
+     "class": TRAVEL,
+     "expect": "test_an_export_only_moves_forward",
+     "why": "a shorter ledger's export would be written over the record of what was spent (F3)"},
     {"id": "MODEL_REGISTRATION_COMPARES_THE_RAW_BODY",
      "old": '    _need(posted_text(fetched["body"]).encode("utf-8") == proposed,\n',
      "new": '    _need(fetched["body"].encode("utf-8") == proposed,\n',
@@ -80,8 +130,10 @@ INJECTIONS = [
      "expect": "test_an_index_resealed_with_other_counts_is_refused",
      "why": "an index sealed by whoever wrote the archive would say how much was spent"},
     {"id": "VERIFY_SKIPS_THE_LEDGER_S_OWN_SNAPSHOT", "file": EXPORT,
-     "old": "        state = ledger.snapshot()\n",
-     "new": '        state = {"counts": index["counts"], "stopped": index["stopped"],\n'
+     "old": "        # the snapshot is what checks the slots, the claim log and its copy.\n"
+            "        state = ledger.snapshot()\n",
+     "new": "        # the snapshot is what checks the slots, the claim log and its copy.\n"
+            '        state = {"counts": index["counts"], "stopped": index["stopped"],\n'
             '                 "requests": index["requests"]}\n',
      "class": TRAVEL,
      "expect": "test_a_resealed_archive_of_a_truncated_ledger_is_refused_by_the_ledger",
@@ -118,13 +170,14 @@ def _failed_cases(output):
 def main():
     for injection in INJECTIONS:
         text = (REPO / injection.get("file", MODULE)).read_text(encoding="utf-8")
-        found = text.count(injection["old"])
-        if found != 1:
-            print("INJECTION_DID_NOT_APPLY", injection["id"], found)
-            return 2
+        for old, new in [(injection["old"], injection["new"])] + injection.get("also", []):
+            found = text.count(old)
+            if found != 1:
+                print("INJECTION_DID_NOT_APPLY", injection["id"], found)
+                return 2
+            text = text.replace(old, new)
         try:
-            compile(text.replace(injection["old"], injection["new"]),
-                    injection.get("file", MODULE), "exec")
+            compile(text, injection.get("file", MODULE), "exec")
         except SyntaxError as error:
             print("INJECTED_SOURCE_DOES_NOT_COMPILE", injection["id"], error)
             return 2
@@ -132,9 +185,11 @@ def main():
     for injection in INJECTIONS:
         path = REPO / injection.get("file", MODULE)
         original = path.read_bytes()
+        edited = original.decode("utf-8")
+        for old, new in [(injection["old"], injection["new"])] + injection.get("also", []):
+            edited = edited.replace(old, new)
         try:
-            path.write_text(original.decode("utf-8").replace(injection["old"], injection["new"]),
-                            encoding="utf-8")
+            path.write_text(edited, encoding="utf-8")
             run = subprocess.run([sys.executable, "-m", "unittest", injection["class"]], cwd=REPO, env=_isolated_env(),
                                  capture_output=True, text=True, timeout=1800)
         finally:

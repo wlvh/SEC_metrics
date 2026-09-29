@@ -25,7 +25,9 @@ through register_model_approval and model_allowance - the functions the live
 path uses - and every proposed request must be inside a grant that names it,
 while each neighbouring position is refused, a request of one granted position
 asked at another is refused, and a digest no grant names is refused at every
-granted position. A proposal the gate would not accept is not written.
+granted position. A proposal the gate would not accept is not written, and neither is one naming a
+request an earlier approval's committed export already claimed (the start
+would refuse it).
 
 Nothing here posts to GitHub, reads the owner's ledger or makes a call.
 
@@ -48,19 +50,37 @@ D02_MEASUREMENT = "docs/evidence/issue47_history/d02-item-8-review/request-measu
 # beside the SEC ledger's and nested in neither.
 LEDGER_ROOT = "/root/.local/state/sec_metrics/issue47-historical-model-cloud-v1"
 # What the approval says about where and how the calls run. The gate does not
-# read it; it is there so the owner approves the place as well as the numbers.
+# read it; it is there so the owner approves the place as well as the numbers,
+# and what the gates there do and do not stop. An independent review of the VM
+# change (independent-review-2026-09-29-vm, F1, F2, F10) found the earlier text
+# overstated both.
 EXECUTION = {
     "host": ("the executor's Claude Code cloud container, by the owner's decision of 2026-09-29 "
              "(issue 47 comment 5882788074)"),
+    "what_the_gates_bind": (
+        "the executor's code path, not the executor: in the container the executor chooses the "
+        "GitHub reader, the proxy and the CA bundle the read-back goes through, and holds the "
+        "provider key, so it could fake a read-back or call the provider without this code. The "
+        "gates guard against accidents and make the owner's decision auditable; the controls "
+        "that bind the executor are outside it: a dedicated provider key with a provider-side "
+        "credit limit, revoked after the run, and the committed exports compared with the "
+        "provider's own usage log"),
     "provider_key": ("DEEPSEEK_API_KEY from the environment's settings, set by the owner; never "
-                     "in the chat, the repository or a comment; it takes effect in a new session"),
-    "durability": ("the ledger root is lost with the container; a start marker on issue 47 makes "
-                   "a second start of this allowance refuse, and the ledger is exported to the "
-                   "branch after each run; a restored ledger is a record and spending more from "
-                   "it is the owner's decision"),
+                     "in the chat, the repository or a comment; it takes effect in a new session. "
+                     "The container's egress proxy re-terminates TLS, so the key, the prompts and "
+                     "the responses are visible to it"),
+    "durability": ("the ledger root and the start record beside it are lost with the container. "
+                   "The start marker on issue 47 carries only a digest of the local record, so "
+                   "a new container cannot rebuild the start from it, and once the branch "
+                   "carries this approval's export a start refuses and the live path refuses a "
+                   "ledger behind it. Before the first export is pushed nothing guards a lost "
+                   "container whose marker is deleted. A restored ledger is a record; spending "
+                   "more from it is the owner's decision, and a re-approval cannot name a "
+                   "request an earlier approval's export claimed"),
     "transport": ("HTTPS to the fixed provider host through the container's egress proxy, which "
                   "re-terminates TLS: the client verifies the proxy's certificate, not the "
-                  "provider's")}
+                  "provider's. 'Verified against GitHub' means as the proxy relayed it; the start "
+                  "record names the reader, the proxy and the CA bundle's digest")}
 # The fixed transport a #47 model allowance must name (historical_model_calls
 # checks every field against its own constants and the adapter's host).
 TRANSPORT = {"provider": "deepseek", "model": "deepseek-flash", "api": "chat_completions",
@@ -159,6 +179,33 @@ def _planned(calls, resolve_period_selection, transport, measured, e01, d02,
     return planned
 
 
+def _claimed_in_committed_exports(calls):
+    """Request digests committed model exports already claimed, by export, and the exports read.
+
+    A request is sent once, whatever came back (no re-draw), so a later
+    approval must not name one an earlier approval claimed; the start refuses
+    such an approval (claimed_by_other_approvals). Every export counts here:
+    the new body's digest is not known until its grants are. An export that
+    cannot be read stops the proposal - it is not evidence that nothing was
+    spent.
+    """
+    from vnext.canonical import strict_json_file
+    base = REPO / calls.MODEL_EXPORT_DIRECTORY
+    claimed, read = {}, []
+    for path in sorted(base.glob("*/" + calls.MODEL_EXPORT_INDEX)) if base.is_dir() else []:
+        where = path.relative_to(REPO).as_posix()
+        read.append(where)
+        try:
+            requests = strict_json_file(path=path)["requests"]
+        except (OSError, ValueError, KeyError, TypeError):
+            raise SystemExit("A_COMMITTED_MODEL_EXPORT_CANNOT_BE_READ:" + where)
+        if type(requests) is not list or not all(type(digest) is str for digest in requests):
+            raise SystemExit("A_COMMITTED_MODEL_EXPORT_CANNOT_BE_READ:" + where)
+        for digest in requests:
+            claimed.setdefault(digest, []).append(where)
+    return claimed, read
+
+
 def _stale_bound_files(receipt):
     """The receipt's bound files that the patch leaves alone and this checkout has changed.
 
@@ -211,6 +258,13 @@ def main():
                        positions)
     if sum(len(digests) for digests in planned.values()) != total:
         raise SystemExit("THE_PLANNED_REQUESTS_ARE_NOT_THE_CAP")
+    # Refused rather than left out: leaving them out changes the cap and the
+    # grants, and today no export exists, so there is no case to design it on.
+    claimed, exports_read = _claimed_in_committed_exports(calls)
+    reused = sorted(digest for digests in planned.values() for digest in digests if digest in claimed)
+    if reused:
+        raise SystemExit("A_PROPOSED_REQUEST_WAS_CLAIMED_UNDER_AN_EARLIER_APPROVAL:"
+                         + ",".join(digest + "@" + ";".join(claimed[digest]) for digest in reused))
     named = {grant["grant"]: [] for grant in GRANTS}
     for (metric, company, end), digests in planned.items():
         named[_covering_grant(metric, company, end)].extend(digests)
@@ -308,6 +362,7 @@ def main():
                 "request_digests_by_grant": {grant["grant"]: grant["request_digests"]
                                              for grant in grants},
                 "model_wiring_receipt_id": receipt["receipt_id"],
+                "committed_model_exports_read": exports_read,
                 "checked_by_the_real_gate_in_a_temporary_tree": {
                     "registered": registered["status"], "requests_inside_a_grant": inside,
                     "what_the_scope_does_not_decide": (

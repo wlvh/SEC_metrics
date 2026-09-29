@@ -159,7 +159,12 @@ STOPS = frozenset({"HTTP_402", "UNKNOWN_REMOTE_OUTCOME", "SOURCE_AUTHENTICITY_FA
                    "USAGE_UNKNOWN", "CONTEXT_REFERENCE_MISMATCH", "CONTEXT_LIMIT",
                    # The transport's own account of the call disagrees with the
                    # bytes it was given: what was sent cannot be trusted.
-                   "TRANSPORT_OBSERVATION_CHANGED"})
+                   "TRANSPORT_OBSERVATION_CHANGED",
+                   # The approval could not be confirmed on GitHub right before
+                   # the socket - changed, gone or unreadable. No socket opened;
+                   # an independent review found this left the slot without a
+                   # terminal, read as an unknown outcome.
+                   "APPROVAL_NOT_CONFIRMED_ON_GITHUB"})
 # Files a call executes that the Requirement's authority does not already list.
 # The files a live call runs through that the controller's authority does not
 # already bind. The allowance's approval checks - the comment URL, its
@@ -1254,9 +1259,54 @@ def live_model_ledger():
 # ------------------------------------------------ a start that outlives the host
 # The model ledger's names for the start shared with the SEC ledger: its own
 # record type, refusal prefix and export index, so neither ledger's marker or
-# export stands in for the other's.
+# export stands in for the other's. Each approval's export has a directory of
+# its own, named by the approval's digest: a second approval - which a re-seal
+# makes necessary - must neither overwrite the first one's record nor be
+# started over requests the first one already claimed (an independent review
+# found both).
 MODEL_EXPORT_DIRECTORY = "evidence/issue47_model_calls"
 MODEL_EXPORT_INDEX = "export.json"
+
+
+def model_export_directory(allowance):
+    """The repository-relative directory this approval's model ledger is exported into."""
+    digest = str(allowance["delegation_body_sha256"])
+    _need(len(digest) == 64 and all(c in "0123456789abcdef" for c in digest),
+          "ISSUE_47_MODEL_EXPORT_NEEDS_AN_APPROVAL_DIGEST")
+    return MODEL_EXPORT_DIRECTORY + "/" + digest[:16]
+
+
+def _model_export_claims(index):
+    """The claim log a model export carries, as bound by its archive."""
+    return index["archive"]["members"]["root/claims.jsonl"]
+
+
+def claimed_by_other_approvals(*, allowance, checkout):
+    """Request digests the checkout's exports of other approvals' model ledgers claimed.
+
+    An export that cannot be read counts as claiming everything: it is not
+    evidence that nothing was spent.
+    """
+    claimed, unreadable = set(), []
+    checkout = Path(checkout)
+    base = checkout / MODEL_EXPORT_DIRECTORY
+    own = model_export_directory(allowance)
+    for index_path in sorted(base.glob("*/" + MODEL_EXPORT_INDEX)) if base.is_dir() else []:
+        if index_path.parent.relative_to(checkout).as_posix() == own:
+            continue
+        try:
+            index = strict_json_file(path=index_path)
+            requests = index["requests"]
+            _need(type(requests) is list and all(type(d) is str for d in requests), "unreadable")
+        except (OSError, ValueError, KeyError, TypeError, HistoricalModelCallError):
+            unreadable.append(index_path.relative_to(checkout).as_posix())
+            continue
+        claimed.update(requests)
+    return claimed, unreadable
+
+
+def _granted_digests(allowance):
+    return {digest for grant in allowance["scope"]["grants"] for digest in grant["request_digests"]}
 
 
 def _model_ledger_paths(root):
@@ -1265,26 +1315,42 @@ def _model_ledger_paths(root):
 
 def _model_start():
     from .historical_ledger_start import LedgerKind
-    from .historical_source_acquisition import ISSUE_NUMBER, TRUSTED_REPOSITORY
+    from .historical_source_acquisition import (ISSUE_NUMBER, TRUSTED_APPROVER_ID,
+                                                TRUSTED_REPOSITORY)
     return LedgerKind(record_type="ISSUE_47_MODEL_LEDGER_START", prefix="ISSUE_47_MODEL_LEDGER",
                       title="Issue #47 model ledger", error=HistoricalModelCallError,
                       ledger_paths=_model_ledger_paths,
-                      export_index=MODEL_EXPORT_DIRECTORY + "/" + MODEL_EXPORT_INDEX,
+                      export_index=lambda allowance: (model_export_directory(allowance) + "/"
+                                                      + MODEL_EXPORT_INDEX),
+                      export_claims=_model_export_claims,
                       repository=TRUSTED_REPOSITORY, issue_number=ISSUE_NUMBER,
-                      requirement_id=REQUIREMENT_ID)
+                      requirement_id=REQUIREMENT_ID, owner_id=TRUSTED_APPROVER_ID)
 
 
 def start_model_ledger(*, allowance, reader, now=None, checkout=None):
-    """Start the model ledger here, once; see historical_ledger_start.start_ledger."""
+    """Start the model ledger here, once; see historical_ledger_start.start_ledger.
+
+    Also refused when this approval grants a request another approval's
+    exported ledger already claimed: a re-approval is not a redraw, and the
+    proposal that makes one leaves such requests out.
+    """
     from .historical_ledger_start import start_ledger
+    checkout = ROOT if checkout is None else checkout
+    claimed, unreadable = claimed_by_other_approvals(allowance=allowance, checkout=checkout)
+    _need(not unreadable, "ISSUE_47_MODEL_LEDGER_ANOTHER_APPROVAL_S_EXPORT_UNREADABLE:"
+          + ",".join(unreadable))
+    again = sorted(_granted_digests(allowance) & claimed)
+    _need(not again, "ISSUE_47_MODEL_LEDGER_GRANTS_REQUESTS_ANOTHER_APPROVAL_CLAIMED:"
+          + ",".join(again[:4]) + ("" if len(again) <= 4 else ",..."))
     return start_ledger(_model_start(), allowance=allowance, reader=reader, now=now,
-                        checkout=ROOT if checkout is None else checkout)
+                        checkout=checkout)
 
 
-def require_published_model_start(*, allowance, reader):
-    """The model ledger was started here and its start is on GitHub, or a named refusal."""
+def require_published_model_start(*, allowance, reader, checkout=None):
+    """The model ledger was started here, its start is on GitHub and it is not behind its export."""
     from .historical_ledger_start import require_published_start
-    return require_published_start(_model_start(), allowance=allowance, reader=reader)
+    return require_published_start(_model_start(), allowance=allowance, reader=reader,
+                                   checkout=ROOT if checkout is None else checkout)
 
 
 def recorded_model_ledger(*, root, allowance):

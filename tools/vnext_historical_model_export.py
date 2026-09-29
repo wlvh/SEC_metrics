@@ -11,10 +11,14 @@ ledger is the owner's decision (historical_ledger_start).
 A process of its own: never the one that sends requests, which may load only
 the code its authorization binds.
 
-  export              the granted ledger into evidence/issue47_model_calls/
+  export              the granted ledger into its approval's own directory under
+                      evidence/issue47_model_calls/, only forward
   verify [--export D] rebuild an export in a scratch root and check it
   restore [--export D]
-                      put a verified export back at the granted root
+                      put a verified export back at the granted root, on a
+                      host that holds no start record for it
+
+Without --export the directory is the granted approval's.
 """
 import argparse
 import json
@@ -24,8 +28,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from vnext.historical_model_calls import (MODEL_EXPORT_DIRECTORY,  # noqa: E402 - path set above
-                                          HistoricalModelCallError, _ledger, model_allowance)
+from vnext.historical_model_calls import (HistoricalModelCallError,  # noqa: E402 - path set above
+                                          _ledger, model_allowance, model_export_directory)
 from vnext.historical_model_export import (export_model_ledger,  # noqa: E402
                                            restore_model_ledger, verify_model_export)
 from vnext.historical_source_export import HistoricalExportError  # noqa: E402
@@ -34,19 +38,21 @@ from vnext.historical_source_export import HistoricalExportError  # noqa: E402
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("command", choices=["export", "verify", "restore"])
-    parser.add_argument("--export", default=str(ROOT / MODEL_EXPORT_DIRECTORY))
+    parser.add_argument("--export")
     args = parser.parse_args(argv)
     try:
+        allowance = model_allowance(repo_root=ROOT) if args.command == "export" or not args.export \
+            else None
+        out = Path(args.export) if args.export else ROOT / model_export_directory(allowance)
         if args.command == "export":
-            allowance = model_allowance(repo_root=ROOT)
             ledger = _ledger(allowance=allowance, root=Path(allowance["budget_root"]), live=True)
-            result = export_model_ledger(ledger=ledger, out_dir=Path(args.export))
+            result = export_model_ledger(ledger=ledger, out_dir=out)
         elif args.command == "verify":
-            index = verify_model_export(export_dir=Path(args.export))
+            index = verify_model_export(export_dir=out)
             result = {"status": "VERIFIED", "export_id": index["export_id"],
                       "counts": index["counts"], "stopped": index["stopped"], "calls": [0, 0, 0]}
         else:
-            result = restore_model_ledger(export_dir=Path(args.export))
+            result = restore_model_ledger(export_dir=out)
     except (HistoricalModelCallError, HistoricalExportError) as error:
         print(json.dumps({"status": "REFUSED", "reason": str(error), "calls": [0, 0, 0]},
                          indent=1))

@@ -1,5 +1,32 @@
 # Issue #47's acquisition chain, exercised before it is authorized
 
+## 2026-09-29, later: what an independent review of the VM change corrected
+
+A separate agent with a fresh context (same model family, not a human)
+reviewed the VM change (`../model-egress/independent-review-2026-09-29-vm/`).
+The SEC ledger starts through the same module as the model ledger, so these
+apply here too:
+
+- **The gates bind the executor's code path, not the executor** (F1). In the
+  container the executor chooses the GitHub reader, the proxy and the CA
+  bundle the read-back goes through (the reviewer made the gate accept a
+  never-posted comment with a three-line fake `gh`), and it could send
+  requests without this code. The gates guard against accidents and make the
+  owner's decision auditable; what the owner can check is what the branch
+  carries - the exported ledger, the request log and the sources.
+- **The marker as first built carried the start record's random number** (F2),
+  so a copy of it beside an empty root matched - "a lost container meets a
+  marker it cannot match" below did not hold. The marker now carries the
+  record's public view and its digest; the number stays in the local record.
+  The live path also refuses a ledger behind the branch's export of it, and an
+  export replaces only its own shorter self (F3).
+- **The approval body is corrected before the owner posts it**: plan revision
+  7 rewrites only the `execution` statement (the cap, the grants and the
+  ledger root are unchanged). New digest `131a720a...02f0`, pinned in
+  `historical_source_acquisition.py`; the `1c537bc3...` body was never posted
+  and is withdrawn. Nothing below changes for the owner except which bytes to
+  post.
+
 ## 2026-09-29: the executor's container runs it; the owner posts one comment
 
 The owner decided that the acquisition runs in the executor's cloud container
