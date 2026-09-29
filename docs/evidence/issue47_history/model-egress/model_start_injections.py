@@ -23,6 +23,10 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+import atexit
+import os
+import shutil
+import tempfile
 
 REPO = Path(__file__).resolve().parents[4]
 MODULE = "scripts/vnext/historical_model_calls.py"
@@ -91,6 +95,22 @@ INJECTIONS = [
 ]
 
 
+def _isolated_env():
+    """The environment for one injected run: bytecode read and written only in a fresh directory.
+
+    Restoring a file's bytes does not restore what runs. The interpreter trusts
+    a cached compile whose recorded source size and whole-second modification
+    time match the file, so an edit of the same size, restored within the same
+    second, leaves the injected bytecode in the checkout's __pycache__ to run
+    in place of the restored source. Measured 2026-09-29: a restored C02
+    reader ran an injection's pattern in the next ordinary test run. No
+    injected run here reads or writes the checkout's __pycache__.
+    """
+    cache = tempfile.mkdtemp(prefix="issue47-injection-pyc-")
+    atexit.register(shutil.rmtree, cache, True)
+    return {**os.environ, "PYTHONPYCACHEPREFIX": cache}
+
+
 def _failed_cases(output):
     return set(re.findall(r"^(?:FAIL|ERROR): (test_\w+)", output, re.M))
 
@@ -115,7 +135,7 @@ def main():
         try:
             path.write_text(original.decode("utf-8").replace(injection["old"], injection["new"]),
                             encoding="utf-8")
-            run = subprocess.run([sys.executable, "-m", "unittest", injection["class"]], cwd=REPO,
+            run = subprocess.run([sys.executable, "-m", "unittest", injection["class"]], cwd=REPO, env=_isolated_env(),
                                  capture_output=True, text=True, timeout=1800)
         finally:
             path.write_bytes(original)

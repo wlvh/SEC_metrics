@@ -64,6 +64,10 @@ NEW_RULE_FILES = (
     # authority, so both roots check it.
     "catalog/r6/D02_legal_disclosures_v2.md",
     "scripts/vnext/historical_board_composition.py",
+    # The board's lead-director role phrase that reader compiles into four of
+    # its patterns: a phrase the source strategy owns for the family, so it
+    # lives in the catalog, and its bytes decide what the reader selects.
+    "catalog/r6/C02_board_composition_terms_v1.json",
     "catalog/r6/C02_board_disclosures_v2.md",
     # E01's content-confirmed successor route: its hash is the Spec's, so the
     # meaning it carries belongs in the rule set.

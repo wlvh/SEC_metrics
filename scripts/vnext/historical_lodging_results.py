@@ -1,6 +1,6 @@
 """B10 and B11 for a pinned annual period, from the filing's own statistics table.
 
-Occupancy and RevPAR are the two metrics this repository answers from a table
+B10 and B11 are the two metrics this repository answers from a table
 in the annual report itself rather than from XBRL. The ordinary route already
 does that deterministically - ``lodging_table_source`` rebuilds the whole table
 set, matches the scope contract against the table's own headers and geometry,

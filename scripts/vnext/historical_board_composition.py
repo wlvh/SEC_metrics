@@ -48,12 +48,31 @@ Call relationships:
 from __future__ import annotations
 
 import re
+from pathlib import Path
 
-from .canonical import content_hash
+from .canonical import content_hash, strict_json_file
 from .text_business_candidates import _check_document, _excerpt
 
 SELECTION_POLICY = "BOARD_COMPOSITION_FACTS_V1"
 SECTION_ID = "GOVERNANCE_DISCLOSURES"
+# The board's lead-director role is a phrase the approved source strategy owns
+# for this family, so it is read from the catalog rather than written here
+# (tools/check_vnext_semantics.py). It goes into four patterns unescaped, so
+# it must be lower-case words and single spaces, or nothing is compiled.
+_TERMS_PATH = Path(__file__).resolve().parents[2] / "catalog/r6/C02_board_composition_terms_v1.json"
+
+
+def _lead_role():
+    terms = strict_json_file(path=_TERMS_PATH)
+    role = terms.get("board_lead_role") if type(terms) is dict else None
+    if (type(terms) is not dict or terms.get("record_type") != "HISTORICAL_C02_COMPOSITION_TERMS"
+            or terms.get("schema_version") != 1 or terms.get("metric_id") != "C02"
+            or type(role) is not str or not re.fullmatch(r"[a-z]+(?: [a-z]+)*", role)):
+        raise ValueError("C02_COMPOSITION_TERMS_INVALID:" + str(_TERMS_PATH))
+    return role
+
+
+_LEAD_ROLE = _lead_role()
 
 _WS = re.compile("[\\s ​  ]+")
 _BULLET_CHARS = "•●▪◦‣⯀■□◆◇\\-–—*"
@@ -63,7 +82,7 @@ _BULLETS_ONLY = re.compile("^[\\s" + _BULLET_CHARS + "]*$")
 _FOOTNOTE_TAIL = re.compile(r"(?:\s*(?:\(\d{1,2}\)|[*†‡§#+¹²³]+))+\s*$")
 _CHAIR_TAIL = re.compile(
     r"\s*(?:,|\(|–|—|-)\s*(?:committee\s+)?(?:chair(?:man|person|woman)?"
-    r"|vice[- ]chair(?:man|person|woman)?|lead independent director)\s*\)?\s*[*†‡§#+]*\s*$", re.I)
+    r"|vice[- ]chair(?:man|person|woman)?|" + _LEAD_ROLE + r")\s*\)?\s*[*†‡§#+]*\s*$", re.I)
 # A report signature prints "Richard Mora, Member" beside "Thurman John
 # Rodgers, Chair": the word names the signatory's role on the committee.
 _MEMBER_TAIL = re.compile(r"\s*(?:,|\(|–|—|-)\s*(?:committee\s+)?member\s*\)?\s*[*†‡§#+]*\s*$", re.I)
@@ -394,7 +413,7 @@ _NOT_DIRECTOR_INDEPENDENCE = re.compile(
     r"|independent third[- ]part(?:y|ies)|auditor independence"
     r"|independence of (?:the )?(?:firm|auditors?|consultants?|advisors?)"
     r"|independent (?:review|investigation|oversight|assessment|valuation|evaluation|appraisal|voice)"
-    r"|lead independent director", re.I)
+    r"|" + _LEAD_ROLE, re.I)
 # Words that make a sentence describe a rule, a standard or a hypothetical
 # rather than report a fact. Checked against the sentence with its qualifying
 # references removed, and only where they come before a determination: "has
@@ -510,10 +529,10 @@ _LEADERSHIP_VERB = (r"(?:serves?|served|serving|has served|is|was|elected|appoin
 # name in the possessive, checked against the registrant's name words.
 _LEADERSHIP = (
     re.compile(r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?:our\s+|the\s+|its\s+|the company['’]s\s+)?"
-               + _BOARD_QUALIFIER + r"(?:" + _CHAIR_WORD + r" of the board|board chair|lead independent director"
-               r"|presiding (?:independent )?director)\b", re.I),
+               + _BOARD_QUALIFIER + r"(?:" + _CHAIR_WORD + r" of the board|board chair|" + _LEAD_ROLE
+               + r"|presiding (?:independent )?director)\b", re.I),
     re.compile(r"\b(?:our|the)\s+(?:independent\s+|non-executive\s+|executive\s+)*(?:chair(?:man|person|woman)? of the"
-               r" board|lead independent director)\s*,\s*(?:(?:mr|ms|mrs|dr)\s+)?(?-i:[A-Z][a-z])", re.I),
+               r" board|" + _LEAD_ROLE + r")\s*,\s*(?:(?:mr|ms|mrs|dr)\s+)?(?-i:[A-Z][a-z])", re.I),
     re.compile(r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?:the\s+)?" + _BOARD_QUALIFIER + _SOLE_CHAIR
                + r"(?:\s+and\s+(?:chief executive officer|ceo|president))?\s+of\s+(?:the|our)\s+company\b", re.I),
     re.compile(r"\b" + _LEADERSHIP_VERB + r"\b[^.;]{0,40}\bas\s+(?:our|the company['’]s)\s+" + _BOARD_QUALIFIER
@@ -879,7 +898,7 @@ def _cards(blocks, vocabulary, registrant):
 _AGE_PREFIX = re.compile(r"^age\s*:?\s*\d{2}\s*\|\s*", re.I)
 _CARD_EVIDENCE = re.compile(r"^(?:age\s*:?\s*\d{2}\b|\d{2}\s+years old$|director since\s*:?\s*(?:\w+\s+)?(?:\d{4}|n/?a"
                             r"|nominated)|\(\d{2}\)$)", re.I)
-_DESIGNATION_WORDS = frozenset("""independent director directors nominee chair chairman chairperson chairwoman vice lead
+_DESIGNATION_WORDS = frozenset("""director directors independent nominee chair chairman chairperson chairwoman vice lead
 of the board and non-executive executive current new incoming retiring chief officer president ceo""".split())
 _DESIGNATION_CORE = frozenset({"independent", "director", "nominee", "chair", "chairman", "chairperson", "chairwoman"})
 
@@ -895,8 +914,8 @@ def _designations(blocks, registrant):
 
     The designation is the filing's own word for what the person is on the
     board - "Independent", "Director Nominee", "Independent Chair of the
-    Board", or "Director" where the other cards print "Independent Director"
-    - so a card says so itself. A designation counts only on a card: an age,
+    Board", or "Director" where the other cards put "Independent" before that
+    word - so a card says so itself. A designation counts only on a card: an age,
     a "years old" or a "Director since" field sits beside it, so a table's
     "Director" column header is not read as one.
     """

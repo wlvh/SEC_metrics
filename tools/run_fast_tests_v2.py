@@ -359,6 +359,9 @@ FAST_TESTS += ("tests.vnext.test_c02_core_fact_reach",)
 FAST_TESTS += ("tests.vnext.test_source_tier_split",)
 # C02 composition facts: synthetic structures, one rule per case.
 FAST_TESTS += ("tests.vnext.test_historical_board_composition",)
+# #47's own files against the family-owned phrase list; CI runs no
+# repository-wide semantic audit, and nine phrases had crept in unseen.
+FAST_TESTS += ("tests.vnext.test_historical_business_literals",)
 # C02 composition facts on the ten saved governance filings, both directions.
 SOURCE_TESTS += ("tests.vnext.test_historical_board_composition_filings",)
 # D02's Item 8 review: the contract on synthetic documents (no filing, well

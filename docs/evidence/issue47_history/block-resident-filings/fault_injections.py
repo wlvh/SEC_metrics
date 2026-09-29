@@ -9,7 +9,28 @@ interrupted run leaves no injection behind.
 """
 import json, shutil, subprocess, sys
 from pathlib import Path
+import atexit
+import os
+import tempfile
 REPO = Path(__file__).resolve().parents[4]
+
+
+def _isolated_env():
+    """The environment for one injected run: bytecode read and written only in a fresh directory.
+
+    Restoring a file's bytes does not restore what runs. The interpreter trusts
+    a cached compile whose recorded source size and whole-second modification
+    time match the file, so an edit of the same size, restored within the same
+    second, leaves the injected bytecode in the checkout's __pycache__ to run
+    in place of the restored source. Measured 2026-09-29: a restored C02
+    reader ran an injection's pattern in the next ordinary test run. No
+    injected run here reads or writes the checkout's __pycache__.
+    """
+    cache = tempfile.mkdtemp(prefix="issue47-injection-pyc-")
+    atexit.register(shutil.rmtree, cache, True)
+    return {**os.environ, "PYTHONPYCACHEPREFIX": cache}
+
+
 T = "tests.vnext.test_historical_filing_inventory"
 INJECTIONS = [
  ("COMPANY_FACTS_PROVES_THE_TARGET_AGAINST_THE_MAIN_INDEX", "scripts/vnext/historical_results.py",
@@ -53,7 +74,7 @@ for name, path, old, new, tests in INJECTIONS:
     assert text.count(old) == 1, (name, text.count(old))
     try:
         target.write_text(text.replace(old, new), encoding="utf-8")
-        run = subprocess.run([sys.executable, "-m", "unittest", *tests], cwd=REPO,
+        run = subprocess.run([sys.executable, "-m", "unittest", *tests], cwd=REPO, env=_isolated_env(),
                              capture_output=True, text=True, timeout=2400)
         tail = run.stderr.strip().splitlines()
         failed = sorted({line.split(" (")[0].replace("FAIL: ", "").replace("ERROR: ", "")

@@ -41,6 +41,47 @@ def _selected(texts, **kwargs):
     return {c["block_index"]: c["labels"] for c in proposal["candidates"]}
 
 
+class TheLeadRoleIsReadFromTheCatalog(unittest.TestCase):
+    """The lead-director role phrase lives in the catalog; four patterns carry it.
+
+    It is one of the phrases the approved source strategy owns for this
+    family, which executable code may not spell (tools/check_vnext_semantics).
+    It goes into the patterns unescaped, so the reader refuses a phrase that
+    could change a pattern's shape rather than its words.
+    """
+
+    def test_the_four_patterns_carry_the_catalog_s_phrase(self):
+        import json
+        from vnext import historical_board_composition as reader
+        terms = json.loads(reader._TERMS_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(terms["board_lead_role"], reader._LEAD_ROLE)
+        for pattern in (reader._CHAIR_TAIL, reader._NOT_DIRECTOR_INDEPENDENCE, *reader._LEADERSHIP[:2]):
+            self.assertIn(reader._LEAD_ROLE, pattern.pattern)
+        self.assertTrue(reader._LEADERSHIP[0].search("She serves as our " + reader._LEAD_ROLE + "."))
+
+    def test_terms_that_could_reshape_a_pattern_are_refused(self):
+        import json
+        import tempfile
+        from unittest.mock import patch
+        from vnext import historical_board_composition as reader
+        good = json.loads(reader._TERMS_PATH.read_text(encoding="utf-8"))
+        cases = {"a group": {**good, "board_lead_role": "lead (independent) director"},
+                 "an alternation": {**good, "board_lead_role": "lead director|chair"},
+                 "capitals": {**good, "board_lead_role": "Lead Independent Director"},
+                 "another metric": {**good, "metric_id": "C03"},
+                 "another record": {**good, "record_type": "SOMETHING_ELSE"}}
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "terms.json"
+            for name, terms in cases.items():
+                path.write_text(json.dumps(terms), encoding="utf-8")
+                with self.subTest(case=name), patch.object(reader, "_TERMS_PATH", path):
+                    with self.assertRaisesRegex(ValueError, "C02_COMPOSITION_TERMS_INVALID"):
+                        reader._lead_role()
+            path.write_text(json.dumps(good), encoding="utf-8")
+            with patch.object(reader, "_TERMS_PATH", path):
+                self.assertEqual(good["board_lead_role"], reader._lead_role())
+
+
 class ANameIsTheWholeBlock(unittest.TestCase):
 
     def test_names_as_proxies_print_them(self):

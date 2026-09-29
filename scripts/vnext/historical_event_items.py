@@ -35,9 +35,10 @@ Spec, and every acceptance bound to a Spec, is a different one.
 The heading is found in the frozen ``_visible_text`` view of the primary bytes,
 so a reader can rebuild the same span from the same bytes. A heading is an
 ``Item x.yy`` occurrence followed by a capitalised word and not introduced by a
-word that makes it a reference ("into this Item 2.03", "under Item 1.01") or by
-an opening quotation mark. Consecutive headings of one item ("Item 5.02" then
-"Item 5.02(b)") are one item. An item that cannot be located, or that is headed
+word that makes it a reference ("into this Item 2.03", or "under" before an item's
+name) or by an opening quotation mark. Consecutive headings of one item - its
+number, then the same number with a lettered part, as 5.02 and 5.02(b) - are one
+item. An item that cannot be located, or that is headed
 twice with another item between, stops the answer by name: an unread item
 never counts and never silently fails to count.
 

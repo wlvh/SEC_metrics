@@ -1,7 +1,7 @@
 """B13 at a pinned period, where the approved definition puts the company outside it.
 
-The approved definition names B13's companies in its own heading - "B13
-Capacity utilization (Ford / Enphase)" in 02_指标定义_SEC_10公司单年指标.md - and
+The approved definition names B13's companies in its own heading - the B13
+entry of 02_指标定义_SEC_10公司单年指标.md lists the two in parentheses - and
 for every other company the ordinary route answers without reading a filing:
 capacity_run builds an N_A_STRUCTURAL text result with reason
 TRAIT_NOT_APPLICABLE from the latest annual input, under category
