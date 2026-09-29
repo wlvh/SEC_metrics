@@ -1,0 +1,47 @@
+{
+ "record_type": "ISSUE_47_OWNER_DECISIONS",
+ "schema_version": 1,
+ "recorded_by": "the executor, transcribing; not a GitHub comment by the owner",
+ "source": "the owner's answers in the Claude Code session on 2026-09-29 (UTC) to two questions the executor asked after explaining why the plan had the owner run the SEC acquisition and the model calls on the owner's machine",
+ "issue_comment": {
+  "url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5882788074",
+  "posted_by": "the executor through this session's GitHub integration; it says in its own text that it is a transcription"
+ },
+ "what_this_record_is_not": "an SEC or model-call allowance, a security-review pass, or a grant of Ready, merge, adoption, deployment or active switch. No gate reads it.",
+ "questions_and_answers_verbatim": {
+  "SEC 获取在哪里执行？": "问题不大，所有任务都在你虚拟机跑。",
+  "模型调用在哪里执行？": "问题不大，所有任务都在你虚拟机跑。你需要DeepSeek api的时候告诉我"
+ },
+ "costs_stated_before_the_answer": [
+  "the executor both spends the allowance and holds the count; a record on GitHub makes a change visible, not impossible - weaker than a ledger on the owner's machine",
+  "the session's egress proxy re-terminates TLS, so the client verifies the proxy's certificate rather than SEC's and the saved bytes pass through Anthropic's proxy; every acquisition record states the transport",
+  "the approval body names the ledger root on the owner's machine and has to be rewritten; the executor must not create a same-named directory in the container to pass the gate's path comparison",
+  "requests leave from a shared egress address; if SEC throttles it the run stops by name at a 403 or 429, never beyond the cap, and may take more than one run"
+ ],
+ "checked_before_the_answer": {
+  "egress_policy": "the session's proxy answered '200 Connection Established' to CONNECT requests for www.sec.gov, data.sec.gov and api.deepseek.com; nothing was sent to SEC or to the provider",
+  "provider_key_in_environment": false,
+  "egress_receipt_binds_a_machine": false
+ },
+ "decisions": {
+  "SEC_ACQUISITION_RUNS_IN_THE_EXECUTOR_VM": {
+   "changes": [
+    "the ledger root moves into the VM; the new approval body names it",
+    "a one-time start marker: when the ledger is initialized the executor writes a random number beside it and posts a marker comment carrying that number on issue 47; the live path reads issue 47's comments from GitHub whenever it opens a session and refuses unless the earliest marker for this approval is unedited, written with OWNER association and carries the local number - so a lost container, or a local ledger deleted together with the files beside it, cannot start the allowance again; resumption is the owner's decision",
+    "after each company the executor exports the ledger and the acquired sources and commits and pushes them",
+    "the approval comment is read through GitHub's REST API where gh is absent; gh is still used where it exists",
+    "the proposal tool regenerates the approval body: the cap [0, 0, 1354] and every grant unchanged, only the ledger root changed, with the execution environment and the durability stated; the owner still posts it byte for byte"
+   ]
+  },
+  "MODEL_CALLS_RUN_IN_THE_EXECUTOR_VM": {
+   "changes": [
+    "model calls run in the VM, with their ledger root in the VM and the same start marker",
+    "the executor tells the owner when the provider key is needed",
+    "section 3 of the 2026-09-28 contract change: the re-seal before any real call is done by the executor in the VM instead of by the owner on the owner's machine"
+   ],
+   "unchanged": "the call application's decisions and the owner's posted approval are still required before any call"
+  }
+ },
+ "unchanged_boundaries": "the SEC cap and grants; the approval is posted by the owner; no gate check is relaxed; #28's workspace, ledger, allowance and runtime packages stay separate; PR 52 does not merge into task/b06-new-source; no Ready, merge, adoption, deployment or active switch",
+ "production_authorized": false
+}
