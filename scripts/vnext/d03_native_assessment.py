@@ -198,7 +198,7 @@ def _recorded_company_review(*, source, assessment):
 
 
 def collect_recorded_assessments(*, company_id, ledger,
-                                 include_company_review=False):
+                                 include_company_review=False, source_root=None):
     """Read the exact complete current request set; grant no company result.
 
     This collection is a point-in-time view of an already initialized test
@@ -217,12 +217,16 @@ def collect_recorded_assessments(*, company_id, ledger,
     need(type(include_company_review) is bool,
          'D03_COMPANY_REVIEW_SELECTION_INVALID')
     _require_d03_recorded_ledger(ledger)
+    need(source_root is None or Path(source_root).resolve() == ledger.root/'source-inputs',
+         'D03_RECORDED_SOURCE_ROOT_NOT_LEDGER_OWNED')
     need((ledger.root/'binding.json').is_file(),
          'D03_RECORDED_LEDGER_NOT_INITIALIZED')
     requirement = load_requirement_snapshot(
         snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
     with request_construction_session(requirement):
-        prepared = prepare_d03_replay_only_requests(company_id=company_id)
+        prepared = prepare_d03_replay_only_requests(company_id=company_id,
+            source_root=source_root,
+            source_ledger=ledger if source_root is not None else None)
         need(bool(prepared) and all(row.source_bytes == prepared[0].source_bytes
             and row.requirement['requirement_closure_hash'] ==
                 requirement['requirement_closure_hash'] for row in prepared),

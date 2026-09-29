@@ -37,12 +37,20 @@ def _response_schema(policy):
     return obj({'request_id':text,'units':array(unit)})
 
 
-def prepare_regulatory_semantic_source(*,repo_root:Path,company_id:str,request_context_format=None):
+def prepare_regulatory_semantic_source(*,repo_root:Path,company_id:str,request_context_format=None,
+                                       ordinary_registered=False):
     # The inherited assembler makes no D04 conclusion; reuse its complete
     # original annual/amendment text and native-object reconstruction.
-    original=prepare_d04_semantic_source(repo_root=repo_root,company_id=company_id)
+    original=prepare_d04_semantic_source(repo_root=repo_root,company_id=company_id,
+                                         ordinary_registered=ordinary_registered)
     policy=strict_json_file(path=ROOT/POLICY_PATH)
-    _need(strict_json_file(path=repo_root/POLICY_PATH)==policy,'D03_INSTALLED_POLICY_CHANGED')
+    installed = repo_root/POLICY_PATH
+    # The acquisition root owns source bytes, not this V14 execution rule.
+    # If an external processing copy carries the rule, it must be identical.
+    _need((ordinary_registered and repo_root != ROOT
+           and not installed.exists() and not installed.is_symlink())
+          or strict_json_file(path=installed)==policy,
+          'D03_INSTALLED_POLICY_CHANGED')
     pattern=re.compile(policy['candidate_pattern'],re.I)
     documents=[]
     for doc in original['documents']:
@@ -62,6 +70,10 @@ def prepare_regulatory_semantic_source(*,repo_root:Path,company_id:str,request_c
         from .continuous_request_context import FORMAT_VERSION
         _need(request_context_format == FORMAT_VERSION, 'D03_CONTEXT_FORMAT_UNSUPPORTED')
         body['request_context_format'] = FORMAT_VERSION
+    if ordinary_registered:
+        # Current-source preparation is an offline successor only. Carry the
+        # stop in immutable source/request identity, not just a mutable object.
+        body['external_replay_only'] = True
     return {**body,'semantic_source_id':content_hash(value=body)}
 
 
@@ -103,6 +115,8 @@ def requests_from_source(source):
             'policy_sha256':sha256_file(path=ROOT/POLICY_PATH),'provider_request_sent':False,
             'provider_tokens_measured':False,'production_authorized':False}
         body['source_statement_facts'] = facts
+        if source.get('external_replay_only'):
+            body['external_replay_only'] = True
         if context_format is not None:
             body['request_context_format'] = context_format
         if body['source_statement_facts']:

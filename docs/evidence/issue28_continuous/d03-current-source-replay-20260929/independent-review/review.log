@@ -1,0 +1,13 @@
+review_sha=63dad2a2e7b683d3f124c809509d09761dfc572f
+parent_sha=79468174f1ad168a1dee7dd1e3e01903790b962a
+scope=scripts/vnext/continuous_semantic_calls.py,scripts/vnext/r6_regulatory_semantics.py,scripts/vnext/d03_native_assessment.py,tests/vnext/test_d03_current_source_replay.py,tools/run_fast_tests_v2.py,requirements/issue_28_v14/baseline_manifest.json,docs/evidence/issue28_continuous/d03-current-source-replay-20260929/
+directed_command=PYTHONPATH=scripts /private/tmp/issue28_py314_venv/bin/python -m unittest -v tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest
+directed_result=Ran 1 test in 39.924s; OK; exit 0
+manifest_hashes=three changed source files match execution_authority and applicable new_rule_files entries
+binding_check=validate_execution_authority PASS; validate_semantic_rule_bindings PASS; validate_wiring_receipt PASS
+requirement_closure_hash=sha256:7cf19f62e7c84656dc2d1fb2f06cbcaa7a1d501b90d9e9dd372c54a7148f6a5c
+diff_check=git diff --check PASS
+submitted_compatibility_log=5 tests passed in 107.381s; read only
+submitted_material_log=3 tests passed in 157.970s; read only
+submitted_fast_log=141 selectors passed in 95.828s; read only
+verdict=PASS_LIMITED

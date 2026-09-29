@@ -1,0 +1,44 @@
+{
+  "record_type": "D03_CURRENT_SOURCE_REPLAY_FINAL_TREE",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "tested_tree_base_commit": "79468174f1ad168a1dee7dd1e3e01903790b962a",
+  "uncommitted_tracked_paths": [
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json",
+    "docs/evidence/issue28_continuous/continuation.md",
+    "docs/evidence/issue28_continuous/execution-state.json",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json",
+    "requirements/issue_28_v14/baseline_manifest.json",
+    "scripts/vnext/continuous_semantic_calls.py",
+    "scripts/vnext/d03_native_assessment.py",
+    "scripts/vnext/r6_regulatory_semantics.py",
+    "tools/run_fast_tests_v2.py"
+  ],
+  "requirement_closure_hash": "sha256:7cf19f62e7c84656dc2d1fb2f06cbcaa7a1d501b90d9e9dd372c54a7148f6a5c",
+  "file_sha256": {
+    "scripts/vnext/continuous_semantic_calls.py": "db52f2c8e887564442687aa75fa1dcb18c4d7452610091d8ef471cae03502979",
+    "scripts/vnext/r6_regulatory_semantics.py": "abbbc30768e180a81c4d4fbd8d686f8ad269ecf0b775a6b37be3eced81350287",
+    "scripts/vnext/d03_native_assessment.py": "2a856d19c5f68f297cf5fc36ff5109f66968d3b6b61f7826ec7c11d1d1b2b45f",
+    "requirements/issue_28_v14/baseline_manifest.json": "32c2ec77aebfe2f68ca1a1bf1c8c5571b8fa7f1593d852f05da6558b10c0e0ab",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json": "bfd37fec8bec248db546042b3e72903e95980ec7c8593b66a4ff62bc0f734c99",
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json": "d2006d25171cf8d8dd1be3662a84205afede1bd57b1529a543fff3329302b877",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json": "556732882790435f0a73ee914ffd968f82bc3a67127672ad069946ab6e13c334",
+    "tests/vnext/test_d03_current_source_replay.py": "5823f79c6e1ada9de28999084fea2aa5e0a270501f43ba27e69946447c19f662",
+    "tools/run_fast_tests_v2.py": "b22c174186ed4c3bbd632ac9aab292ed9d42b436b9dadac92ebf4e2421ed78b4"
+  },
+  "v13_manifest_unchanged": true,
+  "test_exits": {
+    "test": 0,
+    "compat": 0,
+    "fast": 0,
+    "material-compat": 0
+  },
+  "recorded_test_only": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "native_company_result_created": false,
+  "production_authorized": false
+}
