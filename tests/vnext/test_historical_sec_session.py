@@ -60,6 +60,12 @@ from vnext.ordinary_source_authority import checkpoint_installation
 from sec_urls import submissions_file_url, submissions_url
 
 
+def _tip(checkout=ROOT):
+    """What the branch tip carries, for a case whose checkout is at the tip: its export index."""
+    path = Path(checkout) / "evidence/issue47_acquired/export.json"
+    return path.read_bytes() if path.is_file() else None
+
+
 def _load_tool(name, relative):
     """Import a ``tools/`` entry point by path; the directory is not a package."""
     spec = importlib.util.spec_from_file_location(name, ROOT / relative)
@@ -468,7 +474,8 @@ class TheGrantedPathIsSeparateFromTheTestPath(unittest.TestCase):
                     patch("vnext.historical_sec_session.SecHttpClient",
                           side_effect=AssertionError("a transport was built")):
                 with self.assertRaises(HistoricalAcquisitionError) as caught:
-                    live_historical_session()
+                    live_historical_session(branch_tip=lambda: self.fail(
+                        "the branch was read before the allowance refused"))
         self.assertIn("ISSUE_47_SEC_ALLOWANCE_NOT_GRANTED", str(caught.exception))
         self.assertIn(POLICY_PATH, str(caught.exception))
 
@@ -2575,7 +2582,7 @@ class TheRunSummaryIsWrittenWholeOrNotAtAll(unittest.TestCase):
         rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER[:2]]
         session = _ScriptedPasses(self, frames=[rows]).session()
         cli = self._cli()
-        with patch.object(cli, "live_historical_session", lambda: session), \
+        with patch.object(cli, "live_historical_session", lambda **kwargs: session), \
                 patch.object(cli, "_companies", lambda args: [_SCRIPTED_COMPANY]):
             _, result = cli._acquire(self._args())
         written = strict_json_file(path=Path(result["summary_path"]))
@@ -2588,7 +2595,7 @@ class TheRunSummaryIsWrittenWholeOrNotAtAll(unittest.TestCase):
         session = _ScriptedPasses(self, frames=[[]]).session()
         cli = self._cli()
         unwritable = {"cumulative": {"counts": [0, 0, 0]}, "value": object()}
-        with patch.object(cli, "live_historical_session", lambda: session), \
+        with patch.object(cli, "live_historical_session", lambda **kwargs: session), \
                 patch.object(cli, "_companies", lambda args: [_SCRIPTED_COMPANY]), \
                 patch.object(type(session), "acquire", lambda self, **kwargs: unwritable):
             with self.assertRaises(TypeError) as caught:
@@ -3239,6 +3246,78 @@ class ALedgerCannotBeResetByDeletingIt(unittest.TestCase):
                           "UNKNOWN_REMOTE_OUTCOME"], [item["reason"] for item in blocked])
 
 
+
+class TheResumeIsHandedTheBranchTipThroughGit(unittest.TestCase):
+    """The resume command reads the export index at the upstream tip, fetched when it runs.
+
+    What the 2026-09-29 loss did to the checkout: a snapshot restore reset it
+    to a commit hours older than the branch. These run git against a local
+    bare remote; nothing leaves the machine.
+    """
+
+    INDEX = "evidence/issue47_acquired/export.json"
+
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location("issue47_sec_cli",
+                                                      ROOT / "tools/vnext_historical_sec.py")
+        self.cli = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.cli)
+        self.base = Path(tempfile.mkdtemp(prefix="issue47-branch-tip-"))
+        self.addCleanup(shutil.rmtree, self.base, ignore_errors=True)
+
+    def _git(self, cwd, *arguments):
+        subprocess.run(["git", "-c", "user.name=issue47-test", "-c", "user.email=test@invalid",
+                        "-c", "init.defaultBranch=main", *arguments],
+                       cwd=cwd, check=True, capture_output=True, text=True)
+
+    def _commit(self, clone, body):
+        (clone / self.INDEX).parent.mkdir(parents=True, exist_ok=True)
+        (clone / self.INDEX).write_bytes(body)
+        self._git(clone, "add", self.INDEX)
+        self._git(clone, "commit", "-m", "export")
+        self._git(clone, "push", "-q", "origin", "HEAD:main")
+
+    def test_a_checkout_behind_the_branch_is_handed_the_branch_s_newer_export(self):
+        remote = self.base / "remote.git"
+        self._git(self.base, "init", "-q", "--bare", str(remote))
+        writer, stale = self.base / "writer", self.base / "stale"
+        self._git(self.base, "clone", "-q", str(remote), str(writer))
+        self._commit(writer, b'{"export": 1}\n')
+        self._git(self.base, "clone", "-q", str(remote), str(stale))
+        self._commit(writer, b'{"export": 2}\n')
+        with patch.object(self.cli, "ROOT", stale):
+            with self.assertRaises(HistoricalAcquisitionError) as caught:
+                self.cli._branch_tip()
+        self.assertIn("ISSUE_47_CHECKOUT_BEHIND_THE_BRANCH_TIP", str(caught.exception))
+        self._git(stale, "merge", "-q", "--ff-only", "origin/main")
+        with patch.object(self.cli, "ROOT", stale):
+            tip = self.cli._branch_tip()
+        self.assertEqual(b'{"export": 2}\n', tip["export_index"], "fetched, not a stale ref")
+        head = subprocess.run(["git", "-C", str(writer), "rev-parse", "HEAD"],
+                              capture_output=True, text=True, check=True).stdout.strip()
+        self.assertEqual(head, tip["commit"])
+
+    def test_a_tip_with_no_export_hands_none(self):
+        remote = self.base / "remote.git"
+        self._git(self.base, "init", "-q", "--bare", str(remote))
+        clone = self.base / "clone"
+        self._git(self.base, "clone", "-q", str(remote), str(clone))
+        (clone / "README").write_text("x", encoding="utf-8")
+        self._git(clone, "add", "README")
+        self._git(clone, "commit", "-m", "first")
+        self._git(clone, "push", "-q", "-u", "origin", "HEAD:main")
+        with patch.object(self.cli, "ROOT", clone):
+            self.assertIsNone(self.cli._branch_tip()["export_index"])
+
+    def test_a_checkout_with_no_upstream_is_a_refusal(self):
+        alone = self.base / "alone"
+        self._git(self.base, "init", "-q", str(alone))
+        with patch.object(self.cli, "ROOT", alone):
+            with self.assertRaises(HistoricalAcquisitionError) as caught:
+                self.cli._branch_tip()
+        self.assertIn("ISSUE_47_RESUME_BRANCH_UNREADABLE", str(caught.exception))
+
+
 class AnApprovalMustBeReadAsWrittenAndUnedited(unittest.TestCase):
     """The approval the owner read is the one enforced, and it was not changed later.
 
@@ -3363,7 +3442,7 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
         self.assertEqual(marker_view(started["record"]), published)
         self.assertEqual(published, started["view"])
         self.assertNotIn(started["record"]["instance_nonce"], started["marker_comment_body"])
-        verified = SESSION_MODULE.require_published_start(allowance=self.allowance,
+        verified = SESSION_MODULE.require_published_start(branch_export_index=_tip(), allowance=self.allowance,
                                                           reader=self._reader([comment]))
         self.assertEqual(comment["html_url"], verified["marker_url"])
 
@@ -3384,7 +3463,7 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
             with self.subTest(fields=sorted(guess)):
                 path.write_text(json.dumps(guess), encoding="utf-8")
                 with self.assertRaises(HistoricalSessionError) as caught:
-                    SESSION_MODULE.require_published_start(allowance=self.allowance,
+                    SESSION_MODULE.require_published_start(branch_export_index=_tip(), allowance=self.allowance,
                                                            reader=self._reader([marker]))
                 self.assertIn("ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE", str(caught.exception))
 
@@ -3397,7 +3476,7 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
             with self.subTest(field=field, value=value):
                 comment = {**self._comment(record), field: value}
                 with self.assertRaises(HistoricalSessionError) as caught:
-                    SESSION_MODULE.require_published_start(allowance=self.allowance,
+                    SESSION_MODULE.require_published_start(branch_export_index=_tip(), allowance=self.allowance,
                                                            reader=self._reader([comment]))
                 self.assertIn("ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED", str(caught.exception))
 
@@ -3422,29 +3501,29 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                     ledger.mkdir(exist_ok=True)
                     (ledger / "claims.jsonl").write_bytes(held)
                 with self.assertRaises(HistoricalSessionError) as caught:
-                    SESSION_MODULE.require_published_start(allowance=self.allowance,
+                    SESSION_MODULE.require_published_start(branch_export_index=_tip(checkout), allowance=self.allowance,
                                                            reader=marker, checkout=checkout)
                 self.assertIn("ISSUE_47_SEC_LEDGER_BEHIND_ITS_EXPORT", str(caught.exception))
         for held in (claims, claims + b'{"n":3}\n'):
             (ledger / "claims.jsonl").write_bytes(held)
-            SESSION_MODULE.require_published_start(allowance=self.allowance, reader=marker,
+            SESSION_MODULE.require_published_start(branch_export_index=_tip(checkout), allowance=self.allowance, reader=marker,
                                                    checkout=checkout)
         index.write_text("{", encoding="utf-8")
         with self.assertRaises(HistoricalSessionError) as caught:
-            SESSION_MODULE.require_published_start(allowance=self.allowance, reader=marker,
+            SESSION_MODULE.require_published_start(branch_export_index=_tip(checkout), allowance=self.allowance, reader=marker,
                                                    checkout=checkout)
         self.assertIn("ISSUE_47_SEC_LEDGER_EXPORT_UNREADABLE", str(caught.exception))
 
     def test_nothing_is_requested_until_the_marker_is_on_github(self):
         self._start()
         with self.assertRaises(HistoricalSessionError) as caught:
-            SESSION_MODULE.require_published_start(allowance=self.allowance,
+            SESSION_MODULE.require_published_start(branch_export_index=_tip(), allowance=self.allowance,
                                                    reader=self._reader([]))
         self.assertIn("ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED", str(caught.exception))
 
     def test_an_unstarted_ledger_is_refused_by_name(self):
         with self.assertRaises(HistoricalSessionError) as caught:
-            SESSION_MODULE.require_published_start(allowance=self.allowance,
+            SESSION_MODULE.require_published_start(branch_export_index=_tip(), allowance=self.allowance,
                                                    reader=self._reader([]))
         self.assertIn("ISSUE_47_SEC_LEDGER_NOT_STARTED", str(caught.exception))
 
@@ -3490,7 +3569,7 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
         """The marker is on GitHub and the local record is gone - a new container, or a deletion."""
         published = [self._comment(self._other_record())]
         with self.assertRaises(HistoricalSessionError) as caught:
-            SESSION_MODULE.require_published_start(allowance=self.allowance,
+            SESSION_MODULE.require_published_start(branch_export_index=_tip(), allowance=self.allowance,
                                                    reader=self._reader(published))
         self.assertIn("ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE", str(caught.exception))
         with self.assertRaises(HistoricalSessionError) as caught:
@@ -3505,14 +3584,14 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
         earlier = self._comment(self._other_record(), when="2026-09-29T01:00:00Z")
         ours = self._comment(record, when="2026-09-29T02:00:00Z")
         with self.assertRaises(HistoricalSessionError) as caught:
-            SESSION_MODULE.require_published_start(allowance=self.allowance,
+            SESSION_MODULE.require_published_start(branch_export_index=_tip(), allowance=self.allowance,
                                                    reader=self._reader([ours, earlier]))
         self.assertIn("ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE", str(caught.exception))
 
     def test_an_edited_marker_does_not_count(self):
         record = self._start()["record"]
         with self.assertRaises(HistoricalSessionError) as caught:
-            SESSION_MODULE.require_published_start(
+            SESSION_MODULE.require_published_start(branch_export_index=_tip(), 
                 allowance=self.allowance, reader=self._reader([self._comment(record, edited=True)]))
         self.assertIn("ISSUE_47_SEC_LEDGER_START_MARKER_EDITED", str(caught.exception))
 
@@ -3521,11 +3600,11 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
         stranger_first = self._comment(self._other_record(), association="NONE",
                                        when="2026-09-29T00:30:00Z")
         ours = self._comment(record)
-        SESSION_MODULE.require_published_start(allowance=self.allowance,
+        SESSION_MODULE.require_published_start(branch_export_index=_tip(), allowance=self.allowance,
                                                reader=self._reader([stranger_first, ours]))
         forged = self._comment(record, association="CONTRIBUTOR")
         with self.assertRaises(HistoricalSessionError) as caught:
-            SESSION_MODULE.require_published_start(allowance=self.allowance,
+            SESSION_MODULE.require_published_start(branch_export_index=_tip(), allowance=self.allowance,
                                                    reader=self._reader([forged]))
         self.assertIn("ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED", str(caught.exception))
 
@@ -3533,7 +3612,7 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
         record = self._start()["record"]
         other = self._comment({**record, "delegation_body_sha256": "b" * 64})
         with self.assertRaises(HistoricalSessionError) as caught:
-            SESSION_MODULE.require_published_start(allowance=self.allowance,
+            SESSION_MODULE.require_published_start(branch_export_index=_tip(), allowance=self.allowance,
                                                    reader=self._reader([other]))
         self.assertIn("ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED", str(caught.exception))
 
@@ -3541,8 +3620,12 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
         record = self._start()["record"]
         chatter = [self._comment(None, body="progress note %d" % index) for index in range(100)]
         reader = self._reader(chatter + [self._comment(record)])
-        SESSION_MODULE.require_published_start(allowance=self.allowance, reader=reader)
-        self.assertEqual(2, len(reader.asked))
+        SESSION_MODULE.require_published_start(branch_export_index=_tip(),
+                                               allowance=self.allowance, reader=reader)
+        # Two scans, each past the first page: the resume markers (none here,
+        # which is what lets a started host spend) and then the start markers.
+        self.assertEqual(4, len(reader.asked))
+        self.assertEqual(2, len(set(reader.asked)))
 
     def test_a_ledger_already_at_the_root_is_not_started_over(self):
         for leftover in ("root", "anchor"):
@@ -3574,7 +3657,7 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                 patch.object(SESSION_MODULE, "HistoricalSecSession",
                              side_effect=AssertionError("a session was built")):
             with self.assertRaises(HistoricalSessionError) as caught:
-                live_historical_session()
+                live_historical_session(branch_tip=lambda: {"export_index": _tip()})
         self.assertIn("ISSUE_47_SEC_LEDGER_NOT_STARTED", str(caught.exception))
         # The same path with the start published builds the session.
         SESSION_MODULE.start_ledger(allowance=allowance, reader=reader)
@@ -3588,8 +3671,12 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                       lambda: published), \
                 patch.object(SESSION_MODULE, "SecHttpClient",
                              side_effect=AssertionError("a transport was built")):
-            session = live_historical_session()
+            session = live_historical_session(branch_tip=lambda: {"export_index": _tip()})
         self.assertEqual(Path(allowance["budget_root"]), session.ledger.root)
+        # It keeps the check for every pass, and holds the ledger to the charge
+        # the check verified: none, for a ledger started here.
+        self.assertEqual(0, session.ledger._pinned_reserve)
+        self.assertEqual(0, session.published_check()["reserve_sec_calls"])
         self.assertTrue(session.ledger.live)
 
 
@@ -3650,3 +3737,561 @@ class AReceiptSaysWhichWayItsBytesCame(unittest.TestCase):
         self.addCleanup(shutil.rmtree, ledger.parent, ignore_errors=True)
         receipt = strict_json_file(path=ledger / "calls/0001/sec-receipt.json")
         self.assertEqual({"network": "NONE_RECORDED_RESPONSE"}, receipt["transport"])
+
+
+from vnext import historical_sec_resume as RESUME_MODULE  # noqa: E402
+
+
+class ALostHostResumesFromTheExportAndPaysForWhatItMayHaveSpent(unittest.TestCase):
+    """The container that held the ledger was restored from an older snapshot mid-acquisition.
+
+    What that left, measured on 2026-09-29: the ledger root, its start record
+    and every request after the last pushed export gone; the export on the
+    branch intact; a start the design refuses, because the branch carries this
+    approval's export; and a live path that refuses, because the start record
+    the earliest marker names is gone. Resuming was the owner's decision, and
+    the owner allowed the acquisition to run again. These cases are about the
+    two ways a resume could go wrong without failing: counting from less than
+    was spent, and resuming a ledger that is not the one exported.
+    """
+
+    URL = "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5800000047"
+    DECISION = {"text": "allow the SEC acquisition to run", "received_at": "2026-09-29T12:35:00Z"}
+
+    @classmethod
+    def setUpClass(cls):
+        import sec_http
+        cls.base = Path(tempfile.mkdtemp(prefix="issue47-resume-"))
+        atexit.register(shutil.rmtree, cls.base, ignore_errors=True)
+        cls.root = cls.base / "ledger"
+        cls.checkout = cls.base / "checkout"
+        cls.checkout.mkdir()
+        cls.journal = cls.base / "journal"
+        rows = _rows(_SCRIPTED_COMPANY)
+        cls.annual = sorted((row for row in rows if row["new_acquisition_required"]
+                             and row["dependency_class"] == "ACCESSION_INSTANCE_DISCOVERY"),
+                            key=lambda row: row["source_url"])[:4]
+        cls.events = sorted((row for row in rows if row["new_acquisition_required"]
+                             and row["dependency_class"] == "FISCAL_EVENT_FILING"),
+                            key=lambda row: row["source_url"])[:2]
+        assert len(cls.annual) == 4 and len(cls.events) == 2
+        scope = {"purposes": ["ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"],
+                 "company_ids": [_SCRIPTED_COMPANY],
+                 "dependency_classes": ["ACCESSION_INSTANCE_DISCOVERY", "FISCAL_EVENT_FILING"],
+                 "earliest_report_end": "2021-12-31", "latest_report_end": "2026-01-31"}
+        scope["grants"] = [_whole_envelope(scope)]
+        cls.allowance = {"requirement_id": "issue_47_v1", "budget_root": str(cls.root),
+                         "delegation_url": cls.URL, "delegation_body_sha256": "a" * 64,
+                         "delegation_record_path": APPROVAL_RECORD_PATH,
+                         "maximum_additional_provider_paid_sec_calls": [0, 0, 5],
+                         "scope": scope}
+        cls.granted = cls.base / "granted"
+        (cls.granted / "config").mkdir(parents=True)
+        (cls.granted / POLICY_PATH).write_text(json.dumps(
+            RESUME_MODULE._expected_approval(cls.allowance)), encoding="utf-8")
+        started = SESSION_MODULE.start_ledger(allowance=cls.allowance, reader=cls._reader([]),
+                                              checkout=cls.checkout)
+        cls.start_record = strict_json_file(path=Path(started["start_record"]))
+        cls.next_id = 5950000000
+        cls.start_marker = cls._comment(SESSION_MODULE.marker_comment_body(cls.start_record))
+        with cls._live():
+            session = cls._session()
+            with patch.object(SESSION_MODULE, "declared_frame",
+                              lambda **kwargs: cls._frame(cls.annual[:2])), \
+                    patch.object(sec_http, "urlopen",
+                                 lambda request, timeout: _FakeResponse(BODY, 200)):
+                session.capture_pending(company_id=_SCRIPTED_COMPANY)
+            EXPORT_MODULE.export_acquisition(ledger_root=cls.root,
+                                             out_dir=cls.checkout / "evidence/issue47_acquired",
+                                             policy_root=cls.granted)
+        cls.exported_claims = (cls.root / "claims.jsonl").read_bytes()
+        cls._lose()
+
+    @classmethod
+    def _lose(cls):
+        """What the snapshot restore left: nothing of the ledger on the host."""
+        shutil.rmtree(cls.root, ignore_errors=True)
+        for path in (SESSION_LEDGER.anchor_path(cls.root), SESSION_LEDGER.mirror_path(cls.root),
+                     SESSION_MODULE.start_record_path(cls.root),
+                     SESSION_MODULE.resume_chain_path(cls.root)):
+            path.unlink(missing_ok=True)
+
+    @classmethod
+    def _frame(cls, rows):
+        return {"requirements": copy.deepcopy(rows), "company_id": _SCRIPTED_COMPANY,
+                "target_report_dates": ["2021-12-31", "2022-12-31", "2023-12-31",
+                                        "2024-12-31", "2025-12-31"]}
+
+    @classmethod
+    def _live(cls):
+        """No network, and the checkpoint journal redirected away from the real one."""
+        import contextlib
+        stack = contextlib.ExitStack()
+        stack.enter_context(patch("vnext.continuous_sec_acquisition._journal",
+                                  lambda: cls.journal))
+        stack.enter_context(patch.object(socket.socket, "connect",
+                                         side_effect=AssertionError("a socket was opened")))
+        return stack
+
+    @classmethod
+    def _session(cls):
+        ledger = SESSION_MODULE._allowance_ledger(allowance=cls.allowance, root=cls.root, live=True)
+        return SESSION_MODULE.HistoricalSecSession(factory=SESSION_MODULE._FACTORY,
+                                                   allowance=cls.allowance, ledger=ledger)
+
+    @classmethod
+    def _comment(cls, body, *, edited=False, when="2026-09-29T01:00:00Z"):
+        cls.next_id += 1
+        return {"id": cls.next_id,
+                "html_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-"
+                            + str(cls.next_id),
+                "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
+                "user": {"login": "wlvh", "id": 30534800, "type": "User"},
+                "author_association": "OWNER", "created_at": when,
+                "updated_at": "2026-09-29T23:00:00Z" if edited else when, "body": body}
+
+    @staticmethod
+    def _reader(comments):
+        def read(path):
+            page = int(path.rsplit("page=", 1)[1])
+            return copy.deepcopy(comments if page == 1 else [])
+        return read
+
+    def _index(self, checkout=None):
+        path = (checkout or self.checkout) / "evidence/issue47_acquired" / EXPORT_MODULE.INDEX_NAME
+        return path.read_bytes() if path.is_file() else b""
+
+    def _resume(self, comments, *, frame=None, companies=(_SCRIPTED_COMPANY,), checkout=None,
+                branch_index=None):
+        # The branch's tip carries what the checkout carries unless a case says
+        # otherwise; the CLI reads it from the fetched upstream.
+        with self._live(), patch.object(RESUME_MODULE, "declared_frame",
+                                        lambda **kwargs: self._frame(
+                                            self.events if frame is None else frame)):
+            return RESUME_MODULE.resume_ledger(
+                allowance=self.allowance, reader=self._reader(comments),
+                checkout=checkout or self.checkout, in_flight_company_ids=list(companies),
+                decision=dict(self.DECISION),
+                branch_export_index=(self._index(checkout) if branch_index is None
+                                     else branch_index),
+                branch_tip_commit="0" * 40)
+
+    def _require(self, comments, *, branch_index=None):
+        return SESSION_MODULE.require_published_start(
+            allowance=self.allowance, reader=self._reader(comments), checkout=self.checkout,
+            branch_export_index=self._index() if branch_index is None else branch_index)
+
+    def _export(self):
+        with self._live():
+            return EXPORT_MODULE.export_acquisition(
+                ledger_root=self.root, out_dir=self.checkout / "evidence/issue47_acquired",
+                policy_root=self.granted)
+
+    def test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve(self):
+        import sec_http
+        self.addCleanup(self._lose)
+        export = self.checkout / "evidence/issue47_acquired"
+        before_export = {path.name: path.read_bytes() for path in export.iterdir()}
+
+        def put_the_export_back():
+            for path in export.iterdir():
+                if path.name not in before_export:
+                    path.unlink()
+            for name, data in before_export.items():
+                (export / name).write_bytes(data)
+
+        self.addCleanup(put_the_export_back)
+        resumed = self._resume([self.start_marker])
+        self.assertEqual("LEDGER_RESUMED", resumed["status"])
+        self.assertEqual(2, resumed["reserve"]["reserve_sec_calls"],
+                         "both due event rows are charged: the lost host could have sent them")
+        # Exactly the exported ledger: the same claim log byte for byte, and
+        # its copy and anchor beside the root.
+        self.assertEqual(self.exported_claims, (self.root / "claims.jsonl").read_bytes())
+        self.assertEqual(self.exported_claims, SESSION_LEDGER.mirror_path(self.root).read_bytes())
+        self.assertEqual(2, len(list((self.root / "calls").iterdir())))
+        chain = RESUME_MODULE.local_chain(self.root)
+        self.assertEqual(1, len(chain))
+        self.assertNotIn(chain[-1]["instance_nonce"], resumed["marker_comment_body"],
+                         "the random number stays on the host")
+        resume_marker = self._comment(resumed["marker_comment_body"], when="2026-09-29T13:00:00Z")
+        # Until the resume is on GitHub, nothing may be requested.
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._require([self.start_marker])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_NOT_PUBLISHED", str(caught.exception))
+        # ... nor until the branch's export carries the resume: a second loss
+        # before that would find it only on the issue.
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._require([self.start_marker, resume_marker])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_NOT_EXPORTED", str(caught.exception))
+        self.assertEqual("EXPORTED", self._export()["status"])
+        verified = self._require([self.start_marker, resume_marker])
+        self.assertEqual(2, verified["reserve_sec_calls"])
+        # A checkout that is not the branch's tip is refused: a snapshot restore
+        # can take the ledger and the checkout back together.
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._require([self.start_marker, resume_marker], branch_index=b"{}")
+        self.assertIn("ISSUE_47_SEC_LEDGER_CHECKOUT_IS_NOT_THE_BRANCH_S_EXPORT",
+                      str(caught.exception))
+        session = self._session()
+        with self._live():
+            self.assertEqual([0, 0, 4], session.ledger.snapshot()["counts"],
+                             "two exported slots and a reserve of two")
+            # The cap applies to slots plus the reserve: one more request fits
+            # under five, the next is refused before its socket.
+            with patch.object(SESSION_MODULE, "declared_frame",
+                              lambda **kwargs: self._frame(self.annual[2:])), \
+                    patch.object(sec_http, "urlopen",
+                                 lambda request, timeout: _FakeResponse(BODY, 200)):
+                result = session.capture_pending(company_id=_SCRIPTED_COMPANY)
+            self.assertEqual(1, len(result["captured"]))
+            self.assertIn("ISSUE_47_CUMULATIVE_LIMIT_REACHED", result["stop"])
+            self.assertEqual([0, 0, 5], session.ledger.snapshot()["counts"])
+            # The export carries the resume, as its public view only.
+            exported = EXPORT_MODULE.export_acquisition(ledger_root=self.root, out_dir=export,
+                                                        policy_root=self.granted)
+        self.assertEqual("EXPORTED", exported["status"])
+        index = strict_json_file(path=export / EXPORT_MODULE.INDEX_NAME)
+        self.assertIn(EXPORT_MODULE.RESUME_MEMBER, index["state_archive"]["members"])
+        nonce = chain[-1]["instance_nonce"].encode()
+        for path in export.iterdir():
+            self.assertNotIn(nonce, path.read_bytes(), path.name)
+        # A resume the chain beside the root no longer matches is refused.
+        chain_path = SESSION_MODULE.resume_chain_path(self.root)
+        original = chain_path.read_bytes()
+        cheaper = copy.deepcopy(chain)
+        cheaper[-1]["lost_segment"]["reserve_sec_calls"] = 0
+        chain_path.write_bytes(RESUME_MODULE._chain_bytes(cheaper))
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._require([self.start_marker, resume_marker])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUMED_ELSEWHERE", str(caught.exception))
+        chain_path.write_bytes(original)
+        self._require([self.start_marker, resume_marker])
+        # Without the chain the ledger is neither started nor resumed here: the
+        # issue shows a resume of it, so the start path is fenced too.
+        chain_path.unlink()
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._require([self.start_marker, resume_marker])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUMED_ELSEWHERE", str(caught.exception))
+        # ... and a LIVE ledger with no record of how it began is not exported.
+        with self._live():
+            with self.assertRaises(HistoricalAcquisitionError) as caught:
+                EXPORT_MODULE.export_acquisition(ledger_root=self.root, out_dir=export,
+                                                 policy_root=self.granted)
+        self.assertIn("ISSUE_47_EXPORT_LIVE_LEDGER_HAS_NO_START_OR_RESUME", str(caught.exception))
+        # Nor can one that began from a start replace an export that carries a
+        # resume (constructed: a start record beside a resumed root).
+        start_path = SESSION_MODULE.start_record_path(self.root)
+        start_path.write_bytes(canonical_json_bytes(value=self.start_record))
+        with self._live():
+            with self.assertRaises(HistoricalAcquisitionError) as caught:
+                EXPORT_MODULE.export_acquisition(ledger_root=self.root, out_dir=export,
+                                                 policy_root=self.granted)
+        self.assertIn("ISSUE_47_EXPORT_WOULD_DROP_A_RESUME", str(caught.exception))
+        start_path.unlink()
+        chain_path.write_bytes(original)
+        # Lost again: the second resume carries the first one's charge forward
+        # and links to it.
+        self._lose()
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._resume([self.start_marker])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUMED_SINCE_THE_EXPORT", str(caught.exception))
+        second = self._resume([self.start_marker, resume_marker])
+        again = RESUME_MODULE.local_chain(self.root)
+        self.assertEqual(2, len(again))
+        self.assertEqual(SESSION_MODULE.resume_view(chain[-1]), again[0])
+        self.assertEqual(again[0]["resume_record_sha256"], again[1]["previous_resume_sha256"])
+        second_marker = self._comment(second["marker_comment_body"], when="2026-09-29T14:00:00Z")
+        self._export()
+        verified = self._require([self.start_marker, resume_marker, second_marker])
+        self.assertEqual(2 + second["reserve"]["reserve_sec_calls"], verified["reserve_sec_calls"])
+        with self._live():
+            self.assertEqual(3 + verified["reserve_sec_calls"],
+                             self._session().ledger.snapshot()["counts"][2])
+
+    def test_a_host_that_kept_its_start_or_its_root_does_not_resume(self):
+        self.addCleanup(self._lose)
+        path = SESSION_MODULE.start_record_path(self.root)
+        path.write_bytes(canonical_json_bytes(value=self.start_record))
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._resume([self.start_marker])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_BESIDE_A_START_RECORD", str(caught.exception))
+        path.unlink()
+        self.root.mkdir()
+        (self.root / "binding.json").write_text("{}", encoding="utf-8")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._resume([self.start_marker])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_ROOT_NOT_EMPTY", str(caught.exception))
+
+    def test_a_resume_needs_this_approval_s_export(self):
+        self.addCleanup(self._lose)
+        empty = self.base / "empty-checkout"
+        empty.mkdir(exist_ok=True)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._resume([self.start_marker], checkout=empty)
+        self.assertIn("ISSUE_47_SEC_LEDGER_NOTHING_TO_RESUME", str(caught.exception))
+        other = self.base / "other-checkout"
+        shutil.copytree(self.checkout, other, dirs_exist_ok=True)
+        self.addCleanup(shutil.rmtree, other, ignore_errors=True)
+        index_path = other / "evidence/issue47_acquired" / EXPORT_MODULE.INDEX_NAME
+        index = strict_json_file(path=index_path)
+        body = {key: value for key, value in index.items() if key != "export_id"}
+        body["approval"] = {**body["approval"], "budget_root": str(self.base / "elsewhere")}
+        index_path.write_bytes(canonical_json_bytes(value={**body,
+                                                           "export_id": content_hash(value=body)}))
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._resume([self.start_marker], checkout=other)
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_EXPORT_IS_FOR_ANOTHER_APPROVAL",
+                      str(caught.exception))
+
+    def test_a_resume_needs_the_approval_s_earliest_start_marker_unedited(self):
+        self.addCleanup(self._lose)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._resume([])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_WITHOUT_A_PUBLISHED_START", str(caught.exception))
+        edited = self._comment(self.start_marker["body"], edited=True)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._resume([edited])
+        self.assertIn("ISSUE_47_SEC_LEDGER_START_MARKER_EDITED", str(caught.exception))
+        self.assertFalse(self.root.exists(), "a refused resume rebuilds nothing")
+
+    def test_a_decision_and_the_in_flight_companies_are_required(self):
+        self.addCleanup(self._lose)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._resume([self.start_marker], companies=())
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_IN_FLIGHT_COMPANIES_INVALID", str(caught.exception))
+        with self.assertRaises(HistoricalSessionError) as caught:
+            RESUME_MODULE.resume_ledger(allowance=self.allowance,
+                                        reader=self._reader([self.start_marker]),
+                                        checkout=self.checkout,
+                                        in_flight_company_ids=[_SCRIPTED_COMPANY],
+                                        decision={"text": " ", "received_at": "x"},
+                                        branch_export_index=self._index(),
+                                        branch_tip_commit="0" * 40)
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_DECISION_MISSING", str(caught.exception))
+
+    def _resumed_and_exported(self):
+        resumed = self._resume([self.start_marker])
+        marker = self._comment(resumed["marker_comment_body"], when="2026-09-29T13:00:00Z")
+        self._export()
+        return resumed, marker
+
+    def test_a_running_session_stops_when_a_resume_is_published_elsewhere(self):
+        """An independent review kept a resumed session claiming after another resume: it went on.
+
+        The live path's check runs again before every pass. A second resume
+        marker for this approval, from a host that also believed this one
+        lost, makes the chain here not the issue's, and the pass stops before
+        planning, with nothing claimed.
+        """
+        import sec_http
+        self.addCleanup(self._lose)
+        export = self.checkout / "evidence/issue47_acquired"
+        before = {path.name: path.read_bytes() for path in export.iterdir()}
+        self.addCleanup(lambda: ([p.unlink() for p in export.iterdir() if p.name not in before],
+                                 [(export / n).write_bytes(d) for n, d in before.items()]))
+        resumed, marker = self._resumed_and_exported()
+        comments = [self.start_marker, marker]
+        session = self._session()
+        session.ledger.pin_resume_reserve(self._require(comments)["reserve_sec_calls"])
+        session.published_check = lambda: self._require(comments)
+        # Another host's resume of the same export: a different record.
+        other = {**resumed["record"], "resume_record_sha256": "f" * 64}
+        elsewhere = self._comment(RESUME_MODULE.MARKER_TITLE + "\n\n```json\n"
+                                  + json.dumps(other, indent=1, sort_keys=True) + "\n```\n",
+                                  when="2026-09-29T15:00:00Z")
+        comments.append(elsewhere)
+        with self._live(), patch.object(SESSION_MODULE, "declared_frame",
+                                        lambda **kwargs: self._frame(self.annual[2:])), \
+                patch.object(sec_http, "urlopen",
+                             lambda request, timeout: _FakeResponse(BODY, 200)):
+            result = session.capture_pending(company_id=_SCRIPTED_COMPANY)
+        self.assertEqual([], result["captured"])
+        self.assertIn("LIVE_PATH_REFUSED:ISSUE_47_SEC_LEDGER_RESUMED_ELSEWHERE", result["stop"])
+        with self._live():
+            self.assertEqual([0, 0, 4], session.ledger.snapshot()["counts"])
+
+    def test_the_resume_guards_the_review_found_untested(self):
+        """Each guard, with the one thing changed it guards."""
+        self.addCleanup(self._lose)
+        export = self.checkout / "evidence/issue47_acquired"
+        before = {path.name: path.read_bytes() for path in export.iterdir()}
+        self.addCleanup(lambda: ([p.unlink() for p in export.iterdir() if p.name not in before],
+                                 [(export / n).write_bytes(d) for n, d in before.items()]))
+        resumed, marker = self._resumed_and_exported()
+        comments = [self.start_marker, marker]
+        self._require(comments)
+        chain_path = SESSION_MODULE.resume_chain_path(self.root)
+        original = chain_path.read_bytes()
+        with self.subTest("a resume of another start"):
+            chain = RESUME_MODULE.local_chain(self.root)
+            chain[-1]["resumes_start_record_sha256"] = "f" * 64
+            chain_path.write_bytes(RESUME_MODULE._chain_bytes(chain))
+            with self.assertRaises(HistoricalSessionError) as caught:
+                self._require(comments)
+            self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_IS_OF_ANOTHER_START", str(caught.exception))
+            chain_path.write_bytes(original)
+        with self.subTest("a claim log that is not what was restored"):
+            log, mirror = self.root / "claims.jsonl", SESSION_LEDGER.mirror_path(self.root)
+            held = log.read_bytes()
+            changed = held.replace(b'"ordinal":1', b'"ordinal":7', 1)
+            self.assertNotEqual(held, changed)
+            log.write_bytes(changed)
+            mirror.write_bytes(changed)
+            with self.assertRaises(HistoricalSessionError) as caught:
+                self._require(comments)
+            self.assertIn("RESUMED_LEDGER_IS_NOT_WHAT_WAS_RESTORED", str(caught.exception))
+            log.write_bytes(held)
+            mirror.write_bytes(held)
+        with self.subTest("an edited resume marker"):
+            edited = self._comment(marker["body"], edited=True, when="2026-09-29T13:00:00Z")
+            with self.assertRaises(HistoricalSessionError) as caught:
+                self._require([self.start_marker, edited])
+            self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_MARKER_EDITED", str(caught.exception))
+        with self.subTest("the same marker twice, and a comment quoting it"):
+            again = self._comment(marker["body"], when="2026-09-29T13:05:00Z")
+            quoted = self._comment("Status: the resume is published.\n\n"
+                                   + marker["body"][marker["body"].index("```json"):],
+                                   when="2026-09-29T13:10:00Z")
+            self.assertEqual(2, self._require([self.start_marker, marker, again,
+                                               quoted])["reserve_sec_calls"])
+        with self.subTest("a comment quoting a record no marker carries"):
+            # A quote of the published record collapses into it by digest, so it
+            # cannot show that only a marker counts. A draft that was never
+            # posted as a marker has its own digest: counted, it would be a
+            # second resume on the issue and stop every live start.
+            block = marker["body"].split("```json\n", 1)[1].split("\n```", 1)[0]
+            draft = json.loads(block)
+            draft["resume_record_sha256"] = "e" * 64
+            status = self._comment("Status: a draft of the resume, never posted as a marker.\n\n"
+                                   "```json\n" + json.dumps(draft, indent=1, sort_keys=True)
+                                   + "\n```\n", when="2026-09-29T13:15:00Z")
+            self.assertEqual(2, self._require([self.start_marker, marker,
+                                               status])["reserve_sec_calls"])
+        with self.subTest("a second resume on the same host"):
+            with self.assertRaises(HistoricalSessionError) as caught:
+                self._resume(comments)
+            self.assertIn("ISSUE_47_SEC_LEDGER_ALREADY_RESUMED_HERE", str(caught.exception))
+
+    def test_a_resume_already_running_or_left_over_is_not_disturbed(self):
+        """A second resume is refused before it touches the first one's staging directory."""
+        self.addCleanup(self._lose)
+        staging = self.root.parent / ("." + self.root.name + ".resuming")
+        sentinel = self.root.parent / ("." + self.root.name + ".resuming.lock")
+        staging.mkdir()
+        (staging / "work").write_text("the first resume's", encoding="utf-8")
+        sentinel.write_text("", encoding="utf-8")
+        self.addCleanup(shutil.rmtree, staging, ignore_errors=True)
+        self.addCleanup(sentinel.unlink, missing_ok=True)
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._resume([self.start_marker])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_IN_PROGRESS_OR_LEFT_OVER", str(caught.exception))
+        self.assertEqual("the first resume's", (staging / "work").read_text(encoding="utf-8"))
+        self.assertTrue(sentinel.exists())
+        self.assertFalse(self.root.exists())
+
+    def test_a_resume_is_from_the_export_the_branch_carries_now(self):
+        """A loss can take the checkout back with it; an older export would be charged from.
+
+        The one this was written for reset the checkout to a commit hours old.
+        An independent review resumed from such a checkout: the older export
+        restored, the reserve computed from it, and the claims the branch
+        showed after it counted nowhere.
+        """
+        self.addCleanup(self._lose)
+        newer = self._index().replace(b'"exported_row_count"', b'"exported_row_count" ', 1)
+        self.assertNotEqual(self._index(), newer)
+        for branch in (newer, b"", self._index().decode("utf-8")):
+            with self.subTest(branch=repr(branch)[:20]):
+                with self.assertRaises(HistoricalSessionError) as caught:
+                    self._resume([self.start_marker], branch_index=branch)
+                self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_CHECKOUT_IS_NOT_THE_BRANCH_S_EXPORT",
+                              str(caught.exception))
+                self.assertFalse(self.root.exists(), "a refused resume rebuilds nothing")
+
+    def test_the_resume_charge_cannot_shrink_while_a_session_holds_the_ledger(self):
+        """An independent review deleted the chain mid-session: the count fell and captures ran past the cap.
+
+        The live path checks the chain against the issue before the session
+        exists; the ledger it builds is held to the charge that check verified,
+        and a snapshot that reads another refuses.
+        """
+        self.addCleanup(self._lose)
+        export = self.checkout / "evidence/issue47_acquired"
+        before = {path.name: path.read_bytes() for path in export.iterdir()}
+        self.addCleanup(lambda: ([p.unlink() for p in export.iterdir() if p.name not in before],
+                                 [(export / n).write_bytes(d) for n, d in before.items()]))
+        _, marker = self._resumed_and_exported()
+        published = self._require([self.start_marker, marker])
+        ledger = SESSION_MODULE.live_ledger(allowance=self.allowance, published=published)
+        chain_path = SESSION_MODULE.resume_chain_path(self.root)
+        original = chain_path.read_bytes()
+        with self._live():
+            self.assertEqual([0, 0, 4], ledger.snapshot()["counts"])
+            for label, change in (("deleted", lambda: chain_path.unlink()),
+                                  ("emptied", lambda: chain_path.write_bytes(b""))):
+                with self.subTest(label):
+                    change()
+                    with self.assertRaises(HistoricalSessionError) as caught:
+                        ledger.snapshot()
+                    self.assertIn("ISSUE_47_LEDGER_RESUME_RESERVE_CHANGED", str(caught.exception))
+                    chain_path.write_bytes(original)
+            self.assertEqual([0, 0, 4], ledger.snapshot()["counts"])
+        # A pin that is not what the chain charges is refused where it is made.
+        for wrong in (0, 3, -1, "2", None):
+            with self.subTest(pin=wrong):
+                with self.assertRaises(HistoricalSessionError):
+                    SESSION_MODULE.live_ledger(allowance=self.allowance,
+                                               published={"reserve_sec_calls": wrong})
+
+    def test_a_host_that_still_holds_its_start_may_not_spend_after_a_resume(self):
+        """An independent review kept the first host alive beside a published resume: it passed.
+
+        A host that was only unreachable still holds its start record and its
+        ledger. Once the issue shows a resume of this approval, the ledger it
+        started was declared lost, and it may not spend the same allowance a
+        second time.
+        """
+        self.addCleanup(self._lose)
+        resumed = self._resume([self.start_marker])
+        marker = self._comment(resumed["marker_comment_body"], when="2026-09-29T13:00:00Z")
+        self._lose()
+        start_path = SESSION_MODULE.start_record_path(self.root)
+        start_path.write_bytes(canonical_json_bytes(value=self.start_record))
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._require([self.start_marker, marker])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUMED_ELSEWHERE", str(caught.exception))
+        # Without the resume on the issue this host is refused for another
+        # reason - its ledger is behind the branch's export - not this one.
+        with self.assertRaises(HistoricalSessionError) as caught:
+            self._require([self.start_marker])
+        self.assertNotIn("RESUMED_ELSEWHERE", str(caught.exception))
+
+    def test_the_reserve_is_the_due_rows_and_refuses_where_a_capture_could_open_more(self):
+        """What one invocation could have claimed from the exported state, or a refusal.
+
+        A URL is claimed once and nothing is retried, so the admitted due rows
+        bound what the lost host could send - unless capturing one can make
+        more rows declarable, as an annual primary or an index does; then the
+        rows due now are not a bound, and the reserve is refused.
+        """
+        claimed = {self.events[0]["source_url"]}
+        outside = {**copy.deepcopy(self.events[1]), "dependency_class": "COMPANYFACTS"}
+        cases = (("events", self.events, set(), 2),
+                 ("one already claimed", self.events, claimed, 1),
+                 ("one outside every grant", [self.events[0], outside], set(), 1))
+        for label, rows, already, expected in cases:
+            with self.subTest(label):
+                with patch.object(RESUME_MODULE, "declared_frame",
+                                  lambda **kwargs: self._frame(rows)):
+                    reserve = RESUME_MODULE.lost_segment_reserve(
+                        data_root=ROOT, claimed_urls=already, allowance=self.allowance,
+                        company_ids=[_SCRIPTED_COMPANY])
+                self.assertEqual(expected, reserve["reserve_sec_calls"])
+        with patch.object(RESUME_MODULE, "declared_frame",
+                          lambda **kwargs: self._frame([*self.events, self.annual[3]])):
+            with self.assertRaises(HistoricalSessionError) as caught:
+                RESUME_MODULE.lost_segment_reserve(data_root=ROOT, claimed_urls=set(),
+                                                   allowance=self.allowance,
+                                                   company_ids=[_SCRIPTED_COMPANY])
+        self.assertIn("ISSUE_47_SEC_LEDGER_RESUME_RESERVE_UNBOUNDED", str(caught.exception))

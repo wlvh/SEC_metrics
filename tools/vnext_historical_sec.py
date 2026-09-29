@@ -29,6 +29,14 @@ the owner decided to run it there, the executor's cloud container:
 ``restore --export DIR --out DIR`` is the other end: it rebuilds a data root
 from this checkout's baseline plus an export and registers it here.
 
+``resume --in-flight-company C [...] --decision-text T --decision-received-at W``
+is for a host that lost the ledger root after an export was pushed: it rebuilds
+the ledger from the branch's export, charges what the lost host may have spent
+after it (the due rows of the companies it could have been acquiring) and
+prints the resume marker to post on issue 47. Resuming is the owner's decision;
+``T`` and ``W`` are that decision as the executor transcribed it. Nothing is
+requested until the marker is on GitHub.
+
 Call relationships: Developers and the Issue #47 evidence archive call this. It
 calls ``scripts/vnext/historical_source_acquisition.py`` for planning and the
 allowance, ``scripts/vnext/historical_sec_session.py`` for capture and
@@ -54,7 +62,7 @@ EXPORT_HINT = ("config/issue47_historical_calls_v1.json "
                "docs/evidence/issue47_history/acquisition-wiring/approval-comment.json "
                "evidence/issue47_acquired")
 COMMANDS = ["list", "plan", "capture", "register-approval", "start", "acquire", "export",
-            "run", "restore"]
+            "run", "restore", "resume"]
 
 
 def _companies(args):
@@ -87,7 +95,7 @@ def _summary_text(summary):
 def _acquire(args):
     """Run the acquisition and keep its summary beside the ledger it spent."""
     from datetime import datetime, timezone
-    session = live_historical_session()
+    session = live_historical_session(branch_tip=_branch_tip)
     summary = session.acquire(company_ids=_companies(args), years=args.years,
                               max_captures=args.max_captures)
     text = _summary_text(summary)
@@ -111,6 +119,42 @@ def _acquire(args):
                      "summary_path": str(runs / (stamp + ".json"))}
 
 
+def _branch_tip():
+    """The tip of this checkout's upstream branch, fetched now: its commit and its export index.
+
+    Read through git rather than the GitHub reader, which reads only issue-47
+    comments. A checkout with no upstream, a fetch that fails, or a HEAD that
+    does not contain the tip is a refusal: nothing guesses which export is the
+    latest. The index is None where the tip carries no export yet.
+    """
+    import subprocess
+    from vnext.historical_source_export import EXPORT_DIRECTORY, INDEX_NAME
+
+    def git(*arguments, text=True):
+        run = subprocess.run(["git", "-C", str(ROOT), *arguments], capture_output=True,
+                             text=text, timeout=600)
+        if run.returncode != 0:
+            raise HistoricalAcquisitionError(
+                "ISSUE_47_RESUME_BRANCH_UNREADABLE:git " + " ".join(arguments) + ": "
+                + (run.stderr if text else run.stderr.decode("utf-8", "replace"))[-300:])
+        return run.stdout
+
+    upstream = git("rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{upstream}").strip()
+    remote, _, branch = upstream.partition("/")
+    git("fetch", remote, branch)
+    tip = git("rev-parse", upstream).strip()
+    contained = subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor", tip,
+                                "HEAD"], capture_output=True, timeout=60).returncode
+    if contained != 0:
+        raise HistoricalAcquisitionError(
+            "ISSUE_47_CHECKOUT_BEHIND_THE_BRANCH_TIP:HEAD does not contain " + upstream + " at "
+            + tip + "; bring the checkout to the tip before resuming or acquiring")
+    path = upstream + ":" + EXPORT_DIRECTORY + "/" + INDEX_NAME
+    present = subprocess.run(["git", "-C", str(ROOT), "cat-file", "-e", path],
+                             capture_output=True, timeout=60).returncode == 0
+    return {"commit": tip, "export_index": git("show", path, text=False) if present else None}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -128,6 +172,9 @@ def main(argv=None):
     parser.add_argument("--max-captures", type=int)
     parser.add_argument("--export", type=Path)
     parser.add_argument("--out", type=Path)
+    parser.add_argument("--in-flight-company", action="append")
+    parser.add_argument("--decision-text")
+    parser.add_argument("--decision-received-at")
     args = parser.parse_args(argv)
     if args.command in ("list", "plan", "capture") and args.company is None:
         parser.error("--company is required for " + args.command)
@@ -135,6 +182,10 @@ def main(argv=None):
         parser.error("--approval-url is required for " + args.command)
     if args.command == "restore" and (args.export is None or args.out is None):
         parser.error("--export and --out are required for restore")
+    if args.command == "resume" and (not args.in_flight_company or not args.decision_text
+                                     or not args.decision_received_at):
+        parser.error("--in-flight-company, --decision-text and --decision-received-at are "
+                     "required for resume")
     session = None
     try:
         if args.command in ("register-approval", "run"):
@@ -145,6 +196,17 @@ def main(argv=None):
             reader = live_github_reader()
             result = start_ledger(allowance=acquisition_allowance(
                 repo_root=ROOT, delegation_reader=reader), reader=reader)
+        if args.command == "resume":
+            from vnext.historical_sec_resume import resume_ledger
+            reader = live_github_reader()
+            allowance = acquisition_allowance(repo_root=ROOT, delegation_reader=reader)
+            tip = _branch_tip()
+            result = resume_ledger(
+                allowance=allowance,
+                reader=reader, checkout=ROOT, in_flight_company_ids=args.in_flight_company,
+                decision={"text": args.decision_text,
+                          "received_at": args.decision_received_at},
+                branch_export_index=tip["export_index"], branch_tip_commit=tip["commit"])
         if args.command in ("acquire", "run"):
             session, acquired = _acquire(args)
             result = acquired if args.command == "acquire" else {**registered,
@@ -176,7 +238,7 @@ def main(argv=None):
             # is which layer refuses: the execution chain now exists and is
             # exercised offline, so a refusal here names the missing grant
             # rather than a missing implementation.
-            session = live_historical_session()
+            session = live_historical_session(branch_tip=_branch_tip)
             result = session.capture(company_id=args.company, url=args.url,
                                      years=args.years)
     except HistoricalAcquisitionError as error:

@@ -762,6 +762,314 @@
    "suite_result": "Ran 5 tests in 4.647s FAILED (errors=4)",
    "why_it_matters": "a root whose configuration changed without a record reads as if it had always held these bytes",
    "run": "2026-09-29, main checkout, rule_input_injections.py; failed cases test_a_new_generation_replaces_the_input_and_records_it, test_a_root_from_before_the_stamp_takes_the_current_inputs, test_the_installation_records_the_generation_it_installed, test_within_one_generation_a_changed_input_is_refused"
+  },
+  {
+   "id": "THE_RESERVE_IS_NOT_COUNTED",
+   "edit": "HistoricalCallLedger.snapshot() leaves the resume's reserve out of the count",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 43.623s FAILED (failures=1)",
+   "why_it_matters": "the cap would bound only what the restored slots recorded, not what the lost host may have sent",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "A_RESUME_NEEDS_NO_MARKER",
+   "edit": "require_published_resume() accepts a local chain the issue does not show",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 41.971s FAILED (failures=1)",
+   "why_it_matters": "a resume nobody can see on the issue would be a second, unaudited spending of the same approval",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "A_CHEAPER_CHAIN_PASSES",
+   "edit": "require_published_resume() compares how many resumes, not what they say",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 45.734s FAILED (failures=1)",
+   "why_it_matters": "a chain whose reserve was lowered locally would pass beside the true marker",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "THE_EXPORT_DROPS_THE_CHAIN",
+   "edit": "export_acquisition() leaves the resume chain out of the export",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 39.458s FAILED (errors=1)",
+   "why_it_matters": "a later restore would count from the slots alone and forget the lost segment",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "AN_EXPORT_MAY_DROP_A_RESUME",
+   "edit": "_only_forward() lets an export without the chain replace one that carries it",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 44.848s FAILED (failures=1)",
+   "why_it_matters": "the branch would stop recording the charge for a lost segment",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "THE_NONCE_IS_EXPORTED",
+   "edit": "export_acquisition() exports the resume record with its random number",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 42.278s FAILED (errors=1)",
+   "why_it_matters": "anyone reading the public branch could write a matching chain beside an empty root",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "A_RESUME_SINCE_THE_EXPORT_IS_IGNORED",
+   "edit": "resume_ledger() ignores resume markers the export does not carry",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 50.545s FAILED (failures=1)",
+   "why_it_matters": "what a resumed-then-lost host spent after its resume would be charged nowhere",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "THE_RESERVE_COUNTS_NOTHING",
+   "edit": "lost_segment_reserve() charges nothing for the due rows",
+   "caught_by": [
+    "test_the_reserve_is_the_due_rows_and_refuses_where_a_capture_could_open_more"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 36.111s FAILED (failures=4)",
+   "why_it_matters": "the resume would count from the export as if the lost host had sent nothing",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_reserve_is_the_due_rows_and_refuses_where_a_capture_could_open_more"
+  },
+  {
+   "id": "AN_OPENING_ROW_IS_TREATED_AS_BOUNDED",
+   "edit": "lost_segment_reserve() counts rows whose capture can declare more rows",
+   "caught_by": [
+    "test_the_reserve_is_the_due_rows_and_refuses_where_a_capture_could_open_more"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 36.764s FAILED (failures=1)",
+   "why_it_matters": "a later pass could have claimed rows the reserve does not see",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_reserve_is_the_due_rows_and_refuses_where_a_capture_could_open_more"
+  },
+  {
+   "id": "A_RESUME_OVER_A_KEPT_START",
+   "edit": "resume_ledger() rebuilds a ledger beside a start record the host kept",
+   "caught_by": [
+    "test_a_host_that_kept_its_start_or_its_root_does_not_resume"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 41.684s FAILED (failures=1)",
+   "why_it_matters": "a host that did not lose its ledger could reset it to an older export",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_host_that_kept_its_start_or_its_root_does_not_resume"
+  },
+  {
+   "id": "ANOTHER_APPROVAL_S_EXPORT_IS_RESUMED",
+   "edit": "resume_ledger() rebuilds from an export whose approval block differs",
+   "caught_by": [
+    "test_a_resume_needs_this_approval_s_export"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 44.082s FAILED (failures=1)",
+   "why_it_matters": "another approval's ledger would be counted against this one",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_resume_needs_this_approval_s_export"
+  },
+  {
+   "id": "AN_EDITED_START_MARKER_IS_ACCEPTED",
+   "edit": "resume_ledger() resumes from an edited start marker",
+   "caught_by": [
+    "test_a_resume_needs_the_approval_s_earliest_start_marker_unedited"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 42.917s FAILED (failures=1)",
+   "why_it_matters": "an edited marker is no longer the start that was published",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_resume_needs_the_approval_s_earliest_start_marker_unedited"
+  },
+  {
+   "id": "A_SNAPSHOT_DOES_NOT_HOLD_THE_PINNED_CHARGE",
+   "edit": "HistoricalCallLedger.snapshot() reads the chain afresh and ignores the pinned charge",
+   "caught_by": [
+    "test_the_resume_charge_cannot_shrink_while_a_session_holds_the_ledger"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 39.635s FAILED (failures=3)",
+   "why_it_matters": "a chain deleted mid-session lowered the count and captures ran past the cap",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_charge_cannot_shrink_while_a_session_holds_the_ledger"
+  },
+  {
+   "id": "THE_LIVE_LEDGER_IS_NOT_PINNED",
+   "edit": "live_ledger() builds the ledger without holding it to the verified charge",
+   "caught_by": [
+    "test_the_resume_charge_cannot_shrink_while_a_session_holds_the_ledger"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 39.907s FAILED (failures=3)",
+   "why_it_matters": "the snapshot check would have nothing to compare with",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_charge_cannot_shrink_while_a_session_holds_the_ledger"
+  },
+  {
+   "id": "A_LIVE_LEDGER_WITHOUT_A_BEGINNING_IS_EXPORTED",
+   "edit": "export_acquisition() exports a LIVE ledger with neither a start nor a resume beside it",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 43.614s FAILED (failures=1)",
+   "why_it_matters": "an export after the chain was deleted would leave the lost segment's charge out",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "THE_FIRST_HOST_IS_NOT_FENCED",
+   "edit": "require_published_start() lets a host holding its start spend after a published resume",
+   "caught_by": [
+    "test_a_host_that_still_holds_its_start_may_not_spend_after_a_resume"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 40.660s FAILED (failures=1)",
+   "why_it_matters": "a host that was only unreachable would spend the same allowance a second time",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_host_that_still_holds_its_start_may_not_spend_after_a_resume"
+  },
+  {
+   "id": "THE_RESUME_TRUSTS_THE_CHECKOUT",
+   "edit": "resume_ledger() restores whatever export the checkout holds",
+   "caught_by": [
+    "test_a_resume_is_from_the_export_the_branch_carries_now"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 42.168s FAILED (failures=3)",
+   "why_it_matters": "a checkout the loss took back would restore an older export and charge from it",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_resume_is_from_the_export_the_branch_carries_now"
+  },
+  {
+   "id": "THE_TIP_IS_NOT_FETCHED",
+   "edit": "the resume command reads the upstream ref without fetching it",
+   "caught_by": [
+    "test_a_checkout_behind_the_branch_is_handed_the_branch_s_newer_export"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.513s FAILED (failures=1)",
+   "why_it_matters": "the stale checkout's own remote ref is the export the loss took it back to",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_checkout_behind_the_branch_is_handed_the_branch_s_newer_export"
+  },
+  {
+   "id": "A_RUNNING_SESSION_IS_NOT_RECHECKED",
+   "edit": "capture_pending() plans a pass without running the live path's check again",
+   "caught_by": [
+    "test_a_running_session_stops_when_a_resume_is_published_elsewhere"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 43.842s FAILED (failures=1)",
+   "why_it_matters": "a session already running would keep claiming after a resume elsewhere",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_running_session_stops_when_a_resume_is_published_elsewhere"
+  },
+  {
+   "id": "THE_LIVE_SESSION_KEEPS_NO_CHECK",
+   "edit": "live_historical_session() builds a session with no check to run per pass",
+   "caught_by": [
+    "test_the_live_path_checks_the_start_before_any_transport"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.030s FAILED (errors=1)",
+   "why_it_matters": "the per-pass check would be skipped in production while every test of it passed",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_live_path_checks_the_start_before_any_transport"
+  },
+  {
+   "id": "THE_LIVE_PATH_TRUSTS_THE_CHECKOUT",
+   "edit": "require_published_start() compares the ledger with the checkout's export only",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 41.790s FAILED (failures=1)",
+   "why_it_matters": "a snapshot that took the ledger and the checkout back together would pass",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "A_RESUME_IS_CLAIMED_BEFORE_IT_IS_EXPORTED",
+   "edit": "require_published_resume() lets a session claim before the branch carries the resume",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 40.254s FAILED (failures=1)",
+   "why_it_matters": "a second loss before that export would find the resume only on the issue",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "A_QUOTED_MARKER_IS_ANOTHER_RESUME",
+   "edit": "resume_markers() counts any owner comment carrying a resume record",
+   "caught_by": [
+    "test_the_resume_guards_the_review_found_untested"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 41.678s FAILED (errors=1)",
+   "why_it_matters": "a status comment quoting the marker would stop every live start",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_guards_the_review_found_untested"
+  },
+  {
+   "id": "A_DUPLICATE_MARKER_IS_ANOTHER_RESUME",
+   "edit": "resume_markers() counts the same record posted twice as two resumes",
+   "caught_by": [
+    "test_the_resume_guards_the_review_found_untested"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 42.407s FAILED (errors=1)",
+   "why_it_matters": "a retried POST GitHub had accepted would stop every live start",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_guards_the_review_found_untested"
+  },
+  {
+   "id": "A_RESUME_IN_PROGRESS_IS_DISTURBED",
+   "edit": "resume_ledger() goes on beside another resume's sentinel",
+   "caught_by": [
+    "test_a_resume_already_running_or_left_over_is_not_disturbed"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 32.444s FAILED (failures=1)",
+   "why_it_matters": "a refused resume would delete the staging directory of the one in progress",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_resume_already_running_or_left_over_is_not_disturbed"
+  },
+  {
+   "id": "THE_PREFIX_IS_ALWAYS_TRUE",
+   "edit": "_prefix() accepts any bytes (the review's mutation)",
+   "caught_by": [
+    "test_the_resume_guards_the_review_found_untested"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 39.261s FAILED (failures=1, errors=2)",
+   "why_it_matters": "a ledger that is not what was restored would pass the live path",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_guards_the_review_found_untested"
+  },
+  {
+   "id": "THE_LINKS_ARE_NOT_CHECKED",
+   "edit": "_check_links() checks nothing (the review's mutation)",
+   "caught_by": [
+    "test_the_resume_guards_the_review_found_untested"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 40.569s FAILED (failures=2, errors=2)",
+   "why_it_matters": "a chain resuming another start, or with a broken link, would pass",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_guards_the_review_found_untested"
+  },
+  {
+   "id": "A_HEAD_BEHIND_THE_TIP_IS_ACCEPTED",
+   "edit": "the resume command accepts a HEAD that does not contain the fetched tip",
+   "caught_by": [
+    "test_a_checkout_behind_the_branch_is_handed_the_branch_s_newer_export"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.512s FAILED (failures=1)",
+   "why_it_matters": "the code and export the command acts on would be older than the branch's",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_checkout_behind_the_branch_is_handed_the_branch_s_newer_export"
   }
  ],
  "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py, scripts/vnext/historical_event_sources.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",

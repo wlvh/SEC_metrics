@@ -390,6 +390,12 @@ class HistoricalCallLedger:
         # half a second per claim by the end of a full allowance. Cleared on
         # every acquire and release, so nothing is carried across two holds.
         self._resolved = {}
+        # The resume charge the live path verified against the issue before
+        # this session existed (0 for a ledger started here). A snapshot that
+        # reads another refuses: a chain deleted or cut after that check would
+        # otherwise lower the count mid-session. None until the session pins
+        # it; recorded sessions have no published start to pin from.
+        self._pinned_reserve = None
 
     @staticmethod
     def anchor_path(root):
@@ -543,9 +549,26 @@ class HistoricalCallLedger:
                                 "reason": reason})
             elif self._locked:
                 self._resolved[slot.name] = (index, previous, intent["request_digest"])
+        # Requests a lost host made after its last export are in no slot; a
+        # resume charges them at their bound (historical_sec_resume), and the
+        # count carries that charge like any claimed slot.
+        reserve = _resume_reserve(self.root)
+        _need(self._pinned_reserve is None or reserve == self._pinned_reserve,
+              "ISSUE_47_LEDGER_RESUME_RESERVE_CHANGED:" + str(reserve) + " now, "
+              + str(self._pinned_reserve) + " when the live path checked it")
+        counts[2] += reserve
         return {"counts": counts, "limits": list(self.binding["limits"]),
-                "blocked": blocked, "slot_count": len(slots),
+                "blocked": blocked, "slot_count": len(slots), "resume_reserve": reserve,
                 "previous_intent_id": previous, "request_digests": digests}
+
+    def pin_resume_reserve(self, reserve):
+        """Hold the ledger to the resume charge the live path verified, for as long as it lives."""
+        _need(type(reserve) is int and reserve >= 0 and self._pinned_reserve is None,
+              "ISSUE_47_LEDGER_RESUME_RESERVE_PIN_INVALID")
+        _need(_resume_reserve(self.root) == reserve,
+              "ISSUE_47_LEDGER_RESUME_RESERVE_CHANGED:the chain beside the root no longer "
+              "charges what the live path verified")
+        self._pinned_reserve = reserve
 
     @property
     def mode(self):
@@ -680,6 +703,11 @@ class HistoricalSecSession:
         ledger.request_log = self.data_root / "evidence/requests_log.csv"
         self._sec_client = None
         self._transport_facts = None
+        # The live path's published check, run again before every pass: a
+        # resume published elsewhere while this session runs means this
+        # ledger was declared lost, and it must stop spending. None for a
+        # recorded session, which has no issue to read.
+        self.published_check = None
         # What this session claimed, so a caller never has to infer it from the
         # shared ledger's total. Two snapshots around a capture are not taken
         # under the same lock, so another process finishing a request between
@@ -715,12 +743,30 @@ class HistoricalSecSession:
               "ISSUE_47_RECORDED_RESPONSE_NOT_PROVIDED:" + url)
         return self.response[url]
 
+    def _published_still(self):
+        """None while the live path's check still holds with the charge this ledger was pinned to.
+
+        A refusal is returned as a stop, not raised: ``acquire`` goes on to the
+        next company after an error, and this is about the whole ledger.
+        """
+        if self.published_check is None:
+            return None
+        try:
+            published = self.published_check()
+        except (HistoricalSessionError, HistoricalAcquisitionError) as refusal:
+            return "LIVE_PATH_REFUSED:" + str(refusal)
+        if published["reserve_sec_calls"] != self.ledger._pinned_reserve:
+            return "LIVE_PATH_REFUSED:ISSUE_47_LEDGER_RESUME_RESERVE_CHANGED"
+        return None
+
     def capture(self, *, company_id, url, years=5):
         """Fetch one declared dependency and prove what the ledger then holds."""
         self._check()
         validate_official_sec_url(url=url)
         with self.ledger.locked():
             self.ledger.require_unblocked()
+            refused = self._published_still()
+            _need(refused is None, "ISSUE_47_" + str(refused))
             install_historical_source_inputs(root=self.data_root)
             frame = declared_frame(repo_root=self.data_root, company_id=company_id,
                                    years=years)
@@ -806,6 +852,11 @@ class HistoricalSecSession:
                   "frame_may_have_changed": False, "checkpoint_id": None}
         with self.ledger.locked():
             self.ledger.require_unblocked()
+            refused = self._published_still()
+            if refused is not None:
+                result["stop"] = refused
+                result["calls"] = self.calls_this_session()
+                return result
             install_historical_source_inputs(root=self.data_root)
             if register:
                 result["registered_before_planning"] = self._register_if_unregistered()
@@ -1193,6 +1244,9 @@ REQUIRED_WIRING_EVIDENCE = (
     # what rebuilds and registers it there. Both ends are part of the path a
     # grant is spent on, so the receipt pins them with the rest.
     "scripts/vnext/historical_source_export.py",
+    # The resume after a lost host: it rebuilds the ledger a grant is spent on
+    # and charges what the lost host may have spent, so it is on that path too.
+    "scripts/vnext/historical_sec_resume.py",
     "tests/vnext/test_historical_sec_session.py",
     "tools/vnext_historical_sec.py",
     "tools/vnext_historical_wiring.py",
@@ -1396,6 +1450,45 @@ def _sec_start():
 
 
 START_TYPE = "ISSUE_47_SEC_LEDGER_START"
+RESUME_TYPE = "ISSUE_47_SEC_LEDGER_RESUME"
+
+
+def resume_chain_path(root):
+    """Where a resumed ledger's resume chain lives: beside the root, with the start record."""
+    root = Path(root)
+    return root.parent / ("." + root.name + ".resumes.jsonl")
+
+
+def resume_view(record):
+    """What a resume marker publishes: the record without its random number, and a digest of it."""
+    view = {key: value for key, value in record.items() if key != "instance_nonce"}
+    view["resume_record_sha256"] = sha256_bytes(content=canonical_json_bytes(value=record))
+    return view
+
+
+def _resume_reserve(root):
+    """The SEC calls every resume of the ledger at ``root`` charged for a lost segment, summed.
+
+    Read from the chain beside the root. Whether the chain is the one on the
+    issue is the live path's check (``require_published_resume``), made before
+    any session exists; here each record must at least be a resume of this
+    root with a whole, non-negative reserve.
+    """
+    path = resume_chain_path(root)
+    if not path.exists() and not path.is_symlink():
+        return 0
+    _need(path.is_file() and not path.is_symlink(), "ISSUE_47_LEDGER_RESUME_CHAIN_UNSAFE")
+    total = 0
+    for line in path.read_text(encoding="utf-8").splitlines():
+        record = strict_json_loads(text=line)
+        segment = record.get("lost_segment") if type(record) is dict else None
+        reserve = segment.get("reserve_sec_calls") if type(segment) is dict else None
+        _need(type(record) is dict and record.get("record_type") == RESUME_TYPE
+              and record.get("budget_root") == str(Path(root))
+              and type(reserve) is int and reserve >= 0,
+              "ISSUE_47_LEDGER_RESUME_CHAIN_INVALID")
+        total += reserve
+    return total
 
 
 def start_record_path(root):
@@ -1434,11 +1527,44 @@ def start_ledger(*, allowance, reader, now=None, checkout=None):
                  checkout=ROOT if checkout is None else checkout)
 
 
-def require_published_start(*, allowance, reader, checkout=None):
-    """The SEC ledger was started here, its start is on GitHub and it is not behind its export."""
+def require_published_start(*, allowance, reader, branch_export_index, checkout=None):
+    """The SEC ledger was started - or resumed - here, is on GitHub and is not behind its export.
+
+    A resume chain beside the root means the host that started the ledger was
+    lost and this one rebuilt it from the branch's export; that is checked
+    against the resume markers instead (``historical_sec_resume``).
+
+    ``branch_export_index`` is the export index at the branch's remote tip as
+    the caller fetched it, or None where the tip carries none; the checkout's
+    must be the same. A snapshot restore can take the ledger, what is beside
+    it and the checkout back together, and every check against the checkout
+    alone would then pass while the requests since the snapshot are forgotten.
+    """
+    checkout = ROOT if checkout is None else checkout
+    from .historical_source_export import EXPORT_DIRECTORY, INDEX_NAME
+    local = Path(checkout) / EXPORT_DIRECTORY / INDEX_NAME
+    _need(branch_export_index is None or type(branch_export_index) is bytes,
+          "ISSUE_47_SEC_LEDGER_BRANCH_EXPORT_UNREADABLE")
+    _need((local.read_bytes() if local.is_file() and not local.is_symlink() else None)
+          == branch_export_index,
+          "ISSUE_47_SEC_LEDGER_CHECKOUT_IS_NOT_THE_BRANCH_S_EXPORT:bring the checkout to the "
+          "branch's tip; a checkout behind it would let a rolled-back ledger pass")
+    chain = resume_chain_path(Path(allowance["budget_root"]))
+    from .historical_sec_resume import require_published_resume, resume_markers
+    if chain.exists() or chain.is_symlink():
+        return require_published_resume(allowance=allowance, reader=reader, checkout=checkout)
+    # A resume published for this approval means the ledger this host started
+    # was declared lost and rebuilt elsewhere; a host that was only
+    # unreachable, and still holds its start, would otherwise spend the same
+    # allowance twice.
+    resumed = resume_markers(allowance=allowance, reader=reader)
+    _need(not resumed, "ISSUE_47_SEC_LEDGER_RESUMED_ELSEWHERE:"
+          + str(resumed[0]["comment"].get("html_url") if resumed else "")
+          + ": this approval's ledger was resumed from its export; the ledger started here "
+            "may not spend again")
     from .historical_ledger_start import require_published_start as require
-    return require(_sec_start(), allowance=allowance, reader=reader,
-                   checkout=ROOT if checkout is None else checkout)
+    return {**require(_sec_start(), allowance=allowance, reader=reader, checkout=checkout),
+            "reserve_sec_calls": 0}
 
 
 def _allowance_ledger(*, allowance, root, live):
@@ -1453,7 +1579,7 @@ def _allowance_ledger(*, allowance, root, live):
                                 binding=_sealed(body, "binding_id"), live=live)
 
 
-def live_historical_session():
+def live_historical_session(*, branch_tip):
     """Issue #47's granted session, or a refusal naming what is missing.
 
     ``acquisition_allowance`` never falls back to Issue #28's record, so while
@@ -1461,6 +1587,11 @@ def live_historical_session():
     no transport is constructed. The rest of the chain is built and exercised
     regardless, because an execution path that first appears alongside its
     grant is a path nobody has run.
+
+    ``branch_tip`` is called once the allowance and the wiring are verified,
+    and returns the branch's remote tip as the caller fetched it
+    (``{"export_index": bytes or None, ...}``): a missing grant refuses before
+    anything is fetched.
     """
     # The live path always supplies the reader, so a grant is verified against
     # the comment on GitHub rather than against a second local file.
@@ -1470,13 +1601,25 @@ def live_historical_session():
     _need(allowance["delegation_body_sha256"] and allowance["delegation_url"],
           "ISSUE_47_ALLOWANCE_DELEGATION_INCOMPLETE:" + POLICY_PATH)
     verify_offline_wiring(receipt_path=allowance["sec_wiring_receipt_path"])
+    branch_export_index = branch_tip()["export_index"]
+
     # Before the session exists, so before any transport: a ledger with no
     # published start could be a second start of an allowance already begun.
-    require_published_start(allowance=allowance, reader=reader)
-    root = Path(allowance["budget_root"])
-    return HistoricalSecSession(factory=_FACTORY, allowance=allowance,
-                                ledger=_allowance_ledger(allowance=allowance, root=root,
-                                                         live=True))
+    def published():
+        return require_published_start(allowance=allowance, reader=reader,
+                                       branch_export_index=branch_export_index)
+
+    ledger = live_ledger(allowance=allowance, published=published())
+    session = HistoricalSecSession(factory=_FACTORY, allowance=allowance, ledger=ledger)
+    session.published_check = published
+    return session
+
+
+def live_ledger(*, allowance, published):
+    """The LIVE ledger at the granted root, held to the resume charge the published check verified."""
+    ledger = _allowance_ledger(allowance=allowance, root=Path(allowance["budget_root"]), live=True)
+    ledger.pin_resume_reserve(published["reserve_sec_calls"])
+    return ledger
 
 
 def recorded_historical_session(*, root, response, status=200, limits=(0, 0, 80),

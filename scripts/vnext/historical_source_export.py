@@ -45,7 +45,8 @@ from .canonical import (canonical_json_bytes, content_hash, sha256_bytes, sha256
 from .historical_source_acquisition import (POLICY_PATH, REQUIREMENT_ID,
                                             HistoricalAcquisitionError)
 from .historical_sec_session import (ATTRIBUTION_TYPE, HistoricalCallLedger,
-                                     install_historical_source_inputs)
+                                     install_historical_source_inputs, resume_chain_path,
+                                     resume_view, start_record_path)
 from .normal_source_authority import MANIFEST_PATH, ROOT
 
 EXPORT_TYPE = "ISSUE_47_HISTORICAL_ACQUISITION_EXPORT"
@@ -54,6 +55,7 @@ EXPORT_DIRECTORY = "evidence/issue47_acquired"
 INDEX_NAME = "export.json"
 STATE_ARCHIVE = "ledger-state.tar.gz"
 CHECKPOINT_MEMBER = "ledger/checkpoint.json"
+RESUME_MEMBER = "ledger/resumes.jsonl"
 LEDGER_FILES = ("evidence/requests_log.csv", "evidence/requests_log_manifest.json")
 SLOT_FILES = ("intent.json", "sec-plan.json", "sec-receipt.json", "terminal.json")
 # Closed at 100 rows or 160 MiB of raw bytes, whichever comes first. SEC HTML
@@ -204,6 +206,13 @@ def export_acquisition(*, ledger_root, out_dir=None, policy_root=None):
           "ISSUE_47_EXPORT_ATTRIBUTION_DISAGREES_WITH_CHECKPOINT")
     approval = _approval(ledger_root=ledger_root, mode=mode,
                          policy_root=ROOT if policy_root is None else policy_root)
+    # A LIVE ledger began either with a start published here or with a resume
+    # of a lost one; one with neither beside it has lost the record of its own
+    # beginning - a deleted resume chain among them, whose charge the export
+    # would silently leave out.
+    _need(mode != "LIVE" or any(path.is_file() and not path.is_symlink() for path in
+                                (start_record_path(ledger_root), resume_chain_path(ledger_root))),
+          "ISSUE_47_EXPORT_LIVE_LEDGER_HAS_NO_START_OR_RESUME:" + str(ledger_root))
     slots = sorted((ledger_root / "calls").iterdir())
     _need(len(slots) == len(checkpoint["captures"]) == len(rows) - len(old),
           "ISSUE_47_EXPORT_SLOTS_DIFFER_FROM_CHECKPOINT")
@@ -232,8 +241,18 @@ def export_acquisition(*, ledger_root, out_dir=None, policy_root=None):
     _need(mirror.is_file() and not mirror.is_symlink()
           and mirror.read_bytes() == state["ledger/claims.jsonl"],
           "ISSUE_47_EXPORT_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR")
+    # A resumed ledger carries its resume chain, so a later restore charges the
+    # same lost segments. The export carries each resume's public view, never
+    # the random number this host keeps: the branch is public.
+    if resume_chain_path(ledger_root).exists() or resume_chain_path(ledger_root).is_symlink():
+        from .historical_sec_resume import local_chain
+        state[RESUME_MEMBER] = b"".join(
+            canonical_json_bytes(value=resume_view(record) if "instance_nonce" in record
+                                 else record).rstrip(b"\n") + b"\n"
+            for record in local_chain(ledger_root))
     state[CHECKPOINT_MEMBER] = canonical_json_bytes(value=checkpoint)
-    _only_forward(out_dir=out_dir, approval=approval, log=state["ledger/claims.jsonl"])
+    _only_forward(out_dir=out_dir, approval=approval, log=state["ledger/claims.jsonl"],
+                  chain=state.get(RESUME_MEMBER, b""))
     out_dir.mkdir(parents=True, exist_ok=True)
     written = {}
     state_bytes = _archive(state)
@@ -279,13 +298,15 @@ def export_acquisition(*, ledger_root, out_dir=None, policy_root=None):
             "bytes": sum(len(data) for data in written.values()), "calls": [0, 0, 0]}
 
 
-def _only_forward(*, out_dir, approval, log):
+def _only_forward(*, out_dir, approval, log, chain=b""):
     """An export replaces only an export of the same approval whose claim log this one begins with.
 
     One directory serves the SEC ledger; an export of another approval, or of
     a shorter ledger - a reset one, or one restored from an older export - is
     not written over the record of what was spent (an independent review found
-    the model ledger's export could be).
+    the model ledger's export could be). The same holds for a resumed ledger's
+    resume chain: an export without a resume the one there carries would drop
+    the charge for a lost segment.
     """
     previous = Path(out_dir) / INDEX_NAME
     if not previous.exists() and not previous.is_symlink():
@@ -293,13 +314,19 @@ def _only_forward(*, out_dir, approval, log):
     try:
         old = strict_json_file(path=previous)
         old_log = old["state_archive"]["members"]["ledger/claims.jsonl"]
+        old_chain = old["state_archive"]["members"].get(RESUME_MEMBER)
         same = old.get("approval") == approval
-    except (OSError, ValueError, KeyError, TypeError):
-        old_log, same = None, False
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        old_log, old_chain, same = None, None, False
     _need(same and type(old_log) is dict and type(old_log.get("size")) is int
           and len(log) >= old_log["size"]
           and sha256_bytes(content=log[:old_log["size"]]) == old_log.get("sha256"),
           "ISSUE_47_EXPORT_WOULD_NOT_EXTEND_THE_EXPORT_THERE:" + str(previous))
+    _need(old_chain is None or (type(old_chain) is dict and type(old_chain.get("size")) is int
+                                and len(chain) >= old_chain["size"]
+                                and sha256_bytes(content=chain[:old_chain["size"]])
+                                == old_chain.get("sha256")),
+          "ISSUE_47_EXPORT_WOULD_DROP_A_RESUME:" + str(previous))
 
 
 def _replace(path, data):
