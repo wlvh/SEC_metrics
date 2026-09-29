@@ -537,5 +537,25 @@
   ],
   "owner_decisions": "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json"
  },
- "supersedes": "docs/evidence/issue47_history/remaining-implementation.json, which counted unwired metrics and chose C04 as the next route; C04, C02, C03, B06, B10, B11, D01 and B13's out-of-scope branch have been wired since"
+ "supersedes": "docs/evidence/issue47_history/remaining-implementation.json, which counted unwired metrics and chose C04 as the next route; C04, C02, C03, B06, B10, B11, D01 and B13's out-of-scope branch have been wired since",
+ "state_2026_09_29": {
+  "execution_place": "the executor's cloud container, by the owner's decision (issue 47 comment 5882788074, transcribed); the gates bind the executor's code path, not the executor (independent review F1; correction posted as issue 47 comment 5885423070)",
+  "sec_acquisition": {
+   "waits_on": "the owner posting the corrected approval body (plan revision 7, digest 131a720a...; cap, grants and ledger root unchanged) as the owner's own comment",
+   "then": "register, start, first run one capture exported and pushed at once"
+  },
+  "model_calls": {
+   "owner_decisions": "docs/evidence/issue47_history/owner-decisions-2026-09-29/call-application-decisions.json",
+   "grants": "all three: D04 16, E01 7, D02 12, cap [35, 35, 0]; run order E01, D02, D04",
+   "latest_year_d04": "option A: wait for #28's D04 to be accepted and adopted, then reference its published results; no #47 calls for those positions (option B measured at 66 requests and 11,056,361 reference input tokens with zero calls)",
+   "e01_attachments": "item text only; unsettled windows are withheld by name",
+   "waits_on": [
+    "the offline verification re-seal (running)",
+    "the approval body regenerated for the new receipt",
+    "the owner posting it",
+    "a dedicated DeepSeek key in the environment settings, effective in a new session"
+   ]
+  },
+  "coverage_follow_up": "the latest-year D04 positions are pending on #28's adoption, not on #47's own calls; the next frame report labels the two apart"
+ }
 }

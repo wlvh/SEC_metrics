@@ -1,0 +1,903 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "compare_with_issue_28_census": "per company the request counts equal #28's grouped census for the same filing (semantic-route-need/measured.json)",
+ "metric_id": "D04",
+ "positions": {
+  "enphase_energy:2025-12-31": {
+   "filing_accessions": [
+    "0001463101-26-000013"
+   ],
+   "reference_input_tokens": 1009388,
+   "requests": [
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:63820cdc7b6b5febfe80d962e20d8ee064dfc20216f64c0b2ed5afd176fc9953",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 188750,
+     "provider_body_bytes": 615089,
+     "provider_body_sha256": "sha256:63820cdc7b6b5febfe80d962e20d8ee064dfc20216f64c0b2ed5afd176fc9953",
+     "reference_input_tokens": 184654,
+     "required_candidate_assessments": 1,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:207a110c9cae904be2af1fe125e58ec7f2ecb391a86c767114bdee03f7025d95",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 160427,
+     "provider_body_bytes": 441448,
+     "provider_body_sha256": "sha256:207a110c9cae904be2af1fe125e58ec7f2ecb391a86c767114bdee03f7025d95",
+     "reference_input_tokens": 156331,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:04ece0bf9a58cb9b66fee9a8a0314d170204550fbcfc1882cd8ad0dbcd651630",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 191153,
+     "provider_body_bytes": 549902,
+     "provider_body_sha256": "sha256:04ece0bf9a58cb9b66fee9a8a0314d170204550fbcfc1882cd8ad0dbcd651630",
+     "reference_input_tokens": 187057,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:dd644520f37f7df30a32f72f4f3e0abce838aaf2bc3e0bdfe67b818fffa21152",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 175787,
+     "provider_body_bytes": 505661,
+     "provider_body_sha256": "sha256:dd644520f37f7df30a32f72f4f3e0abce838aaf2bc3e0bdfe67b818fffa21152",
+     "reference_input_tokens": 171691,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:d467692712d40666a37e4fe486d2a37e84c8042d15770afac85b1e9c291c84af",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 190212,
+     "provider_body_bytes": 647461,
+     "provider_body_sha256": "sha256:d467692712d40666a37e4fe486d2a37e84c8042d15770afac85b1e9c291c84af",
+     "reference_input_tokens": 186116,
+     "required_candidate_assessments": 0,
+     "units": 7
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:4851d1f97fc75b897bd210e4559305defe0a3647b447348c330a52a383054121",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 127635,
+     "provider_body_bytes": 421328,
+     "provider_body_sha256": "sha256:4851d1f97fc75b897bd210e4559305defe0a3647b447348c330a52a383054121",
+     "reference_input_tokens": 123539,
+     "required_candidate_assessments": 0,
+     "units": 5
+    }
+   ],
+   "seconds": 28.7,
+   "semantic_source_id": "sha256:1672687798d9c32549f0fb4fe79126db4e53c6353721228a15efa5f389edc77e"
+  },
+  "ford_motor_company:2025-12-31": {
+   "filing_accessions": [
+    "0000037996-26-000015"
+   ],
+   "reference_input_tokens": 1836756,
+   "requests": [
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:d0ed218eee4e076a49e3ad5c67e89342b77d18d3352331582df38e8ef6473907",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 189501,
+     "provider_body_bytes": 619107,
+     "provider_body_sha256": "sha256:d0ed218eee4e076a49e3ad5c67e89342b77d18d3352331582df38e8ef6473907",
+     "reference_input_tokens": 185405,
+     "required_candidate_assessments": 2,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:b2dd1d6f7cd151e85d1645619340ab535a03888c27cb96000a6f77e61a6da9ed",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 175444,
+     "provider_body_bytes": 455895,
+     "provider_body_sha256": "sha256:b2dd1d6f7cd151e85d1645619340ab535a03888c27cb96000a6f77e61a6da9ed",
+     "reference_input_tokens": 171348,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:7dddf8f5ba7311d06f2b99d6df20abe616982d429a414d6deaa35e2d8560373f",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 164605,
+     "provider_body_bytes": 477986,
+     "provider_body_sha256": "sha256:7dddf8f5ba7311d06f2b99d6df20abe616982d429a414d6deaa35e2d8560373f",
+     "reference_input_tokens": 160509,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:0f20a4647585389017c9ed0fad6b18083712be853a1794a3ee6879fcac8da02d",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 189399,
+     "provider_body_bytes": 542677,
+     "provider_body_sha256": "sha256:0f20a4647585389017c9ed0fad6b18083712be853a1794a3ee6879fcac8da02d",
+     "reference_input_tokens": 185303,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:5b3466f98ebaeb83da9f75aa1214a60dee2a3d403b95822e6d658432d105131e",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 188605,
+     "provider_body_bytes": 534547,
+     "provider_body_sha256": "sha256:5b3466f98ebaeb83da9f75aa1214a60dee2a3d403b95822e6d658432d105131e",
+     "reference_input_tokens": 184509,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:f8d54d28a0fa782046d6d297d6a9e27cf946b6e11c41517a0a0583b48a3a95e0",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 157370,
+     "provider_body_bytes": 434403,
+     "provider_body_sha256": "sha256:f8d54d28a0fa782046d6d297d6a9e27cf946b6e11c41517a0a0583b48a3a95e0",
+     "reference_input_tokens": 153274,
+     "required_candidate_assessments": 0,
+     "units": 3
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:1e3eaab823f11904f165dacc046b981c62d70f3743feca5f57352a757d5de030",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 195158,
+     "provider_body_bytes": 549710,
+     "provider_body_sha256": "sha256:1e3eaab823f11904f165dacc046b981c62d70f3743feca5f57352a757d5de030",
+     "reference_input_tokens": 191062,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:8013f7869ea8dd934733eb884fdcfa980760463c2e0898fd16044168874f5976",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 184501,
+     "provider_body_bytes": 579200,
+     "provider_body_sha256": "sha256:8013f7869ea8dd934733eb884fdcfa980760463c2e0898fd16044168874f5976",
+     "reference_input_tokens": 180405,
+     "required_candidate_assessments": 0,
+     "units": 7
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:6b8535c36de31ca542626f26da4e36943c6c8f0ec7a73b456c71d104dbb65f0b",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 188749,
+     "provider_body_bytes": 622901,
+     "provider_body_sha256": "sha256:6b8535c36de31ca542626f26da4e36943c6c8f0ec7a73b456c71d104dbb65f0b",
+     "reference_input_tokens": 184653,
+     "required_candidate_assessments": 0,
+     "units": 8
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:15bbbfe0b66b3f4adfe28b0a30f5211ce6d84821b8597537097fd7a933accc05",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 188922,
+     "provider_body_bytes": 618417,
+     "provider_body_sha256": "sha256:15bbbfe0b66b3f4adfe28b0a30f5211ce6d84821b8597537097fd7a933accc05",
+     "reference_input_tokens": 184826,
+     "required_candidate_assessments": 0,
+     "units": 7
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:f76db1303e92f1408dce64d4d7da4cfe221a2f04b4ed6245d9904239f0b8faac",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 59558,
+     "provider_body_bytes": 189015,
+     "provider_body_sha256": "sha256:f76db1303e92f1408dce64d4d7da4cfe221a2f04b4ed6245d9904239f0b8faac",
+     "reference_input_tokens": 55462,
+     "required_candidate_assessments": 0,
+     "units": 2
+    }
+   ],
+   "seconds": 52.6,
+   "semantic_source_id": "sha256:ebcc3edc2cffb2477ff21c4f9c38f65162284364f30b9d30d8501570c5dd9845"
+  },
+  "lumen_technologies:2025-12-31": {
+   "filing_accessions": [
+    "0000018926-26-000014"
+   ],
+   "reference_input_tokens": 1389132,
+   "requests": [
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:b1d58298c45f109ffb327e2a3224ee6b1d71ab164eac444341643952f2da0c57",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 196602,
+     "provider_body_bytes": 583690,
+     "provider_body_sha256": "sha256:b1d58298c45f109ffb327e2a3224ee6b1d71ab164eac444341643952f2da0c57",
+     "reference_input_tokens": 192506,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:00ef4c906dc5e3b877e71958a2ea49f1bdfa8e576f3a7903c7a480ea31828799",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 178812,
+     "provider_body_bytes": 445888,
+     "provider_body_sha256": "sha256:00ef4c906dc5e3b877e71958a2ea49f1bdfa8e576f3a7903c7a480ea31828799",
+     "reference_input_tokens": 174716,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:184592ebe656aa83b49214fc3e289676bde5195bd95c9ce8494a322354e076ff",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 187881,
+     "provider_body_bytes": 538164,
+     "provider_body_sha256": "sha256:184592ebe656aa83b49214fc3e289676bde5195bd95c9ce8494a322354e076ff",
+     "reference_input_tokens": 183785,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:3279282c37ad1bdd2b647fd1f882c144a5325e75b2fe007926245b4945718bb2",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 151832,
+     "provider_body_bytes": 412900,
+     "provider_body_sha256": "sha256:3279282c37ad1bdd2b647fd1f882c144a5325e75b2fe007926245b4945718bb2",
+     "reference_input_tokens": 147736,
+     "required_candidate_assessments": 0,
+     "units": 3
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:c073623569a88b88896ef86719712de153aae6ca28504a7fd40ddeb135ca2670",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 155195,
+     "provider_body_bytes": 420146,
+     "provider_body_sha256": "sha256:c073623569a88b88896ef86719712de153aae6ca28504a7fd40ddeb135ca2670",
+     "reference_input_tokens": 151099,
+     "required_candidate_assessments": 0,
+     "units": 3
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:b48289d2b397a8d8fbde4382075798c8a6588e450d9475366943056259e7493e",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 198154,
+     "provider_body_bytes": 547278,
+     "provider_body_sha256": "sha256:b48289d2b397a8d8fbde4382075798c8a6588e450d9475366943056259e7493e",
+     "reference_input_tokens": 194058,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:1fe9d8901f08fe55578594161c78edcb2166b2d6b138761a1d2768131fa0ce4d",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 187180,
+     "provider_body_bytes": 633088,
+     "provider_body_sha256": "sha256:1fe9d8901f08fe55578594161c78edcb2166b2d6b138761a1d2768131fa0ce4d",
+     "reference_input_tokens": 183084,
+     "required_candidate_assessments": 0,
+     "units": 8
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:90dd1d8112a5980bc12a684ecea15cffacf22d586a985d7c11f5ed6602c18937",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 166244,
+     "provider_body_bytes": 554262,
+     "provider_body_sha256": "sha256:90dd1d8112a5980bc12a684ecea15cffacf22d586a985d7c11f5ed6602c18937",
+     "reference_input_tokens": 162148,
+     "required_candidate_assessments": 0,
+     "units": 7
+    }
+   ],
+   "seconds": 47.2,
+   "semantic_source_id": "sha256:dd3a63ee542f3970e76cb8283047152ac4604a2a76134f902add39b2a9eba478"
+  },
+  "macys:2026-01-31": {
+   "filing_accessions": [
+    "0001628280-26-021721"
+   ],
+   "reference_input_tokens": 779403,
+   "requests": [
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:d7442831b62d68da0217e2295b9cc7b3ee37a51c5f43a582546ae0ca956689c3",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 191935,
+     "provider_body_bytes": 555498,
+     "provider_body_sha256": "sha256:d7442831b62d68da0217e2295b9cc7b3ee37a51c5f43a582546ae0ca956689c3",
+     "reference_input_tokens": 187839,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:4c5e3040d7e0b0b106e37f59bec3cb86e700ea1c92ee34eeb591fd29ae1faa39",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 190838,
+     "provider_body_bytes": 530598,
+     "provider_body_sha256": "sha256:4c5e3040d7e0b0b106e37f59bec3cb86e700ea1c92ee34eeb591fd29ae1faa39",
+     "reference_input_tokens": 186742,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:079387cd80be353462f739380656819c7db81372e84e856233127dbd0411a64c",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 188913,
+     "provider_body_bytes": 520965,
+     "provider_body_sha256": "sha256:079387cd80be353462f739380656819c7db81372e84e856233127dbd0411a64c",
+     "reference_input_tokens": 184817,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:d87739cee24f2116c7fcb5366bc8dda6f5acaaac1ce9ce7a4dbc6a916021e5bb",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 182146,
+     "provider_body_bytes": 615331,
+     "provider_body_sha256": "sha256:d87739cee24f2116c7fcb5366bc8dda6f5acaaac1ce9ce7a4dbc6a916021e5bb",
+     "reference_input_tokens": 178050,
+     "required_candidate_assessments": 0,
+     "units": 7
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:e6c956fd22f6876f17b6a4a518701fb5213bf6e9214f99de8e8fe7a64f7c3ef7",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 46051,
+     "provider_body_bytes": 145579,
+     "provider_body_sha256": "sha256:e6c956fd22f6876f17b6a4a518701fb5213bf6e9214f99de8e8fe7a64f7c3ef7",
+     "reference_input_tokens": 41955,
+     "required_candidate_assessments": 0,
+     "units": 2
+    }
+   ],
+   "seconds": 20.5,
+   "semantic_source_id": "sha256:aad561b25606e03c5f82230d3c9f5613ea262d061bfe5c8187a2438c27ff87e9"
+  },
+  "marriott_international:2025-12-31": {
+   "filing_accessions": [
+    "0001048286-26-000007"
+   ],
+   "reference_input_tokens": 611084,
+   "requests": [
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:037f3a77946407cdd20bcaef0c17f44f4bc15390ef4caf056c5d27d81174373e",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 176589,
+     "provider_body_bytes": 513589,
+     "provider_body_sha256": "sha256:037f3a77946407cdd20bcaef0c17f44f4bc15390ef4caf056c5d27d81174373e",
+     "reference_input_tokens": 172493,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:847b15cfa21ff6c15d16336270c83450210e7c9ba30722f3447f35017f38671f",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 180553,
+     "provider_body_bytes": 527305,
+     "provider_body_sha256": "sha256:847b15cfa21ff6c15d16336270c83450210e7c9ba30722f3447f35017f38671f",
+     "reference_input_tokens": 176457,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:797cf8ee9b311e524e320077f769dabd4984be5494635f38f27c6384fa6614a0",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 185243,
+     "provider_body_bytes": 566116,
+     "provider_body_sha256": "sha256:797cf8ee9b311e524e320077f769dabd4984be5494635f38f27c6384fa6614a0",
+     "reference_input_tokens": 181147,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:129d956b66f6163b3ecd3d9f6ff4dc84fa235b192893c5144dcbdf702d84a491",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 85083,
+     "provider_body_bytes": 274242,
+     "provider_body_sha256": "sha256:129d956b66f6163b3ecd3d9f6ff4dc84fa235b192893c5144dcbdf702d84a491",
+     "reference_input_tokens": 80987,
+     "required_candidate_assessments": 0,
+     "units": 3
+    }
+   ],
+   "seconds": 17.2,
+   "semantic_source_id": "sha256:7e683b4a21a1183760fd7243eb8cad6d2a3cceea7f5de451513e235618c7bea0"
+  },
+  "paramount_skydance_paramount_global:2025-12-31": {
+   "filing_accessions": [
+    "0001140361-26-016758",
+    "0002041610-26-000011"
+   ],
+   "reference_input_tokens": 1736676,
+   "requests": [
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:f3b25d663d3902eabbdc40f8b31911c6de24cf1318b537a549bb9db74417184b",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 193455,
+     "provider_body_bytes": 604630,
+     "provider_body_sha256": "sha256:f3b25d663d3902eabbdc40f8b31911c6de24cf1318b537a549bb9db74417184b",
+     "reference_input_tokens": 189359,
+     "required_candidate_assessments": 1,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:b7c49641508c5974ff4c7236632deef671de99159bb201855ca86aa9be9a3f93",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 181060,
+     "provider_body_bytes": 483237,
+     "provider_body_sha256": "sha256:b7c49641508c5974ff4c7236632deef671de99159bb201855ca86aa9be9a3f93",
+     "reference_input_tokens": 176964,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:ce259c9a1a9dfbf9d6b300647c0761e046dc8e58654a75f6e027ac7097c330e8",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 184875,
+     "provider_body_bytes": 538320,
+     "provider_body_sha256": "sha256:ce259c9a1a9dfbf9d6b300647c0761e046dc8e58654a75f6e027ac7097c330e8",
+     "reference_input_tokens": 180779,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:8ecf4a20714ac04f15e1dce7cabaaee7ff936620bade47548afd00ac248edb15",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 197123,
+     "provider_body_bytes": 541804,
+     "provider_body_sha256": "sha256:8ecf4a20714ac04f15e1dce7cabaaee7ff936620bade47548afd00ac248edb15",
+     "reference_input_tokens": 193027,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:9db25f85dbb8a553a8c6d01b153bf5224f946e14900b669fb8e55d30a44eca32",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 186234,
+     "provider_body_bytes": 533871,
+     "provider_body_sha256": "sha256:9db25f85dbb8a553a8c6d01b153bf5224f946e14900b669fb8e55d30a44eca32",
+     "reference_input_tokens": 182138,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:bab0e2d40642c6ef6abe97bbe6b77a9040744c44e477ed8c78a695ebe33c7035",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 178761,
+     "provider_body_bytes": 523398,
+     "provider_body_sha256": "sha256:bab0e2d40642c6ef6abe97bbe6b77a9040744c44e477ed8c78a695ebe33c7035",
+     "reference_input_tokens": 174665,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:e48de89db84fcadfd464d9144df5869710e5e8944b5a06e9e6073045c4d45c00",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 178610,
+     "provider_body_bytes": 591569,
+     "provider_body_sha256": "sha256:e48de89db84fcadfd464d9144df5869710e5e8944b5a06e9e6073045c4d45c00",
+     "reference_input_tokens": 174514,
+     "required_candidate_assessments": 0,
+     "units": 6
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:df8ff966bf652f85664f479b601b994805d41682e68d87d38375202e6a02991b",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 176223,
+     "provider_body_bytes": 581728,
+     "provider_body_sha256": "sha256:df8ff966bf652f85664f479b601b994805d41682e68d87d38375202e6a02991b",
+     "reference_input_tokens": 172127,
+     "required_candidate_assessments": 0,
+     "units": 6
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:c82aefe783b91853b20abd6b93e2f5c6821b906ee17dc6ad1753de4c4ac3da49",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 158549,
+     "provider_body_bytes": 523369,
+     "provider_body_sha256": "sha256:c82aefe783b91853b20abd6b93e2f5c6821b906ee17dc6ad1753de4c4ac3da49",
+     "reference_input_tokens": 154453,
+     "required_candidate_assessments": 0,
+     "units": 6
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:c7366b347ce43cd2834b6d68e691f848a50f6dc9b667558ddd082b4a3e28a3c5",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 142746,
+     "provider_body_bytes": 388524,
+     "provider_body_sha256": "sha256:c7366b347ce43cd2834b6d68e691f848a50f6dc9b667558ddd082b4a3e28a3c5",
+     "reference_input_tokens": 138650,
+     "required_candidate_assessments": 0,
+     "units": 6
+    }
+   ],
+   "seconds": 48.5,
+   "semantic_source_id": "sha256:8aa7ff9054659f9c77d46eaf528fca71a7f1e24cd2eb6ccce5b3eeca4bc4e362"
+  },
+  "pfizer:2025-12-31": {
+   "filing_accessions": [
+    "0000078003-26-000026"
+   ],
+   "reference_input_tokens": 1941350,
+   "requests": [
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:984d15e31382f3150dd53511b0e203448def6e6899ab7b74f2031bfcd11578b3",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 193016,
+     "provider_body_bytes": 603958,
+     "provider_body_sha256": "sha256:984d15e31382f3150dd53511b0e203448def6e6899ab7b74f2031bfcd11578b3",
+     "reference_input_tokens": 188920,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:ac0f4a22b90a5670a274f87e8cc524469308da0de228f5d46bf51c49b1dc86c0",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 169750,
+     "provider_body_bytes": 463341,
+     "provider_body_sha256": "sha256:ac0f4a22b90a5670a274f87e8cc524469308da0de228f5d46bf51c49b1dc86c0",
+     "reference_input_tokens": 165654,
+     "required_candidate_assessments": 1,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:ce07d60b78e31f61d15ef96acd931a6a0216bc9d0c0d51893e090b78e239821e",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 187517,
+     "provider_body_bytes": 523523,
+     "provider_body_sha256": "sha256:ce07d60b78e31f61d15ef96acd931a6a0216bc9d0c0d51893e090b78e239821e",
+     "reference_input_tokens": 183421,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:2824f3428e242efa1542493ed19ade4d1c8bd0f25e1b76ab123f98d45f91af63",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 192228,
+     "provider_body_bytes": 544453,
+     "provider_body_sha256": "sha256:2824f3428e242efa1542493ed19ade4d1c8bd0f25e1b76ab123f98d45f91af63",
+     "reference_input_tokens": 188132,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:11aad5495c86b6bd1deb3fa1e745cc94a37612c22c995697fdc1e569236a8129",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 194321,
+     "provider_body_bytes": 538791,
+     "provider_body_sha256": "sha256:11aad5495c86b6bd1deb3fa1e745cc94a37612c22c995697fdc1e569236a8129",
+     "reference_input_tokens": 190225,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:8c25d00169a5bfe83c028272659dcaf933c5a0eaca33efb7a3e4b5290d40883a",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 198440,
+     "provider_body_bytes": 560104,
+     "provider_body_sha256": "sha256:8c25d00169a5bfe83c028272659dcaf933c5a0eaca33efb7a3e4b5290d40883a",
+     "reference_input_tokens": 194344,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:c216bb1024a48f724dd7ee5beff711480eca15ed02ab5e0d3e1583f35717f16a",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 183730,
+     "provider_body_bytes": 510958,
+     "provider_body_sha256": "sha256:c216bb1024a48f724dd7ee5beff711480eca15ed02ab5e0d3e1583f35717f16a",
+     "reference_input_tokens": 179634,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:def5c8f0c35a8b0aee01d7eeec9ba10c50ea4b323cd8d65ea47cf2d2d5ba3a47",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 182400,
+     "provider_body_bytes": 585406,
+     "provider_body_sha256": "sha256:def5c8f0c35a8b0aee01d7eeec9ba10c50ea4b323cd8d65ea47cf2d2d5ba3a47",
+     "reference_input_tokens": 178304,
+     "required_candidate_assessments": 0,
+     "units": 7
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:56717db14a7d2abd8ec4ea7e7385fe511bf8014c09bee8b58637404b797981df",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 174834,
+     "provider_body_bytes": 571230,
+     "provider_body_sha256": "sha256:56717db14a7d2abd8ec4ea7e7385fe511bf8014c09bee8b58637404b797981df",
+     "reference_input_tokens": 170738,
+     "required_candidate_assessments": 0,
+     "units": 6
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:9445b6011db713c18c2705a5e80e64b3d001c0570772351292282e38ce7be8c8",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 187479,
+     "provider_body_bytes": 618105,
+     "provider_body_sha256": "sha256:9445b6011db713c18c2705a5e80e64b3d001c0570772351292282e38ce7be8c8",
+     "reference_input_tokens": 183383,
+     "required_candidate_assessments": 0,
+     "units": 6
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:b8034da623ec01a392f00376e5f78e5b035fc82456b7a4e67b45e7de94825efc",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 122691,
+     "provider_body_bytes": 410174,
+     "provider_body_sha256": "sha256:b8034da623ec01a392f00376e5f78e5b035fc82456b7a4e67b45e7de94825efc",
+     "reference_input_tokens": 118595,
+     "required_candidate_assessments": 0,
+     "units": 5
+    }
+   ],
+   "seconds": 53.2,
+   "semantic_source_id": "sha256:051136f92a2f1abd7d3312b5b21ceb9551b8196c0d7b2ffc61a2833485262c70"
+  },
+  "salesforce:2026-01-31": {
+   "filing_accessions": [
+    "0001108524-26-000060"
+   ],
+   "reference_input_tokens": 825803,
+   "requests": [
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:2ff668c604c969495311dea1b55da8901129cb5b23695bf9aec1808b156cc8ac",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 189107,
+     "provider_body_bytes": 605434,
+     "provider_body_sha256": "sha256:2ff668c604c969495311dea1b55da8901129cb5b23695bf9aec1808b156cc8ac",
+     "reference_input_tokens": 185011,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:1ce107e4c03df827de1abbc12a843a23ca0e1d791013bf30ed0fbc09463d50f0",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 167935,
+     "provider_body_bytes": 495628,
+     "provider_body_sha256": "sha256:1ce107e4c03df827de1abbc12a843a23ca0e1d791013bf30ed0fbc09463d50f0",
+     "reference_input_tokens": 163839,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:4895e23872d5251b2ae1d6c6b85180e99648fedf7d8821b74e57706e7efb493e",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 184870,
+     "provider_body_bytes": 545138,
+     "provider_body_sha256": "sha256:4895e23872d5251b2ae1d6c6b85180e99648fedf7d8821b74e57706e7efb493e",
+     "reference_input_tokens": 180774,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:9f0533003e12cf0d244568f99e8dea8083637d716130ba7c07534fecdb1b7df0",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 180040,
+     "provider_body_bytes": 588674,
+     "provider_body_sha256": "sha256:9f0533003e12cf0d244568f99e8dea8083637d716130ba7c07534fecdb1b7df0",
+     "reference_input_tokens": 175944,
+     "required_candidate_assessments": 0,
+     "units": 7
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:6256909deea88dd9e3c2a5d9de95546a0d101adfbd4fdeaeba567df92a8c3904",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 124331,
+     "provider_body_bytes": 414440,
+     "provider_body_sha256": "sha256:6256909deea88dd9e3c2a5d9de95546a0d101adfbd4fdeaeba567df92a8c3904",
+     "reference_input_tokens": 120235,
+     "required_candidate_assessments": 0,
+     "units": 5
+    }
+   ],
+   "seconds": 24.6,
+   "semantic_source_id": "sha256:1ec3f1e83a9709d6c5b70410cae3b4ba74ba29cfe42164183818ac07b43ead28"
+  },
+  "southwest_airlines:2025-12-31": {
+   "filing_accessions": [
+    "0000092380-26-000004",
+    "0000092380-26-000006"
+   ],
+   "reference_input_tokens": 926769,
+   "requests": [
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:ffd95d07c697a4615c3fdac3da0e10d5984a39dd214e6c0f2a146a9b764b0c87",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 183922,
+     "provider_body_bytes": 632105,
+     "provider_body_sha256": "sha256:ffd95d07c697a4615c3fdac3da0e10d5984a39dd214e6c0f2a146a9b764b0c87",
+     "reference_input_tokens": 179826,
+     "required_candidate_assessments": 0,
+     "units": 5
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:e237e3755ce07481c428547b1526af459ccd022b08b8929fce84edfa66f2ff39",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 173433,
+     "provider_body_bytes": 488212,
+     "provider_body_sha256": "sha256:e237e3755ce07481c428547b1526af459ccd022b08b8929fce84edfa66f2ff39",
+     "reference_input_tokens": 169337,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:77d53c7ca0bb7604db86d0fdae5a0e26726a70eb892f1f7be9f36826acbd90ab",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 193532,
+     "provider_body_bytes": 548425,
+     "provider_body_sha256": "sha256:77d53c7ca0bb7604db86d0fdae5a0e26726a70eb892f1f7be9f36826acbd90ab",
+     "reference_input_tokens": 189436,
+     "required_candidate_assessments": 0,
+     "units": 4
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:b08a3fb7a7148a735b6907ac8f134cde8b04bc1aa348b854f5abeb09bd6fba9c",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 186819,
+     "provider_body_bytes": 586647,
+     "provider_body_sha256": "sha256:b08a3fb7a7148a735b6907ac8f134cde8b04bc1aa348b854f5abeb09bd6fba9c",
+     "reference_input_tokens": 182723,
+     "required_candidate_assessments": 0,
+     "units": 6
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:72fb63c98fb89d0644875531ccdaca25eec8759d4819e740c9d8fbacc9c340ec",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 185165,
+     "provider_body_bytes": 623054,
+     "provider_body_sha256": "sha256:72fb63c98fb89d0644875531ccdaca25eec8759d4819e740c9d8fbacc9c340ec",
+     "reference_input_tokens": 181069,
+     "required_candidate_assessments": 0,
+     "units": 8
+    },
+    {
+     "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+     "fits_the_ceiling": true,
+     "ledger_digest": "sha256:7cb29b57498bbf147b0ce14dfb0725b732ad6fd9fd1c9a98db1fac306a843d52",
+     "max_output_tokens": 4096,
+     "planned_context_tokens": 28474,
+     "provider_body_bytes": 70129,
+     "provider_body_sha256": "sha256:7cb29b57498bbf147b0ce14dfb0725b732ad6fd9fd1c9a98db1fac306a843d52",
+     "reference_input_tokens": 24378,
+     "required_candidate_assessments": 0,
+     "units": 2
+    }
+   ],
+   "seconds": 27.6,
+   "semantic_source_id": "sha256:b94cb1f86cd6d7c788f6445bc18907cf3accb87ab57d007e1f972ecc58c35e84"
+  }
+ },
+ "record_type": "ISSUE_47_D04_REQUEST_MEASUREMENT",
+ "tokenizer": "the pinned reference tokenizer (continuous_request_context.measure_request)",
+ "totals": {
+  "max_output_tokens": 270336,
+  "reference_input_tokens": 11056361,
+  "requests": 66
+ },
+ "why_measured": "the owner asked for the latest-year D04 decision in detail (2026-09-29). #28 has already reviewed these ten filings with the same request contract; this measures what #47 re-reviewing nine of them would send. JPMorgan's latest year is not reachable here (saved submissions history incoherent; #28's census for it is 27). Zero calls: the requests are built and counted, nothing is sent"
+}
