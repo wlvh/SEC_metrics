@@ -1,0 +1,106 @@
+{
+ "record_type": "ISSUE_47_E01_ITEM_VISIBILITY_FAULT_INJECTIONS",
+ "file": "scripts/vnext/historical_event_items.py",
+ "class": "tests.vnext.test_historical_event_items.TextAReaderCannotSeeNeverEntersTheItem",
+ "results": [
+  {
+   "id": "VISIBILITY_IS_NOT_CHECKED",
+   "why_it_matters": "the frozen view keeps hidden text; without the check it goes to the model as the item's text",
+   "outcome": "CAUGHT",
+   "expected_case": "test_hidden_text_inside_the_item_is_refused",
+   "failed_cases": [
+    "test_hidden_text_inside_the_item_is_refused",
+    "test_text_styled_so_it_cannot_be_seen_is_refused",
+    "test_the_refusals_are_implementation_gaps_not_disclosure_findings"
+   ],
+   "suite_result": "Ran 9 tests in 0.410s FAILED (failures=18)"
+  },
+  {
+   "id": "IX_HIDDEN_IS_DISPLAYED",
+   "why_it_matters": "every saved 8-K carries its inline-XBRL header in ix:hidden",
+   "outcome": "CAUGHT",
+   "expected_case": "test_hidden_text_inside_the_item_is_refused",
+   "failed_cases": [
+    "test_hidden_text_inside_the_item_is_refused"
+   ],
+   "suite_result": "Ran 9 tests in 0.504s FAILED (failures=1)"
+  },
+  {
+   "id": "ONLY_AN_EXACT_ZERO_OPACITY_HIDES",
+   "why_it_matters": "a percentage, a near-zero value or an unreadable value hides text as well as 0 does",
+   "outcome": "CAUGHT",
+   "expected_case": "test_text_styled_so_it_cannot_be_seen_is_refused",
+   "failed_cases": [
+    "test_text_styled_so_it_cannot_be_seen_is_refused"
+   ],
+   "suite_result": "Ran 9 tests in 0.497s FAILED (failures=2)"
+  },
+  {
+   "id": "TRANSPARENT_COLOUR_IS_VISIBLE",
+   "why_it_matters": "an independent review of #28's component found color:transparent accepted",
+   "outcome": "CAUGHT",
+   "expected_case": "test_text_styled_so_it_cannot_be_seen_is_refused",
+   "failed_cases": [
+    "test_text_styled_so_it_cannot_be_seen_is_refused"
+   ],
+   "suite_result": "Ran 9 tests in 0.443s FAILED (failures=2)"
+  },
+  {
+   "id": "ANY_INLINE_COLOUR_OR_POSITION_IS_UNCERTAIN",
+   "why_it_matters": "measured: a broad rule refuses 36 of the 56 saved candidate items",
+   "outcome": "CAUGHT",
+   "expected_case": "test_ordinary_formatting_is_not_hiding",
+   "failed_cases": [
+    "test_every_saved_candidate_reads_the_text_it_read_before",
+    "test_ordinary_formatting_is_not_hiding"
+   ],
+   "suite_result": "Ran 9 tests in 0.494s FAILED (errors=39)"
+  },
+  {
+   "id": "THE_END_HEADING_IS_COUNTED_BY_RUNS",
+   "why_it_matters": "adjacent headings of one code merge into one run, so a reference and the real heading count once",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_cross_reference_that_looks_like_the_next_heading_is_refused",
+   "failed_cases": [
+    "test_a_cross_reference_that_looks_like_the_next_heading_is_refused"
+   ],
+   "suite_result": "Ran 9 tests in 0.494s FAILED (failures=1)"
+  },
+  {
+   "id": "THE_SIGNATURES_ARE_NOT_CHECKED",
+   "why_it_matters": "an upper-case SIGNATURE word inside the item would end it there silently",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_second_signatures_word_is_refused_rather_than_cut_at",
+   "failed_cases": [
+    "test_a_second_signatures_word_is_refused_rather_than_cut_at"
+   ],
+   "suite_result": "Ran 9 tests in 0.554s FAILED (failures=1)"
+  },
+  {
+   "id": "THE_REBUILT_VIEW_IS_TRUSTED",
+   "why_it_matters": "offsets from a rebuild that differs from the frozen view point at the wrong nodes",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_view_the_check_cannot_rebuild_is_refused_not_trusted",
+   "failed_cases": [
+    "test_a_view_the_check_cannot_rebuild_is_refused_not_trusted"
+   ],
+   "suite_result": "Ran 9 tests in 0.513s FAILED (failures=1)"
+  },
+  {
+   "id": "HIDDEN_TEXT_OUTSIDE_THE_SPAN_REFUSES",
+   "why_it_matters": "every saved 8-K has hidden text above its first item; refusing on it refuses every item",
+   "outcome": "CAUGHT",
+   "expected_case": "test_hidden_text_outside_the_item_is_not_this_item_s",
+   "failed_cases": [
+    "test_every_saved_candidate_reads_the_text_it_read_before",
+    "test_hidden_text_outside_the_item_is_not_this_item_s"
+   ],
+   "suite_result": "Ran 9 tests in 0.524s FAILED (errors=57)"
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

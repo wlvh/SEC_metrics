@@ -41,6 +41,24 @@ an opening quotation mark. Consecutive headings of one item ("Item 5.02" then
 twice with another item between, stops the answer by name: an unread item
 never counts and never silently fails to count.
 
+The frozen view keeps every text node of the document, including those a
+reader never sees: <style>, <script>, the inline-XBRL ix:hidden header and
+anything styled display:none. So the view is rebuilt beside it, node by node,
+with what hides each node recorded, and the rebuilt text must equal the frozen
+view; an item whose span holds a node that is hidden, or styled so that it
+cannot be seen (zero opacity or font size, transparent colour, pushed a
+thousand points off the page), is refused by name rather than read with text
+nobody reading the filing saw. Ordinary colours and hanging indents are not
+hiding: measured over the 56 candidate items of the 51 saved 8-Ks, every
+document carries hidden text somewhere and no item span does, and a rule that
+refused any inline colour, position or background would have refused 36 of
+the 56. An item must also end where exactly one reading says it ends: the item
+heading that ends it is that code's only heading after the item starts, and a
+span ended by the signatures meets only one of them - otherwise a
+cross-reference that looks like the next heading would cut the item short
+silently. Over the same corpus every end was unique, so neither check refuses
+a saved item; both hold for filings not saved yet.
+
 Not read: exhibits the item incorporates by reference. They are separate
 documents and none of them is saved; each candidate records whether its own
 text incorporates an exhibit, so a confirmation that needs one says so.
@@ -49,6 +67,7 @@ press release furnished under 7.01). The candidate codes are the approved
 definition's; widening them would be a further change of meaning.
 """
 import re
+from html.parser import HTMLParser
 
 from pathlib import Path
 
@@ -101,6 +120,105 @@ _CAPTIONS = {
 _LETTERS = re.compile(r"[^a-z]+")
 _EXHIBIT = re.compile(r"\bExhibits?\s+\d+(?:\.\d+)?", re.I)
 _CONTEXT = 240
+
+
+# Elements whose text is never displayed, and the inline declarations that hide
+# an element or make its text invisible. A value that cannot be read as a
+# number is treated as hiding for the properties that hide by their value: an
+# item is refused rather than read when its visibility cannot be established.
+_NONDISPLAY = frozenset(("head", "title", "script", "style", "template", "noscript", "svg",
+                         "ix:hidden"))
+_VOID = frozenset(("area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta",
+                   "param", "source", "track", "wbr"))
+_NUMBER = re.compile(r"^([+-]?(?:\d+\.?\d*|\.\d+))(px|pt|em|rem|%|in|cm|mm|pc|ex|ch|vw|vh)?$")
+_OFF_THE_PAGE = 999
+
+
+def _number(value):
+    match = _NUMBER.match(value)
+    return None if match is None else (float(match.group(1)), match.group(2) or "")
+
+
+def _hidden_by_style(style):
+    """The inline declaration that keeps an element's text from being seen, or None."""
+    for declaration in style.split(";"):
+        name, _, value = declaration.partition(":")
+        value = value.replace("!important", "")
+        if not name or not value:
+            continue
+        if ((name == "display" and value == "none")
+                or (name == "visibility" and value in ("hidden", "collapse"))
+                or (name == "content-visibility" and value == "hidden")
+                or (name == "color" and (value == "transparent"
+                                         or re.fullmatch(r"rgba\([^)]*,0*\.?0*\)", value)))):
+            return name + ":" + value
+        number = _number(value)
+        if name == "opacity" and (number is None or number[0] * (0.01 if number[1] == "%" else 1)
+                                  < 0.1):
+            return name + ":" + value
+        if name == "font-size" and number is not None and number[0] == 0:
+            return name + ":" + value
+        if (name in ("text-indent", "left", "top", "margin-left", "margin-top")
+                and number is not None and number[0] <= -_OFF_THE_PAGE):
+            return name + ":" + value
+    return None
+
+
+class _Visibility(HTMLParser):
+    """The frozen view's text nodes, each with what hides it, if anything."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.tags, self.stack, self.nodes = [], [], []
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        hidden = self.stack[-1] if self.stack else None
+        if hidden is None:
+            style = re.sub(r"\s+", "", attributes.get("style") or "").lower()
+            if tag in _NONDISPLAY:
+                hidden = "element:" + tag
+            elif "hidden" in attributes:
+                hidden = "attribute:hidden"
+            elif (attributes.get("aria-hidden") or "").lower() == "true":
+                hidden = "attribute:aria-hidden"
+            else:
+                hidden = _hidden_by_style(style)
+                hidden = None if hidden is None else "style:" + hidden
+        if tag not in _VOID:
+            self.tags.append(tag)
+            self.stack.append(hidden)
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        if tag not in _VOID:
+            self.handle_endtag(tag)
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.tags) - 1, -1, -1):
+            if self.tags[index] == tag:
+                del self.tags[index:]
+                del self.stack[index:]
+                return
+
+    def handle_data(self, data):
+        text = " ".join(data.split())
+        if text:
+            self.nodes.append((text, self.stack[-1] if self.stack else None))
+
+
+def _hidden_in_span(*, raw_bytes, text, start, end):
+    """What hides a node inside [start, end) of the frozen view, or None."""
+    parser = _Visibility()
+    parser.feed(raw_bytes.decode("utf-8", errors="replace"))
+    parser.close()
+    _need(" ".join(node for node, _ in parser.nodes) == text, "EVENT_ITEM_TEXT_VIEW_NOT_REBUILT")
+    offset = 0
+    for node, hidden in parser.nodes:
+        if hidden is not None and offset < end and offset + len(node) > start:
+            return hidden
+        offset += len(node) + 1
+    return None
 
 
 class EventItemTextError(ValueError):
@@ -159,6 +277,15 @@ def item_text(*, raw_bytes, item_code):
         end, marker = signatures.start(), "SIGNATURES"
     else:
         end, marker = len(text), "END_OF_DOCUMENT"
+    if marker == "NEXT_ITEM_HEADING":
+        end_code = next(code for position, _, code in headings if position == end)
+        _need(sum(1 for position, _, code in headings if code == end_code and position > start) == 1,
+              "EVENT_ITEM_END_HEADING_NOT_UNIQUE:" + item_code + ":" + end_code)
+    elif marker == "SIGNATURES":
+        _need(len(_SIGNATURES.findall(text, start)) == 1,
+              "EVENT_ITEM_END_SIGNATURES_NOT_UNIQUE:" + item_code)
+    hidden = _hidden_in_span(raw_bytes=raw_bytes, text=text, start=start, end=end)
+    _need(hidden is None, "EVENT_ITEM_TEXT_A_READER_CANNOT_SEE:" + item_code + ":" + str(hidden))
     body = text[start:end]
     return {"item_code": item_code, "text_view": TEXT_VIEW, "rule": RULE,
             "start": start, "end": end, "end_marker": marker,

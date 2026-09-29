@@ -163,6 +163,128 @@ class HeadingsAndReferences(unittest.TestCase):
         self.assertNotIn("Pursuant", text["text"])
 
 
+class TextAReaderCannotSeeNeverEntersTheItem(unittest.TestCase):
+    """The frozen view keeps hidden text; an item span that holds any is refused.
+
+    Issue #28 found this class of problem in its own 8.01 source component
+    (base commit d1caf720): text inside display:none, <style> or ix:hidden, and
+    text styled so that it cannot be seen, entered the "visible" body. The E01
+    confirmation shows the item text to a model, so hidden text must never be
+    part of it. The saved corpus has hidden text in every document and in no
+    item span; the shapes below are built in memory and say so.
+    """
+
+    CENSUS = ROOT / "docs/evidence/issue47_history/e01-item-text/hidden-text-census.json"
+
+    @staticmethod
+    def _item(middle):
+        return ("<html><body><p>Item 8.01 Other Events.</p>" + middle
+                + "<p>SIGNATURES</p><p>Pursuant to the Act.</p></body></html>").encode("utf-8")
+
+    def test_every_saved_candidate_reads_the_text_it_read_before(self):
+        """No saved item is refused and none changes: the census was taken before the check."""
+        census = json.loads(self.CENSUS.read_text(encoding="utf-8"))
+        rows = [row for row in census["rows"] if "text_sha256" in row]
+        self.assertEqual(len(rows), 56)
+        for row in rows:
+            with self.subTest(folder=row["folder"], code=row["item_code"]):
+                raw = (MATERIALS / row["folder"] / row["document"]).read_bytes()
+                text = item_text(raw_bytes=raw, item_code=row["item_code"])
+                self.assertEqual(text["text_sha256"], row["text_sha256"])
+                self.assertEqual(text["end_marker"], row["end_marker"])
+
+    def test_hidden_text_inside_the_item_is_refused(self):
+        for middle, reason in (
+                ('<div style="display:none">The Company agreed to acquire Acme.</div>',
+                 "style:display:none"),
+                ('<p style="visibility: hidden">Acquire Acme.</p>', "style:visibility:hidden"),
+                ('<p hidden>Acquire Acme.</p>', "attribute:hidden"),
+                ('<p aria-hidden="true">Acquire Acme.</p>', "attribute:aria-hidden"),
+                ("<ix:hidden>Acquire Acme.</ix:hidden>", "element:ix:hidden"),
+                ("<style>p { color: red }</style>", "element:style"),
+                ("<script>var acquisition = 1;</script>", "element:script")):
+            with self.subTest(reason):
+                raw = self._item("<p>The Company issued a press release.</p>" + middle)
+                with self.assertRaisesRegex(EventItemTextError,
+                                            "EVENT_ITEM_TEXT_A_READER_CANNOT_SEE:8.01:"
+                                            + re.escape(reason)):
+                    item_text(raw_bytes=raw, item_code="8.01")
+
+    def test_text_styled_so_it_cannot_be_seen_is_refused(self):
+        # The two shapes an independent review of #28's component found
+        # accepted, and the other ways a value alone makes text invisible.
+        for style in ("opacity:0.0", "opacity: 0", "opacity:5%", "opacity:var(--x)",
+                      "font-size:0pt", "font-size:0", "color:transparent",
+                      "color: rgba(0, 0, 0, 0)", "text-indent:-9999px",
+                      "position:absolute;left:-10000px"):
+            with self.subTest(style):
+                raw = self._item('<p style="' + style + '">The Company acquired Acme.</p>')
+                with self.assertRaisesRegex(EventItemTextError,
+                                            "EVENT_ITEM_TEXT_A_READER_CANNOT_SEE:8.01:style:"):
+                    item_text(raw_bytes=raw, item_code="8.01")
+
+    def test_ordinary_formatting_is_not_hiding(self):
+        # Every one of these is on saved 8-Ks: a black colour, a hanging indent,
+        # a point size, full opacity, a coloured background.
+        for style in ("color:#000000", "text-indent:-72pt;padding-left:72pt", "font-size:10pt",
+                      "opacity:1", "background-color:#cceeff", "position:relative"):
+            with self.subTest(style):
+                raw = self._item('<p style="' + style + '">The Company acquired Acme.</p>')
+                self.assertIn("acquired Acme", item_text(raw_bytes=raw, item_code="8.01")["text"])
+
+    def test_hidden_text_outside_the_item_is_not_this_item_s(self):
+        # Every saved 8-K carries its inline-XBRL header in ix:hidden above the
+        # first item; it is outside every item span.
+        raw = ('<html><head><title>8-K</title></head><body><div style="display:none">'
+               '<ix:header><ix:hidden>0000000000 false</ix:hidden></ix:header></div>'
+               '<p>Item 8.01 Other Events.</p><p>The Company acquired Acme.</p>'
+               '<p>SIGNATURES</p></body></html>').encode("utf-8")
+        text = item_text(raw_bytes=raw, item_code="8.01")
+        self.assertEqual(text["text"].strip(), "Item 8.01 Other Events. The Company acquired Acme.")
+
+    def test_a_cross_reference_that_looks_like_the_next_heading_is_refused(self):
+        # #28's review: a bold 9.01 reference inside the 8.01 body, then the
+        # acquisition paragraph, then the real 9.01 heading. Cutting at the
+        # first would drop the paragraph without a word.
+        raw = _html("Item 8.01 Other Events. See the exhibit discussion below:",
+                    "Item 9.01 Exhibits are listed below.",
+                    "We signed an acquisition agreement with Acme.",
+                    "Item 9.01 Financial Statements and Exhibits.", "SIGNATURES")
+        with self.assertRaisesRegex(EventItemTextError,
+                                    "EVENT_ITEM_END_HEADING_NOT_UNIQUE:8.01:9.01"):
+            item_text(raw_bytes=raw, item_code="8.01")
+
+    def test_a_second_signatures_word_is_refused_rather_than_cut_at(self):
+        raw = _html("Item 8.01 Other Events. The SIGNATURE page of the merger agreement follows.",
+                    "The Company agreed to acquire Acme.", "SIGNATURES")
+        with self.assertRaisesRegex(EventItemTextError, "EVENT_ITEM_END_SIGNATURES_NOT_UNIQUE:8.01"):
+            item_text(raw_bytes=raw, item_code="8.01")
+
+    def test_a_view_the_check_cannot_rebuild_is_refused_not_trusted(self):
+        """If the rebuilt nodes ever stop matching the frozen view, no offset can be trusted."""
+        import vnext.historical_event_items as items
+
+        class Dropping(items._Visibility):
+            def handle_data(self, data):
+                if "acquired" not in data:
+                    super().handle_data(data)
+
+        original = items._Visibility
+        items._Visibility = Dropping
+        try:
+            with self.assertRaisesRegex(EventItemTextError, "EVENT_ITEM_TEXT_VIEW_NOT_REBUILT"):
+                item_text(raw_bytes=self._item("<p>The Company acquired Acme.</p>"),
+                          item_code="8.01")
+        finally:
+            items._Visibility = original
+
+    def test_the_refusals_are_implementation_gaps_not_disclosure_findings(self):
+        raw = self._item('<p style="opacity:0">Acquire Acme.</p>')
+        with self.assertRaises(EventItemTextError) as caught:
+            item_text(raw_bytes=raw, item_code="8.01")
+        self.assertEqual(caught.exception.category, "IMPLEMENTATION_GAP")
+
+
 class TheContentConfirmedRouteCountsNothingItHasNotConfirmed(unittest.TestCase):
     """The owner's E01 meaning, on the seven saved windows."""
 
