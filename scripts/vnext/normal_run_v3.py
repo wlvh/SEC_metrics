@@ -379,9 +379,15 @@ def replay_case(*, data_root, manifest, spec=None):
         'c04_registration_successor',{}).get('event_forms')
     _need(c04_event_forms is None or metric_id == 'C04',
           'ORDINARY_C04_EVENT_FORM_REPLAY_METRIC_CHANGED')
-    case = prepare_case(data_root=data_root,company_id=manifest["company_id"],
-        metric_id=metric_id,
-        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
+    if saved.get('input_binding', {}).get('route') == 'B03_EXACT_IMPAIRMENT_EXCLUSION_V1':
+        _need(metric_id == 'B03', 'ORDINARY_B03_ADJUSTED_REPLAY_METRIC_CHANGED')
+        from .b03_impairment_adjusted_run import prepare_case as prepare_adjusted_b03
+        case = prepare_adjusted_b03(data_root=data_root,
+                                    company_id=manifest['company_id'])
+    else:
+        case = prepare_case(data_root=data_root,company_id=manifest["company_id"],
+            metric_id=metric_id,
+            **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
     from .ordinary_source_authority import require_installed_checkpoint
     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)

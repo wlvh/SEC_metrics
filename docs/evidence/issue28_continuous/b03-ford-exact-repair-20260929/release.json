@@ -1,0 +1,40 @@
+{
+  "record_type": "ISSUE28_FORD_B03_EXACT_PRIVATE_RELEASE_PREPARATION",
+  "preparation_id": "sha256:151a5f568aaa476521b69f5f9f537c64225903c954eac276a2287f109fc1dcf9",
+  "selected_result_id": "sha256:06d93be4d329b7705642879ea50c677250b35c646214070e92f8e009396d9289",
+  "selected_run_id": "run:ordinary-integrated:329442719fabd41aa6d78f2f4039dc2a76d197908a8c62738e5cbdc122160c88",
+  "selected_origin": "VERIFIED_ORDINARY_RUN",
+  "selected_row": {
+    "company": "Ford Motor Company",
+    "cik": "37996",
+    "metric_id": "B03",
+    "metric_name": "EBITDA margin",
+    "value": "-0.007128858795196163766173431518",
+    "unit": "ratio",
+    "status": "OK",
+    "source_class": "DERIVED",
+    "formula": "(Operating income + D&A) / revenue",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000037996-26-000015",
+    "form": "10-K",
+    "filed_date": "2026-02-11;2026-02-11;2026-02-11;2026-02-11",
+    "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax+OperatingIncomeLoss+DepreciationDepletionAndAmortization+ProductionRelatedImpairmentsOrCharges",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"reason_code\": \"PASS\", \"selected_fact_ids\": [\"fact:sha256:3b7c79c7132ce4ffed7d97cfe3528d8476278cc408d2944887e729cc1c6619b8\", \"fact:sha256:bea6139a4bdcbeb826657456073e19ba253c0d7da59f58dbc2a7cc8c7803ae01\", \"fact:sha256:4ec205c3102bb1c68a917d91148001cf220c563e26666ae2af7366adaa5cbcc1\"], \"source_relation_proof_id\": \"sha256:951c8c55a196e91d60b0b814541654d46255c8f016e8e554e9c36e9f27276300\"}, \"source_reference_ids\": [\"sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6\", \"sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2\", \"sha256:5a7fd6bdf110f3429e0cee5ebf349b6e59d8e3789cbb05a52827afc195d02ec4\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS."
+  },
+  "public_row_count": 327,
+  "unselected_coordinate_count": 389,
+  "first_script_exit": 1,
+  "first_script_failed_after_successful_prepare": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "full390_acceptance": false,
+  "formal_adoption": false
+}

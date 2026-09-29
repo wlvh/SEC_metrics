@@ -2614,6 +2614,53 @@
       "ordinary_messages": 4,
       "result_path": "docs/evidence/issue28_continuous/e01-item-source-v1-20260929/independent-review-repair2-d1caf72/conclusion.md",
       "verdict": "PASS_LIMITED_WITH_RESOURCE_MESSAGE_LIMIT_DEVIATION"
+    },
+    {
+      "task_name": "review_b03exact_2cffa8e",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "b03_ford_exact_repair",
+      "scope_paths": [
+        "scripts/vnext/b03_exact_impairment_relation.py",
+        "scripts/vnext/b03_impairment_adjusted_run.py",
+        "scripts/vnext/normal_run_v3.py",
+        "scripts/vnext/ordinary_b03_scope_update.py",
+        "catalog/r6/B03_impairment_excluded_v1.md",
+        "config/issue28_normal_results_v2.json",
+        "requirements/issue_28_v13/",
+        "requirements/issue_28_v14/",
+        "tests/vnext/test_b03_exact_impairment_relation.py",
+        "tests/vnext/test_b03_depreciation_scope_update.py",
+        "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/"
+      ],
+      "patch_sha": "2cffa8e99a724e1f4015c6c0c17b1d7e24846aa2",
+      "spawned_at": "2026-09-29T10:10:43Z",
+      "ended_at": "2026-09-29T10:20:00Z",
+      "tool_calls": 43,
+      "outer_exec_calls": 17,
+      "ordinary_messages": 4,
+      "resource_deviation": "TOOL_COUNT_FOLLOWUP_ADDED_FOURTH_ORDINARY_MESSAGE_AFTER_THREE_MESSAGE_REVIEW_LIMIT",
+      "result_path": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/independent-review/conclusion.md",
+      "verdict": "CHANGES_REQUIRED_SOURCE_NEGATION_FALSE_ACCEPTANCE"
+    },
+    {
+      "task_name": "review_b03neg_9387643",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "b03_ford_exact_negation_increment",
+      "scope_paths": [
+        "scripts/vnext/b03_exact_impairment_relation.py",
+        "tests/vnext/test_b03_exact_impairment_relation.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/"
+      ],
+      "patch_sha": "9387643a8722c5f49ba056a47bfcd19cf6e3d8f0",
+      "spawned_at": "2026-09-29T10:31:00Z",
+      "ended_at": "2026-09-29T10:35:55Z",
+      "tool_calls": 29,
+      "outer_exec_calls": 12,
+      "ordinary_messages": 1,
+      "result_path": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/independent-review-repair-9387643/conclusion.md",
+      "verdict": "PASS_LIMITED_NEGATION_REPAIR_NO_BLOCKER_IN_REVIEWED_SCOPE"
     }
   ],
   "ci_capacity_20260922": {
@@ -6594,6 +6641,67 @@
       "binding": "unfrozen issue_28_v14 execution identities for two changed B03 source/controller files and three current wiring receipts; V13/default normal_run_v3 bytes unchanged",
       "compatibility_evidence": "Salesforce fixed-assets-only block, Southwest positive/idempotent, Marriott composed direct absence, Ford impairment block, B03+C04 recorded two-source recovery and cold read",
       "downstream_impact": "stacked consumer may refresh its own current V14 closure if it consumes this head; no #47 branch/worktree/ledger/snapshot/PR operated"
+    }
+  },
+  "b03_ford_exact_repair_20260929": {
+    "status": "EXACT_SHA_REPAIR_REVIEW_PASS_LIMITED_PRIVATE_CURRENT_CANDIDATE",
+    "evidence": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/README.md",
+    "coordinate_key": "ford_motor_company:B03",
+    "old_historical_result_id_retained": "sha256:1829d73dac66a195a590ab84ea1f1d1800a77fae60d828b6f37d5cbeec2abd30",
+    "new_private_result_id": "sha256:06d93be4d329b7705642879ea50c677250b35c646214070e92f8e009396d9289",
+    "new_private_value": "-0.007128858795196163766173431518",
+    "source_relation_proof_id": "sha256:951c8c55a196e91d60b0b814541654d46255c8f016e8e554e9c36e9f27276300",
+    "source_relation": "AUTHENTICATED_SAME_CONTEXT_DA_15974000000_EQUALS_CASHFLOW_DA_7834000000_PLUS_EXACT_IMPAIRMENT_DEPRECIATION_8140000000",
+    "rounded_8_1_billion_subtraction_used": false,
+    "three_synthetic_source_counterexamples_rejected": true,
+    "private_processing_snapshot_id": "sha256:a1aea4b15f7b741708c172ac11e08e54e846322bfbad551fc2680d191d0b4eff",
+    "normal_cli_status": "UPDATES_READY_B03_CANDIDATE_READY",
+    "native_installed_cold_read": "PASS_SAME_RESULT_ID_VALUE_SOURCE_RELATION_AND_PUBLIC_ROW",
+    "pre_review_long_chain_retained_at_original_binding": true,
+    "repair_private_creation_and_cold_read_rerun_under_new_binding": true,
+    "private_unified_release_preparation": {
+      "status": "PASS_ONE_SELECTED_COORDINATE_AND_INDEPENDENT_COLD_READ",
+      "preparation_id": "sha256:151a5f568aaa476521b69f5f9f537c64225903c954eac276a2287f109fc1dcf9",
+      "selected_origin": "VERIFIED_ORDINARY_RUN",
+      "selected_coordinate_count": 1,
+      "selected_result_id": "sha256:06d93be4d329b7705642879ea50c677250b35c646214070e92f8e009396d9289",
+      "public_row_count": 327,
+      "unselected_coordinate_count": 389,
+      "cold_read_file_count": 1654,
+      "package_bytes_unchanged": true,
+      "first_evidence_script_error": "D04_ONLY_SELECTION_BASIS_FIELD_READ_AFTER_SUCCESSFUL_B03_PREPARATION;_EXIT_1_PRESERVED_AND_NO_SECOND_PREPARATION",
+      "full390_acceptance": false,
+      "formal_adoption": false,
+      "evidence": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/release.json"
+    },
+    "current_v13_closure": "sha256:33ee286c21be8262e550939e2a94512775996635c569bcd12531efca2014ed83",
+    "current_v14_closure": "sha256:44b77302eba4ece211c6c803d4a790ebf593d3d2d813c9da68fe8e8d3b282402",
+    "v14_only_prototype": "FAILED_B13_NATIVE_RUN_ROUTE_REQUIRED_AND_ROLLED_BACK_WITHOUT_CREDIT",
+    "pre_review_ford_native_test": "PASS_1_IN_57_705_SECONDS",
+    "repair_private_native_chain": "PASS_NORMAL_CLI_AND_INDEPENDENT_COLD_READ_UNDER_NEW_BINDING",
+    "final_bound_other_affected_tests": "SALESFORCE_SOUTHWEST_AND_HISTORICAL_REJECTION_PASS;_TWO_INITIAL_TEST_MOCK_FAILURES_PRESERVED_AND_ONLY_FAILED_CASES_RERUN_PASS",
+    "final_bound_fast": "PASS_142_OF_142_99_32_SECONDS",
+    "initial_limited_independent_review": "CHANGES_REQUIRED_2CFFA8E_NOT_INCLUDING_CASHFLOW_LABEL_FALSE_ACCEPTED;_SOURCE_COUNTEREXAMPLE_REPRODUCED",
+    "repair_limited_independent_review": "PASS_LIMITED_9387643_NO_BLOCKER_FOR_FORD_ORIGINAL_AND_THREE_SPECIFIED_TAMPERS;_NO_GENERAL_LANGUAGE_OR_ALL390_CREDIT",
+    "repair_review_path": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/independent-review-repair-9387643/conclusion.md",
+    "corrected_private_coordinate_count": 1,
+    "current_private_candidate_credit": true,
+    "new_complete_company_count": 0,
+    "all390_acceptance": false,
+    "new_real_calls": [0, 0, 0],
+    "formal_adoption": false,
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "files_functions": {
+        "scripts/vnext/normal_run_v3.py": ["replay_case explicit saved-route branch; prepare_case/install_normal_inputs/create_normal_run/_binding default bodies unchanged"],
+        "scripts/vnext/ordinary_b03_scope_update.py": ["_run_once_b03 exact source selection", "_verify_candidate native replay"],
+        "config/issue28_normal_results_v2.json": ["explicit B03 Spec route and bound rule paths"],
+        "requirements/issue_28_v13/": ["mutable ordinary decision and execution binding"],
+        "requirements/issue_28_v14/": ["parent identity, execution binding and three wiring receipts"],
+        "tools/run_fast_tests_v2.py": ["one source-material selector appended at list end; runner body unchanged"]
+      },
+      "compatibility_evidence": "old Ford Result ID retained; Salesforce old conflict, Southwest positive/idempotence and old success rejection passed; _binding function and default record shape unchanged; previous installed packages retain original identity",
+      "downstream_impact": "new mutable V13 closure changes newly generated ordinary Run requirement hashes; #47 stacked consumer must assess its own parent binding; no #47 artifact operated"
     }
   },
   "b03_c04_recorded_resume_20260929": {

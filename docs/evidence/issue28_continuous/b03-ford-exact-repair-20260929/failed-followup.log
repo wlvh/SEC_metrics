@@ -1,0 +1,16 @@
+test_old_success_has_no_current_credit_but_new_input_can_attempt (tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest.test_old_success_has_no_current_credit_but_new_input_can_attempt) ... FAIL
+test_late_processing_failure_cannot_recredit_old_success (tests.vnext.test_b03_depreciation_scope_update.B03HistoricalRecoveryVerifierTest.test_late_processing_failure_cannot_recredit_old_success) ... ok
+
+======================================================================
+FAIL: test_old_success_has_no_current_credit_but_new_input_can_attempt (tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest.test_old_success_has_no_current_credit_but_new_input_can_attempt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b03_depreciation_scope_update.py", line 119, in test_old_success_has_no_current_credit_but_new_input_can_attempt
+    self.assertIsNone(new_attempt['metrics'][0]['last_verified_candidate'])
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'attempt_id': '45d492ee79944531b8dddc3d9dfad1a8', 'targets': {'B03': {'fiscal_year': 2026, 'period_end': '2026-01-31', 'period_start': '2025-02-01'}}, 'current_input_matches': False, 'results': {'B03': {'applicability': 'APPLICABLE', 'company_id': 'salesforce', 'metric_id': 'B03', 'period_end': '2026-01-31', 'period_start': '2025-02-01', 'publication': 'PUBLISHED', 'quality': 'EXACT', 'reason_code': 'PASS', 'record_type': 'METRIC_RESULT', 'result_id': 'sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120', 'scope_key': 'sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8', 'spec_closure_hash': 'sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5', 'trace_id': 'sha256:ae47b010a5ad41aeea64a4a39500ed9c823f0669c4d73c86dfa6b549d802c5ab', 'unit': 'ratio', 'value': '0.2295243829018663455749548465'}}, 'rows_root': '/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/b03-old-success-jstpd1pq/salesforce/metrics/B03/attempts/45d492ee79944531b8dddc3d9dfad1a8/rows'} is not None
+
+----------------------------------------------------------------------
+Ran 2 tests in 55.722s
+
+FAILED (failures=1)

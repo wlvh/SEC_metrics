@@ -149,6 +149,10 @@
       "sha256": "7958a21a738c3c46ba0532f0bc301ca8ddba782c3f88743fb706c7e4938f890e",
       "size": 9368
     },
+    "catalog/r6/B03_impairment_excluded_v1.md": {
+      "sha256": "c7cd1b462271b3aa1c5766a997fbb968d8e168650e412f6973c6e1dffa2116c6",
+      "size": 6250
+    },
     "config/annual_amendment_scope_v1.json": {
       "sha256": "ed7c8d776c47b08a5238d41d250fa7d4712994f2df34148383040e2435a93202",
       "size": 3228
@@ -186,8 +190,8 @@
       "size": 4861
     },
     "config/issue28_normal_results_v2.json": {
-      "sha256": "deebcd3ec68e9a424ac35b7626ff2ce602d39cc69bdbc75a0e9213dca9d39897",
-      "size": 7296
+      "sha256": "33d0a8801220d51aacbeb1f73200ee0d9d19121ee60175d1c0b4ce0f2a7c21e2",
+      "size": 7547
     },
     "config/normal_accession_metrics_v1.json": {
       "sha256": "f0ebf62e04675b33cc9dba0a9d58e35e46fca1581ad50cbecce672e8b7e1deaa",
@@ -208,6 +212,18 @@
     "scripts/vnext/annual_amendment_scope.py": {
       "sha256": "19ccf11107319a3bffc809339b6fa4380e0165877b7fa469cfcf042303827d4f",
       "size": 19522
+    },
+    "scripts/vnext/b03_depreciation_scope.py": {
+      "sha256": "bd15c9fd076ec1f571abccf3a4fdbf494b34e2540131addb22fad24868bc7868",
+      "size": 12283
+    },
+    "scripts/vnext/b03_exact_impairment_relation.py": {
+      "sha256": "1f9e0ea642ccbd27f175400e7a0557d87915dfe28b55575ddfa4f38b94e4689b",
+      "size": 6912
+    },
+    "scripts/vnext/b03_impairment_adjusted_run.py": {
+      "sha256": "db3114f9865db36cf0cf776d05738b38d6c45e42118f60e1175364ed7f100fb1",
+      "size": 6942
     },
     "scripts/vnext/b06_bond_leases.py": {
       "sha256": "d211352b8b8bf27a123236fdae8993f5996df03dfe5d7ceb447b6dc9feeca332",
@@ -278,8 +294,8 @@
       "size": 3779
     },
     "scripts/vnext/normal_run_v3.py": {
-      "sha256": "76871ebdbdc8395f30a2bc0e24d506f5592e8b2f3e91b7f23c6ea6271cfe0cdf",
-      "size": 26994
+      "sha256": "8bd99427e0029e9a56fbccb9756cab7dcb46581c07c2673c6ec37d73b573619f",
+      "size": 27402
     },
     "scripts/vnext/normal_zero_ai_results.py": {
       "sha256": "91247d1cf336b9202c8c84aec947ce283d723c6a5302dee37a70840993e26565",
@@ -669,8 +685,8 @@
         "size": 3093
       },
       "config/issue28_normal_results_v2.json": {
-        "sha256": "deebcd3ec68e9a424ac35b7626ff2ce602d39cc69bdbc75a0e9213dca9d39897",
-        "size": 7296
+        "sha256": "33d0a8801220d51aacbeb1f73200ee0d9d19121ee60175d1c0b4ce0f2a7c21e2",
+        "size": 7547
       },
       "config/issue_15_release_plan.json": {
         "sha256": "b2feda3fc40f0cfdc05a1b9006aaf8ba3b055e778cfb4e4921eae9ab0e288fc7",
@@ -1157,8 +1173,8 @@
         "size": 17882
       },
       "scripts/vnext/normal_run_v3.py": {
-        "sha256": "76871ebdbdc8395f30a2bc0e24d506f5592e8b2f3e91b7f23c6ea6271cfe0cdf",
-        "size": 26994
+        "sha256": "8bd99427e0029e9a56fbccb9756cab7dcb46581c07c2673c6ec37d73b573619f",
+        "size": 27402
       },
       "scripts/vnext/normal_source_authority.py": {
         "sha256": "657eaec526d1b28edcd28a1e1d7fc9433fad5a96a677da77c2561d0d0383be3e",
@@ -1779,6 +1795,22 @@
       "scripts/vnext/ordinary_processing_source.py": {
         "sha256": "7eeed1b75bd51ee437b4cc0f6af383e80f91b72ffec44e550f24b828e93dad05",
         "size": 7684
+      },
+      "catalog/r6/B03_impairment_excluded_v1.md": {
+        "sha256": "c7cd1b462271b3aa1c5766a997fbb968d8e168650e412f6973c6e1dffa2116c6",
+        "size": 6250
+      },
+      "scripts/vnext/b03_depreciation_scope.py": {
+        "sha256": "bd15c9fd076ec1f571abccf3a4fdbf494b34e2540131addb22fad24868bc7868",
+        "size": 12283
+      },
+      "scripts/vnext/b03_exact_impairment_relation.py": {
+        "sha256": "1f9e0ea642ccbd27f175400e7a0557d87915dfe28b55575ddfa4f38b94e4689b",
+        "size": 6912
+      },
+      "scripts/vnext/b03_impairment_adjusted_run.py": {
+        "sha256": "db3114f9865db36cf0cf776d05738b38d6c45e42118f60e1175364ed7f100fb1",
+        "size": 6942
       }
     },
     "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"

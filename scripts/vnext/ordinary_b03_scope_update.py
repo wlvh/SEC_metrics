@@ -62,6 +62,11 @@ def _verify_candidate(root, terminal, configuration):
     _need(case['primary_metric_id'] == 'B03'
           and manifest['company_id'] == configuration['company_id'],
           'B03_CURRENT_SUCCESS_METRIC_OR_COMPANY_CHANGED')
+    from .b03_impairment_adjusted_run import ROUTE as adjusted_route
+    if case.get('input_binding', {}).get('route') == adjusted_route:
+        # Native replay has rebuilt the explicit Spec, exact original-source
+        # proof and complete computation graph before this success is returned.
+        return {'B03': result}
     scope = assess_direct_depreciation_scope(case=case, data_root=data)
     if scope['blocked']:
         raise B03CurrentScopeConflict(
@@ -123,11 +128,21 @@ def _run_once_b03(*, state_root, source_root, company_id,
         descriptor = None
         metrics = {}
         candidate_results = None
+        adjusted_route = False
         status = 'INPUT_FAILED'
         error = None
         try:
-            _, descriptor, ledger = inherited._inspect(
+            cases, descriptor, ledger = inherited._inspect(
                 source, configuration, native_assessment_ledger)
+            current_scope = assess_direct_depreciation_scope(
+                case=cases['B03'], data_root=source)
+            if current_scope['status'] == 'SELECTED_DEPRECIATION_INCLUDES_IMPAIRMENT':
+                from .b03_impairment_adjusted_run import (
+                    prepare_case as prepare_adjusted_case)
+                cases['B03'] = prepare_adjusted_case(
+                    data_root=source, company_id=company_id)
+                descriptor = inherited._descriptor(cases, configuration)
+                adjusted_route = True
             if previous:
                 inherited._need(descriptor['targets']['B03']['period_end'] >=
                     previous['input']['targets']['B03']['period_end'],
@@ -148,12 +163,21 @@ def _run_once_b03(*, state_root, source_root, company_id,
                             'B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:')):
                     status = 'PREVIOUS_INPUT_WITHHELD'
             if status == 'INPUT_FAILED':
-                normal.install_normal_inputs(data_root=work/'data',
-                    source_root=None if source == normal.ROOT else source,
-                    company_id=company_id, metric_id='B03')
-                created = normal.create_normal_run(data_root=work/'data',
-                    run_dir=work/'runs/B03', company_id=company_id,
-                    metric_id='B03')
+                if adjusted_route:
+                    from .b03_impairment_adjusted_run import (
+                        install_inputs as install_adjusted_inputs,
+                        create_run as create_adjusted_run)
+                    install_adjusted_inputs(data_root=work/'data',
+                        source_root=source, company_id=company_id)
+                    created = create_adjusted_run(data_root=work/'data',
+                        run_dir=work/'runs/B03', company_id=company_id)
+                else:
+                    normal.install_normal_inputs(data_root=work/'data',
+                        source_root=None if source == normal.ROOT else source,
+                        company_id=company_id, metric_id='B03')
+                    created = normal.create_normal_run(data_root=work/'data',
+                        run_dir=work/'runs/B03', company_id=company_id,
+                        metric_id='B03')
                 rendered = render_ordinary_run(data_root=work/'data',
                     run_dir=work/'runs/B03', _return_replay_context=True)
                 hashes = {}
@@ -172,11 +196,16 @@ def _run_once_b03(*, state_root, source_root, company_id,
                     'UPDATE_SOURCE_CHANGED_DURING_EXECUTION')
                 if created['result']['publication'] == 'PUBLISHED':
                     case = rendered['replay_context']['case']
-                    scope = assess_direct_depreciation_scope(
-                        case=case, data_root=work/'data')
-                    _need(not scope['blocked'],
-                          'B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:' +
-                          scope['status'])
+                    if adjusted_route:
+                        from .b03_impairment_adjusted_run import ROUTE
+                        _need(case['input_binding']['route'] == ROUTE,
+                              'B03_ADJUSTED_INSTALLED_ROUTE_CHANGED')
+                    else:
+                        scope = assess_direct_depreciation_scope(
+                            case=case, data_root=work/'data')
+                        _need(not scope['blocked'],
+                              'B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:' +
+                              scope['status'])
                     status = 'CANDIDATE_READY'
                     candidate_results = _verify_candidate(root, {
                         'status': status,
