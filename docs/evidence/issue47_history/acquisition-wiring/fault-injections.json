@@ -418,7 +418,7 @@
     "test_the_live_path_checks_the_start_before_any_transport"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 12 tests in 0.018s FAILED (failures=1)",
+   "suite_result": "Ran 12 tests in 0.023s FAILED (failures=1)",
    "why_it_matters": "the check that makes a count outlive the container; without it a new container with an empty ledger spends the allowance again",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_live_path_checks_the_start_before_any_transport"
   },
@@ -429,7 +429,7 @@
     "test_the_earliest_marker_decides_not_the_latest"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 12 tests in 0.017s FAILED (failures=1)",
+   "suite_result": "Ran 12 tests in 0.029s FAILED (failures=1)",
    "why_it_matters": "a second container that posted its own marker later would pass; only the earliest start is the start",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_earliest_marker_decides_not_the_latest"
   },
@@ -440,7 +440,7 @@
     "test_the_earliest_marker_decides_not_the_latest"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 12 tests in 0.016s FAILED (failures=1)",
+   "suite_result": "Ran 12 tests in 0.030s FAILED (failures=1)",
    "why_it_matters": "same as above through the ordering: the latest marker would decide",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_earliest_marker_decides_not_the_latest"
   },
@@ -451,7 +451,7 @@
     "test_an_edited_marker_does_not_count"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 12 tests in 0.015s FAILED (failures=1)",
+   "suite_result": "Ran 12 tests in 0.029s FAILED (failures=1)",
    "why_it_matters": "an edit can make an old marker carry a new number",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_edited_marker_does_not_count"
   },
@@ -462,7 +462,7 @@
     "test_a_stranger_s_marker_neither_blocks_nor_stands_in"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 12 tests in 0.017s FAILED (errors=1)",
+   "suite_result": "Ran 12 tests in 0.028s FAILED (errors=1)",
    "why_it_matters": "issue 47 is public; a stranger's comment could block a start or stand in for one",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_stranger_s_marker_neither_blocks_nor_stands_in"
   },
@@ -473,7 +473,7 @@
     "test_another_approval_s_marker_is_not_this_one_s"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 12 tests in 0.025s FAILED (failures=1)",
+   "suite_result": "Ran 12 tests in 0.026s FAILED (failures=1)",
    "why_it_matters": "a marker for another approval would decide this one's start",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_another_approval_s_marker_is_not_this_one_s"
   },
@@ -484,7 +484,7 @@
     "test_a_host_that_lost_its_ledger_cannot_start_the_allowance_again"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 12 tests in 0.019s FAILED (failures=1)",
+   "suite_result": "Ran 12 tests in 0.022s FAILED (failures=1)",
    "why_it_matters": "a container that lost its ledger could write a new start record and begin again",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_host_that_lost_its_ledger_cannot_start_the_allowance_again"
   },
@@ -495,7 +495,7 @@
     "test_markers_are_read_past_the_first_page"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 12 tests in 0.014s FAILED (errors=1)",
+   "suite_result": "Ran 12 tests in 0.028s FAILED (errors=1)",
    "why_it_matters": "the issue already has more than a page of comments; a marker on page two would be missed",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_markers_are_read_past_the_first_page"
   },
@@ -506,7 +506,7 @@
     "test_only_this_issue_s_comment_resources_are_readable"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 5 tests in 0.008s FAILED (failures=6)",
+   "suite_result": "Ran 5 tests in 0.005s FAILED (failures=6)",
    "why_it_matters": "the REST reader could be aimed at another repository's or issue's comment",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_only_this_issue_s_comment_resources_are_readable"
   },
@@ -517,7 +517,7 @@
     "test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 2 tests in 37.175s FAILED (failures=1)",
+   "suite_result": "Ran 2 tests in 39.186s FAILED (failures=1)",
    "why_it_matters": "a proxy URL with credentials would be written into receipts the branch carries",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
   },
@@ -528,7 +528,7 @@
     "test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 2 tests in 35.306s FAILED (errors=2)",
+   "suite_result": "Ran 2 tests in 35.886s FAILED (errors=2)",
    "why_it_matters": "a receipt silent about the proxy reads as a direct fetch from SEC",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_recorded_receipt_says_no_network_was_used, test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
   },
@@ -539,7 +539,7 @@
     "test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 12 tests in 0.028s FAILED (failures=3, errors=2)",
+   "suite_result": "Ran 12 tests in 0.022s FAILED (failures=3, errors=2)",
    "why_it_matters": "the executor acts on GitHub as the owner and can delete a marker comment; without this an empty ledger starts again once the marker is gone",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow"
   },
@@ -550,7 +550,7 @@
     "test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 12 tests in 0.023s FAILED (failures=2, errors=2)",
+   "suite_result": "Ran 12 tests in 0.026s FAILED (failures=2, errors=2)",
    "why_it_matters": "an export index nobody can read would read as 'nothing was spent'",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow"
   },
@@ -561,7 +561,7 @@
     "test_an_approval_posted_through_an_app_registers_nothing"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 17 tests in 0.044s FAILED (failures=5, errors=1)",
+   "suite_result": "Ran 17 tests in 0.024s FAILED (failures=5, errors=1)",
    "why_it_matters": "the container writes GitHub as the owner through the Claude app; without this a comment it posted directly would pass as the owner's approval",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal, test_an_approval_posted_through_an_app_registers_nothing"
   },
@@ -572,7 +572,7 @@
     "test_an_app_s_mark_on_either_copy_is_a_refusal"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 17 tests in 0.048s FAILED (failures=1, errors=1)",
+   "suite_result": "Ran 17 tests in 0.027s FAILED (failures=1, errors=1)",
    "why_it_matters": "a record or reader that drops the field would read as 'no app'",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal, test_an_approval_posted_through_an_app_registers_nothing"
   },
@@ -583,7 +583,7 @@
     "test_an_app_s_mark_on_either_copy_is_a_refusal"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 6 tests in 0.017s FAILED (failures=2)",
+   "suite_result": "Ran 6 tests in 0.012s FAILED (failures=2)",
    "why_it_matters": "an offline read would take an app-posted record for an approval",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal"
   },
@@ -594,7 +594,7 @@
     "test_an_app_s_mark_on_either_copy_is_a_refusal"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 6 tests in 0.015s FAILED (failures=1)",
+   "suite_result": "Ran 6 tests in 0.014s FAILED (failures=1)",
    "why_it_matters": "a saved record cleaned of the mark would pass against a comment GitHub marks",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal"
   },
@@ -605,7 +605,7 @@
     "test_an_approval_posted_through_an_app_registers_nothing"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 11 tests in 0.025s FAILED (failures=2, errors=1)",
+   "suite_result": "Ran 11 tests in 0.019s FAILED (failures=2, errors=1)",
    "why_it_matters": "registration would write the policy and record from an app's comment before any gate refused it",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_approval_posted_through_an_app_registers_nothing"
   },
@@ -616,7 +616,7 @@
     "test_only_line_breaks_are_forgiven"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 11 tests in 0.026s FAILED (failures=2)",
+   "suite_result": "Ran 11 tests in 0.031s FAILED (failures=2)",
    "why_it_matters": "forgiving leading whitespace or a lone CR accepts a text the owner did not post as approved",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_only_line_breaks_are_forgiven"
   },
@@ -627,7 +627,7 @@
     "test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 11 tests in 0.027s FAILED (errors=1)",
+   "suite_result": "Ran 11 tests in 0.025s FAILED (errors=1)",
    "why_it_matters": "a body pasted into github.com may come back with CRLF and would be refused although it is the same record",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
   },
@@ -638,7 +638,7 @@
     "test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
    ],
    "outcome": "CAUGHT",
-   "suite_result": "Ran 11 tests in 0.027s FAILED (errors=1)",
+   "suite_result": "Ran 11 tests in 0.029s FAILED (errors=1)",
    "why_it_matters": "registration would accept a CRLF body the gate then refuses, leaving a written policy that never grants",
    "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
   }

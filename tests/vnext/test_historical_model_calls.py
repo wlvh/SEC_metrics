@@ -23,6 +23,7 @@ docs/evidence/issue47_history/model-egress/verify.py.
 """
 import ast
 import json
+import re
 import sys
 import tempfile
 import unittest
@@ -372,11 +373,24 @@ class TheApprovalIsRegisteredFromWhatWasPosted(unittest.TestCase):
             (self.root / counted.GRANTED_LEDGER_PATH).read_text(encoding="utf-8")))
 
     def test_a_post_that_is_not_the_proposal_is_refused(self):
-        changed = {**self.comment, "body": self.comment["body"] + " "}
-        with self.assertRaisesRegex(calls.HistoricalModelCallError,
-                                    "ISSUE_47_MODEL_POSTED_BODY_IS_NOT_THE_PROPOSED_TEXT"):
-            self.register(changed)
-        self.assertFalse((self.root / calls.ALLOWANCE_PATH).exists())
+        # Anything but the line breaks a browser adds and whitespace after the
+        # record: a character appended, the text indented differently, a lone CR.
+        body = self.comment["body"]
+        for changed in (body + " x", "\n" + body, body.replace("\n", "\r", 1)
+                        if "\n" in body else body.replace(" ", "  ", 1)):
+            with self.subTest(changed=changed[:40]):
+                with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                            "ISSUE_47_MODEL_POSTED_BODY_IS_NOT_THE_PROPOSED_TEXT"):
+                    self.register({**self.comment, "body": changed})
+                self.assertFalse((self.root / calls.ALLOWANCE_PATH).exists())
+
+    def test_a_proposal_pasted_into_the_web_page_registers(self):
+        """A browser may send CRLF line breaks and a trailing newline; the record is the same."""
+        pasted = {**self.comment, "body": self.comment["body"].replace("\n", "\r\n") + "\r\n"}
+        registered = self.register(pasted)
+        self.assertEqual("MODEL_APPROVAL_REGISTERED", registered["status"])
+        allowance = calls.model_allowance(repo_root=self.root, delegation_reader=lambda path: pasted)
+        self.assertTrue(allowance["provenance_verified_against_github"])
 
     def test_a_post_by_someone_else_or_edited_is_refused(self):
         for overrides, reason in (({"user": {"login": "someone-else"}},
@@ -680,28 +694,26 @@ class NothingHereReachesAProvider(unittest.TestCase):
                                     "ISSUE_47_MODEL_WIRING_RECEIPT_IS_NOT_THE_APPROVED_ONE"):
             calls.verify_model_wiring(receipt_path=RECEIPT, receipt_id="sha256:" + "0" * 64)
         with self.assertRaisesRegex(calls.HistoricalModelCallError,
-                                    "ISSUE_47_MODEL_WIRING_FILE_(CHANGED|MISSING):"):
+                                    "ISSUE_47_MODEL_WIRING_(FILE_CHANGED|FILE_MISSING|"
+                                    "DOES_NOT_BIND_THE_CALL_PATH)"):
             calls.verify_model_wiring(receipt_path=RECEIPT, receipt_id=receipt["receipt_id"])
-        # What it binds that this tree has unchanged is exactly what the
-        # repository carries: this module, the SEC module whose approval checks
-        # it imports and that module's tests (the gh reader's case runs in the
-        # harness), the counted-call checks a LIVE registration's consumer
-        # makes, this file and the D04 answer helper the suite imports, the
-        # harness and the patch itself. Everything else is either new in the
-        # patch or changed by it.
-        same = sorted(relative for relative, binding in receipt["bound_files"].items()
-                      if (ROOT / relative).is_file()
-                      and {"sha256": sha256_bytes(content=(ROOT / relative).read_bytes()),
-                           "size": (ROOT / relative).stat().st_size} == binding)
-        self.assertEqual(sorted(["scripts/vnext/historical_model_calls.py",
-                                 "scripts/vnext/historical_source_acquisition.py",
-                                 "scripts/vnext/historical_counted_calls.py",
-                                 "tests/vnext/test_historical_source_acquisition.py",
-                                 "tests/vnext/test_historical_model_calls.py",
-                                 "tests/vnext/d04_synthetic_output.py",
-                                 "docs/evidence/issue47_history/model-egress/verify.py",
-                                 "docs/evidence/issue47_history/model-egress/"
-                                 "egress-registration.patch"]), same)
+        # What makes it refuse here is the patch: every bound file the patch
+        # creates or changes differs in this unpatched tree. A bound file the
+        # repository carries may match the receipt or not - it stops matching
+        # when it changes after the seal, and then the receipt must be sealed
+        # again before any call, which the refusal above already enforces. The
+        # previous form of this case asserted the exact unchanged set and so
+        # failed on every repository change between two seals.
+        touched = set(re.findall(r"^\+\+\+ b/(\S+)", PATCH.read_text(encoding="utf-8"), re.M))
+        bound_and_patched = sorted(touched & set(receipt["bound_files"]))
+        self.assertTrue(bound_and_patched)
+        for relative in bound_and_patched:
+            with self.subTest(relative):
+                path = ROOT / relative
+                self.assertFalse(path.is_file() and {
+                    "sha256": sha256_bytes(content=path.read_bytes()),
+                    "size": path.stat().st_size} == receipt["bound_files"][relative],
+                    "a file the patch creates or changes matches the patched tree's bytes here")
 
     def test_the_patch_still_applies_to_this_tree(self):
         import subprocess
@@ -709,6 +721,209 @@ class NothingHereReachesAProvider(unittest.TestCase):
                              capture_output=True, text=True)
         self.assertEqual(0, run.returncode, run.stderr)
 
+
+
+class TheModelLedgerStartsOnceAndOnlyItsOwnMarkerCounts(unittest.TestCase):
+    """The model ledger's start: the same mechanism as the SEC ledger's, never the same record.
+
+    The owner decided the model calls run in the executor's cloud container
+    too, so the model ledger is started once like the SEC ledger
+    (historical_ledger_start). The two ledgers spend two different approvals;
+    a marker or an export of one must not start, block or stand in for the
+    other, even for the same approval digest.
+    """
+
+    URL = "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5800000002"
+
+    def setUp(self):
+        from unittest.mock import patch
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-model-start-"))
+        self.addCleanup(lambda: __import__("shutil").rmtree(self.root, ignore_errors=True))
+        self.allowance = {"requirement_id": calls.REQUIREMENT_ID,
+                          "budget_root": str(self.root / "ledger"),
+                          "delegation_url": self.URL, "delegation_body_sha256": "c" * 64}
+        self.patch = patch
+
+    @staticmethod
+    def _reader(comments):
+        return lambda path: [dict(item) for item in comments] if "page=1" in path else []
+
+    @staticmethod
+    def _comment(body, *, number=5900000101):
+        return {"id": number, "author_association": "OWNER", "created_at": "2026-09-29T01:00:00Z",
+                "updated_at": "2026-09-29T01:00:00Z", "body": body,
+                "html_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-"
+                            + str(number)}
+
+    def test_a_model_start_writes_a_model_record_and_its_marker_verifies(self):
+        started = calls.start_model_ledger(allowance=self.allowance, reader=self._reader([]),
+                                           checkout=self.root)
+        self.assertEqual("ISSUE_47_MODEL_LEDGER_START", started["record"]["record_type"])
+        marker = self._comment(started["marker_comment_body"])
+        verified = calls.require_published_model_start(allowance=self.allowance,
+                                                       reader=self._reader([marker]))
+        self.assertEqual(marker["html_url"], verified["marker_url"])
+
+    def test_an_sec_marker_neither_starts_nor_blocks_the_model_ledger(self):
+        from vnext import historical_sec_session as session
+        sec_allowance = {**self.allowance, "budget_root": str(self.root / "sec-ledger")}
+        model_allowance = {**self.allowance, "budget_root": str(self.root / "model-ledger")}
+        sec = session.start_ledger(allowance=sec_allowance, reader=lambda path: [],
+                                   checkout=self.root)
+        sec_marker = self._comment(sec["marker_comment_body"])
+        # The SEC marker is for the same approval digest, and still it is not
+        # the model ledger's: no model start is published, and one can be made.
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_LEDGER_NOT_STARTED"):
+            calls.require_published_model_start(allowance=model_allowance,
+                                                 reader=self._reader([sec_marker]))
+        started = calls.start_model_ledger(allowance=model_allowance,
+                                           reader=self._reader([sec_marker]), checkout=self.root)
+        # And the model marker does not stand in for the SEC start.
+        with self.assertRaisesRegex(ValueError, "ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED"):
+            session.require_published_start(
+                allowance=sec_allowance,
+                reader=self._reader([self._comment(started["marker_comment_body"])]))
+        # A start record of the other ledger's kind at a root is not this one's.
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_LEDGER_START_RECORD_IS_FOR_ANOTHER_APPROVAL"):
+            calls.require_published_model_start(allowance=sec_allowance,
+                                                 reader=self._reader([sec_marker]))
+
+    def test_only_the_model_export_blocks_a_model_start(self):
+        from vnext import historical_sec_session as session
+        index = self.root / calls.MODEL_EXPORT_DIRECTORY / calls.MODEL_EXPORT_INDEX
+        index.parent.mkdir(parents=True)
+        index.write_text(json.dumps({"execution_mode": "LIVE", "approval": {
+            "delegation_body_sha256": "c" * 64}}), encoding="utf-8")
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_LEDGER_ALREADY_EXPORTED"):
+            calls.start_model_ledger(allowance=self.allowance, reader=self._reader([]),
+                                     checkout=self.root)
+        # The SEC ledger reads its own export index, not this one.
+        self.assertEqual("LEDGER_START_WRITTEN", session.start_ledger(
+            allowance=self.allowance, reader=lambda path: [], checkout=self.root)["status"])
+
+    def test_the_live_ledger_reads_the_host_s_reader_and_checks_the_start_last(self):
+        """Allowance, wiring, then the start - before the ledger exists or anything is sent."""
+        from vnext import historical_source_acquisition as gate
+        asked = []
+
+        def reader(path):
+            asked.append(path)
+            return []
+
+        order = []
+        with self.patch.object(gate, "live_github_reader", return_value=reader), \
+                self.patch.object(calls, "model_allowance",
+                                  side_effect=lambda **kw: order.append("allowance")
+                                  or {**self.allowance, "model_wiring_receipt_path": "r",
+                                      "model_wiring_receipt_id": "i"}), \
+                self.patch.object(calls, "verify_model_wiring",
+                                  side_effect=lambda **kw: order.append("wiring")), \
+                self.patch.object(calls, "_ledger", side_effect=AssertionError("ledger built")):
+            with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                        "ISSUE_47_MODEL_LEDGER_NOT_STARTED"):
+                calls.live_model_ledger()
+        self.assertEqual(["allowance", "wiring"], order)
+        self.assertTrue(asked and all("/issues/47/comments?" in path for path in asked))
+
+
+class TheModelLedgerTravelsToTheBranchAndBack(unittest.TestCase):
+    """An export of the model ledger is the ledger, checked by its own snapshot, or nothing.
+
+    The ledger lives in the executor's container, whose disk goes with it, so
+    it is exported to the branch after each run. A recorded ledger stands in
+    for the granted one here: the archive, the index and the snapshot are the
+    same code for both, and a restore - which only a granted LIVE ledger may
+    have - is refused for it by name.
+    """
+
+    GRANT = {"grant": "G1", "request_digests": ["sha256:" + "a" * 64, "sha256:" + "b" * 64]}
+
+    def setUp(self):
+        import shutil
+        from vnext import historical_model_export as export
+        self.export = export
+        self.tmp = Path(tempfile.mkdtemp(prefix="issue47-model-export-test-"))
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+        allowance = {"requirement_id": calls.REQUIREMENT_ID,
+                     "budget_root": "/nonexistent-granted-model-root",
+                     "maximum_additional_provider_paid_sec_calls": [3, 3, 0],
+                     "scope": {"purposes": [calls.PURPOSE], "grants": [self.GRANT]},
+                     "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-1",
+                     "delegation_body_sha256": "d" * 64}
+        self.ledger = calls.recorded_model_ledger(root=self.tmp / "ledger", allowance=allowance)
+        with self.ledger.locked():
+            self.ledger.claim(request_digest=self.GRANT["request_digests"][0], plan_id="plan-1",
+                              purpose=calls.PURPOSE, grants=["G1"], request_identity="request-1",
+                              authority_files_hash="sha256:" + "e" * 64)
+        self.out = self.tmp / "export"
+        self.exported = export.export_model_ledger(ledger=self.ledger, out_dir=self.out)
+
+    def test_an_export_is_the_ledger_and_verifies_from_the_archive_alone(self):
+        self.assertEqual([1, 1, 0], self.exported["counts"])
+        index = self.export.verify_model_export(export_dir=self.out)
+        self.assertEqual(["0001=UNKNOWN_PENDING_RECONCILIATION"], index["stopped"])
+        self.assertIsNone(index["approval"], "a recorded ledger names no approval")
+        members = set(index["archive"]["members"])
+        self.assertIn("root/claims.jsonl", members)
+        self.assertIn("root/calls/0001/intent.json", members)
+        self.assertIn("beside/claims-mirror.jsonl", members)
+
+    def test_a_changed_archive_or_index_is_refused(self):
+        from vnext.historical_source_export import HistoricalExportError
+        archive = self.out / self.export.ARCHIVE_NAME
+        original = archive.read_bytes()
+        archive.write_bytes(original[:-1] + bytes([original[-1] ^ 1]))
+        with self.assertRaisesRegex(HistoricalExportError, "ISSUE_47_EXPORT_ARCHIVE_CHANGED"):
+            self.export.verify_model_export(export_dir=self.out)
+        archive.write_bytes(original)
+        index_path = self.out / calls.MODEL_EXPORT_INDEX
+        index = json.loads(index_path.read_text(encoding="utf-8"))
+        index["counts"] = [0, 0, 0]
+        index_path.write_text(json.dumps(index), encoding="utf-8")
+        with self.assertRaisesRegex(HistoricalExportError, "ISSUE_47_EXPORT_RECORD_CHANGED"):
+            self.export.verify_model_export(export_dir=self.out)
+
+    def test_a_resealed_archive_of_a_truncated_ledger_is_refused_by_the_ledger(self):
+        """Hashes that agree with each other are not a ledger; its own snapshot decides."""
+        from vnext.historical_source_export import _archive, _binding, _sealed
+        index_path = self.out / calls.MODEL_EXPORT_INDEX
+        index = json.loads(index_path.read_text(encoding="utf-8"))
+        members = self.export._read(self.out)[1]
+        members["beside/claims-mirror.jsonl"] = b""
+        data = _archive(members)
+        (self.out / self.export.ARCHIVE_NAME).write_bytes(data)
+        index = {k: v for k, v in index.items() if k != "export_id"}
+        index["archive"] = {"name": self.export.ARCHIVE_NAME, **_binding(data),
+                            "members": {name: _binding(content)
+                                        for name, content in sorted(members.items())}}
+        index_path.write_text(json.dumps(_sealed(index, "export_id")), encoding="utf-8")
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_LEDGER_CLAIM_LOG_DIFFERS_FROM_ITS_MIRROR"):
+            self.export.verify_model_export(export_dir=self.out)
+
+    def test_an_index_resealed_with_other_counts_is_refused(self):
+        from vnext.historical_source_export import _sealed
+        index_path = self.out / calls.MODEL_EXPORT_INDEX
+        index = {k: v for k, v in json.loads(index_path.read_text(encoding="utf-8")).items()
+                 if k != "export_id"}
+        index["counts"], index["stopped"] = [0, 0, 0], []
+        index_path.write_text(json.dumps(_sealed(index, "export_id")), encoding="utf-8")
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_RESTORE_SNAPSHOT_DIFFERS_FROM_THE_INDEX"):
+            self.export.verify_model_export(export_dir=self.out)
+
+    def test_only_a_live_ledger_is_restored(self):
+        with self.assertRaisesRegex(calls.HistoricalModelCallError,
+                                    "ISSUE_47_MODEL_RESTORE_ONLY_A_LIVE_LEDGER"):
+            self.export.restore_model_ledger(export_dir=self.out)
+
+    def test_an_export_never_carries_the_start(self):
+        """The start stays with the host that made it; a restore is a record, not a resumption."""
+        index = self.export.verify_model_export(export_dir=self.out)
+        self.assertFalse(any("start" in name for name in index["archive"]["members"]))
 
 if __name__ == "__main__":
     unittest.main()

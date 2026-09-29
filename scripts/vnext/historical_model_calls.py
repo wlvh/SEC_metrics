@@ -170,6 +170,9 @@ STOPS = frozenset({"HTTP_402", "UNKNOWN_REMOTE_OUTCOME", "SOURCE_AUTHENTICITY_FA
 CALL_PATH_FILES = ("scripts/vnext/historical_model_calls.py",
                    "scripts/vnext/historical_model_egress.py",
                    "scripts/vnext/historical_source_acquisition.py",
+                   # The start that outlives the container the ledger is in:
+                   # the live path refuses without it, so it is on the path.
+                   "scripts/vnext/historical_ledger_start.py",
                    "tools/vnext_historical_model.py",
                    # The generation's snapshot, which records every rule file's
                    # bytes - E01's answer check and the D04 checker it inherits
@@ -323,7 +326,7 @@ def model_allowance(*, repo_root: Path = ROOT, delegation_reader=None):
     path always passes one - the comment is fetched from GitHub and the saved
     record must match it byte for byte.
     """
-    from .historical_source_acquisition import _comment_url, _provenance
+    from .historical_source_acquisition import _comment_url, _provenance, posted_text
     path = Path(repo_root) / ALLOWANCE_PATH
     _need(path.is_file() and not path.is_symlink(),
           "ISSUE_47_MODEL_ALLOWANCE_NOT_GRANTED:" + ALLOWANCE_PATH + ":needs "
@@ -343,8 +346,11 @@ def model_allowance(*, repo_root: Path = ROOT, delegation_reader=None):
     _need(record_path.is_file() and not record_path.is_symlink(),
           "ISSUE_47_MODEL_DELEGATION_RECORD_MISSING:" + policy["delegation_record_path"])
     comment = strict_json_file(path=record_path)
+    # The approved text, with only the line breaks a browser may add undone
+    # (historical_source_acquisition.posted_text): the owner may paste the
+    # approval into github.com.
     _need(type(comment.get("body")) is str and comment["body"]
-          and sha256_bytes(content=comment["body"].encode("utf-8"))
+          and sha256_bytes(content=posted_text(comment["body"]).encode("utf-8"))
           == policy["delegation_body_sha256"], "ISSUE_47_MODEL_DELEGATION_BODY_DOES_NOT_MATCH")
     _provenance(comment=comment, policy=policy, where="saved_record")
     _posted_by_the_approver_directly(comment, where="saved_record")
@@ -357,7 +363,7 @@ def model_allowance(*, repo_root: Path = ROOT, delegation_reader=None):
         _need(fetched.get("body") == comment["body"],
               "ISSUE_47_MODEL_SAVED_DELEGATION_DIFFERS_FROM_GITHUB")
     try:
-        approved = strict_json_loads(text=comment["body"])
+        approved = strict_json_loads(text=posted_text(comment["body"]))
     except ValueError:
         raise HistoricalModelCallError("ISSUE_47_MODEL_DELEGATION_BODY_IS_NOT_A_RECORD")
     _need(type(approved) is dict and approved.get("record_type") == DELEGATION_TYPE
@@ -400,7 +406,8 @@ def register_model_approval(*, repo_root: Path, comment_url, reader):
     same way.
     """
     from .historical_source_acquisition import (_RECORD_FIELDS, TRUSTED_APPROVER,
-                                                TRUSTED_REPOSITORY, _comment_url, _provenance)
+                                                TRUSTED_REPOSITORY, _comment_url, _provenance,
+                                                posted_text)
     repo_root = Path(repo_root)
     match = _comment_url(repository=TRUSTED_REPOSITORY).match(str(comment_url))
     _need(match is not None, "ISSUE_47_MODEL_APPROVAL_URL_IS_NOT_THIS_ISSUE_S_COMMENT:"
@@ -412,11 +419,11 @@ def register_model_approval(*, repo_root: Path, comment_url, reader):
     fetched = reader("repos/" + TRUSTED_REPOSITORY + "/issues/comments/" + match[1])
     _need(type(fetched) is dict and type(fetched.get("body")) is str,
           "ISSUE_47_MODEL_DELEGATION_FETCH_DID_NOT_RETURN_A_COMMENT")
-    _need(fetched["body"].encode("utf-8") == proposed,
+    _need(posted_text(fetched["body"]).encode("utf-8") == proposed,
           "ISSUE_47_MODEL_POSTED_BODY_IS_NOT_THE_PROPOSED_TEXT:sha256="
-          + sha256_bytes(content=fetched["body"].encode("utf-8")))
+          + sha256_bytes(content=posted_text(fetched["body"]).encode("utf-8")))
     try:
-        body = strict_json_loads(text=fetched["body"])
+        body = strict_json_loads(text=posted_text(fetched["body"]))
     except ValueError:
         raise HistoricalModelCallError("ISSUE_47_MODEL_DELEGATION_BODY_IS_NOT_A_RECORD")
     _need(type(body) is dict, "ISSUE_47_MODEL_DELEGATION_BODY_IS_NOT_A_RECORD")
@@ -1226,12 +1233,58 @@ def _ledger(*, allowance, root, live):
 
 
 def live_model_ledger():
-    """The granted ledger, after the allowance and its offline wiring receipt are verified."""
-    from .historical_source_acquisition import github_comment_reader
-    allowance = model_allowance(repo_root=ROOT, delegation_reader=github_comment_reader)
+    """The granted ledger, after the allowance, its wiring receipt and its published start are verified.
+
+    The owner decided the calls run in the executor's cloud container, where
+    gh is not installed; ``live_github_reader`` reads the same comment over the
+    REST API there. The ledger lives in the container too, so before anything
+    else the start must be the one published on issue 47
+    (historical_ledger_start): a new container with an empty ledger meets a
+    marker it cannot match.
+    """
+    from .historical_source_acquisition import live_github_reader
+    reader = live_github_reader()
+    allowance = model_allowance(repo_root=ROOT, delegation_reader=reader)
     verify_model_wiring(receipt_path=allowance["model_wiring_receipt_path"],
                         receipt_id=allowance["model_wiring_receipt_id"])
+    require_published_model_start(allowance=allowance, reader=reader)
     return allowance, _ledger(allowance=allowance, root=Path(allowance["budget_root"]), live=True)
+
+
+# ------------------------------------------------ a start that outlives the host
+# The model ledger's names for the start shared with the SEC ledger: its own
+# record type, refusal prefix and export index, so neither ledger's marker or
+# export stands in for the other's.
+MODEL_EXPORT_DIRECTORY = "evidence/issue47_model_calls"
+MODEL_EXPORT_INDEX = "export.json"
+
+
+def _model_ledger_paths(root):
+    return (HistoricalModelLedger.anchor_path(root), HistoricalModelLedger.mirror_path(root))
+
+
+def _model_start():
+    from .historical_ledger_start import LedgerKind
+    from .historical_source_acquisition import ISSUE_NUMBER, TRUSTED_REPOSITORY
+    return LedgerKind(record_type="ISSUE_47_MODEL_LEDGER_START", prefix="ISSUE_47_MODEL_LEDGER",
+                      title="Issue #47 model ledger", error=HistoricalModelCallError,
+                      ledger_paths=_model_ledger_paths,
+                      export_index=MODEL_EXPORT_DIRECTORY + "/" + MODEL_EXPORT_INDEX,
+                      repository=TRUSTED_REPOSITORY, issue_number=ISSUE_NUMBER,
+                      requirement_id=REQUIREMENT_ID)
+
+
+def start_model_ledger(*, allowance, reader, now=None, checkout=None):
+    """Start the model ledger here, once; see historical_ledger_start.start_ledger."""
+    from .historical_ledger_start import start_ledger
+    return start_ledger(_model_start(), allowance=allowance, reader=reader, now=now,
+                        checkout=ROOT if checkout is None else checkout)
+
+
+def require_published_model_start(*, allowance, reader):
+    """The model ledger was started here and its start is on GitHub, or a named refusal."""
+    from .historical_ledger_start import require_published_start
+    return require_published_start(_model_start(), allowance=allowance, reader=reader)
 
 
 def recorded_model_ledger(*, root, allowance):
