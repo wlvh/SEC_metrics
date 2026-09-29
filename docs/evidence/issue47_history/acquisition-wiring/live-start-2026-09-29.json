@@ -6,7 +6,12 @@
   "comment_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5886314727",
   "posted_at": "2026-09-29T08:12:59Z",
   "edited": false,
-  "author": {"login": "wlvh", "id": 30534800, "type": "User", "author_association": "OWNER"},
+  "author": {
+   "login": "wlvh",
+   "id": 30534800,
+   "type": "User",
+   "author_association": "OWNER"
+  },
   "performed_via_github_app": null,
   "body_sha256": "131a720ad1b8c573c0094c25905760151da6804ea6b00f32e3ea0f9346ed02f0",
   "how_it_was_posted": "by the owner, directly (no app marker), after being given the three options in no-posting-instruction.json; the owner then told the executor in the session: 已经做了1"
@@ -14,11 +19,21 @@
  "registration": {
   "command": "python3 tools/vnext_historical_sec.py register-approval --approval-url <the comment url above>",
   "status": "APPROVAL_REGISTERED",
-  "limits": [0, 0, 1354],
+  "limits": [
+   0,
+   0,
+   1354
+  ],
   "budget_root": "/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1",
-  "written": ["config/issue47_historical_calls_v1.json",
-              "docs/evidence/issue47_history/acquisition-wiring/approval-comment.json"],
-  "calls": [0, 0, 0]
+  "written": [
+   "config/issue47_historical_calls_v1.json",
+   "docs/evidence/issue47_history/acquisition-wiring/approval-comment.json"
+  ],
+  "calls": [
+   0,
+   0,
+   0
+  ]
  },
  "start": {
   "command": "python3 tools/vnext_historical_sec.py start",
@@ -40,14 +55,57 @@
    "start_record_sha256": "09b28f13185f0edf402a8911cf40041d131a39a3b9b7c1c87f81abac1590a8cd"
   },
   "marker_comment_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5886341304",
-  "calls": [0, 0, 0]
+  "calls": [
+   0,
+   0,
+   0
+  ]
  },
  "first_acquisition": {
   "command": "python3 tools/vnext_historical_sec.py acquire --max-captures 1",
-  "status": "NOT_RUN",
+  "status": "DENIED_THEN_RUN_AFTER_OWNER_PERMISSION",
   "why": "Claude Code's auto-mode permission classifier denied the command with the reason '[Auto-Mode Bypass]' before it ran. The executor did not run it any other way. No SEC request has been sent under this approval; the ledger root has no slot",
-  "what_resumes_it": "the owner's decision on how to let this command run in this session"
+  "what_resumes_it": "resolved: the owner wrote in the session '允许运行 SEC 取数', and the same command then ran"
  },
  "exposure_while_paused": "the start record lives only in this container. If the container is lost before a capture and an export, the marker on issue 47 stays, and a new start is refused by design (ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE); nothing was spent, and resuming from there is the owner's decision",
- "production_authorized": false
+ "production_authorized": false,
+ "first_acquisition_after_permission": {
+  "command": "python3 tools/vnext_historical_sec.py acquire --max-captures 1",
+  "ran_at_utc": "2026-09-29T08:37:44Z",
+  "captured": [
+   {
+    "company_id": "enphase_energy",
+    "dependency_class": "ANNUAL_PERIOD_IDENTITY",
+    "consumers": [
+     "period:2021-12-31:B02"
+    ],
+    "grants": [
+     "A_ANNUAL_CHAIN"
+    ],
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310121000016/enph-20201231.htm",
+    "status": "SUCCEEDED",
+    "status_code": "200"
+   }
+  ],
+  "checkpoint_id": "sha256:347de8e0c29ff5adba99dcc5ef35a067d3b517e34ceb75289b363932c95a0abf",
+  "cumulative_counts": [
+   0,
+   0,
+   1
+  ],
+  "limits": [
+   0,
+   0,
+   1354
+  ],
+  "cli_defect": "after the capture and its checkpoint were registered, the command crashed writing its run summary beside the ledger: the summary's cumulative block carries request_digests as a set, which json cannot serialize, and the file had been opened before serialization, so runs/20260929T083744Z.json is left truncated at 944 bytes. The summary is the CLI's own convenience record: the export takes the slots, the claim log, the binding, the attribution and the checkpoint, not runs/, so nothing the ledger holds is affected. The truncated file is left as it was written",
+  "export": {
+   "command": "python3 tools/vnext_historical_sec.py export",
+   "export_id": "sha256:3f207f161951a9c42cb62cba4d35c4faa40cbaaa1d84c6e2737f17a47bbf26e1",
+   "rows": 1,
+   "execution_mode": "LIVE",
+   "real_sec_credit": true,
+   "out_dir": "evidence/issue47_acquired"
+  }
+ }
 }
