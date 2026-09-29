@@ -181,13 +181,7 @@ def install_historical_source_inputs(*, root: Path):
             _exclusive_write_bytes(path=root / relative, content=raw)
         _exclusive_write_json(path=root / "source-baseline.json", value=stamp)
     from .normal_annual_input_v2 import POLICY_PATH as fiscal_policy
-    # Written unconditionally on every call, never skipped when the file is
-    # already there. ``_exclusive_write_bytes`` accepts a second write of
-    # identical bytes and rejects different ones, so calling it again is what
-    # re-checks an existing root rather than trusting it; skipping the write
-    # would also skip the hash comparison below.
-    _exclusive_write_bytes(path=root / fiscal_policy,
-                           content=(ROOT / fiscal_policy).read_bytes())
+    rule_inputs = {fiscal_policy: (ROOT / fiscal_policy).read_bytes()}
     # Every rule input, chosen by the kind of file rather than by where it
     # lives. The parent's installer copies config/ and catalog/, and this one
     # did the same until a recorded bank run over an installed root stopped
@@ -205,7 +199,62 @@ def install_historical_source_inputs(*, root: Path):
                                       repo_relative_path=relative).read_bytes()
         _need({"sha256": sha256_bytes(content=raw), "size": len(raw)} == binding,
               "ISSUE_47_PROCESSING_RULE_CHANGED:" + relative)
-        _exclusive_write_bytes(path=root / relative, content=raw)
+        rule_inputs[relative] = raw
+    _install_rule_inputs(root=root, rule_inputs=rule_inputs,
+                         baseline_files=set(baseline["files"]))
+
+
+RULE_INPUT_STAMP = "source-rule-inputs.json"
+RULE_INPUT_TRANSITIONS = "source-rule-inputs-transitions.jsonl"
+
+
+def _install_rule_inputs(*, root: Path, rule_inputs, baseline_files):
+    """Put the minted generation's rule inputs in the root; say when they change.
+
+    Within one generation the installed bytes are re-checked on every call,
+    never trusted: ``_exclusive_write_bytes`` accepts a second write of the same
+    bytes and refuses different ones. A re-mint is a new generation - merging
+    the base moved a configuration file the parent generation records - and
+    then the root takes the new generation's inputs, each already checked
+    against the manifest, and records the transition beside them. The first
+    ledger root met exactly that before its second round: the installer refused
+    the merged configuration, before any request, because it allowed no
+    difference at all, and the one it met was the kind a re-mint is for. A rule
+    input that is also a baseline file stays with the baseline stamp, which
+    refuses any change to the corpus.
+    """
+    digests = {relative: sha256_bytes(content=raw) for relative, raw in sorted(rule_inputs.items())}
+    stamp = {"rule_inputs_sha256": content_hash(value=digests)}
+    stamp_path = root / RULE_INPUT_STAMP
+    installed = strict_json_file(path=stamp_path) if stamp_path.exists() else None
+    if installed == stamp:
+        for relative, raw in sorted(rule_inputs.items()):
+            _exclusive_write_bytes(path=root / relative, content=raw)
+        return
+    changed = []
+    for relative, raw in sorted(rule_inputs.items()):
+        path = root / relative
+        if path.is_file() and not path.is_symlink() and path.read_bytes() == raw:
+            continue
+        _need(relative not in baseline_files or not path.exists(),
+              "ISSUE_47_BASELINE_RULE_INPUT_CHANGED:" + relative)
+        _replace_rule_input(path=path, content=raw)
+        changed.append(relative)
+    transition = {"from": installed, "to": stamp, "changed": changed,
+                  "requirement_manifest_sha256": sha256_file(path=ROOT / MANIFEST)}
+    with (root / RULE_INPUT_TRANSITIONS).open("a", encoding="utf-8") as handle:
+        handle.write(canonical_json_bytes(value=transition).decode("utf-8").rstrip("\n") + "\n")
+    _replace_rule_input(path=stamp_path, content=canonical_json_bytes(value=stamp))
+
+
+def _replace_rule_input(*, path: Path, content: bytes):
+    """Write ``content`` at ``path`` whole or not at all, never through a link."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _need(not path.parent.is_symlink() and path.parent.is_dir() and not path.is_symlink(),
+          "ISSUE_47_RULE_INPUT_PATH_UNSAFE:" + str(path))
+    temporary = path.with_name("." + path.name + ".installing")
+    temporary.write_bytes(content)
+    os.replace(temporary, path)
 
 
 RESOLVED = {"SUCCEEDED", "FAILED_TERMINAL"}

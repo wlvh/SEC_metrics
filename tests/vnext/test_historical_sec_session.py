@@ -31,7 +31,7 @@ import tempfile
 import types
 import unittest
 
-from vnext.canonical import content_hash, strict_json_file
+from vnext.canonical import canonical_json_bytes, content_hash, strict_json_file
 from vnext.continuous_sec_acquisition import validate_acquisition_checkpoint
 from vnext.annual_update import saved_source
 from vnext.historical_sec_session import HistoricalCallLedger as SESSION_LEDGER
@@ -662,6 +662,90 @@ class TheInstallerCarriesTheRuleInputsItClaims(unittest.TestCase):
         with self.assertRaises(HistoricalSessionError) as caught:
             install_historical_source_inputs(root=root / "source-inputs")
         self.assertIn("ISSUE_47_SOURCE_ROOT_UNOWNED", str(caught.exception))
+
+
+class RuleInputsFollowTheMintedGeneration(unittest.TestCase):
+    """A re-mint may change a rule input; within one generation nothing may.
+
+    The first ledger root stopped before its second round's first request:
+    merging the base had changed a configuration file the parent generation
+    records, the re-mint carried it, and the installer refused the new bytes
+    because it allowed no difference at all.
+    """
+
+    RELATIVE = "config/issue28_normal_results_v2.json"  # a rule input, not a baseline file
+    OLDER_STAMP = {"rule_inputs_sha256": "sha256:" + "0" * 64}
+
+    @classmethod
+    def setUpClass(cls):
+        from vnext.historical_sec_session import RULE_INPUT_STAMP, RULE_INPUT_TRANSITIONS
+        cls.scratch = Path(tempfile.mkdtemp(prefix="issue47-generation-"))
+        atexit.register(shutil.rmtree, cls.scratch, ignore_errors=True)
+        cls.root = cls.scratch / "source-inputs"
+        install_historical_source_inputs(root=cls.root)
+        cls.stamp_path = cls.root / RULE_INPUT_STAMP
+        cls.transitions = cls.root / RULE_INPUT_TRANSITIONS
+        # Saved as found, absent included, so a case that fails part way
+        # leaves the next one the same root.
+        cls.saved = {path: path.read_bytes() if path.exists() else None for path in (
+            cls.root / cls.RELATIVE, cls.root / "config/company_registry.csv",
+            cls.stamp_path, cls.transitions)}
+
+    def setUp(self):
+        self.addCleanup(self._restore)
+
+    def _restore(self):
+        for path, raw in self.saved.items():
+            if raw is None:
+                path.unlink(missing_ok=True)
+            else:
+                path.write_bytes(raw)
+
+    def _records(self):
+        return [json.loads(line) for line in self.transitions.read_text().splitlines()]
+
+    def test_the_installation_records_the_generation_it_installed(self):
+        records = self._records()
+        self.assertEqual(1, len(records))
+        self.assertIsNone(records[0]["from"])
+        self.assertEqual(json.loads(self.stamp_path.read_text()), records[0]["to"])
+
+    def test_within_one_generation_a_changed_input_is_refused(self):
+        (self.root / self.RELATIVE).write_bytes(self.saved[self.root / self.RELATIVE] + b" ")
+        with self.assertRaises(Exception) as caught:
+            install_historical_source_inputs(root=self.root)
+        self.assertIn("Immutable receipt bytes differ", str(caught.exception))
+        self.assertEqual(1, len(self._records()), "a refusal records no transition")
+
+    def test_a_new_generation_replaces_the_input_and_records_it(self):
+        self.stamp_path.write_bytes(canonical_json_bytes(value=self.OLDER_STAMP))
+        (self.root / self.RELATIVE).write_bytes(b'{"older": true}\n')
+        install_historical_source_inputs(root=self.root)
+        self.assertEqual(self.saved[self.root / self.RELATIVE],
+                         (self.root / self.RELATIVE).read_bytes())
+        last = self._records()[-1]
+        self.assertEqual([self.RELATIVE], last["changed"], "only what differed is replaced")
+        self.assertEqual(self.OLDER_STAMP, last["from"])
+        install_historical_source_inputs(root=self.root)
+        self.assertEqual(2, len(self._records()), "the next call is a check, not a transition")
+
+    def test_a_root_from_before_the_stamp_takes_the_current_inputs(self):
+        self.stamp_path.unlink()
+        (self.root / self.RELATIVE).write_bytes(b'{"older": true}\n')
+        install_historical_source_inputs(root=self.root)
+        self.assertEqual(self.saved[self.root / self.RELATIVE],
+                         (self.root / self.RELATIVE).read_bytes())
+        self.assertIsNone(self._records()[-1]["from"])
+
+    def test_a_baseline_file_is_never_replaced_as_a_rule_input(self):
+        registry = self.root / "config/company_registry.csv"
+        self.stamp_path.write_bytes(canonical_json_bytes(value=self.OLDER_STAMP))
+        registry.write_bytes(self.saved[registry] + b"\n")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            install_historical_source_inputs(root=self.root)
+        self.assertIn("ISSUE_47_BASELINE_RULE_INPUT_CHANGED:config/company_registry.csv",
+                      str(caught.exception))
+        self.assertEqual(self.saved[registry] + b"\n", registry.read_bytes())
 
 
 def _whole_envelope(scope):
