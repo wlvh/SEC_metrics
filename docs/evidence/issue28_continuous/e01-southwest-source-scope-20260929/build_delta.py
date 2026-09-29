@@ -9,6 +9,9 @@ index = json.loads(PARENT.read_text())
 audit = json.loads((HERE/'audit.json').read_text())
 row, = [item for item in index['rows']
         if item['company_id'] == 'southwest_airlines' and item['metric_id'] == 'E01']
+positive_parent_rows = [item for item in index['rows']
+    if item['metric_id'] == 'E01' and item['value'] is not None
+    and int(item['value']) > 0]
 assert row['value'] == audit['result_value'] == '2'
 assert row['implementation_identity']['result_id'] == audit['result_id']
 assert audit['matched_claim_count'] == 2
@@ -29,6 +32,9 @@ body = {'record_type': 'ISSUE28_CURRENT_390_ONE_COORDINATE_E01_DEFINITION_DELTA'
     'new_complete_coordinate_count': 0,
     'other_389_revalidated': False,
     'other_E01_coordinates_audited': False,
+    'parent_index_positive_E01_company_count': len(positive_parent_rows),
+    'parent_index_positive_E01_item_total_not_semantically_audited': sum(
+        int(item['value']) for item in positive_parent_rows),
     'all390_acceptance': False,
     'production_authorized': False,
     'new_provider_paid_sec_calls': [0, 0, 0]}
