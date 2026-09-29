@@ -32,7 +32,11 @@ the cap). What changed:
   party that holds the count - which the owner accepted when deciding the
   executor holds it. The record that survives a deleted comment is the export
   pushed to the branch after each company, which cannot be removed without a
-  commit that shows it.
+  commit that shows it; `start` refuses once the checkout carries an export of
+  this approval's ledger (`ISSUE_47_SEC_LEDGER_ALREADY_EXPORTED`), so after the
+  first export a deleted marker is not enough to start again. Before it, the
+  marker is the only guard, which is why the first run is
+  `acquire --max-captures 1` followed at once by an export and a push.
 - **Reading GitHub without gh.** `github_rest_reader` reads only this
   repository's issue-47 comment resources (one comment by id, or a page of
   the list) over the REST API; `live_github_reader` uses gh where it exists.

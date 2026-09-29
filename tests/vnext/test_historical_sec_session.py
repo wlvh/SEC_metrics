@@ -3172,6 +3172,44 @@ class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
                                                    reader=self._reader([]))
         self.assertIn("ISSUE_47_SEC_LEDGER_NOT_STARTED", str(caught.exception))
 
+    def test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow(self):
+        """The marker guards a lost container, not a deleted comment; an export guards both.
+
+        The executor acts on GitHub as the owner's account, so it can delete a
+        marker comment, and the comments API shows no trace of it. Here the
+        issue shows no marker at all, as after such a deletion, and the start
+        is refused because the checkout carries this approval's export. An
+        export of another approval, or of a recorded test ledger, does not
+        block; an index nobody can read does.
+        """
+        checkout = self.root / "checkout"
+        index = checkout / "evidence/issue47_acquired/export.json"
+        index.parent.mkdir(parents=True)
+        for label, content, blocks in (
+                ("this approval", {"execution_mode": "LIVE",
+                                   "approval": {"delegation_body_sha256": "a" * 64}}, True),
+                ("damaged index", None, True),
+                ("approval not a record", {"execution_mode": "LIVE", "approval": "x"}, True),
+                ("another approval", {"execution_mode": "LIVE",
+                                      "approval": {"delegation_body_sha256": "b" * 64}}, False),
+                ("recorded test ledger", {"execution_mode": "RECORDED_TEST_ONLY",
+                                          "approval": None}, False)):
+            with self.subTest(label):
+                index.write_text("{not json" if content is None else json.dumps(content),
+                                 encoding="utf-8")
+                path = SESSION_MODULE.start_record_path(self.root / "ledger")
+                if blocks:
+                    with self.assertRaises(HistoricalSessionError) as caught:
+                        SESSION_MODULE.start_ledger(allowance=self.allowance,
+                                                    reader=self._reader([]), checkout=checkout)
+                    self.assertIn("ISSUE_47_SEC_LEDGER_ALREADY_EXPORTED", str(caught.exception))
+                    self.assertFalse(path.exists(), "a refused start writes no record")
+                else:
+                    SESSION_MODULE.start_ledger(allowance=self.allowance,
+                                                reader=self._reader([]), checkout=checkout)
+                    self.assertTrue(path.is_file())
+                    path.unlink()
+
     def test_a_host_that_lost_its_ledger_cannot_start_the_allowance_again(self):
         """The marker is on GitHub and the local record is gone - a new container, or a deletion."""
         published = [self._comment(self._other_record())]

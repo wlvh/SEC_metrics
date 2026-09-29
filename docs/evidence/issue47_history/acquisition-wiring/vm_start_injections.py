@@ -9,6 +9,8 @@ came from measuring that container: its GitHub API calls are made as the
 owner's account through a GitHub App, so the approval gate now refuses a
 comment an app posted, and - because the owner may paste the approval into
 github.com - forgives the CRLF line breaks a browser sends and nothing else.
+The same measurement means the executor could delete a start marker, so a
+new start is also refused once the checkout carries this approval's export.
 
 Same method as batch_injections.py: each injection edits one source file in
 place, runs the test classes aimed at it, restores the file byte for byte in
@@ -98,6 +100,16 @@ INJECTIONS = [
      "new": '"wire": wire, "company_id": company_id,',
      "classes": [TRANSPORT],
      "expect": "test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"},
+    {"id": "A_DELETED_MARKER_LETS_A_NEW_START", "file": SESSION,
+     "old": '    _need(not _exported_here(allowance=allowance, checkout=ROOT if checkout is None else checkout),\n',
+     "new": '    _need(True,\n',
+     "classes": [START],
+     "expect": "test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow"},
+    {"id": "AN_UNREADABLE_EXPORT_READS_AS_NONE", "file": SESSION,
+     "old": "    except (OSError, ValueError):\n        return True\n    if type(index) is not dict:\n",
+     "new": "    except (OSError, ValueError):\n        return False\n    if type(index) is not dict:\n",
+     "classes": [START],
+     "expect": "test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow"},
     {"id": "AN_APP_S_POST_COUNTS_AS_THE_OWNER_S", "file": GATE,
      "old": '    _need("performed_via_github_app" in comment and comment["performed_via_github_app"] is None,\n'
             '          "ISSUE_47_DELEGATION_WAS_POSTED_THROUGH_AN_APP:" + where)\n',

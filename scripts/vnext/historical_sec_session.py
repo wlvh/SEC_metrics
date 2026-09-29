@@ -1386,12 +1386,41 @@ def marker_comment_body(record):
             + json.dumps(record, indent=1, sort_keys=True) + "\n```\n")
 
 
-def start_ledger(*, allowance, reader, now=None):
+def _exported_here(*, allowance, checkout):
+    """Whether ``checkout`` carries an export of a ledger this approval granted.
+
+    An index that cannot be read counts as one: an export nobody can read is
+    not evidence that nothing was spent. An export of a recorded test ledger
+    names no approval and does not count.
+    """
+    from .historical_source_export import EXPORT_DIRECTORY, INDEX_NAME
+    path = Path(checkout) / EXPORT_DIRECTORY / INDEX_NAME
+    if not path.exists() and not path.is_symlink():
+        return False
+    try:
+        index = strict_json_file(path=path)
+    except (OSError, ValueError):
+        return True
+    if type(index) is not dict:
+        return True
+    approval = index.get("approval")
+    return approval is not None and (type(approval) is not dict or approval.get(
+        "delegation_body_sha256") == allowance["delegation_body_sha256"])
+
+
+def start_ledger(*, allowance, reader, now=None, checkout=None):
     """Start this approval's ledger here, once: write the local record, return the marker.
 
     Refuses if a start record is already here, if anything of a ledger is
-    already at the root, or if this approval already has a marker on issue 47
-    - started elsewhere, or here and lost. Posting the marker is the caller's:
+    already at the root, if this approval already has a marker on issue 47 -
+    started elsewhere, or here and lost - or if this checkout carries an
+    export of a ledger this approval granted. The marker guards a lost
+    container, not a deleted marker comment: the owner's account can delete
+    it, and so can the executor, which acts on GitHub as that account, and
+    the comments API shows no trace of it. An export pushed to the branch
+    cannot be removed without a commit that shows it, so once one exists a
+    new start is refused whatever the issue shows, and the way back is
+    ``restore`` and the owner's decision. Posting the marker is the caller's:
     until it is on GitHub the live path refuses.
     """
     from datetime import datetime, timezone
@@ -1404,6 +1433,9 @@ def start_ledger(*, allowance, reader, now=None):
           and not HistoricalCallLedger.anchor_path(root).exists()
           and not HistoricalCallLedger.mirror_path(root).exists(),
           "ISSUE_47_SEC_LEDGER_EXISTS_WITHOUT_A_START:" + str(root))
+    _need(not _exported_here(allowance=allowance, checkout=ROOT if checkout is None else checkout),
+          "ISSUE_47_SEC_LEDGER_ALREADY_EXPORTED:this checkout carries an export of this "
+          "approval's ledger; restore it and ask the owner instead of starting again")
     _need(not start_markers(allowance=allowance, reader=reader),
           "ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE:this approval already has a start "
           "marker on issue 47")

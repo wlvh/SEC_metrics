@@ -392,6 +392,7 @@
    "transport": "HTTPS through the container's egress proxy, which re-terminates TLS: the client verifies the proxy's certificate, not SEC's. Each receipt records the proxy and the CA bundle the request used",
    "durability": "the ledger root is lost with the container; a start marker on issue 47 makes a second start of this allowance refuse, and the ledger and the acquired sources are exported to the branch after each company"
   },
-  "what_the_owner_does": "posts the regenerated approval body on issue 47, byte for byte, with gh or the web editor; everything else - registering it, starting the ledger, acquiring and exporting - runs in the executor's container"
+  "what_the_owner_does": "posts the regenerated approval body on issue 47, byte for byte, with gh or the web editor; everything else - registering it, starting the ledger, acquiring and exporting - runs in the executor's container",
+  "what_the_start_marker_does_not_guard": "a deleted marker comment. The owner's account can delete it, and so can the executor, which acts on GitHub as that account (measured: the container's GitHub API calls carry the owner's account through the Claude GitHub App); the comments API shows no trace of a deleted comment. The marker guards a lost container, not a deliberate reset by the party that holds the count, which the owner accepted in deciding the executor holds it. The second guard is the export pushed after each company: start refuses once the checkout carries an export of this approval's ledger, so before the first export the marker is the only guard, and the first run is one capture followed at once by an export and a push"
  }
 }
