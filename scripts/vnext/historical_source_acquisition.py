@@ -411,6 +411,52 @@ def github_comment_reader(path):
         raise HistoricalAcquisitionError("ISSUE_47_GITHUB_READ_NOT_STRICT_JSON:" + path)
 
 
+# The same read over GitHub's REST API, for a host without gh. The owner
+# decided that Issue #47's acquisition runs in the executor's cloud container,
+# and gh is not installed there. Only two shapes are readable, both
+# on this repository's issue 47: one comment by id (the approval), and a page
+# of the issue's comment list (the start marker). Anything else is refused
+# before a request is built, so this reader cannot be pointed at another
+# repository, another issue or another kind of resource.
+GITHUB_API_ORIGIN = "https://api.github.com/"
+_GITHUB_READABLE = re.compile(
+    r"\Arepos/" + re.escape(TRUSTED_REPOSITORY) + r"/issues/(?:comments/[1-9][0-9]*|"
+    + str(ISSUE_NUMBER) + r"/comments\?per_page=100&page=[1-9][0-9]*)\Z")
+
+
+def github_rest_reader(path):
+    """Read one of this repository's issue-47 comment resources over GitHub's REST API.
+
+    Where the host has an HTTPS proxy in its environment the request goes
+    through it, as every other request from that host does.
+    """
+    from urllib.request import Request, urlopen
+    _need(_GITHUB_READABLE.match(str(path)) is not None,
+          "ISSUE_47_GITHUB_READ_PATH_NOT_ALLOWED:" + str(path)[:120])
+    request = Request(GITHUB_API_ORIGIN + path,
+                      headers={"Accept": "application/vnd.github+json",
+                               "User-Agent": "sec-metrics-issue47-reader"})
+    try:
+        with urlopen(request, timeout=30) as response:
+            text = response.read().decode("utf-8")
+    except (OSError, UnicodeDecodeError) as error:
+        raise HistoricalAcquisitionError("ISSUE_47_GITHUB_READ_FAILED:" + path + ":"
+                                         + str(error)[:160])
+    try:
+        return strict_json_loads(text=text)
+    except ValueError:
+        raise HistoricalAcquisitionError("ISSUE_47_GITHUB_READ_NOT_STRICT_JSON:" + path)
+
+
+def live_github_reader():
+    """The reader the live path uses: gh where it is installed, the REST API where it is not.
+
+    Both read the same comment from GitHub; neither can return a local file.
+    """
+    import shutil
+    return github_comment_reader if shutil.which("gh") else github_rest_reader
+
+
 def _provenance(*, comment, policy, where):
     """The fields that say this comment is the approval, not a copy of one."""
     match = _comment_url(repository=policy["repository"]).match(policy["delegation_url"])
@@ -433,6 +479,37 @@ def _provenance(*, comment, policy, where):
     _need(type(comment.get("created_at")) is str and comment.get("created_at")
           and comment.get("created_at") == comment.get("updated_at"),
           "ISSUE_47_DELEGATION_COMMENT_WAS_EDITED:" + where)
+
+
+def _posted_by_the_approver_directly(comment, *, where):
+    """An approval posted by the approver's own hand, not by an app acting as them.
+
+    Measured in the executor's container: its GitHub API calls are made as the
+    owner's account through a GitHub App. A comment it posted there directly -
+    without the attribution footer this environment's posting tool appends -
+    would be authored by the approver, associated OWNER and unedited, and the
+    checks above would have taken it for the owner's approval. GitHub marks a
+    comment an app wrote with that app. The model approval already required the
+    mark to be absent; the SEC approval now does too. The saved record carries
+    the field as fetched, so an offline read holds it as well, and a record or
+    a reader that drops the field is refused rather than read as "no app".
+    """
+    _need("performed_via_github_app" in comment and comment["performed_via_github_app"] is None,
+          "ISSUE_47_DELEGATION_WAS_POSTED_THROUGH_AN_APP:" + where)
+
+
+def posted_text(body):
+    """The text a posted comment carries, with the line breaks a browser adds undone.
+
+    A comment pasted into github.com is submitted with CRLF line breaks (a web
+    form sends a text box's newlines that way); gh sends the bytes it is given.
+    A body that differs from the approved bytes only there, or only in
+    whitespace after the record, is the same approval: strict JSON allows no
+    raw CR or LF inside a string, so a CR can only be whitespace between
+    tokens. Nothing else is forgiven - leading whitespace, a changed indent, a
+    lone CR or an appended footer still make a different text.
+    """
+    return body.replace("\r\n", "\n").rstrip(" \t\r\n")
 
 
 def _delegation(*, repo_root: Path, policy, reader=None):
@@ -458,15 +535,17 @@ def _delegation(*, repo_root: Path, policy, reader=None):
     comment = strict_json_file(path=path)
     _need(type(comment.get("body")) is str and comment["body"],
           "ISSUE_47_DELEGATION_RECORD_HAS_NO_BODY")
-    _need(sha256_bytes(content=comment["body"].encode("utf-8"))
+    _need(sha256_bytes(content=posted_text(comment["body"]).encode("utf-8"))
           == policy["delegation_body_sha256"],
           "ISSUE_47_DELEGATION_BODY_DOES_NOT_MATCH_ITS_DIGEST")
     _provenance(comment=comment, policy=policy, where="saved_record")
+    _posted_by_the_approver_directly(comment, where="saved_record")
     if reader is not None:
         match = _comment_url(repository=policy["repository"]).match(policy["delegation_url"])
         fetched = reader("repos/" + policy["repository"] + "/issues/comments/" + match[1])
         _need(type(fetched) is dict, "ISSUE_47_DELEGATION_FETCH_DID_NOT_RETURN_A_COMMENT")
         _provenance(comment=fetched, policy=policy, where="fetched")
+        _posted_by_the_approver_directly(fetched, where="fetched")
         _need(fetched.get("body") == comment["body"],
               "ISSUE_47_SAVED_DELEGATION_DIFFERS_FROM_THE_ONE_ON_GITHUB")
     # Strict JSON: a duplicate key is a refusal, not "the last one wins".
@@ -475,7 +554,7 @@ def _delegation(*, repo_root: Path, policy, reader=None):
     # more was accepted as the larger one on the GitHub-verified path - the
     # approval the owner read and the one enforced were different.
     try:
-        approved = strict_json_loads(text=comment["body"])
+        approved = strict_json_loads(text=posted_text(comment["body"]))
     except CanonicalError:
         raise HistoricalAcquisitionError("ISSUE_47_DELEGATION_BODY_IS_NOT_A_RECORD")
     _need(type(approved) is dict, "ISSUE_47_DELEGATION_BODY_IS_NOT_A_RECORD")
@@ -530,13 +609,16 @@ def acquisition_allowance(*, repo_root: Path, delegation_reader=None):
     return policy
 
 
-# What the owner approved, byte for byte. The delegation names the text as the
-# proposal's ``the_comment_body_as_text`` at commit 92da6f2f and this digest;
-# the file below holds those bytes, and registration requires the comment on
-# GitHub to be the same bytes. A digest pinned here rather than read from the
-# proposal is the point: a proposal edited after the approval must not move
-# what the approval means.
-APPROVED_BODY_SHA256 = "71439c2ecaa5d936b8b4e0b14f612c1b1cee2bd3cc99113d14dbd264862e8394"
+# What the owner approved, byte for byte. The first delegation named the
+# proposal's ``the_comment_body_as_text`` at commit 92da6f2f (digest 71439c2e...),
+# whose ledger root was on the owner's machine. The owner then decided the
+# acquisition runs in the executor's container, so the body was regenerated
+# with that ledger root and an ``execution`` statement, the cap and every grant
+# unchanged; this is its digest. The file below holds those bytes, and
+# registration requires the comment on GitHub to be the same bytes. A digest
+# pinned here rather than read from the proposal is the point: a proposal
+# edited after the approval must not move what the approval means.
+APPROVED_BODY_SHA256 = "1c537bc30860b644c60e03ff7e023f019d430d6927472e17833e2b48d6f7b684"
 APPROVED_BODY_PATH = ("docs/evidence/issue47_history/acquisition-wiring/"
                       "approval-comment-body.json")
 APPROVAL_RECORD_PATH = "docs/evidence/issue47_history/acquisition-wiring/approval-comment.json"
@@ -553,7 +635,9 @@ def register_approval(*, repo_root: Path, comment_url, reader):
 
     Nothing here writes to GitHub. The comment is read through ``reader``; its
     body must be the approved bytes (pinned above, and equal to the committed
-    body file), its author the trusted approver and its place this issue. Then
+    body file; the line breaks a web page adds are undone, see ``posted_text``),
+    its author the trusted approver posting directly rather than through an app,
+    and its place this issue. Then
     the record and the policy are written from what was read, and the result is
     put through ``acquisition_allowance`` with the same reader, so the file that
     grants is checked by the gate that will read it, not by this function's
@@ -571,9 +655,9 @@ def register_approval(*, repo_root: Path, comment_url, reader):
     fetched = reader("repos/" + TRUSTED_REPOSITORY + "/issues/comments/" + match[1])
     _need(type(fetched) is dict and type(fetched.get("body")) is str,
           "ISSUE_47_DELEGATION_FETCH_DID_NOT_RETURN_A_COMMENT")
-    _need(fetched["body"].encode("utf-8") == approved,
+    _need(posted_text(fetched["body"]).encode("utf-8") == approved,
           "ISSUE_47_POSTED_BODY_IS_NOT_THE_APPROVED_TEXT:sha256="
-          + sha256_bytes(content=fetched["body"].encode("utf-8")))
+          + sha256_bytes(content=posted_text(fetched["body"]).encode("utf-8")))
     body = json.loads(approved.decode("utf-8"))
     policy = {"requirement_id": body["requirement_id"], "repository": TRUSTED_REPOSITORY,
               "approver_login": TRUSTED_APPROVER, "delegation_url": fetched.get("html_url"),
@@ -584,8 +668,10 @@ def register_approval(*, repo_root: Path, comment_url, reader):
                   body["maximum_additional_provider_paid_sec_calls"],
               "scope": body["scope"], "sec_wiring_receipt_path": WIRING_RECEIPT_PATH}
     _provenance(comment=fetched, policy=policy, where="fetched")
+    _posted_by_the_approver_directly(fetched, where="fetched")
     record = {field: fetched.get(field) for field in _RECORD_FIELDS}
     record["user"] = {key: fetched.get("user", {}).get(key) for key in ("login", "id", "type")}
+    record["performed_via_github_app"] = fetched["performed_via_github_app"]
     outputs = {POLICY_PATH: policy, APPROVAL_RECORD_PATH: record}
     for relative, value in outputs.items():
         data = (json.dumps(value, ensure_ascii=False, indent=1, sort_keys=True)

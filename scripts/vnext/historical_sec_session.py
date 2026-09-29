@@ -49,6 +49,7 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import urlsplit
 import fcntl
+import json
 import os
 
 from sec_http import (SecHttpClient, parse_request_log_rows, request_log_attempt_id,
@@ -630,6 +631,7 @@ class HistoricalSecSession:
         self.data_root = ledger.root / "source-inputs"
         ledger.request_log = self.data_root / "evidence/requests_log.csv"
         self._sec_client = None
+        self._transport_facts = None
         # What this session claimed, so a caller never has to infer it from the
         # shared ledger's total. Two snapshots around a capture are not taken
         # under the same lock, so another process finishing a request between
@@ -973,6 +975,32 @@ class HistoricalSecSession:
         terminal = self.ledger.finish(path=path, intent=intent, receipt=receipt)
         return receipt, terminal
 
+    def _transport(self):
+        """Which way this session's HTTPS went: the proxy and the CA bundle, as facts.
+
+        The owner accepted a run from the executor's container,
+        whose egress proxy re-terminates TLS, so the client there verifies the
+        proxy's certificate rather than SEC's. A receipt that did not say which
+        path its bytes took would read as a direct fetch. Recorded, not judged:
+        what a proxy does to TLS is stated in the approval the owner posted.
+        """
+        if not self.ledger.live:
+            return {"network": "NONE_RECORDED_RESPONSE"}
+        if self._transport_facts is None:
+            from urllib.request import getproxies
+            proxy = getproxies().get("https")
+            if proxy:
+                # Never a credential: only where the proxy is, not who logs in to it.
+                parts = urlsplit(proxy)
+                proxy = (parts.scheme + "://" + (parts.hostname or "")
+                         + (":" + str(parts.port) if parts.port else ""))
+            bundle = os.environ.get("SSL_CERT_FILE")
+            self._transport_facts = {
+                "https_proxy": proxy or None,
+                "ca_bundle": ({"path": bundle, "sha256": sha256_file(path=Path(bundle))}
+                              if bundle and Path(bundle).is_file() else None)}
+        return self._transport_facts
+
     def calls_this_session(self):
         """What this session actually claimed, by channel.
 
@@ -1028,7 +1056,7 @@ class HistoricalSecSession:
                 "ledger_before_sha256": sha256_bytes(content=before),
                 "ledger_after_sha256": sha256_bytes(content=after),
                 "ledger_row_index": len(old_rows), "ledger_row": row, "proof": proof,
-                "wire": wire, "company_id": company_id,
+                "wire": wire, "transport": self._transport(), "company_id": company_id,
                 "requirement_id": REQUIREMENT_ID, "production_authorized": False}
         receipt = _sealed(body, "receipt_id")
         _exclusive_write_json(path=path / "sec-receipt.json", value=receipt)
@@ -1110,7 +1138,7 @@ REQUIRED_WIRING_EVIDENCE = (
     # declaration the gate admits from has to be pinned by the same receipt as
     # the gate.
     "scripts/vnext/historical_governance_sources.py",
-    # What carries an acquisition from the owner's machine to a checkout, and
+    # What carries an acquisition from the host that ran it to a checkout, and
     # what rebuilds and registers it there. Both ends are part of the path a
     # grant is spent on, so the receipt pins them with the rest.
     "scripts/vnext/historical_source_export.py",
@@ -1282,6 +1310,142 @@ def _verify_case_accounting(*, run):
           "ISSUE_47_OFFLINE_WIRING_VERIFICATION_RUN_DID_NOT_PASS:" + str(run)[:200])
 
 
+# ------------------------------------------------ a start that outlives the host
+# The owner decided that Issue #47's acquisition runs in the executor's cloud
+# container. Everything above keeps the count honest while
+# the ledger exists, but a container is reclaimed with its disk, and a ledger
+# that vanishes with it would let the same allowance be spent again from an
+# empty one. So a ledger is started once, and the start is published where
+# the container cannot take it: a random number is written beside the root,
+# and the executor posts a marker comment carrying it on issue 47. The live
+# path reads the issue's comments before any request and refuses unless the
+# earliest marker for this approval is unedited, written with the repository
+# owner's association, and carries the local number. A lost container, or a
+# local ledger deleted together with the files beside it, then meets a marker
+# it cannot match, and resuming is the owner's decision.
+START_TYPE = "ISSUE_47_SEC_LEDGER_START"
+MARKER_PAGES = 100
+
+
+def start_record_path(root):
+    """Where the local half of a ledger's start lives: beside the root, with the anchor."""
+    root = Path(root)
+    return root.parent / ("." + root.name + ".start.json")
+
+
+def _marker_record(body):
+    """The start record in a comment's first fenced json block, or None."""
+    text = body.replace("\r\n", "\n")
+    opening = text.find("```json\n")
+    if opening < 0:
+        return None
+    closing = text.find("\n```", opening + len("```json\n"))
+    if closing < 0:
+        return None
+    try:
+        record = strict_json_loads(text=text[opening + len("```json\n"):closing])
+    except ValueError:
+        return None
+    return record if type(record) is dict and record.get("record_type") == START_TYPE else None
+
+
+def start_markers(*, allowance, reader):
+    """This approval's start markers on issue 47, oldest first.
+
+    Only comments with the repository owner's association count: the issue is
+    public, and a stranger's comment must neither block a start nor stand in
+    for one.
+    """
+    from .historical_source_acquisition import ISSUE_NUMBER, TRUSTED_REPOSITORY
+    markers = []
+    for page in range(1, MARKER_PAGES + 1):
+        comments = reader("repos/" + TRUSTED_REPOSITORY + "/issues/" + str(ISSUE_NUMBER)
+                          + "/comments?per_page=100&page=" + str(page))
+        _need(type(comments) is list and all(type(item) is dict for item in comments),
+              "ISSUE_47_SEC_START_MARKERS_UNREADABLE")
+        for comment in comments:
+            record = _marker_record(str(comment.get("body") or ""))
+            if (record is not None and comment.get("author_association") == "OWNER"
+                    and record.get("delegation_body_sha256")
+                    == allowance["delegation_body_sha256"]):
+                markers.append({"comment": comment, "record": record})
+        if len(comments) < 100:
+            break
+    else:
+        _need(False, "ISSUE_47_SEC_START_MARKERS_BEYOND_THE_PAGES_READ")
+    return sorted(markers, key=lambda item: (str(item["comment"].get("created_at")),
+                                             int(item["comment"].get("id") or 0)))
+
+
+def marker_comment_body(record):
+    """The comment the executor posts on issue 47; its first json block is the record."""
+    return ("Issue #47 SEC ledger start marker, posted by the executor. The live "
+            "acquisition path reads this issue's comments and refuses unless the earliest "
+            "marker for this approval is unedited, has the repository owner's association "
+            "and matches the local start record beside the ledger.\n\n```json\n"
+            + json.dumps(record, indent=1, sort_keys=True) + "\n```\n")
+
+
+def start_ledger(*, allowance, reader, now=None):
+    """Start this approval's ledger here, once: write the local record, return the marker.
+
+    Refuses if a start record is already here, if anything of a ledger is
+    already at the root, or if this approval already has a marker on issue 47
+    - started elsewhere, or here and lost. Posting the marker is the caller's:
+    until it is on GitHub the live path refuses.
+    """
+    from datetime import datetime, timezone
+    import secrets
+    root = Path(allowance["budget_root"])
+    path = start_record_path(root)
+    _need(not path.exists() and not path.is_symlink(),
+          "ISSUE_47_SEC_LEDGER_ALREADY_STARTED_HERE:" + str(path))
+    _need(not (root.exists() and any(root.iterdir()))
+          and not HistoricalCallLedger.anchor_path(root).exists()
+          and not HistoricalCallLedger.mirror_path(root).exists(),
+          "ISSUE_47_SEC_LEDGER_EXISTS_WITHOUT_A_START:" + str(root))
+    _need(not start_markers(allowance=allowance, reader=reader),
+          "ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE:this approval already has a start "
+          "marker on issue 47")
+    record = {"record_type": START_TYPE, "schema_version": 1, "requirement_id": REQUIREMENT_ID,
+              "delegation_url": allowance["delegation_url"],
+              "delegation_body_sha256": allowance["delegation_body_sha256"],
+              "budget_root": allowance["budget_root"],
+              "instance_nonce": secrets.token_hex(16),
+              "created_at": (now or datetime.now(timezone.utc)).strftime("%Y-%m-%dT%H:%M:%SZ")}
+    path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    _exclusive_write_json(path=path, value=record)
+    return {"status": "LEDGER_START_WRITTEN", "start_record": str(path), "record": record,
+            "marker_comment_body": marker_comment_body(record), "calls": [0, 0, 0]}
+
+
+def require_published_start(*, allowance, reader):
+    """The ledger was started here and its start is on GitHub, or a refusal naming which half is missing."""
+    path = start_record_path(Path(allowance["budget_root"]))
+    markers = start_markers(allowance=allowance, reader=reader)
+    if not path.exists():
+        _need(not markers, "ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE:"
+              + str(markers[0]["comment"].get("html_url") if markers else ""))
+        _need(False, "ISSUE_47_SEC_LEDGER_NOT_STARTED:run 'start' and post its marker on issue 47")
+    _need(path.is_file() and not path.is_symlink(),
+          "ISSUE_47_SEC_LEDGER_START_RECORD_UNSAFE:" + str(path))
+    record = strict_json_file(path=path)
+    _need(record.get("record_type") == START_TYPE
+          and record.get("requirement_id") == REQUIREMENT_ID
+          and all(record.get(key) == allowance[key]
+                  for key in ("delegation_url", "delegation_body_sha256", "budget_root")),
+          "ISSUE_47_SEC_LEDGER_START_RECORD_IS_FOR_ANOTHER_APPROVAL:" + str(path))
+    _need(markers, "ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED:post the marker comment on issue 47")
+    first = markers[0]
+    comment = first["comment"]
+    _need(type(comment.get("created_at")) is str and comment.get("created_at")
+          and comment.get("created_at") == comment.get("updated_at"),
+          "ISSUE_47_SEC_LEDGER_START_MARKER_EDITED:" + str(comment.get("html_url")))
+    _need(first["record"] == record,
+          "ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE:" + str(comment.get("html_url")))
+    return {"start_record": record, "marker_url": comment.get("html_url")}
+
+
 def _allowance_ledger(*, allowance, root, live):
     # The location is not in the binding: the live session separately requires
     # the ledger to be the granted root, and a binding that named its own path
@@ -1305,12 +1469,15 @@ def live_historical_session():
     """
     # The live path always supplies the reader, so a grant is verified against
     # the comment on GitHub rather than against a second local file.
-    from .historical_source_acquisition import github_comment_reader
-    allowance = acquisition_allowance(repo_root=ROOT,
-                                      delegation_reader=github_comment_reader)
+    from .historical_source_acquisition import live_github_reader
+    reader = live_github_reader()
+    allowance = acquisition_allowance(repo_root=ROOT, delegation_reader=reader)
     _need(allowance["delegation_body_sha256"] and allowance["delegation_url"],
           "ISSUE_47_ALLOWANCE_DELEGATION_INCOMPLETE:" + POLICY_PATH)
     verify_offline_wiring(receipt_path=allowance["sec_wiring_receipt_path"])
+    # Before the session exists, so before any transport: a ledger with no
+    # published start could be a second start of an allowance already begun.
+    require_published_start(allowance=allowance, reader=reader)
     root = Path(allowance["budget_root"])
     return HistoricalSecSession(factory=_FACTORY, allowance=allowance,
                                 ledger=_allowance_ledger(allowance=allowance, root=root,

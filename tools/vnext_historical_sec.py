@@ -7,16 +7,24 @@ four. This reads Issue #47's own declaration instead, and spends only Issue
 #47's own allowance - the approval comment on issue 47, registered here and
 re-read from GitHub before any request.
 
-Owner commands, in order, on the machine that holds the approved ledger root:
+Commands, in order, on the host that holds the approved ledger root - since
+the owner decided to run it there, the executor's cloud container:
 
   register-approval --approval-url URL   read the posted approval back from
                                          GitHub and write the allowance files
-  acquire [--max-captures N]             capture every due dependency inside
+  start                                  write the ledger's local start record
+                                         and print the marker comment to post
+                                         on issue 47; nothing is requested
+                                         until that marker is on GitHub
+  acquire [--company C] [--max-captures N]
+                                         capture every due dependency inside
                                          the grants, company by company, until
                                          nothing is left or a stop
   export                                 write the registered acquisition into
                                          evidence/issue47_acquired/ to commit
-  run --approval-url URL                 the three above, in that order
+  run --approval-url URL                 register, acquire and export in that
+                                         order (the start must already be
+                                         published)
 
 ``restore --export DIR --out DIR`` is the other end: it rebuilds a data root
 from this checkout's baseline plus an export and registers it here.
@@ -35,23 +43,23 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from vnext.historical_sec_session import (  # noqa: E402 - path set above
-    live_historical_session)
+    live_historical_session, start_ledger)
 from vnext.historical_source_acquisition import (  # noqa: E402 - path set above
-    HistoricalAcquisitionError, acquisition_allowance, github_comment_reader,
-    historical_dependencies, offline_source_plan, register_approval)
+    HistoricalAcquisitionError, acquisition_allowance, historical_dependencies,
+    live_github_reader, offline_source_plan, register_approval)
 from vnext.historical_source_export import (  # noqa: E402 - path set above
     export_acquisition, restore_acquisition)
 
 EXPORT_HINT = ("config/issue47_historical_calls_v1.json "
                "docs/evidence/issue47_history/acquisition-wiring/approval-comment.json "
                "evidence/issue47_acquired")
-COMMANDS = ["list", "plan", "capture", "register-approval", "acquire", "export", "run",
-            "restore"]
+COMMANDS = ["list", "plan", "capture", "register-approval", "start", "acquire", "export",
+            "run", "restore"]
 
 
 def _companies(args):
     """The companies to acquire for: the grant's own list, in its own order."""
-    allowance = acquisition_allowance(repo_root=ROOT, delegation_reader=github_comment_reader)
+    allowance = acquisition_allowance(repo_root=ROOT, delegation_reader=live_github_reader())
     granted = list(allowance["scope"]["company_ids"])
     if args.company is None:
         return granted
@@ -114,15 +122,19 @@ def main(argv=None):
     try:
         if args.command in ("register-approval", "run"):
             registered = register_approval(repo_root=ROOT, comment_url=args.approval_url,
-                                           reader=github_comment_reader)
+                                           reader=live_github_reader())
             result = registered
+        if args.command == "start":
+            reader = live_github_reader()
+            result = start_ledger(allowance=acquisition_allowance(
+                repo_root=ROOT, delegation_reader=reader), reader=reader)
         if args.command in ("acquire", "run"):
             session, acquired = _acquire(args)
             result = acquired if args.command == "acquire" else {**registered,
                                                                  **acquired}
         if args.command in ("export", "run"):
             allowance = acquisition_allowance(repo_root=ROOT,
-                                              delegation_reader=github_comment_reader)
+                                              delegation_reader=live_github_reader())
             exported = export_acquisition(ledger_root=allowance["budget_root"])
             result = exported if args.command == "export" else {**result,
                                                                 "export": exported}

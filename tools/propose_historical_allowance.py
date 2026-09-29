@@ -39,7 +39,11 @@ _DATES = sorted({date for frame in _FRAMES for date in frame["target_report_date
 WINDOW = (_DATES[0], _DATES[-1])
 PLAN = json.loads((REPO / "docs/evidence/issue47_history/acquisition-plan.json").read_text())
 CAP = PLAN["cumulative_cap"]["requested"]
-BUDGET_ROOT = PLAN["revision_4"]["ledger"]["proposed_budget_root"]
+# Revision 6: the owner decided the acquisition runs in the
+# executor's container, so the ledger root is there and the body says how the
+# run is made and kept - the owner approves the execution, not only the cap.
+BUDGET_ROOT = PLAN["revision_6"]["ledger"]["proposed_budget_root"]
+EXECUTION = PLAN["revision_6"]["execution"]
 # The windows of the grants named for one company are the plan's decisions.
 NAMED_WINDOWS = PLAN["named_grant_windows"]["windows"]
 EVERYONE = COMPANIES
@@ -75,6 +79,7 @@ approved = {
     "requirement_id": "issue_47_v1",
     "maximum_additional_provider_paid_sec_calls": [0, 0, CAP],
     "budget_root": BUDGET_ROOT,
+    "execution": EXECUTION,
     "scope": {"purposes": ["ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"],
               "company_ids": COMPANIES, "dependency_classes": GRANTED_CLASSES,
               "earliest_report_end": WINDOW[0], "latest_report_end": WINDOW[1],
@@ -104,15 +109,17 @@ policy = {
                                "offline-wiring-receipt.json",
 }
 # The saved record as the owner's own post would come back from GitHub: the
-# approver's numeric account id, a user account, the owner association and an
-# unedited comment - every field the gate checks since the re-review's fixes.
+# approver's numeric account id, a user account, the owner association, an
+# unedited comment and no app's mark - every field the gate checks since the
+# re-review's fixes and the refusal of comments an app posted as the owner.
 # With only a login, this check went on writing a proposal whose own acceptance
 # had failed, and its widening negative was refused for the author, not the scope.
 record = {"html_url": policy["delegation_url"], "id": COMMENT_ID,
           "issue_url": "https://api.github.com/repos/" + TRUSTED_REPOSITORY + "/issues/47",
           "user": {"login": TRUSTED_APPROVER, "id": TRUSTED_APPROVER_ID, "type": "User"},
           "author_association": "OWNER", "created_at": "2026-09-27T00:00:00Z",
-          "updated_at": "2026-09-27T00:00:00Z", "body": body}
+          "updated_at": "2026-09-27T00:00:00Z", "performed_via_github_app": None,
+          "body": body}
 
 checks = {}
 with tempfile.TemporaryDirectory() as directory:
@@ -260,11 +267,12 @@ out = {"record_type": "ISSUE_47_PROPOSED_SEC_ALLOWANCE",
          "what_is_still_missing": ["the owner posts the comment body below on "
                                    "issue 47, which is what creates its id, "
                                    "URL and digest",
-                                   "the owner confirms or replaces budget_root: "
-                                   "proposed beside Issue #28's root on the "
-                                   "executing host, and the gate refuses #28's "
-                                   "root, anything inside it and anything inside "
-                                   "the checkout",
+                                   "budget_root is in the executor's container, "
+                                   "by the owner's decision (plan revision 6); the gate "
+                                   "refuses #28's root, anything inside it and "
+                                   "anything inside the checkout",
+                                   "before the first request the executor starts "
+                                   "the ledger and posts its marker on issue 47",
                                    "the saved comment record is fetched from "
                                    "GitHub and must match byte for byte"]},
        "execution_scope_census": {

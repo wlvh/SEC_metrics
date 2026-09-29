@@ -43,6 +43,7 @@ from vnext.historical_sec_session import (HistoricalSessionError,
 from vnext.historical_event_sources import (EVENT_METRICS, declare_event_sources,
                                             _registry_row, _window)
 from vnext.historical_source_acquisition import (POLICY_PATH, DELEGATION_TYPE,
+                                                 APPROVAL_RECORD_PATH,
                                                  TRUSTED_APPROVER, TRUSTED_REPOSITORY,
                                                  HistoricalAcquisitionError,
                                                  acquisition_allowance,
@@ -706,7 +707,7 @@ def _grant_tree(*, scope_overrides=None, body_overrides=None, digest=None, url=N
                "issue_url": "https://api.github.com/repos/" + repository + "/issues/47",
                "user": {"login": login, "id": 30534800, "type": "User"},
                "author_association": "OWNER", "created_at": "2026-09-27T00:00:00Z",
-               "updated_at": "2026-09-27T00:00:00Z"}
+               "updated_at": "2026-09-27T00:00:00Z", "performed_via_github_app": None}
     (root / "docs").mkdir(parents=True)
     (root / "docs/delegation.json").write_text(json.dumps(comment), encoding="utf-8")
     (root / "config").mkdir(parents=True)
@@ -1204,7 +1205,9 @@ class TheApprovalIsReadGrantByGrant(unittest.TestCase):
                 with self.assertRaises(HistoricalAcquisitionError) as caught:
                     _typed_budget_root(root)
                 self.assertIn(reason, str(caught.exception))
-        _typed_budget_root("/Users/lyuhongwang/.local/state/sec_metrics/issue47-historical-sec-v1")
+        # The root the approval body proposes is one the gate accepts.
+        plan = strict_json_file(path=ROOT / "docs/evidence/issue47_history/acquisition-plan.json")
+        _typed_budget_root(plan["revision_6"]["ledger"]["proposed_budget_root"])
 
 
 class AGrantMustComeFromAnApprovalNotFromTwoLocalFiles(unittest.TestCase):
@@ -1258,11 +1261,33 @@ class AGrantMustComeFromAnApprovalNotFromTwoLocalFiles(unittest.TestCase):
                      "id": 1, "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
                      "user": {"login": "wlvh", "id": 30534800, "type": "User"},
                      "author_association": "OWNER", "body": '{"record_type": "SOMETHING_ELSE"}',
-                     "created_at": "2026-09-27T00:00:00Z", "updated_at": "2026-09-27T00:00:00Z"}
+                     "created_at": "2026-09-27T00:00:00Z", "updated_at": "2026-09-27T00:00:00Z",
+                     "performed_via_github_app": None}
         with self.assertRaises(HistoricalAcquisitionError) as caught:
             acquisition_allowance(repo_root=root, delegation_reader=lambda path: elsewhere)
         self.assertIn("ISSUE_47_SAVED_DELEGATION_DIFFERS_FROM_THE_ONE_ON_GITHUB",
                       str(caught.exception))
+
+    def test_an_app_s_mark_on_either_copy_is_a_refusal(self):
+        """The saved record and the comment GitHub returns are each read for it."""
+        for where, change in (("saved_record", {"performed_via_github_app": {"slug": "claude"}}),
+                              ("saved_record", "DROPPED"),
+                              ("fetched", {"performed_via_github_app": {"slug": "claude"}})):
+            with self.subTest(where=where, change=change):
+                root, _ = self._tree()
+                path = root / "docs/delegation.json"
+                saved = json.loads(path.read_text())
+                fetched = copy.deepcopy(saved)
+                target = saved if where == "saved_record" else fetched
+                if change == "DROPPED":
+                    del target["performed_via_github_app"]
+                else:
+                    target.update(change)
+                path.write_text(json.dumps(saved), encoding="utf-8")
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    acquisition_allowance(repo_root=root, delegation_reader=lambda _: fetched)
+                self.assertIn("ISSUE_47_DELEGATION_WAS_POSTED_THROUGH_AN_APP:" + where,
+                              str(caught.exception))
 
     def test_a_matching_real_read_is_accepted_and_says_so(self):
         root, _ = self._tree()
@@ -2755,7 +2780,7 @@ class AnApprovalIsRegisteredOnlyFromTheApprovedBytes(unittest.TestCase):
                    "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/47",
                    "user": {"login": "wlvh", "id": 30534800, "type": "User"},
                    "author_association": "OWNER", "created_at": "2026-09-27T00:00:00Z",
-                   "updated_at": "2026-09-27T00:00:00Z",
+                   "updated_at": "2026-09-27T00:00:00Z", "performed_via_github_app": None,
                    "body": (ROOT / APPROVED_BODY_PATH).read_text(encoding="utf-8")}
         comment.update(changes)
         return comment
@@ -2842,6 +2867,69 @@ class AnApprovalIsRegisteredOnlyFromTheApprovedBytes(unittest.TestCase):
                     register_approval(repo_root=root, comment_url=url,
                                       reader=lambda path: self._comment(html_url=url))
         self.assertFalse((root / POLICY_PATH).exists())
+
+    def test_an_approval_posted_through_an_app_registers_nothing(self):
+        """Measured in the executor's container, which reads and writes GitHub as the owner.
+
+        Its GitHub API calls carry the owner's account through a GitHub App, so
+        a comment it posted with curl would be authored wlvh, associated OWNER,
+        unedited and without the footer this environment's posting tool adds -
+        the approved bytes, accepted as the owner's approval until this check.
+        A reader that drops the field is refused too, not read as "no app".
+        """
+        for change in ({"performed_via_github_app": {"slug": "claude", "id": 1}},
+                       {"performed_via_github_app": {}}, "DROPPED"):
+            with self.subTest(change=change):
+                root = self._tree()
+                comment = self._comment()
+                if change == "DROPPED":
+                    del comment["performed_via_github_app"]
+                else:
+                    comment.update(change)
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    register_approval(repo_root=root, comment_url=self.URL,
+                                      reader=lambda path: copy.deepcopy(comment))
+                self.assertIn("ISSUE_47_DELEGATION_WAS_POSTED_THROUGH_AN_APP", str(caught.exception))
+                self.assertFalse((root / POLICY_PATH).exists())
+                self.assertFalse((root / APPROVAL_RECORD_PATH).exists())
+
+    def test_a_body_pasted_into_the_web_page_registers_as_the_same_approval(self):
+        """A browser sends a text box's line breaks as CRLF; the approved record is unchanged."""
+        root = self._tree()
+        comment = self._comment()
+        comment["body"] = comment["body"].replace("\n", "\r\n") + "\r\n"
+        result = register_approval(repo_root=root, comment_url=self.URL,
+                                   reader=lambda path: copy.deepcopy(comment))
+        self.assertEqual("APPROVAL_REGISTERED", result["status"])
+        self.assertEqual(APPROVED_BODY_SHA256, result["delegation_body_sha256"])
+        self.assertEqual([0, 0, 1354], result["limits"])
+        # The saved record is what GitHub returned, not a cleaned copy: the
+        # gate compares it with a fresh read byte for byte.
+        saved = strict_json_file(path=root / APPROVAL_RECORD_PATH)
+        self.assertEqual(comment["body"], saved["body"])
+        self.assertIsNone(saved["performed_via_github_app"])
+        allowance = acquisition_allowance(repo_root=root,
+                                          delegation_reader=lambda path: copy.deepcopy(comment))
+        self.assertIs(True, allowance["approved_delegation"]["provenance_verified_against_github"])
+        self.assertEqual([0, 0, 1354], allowance["maximum_additional_provider_paid_sec_calls"])
+
+    def test_only_line_breaks_are_forgiven(self):
+        """Leading whitespace, a changed indent, a lone CR: each a different text, each refused."""
+        approved = self._comment()["body"]
+        self.assertIn("\n \"", approved, "the body is indented; the indent case below needs it")
+        for name, body in (("leading newline", "\n" + approved),
+                           ("indent changed", approved.replace("\n \"", "\n  \"", 1)),
+                           ("lone CR", approved.replace("\n", "\r", 1)),
+                           ("CRLF and one byte", approved.replace("\n", "\r\n").replace(
+                               "1354", "1355"))):
+            with self.subTest(name):
+                root = self._tree()
+                comment = self._comment(body=body)
+                with self.assertRaises(HistoricalAcquisitionError) as caught:
+                    register_approval(repo_root=root, comment_url=self.URL,
+                                      reader=lambda path: copy.deepcopy(comment))
+                self.assertIn("ISSUE_47_POSTED_BODY_IS_NOT_THE_APPROVED_TEXT", str(caught.exception))
+                self.assertFalse((root / POLICY_PATH).exists())
 
     def test_a_policy_that_already_says_something_else_is_not_overwritten(self):
         root = self._tree()
@@ -2995,3 +3083,254 @@ class AnApprovalMustBeReadAsWrittenAndUnedited(unittest.TestCase):
         with self.assertRaises(HistoricalAcquisitionError) as caught:
             acquisition_allowance(repo_root=root)
         self.assertIn("ISSUE_47_DELEGATION_COMMENT_WAS_EDITED", str(caught.exception))
+
+
+class AStartMustBePublishedBeforeAnyRequest(unittest.TestCase):
+    """The start a lost container cannot take with it.
+
+    On 2026-09-29 the owner decided the acquisition runs in the executor's
+    cloud container. A container is reclaimed with its disk, and a ledger
+    that vanishes with it would let the allowance be spent again from an
+    empty one; so a start is written beside the ledger and published as a
+    marker comment on issue 47, and the live path refuses unless the earliest
+    marker for this approval is unedited, has the owner's association and
+    carries the local record. These cases are about which marker counts and
+    what a missing half says, because a check that accepted the latest marker,
+    an edited one or a stranger's would pass every case that only asks
+    whether a marker exists.
+    """
+
+    URL = "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5800000001"
+    FOOTER = "\n---\n_Generated by [Claude Code](https://claude.ai/code)_"
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="issue47-start-"))
+        self.addCleanup(shutil.rmtree, self.root, ignore_errors=True)
+        self.allowance = {"requirement_id": "issue_47_v1",
+                          "budget_root": str(self.root / "ledger"),
+                          "delegation_url": self.URL,
+                          "delegation_body_sha256": "a" * 64}
+        self.next_id = 5900000000
+
+    def _comment(self, record, *, association="OWNER", edited=False, when="2026-09-29T01:00:00Z",
+                 body=None):
+        self.next_id += 1
+        return {"id": self.next_id,
+                "html_url": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-"
+                            + str(self.next_id),
+                "author_association": association, "created_at": when,
+                "updated_at": "2026-09-29T09:00:00Z" if edited else when,
+                "body": (body if body is not None
+                         else SESSION_MODULE.marker_comment_body(record) + self.FOOTER)}
+
+    @staticmethod
+    def _reader(comments):
+        pages = [comments[i:i + 100] for i in range(0, len(comments), 100)] or [[]]
+        asked = []
+
+        def read(path):
+            asked.append(path)
+            page = int(path.rsplit("page=", 1)[1])
+            return copy.deepcopy(pages[page - 1] if page <= len(pages) else [])
+
+        read.asked = asked
+        return read
+
+    def _start(self):
+        return SESSION_MODULE.start_ledger(allowance=self.allowance, reader=self._reader([]))
+
+    def _other_record(self):
+        return {**self._start_record_shape(), "instance_nonce": "0" * 32}
+
+    def _start_record_shape(self):
+        return {"record_type": SESSION_MODULE.START_TYPE, "schema_version": 1,
+                "requirement_id": "issue_47_v1", "delegation_url": self.URL,
+                "delegation_body_sha256": "a" * 64, "budget_root": str(self.root / "ledger"),
+                "created_at": "2026-09-29T00:00:00Z"}
+
+    def test_a_start_writes_the_local_record_and_the_marker_that_carries_it(self):
+        started = self._start()
+        path = SESSION_MODULE.start_record_path(self.root / "ledger")
+        self.assertEqual(started["record"], strict_json_file(path=path))
+        self.assertEqual(32, len(started["record"]["instance_nonce"]))
+        comment = self._comment(started["record"], body=started["marker_comment_body"] + self.FOOTER)
+        self.assertEqual(started["record"], SESSION_MODULE._marker_record(comment["body"]))
+        verified = SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                                          reader=self._reader([comment]))
+        self.assertEqual(comment["html_url"], verified["marker_url"])
+
+    def test_nothing_is_requested_until_the_marker_is_on_github(self):
+        self._start()
+        with self.assertRaises(HistoricalSessionError) as caught:
+            SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                                   reader=self._reader([]))
+        self.assertIn("ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED", str(caught.exception))
+
+    def test_an_unstarted_ledger_is_refused_by_name(self):
+        with self.assertRaises(HistoricalSessionError) as caught:
+            SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                                   reader=self._reader([]))
+        self.assertIn("ISSUE_47_SEC_LEDGER_NOT_STARTED", str(caught.exception))
+
+    def test_a_host_that_lost_its_ledger_cannot_start_the_allowance_again(self):
+        """The marker is on GitHub and the local record is gone - a new container, or a deletion."""
+        published = [self._comment(self._other_record())]
+        with self.assertRaises(HistoricalSessionError) as caught:
+            SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                                   reader=self._reader(published))
+        self.assertIn("ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE", str(caught.exception))
+        with self.assertRaises(HistoricalSessionError) as caught:
+            SESSION_MODULE.start_ledger(allowance=self.allowance, reader=self._reader(published))
+        self.assertIn("ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE", str(caught.exception))
+        self.assertFalse(SESSION_MODULE.start_record_path(self.root / "ledger").exists())
+
+    def test_the_earliest_marker_decides_not_the_latest(self):
+        # Two containers started; the second posted after the first. The
+        # second must lose even though its own marker is on the issue.
+        record = self._start()["record"]
+        earlier = self._comment(self._other_record(), when="2026-09-29T01:00:00Z")
+        ours = self._comment(record, when="2026-09-29T02:00:00Z")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                                   reader=self._reader([ours, earlier]))
+        self.assertIn("ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE", str(caught.exception))
+
+    def test_an_edited_marker_does_not_count(self):
+        record = self._start()["record"]
+        with self.assertRaises(HistoricalSessionError) as caught:
+            SESSION_MODULE.require_published_start(
+                allowance=self.allowance, reader=self._reader([self._comment(record, edited=True)]))
+        self.assertIn("ISSUE_47_SEC_LEDGER_START_MARKER_EDITED", str(caught.exception))
+
+    def test_a_stranger_s_marker_neither_blocks_nor_stands_in(self):
+        record = self._start()["record"]
+        stranger_first = self._comment(self._other_record(), association="NONE",
+                                       when="2026-09-29T00:30:00Z")
+        ours = self._comment(record)
+        SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                               reader=self._reader([stranger_first, ours]))
+        forged = self._comment(record, association="CONTRIBUTOR")
+        with self.assertRaises(HistoricalSessionError) as caught:
+            SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                                   reader=self._reader([forged]))
+        self.assertIn("ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED", str(caught.exception))
+
+    def test_another_approval_s_marker_is_not_this_one_s(self):
+        record = self._start()["record"]
+        other = self._comment({**record, "delegation_body_sha256": "b" * 64})
+        with self.assertRaises(HistoricalSessionError) as caught:
+            SESSION_MODULE.require_published_start(allowance=self.allowance,
+                                                   reader=self._reader([other]))
+        self.assertIn("ISSUE_47_SEC_LEDGER_START_NOT_PUBLISHED", str(caught.exception))
+
+    def test_markers_are_read_past_the_first_page(self):
+        record = self._start()["record"]
+        chatter = [self._comment(None, body="progress note %d" % index) for index in range(100)]
+        reader = self._reader(chatter + [self._comment(record)])
+        SESSION_MODULE.require_published_start(allowance=self.allowance, reader=reader)
+        self.assertEqual(2, len(reader.asked))
+
+    def test_a_ledger_already_at_the_root_is_not_started_over(self):
+        for leftover in ("root", "anchor"):
+            with self.subTest(leftover):
+                root = Path(tempfile.mkdtemp(prefix="issue47-start-left-"))
+                self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+                allowance = {**self.allowance, "budget_root": str(root / "ledger")}
+                if leftover == "root":
+                    (root / "ledger").mkdir()
+                    (root / "ledger" / "binding.json").write_text("{}", encoding="utf-8")
+                else:
+                    SESSION_LEDGER.anchor_path(root / "ledger").write_text("{}", encoding="utf-8")
+                with self.assertRaises(HistoricalSessionError) as caught:
+                    SESSION_MODULE.start_ledger(allowance=allowance, reader=self._reader([]))
+                self.assertIn("ISSUE_47_SEC_LEDGER_EXISTS_WITHOUT_A_START", str(caught.exception))
+
+    def test_the_live_path_checks_the_start_before_any_transport(self):
+        """Registered and wired, not started: refused before a session, and so before a socket."""
+        allowance = {**self.allowance, "sec_wiring_receipt_path": "unused",
+                     "maximum_additional_provider_paid_sec_calls": [0, 0, 5],
+                     "scope": {"purposes": ["ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"]}}
+        reader = self._reader([])
+        with patch.object(SESSION_MODULE, "acquisition_allowance",
+                          lambda **kwargs: copy.deepcopy(allowance)), \
+                patch.object(SESSION_MODULE, "verify_offline_wiring", lambda **kwargs: None), \
+                patch("vnext.historical_source_acquisition.live_github_reader", lambda: reader), \
+                patch.object(SESSION_MODULE, "SecHttpClient",
+                             side_effect=AssertionError("a transport was built")), \
+                patch.object(SESSION_MODULE, "HistoricalSecSession",
+                             side_effect=AssertionError("a session was built")):
+            with self.assertRaises(HistoricalSessionError) as caught:
+                live_historical_session()
+        self.assertIn("ISSUE_47_SEC_LEDGER_NOT_STARTED", str(caught.exception))
+        # The same path with the start published builds the session.
+        record = SESSION_MODULE.start_ledger(allowance=allowance, reader=reader)["record"]
+        published = self._reader([self._comment(record)])
+        with patch.object(SESSION_MODULE, "acquisition_allowance",
+                          lambda **kwargs: copy.deepcopy(allowance)), \
+                patch.object(SESSION_MODULE, "verify_offline_wiring", lambda **kwargs: None), \
+                patch("vnext.historical_source_acquisition.live_github_reader",
+                      lambda: published), \
+                patch.object(SESSION_MODULE, "SecHttpClient",
+                             side_effect=AssertionError("a transport was built")):
+            session = live_historical_session()
+        self.assertEqual(Path(allowance["budget_root"]), session.ledger.root)
+        self.assertTrue(session.ledger.live)
+
+
+class AReceiptSaysWhichWayItsBytesCame(unittest.TestCase):
+    """A LIVE receipt names the HTTPS proxy and CA bundle the request used.
+
+    The owner accepted a run from a container whose egress proxy re-terminates
+    TLS, where the client verifies the proxy's certificate rather than SEC's.
+    A receipt silent about that would read as a direct fetch; a receipt that
+    kept the proxy's credentials would leak them into the repository.
+    """
+
+    def test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle(self):
+        root = Path(tempfile.mkdtemp(prefix="issue47-transport-"))
+        self.addCleanup(shutil.rmtree, root, ignore_errors=True)
+        import sec_http
+        row = [row for row in _rows(_SCRIPTED_COMPANY)
+               if row["new_acquisition_required"]
+               and row["dependency_class"] == "ACCESSION_INSTANCE_DISCOVERY"][0]
+        scope = {"purposes": ["ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"],
+                 "company_ids": [_SCRIPTED_COMPANY],
+                 "dependency_classes": ["ACCESSION_INSTANCE_DISCOVERY"],
+                 "earliest_report_end": "2021-12-31", "latest_report_end": "2026-01-31"}
+        scope["grants"] = [_whole_envelope(scope)]
+        allowance = {"requirement_id": "issue_47_v1", "budget_root": str(root / "ledger"),
+                     "maximum_additional_provider_paid_sec_calls": [0, 0, 5], "scope": scope}
+        ledger = SESSION_MODULE._allowance_ledger(allowance=allowance, root=root / "ledger",
+                                                  live=True)
+        session = SESSION_MODULE.HistoricalSecSession(factory=SESSION_MODULE._FACTORY,
+                                                      allowance=allowance, ledger=ledger)
+        bundle = root / "bundle.pem"
+        bundle.write_bytes(b"not a real certificate, only its digest is recorded\n")
+        frame = {"requirements": [copy.deepcopy(row)], "company_id": _SCRIPTED_COMPANY,
+                 "target_report_dates": ["2021-12-31", "2022-12-31", "2023-12-31",
+                                         "2024-12-31", "2025-12-31"]}
+        environment = {"HTTPS_PROXY": "http://someone:secret@proxy.invalid:3128",
+                       "https_proxy": "http://someone:secret@proxy.invalid:3128",
+                       "SSL_CERT_FILE": str(bundle)}
+        with patch.dict(os.environ, environment), \
+                patch.object(sec_http, "urlopen",
+                             lambda request, timeout: _FakeResponse(BODY, 200)), \
+                patch("vnext.continuous_sec_acquisition._journal", lambda: root / "journal"), \
+                patch.object(SESSION_MODULE, "declared_frame",
+                             lambda **kwargs: copy.deepcopy(frame)), \
+                patch.object(socket.socket, "connect",
+                             side_effect=AssertionError("a socket was opened")):
+            result = session.capture_pending(company_id=_SCRIPTED_COMPANY)
+        self.assertEqual(["SUCCEEDED"], [item["status"] for item in result["captured"]])
+        receipt = strict_json_file(path=root / "ledger/calls/0001/sec-receipt.json")
+        self.assertEqual({"https_proxy": "http://proxy.invalid:3128",
+                          "ca_bundle": {"path": str(bundle),
+                                        "sha256": SESSION_MODULE.sha256_file(path=bundle)}},
+                         receipt["transport"])
+        self.assertNotIn("secret", json.dumps(receipt))
+
+    def test_a_recorded_receipt_says_no_network_was_used(self):
+        ledger = _Chain.copy(Path(tempfile.mkdtemp(prefix="issue47-transport-rec-")) / "ledger")
+        self.addCleanup(shutil.rmtree, ledger.parent, ignore_errors=True)
+        receipt = strict_json_file(path=ledger / "calls/0001/sec-receipt.json")
+        self.assertEqual({"network": "NONE_RECORDED_RESPONSE"}, receipt["transport"])

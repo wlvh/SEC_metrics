@@ -224,5 +224,96 @@ class TheGithubReaderPassesGhOnlyWhatItNeeds(unittest.TestCase):
         self.assertIn("ISSUE_47_GITHUB_READ_NOT_STRICT_JSON", str(caught.exception))
 
 
+
+class TheRestReaderReadsOnlyThisIssuesComments(unittest.TestCase):
+    """The reader for a host without gh, which is where the owner decided the acquisition runs.
+
+    It can be pointed at one comment of this repository's issue 47 or at a page
+    of that issue's comment list, and at nothing else: a reader that fetched
+    whatever path it was handed could be aimed at another repository's
+    "approval" as easily as at this one.
+    """
+
+    def _response(self, text):
+        class Response:
+            def read(self):
+                return text.encode("utf-8")
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *exc):
+                return False
+
+        return Response()
+
+    def test_only_this_issue_s_comment_resources_are_readable(self):
+        from unittest import mock
+        from vnext.historical_source_acquisition import (HistoricalAcquisitionError,
+                                                         github_rest_reader)
+        for path in ("repos/other/SEC_metrics/issues/comments/1",
+                     "repos/wlvh/SEC_metrics/issues/28/comments?per_page=100&page=1",
+                     "repos/wlvh/SEC_metrics/pulls/52",
+                     "repos/wlvh/SEC_metrics/issues/comments/1?x=y",
+                     "repos/wlvh/SEC_metrics/issues/comments/0",
+                     "repos/wlvh/SEC_metrics/issues/47/comments?per_page=100&page=1&x=1"):
+            with self.subTest(path):
+                with mock.patch("urllib.request.urlopen",
+                                side_effect=AssertionError("a request was made")), \
+                        self.assertRaises(HistoricalAcquisitionError) as caught:
+                    github_rest_reader(path)
+                self.assertIn("ISSUE_47_GITHUB_READ_PATH_NOT_ALLOWED", str(caught.exception))
+
+    def test_a_comment_and_a_list_page_are_read_from_the_api(self):
+        from unittest import mock
+        from vnext.historical_source_acquisition import github_rest_reader
+        seen = []
+
+        def urlopen(request, timeout):
+            seen.append((request.full_url, request.get_header("Accept")))
+            return self._response('{"id": 1}' if "comments/1" in request.full_url else "[]")
+
+        with mock.patch("urllib.request.urlopen", urlopen):
+            self.assertEqual({"id": 1},
+                             github_rest_reader("repos/wlvh/SEC_metrics/issues/comments/1"))
+            self.assertEqual([], github_rest_reader(
+                "repos/wlvh/SEC_metrics/issues/47/comments?per_page=100&page=2"))
+        self.assertEqual([("https://api.github.com/repos/wlvh/SEC_metrics/issues/comments/1",
+                           "application/vnd.github+json"),
+                          ("https://api.github.com/repos/wlvh/SEC_metrics/issues/47/comments"
+                           "?per_page=100&page=2", "application/vnd.github+json")], seen)
+
+    def test_a_reply_that_is_not_strict_json_is_refused(self):
+        from unittest import mock
+        from vnext.historical_source_acquisition import (HistoricalAcquisitionError,
+                                                         github_rest_reader)
+        with mock.patch("urllib.request.urlopen",
+                        lambda request, timeout: self._response('{"id": 1, "id": 2}')), \
+                self.assertRaises(HistoricalAcquisitionError) as caught:
+            github_rest_reader("repos/wlvh/SEC_metrics/issues/comments/1")
+        self.assertIn("ISSUE_47_GITHUB_READ_NOT_STRICT_JSON", str(caught.exception))
+
+    def test_a_failed_read_is_a_named_refusal(self):
+        import urllib.error
+        from unittest import mock
+        from vnext.historical_source_acquisition import (HistoricalAcquisitionError,
+                                                         github_rest_reader)
+        with mock.patch("urllib.request.urlopen",
+                        side_effect=urllib.error.URLError("unreachable")), \
+                self.assertRaises(HistoricalAcquisitionError) as caught:
+            github_rest_reader("repos/wlvh/SEC_metrics/issues/comments/1")
+        self.assertIn("ISSUE_47_GITHUB_READ_FAILED", str(caught.exception))
+
+    def test_the_live_reader_is_gh_where_it_is_installed(self):
+        from unittest import mock
+        from vnext.historical_source_acquisition import (github_comment_reader,
+                                                         github_rest_reader,
+                                                         live_github_reader)
+        with mock.patch("shutil.which", lambda name: "/usr/bin/gh"):
+            self.assertIs(github_comment_reader, live_github_reader())
+        with mock.patch("shutil.which", lambda name: None):
+            self.assertIs(github_rest_reader, live_github_reader())
+
+
 if __name__ == "__main__":
     unittest.main()

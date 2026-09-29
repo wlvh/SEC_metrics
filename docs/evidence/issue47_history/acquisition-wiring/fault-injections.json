@@ -410,6 +410,215 @@
    "suite_result": "FAILED (failures=3 subtests) of 8",
    "why_it_matters": "the re-review found a comment by another account of the approver's name, by a bot or by a non-owner was accepted: a login can be renamed and re-registered; the id cannot",
    "run": "2026-09-27, main checkout, tests.vnext.test_historical_sec_session.AnApprovalIsRegisteredOnlyFromTheApprovedBytes"
+  },
+  {
+   "id": "THE_LIVE_PATH_SKIPS_THE_START",
+   "edit": "live_historical_session() no longer calls require_published_start()",
+   "caught_by": [
+    "test_the_live_path_checks_the_start_before_any_transport"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.014s FAILED (failures=1)",
+   "why_it_matters": "the check that makes a count outlive the container; without it a new container with an empty ledger spends the allowance again",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_live_path_checks_the_start_before_any_transport"
+  },
+  {
+   "id": "ANY_MARKER_WILL_DO",
+   "edit": "require_published_start() accepts any marker equal to the local record, not only the earliest",
+   "caught_by": [
+    "test_the_earliest_marker_decides_not_the_latest"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.014s FAILED (failures=1)",
+   "why_it_matters": "a second container that posted its own marker later would pass; only the earliest start is the start",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_earliest_marker_decides_not_the_latest"
+  },
+  {
+   "id": "THE_LATEST_MARKER_DECIDES",
+   "edit": "start_markers() sorts newest first",
+   "caught_by": [
+    "test_the_earliest_marker_decides_not_the_latest"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.016s FAILED (failures=1)",
+   "why_it_matters": "same as above through the ordering: the latest marker would decide",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_earliest_marker_decides_not_the_latest"
+  },
+  {
+   "id": "AN_EDITED_MARKER_COUNTS",
+   "edit": "require_published_start() no longer requires created_at == updated_at",
+   "caught_by": [
+    "test_an_edited_marker_does_not_count"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.014s FAILED (failures=1)",
+   "why_it_matters": "an edit can make an old marker carry a new number",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_edited_marker_does_not_count"
+  },
+  {
+   "id": "A_STRANGER_S_MARKER_COUNTS",
+   "edit": "start_markers() no longer requires the owner's association",
+   "caught_by": [
+    "test_a_stranger_s_marker_neither_blocks_nor_stands_in"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.015s FAILED (errors=1)",
+   "why_it_matters": "issue 47 is public; a stranger's comment could block a start or stand in for one",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_stranger_s_marker_neither_blocks_nor_stands_in"
+  },
+  {
+   "id": "ANOTHER_APPROVAL_S_MARKER_COUNTS",
+   "edit": "start_markers() no longer compares the approval digest",
+   "caught_by": [
+    "test_another_approval_s_marker_is_not_this_one_s"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.012s FAILED (failures=1)",
+   "why_it_matters": "a marker for another approval would decide this one's start",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_another_approval_s_marker_is_not_this_one_s"
+  },
+  {
+   "id": "A_LOST_LEDGER_STARTS_AGAIN",
+   "edit": "start_ledger() no longer refuses when this approval already has a marker",
+   "caught_by": [
+    "test_a_host_that_lost_its_ledger_cannot_start_the_allowance_again"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.015s FAILED (failures=1)",
+   "why_it_matters": "a container that lost its ledger could write a new start record and begin again",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_host_that_lost_its_ledger_cannot_start_the_allowance_again"
+  },
+  {
+   "id": "ONLY_THE_FIRST_PAGE_IS_READ",
+   "edit": "start_markers() reads only the first page",
+   "caught_by": [
+    "test_markers_are_read_past_the_first_page"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.014s FAILED (errors=1)",
+   "why_it_matters": "the issue already has more than a page of comments; a marker on page two would be missed",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_markers_are_read_past_the_first_page"
+  },
+  {
+   "id": "THE_READER_TAKES_ANY_PATH",
+   "edit": "github_rest_reader() no longer checks the path",
+   "caught_by": [
+    "test_only_this_issue_s_comment_resources_are_readable"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 5 tests in 0.006s FAILED (failures=6)",
+   "why_it_matters": "the REST reader could be aimed at another repository's or issue's comment",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_only_this_issue_s_comment_resources_are_readable"
+  },
+  {
+   "id": "THE_PROXY_S_CREDENTIALS_ARE_RECORDED",
+   "edit": "_transport() records the proxy URL as given",
+   "caught_by": [
+    "test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 2 tests in 38.717s FAILED (failures=1)",
+   "why_it_matters": "a proxy URL with credentials would be written into receipts the branch carries",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
+  },
+  {
+   "id": "THE_TRANSPORT_IS_NOT_RECORDED",
+   "edit": "_receipt() no longer records the transport",
+   "caught_by": [
+    "test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 2 tests in 36.831s FAILED (errors=2)",
+   "why_it_matters": "a receipt silent about the proxy reads as a direct fetch from SEC",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_recorded_receipt_says_no_network_was_used, test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
+  },
+  {
+   "id": "AN_APP_S_POST_COUNTS_AS_THE_OWNER_S",
+   "edit": "_posted_by_the_approver_directly() always passes",
+   "caught_by": [
+    "test_an_approval_posted_through_an_app_registers_nothing"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 17 tests in 0.025s FAILED (failures=5, errors=1)",
+   "why_it_matters": "the container writes GitHub as the owner through the Claude app; without this a comment it posted directly would pass as the owner's approval",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal, test_an_approval_posted_through_an_app_registers_nothing"
+  },
+  {
+   "id": "A_DROPPED_FIELD_READS_AS_NO_APP",
+   "edit": "_posted_by_the_approver_directly() reads a missing field as None",
+   "caught_by": [
+    "test_an_app_s_mark_on_either_copy_is_a_refusal"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 17 tests in 0.024s FAILED (failures=1, errors=1)",
+   "why_it_matters": "a record or reader that drops the field would read as 'no app'",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal, test_an_approval_posted_through_an_app_registers_nothing"
+  },
+  {
+   "id": "THE_SAVED_RECORD_IS_NOT_READ_FOR_THE_MARK",
+   "edit": "_delegation() no longer checks the saved record for the mark",
+   "caught_by": [
+    "test_an_app_s_mark_on_either_copy_is_a_refusal"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 6 tests in 0.010s FAILED (failures=2)",
+   "why_it_matters": "an offline read would take an app-posted record for an approval",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal"
+  },
+  {
+   "id": "THE_FETCHED_COMMENT_IS_NOT_READ_FOR_THE_MARK",
+   "edit": "_delegation() no longer checks the fetched comment for the mark",
+   "caught_by": [
+    "test_an_app_s_mark_on_either_copy_is_a_refusal"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 6 tests in 0.010s FAILED (failures=1)",
+   "why_it_matters": "a saved record cleaned of the mark would pass against a comment GitHub marks",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal"
+  },
+  {
+   "id": "REGISTRATION_DOES_NOT_READ_THE_MARK",
+   "edit": "register_approval() no longer checks the mark",
+   "caught_by": [
+    "test_an_approval_posted_through_an_app_registers_nothing"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.018s FAILED (failures=2, errors=1)",
+   "why_it_matters": "registration would write the policy and record from an app's comment before any gate refused it",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_approval_posted_through_an_app_registers_nothing"
+  },
+  {
+   "id": "MORE_THAN_LINE_BREAKS_IS_FORGIVEN",
+   "edit": "posted_text() also turns a lone CR into LF and strips leading whitespace",
+   "caught_by": [
+    "test_only_line_breaks_are_forgiven"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.018s FAILED (failures=2)",
+   "why_it_matters": "forgiving leading whitespace or a lone CR accepts a text the owner did not post as approved",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_only_line_breaks_are_forgiven"
+  },
+  {
+   "id": "LINE_BREAKS_ARE_NOT_FORGIVEN",
+   "edit": "posted_text() returns the body unchanged",
+   "caught_by": [
+    "test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.014s FAILED (errors=1)",
+   "why_it_matters": "a body pasted into github.com may come back with CRLF and would be refused although it is the same record",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
+  },
+  {
+   "id": "THE_DIGEST_IS_OVER_THE_RAW_BODY",
+   "edit": "_delegation() hashes the raw body instead of posted_text()",
+   "caught_by": [
+    "test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.021s FAILED (errors=1)",
+   "why_it_matters": "registration would accept a CRLF body the gate then refuses, leaving a written policy that never grants",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
   }
  ],
  "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py, scripts/vnext/historical_event_sources.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",

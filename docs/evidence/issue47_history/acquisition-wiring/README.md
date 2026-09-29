@@ -1,6 +1,80 @@
 # Issue #47's acquisition chain, exercised before it is authorized
 
-## 2026-09-27: what the owner runs, and why it has to be the owner
+## 2026-09-29: the executor's container runs it; the owner posts one comment
+
+The owner decided that the acquisition runs in the executor's cloud container
+(`../owner-decisions-2026-09-29/decisions.json`, transcribed to issue 47 as
+comment 5882788074), after being told what that costs: the executor both
+spends the allowance and holds the count; the container's egress proxy
+re-terminates TLS, so the client verifies the proxy's certificate rather than
+SEC's; the approval body had to be rewritten; and requests leave from a
+shared egress address, so a throttled address stops the run early (never past
+the cap). What changed:
+
+- **The ledger root** is `/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1`,
+  in the container (`acquisition-plan.json` revision 6). The approval body was
+  regenerated with it and with an `execution` statement saying all of the
+  above; the cap `[0, 0, 1354]` and every grant are unchanged, and the
+  proposal's scope census is identical. New digest `1c537bc3...b684`, pinned in
+  `historical_source_acquisition.py`.
+- **A start the container cannot take with it.** `start` writes a start record
+  beside the root, carrying a random number, and prints a marker comment; the
+  executor posts it on issue 47. `live_historical_session` reads the issue's
+  comments before any request and refuses unless the earliest marker for this
+  approval is unedited, has the owner's association and equals the local
+  record. A lost container, or a ledger deleted together with the files beside
+  it, meets a marker it cannot match (`ISSUE_47_SEC_LEDGER_STARTED_ELSEWHERE`)
+  and resuming is the owner's decision. A stranger's comment neither blocks a
+  start nor stands in for one. What the marker does not guard: a deleted
+  marker comment. The owner's account can delete it, and so can the executor,
+  which acts on GitHub as that account; the comments API shows no trace of a
+  deleted comment. It guards a lost container, not a deliberate reset by the
+  party that holds the count - which the owner accepted when deciding the
+  executor holds it. The record that survives a deleted comment is the export
+  pushed to the branch after each company, which cannot be removed without a
+  commit that shows it.
+- **Reading GitHub without gh.** `github_rest_reader` reads only this
+  repository's issue-47 comment resources (one comment by id, or a page of
+  the list) over the REST API; `live_github_reader` uses gh where it exists.
+- **Each LIVE receipt records its transport**: the HTTPS proxy (never its
+  credentials) and the CA bundle's path and digest.
+- **After each company** the executor exports the ledger and the sources and
+  pushes them, so the branch carries what was spent if the container goes.
+
+What the owner does, once: post the approved body as the owner's own comment
+on issue 47, unedited. Either route works:
+
+- in a browser, open
+  `https://raw.githubusercontent.com/wlvh/SEC_metrics/<commit>/docs/evidence/issue47_history/acquisition-wiring/approval-comment-body.json`,
+  select all, copy, paste it as a new comment on issue 47 and submit;
+- or, wherever `gh` is signed in to github.com:
+
+```
+curl -fsSL https://raw.githubusercontent.com/wlvh/SEC_metrics/<commit>/docs/evidence/issue47_history/acquisition-wiring/approval-comment-body.json \
+  | gh issue comment 47 --repo wlvh/SEC_metrics --body-file -
+```
+
+Registration compares the posted text with the approved bytes. It forgives
+the CRLF line breaks a browser may send and whitespace after the record, and
+nothing else (`posted_text`). That is insurance, not a measured need: the 16
+comments on issue 28 that no app posted all read back with LF. It refuses a
+comment an app posted, and that includes this executor. Measured in the
+container: its GitHub API calls are made as the owner's account through the
+Claude GitHub App, so a comment it posted there directly - with none of the
+footer its posting tool appends - would have been authored wlvh, associated
+OWNER and unedited, and the gate took such a comment for the approval until
+this check (`ISSUE_47_DELEGATION_WAS_POSTED_THROUGH_AN_APP`, on the fetched
+comment and on the saved record). GitHub's mobile app has not been tried. If
+registration refuses, nothing has been requested; post a new comment rather
+than editing one, since an edited approval is refused.
+
+Then, in the container: `register-approval --approval-url <URL>`, `start`
+(the executor posts the printed marker), `acquire --company <C>` per company
+with `export`, commit and push after each, and a first run of
+`acquire --max-captures 1` to see one real request through the proxy before
+the rest.
+
+## 2026-09-27 (superseded on 2026-09-29): what the owner was to run on the owner's machine
 
 The owner approved the `[0, 0, 1354]` cap and its grants as proposed
 (`../owner-decisions-2026-09-27/decisions.json`). Two things this session

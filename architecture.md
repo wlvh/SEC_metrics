@@ -1269,6 +1269,8 @@ validate_acquisition_checkpoint` 重放；该函数被 `issue_28_v14` 按字节�
 不是 #47 信用；`issue_47_v1` 写在本 Issue 总账的每个 slot 和旁边的 attribution 记录里。把
 这一点写出来，是因为下游按总账哈希查 journal，查到的东西不会告诉你是谁的额度付的账。
 
+**执行地点与开跑标记**（所有者决定 SEC 获取在执行者的云端容器里跑之后）：账本根在容器里，容器被回收时磁盘随之消失，所以一个账本只能开跑一次，而且开跑要记在容器带不走的地方。`start_ledger` 在账本根旁写本地开跑记录（`.<根名>.start.json`，含随机编号），执行者把它打印的标记评论发到 Issue #47。`live_historical_session` 在建会话之前、也就在任何传输之前调用 `require_published_start`：经 GitHub 分页读本 Issue 的评论，只看带所有者关联、且点名本批准摘要的标记，取最早的一条，要求它未编辑、且与本地记录完全相同。本地记录没有而标记在，报 `STARTED_ELSEWHERE`；本地有而标记不在，报 `START_NOT_PUBLISHED`；两者都没有，报 `NOT_STARTED`。读 GitHub 用 `live_github_reader`：有 `gh` 用 `gh`，没有则用 `github_rest_reader` 经 REST API 读，且只允许本仓库 Issue 47 的单条评论与评论列表分页。每条 LIVE 收据多一个 `transport` 字段（HTTPS 代理地址去掉凭据、CA 包路径与摘要），因为容器的出口代理会重新终止 TLS；冻结的检查点验证器只核对它点名的字段，多出的字段由收据自己的封印覆盖。批准评论本身要求没有 GitHub 应用标记：容器调用 GitHub 的身份就是所有者账号经应用授权，它直接发出的评论只凭作者、关联与未编辑，与所有者亲手发的分不开；正文比较经 `posted_text` 只原谅 CRLF 换行与记录之后的空白。
+
 ### 所有者 2026-09-27 的两项口径：C02 构成事实与 E01 经内容确认的并购公告
 
 **C02**：`scripts/vnext/historical_board_composition.py`（规则文件）在冻结文本选择器之外按"构成事实"选块——董事会规模、独立董事人数、委员会设置、成员、主席及相关独立性与资格认定；一般治理流程与委员会职能描述不收。委员会页面按结构读（委员会名、"Chair:"、成员块、"All Members are Independent"），因为冻结选择器要求同一块同时含委员会名与结构词，而这类页面没有这样的块。验收是两向阅读（`docs/evidence/issue47_history/c02-composition-facts/`）：每个入选块判是否在口径内，另从点名董事或委员会的全部块里找漏选；`tools/read_c02_composition.py` 的接受模式再要求 Run 的候选哈希等于今天重算的选择、公共行摘录就是选中块按序。

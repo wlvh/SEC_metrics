@@ -1,7 +1,8 @@
 """Carry an Issue #47 acquisition from the machine that made it to a checkout.
 
-The approved ledger root is a path on the owner's machine, so that is where
-the requests are made and counted. The historical Runs read their sources
+The approved ledger root is on the host that makes and counts the requests -
+since the owner decided to run it there, the executor's cloud container, whose
+disk goes with it. The historical Runs read their sources
 from a data root, and the frozen reader trusts a data root's extended ledger
 only through a checkpoint in the reading checkout's own journal
 (``.git/ordinary-source-authority/acquired``). Neither the ledger root nor the
@@ -21,9 +22,10 @@ checkpoint in this checkout's journal. What that establishes is exactly what
 the replay establishes: the ledger extends the trusted baseline, every row is
 bound to its slot, and every success's bytes are the immutable attempt its row
 names. What it cannot establish is that the rows came from sec.gov rather than
-from the machine that wrote them; that rests on the session records, the
-approval on GitHub and the machine the owner ran it on, and the import record
-says so rather than letting a journal entry imply more.
+from the machine that wrote them; that rests on the session records (each
+receipt names the HTTPS proxy and CA bundle its request used), the approval and
+the start marker on GitHub, and the host that made the requests, and the
+import record says so rather than letting a journal entry imply more.
 
 Archives are grouped by ledger row, closed at a row count or a raw size, and
 written with fixed metadata, so exporting a longer ledger later rewrites only
@@ -260,8 +262,11 @@ def export_acquisition(*, ledger_root, out_dir=None, policy_root=None):
             "that the rows came from sec.gov rather than from the machine that "
             "wrote them. The frozen replay proves the ledger extends the trusted "
             "baseline and every success's bytes are the attempt its row names; the "
-            "origin rests on the session records, the approval on GitHub and the "
-            "machine the owner ran it on."),
+            "origin rests on the session records - each receipt names the HTTPS "
+            "proxy and CA bundle its request used - the approval and the start marker "
+            "on GitHub, and the host that made the requests. Where a proxy "
+            "re-terminates TLS, as the executor's container's egress proxy does, the "
+            "client verified the proxy's certificate rather than SEC's."),
         "production_authorized": False}, "export_id")
     for stale in out_dir.iterdir():
         if _CHUNK_NAME.match(stale.name) and stale.name not in written:

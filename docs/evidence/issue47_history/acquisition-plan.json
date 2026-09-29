@@ -376,5 +376,22 @@
     "latest_report_end": "2024-12-31"
    }
   }
+ },
+ "revision_6": {
+  "date": "2026-09-29",
+  "decision": "the owner's answer that the acquisition runs in the executor's cloud container: docs/evidence/issue47_history/owner-decisions-2026-09-29/decisions.json, transcribed to issue 47 as comment 5882788074",
+  "what_changed": "where the requests are made and counted. The cap, the grants, the classes, the window and the counting and stopping rules are unchanged",
+  "ledger": {
+   "proposed_budget_root": "/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1",
+   "why_there": "in the executor's container, outside the checkout and apart from Issue #28's root, which is on the owner's machine",
+   "what_the_gate_refuses": "a relative path, a path containing '..', Issue #28's root or anything inside it, and anything inside the repository checkout - unchanged",
+   "durability": "the container's disk goes when the container is reclaimed. Before the first request a start record is written beside the root and a marker carrying it is posted on issue 47; the live path refuses unless the earliest marker for this approval is unedited, has the owner's association and matches the local record, so a lost container or a ledger deleted with the files beside it cannot start the allowance again. After each company the ledger and the acquired sources are exported to the branch and pushed"
+  },
+  "execution": {
+   "host": "the executor's Claude Code cloud container, by the owner's decision of 2026-09-29 (issue 47 comment 5882788074)",
+   "transport": "HTTPS through the container's egress proxy, which re-terminates TLS: the client verifies the proxy's certificate, not SEC's. Each receipt records the proxy and the CA bundle the request used",
+   "durability": "the ledger root is lost with the container; a start marker on issue 47 makes a second start of this allowance refuse, and the ledger and the acquired sources are exported to the branch after each company"
+  },
+  "what_the_owner_does": "posts the regenerated approval body on issue 47, byte for byte, with gh or the web editor; everything else - registering it, starting the ledger, acquiring and exporting - runs in the executor's container"
  }
 }
