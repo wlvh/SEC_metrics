@@ -225,7 +225,18 @@ class HistoricalCoverageTest(unittest.TestCase):
         resolved = [p for p in matrix["positions"] if p["report_end"] == MACYS_PERIOD]
         wired = [p for p in resolved if p["metric_id"] in WIRED_HISTORICAL_METRICS]
         self.assertEqual(len(WIRED_HISTORICAL_METRICS), len(wired))
-        self.assertEqual({"ROUTE_IMPLEMENTED_NOT_RUN"}, {p["status"] for p in wired})
+        # Except where an owner decision leaves the position to Issue #28's
+        # adopted result: pending as well, but not on a call of #47's. Read from
+        # the register rather than listed, so the two cannot drift apart.
+        from vnext.historical_coverage import positions_awaiting_issue_28
+        left_to_28 = {metric for company, metric, report_end
+                      in positions_awaiting_issue_28(repo_root=ROOT)
+                      if (company, report_end) == ("macys", MACYS_PERIOD)}
+        self.assertTrue(left_to_28)
+        self.assertEqual({"AWAITING_ISSUE_28_ADOPTION"},
+                         {p["status"] for p in wired if p["metric_id"] in left_to_28})
+        self.assertEqual({"ROUTE_IMPLEMENTED_NOT_RUN"},
+                         {p["status"] for p in wired if p["metric_id"] not in left_to_28})
         # The eight trait-gated metrics also have a route at a retailer, and it
         # is the structural one, so they read as implemented-and-not-run too.
         # Selected by the gate rather than by the structural-only list: that
@@ -2005,3 +2016,122 @@ class ADeclineAndABreakageAreDifferentTest(unittest.TestCase):
         self.assertFalse(identity["engine_registered_in_this_tree"])
         self.assertIsNone(identity["requirement_closure_hash"])
         self.assertIn("could not freeze a Run", identity["closure_note"])
+
+
+class PositionsLeftToIssue28AreCountedApartTest(unittest.TestCase):
+    """Pending on #28's adoption and pending on a call of #47's are two things.
+
+    The owner decided that the newest-year D04 positions wait for Issue #28's
+    accepted and adopted result and that #47 sends no call for them
+    (owner-decisions-2026-09-29, ITEM_3_LATEST_YEAR_D04). Reporting them as
+    ROUTE_IMPLEMENTED_NOT_RUN would read as work #47 still has to spend on.
+    """
+
+    COMPANY = "marriott_international"
+    NEWEST = "2025-12-31"
+    EARLIER = "2023-12-31"
+
+    @classmethod
+    def setUpClass(cls):
+        with original_sources_only():
+            cls.matrix = build_coverage_matrix(repo_root=ROOT, company_ids=[cls.COMPANY],
+                                               years=3)
+        cls.rows = {(p["metric_id"], p["report_end"]): p for p in cls.matrix["positions"]}
+
+    def test_the_newest_d04_awaits_issue_28(self):
+        row = self.rows[("D04", self.NEWEST)]
+        self.assertEqual("AWAITING_ISSUE_28_ADOPTION", row["status"])
+        self.assertEqual("ITEM_3_LATEST_YEAR_D04", row["detail"]["decision"]["key"])
+        self.assertFalse(row["native_run_receipt"])
+        self.assertEqual("AWAITING_ISSUE_28_ADOPTION", row["delivery"]["native_run"]["reason"])
+        self.assertIn("#28 has accepted or adopted", row["detail"]["what_is_not_claimed"])
+
+    def test_an_earlier_d04_still_waits_on_47s_own_call(self):
+        """The decision covers the filings #28 reviewed, not the metric."""
+        self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", self.rows[("D04", self.EARLIER)]["status"])
+
+    def test_other_metrics_at_the_newest_period_keep_their_status(self):
+        self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", self.rows[("D01", self.NEWEST)]["status"])
+        self.assertEqual("HISTORICAL_ROUTE_NOT_WIRED", self.rows[("D03", self.NEWEST)]["status"])
+
+    def test_every_entry_of_the_selected_companies_is_reported(self):
+        report = self.matrix["awaiting_issue_28"]["entries_in_selected_companies"]
+        self.assertEqual([(self.COMPANY, "D04", self.NEWEST, True)],
+                         [(e["company_id"], e["metric_id"], e["report_end"], e["matched"])
+                          for e in report])
+
+    def _one_period(self, entries, **arguments):
+        from vnext import historical_coverage
+        with patch.object(historical_coverage, "positions_awaiting_issue_28",
+                          return_value=entries), original_sources_only():
+            matrix = build_coverage_matrix(repo_root=ROOT, company_ids=[self.COMPANY],
+                                           years=1, **arguments)
+        return matrix, {p["metric_id"]: p for p in matrix["positions"]}
+
+    def test_another_target_filing_is_not_covered(self):
+        """The decision is about a filing; a position whose filing moved is not in it."""
+        entry = {"company_id": self.COMPANY, "metric_id": "D04", "report_end": self.NEWEST,
+                 "target_accession": "0000000000-00-000000",
+                 "reviewed_filing_accessions": ["0000000000-00-000000"],
+                 "decision": {"path": "x", "key": "y"}}
+        matrix, rows = self._one_period({(self.COMPANY, "D04", self.NEWEST): entry})
+        self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", rows["D04"]["status"])
+        [reported] = matrix["awaiting_issue_28"]["entries_in_selected_companies"]
+        self.assertFalse(reported["matched"])
+        self.assertEqual("ROUTE_IMPLEMENTED_NOT_RUN", reported["position_status"])
+
+    def test_a_recorded_attempt_stays_attached(self):
+        """What a batch recorded is history; the decision does not erase it."""
+        with TemporaryDirectory() as directory:
+            artifact = Path(directory) / "batch" / "native-run-matrix.json"
+            artifact.parent.mkdir(parents=True)
+            artifact.write_text(json.dumps({
+                "record_type": "HISTORICAL_NATIVE_RUN_MATRIX",
+                "positions": [{"company_id": self.COMPANY, "metric_id": "D04",
+                               "report_end": self.NEWEST, "stage": "FAILED",
+                               "case": "batch",
+                               "error": "HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE",
+                               "error_type": "HistoricalRunError"}]}))
+            from vnext.historical_coverage import positions_awaiting_issue_28
+            _, rows = self._one_period(positions_awaiting_issue_28(repo_root=ROOT),
+                                       attempts_root=Path(directory))
+        self.assertEqual("AWAITING_ISSUE_28_ADOPTION", rows["D04"]["status"])
+        self.assertEqual("HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE",
+                         rows["D04"]["detail"]["attempt"]["failed_records"][0]
+                         ["recorded"]["error"])
+
+    def test_a_register_must_cite_a_recorded_decision(self):
+        from vnext.historical_coverage import (AWAITING_REGISTER_PATH,
+                                               positions_awaiting_issue_28)
+        register = json.loads((ROOT / AWAITING_REGISTER_PATH).read_text(encoding="utf-8"))
+        decision_path = register["decision"]["path"]
+        decision = json.loads((ROOT / decision_path).read_text(encoding="utf-8"))
+
+        def load(register_body, decision_body):
+            with TemporaryDirectory() as directory:
+                root = Path(directory)
+                for relative, body in ((AWAITING_REGISTER_PATH, register_body),
+                                       (decision_path, decision_body)):
+                    (root / relative).parent.mkdir(parents=True, exist_ok=True)
+                    (root / relative).write_text(json.dumps(body), encoding="utf-8")
+                return positions_awaiting_issue_28(repo_root=root)
+
+        self.assertEqual(10, len(load(register, decision)))
+        cases = {
+            "COVERAGE_AWAITING_DECISION_NOT_RECORDED": (
+                register, {**decision, "decisions": {
+                    k: v for k, v in decision["decisions"].items()
+                    if k != register["decision"]["key"]}}),
+            "COVERAGE_AWAITING_ENTRY_DUPLICATED": (
+                {**register, "positions": register["positions"] + register["positions"][:1]},
+                decision),
+            "COVERAGE_AWAITING_ENTRY_FILING_INVALID": (
+                {**register, "positions": [{**register["positions"][0],
+                                            "reviewed_filing_accessions": []}]},
+                decision),
+            "COVERAGE_AWAITING_REGISTER_TYPE_INVALID": (
+                {**register, "record_type": "SOMETHING_ELSE"}, decision),
+        }
+        for reason, (register_body, decision_body) in cases.items():
+            with self.subTest(reason), self.assertRaisesRegex(CoverageError, reason):
+                load(register_body, decision_body)

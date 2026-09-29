@@ -548,6 +548,11 @@ D04的条件、例证或过去原因只影响其实际限定的断言；明确�
   39 个指标共用同一份申报，所以坐标会坍缩——把坐标数读成工作量会让来源预算
   看起来等于全部剩余成本。
 * `dimension_counts` 是互不包含的独立维度。
+* 所有者决定留给 Issue #28 采纳后结果的位置（最新年份 D04，登记在
+  `docs/evidence/issue47_history/awaiting_issue_28.json`）报
+  `AWAITING_ISSUE_28_ADOPTION`，与仍要 #47 自己调用的 `ROUTE_IMPLEMENTED_NOT_RUN`
+  分开计数。只在该位置的目标申报就是登记的那一份时成立；`awaiting_issue_28`
+  逐条列出登记是否匹配。它不表示 #28 已经接受或采纳任何结果。
 * `delivery_layer_counts` 是交付三层：`native_run`（哪个版本产出什么、是否冻结
   并验证）、`public_row`（Run 旁是否有点名该结果的 `row_receipt.json`）、
   `content_acceptance`。**未证明的一层在 `delivery_layer_unproven_reasons` 里

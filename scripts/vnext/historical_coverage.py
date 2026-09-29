@@ -19,7 +19,9 @@ limitation never hides an earlier one:
    failure's own category, because a missing source and a missing
    implementation are different conclusions and neither is a disclosure claim.
 4. whether a native Run recorded an outcome for it, read from that Run's own
-   receipt.
+   receipt. Where none did, a position an owner decision leaves to Issue #28's
+   adopted result says ``AWAITING_ISSUE_28_ADOPTION`` rather than
+   ``ROUTE_IMPLEMENTED_NOT_RUN``: both are pending, only the second on #47.
 
 This module plans and reports. It does not execute. It used to build a second
 candidate, a second Evidence check, a second system review decision and a
@@ -57,6 +59,11 @@ _SHA = re.compile(r"sha256:[0-9a-f]{64}\Z")
 POLICY_PATH = "config/issue28_normal_results_v2.json"
 DEFECT_REGISTER_PATH = "docs/evidence/issue47_history/known_result_defects.json"
 ACCEPTANCE_REGISTER_PATH = ("docs/evidence/issue47_history/accepted_result_content.json")
+# Positions #47 fills from another Issue's adopted result, by the owner's
+# decision, rather than by a call of its own. Pending either way, but not on the
+# same thing, so they are counted apart.
+AWAITING_REGISTER_PATH = "docs/evidence/issue47_history/awaiting_issue_28.json"
+AWAITING_STATUS = "AWAITING_ISSUE_28_ADOPTION"
 # The fields an acceptance pins, so a later result cannot inherit it by
 # carrying the same number under a different measurement. They are the filing
 # (``filings``), the period, the entity (``entities`` and the scope key), the
@@ -221,6 +228,44 @@ def known_result_defects(*, repo_root: Path):
         _need(defect.get("result_id") is None,
               "COVERAGE_DEFECT_RELEASE_ON_RESULT_SCOPED_ENTRY")
     return register["defects"]
+
+
+def positions_awaiting_issue_28(*, repo_root: Path):
+    """The positions an owner decision leaves to Issue #28's adopted result.
+
+    Keyed by (company, metric, report end). Each entry names the target filing
+    the decision is about - the one #28 reviewed with the same request contract
+    - and a position matches only while its own target filing is that one. The
+    register must cite a decision that the committed decision record actually
+    holds; an entry cannot defer a position on a decision nobody recorded.
+    Missing register, no entries: the frame then reports these positions as it
+    reports any other, which is visible in the frame's own summary.
+    """
+    path = repo_root / AWAITING_REGISTER_PATH
+    if not path.is_file():
+        return {}
+    register = strict_json_file(path=path)
+    _need(register.get("record_type") == "ISSUE_47_POSITIONS_AWAITING_ISSUE_28",
+          "COVERAGE_AWAITING_REGISTER_TYPE_INVALID")
+    decision = register.get("decision") or {}
+    decision_path = repo_root / str(decision.get("path"))
+    _need(decision_path.is_file(), "COVERAGE_AWAITING_DECISION_RECORD_MISSING")
+    recorded = strict_json_file(path=decision_path)
+    _need(isinstance(recorded.get("decisions"), dict)
+          and isinstance(recorded["decisions"].get(decision.get("key")), str),
+          "COVERAGE_AWAITING_DECISION_NOT_RECORDED")
+    entries = {}
+    for entry in register.get("positions") or []:
+        key = (entry.get("company_id"), entry.get("metric_id"), entry.get("report_end"))
+        _need(all(isinstance(part, str) and part for part in key),
+              "COVERAGE_AWAITING_ENTRY_KEY_INVALID")
+        _need(isinstance(entry.get("target_accession"), str)
+              and bool(_ACCESSION.match(entry["target_accession"]))
+              and entry["target_accession"] in (entry.get("reviewed_filing_accessions") or []),
+              "COVERAGE_AWAITING_ENTRY_FILING_INVALID")
+        _need(key not in entries, "COVERAGE_AWAITING_ENTRY_DUPLICATED")
+        entries[key] = {**entry, "decision": {"path": decision["path"], "key": decision["key"]}}
+    return entries
 
 
 def _releases(defect):
@@ -778,7 +823,7 @@ def _delivery(*, receipt, result, status, defect, defects, acceptance=None,
 
 def _position(*, company_id, report_end, ordinal, metric_id, established,
               original_saved, implemented, found, defects, candidate, closure=None,
-              selection_id=None, attempt=None, acceptances=()):
+              selection_id=None, attempt=None, acceptances=(), awaiting=None):
     """One target position, with its four states kept apart.
 
     A route can exist without a Run, and a Run can record a result whose
@@ -829,7 +874,25 @@ def _position(*, company_id, report_end, ordinal, metric_id, established,
         # recorded, which is a statement about the past; asking the route again
         # would answer a different question and would re-compute results inside
         # the reporting path, which this summary does not do.
-        if attempt is not None and attempt["failed_records"]:
+        #
+        # A position an owner decision leaves to Issue #28's adopted result is
+        # pending too, but not on #47: no call of #47's will fill it. It says
+        # so only while its target filing is the one the decision is about,
+        # and it keeps what a batch recorded here, which is still history.
+        if (awaiting is not None and awaiting["target_accession"]
+                == candidate["current_filing"]["accessionNumber"]):
+            status = AWAITING_STATUS
+            detail = {"note": ("an owner decision leaves this position to Issue #28's "
+                               "result once #28 accepts and adopts it; #47 sends no "
+                               "call for it"),
+                      "decision": awaiting["decision"],
+                      "target_accession": awaiting["target_accession"],
+                      "reviewed_filing_accessions": awaiting["reviewed_filing_accessions"],
+                      "attempt": attempt,
+                      "what_is_not_claimed": (
+                          "that #28 has accepted or adopted a result for this filing, "
+                          "or anything about what the filing discloses")}
+        elif attempt is not None and attempt["failed_records"]:
             status = "ROUTE_IMPLEMENTED_ATTEMPT_FAILED"
             detail = {"note": "a batch recorded an attempt at this position that failed",
                       "attempt": attempt,
@@ -947,6 +1010,7 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
           and set(selected) <= set(configured), "COVERAGE_COMPANY_SET_INVALID")
     wired = set(WIRED_HISTORICAL_METRICS)
     defects = known_result_defects(repo_root=repo_root)
+    awaiting = positions_awaiting_issue_28(repo_root=repo_root)
     acceptances = independent_content_acceptances(repo_root=repo_root)
     collected = ({"receipts": [], "unreadable": []} if runs_root is None
                  else collect_run_receipts(runs_root=runs_root))
@@ -999,7 +1063,9 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                                      defects=defects, candidate=candidate,
                                      closure=requirement_closure_hash,
                                      selection_id=entry["selection_id"],
-                                     attempt=attempt, acceptances=acceptances)
+                                     attempt=attempt, acceptances=acceptances,
+                                     awaiting=awaiting.get((company_id, metric_id,
+                                                            report_end)))
                 if position["fiscal_year"] is not None and entry["fiscal_year"] is None:
                     entry["fiscal_year"] = position["fiscal_year"]
                 positions.append(position)
@@ -1091,6 +1157,21 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
             reasons[layer["reason"]] = reasons.get(layer["reason"], 0) + 1
     blocked_by_both = sum(1 for p in positions
                           if not p["target_original_saved"] and not p["historical_route_implemented"])
+    # Every register entry in the selected companies, said to match or not.
+    # An entry that matches nothing is not an error - the position may not be
+    # established yet - but it is shown, so the register cannot be read as
+    # covering positions the frame reports otherwise.
+    by_key = {(p["company_id"], p["metric_id"], p["report_end"]): p for p in positions}
+    awaiting_report = []
+    for key, entry in sorted(awaiting.items()):
+        if key[0] not in selected:
+            continue
+        position = by_key.get(key)
+        awaiting_report.append({
+            "company_id": key[0], "metric_id": key[1], "report_end": key[2],
+            "target_accession": entry["target_accession"],
+            "matched": position is not None and position["status"] == AWAITING_STATUS,
+            "position_status": None if position is None else position["status"]})
     body = {"record_type": RECORD_TYPE, "schema_version": 4,
             "declared_metric_ids": metrics, "declared_metric_count": len(metrics),
             "requested_years": years, "companies": selected,
@@ -1120,6 +1201,13 @@ def build_coverage_matrix(*, repo_root: Path, company_ids=None, years=5,
                 "delivery rate would read 'a Run exists' as 'the number is right and "
                 "it reached the output'."),
             "positions_missing_source_and_route": blocked_by_both,
+            "awaiting_issue_28": {
+                "register": AWAITING_REGISTER_PATH if awaiting else None,
+                "entries_in_selected_companies": awaiting_report,
+                "what_matched_means": (
+                    "the position's target filing is the one the owner decision is "
+                    "about, and no Run result stands at it; the position is pending "
+                    "on #28's adoption, not on a call of #47's")},
             "first_blocking_reason_is_not_the_only_blocker": True,
             # This frame renders nothing. A public row counts here only when
             # the renderer wrote a bundle beside the Run and that bundle names

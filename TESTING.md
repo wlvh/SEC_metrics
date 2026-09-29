@@ -881,6 +881,8 @@ Requirement 接缝成本实测：`python3 tools/vnext_requirement_seam.py --data
 
 覆盖汇总只读：`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_historical_coverage`（saved-source 层，7 个用例实测 23 秒，原为逐位置重算）。验收条件不是"看起来只读"：`test_the_report_entry_computes_no_metric_outcome` 把三个指标解析器、两个文本候选工厂与 `create_system_review_decision` 全部替换为抛异常，报告仍必须产出 195 个位置。它刻意**不**禁止所有 `HTMLParser.feed`——计划层为确定期间要读申报自身 DEI，一律禁止会因成本问题而失败，而成本属于另一项。`test_a_recorded_exact_result_is_not_a_verified_outcome_when_a_defect_names_it` 用临时 run 目录证明：同为 `VALUE_EXACT`，被缺陷登记点名的那条退出 `verified_outcome` 而状态不被改写；`test_an_edited_run_directory_is_not_the_run_its_manifest_describes` 改一字节即 `RUN_RECEIPT_FILE_CHANGED`。原"一个适配器的限制不移除另一个已解析的指标"用例改为直接调用三个 resolver——该性质在 resolver 里，不靠让报告去跑它们。端到端实测同样 390 个位置：260.4 秒 → 4.7 秒。
 
+留给 #28 采纳后结果的位置：`tests.vnext.test_historical_coverage.PositionsLeftToIssue28AreCountedApartTest`（7 个用例，约 4 秒）；注错 `python3 docs/evidence/issue47_history/awaiting-issue-28/injections.py <out.json>`（5 个，每个由点名用例抓到）。
+
 内容接受层（同一文件，`ContentAcceptanceIsBoundToTheValueTest`）：默认跑构造输入，
 不需要任何批次；要连带验证它接到覆盖表上，设 `HISTORICAL_RUNS_ROOT=/absolute/runs/root`
 指向一批冻结 Run，否则该用例按名跳过并说明原因。承重的一条是
