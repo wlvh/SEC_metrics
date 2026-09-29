@@ -20,8 +20,10 @@ For every position that compared a published value, a walk yields:
 Nothing here decides whether a position is accepted; that is the register's
 rule. This only says what each reading contains and where.
 """
+import hashlib
 import json
 import re
+import tarfile
 from pathlib import Path
 
 EVIDENCE = "docs/evidence/issue47_history/content-acceptance/"
@@ -29,7 +31,10 @@ CROSS = EVIDENCE + "cross-source-read.json"
 # Paramount's two Part III years, read the same way against the targeted Runs of
 # the closure that admitted their statement inputs (part-iii-statement-review/).
 CROSS_PARAMOUNT_PART_III = EVIDENCE + "part-iii-statement-read.json"
-CROSS_READINGS = (CROSS, CROSS_PARAMOUNT_PART_III)
+# Years whose originals the acquisition saved, read off the bytes its export
+# carries against the results of the round that ran them.
+CROSS_OLDER_YEARS = EVIDENCE + "cross-source-read-older-years.json"
+CROSS_READINGS = (CROSS, CROSS_PARAMOUNT_PART_III, CROSS_OLDER_YEARS)
 LODGING = EVIDENCE + "lodging-table-read.json"
 EVENTS = EVIDENCE + "event-count-read.json"
 # Paramount's predecessor year, read the same way against the targeted Runs of
@@ -64,8 +69,11 @@ HEADINGS_PARAMOUNT_REPAIRED = EVIDENCE + "d01-paramount-repaired-read.json"
 # Paramount's predecessor year, read off the predecessor's own 10-K (CIK 813828)
 # against the result of the twelve-period batch.
 HEADINGS_PARAMOUNT_PREDECESSOR = EVIDENCE + "d01-paramount-predecessor-2024-read.json"
+# Years whose originals the acquisition saved, read off the bytes its export
+# carries against the results of the round that ran them.
+HEADINGS_OLDER_YEARS = EVIDENCE + "d01-older-years-read.json"
 D01_READINGS = (HEADINGS, HEADINGS_FROM_BYTES, HEADINGS_PARAMOUNT_REPAIRED,
-                HEADINGS_PARAMOUNT_PREDECESSOR)
+                HEADINGS_PARAMOUNT_PREDECESSOR, HEADINGS_OLDER_YEARS)
 RPO = EVIDENCE + "rpo-read.json"
 COMPENSATION = EVIDENCE + "paramount-compensation-table-read.json"
 # B06 read off each filing's balance sheet and lease note by
@@ -88,6 +96,11 @@ def reading_cases(reading):
     """The (company_id, report_end, label) positions one reading covers, in its order."""
     return [(_POSITIONS["labels"][label]["company_id"], _POSITIONS["labels"][label]["report_end"],
              label) for label in _POSITIONS["readings"][reading]]
+# What the acquisition saved travels in its export's archives, not extracted
+# into the checkout. A member is the saved file's path under the exported data
+# root, prefixed; the index records each member's digest.
+EXPORT = "evidence/issue47_acquired"
+EXPORT_MEMBER_PREFIX = "source-inputs/"
 _ACCESSION_DIRECTORY = re.compile(r"_(\d+)_(\d{10})(\d{2})(\d{6})\Z")
 _ARCHIVE_URL = re.compile(r"/Archives/edgar/data/(\d+)/(\d{10})(\d{2})(\d{6})/")
 
@@ -119,6 +132,43 @@ def dump(*, repo_root: Path, path: str, body, options):
     (repo_root / path).write_text(json.dumps(body, **options) + "\n", encoding="utf-8")
 
 
+def _export_members(repo_root: Path):
+    index = json.loads((repo_root / EXPORT / "export.json").read_text(encoding="utf-8"))
+    members = {}
+    for archive in index["row_archives"]:
+        for path, meta in archive["members"].items():
+            if path in members:
+                raise ReadingError("READING_EXPORT_MEMBER_NOT_UNIQUE:" + path)
+            members[path] = (archive["name"], meta["sha256"])
+    return members
+
+
+def _export_member_bytes(*, repo_root: Path, member: str, members):
+    name, digest = members[member]
+    with tarfile.open(repo_root / EXPORT / name) as archive:
+        data = archive.extractfile(member).read()
+    if hashlib.sha256(data).hexdigest() != digest:
+        raise ReadingError("READING_EXPORT_MEMBER_DIGEST_DIFFERS:" + member)
+    return data
+
+
+def saved_bytes(*, repo_root: Path, relative: str):
+    """A saved file's bytes: from the checkout, or else from the acquisition's export.
+
+    A file the acquisition saved is carried by the export's archives rather
+    than extracted into the checkout. It is taken by its exact path under the
+    exported data root and checked against the digest the export's own index
+    records, so a reading made over a restored root reads the same bytes here.
+    """
+    if (repo_root / relative).is_file():
+        return (repo_root / relative).read_bytes()
+    members = _export_members(repo_root)
+    member = EXPORT_MEMBER_PREFIX + relative
+    if member not in members:
+        raise ReadingError("READING_FILE_NOT_SAVED:" + relative)
+    return _export_member_bytes(repo_root=repo_root, member=member, members=members)
+
+
 def accession_of_document(*, repo_root: Path, document: str):
     """The filing a saved document belongs to, from what was saved with it.
 
@@ -143,9 +193,21 @@ def accession_of_document(*, repo_root: Path, document: str):
         return head + "-" + year + "-" + serial, str(int(cik))
     if relative.parts[1] == "request_attempts":
         headers = sorted((repo_root / relative.parent).glob(relative.name + ".*.headers.json"))
-        if len(headers) != 1:
-            raise ReadingError("READING_ATTEMPT_HEADERS_NOT_UNIQUE:" + document)
-        url = json.loads(headers[0].read_text(encoding="utf-8"))["url"]
+        if headers or (repo_root / relative).exists():
+            if len(headers) != 1:
+                raise ReadingError("READING_ATTEMPT_HEADERS_NOT_UNIQUE:" + document)
+            saved = headers[0].read_bytes()
+        else:
+            # An attempt only the export carries: its headers travel with it.
+            members = _export_members(repo_root)
+            stem = EXPORT_MEMBER_PREFIX + str(relative) + "."
+            named = [path for path in members
+                     if path.startswith(stem) and path.endswith(".headers.json")
+                     and "/" not in path[len(stem):]]
+            if len(named) != 1:
+                raise ReadingError("READING_ATTEMPT_HEADERS_NOT_UNIQUE:" + document)
+            saved = _export_member_bytes(repo_root=repo_root, member=named[0], members=members)
+        url = json.loads(saved.decode("utf-8"))["url"]
         found = _ARCHIVE_URL.search(url)
         if found is None:
             raise ReadingError("READING_ATTEMPT_URL_NAMES_NO_ACCESSION:" + url)

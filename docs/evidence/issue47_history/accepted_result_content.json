@@ -167,6 +167,61 @@
    "what_this_does_not_establish": "what is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_B01_MACYS_2023",
+   "accepted_value": "24442000000",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+     "result_id": "sha256:a4237cca3788296cffd90e794cbf00efd6398610b770176331570331957aafd7",
+     "run_id": "run:historical-period:5d5e03ef2ba540d7ec7795e7c8b6a93eb13e320370a67ea4c29ea39f32ee2503"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-23-009154"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2023-01-28",
+    "period_start": "2022-01-30",
+    "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+    "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+    "unit": "USD",
+    "value_kind": null
+   },
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/cross-source-read-older-years.json",
+   "method": "the filing's own primary document, walked directly by tools/read_statement_facts.py: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read as decimals with their scale and sign, the fixed-zero dash as zero, and duplicates kept as one fact only where they round to each other; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. B03 is not accepted where two names for total D&A carry different values. The route resolves these from the Company Facts API instead, so this is a different source for the same facts.",
+   "metric_id": "B01",
+   "period_end": "2023-01-28",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "operating_income": "OperatingIncomeLoss",
+     "operating_income_crosscheck": null,
+     "prior_revenue_context": [
+      "2021-01-31",
+      "2022-01-29",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_B01_MACYS_2026",
    "accepted_value": "21764000000",
    "checked_identity": {
@@ -1266,6 +1321,61 @@
      "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
     },
     "document": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm"
+   },
+   "what_this_does_not_establish": "what is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
+   "acceptance_id": "CONTENT_B03_MACYS_2023",
+   "accepted_value": "0.1058424024220603878569675149",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+     "result_id": "sha256:25ec5ac50915af9e5efb95ebe4f42ea8098ae29fd306ad65365e9a6505d1eb9f",
+     "run_id": "run:historical-period:b6b68a6f08083a3f3d0ff41f24014c0b4d55ac7d6c8d3f910fa90feea33316df"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "794367"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001628280-23-009154"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2023-01-28",
+    "period_start": "2022-01-30",
+    "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+    "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+    "unit": "ratio",
+    "value_kind": null
+   },
+   "company_id": "macys",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/cross-source-read-older-years.json",
+   "method": "the filing's own primary document, walked directly by tools/read_statement_facts.py: xbrli:context parsed for period, instant and dimensional members; ix:nonFraction facts read as decimals with their scale and sign, the fixed-zero dash as zero, and duplicates kept as one fact only where they round to each other; consolidated facts only; the approved candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what that document tags; the arithmetic in Decimal at the calculator's own precision. B03 is not accepted where two names for total D&A carry different values. The route resolves these from the Company Facts API instead, so this is a different source for the same facts.",
+   "metric_id": "B03",
+   "period_end": "2023-01-28",
+   "read_from": {
+    "concepts_that_answered": {
+     "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+     "d_and_a": "DepreciationDepletionAndAmortization",
+     "d_and_a_parts": null,
+     "interest": "InterestExpense",
+     "net_income": "NetIncomeLoss",
+     "operating_income": "OperatingIncomeLoss",
+     "operating_income_crosscheck": null,
+     "prior_revenue_context": [
+      "2021-01-31",
+      "2022-01-29",
+      false
+     ],
+     "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+    },
+    "document": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm"
    },
    "what_this_does_not_establish": "what is established is that the concept the definition names carries this value in this filing for this period and that the stated arithmetic produces the published number. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
@@ -7406,6 +7516,51 @@
    "what_this_does_not_establish": "what is established is that the auditor named in both years is the same and no 8-K in the window reported a change. Two limits belong with that. Naming the same firm across a punctuation difference - Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation the route uses, so a route too loose at that layer would not be caught here; the rule compares letter sequences, so KPMG and KPMG Advisory are not equal under it, and both exact strings are recorded. And the reading takes every dei:AuditorName fact in the document without filtering by context, entity or dimension, which is looser than the route; each document here carries exactly one name. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
   },
   {
+   "acceptance_id": "CONTENT_D01_ENPHASE_2021",
+   "accepted_value": "sha256:8b66471154344b88f8a7e94a0184d90f284e65850c089f0abcbfe8f49909a483",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+     "result_id": "sha256:969aa954e189a754bce953fc25a1713179e3a2fd796c2cfb83b89e951d376fef",
+     "run_id": "run:historical-period:92bcfe79c4ac12e05666c94fbca4905a32e7874e921de24b6c3e5678126909a8"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "1463101"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001463101-22-000016"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "enphase_energy",
+   "evidence": "docs/evidence/issue47_history/content-acceptance/d01-older-years-read.json",
+   "method": "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which imports none of the route's text modules: its own block reader, runs carrying the bold, underline and italic their own styles give them, the item located by its own heading and ended by the next item's. Every heading-marked line - bold or underline, outside links, not page furniture - is compared with the published value line for line and in order, so a dropped heading and an extra line both fail it; every other visually marked block needs a recorded judgement; the cover's fiscal year end must be the period read; and each line was judged as a category or a risk-factor heading against the filing. Identical heading text is listed once at its first occurrence, which is the shape the route publishes. Its controls: against Marriott's results from before the underline repair it reports exactly the four underlined categories as read and not published in each year, and on Paramount it flags the line cut at an unbolded period.",
+   "metric_id": "D01",
+   "period_end": "2021-12-31",
+   "read_from": {
+    "accession": "0001463101-22-000016",
+    "document": "evidence/request_attempts/d2/d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a/enph-20211231.htm",
+    "heading_shapes": {
+     "BOLD:STANDALONE": 68
+    },
+    "headings": 68
+   },
+   "what_this_does_not_establish": "what is established is that this heading set is the set the approved source definition asks for in this filing, read in both directions and item by item. It does not establish that the approved definition is the right definition for the business question, or that the filing is right. It is independent of the code, not of the reader: the same person wrote the reading and read the result."
+  },
+  {
    "acceptance_id": "CONTENT_D01_ENPHASE_2025",
    "accepted_value": "sha256:616b39a80a967e6223e9b8b913970bc38f53dc44c0f67b6501bf55bac8f4639c",
    "checked_identity": {
@@ -12575,6 +12730,7 @@
  "generated_from": [
   "docs/evidence/issue47_history/content-acceptance/cross-source-read.json",
   "docs/evidence/issue47_history/content-acceptance/part-iii-statement-read.json",
+  "docs/evidence/issue47_history/content-acceptance/cross-source-read-older-years.json",
   "docs/evidence/issue47_history/content-acceptance/lodging-table-read.json",
   "docs/evidence/issue47_history/content-acceptance/event-count-read.json",
   "docs/evidence/issue47_history/content-acceptance/event-count-read-paramount-2024.json",
@@ -12585,6 +12741,7 @@
   "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json",
   "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json",
   "docs/evidence/issue47_history/content-acceptance/d01-paramount-predecessor-2024-read.json",
+  "docs/evidence/issue47_history/content-acceptance/d01-older-years-read.json",
   "docs/evidence/issue47_history/content-acceptance/rpo-read.json",
   "docs/evidence/issue47_history/content-acceptance/paramount-compensation-table-read.json",
   "docs/evidence/issue47_history/content-acceptance/debt-to-equity-read.json",
@@ -12611,6 +12768,12 @@
    "positions_examined": 10,
    "positions_examined_is_null_because": null
   },
+  "docs/evidence/issue47_history/content-acceptance/cross-source-read-older-years.json": {
+   "acceptances_contributed": 2,
+   "content_sha256": "sha256:b36ecc4feeea45807d6e27cb589d8d696efadfac1e8625944a67e6da12e3d263",
+   "positions_examined": 1,
+   "positions_examined_is_null_because": null
+  },
   "docs/evidence/issue47_history/content-acceptance/cross-source-read.json": {
    "acceptances_contributed": 75,
    "content_sha256": "sha256:6e0c92a580f2f9f42c91227dc7eefd051efec295dd9685e8a2415eff947ebb57",
@@ -12627,6 +12790,12 @@
    "acceptances_contributed": 3,
    "content_sha256": "sha256:f1d4016b35abb4b1e2de97304682c744dbe9422a3df7ef3d1e5eeec6391a5dac",
    "positions_examined": 3,
+   "positions_examined_is_null_because": null
+  },
+  "docs/evidence/issue47_history/content-acceptance/d01-older-years-read.json": {
+   "acceptances_contributed": 1,
+   "content_sha256": "sha256:0746170118cca7e1faf56b6b9df448e5c158068f10677cbbf0126513ad714eda",
+   "positions_examined": 1,
    "positions_examined_is_null_because": null
   },
   "docs/evidence/issue47_history/content-acceptance/d01-paramount-predecessor-2024-read.json": {

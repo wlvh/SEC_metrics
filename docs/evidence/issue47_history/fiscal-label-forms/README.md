@@ -62,9 +62,16 @@ second label or leaves another current-year lead unread.
   again, another trailing clause or an alias naming another entity still
   stops the period, a second label stops it, and a widened scan that changes a
   frozen definition or leaves a new lead is refused.
-- `measure_fiscal_labels.py`: every saved annual report, frozen and widened;
-  its record (`measured.json`) is added when the run over all ten companies
-  completes.
+- `measure_fiscal_labels.py` over the root restored from the export at 288
+  captures, every saved annual report frozen and widened (`measured.json`, 2.5
+  hours, zero calls): 45 periods measured - nine companies, five each; JPMorgan's
+  five originals are not saved there. Exactly two move, Macy's FY2022 and
+  FY2021, from `EXPLICIT_DEFINITION_UNRESOLVED` to `SOURCE_LABELS_CONSISTENT`
+  with labels 2022 and 2021 (FY2022 through the ordered form alone; FY2021
+  through both forms), each leaving no unread lead. The other 43 come back as
+  the frozen inspection itself, inspection ID and all: 35
+  `METADATA_LABEL_ONLY`, 7 `SOURCE_LABELS_CONSISTENT`, 1
+  `SOURCE_LABEL_CONFLICT` (Salesforce FY2026, as before).
 - `injections.py`: 10 injections, each part of the repair undone, each caught
   by the case written for it (`injections.json`, run in a clone of the branch
   holding the same files).

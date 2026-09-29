@@ -6,12 +6,14 @@ below is one rule the filings need, checked where a filing needs it, plus the
 committed reading re-derived from the saved bytes.
 """
 import ast
+import hashlib
 import json
 import unittest
 from decimal import Decimal
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools import read_statement_facts as reader
+from tools.acceptance_readings import CROSS_READINGS, saved_bytes
 
 READING = "docs/evidence/issue47_history/content-acceptance/cross-source-read.json"
 
@@ -130,6 +132,26 @@ class TheCommittedReadingRederivesFromTheBytesTest(unittest.TestCase):
                 self.assertEqual({m: (e["read"], e["verdict"]) for m, e in row["metrics"].items()},
                                  {m: (e["read"], e["verdict"]) for m, e in case["metrics"].items()})
                 self.assertEqual(row["concepts_used"], case["concepts_used"])
+
+    def test_every_statement_reading_rederives_from_the_bytes_it_names(self):
+        """The other statement readings too, including years whose original only
+        the acquisition's export carries: the same bytes, checked by digest."""
+        for path in CROSS_READINGS:
+            body = json.loads((ROOT / path).read_text(encoding="utf-8"))
+            for label, row in body["per_position"].items():
+                if "error" in row:
+                    continue
+                raw = saved_bytes(repo_root=ROOT, relative=row["document"])
+                with self.subTest(reading=path, label=label):
+                    if "document_sha256" in row:
+                        self.assertEqual(row["document_sha256"], hashlib.sha256(raw).hexdigest())
+                    published = {metric: entry["published"]
+                                 for metric, entry in row["metrics"].items()}
+                    case = reader.read_case(text=reader.document_text(raw), period=row["period"],
+                                            published=published)
+                    self.assertEqual(
+                        {m: (e["read"], e["verdict"]) for m, e in row["metrics"].items()},
+                        {m: (e["read"], e["verdict"]) for m, e in case["metrics"].items()})
 
     def test_every_recorded_identity_was_recorded_when_the_reading_was_made(self):
         for label, row in _committed().items():

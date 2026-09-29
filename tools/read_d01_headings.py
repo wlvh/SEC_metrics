@@ -309,8 +309,13 @@ def headings_and_other_marks(*, raw_bytes, registrant_names=()):
     return headings, shapes, others
 
 
-def read_position(*, index, closure, company_id, period_end, judgements):
-    """One position: select the result, read its filing, compare both ways."""
+def read_position(*, index, closure, company_id, period_end, judgements, source_root=REPO):
+    """One position: select the result, read its filing, compare both ways.
+
+    ``source_root`` is where the filing's saved bytes are: this checkout, or a
+    root restored from the acquisition's export for a filing the checkout does
+    not hold. The bytes are checked against the Run's own digest either way.
+    """
     key = (company_id, "D01", period_end)
     selection = select_receipt(found=index.get(key, []), closure=closure)
     if selection["result"] is None:
@@ -326,10 +331,10 @@ def read_position(*, index, closure, company_id, period_end, judgements):
     if len(target) != 1:
         raise SystemExit("TARGET_DOCUMENT_NOT_UNIQUE:" + "/".join(key))
     storage = blobs[target[0]["raw_asset_id"]]["storage_uri"]
-    raw = (REPO / storage).read_bytes()
+    raw = (Path(source_root) / storage).read_bytes()
     if "sha256:" + hashlib.sha256(raw).hexdigest() != target[0]["raw_asset_id"]:
         raise SystemExit("SAVED_DOCUMENT_BYTES_CHANGED:" + storage)
-    accession, cik = accession_of_document(repo_root=REPO, document=storage)
+    accession, cik = accession_of_document(repo_root=Path(source_root), document=storage)
     # The cover's own statement of the period. The first "fiscal year ended"
     # in a filing is often a reference to an earlier report, so the cover's
     # "For the fiscal year ended" is asked for by that phrase; tag stripping
@@ -425,6 +430,8 @@ def main():
                         help="<company_id>:<period_end>")
     parser.add_argument("--out", required=True)
     parser.add_argument("--judgements", type=Path)
+    parser.add_argument("--source-root", type=Path, default=REPO,
+                        help="where the filings' saved bytes are (default: this checkout)")
     arguments = parser.parse_args()
     receipts = []
     for root in arguments.runs_root:
@@ -439,7 +446,8 @@ def main():
         label = company_id.split("_")[0] + "-" + period_end[:4]
         positions[label] = read_position(index=index, closure=arguments.closure,
                                          company_id=company_id, period_end=period_end,
-                                         judgements=judgements.get(label, {}))
+                                         judgements=judgements.get(label, {}),
+                                         source_root=arguments.source_root)
         row = positions[label]
         print(label, row["verdict"], "read", len(row["headings_read"]),
               "published", row["published_lines"],

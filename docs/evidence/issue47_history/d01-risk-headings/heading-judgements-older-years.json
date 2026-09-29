@@ -1,0 +1,9 @@
+{
+ "enphase-2021": {
+  "every_line": "Read line by line against Enphase's FY2021 10-K (accession 0001463101-22-000016), the original the acquisition saved. Every line is a bold stand-alone line of Item 1A: the seven category headings (Risks Related to our Business, Operations and Our Industry; to our Intellectual Property and Technology; to Legal Proceedings and Regulations; to Our Financial Condition and Liquidity; to our Acquisition Activity; to our Debt and Equity Securities; General Risks Related to our Business) and, under them, the sixty-one sentences that open each risk factor and stand apart from its body. Each is a heading of Item 1A under the approved definition's heading-level list, the same judgement made for the FY2025 report. The reading finds no heading-marked line the route left out, and no line emphasis resumes after a short gap.",
+  "other_marks": [
+   {"block_in_item_1a": 308, "judgement": "NOT_A_HEADING: a bullet inside the convertible notes risk factor's body, listing the principal of the Notes due 2028 outstanding; the only italic run is the bullet character itself (a span styled font-style:italic holding U+2022), and the text after it is plain."},
+   {"block_in_item_1a": 311, "judgement": "NOT_A_HEADING: the next bullet of the same list, for the Notes due 2026, marked the same way: an italic bullet character before plain text."}
+  ]
+ }
+}

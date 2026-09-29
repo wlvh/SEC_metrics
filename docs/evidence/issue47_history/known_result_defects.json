@@ -1661,13 +1661,30 @@
    "root_cause": "The approved chain takes the first direct concept that carries a candidate; nothing asked what the filer's total covers. The cross-source reading that accepted it followed the same chain over the filing's own facts, so it read the same total.",
    "scope_measured": "#28's check asked of every B03 the historical route resolves over every saved annual report, on the data root restored from the branch's export (b03-impairment-inclusion/measured.json). This is the only one it flags.",
    "found_by": "Issue #28's ordinary route (b03_depreciation_scope, commit 08915a83, [shared-with-#47]); the same result id is the historical route's, computed from the same Company Facts for the same accession.",
-   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_WITHHELD_BY_NAME",
    "evidence": [
     "docs/evidence/issue47_history/b03-impairment-inclusion/README.md",
     "docs/evidence/issue47_history/b03-impairment-inclusion/measured.json",
     "docs/evidence/issue47_history/b03-impairment-inclusion/injections.json"
    ],
-   "repair": "The historical route asks a kept or retaken direct D&A total whether the filing itself says it includes impairment-related depreciation (#28's _selected_impairment_inclusion, through historical_zero_ai_results.impairment_included) and withholds it by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN, still carrying B01. That is the standing rule, not a new decision. The exact exclusion is #28's successor Spec, still a private candidate there, and is not ported."
+   "repair": "The historical route asks a kept or retaken direct D&A total whether the filing itself says it includes impairment-related depreciation (#28's _selected_impairment_inclusion, through historical_zero_ai_results.impairment_included) and withholds it by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN, still carrying B01. That is the standing rule, not a new decision. The exact exclusion is #28's successor Spec, still a private candidate there, and is not ported.",
+   "recomputed": {
+    "result_id": "sha256:1d4d52d5879a530514dd0d661dbc649d0ec812d0e08972c7fb3d9460077ab7b0",
+    "publication": "WITHHELD",
+    "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+    "why": "THE_SELECTED_TOTAL_INCLUDES_IMPAIRMENT_RELATED_DEPRECIATION",
+    "b01_it_carries_unchanged": "sha256:3ad67e9da35dd8c6e55243d6fd324e377a65169f876b7521ea04996ceca3a5d4"
+   },
+   "released": [
+    {
+     "result_id": "sha256:1d4d52d5879a530514dd0d661dbc649d0ec812d0e08972c7fb3d9460077ab7b0",
+     "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+     "run_id": "run:historical-period:b77c159dbd55aa96d6b4fba8dca215ba0121276a834b60add75c941bb1761613",
+     "read_by": "docs/evidence/issue47_history/targeted-round-7c22e583/rerun-results.json",
+     "what_this_releases": "This withheld result and no other. The published 0.0363384899635280108080975292 that earlier batches hold, and any other result at this coordinate, stays withdrawn.",
+     "what_it_does_not_assert": "that the coordinate has a correct value. It has none: the withhold says the D&A the value took is not provably the whole of it, and does not supply one. Nor that any batch has re-run under this version."
+    }
+   ]
   },
   {
    "defect_id": "B03_MARRIOTT_2025_COMPOSED_DA_BESIDE_CONTRACT_COST_AMORTIZATION",
@@ -1680,12 +1697,29 @@
    "root_cause": "The approved composition takes Depreciation plus AmortizationOfIntangibleAssets and never asks whether the filing states another amortization apart from both. The cross-source reading that accepted it followed the same composition over the filing's own facts, so it read the same two components.",
    "scope_measured": "Of the B03 results the historical route resolves on the saved annual reports, only Marriott's FY2025 and FY2024 take the composition (b03-impairment-inclusion/measured.json, base_scope_status NO_DIRECT_DEPRECIATION_SELECTION); both report the amortization.",
    "found_by": "Issue #28's ordinary route (b03_contract_amortization_scope, commit 45bcce3d, [shared-with-#47]; bounded independent review 969de88b, PASS_WITH_BOUNDS); the historical route composes B03 the same way for the same accession.",
-   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_WITHHELD_BY_NAME",
    "evidence": [
     "docs/evidence/issue47_history/b03-impairment-inclusion/README.md",
     "docs/evidence/issue47_history/b03-impairment-inclusion/injections.json"
    ],
-   "repair": "The historical route asks a kept composition #28's own question (b03_contract_amortization_scope._unreconciled_contract_amortization, through historical_zero_ai_results.contract_amortization_unreconciled, with the pinned input's source proofs) and withholds it by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN, still carrying B01. Whether the definition adds contract-cost amortization back is not decided here; the withhold neither adds it nor recomputes anything."
+   "repair": "The historical route asks a kept composition #28's own question (b03_contract_amortization_scope._unreconciled_contract_amortization, through historical_zero_ai_results.contract_amortization_unreconciled, with the pinned input's source proofs) and withholds it by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN, still carrying B01. Whether the definition adds contract-cost amortization back is not decided here; the withhold neither adds it nor recomputes anything.",
+   "recomputed": {
+    "result_id": "sha256:e2c72e6b7dc5c4a3c1d72f7a09df195068b053f7211798f2466633e4a4b77873",
+    "publication": "WITHHELD",
+    "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+    "why": "THE_FILING_REPORTS_AN_AMORTIZATION_THE_COMPOSITION_DOES_NOT_TAKE",
+    "b01_it_carries_unchanged": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc"
+   },
+   "released": [
+    {
+     "result_id": "sha256:e2c72e6b7dc5c4a3c1d72f7a09df195068b053f7211798f2466633e4a4b77873",
+     "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+     "run_id": "run:historical-period:be92373b0689237fd6abc38bda65b97a51b876470417911ec1dd89a37f9a8bd1",
+     "read_by": "docs/evidence/issue47_history/targeted-round-7c22e583/rerun-results.json",
+     "what_this_releases": "This withheld result and no other. The published 0.1756281982738868097456656229 that earlier batches hold, and any other result at this coordinate, stays withdrawn.",
+     "what_it_does_not_assert": "that the coordinate has a correct value. It has none: the withhold says the D&A the value took is not provably the whole of it, and does not supply one. Nor that any batch has re-run under this version."
+    }
+   ]
   },
   {
    "defect_id": "B03_MARRIOTT_2024_COMPOSED_DA_BESIDE_CONTRACT_COST_AMORTIZATION",
@@ -1698,12 +1732,29 @@
    "root_cause": "The approved composition takes Depreciation plus AmortizationOfIntangibleAssets and never asks whether the filing states another amortization apart from both. The cross-source reading that accepted it followed the same composition over the filing's own facts, so it read the same two components.",
    "scope_measured": "Of the B03 results the historical route resolves on the saved annual reports, only Marriott's FY2025 and FY2024 take the composition (b03-impairment-inclusion/measured.json, base_scope_status NO_DIRECT_DEPRECIATION_SELECTION); both report the amortization.",
    "found_by": "Issue #28's ordinary route (b03_contract_amortization_scope, commit 45bcce3d, [shared-with-#47]; bounded independent review 969de88b, PASS_WITH_BOUNDS); the historical route composes B03 the same way for the same accession.",
-   "repair_state": "RULE_FIXED_RESULT_NOT_YET_RECOMPUTED",
+   "repair_state": "RULE_FIXED_RESULT_RECOMPUTED_WITHHELD_BY_NAME",
    "evidence": [
     "docs/evidence/issue47_history/b03-impairment-inclusion/README.md",
     "docs/evidence/issue47_history/b03-impairment-inclusion/injections.json"
    ],
-   "repair": "The historical route asks a kept composition #28's own question (b03_contract_amortization_scope._unreconciled_contract_amortization, through historical_zero_ai_results.contract_amortization_unreconciled, with the pinned input's source proofs) and withholds it by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN, still carrying B01. Whether the definition adds contract-cost amortization back is not decided here; the withhold neither adds it nor recomputes anything."
+   "repair": "The historical route asks a kept composition #28's own question (b03_contract_amortization_scope._unreconciled_contract_amortization, through historical_zero_ai_results.contract_amortization_unreconciled, with the pinned input's source proofs) and withholds it by name, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN, still carrying B01. Whether the definition adds contract-cost amortization back is not decided here; the withhold neither adds it nor recomputes anything.",
+   "recomputed": {
+    "result_id": "sha256:c9856274f142b9dd50137fa3f6a37cce88e8257bea6eccf14ba4c360012d1fc4",
+    "publication": "WITHHELD",
+    "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+    "why": "THE_FILING_REPORTS_AN_AMORTIZATION_THE_COMPOSITION_DOES_NOT_TAKE",
+    "b01_it_carries_unchanged": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0"
+   },
+   "released": [
+    {
+     "result_id": "sha256:c9856274f142b9dd50137fa3f6a37cce88e8257bea6eccf14ba4c360012d1fc4",
+     "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+     "run_id": "run:historical-period:c5335e8b75b9ac2f16de9b9738726aacb8ec8cb3a2f33ab75e999bd8b2ec40f8",
+     "read_by": "docs/evidence/issue47_history/targeted-round-7c22e583/rerun-results.json",
+     "what_this_releases": "This withheld result and no other. The published 0.1653386454183266932270916335 that earlier batches hold, and any other result at this coordinate, stays withdrawn.",
+     "what_it_does_not_assert": "that the coordinate has a correct value. It has none: the withhold says the D&A the value took is not provably the whole of it, and does not supply one. Nor that any batch has re-run under this version."
+    }
+   ]
   }
  ],
  "issue": "https://github.com/wlvh/SEC_metrics/issues/47",

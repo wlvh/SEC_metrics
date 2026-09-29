@@ -39,8 +39,14 @@ Usage:
     python3 tools/read_statement_facts.py --runs-root <root> --closure <closure> \
         --case <label>=<company_id>:<report_end> \
         --output docs/evidence/issue47_history/content-acceptance/<name>.json
+
+    A year whose original only the acquisition saved is read over a root
+    restored from its export (``--source-root``); the reading records the
+    document's digest, and the test reads the same bytes out of the export.
 """
 import argparse
+import hashlib
+import io
 import json
 import re
 import sys
@@ -276,6 +282,13 @@ def read_case(*, text, period, published):
             "needed_facts_not_read": unread, "metrics": rows}
 
 
+def document_text(raw):
+    """A document's text as ``Path.read_text(encoding="utf-8-sig", errors="replace")``
+    gives it - line endings translated - whether the bytes came from a file or
+    from the export's archive."""
+    return io.TextIOWrapper(io.BytesIO(raw), encoding="utf-8-sig", errors="replace").read()
+
+
 def _case(text):
     """``label=company_id:report_end`` from the command line."""
     label, _, rest = text.partition("=")
@@ -292,12 +305,12 @@ def _fresh_body():
     return {**{key: main[key] for key in kept if key in main}, "same_method_as": OUT}
 
 
-def _case_input(*, company_id, report_end):
+def _case_input(*, source_root, company_id, report_end):
     from vnext.historical_annual_input import prepare_historical_annual_input
     from vnext.normal_period_selection import resolve_period_selection
-    selection = resolve_period_selection(repo_root=REPO, company_id=company_id,
+    selection = resolve_period_selection(repo_root=source_root, company_id=company_id,
                                          report_end=report_end)
-    prepared = prepare_historical_annual_input(repo_root=REPO, company_id=company_id,
+    prepared = prepare_historical_annual_input(repo_root=source_root, company_id=company_id,
                                                period_selection=selection)
     return (prepared["original_input"]["table_input"]["source_repo_relative_path"],
             prepared["original_input"]["table_input"]["target_period"])
@@ -308,17 +321,24 @@ def main():
     from bind_acceptance_readings import identity_for
     from vnext.historical_coverage import select_receipt
     from vnext.historical_run_receipts import collect_run_receipts, index_receipts
+    from vnext.normal_history_plan import checkpoint_replayed_once
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--runs-root", required=True, type=Path, action="append")
     parser.add_argument("--closure", required=True)
     parser.add_argument("--case", action="append", type=_case,
                         help="label=company_id:report_end; replaces the default cases")
     parser.add_argument("--output", default=OUT)
+    parser.add_argument("--source-root", type=Path, default=None,
+                        help="a data root holding originals the checkout does not, "
+                             "such as one restored from the acquisition's export")
     arguments = parser.parse_args()
     # One reading compares its positions with results of one closure, so a
     # position read under another closure is a reading of its own.
     if arguments.case and arguments.output == OUT:
         raise SystemExit("A_CASE_OF_ITS_OWN_IS_WRITTEN_TO_A_READING_OF_ITS_OWN")
+    if arguments.source_root is not None and arguments.output == OUT:
+        raise SystemExit("A_SOURCE_ROOT_READING_IS_WRITTEN_TO_A_READING_OF_ITS_OWN")
+    source = REPO if arguments.source_root is None else arguments.source_root.resolve()
     cases = arguments.case or CASES
     receipts = []
     for root in arguments.runs_root:
@@ -329,17 +349,20 @@ def main():
                 else _fresh_body())
     positions = {}
     for company_id, report_end, label in cases:
-        document, period = _case_input(company_id=company_id, report_end=report_end)
+        # A restored root's saved sources are proved through its acquisition
+        # checkpoint; one replay per ledger state, as a frame's plan does.
+        with checkpoint_replayed_once():
+            document, period = _case_input(source_root=source, company_id=company_id,
+                                           report_end=report_end)
         published = {}
         for metric in ("B01", "B02", "B03", "B04", "B05", "B07", "B08", "B09"):
             result = select_receipt(found=index.get((company_id, metric, report_end), []),
                                     closure=arguments.closure)["result"]
             published[metric] = (None if result is None or result.get("value") is None
                                  else str(result["value"]))
-        case = read_case(text=(REPO / document).read_text(encoding="utf-8-sig",
-                                                          errors="replace"),
-                         period=period, published=published)
-        accession, _ = accession_of_document(repo_root=REPO, document=document)
+        raw = (source / document).read_bytes()
+        case = read_case(text=document_text(raw), period=period, published=published)
+        accession, _ = accession_of_document(repo_root=source, document=document)
         for metric, row in case["metrics"].items():
             if row["published"] is None:
                 continue
@@ -356,7 +379,8 @@ def main():
         positions[label] = {"company_id": company_id, "period_end": report_end,
                             "period": {"period_start": period["period_start"],
                                        "period_end": period["period_end"]},
-                            "document": document, **case}
+                            "document": document,
+                            "document_sha256": hashlib.sha256(raw).hexdigest(), **case}
         print(label, {metric: row["verdict"] for metric, row in case["metrics"].items()},
               flush=True)
     owned = {"record_type", "what_this_is", "requirement_closure_hash", "per_position",

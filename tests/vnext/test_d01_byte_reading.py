@@ -6,16 +6,26 @@ filing here needed it, run on that filing, so a reader that stopped doing it
 fails where the filing is rather than by an argument about it.
 """
 import ast
+import hashlib
 import json
 import unittest
 
 from tests.vnext.common import REPO_ROOT as ROOT
 from tools import read_d01_headings as reader
+from tools.acceptance_readings import saved_bytes
 
 READING = "docs/evidence/issue47_history/content-acceptance/d01-headings-read-from-bytes.json"
 REPAIRED = "docs/evidence/issue47_history/content-acceptance/d01-marriott-repaired-read.json"
 PARAMOUNT_REPAIRED = "docs/evidence/issue47_history/content-acceptance/d01-paramount-repaired-read.json"
-READINGS = (READING, REPAIRED, PARAMOUNT_REPAIRED)
+OLDER_YEARS = "docs/evidence/issue47_history/content-acceptance/d01-older-years-read.json"
+READINGS = (READING, REPAIRED, PARAMOUNT_REPAIRED, OLDER_YEARS)
+
+
+def _saved_bytes(relative):
+    """A saved document: from the checkout, or else from the acquisition's export."""
+    return saved_bytes(repo_root=ROOT, relative=relative)
+
+
 CUT = "Failures to comply with or changes in U"
 
 
@@ -158,14 +168,13 @@ class TheReaderReproducesThePublishedValueTest(unittest.TestCase):
     """
 
     def test_every_accepted_position(self):
-        import hashlib
         for path in READINGS:
             rows = json.loads((ROOT / path).read_text(encoding="utf-8"))["per_position"]
             for label, row in rows.items():
                 if row["verdict"] != "MATCH":
                     continue
                 with self.subTest(path=path, label=label):
-                    raw = (ROOT / row["document"]).read_bytes()
+                    raw = _saved_bytes(row["document"])
                     headings, shapes, _ = reader.headings_and_other_marks(
                         raw_bytes=raw, registrant_names=row["registrant_names_tagged_in_the_filing"])
                     lines, unjudged, not_found = reader.judged_lines(
