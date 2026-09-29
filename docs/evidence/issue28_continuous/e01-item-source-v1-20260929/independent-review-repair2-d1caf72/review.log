@@ -1,0 +1,33 @@
+Target: 80322de9bfe171245c2d37bdff43c370321ea418..d1caf720ea30683490885c4dca09463a68a1eb1b
+HEAD at review: d1caf720ea30683490885c4dca09463a68a1eb1b
+Commit parent: 80322de9bfe171245c2d37bdff43c370321ea418
+Reviewed paths: scripts/vnext/e01_item_source.py; tests/vnext/test_e01_item_source.py; docs/evidence/issue28_continuous/e01-item-source-v1-20260929/repair2-summary.md
+git diff --exit-code d1caf720 -- <reviewed paths>: exit 0.
+Other worktree change before review: docs/evidence/issue28_continuous/execution-state.json; untouched.
+
+Command: PYTHONPATH=scripts /private/tmp/issue28_py314_venv/bin/python -m unittest -v tests.vnext.test_e01_item_source
+test_ambiguous_and_missing_heading_fail_closed ... ok
+test_body_cross_references_are_not_section_boundaries ... ok
+test_header_identity_kept_while_original_801_body_is_available ... ok
+test_hidden_or_unproven_visibility_does_not_create_section ... ok
+Ran 4 tests in 0.006s; OK; exit 0.
+
+Command: PYTHONPATH=.:scripts /private/tmp/issue28_py314_venv/bin/python docs/evidence/issue28_continuous/e01-item-source-v1-20260929/check-binding.py
+{"new_module_runtime_authorized": false, "requirement_closure_hash": "sha256:7cf19f62e7c84656dc2d1fb2f06cbcaa7a1d501b90d9e9dd372c54a7148f6a5c", "status": "PASS_EXISTING_V14_AUTHORITY"}
+Exit 0.
+
+Independent read-only _visible_801_section probes using the current module:
+mixed_tag_duplicate_901: REJECT E01_ITEM_SOURCE_ITEM_801_BOUNDARY_AMBIGUOUS
+  Input: bold p Item 8.01; bold p Item 9.01 cross-reference; later acquisition paragraph; h2 Item 9.01 real heading.
+inline_opacity_0_0: REJECT E01_ITEM_SOURCE_VISIBILITY_UNPROVEN
+  Input: p style="opacity:0.0" with a hidden acquisition assertion between h2 boundaries.
+inline_color_transparent: REJECT E01_ITEM_SOURCE_VISIBILITY_UNPROVEN
+  Input: p style="color:transparent" with a hidden acquisition assertion between h2 boundaries.
+single_bold_901_positive: ACCEPT 'Item 8.01 Other Events We signed an acquisition agreement.'
+
+Independent read-only saved Southwest probe (no output file): existing E01 Run claim and SourceReference, authenticated saved d83756d8k.htm raw bytes; bound_801_primary_section and verify_bound_801_primary_section agree. chars=174; claim_retained=true; excludes_901=true; result_created=false; section_id=sha256:62495bc5783ed9fc554b3baf67161a092135d3d2f470cfb7a2d15829ce9977d1.
+
+Read-only parse of parent repair2-fast.log: FAST_LOCAL_ONLY, PASSED, 142 selectors, 0 selector failures, E01 selector return_code=0 and 4 tests. Reviewer did not rerun fast or long materials.
+
+No SEC/provider request, account action, branch change, commit, push, publication, #47/PR52 action, or product-source edit.
+Tool count through evidence write: 8 outer functions.exec calls, 25 nested tool calls. Ordinary progress messages: 3, questions: 0.
