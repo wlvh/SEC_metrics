@@ -4,11 +4,12 @@ This does not classify an event or change the frozen item-code route. A
 header-listed 8.01 currently has only a synthesized brief; callers can use
 this explicit source record to inspect its original primary section.
 """
+from html.parser import HTMLParser
 import re
 
 from .canonical import content_hash, sha256_bytes
 from .deterministic_router import (_reference, _require_raw_bytes,
-                                   _visible_text, validate_verified_claim)
+                                   validate_verified_claim)
 
 
 def _need(condition, reason):
@@ -16,32 +17,111 @@ def _need(condition, reason):
         raise ValueError('E01_ITEM_SOURCE_' + reason)
 
 
+_VOID_TAGS = frozenset(('area', 'base', 'br', 'col', 'embed', 'hr', 'img',
+                        'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'))
+_NONDISPLAY_TAGS = frozenset(('head', 'script', 'style', 'template',
+                              'noscript', 'svg', 'ix:hidden'))
+_HEADING_TAGS = frozenset(('p', 'div', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'))
+_ITEM_HEADING = re.compile(r'^Item\s+(\d{1,2}\.\d{2})\s+(.+?)\.?$', re.I)
+
+
+class _ItemSectionParser(HTMLParser):
+    """Keep text positions and actual block boundaries, excluding hidden DOM."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.words = []
+        self.blocks = []
+        self.stack = []
+        self.uncertain_visibility = False
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        if tag == 'style' or (tag == 'link' and
+                              'stylesheet' in (attributes.get('rel') or '').lower()):
+            self.uncertain_visibility = True
+        style = re.sub(r'\s+', '', attributes.get('style') or '').lower()
+        hidden = (bool(self.stack and self.stack[-1]['hidden'])
+                  or tag in _NONDISPLAY_TAGS or 'hidden' in attributes
+                  or (attributes.get('aria-hidden') or '').lower() == 'true'
+                  or 'display:none' in style or 'visibility:hidden' in style
+                  or 'content-visibility:hidden' in style
+                  or bool(re.search(r'(?:^|;)opacity:0(?:;|$)', style)))
+        emphasized = (tag in ('b', 'strong') or bool(re.search(
+            r'(?:^|;)font-weight:(?:bold|[6-9]00)(?:;|$)', style)))
+        if emphasized and not hidden:
+            for ancestor in self.stack:
+                ancestor['emphasized'] = True
+        if tag not in _VOID_TAGS:
+            self.stack.append({'tag': tag, 'start': len(self.words),
+                               'hidden': hidden, 'emphasized': emphasized})
+
+    def handle_startendtag(self, tag, attrs):
+        self.handle_starttag(tag, attrs)
+        if tag not in _VOID_TAGS:
+            self.handle_endtag(tag)
+
+    def handle_endtag(self, tag):
+        matching = next((i for i in range(len(self.stack)-1, -1, -1)
+                         if self.stack[i]['tag'] == tag), None)
+        if matching is None:
+            return
+        for element in reversed(self.stack[matching:]):
+            if not element['hidden'] and element['tag'] in _HEADING_TAGS:
+                self.blocks.append((element['start'], len(self.words),
+                                    element['emphasized'] or
+                                    element['tag'] in ('h1', 'h2', 'h3', 'h4',
+                                                       'h5', 'h6'),
+                                    element['tag']))
+        del self.stack[matching:]
+
+    def handle_data(self, data):
+        if not self.stack or not self.stack[-1]['hidden']:
+            self.words.extend(data.split())
+
+
 def _visible_801_section(raw_bytes):
-    """Return a full normalized visible section, or stop on uncertain bounds."""
+    """Return complete text between proven visible block headings, or stop."""
     _need(type(raw_bytes) is bytes, 'PRIMARY_BYTES_REQUIRED')
-    visible = _visible_text(raw_bytes=raw_bytes)
-    mentions = list(re.finditer(r'\bItem\s+8\.01\b', visible, re.I))
-    headings = list(re.finditer(r'\bItem\s+8\.01\s+Other Events\b',
-                                visible, re.I))
-    _need(len(mentions) == len(headings) == 1,
-          'ITEM_801_HEADING_MISSING_OR_AMBIGUOUS')
-    start = headings[0].start()
-    after = visible[headings[0].end():]
-    next_901 = re.search(r'\bItem\s+9\.01\s+Financial Statements and Exhibits\b',
-                         after, re.I)
-    boundaries = ([headings[0].end()+next_901.start()]
-                  if next_901 is not None else [])
-    signatures = re.search(r'\bSIGNATURES\b', after)
-    if signatures is not None:
-        boundaries.append(headings[0].end()+signatures.start())
-    _need(bool(boundaries), 'ITEM_801_SECTION_END_UNPROVEN')
-    end = min(boundaries)
-    _need(re.search(r'\bItem\s+\d{1,2}\.\d{2}\b',
-                    visible[headings[0].end():end], re.I) is None,
+    parser = _ItemSectionParser()
+    parser.feed(raw_bytes.decode('utf-8', errors='replace'))
+    parser.close()
+    _need(not parser.uncertain_visibility, 'VISIBILITY_UNPROVEN')
+    visible = ' '.join(parser.words)
+    headings = {}
+    for start, end, emphasized, tag in parser.blocks:
+        if start == end or not emphasized:
+            continue
+        block = ' '.join(parser.words[start:end]).strip()
+        match = _ITEM_HEADING.fullmatch(block)
+        if match is not None:
+            headings.setdefault((start, end),
+                                (match.group(1), match.group(2), tag))
+        elif block.upper() == 'SIGNATURES':
+            headings.setdefault((start, end), ('SIGNATURES', '', tag))
+    starts = [(start, end, tag) for (start, end), (code, title, tag)
+              in headings.items()
+              if code == '8.01' and title.lower() == 'other events']
+    _need(len(starts) == 1, 'ITEM_801_HEADING_MISSING_OR_AMBIGUOUS')
+    start_word, heading_end, heading_tag = starts[0]
+    after = sorted((begin, code, title) for (begin, _), (code, title, tag)
+                   in headings.items() if begin >= heading_end
+                   and tag == heading_tag)
+    _need(bool(after), 'ITEM_801_SECTION_END_UNPROVEN')
+    end_word, end_code, end_title = after[0]
+    _need(end_code == 'SIGNATURES' or
+          (end_code == '9.01' and
+           end_title.lower() == 'financial statements and exhibits'),
           'ITEM_801_BOUNDARY_AMBIGUOUS')
-    section = visible[start:end].strip()
-    payload = visible[headings[0].end():end].strip().lstrip('.:-–— ').strip()
-    _need(bool(payload) and end > start, 'ITEM_801_SECTION_EMPTY')
+    _need(not any(code == '9.01' for _, code, _ in after[1:]),
+          'ITEM_801_BOUNDARY_AMBIGUOUS')
+    _need(not any(heading_end <= begin < end_word
+                  for (begin, _), (_, _, tag) in headings.items()
+                  if tag != heading_tag), 'ITEM_801_BOUNDARY_AMBIGUOUS')
+    _need(end_word > heading_end, 'ITEM_801_SECTION_EMPTY')
+    section = ' '.join(parser.words[start_word:end_word])
+    start = len(' '.join(parser.words[:start_word])) + (1 if start_word else 0)
+    end = start + len(section)
     return {'section_text': section, 'start_char': start, 'end_char': end,
             'visible_text_sha256': sha256_bytes(content=visible.encode('utf-8'))}
 

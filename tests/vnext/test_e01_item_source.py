@@ -96,27 +96,97 @@ class E01ItemSourceTest(unittest.TestCase):
             _visible_801_section(b'<html><body>Item 1.01 Agreement.</body></html>')
         with self.assertRaisesRegex(ValueError,
                 'E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS'):
-            _visible_801_section(b'<html><body>Item 8.01 Other Events. First. '
-                                 b'Item 8.01 Other Events. Second.</body></html>')
+            _visible_801_section(b'<html><body><h2>Item 8.01 Other Events</h2>'
+                                 b'<p>First.</p><h2>Item 8.01 Other Events</h2>'
+                                 b'<p>Second.</p><h2>Item 9.01 Financial '
+                                 b'Statements and Exhibits</h2></body></html>')
         with self.assertRaisesRegex(ValueError,
                 'E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS'):
-            _visible_801_section(b'<html><body>Item 8.01 of this report was '
-                                 b'mentioned before Item 8.01 Other Events.'
-                                 b'</body></html>')
+            _visible_801_section(b'<html><body><p>Item 8.01 Other Events. '
+                                 b'Its contents are inline prose.</p>'
+                                 b'<h2>Item 9.01 Financial Statements and '
+                                 b'Exhibits</h2></body></html>')
         with self.assertRaisesRegex(ValueError,
                 'E01_ITEM_SOURCE_ITEM_801_SECTION_EMPTY'):
-            _visible_801_section(b'<html><body>Item 8.01 Other Events.'
-                                 b' Item 9.01 Financial Statements and Exhibits.'
-                                 b'</body></html>')
+            _visible_801_section(b'<html><body><h2>Item 8.01 Other Events</h2>'
+                                 b'<h2>Item 9.01 Financial Statements and '
+                                 b'Exhibits</h2></body></html>')
         with self.assertRaisesRegex(ValueError,
                 'E01_ITEM_SOURCE_ITEM_801_SECTION_END_UNPROVEN'):
-            _visible_801_section(b'<html><body>Item 8.01 Other Events. '
-                                 b'A reported transaction.</body></html>')
+            _visible_801_section(b'<html><body><h2>Item 8.01 Other Events</h2>'
+                                 b'<p>A reported transaction.</p></body></html>')
         with self.assertRaisesRegex(ValueError,
                 'E01_ITEM_SOURCE_ITEM_801_BOUNDARY_AMBIGUOUS'):
-            _visible_801_section(b'<html><body>Item 8.01 Other Events. '
-                                 b'See Item 1.01 of this report. '
-                                 b'Item 9.01 Financial Statements and Exhibits.'
+            _visible_801_section(b'<html><body><h2>Item 8.01 Other Events</h2>'
+                                 b'<p>A reported transaction.</p>'
+                                 b'<h2>Item 1.01 Entry into a Material Definitive '
+                                 b'Agreement</h2><h2>Item 9.01 Financial '
+                                 b'Statements and Exhibits</h2></body></html>')
+
+    def test_body_cross_references_are_not_section_boundaries(self):
+        section = _visible_801_section(
+            b'<html><body><h2>Item 8.01 Other Events</h2>'
+            b'<p>For related documents see Item 9.01 Financial Statements '
+            b'and Exhibits below; SIGNATURES follow.</p>'
+            b'<p>Item 9.01 Financial Statements and Exhibits.</p>'
+            b'<p>We signed an acquisition agreement.</p>'
+            b'<h2>Item 9.01 Financial Statements and Exhibits</h2>'
+            b'</body></html>')
+        self.assertIn('We signed an acquisition agreement.',
+                      section['section_text'])
+        self.assertIn('SIGNATURES follow', section['section_text'])
+        self.assertIn('Item 9.01 Financial Statements and Exhibits.',
+                      section['section_text'])
+        self.assertTrue(section['section_text'].endswith(
+            'We signed an acquisition agreement.'))
+        with self.assertRaisesRegex(ValueError,
+                'E01_ITEM_SOURCE_ITEM_801_BOUNDARY_AMBIGUOUS'):
+            _visible_801_section(
+                b'<html><body><h2>Item 8.01 Other Events</h2>'
+                b'<p><strong>Item 9.01 Financial Statements and Exhibits'
+                b'</strong></p><p>Possible later 8.01 text.</p>'
+                b'<h2>Item 9.01 Financial Statements and Exhibits</h2>'
+                b'</body></html>')
+        bold_paragraph = _visible_801_section(
+            b'<html><body><p><strong>Item 8.01 Other Events</strong></p>'
+            b'<p>We signed an acquisition agreement.</p>'
+            b'<p><strong>Item 9.01 Financial Statements and Exhibits'
+            b'</strong></p></body></html>')
+        self.assertIn('acquisition agreement', bold_paragraph['section_text'])
+        with self.assertRaisesRegex(ValueError,
+                'E01_ITEM_SOURCE_ITEM_801_BOUNDARY_AMBIGUOUS'):
+            _visible_801_section(
+                b'<html><body><p><strong>Item 8.01 Other Events</strong></p>'
+                b'<p>First sentence.</p><p><strong>Item 9.01 Financial '
+                b'Statements and Exhibits</strong></p><p>More 8.01 text.</p>'
+                b'<p><strong>Item 9.01 Financial Statements and Exhibits'
+                b'</strong></p></body></html>')
+
+    def test_hidden_or_unproven_visibility_does_not_create_section(self):
+        for hidden in (
+                b'<script>Item 8.01 Other Events. Hidden words. Item 9.01 '
+                b'Financial Statements and Exhibits.</script>',
+                b'<div style="display:none"><h2>Item 8.01 Other Events</h2>'
+                b'<p>Hidden words.</p><h2>Item 9.01 Financial Statements '
+                b'and Exhibits</h2></div>',
+                b'<div hidden><h2>Item 8.01 Other Events</h2>'
+                b'<p>Hidden words.</p><h2>Item 9.01 Financial Statements '
+                b'and Exhibits</h2></div>',
+                b'<div aria-hidden="true"><h2>Item 8.01 Other Events</h2>'
+                b'<p>Hidden words.</p><h2>Item 9.01 Financial Statements '
+                b'and Exhibits</h2></div>'):
+            with self.subTest(hidden=hidden[:50]), self.assertRaisesRegex(
+                    ValueError,
+                    'E01_ITEM_SOURCE_ITEM_801_HEADING_MISSING_OR_AMBIGUOUS'):
+                _visible_801_section(b'<html><body>' + hidden +
+                                     b'<p>Visible document lacks 8.01.</p>'
+                                     b'</body></html>')
+        with self.assertRaisesRegex(ValueError,
+                'E01_ITEM_SOURCE_VISIBILITY_UNPROVEN'):
+            _visible_801_section(b'<html><head><style>.hide {display:none}'
+                                 b'</style></head><body><h2>Item 8.01 Other '
+                                 b'Events</h2><p>A report.</p><h2>Item 9.01 '
+                                 b'Financial Statements and Exhibits</h2>'
                                  b'</body></html>')
 
 

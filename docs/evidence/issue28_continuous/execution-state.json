@@ -2564,6 +2564,23 @@
       "tool_calls": 20,
       "result_path": "docs/evidence/issue28_continuous/d03-current-source-replay-20260929/independent-review/conclusion.md",
       "verdict": "PASS_LIMITED"
+    },
+    {
+      "task_name": "review_e01item_7d0f7a6",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "e01_item_source",
+      "scope_paths": [
+        "scripts/vnext/e01_item_source.py",
+        "tests/vnext/test_e01_item_source.py",
+        "tools/run_fast_tests_v2.py",
+        "docs/evidence/issue28_continuous/e01-item-source-v1-20260929/"
+      ],
+      "patch_sha": "7d0f7a69c202c0caf58d54e4a2785e1fa1c36ad9",
+      "spawned_at": "2026-09-29T02:13:53Z",
+      "ended_at": "2026-09-29T02:25:07Z",
+      "tool_calls": 44,
+      "result_path": "docs/evidence/issue28_continuous/e01-item-source-v1-20260929/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX"
     }
   ],
   "ci_capacity_20260922": {
@@ -6843,10 +6860,10 @@
     "all390_acceptance": false
   },
   "e01_item_source_v1_20260929": {
-    "status": "OPT_IN_SOURCE_BOUND_ITEM_801_VISIBLE_SECTION_LOCAL_PASS_UNBOUND_PENDING_LIMITED_REVIEW",
+    "status": "OPT_IN_ITEM_801_REPAIR_LOCAL_PASS_PENDING_NEW_SHA_LIMITED_REVIEW",
     "evidence": "docs/evidence/issue28_continuous/e01-item-source-v1-20260929/README.md",
     "source_module": "scripts/vnext/e01_item_source.py",
-    "module_sha256": "b2db9e8ab29ab01d826bcd07f0e6543ea6d6d8bf7e44ab37a6b0e4bfca59d698",
+    "module_sha256": "9c582e4675a921ee2eef5989d5b411688b738b9dea1f9d4dd2bf09b2827ff3d9",
     "base_commit": "237c7cf4c949a9c58bf857cd406e41ad6ec237d0",
     "default_event_router_and_catalog_bytes_unchanged": true,
     "current_v14_runtime_authority_includes_module": false,
@@ -6854,12 +6871,14 @@
     "actual_southwest_primary_section_source_bound": true,
     "old_verified_claim_id_retained": true,
     "saved_section_rebuild_and_mutation_rejection": true,
-    "directed_tests": "2/2_PASS",
-    "fast_selectors": "142/142_PASS_94.427_SECONDS",
+    "directed_tests": "4/4_PASS_ON_REPAIR_WORKTREE",
+    "fast_selectors": "142/142_PASS_94.376_SECONDS_ON_REPAIR_WORKTREE",
     "new_real_calls": [0, 0, 0],
     "new_native_result_or_run": false,
     "E01_business_definition_decided": false,
-    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "limited_independent_review": "NEEDS_FIX_7d0f7a69_e01-item-source-v1-20260929/independent-review/conclusion.md",
+    "repair_review": "PENDING_EXACT_REPAIR_PATCH_SHA",
+    "repair_scope": "structural_801_and_901_headings_exclude_hidden_dom_and_stop_on_ambiguous_css_or_boundaries",
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
       "files_and_functions": [
