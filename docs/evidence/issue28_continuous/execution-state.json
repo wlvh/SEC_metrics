@@ -2581,6 +2581,22 @@
       "tool_calls": 44,
       "result_path": "docs/evidence/issue28_continuous/e01-item-source-v1-20260929/independent-review/conclusion.md",
       "verdict": "NEEDS_FIX"
+    },
+    {
+      "task_name": "review_e01item_80322de",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "e01_item_source",
+      "scope_paths": [
+        "scripts/vnext/e01_item_source.py",
+        "tests/vnext/test_e01_item_source.py",
+        "docs/evidence/issue28_continuous/e01-item-source-v1-20260929/repair-summary.md"
+      ],
+      "patch_sha": "80322de9bfe171245c2d37bdff43c370321ea418",
+      "spawned_at": "2026-09-29T02:36:03Z",
+      "ended_at": "2026-09-29T02:40:17Z",
+      "tool_calls": 23,
+      "result_path": "docs/evidence/issue28_continuous/e01-item-source-v1-20260929/independent-review-repair-80322de/conclusion.md",
+      "verdict": "NEEDS_FIX"
     }
   ],
   "ci_capacity_20260922": {
@@ -6860,10 +6876,10 @@
     "all390_acceptance": false
   },
   "e01_item_source_v1_20260929": {
-    "status": "OPT_IN_ITEM_801_REPAIR_LOCAL_PASS_PENDING_NEW_SHA_LIMITED_REVIEW",
+    "status": "OPT_IN_ITEM_801_REPAIR2_LOCAL_PASS_PENDING_NEW_SHA_LIMITED_REVIEW",
     "evidence": "docs/evidence/issue28_continuous/e01-item-source-v1-20260929/README.md",
     "source_module": "scripts/vnext/e01_item_source.py",
-    "module_sha256": "9c582e4675a921ee2eef5989d5b411688b738b9dea1f9d4dd2bf09b2827ff3d9",
+    "module_sha256": "ccb458181ec83ace1db307366bba75ac361346852058853575357c5afe612de2",
     "base_commit": "237c7cf4c949a9c58bf857cd406e41ad6ec237d0",
     "default_event_router_and_catalog_bytes_unchanged": true,
     "current_v14_runtime_authority_includes_module": false,
@@ -6872,13 +6888,14 @@
     "old_verified_claim_id_retained": true,
     "saved_section_rebuild_and_mutation_rejection": true,
     "directed_tests": "4/4_PASS_ON_REPAIR_WORKTREE",
-    "fast_selectors": "142/142_PASS_94.376_SECONDS_ON_REPAIR_WORKTREE",
+    "fast_selectors": "142/142_PASS_97.016_SECONDS_ON_REPAIR2_WORKTREE",
     "new_real_calls": [0, 0, 0],
     "new_native_result_or_run": false,
     "E01_business_definition_decided": false,
     "limited_independent_review": "NEEDS_FIX_7d0f7a69_e01-item-source-v1-20260929/independent-review/conclusion.md",
-    "repair_review": "PENDING_EXACT_REPAIR_PATCH_SHA",
-    "repair_scope": "structural_801_and_901_headings_exclude_hidden_dom_and_stop_on_ambiguous_css_or_boundaries",
+    "repair_review": "NEEDS_FIX_80322de9_e01-item-source-v1-20260929/independent-review-repair-80322de/conclusion.md",
+    "repair2_review": "PENDING_EXACT_REPAIR2_PATCH_SHA",
+    "repair_scope": "structural_801_and_901_headings_reject_duplicate_end_headings_exclude_explicit_hidden_dom_and_reject_visibility_affecting_inline_styles",
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
       "files_and_functions": [

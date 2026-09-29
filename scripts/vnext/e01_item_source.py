@@ -41,12 +41,17 @@ class _ItemSectionParser(HTMLParser):
                               'stylesheet' in (attributes.get('rel') or '').lower()):
             self.uncertain_visibility = True
         style = re.sub(r'\s+', '', attributes.get('style') or '').lower()
+        if tag not in _VOID_TAGS and (
+                re.search(r'(?:^|;)(?:opacity|color|background|background-color|'
+                          r'clip|clip-path|filter|position|transform|z-index):',
+                          style) or
+                re.search(r'(?:^|;)font-size:0(?:[^0-9]|$)', style)):
+            self.uncertain_visibility = True
         hidden = (bool(self.stack and self.stack[-1]['hidden'])
                   or tag in _NONDISPLAY_TAGS or 'hidden' in attributes
                   or (attributes.get('aria-hidden') or '').lower() == 'true'
                   or 'display:none' in style or 'visibility:hidden' in style
-                  or 'content-visibility:hidden' in style
-                  or bool(re.search(r'(?:^|;)opacity:0(?:;|$)', style)))
+                  or 'content-visibility:hidden' in style)
         emphasized = (tag in ('b', 'strong') or bool(re.search(
             r'(?:^|;)font-weight:(?:bold|[6-9]00)(?:;|$)', style)))
         if emphasized and not hidden:
@@ -114,6 +119,9 @@ def _visible_801_section(raw_bytes):
            end_title.lower() == 'financial statements and exhibits'),
           'ITEM_801_BOUNDARY_AMBIGUOUS')
     _need(not any(code == '9.01' for _, code, _ in after[1:]),
+          'ITEM_801_BOUNDARY_AMBIGUOUS')
+    _need(sum(code == '9.01' and begin >= heading_end
+              for (begin, _), (code, _, _) in headings.items()) <= 1,
           'ITEM_801_BOUNDARY_AMBIGUOUS')
     _need(not any(heading_end <= begin < end_word
                   for (begin, _), (_, _, tag) in headings.items()

@@ -161,6 +161,15 @@ class E01ItemSourceTest(unittest.TestCase):
                 b'Statements and Exhibits</strong></p><p>More 8.01 text.</p>'
                 b'<p><strong>Item 9.01 Financial Statements and Exhibits'
                 b'</strong></p></body></html>')
+        with self.assertRaisesRegex(ValueError,
+                'E01_ITEM_SOURCE_ITEM_801_BOUNDARY_AMBIGUOUS'):
+            _visible_801_section(
+                b'<html><body><p><strong>Item 8.01 Other Events</strong></p>'
+                b'<p>See the exhibit discussion below:</p>'
+                b'<p><strong>Item 9.01 Financial Statements and Exhibits'
+                b'</strong></p><p>We signed an acquisition agreement.</p>'
+                b'<h2>Item 9.01 Financial Statements and Exhibits</h2>'
+                b'</body></html>')
 
     def test_hidden_or_unproven_visibility_does_not_create_section(self):
         for hidden in (
@@ -188,6 +197,15 @@ class E01ItemSourceTest(unittest.TestCase):
                                  b'Events</h2><p>A report.</p><h2>Item 9.01 '
                                  b'Financial Statements and Exhibits</h2>'
                                  b'</body></html>')
+        for hidden_style in (b'opacity:0.0', b'color:transparent'):
+            with self.subTest(style=hidden_style), self.assertRaisesRegex(
+                    ValueError, 'E01_ITEM_SOURCE_VISIBILITY_UNPROVEN'):
+                _visible_801_section(
+                    b'<html><body><h2>Item 8.01 Other Events</h2>'
+                    b'<p style="' + hidden_style + b'">Hidden acquisition '
+                    b'assertion.</p><p>Visible disclosure.</p>'
+                    b'<h2>Item 9.01 Financial Statements and Exhibits</h2>'
+                    b'</body></html>')
 
 
 if __name__ == '__main__':
