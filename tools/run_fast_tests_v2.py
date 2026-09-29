@@ -153,6 +153,7 @@ SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03FordUpdateMa
 SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest",)
 SOURCE_TESTS += ("tests.vnext.test_b03_exact_impairment_relation.B03ExactImpairmentRelationTest",)
+SOURCE_TESTS += ("tests.vnext.test_b03_contract_amortization_scope.B03ContractAmortizationScopeTest",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

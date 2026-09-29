@@ -50,9 +50,9 @@ def _result_selection_basis(*, data_root, manifest, result, rendered):
     """
     if result['publication'] == 'PUBLISHED':
         if result['metric_id'] == 'B03':
-            from .b03_depreciation_scope import assess_direct_depreciation_scope
+            from .b03_contract_amortization_scope import assess_current_b03_scope
             case = normal.replay_case(data_root=data_root, manifest=manifest)
-            scope = assess_direct_depreciation_scope(case=case,
+            scope = assess_current_b03_scope(case=case,
                 data_root=data_root)
             _need(not scope['blocked'],
                   'ORDINARY_RELEASE_B03_DEPRECIATION_SCOPE_UNRESOLVED:' +

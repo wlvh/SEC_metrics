@@ -10,7 +10,7 @@ from uuid import uuid4
 
 from . import normal_run_v3 as normal
 from . import ordinary_update_cycle as inherited
-from .b03_depreciation_scope import assess_direct_depreciation_scope
+from .b03_contract_amortization_scope import assess_current_b03_scope
 from .canonical import atomic_write_json, sha256_file
 from .normal_annual_input import _registry_rows
 from .ordinary_projection import render_ordinary_run
@@ -67,7 +67,7 @@ def _verify_candidate(root, terminal, configuration):
         # Native replay has rebuilt the explicit Spec, exact original-source
         # proof and complete computation graph before this success is returned.
         return {'B03': result}
-    scope = assess_direct_depreciation_scope(case=case, data_root=data)
+    scope = assess_current_b03_scope(case=case, data_root=data)
     if scope['blocked']:
         raise B03CurrentScopeConflict(
             'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED:' + scope['status'],
@@ -134,7 +134,7 @@ def _run_once_b03(*, state_root, source_root, company_id,
         try:
             cases, descriptor, ledger = inherited._inspect(
                 source, configuration, native_assessment_ledger)
-            current_scope = assess_direct_depreciation_scope(
+            current_scope = assess_current_b03_scope(
                 case=cases['B03'], data_root=source)
             if current_scope['status'] == 'SELECTED_DEPRECIATION_INCLUDES_IMPAIRMENT':
                 from .b03_impairment_adjusted_run import (
@@ -201,7 +201,7 @@ def _run_once_b03(*, state_root, source_root, company_id,
                         _need(case['input_binding']['route'] == ROUTE,
                               'B03_ADJUSTED_INSTALLED_ROUTE_CHANGED')
                     else:
-                        scope = assess_direct_depreciation_scope(
+                        scope = assess_current_b03_scope(
                             case=case, data_root=work/'data')
                         _need(not scope['blocked'],
                               'B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:' +
