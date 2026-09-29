@@ -6643,6 +6643,25 @@
       "downstream_impact": "stacked consumer may refresh its own current V14 closure if it consumes this head; no #47 branch/worktree/ledger/snapshot/PR operated"
     }
   },
+  "b03_salesforce_exact_amount_census_20260929": {
+    "status": "BOUNDED_AUTHENTIC_SOURCE_CHECK_NO_EXACT_IMPAIRMENT_FREE_DA_TOTAL",
+    "evidence": "docs/evidence/issue28_continuous/b03-salesforce-exact-amount-census-20260929/README.md",
+    "company_id": "salesforce",
+    "fiscal_year": 2026,
+    "primary_raw_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+    "companyfacts_raw_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+    "reported_da_usd": 3631000000,
+    "fixed_asset_da_usd_rounded": 1200000000,
+    "acquired_intangible_amortization_usd_rounded": 1700000000,
+    "finance_lease_rou_amortization_usd": 375000000,
+    "separately_tagged_rou_impairment_in_scanned_period": false,
+    "clean_da_total_proven": false,
+    "rounded_component_residual_used_as_impairment": false,
+    "old_result_id_retained_without_current_credit": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120",
+    "new_result_or_run_created": false,
+    "new_real_calls": [0, 0, 0],
+    "scope_limit": "SAME_ACCESSION_PRIMARY_INLINE_AND_COMPANYFACTS;_NO_CLAIM_OF_FULL_TEXT_ABSENCE_OR_COMPLETE_DA"
+  },
   "b03_ford_exact_repair_20260929": {
     "status": "EXACT_SHA_REPAIR_REVIEW_PASS_LIMITED_PRIVATE_CURRENT_CANDIDATE",
     "evidence": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/README.md",
