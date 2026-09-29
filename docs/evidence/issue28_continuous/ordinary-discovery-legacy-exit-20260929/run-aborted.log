@@ -1,0 +1,48 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/ordinary-discovery-legacy-exit-20260929/check.py", line 36, in <module>
+    report = inspect_source_requirements(repo_root=ACQUIRED/'source-inputs')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_source_requirements.py", line 378, in inspect_source_requirements
+    reports.append(discover_saved_source_requirements(repo_root=repo_root,company_id=company_id))
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_source_requirements.py", line 306, in discover_saved_source_requirements
+    selection,metadata=_metadata_requirements(plan,prepared,inventory)
+                       ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_source_requirements.py", line 198, in _metadata_requirements
+    source=plan.require(url,'sec_submissions_history','application/json',refresh=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_source_requirements.py", line 80, in require
+    verify_ordinary_source_proofs(data_root=self.root,proofs=[proof])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_source_authority.py", line 164, in verify_ordinary_source_proofs
+    _,old_ids,admitted=_validate_checkpoint(data_root,checkpoint,baseline)
+                       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_source_authority.py", line 72, in _validate_checkpoint
+    return validate_acquisition_checkpoint(data_root,checkpoint,baseline)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 342, in validate_acquisition_checkpoint
+    proof=receipt['proof'];_proof(data_root,proof)
+                           ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_source_authority.py", line 62, in _proof
+    binding=validate_request_attempt_binding(repo_root=data_root,source_url=proof['source_url'],
+        content_sha256=proof['content_sha256'],accession=proof['accession'],document_name=proof['document_name'],
+        request_attempt_id=proof['request_attempt_id'],require_immutable=proof['request_locator_kind']=='IMMUTABLE_ATTEMPT')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 306, in validate_request_attempt_binding
+    if request_log_attempt_id(row_index=row_index, row=row)
+       ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/sec_http.py", line 1024, in request_log_attempt_id
+    identity_bytes = json.dumps(
+                     ~~~~~~~~~~^
+        {
+        ^
+    ...<6 lines>...
+        sort_keys=True,
+        ^^^^^^^^^^^^^^^
+    ).encode("utf-8")
+    ^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+KeyboardInterrupt
+when serializing dict item 'schema_version'

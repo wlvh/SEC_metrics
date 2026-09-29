@@ -6825,7 +6825,7 @@
     }
   },
   "d03_current_source_replay_20260929": {
-    "status": "LOCAL_RECORDED_CURRENT_SOURCE_PATH_PASS_LIMITED_REVIEW_AND_NEW_HEAD_CI_PENDING",
+    "status": "RECORDED_CURRENT_SOURCE_PATH_PASS_LIMITED_REVIEW_AND_76EBE42E_MAIN_CI_SUCCESS",
     "evidence": "docs/evidence/issue28_continuous/d03-current-source-replay-20260929/README.md",
     "requirement_closure_hash": "sha256:7cf19f62e7c84656dc2d1fb2f06cbcaa7a1d501b90d9e9dd372c54a7148f6a5c",
     "source_root": "LEDGER_OWNED_EXTERNAL_RECORDED_SOURCE_INPUTS",
@@ -6849,6 +6849,7 @@
       "source_selector_shards": [30, 30, 29]
     },
     "limited_independent_review": "PASS_LIMITED_63dad2a2e7b683d3f124c809509d09761dfc572f_docs/evidence/issue28_continuous/d03-current-source-replay-20260929/independent-review/conclusion.md",
+    "current_product_head_main_ci": {"head": "76ebe42ea28eedaac640c70d127475296361d1f3", "run_id": 36498979085, "status": "completed", "conclusion": "success", "jobs_succeeded": 16},
     "shared_with_issue47": {
       "commit_marker": "[shared-with-#47]",
       "files_and_functions": [
@@ -6881,5 +6882,21 @@
     "new_real_calls": [0, 0, 0],
     "new_company_or_390_credit": 0,
     "limited_independent_review_reused": "PASS_LIMITED_63dad2a2e7b683d3f124c809509d09761dfc572f_NO_NEW_PRODUCT_SOURCE_DIFF"
+  },
+  "ordinary_discovery_legacy_exit_20260929": {
+    "status": "TEN_COMPANY_CURRENT_SAVED_SOURCE_DISCOVERY_WITH_116_OLD_PRODUCERS_DISABLED_PASS",
+    "evidence": "docs/evidence/issue28_continuous/ordinary-discovery-legacy-exit-20260929/README.md",
+    "tested_product_head": "76ebe42ea28eedaac640c70d127475296361d1f3",
+    "company_count": 10,
+    "saved_source_dependencies_available_count": 10,
+    "metadata_refresh_url_count": 29,
+    "not_directly_saved_but_native_alternative_count": 5,
+    "old_semantic_exports_disabled": 116,
+    "original_claims_source_and_active_unchanged": true,
+    "first_attempt_intentionally_aborted_after_evidence_script_schema_error": true,
+    "new_real_calls": [0, 0, 0],
+    "new_company_results": 0,
+    "authentic_online_new_fiscal_year_update_proven": false,
+    "formal_old_entrypoints_retired": false
   }
 }
