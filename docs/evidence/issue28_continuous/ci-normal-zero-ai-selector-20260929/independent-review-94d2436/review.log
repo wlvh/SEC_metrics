@@ -1,0 +1,37 @@
+REVIEW: 94d2436a368e7c7456d67a8861ce44145dedeccf
+BASE:   357bae2452b29dc1ed9f0679f6591668c604e7c4
+SCOPE:  tools/run_fast_tests_v2.py and the specified ci-normal-zero-ai-selector-20260929 evidence.
+
+1. Exact diff
+git diff --unified=0 BASE HEAD -- tools/run_fast_tests_v2.py
+Result: only five added lines at SOURCE_TIMEOUT_OVERRIDES: four explanatory comments and target -> 300. No function, test list, default limit or other override changed. Workflow source job remains 35 minutes, command retains --jobs 2 and three shards.
+git diff --check BASE HEAD -- tools/run_fast_tests_v2.py docs/evidence/issue28_continuous/ci-normal-zero-ai-selector-20260929
+Result: exit 0.
+
+2. Selector and syntax checks
+PYTHONPATH=tools python3 docs/evidence/issue28_continuous/ci-normal-zero-ai-selector-20260929/check-selector.py
+Result: exit 0; {"fast_selectors": 142, "source_selectors": 90, "target": "tests.vnext.test_normal_zero_ai_results", "timeout": 300}. Tracked selector-identity.json remained clean.
+python3 -m py_compile tools/run_fast_tests_v2.py
+Result: exit 0.
+The checker compares the fixed BASE source and current module. The exact Git diff independently establishes unchanged runner functions and default limit for this reviewed pair; the checker alone does not inspect function bodies.
+
+3. Remote job evidence, read only
+gh api --allow-escape-sequences repos/wlvh/SEC_metrics/actions/jobs/109371774337/logs | shasum -a 256
+Result: 68e7c20807016de6304339fe91da384ff431368b9dc06ba5a7cd47e72136af68.
+gh api --allow-escape-sequences repos/wlvh/SEC_metrics/actions/jobs/109402753242/logs | shasum -a 256
+Result: 9367ffcd6146d1d6b7ac42864f8f989828e2e2a24da9d7cdf72beb14edd6e31c.
+Both equal remote-comparison.json. Parsed original runner result lines:
+  job 109371774337, run 36558015325, attempt 1, head 698b9a457e5fe03f7b52146b68b5ff79e8cb4bfc: completed/success, 30 selectors, PASSED, 1296.18 s; target 226.062 s, rc 0, timeout 240; test stderr says Ran 10 tests, OK.
+  job 109402753242, run 36567437194, attempt 1, head c3cda0b107e98dc2d244c873dd84c3752298fe9c: completed/failure, same 30 selectors, FAILED, 1342.631 s; only target nonzero, 240.117 s, rc 124, timeout 240; stderr tail has SOURCE_MATERIAL_TIMEOUT_SECONDS=240.
+Compared all matching non-target selectors: 0 have absolute duration delta >=10 s; largest is 8.057 s.
+git diff --name-only 698b9a45 c3cda0b1 lists 23 evidence/status paths, with no product or test source.
+gh run view 36567437194 reported run status in_progress at review time; this does not change the completed shard 0 job result.
+gh run list --commit 94d2436a368e7c7456d67a8861ce44145dedeccf returned [] at review time.
+
+4. Existing local logs, read only
+OrdinaryZeroAiPrototypeTest.log: 7 tests, OK; timing.json says 69.499 s.
+OrdinaryZeroAiAdditionalRoutesTest.log: 3 tests, OK; timing.json says 14.812 s.
+launcher.exit: 0. These local class timings are not a CI rerun or full-module duration.
+
+5. Tool and scope accounting
+Direct tool calls: 12 functions.exec calls. Nested: 39 exec_command calls and 1 apply_patch call, including the final file verification. One initial gh api log-hash attempt produced empty input because terminal escape sequences required --allow-escape-sequences; hashes were then verified with that flag. One initial Python log parser had a shell quoting error; corrected read-only parsing yielded the results above. No long test was rerun. No commit or push. No Issue #47/PR52 path, ledger or worktree was modified. A pre-existing modification to docs/evidence/issue28_continuous/execution-state.json was observed and left untouched.

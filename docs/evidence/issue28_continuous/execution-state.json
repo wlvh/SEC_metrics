@@ -51,7 +51,7 @@
     "B13 V8 lexical route remains suspended after two NEEDS_FIX reviews; C04 cross-fiscal-year online update, B06 five source relationships and full390/legacy exit remain unproven. Original ledger last checked at provider/paid/SEC 143/143/52, 195 slots."
   ],
   "next": [
-    "Append-only push the accumulated evidence-only commits d4adce1b, efe59c66, 2608fe86, ccf6a537 and 20e712cd to Draft PR43 without manually rerunning unchanged material. Keep c3cda0b1 CI on its own original head; read the new-head CI once after push, then update Issue #28 section 3 and PR body in place. Continue independent work while either CI remains queued or running.",
+    "Append-only push the narrowly scoped 300-second source-selector CI repair and its 94d2436 limited review to Draft PR43. The original c3cda0b1 run36567437194 completed FAILURE on shard0 selector rc124; 357bae24 run36572169437 remains nonterminal at the 2026-09-29T13:24Z natural checkpoint. Read the repair head CI once after push, then update Issue #28 section 3 and PR body in place. Do not rerun unaffected long materials.",
     "E01 business meaning and count unit await the user choice. The current ten-company window has 41 Item 8.01 claims; the opt-in source parser binds two sections, including a Paramount notice about an already reported transaction. No current E01 result is changed by keyword hits; Salesforce header and primary are already verified in the #28 cumulative root, so do not request them again.",
     "D03 still needs provider-bound cross-group semantic Review and native company Result/Run; B13 needs a viable non-lexical task and explicit new-route real-call mapping. Neither route may issue unapproved real requests or upgrade recorded answers. Preserve old 190 and all failures.",
     "Continue B06 source relationships without guessing: Ford industrial attributable equity and full debt scope, Pfizer finance-lease completeness, JPMorgan bank finance leases, Southwest supplier-credit nature. Salesforce B03 remains withheld until an exact impairment-free complete D&A source relation is proven. Paramount C04 negative conclusion without same-registrant prior auditor facts remains a business decision.",
@@ -2654,6 +2654,25 @@
       "ordinary_messages": 1,
       "result_path": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/independent-review-repair-9387643/conclusion.md",
       "verdict": "PASS_LIMITED_NEGATION_REPAIR_NO_BLOCKER_IN_REVIEWED_SCOPE"
+    },
+    {
+      "task_name": "review_cizero_94d2436",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ci_normal_zero_ai_selector",
+      "scope_paths": [
+        "tools/run_fast_tests_v2.py",
+        "docs/evidence/issue28_continuous/ci-normal-zero-ai-selector-20260929/README.md",
+        "docs/evidence/issue28_continuous/ci-normal-zero-ai-selector-20260929/remote-comparison.json",
+        "docs/evidence/issue28_continuous/ci-normal-zero-ai-selector-20260929/selector-identity.json"
+      ],
+      "patch_sha": "94d2436a368e7c7456d67a8861ce44145dedeccf",
+      "spawned_at": "2026-09-29T13:16:37Z",
+      "ended_at": "2026-09-29T13:23:06Z",
+      "tool_calls": 40,
+      "outer_exec_calls": 12,
+      "ordinary_messages": 1,
+      "result_path": "docs/evidence/issue28_continuous/ci-normal-zero-ai-selector-20260929/independent-review-94d2436/conclusion.md",
+      "verdict": "PASS_LIMITED_NO_BLOCKER_IN_REVIEWED_SCOPE"
     }
   ],
   "ci_capacity_20260922": {
@@ -6637,13 +6656,18 @@
     }
   },
   "ci_normal_zero_ai_selector_20260929": {
-    "status": "MEASURED_SINGLE_SOURCE_SELECTOR_TIMEOUT_300_LOCAL_REVIEW_PENDING",
+    "status": "MEASURED_SINGLE_SOURCE_SELECTOR_TIMEOUT_300_LIMITED_REVIEW_PASS_CI_PENDING",
     "evidence": "docs/evidence/issue28_continuous/ci-normal-zero-ai-selector-20260929/README.md",
     "prior_same_product_source_head": "698b9a457e5fe03f7b52146b68b5ff79e8cb4bfc",
     "prior_job_id": 109371774337,
     "prior_target_selector_seconds": 226.062,
     "failed_evidence_only_head": "c3cda0b107e98dc2d244c873dd84c3752298fe9c",
     "failed_job_id": 109402753242,
+    "failed_run_id": 36567437194,
+    "failed_run_terminal_conclusion": "failure",
+    "review_patch_sha": "94d2436a368e7c7456d67a8861ce44145dedeccf",
+    "review_verdict": "PASS_LIMITED_NO_BLOCKER_IN_REVIEWED_SCOPE",
+    "review_result_path": "docs/evidence/issue28_continuous/ci-normal-zero-ai-selector-20260929/independent-review-94d2436/conclusion.md",
     "failed_target_selector_seconds": 240.117,
     "failed_target_return_code": 124,
     "other_selector_duration_shift_ge_10_seconds": false,
