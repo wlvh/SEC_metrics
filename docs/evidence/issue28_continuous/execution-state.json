@@ -6596,6 +6596,47 @@
       "downstream_impact": "stacked consumer may refresh its own current V14 closure if it consumes this head; no #47 branch/worktree/ledger/snapshot/PR operated"
     }
   },
+  "b03_ford_exact_repair_20260929": {
+    "status": "LOCAL_PRIVATE_NATIVE_CANDIDATE_AND_COLD_READ_PASS_LIMITED_REVIEW_PENDING",
+    "evidence": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/README.md",
+    "coordinate_key": "ford_motor_company:B03",
+    "old_historical_result_id_retained": "sha256:1829d73dac66a195a590ab84ea1f1d1800a77fae60d828b6f37d5cbeec2abd30",
+    "new_private_result_id": "sha256:06d93be4d329b7705642879ea50c677250b35c646214070e92f8e009396d9289",
+    "new_private_value": "-0.007128858795196163766173431518",
+    "source_relation_proof_id": "sha256:951c8c55a196e91d60b0b814541654d46255c8f016e8e554e9c36e9f27276300",
+    "source_relation": "AUTHENTICATED_SAME_CONTEXT_DA_15974000000_EQUALS_CASHFLOW_DA_7834000000_PLUS_EXACT_IMPAIRMENT_DEPRECIATION_8140000000",
+    "rounded_8_1_billion_subtraction_used": false,
+    "two_synthetic_source_counterexamples_rejected": true,
+    "private_processing_snapshot_id": "sha256:bd560d70eff5f68ab4c42d8e70445312ded727dbb53c9f0f65920e767157cf95",
+    "normal_cli_status": "UPDATES_READY_B03_CANDIDATE_READY",
+    "native_installed_cold_read": "PASS_SAME_RESULT_ID_VALUE_SOURCE_RELATION_AND_PUBLIC_ROW",
+    "reused_long_chain_exact_binding": true,
+    "current_v13_closure": "sha256:eb4ffdd488321a13733be3e05ba2f3a039e7f4b7b16d8149118e46ee7468593f",
+    "current_v14_closure": "sha256:b2f0480c0c631b1ffb64b03c397497e0fc8ffeff357ebdcab4c49debb87e8912",
+    "v14_only_prototype": "FAILED_B13_NATIVE_RUN_ROUTE_REQUIRED_AND_ROLLED_BACK_WITHOUT_CREDIT",
+    "final_bound_ford_native_test": "PASS_1_IN_57_705_SECONDS",
+    "final_bound_other_affected_tests": "SALESFORCE_SOUTHWEST_AND_HISTORICAL_REJECTION_PASS;_TWO_INITIAL_TEST_MOCK_FAILURES_PRESERVED_AND_ONLY_FAILED_CASES_RERUN_PASS",
+    "final_bound_fast": "PASS_142_OF_142_98_5_SECONDS",
+    "limited_independent_review": "PENDING_EXACT_PATCH_SHA",
+    "corrected_private_coordinate_count": 1,
+    "new_complete_company_count": 0,
+    "all390_acceptance": false,
+    "new_real_calls": [0, 0, 0],
+    "formal_adoption": false,
+    "shared_with_issue47": {
+      "commit_marker": "[shared-with-#47]",
+      "files_functions": {
+        "scripts/vnext/normal_run_v3.py": ["replay_case explicit saved-route branch; prepare_case/install_normal_inputs/create_normal_run/_binding default bodies unchanged"],
+        "scripts/vnext/ordinary_b03_scope_update.py": ["_run_once_b03 exact source selection", "_verify_candidate native replay"],
+        "config/issue28_normal_results_v2.json": ["explicit B03 Spec route and bound rule paths"],
+        "requirements/issue_28_v13/": ["mutable ordinary decision and execution binding"],
+        "requirements/issue_28_v14/": ["parent identity, execution binding and three wiring receipts"],
+        "tools/run_fast_tests_v2.py": ["one source-material selector appended at list end; runner body unchanged"]
+      },
+      "compatibility_evidence": "old Ford Result ID retained; Salesforce old conflict, Southwest positive/idempotence and old success rejection passed; _binding function and default record shape unchanged; previous installed packages retain original identity",
+      "downstream_impact": "new mutable V13 closure changes newly generated ordinary Run requirement hashes; #47 stacked consumer must assess its own parent binding; no #47 artifact operated"
+    }
+  },
   "b03_c04_recorded_resume_20260929": {
     "status": "LOCAL_EVIDENCE_COMMIT_PENDING_PUSH_RECORDED_TWO_SOURCE_AND_COLD_READ_PASS",
     "evidence": "docs/evidence/issue28_continuous/b03-c04-recorded-resume-20260929/README.md",

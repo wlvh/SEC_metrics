@@ -99,8 +99,18 @@ class B03LegacyRecoveryMaterialTest(TestCase):
             changed['source_contents'][0]['sha256'] = 'synthetic-new-source'
             changed['content_id'] = content_hash(value={k:v for k,v in
                 changed.items() if k != 'content_id'})
+            historical = earlier['metrics'][0]['last_verified_candidate'][
+                'results']
             with patch.object(successor.inherited, '_inspect',
-                              return_value=({}, changed, 'synthetic-ledger')), \
+                              return_value=({'B03': {'primary_metric_id': 'B03'}},
+                                            changed, 'synthetic-ledger')), \
+                 patch.object(successor, '_verify_candidate',
+                              side_effect=successor.B03CurrentScopeConflict(
+                                  'B03_CURRENT_SUCCESS_SCOPE_UNRESOLVED',
+                                  historical)), \
+                 patch.object(successor, 'assess_direct_depreciation_scope',
+                              return_value={'blocked': False,
+                                            'status': 'NO_DIRECT_DEPRECIATION_SELECTION'}), \
                  patch.object(successor.normal, 'install_normal_inputs',
                               side_effect=RuntimeError('SYNTHETIC_INSTALL_STOP')):
                 new_attempt = run_company(state_root=root/'salesforce',
@@ -150,7 +160,7 @@ class B03SouthwestUpdateMaterialTest(TestCase):
 
 
 class B03FordUpdateMaterialTest(TestCase):
-    def test_footnoted_impairment_cannot_become_current_b03(self):
+    def test_exact_original_split_creates_new_current_b03_without_rewriting_old(self):
         self.enterContext(patch.object(socket.socket, 'connect',
             side_effect=AssertionError('NETWORK_FORBIDDEN')))
         self.enterContext(patch.object(socket, 'getaddrinfo',
@@ -162,15 +172,28 @@ class B03FordUpdateMaterialTest(TestCase):
             outcome = run_company(state_root=root/'ford', source_root=ROOT,
                 company_id='ford_motor_company', metric_ids=['B03'])
             row, = outcome['metrics']
-            self.assertEqual('UPDATES_INCOMPLETE', outcome['status'])
-            self.assertEqual('EXECUTION_FAILED', row['status'])
-            self.assertIn('B03_CURRENT_SOURCE_SCOPE_UNRESOLVED:'
-                          'SELECTED_DEPRECIATION_INCLUDES_IMPAIRMENT',
-                          row['terminal']['error']['reason'])
-            self.assertIsNone(row['last_verified_candidate'])
-            self.assertIsNone(strict_json_file(
-                path=root/'ford/metrics/B03/current.json')[
-                    'successful_attempt'])
+            self.assertEqual('UPDATES_READY', outcome['status'])
+            self.assertEqual('CANDIDATE_READY', row['status'])
+            current = row['last_verified_candidate']['results']['B03']
+            self.assertEqual('-0.007128858795196163766173431518',
+                             current['value'])
+            self.assertNotEqual(
+                'sha256:1829d73dac66a195a590ab84ea1f1d1800a77fae60d828b6f37d5cbeec2abd30',
+                current['result_id'])
+            state = strict_json_file(
+                path=root/'ford/metrics/B03/current.json')
+            self.assertEqual(row['attempt_id'], state['successful_attempt'])
+            work = root/'ford/metrics/B03/attempts'/row['attempt_id']
+            from vnext.ordinary_projection import render_ordinary_run
+            replay = render_ordinary_run(data_root=work/'data',
+                run_dir=work/'runs/B03', _return_replay_context=True)
+            self.assertEqual(
+                'catalog/r6/B03_impairment_excluded_v1.md',
+                replay['replay_context']['case']['spec_paths']['B03'])
+            self.assertEqual(current['result_id'], next(item['result_id']
+                for item in replay['replay_context']['records']
+                if item['record_type'] == 'METRIC_RESULT'
+                and item['metric_id'] == 'B03'))
             self.assertEqual({'provider':0,'paid':0,'sec':0}, outcome['calls'])
 
 
@@ -227,7 +250,7 @@ class B03HistoricalRecoveryVerifierTest(TestCase):
                     '_record', side_effect=lambda path, body: {
                         **body, 'record_id': content_hash(value=body)}))
                 stack.enter_context(patch.object(successor.inherited,
-                    '_inspect', return_value=({}, changed_input,
+                    '_inspect', return_value=({'B03': {'primary_metric_id': 'B03'}}, changed_input,
                                               'unchanged-ledger')))
                 installed = stack.enter_context(patch.object(successor.normal,
                     'install_normal_inputs'))
@@ -262,7 +285,7 @@ class B03HistoricalRecoveryVerifierTest(TestCase):
                     company_id='salesforce')
             self.assertEqual(2, postcheck.call_count)
             self.assertEqual(2, verifier.call_count)
-            self.assertEqual((1, 1, 1, 1),
+            self.assertEqual((1, 1, 1, 2),
                              (installed.call_count, made.call_count,
                               rendered.call_count, scoped.call_count))
             self.assertEqual('EXECUTION_FAILED', outcome['status'])

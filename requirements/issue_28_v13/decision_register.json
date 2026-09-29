@@ -95,7 +95,8 @@
         "catalog/metrics/B01_revenue.md"
       ],
       "B03": [
-        "catalog/metrics/B03_ebitda_margin.md"
+        "catalog/metrics/B03_ebitda_margin.md",
+        "catalog/r6/B03_impairment_excluded_v1.md"
       ],
       "A01": [
         "catalog/ordinary_zero_ai/A01.md"
@@ -202,6 +203,7 @@
       "catalog/r5/B06_bond_leases_v5.md",
       "catalog/r5/B06_inclusive_table_v6.md",
       "catalog/r5/B06_note_carrying_v4.md",
+      "catalog/r6/B03_impairment_excluded_v1.md",
       "config/annual_amendment_scope_v1.json",
       "config/b06_bond_debt_set_v1.json",
       "config/b06_bond_leases_v1.json",
@@ -217,6 +219,9 @@
       "config/ordinary_income_input_v1.json",
       "config/ordinary_lodging_table_v1.json",
       "scripts/vnext/annual_amendment_scope.py",
+      "scripts/vnext/b03_depreciation_scope.py",
+      "scripts/vnext/b03_exact_impairment_relation.py",
+      "scripts/vnext/b03_impairment_adjusted_run.py",
       "scripts/vnext/b06_bond_leases.py",
       "scripts/vnext/b06_current_input.py",
       "scripts/vnext/b06_financing_inventory.py",
