@@ -1,0 +1,14 @@
+# E01 Item 8.01 opt-in source repair
+
+The exact `7d0f7a69` limited independent review remains **NEEDS_FIX**. Its two authenticated counterexamples found that a body cross-reference to Item 9.01 truncated the purported complete Item 8.01 section, and explicitly hidden HTML produced a purported visible section. The original [conclusion](independent-review/conclusion.md), log, source, tests and fast evidence retain their historical meaning.
+
+The repair changes only the new opt-in `e01_item_source.py` component and its directed tests. The component now identifies Item 8.01 and its end using actual HTML block structure rather than the first flat-text keyword. Headings must be the unique matching structured block; a plain body cross-reference remains body text. Competing or indistinguishable headings stop extraction. Script, style and explicitly hidden DOM content cannot create a visible section. A CSS stylesheet stops extraction instead of silently certifying completeness. The accepted text and its offsets are rebuilt from the same authenticated primary bytes for saved-record verification. This is a bounded accepted-layout check, not a general browser renderer or an E01 semantic classifier.
+
+Repair worktree verification:
+
+- `PYTHONPATH=.:scripts:tools /private/tmp/issue28_py314_venv/bin/python -m unittest -v tests.vnext.test_e01_item_source`: **4/4 PASS** ([log](repair-directed.log)). Includes body 9.01 and `SIGNATURES` cross-references, source heading ambiguity, hidden DOM and CSS uncertainty. The previously authenticated claim/source test still passes.
+- `PYTHONPATH=.:scripts:tools /private/tmp/issue28_py314_venv/bin/python tools/run_fast_tests_v2.py --suite fast --jobs 2`: **142/142 selectors PASS**, 94.376 seconds, no failed selector ([log](repair-fast.log)). This is local fast evidence, not current-head CI.
+- Actual saved Southwest debt-offering 8-K, no network: old verified claim ID retained; Item 8.01 section still 174 characters; no metric result or source acquisition credit ([probe](repair-probe.log), [record](repair-item-source.json)). This is one saved source, not an E01 M&A classification or company Run.
+- Current V14 execution/semantic/provider binding still validates and does **not** include this new module ([log](repair-binding.log)); old default router, normal result component, event catalog and V13/V14 manifests are byte-identical to `237c7cf4` ([scope](repair-scope.json)). The original `scope.json` and audit probe record were not overwritten for this repair.
+
+The repair requires a **new exact-SHA limited independent review**. Parent verification does not convert the `7d0f7a69` NEEDS_FIX verdict into a PASS. E01 product meaning remains undecided; historical Southwest E01 value 2 remains unchanged and currently lacks content-confirmed M&A credit. No provider/SEC call, #47 operation, Result/Run or production action occurred.
