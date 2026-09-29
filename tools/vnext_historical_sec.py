@@ -68,17 +68,34 @@ def _companies(args):
     return [args.company]
 
 
+def _summary_text(summary):
+    """The run summary as JSON text, complete or not at all.
+
+    Serialized before any file is opened: the first live run opened the file
+    first, and the ledger snapshot's request digests are a set, so json
+    failed half way and left a truncated summary beside the ledger. A set is
+    written as its sorted list; any other value json cannot write is still an
+    error, raised before anything is written.
+    """
+    def plain(value):
+        if isinstance(value, (set, frozenset)):
+            return sorted(value)
+        raise TypeError("ISSUE_47_SUMMARY_VALUE_IS_NOT_JSON:" + type(value).__name__)
+    return json.dumps(summary, ensure_ascii=False, indent=1, sort_keys=True, default=plain)
+
+
 def _acquire(args):
     """Run the acquisition and keep its summary beside the ledger it spent."""
     from datetime import datetime, timezone
     session = live_historical_session()
     summary = session.acquire(company_ids=_companies(args), years=args.years,
                               max_captures=args.max_captures)
+    text = _summary_text(summary)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     runs = session.ledger.root / "runs"
     runs.mkdir(parents=True, exist_ok=True)
     with (runs / (stamp + ".json")).open("x", encoding="utf-8") as file:
-        json.dump(summary, file, ensure_ascii=False, indent=1, sort_keys=True)
+        file.write(text)
     companies = {company: {"passes": item["passes"], "captured": len(item["captured"]),
                            "failed": sum(1 for x in item["captured"]
                                          if x["status"] != "SUCCEEDED"),

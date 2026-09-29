@@ -2466,6 +2466,55 @@ class APassTakesOneTierAndNeverClaimsAUrlTwice(unittest.TestCase):
         self.assertEqual([], scripted.fetched)
 
 
+class TheRunSummaryIsWrittenWholeOrNotAtAll(unittest.TestCase):
+    """The CLI's own acquire, over the scripted passes.
+
+    Nothing exercised the CLI's ``_acquire`` before the first live run, which
+    then crashed writing its summary: the ledger snapshot's request digests
+    are a set, and the file had been opened before json failed, so a
+    truncated summary was left beside the ledger (the capture itself and its
+    checkpoint were already registered).
+    """
+
+    def _cli(self):
+        spec = importlib.util.spec_from_file_location(
+            "issue47_historical_sec_cli", ROOT / "tools/vnext_historical_sec.py")
+        cli = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cli)
+        return cli
+
+    @staticmethod
+    def _args():
+        return types.SimpleNamespace(company=None, years=5, max_captures=None)
+
+    def test_the_summary_is_whole_json_and_lists_the_claimed_digests(self):
+        rows = [_scripted_row(url, "ANNUAL_PERIOD_IDENTITY") for url in _OTHER[:2]]
+        session = _ScriptedPasses(self, frames=[rows]).session()
+        cli = self._cli()
+        with patch.object(cli, "live_historical_session", lambda: session), \
+                patch.object(cli, "_companies", lambda args: [_SCRIPTED_COMPANY]):
+            _, result = cli._acquire(self._args())
+        written = strict_json_file(path=Path(result["summary_path"]))
+        digests = session.ledger.snapshot()["request_digests"]
+        self.assertEqual(2, len(digests))
+        self.assertEqual(sorted(digests), written["cumulative"]["request_digests"])
+        self.assertEqual([0, 0, 2], result["cumulative_calls"])
+
+    def test_a_value_json_cannot_write_leaves_no_file(self):
+        session = _ScriptedPasses(self, frames=[[]]).session()
+        cli = self._cli()
+        unwritable = {"cumulative": {"counts": [0, 0, 0]}, "value": object()}
+        with patch.object(cli, "live_historical_session", lambda: session), \
+                patch.object(cli, "_companies", lambda args: [_SCRIPTED_COMPANY]), \
+                patch.object(type(session), "acquire", lambda self, **kwargs: unwritable):
+            with self.assertRaises(TypeError) as caught:
+                cli._acquire(self._args())
+        self.assertIn("ISSUE_47_SUMMARY_VALUE_IS_NOT_JSON:object", str(caught.exception))
+        runs = session.ledger.root / "runs"
+        self.assertEqual([], sorted(runs.iterdir()) if runs.exists() else [],
+                         "nothing is written when the summary cannot be serialized")
+
+
 class TheRealChainReachesAFixpointWithoutRetrying(unittest.TestCase):
     """The batch path over the real planner, gate, ledger and frozen replay.
 
