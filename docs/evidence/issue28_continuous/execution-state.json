@@ -2641,6 +2641,26 @@
       "resource_deviation": "TOOL_COUNT_FOLLOWUP_ADDED_FOURTH_ORDINARY_MESSAGE_AFTER_THREE_MESSAGE_REVIEW_LIMIT",
       "result_path": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/independent-review/conclusion.md",
       "verdict": "CHANGES_REQUIRED_SOURCE_NEGATION_FALSE_ACCEPTANCE"
+    },
+    {
+      "task_name": "review_b03neg_9387643",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "b03_ford_exact_negation_increment",
+      "scope_paths": [
+        "scripts/vnext/b03_exact_impairment_relation.py",
+        "tests/vnext/test_b03_exact_impairment_relation.py",
+        "requirements/issue_28_v13/baseline_manifest.json",
+        "requirements/issue_28_v14/baseline_manifest.json",
+        "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/"
+      ],
+      "patch_sha": "9387643a8722c5f49ba056a47bfcd19cf6e3d8f0",
+      "spawned_at": "2026-09-29T10:31:00Z",
+      "ended_at": "2026-09-29T10:35:55Z",
+      "tool_calls": 29,
+      "outer_exec_calls": 12,
+      "ordinary_messages": 1,
+      "result_path": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/independent-review-repair-9387643/conclusion.md",
+      "verdict": "PASS_LIMITED_NEGATION_REPAIR_NO_BLOCKER_IN_REVIEWED_SCOPE"
     }
   ],
   "ci_capacity_20260922": {
@@ -6624,7 +6644,7 @@
     }
   },
   "b03_ford_exact_repair_20260929": {
-    "status": "SOURCE_NEGATION_REPAIR_LOCAL_PASS_NEW_EXACT_SHA_REVIEW_PENDING",
+    "status": "EXACT_SHA_REPAIR_REVIEW_PASS_LIMITED_PRIVATE_CURRENT_CANDIDATE",
     "evidence": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/README.md",
     "coordinate_key": "ford_motor_company:B03",
     "old_historical_result_id_retained": "sha256:1829d73dac66a195a590ab84ea1f1d1800a77fae60d828b6f37d5cbeec2abd30",
@@ -6647,9 +6667,10 @@
     "final_bound_other_affected_tests": "SALESFORCE_SOUTHWEST_AND_HISTORICAL_REJECTION_PASS;_TWO_INITIAL_TEST_MOCK_FAILURES_PRESERVED_AND_ONLY_FAILED_CASES_RERUN_PASS",
     "final_bound_fast": "PASS_142_OF_142_99_32_SECONDS",
     "initial_limited_independent_review": "CHANGES_REQUIRED_2CFFA8E_NOT_INCLUDING_CASHFLOW_LABEL_FALSE_ACCEPTED;_SOURCE_COUNTEREXAMPLE_REPRODUCED",
-    "repair_limited_independent_review": "PENDING_NEW_EXACT_PATCH_SHA",
-    "corrected_private_coordinate_count": 0,
-    "genuine_ford_source_private_result_preserved_without_current_credit": true,
+    "repair_limited_independent_review": "PASS_LIMITED_9387643_NO_BLOCKER_FOR_FORD_ORIGINAL_AND_THREE_SPECIFIED_TAMPERS;_NO_GENERAL_LANGUAGE_OR_ALL390_CREDIT",
+    "repair_review_path": "docs/evidence/issue28_continuous/b03-ford-exact-repair-20260929/independent-review-repair-9387643/conclusion.md",
+    "corrected_private_coordinate_count": 1,
+    "current_private_candidate_credit": true,
     "new_complete_company_count": 0,
     "all390_acceptance": false,
     "new_real_calls": [0, 0, 0],
